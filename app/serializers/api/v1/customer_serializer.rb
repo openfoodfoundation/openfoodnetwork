@@ -6,6 +6,8 @@ module Api
       attributes :id, :enterprise_id, :first_name, :last_name, :code, :email,
                  :allow_charges, :terms_and_conditions_accepted_at
 
+      attribute :tags, &:tag_list
+
       belongs_to :enterprise, links: {
         related: ->(object) {
           url_helpers.api_v1_enterprise_url(id: object.enterprise_id)

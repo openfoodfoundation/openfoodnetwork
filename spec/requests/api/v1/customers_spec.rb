@@ -10,6 +10,7 @@ describe "Customers", type: :request do
       :customer,
       enterprise: enterprise1,
       terms_and_conditions_accepted_at: Time.zone.parse("2000-01-01"),
+      tag_list: ["long-term"],
     )
   }
   let!(:customer2) { create(:customer, enterprise: enterprise1) }
@@ -145,6 +146,7 @@ describe "Customers", type: :request do
             code: "BUYER1",
             email: "alice@example.com",
             enterprise_id: enterprise1.id,
+            tags: ["staff", "discount"],
           )
         end
       end
@@ -258,7 +260,12 @@ describe "Customers", type: :request do
         end
         schema "$ref": "#/components/schemas/resources/customer"
 
-        run_test!
+        run_test! do
+          # Tags should not be overridden when the param is missing:
+          expect(json_response[:data][:attributes]).to include(
+            tags: ["long-term"],
+          )
+        end
       end
 
       response "422", "Unprocessable entity" do

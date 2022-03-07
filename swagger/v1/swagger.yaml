@@ -63,6 +63,11 @@ components:
                   allow_charges:
                     type: boolean
                     example: false
+                  tags:
+                    type: array
+                    example:
+                    - staff
+                    - discount
                   terms_and_conditions_accepted_at:
                     type: string
                     format: date-time
@@ -76,6 +81,7 @@ components:
                 - code
                 - email
                 - allow_charges
+                - tags
                 - terms_and_conditions_accepted_at
               relationships:
                 type: object
@@ -143,6 +149,11 @@ components:
                     allow_charges:
                       type: boolean
                       example: false
+                    tags:
+                      type: array
+                      example:
+                      - staff
+                      - discount
                     terms_and_conditions_accepted_at:
                       type: string
                       format: date-time
@@ -156,6 +167,7 @@ components:
                   - code
                   - email
                   - allow_charges
+                  - tags
                   - terms_and_conditions_accepted_at
                 relationships:
                   type: object
@@ -291,6 +303,11 @@ paths:
                 email:
                   type: string
                   example: alice@example.com
+                tags:
+                  type: array
+                  example:
+                  - staff
+                  - discount
               required:
               - enterprise_id
               - email
@@ -371,6 +388,11 @@ paths:
                 email:
                   type: string
                   example: alice@example.com
+                tags:
+                  type: array
+                  example:
+                  - staff
+                  - discount
               required:
               - enterprise_id
               - email

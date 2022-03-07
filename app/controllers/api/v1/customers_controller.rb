@@ -70,10 +70,14 @@ module Api
       end
 
       def customer_params
-        params.require(:customer).permit(
+        attributes = params.require(:customer).permit(
           :email, :enterprise_id,
           :code, :first_name, :last_name,
-        )
+        ).to_h
+
+        attributes.merge!(tag_list: params[:tags]) if params.key?(:tags)
+
+        attributes
       end
 
       def editable_enterprises
