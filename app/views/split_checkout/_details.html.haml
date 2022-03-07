@@ -89,7 +89,7 @@
           = shipping_method_form.label shipping_method.id, shipping_method.name, {for: "shipping_method_" + shipping_method.id.to_s }
           %em.light
             = payment_or_shipping_price(shipping_method, @order)
-          - display_ship_address = (shipping_method.id == selected_shipping_method.to_i && shipping_method.require_ship_address)
+          - display_ship_address = display_ship_address || (shipping_method.id == selected_shipping_method.to_i && shipping_method.require_ship_address)
           - if shipping_method.id == selected_shipping_method.to_i
             - ship_method_description = shipping_method.description
 

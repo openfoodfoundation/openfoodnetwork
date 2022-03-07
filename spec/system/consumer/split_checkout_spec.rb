@@ -32,6 +32,9 @@ describe "As a consumer, I want to checkout my order", js: true do
   let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: fee_tax_category) }
 
+  let(:free_shipping_with_required_address) {
+    create(:shipping_method, require_ship_address: true, name: "A Free Shipping with required address")
+  }
   let(:free_shipping) {
     create(:shipping_method, require_ship_address: false, name: "Free Shipping", description: "yellow",
                              calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
@@ -42,6 +45,9 @@ describe "As a consumer, I want to checkout my order", js: true do
     create(:shipping_method, require_ship_address: true, tax_category: shipping_tax_category,
                              name: "Shipping with Fee", description: "blue",
                              calculator: Calculator::FlatRate.new(preferred_amount: 4.56))
+  }
+  let(:free_shipping_without_required_address) {
+    create(:shipping_method, require_ship_address: false, name: "Z Free Shipping without required address")
   }
   let!(:payment_with_fee) {
     create(:payment_method, distributors: [distributor],
@@ -56,8 +62,7 @@ describe "As a consumer, I want to checkout my order", js: true do
     add_enterprise_fee enterprise_fee
     set_order order
 
-    distributor.shipping_methods << free_shipping
-    distributor.shipping_methods << shipping_with_fee
+    distributor.shipping_methods = [free_shipping_with_required_address, free_shipping, shipping_with_fee, free_shipping_without_required_address]
   end
 
   context "guest checkout when distributor doesn't allow guest orders" do
@@ -186,6 +191,19 @@ describe "As a consumer, I want to checkout my order", js: true do
     end
 
     context "details step" do
+      context "when form is submitted but invalid" do
+        it "display the checkbox about shipping address same as billing address when selecting a shipping method that requires ship address" do
+          choose free_shipping_with_required_address.name
+          check "Shipping address same as billing address?"
+
+          click_button "Next - Payment method"
+
+          expect(page).to have_content "Saving failed, please update the highlighted fields."
+          expect(page).to have_content "Shipping address same as billing address?"
+          expect(page).to have_checked_field "Shipping address same as billing address?"
+        end
+      end
+
       describe "filling out delivery details" do
         before do
           fill_out_details
