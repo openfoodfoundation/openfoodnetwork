@@ -73,6 +73,25 @@ components:
                     format: date-time
                     nullable: true
                     example: '2022-03-12T15:55:00.000+11:00'
+                  billing_address:
+                    type: object
+                    nullable: true
+                    example:
+                  shipping_address:
+                    type: object
+                    nullable: true
+                    example:
+                      phone: 0404 333 222 111
+                      latitude: -37.8173751
+                      longitude: 144.964803195704
+                      first_name: Alice
+                      last_name: Springs
+                      street_address_1: 1 Flinders Street
+                      street_address_2: ''
+                      postal_code: '1234'
+                      locality: Melbourne
+                      region: Victoria
+                      country: Australia
                 required:
                 - id
                 - enterprise_id
@@ -83,6 +102,8 @@ components:
                 - allow_charges
                 - tags
                 - terms_and_conditions_accepted_at
+                - billing_address
+                - shipping_address
               relationships:
                 type: object
                 properties:
@@ -159,6 +180,25 @@ components:
                       format: date-time
                       nullable: true
                       example: '2022-03-12T15:55:00.000+11:00'
+                    billing_address:
+                      type: object
+                      nullable: true
+                      example:
+                    shipping_address:
+                      type: object
+                      nullable: true
+                      example:
+                        phone: 0404 333 222 111
+                        latitude: -37.8173751
+                        longitude: 144.964803195704
+                        first_name: Alice
+                        last_name: Springs
+                        street_address_1: 1 Flinders Street
+                        street_address_2: ''
+                        postal_code: '1234'
+                        locality: Melbourne
+                        region: Victoria
+                        country: Australia
                   required:
                   - id
                   - enterprise_id
@@ -169,6 +209,8 @@ components:
                   - allow_charges
                   - tags
                   - terms_and_conditions_accepted_at
+                  - billing_address
+                  - shipping_address
                 relationships:
                   type: object
                   properties:

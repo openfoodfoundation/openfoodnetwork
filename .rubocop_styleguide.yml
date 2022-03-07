@@ -79,6 +79,11 @@ Lint/RaiseException:
 Lint/StructNewOverride:
   Enabled: true
 
+Naming/VariableNumber:
+  AllowedIdentifiers:
+    - street_address_1
+    - street_address_2
+
 Bundler/DuplicatedGem:
   Enabled: false
 

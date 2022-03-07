@@ -11,6 +11,7 @@ describe "Customers", type: :request do
       enterprise: enterprise1,
       terms_and_conditions_accepted_at: Time.zone.parse("2000-01-01"),
       tag_list: ["long-term"],
+      ship_address: create(:address),
     )
   }
   let!(:customer2) { create(:customer, enterprise: enterprise1) }

@@ -58,7 +58,7 @@ module Api
       end
 
       def search_customers
-        customers = visible_customers
+        customers = visible_customers.includes(:bill_address, :ship_address)
         customers = customers.where(enterprise_id: params[:enterprise_id]) if params[:enterprise_id]
         customers.ransack(params[:q]).result
       end
