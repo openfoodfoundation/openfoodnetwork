@@ -43,9 +43,11 @@ describe "As a consumer, I want to checkout my order", js: true do
                              name: "Shipping with Fee", description: "blue",
                              calculator: Calculator::FlatRate.new(preferred_amount: 4.56))
   }
-  let!(:payment_with_fee) { create(:payment_method, distributors: [distributor],
-                             name: "Payment with Fee", description: "Payment with fee",
-                             calculator: Calculator::FlatRate.new(preferred_amount: 1.23)) }
+  let!(:payment_with_fee) {
+    create(:payment_method, distributors: [distributor],
+                            name: "Payment with Fee", description: "Payment with fee",
+                            calculator: Calculator::FlatRate.new(preferred_amount: 1.23))
+  }
 
   before do
     allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
@@ -212,7 +214,7 @@ describe "As a consumer, I want to checkout my order", js: true do
             end
 
             it "displays the shipping fee" do
-              expect(page).to have_content("#{shipping_with_fee.name} " + "#{with_currency(4.56)}")
+              expect(page).to have_content("#{shipping_with_fee.name} " + with_currency(4.56).to_s)
             end
 
             it "does not display the shipping address form" do
@@ -244,7 +246,7 @@ describe "As a consumer, I want to checkout my order", js: true do
                   end
                 end
               end
-              
+
               it_behaves_like "displays the shipping fee", "order summary"
 
               context "after completing the order" do
@@ -377,7 +379,7 @@ describe "As a consumer, I want to checkout my order", js: true do
             end
           end
         end
-        
+
         it_behaves_like "displays the transaction fee", "order summary"
 
         context "after completing the order" do
