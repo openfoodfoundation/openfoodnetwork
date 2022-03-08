@@ -199,7 +199,7 @@ describe "As a consumer, I want to checkout my order", js: true do
           end
         end
 
-        describe "selecting a delivery method" do
+        describe "selecting a delivery method with a shipping fee" do
           before do
             choose shipping_with_fee.name
           end
@@ -208,6 +208,11 @@ describe "As a consumer, I want to checkout my order", js: true do
             before do
               check "ship_address_same_as_billing"
             end
+
+            it "displays the shipping fee" do
+              expect(page).to have_content("#{shipping_with_fee.name} " + "#{with_currency(4.56)}")
+            end
+
             it "does not display the shipping address form" do
               expect(page).not_to have_field "order_ship_address_attributes_address1"
             end
@@ -219,6 +224,30 @@ describe "As a consumer, I want to checkout my order", js: true do
               bill_add_id = order.reload.bill_address_id
               expect(Spree::Address.where(id: bill_add_id).pluck(:address1) ==
                 Spree::Address.where(id: ship_add_id).pluck(:address1)).to be true
+            end
+
+            context "with a shipping fee" do
+              before do
+                proceed_to_payment
+                click_button "Next - Order summary"
+              end
+
+              shared_examples "displays the shipping fee" do |checkout_page|
+                it "on the #{checkout_page} page" do
+                  within "#line-items" do
+                    expect(page).to have_content("Shipping #{with_currency(4.56)}")
+                  end
+                end
+              end
+              
+              it_behaves_like "displays the shipping fee", "order summary"
+
+              context "after completing the order" do
+                before do
+                  click_on "Complete order"
+                end
+                it_behaves_like "displays the shipping fee", "order confirmation"
+              end
             end
           end
 
