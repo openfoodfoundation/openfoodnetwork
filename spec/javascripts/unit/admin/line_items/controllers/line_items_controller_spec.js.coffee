@@ -221,10 +221,10 @@ describe "LineItemsCtrl", ->
 
         it "returns the sum of the final_weight_volumes for line_items with both metric and imperial units", ->
           scope.filteredLineItems = [
-            { final_weight_volume: 907.2, units_product: { variant_unit: "weight" }, units_variant: { unit_value: 453.6 } }
-            { final_weight_volume: 2000, units_product: { variant_unit: "weight" }, units_variant: { unit_value: 1000 } }
-            { final_weight_volume: 56.7, units_product: { variant_unit: "weight" }, units_variant: { unit_value: 28.35 } }
-            { final_weight_volume: 2, units_product: { variant_unit: "volume" }, units_variant: { unit_value: 1.0 } }
+            { final_weight_volume: 907.2, units_product: { variant_unit: "weight", variant_unit_scale: 453.6 }, units_variant: { unit_value: 453.6 } }
+            { final_weight_volume: 2000, units_product: { variant_unit: "weight", variant_unit_scale: 1000 }, units_variant: { unit_value: 1000 } }
+            { final_weight_volume: 56.7, units_product: { variant_unit: "weight", variant_unit_scale: 28.35 }, units_variant: { unit_value: 28.35 } }
+            { final_weight_volume: 2, units_product: { variant_unit: "volume", variant_unit_scale: 1.0 }, units_variant: { unit_value: 1.0 } }
           ]
           expect(scope.sumUnitValues()).toEqual 8
 
@@ -254,7 +254,7 @@ describe "LineItemsCtrl", ->
           expect(Math.round).not.toHaveBeenCalled()
 
         it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
-          unitsProduct = { variant_unit: "weight" }
+          unitsProduct = { variant_unit: "weight", variant_unit_scale: 1 }
           scope.formattedValueWithUnitName(1,unitsProduct,unitsVariant)
           expect(Math.round).toHaveBeenCalled()
           scope.selectedUnitsVariant = { variant_unit: "volume" }
@@ -262,21 +262,18 @@ describe "LineItemsCtrl", ->
           expect(Math.round).toHaveBeenCalled()
 
         it "calls Math.round with the value multiplied by 1000", ->
-          unitsProduct = { variant_unit: "weight" }
-          spyOn(VariantUnitManager, "getScale").and.returnValue 5
+          unitsProduct = { variant_unit: "weight", variant_unit_scale: 5 }
           scope.formattedValueWithUnitName(10, unitsProduct,unitsVariant)
           expect(Math.round).toHaveBeenCalledWith 10 * 1000
 
         it "returns the result of Math.round divided by 1000, followed by the result of getUnitName", ->
-          unitsProduct = { variant_unit: "weight" }
-          spyOn(VariantUnitManager, "getScale").and.returnValue 1000
+          unitsProduct = { variant_unit: "weight", variant_unit_scale: 1000 }
           spyOn(VariantUnitManager, "getUnitName").and.returnValue "kg"
           expect(scope.formattedValueWithUnitName(2,unitsProduct,unitsVariant)).toEqual "2 kg"
 
         it "handle correclty the imperial units", ->
-          unitsProduct = { variant_unit: "weight" }
+          unitsProduct = { variant_unit: "weight", variant_unit_scale: 1000 }
           unitsVariant = { unit_value: "453.6" }
-          spyOn(VariantUnitManager, "getScale").and.returnValue 1000
           spyOn(VariantUnitManager, "getUnitName").and.returnValue "lb"
           expect(scope.formattedValueWithUnitName(2, unitsProduct, unitsVariant)).toEqual "2 lb"
 

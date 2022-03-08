@@ -130,7 +130,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.getLineItemScale = (lineItem) ->
     if lineItem.units_product && lineItem.units_variant && (lineItem.units_product.variant_unit == "weight" || lineItem.units_product.variant_unit == "volume") 
-      VariantUnitManager.getScale(lineItem.units_variant.unit_value, lineItem.units_product.variant_unit)
+      lineItem.units_product.variant_unit_scale
     else
       1
 
@@ -154,7 +154,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.getScale = (unitsProduct, unitsVariant) ->
     if unitsProduct.hasOwnProperty("variant_unit") && (unitsProduct.variant_unit == "weight" || unitsProduct.variant_unit == "volume")
-      VariantUnitManager.getScale(unitsVariant.unit_value, unitsProduct.variant_unit)
+      unitsProduct.variant_unit_scale
     else
       null
 
