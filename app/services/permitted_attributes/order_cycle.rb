@@ -16,7 +16,7 @@ module PermittedAttributes
       [
         :name, :orders_open_at, :orders_close_at, :coordinator_id,
         :preferred_product_selection_from_coordinator_inventory_only,
-        :automatic_notifications,
+        :automatic_notifications, :send_order_confirm_email_to_shop,
         { schedule_ids: [], coordinator_fee_ids: [] }
       ]
     end

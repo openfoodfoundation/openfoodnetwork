@@ -227,6 +227,17 @@ module Admin
           spree_put :update, params.
             merge(order_cycle: { automatic_notifications: true })
         end
+
+        it "can update preference send_order_confirm_email_to_shop" do
+          expect(OrderCycleForm).to receive(:new).
+            with(order_cycle,
+                 { "send_order_confirm_email_to_shop" => false },
+                 anything) { form_mock }
+          allow(form_mock).to receive(:save) { true }
+
+          spree_put :update, params.
+            merge(order_cycle: { send_order_confirm_email_to_shop: false })
+        end
       end
     end
 

@@ -1145,6 +1145,8 @@ en:
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
         preferred_product_selection_from_coordinator_inventory_only_all: All Available Products
         save_reload: Save and Reload Page
+        send_order_confirm_email_to_shop: Send a copy of each order to the shop
+        send_order_confirm_email_to_shop_tip: Shoppers get a confirmation email after they finalize their order. Check this checkbox to send a copy of this confirmation email to the shop
       order_cycle_top_buttons:
         advanced_settings: "Advanced Settings"
       coordinator_fees:

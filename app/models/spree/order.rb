@@ -366,7 +366,9 @@ module Spree
       return if subscription.present?
 
       Spree::OrderMailer.confirm_email_for_customer(id).deliver_later(wait: 10.seconds)
-      Spree::OrderMailer.confirm_email_for_shop(id).deliver_later(wait: 10.seconds)
+      if order_cycle&.send_order_confirm_email_to_shop
+        Spree::OrderMailer.confirm_email_for_shop(id).deliver_later(wait: 10.seconds)
+      end
     end
 
     # Helper methods for checkout steps

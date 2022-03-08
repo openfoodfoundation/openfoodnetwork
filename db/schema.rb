@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_18_053107) do
+ActiveRecord::Schema.define(version: 2022_03_08_134807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -298,6 +298,7 @@ ActiveRecord::Schema.define(version: 2022_01_18_053107) do
     t.datetime "processed_at"
     t.boolean "automatic_notifications", default: false
     t.boolean "mails_sent", default: false
+    t.boolean "send_order_confirm_email_to_shop", default: true
   end
 
   create_table "producer_properties", force: :cascade do |t|

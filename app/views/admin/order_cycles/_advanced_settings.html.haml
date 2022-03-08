@@ -23,6 +23,14 @@
       = f.check_box :automatic_notifications
 
   .row
+    .alpha.three.columns
+      = f.label :automatic_notifications, t('.send_order_confirm_email_to_shop')
+      .with-tip{ 'data-powertip' => t('.send_order_confirm_email_to_shop_tip') }
+        %a= t('admin.whats_this')
+    .omega.eight.columns
+      = f.check_box :send_order_confirm_email_to_shop
+
+  .row
     .sixteen.columns.alpha.omega.text-center
       %input{ type: 'submit', value: t('.save_reload') }
       %a{ href: "#", onClick: "toggleSettings()" }= t(:close)
