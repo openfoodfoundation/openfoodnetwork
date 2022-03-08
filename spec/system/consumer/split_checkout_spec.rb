@@ -239,6 +239,9 @@ describe "As a consumer, I want to checkout my order", js: true do
                   within "#line-items" do
                     expect(page).to have_content("Shipping #{with_currency(4.56)}")
                   end
+                  if checkout_page.eql?("order confirmation")
+                    expect(page).to have_content "Your order has been processed successfully"
+                  end
                 end
               end
               
@@ -368,6 +371,9 @@ describe "As a consumer, I want to checkout my order", js: true do
           it "on the #{checkout_page} page" do
             within "#line-items" do
               expect(page).to have_content("Transaction fee #{with_currency(1.23)}")
+            end
+            if checkout_page.eql?("order confirmation")
+              expect(page).to have_content "Your order has been processed successfully"
             end
           end
         end
