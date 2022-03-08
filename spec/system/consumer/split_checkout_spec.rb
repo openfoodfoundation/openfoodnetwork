@@ -43,7 +43,9 @@ describe "As a consumer, I want to checkout my order", js: true do
                              name: "Shipping with Fee", description: "blue",
                              calculator: Calculator::FlatRate.new(preferred_amount: 4.56))
   }
-  let!(:payment_method) { create(:payment_method, distributors: [distributor]) }
+  let!(:payment_with_fee) { create(:payment_method, distributors: [distributor],
+                             name: "Payment with Fee", description: "Payment with fee",
+                             calculator: Calculator::FlatRate.new(preferred_amount: 1.23)) }
 
   before do
     allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
@@ -345,24 +347,51 @@ describe "As a consumer, I want to checkout my order", js: true do
     context "payment step" do
       let(:order) { create(:order_ready_for_payment, distributor: distributor) }
 
-      context "with one payment method" do
-        it "preselect the payment method if only one is available" do
+      context "with one payment method, with a fee" do
+        before do
           visit checkout_step_path(:payment)
+        end
+        it "preselect the payment method if only one is available" do
+          expect(page).to have_checked_field "payment_method_#{payment_with_fee.id}"
+        end
+        it "displays the transaction fee" do
+          expect(page).to have_content("#{payment_with_fee.name} " + "(#{with_currency(1.23)})")
+        end
+      end
 
-          expect(page).to have_checked_field "payment_method_#{payment_method.id}"
+      context "with a transaction fee" do
+        before do
+          click_button "Next - Order summary"
+        end
+
+        shared_examples "displays the transaction fee" do |checkout_page|
+          it "on the #{checkout_page} page" do
+            within "#line-items" do
+              expect(page).to have_content("Transaction fee #{with_currency(1.23)}")
+            end
+          end
+        end
+        
+        it_behaves_like "displays the transaction fee", "order summary"
+
+        context "after completing the order" do
+          before do
+            click_on "Complete order"
+          end
+          it_behaves_like "displays the transaction fee", "order confirmation"
         end
       end
 
       context "with more than one payment method" do
-        let!(:payment_method2) { create(:payment_method, distributors: [distributor]) }
+        let!(:payment_method) { create(:payment_method, distributors: [distributor]) }
 
         before do
           visit checkout_step_path(:payment)
         end
 
         it "don't preselect the payment method if more than one is available" do
+          expect(page).to have_field "payment_method_#{payment_with_fee.id}", checked: false
           expect(page).to have_field "payment_method_#{payment_method.id}", checked: false
-          expect(page).to have_field "payment_method_#{payment_method2.id}", checked: false
         end
 
         it "requires choosing a payment method" do
