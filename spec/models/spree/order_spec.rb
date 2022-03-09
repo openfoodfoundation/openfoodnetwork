@@ -169,30 +169,6 @@ describe Spree::Order do
       expect(order.shipment_state).to eq 'ready'
     end
 
-    it "sends confirmation emails to both the user and the shop owner" do
-      mailer = double(:mailer, deliver_later: true)
-      oc = double(:order_cycle)
-      allow(oc).to receive(:send_order_confirm_email_to_shop) { true }
-      allow(order).to receive(:order_cycle) { oc }
-
-      expect(Spree::OrderMailer).to receive(:confirm_email_for_customer).and_return(mailer)
-      expect(Spree::OrderMailer).to receive(:confirm_email_for_shop).and_return(mailer)
-
-      order.finalize!
-    end
-
-    it "sends confirmation emails only to the user" do
-      mailer = double(:mailer, deliver_later: true)
-      oc = double(:order_cycle)
-      allow(oc).to receive(:send_order_confirm_email_to_shop) { false }
-      allow(order).to receive(:order_cycle) { oc }
-
-      expect(Spree::OrderMailer).to receive(:confirm_email_for_customer).and_return(mailer)
-      expect(Spree::OrderMailer).not_to receive(:confirm_email_for_shop)
-
-      order.finalize!
-    end
-
     it "should freeze all adjustments" do
       allow(Spree::OrderMailer).to receive_message_chain :confirm_email, :deliver_later
       adjustments = double
@@ -890,10 +866,26 @@ describe Spree::Order do
     let!(:distributor) { create(:distributor_enterprise) }
     let!(:order) { create(:order, distributor: distributor) }
 
-    it "sends confirmation emails" do
+    it "sends confirmation emails to both the user and the shop owner" do
       mailer = double(:mailer, deliver_later: true)
+      oc = double(:order_cycle)
+      allow(oc).to receive(:send_order_confirm_email_to_shop) { true }
+      allow(order).to receive(:order_cycle) { oc }
+
       expect(Spree::OrderMailer).to receive(:confirm_email_for_customer).and_return(mailer)
       expect(Spree::OrderMailer).to receive(:confirm_email_for_shop).and_return(mailer)
+
+      order.deliver_order_confirmation_email
+    end
+
+    it "sends confirmation emails only to the user" do
+      mailer = double(:mailer, deliver_later: true)
+      oc = double(:order_cycle)
+      allow(oc).to receive(:send_order_confirm_email_to_shop) { false }
+      allow(order).to receive(:order_cycle) { oc }
+
+      expect(Spree::OrderMailer).to receive(:confirm_email_for_customer).and_return(mailer)
+      expect(Spree::OrderMailer).not_to receive(:confirm_email_for_shop)
 
       order.deliver_order_confirmation_email
     end
