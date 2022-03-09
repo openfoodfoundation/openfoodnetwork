@@ -298,7 +298,7 @@ ActiveRecord::Schema.define(version: 2022_03_08_134807) do
     t.datetime "processed_at"
     t.boolean "automatic_notifications", default: false
     t.boolean "mails_sent", default: false
-    t.boolean "send_order_confirm_email_to_shop", default: true
+    t.boolean "send_order_confirm_email_to_shop", default: true, null: false
   end
 
   create_table "producer_properties", force: :cascade do |t|
