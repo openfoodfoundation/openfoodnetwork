@@ -19,7 +19,7 @@ class SplitCheckoutController < ::BaseController
   before_action :set_checkout_redirect
 
   def edit
-    redirect_to_step unless params[:step]
+    redirect_to_step_based_on_order unless params[:step]
   end
 
   def update
@@ -118,7 +118,7 @@ class SplitCheckoutController < ::BaseController
     @order_params ||= Checkout::Params.new(@order, params, spree_current_user).call
   end
 
-  def redirect_to_step
+  def redirect_to_step_based_on_order
     case @order.state
     when "cart", "address", "delivery"
       redirect_to checkout_step_path(:details)
@@ -129,5 +129,15 @@ class SplitCheckoutController < ::BaseController
     else
       redirect_to order_path(@order)
     end
+  end
+
+  def redirect_to_step
+    case params[:step]
+    when "details"
+      return redirect_to checkout_step_path(:payment)
+    when "payment"
+      return redirect_to checkout_step_path(:summary)
+    end
+    redirect_to_step_based_on_order
   end
 end

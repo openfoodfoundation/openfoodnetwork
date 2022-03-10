@@ -492,6 +492,7 @@ Metrics/ClassLength:
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/checkout_controller.rb'
     - 'app/controllers/payment_gateways/paypal_controller.rb'
+    - 'app/controllers/split_checkout_controller.rb'
     - 'app/controllers/spree/admin/orders_controller.rb'
     - 'app/controllers/spree/admin/payment_methods_controller.rb'
     - 'app/controllers/spree/admin/payments_controller.rb'
