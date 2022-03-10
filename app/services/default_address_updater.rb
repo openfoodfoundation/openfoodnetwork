@@ -27,14 +27,14 @@ class DefaultAddressUpdater
            :bill_address_id, :ship_address_id, to: :order
 
   def assign_bill_addresses
-    return unless save_bill_address
+    return if save_bill_address == "0"
 
     customer.bill_address_id = bill_address_id
     user&.bill_address_id = bill_address_id
   end
 
   def assign_ship_addresses
-    return unless save_ship_address
+    return if save_ship_address == "0"
 
     customer.ship_address_id = ship_address_id
     user&.ship_address_id = ship_address_id

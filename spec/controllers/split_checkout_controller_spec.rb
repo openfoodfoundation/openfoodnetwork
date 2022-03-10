@@ -84,15 +84,31 @@ describe SplitCheckoutController, type: :controller do
         end
 
         describe "saving default addresses" do
+          it "don't updates default bill address on user" do
+            expect {
+              put :update, params: params.merge({ order: { save_bill_address: "0" } })
+            }.to_not change {
+              order.user.reload.bill_address
+            }
+          end
+
           it "updates default bill address on user and customer" do
-            put :update, params: params.merge({ order: { save_bill_address: true } })
+            put :update, params: params.merge({ order: { save_bill_address: "1" } })
 
             expect(order.customer.bill_address).to eq(order.bill_address)
             expect(order.user.bill_address).to eq(order.bill_address)
           end
 
+          it "don't updates default ship address on user" do
+            expect {
+              put :update, params: params.merge({ order: { save_bill_address: "0" } })
+            }.to_not change {
+              order.user.reload.ship_address
+            }
+          end
+
           it "updates default ship address on user and customer" do
-            put :update, params: params.merge({ order: { save_ship_address: true } })
+            put :update, params: params.merge({ order: { save_ship_address: "1" } })
 
             expect(order.customer.ship_address).to eq(order.ship_address)
             expect(order.user.ship_address).to eq(order.ship_address)
