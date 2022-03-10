@@ -46,7 +46,10 @@ module CheckoutCallbacks
   end
 
   def load_shipping_methods
-    @shipping_methods = Spree::ShippingMethod.for_distributor(@order.distributor).order(:name)
+    @shipping_methods = Spree::ShippingMethod.
+      for_distributor(@order.distributor).
+      display_on_checkout.
+      order(:name)
   end
 
   def redirect_to_shop?

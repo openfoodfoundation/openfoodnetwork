@@ -48,6 +48,9 @@ describe "As a consumer, I want to checkout my order", js: true do
                             name: "Payment with Fee", description: "Payment with fee",
                             calculator: Calculator::FlatRate.new(preferred_amount: 1.23))
   }
+  let(:shipping_backoffice_only) {
+    create(:shipping_method, require_ship_address: true, name: "Shipping Backoffice Only", display_on: "back_end")
+  }
 
   before do
     allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
@@ -291,7 +294,7 @@ describe "As a consumer, I want to checkout my order", js: true do
 
         describe "pre-selecting a shipping method" do
           it "preselect a shipping method if only one is available" do
-            order.distributor.update! shipping_methods: [free_shipping]
+            order.distributor.update! shipping_methods: [free_shipping, shipping_backoffice_only]
 
             visit checkout_step_path(:details)
 
