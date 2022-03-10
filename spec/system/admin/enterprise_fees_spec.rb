@@ -97,7 +97,15 @@ describe '
       expect(fee.inherits_tax_category).to eq(true)
     end
 
+    it "handle when updating calculator type for Weight to Flat Rate" do
+      select 'Weight (per kg or lb)', from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
+      click_button 'Update'
 
+      select 'Flat Rate (per item)', from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
+      click_button 'Update'
+
+      expect(fee.reload.calculator_type).to eq("Calculator::PerItem")
+    end
   end
 
   it "deleting an enterprise fee" do
