@@ -28,7 +28,7 @@ module EnterprisesHelper
   def available_payment_methods
     return [] if current_distributor.blank?
 
-    payment_methods = current_distributor.payment_methods.available(:front_end).to_a
+    payment_methods = current_distributor.payment_methods.available(:both).to_a
 
     filter = OpenFoodNetwork::AvailablePaymentMethodFilter.new
     filter.filter!(payment_methods)

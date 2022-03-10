@@ -375,7 +375,7 @@ module Spree
     end
 
     def available_payment_methods
-      @available_payment_methods ||= PaymentMethod.available(:front_end)
+      @available_payment_methods ||= PaymentMethod.available(:both)
     end
 
     # "Checkout" is the initial state and, for card payments, "pending" is the state after auth

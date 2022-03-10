@@ -10,7 +10,7 @@ module Spree
     acts_as_taggable
     acts_as_paranoid
 
-    DISPLAY = [:both, :front_end, :back_end].freeze
+    DISPLAY = [:both, :back_end].freeze
     default_scope -> { where(deleted_at: nil) }
 
     has_many :credit_cards, class_name: "Spree::CreditCard"
