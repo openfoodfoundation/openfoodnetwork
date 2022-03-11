@@ -148,5 +148,9 @@ table.index td.actions {
 	.message {
 		font-size: $h5-size;
 		padding: 1.2em 0;
+
+		.form {
+			padding: 1.2em 0;
+		}
 	}
 }
