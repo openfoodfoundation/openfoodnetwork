@@ -1224,7 +1224,6 @@ fil_PH:
     messages:
       customer_required:
         login: "mag-log-in"
-        signup: "mag-sign-up"
         contact: "makipag-ugnayan"
         require_customer_login: "ang mga inaprubahang customer lamang ang maaaring gumamit ng shop na ito."
         require_customer_html: "kung nais mong magsimulang mamili rito, maaaring%{contact}%{enterprise} at magtanong kung paano sumali."

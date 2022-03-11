@@ -1412,10 +1412,8 @@ es:
     messages:
       customer_required:
         login: "login"
-        signup: "Regístrate"
         contact: "contactar"
         require_customer_login: "Sólo las consumidoras aprobadas pueden acceder a esta tienda."
-        require_login_html: "Si ya eres un cliente aprovado, %{login} o %{signup} para continuar"
         require_login_2_html: "¿Quieres comprar en esta tienda? %{contact}%{enterprise}y solicita tu admisión."
         require_customer_html: "Si desea comenzar a comprar aquí, por favor %{contact} %{enterprise} para preguntar acerca de incorporación."
       select_oc:
@@ -3627,7 +3625,6 @@ es:
           display: "Mostrar"
           active: "Activo"
           both: "Ambos"
-          front_end: "Solo visible para el comprador"
           back_end: "Solo en Administración"
           active_yes: "Sí"
           active_no: "No"
@@ -3661,7 +3658,6 @@ es:
           active_yes: "Sí"
           active_no: "No"
           both: "Tanto en Hacer pedido como en Administración"
-          front_end: "Solo visible para el comprador"
           back_end: "Solo en Administración"
           tags: "Tags"
           deactivation_warning: "La desactivación de un método de pago puede hacer que el método de pago desaparezca de su lista. Alternativamente, puede ocultar un método de pago desde la página de pago configurando la opción 'Mostrar' como 'Solo visible para el administrador'."

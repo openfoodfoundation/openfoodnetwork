@@ -1261,10 +1261,8 @@ es_CO:
     messages:
       customer_required:
         login: "Ingresar"
-        signup: "Registrarse"
         contact: "contactar"
         require_customer_login: "Sólo los clientes aprobados pueden acceder a esta tienda."
-        require_login_html: "Si ya eres un cliente aprobado, %{login} o %{signup} para continuar."
         require_login_2_html: "¿Quieres empezar a comprar aquí? Por favor %{contact} %{enterprise} y pregunte si puede unirse."
         require_customer_html: "Si desea comenzar a comprar aquí, por favor %{contact} %{enterprise} para preguntar acerca de incorporación."
       select_oc:
@@ -3290,7 +3288,6 @@ es_CO:
           display: "Mostrar"
           active: "Activo"
           both: "Ambos"
-          front_end: "Solo pago"
           back_end: "Back office solamente"
           active_yes: "Sí"
           active_no: "No"
@@ -3324,7 +3321,6 @@ es_CO:
           active_yes: "Sí"
           active_no: "No"
           both: "Tanto Checkout como Back office"
-          front_end: "Solo pago"
           back_end: "Back office solamente"
           tags: "Etiquetas"
           deactivation_warning: "La desactivación de un método de pago puede hacer que el método de pago desaparezca de su lista. Alternativamente, puede ocultar un método de pago de la página de pago configurando la opción \"Mostrar\" en \"solo back office\"."

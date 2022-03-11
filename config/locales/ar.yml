@@ -1415,10 +1415,8 @@ ar:
     messages:
       customer_required:
         login: "تسجيل الدخول"
-        signup: "سجل"
         contact: "اتصل"
         require_customer_login: "يمكن للعملاء المعتمدين فقط الوصول إلى هذا المتجر."
-        require_login_html: "إذا كنت عميلاً معتمدًا بالفعل ، %{login} أو %{signup} للمتابعة."
         require_login_2_html: "تريد أن تبدأ التسوق هنا؟ من فضلك %{contact} %{enterprise} واسأل عن الانضمام."
         require_customer_html: "إذا كنت ترغب في بدء التسوق هنا ، فيرجى %{contact} %{enterprise} أن تسأل عن الانضمام."
       select_oc:
@@ -3717,7 +3715,6 @@ ar:
           display: "عرض"
           active: "نشط"
           both: "على حد سواء"
-          front_end: "الخروج فقط"
           back_end: "المكتب الخلفي فقط"
           active_yes: "نعم"
           active_no: "لا"
@@ -3751,7 +3748,6 @@ ar:
           active_yes: "نعم"
           active_no: "لا"
           both: "كل من تسجيل الخروج والمكتب الخلفي"
-          front_end: "الخروج فقط"
           back_end: "المكتب الخلفي فقط"
           tags: "الاوسمة"
           deactivation_warning: "يمكن أن يؤدي إلغاء تنشيط طريقة الدفع إلى اختفاء طريقة الدفع من قائمتك. بدلاً من ذلك ، يمكنك إخفاء طريقة الدفع من صفحة الخروج عن طريق تعيين الخيار \"عرض\" إلى\"المكتب الخلفي فقط\"."

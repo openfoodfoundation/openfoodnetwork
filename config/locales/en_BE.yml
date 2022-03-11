@@ -1180,7 +1180,6 @@ en_BE:
     messages:
       customer_required:
         login: "login"
-        signup: "signup"
         contact: "contact"
         require_customer_login: "Only approved customers can access this shop."
         require_customer_html: "If you'd like to start shopping here, please %{contact}%{enterprise}to ask about joining."

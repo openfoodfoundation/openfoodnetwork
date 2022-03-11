@@ -1332,10 +1332,8 @@ ca:
     messages:
       customer_required:
         login: "Inicia sessió"
-        signup: "registra't"
         contact: "contacta"
         require_customer_login: "Només els clients autoritzats poden accedir a aquesta botiga."
-        require_login_html: "Si ja sou una consumidora aprovat, %{login} o %{signup} podeu continuar."
         require_login_2_html: "Voleu començar a comprar aquí? Per favor, %{contact} %{enterprise} i pregunteu com unir-vos."
         require_customer_html: "Si vols començar a comprar aquí, si us plau %{contact} %{enterprise} per unir-t'hi."
       select_oc:
@@ -3489,7 +3487,6 @@ ca:
           display: "Mostra"
           active: "Actiu"
           both: "Ambdós"
-          front_end: "Visible només per al comprador"
           back_end: "Només pàgina administració (back office) "
           active_yes: "Sí"
           active_no: "No"
@@ -3523,7 +3520,6 @@ ca:
           active_yes: "Sí"
           active_no: "No"
           both: "Ambdues, validació de comanda i administració"
-          front_end: "Visible només per al comprador"
           back_end: "Només pàgina administració (back office) "
           tags: "Etiquetes"
           deactivation_warning: "Desactivar un mètode de pagament pot fer que el mètode de pagament desapareixi de la vostra llista. De forma alternativa, podeu amagar un mètode de pagament a la pàgina de compra configurant l'opció \"Mostrar\" a \"només a la pàgina d'administració\" (back end)."

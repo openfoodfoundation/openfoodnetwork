@@ -1247,10 +1247,8 @@ nl_BE:
     messages:
       customer_required:
         login: "login"
-        signup: "inschrijven"
         contact: "contact"
         require_customer_login: "Alleen goedgekeurde klanten hebben toegang tot deze winkel. "
-        require_login_html: "Als u al een goedgekeurde klant bent %{login} of %{signup} als u wilt doorgaan. "
         require_login_2_html: "WIlt u hier beginnen winkelen?  Vraag dan %{contact}%{enterprise}om lid te worden."
         require_customer_html: "Als u hier wilt beginnen met winkelen, kunt u vragen of %{contact}%{enterprise}u lid wilt worden."
       select_oc:
@@ -3201,7 +3199,6 @@ nl_BE:
           display: "Display"
           active: "Aktief"
           both: "Beide"
-          front_end: "Uitchecken aleen"
           back_end: "Aleen Back Office"
           active_yes: "Ya"
           active_no: "Néé"
@@ -3235,7 +3232,6 @@ nl_BE:
           active_yes: "Ya"
           active_no: "Néé"
           both: "Bijden uitchecken en Back office"
-          front_end: "Uitchecken aleen"
           back_end: "Aleen Back Office"
           tags: "Tags"
           deactivation_warning: "De activatie van de verzending methode kan de verzending methode laten verdwijnen van uw lijst. Alternatief, u kunt de verzending methode van de uitchecken pagina verstoppen door bij de opties \"Display\" naar \"aleen back office\""

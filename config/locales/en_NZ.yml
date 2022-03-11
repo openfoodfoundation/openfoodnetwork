@@ -1275,10 +1275,8 @@ en_NZ:
     messages:
       customer_required:
         login: "login"
-        signup: "signup"
         contact: "contact"
         require_customer_login: "Only approved customers can access this shop."
-        require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed."
         require_login_2_html: "Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
         require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
       select_oc:
@@ -3353,7 +3351,6 @@ en_NZ:
           display: "Display"
           active: "Active"
           both: "Both"
-          front_end: "Checkout only"
           back_end: "Back office only"
           active_yes: "Yes"
           active_no: "No"
@@ -3387,7 +3384,6 @@ en_NZ:
           active_yes: "Yes"
           active_no: "No"
           both: "Both Checkout and Back office"
-          front_end: "Checkout only"
           back_end: "Back office only"
           tags: "Tags"
           deactivation_warning: "De-activating a payment method can make the payment method disappear from your list. Alternatively, you can hide a payment method from the checkout page by setting the option 'Display' to 'back office only'."

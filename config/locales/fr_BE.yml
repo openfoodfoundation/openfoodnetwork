@@ -1258,10 +1258,8 @@ fr_BE:
     messages:
       customer_required:
         login: "Se connecter"
-        signup: "s'inscrire"
         contact: "contacter"
         require_customer_login: "Seuls les clients approuvés peuvent accéder à ce comptoir."
-        require_login_html: "Si vous êtes déjà un client approuvé, %{login} ou %{signup} pour continuer."
         require_login_2_html: "Vous voulez commencer à faire vos achats ici? Veuillez %{contact} %{enterprise} et demandez à vous inscrire."
         require_customer_html: "Si vous souhaitez commencer à faire vos achats ici, veuillez %{contact}%{enterprise} et demandez pour vous inscrire."
       select_oc:
@@ -3221,7 +3219,6 @@ fr_BE:
           display: "Ecran"
           active: "Actif"
           both: "Les deux"
-          front_end: "Seulement Passage a la caisse"
           back_end: "Seulement Back office"
           active_yes: "Oui"
           active_no: "Non"
@@ -3255,7 +3252,6 @@ fr_BE:
           active_yes: "Oui"
           active_no: "Non"
           both: "Aussi bien check-out ets parametre"
-          front_end: "Seulement Passage a la caisse"
           back_end: "Seulement Back office"
           tags: "Tags"
           deactivation_warning: "La désactivation d'une méthode de payement peux faire que la méthode de payement disparait de votre liste. Alternative, vous savez cacher la méthode de payement depuis la page de payement en changeant les options de 'affichages' vers \"retour a back office seulement\""

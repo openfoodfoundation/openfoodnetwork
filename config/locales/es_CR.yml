@@ -1356,7 +1356,6 @@ es_CR:
     messages:
       customer_required:
         login: "Ingresar"
-        signup: "Registrarse"
         contact: "contactar"
         require_customer_login: "Sólo los clientes aprobados pueden acceder a esta tienda."
         require_customer_html: "Si desea comenzar a comprar aquí, por favor %{contact} %{enterprise} para preguntar acerca de incorporación."

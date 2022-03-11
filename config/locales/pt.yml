@@ -3168,7 +3168,6 @@ pt:
           display: "Mostrar"
           active: "Ativo"
           both: "Ambos"
-          front_end: "Só checkout"
           back_end: "Só Administração"
           active_yes: "Sim"
           active_no: "Não"
@@ -3202,7 +3201,6 @@ pt:
           active_yes: "Sim"
           active_no: "Não"
           both: "Ambos Checkout e Administração"
-          front_end: "Só checkout"
           back_end: "Só Administração"
           tags: "Etiquetas"
         providers:

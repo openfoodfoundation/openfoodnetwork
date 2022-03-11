@@ -1331,10 +1331,8 @@ tr:
     messages:
       customer_required:
         login: "Oturum Aç / Kaydol"
-        signup: "Kaydol"
         contact: "İLETİŞİM"
         require_customer_login: "Yalnızca onaylı müşteriler (üyeler) buradan alışveriş yapabilir."
-        require_login_html: "Zaten onaylanmış bir müşteri iseniz, devam etmek için %{login} veya %{signup}"
         require_login_2_html: "Buradan alışveriş mi yapmak istiyorsunuz? Lütfen katılmak için sorun: %{contact}%{enterprise} "
         require_customer_html: "Buradan alışveriş yapmaya başlamak istiyorsanız, katılmak için lütfen sorun: %{contact} %{enterprise} "
       select_oc:
@@ -3520,7 +3518,6 @@ tr:
           display: "GÖSTER"
           active: "AKTİF"
           both: "Her ikisi de"
-          front_end: "Sadece Ödeme"
           back_end: "Sadece panel"
           active_yes: "Evet"
           active_no: "Hayır"
@@ -3554,7 +3551,6 @@ tr:
           active_yes: "Evet"
           active_no: "Hayır"
           both: "Ödeme Sayfası ve Panel"
-          front_end: "Sadece Ödeme"
           back_end: "Sadece panel"
           tags: "ETİKETLER"
           deactivation_warning: "Bir ödeme yöntemini kaldırmak listenizden silinmesine sebep olabilir. Alternatif olarak, ödeme yöntemi ayarını 'Göster' yerine 'Sadece Panel' olarak değiştirebilirsiniz.    "

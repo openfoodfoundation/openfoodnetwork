@@ -1418,10 +1418,8 @@ fr_CA:
     messages:
       customer_required:
         login: "se connecter"
-        signup: "inscrivez-vous"
         contact: "contact"
         require_customer_login: "Seul les acheteurs autorisés peuvent accéder à cette boutique."
-        require_login_html: "Si vous êtes déjà autorisé à accéder à la boutique, %{login} ou %{signup} pour continuer."
         require_login_2_html: "Vous souhaitez réaliser vos courses ici? Merci de %{contact}%{enterprise} afin d'avoir l'autorisation d'accès à la boutique."
         require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
       select_oc:
@@ -3642,7 +3640,6 @@ fr_CA:
           display: "Afficher"
           active: "Actif"
           both: "Les deux"
-          front_end: "Visible par l'acheteur uniquement"
           back_end: "Visible pour l'administration uniquement"
           active_yes: "Oui"
           active_no: "Non"
@@ -3676,7 +3673,6 @@ fr_CA:
           active_yes: "Oui"
           active_no: "Non"
           both: "Visible par l'acheteur sur la boutique"
-          front_end: "Visible par l'acheteur uniquement"
           back_end: "Visible pour l'administration uniquement"
           tags: "Tags"
           deactivation_warning: "Désactiver une méthode de paiement peut faire disparaitre cette méthode de votre liste. Si vous souhaitez uniquement la rendre invisible par l'acheteur, modifiez la méthode et utilisez l'affichage pour l'administrateur uniquement."

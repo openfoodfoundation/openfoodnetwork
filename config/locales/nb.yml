@@ -1368,10 +1368,8 @@ nb:
     messages:
       customer_required:
         login: "innlogging"
-        signup: "melde deg på"
         contact: "kontakt"
         require_customer_login: "Kun godkjente kunder kan få tilgang til denne butikken."
-        require_login_html: "Hvis du allerede er en godkjent kunde kan du fortsette til %{login} eller %{signup}."
         require_login_2_html: "Vil du begynne å handle her? Vennligst %{contact} %{enterprise} og spør om å bli med."
         require_customer_html: "Hvis du vil begynne å handle her, vennligst %{contact} %{enterprise} for å spørre om å bli med."
       select_oc:
@@ -3569,7 +3567,6 @@ nb:
           display: "Visning"
           active: "Aktiv"
           both: "Begge"
-          front_end: "Bare Kasse"
           back_end: "Kun backoffice"
           active_yes: "Ja"
           active_no: "Nei"
@@ -3603,7 +3600,6 @@ nb:
           active_yes: "Ja"
           active_no: "Nei"
           both: "Både Kasse og Backoffice"
-          front_end: "Kun Kasse"
           back_end: "Kun backoffice"
           tags: "Merkelapper"
           deactivation_warning: "Ved å deaktivere en betalingsmetode kan den forsvinne fra listen din. Alternativt kan du skjule en betalingsmetode fra kassen ved å sette alternativet &quot;Vis&quot; til &quot;Kun Backoffice&quot;."

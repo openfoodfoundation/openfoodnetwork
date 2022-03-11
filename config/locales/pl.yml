@@ -1240,10 +1240,8 @@ pl:
     messages:
       customer_required:
         login: "Zaloguj sie"
-        signup: "Zapisz się"
         contact: "kontakt"
         require_customer_login: "Tylko zatwierdzeni klienci mogą uzyskać dostęp do tego sklepu."
-        require_login_html: "Jeśli jesteś już zatwierdzonym klientem, %{login} lub %{signup}, aby kontynuować."
         require_login_2_html: "Chcesz tutaj rozpocząć zakupy? Zapytaj czy możesz dołączyć. Prosimy o %{contact}z %{enterprise}."
         require_customer_html: "Chcesz tutaj rozpocząć zakupy? Zapytaj czy możesz dołączyć. Prosimy o %{contact} z%{enterprise}."
       select_oc:
@@ -3265,7 +3263,6 @@ pl:
           display: "Pokaz"
           active: "Aktywny"
           both: "Obie"
-          front_end: "Tylko do kasy"
           back_end: "Tylko na zapleczu"
           active_yes: "Tak"
           active_no: "Nie"
@@ -3299,7 +3296,6 @@ pl:
           active_yes: "Tak"
           active_no: "Nie"
           both: "Zarówno Checkout, jak i Back office"
-          front_end: "Tylko do kasy"
           back_end: "Tylko na zapleczu"
           tags: "Tagi"
           deactivation_warning: "Dezaktywacja metody płatności może spowodować, że zniknie ona z Twojej listy. Alternatywnie możesz ukryć metodę płatności na stronie kasy, ustawiając opcję „Wyświetl” na „Tylko zaplecze”."

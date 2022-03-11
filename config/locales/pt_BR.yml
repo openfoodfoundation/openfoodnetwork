@@ -1309,10 +1309,8 @@ pt_BR:
     messages:
       customer_required:
         login: "Login"
-        signup: "cadastre-se"
         contact: "contato"
         require_customer_login: "Somente compradores cadastrados podem acessar esta loja"
-        require_login_html: "Se você já é um comprador cadastrado %{login}ou %{signup}para prosseguir."
         require_login_2_html: "Quer começar a comprar aqui? Entre em contato com %{enterprise} para saber como. "
         require_customer_html: "Se quiser começar a comprar aqui, entre em contato com %{enterprise}para saber como."
       select_oc:
@@ -3460,7 +3458,6 @@ pt_BR:
           display: "Exibição"
           active: "Ativo"
           both: "Ambos"
-          front_end: "Apenas checkout"
           back_end: "Somente Área Administrativa"
           active_yes: "Sim"
           active_no: "Não"
@@ -3494,7 +3491,6 @@ pt_BR:
           active_yes: "Sim"
           active_no: "Não"
           both: "Tanto Checkout quanto Área Administrativa"
-          front_end: "Apenas Checkout"
           back_end: "Somente Área Administrativa"
           tags: "Tags"
           deactivation_warning: "Desativar o método de pagamento pode fazer com que ele desapareça da sua lista. Como alternativa, você pode escondê-lo da página de checkout, trocando "
