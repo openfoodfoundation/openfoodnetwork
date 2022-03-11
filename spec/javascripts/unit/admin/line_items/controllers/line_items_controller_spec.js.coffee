@@ -169,15 +169,19 @@ describe "LineItemsCtrl", ->
           scope.fulfilled()
           expect(Math.round).toHaveBeenCalled()
 
-        it "returns the quantity of fulfilled group buy units", ->
-          scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 1000 }
-          scope.selectedUnitsVariant = { unit_value: 1 }
-          expect(scope.fulfilled(1500)).toEqual 1.5
 
-        it "returns the quantity of fulfilled group buy units by volume", ->
-          scope.selectedUnitsProduct = { variant_unit: "volume", group_buy_unit_size: 5000 }
-          scope.selectedUnitsVariant = { unit_value: 1000 }
-          expect(scope.fulfilled(5)).toEqual 1
+        describe "returns the quantity of fulfilled group buy units", -> 
+          runs = [
+            { selectedUnitsProduct: { variant_unit: "weight", group_buy_unit_size: 1000, variant_unit_scale: 1 }, arg: 1500, expected: 1.5  },
+            { selectedUnitsProduct: { variant_unit: "weight", group_buy_unit_size: 60000, variant_unit_scale: 1000 }, arg: 9, expected: 0.15  },
+            { selectedUnitsProduct: { variant_unit: "weight", group_buy_unit_size: 60000, variant_unit_scale: 1 }, arg: 9000, expected: 0.15 }
+            { selectedUnitsProduct: { variant_unit: "weight", group_buy_unit_size: 5, variant_unit_scale: 28.35 }, arg: 12, expected: 2.4},
+            { selectedUnitsProduct: { variant_unit: "volume", group_buy_unit_size: 5000, variant_unit_scale: 1  }, arg: 5, expected: 0.001}
+          ];
+          runs.forEach ({selectedUnitsProduct, arg, expected}) ->
+            it "returns the quantity of fulfilled group buy units, group_buy_unit_size: " + selectedUnitsProduct.group_buy_unit_size + ", arg: " + arg + ", scale: " + selectedUnitsProduct.variant_unit_scale ,  ->
+              scope.selectedUnitsProduct = selectedUnitsProduct
+              expect(scope.fulfilled(arg)).toEqual expected
 
       describe "allFinalWeightVolumesPresent()", ->
         it "returns false if the unit_value of any item in filteredLineItems does not exist", ->

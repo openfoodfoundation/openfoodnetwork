@@ -182,9 +182,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     if $scope.selectedUnitsProduct.hasOwnProperty("group_buy_unit_size") && $scope.selectedUnitsProduct.group_buy_unit_size > 0 &&
       $scope.selectedUnitsProduct.hasOwnProperty("variant_unit") &&
       ( $scope.selectedUnitsProduct.variant_unit == "weight" || $scope.selectedUnitsProduct.variant_unit == "volume" )
-        scale = $scope.getScale($scope.selectedUnitsProduct, $scope.selectedUnitsVariant)
-        sumOfUnitValues = sumOfUnitValues / scale if scale == 28.35 || scale == 453.6 # divide by scale if smallest unit
-        $scope.roundToThreeDecimals(sumOfUnitValues / $scope.selectedUnitsProduct.group_buy_unit_size * $scope.selectedUnitsVariant.unit_value)
+        scale = $scope.selectedUnitsProduct.variant_unit_scale
+        sumOfUnitValues = sumOfUnitValues * scale unless scale == 28.35 || scale == 453.6
+        $scope.roundToThreeDecimals(sumOfUnitValues / $scope.selectedUnitsProduct.group_buy_unit_size)
     else
       ''
 
