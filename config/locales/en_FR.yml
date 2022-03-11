@@ -1416,10 +1416,9 @@ en_FR:
     messages:
       customer_required:
         login: "login"
-        signup: "signup"
         contact: "contact"
         require_customer_login: "Only approved customers can access this shop."
-        require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed."
+        require_login_link_html: "If you're already an approved customer, %{login} to proceed."
         require_login_2_html: "Want to start shopping here? Please %{contact} and %{enterprise} ask about joining."
         require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
       select_oc:

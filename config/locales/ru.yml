@@ -1419,10 +1419,9 @@ ru:
     messages:
       customer_required:
         login: "войдите"
-        signup: "зарегистрируйтесь"
         contact: "свяжитесь"
         require_customer_login: "Только проверенные клиенты могут получить доступ к этому магазину."
-        require_login_html: "Если вы уже являетесь подтверждённым клиентом, %{login} или %{signup}, чтобы продолжить."
+        require_login_link_html: "Если вы уже являетесь одобренным клиентом, нажмите %{login}, чтобы продолжить."
         require_login_2_html: "Хотите покупать здесь? Пожалуйста, %{contact} с %{enterprise} и спросите о присоединении."
         require_customer_html: "Если Вы хотите покупать здесь, пожалуйста %{contact} %{enterprise} и спросите о присоединении."
       select_oc:

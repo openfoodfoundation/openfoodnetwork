@@ -1268,7 +1268,7 @@ en_GB:
         set_up_shipping_and_payment_methods_note_html: Note that only Cash and Stripe payment methods may<br />be used with subscriptions
         ensure_at_least_one_customer_html: Ensure that at least one %{customer_link} exists
         create_at_least_one_schedule: Create at least one Schedule
-        create_at_least_one_schedule_step_1_html: 1. Go to the on the %{order_cycles_link} page
+        create_at_least_one_schedule_step_1_html: 1. Go to the %{order_cycles_link} page
         create_at_least_one_schedule_step_2: 2. Create an order cycle if you have not already done so
         create_at_least_one_schedule_step_3: 3. Click '+ New Schedule', and fill out the form
         once_you_are_done_you_can_html: Once you are done, you can %{reload_this_page_link}
@@ -1416,10 +1416,9 @@ en_GB:
     messages:
       customer_required:
         login: "login"
-        signup: "signup"
         contact: "contact"
         require_customer_login: "Only approved customers can access this shop."
-        require_login_html: "If you're already an approved customer, %{login} or %{signup} to proceed."
+        require_login_link_html: "If you're already an approved customer, %{login} to proceed."
         require_login_2_html: "Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
         require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
       select_oc:
@@ -3026,7 +3025,7 @@ en_GB:
         order: "Order"
     registration:
       welcome_to_ofn: "Welcome to the Open Food Network!"
-      signup_or_login: "Start By signing up (or logging in)"
+      signup_or_login: "Start by signing up (or logging in)"
       have_an_account: "Already have an account?"
       action_login: "Log in now."
     stripe_elements:
