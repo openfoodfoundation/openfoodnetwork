@@ -2927,7 +2927,8 @@ fr:
           invalid: "invalide"
         quantity_adjusted: "Le stock disponible est insuffisant. La quantité a été mise à jour en fonction du stock restant."
         quantity_unchanged: "La quantité n'a pas été modifiée."
-        cannot_remove_last_item: "Vous ne pouvez pas supprimer le dernier produit d'une commande, veuillez annuler la commande si aucun produit ne doit y être ajouté."
+        cancel_the_order_html: "Cette action va annuler la commande. <br /> Etes-vous sûr de vouloir continuer ?"
+        cancel_the_order_send_cancelation_email: "Envoyer un email d'annulation à l'acheteur"
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoi...."
@@ -3295,6 +3296,7 @@ fr:
     tracking: "Suivi"
     tracking_number: "Numéro de suivi"
     order_total: "Total Commande"
+    order_updated: "La commande a été mise à jour"
     customer_details: "Informations acheteur"
     customer_details_updated: "Détails de l'acheteur mis à jour"
     customer_search: "Recherche Acheteur"
