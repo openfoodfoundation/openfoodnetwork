@@ -37,17 +37,6 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
       options.push [[I18n.t('items'), 'items']]
       options = [].concat options...
 
-    @getScale: (value, unitType) ->
-      scaledValue = null
-      validScales = []
-      unitScales = VariantUnitManager.unitScales(unitType)
-
-      validScales.unshift scale for scale in unitScales when value/scale >= 1
-      if validScales.length > 0
-        validScales[0]
-      else
-        unitScales[0]
-
     @getUnitName: (scale, unitType) ->
       if @units[unitType][scale]
         @units[unitType][scale]['name']

@@ -817,15 +817,15 @@ describe '
 
         within "div#group_buy_calculation" do
           expect(page).to have_text "Group Buy Unit Size"
-          expect(page).to have_text "5 kg"
+          expect(page).to have_text "5000 g"
           expect(page).to have_text "Total Quantity Ordered"
-          expect(page).to have_text "4 kg"
+          expect(page).to have_text "4000 g"
           expect(page).to have_text "Max Quantity Ordered"
-          expect(page).to have_text "9 kg"
+          expect(page).to have_text "9000 g"
           expect(page).to have_text "Current Fulfilled Units"
-          expect(page).to have_text "0.8"
+          expect(page).to have_text "800"
           expect(page).to have_text "Max Fulfilled Units"
-          expect(page).to have_text "1.8"
+          expect(page).to have_text "1800"
           expect(page).to have_selector "div.shared_resource", visible: true
           within "div.shared_resource" do
             expect(page).to have_selector "span", text: "Shared Resource?"
