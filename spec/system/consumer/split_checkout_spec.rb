@@ -198,11 +198,13 @@ describe "As a consumer, I want to checkout my order", js: true do
         it "display the checkbox about shipping address same as billing address when selecting a shipping method that requires ship address" do
           choose free_shipping_with_required_address.name
           check "Shipping address same as billing address?"
+          expect(page).to have_content "Save as default shipping address"
 
           click_button "Next - Payment method"
 
           expect(page).to have_content "Saving failed, please update the highlighted fields."
           expect(page).to have_content "Shipping address same as billing address?"
+          expect(page).to have_content "Save as default shipping address"
           expect(page).to have_checked_field "Shipping address same as billing address?"
         end
       end
