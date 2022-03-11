@@ -198,7 +198,7 @@ ofnCancelOrderAlert = function(callback) {
   $('#custom-confirm .message').html(
     ` ${t("js.admin.orders.cancel_the_order_html")}
       <div class="form">
-        <input type="checkbox" name="send_cancellation_email" value="1" id="send_cancellation_email" />
+        <input type="checkbox" name="send_cancellation_email" value="1" id="send_cancellation_email" checked="true" />
         <label for="send_cancellation_email">${t("js.admin.orders.cancel_the_order_send_cancelation_email")}</label>
       </div>`);
   $('#custom-confirm button.confirm').unbind( "click" ).click(() => {
