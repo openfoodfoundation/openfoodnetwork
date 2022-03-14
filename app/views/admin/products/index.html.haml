@@ -1,0 +1,13 @@
+- content_for :page_title do
+  New Products Page
+
+= render partial: 'spree/admin/shared/product_sub_menu'
+
+
+%div
+  %input.search{type: 'text', placeholder: 'Search', id: 'search_query'}
+  %button.btn.btn-primary{type: 'submit'}
+    Filter results
+
+#new_products
+  = render partial: "product", collection: @products
