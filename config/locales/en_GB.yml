@@ -2905,7 +2905,8 @@ en_GB:
           invalid: "invalid"
         quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
         quantity_unchanged: "Quantity unchanged from previous amount."
-        cannot_remove_last_item: "Cannot remove last item from order. Please cancel order instead."
+        cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
+        cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -3272,6 +3273,7 @@ en_GB:
     tracking: "Tracking"
     tracking_number: "Tracking Number"
     order_total: "Order Total"
+    order_updated: "Order updated"
     customer_details: "Customer Details"
     customer_details_updated: "Customer Details updated"
     customer_search: "Customer Search"
