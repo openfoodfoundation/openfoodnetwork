@@ -57,3 +57,17 @@
   .row{"data-controller": "updateinput"}
     = bf.hidden_field :_destroy, {"data-updateinput-target": "input"}
     = f.submit t(".reset_form"), {class: 'secondary', "data-action": "click->updateinput#update", "data-updateinput-value": "true"}
+
+.row
+  %fieldset.alpha.no-border-bottom
+    %legend= t('Invoice_item_sorting')
+  .three.columns.alpha
+    %label= t '.sort_items_by_supplier?'
+    %div{'ofn-with-tip' => t('.sort_items_by_supplier_tip')}
+      %a= t 'admin.whats_this'
+  .three.columns
+    = f.radio_button :preferred_invoice_order_by_supplier, true, 'ng-model' => 'Enterprise.preferred_invoice_order_by_supplier', 'ng-value' => 'true'
+    = f.label :enabled, t('.enabled'), value: :true
+  .five.columns.omega
+    = f.radio_button :preferred_invoice_order_by_supplier, false, 'ng-model' => 'Enterprise.preferred_invoice_order_by_supplier', 'ng-value' => 'false' 
+    = f.label :disabled, t('.disabled'), value: :false
