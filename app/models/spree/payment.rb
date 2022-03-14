@@ -183,9 +183,11 @@ module Spree
 
     def validate_source
       if source && !skip_source_validation && !source.valid?
-        source.errors.each do |field, error|
-          field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{field}")
-          errors.add(Spree.t(source.class.to_s.demodulize.underscore), "#{field_name} #{error}")
+        source.errors.each do |error|
+          field_name =
+            I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{error.attribute}")
+          errors.add(Spree.t(source.class.to_s.demodulize.underscore),
+                     "#{field_name} #{error.message}")
         end
       end
       errors.blank?
