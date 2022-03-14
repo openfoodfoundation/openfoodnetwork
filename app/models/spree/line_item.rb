@@ -226,7 +226,7 @@ module Spree
 
     def update_inventory
       return unless changed?
-   
+
       scoper.scope(variant)
       Spree::OrderInventory.new(order).verify(self, target_shipment)
     end
@@ -234,7 +234,7 @@ module Spree
     def update_order
       return unless saved_changes.present? || destroyed?
 
-      # update the order totals, etc. 
+      # update the order totals, etc.
       order.create_tax_charge!
     end
 

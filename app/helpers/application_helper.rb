@@ -57,20 +57,4 @@ module ApplicationHelper
       wicked_pdf_stylesheet_pack_tag(source)
     end
   end
-
-  def line_items_for_invoice(order)
-    if @order.distributor.preferred_invoice_order_by_supplier
-      order.line_items.sort do |a, b|
-        if a.supplier == b.supplier
-          a.product.name <=> b.product.name
-        else
-          a.supplier.name <=> b.supplier.name
-        end
-      end
-    else
-      order.line_items.sort do |a, b|
-        a.product.name <=> b.product.name
-      end
-    end
-  end
 end

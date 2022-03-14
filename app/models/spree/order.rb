@@ -612,7 +612,7 @@ module Spree
       if distributor.preferred_invoice_order_by_supplier
         line_items.sort_by { |li| [li.supplier.name, li.product.name] }
       else
-        line_items.sort_by { |li| [li.product.name]}
+        line_items.sort_by { |li| [li.product.name] }
       end
     end
 
