@@ -33,6 +33,7 @@ module PermittedAttributes
         :preferred_shopfront_closed_message, :preferred_shopfront_taxon_order,
         :preferred_shopfront_producer_order, :preferred_shopfront_order_cycle_order,
         :show_customer_names_to_suppliers, :preferred_shopfront_product_sorting_method,
+        :preferred_invoice_order_by_supplier,
       ]
     end
   end
