@@ -667,6 +667,24 @@ describe "As a consumer, I want to checkout my order", js: true do
           expect(page).to have_current_path checkout_step_path(:payment)
         end
       end
+
+      context "with previous open orders" do
+        let!(:prev_order) {
+          create(:completed_order_with_totals, order_cycle: order.order_cycle, distributor: distributor,
+                                               user: order.user)
+        }
+
+        before do
+          order.distributor.allow_order_changes = true
+          order.distributor.save
+          visit checkout_step_path(:summary)
+        end
+
+        it "informs about previous orders" do
+          byebug
+          expect(page).to have_content("You have an order for this order cycle already.")
+        end
+      end
     end
   end
 end
