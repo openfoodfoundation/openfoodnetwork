@@ -194,7 +194,6 @@ describe "As a consumer, I want to checkout my order", js: true do
     end
 
     context "details step" do
-
       context "when form is submitted but invalid" do
         it "display the checkbox about shipping address same as billing address when selecting a shipping method that requires ship address" do
           choose free_shipping_with_required_address.name
@@ -209,16 +208,15 @@ describe "As a consumer, I want to checkout my order", js: true do
       end
 
       describe "filling out order details" do
-
         before do
           fill_out_details
           fill_out_billing_address
+          order.update(user_id: user.id)
         end
 
         context "billing address" do
           describe "checking the default address box" do
             before do
-              order.update(user_id: user.id)
               check "order_save_bill_address"
               choose free_shipping.name
               proceed_to_payment
@@ -240,7 +238,6 @@ describe "As a consumer, I want to checkout my order", js: true do
 
           describe "unchecking the default address box" do
             before do
-              order.update(user_id: user.id)
               uncheck "order_save_bill_address"
               choose free_shipping.name
             end
@@ -254,12 +251,9 @@ describe "As a consumer, I want to checkout my order", js: true do
                 proceed_to_payment
               end
               it "updates the bill address of the order and customer" do
-                pending("issue #8958")
-                # it should change the order address - OK
                 expect(order.reload.bill_address.address1).to eq "Rue de la Vie, 77"
-                # it should not change the default address for customer and user - pending #8958
-                expect(order.customer.bill_address.address1).to eq(existing_address.address1)
-                expect(user.reload.bill_address.address1).to eq(existing_address.address1)
+                expect(order.customer.bill_address.address1).to eq "Rue de la Vie, 77"
+                expect(user.bill_address.address1).to eq(existing_address.address1)
               end
             end
           end
