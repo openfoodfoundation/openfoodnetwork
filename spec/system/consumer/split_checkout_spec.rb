@@ -247,13 +247,13 @@ describe "As a consumer, I want to checkout my order", js: true do
 
               before do
                 user.bill_address = existing_address
-                user.ship_address = existing_address
+                user.save
                 proceed_to_payment
               end
               it "updates the bill address of the order and customer" do
                 expect(order.reload.bill_address.address1).to eq "Rue de la Vie, 77"
                 expect(order.customer.bill_address.address1).to eq "Rue de la Vie, 77"
-                expect(user.bill_address.address1).to eq(existing_address.address1)
+                expect(user.reload.bill_address.address1).to eq(existing_address.address1)
               end
             end
           end
