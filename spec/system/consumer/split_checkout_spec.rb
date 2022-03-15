@@ -226,7 +226,7 @@ describe "As a consumer, I want to checkout my order", js: true do
               expect(order.bill_address).to be_nil
             end
 
-            context "as a first time customer" do
+            context "proceeding to payment" do
               before do
                 proceed_to_payment
               end
@@ -245,7 +245,7 @@ describe "As a consumer, I want to checkout my order", js: true do
               choose free_shipping.name
             end
 
-            context "as an existing customer" do
+            context "proceeding to payment" do
               before do
                 expect {
                   proceed_to_payment
@@ -276,11 +276,11 @@ describe "As a consumer, I want to checkout my order", js: true do
               expect(order.ship_address).to be_nil
             end
 
-            context "as a first time customer" do
+            context "proceeding to payment" do
               before do
                 proceed_to_payment
               end
-       
+
               it "creates a new default ship address" do
                 expect(order.reload.ship_address.address1).to eq "Rue de la Vie, 66"
                 expect(order.customer.ship_address.address1).to eq "Rue de la Vie, 66"
@@ -297,15 +297,15 @@ describe "As a consumer, I want to checkout my order", js: true do
               uncheck "order_save_ship_address"
             end
 
-            context "as an existing customer" do
+            context "proceeding to payment" do
               before do
-              expect {
+                expect {
                   proceed_to_payment
                 }.to_not change {
-                  user.reload.ship_address
-                }
+                           user.reload.ship_address
+                         }
               end
-         
+
               it "updates the ship address of the order and customer" do
                 expect(order.reload.ship_address.address1).to eq "Rue de la Vie, 66"
                 expect(order.customer.ship_address.address1).to eq "Rue de la Vie, 66"
