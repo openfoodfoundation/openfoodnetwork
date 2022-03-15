@@ -135,6 +135,7 @@ gem 'flipper-active_record'
 gem 'flipper-ui'
 
 gem "view_component"
+gem 'view_component_reflex', '3.1.14.pre9'
 
 gem 'mini_portile2', '~> 2.8'
 

@@ -1,4 +1,5 @@
 Openfoodnetwork::Application.configure do
+  config.action_controller.default_url_options = {host: "localhost", port: 3000}
   # Settings specified here will take precedence over those in config/application.rb
   #
   # PROFILE switches several settings to a more "production-like" value
@@ -22,6 +23,8 @@ Openfoodnetwork::Application.configure do
       expires_in: 90.minutes
     }
   end
+
+  config.session_store :cache_store, key: "_sessions_development", compress: true, pool_size: 5, expire_after: 1.year
 
   config.eager_load = false
 
