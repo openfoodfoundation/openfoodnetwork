@@ -230,6 +230,7 @@ describe "As a consumer, I want to checkout my order", js: true do
               before do
                 proceed_to_payment
               end
+
               it "creates a new default bill address" do
                 expect(order.reload.bill_address.address1).to eq "Rue de la Vie, 77"
                 expect(order.customer.bill_address.address1).to eq "Rue de la Vie, 77"
@@ -245,17 +246,17 @@ describe "As a consumer, I want to checkout my order", js: true do
             end
 
             context "as an existing customer" do
-              let(:existing_address) { create(:address) }
-
               before do
-                user.bill_address = existing_address
-                user.save
-                proceed_to_payment
+                expect {
+                  proceed_to_payment
+                }.to_not change {
+                  user.reload.bill_address
+                }
               end
+
               it "updates the bill address of the order and customer" do
                 expect(order.reload.bill_address.address1).to eq "Rue de la Vie, 77"
                 expect(order.customer.bill_address.address1).to eq "Rue de la Vie, 77"
-                expect(user.reload.bill_address.address1).to eq(existing_address.address1)
               end
             end
           end
@@ -279,6 +280,7 @@ describe "As a consumer, I want to checkout my order", js: true do
               before do
                 proceed_to_payment
               end
+       
               it "creates a new default ship address" do
                 expect(order.reload.ship_address.address1).to eq "Rue de la Vie, 66"
                 expect(order.customer.ship_address.address1).to eq "Rue de la Vie, 66"
@@ -296,17 +298,17 @@ describe "As a consumer, I want to checkout my order", js: true do
             end
 
             context "as an existing customer" do
-              let(:existing_address) { create(:address) }
-
               before do
-                user.ship_address = existing_address
-                user.save
-                proceed_to_payment
+              expect {
+                  proceed_to_payment
+                }.to_not change {
+                  user.reload.ship_address
+                }
               end
+         
               it "updates the ship address of the order and customer" do
                 expect(order.reload.ship_address.address1).to eq "Rue de la Vie, 66"
                 expect(order.customer.ship_address.address1).to eq "Rue de la Vie, 66"
-                expect(user.reload.ship_address.address1).to eq(existing_address.address1)
               end
             end
           end
