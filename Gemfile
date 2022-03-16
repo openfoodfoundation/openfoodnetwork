@@ -8,6 +8,10 @@ gem 'dotenv-rails', require: 'dotenv/rails-now' # Load ENV vars before other gem
 
 gem 'rails', '>= 6.1.4'
 
+# Active Storage
+gem "aws-sdk-s3", require: false
+gem "image_processing"
+
 gem 'activemerchant', '>= 1.78.0'
 gem 'rexml'
 gem 'angular-rails-templates', '>= 0.3.0'
