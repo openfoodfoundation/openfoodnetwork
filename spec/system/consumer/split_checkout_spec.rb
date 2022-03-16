@@ -49,6 +49,9 @@ describe "As a consumer, I want to checkout my order", js: true do
   let(:free_shipping_without_required_address) {
     create(:shipping_method, require_ship_address: false, name: "Z Free Shipping without required address")
   }
+  let(:tagged_shipping) {
+    create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local")
+  }
   let!(:payment_with_fee) {
     create(:payment_method, distributors: [distributor],
                             name: "Payment with Fee", description: "Payment with fee",
@@ -65,7 +68,7 @@ describe "As a consumer, I want to checkout my order", js: true do
     add_enterprise_fee enterprise_fee
     set_order order
 
-    distributor.shipping_methods.push(free_shipping_with_required_address, free_shipping, shipping_with_fee, free_shipping_without_required_address)
+    distributor.shipping_methods.push(free_shipping_with_required_address, free_shipping, shipping_with_fee, free_shipping_without_required_address, tagged_shipping)
   end
 
   context "guest checkout when distributor doesn't allow guest orders" do
@@ -182,6 +185,59 @@ describe "As a consumer, I want to checkout my order", js: true do
       end
 
       it_behaves_like "when I have an out of stock product in my cart"
+    end
+
+    describe "hidding a shipping method" do
+      let(:user) { create(:user) }
+      let(:customer) { create(:customer, user: user, enterprise: distributor) }
+
+      it "shows shipping methods allowed by the rule" do
+        visit checkout_path
+        click_on "Checkout as guest"
+
+        # No rules in effect
+        expect(page).to have_content free_shipping.name
+        expect(page).to have_content shipping_with_fee.name
+        expect(page).to have_content free_shipping_without_required_address.name
+        expect(page).to have_content tagged_shipping.name
+
+        create(:filter_shipping_methods_tag_rule,
+               enterprise: distributor,
+               preferred_customer_tags: "local",
+               preferred_shipping_method_tags: "local",
+               preferred_matched_shipping_methods_visibility: 'visible')
+        create(:filter_shipping_methods_tag_rule,
+               enterprise: distributor,
+               is_default: true,
+               preferred_shipping_method_tags: "local",
+               preferred_matched_shipping_methods_visibility: 'hidden')
+
+        visit checkout_path
+
+        # Default rule in effect, disallows access to 'Local'
+        expect(page).to have_content free_shipping.name
+        expect(page).to have_content shipping_with_fee.name
+        expect(page).to have_content free_shipping_without_required_address.name
+        expect(page).not_to have_content tagged_shipping.name
+
+        login_as(user)
+        visit checkout_path
+
+        # Default rule in still effect, disallows access to 'Local'
+        expect(page).to have_content free_shipping.name
+        expect(page).to have_content shipping_with_fee.name
+        expect(page).to have_content free_shipping_without_required_address.name
+        expect(page).not_to have_content tagged_shipping.name
+
+        customer.update_attribute(:tag_list, "local")
+        visit checkout_path
+
+        # #local Customer can access 'Local' shipping method
+        expect(page).to have_content free_shipping.name
+        expect(page).to have_content shipping_with_fee.name
+        expect(page).to have_content free_shipping_without_required_address.name
+        expect(page).to have_content tagged_shipping.name
+      end
     end
   end
 
