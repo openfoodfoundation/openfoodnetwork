@@ -2909,7 +2909,8 @@ de_DE:
           invalid: "ungültig"
         quantity_adjusted: "Kein ausreichender Lagerbestand vorhanden. Die Position wurde auf die maximal verfügbare Menge aktualisiert."
         quantity_unchanged: "Menge wurde nicht geändert."
-        cannot_remove_last_item: "Der letzte verbleibende Artikel einer Bestellung kann nicht entfernt werden. Bitte stornieren Sie stattdessen die Bestellung."
+        cancel_the_order_html: "Wenn Sie fortfahren, wird die aktuelle Bestellung storniert.<br /> Sind Sie sicher, dass Sie fortfahren möchten?"
+        cancel_the_order_send_cancelation_email: "Bestätigung der Stornierung per E-Mail an den Kunden senden"
       resend_user_email_confirmation:
         resend: "Erneut senden"
         sending: "Wird erneut gesendet ..."
@@ -3275,6 +3276,7 @@ de_DE:
     tracking: "Sendungsverfolgung"
     tracking_number: "Sendungscode"
     order_total: "Bestellung insgesamt"
+    order_updated: "Bestellung wurde aktualisiert."
     customer_details: "Kundendetails"
     customer_details_updated: "Kundendetails gespeichert"
     customer_search: "Kundensuche"
