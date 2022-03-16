@@ -221,21 +221,21 @@ describe "As a consumer, I want to checkout my order", js: true do
               choose free_shipping.name
             end
 
-            it "before saving has no default address" do
-              expect(user.bill_address).to be_nil
-              expect(order.bill_address).to be_nil
-            end
-
-            context "proceeding to payment" do
-              before do
+            it "creates a new default bill address" do
+              expect {
                 proceed_to_payment
-              end
-
-              it "creates a new default bill address" do
-                expect(order.reload.bill_address.address1).to eq "Rue de la Vie, 77"
-                expect(order.customer.bill_address.address1).to eq "Rue de la Vie, 77"
-                expect(user.reload.bill_address.address1).to eq "Rue de la Vie, 77"
-              end
+                order.reload
+                user.reload
+              }.to change {
+                order.bill_address&.address1
+              }.from(nil).to("Rue de la Vie, 77")
+                .and change {
+                       order.customer&.bill_address&.address1
+                     }.from(nil).to("Rue de la Vie, 77")
+                .and change {
+                       order.bill_address&.address1
+                     }
+                .from(nil).to("Rue de la Vie, 77")
             end
           end
 
@@ -271,20 +271,22 @@ describe "As a consumer, I want to checkout my order", js: true do
               check "order_save_ship_address"
             end
 
-            it "before saving has no default address" do
-              expect(user.ship_address).to be_nil
-              expect(order.ship_address).to be_nil
-            end
-
             context "proceeding to payment" do
-              before do
-                proceed_to_payment
-              end
-
               it "creates a new default ship address" do
-                expect(order.reload.ship_address.address1).to eq "Rue de la Vie, 66"
-                expect(order.customer.ship_address.address1).to eq "Rue de la Vie, 66"
-                expect(user.reload.ship_address.address1).to eq "Rue de la Vie, 66"
+                expect {
+                  proceed_to_payment
+                  order.reload
+                  user.reload
+                }.to change {
+                  order.ship_address&.address1
+                }.from(nil).to("Rue de la Vie, 66")
+                  .and change {
+                         order.customer&.ship_address&.address1
+                       }.from(nil).to("Rue de la Vie, 66")
+                  .and change {
+                         order.ship_address&.address1
+                       }
+                  .from(nil).to("Rue de la Vie, 66")
               end
             end
           end
