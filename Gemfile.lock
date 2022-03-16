@@ -101,6 +101,11 @@ GEM
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
     active_model_serializers (0.8.4)
       activemodel (>= 3.0)
+    active_storage_validations (0.9.7)
+      activejob (>= 5.2.0)
+      activemodel (>= 5.2.0)
+      activestorage (>= 5.2.0)
+      activesupport (>= 5.2.0)
     activejob (6.1.4.4)
       activesupport (= 6.1.4.4)
       globalid (>= 0.3.6)
@@ -706,6 +711,7 @@ PLATFORMS
 DEPENDENCIES
   actionpack-action_caching
   active_model_serializers (= 0.8.4)
+  active_storage_validations
   activemerchant (>= 1.78.0)
   activerecord-import
   activerecord-postgresql-adapter
