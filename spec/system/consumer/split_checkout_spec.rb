@@ -671,6 +671,42 @@ describe "As a consumer, I want to checkout my order", js: true do
           end
         end
       end
+
+      describe "hidding a payment method with a default rule" do
+        let!(:tagged_customer) { create(:customer, user: user, enterprise: distributor) }
+        let!(:hidden_payment) {
+          create(:payment_method, distributors: [distributor], name: "Hidden", tag_list: "hide_pm")
+        }
+        before do
+          create(:filter_payment_methods_tag_rule,
+                 enterprise: distributor,
+                 is_default: true,
+                 preferred_payment_method_tags: "hide_pm",
+                 preferred_matched_payment_methods_visibility: 'hidden')
+          visit checkout_step_path(:payment)
+        end
+
+        context "with no exceptions set to a customer" do
+          it "hides the payment method" do
+            expect(page).not_to have_content hidden_payment.name
+          end
+        end
+
+        context "with an exception set to a customer" do
+          before do
+            create(:filter_payment_methods_tag_rule,
+                   enterprise: distributor,
+                   preferred_customer_tags: "show_pm",
+                   preferred_payment_method_tags: "hide_pm",
+                   preferred_matched_payment_methods_visibility: 'visible')
+            tagged_customer.update_attribute(:tag_list, "show_pm")
+            visit checkout_step_path(:payment)
+          end
+          it "displays the payment method" do
+            expect(page).to have_content hidden_payment.name
+          end
+        end
+      end
     end
 
     context "summary step" do
