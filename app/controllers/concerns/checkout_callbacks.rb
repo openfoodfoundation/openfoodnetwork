@@ -2,6 +2,7 @@
 
 module CheckoutCallbacks
   extend ActiveSupport::Concern
+  include EnterprisesHelper
 
   included do
     # We need pessimistic locking to avoid race conditions.
@@ -46,10 +47,7 @@ module CheckoutCallbacks
   end
 
   def load_shipping_methods
-    @shipping_methods = Spree::ShippingMethod.
-      for_distributor(@order.distributor).
-      display_on_checkout.
-      order(:name)
+    @shipping_methods = available_shipping_methods
   end
 
   def redirect_to_shop?
