@@ -506,8 +506,7 @@ describe "As a consumer, I want to checkout my order", js: true do
 
     context "summary step" do
       let(:order) {
-        create(:order_ready_for_confirmation, distributor: distributor,
-                                              order_cycle: order_cycle, user_id: user.id)
+        create(:order_ready_for_confirmation, distributor: distributor)
       }
 
       describe "completing the checkout" do
@@ -670,22 +669,32 @@ describe "As a consumer, I want to checkout my order", js: true do
           expect(page).to have_current_path checkout_step_path(:payment)
         end
       end
+    end
 
-      context "with previous open orders" do
-        let!(:prev_order) {
-          create(:completed_order_with_totals,
-                 order_cycle: order_cycle, distributor: distributor, user_id: order.user_id)
-        }
+    context "with previous open orders" do
+      let(:order) {
+        create(:order_ready_for_confirmation, distributor: distributor,
+                                              order_cycle: order_cycle, user_id: user.id)
+      }
+      let!(:prev_order) {
+        create(:completed_order_with_totals,
+               order_cycle: order_cycle, distributor: distributor, user_id: order.user_id)
+      }
 
-        before do
-          order.distributor.allow_order_changes = true
-          order.distributor.save
-        end
+      it "informs about previous orders if distributor allow order changes" do
+        order.distributor.allow_order_changes = true
+        order.distributor.save
+        visit checkout_step_path(:summary)
 
-        it "informs about previous orders" do
-          pending("issue #9007")
-          expect(page).to have_content("You have an order for this order cycle already.")
-        end
+        expect(page).to have_content("You have an order for this order cycle already.")
+      end
+
+      it "don't display any message if distributor don't allow order changes" do
+        order.distributor.allow_order_changes = false
+        order.distributor.save
+        visit checkout_step_path(:summary)
+
+        expect(page).to_not have_content("You have an order for this order cycle already.")
       end
     end
   end
