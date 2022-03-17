@@ -6,6 +6,11 @@ import { Application } from "stimulus";
 import stripe_cards_controller from "../../../app/webpacker/controllers/stripe_cards_controller";
 
 describe("StripeCardsController", () => {
+  beforeAll(() => {
+    const application = Application.start();
+    application.register("stripe-cards", stripe_cards_controller);
+  });
+
   beforeEach(() => {
     document.body.innerHTML = `<div data-controller="stripe-cards">
        <select data-action="change->stripe-cards#onSelectCard" id="select">
@@ -17,9 +22,6 @@ describe("StripeCardsController", () => {
         <input type="hidden" id="input_1">
        </div>
       </div>`;
-
-    const application = Application.start();
-    application.register("stripe-cards", stripe_cards_controller);
   });
   describe("#connect", () => {
     it("initialize with the right display state", () => {

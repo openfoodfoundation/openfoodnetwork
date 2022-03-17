@@ -6,6 +6,11 @@ import { Application } from "stimulus";
 import tabs_controller from "../../../app/webpacker/controllers/tabs_controller";
 
 describe("TabsController", () => {
+  beforeAll(() => {
+    const application = Application.start();
+    application.register("tabs", tabs_controller);
+  });
+
   describe("#select", () => {
     beforeEach(() => {
       document.body.innerHTML = `
@@ -13,7 +18,7 @@ describe("TabsController", () => {
           <button data-tabs-target="tab" data-action="click->tabs#select">Dogs</button>
           <button data-tabs-target="tab" data-action="click->tabs#select">Cats</button>
           <button data-tabs-target="tab" data-action="click->tabs#select">Birds</button>
-          
+
           <div class="content-area" data-tabs-target="content" >
             Dogs content
           </div>
@@ -25,9 +30,6 @@ describe("TabsController", () => {
           </div>
         </div>
       `;
-
-      const application = Application.start();
-      application.register("tabs", tabs_controller);
     });
 
     it("shows the corresponding content when a tab button is clicked", () => {

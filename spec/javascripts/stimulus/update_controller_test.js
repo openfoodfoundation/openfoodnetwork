@@ -6,15 +6,17 @@ import { Application } from "stimulus";
 import updateinput_controller from "../../../app/webpacker/controllers/updateinput_controller";
 
 describe("updateInput controller", () => {
+  beforeAll(() => {
+    const application = Application.start();
+    application.register("updateinput", updateinput_controller);
+  });
+
   describe("#update", () => {
     beforeEach(() => {
       document.body.innerHTML = `<form data-controller="updateinput">
         <input id="input" type="hidden" value="false" data-updateinput-target="input" />
         <div id="submit" data-action="click->updateinput#update" data-updateinput-value="true" />
       </form>`;
-
-      const application = Application.start();
-      application.register("updateinput", updateinput_controller);
     });
 
     it("update the input value", () => {
