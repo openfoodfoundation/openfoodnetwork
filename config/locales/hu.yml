@@ -2961,7 +2961,8 @@ hu:
           invalid: "érvénytelen"
         quantity_adjusted: "Nem áll rendelkezésre elegendő készlet. A sor frissítve a maximális elérhető mennyiségre."
         quantity_unchanged: "A mennyiség nem változott az előző mennyiséghez képest."
-        cannot_remove_last_item: "Az utolsó tétel nem távolítható el a rendelésből. Inkább törölje a rendelést."
+        cancel_the_order_html: "Ez megszakítja a vásárlási folyamatot. Biztosan folytatja?"
+        cancel_the_order_send_cancelation_email: "A törlés elküldése a vásárlónak (emailben)."
       resend_user_email_confirmation:
         resend: "Újraküldés"
         sending: "Újraküldés..."
@@ -3329,6 +3330,7 @@ hu:
     tracking: "Követés"
     tracking_number: "Nyomon követési szám"
     order_total: "Rendelés Összesen"
+    order_updated: "A megrendelés frissítve."
     customer_details: "Vásárló adatai"
     customer_details_updated: "Ügyféladatok frissítve"
     customer_search: "Ügyfélkeresés"
