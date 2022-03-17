@@ -10,4 +10,5 @@
     Filter results
 
 #new_products
-  = render partial: "product", collection: @products
+  %table.products_table
+    = render(ProductComponent.with_collection(@products, columns: [:price, :unit]))
