@@ -72,6 +72,11 @@
   }
 }
 
+.already-ordered .panel, #distributor_address.panel {
+  font-size: 0.875rem;
+  padding: 1rem;
+}
+
 .checkout-step {
   margin-top: 3rem;
 
@@ -133,9 +138,6 @@
     }
 
     #distributor_address.panel {
-      font-size: 0.875rem;
-      padding: 1rem;
-
       span {
         white-space: pre-wrap;
       }
