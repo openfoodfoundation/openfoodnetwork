@@ -2,6 +2,7 @@
 
 module CheckoutCallbacks
   extend ActiveSupport::Concern
+  include EnterprisesHelper
 
   included do
     # We need pessimistic locking to avoid race conditions.
@@ -13,7 +14,8 @@ module CheckoutCallbacks
     prepend_before_action :require_order_cycle
     prepend_before_action :require_distributor_chosen
 
-    before_action :load_order, :associate_user, :load_saved_addresses, :load_saved_credit_cards
+    before_action :load_order, :associate_user, :load_saved_addresses, :load_saved_credit_cards,
+                  :load_already_ordered
     before_action :load_shipping_methods, if: -> { params[:step] == "details" }
 
     before_action :ensure_order_not_completed
@@ -50,6 +52,10 @@ module CheckoutCallbacks
       for_distributor(@order.distributor).
       display_on_checkout.
       order(:name)
+  end
+
+  def load_already_ordered
+    @already_ordered = show_bought_items?
   end
 
   def redirect_to_shop?
