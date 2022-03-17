@@ -432,30 +432,56 @@ module OrderManagement
             end
           end
 
-          context "when subscription line items exist but all are marked for destruction" do
-            let(:subscription_line_item1) {
-              instance_double(SubscriptionLineItem, marked_for_destruction?: true)
-            }
-            let(:subscription_line_items) { [subscription_line_item1] }
+          context "when some subscription line items exist" do
+            context "and they have some quantity but all are marked for destruction" do
+              let(:subscription_line_item1) {
+                instance_double(SubscriptionLineItem, marked_for_destruction?: true, quantity: 1)
+              }
+              let(:subscription_line_items) { [subscription_line_item1] }
 
-            it "adds an error and returns false" do
-              expect(validator.valid?).to be false
-              expect(validator.errors[:subscription_line_items]).to_not be_empty
+              it "adds an error and returns false" do
+                expect(validator.valid?).to be false
+                expect(validator.errors[:subscription_line_items]).to_not be_empty
+              end
             end
-          end
 
-          context "when subscription line items exist and some are not marked for destruction" do
-            let(:subscription_line_item1) {
-              instance_double(SubscriptionLineItem, marked_for_destruction?: true)
-            }
-            let(:subscription_line_item2) {
-              instance_double(SubscriptionLineItem, marked_for_destruction?: false)
-            }
-            let(:subscription_line_items) { [subscription_line_item1, subscription_line_item2] }
+            context "and at least one has some quantity and is not marked for destruction" do
+              let(:subscription_line_item1) {
+                instance_double(SubscriptionLineItem, marked_for_destruction?: true, quantity: 1)
+              }
+              let(:subscription_line_item2) {
+                instance_double(SubscriptionLineItem, marked_for_destruction?: false, quantity: 1)
+              }
+              let(:subscription_line_items) { [subscription_line_item1, subscription_line_item2] }
 
-            it "returns true" do
-              expect(validator.valid?).to be true
-              expect(validator.errors[:subscription_line_items]).to be_empty
+              it "returns true" do
+                expect(validator.valid?).to be true
+                expect(validator.errors[:subscription_line_items]).to be_empty
+              end
+            end
+
+            context "and they are not marked for destruction but all have no quantity" do
+              let(:subscription_line_item1) {
+                instance_double(SubscriptionLineItem, marked_for_destruction?: false, quantity: 0)
+              }
+              let(:subscription_line_items) { [subscription_line_item1] }
+
+              it "adds an error and returns false" do
+                expect(validator.valid?).to be false
+                expect(validator.errors[:subscription_line_items]).to_not be_empty
+              end
+            end
+
+            context "but all have no quantity and are marked for destruction" do
+              let(:subscription_line_item1) {
+                instance_double(SubscriptionLineItem, marked_for_destruction?: true, quantity: 0)
+              }
+              let(:subscription_line_items) { [subscription_line_item1] }
+
+              it "adds an error and returns false" do
+                expect(validator.valid?).to be false
+                expect(validator.errors[:subscription_line_items]).to_not be_empty
+              end
             end
           end
         end
