@@ -58,6 +58,20 @@
   }
 }
 
+.already-ordered {
+  .panel {
+    margin-top: 3rem;
+    background-color: $grey-250;
+    border: 1px solid $tiny-blue;
+    color: $grey-700;
+    
+    &.medium-6, &.medium-10 {
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+}
+
 .checkout-step {
   margin-top: 3rem;
 
