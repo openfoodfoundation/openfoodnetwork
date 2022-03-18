@@ -2711,6 +2711,7 @@ de_DE:
     admin:
       unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgröße und -gewicht. Der im Online-Shop angezeigte Grundpreis kann ggf. aufgrund hinzukommender Gebühren abweichen."
       enterprise_limit_reached: "Sie haben die maximale Anzahl der Unternehmen pro Konto erreicht. Schreiben Sie an %{contact_email}, wenn Sie das Limit erhöhen möchten."
+      deleting_item_will_cancel_order: "Das Löschen dieses Produkts führt zu einer oder mehreren leeren Bestellungen, die daher automatisch storniert werden. Möchten Sie fortfahren?"
       modals:
         got_it: "Verstanden"
         close: "Schließen"
