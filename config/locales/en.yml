@@ -2847,6 +2847,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     admin:
       unit_price_tooltip: "The unit price increases transparency by allowing your customers to easily compare prices between different products and packaging sizes. Note, that the final unit price displayed in the shopfront might differ as it is includes taxes & fees."
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
+      deleting_item_will_cancel_order: "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
       modals:
         got_it: "Got it"
         close: "Close"
@@ -3345,6 +3346,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   last: "Last"
 
   spree:
+    order_updated: "Order Updated"
     add_country: "Add country"
     add_state: "Add state"
     adjustment: "Adjustment"

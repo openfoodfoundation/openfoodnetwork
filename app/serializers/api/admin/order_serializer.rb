@@ -7,7 +7,7 @@ module Api
                  :edit_path, :state, :payment_state, :shipment_state,
                  :payments_path, :ready_to_ship, :ready_to_capture, :created_at,
                  :distributor_name, :special_instructions, :display_outstanding_balance,
-                 :item_total, :adjustment_total, :payment_total, :total
+                 :item_total, :adjustment_total, :payment_total, :total, :item_count
 
       has_one :distributor, serializer: Api::Admin::IdSerializer
       has_one :order_cycle, serializer: Api::Admin::IdSerializer
@@ -67,6 +67,10 @@ module Api
 
       def completed_at
         object.completed_at.blank? ? "" : I18n.l(object.completed_at, format: '%B %d, %Y')
+      end
+
+      def item_count
+        object.line_items.count
       end
 
       private
