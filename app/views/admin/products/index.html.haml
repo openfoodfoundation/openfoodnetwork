@@ -1,14 +1,19 @@
+
 - content_for :page_title do
   New Products Page
 
 = render partial: 'spree/admin/shared/product_sub_menu'
 
+#products_page
+  #products_page_form
+    #filter_results
+      %input.search{type: 'text', placeholder: 'Search', id: 'search_query'}
+      %button.btn.btn-primary{type: 'submit'}
+        Filter results
 
-%div
-  %input.search{type: 'text', placeholder: 'Search', id: 'search_query'}
-  %button.btn.btn-primary{type: 'submit'}
-    Filter results
+    #columns_selector
+      = render(SelectorComponent.new(title: "Columns", selected: [:price], items: [:price, :unit]))
 
-#new_products
-  %table.products_table
-    = render(ProductComponent.with_collection(@products, columns: [:price, :unit]))
+  #products_table
+    %table
+      = render(ProductComponent.with_collection(@products, columns: [:price]))

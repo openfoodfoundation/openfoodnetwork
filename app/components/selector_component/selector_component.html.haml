@@ -1,0 +1,10 @@
+= component_controller do
+  .selector{ class: ("selector_close" if @state == :close) }
+    .selector_main 
+      .selector_main_title 
+        = @title
+      .selector_arrow{data: reflex_data_attributes(:toggle)}
+    .selector_items
+      - @items.each do |item|
+        .selector_item{id: item[:id], class: ("selected" if item[:selected]), data: @data, "data-value": item[:id]}
+          = item[:name]

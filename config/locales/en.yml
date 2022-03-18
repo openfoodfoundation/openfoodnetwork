@@ -458,6 +458,10 @@ en:
 # Admin
 #
   admin:
+    products_page:
+      columns_selector:
+        unit: Unit
+        price: Price
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     # Common properties / models
