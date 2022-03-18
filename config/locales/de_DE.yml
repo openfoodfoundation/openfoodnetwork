@@ -2398,7 +2398,7 @@ de_DE:
   spree_user_enterprise_limit_error: "^ %{email} darf keine weiteren Unternehmen besitzen (maximale Anzahl ist %{enterprise_limit})."
   spree_variant_product_error: muss mindestens eine Produktvariante haben
   your_profil_live: "Ihr öffentlicher Auftritt im Open Food Network"
-  see: "Sehen Sie"
+  see: " "
   live: "ansehen"
   manage: "Verwalten"
   resend: "Erneut senden"
