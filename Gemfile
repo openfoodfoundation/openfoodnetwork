@@ -162,6 +162,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'test-prof'
   gem 'webmock'
+  gem 'puffing-billy'
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'
 end
