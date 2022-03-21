@@ -5,7 +5,7 @@ class ProductsTableComponent < ViewComponentReflex::Component
     super
     @columns = [{ label: I18n.t("admin.products_page.columns_selector.price"), value: "price" },
                 { label: I18n.t("admin.products_page.columns_selector.unit"), value: "unit" }]
-    @selected = ["price", "unit"]
+    @columns_selected = ["price", "unit"]
     @per_page = [{ label: "10", value: 10 }, { label: "25", value: 25 }, { label: "50", value: 50 },
                  { label: "100", value: 100 }]
     @per_page_selected = [10]
@@ -16,7 +16,11 @@ class ProductsTableComponent < ViewComponentReflex::Component
 
   def toggle_column
     column = element.dataset['value']
-    @selected = @selected.include?(column) ? @selected - [column] : @selected + [column]
+    @columns_selected = if @columns_selected.include?(column)
+                          @columns_selected - [column]
+                        else
+                          @columns_selected + [column]
+                        end
   end
 
   def toggle_per_page
