@@ -30,3 +30,14 @@ angular.module("admin.side_menu")
         for item in @items when item.name is name
           return item
         null
+
+      redirect_function: (elementID , href) =>
+        window.addEventListener 'load', ->
+          element = document.getElementById(elementID)
+          if !element
+            return
+          element.addEventListener 'click', ->
+            window.location.replace(href)
+            return
+          return
+

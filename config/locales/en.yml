@@ -324,7 +324,7 @@ en:
   producers_join: Australian producers are now welcome to join the Open Food Network. #FIXME
   charges_sales_tax: Charges GST?
   business_address: "Business Address"
-  Invoice_item_sorting: "Invoice sorting"
+  enterprise_permissions: "Enterprise Permissions"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -880,6 +880,8 @@ en:
           manage_fees: Manage Enterprise Fees
           no_fees_yet: You don't have any enterprise fees yet.
           create_button: Create One Now
+        enterprise_permissions:
+          enterprise_relationships: Enterprise Relationships
         images:
           logo: Logo
           promo_image_placeholder: 'This image is displayed in "About Us"'
