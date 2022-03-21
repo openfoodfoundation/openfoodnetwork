@@ -6,5 +6,5 @@
       .selector_arrow{data: reflex_data_attributes(:toggle)}
     .selector_items
       - @items.each do |item|
-        .selector_item{id: item[:id], class: ("selected" if item[:selected]), data: @data, "data-value": item[:id]}
-          = item[:name]
+        .selector_item{ class: ("selected" if item[:selected]), data: @data, "data-value": item[:value] }
+          = item[:label]
