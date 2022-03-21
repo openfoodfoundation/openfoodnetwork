@@ -642,7 +642,7 @@ fr:
       import:
         review: Vérifier
         import: Importer
-        save: Sauvergarder
+        save: Sauvegarder
         results: Résultats
         save_imported: Sauvegarder les produits importés
         no_valid_entries: Aucune entrée valide trouvée
@@ -2713,6 +2713,7 @@ fr:
     admin:
       unit_price_tooltip: "Le prix unitaire permet aux acheteurs de comparer les prix entre les produits et/ou les conditionnements. Attention, le prix final observé par l'acheteur peut être différent si des marges et/ou commissions sont appliquées."
       enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email} si vous avez besoin d'augmenter cette limite."
+      deleting_item_will_cancel_order: "Cette opération va rendre une ou plusieurs commandes vides, sans aucun produit. Elles vont ainsi être annulées. Souhaitez-vous continuer ?"
       modals:
         got_it: "J'ai compris"
         close: "Fermer"

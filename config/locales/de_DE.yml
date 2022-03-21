@@ -2397,9 +2397,9 @@ de_DE:
   spree_distributors_error: "Mindestens ein Hub muss ausgewählt sein."
   spree_user_enterprise_limit_error: "^ %{email} darf keine weiteren Unternehmen besitzen (maximale Anzahl ist %{enterprise_limit})."
   spree_variant_product_error: muss mindestens eine Produktvariante haben
-  your_profil_live: "Ihr Profil live"
-  see: "Sehen Sie"
-  live: "live"
+  your_profil_live: "Ihr öffentlicher Auftritt im Open Food Network"
+  see: " "
+  live: "ansehen"
   manage: "Verwalten"
   resend: "Erneut senden"
   add_and_manage_products: "Produkte hinzufügen und verwalten"
@@ -2711,6 +2711,7 @@ de_DE:
     admin:
       unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgröße und -gewicht. Der im Online-Shop angezeigte Grundpreis kann ggf. aufgrund hinzukommender Gebühren abweichen."
       enterprise_limit_reached: "Sie haben die maximale Anzahl der Unternehmen pro Konto erreicht. Schreiben Sie an %{contact_email}, wenn Sie das Limit erhöhen möchten."
+      deleting_item_will_cancel_order: "Das Löschen dieses Produkts führt zu einer oder mehreren leeren Bestellungen, die daher automatisch storniert werden. Möchten Sie fortfahren?"
       modals:
         got_it: "Verstanden"
         close: "Schließen"
