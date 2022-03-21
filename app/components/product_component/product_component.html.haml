@@ -4,9 +4,9 @@
       .image
         = image_tag @image.url(:mini)
     = @name
-  - if @columns.include?(:unit)
+  - if @columns.include?("unit")
     %td.products_column.unit
       = @unit
-  - if @columns.include?(:price)
+  - if @columns.include?("price")
     %td.products_column.price
       = @price

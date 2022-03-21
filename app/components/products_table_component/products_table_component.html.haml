@@ -1,0 +1,13 @@
+= component_controller do
+  #products_page_form
+    #filter_results
+      %input.search{type: 'text', placeholder: 'Search', id: 'search_query'}
+      %button.btn.btn-primary{type: 'submit'}
+        Filter results
+
+    #columns_selector
+      = render(SelectorComponent.new(title: "Columns", selected: @selected, items: @columns, data: { key: key, reflex: "click->ProductsTableComponent#toggle_column" }))
+
+  #products_table
+    %table
+      = render(ProductComponent.with_collection(@products, columns: @selected))
