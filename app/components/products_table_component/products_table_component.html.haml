@@ -12,4 +12,12 @@
 
   #products_table
     %table
-      = render(ProductComponent.with_collection(@products, columns: @columns_selected))
+      %thead
+        %tr
+          %th
+            Name
+          - @columns_selected.each do |column|
+            %th
+              = @columns.find{ |c| c[:value] == column }[:label]
+      %tbody
+        = render(ProductComponent.with_collection(@products, columns: @columns_selected))
