@@ -1,64 +1,85 @@
 .selector {
-  .selector_main {
-    border: 1px solid #ccc;
+  position: relative;
+
+  .selector-main {
+    border: 1px solid #d2d2d2;
+    height: 3em;
     position: relative;
 
-    .selector_main_title {
-      padding: 5px 10px;
+    .selector-main-title {
+      line-height: 3em;
+      padding-left: 10px;
+      padding-right: 10px;
     }
     
-    .selector_arrow {
-      height: 2em;
-      width: 10px;
+    .selector-arrow {
       position: absolute;
-      top: 1px;
-      right: 10px;
+      right: 0px;
+      height: 3em;
+      width: 1.5em;
+      top: -1px;
       cursor: pointer;
 
-      &:after { 
-        display: inline-block;
+      &:after {
         content: "";
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        margin-top: -5px;
         width: 0;
         height: 0;
         border-left: 5px solid transparent;
         border-right: 5px solid transparent;
-        border-top: 5px solid #ccc;
+        border-top: 5px solid #d2d2d2;
       }
     }
   }
 
-  .selector_items {
-    border: 1px solid #cCC;
+  .selector-wrapper {
     position: absolute;
-    width: 100%;
-    margin-top: -1px;
+    left: 0px;
+    right: 0px;
+    z-index: 1;
     background-color: white;
+    margin-top: -1px;
+    border: 1px solid #d2d2d2;
 
-    .selector_item {
-      padding-left: 10px;
-      padding-right: 10px;
-      border-bottom: 1px solid #CCC;
-      padding-top: 2px;
-      padding-bottom: 2px;
+    .selector-items {
+      overflow-y: auto;
+      min-height: 6em;
+  
+      .selector-item {
+        padding-left: 10px;
+        padding-right: 10px;
+        border-bottom: 1px solid #d2d2d2;
+        position: relative;
+        height: 3em;
+        line-height: 3em;
 
-      &.selected {
-        &:after {
-          content: "✓";
-          display: inline-block;
-          position: absolute;
-          right: 10px;
-          top: 50%;
+        &:hover {
+          background-color: #eee;
+          cursor: pointer;
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &.selected {
+          &:after {
+            content: "✓";
+            display: inline-block;
+            position: absolute;
+            right: 10px;
+          }
         }
       }
-      &:hover {
-        background-color: #eee;
-        cursor: pointer;
-      }
     }
   }
+  
 
-  &.selector_close {
-    .selector_items {
+  &.selector-close {
+    .selector-wrapper {
       display: none;
     }
   }
