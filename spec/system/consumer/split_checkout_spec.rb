@@ -207,10 +207,113 @@ describe "As a consumer, I want to checkout my order", js: true do
         end
       end
 
-      describe "filling out delivery details" do
+      describe "filling out order details" do
         before do
           fill_out_details
           fill_out_billing_address
+          order.update(user_id: user.id)
+        end
+
+        context "billing address" do
+          describe "checking the default address box" do
+            before do
+              check "order_save_bill_address"
+              choose free_shipping.name
+            end
+
+            it "creates a new default bill address" do
+              expect {
+                proceed_to_payment
+                order.reload
+                user.reload
+              }.to change {
+                order.bill_address&.address1
+              }.from(nil).to("Rue de la Vie, 77")
+                .and change {
+                       order.customer&.bill_address&.address1
+                     }.from(nil).to("Rue de la Vie, 77")
+                .and change {
+                       order.bill_address&.address1
+                     }
+                .from(nil).to("Rue de la Vie, 77")
+            end
+          end
+
+          describe "unchecking the default address box" do
+            before do
+              uncheck "order_save_bill_address"
+              choose free_shipping.name
+            end
+
+            context "proceeding to payment" do
+              before do
+                expect {
+                  proceed_to_payment
+                }.to_not change {
+                  user.reload.bill_address
+                }
+              end
+
+              it "updates the bill address of the order and customer" do
+                expect(order.reload.bill_address.address1).to eq "Rue de la Vie, 77"
+                expect(order.customer.bill_address.address1).to eq "Rue de la Vie, 77"
+              end
+            end
+          end
+        end
+
+        context "shipping address" do
+          describe "checking the default address box" do
+            before do
+              choose free_shipping_with_required_address.name
+              uncheck "ship_address_same_as_billing"
+              fill_out_shipping_address
+              check "order_save_ship_address"
+            end
+
+            context "proceeding to payment" do
+              it "creates a new default ship address" do
+                expect {
+                  proceed_to_payment
+                  order.reload
+                  user.reload
+                }.to change {
+                  order.ship_address&.address1
+                }.from(nil).to("Rue de la Vie, 66")
+                  .and change {
+                         order.customer&.ship_address&.address1
+                       }.from(nil).to("Rue de la Vie, 66")
+                  .and change {
+                         order.ship_address&.address1
+                       }
+                  .from(nil).to("Rue de la Vie, 66")
+              end
+            end
+          end
+
+          describe "unchecking the default address box" do
+            before do
+              choose free_shipping_with_required_address.name
+              uncheck "ship_address_same_as_billing"
+              fill_out_shipping_address
+              uncheck "order_save_ship_address"
+            end
+
+            context "proceeding to payment" do
+              before do
+                expect {
+                  proceed_to_payment
+                }.to_not change {
+                           user.reload.ship_address
+                         }
+              end
+
+              it "updates the ship address of the order and customer" do
+                expect(order.reload.ship_address.address1).to eq "Rue de la Vie, 66"
+                expect(order.customer.ship_address.address1).to eq "Rue de la Vie, 66"
+              end
+            end
+          end
         end
 
         describe "selecting a pick-up shipping method and submiting the form" do
@@ -438,11 +541,9 @@ describe "As a consumer, I want to checkout my order", js: true do
 
             it "proceeds to the summary step and completes the order" do
               choose pay_method.to_s
-              click_on "Next - Order summary"
-              expect(page).to have_content "Shopping @ #{distributor.name}"
+              proceed_to_summary
 
-              click_on "Complete order"
-              expect(page).to have_content "Back To Store"
+              place_order
               expect(page).to have_content "Paying via: #{pay_method}"
               expect(order.reload.state).to eq "complete"
             end
@@ -457,8 +558,7 @@ describe "As a consumer, I want to checkout my order", js: true do
             it "selects Stripe SCA and proceeds to the summary step" do
               choose pay_method.to_s
               fill_out_card_details
-              click_on "Next - Order summary"
-              expect(page).to have_content "Shopping @ #{distributor.name}"
+              proceed_to_summary
             end
           end
         end
@@ -513,7 +613,7 @@ describe "As a consumer, I want to checkout my order", js: true do
 
           expect(page).to have_content "Shopping @ #{distributor.name}"
 
-          click_on "Complete order"
+          place_order
 
           expect(page).to have_content "Back To Store"
           expect(order.reload.state).to eq "complete"
