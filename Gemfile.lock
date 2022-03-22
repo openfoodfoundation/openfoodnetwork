@@ -346,6 +346,8 @@ GEM
     json_spec (1.1.5)
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
+    jsonapi-serializer (2.2.0)
+      activesupport (>= 4.2)
     jwt (2.3.0)
     knapsack (4.0.0)
       rake
@@ -739,6 +741,7 @@ DEPENDENCIES
   jquery-ui-rails (~> 4.2)
   json
   json_spec (~> 1.1.4)
+  jsonapi-serializer
   jwt (~> 2.3)
   knapsack
   letter_opener (>= 1.4.1)

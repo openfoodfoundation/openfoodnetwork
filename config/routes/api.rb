@@ -87,6 +87,16 @@ Openfoodnetwork::Application.routes.draw do
           constraints: lambda { |_| Flipper.enabled?(:api_reports) }
     end
 
+    unless Rails.env.production?
+      namespace :v1 do
+        resources :customers
+
+        resources :enterprises do
+          resources :customers, only: :index
+        end
+      end
+    end
+
     match '*path', to: redirect(path: "/api/v0/%{path}"), via: :all, constraints: { path: /(?!v[0-9]).+/ }
   end
 end

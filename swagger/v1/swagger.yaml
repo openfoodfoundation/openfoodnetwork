@@ -3,6 +3,395 @@ openapi: 3.0.1
 info:
   title: API V1
   version: v1
-paths: {}
+components:
+  schemas:
+    error_response:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              detail:
+                type: string
+              source:
+                type: object
+            required:
+            - detail
+      required:
+      - errors
+    resources:
+      customer:
+        type: object
+        properties:
+          data:
+            type: object
+            properties:
+              id:
+                type: string
+                example: '1'
+              type:
+                type: string
+                example: customer
+              attributes:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  enterprise_id:
+                    type: integer
+                    example: 2
+                  first_name:
+                    type: string
+                    nullable: true
+                    example: Alice
+                  last_name:
+                    type: string
+                    nullable: true
+                    example: Springs
+                  code:
+                    type: string
+                    nullable: true
+                    example: BUYER1
+                  email:
+                    type: string
+                    example: alice@example.com
+                required:
+                - id
+                - enterprise_id
+                - first_name
+                - last_name
+                - code
+                - email
+              relationships:
+                type: object
+                properties:
+                  enterprise:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          type:
+                            type: string
+                            example: enterprise
+                      links:
+                        type: object
+                        properties:
+                          related:
+                            type: string
+          meta:
+            type: object
+          links:
+            type: object
+        required:
+        - data
+      customers_collection:
+        type: object
+        properties:
+          data:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: '1'
+                type:
+                  type: string
+                  example: customer
+                attributes:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    enterprise_id:
+                      type: integer
+                      example: 2
+                    first_name:
+                      type: string
+                      nullable: true
+                      example: Alice
+                    last_name:
+                      type: string
+                      nullable: true
+                      example: Springs
+                    code:
+                      type: string
+                      nullable: true
+                      example: BUYER1
+                    email:
+                      type: string
+                      example: alice@example.com
+                  required:
+                  - id
+                  - enterprise_id
+                  - first_name
+                  - last_name
+                  - code
+                  - email
+                relationships:
+                  type: object
+                  properties:
+                    enterprise:
+                      type: object
+                      properties:
+                        data:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            type:
+                              type: string
+                              example: enterprise
+                        links:
+                          type: object
+                          properties:
+                            related:
+                              type: string
+          meta:
+            type: object
+            properties:
+              pagination:
+                type: object
+                properties:
+                  results:
+                    type: integer
+                    example: 250
+                  pages:
+                    type: integer
+                    example: 5
+                  page:
+                    type: integer
+                    example: 2
+                  per_page:
+                    type: integer
+                    example: 50
+            required:
+            - pagination
+          links:
+            type: object
+            properties:
+              self:
+                type: string
+              first:
+                type: string
+              prev:
+                type: string
+                nullable: true
+              next:
+                type: string
+                nullable: true
+              last:
+                type: string
+        required:
+        - data
+        - meta
+        - links
+  securitySchemas:
+    api_key_header:
+      type: apiKey
+      name: X-Api-Token
+      in: header
+      description: Authenticates via API key passed in specified header
+    api_key_param:
+      type: apiKey
+      name: token
+      in: query
+      description: Authenticates via API key passed in specified query param
+    session:
+      type: http
+      name: _ofn_session
+      in: cookie
+      description: Authenticates using the current user's session if logged in
+paths:
+  "/api/v1/customers":
+    get:
+      summary: List customers
+      tags:
+      - Customers
+      parameters:
+      - name: enterprise_id
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Customers list
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/resources/customers_collection"
+    post:
+      summary: Create customer
+      tags:
+      - Customers
+      parameters: []
+      responses:
+        '201':
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/resources/customer"
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_response"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enterprise_id:
+                  type: integer
+                  example: 2
+                first_name:
+                  type: string
+                  nullable: true
+                  example: Alice
+                last_name:
+                  type: string
+                  nullable: true
+                  example: Springs
+                code:
+                  type: string
+                  nullable: true
+                  example: BUYER1
+                email:
+                  type: string
+                  example: alice@example.com
+              required:
+              - enterprise_id
+              - email
+  "/api/v1/customers/{id}":
+    get:
+      summary: Show customer
+      tags:
+      - Customers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Customer
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/resources/customer"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_response"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_response"
+    put:
+      summary: Update customer
+      tags:
+      - Customers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Customer updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/resources/customer"
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error_response"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                enterprise_id:
+                  type: integer
+                  example: 2
+                first_name:
+                  type: string
+                  nullable: true
+                  example: Alice
+                last_name:
+                  type: string
+                  nullable: true
+                  example: Springs
+                code:
+                  type: string
+                  nullable: true
+                  example: BUYER1
+                email:
+                  type: string
+                  example: alice@example.com
+              required:
+              - enterprise_id
+              - email
+    delete:
+      summary: Delete customer
+      tags:
+      - Customers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Customer deleted
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/resources/customer"
+  "/api/v1/enterprises/{enterprise_id}/customers":
+    get:
+      summary: List customers of an enterprise
+      tags:
+      - Customers
+      - Enterprises
+      parameters:
+      - name: enterprise_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Customers list
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/resources/customers_collection"
 servers:
 - url: "/"
