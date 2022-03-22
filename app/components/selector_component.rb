@@ -11,6 +11,7 @@ class SelectorComponent < ViewComponentReflex::Component
         selected: selected.include?(item[:value])
       }
     end
+    @selected = selected
     @state = :close
     @data = data
   end
