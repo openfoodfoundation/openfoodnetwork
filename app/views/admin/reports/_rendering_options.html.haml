@@ -8,7 +8,12 @@
   .alpha.two.columns
     = label_tag :report_format, t(".generate_report")
   .omega.fourteen.columns
-    = select_tag :report_format, options_for_select({t('.on_screen') => '', t('.csv_spreadsheet') => 'csv', t('.excel_spreadsheet') => 'xlsx', t('.openoffice_spreadsheet') => 'ods'})
+    = select_tag :report_format, options_for_select({ |
+      t('.on_screen') => '', |
+      t('.pdf') => 'pdf', |
+      t('.csv_spreadsheet') => 'csv', |
+      t('.excel_spreadsheet') => 'xlsx', |
+      t('.openoffice_spreadsheet') => 'ods'})
 
 -#.inline-checkbox
 -#  = check_box_tag "options[exclude_summaries]", true, params[:options].andand[:exclude_summaries]

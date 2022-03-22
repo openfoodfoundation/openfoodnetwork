@@ -35,5 +35,15 @@ module Reporting
     def to_xlsx
       SpreadsheetArchitect.to_xlsx(headers: table_headers, data: table_rows)
     end
+
+    def to_pdf
+      WickedPdf.new.pdf_from_string(
+        ActionController::Base.new.render_to_string(
+          template: 'admin/reports/_table',
+          layout: 'pdf',
+          locals: { report: self }
+        )
+      )
+    end
   end
 end

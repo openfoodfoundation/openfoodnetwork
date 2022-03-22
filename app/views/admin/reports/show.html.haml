@@ -13,4 +13,5 @@
 - if @report_message.present?
   %p.report__message= @report_message
 
-= render "table"
+- if params[:q].present?
+  = render "table"

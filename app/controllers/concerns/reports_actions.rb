@@ -39,10 +39,6 @@ module ReportsActions
     params[:report_format]
   end
 
-  def export_spreadsheet?
-    ['xlsx', 'ods', 'csv'].include?(report_format)
-  end
-
   def form_options_required?
     [:packing, :customers, :products_and_inventory, :order_cycle_management].
       include? report_type.to_sym

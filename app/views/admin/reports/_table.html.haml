@@ -1,17 +1,18 @@
-- if params[:q].present?
-  %table.report__table
-    %thead
-      %tr
-        - @report.table_headers.each do |heading|
-          %th
-            = t("admin.reports.table.headings.#{heading}")
-    %tbody
-      - @report.table_rows.each do |row|
-        - if row
-          %tr
-            - row.each do |cell|
-              %td
-                = cell
-      - if @report.table_rows.empty?
+- report ||= @report
+
+%table.report__table
+  %thead
+    %tr
+      - report.table_headers.each do |heading|
+        %th
+          = t("admin.reports.table.headings.#{heading}")
+  %tbody
+    - report.table_rows.each do |row|
+      - if row
         %tr
-          %td{colspan: @report.table_headers.count}= t(:none)
+          - row.each do |cell|
+            %td
+              = cell
+    - if report.table_rows.empty?
+      %tr
+        %td{colspan: report.table_headers.count}= t(:none)

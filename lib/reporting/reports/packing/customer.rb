@@ -9,12 +9,13 @@ module Reporting
             {
               hub: default_blank(distributor_alias[:name]),
               customer_code: default_blank(masked(customer_table[:code])),
-              first_name: default_blank(masked(bill_address_alias[:firstname])),
               last_name: default_blank(masked(bill_address_alias[:lastname])),
+              first_name: default_blank(masked(bill_address_alias[:firstname])),
               supplier: default_blank(supplier_alias[:name]),
               product: default_string(product_table[:name], summary_row_title),
               variant: default_blank(variant_full_name),
               quantity: sum_values(line_item_table[:quantity]),
+              price: sum_values(line_item_table[:quantity] * line_item_table[:price]),
               temp_controlled: boolean_blank(shipping_category_table[:temperature_controlled]),
             }
           end

@@ -69,6 +69,7 @@ describe Api::V0::ReportsController, type: :controller do
       "product" => line_item.product.name,
       "variant" => line_item.full_name,
       "quantity" => line_item.quantity,
+      "price" => (line_item.quantity * line_item.price).to_s,
       "temp_controlled" =>
         line_item.product.shipping_category&.temperature_controlled ? I18n.t(:yes) : I18n.t(:no)
     }
@@ -84,6 +85,7 @@ describe Api::V0::ReportsController, type: :controller do
       "product" => line_item.product.name,
       "variant" => line_item.full_name,
       "quantity" => line_item.quantity,
+      "price" => (line_item.quantity * line_item.price).to_s,
       "temp_controlled" =>
         line_item.product.shipping_category&.temperature_controlled ? I18n.t(:yes) : I18n.t(:no)
     }
@@ -96,9 +98,10 @@ describe Api::V0::ReportsController, type: :controller do
       "first_name" => "",
       "last_name" => "",
       "supplier" => "",
-      "product" => I18n.t("total_items", scope: i18n_scope),
+      "product" => I18n.t("total", scope: i18n_scope),
       "variant" => "",
       "quantity" => order.line_items.sum(&:quantity),
+      "price" => order.line_items.sum(&:price).to_s,
       "temp_controlled" => "",
     }
   end

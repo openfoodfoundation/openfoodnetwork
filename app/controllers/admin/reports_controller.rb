@@ -12,7 +12,7 @@ module Admin
 
       @report = report_class.new(spree_current_user, ransack_params, report_options)
 
-      if export_spreadsheet?
+      if report_format.present?
         export_report
       else
         render_report
@@ -22,14 +22,12 @@ module Admin
     private
 
     def export_report
-      render report_format.to_sym => @report.public_send("to_#{report_format}"),
-             :filename => report_filename
+      send_data @report.public_send("to_#{report_format}"), filename: report_filename
     end
 
     def render_report
       assign_view_data
       load_form_options
-
       render "show"
     end
 

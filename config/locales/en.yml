@@ -1329,9 +1329,11 @@ en:
           quantity: "Quantity"
           is_temperature_controlled: "TempControlled?"
           temp_controlled: "TempControlled?"
+          price: "Price"
       rendering_options:
         generate_report: "Generate report"
         on_screen: "On screen"
+        pdf: PDF
         csv_spreadsheet: "CSV Spreadsheet"
         excel_spreadsheet: "Excel Spreadsheet"
         openoffice_spreadsheet: "OpenOffice Spreadsheet"

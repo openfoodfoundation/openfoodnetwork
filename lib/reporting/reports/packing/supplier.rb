@@ -4,21 +4,24 @@ module Reporting
   module Reports
     module Packing
       class Supplier < Base
+        # rubocop:disable Metrics/AbcSize
         def select_fields
           lambda do
             {
               hub: default_blank(distributor_alias[:name]),
               supplier: default_blank(supplier_alias[:name]),
               customer_code: default_blank(customer_table[:code]),
-              first_name: default_blank(masked(bill_address_alias[:firstname])),
               last_name: default_blank(masked(bill_address_alias[:lastname])),
+              first_name: default_blank(masked(bill_address_alias[:firstname])),
               product: default_string(product_table[:name], summary_row_title),
               variant: default_blank(variant_full_name),
               quantity: sum_values(line_item_table[:quantity]),
+              price: sum_values(line_item_table[:quantity] * line_item_table[:price]),
               temp_controlled: boolean_blank(shipping_category_table[:temperature_controlled]),
             }
           end
         end
+        # rubocop:enable Metrics/AbcSize
 
         def group_sets
           lambda do
