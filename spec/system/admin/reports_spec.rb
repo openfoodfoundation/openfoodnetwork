@@ -39,7 +39,6 @@ describe '
     it "customers report" do
       click_link "Mailing List"
       expect(page).to have_select('report_type', selected: 'Mailing List')
-      expect(page).to have_content "click on GO"
       click_button "Go"
 
       rows = find("table#listing_customers").all("thead tr")

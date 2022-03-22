@@ -15,6 +15,3 @@
       - if @report.table_rows.empty?
         %tr
           %td{colspan: @report.table_headers.count}= t(:none)
-- else
-  %p.report__message
-    = t(".select_and_search", option: msg_option.upcase)

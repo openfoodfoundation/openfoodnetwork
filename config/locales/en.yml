@@ -1330,7 +1330,7 @@ en:
           is_temperature_controlled: "TempControlled?"
           temp_controlled: "TempControlled?"
       rendering_options:
-        generate_report: "Generate report:"
+        generate_report: "Generate report"
         on_screen: "On screen"
         csv_spreadsheet: "CSV Spreadsheet"
         excel_spreadsheet: "Excel Spreadsheet"
@@ -2622,20 +2622,22 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"
   report_customers_csv: "Download as csv"
-  report_producers: "Producers: "
-  report_type: "Report Type: "
-  report_hubs: "Hubs: "
-  report_payment: "Payment Methods: "
-  report_distributor: "Distributor: "
+  report_producers: "Producers"
+  report_type: "Report Type"
+  report_hubs: "Hubs"
+  report_payment: "Payment Methods"
+  report_distributor: "Distributor"
   report_payment_by: 'Payments By Type'
   report_itemised_payment: 'Itemised Payment Totals'
   report_payment_totals: 'Payment Totals'
   report_all: 'all'
-  report_order_cycle: "Order Cycle: "
-  report_enterprises: "Enterprises: "
-  report_users: "Users: "
+  report_order_cycle: "Order Cycle"
+  report_enterprises: "Enterprises"
+  report_users: "Users"
   report_tax_rates: Tax rates
   report_tax_types: Tax types
+  report_filters: Report Filters
+  report_display_options: Display Options
   report_header_order_cycle: Order Cycle
   report_header_user: User
   report_header_email: Email
