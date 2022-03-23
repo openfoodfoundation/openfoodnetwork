@@ -1,0 +1,16 @@
+= form_tag main_app.admin_reports_path, report_type: @report_type do
+  %fieldset.no-border-bottom
+    %legend{ align: 'center'}= t(:report_filters)
+    = render partial: "admin/reports/filters/#{@report_type}"
+
+  %fieldset
+    %legend{ align: 'center'}= t(:report_render_options)
+    = render partial: "rendering_options"
+
+    .actions.filter-actions
+      = button t(:go), "report__submit-btn"
+
+- if @report_message.present?
+  %p.report__message= @report_message
+
+= render "table"

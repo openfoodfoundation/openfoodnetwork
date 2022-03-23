@@ -30,7 +30,7 @@ module Admin
       assign_view_data
       load_form_options
 
-      render report_type
+      render "show"
     end
 
     def assign_view_data
@@ -38,6 +38,9 @@ module Admin
       @report_subtype = report_subtype || report_loader.default_report_subtype
       @report_subtypes = report_class.report_subtypes.map do |subtype|
         [t("packing.#{subtype}_report", scope: i18n_scope), subtype]
+      end
+      if @report_type == "packing"
+        @report_message = I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
       end
     end
 

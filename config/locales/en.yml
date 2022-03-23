@@ -2637,7 +2637,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_tax_rates: Tax rates
   report_tax_types: Tax types
   report_filters: Report Filters
-  report_display_options: Display Options
+  report_render_options: Render Options
   report_header_order_cycle: Order Cycle
   report_header_user: User
   report_header_email: Email

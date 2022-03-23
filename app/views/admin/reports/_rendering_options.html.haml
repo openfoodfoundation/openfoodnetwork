@@ -1,8 +1,15 @@
+- if @report_subtypes.any?
+  .row
+    .alpha.two.columns= label_tag nil, t(:report_type)
+    .omega.fourteen.columns
+      = select_tag(:report_subtype, options_for_select(@report_subtypes, @report_subtype))
+
 .row.rendering-options
   .alpha.two.columns
     = label_tag :report_format, t(".generate_report")
   .omega.fourteen.columns
     = select_tag :report_format, options_for_select({t('.on_screen') => '', t('.csv_spreadsheet') => 'csv', t('.excel_spreadsheet') => 'xlsx', t('.openoffice_spreadsheet') => 'ods'})
-  -#.inline-checkbox
-  -#  = check_box_tag "options[exclude_summaries]", true, params[:options].andand[:exclude_summaries]
-  -#  = label_tag t(".hide_summary_rows")
+
+-#.inline-checkbox
+-#  = check_box_tag "options[exclude_summaries]", true, params[:options].andand[:exclude_summaries]
+-#  = label_tag t(".hide_summary_rows")
