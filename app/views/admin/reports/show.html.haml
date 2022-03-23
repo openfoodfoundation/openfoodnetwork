@@ -1,9 +1,9 @@
 = form_tag main_app.admin_reports_path, report_type: @report_type do
-  %fieldset.no-border-bottom
+  %fieldset.no-border-bottom.print-hidden
     %legend{ align: 'center'}= t(:report_filters)
     = render partial: "admin/reports/filters/#{@report_type}"
 
-  %fieldset
+  %fieldset.print-hidden
     %legend{ align: 'center'}= t(:report_render_options)
     = render partial: "rendering_options"
 
@@ -11,7 +11,7 @@
       = button t(:go), "report__submit-btn"
 
 - if @report_message.present?
-  %p.report__message= @report_message
+  %p.report__message.print-hidden= @report_message
 
 - if params[:q].present?
   = render "table"
