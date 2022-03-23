@@ -214,6 +214,7 @@ GEM
       ruby-rc4 (>= 0.1.5)
     concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
+    cookiejar (0.3.3)
     crack (0.4.5)
       rexml
     crass (1.0.6)
@@ -254,12 +255,24 @@ GEM
       railties (>= 3.2)
     dry-inflector (0.2.1)
     e2mmap (0.1.0)
+    em-http-request (1.1.7)
+      addressable (>= 2.3.4)
+      cookiejar (!= 0.3.1)
+      em-socksify (>= 0.3)
+      eventmachine (>= 1.0.3)
+      http_parser.rb (>= 0.6.0)
+    em-socksify (0.3.2)
+      eventmachine (>= 1.0.0.beta.4)
+    em-synchrony (1.0.6)
+      eventmachine (>= 1.0.0.beta.1)
     erubi (1.10.0)
     et-orbi (1.2.4)
       tzinfo
-    excon (0.81.0)
-    execjs (2.7.0)
-    factory_bot (6.2.0)
+    eventmachine (1.2.7)
+    eventmachine_httpserver (0.2.1)
+    excon (0.92.1)
+    execjs (2.8.1)
+    factory_bot (6.2.1)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
@@ -327,7 +340,8 @@ GEM
     highline (2.0.3)
     hiredis (0.6.3)
     htmlentities (4.3.4)
-    i18n (1.8.10)
+    http_parser.rb (0.6.0)
+    i18n (1.10.0)
       concurrent-ruby (~> 1.0)
     i18n-js (3.9.0)
       i18n (>= 0.6.6)
@@ -432,6 +446,14 @@ GEM
       byebug (~> 11.0)
       pry (~> 0.13.0)
     public_suffix (4.0.6)
+    puffing-billy (3.0.2)
+      addressable (~> 2.5)
+      em-http-request (~> 1.1, >= 1.1.0)
+      em-synchrony
+      eventmachine (~> 1.2)
+      eventmachine_httpserver
+      http_parser.rb (~> 0.6.0)
+      multi_json
     puma (5.6.2)
       nio4r (~> 2.0)
     raabro (1.4.0)
@@ -761,6 +783,7 @@ DEPENDENCIES
   pg (~> 1.2.3)
   pry (~> 0.13.0)
   pry-byebug (~> 3.9.0)
+  puffing-billy
   puma
   rack-mini-profiler (< 3.0.0)
   rack-rewrite
