@@ -12,18 +12,12 @@
     #per-page_selector
       = render(SelectorComponent.new(title: "#{@per_page_selected[0]} items per page", selected: @per_page_selected, items: @per_page, data: reflex_data_attributes(:toggle_per_page)))
     #columns_selector
-      = render(SelectorComponent.new(title: "Columns", selected: @columns_selected, items: @columns, data: reflex_data_attributes(:toggle_column)))
+      = render(SelectorComponent.new(title: "Columns", selected: @columns_selected, items: @selectable_columns, data: reflex_data_attributes(:toggle_column)))
 
   #products_table
     %table
-      %thead
-        %tr
-          %th
-            Name
-          - @columns_selected.each do |column|
-            %th
-              = @columns.find{ |c| c[:value] == column }[:label]
+      = render(TableHeaderComponent.new(columns: @columns, sort: @sort, data: reflex_data_attributes(:click_sort)))
       %tbody
-        = render(ProductComponent.with_collection(@products, columns: @columns_selected))
+        = render(ProductComponent.with_collection(@products, columns: @columns))
   #pagination
     = render(PaginationComponent.new(pagy: @pagy, data: reflex_data_attributes(:change_page)))

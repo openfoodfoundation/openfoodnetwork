@@ -3,15 +3,21 @@
 class ProductsTableComponent < ViewComponentReflex::Component
   include Pagy::Backend
 
+  SORTABLE_COLUMNS = ["name"].freeze
+
   def initialize(user:)
     super
     @user = user
-    @columns = [{ label: I18n.t("admin.products_page.columns_selector.price"), value: "price" },
-                { label: I18n.t("admin.products_page.columns_selector.unit"), value: "unit" },
-                { label: I18n.t("admin.products_page.columns_selector.producer"),
-                  value: "producer" },
-                { label: I18n.t("admin.products_page.columns_selector.category"),
-                  value: "category" }].sort { |a, b| a[:label] <=> b[:label] }
+    @selectable_columns = [{ label: I18n.t("admin.products_page.columns_selector.price"),
+                             value: "price" },
+                           { label: I18n.t("admin.products_page.columns_selector.unit"),
+                             value: "unit" },
+                           { label: I18n.t("admin.products_page.columns_selector.producer"),
+                             value: "producer" },
+                           { label: I18n.t("admin.products_page.columns_selector.category"),
+                             value: "category" }].sort { |a, b|
+      a[:label] <=> b[:label]
+    }
     @columns_selected = ["price", "unit"]
     @per_page = [{ label: "10", value: 10 }, { label: "25", value: 25 }, { label: "50", value: 50 },
                  { label: "100", value: 100 }]
@@ -26,10 +32,12 @@ class ProductsTableComponent < ViewComponentReflex::Component
                    .map { |producer| { label: producer.name, value: producer.id.to_s } }
     @producers_selected = ["all"]
     @page = 1
+    @sort = { column: "name", direction: "asc" }
   end
 
   def before_render
     fetch_products
+    refresh_columns
   end
 
   def toggle_column
@@ -39,6 +47,11 @@ class ProductsTableComponent < ViewComponentReflex::Component
                         else
                           @columns_selected + [column]
                         end
+  end
+
+  def click_sort
+    @sort = { column: element.dataset['sort-value'],
+              direction: element.dataset['sort-direction'] == "asc" ? "desc" : "asc" }
   end
 
   def toggle_per_page
@@ -69,6 +82,15 @@ class ProductsTableComponent < ViewComponentReflex::Component
   end
 
   private
+
+  def refresh_columns
+    @columns = @columns_selected.map { |column|
+      { label: I18n.t("admin.products_page.columns.#{column}"), value: column,
+        sortable: SORTABLE_COLUMNS.include?(column) }
+    }.sort! { |a, b| a[:label] <=> b[:label] }
+    @columns.unshift({ label: I18n.t("admin.products_page.columns.name"), value: "name",
+                       sortable: SORTABLE_COLUMNS.include?("name") })
+  end
 
   def toggle_super_selector(clicked, selected)
     selected = if selected.include?(clicked)
@@ -102,7 +124,7 @@ class ProductsTableComponent < ViewComponentReflex::Component
   end
 
   def ransack_query
-    query = { s: 'created_at desc' }
+    query = { s: "#{@sort[:column]} #{@sort[:direction]}" }
 
     query = if @producers_selected.include?("all")
               query.merge({ supplier_id_eq: "" })

@@ -8,8 +8,8 @@ class ProductComponent < ViewComponentReflex::Component
     @name = @product.name
     @columns = columns.map { |c|
       {
-        id: c,
-        value: column_value(c)
+        id: c[:value],
+        value: column_value(c[:value])
       }
     }
   end

@@ -459,6 +459,12 @@ en:
 #
   admin:
     products_page:
+      columns:
+        name: Name
+        unit: Unit
+        price: Price
+        producer: Producer
+        category: Category
       columns_selector:
         unit: Unit
         price: Price
