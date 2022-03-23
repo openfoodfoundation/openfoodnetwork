@@ -4,23 +4,27 @@ class ProductsTableComponent < ViewComponentReflex::Component
   include Pagy::Backend
 
   SORTABLE_COLUMNS = ["name"].freeze
+  SELECTABLE_COMUMNS = [{ label: I18n.t("admin.products_page.columns_selector.price"),
+                          value: "price" },
+                        { label: I18n.t("admin.products_page.columns_selector.unit"),
+                          value: "unit" },
+                        { label: I18n.t("admin.products_page.columns_selector.producer"),
+                          value: "producer" },
+                        { label: I18n.t("admin.products_page.columns_selector.category"),
+                          value: "category" }].sort { |a, b|
+    a[:label] <=> b[:label]
+  }.freeze
+  PER_PAGE_VALUE = [10, 25, 50, 100].freeze
+  PER_PAGE = PER_PAGE_VALUE.map { |value| { label: value, value: value } }
+  ALL_COLUMN = { label: I18n.t("admin.products_page.columns.name"), value: "name",
+                 sortable: true }.freeze
 
   def initialize(user:)
     super
     @user = user
-    @selectable_columns = [{ label: I18n.t("admin.products_page.columns_selector.price"),
-                             value: "price" },
-                           { label: I18n.t("admin.products_page.columns_selector.unit"),
-                             value: "unit" },
-                           { label: I18n.t("admin.products_page.columns_selector.producer"),
-                             value: "producer" },
-                           { label: I18n.t("admin.products_page.columns_selector.category"),
-                             value: "category" }].sort { |a, b|
-      a[:label] <=> b[:label]
-    }
+    @selectable_columns = SELECTABLE_COMUMNS
     @columns_selected = ["price", "unit"]
-    @per_page = [{ label: "10", value: 10 }, { label: "25", value: 25 }, { label: "50", value: 50 },
-                 { label: "100", value: 100 }]
+    @per_page = PER_PAGE
     @per_page_selected = [10]
     @categories = [{ label: "All", value: "all" }] +
                   Spree::Taxon.order(:name)
@@ -56,7 +60,7 @@ class ProductsTableComponent < ViewComponentReflex::Component
 
   def toggle_per_page
     selected = element.dataset['value'].to_i
-    @per_page_selected = [selected] if [10, 25, 50, 100].include?(selected)
+    @per_page_selected = [selected] if PER_PAGE_VALUE.include?(selected)
   end
 
   def toggle_category
@@ -81,8 +85,7 @@ class ProductsTableComponent < ViewComponentReflex::Component
       { label: I18n.t("admin.products_page.columns.#{column}"), value: column,
         sortable: SORTABLE_COLUMNS.include?(column) }
     }.sort! { |a, b| a[:label] <=> b[:label] }
-    @columns.unshift({ label: I18n.t("admin.products_page.columns.name"), value: "name",
-                       sortable: SORTABLE_COLUMNS.include?("name") })
+    @columns.unshift(ALL_COLUMN)
   end
 
   def toggle_super_selector(clicked, selected)
