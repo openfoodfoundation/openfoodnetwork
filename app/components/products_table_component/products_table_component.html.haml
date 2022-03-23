@@ -10,7 +10,7 @@
     #producers_selector
       = render(SuperSelectorComponent.new(title: "Producers", selected: @producers_selected, items: @producers, data: { key: key, reflex: "click->ProductsTableComponent#toggle_producer" }))
     #per-page_selector
-      = render(SelectorComponent.new(title: "# per page", selected: @per_page_selected, items: @per_page, data: { key: key, reflex: "click->ProductsTableComponent#toggle_per_page" }))
+      = render(SelectorComponent.new(title: "#{@per_page_selected[0]} items per page", selected: @per_page_selected, items: @per_page, data: { key: key, reflex: "click->ProductsTableComponent#toggle_per_page" }))
     #columns_selector
       = render(SelectorComponent.new(title: "Columns", selected: @columns_selected, items: @columns, data: { key: key, reflex: "click->ProductsTableComponent#toggle_column" }))
 
