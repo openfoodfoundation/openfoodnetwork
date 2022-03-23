@@ -57,28 +57,21 @@ class ProductsTableComponent < ViewComponentReflex::Component
   def toggle_per_page
     selected = element.dataset['value'].to_i
     @per_page_selected = [selected] if [10, 25, 50, 100].include?(selected)
-    fetch_products
   end
 
   def toggle_category
     category_clicked = element.dataset['value']
     @categories_selected = toggle_super_selector(category_clicked, @categories_selected)
-
-    fetch_products
   end
 
   def toggle_producer
     producer_clicked = element.dataset['value']
     @producers_selected = toggle_super_selector(producer_clicked, @producers_selected)
-
-    fetch_products
   end
 
   def change_page
     page = element.dataset['page'].to_i
     @page = page if page > 0
-
-    fetch_products
   end
 
   private
