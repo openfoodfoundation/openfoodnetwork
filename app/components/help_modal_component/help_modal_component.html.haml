@@ -1,0 +1,8 @@
+%div{ id: @id, "data-controller": "help-modal", "data-action": "keyup@document->help-modal#closeIfEscapeKey" }
+  .reveal-modal-bg.fade{ "data-help-modal-target": "background", "data-action": "click->help-modal#close" }
+  .reveal-modal.fade.small.help-modal{ "data-help-modal-target": "modal" }
+    = content
+
+    - if close_button?
+      .text-center
+        %input{ class: "button icon-plus #{close_button_class}", type: 'button', value: t('js.admin.modals.got_it'), "data-action": "click->help-modal#close" }

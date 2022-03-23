@@ -1,15 +1,14 @@
 .row
   .three.columns.alpha
     = bf.label :company, t(".company_legal_name")
-    %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/business_address_info.html' }
+    %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "business_address_info_modal" }
   .eight.columns.omega
     = bf.text_field :company, { placeholder: t(".company_placeholder") }
 
 .row
   .three.columns.alpha
     = bf.label :address1, t('.address1')
-    %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/business_address_info.html' }
-  .eight.columns.omega
+    %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "business_address_info_modal" }
     = bf.text_field :address1, { placeholder: t(".address1_placeholder") }
 .row
   .alpha.three.columns
@@ -40,7 +39,11 @@
 .row
   .three.columns.alpha
     = bf.label :phone, t(".legal_phone_number")
-    %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/business_address_info.html' }
+    %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "business_address_info_modal" }
   .eight.columns.omega
     = bf.text_field :phone, { placeholder: t(".phone_placeholder") }
+
+= render HelpModalComponent.new(id: "business_address_info_modal") do
+  .margin-bottom-30
+    = t('js.admin.modals.business_address_info.message')
 

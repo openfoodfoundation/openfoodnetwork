@@ -35,7 +35,7 @@
 .row
   .alpha.three.columns
     = f.label :terms_and_conditions, t('.terms_and_conditions')
-    %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/terms_and_conditions_info.html' }
+    %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "terms_and_conditions_info_modal" }
 
   .omega.eight.columns
     %a{ href: '{{ Enterprise.terms_and_conditions }}', target: '_blank', ng: { if: 'Enterprise.terms_and_conditions' } }
@@ -69,5 +69,16 @@
     = f.radio_button :preferred_invoice_order_by_supplier, true, 'ng-model' => 'Enterprise.preferred_invoice_order_by_supplier', 'ng-value' => 'true'
     = f.label :preffered_invoice_order_by_supplier, t('.enabled'), value: :true
   .five.columns.omega
-    = f.radio_button :preferred_invoice_order_by_supplier, false, 'ng-model' => 'Enterprise.preferred_invoice_order_by_supplier', 'ng-value' => 'false' 
+    = f.radio_button :preferred_invoice_order_by_supplier, false, 'ng-model' => 'Enterprise.preferred_invoice_order_by_supplier', 'ng-value' => 'false'
     = f.label :preferred_invoice_order_by_name, t('.disabled'), value: :false
+
+= render HelpModalComponent.new(id: "terms_and_conditions_info_modal") do
+  .margin-bottom-30.text-center
+    .text-big
+      = t('js.admin.modals.terms_and_conditions_info.title')
+  .margin-bottom-30
+    %p
+      = t('js.admin.modals.terms_and_conditions_info.message_1')
+  .margin-bottom-30
+    %p
+      = t('js.admin.modals.terms_and_conditions_info.message_2')
