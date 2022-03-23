@@ -6,13 +6,13 @@
         Filter results
 
     #categories_selector
-      = render(SuperSelectorComponent.new(title: "Categories", selected: @categories_selected, items: @categories, data: { key: key, reflex: "click->ProductsTableComponent#toggle_category" }))
+      = render(SuperSelectorComponent.new(title: "Categories", selected: @categories_selected, items: @categories, data: reflex_data_attributes(:toggle_category)))
     #producers_selector
-      = render(SuperSelectorComponent.new(title: "Producers", selected: @producers_selected, items: @producers, data: { key: key, reflex: "click->ProductsTableComponent#toggle_producer" }))
+      = render(SuperSelectorComponent.new(title: "Producers", selected: @producers_selected, items: @producers, data: reflex_data_attributes(:toggle_producer)))
     #per-page_selector
-      = render(SelectorComponent.new(title: "#{@per_page_selected[0]} items per page", selected: @per_page_selected, items: @per_page, data: { key: key, reflex: "click->ProductsTableComponent#toggle_per_page" }))
+      = render(SelectorComponent.new(title: "#{@per_page_selected[0]} items per page", selected: @per_page_selected, items: @per_page, data: reflex_data_attributes(:toggle_per_page)))
     #columns_selector
-      = render(SelectorComponent.new(title: "Columns", selected: @columns_selected, items: @columns, data: { key: key, reflex: "click->ProductsTableComponent#toggle_column" }))
+      = render(SelectorComponent.new(title: "Columns", selected: @columns_selected, items: @columns, data: reflex_data_attributes(:toggle_column)))
 
   #products_table
     %table
@@ -26,4 +26,4 @@
       %tbody
         = render(ProductComponent.with_collection(@products, columns: @columns_selected))
   #pagination
-    = render(PaginationComponent.new(pagy: @pagy, data: {key: key, reflex: "click->ProductsTableComponent#change_page" }))
+    = render(PaginationComponent.new(pagy: @pagy, data: reflex_data_attributes(:change_page)))
