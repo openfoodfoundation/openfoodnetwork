@@ -7,7 +7,11 @@ class ProductsTableComponent < ViewComponentReflex::Component
     super
     @user = user
     @columns = [{ label: I18n.t("admin.products_page.columns_selector.price"), value: "price" },
-                { label: I18n.t("admin.products_page.columns_selector.unit"), value: "unit" }]
+                { label: I18n.t("admin.products_page.columns_selector.unit"), value: "unit" },
+                { label: I18n.t("admin.products_page.columns_selector.producer"),
+                  value: "producer" },
+                { label: I18n.t("admin.products_page.columns_selector.category"),
+                  value: "category" }].sort { |a, b| a[:label] <=> b[:label] }
     @columns_selected = ["price", "unit"]
     @per_page = [{ label: "10", value: 10 }, { label: "25", value: 25 }, { label: "50", value: 50 },
                  { label: "100", value: 100 }]

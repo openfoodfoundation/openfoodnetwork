@@ -462,6 +462,8 @@ en:
       columns_selector:
         unit: Unit
         price: Price
+        producer: Producer
+        category: Category
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     # Common properties / models

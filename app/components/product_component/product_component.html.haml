@@ -4,9 +4,6 @@
       .image
         = image_tag @image.url(:mini)
     = @name
-  - if @columns.include?("unit")
-    %td.products_column.unit
-      = @unit
-  - if @columns.include?("price")
-    %td.products_column.price
-      = @price
+  - @columns.each do |column|
+    %td.products_column{class: column[:id]}
+      = column[:value]
