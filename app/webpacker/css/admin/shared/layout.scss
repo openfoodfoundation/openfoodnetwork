@@ -68,6 +68,11 @@
 .hidden {
   display: none;
 }
+@media print {
+  .print-hidden {
+    display: none;
+  }
+}
 
 // Header
 //---------------------------------------------------
@@ -102,4 +107,10 @@
   margin-top: 15px;
   border-top: 1px solid $color-border;
   padding: 10px 0;
+}
+
+@media print {
+  header, nav {
+    display:none;
+  }
 }
