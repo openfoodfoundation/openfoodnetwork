@@ -25,3 +25,5 @@
               = @columns.find{ |c| c[:value] == column }[:label]
       %tbody
         = render(ProductComponent.with_collection(@products, columns: @columns_selected))
+  #pagination
+    = render(PaginationComponent.new(pagy: @pagy, data: {key: key, reflex: "click->ProductsTableComponent#change_page" }))

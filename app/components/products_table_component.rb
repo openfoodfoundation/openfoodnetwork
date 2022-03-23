@@ -25,6 +25,7 @@ class ProductsTableComponent < ViewComponentReflex::Component
                    .managed_product_enterprises.is_primary_producer.by_name
                    .map { |producer| { label: producer.name, value: producer.id.to_s } }
     @producers_selected = ["all"]
+    @page = 1
   end
 
   def before_render
@@ -60,6 +61,13 @@ class ProductsTableComponent < ViewComponentReflex::Component
     fetch_products
   end
 
+  def change_page
+    page = element.dataset['page'].to_i
+    @page = page if page > 0
+
+    fetch_products
+  end
+
   private
 
   def toggle_super_selector(clicked, selected)
@@ -80,7 +88,7 @@ class ProductsTableComponent < ViewComponentReflex::Component
   def fetch_products
     product_query = OpenFoodNetwork::Permissions.new(@user).editable_products.merge(product_scope)
     @products = product_query.ransack(ransack_query).result
-    @pagy, @products = pagy(@products, items: @per_page_selected.first)
+    @pagy, @products = pagy(@products, items: @per_page_selected.first, page: @page)
   end
 
   def product_scope
