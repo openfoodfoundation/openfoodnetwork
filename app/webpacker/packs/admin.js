@@ -13,3 +13,6 @@ application.consumer = consumer;
 StimulusReflex.initialize(application, { controller, isolate: true });
 StimulusReflex.debug = process.env.RAILS_ENV === "development";
 CableReady.initialize({ consumer });
+
+import debounced from "debounced";
+debounced.initialize({ input: { wait: 300 } });

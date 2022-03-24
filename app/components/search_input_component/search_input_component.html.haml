@@ -1,0 +1,5 @@
+= component_controller do
+  %div.search-input
+    %input{type: 'text', placeholder: 'Search', id: 'search_query', data: {action: 'debounced:input->search-input#search'}, value: @value}
+    .search-button{data: @data}
+      %i.fa.fa-search
