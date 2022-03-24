@@ -148,6 +148,7 @@ describe "Customers", type: :request do
             email: "alice@example.com",
             enterprise_id: enterprise1.id,
             tags: ["staff", "discount"],
+            shipping_address: CustomerSchema.address_example
           )
         end
       end

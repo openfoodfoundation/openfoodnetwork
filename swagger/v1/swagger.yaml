@@ -350,6 +350,25 @@ paths:
                   example:
                   - staff
                   - discount
+                billing_address:
+                  type: object
+                  nullable: true
+                  example:
+                shipping_address:
+                  type: object
+                  nullable: true
+                  example:
+                    phone: 0404 333 222 111
+                    latitude: -37.8173751
+                    longitude: 144.964803195704
+                    first_name: Alice
+                    last_name: Springs
+                    street_address_1: 1 Flinders Street
+                    street_address_2: ''
+                    postal_code: '1234'
+                    locality: Melbourne
+                    region: Victoria
+                    country: Australia
               required:
               - enterprise_id
               - email
@@ -435,6 +454,25 @@ paths:
                   example:
                   - staff
                   - discount
+                billing_address:
+                  type: object
+                  nullable: true
+                  example:
+                shipping_address:
+                  type: object
+                  nullable: true
+                  example:
+                    phone: 0404 333 222 111
+                    latitude: -37.8173751
+                    longitude: 144.964803195704
+                    first_name: Alice
+                    last_name: Springs
+                    street_address_1: 1 Flinders Street
+                    street_address_2: ''
+                    postal_code: '1234'
+                    locality: Melbourne
+                    region: Victoria
+                    country: Australia
               required:
               - enterprise_id
               - email

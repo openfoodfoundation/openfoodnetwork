@@ -55,7 +55,6 @@ class CustomerSchema < JsonApiSchema
       :id,
       :allow_charges,
       :terms_and_conditions_accepted_at,
-      :billing_address, :shipping_address,
     )
   end
 
