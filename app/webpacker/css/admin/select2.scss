@@ -15,28 +15,18 @@
     .select2-choice{
       background-color: #ffffff;
       font-weight: normal;
-      border: 1px solid $spree-blue !important;
       color: $spree-blue !important;
-
-      .select2-arrow {
-        &:before {
-          color: $spree-blue;
-          font-size: 1rem;
-          font-weight: 400;
-          content: '\25be';
-          display: inline;
-        }
-      }
+      border: 1px solid $color-border !important;
     }
 
     &:hover, &.select2-container-active {
       .select2-choice{
-        color: #ffffff !important;
-        background-color: $spree-blue !important;
+        background-color: #ffffff !important;
+        border: 1px solid $spree-green !important;
 
         .select2-arrow {
           &:before {
-            color: #ffffff;
+            color: $spree-blue;
           }
         }
       }
