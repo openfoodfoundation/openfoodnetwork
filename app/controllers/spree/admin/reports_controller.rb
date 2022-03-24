@@ -46,11 +46,7 @@ module Spree
       end
 
       def customers
-        @report_types = report_types[:customers]
-        @report_type = params[:report_type]
-        @report = OpenFoodNetwork::CustomersReport.new spree_current_user, raw_params,
-                                                       render_content?
-        render_report(@report.header, @report.table, params[:csv], "customers_#{timestamp}.csv")
+        render_report2
       end
 
       def order_cycle_management
@@ -195,7 +191,6 @@ module Spree
         @report_subtype = params[:report_subtype]
         klass = "OpenFoodNetwork::#{action_name.camelize}Report".constantize
         @report = klass.new spree_current_user, raw_params, render_content?
-
         if report_format.present?
           data = Reporting::ReportRenderer.new(@report).public_send("to_#{report_format}")
           send_data data, filename: report_filename

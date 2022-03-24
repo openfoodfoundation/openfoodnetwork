@@ -1,4 +1,7 @@
-= form_for @report.search, :url => url_for(only_path: false) do |f|
+/ If the report object do not use ransack search, create a fake one just for the form_for
+- ransack_search = @report.respond_to?(:search) ? @report.search : Ransack::Search.new(Spree::Order)
+= form_for ransack_search, :url => url_for(only_path: false) do |f|
+
   %fieldset.no-border-bottom.print-hidden
     %legend{ align: 'center'}= t(:report_filters)
     = render partial: "spree/admin/reports/filters/#{action_name}", locals: { f: f }

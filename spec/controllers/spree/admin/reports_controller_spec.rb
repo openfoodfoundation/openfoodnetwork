@@ -286,7 +286,7 @@ describe Spree::Admin::ReportsController, type: :controller do
 
     it "assigns report types" do
       spree_get :customers
-      expect(assigns(:report_types)).to eq(subject.report_types[:customers])
+      expect(assigns(:report_subtypes)).to eq(subject.report_types[:customers])
     end
 
     it "creates a CustomersReport" do
@@ -295,8 +295,8 @@ describe Spree::Admin::ReportsController, type: :controller do
                              "action" => "customers", "use_route" => "main_app",
                              "report" => {} }, false)
         .and_return(report = double(:report))
-      allow(report).to receive(:header).and_return []
-      allow(report).to receive(:table).and_return []
+      allow(report).to receive(:table_headers).and_return []
+      allow(report).to receive(:table_rows).and_return []
       spree_get :customers, test: "foo"
       expect(assigns(:report)).to eq(report)
     end

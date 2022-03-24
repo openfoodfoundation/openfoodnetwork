@@ -15,11 +15,11 @@ module OpenFoodNetwork
 
       describe "mailing list report" do
         before do
-          allow(subject).to receive(:params).and_return(report_type: "mailing_list")
+          allow(subject).to receive(:params).and_return(report_subtype: "mailing_list")
         end
 
         it "returns headers for mailing_list" do
-          expect(subject.header).to eq(["Email", "First Name", "Last Name", "Suburb"])
+          expect(subject.table_headers).to eq(["Email", "First Name", "Last Name", "Suburb"])
         end
 
         it "builds a table from a list of variants" do
@@ -29,7 +29,7 @@ module OpenFoodNetwork
           allow(order).to receive(:billing_address).and_return address
           allow(subject).to receive(:orders).and_return [order]
 
-          expect(subject.table).to eq([[
+          expect(subject.table_rows).to eq([[
                                         "test@test.com", "Firsty", "Lasty", "Suburbia"
                                       ]])
         end
@@ -37,11 +37,11 @@ module OpenFoodNetwork
 
       describe "addresses report" do
         before do
-          allow(subject).to receive(:params).and_return(report_type: "addresses")
+          allow(subject).to receive(:params).and_return(report_subtype: "addresses")
         end
 
         it "returns headers for addresses" do
-          expect(subject.header).to eq(["First Name", "Last Name", "Billing Address", "Email",
+          expect(subject.table_headers).to eq(["First Name", "Last Name", "Billing Address", "Email",
                                         "Phone", "Hub", "Hub Address", "Shipping Method"])
         end
 
@@ -52,7 +52,7 @@ module OpenFoodNetwork
           o.shipments << create(:shipment)
 
           allow(subject).to receive(:orders).and_return [o]
-          expect(subject.table).to eq([[
+          expect(subject.table_rows).to eq([[
                                         a.firstname, a.lastname,
                                         [a.address1, a.address2, a.city].join(" "),
                                         o.email, a.phone, d.name,

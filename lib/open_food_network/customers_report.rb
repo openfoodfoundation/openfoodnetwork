@@ -10,7 +10,7 @@ module OpenFoodNetwork
       @compile_table = compile_table
     end
 
-    def header
+    def table_headers
       if is_mailing_list?
         [I18n.t(:report_header_email),
          I18n.t(:report_header_first_name),
@@ -28,7 +28,7 @@ module OpenFoodNetwork
       end
     end
 
-    def table
+    def table_rows
       return [] unless @compile_table
 
       orders.map do |order|
@@ -93,7 +93,7 @@ module OpenFoodNetwork
     private
 
     def is_mailing_list?
-      params[:report_type] == "mailing_list"
+      params[:report_subtype] == "mailing_list"
     end
   end
 end
