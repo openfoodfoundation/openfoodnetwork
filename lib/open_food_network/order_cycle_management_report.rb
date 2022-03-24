@@ -12,7 +12,7 @@ module OpenFoodNetwork
       @render_table = render_table
     end
 
-    def header
+    def table_headers
       if is_payment_methods?
         [
           I18n.t(:report_header_first_name),
@@ -63,7 +63,7 @@ module OpenFoodNetwork
       filter(orders_with_balance)
     end
 
-    def table_items
+    def table_rows
       return [] unless @render_table
 
       if is_payment_methods?
@@ -147,7 +147,7 @@ module OpenFoodNetwork
     end
 
     def is_payment_methods?
-      params[:report_type] == "payment_methods"
+      params[:report_subtype] == "payment_methods"
     end
 
     def customer_code(email)

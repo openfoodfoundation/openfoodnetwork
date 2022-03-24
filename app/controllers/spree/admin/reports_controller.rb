@@ -50,19 +50,7 @@ module Spree
       end
 
       def order_cycle_management
-        raw_params[:q] ||= {}
-
-        @report_types = report_types[:order_cycle_management]
-        @report_type = params[:report_type]
-
-        # -- Build Report with Order Grouper
-        @report = OpenFoodNetwork::OrderCycleManagementReport.new spree_current_user,
-                                                                  raw_params,
-                                                                  render_content?
-        @table = @report.table_items
-
-        render_report(@report.header, @table, params[:csv],
-                      "order_cycle_management_#{timestamp}.csv")
+        render_report2
       end
 
       def orders_and_distributors

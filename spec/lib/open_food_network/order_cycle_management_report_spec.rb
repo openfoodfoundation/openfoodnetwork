@@ -146,14 +146,14 @@ module OpenFoodNetwork
         end
       end
 
-      describe '#table_items' do
+      describe '#table_rows' do
         subject { OrderCycleManagementReport.new(user, params, true) }
 
         let(:distributor) { create(:distributor_enterprise) }
         before { distributor.enterprise_roles.create!(user: user) }
 
         context 'when the report type is payment_methods' do
-          let(:params) { { report_type: 'payment_methods' } }
+          let(:params) { { report_subtype: 'payment_methods' } }
 
           let!(:order) do
             create(
@@ -164,7 +164,7 @@ module OpenFoodNetwork
           end
 
           it 'returns rows with payment information' do
-            expect(subject.table_items).to eq([[
+            expect(subject.table_rows).to eq([[
                                                 order.billing_address.firstname,
                                                 order.billing_address.lastname,
                                                 order.distributor.name,
@@ -190,7 +190,7 @@ module OpenFoodNetwork
           end
 
           it 'returns rows with delivery information' do
-            expect(subject.table_items).to eq([[
+            expect(subject.table_rows).to eq([[
                                                 order.ship_address.firstname,
                                                 order.ship_address.lastname,
                                                 order.distributor.name,

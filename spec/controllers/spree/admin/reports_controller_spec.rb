@@ -313,7 +313,7 @@ describe Spree::Admin::ReportsController, type: :controller do
       spree_post :order_cycle_management, {
         q: { completed_at_lt: 1.day.ago },
         shipping_method_in: ["123"], # We just need to search for shipping methods
-        report_type: "delivery",
+        report_subtype: "delivery",
       }
 
       expect(response).to have_http_status(:ok)
