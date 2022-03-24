@@ -37,11 +37,16 @@ class ProductsTableComponent < ViewComponentReflex::Component
     @producers_selected = ["all"]
     @page = 1
     @sort = { column: "name", direction: "asc" }
+    @search_term = ""
   end
 
   def before_render
     fetch_products
     refresh_columns
+  end
+
+  def search_term
+    @search_term = element.dataset['value']
   end
 
   def toggle_column
@@ -127,6 +132,8 @@ class ProductsTableComponent < ViewComponentReflex::Component
             else
               query.merge({ supplier_id_in: @producers_selected })
             end
+
+    query = query.merge({ name_cont: @search_term }) if @search_term.present?
 
     if @categories_selected.include?("all")
       query.merge({ primary_taxon_id_eq: "" })

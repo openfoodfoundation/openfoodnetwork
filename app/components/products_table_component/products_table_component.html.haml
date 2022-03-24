@@ -1,10 +1,7 @@
 = component_controller do
   #products_page_form
     #filter_results
-      %input.search{type: 'text', placeholder: 'Search', id: 'search_query'}
-      %button.btn.btn-primary{type: 'submit'}
-        Filter results
-
+      = render(SearchInputComponent.new(value: @search_term, data: reflex_data_attributes(:search_term)))
     #categories_selector
       = render(SuperSelectorComponent.new(title: "Categories", selected: @categories_selected, items: @categories, data: reflex_data_attributes(:toggle_category)))
     #producers_selector
