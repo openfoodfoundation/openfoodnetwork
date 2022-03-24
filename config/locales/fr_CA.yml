@@ -1347,6 +1347,11 @@ fr_CA:
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
   api:
+    unknown_error: "Quelque chose n'a pas fonctionné. Notre équipe a été notifiée."
+    invalid_api_key: " La clé API (%{key}) n'est pas valide."
+    unauthorized: "Vous n'êtes pas autorisé à réaliser cette action."
+    invalid_resource: "La resource est invalide. Veuillez corriger les erreurs et recommencer."
+    resource_not_found: "La ressource recherchée n'a pas été trouvée."
     enterprise_logo:
       destroy_attachment_does_not_exist: "Aucun logo trouvé "
     enterprise_promo_image:
@@ -1420,6 +1425,7 @@ fr_CA:
         login: "se connecter"
         contact: "contact"
         require_customer_login: "Seul les acheteurs autorisés peuvent accéder à cette boutique."
+        require_login_link_html: "Quelque chose n'a pas fonctionné. Notre équipe a été notifiée.%{login}pour continuer."
         require_login_2_html: "Vous souhaitez réaliser vos courses ici? Merci de %{contact}%{enterprise} afin d'avoir l'autorisation d'accès à la boutique."
         require_customer_html: "Si vous voulez demander à y accéder, veuillez %{contact} %{enterprise}."
       select_oc:
@@ -2712,6 +2718,7 @@ fr_CA:
     admin:
       unit_price_tooltip: "Le prix unitaire permet aux acheteurs de comparer les prix entre les produits et/ou les conditionnements. Attention, le prix final observé par l'acheteur peut être différent si des marges et/ou commissions sont appliquées."
       enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à  %{contact_email} si vous avez besoin d'augmenter cette limite."
+      deleting_item_will_cancel_order: "Cette opération va rendre une ou plusieurs commandes vides, sans aucun produit. Elles vont ainsi être annulées. Souhaitez-vous continuer ?"
       modals:
         got_it: "J'ai compris"
         close: "Fermer"
@@ -2910,7 +2917,8 @@ fr_CA:
           invalid: "invalide"
         quantity_adjusted: "Le stock disponible est insuffisant. La quantité a été mise à jour en fonction du stock restant."
         quantity_unchanged: "La quantité n'a pas été modifiée."
-        cannot_remove_last_item: "Vous ne pouvez pas supprimer le dernier produit d'une commande, veuillez annuler la commande si aucun produit ne doit y être ajouté."
+        cancel_the_order_html: "Cette action va annuler la commande.<br />Etes-vous sûr de vouloir continuer ?"
+        cancel_the_order_send_cancelation_email: "Envoyer un email d'annulation à l'acheteur"
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoyer"
@@ -3278,6 +3286,7 @@ fr_CA:
     tracking: "Suivi"
     tracking_number: "Numéro de suivi"
     order_total: "Total Commande:"
+    order_updated: "Quelque chose n'a pas fonctionné. Notre équipe a été notifiée."
     customer_details: "Informations acheteur"
     customer_details_updated: "Détails de l'acheteur mis à jour"
     customer_search: "Recherche Acheteur"
