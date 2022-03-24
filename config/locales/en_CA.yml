@@ -1345,6 +1345,11 @@ en_CA:
       stripe_connect_settings:
         resource: Stripe Connect configuration
   api:
+    unknown_error: "Something went wrong. Our team has been notified."
+    invalid_api_key: "Invalid API key (%{key}) specified."
+    unauthorized: "You are not authorized to perform that action."
+    invalid_resource: "Invalid resource. Please fix errors and try again."
+    resource_not_found: "The resource you were looking for could not be found."
     enterprise_logo:
       destroy_attachment_does_not_exist: "Logo does not exist"
     enterprise_promo_image:
@@ -1418,6 +1423,7 @@ en_CA:
         login: "login"
         contact: "contact"
         require_customer_login: "Only approved customers can access this shop"
+        require_login_link_html: "If you're already an approved customer, %{login} to proceed."
         require_login_2_html: "Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
         require_customer_html: "If you'd like to start shopping here, please %{contact}%{enterprise}  to ask about joining."
       select_oc:
@@ -2708,6 +2714,7 @@ en_CA:
     admin:
       unit_price_tooltip: "The unit price increases transparency by allowing your customers to easily compare prices between different products and packaging sizes. Note, that the final unit price displayed in the shopfront might differ. For example, shopfront prices might include enterprise fees (mark-ups)  if you are using them."
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
+      deleting_item_will_cancel_order: "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
       modals:
         got_it: "Got it"
         close: "Close"
@@ -2897,7 +2904,8 @@ en_CA:
           invalid: "invalid"
         quantity_adjusted: "Insufficient stock available. Your item updated to the maximum available quantity."
         quantity_unchanged: "Quantity unchanged from previous amount."
-        cannot_remove_last_item: "Cannot remove last item from order. Please cancel order instead."
+        cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
+        cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer."
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -3264,6 +3272,7 @@ en_CA:
     tracking: "Tracking"
     tracking_number: "Tracking Number"
     order_total: "Order Total"
+    order_updated: "Order updated"
     customer_details: "Customer Details"
     customer_details_updated: "Customer Details updated"
     customer_search: "Customer Search"
