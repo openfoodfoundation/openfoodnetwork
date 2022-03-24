@@ -223,6 +223,13 @@ describe "Customers", type: :request do
       end
 
       describe "related records" do
+        it "contains exactly the defined relationships" do
+          get "/api/v1/customers/#{customer1.id}"
+
+          relationships = json_response[:data][:relationships].keys
+          expect(relationships).to match_array CustomerSchema.relationships.map(&:to_s)
+        end
+
         it "serializes the enterprise relationship" do
           expected_enterprise_data = {
             "data" => {
