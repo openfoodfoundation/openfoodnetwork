@@ -16,7 +16,7 @@ nav {
 
       &.inactive {
         cursor: default;
-        color: #999;
+        color: $disabled-dark;
       }
     }
 
@@ -52,15 +52,15 @@ nav {
       }
 
       .pagination-gap {
-        color: #999;
+        color: $disabled-dark;
       }
 
       .pagination-page {
-        color: #6788A2;
+        color: $color-4;
         cursor: pointer;
         &.active {
-          border-top: 3px solid #5498DA;
-          color: #5498DA;
+          border-top: 3px solid $spree-blue;
+          color: $spree-blue;
           cursor: default;
         }
       }

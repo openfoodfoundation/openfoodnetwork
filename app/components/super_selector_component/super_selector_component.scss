@@ -20,8 +20,8 @@
     display: flex;
 
     .super-selector-selected-item {
-      border: 1px solid #cee1f4;
-      background-color: #eff5fc;
+      border: 1px solid $pale-blue;
+      background-color: $spree-light-blue;
       border-radius: 20px;
       height: 2em;
       padding-left: 10px;
@@ -37,11 +37,11 @@
 
   .selector-wrapper {
     .super-selector-search {
-      border-bottom: 1px solid #d2d2d2;
+      border-bottom: 1px solid $disabled-light;
       padding: 10px 5px;
 
       input {
-        border: 1px solid #d2d2d2;
+        border: 1px solid $disabled-light;
         box-sizing: border-box;
         border-radius: 4px;
         width: 100%;
