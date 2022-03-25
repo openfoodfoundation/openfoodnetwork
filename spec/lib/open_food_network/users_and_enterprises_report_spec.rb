@@ -8,7 +8,7 @@ module OpenFoodNetwork
     describe "users_and_enterprises" do
       let!(:owners_and_enterprises) { double(:owners_and_enterprises) }
       let!(:managers_and_enterprises) { double(:managers_and_enterprises) }
-      let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new({}, true) }
+      let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new(nil, {}, true) }
 
       before do
         allow(subject).to receive(:owners_and_enterprises) { owners_and_enterprises }
@@ -25,7 +25,7 @@ module OpenFoodNetwork
     end
 
     describe "sorting results" do
-      let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new({}, true) }
+      let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new(nil, {}, true) }
 
       it "sorts by creation date" do
         uae_mock = [
@@ -69,7 +69,7 @@ module OpenFoodNetwork
       describe "for owners and enterprises" do
         describe "by enterprise id" do
           let!(:params) { { enterprise_id_in: [enterprise1.id.to_s] } }
-          let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new params, true }
+          let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new nil, params, true }
 
           it "excludes enterprises that are not explicitly requested" do
             results = subject.owners_and_enterprises.to_a.map{ |oae| oae["name"] }
@@ -80,7 +80,7 @@ module OpenFoodNetwork
 
         describe "by user id" do
           let!(:params) { { user_id_in: [enterprise1.owner.id.to_s] } }
-          let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new params, true }
+          let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new nil, params, true }
 
           it "excludes enterprises that are not explicitly requested" do
             results = subject.owners_and_enterprises.to_a.map{ |oae| oae["name"] }
@@ -93,7 +93,7 @@ module OpenFoodNetwork
       describe "for managers and enterprises" do
         describe "by enterprise id" do
           let!(:params) { { enterprise_id_in: [enterprise1.id.to_s] } }
-          let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new params, true }
+          let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new nil, params, true }
 
           it "excludes enterprises that are not explicitly requested" do
             results = subject.managers_and_enterprises.to_a.map{ |mae| mae["name"] }
@@ -106,7 +106,7 @@ module OpenFoodNetwork
           let!(:manager1) { create(:user) }
           let!(:manager2) { create(:user) }
           let!(:params) { { user_id_in: [manager1.id.to_s] } }
-          let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new params, true }
+          let!(:subject) { OpenFoodNetwork::UsersAndEnterprisesReport.new nil, params, true }
 
           before do
             enterprise1.enterprise_roles.build(user: manager1).save

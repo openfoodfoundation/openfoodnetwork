@@ -90,9 +90,7 @@ module Spree
       end
 
       def users_and_enterprises
-        @report = OpenFoodNetwork::UsersAndEnterprisesReport.new raw_params, render_content?
-        render_report(@report.header, @report.table, params[:csv],
-                      "users_and_enterprises_#{timestamp}.csv")
+        render_report2
       end
 
       def xero_invoices

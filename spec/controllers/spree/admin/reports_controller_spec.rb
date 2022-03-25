@@ -328,12 +328,12 @@ describe Spree::Admin::ReportsController, type: :controller do
 
       it "shows report search forms" do
         spree_get :users_and_enterprises
-        expect(assigns(:report).table).to eq []
+        expect(assigns(:report).table_rows).to eq []
       end
 
       it "shows report data" do
         spree_post :users_and_enterprises, q: {}
-        expect(assigns(:report).table.empty?).to be false
+        expect(assigns(:report).table_rows.empty?).to be false
       end
     end
 

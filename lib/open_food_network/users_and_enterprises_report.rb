@@ -4,7 +4,8 @@ module OpenFoodNetwork
   class UsersAndEnterprisesReport
     attr_reader :params
 
-    def initialize(params = {}, compile_table = false)
+    def initialize(user, params = {}, compile_table = false)
+      @user = user
       @params = params
       @compile_table = compile_table
 
@@ -15,7 +16,7 @@ module OpenFoodNetwork
       @params[:user_id_in] = @params[:user_id_in].join(',') if @params[:user_id_in].is_a? Array
     end
 
-    def header
+    def table_headers
       [
         I18n.t(:report_header_user),
         I18n.t(:report_header_relationship),
@@ -27,7 +28,7 @@ module OpenFoodNetwork
       ]
     end
 
-    def table
+    def table_rows
       return [] unless @compile_table
 
       users_and_enterprises.map do |uae|

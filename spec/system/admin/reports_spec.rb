@@ -347,7 +347,7 @@ describe '
     end
 
     it "shows users and enterprises report" do
-      click_button "Search"
+      click_button "Go"
 
       rows = find("table.report__table").all("tr")
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
@@ -368,7 +368,7 @@ describe '
       select enterprise3.name, from:  "enterprise_id_in"
       select enterprise1.owner.email, from: "user_id_in"
 
-      click_button "Search"
+      click_button "Go"
 
       rows = find("table.report__table").all("tr")
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
