@@ -59,10 +59,7 @@ module Spree
 
       def sales_tax
         @distributors = my_distributors
-        @report_type = params[:report_type]
-        @report = OpenFoodNetwork::SalesTaxReport.new spree_current_user, raw_params,
-                                                      render_content?
-        render_report(@report.header, @report.table, params[:csv], "sales_tax.csv")
+        render_report2
       end
 
       def payments

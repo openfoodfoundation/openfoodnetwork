@@ -340,7 +340,7 @@ describe Spree::Admin::ReportsController, type: :controller do
     describe "sales_tax" do
       it "shows report search forms" do
         spree_get :sales_tax
-        expect(assigns(:report).table).to eq []
+        expect(assigns(:report).table_rows).to eq []
       end
     end
   end

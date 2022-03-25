@@ -164,7 +164,7 @@ describe '
 
       login_as_admin_and_visit spree.admin_reports_path
       click_link "Sales Tax"
-      select("Tax types", from: "report_type")
+      select("Tax Types", from: "report_subtype")
     end
 
     it "reports" do

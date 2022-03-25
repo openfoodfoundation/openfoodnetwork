@@ -11,8 +11,8 @@ module OpenFoodNetwork
       @render_table = render_table
     end
 
-    def header
-      case params[:report_type]
+    def table_headers
+      case params[:report_subtype]
       when "tax_rates"
         [I18n.t(:report_header_order_number),
          I18n.t(:report_header_total_excl_vat, currency_symbol: currency_symbol)] +
@@ -44,10 +44,10 @@ module OpenFoodNetwork
       search.result
     end
 
-    def table
+    def table_rows
       return [] unless @render_table
 
-      case params[:report_type]
+      case params[:report_subtype]
       when "tax_rates"
         orders.map do |order|
           [order.number, order.total - order.total_tax] +
