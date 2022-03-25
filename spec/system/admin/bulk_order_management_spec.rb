@@ -670,12 +670,21 @@ describe '
           within("tr#li_#{li2.id} td.bulk") do
             check "bulk"
           end
-          page.driver.accept_modal :confirm do
-            find("div#bulk-actions-dropdown").click   
-            find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
-          end
-          expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
+
+          find("div#bulk-actions-dropdown").click
+          find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
+
+          expect(page).to have_content "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
+
+          expect do
+            within(".modal", visible: true) do
+              check("send_cancellation_email")
+              click_on("OK")
+            end
+            expect(page).to have_selector "tr#li_#{li1.id}"
+            expect(page).to have_no_selector "tr#li_#{li2.id}"
+            expect(o2.reload.state).to eq("canceled")
+          end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
         end
       end
 
@@ -695,10 +704,14 @@ describe '
           check "toggle_bulk"
           fill_in "quick_search", with: o1.number
           expect(page).to have_no_selector "tr#li_#{li2.id}"
-          page.driver.accept_modal :confirm do
-            find("div#bulk-actions-dropdown").click
-            find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
+
+          find("div#bulk-actions-dropdown").click
+          find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
+
+          within ".modal", visible: true do
+            click_on("OK")
           end
+
           expect(page).to have_no_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "#quick_search"
           fill_in "quick_search", with: ''
@@ -765,19 +778,57 @@ describe '
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
         let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
 
-        before :each do
-          visit_bulk_order_management
+        context "when deleting a line item of an order that have more than one line item" do
+          let!(:li12) { create(:line_item_with_shipment, order: o1 ) }
+
+          it "removes a line item when the relevant delete button is clicked" do
+            visit_bulk_order_management
+
+            expect(page).to have_selector "a.delete-line-item", count: 3
+            accept_alert do
+              find("tr#li_#{li1.id} a.delete-line-item").click
+            end
+            expect(page).to have_selector "a.delete-line-item", count: 2
+          end
         end
 
-        it "removes a line item when the relevant delete button is clicked" do
-          expect(page).to have_selector "a.delete-line-item", count: 2
-          accept_alert do
-            find("tr#li_#{li1.id} a.delete-line-item").click
+        context "when deleting the last item of an order, it shows a modal about order cancellation" do
+          before :each do
+            visit_bulk_order_management
+            expect(page).to have_selector "a.delete-line-item", count: 2
+            find("tr#li_#{li2.id} a.delete-line-item").click
+            expect(page).to have_content "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
           end
-          expect(page).to have_no_selector "a.delete-line-item", count: 2
-          expect(page).to have_selector "a.delete-line-item", count: 1
-          visit_bulk_order_management
-          expect(page).to have_selector "a.delete-line-item", count: 1
+
+          it "the user can cancel : no line item is deleted" do
+            within(".modal", visible: true) do
+              click_on("Cancel")
+            end
+            expect(o2.reload.line_items.length).to eq(1)
+            expect(page).to have_selector "a.delete-line-item", count: 2
+          end
+
+          it "the user can confirm : line item is then deleted and order is canceled" do
+            expect do
+              within(".modal", visible: true) do
+                uncheck("send_cancellation_email")
+                click_on("OK")
+              end
+              expect(page).to have_selector "a.delete-line-item", count: 1
+              expect(o2.reload.state).to eq("canceled")
+            end.to_not have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+          end
+
+          it "the user can confirm + wants to send email confirmation : line item is then deleted, order is canceled and email is sent" do
+            expect do
+              within(".modal", visible: true) do
+                check("send_cancellation_email")
+                click_on("OK")
+              end
+              expect(page).to have_selector "a.delete-line-item", count: 1
+              expect(o2.reload.state).to eq("canceled")
+            end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+          end
         end
       end
     end
