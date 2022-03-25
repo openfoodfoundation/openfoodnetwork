@@ -44,7 +44,7 @@ module Spree
 
     def self.valid_localizable_number?(number)
       return true unless number.is_a?(String) || number.respond_to?(:to_d)
-      return false if number =~ /[.,]\d{2}[.,]/
+      return false if number.to_s =~ /[.,]\d{2}[.,]/
 
       true
     end

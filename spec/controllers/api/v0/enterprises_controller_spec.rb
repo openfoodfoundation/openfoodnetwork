@@ -75,7 +75,7 @@ describe Api::V0::EnterprisesController, type: :controller do
     end
 
     describe "submitting a valid image" do
-      let!(:logo) { fixture_file_upload("files/logo.png", "image/png") }
+      let!(:logo) { fixture_file_upload("logo.png", "image/png") }
       before do
         allow(Enterprise)
           .to receive(:find_by).with({ permalink: enterprise.id.to_s }) { enterprise }
