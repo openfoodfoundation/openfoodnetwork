@@ -1,20 +1,21 @@
-= component_controller do
-  #products_page_form
-    #filter_results
+= component_controller(class: "products-table") do
+  .products-table-form
+    .products-table-form_filter_results
       = render(SearchInputComponent.new(value: @search_term, data: reflex_data_attributes(:search_term)))
-    #categories_selector
+    .products-table-form_categories_selector
       = render(SuperSelectorComponent.new(title: "Categories", selected: @categories_selected, items: @categories, data: reflex_data_attributes(:toggle_category)))
-    #producers_selector
+    .products-table-form_producers_selector
       = render(SuperSelectorComponent.new(title: "Producers", selected: @producers_selected, items: @producers, data: reflex_data_attributes(:toggle_producer)))
-    #per-page_selector
+    .products-table-form_per-page_selector
       = render(SelectorComponent.new(title: "#{@per_page_selected[0]} items per page", selected: @per_page_selected, items: @per_page, data: reflex_data_attributes(:toggle_per_page)))
-    #columns_selector
+    .products-table-form_columns_selector
       = render(SelectorComponent.new(title: "Columns", selected: @columns_selected, items: @selectable_columns, data: reflex_data_attributes(:toggle_column)))
 
-  #products_table
+  .products-table_table
     %table
       = render(TableHeaderComponent.new(columns: @columns, sort: @sort, data: reflex_data_attributes(:click_sort)))
       %tbody
         = render(ProductComponent.with_collection(@products, columns: @columns))
-  #pagination
+
+  .products-table-form_pagination
     = render(PaginationComponent.new(pagy: @pagy, data: reflex_data_attributes(:change_page)))
