@@ -1200,6 +1200,10 @@ fr_BE:
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
   api:
+    invalid_api_key: "Clé API invalide (%{key}) spécifiée."
+    unauthorized: "Vous n'êtes pas autorisé à effectuer cette action."
+    invalid_resource: "Ressource non valable. Veuillez corriger les erreurs et réessayer."
+    resource_not_found: "La ressource que vous cherchiez n'a pas pu être trouvée."
     enterprise_logo:
       destroy_attachment_does_not_exist: "Aucun logo trouvé :-("
     enterprise_promo_image:

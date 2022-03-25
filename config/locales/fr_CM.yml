@@ -1304,6 +1304,10 @@ fr_CM:
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
   api:
+    invalid_api_key: "La clé API (%{key}) n'est pas valide."
+    unauthorized: "Vous n'êtes pas autorisé à réaliser cette action."
+    invalid_resource: "La resource est invalide. Veuillez corriger les erreurs et recommencer."
+    resource_not_found: "La ressource recherchée n'a pas été trouvée."
     enterprise_logo:
       destroy_attachment_does_not_exist: "Aucun logo trouvé :-("
     enterprise_promo_image:
@@ -2882,7 +2886,6 @@ fr_CM:
           invalid: "invalide"
         quantity_adjusted: "Le stock disponible est insuffisant. La quantité a été mise à jour en fonction du stock restant."
         quantity_unchanged: "La quantité n'a pas été modifiée."
-        cannot_remove_last_item: "Vous ne pouvez pas supprimer le dernier produit d'une commande, veuillez annuler la commande si aucun produit ne doit y être ajouté."
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoi...."

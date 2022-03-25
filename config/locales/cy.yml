@@ -1345,6 +1345,10 @@ cy:
       stripe_connect_settings:
         resource: Cyfluniad Stripe Connect
   api:
+    invalid_api_key: "Nodwyd allwedd API annilys (%{key}) ."
+    unauthorized: "Nid oes gennych awdurdod i gyflawni'r weithred honno."
+    invalid_resource: "Adnodd annilys. Trwsiwch wallau a rhoi cynnig arall arni."
+    resource_not_found: "Nid oedd yn bosib dod o hyd i'r adnodd yr oeddech yn chwilio amdano."
     enterprise_logo:
       destroy_attachment_does_not_exist: "Nid yw'r logo yn bodoli"
     enterprise_promo_image:
@@ -2900,7 +2904,6 @@ cy:
           invalid: "annilys"
         quantity_adjusted: "Dim digon o stoc ar gael.  Diweddarwyd llinell yr eitem i'r uchafswm sydd ar gael."
         quantity_unchanged: "Ni newidiwyd y nifer/maint o'r nifer/maint blaenorol."
-        cannot_remove_last_item: "Yn methu dileu'r eitem olaf o'r archeb.  Gofynnir ichi ganslo'r archeb yn lle."
       resend_user_email_confirmation:
         resend: "Ailanfon"
         sending: "Ailanfon ..."

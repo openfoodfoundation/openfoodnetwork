@@ -41,6 +41,8 @@ pt_BR:
           attributes:
             email:
               taken: "Já existe uma conta para este e-mail. Por favor, faça login ou redefina sua senha."
+            reset_password_token:
+              invalid: não é válido
         spree/order:
           no_card: Não há cartões de crédito válidos disponíveis
         spree/credit_card:
@@ -56,6 +58,9 @@ pt_BR:
             using_producer_stock_settings_but_count_on_hand_set: "deve estar em branco porque está usando configurações de estoque do produtor"
             on_demand_but_count_on_hand_set: "deve ficar em branco se sob demanda"
             limited_stock_but_no_count_on_hand: "deve ser especificado porque está forçando o estoque limitado"
+  stripe:
+    error_code:
+      incorrect_number: "O número do cartão está incorreto."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -630,6 +635,7 @@ pt_BR:
         display_name: Mostrar Nome
         category: Categoria
         description: Descrição
+        variant_unit_name: Nome da Unidade da Variante
         price: Preço
         on_hand: Disponível
         on_demand: Sob Encomenda
@@ -1240,6 +1246,10 @@ pt_BR:
       stripe_connect_settings:
         resource: Configuração do Stripe
   api:
+    invalid_api_key: "Chave de API (%{key}) especificada."
+    unauthorized: "Você não está autorizado a executar essa ação."
+    invalid_resource: "Recurso inválido. Corrija os erros e tente novamente."
+    resource_not_found: "Não foi possível encontrar o recurso que você estava procurando."
     enterprise_logo:
       destroy_attachment_does_not_exist: "Logo não existe"
     enterprise_promo_image:

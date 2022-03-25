@@ -1262,6 +1262,10 @@ ca:
       stripe_connect_settings:
         resource: 'Configuració de la connexió amb Stripe '
   api:
+    invalid_api_key: "No s’ha especificat una clau d’API vàlida (%{key})."
+    unauthorized: "No teniu autorització per realitzar aquesta acció."
+    invalid_resource: "Recurs invàlid. Corregiu els errors i torneu-ho a provar."
+    resource_not_found: "No s'ha trobat el recurs que buscaves."
     enterprise_logo:
       destroy_attachment_does_not_exist: "El logotip no existeix"
     enterprise_promo_image:

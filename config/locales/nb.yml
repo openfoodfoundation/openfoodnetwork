@@ -1298,6 +1298,10 @@ nb:
       stripe_connect_settings:
         resource: Stripe Connect-konfigurasjon
   api:
+    invalid_api_key: "Ugyldig API-nøkkel (%{key}) spesifisert."
+    unauthorized: "Du er ikke autorisert til å utføre handlingen."
+    invalid_resource: "Ugyldig ressurs. Vennligst rett feil og prøv igjen."
+    resource_not_found: "Ressursen du lette etter, ble ikke funnet."
     enterprise_logo:
       destroy_attachment_does_not_exist: "Logo eksisterer ikke"
     enterprise_promo_image:
@@ -2842,7 +2846,6 @@ nb:
           invalid: "ugyldig"
         quantity_adjusted: "Utilstrekkelig lager tilgjengelig. Ordrelinje oppdatert til maksimalt tilgjengelig antall."
         quantity_unchanged: "Antall uendret fra forrige mengde."
-        cannot_remove_last_item: "Kan ikke fjerne siste vare fra bestillingen. Avslutt bestillingen i stedet."
       resend_user_email_confirmation:
         resend: "Send på nytt"
         sending: "Send på nytt ..."

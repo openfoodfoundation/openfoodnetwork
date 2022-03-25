@@ -1171,6 +1171,10 @@ fil_PH:
       stripe_connect_settings:
         resource: pagsasaayos ng pagkonekta sa Stripe
   api:
+    invalid_api_key: "hindi valid na API key (%{key}) na tinutukoy."
+    unauthorized: "ikaw ay hindi awtorisado na gawin ang kilos na iyon."
+    invalid_resource: "hindi valid na pinagkuhanan. ayusin ang mga error at subukan muli."
+    resource_not_found: "ang pinagkukuhan ay hindi mahanap."
     enterprise_logo:
       destroy_attachment_does_not_exist: "ang Logo ay hindi matagpuan"
     enterprise_promo_image:

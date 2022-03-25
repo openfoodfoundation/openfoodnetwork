@@ -1345,6 +1345,10 @@ en_US:
       stripe_connect_settings:
         resource: Stripe Connect configuration
   api:
+    invalid_api_key: "Invalid API key (%{key}) specified."
+    unauthorized: "You are not authorized to perform that action."
+    invalid_resource: "Invalid resource. Please fix errors and try again."
+    resource_not_found: "The resource you were looking for could not be found."
     enterprise_logo:
       destroy_attachment_does_not_exist: "Logo does not exist"
     enterprise_promo_image:
@@ -2898,7 +2902,6 @@ en_US:
           invalid: "Invalid"
         quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
         quantity_unchanged: "Quantity unchanged from previous amount."
-        cannot_remove_last_item: "Sorry, we can't remove last item from order. Please cancel order instead."
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."

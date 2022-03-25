@@ -4,6 +4,7 @@ es_US:
     attributes:
       spree/user:
         password: "Contraseña"
+        password_confirmation: "confirmación de contraseña"
         reset_password_token: token de restablecimiento de contraseña
       enterprise_fee:
         fee_type: Tipo de Comisión
@@ -40,6 +41,8 @@ es_US:
           attributes:
             email:
               taken: "Ya existe una cuenta con este email. Inicie sesión o restablezca tu contraseña."
+            reset_password_token:
+              invalid: es inválido
         spree/order:
           no_card: No hay tarjetas de crédito autorizadas disponibles para cargar
         spree/credit_card:
@@ -55,6 +58,58 @@ es_US:
             using_producer_stock_settings_but_count_on_hand_set: "debe estar en blanco porque estás usando la configuración de estoc de la productora"
             on_demand_but_count_on_hand_set: "debe estar en blanco si está bajo demanda"
             limited_stock_but_no_count_on_hand: "se debe especificar porque se ha definido estoc limitado"
+  stripe:
+    error_code:
+      incorrect_number: "El número de tarjeta es incorrecto."
+      invalid_number: "El número de tarjeta no es un número válido."
+      invalid_expiry_month: "La fecha de expiración de la tarjeta es inválida."
+      invalid_expiry_year: "La fecha de expiración de la tarjeta es inválida"
+      invalid_cvc: "El código de seguridad de la tarjeta es inválido."
+      expired_card: "La tarjeta está expirada."
+      incorrect_cvc: "El código de seguridad de la tarjeta está incorrecto."
+      incorrect_zip: "El código postal de la tarjeta falló en la validación."
+      card_declined: "La tarjeta fue denegada"
+      missing: "No hay tarjeta en un cliente al que se le está cobrando."
+      processing_error: "Ocurrió un error al procesar la tarjeta."
+      rate_limit: "Se produjo un error debido a que las solicitudes llegaron a la API demasiado rápido. Háganos saber si se encuentra constantemente con este error."
+      authentication_required: "La tarjeta fue rechazada porque la transacción requiere autenticación."
+      approve_with_id: "No se puede autorizar el pago."
+      call_issuer: "La tarjeta ha sido rechazada por un motivo desconocido."
+      card_not_supported: "La tarjeta no admite este tipo de compra."
+      card_velocity_exceeded: "El cliente ha superado el saldo o límite de crédito disponible en su tarjeta."
+      currency_not_supported: "La tarjeta no admite la moneda especificada."
+      do_not_honor: "La tarjeta ha sido rechazada por un motivo desconocido."
+      do_not_try_again: "La tarjeta ha sido rechazada por un motivo desconocido."
+      duplicate_transaction: "Recientemente se envió una transacción con la misma cantidad e información de la tarjeta de crédito."
+      fraudulent: "El pago ha sido rechazado porque Stripe sospecha que es fraudulento."
+      generic_decline: "La tarjeta ha sido rechazada por un motivo desconocido."
+      incorrect_pin: "El PIN ingresado es incorrecto. Este código de rechazo solo se aplica a los pagos realizados con un lector de tarjetas."
+      insufficient_funds: "La tarjeta no tiene fondos suficientes para completar la compra."
+      invalid_account: "La tarjeta o la cuenta a la que está conectada la tarjeta no es válida."
+      invalid_amount: "El monto del pago no es válido o excede el monto permitido."
+      invalid_pin: "El PIN ingresado es incorrecto. Este código de rechazo solo se aplica a los pagos realizados con un lector de tarjetas."
+      issuer_not_available: "No se pudo contactar al emisor de la tarjeta, por lo que no se pudo autorizar el pago."
+      lost_card: "El pago ha sido rechazado porque la tarjeta está reportada como perdida."
+      merchant_blacklist: "El pago se ha rechazado porque coincide con un valor en la lista de bloqueo del usuario de Stripe."
+      new_account_information_available: "La tarjeta o la cuenta a la que está conectada la tarjeta no es válida."
+      no_action_taken: "La tarjeta ha sido rechazada por un motivo desconocido."
+      not_permitted: "El pago no está permitido."
+      offline_pin_required: "La tarjeta ha sido rechazada porque requiere un PIN."
+      online_or_offline_pin_required: "La tarjeta ha sido rechazada porque requiere un PIN."
+      pickup_card: "La tarjeta no se puede utilizar para realizar este pago (es posible que haya sido reportada como perdida o robada)."
+      pin_try_exceeded: "Se ha superado el número permitido de intentos de PIN."
+      reenter_transaction: "El emisor no pudo procesar el pago por un motivo desconocido."
+      restricted_card: "La tarjeta no se puede utilizar para realizar este pago (es posible que haya sido reportada como perdida o robada)."
+      revocation_of_all_authorizations: "La tarjeta ha sido rechazada por un motivo desconocido."
+      revocation_of_authorization: "La tarjeta ha sido rechazada por un motivo desconocido."
+      security_violation: "La tarjeta ha sido rechazada por un motivo desconocido."
+      service_not_allowed: "La tarjeta ha sido rechazada por un motivo desconocido."
+      stolen_card: "El pago ha sido rechazado porque la tarjeta fue reportada como robada."
+      stop_payment_order: "La tarjeta ha sido rechazada por un motivo desconocido."
+      testmode_decline: "Se utilizó un número de tarjeta de prueba de Stripe."
+      transaction_not_allowed: "La tarjeta ha sido rechazada por un motivo desconocido."
+      try_again_later: "La tarjeta ha sido rechazada por un motivo desconocido."
+      withdrawal_count_limit_exceeded: "El cliente ha superado el saldo o límite de crédito disponible en su tarjeta."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -94,6 +149,9 @@ es_US:
   community_forum_url: "Liga URL para el foro de la comunidad"
   customer_instructions: "Instrucciones del Consumidor"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "La contraseña de usuario no puede estar en blanco. Porfavor ingrese una contraseña."
     confirmations:
       send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
       failed_to_send: "Se produjo un error al enviar su correo electrónico de confirmación."
@@ -117,12 +175,29 @@ es_US:
       already_registered: "Esta dirección de correo electrónico ya está registrada. Inicie sesión para continuar, o vuelva atrás y use otra dirección de correo electrónico."
     success:
       logged_in_succesfully: "Sesión iniciada con éxito"
+    sessions:
+      signed_out: "Cerrado con éxito."
+      already_signed_out: "Cerrado con éxito."
     user_passwords:
       spree_user:
         updated_not_active: "Su contraseña ha sido restablecida, pero su correo electrónico aún no ha sido confirmado."
         updated: "Su contraseña ha sido cambiada con éxito. Ya tienes la sesión iniciada."
         send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
+  home_page_alert_html: "HTML de alerta de página de inicio"
+  hub_signup_case_studies_html: "Casos prácticos de registro de concentrador HTML"
+  hub_signup_detail_html: "HTML de detalle de registro de concentrador"
+  hub_signup_pricing_table_html: "Tabla de precios de registro de Hub HTML"
+  group_signup_case_studies_html: "Casos prácticos de registro de grupos HTML"
+  group_signup_detail_html: "Detalle de registro de grupo HTML"
+  group_signup_pricing_table_html: "Tabla de precios de registro de grupo HTML"
   item_description: "Descripción del artículo"
+  menu_1_icon_name: "Nombre del icono del menú 1"
+  menu_2_icon_name: "Nombre del icono del menú 2"
+  menu_3_icon_name: "Nombre del icono del menú 3"
+  menu_4_icon_name: "Nombre del icono del menú 4"
+  menu_5_icon_name: "Nombre del icono del menú 5"
+  menu_6_icon_name: "Nombre del icono del menú 6"
+  menu_7_icon_name: "Nombre del icono del menú 7"
   models:
     order_cycle:
       cloned_order_cycle_name: "COPIA DE %{order_cycle}"
@@ -133,6 +208,10 @@ es_US:
   open_street_map_default_longitude: "longitud por defecto en Open Street Map"
   open_street_map_provider_name: "nombre del proveedor de Open Street Map"
   open_street_map_provider_options: "opciones de proveedor de Open Street Map"
+  producer_signup_case_studies_html: "Casos prácticos de registro de productores HTML"
+  producer_signup_detail_html: "Productor registro detalle HTML"
+  producer_signup_pricing_table_html: "Tabla de precios de registro de productores HTML"
+  producers_social: "Productores sociales"
   resume_order: "Reanudar pedido"
   sku: "SKU"
   subtotal: "Subtotal"
@@ -214,6 +293,7 @@ es_US:
   search_by_name: Buscar por nombre o municipio...
   producers_join: Las productoras australianas ahora son bienvenidas a unirse a Open Food Network.
   charges_sales_tax: ¿Cargos de IVA?
+  business_address: "Dirección de negocio"
   print_invoice: "Imprimir factura"
   print_ticket: "Imprimir Ticket"
   select_ticket_printer: "Seleccionar impresora para los tickets"
@@ -282,7 +362,9 @@ es_US:
   error: Error
   processing_payment: "Procesando el pago..."
   no_pending_payments: "No tiene pagos pendientes"
+  invalid_payment_state: "Estado de pago no válido: %{state}"
   filter_results: Filtrar resultados
+  clear_filters: Borrar filtros
   quantity: Cantidad
   pick_up: Recogida
   copy: Copia
@@ -386,7 +468,10 @@ es_US:
       enable_embedded_shopfronts: "Habilitar tiendas integradas"
       embedded_shopfronts_whitelist: "Lista de dominios externos permitidos"
     terms_of_service_files:
+      create:
+        select_file: "Seleccione un archivo primero."
       show:
+        title: "Archivos de términos de servicio"
         terms_of_service: "La latitud y longitud son necesarias para mostrar su empresa en el mapa."
     number_localization:
       number_localization_settings: "Number Localization Settings"
@@ -1228,6 +1313,10 @@ es_US:
       stripe_connect_settings:
         resource: Configuración de Stripe Connect
   api:
+    invalid_api_key: "La llave de API especificada (%{key}) es inválida."
+    unauthorized: "No tiene autorización para realizar esta acción."
+    invalid_resource: "Recurso inválido. Por favor corrija los errores e intente nuevamente."
+    resource_not_found: "El recurso que buscaba no puede ser encontrado."
     enterprise_logo:
       destroy_attachment_does_not_exist: "El logotipo no existe"
     enterprise_promo_image:

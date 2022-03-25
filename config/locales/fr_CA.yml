@@ -3286,7 +3286,7 @@ fr_CA:
     tracking: "Suivi"
     tracking_number: "Numéro de suivi"
     order_total: "Total Commande:"
-    order_updated: "Quelque chose n'a pas fonctionné. Notre équipe a été notifiée."
+    order_updated: "La commande a été mise à jour."
     customer_details: "Informations acheteur"
     customer_details_updated: "Détails de l'acheteur mis à jour"
     customer_search: "Recherche Acheteur"

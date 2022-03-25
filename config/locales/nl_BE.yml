@@ -1189,6 +1189,10 @@ nl_BE:
       stripe_connect_settings:
         resource: Stripe Koppelingsconfiguratie
   api:
+    invalid_api_key: "Onjuiste API sleutel (%{key}) gespecificeerd"
+    unauthorized: "U bent niet toegestaan deze actie uittevoeren"
+    invalid_resource: "Ongeldige bron. Stel fout vast en probeer later opnieuw."
+    resource_not_found: "De bron die u zocht kon niet word gevonden."
     enterprise_logo:
       destroy_attachment_does_not_exist: "Logo bestaat niet"
     enterprise_promo_image:

@@ -1261,6 +1261,10 @@ tr:
       stripe_connect_settings:
         resource: Iyzico yapılandırması
   api:
+    invalid_api_key: "Geçersiz API anahtarı (%{key}) belirtildi."
+    unauthorized: "Bu işlemi gerçekleştirme yetkiniz yok."
+    invalid_resource: "Geçersiz kaynak. Lütfen hataları düzeltin ve tekrar deneyin."
+    resource_not_found: "Aradığınız kaynak bulunamadı."
     enterprise_logo:
       destroy_attachment_does_not_exist: "Logo mevcut değil"
     enterprise_promo_image:
@@ -2793,7 +2797,6 @@ tr:
           invalid: "geçersiz"
         quantity_adjusted: "Yetersiz stok. Satır kullanılabilir maksimum miktara güncellendi."
         quantity_unchanged: "Miktar değişmedi."
-        cannot_remove_last_item: "Son ürün siparişten kaldırılamıyor. Lütfen bunun yerine siparişi iptal edin."
       resend_user_email_confirmation:
         resend: "Yeniden gönder"
         sending: "Yeniden gönder..."

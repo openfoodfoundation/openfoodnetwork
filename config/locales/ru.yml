@@ -1348,6 +1348,10 @@ ru:
       stripe_connect_settings:
         resource: Конфигурация Stripe Connect
   api:
+    invalid_api_key: "Указан неверный API ключ (%{key})."
+    unauthorized: "Вам не разрешается выполнять это действие."
+    invalid_resource: "Неверный ресурс. Пожалуйста, исправьте ошибки и попробуйте снова."
+    resource_not_found: "Не удалось найти ресурс, который Вы искали."
     enterprise_logo:
       destroy_attachment_does_not_exist: "Логотип не существует"
     enterprise_promo_image:
@@ -2907,7 +2911,6 @@ ru:
           invalid: "Недействительный"
         quantity_adjusted: "Недостаточный запас. Позиция обновлена до максимально доступного количества."
         quantity_unchanged: "Количество не изменилось по сравнению с предыдущим."
-        cannot_remove_last_item: "Невозможно удалить последний товар из заказа. Вместо этого отмените заказ."
       resend_user_email_confirmation:
         resend: "Повторно отправить"
         sending: "Повторная Отправка..."

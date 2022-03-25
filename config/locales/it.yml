@@ -1346,6 +1346,10 @@ it:
       stripe_connect_settings:
         resource: 'Configurazione Stripe Connect '
   api:
+    invalid_api_key: "Chiave API (%{key}) specificata non valida."
+    unauthorized: "Non sei autorizzato a eseguire questa azione."
+    invalid_resource: "Risorsa non valida. Per favore correggi gli errori e riprova."
+    resource_not_found: "La risorsa che stavi cercando non è stata trovata."
     enterprise_logo:
       destroy_attachment_does_not_exist: "Logo inesistente"
     enterprise_promo_image:
@@ -2902,7 +2906,6 @@ it:
           invalid: "invalido"
         quantity_adjusted: "Disponibilità insufficiente.  Quantità aggiornata alla massima quantità disponibile."
         quantity_unchanged: "Quantità non modificata rispetto a quantità precedente."
-        cannot_remove_last_item: "Non è possibile rimuovere l'ultimo articolo dalla gentile richiesta. Per favore cancella l'ordine piuttosto."
       resend_user_email_confirmation:
         resend: "Invia nuovamente"
         sending: "Invia di nuovo..."
