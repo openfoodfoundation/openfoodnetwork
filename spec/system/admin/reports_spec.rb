@@ -69,7 +69,7 @@ describe '
 
     it "payment method report" do
       click_link "Payment Methods Report"
-      click_button "Search"
+      click_button "Go"
       rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
@@ -245,7 +245,7 @@ describe '
         select 'Order Cycle Customer Totals', from: 'report_subtype'
         click_button 'Search'
         # Then I should see the rows for the first order but not the second
-        expect(all('table#listing_orders tbody tr').count).to eq(4) # Two rows per order
+        expect(all('table.report__table tbody tr').count).to eq(4) # Two rows per order
       end
     end
 

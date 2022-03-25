@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'open_food_network/order_grouper'
+
 module OpenFoodNetwork
   class PaymentsReport
     attr_reader :params
@@ -10,8 +12,8 @@ module OpenFoodNetwork
       @render_table = render_table
     end
 
-    def header
-      case params[:report_type]
+    def table_headers
+      case params[:report_subtype]
       when "payments_by_payment_type"
         I18n.t(:report_header_payment_type)
         [I18n.t(:report_header_payment_state), I18n.t(:report_header_distributor), I18n.t(:report_header_payment_type),
@@ -48,7 +50,7 @@ module OpenFoodNetwork
         order.payments.select(&:completed?)
       end.flatten
 
-      case params[:report_type]
+      case params[:report_subtype]
       when "payments_by_payment_type"
         payments
       when "itemised_payment_totals"
@@ -60,8 +62,13 @@ module OpenFoodNetwork
       end
     end
 
+    def table_rows
+      order_grouper = OpenFoodNetwork::OrderGrouper.new rules, columns, self
+      order_grouper.table(table_items)
+    end
+
     def rules
-      case params[:report_type]
+      case params[:report_subtype]
       when "payments_by_payment_type"
         [{ group_by: proc { |payment| payment.order.payment_state },
            sort_by: proc { |payment_state| payment_state } },
@@ -90,7 +97,7 @@ module OpenFoodNetwork
     end
 
     def columns
-      case params[:report_type]
+      case params[:report_subtype]
       when "payments_by_payment_type"
         [proc { |payments| payments.first.order.payment_state },
          proc { |payments| payments.first.order.distributor.name },

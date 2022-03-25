@@ -63,17 +63,8 @@ module Spree
       end
 
       def payments
-        # -- Prepare Form Options
         @distributors = my_distributors
-        @report_type = params[:report_type]
-
-        # -- Build Report with Order Grouper
-        @report = OpenFoodNetwork::PaymentsReport.new spree_current_user, raw_params,
-                                                      render_content?
-        @table = order_grouper_table
-        csv_file_name = "payments_#{timestamp}.csv"
-
-        render_report(@report.header, @table, params[:csv], csv_file_name)
+        render_report2
       end
 
       def orders_and_fulfillment
