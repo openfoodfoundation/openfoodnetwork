@@ -1139,7 +1139,7 @@ Style/OptionalBooleanParameter:
     - 'lib/open_food_network/order_cycle_management_report.rb'
     - 'lib/open_food_network/orders_and_fulfillment_report.rb'
     - 'lib/open_food_network/payments_report.rb'
-    - 'lib/open_food_network/products_and_inventory_report_base.rb'
+    - 'lib/open_food_network/products_and_inventory_report.rb'
     - 'lib/open_food_network/users_and_enterprises_report.rb'
     - 'lib/open_food_network/xero_invoices_report.rb'
     - 'lib/spree/core/controller_helpers/order.rb'

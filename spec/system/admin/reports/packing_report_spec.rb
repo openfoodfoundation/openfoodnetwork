@@ -46,7 +46,7 @@ describe "Packing Reports", js: true do
         click_link "Pack By Customer"
         fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
         fill_in 'q_completed_at_lt', with: '2013-04-25 16:00:00'
-        click_button 'Search'
+        click_button 'Go'
 
         rows = find("table.report__table").all("thead tr")
         table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
@@ -59,7 +59,7 @@ describe "Packing Reports", js: true do
 
       it "sorts alphabetically" do
         click_link "Pack By Customer"
-        click_button 'Search'
+        click_button 'Go'
 
         rows = find("table.report__table").all("tr")
         table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[3] }
@@ -79,7 +79,7 @@ describe "Packing Reports", js: true do
         click_link "Pack By Supplier"
         fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
         fill_in 'q_completed_at_lt', with: '2013-04-25 16:00:00'
-        click_button 'Search'
+        click_button 'Go'
 
         rows = find("table.report__table").all("thead tr")
         table = rows.map { |r| r.all("th").map { |c| c.text.strip } }

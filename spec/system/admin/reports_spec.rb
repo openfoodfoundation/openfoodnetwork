@@ -94,7 +94,7 @@ describe '
   it "orders and distributors report" do
     login_as_admin_and_visit spree.admin_reports_path
     click_link 'Orders And Distributors'
-    click_button 'Search'
+    click_button 'Go'
 
     expect(page).to have_content 'ORDER DATE'
   end
@@ -102,7 +102,7 @@ describe '
   it "payments reports" do
     login_as_admin_and_visit spree.admin_reports_path
     click_link 'Payment Reports'
-    click_button 'Search'
+    click_button 'Go'
 
     expect(page).to have_content 'PAYMENT STATE'
   end
@@ -176,7 +176,7 @@ describe '
 
       # When I filter to just one distributor
       select user1.enterprises.first.name, from: 'q_distributor_id_eq'
-      click_button 'Search'
+      click_button 'Go'
 
       # Then I should see the relevant order
       expect(page).to have_content order1.number.to_s
@@ -243,7 +243,7 @@ describe '
         pick_datetime "#q_completed_at_lt", datetime_end
 
         select 'Order Cycle Customer Totals', from: 'report_subtype'
-        click_button 'Search'
+        click_button 'Go'
         # Then I should see the rows for the first order but not the second
         expect(all('table.report__table tbody tr').count).to eq(4) # Two rows per order
       end

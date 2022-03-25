@@ -1,47 +1,100 @@
 # frozen_string_literal: true
 
-require 'open_food_network/products_and_inventory_report_base'
+require 'open_food_network/scope_variant_to_hub'
+require 'open_food_network/products_and_inventory_default_report'
+require 'open_food_network/lettuce_share_report'
 
 module OpenFoodNetwork
-  class ProductsAndInventoryReport < ProductsAndInventoryReportBase
-    def header
-      [
-        I18n.t(:report_header_supplier),
-        I18n.t(:report_header_producer_suburb),
-        I18n.t(:report_header_product),
-        I18n.t(:report_header_product_properties),
-        I18n.t(:report_header_taxons),
-        I18n.t(:report_header_variant_value),
-        I18n.t(:report_header_price),
-        I18n.t(:report_header_group_buy_unit_quantity),
-        I18n.t(:report_header_amount),
-        I18n.t(:report_header_sku)
-      ]
+  class ProductsAndInventoryReport
+    attr_reader :params, :render_table
+
+    delegate :table_rows, :table_headers, :rules, :columns, :sku_for, to: :report
+
+    def initialize(user, params = {}, render_table = false)
+      @user = user
+      @params = params
+      @render_table = render_table
     end
 
-    def table
-      return [] unless @render_table
+    def report
+      @report ||= report_klass.new(self)
+    end
 
-      variants.map do |variant|
-        [
-          variant.product.supplier.name,
-          variant.product.supplier.address.city,
-          variant.product.name,
-          variant.product.properties.map(&:name).join(", "),
-          variant.product.taxons.map(&:name).join(", "),
-          variant.full_name,
-          variant.price,
-          variant.product.group_buy_unit_size,
-          "",
-          sku_for(variant)
-        ]
+    def report_type
+      params[:report_subtype]
+    end
+
+    def report_klass
+      if report_type == 'lettuce_share'
+        OpenFoodNetwork::LettuceShareReport
+      else
+        OpenFoodNetwork::ProductsAndInventoryDefaultReport
       end
     end
 
-    def sku_for(variant)
-      return variant.sku if variant.sku.present?
+    def permissions
+      @permissions ||= OpenFoodNetwork::Permissions.new(@user)
+    end
 
-      variant.product.sku
+    def visible_products
+      @visible_products ||= permissions.visible_products
+    end
+
+    def variants
+      filter(child_variants)
+    end
+
+    def child_variants
+      Spree::Variant.
+        where(is_master: false).
+        includes(option_values: :option_type).
+        joins(:product).
+        merge(visible_products).
+        order('spree_products.name')
+    end
+
+    def filter(variants)
+      filter_on_hand filter_to_distributor filter_to_order_cycle filter_to_supplier variants
+    end
+
+    # Using the `in_stock?` method allows overrides by distributors.
+    def filter_on_hand(variants)
+      if report_type == 'inventory'
+        variants.select(&:in_stock?)
+      else
+        variants
+      end
+    end
+
+    def filter_to_supplier(variants)
+      if params[:supplier_id].to_i > 0
+        variants.where("spree_products.supplier_id = ?", params[:supplier_id])
+      else
+        variants
+      end
+    end
+
+    def filter_to_distributor(variants)
+      if params[:distributor_id].to_i > 0
+        distributor = Enterprise.find params[:distributor_id]
+        scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
+        variants.in_distributor(distributor).each { |v| scoper.scope(v) }
+      else
+        variants
+      end
+    end
+
+    def filter_to_order_cycle(variants)
+      if params[:order_cycle_id].to_i > 0
+        order_cycle = OrderCycle.find params[:order_cycle_id]
+        variant_ids = Exchange.in_order_cycle(order_cycle).
+          joins("INNER JOIN exchange_variants ON exchanges.id = exchange_variants.exchange_id").
+          select("DISTINCT exchange_variants.variant_id")
+
+        variants.where("spree_variants.id IN (#{variant_ids.to_sql})")
+      else
+        variants
+      end
     end
   end
 end

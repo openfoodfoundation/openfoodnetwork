@@ -86,21 +86,7 @@ module Spree
       end
 
       def products_and_inventory
-        @report_types = report_types[:products_and_inventory]
-        @report = if params[:report_type] != 'lettuce_share'
-                    OpenFoodNetwork::ProductsAndInventoryReport.new spree_current_user,
-                                                                    raw_params,
-                                                                    render_content?
-                  else
-                    OpenFoodNetwork::LettuceShareReport.new spree_current_user,
-                                                            raw_params,
-                                                            render_content?
-                  end
-
-        render_report @report.header,
-                      @report.table,
-                      params[:csv],
-                      "products_and_inventory_#{timestamp}.csv"
+        render_report2
       end
 
       def users_and_enterprises

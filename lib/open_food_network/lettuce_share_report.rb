@@ -1,11 +1,17 @@
 # frozen_string_literal: true
-
-require 'open_food_network/products_and_inventory_report_base'
 require 'variant_units/option_value_namer'
 
 module OpenFoodNetwork
-  class LettuceShareReport < ProductsAndInventoryReportBase
-    def header
+  class LettuceShareReport
+    attr_reader :context
+
+    delegate :variants, :render_table, to: :context
+
+    def initialize(context)
+      @context = context
+    end
+
+    def table_headers
       # NOTE: These are NOT to be translated, they need to be in this exact format to work with LettucShare
       [
         "PRODUCT",
@@ -21,8 +27,8 @@ module OpenFoodNetwork
       ]
     end
 
-    def table
-      return [] unless @render_table
+    def table_rows
+      return [] unless render_table
 
       variants.select(&:in_stock?)
         .map do |variant|
