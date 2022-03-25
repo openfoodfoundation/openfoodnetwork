@@ -480,7 +480,7 @@ describe '
       end
 
       it "shows Xero invoices report" do
-        click_button "Search"
+        click_button "Go"
         expect(xero_invoice_table).to match_table [
           xero_invoice_header,
           xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,
@@ -506,7 +506,7 @@ describe '
         pick_datetime '#due_date', Date.new(2021, 3, 12)
 
         fill_in 'account_code', with: 'abc123'
-        click_button 'Search'
+        click_button 'Go'
 
         opts = { invoice_number: '5', invoice_date: '2021-02-12 00:00',
                  due_date: '2021-03-12 00:00', account_code: 'abc123' }
@@ -531,8 +531,8 @@ describe '
       end
 
       it "generates a detailed report" do
-        select 'Detailed', from: 'report_type'
-        click_button 'Search'
+        select 'Detailed', from: 'report_subtype'
+        click_button 'Go'
 
         opts = {}
 

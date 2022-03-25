@@ -8,14 +8,14 @@ module OpenFoodNetwork
       @opts = opts.
         symbolize_keys.
         reject { |_k, v| v.blank? }.
-        reverse_merge( report_type: 'summary',
+        reverse_merge( report_subtype: 'summary',
                        invoice_date: Time.zone.today,
                        due_date: Time.zone.today + 1.month,
                        account_code: 'food sales' )
       @compile_table = compile_table
     end
 
-    def header
+    def table_headers
       # NOTE: These are NOT to be translated, they need to be in this exact format to work with Xero
       %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4
          POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme Paid?)
@@ -30,7 +30,7 @@ module OpenFoodNetwork
       search.result.reorder('id DESC')
     end
 
-    def table
+    def table_rows
       return [] unless @compile_table
 
       rows = []
@@ -225,7 +225,7 @@ module OpenFoodNetwork
     end
 
     def detail?
-      @opts[:report_type] == 'detailed'
+      @opts[:report_subtype] == 'detailed'
     end
 
     def tax_type(taxable)

@@ -1,0 +1,23 @@
+= render 'spree/admin/reports/date_range_form', f: f
+
+.row
+  .two.columns.alpha= label_tag nil, t(:report_hubs)
+  .fourteen.columns.omega= f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => 'All'}, {:class => "select2 fullwidth light"})
+.row
+  .two.columns.alpha= label_tag nil, t(:report_order_cycle)
+  .fourteen.columns.omega= f.select(:order_cycle_id_eq,
+    options_for_select(report_order_cycle_options(@order_cycles), params.dig(:q, :order_cycle_id_eq)),
+    {:include_blank => true}, {:class => "select2 fullwidth light"})
+
+.row
+  .two.columns.alpha= label_tag :initial_invoice_number, t(:initial_invoice_number)
+  .fourteen.columns.omega= text_field_tag :initial_invoice_number, params[:initial_invoice_number]
+.row
+  .two.columns.alpha= label_tag :invoice_date, t(:invoice_date)
+  .fourteen.columns.omega= text_field_tag :invoice_date, params[:invoice_date], class: 'datetimepicker'
+.row
+  .two.columns.alpha= label_tag :due_date, t(:due_date)
+  .fourteen.columns.omega= text_field_tag :due_date, params[:due_date], class: 'datetimepicker'
+.row
+  .two.columns.alpha= label_tag :account_code, t(:account_code)
+  .fourteen.columns.omega= text_field_tag :account_code, params[:account_code]

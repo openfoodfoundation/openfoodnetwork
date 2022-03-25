@@ -21,7 +21,7 @@ module OpenFoodNetwork
         expect(report.instance_variable_get(:@opts)).to eq( invoice_date: Date.civil(2015, 5, 5),
                                                             due_date: Date.civil(2015, 6, 5),
                                                             account_code: 'food sales',
-                                                            report_type: 'summary' )
+                                                            report_subtype: 'summary' )
       end
     end
 

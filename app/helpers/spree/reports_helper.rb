@@ -21,11 +21,6 @@ module Spree
       end.uniq
     end
 
-    def xero_report_types
-      [[I18n.t(:summary), 'summary'],
-       [I18n.t(:detailed), 'detailed']]
-    end
-
     def currency_symbol
       Spree::Money.currency_symbol
     end

@@ -15,7 +15,8 @@ module OpenFoodNetwork
           enterprise_fee_summary: enterprise_fee_summary_report_types,
           order_cycle_management: order_cycle_management_report_types,
           sales_tax: sales_tax_report_types,
-          packing: packing_report_types
+          packing: packing_report_types,
+          xero_invoices: xero_report_types
         }
       end
 
@@ -71,6 +72,11 @@ module OpenFoodNetwork
           [i18n_translate("pack_by_customer"), :pack_by_customer],
           [i18n_translate("pack_by_supplier"), :pack_by_supplier]
         ]
+      end
+
+      def xero_report_types
+        [[I18n.t(:summary), 'summary'],
+         [I18n.t(:detailed), 'detailed']]
       end
 
       def i18n_translate(key)
