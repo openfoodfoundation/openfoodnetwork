@@ -1344,6 +1344,11 @@ ar:
       stripe_connect_settings:
         resource: تهيئة ربط Strip
   api:
+    unknown_error: "هناك خطأ ما. تم إخطار فريقنا."
+    invalid_api_key: "مفتاح API المحدد غير صالح (%{key})."
+    unauthorized: "غير مصرح لك بتنفيذ هذا الإجراء."
+    invalid_resource: "مورد غير صالح. يرجى إصلاح الأخطاء والمحاولة مرة أخرى."
+    resource_not_found: "لا يمكن العثور على الموارد الذي تبحث عنه."
     enterprise_logo:
       destroy_attachment_does_not_exist: "الشعار غير موجود"
     enterprise_promo_image:
@@ -1417,6 +1422,7 @@ ar:
         login: "تسجيل الدخول"
         contact: "اتصل"
         require_customer_login: "يمكن للعملاء المعتمدين فقط الوصول إلى هذا المتجر."
+        require_login_link_html: "إذا كنت عميلاً معتمدًا بالفعل ، %{login} للمتابعة."
         require_login_2_html: "تريد أن تبدأ التسوق هنا؟ من فضلك %{contact} %{enterprise} واسأل عن الانضمام."
         require_customer_html: "إذا كنت ترغب في بدء التسوق هنا ، فيرجى %{contact} %{enterprise} أن تسأل عن الانضمام."
       select_oc:
@@ -2705,6 +2711,7 @@ ar:
     admin:
       unit_price_tooltip: "يزيد سعر الوحدة من الشفافية من خلال السماح لعملائك بمقارنة الأسعار بسهولة بين المنتجات المختلفة وأحجام العبوات. لاحظ أن سعر الوحدة النهائي المعروض في واجهة المحل قد يختلف لأنه يشمل الضرائب والرسوم."
       enterprise_limit_reached: "لقد وصلت إلى الحد القياسي للمؤسسات لكل حساب. اكتب %{contact_email} إذا كنت بحاجة إلى زيادته."
+      deleting_item_will_cancel_order: "ستؤدي هذه العملية إلى أمر واحد أو أكثر من الطلبات الفارغة ، والتي سيتم إلغاؤها. هل ترغب في المتابعة؟"
       modals:
         got_it: "فهمتك"
         close: "إغلاق"
@@ -2890,7 +2897,8 @@ ar:
           invalid: "غير صالحة"
         quantity_adjusted: "مخزون غير كافٍ. تم تحديث البند إلى الكمية القصوى المتاحة."
         quantity_unchanged: "الكمية لم تتغير عن المبلغ السابق."
-        cannot_remove_last_item: "لا يمكن إزالة المادة الأخير من الطلب. الرجاء إلغاء الطلب بدلا من ذلك."
+        cancel_the_order_html: "سيؤدي هذا إلى إلغاء الطلب الحالي.<br /> هل انت متأكد انك تريد المتابعة؟"
+        cancel_the_order_send_cancelation_email: "إرسال بريد إلكتروني للإلغاء إلى العميل"
       resend_user_email_confirmation:
         resend: "إعادة إرسال"
         sending: "إعادة إرسال..."
@@ -3353,6 +3361,7 @@ ar:
     tracking: "تتبع"
     tracking_number: "أرقام التتبع"
     order_total: "مجموع الطلب "
+    order_updated: "تم تحديث الطلب"
     customer_details: "تفاصيل العميل"
     customer_details_updated: "تم تحديث تفاصيل العميل"
     customer_search: "بحث العملاء"

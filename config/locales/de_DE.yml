@@ -1347,6 +1347,11 @@ de_DE:
       stripe_connect_settings:
         resource: Konfiguration für Stripe Connect
   api:
+    unknown_error: "Etwas ist schief gelaufen. Unser Team wurde benachrichtigt."
+    invalid_api_key: "Ungültiger API-Schlüssel (%{key}) angegeben."
+    unauthorized: "Sie sind nicht berechtigt, diese Aktion auszuführen."
+    invalid_resource: "Ungültige Ressource. Bitte beheben Sie die Fehler und versuchen Sie es erneut."
+    resource_not_found: "Die gesuchte Ressource wurde nicht gefunden."
     enterprise_logo:
       destroy_attachment_does_not_exist: "Logo existiert nicht"
     enterprise_promo_image:
@@ -1756,7 +1761,7 @@ de_DE:
   order_delivery_address: Lieferadresse
   order_delivery_time: Lieferzeit
   order_special_instructions: "Ihre Notizen:"
-  order_pickup_time: 'Bereit zu Abholung:'
+  order_pickup_time: 'Bereit zu Abholung am:'
   order_pickup_instructions: Informationen zur Abholung
   order_produce: Produkte
   order_total_price: Summe
@@ -1826,7 +1831,7 @@ de_DE:
   email_shipping_delivery_time: "Lieferung am:"
   email_shipping_delivery_address: "Lieferadresse:"
   email_shipping_collection_details: Details zur Abholung
-  email_shipping_collection_time: "Bereit zur Abholung:"
+  email_shipping_collection_time: "Bereit zur Abholung am:"
   email_shipping_collection_instructions: "Informationen zur Abholung:"
   email_special_instructions: "Ihre Notizen:"
   email_signup_greeting: Hallo!
@@ -2400,14 +2405,14 @@ de_DE:
   your_profil_live: "Ihr öffentlicher Auftritt im Open Food Network"
   see: " "
   live: "ansehen"
-  manage: "Verwalten"
+  manage: "Verwalten Sie"
   resend: "Erneut senden"
   add_and_manage_products: "Produkte hinzufügen und verwalten"
   add_and_manage_order_cycles: "Bestellzyklen hinzufügen und verwalten"
   manage_order_cycles: "Bestellzyklen verwalten"
   manage_products: "Produkte verwalten"
-  edit_profile_details: "Unternehmensdetails bearbeiten"
-  edit_profile_details_etc: "Ändern Sie Ihre Unternehmensbeschreibung, Bilder usw."
+  edit_profile_details: "Details und Einstellungen bearbeiten"
+  edit_profile_details_etc: "Ändern Sie Ihre Unternehmensbeschreibung, Bilder, Zahlungsarten, Lieferoptionen und weitere Einstellungen."
   order_cycle: "Bestellzyklus"
   order_cycles: "Bestellzyklen"
   enterprise_relationships: "Unternehmensberechtigungen"
