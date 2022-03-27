@@ -2,6 +2,7 @@
 
 require "spec_helper"
 
+# rubocop:disable Layout/LineLength
 # describe OrderManagement::Reports::EnterpriseFeeSummary::EnterpriseFeeSummaryReport do
 #   let(:report_klass) { OrderManagement::Reports::EnterpriseFeeSummary }
 
@@ -727,3 +728,4 @@ require "spec_helper"
 #     end
 #   end
 # end
+# rubocop:enable Layout/LineLength

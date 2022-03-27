@@ -181,7 +181,7 @@ describe OpenFoodNetwork::BulkCoopReport do
 
     it 'calls #new_outstanding_balance' do
       expect_any_instance_of(Spree::Order).to receive(:new_outstanding_balance)
-      subject.send(:customer_payments_amount_owed, [line_item])
+      subject.__send__(:customer_payments_amount_owed, [line_item])
     end
   end
 end

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'csv'
-
 require 'open_food_network/reports/list'
 require 'open_food_network/orders_and_distributors_report'
 require 'open_food_network/products_and_inventory_report'
@@ -42,25 +40,25 @@ module Spree
       end
 
       def customers
-        render_report2
+        render_report
       end
 
       def order_cycle_management
-        render_report2
+        render_report
       end
 
       def orders_and_distributors
-        render_report2
+        render_report
       end
 
       def sales_tax
         @distributors = my_distributors
-        render_report2
+        render_report
       end
 
       def payments
         @distributors = my_distributors
-        render_report2
+        render_report
       end
 
       def orders_and_fulfillment
@@ -78,33 +76,33 @@ module Spree
 
         @report_message = I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
 
-        render_report2
+        render_report
       end
 
       def products_and_inventory
-        render_report2
+        render_report
       end
 
       def users_and_enterprises
-        render_report2
+        render_report
       end
 
       def xero_invoices
         @distributors = my_distributors
         @order_cycles = my_order_cycles
 
-        render_report2
+        render_report
       end
 
       def bulk_coop
         @distributors = my_distributors
         @report_message = I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
-        render_report2
+        render_report
       end
 
       def enterprise_fee_summary
         @report_message = I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
-        render_report2
+        render_report
       end
 
       private
@@ -143,7 +141,7 @@ module Spree
         @searching
       end
 
-      def render_report2
+      def render_report
         @report_subtypes = report_types[action_name.to_sym]
         @report_subtype = params[:report_subtype]
         klass = if action_name == 'enterprise_fee_summary'
@@ -160,19 +158,6 @@ module Spree
           @table = @report.table_rows
 
           render "show"
-        end
-      end
-
-      def render_report(header, table, create_csv, csv_file_name)
-        send_data csv_report(header, table), filename: csv_file_name if create_csv
-        @header = header
-        @table = table
-      end
-
-      def csv_report(header, table)
-        CSV.generate do |csv|
-          csv << header
-          table.each { |row| csv << row }
         end
       end
 
@@ -205,11 +190,6 @@ module Spree
           active_or_complete.
           visible_by(spree_current_user).
           order('orders_close_at DESC')
-      end
-
-      def order_grouper_table
-        order_grouper = OpenFoodNetwork::OrderGrouper.new @report.rules, @report.columns, @report
-        order_grouper.table(@report.table_items)
       end
 
       def authorized_reports

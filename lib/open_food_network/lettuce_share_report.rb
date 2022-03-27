@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'variant_units/option_value_namer'
 
 module OpenFoodNetwork

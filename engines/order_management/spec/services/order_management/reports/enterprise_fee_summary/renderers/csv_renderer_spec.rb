@@ -10,7 +10,8 @@ require "spec_helper"
 #   let!(:service) { report_klass::ReportService.new(permissions, parameters) }
 #   let!(:renderer) { described_class.new(service) }
 
-#   # Context which will be passed to the renderer. The response object is not automatically prepared,
+#   # Context which will be passed to the renderer. The response object
+#   # is not automatically prepared,
 #   # so this has to be assigned explicitly.
 #   let!(:response) { ActionDispatch::TestResponse.new }
 #   let!(:request) { double(Rack::Request) }

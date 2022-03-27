@@ -1135,6 +1135,7 @@ Style/OptionalBooleanParameter:
     - 'app/models/spree/shipment.rb'
     - 'lib/open_food_network/bulk_coop_report.rb'
     - 'engines/order_management/app/services/order_management/stock/estimator.rb'
+    - 'engines/order_management/app/services/order_management/reports/enterprise_fee_summary/enterprise_fee_summary_report.rb'
     - 'lib/open_food_network/customers_report.rb'
     - 'lib/open_food_network/orders_and_distributors_report.rb'
     - 'lib/open_food_network/order_cycle_management_report.rb'
