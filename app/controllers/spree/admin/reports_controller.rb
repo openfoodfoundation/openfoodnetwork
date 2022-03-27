@@ -24,7 +24,6 @@ module Spree
 
       helper_method :render_content?
 
-      before_action :cache_search_state
       # Fetches user's distributors, suppliers and order_cycles
       before_action :load_basic_data, only: [:customers, :products_and_inventory, :order_cycle_management]
 
@@ -111,34 +110,10 @@ module Spree
         Spree::Admin::ReportsController
       end
 
-      # Some actions are changing the `params` object. That is unfortunate Spree
-      # behavior and we are building on it. So we have to look at `params` early
-      # to check if we are searching or just displaying a report search form.
-      def cache_search_state
-        search_keys = [
-          # search parameter for ransack
-          :q,
-          # common in all reports, only set for CSV rendering
-          :csv,
-          # `button` is included in all forms. It's not important for searching,
-          # but the Users & Enterprises report doesn't have any other parameter
-          # for an empty search. So we use this one to display data.
-          :button,
-          # Some reports use filtering by enterprise or order cycle
-          :distributor_id,
-          :supplier_id,
-          :order_cycle_id,
-          # Xero Invoices can be filtered by date
-          :invoice_date,
-          :due_date
-        ]
-        @searching = search_keys.any? { |key| raw_params.key? key }
-      end
-
       # We don't want to render data unless search params are supplied.
       # Compiling data can take a long time.
       def render_content?
-        @searching
+        request.post?
       end
 
       def render_report
