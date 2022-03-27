@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module OpenFoodNetwork
-  class OrderAndDistributorReport
+  class OrdersAndDistributorsReport
     def initialize(user, params = {}, render_table = false)
       @params = params
       @user = user
@@ -10,7 +10,7 @@ module OpenFoodNetwork
       @permissions = ::Permissions::Order.new(user, @params[:q])
     end
 
-    def header
+    def table_headers
       [
         I18n.t(:report_header_order_date),
         I18n.t(:report_header_order_id),
@@ -41,7 +41,7 @@ module OpenFoodNetwork
         ransack(@params[:q])
     end
 
-    def table
+    def table_rows
       return [] unless @render_table
 
       orders = search.result
@@ -104,7 +104,7 @@ module OpenFoodNetwork
         order.distributor.address.address1,
         order.distributor.address.city,
         order.distributor.address.zipcode,
-        order.shipping_method.name,
+        order.shipping_method&.name,
         order.special_instructions
       ]
     end

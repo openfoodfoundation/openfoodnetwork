@@ -99,9 +99,9 @@ describe Spree::Admin::ReportsController, type: :controller do
       it "only shows orders that I have access to" do
         spree_post :orders_and_distributors
 
-        expect(assigns(:search).result).to include(orderA1, orderB1)
-        expect(assigns(:search).result).not_to include(orderA2)
-        expect(assigns(:search).result).not_to include(orderB2)
+        expect(assigns(:report).search.result).to include(orderA1, orderB1)
+        expect(assigns(:report).search.result).not_to include(orderA2)
+        expect(assigns(:report).search.result).not_to include(orderB2)
       end
     end
 

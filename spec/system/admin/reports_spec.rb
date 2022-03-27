@@ -80,7 +80,7 @@ describe '
 
     it "delivery report" do
       click_link "Delivery Report"
-      click_button "Search"
+      click_button "Go"
       rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([

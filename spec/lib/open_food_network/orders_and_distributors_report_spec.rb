@@ -1,16 +1,15 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'open_food_network/order_and_distributor_report'
+require 'open_food_network/orders_and_distributors_report'
 
 module OpenFoodNetwork
-  describe OrderAndDistributorReport do
+  describe OrdersAndDistributorsReport do
     describe 'orders and distributors report' do
       it 'should return a header row describing the report' do
-        subject = OrderAndDistributorReport.new nil
+        subject = OrdersAndDistributorsReport.new nil
 
-        header = subject.header
-        expect(header).to eq(
+        expect(subject.table_headers).to eq(
           [
             'Order date', 'Order Id',
             'Customer Name', 'Customer Email', 'Customer Phone', 'Customer City',
@@ -45,9 +44,9 @@ module OpenFoodNetwork
         end
 
         it 'should denormalise order and distributor details for display as csv' do
-          subject = OrderAndDistributorReport.new create(:admin_user), {}, true
+          subject = OrdersAndDistributorsReport.new create(:admin_user), {}, true
 
-          table = subject.table
+          table = subject.table_rows
 
           expect(table.size).to eq 1
           expect(table[0]).to eq([
@@ -77,9 +76,9 @@ module OpenFoodNetwork
         it "prints one row per line item" do
           create(:line_item_with_shipment, order: order)
 
-          subject = OrderAndDistributorReport.new(create(:admin_user), {}, true)
+          subject = OrdersAndDistributorsReport.new(create(:admin_user), {}, true)
 
-          table = subject.table
+          table = subject.table_rows
           expect(table.size).to eq 2
         end
       end

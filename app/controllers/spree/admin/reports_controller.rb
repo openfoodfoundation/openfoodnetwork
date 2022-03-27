@@ -3,7 +3,7 @@
 require 'csv'
 
 require 'open_food_network/reports/list'
-require 'open_food_network/order_and_distributor_report'
+require 'open_food_network/orders_and_distributors_report'
 require 'open_food_network/products_and_inventory_report'
 require 'open_food_network/lettuce_share_report'
 require 'open_food_network/group_buy_report'
@@ -54,12 +54,7 @@ module Spree
       end
 
       def orders_and_distributors
-        @report = OpenFoodNetwork::OrderAndDistributorReport.new spree_current_user,
-                                                                 raw_params,
-                                                                 render_content?
-        @search = @report.search
-        csv_file_name = "orders_and_distributors_#{timestamp}.csv"
-        render_report(@report.header, @report.table, params[:csv], csv_file_name)
+        render_report2
       end
 
       def sales_tax
