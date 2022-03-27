@@ -160,16 +160,6 @@ en:
       withdrawal_count_limit_exceeded: "The customer has exceeded the balance or credit limit available on their card."
 
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Start"
-        end_at: "End"
-        distributor_ids: "Hubs"
-        producer_ids: "Producers"
-        order_cycle_ids: "Order Cycles"
-        enterprise_fee_ids: "Fees Names"
-        shipping_method_ids: "Shipping Methods"
-        payment_method_ids: "Payment Methods"
     errors:
       messages:
         inclusion: "is not included in the list"
@@ -2635,6 +2625,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_all: 'all'
   report_order_cycle: "Order Cycle"
   report_enterprises: "Enterprises"
+  report_enterprise_fee: "Fees Names"
   report_users: "Users"
   report_tax_rates: Tax rates
   report_tax_types: Tax types
@@ -3314,9 +3305,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           bulk_coop_customer_payments: "Bulk Co-op Customer Payments"
           bulk_coop_packing_sheets: "Bulk Co-op Packing Sheets"
           bulk_coop_supplier_report: "Bulk Co-op Supplier Report"
-          date_range: "Date range"
-          generate_report: "Generate Report"
-          report_format_csv: "Report format CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Date Range"
@@ -3958,11 +3946,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       reports:
         table:
           select_and_search: "Select filters and click on %{option} to access your data."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Bulk Co-op - Totals by Supplier'
-          bulk_coop_allocation: 'Bulk Co-op - Allocation'
-          bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
-          bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
         customer_names_message:
           customer_names_tip: "If customer names are hidden for orders you have supplied, you can contact the distributor and ask if they can update their shop preferences to allow their suppliers to view customer names."
       users:

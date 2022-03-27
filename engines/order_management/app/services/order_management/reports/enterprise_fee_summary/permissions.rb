@@ -3,7 +3,13 @@
 module OrderManagement
   module Reports
     module EnterpriseFeeSummary
-      class Permissions < ::Reports::Permissions
+      class Permissions
+        attr_accessor :user
+
+        def initialize(user)
+          @user = user
+        end
+
         def allowed_order_cycles
           @allowed_order_cycles ||= OrderCycle.visible_by(user)
         end

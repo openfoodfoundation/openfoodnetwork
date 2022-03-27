@@ -16,7 +16,8 @@ module OpenFoodNetwork
           order_cycle_management: order_cycle_management_report_types,
           sales_tax: sales_tax_report_types,
           packing: packing_report_types,
-          xero_invoices: xero_report_types
+          xero_invoices: xero_report_types,
+          bulk_coop: bulk_coop_report_types
         }
       end
 
@@ -77,6 +78,19 @@ module OpenFoodNetwork
       def xero_report_types
         [[I18n.t(:summary), 'summary'],
          [I18n.t(:detailed), 'detailed']]
+      end
+
+      def bulk_coop_report_types
+        [
+          bulk_coop_item(:bulk_coop_supplier_report),
+          bulk_coop_item(:bulk_coop_allocation),
+          bulk_coop_item(:bulk_coop_packing_sheets),
+          bulk_coop_item(:bulk_coop_customer_payments)
+        ]
+      end
+
+      def bulk_coop_item(key)
+        [I18n.t("order_management.reports.bulk_coop.filters.#{key}"), key]
       end
 
       def i18n_translate(key)

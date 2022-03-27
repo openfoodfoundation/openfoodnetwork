@@ -4,8 +4,6 @@ module OrderManagement
   module Reports
     module EnterpriseFeeSummary
       class Parameters < ::Reports::Parameters::Base
-        extend ActiveModel::Naming
-        extend ActiveModel::Translation
         include ActiveModel::Validations
 
         attr_accessor :start_at, :end_at, :distributor_ids, :producer_ids, :order_cycle_ids,
@@ -30,6 +28,8 @@ module OrderManagement
           self.payment_method_ids = []
 
           super(attributes)
+
+          cleanup_arrays
         end
 
         def authorize!(permissions)

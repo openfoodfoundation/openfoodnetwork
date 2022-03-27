@@ -380,6 +380,76 @@ describe '
     end
   end
 
+  describe 'bulk coop report' do
+    before do
+      login_as_admin_and_visit spree.admin_reports_path
+      click_link 'Bulk Co-Op'
+    end
+
+    xit "generating Bulk Co-op Supplier Report" do
+      select "Bulk Co-op Supplier Report", from: "report_subtype"
+      click_button 'Go'
+
+      expect(page).to have_table_row [
+        "Supplier",
+        "Product",
+        "Bulk Unit Size",
+        "Variant",
+        "Variant Value",
+        "Variant Unit",
+        "Weight",
+        "Sum Total",
+        "Units Required",
+        "Unallocated",
+        "Max Quantity Excess"
+      ]
+    end
+
+    xit "generating Bulk Co-op Allocation report" do
+      select "Bulk Co-op Allocation", from: "report_subtype"
+      click_button 'Go'
+
+      expect(page).to have_table_row [
+        "Customer",
+        "Product",
+        "Bulk Unit Size",
+        "Variant",
+        "Variant Value",
+        "Variant Unit",
+        "Weight",
+        "Sum Total",
+        "Total available",
+        "Unallocated",
+        "Max Quantity Excess"
+      ]
+    end
+
+    xit "generating Bulk Co-op Packing Sheets report" do
+      select "Bulk Co-op Packing Sheets", from: "report_subtype"
+      click_button 'Go'
+
+      expect(page).to have_table_row [
+        "Customer",
+        "Product",
+        "Variant",
+        "Sum Total"
+      ]
+    end
+
+    xit "generating Bulk Co-op Customer Payments report" do
+      select "Bulk Co-op Customer Payments", from: "report_subtype"
+      click_button 'Go'
+
+      expect(page).to have_table_row [
+        "Customer",
+        "Date of Order",
+        "Total Cost",
+        "Amount Owing",
+        "Amount Paid"
+      ]
+    end
+  end
+
   describe "Xero invoices report" do
     let(:distributor1) {
       create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true)
@@ -552,6 +622,7 @@ describe '
       end
     end
 
+
     private
 
     def xero_invoice_table
@@ -560,10 +631,10 @@ describe '
 
     def xero_invoice_header
       %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4
-         POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate
-         *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode
-         *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme
-         Paid?).map(&:upcase)
+          POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate
+          *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode
+          *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme
+          Paid?).map(&:upcase)
     end
 
     def xero_invoice_summary_row(description, amount, tax_type, opts = {})
@@ -573,7 +644,7 @@ describe '
     def xero_invoice_li_row(line_item, opts = {})
       tax_type = line_item.has_tax? ? 'GST on Income' : 'GST Free Income'
       xero_invoice_row line_item.product.sku, line_item.product_and_full_name,
-                       line_item.price.to_s, line_item.quantity.to_s, tax_type, opts
+                        line_item.price.to_s, line_item.quantity.to_s, tax_type, opts
     end
 
     def xero_invoice_adjustment_row(adjustment, opts = {})
@@ -589,14 +660,14 @@ describe '
                           due_date: '2021-05-26', account_code: 'food sales')
 
       [opts[:customer_name], 'customer@email.com', opts[:address1], '', '', '',
-       opts[:city], opts[:state], opts[:zipcode], opts[:country], opts[:invoice_number],
-       opts[:order_number], opts[:invoice_date], opts[:due_date],
+        opts[:city], opts[:state], opts[:zipcode], opts[:country], opts[:invoice_number],
+        opts[:order_number], opts[:invoice_date], opts[:due_date],
 
-       sku,
-       description,
-       quantity,
-       amount.to_s, '', opts[:account_code], tax_type, '', '', '', '', Spree::Config.currency,
-       '', 'N']
+        sku,
+        description,
+        quantity,
+        amount.to_s, '', opts[:account_code], tax_type, '', '', '', '', Spree::Config.currency,
+        '', 'N']
     end
   end
 end

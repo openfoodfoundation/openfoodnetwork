@@ -15,6 +15,7 @@ require 'open_food_network/sales_tax_report'
 require 'open_food_network/xero_invoices_report'
 require 'open_food_network/payments_report'
 require 'open_food_network/orders_and_fulfillment_report'
+require 'open_food_network/bulk_coop_report'
 
 module Spree
   module Admin
@@ -22,11 +23,6 @@ module Spree
       include Spree::ReportsHelper
       include ReportsActions
       helper ::ReportsHelper
-
-      ORDER_MANAGEMENT_ENGINE_REPORTS = [
-        :bulk_coop,
-        :enterprise_fee_summary
-      ].freeze
 
       helper_method :render_content?
 
@@ -100,6 +96,17 @@ module Spree
         render_report2
       end
 
+      def bulk_coop
+        @distributors = my_distributors
+        @report_message = I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
+        render_report2
+      end
+
+      def enterprise_fee_summary
+        @report_message = I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
+        render_report2
+      end
+
       private
 
       def model_class
@@ -139,7 +146,11 @@ module Spree
       def render_report2
         @report_subtypes = report_types[action_name.to_sym]
         @report_subtype = params[:report_subtype]
-        klass = "OpenFoodNetwork::#{action_name.camelize}Report".constantize
+        klass = if action_name == 'enterprise_fee_summary'
+                  OrderManagement::Reports::EnterpriseFeeSummary::EnterpriseFeeSummaryReport
+                else
+                  "OpenFoodNetwork::#{action_name.camelize}Report".constantize
+                end
         @report = klass.new spree_current_user, raw_params, render_content?
         if report_format.present?
           data = Reporting::ReportRenderer.new(@report).public_send("to_#{report_format}")
@@ -235,18 +246,9 @@ module Spree
       end
 
       def url_for_report(report)
-        if report_in_order_management_engine?(report)
-          main_app.public_send("new_order_management_reports_#{report}_url".to_sym)
-        else
-          spree.public_send("#{report}_admin_reports_url".to_sym)
-        end
+        spree.public_send("#{report}_admin_reports_url".to_sym)
       rescue NoMethodError
         main_app.admin_reports_url(report_type: report)
-      end
-
-      # List of reports that have been moved to the Order Management engine
-      def report_in_order_management_engine?(report)
-        ORDER_MANAGEMENT_ENGINE_REPORTS.include?(report)
       end
 
       def timestamp

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'open_food_network/bulk_coop_report'
 
-describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
-  subject { OrderManagement::Reports::BulkCoop::BulkCoopReport.new user, params, true }
+describe OpenFoodNetwork::BulkCoopReport do
+  subject { OpenFoodNetwork::BulkCoopReport.new user, params, true }
   let(:user) { create(:admin_user) }
 
   describe '#table_items' do
@@ -61,15 +62,15 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
         li2 = build(:line_item_with_shipment)
         o2.line_items << li2
 
-        report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new user, {}, true
+        report = OpenFoodNetwork::BulkCoopReport.new user, {}, true
         expect(report.table_items).to match_array [li1, li2]
 
-        report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new(
+        report = OpenFoodNetwork::BulkCoopReport.new(
           user, { q: { completed_at_gt: 2.days.ago } }, true
         )
         expect(report.table_items).to eq([li1])
 
-        report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new(
+        report = OpenFoodNetwork::BulkCoopReport.new(
           user, { q: { completed_at_lt: 2.days.ago } }, true
         )
         expect(report.table_items).to eq([li2])
@@ -85,15 +86,15 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
         li2 = build(:line_item_with_shipment)
         o2.line_items << li2
 
-        report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new user, {}, true
+        report = OpenFoodNetwork::BulkCoopReport.new user, {}, true
         expect(report.table_items).to match_array [li1, li2]
 
-        report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new(
+        report = OpenFoodNetwork::BulkCoopReport.new(
           user, { q: { distributor_id_in: [d1.id] } }, true
         )
         expect(report.table_items).to eq([li1])
 
-        report = OrderManagement::Reports::BulkCoop::BulkCoopReport.new(
+        report = OpenFoodNetwork::BulkCoopReport.new(
           user, { q: { distributor_id_in: [d2.id] } }, true
         )
         expect(report.table_items).to eq([li2])
@@ -102,7 +103,7 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
 
     context "as a manager of a supplier" do
       let!(:user) { create(:user) }
-      subject { OrderManagement::Reports::BulkCoop::BulkCoopReport.new user, {}, true }
+      subject { OpenFoodNetwork::BulkCoopReport.new user, {}, true }
 
       let(:s1) { create(:supplier_enterprise) }
 
@@ -153,7 +154,7 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
 
   describe '#columns' do
     context 'when report type is bulk_coop_customer_payments' do
-      let(:params) { { report_type: 'bulk_coop_customer_payments' } }
+      let(:params) { { report_subtype: 'bulk_coop_customer_payments' } }
 
       it 'returns' do
         expect(subject.columns).to eq(
@@ -170,7 +171,7 @@ describe OrderManagement::Reports::BulkCoop::BulkCoopReport do
   end
 
   # Yes, I know testing a private method is bad practice but report's design, tighly coupling
-  # OpenFoodNetwork::OrderGrouper and OrderManagement::Reports::BulkCoop::BulkCoopReport, makes it
+  # OpenFoodNetwork::OrderGrouper and OpenFoodNetwork::BulkCoopReport, makes it
   # very hard to make things testeable without ending up in a wormwhole. This is a trade-off.
   describe '#customer_payments_amount_owed' do
     let(:params) { {} }

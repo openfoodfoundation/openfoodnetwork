@@ -4,8 +4,6 @@ module OrderManagement
   module Reports
     module EnterpriseFeeSummary
       class Scope
-        attr_accessor :parameters
-
         def initialize
           setup_default_scope
         end
