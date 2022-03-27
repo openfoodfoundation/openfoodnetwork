@@ -5,8 +5,8 @@ module Spree
     module OrdersHelper
       def event_links
         links = []
-        links << event_link("cancel") if @order.can_cancel?
-        links << event_link("resume") if @order.can_resume?
+        links << cancel_event_link if @order.can_cancel?
+        links << resume_event_link if @order.can_resume?
         links.join('&nbsp;').html_safe
       end
 
@@ -114,12 +114,19 @@ module Spree
           confirm: t(:are_you_sure) }
       end
 
-      def event_link(event)
-        event_label = I18n.t(event, scope: "actions")
+      def cancel_event_link
+        event_label = I18n.t("cancel", scope: "actions")
+        button_link_to(event_label,
+                       fire_admin_order_url(@order, e: "cancel"),
+                       method: :put, icon: "icon-cancel", form_id: "cancel_order_form")
+      end
+
+      def resume_event_link
+        event_label = I18n.t("resume", scope: "actions")
         confirm_message = I18n.t("admin.orders.edit.order_sure_want_to", event: event_label)
         button_link_to(event_label,
-                       fire_admin_order_url(@order, e: event),
-                       method: :put, icon: "icon-#{event}",
+                       fire_admin_order_url(@order, e: "resume"),
+                       method: :put, icon: "icon-resume",
                        data: { confirm: confirm_message })
       end
 

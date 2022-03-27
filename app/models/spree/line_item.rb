@@ -50,6 +50,8 @@ module Spree
 
     attr_accessor :skip_stock_check, :target_shipment # Allows manual skipping of Stock::AvailabilityValidator
 
+    attribute :restock_item, type: :boolean, default: true
+
     # -- Scopes
     scope :managed_by, lambda { |user|
       if user.has_spree_role?('admin')

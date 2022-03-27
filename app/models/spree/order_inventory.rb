@@ -44,12 +44,15 @@ module Spree
       quantity = variant_units.size - line_item.quantity
 
       if shipment.present?
-        remove_from_shipment(shipment, line_item.variant, quantity)
+        remove_from_shipment(shipment, line_item.variant, quantity, line_item.restock_item)
       else
         order.shipments.each do |each_shipment|
           break if quantity == 0
 
-          quantity -= remove_from_shipment(each_shipment, line_item.variant, quantity)
+          quantity -= remove_from_shipment(each_shipment,
+                                           line_item.variant,
+                                           quantity,
+                                           line_item.restock_item)
         end
       end
     end
@@ -83,7 +86,7 @@ module Spree
       quantity
     end
 
-    def remove_from_shipment(shipment, variant, quantity)
+    def remove_from_shipment(shipment, variant, quantity, restock_item)
       return 0 if quantity == 0 || shipment.shipped?
 
       shipment_units = shipment.inventory_units_for(variant).reject do |variant_unit|
@@ -101,7 +104,7 @@ module Spree
       shipment.destroy if shipment.inventory_units.reload.count == 0
 
       # removing this from shipment, and adding to stock_location
-      if order.completed?
+      if order.completed? && restock_item
         shipment.stock_location.restock variant, removed_quantity, shipment
       end
 

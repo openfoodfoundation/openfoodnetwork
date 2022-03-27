@@ -192,7 +192,7 @@ module Spree
     end
 
     def after_cancel
-      manifest.each { |item| manifest_restock(item) }
+      manifest.each { |item| manifest_restock(item) } if order.restock_items
     end
 
     def after_resume

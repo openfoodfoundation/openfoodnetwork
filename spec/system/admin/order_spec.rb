@@ -163,13 +163,9 @@ describe '
         order.line_items = [order.line_items.first]
         login_as_admin_and_visit spree.edit_admin_order_path(order)
         find("a.delete-item").click 
-        within(".modal", visible: true) do
-          # ignore first modal by confirming it
-          click_on("OK")
-        end
       end
 
-      context "it shows a second modal about last item deletion and therefore about order cancellation" do
+      context "it shows a modal about last item deletion and therefore about order cancellation" do
         it "that the user can close and then nothing change" do
           expect(page).to have_content "This will cancel the current order."
           expect(page).to have_checked_field "Send a cancellation email to the customer"
@@ -205,23 +201,18 @@ describe '
             end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
           end
         end
-      end
-    end
-  end
 
-  context "user can cancel an order" do
-    before do
-      login_as_admin_and_visit spree.edit_admin_order_path(order)
-    end
-
-    it "by clicking on the cancel button" do
-      expect do
-        accept_alert do
-          click_button "Cancel"
+        context "that the user can choose to restock item" do
+          let(:shipment) { order.shipments.first }
+          it "uncheck the checkbox to not restock item" do
+            within(".modal", visible: true) do
+              check("restock_items")
+              click_on("OK")
+            end
+            expect(shipment.stock_location).not_to receive(:restock)
+          end
         end
-        expect(page).to have_content "Order updated"
-        expect(order.reload.state).to eq("canceled")
-      end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+      end
     end
   end
 
