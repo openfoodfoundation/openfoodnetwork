@@ -29,7 +29,8 @@ class UserPasswordsController < Spree::UserPasswordsController
     render status: :unprocessable_entity, operations: cable_car.inner_html(
       "#forgot-feedback",
       partial("layouts/alert",
-              locals: { type: "alert", message: t(:email_unconfirmed), unconfirmed: true })
+              locals: { type: "alert", message: t(:email_unconfirmed),
+                        unconfirmed: true, tab: "forgot" })
     )
   end
 
