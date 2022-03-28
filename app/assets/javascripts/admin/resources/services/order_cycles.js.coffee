@@ -43,7 +43,7 @@ angular.module("admin.resources").factory 'OrderCycles', ($q, $injector, OrderCy
             angular.extend(@byID[orderCycle.id], orderCycle)
             angular.extend(@pristineByID[orderCycle.id], orderCycle)
           form.$setPristine() if form?
-          StatusMessage.display('success', "Order cycles have been updated.")
+          StatusMessage.display('success', t('order_cycles_bulk_update_notice'))
         , (response) =>
           if response.data.errors?
             StatusMessage.display('failure', response.data.errors[0])
