@@ -4,45 +4,24 @@ require 'spree/core/s3_support'
 
 module Spree
   class Image < Asset
+    include HasMigratingFile
+
     validates_attachment_presence :attachment
     validate :no_attachment_errors
 
-    # Active Storage declaration
-    has_one_attached :attachment
-
-    # Backup Active Storage methods before they get overridden by Paperclip.
-    alias_method :active_storage_attachment, :attachment
-    alias_method :active_storage_attachment=, :attachment=
-
-    # Paperclip declaration
-    #
-    # This will define the `name` and `name=` methods as well.
-    #
     # This is where the styles are used in the app:
     # - mini: used in the BackOffice: Bulk Product Edit page and Order Cycle edit page
     # - small: used in the FrontOffice: Product List page
     # - product: used in the BackOffice: Product Image upload modal in the Bulk Product Edit page
     #                                      and Product image edit page
     # - large: used in the FrontOffice: product modal
-    has_attached_file :attachment,
+    has_one_migrating :attachment,
                       styles: { mini: "48x48#", small: "227x227#",
                                 product: "240x240>", large: "600x600>" },
                       default_style: :product,
                       url: '/spree/products/:id/:style/:basename.:extension',
                       path: ':rails_root/public/spree/products/:id/:style/:basename.:extension',
                       convert_options: { all: '-strip -auto-orient -colorspace sRGB' }
-
-    after_post_process do
-      if attachment.errors.blank?
-        attachable = {
-          io: File.open(local_filename_of_original),
-          filename: attachment_file_name,
-          content_type: attachment_content_type,
-          identify: false,
-        }
-        self.active_storage_attachment = attachable
-      end
-    end
 
     # save the w,h of the original image (from which others can be calculated)
     # we need to look at the write-queue for images which have not been saved yet
