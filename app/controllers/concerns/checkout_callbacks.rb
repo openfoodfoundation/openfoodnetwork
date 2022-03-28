@@ -2,7 +2,6 @@
 
 module CheckoutCallbacks
   extend ActiveSupport::Concern
-  helper EnterprisesHelper
 
   included do
     # We need pessimistic locking to avoid race conditions.
