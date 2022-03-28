@@ -466,6 +466,15 @@ en:
   admin:
     products_page:
       title: Products
+      filters:
+        categories: 
+          title: Categories
+          selected_categories: "%{count} categories selected"
+        producers:
+          title: Producers
+          selected_producers: "%{count} producers selected"
+        per_page: "%{count} items per page"
+        colums: Columns
       columns:
         name: Name
         unit: Unit
