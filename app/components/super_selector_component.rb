@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class SuperSelectorComponent < SelectorComponent
-  def initialize(title:, selected:, items:, data: {})
+  def initialize(title:, selected:, items:, data: {},
+                 selected_items_i18n_key: 'components.super_selector.selected_items')
     super(title: title, selected: selected, items: items, data: data)
     @query = ""
     @selected_items = items.select { |item| @selected.include?(item[:value]) }
+    @selected_items_i18n_key = selected_items_i18n_key
 
     filter_items
   end

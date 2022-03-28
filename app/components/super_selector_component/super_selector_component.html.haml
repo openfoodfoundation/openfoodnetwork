@@ -11,11 +11,11 @@
               = item[:label]
         - else
           .super-selector-selected-item
-            = "#{@selected_items.length} categories selected"
+            = t(@selected_items_i18n_key, count: @selected_items.length)
       .selector-arrow{data: reflex_data_attributes(:toggle)}
     .selector-wrapper
       .super-selector-search
-        %input{type: "text", placeholder: "Search", data: reflex_data_attributes("debounced:input->search"), value: @query}
+        %input{type: "text", placeholder: t("components.super_selector.search_placeholder"), data: reflex_data_attributes("debounced:input->search"), value: @query}
       .selector-items
         - @filtered_items.each do |item|
           .selector-item{ class: ("selected" if item[:selected]), data: @data, "data-value": item[:value] }
