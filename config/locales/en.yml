@@ -459,6 +459,7 @@ en:
 #
   admin:
     products_page:
+      title: Products
       columns:
         name: Name
         unit: Unit
