@@ -455,6 +455,9 @@ en:
     destroy: "Destroy"
     rename: "Rename"
 
+  components:
+    search_input:
+      placeholder: Search
 # Admin
 #
   admin:
