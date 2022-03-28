@@ -1,6 +1,8 @@
 en_CA:
   language_name: "English"
   activerecord:
+    models:
+      spree/product: Product
     attributes:
       spree/user:
         password: "Password"
