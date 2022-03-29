@@ -1,19 +1,17 @@
 # frozen_string_literal: true
 
-require 'open_food_network/reports/list'
-require 'open_food_network/orders_and_distributors_report'
-require 'open_food_network/products_and_inventory_report'
-require 'open_food_network/lettuce_share_report'
-require 'open_food_network/group_buy_report'
-require 'open_food_network/order_grouper'
-require 'open_food_network/customers_report'
-require 'open_food_network/users_and_enterprises_report'
-require 'open_food_network/order_cycle_management_report'
-require 'open_food_network/sales_tax_report'
-require 'open_food_network/xero_invoices_report'
-require 'open_food_network/payments_report'
-require 'open_food_network/orders_and_fulfillment_report'
-require 'open_food_network/bulk_coop_report'
+# require 'open_food_network/orders_and_distributors_report'
+# require 'open_food_network/products_and_inventory_report'
+# require 'open_food_network/lettuce_share_report'
+# require 'open_food_network/order_grouper'
+# require 'open_food_network/customers_report'
+# require 'open_food_network/users_and_enterprises_report'
+# require 'open_food_network/order_cycle_management_report'
+# require 'open_food_network/sales_tax_report'
+# require 'open_food_network/xero_invoices_report'
+# require 'open_food_network/payments_report'
+# require 'open_food_network/orders_and_fulfillment_report'
+# require 'open_food_network/bulk_coop_report'
 
 module Spree
   module Admin
@@ -30,7 +28,7 @@ module Spree
       respond_to :html
 
       def report_types
-        OpenFoodNetwork::Reports::List.all
+        Reporting::Reports::List.all
       end
 
       def index
@@ -119,11 +117,7 @@ module Spree
       def render_report
         @report_subtypes = report_types[action_name.to_sym]
         @report_subtype = params[:report_subtype]
-        klass = if action_name == 'enterprise_fee_summary'
-                  OrderManagement::Reports::EnterpriseFeeSummary::EnterpriseFeeSummaryReport
-                else
-                  "OpenFoodNetwork::#{action_name.camelize}Report".constantize
-                end
+        klass = "Reporting::Reports::#{action_name.camelize}::#{action_name.camelize}Report".constantize
         @report = klass.new spree_current_user, raw_params, render_content?
         if report_format.present?
           data = Reporting::ReportRenderer.new(@report).public_send("to_#{report_format}")
