@@ -979,6 +979,8 @@ en:
           shopfront_sort_by_producer_placeholder: "Producer"
           display_remaining_stock: "Display remaining stock in shopfront"
           display_remaining_stock_tip: "Display remaining stock in shopfront"
+          enabled: "Enabled"
+          disabled: "Disabled"
         social:
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. the_prof"
