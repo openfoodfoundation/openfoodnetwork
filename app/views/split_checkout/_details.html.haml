@@ -62,7 +62,7 @@
           = bill_address.select :state_id, states_for_country(bill_address_country), { selected: @order.bill_address&.state_id }, { "data-dependant-select-target": "select" }
 
       - if spree_current_user
-        %div.checkout-input{ "data-toggle-target": "content", style: "display: none" }
+        %div.checkout-input
           = f.check_box :save_bill_address
           = f.label :save_bill_address, t(:checkout_default_bill_address)
 
