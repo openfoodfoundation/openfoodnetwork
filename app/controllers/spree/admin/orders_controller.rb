@@ -65,7 +65,7 @@ module Spree
 
       def fire
         event = params[:e]
-        @order.send_cancellation_email = params[:send_cancellation_email] == "true"
+        @order.send_cancellation_email = params[:send_cancellation_email] != "false"
         if @order.public_send(event.to_s)
           flash[:success] = Spree.t(:order_updated)
         else
