@@ -74,8 +74,8 @@
 
 .row
   .three.columns.alpha
-    %label= t '.preferred_enterprise_stock_display'
-    %div{'ofn-with-tip' => t('.preferred_enterprise_stock_display_tip')}
+    %label= t '.display_remaining_stock'
+    %div{'ofn-with-tip' => t('.display_remaining_stock_tip')}
       %a= t 'admin.whats_this'
   .three.columns
     = f.radio_button :preferred_product_stock_display, true, 'ng-model' => 'Enterprise.preferred_product_stock_display', 'ng-value' => 'true'
