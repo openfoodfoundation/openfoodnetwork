@@ -1,20 +1,19 @@
 - column_partials ||= {}
-- if render_content?
-  %table.report__table{id: id}
-    %thead
+%table.report__table
+  %thead
+    %tr
+      - @header.each do |heading|
+        %th= heading
+  %tbody
+    - @table.each do |row|
       %tr
-        - @header.each do |heading|
-          %th= heading
-    %tbody
-      - @table.each do |row|
-        %tr
-          - row.each_with_index do |cell_value, column_index|
-            %td
-              - partial = column_partials[column_index]
-              - if partial
-                = render partial, value: cell_value
-              - else
-                = cell_value
-      - if @table.empty?
-        %tr
-          %td{colspan: @header.count}= t(:none)
+        - row.each_with_index do |cell_value, column_index|
+          %td
+            - partial = column_partials[column_index]
+            - if partial
+              = render partial, value: cell_value
+            - else
+              = cell_value
+    - if @table.empty?
+      %tr
+        %td{colspan: @header.count}= t(:none)

@@ -38,10 +38,10 @@ describe '
 
     it "customers report" do
       click_link "Mailing List"
-      expect(page).to have_select('report_type', selected: 'Mailing List')
+      expect(page).to have_select('report_subtype', selected: 'Mailing List')
       click_button "Go"
 
-      rows = find("table#listing_customers").all("thead tr")
+      rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["Email", "First Name", "Last Name", "Suburb"].map(&:upcase)
@@ -50,10 +50,10 @@ describe '
 
     it "customers report" do
       click_link "Addresses"
-      expect(page).to have_select('report_type', selected: 'Addresses')
+      expect(page).to have_select('report_subtype', selected: 'Addresses')
 
       click_button "Go"
-      rows = find("table#listing_customers").all("thead tr")
+      rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address",
@@ -70,7 +70,7 @@ describe '
     it "payment method report" do
       click_link "Payment Methods Report"
       click_button "Search"
-      rows = find("table#listing_ocm_orders").all("thead tr")
+      rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["First Name", "Last Name", "Hub", "Hub Code", "Email", "Phone", "Shipping Method",
@@ -81,7 +81,7 @@ describe '
     it "delivery report" do
       click_link "Delivery Report"
       click_button "Search"
-      rows = find("table#listing_ocm_orders").all("thead tr")
+      rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["First Name", "Last Name", "Hub", "Hub Code", "Delivery Address", "Delivery Postcode",
@@ -242,7 +242,7 @@ describe '
         pick_datetime "#q_completed_at_gt", datetime_start
         pick_datetime "#q_completed_at_lt", datetime_end
 
-        select 'Order Cycle Customer Totals', from: 'report_type'
+        select 'Order Cycle Customer Totals', from: 'report_subtype'
         click_button 'Search'
         # Then I should see the rows for the first order but not the second
         expect(all('table#listing_orders tbody tr').count).to eq(4) # Two rows per order
@@ -349,7 +349,7 @@ describe '
     it "shows users and enterprises report" do
       click_button "Search"
 
-      rows = find("table#users_and_enterprises").all("tr")
+      rows = find("table.report__table").all("tr")
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 
       expect(table.sort).to eq([
@@ -370,7 +370,7 @@ describe '
 
       click_button "Search"
 
-      rows = find("table#users_and_enterprises").all("tr")
+      rows = find("table.report__table").all("tr")
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 
       expect(table.sort).to eq([
@@ -555,7 +555,7 @@ describe '
     private
 
     def xero_invoice_table
-      find("table#listing_invoices")
+      find("table.report__table")
     end
 
     def xero_invoice_header

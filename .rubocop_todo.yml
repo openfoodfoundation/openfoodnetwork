@@ -560,7 +560,7 @@ Metrics/CyclomaticComplexity:
     - 'lib/open_food_network/customers_report.rb'
     - 'lib/open_food_network/enterprise_issue_validator.rb'
     - 'lib/open_food_network/group_buy_report.rb'
-    - 'lib/open_food_network/orders_and_fulfillments_report/customer_totals_report.rb'
+    - 'lib/open_food_network/orders_and_fulfillment_report/customer_totals_report.rb'
     - 'lib/open_food_network/payments_report.rb'
     - 'lib/open_food_network/xero_invoices_report.rb'
     - 'lib/spree/core/controller_helpers/order.rb'
@@ -716,7 +716,7 @@ Naming/VariableNumber:
     - 'app/controllers/spree/orders_controller.rb'
     - 'app/models/content_configuration.rb'
     - 'app/models/preference_sections/main_links_section.rb'
-    - 'lib/open_food_network/orders_and_fulfillments_report/customer_totals_report.rb'
+    - 'lib/open_food_network/orders_and_fulfillment_report/customer_totals_report.rb'
     - 'lib/spree/core/controller_helpers/common.rb'
     - 'spec/controllers/spree/admin/search_controller_spec.rb'
     - 'spec/factories/stock_location_factory.rb'
@@ -1092,7 +1092,7 @@ Style/MissingRespondToMissing:
 # Offense count: 1
 Style/MixinUsage:
   Exclude:
-    - 'lib/open_food_network/orders_and_fulfillments_report.rb'
+    - 'lib/open_food_network/orders_and_fulfillment_report.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -1137,7 +1137,7 @@ Style/OptionalBooleanParameter:
     - 'lib/open_food_network/customers_report.rb'
     - 'lib/open_food_network/order_and_distributor_report.rb'
     - 'lib/open_food_network/order_cycle_management_report.rb'
-    - 'lib/open_food_network/orders_and_fulfillments_report.rb'
+    - 'lib/open_food_network/orders_and_fulfillment_report.rb'
     - 'lib/open_food_network/payments_report.rb'
     - 'lib/open_food_network/products_and_inventory_report_base.rb'
     - 'lib/open_food_network/users_and_enterprises_report.rb'
@@ -1236,7 +1236,7 @@ Style/StringConcatenation:
     - 'app/services/embedded_page_service.rb'
     - 'app/services/products_renderer.rb'
     - 'engines/order_management/app/services/order_management/reports/bulk_coop/bulk_coop_report.rb'
-    - 'lib/open_food_network/orders_and_fulfillments_report/customer_totals_report.rb'
+    - 'lib/open_food_network/orders_and_fulfillment_report/customer_totals_report.rb'
     - 'lib/spree/api/controller_setup.rb'
     - 'lib/spree/core/environment_extension.rb'
     - 'spec/lib/open_food_network/order_grouper_spec.rb'

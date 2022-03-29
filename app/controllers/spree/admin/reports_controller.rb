@@ -14,12 +14,13 @@ require 'open_food_network/order_cycle_management_report'
 require 'open_food_network/sales_tax_report'
 require 'open_food_network/xero_invoices_report'
 require 'open_food_network/payments_report'
-require 'open_food_network/orders_and_fulfillments_report'
+require 'open_food_network/orders_and_fulfillment_report'
 
 module Spree
   module Admin
     class ReportsController < Spree::Admin::BaseController
       include Spree::ReportsHelper
+      include ReportsActions
       helper ::ReportsHelper
 
       ORDER_MANAGEMENT_ENGINE_REPORTS = [
@@ -32,7 +33,6 @@ module Spree
       before_action :cache_search_state
       # Fetches user's distributors, suppliers and order_cycles
       before_action :load_basic_data, only: [:customers, :products_and_inventory, :order_cycle_management]
-      before_action :load_associated_data, only: [:orders_and_fulfillment]
 
       respond_to :html
 
@@ -101,21 +101,21 @@ module Spree
       end
 
       def orders_and_fulfillment
-        raw_params[:q] ||= orders_and_fulfillment_default_filters
+        now = Time.zone.now
+        raw_params[:q] ||= {
+          completed_at_gt: (now - 1.month).beginning_of_day,
+          completed_at_lt: (now + 1.day).beginning_of_day
+        }
 
-        @report_types = report_types[:orders_and_fulfillment]
-        @report_type = params[:report_type]
+        form_options = Reporting::FrontendData.new(spree_current_user)
 
-        @include_blank = I18n.t(:all)
+        @distributors = form_options.distributors
+        @suppliers = form_options.suppliers
+        @order_cycles = form_options.order_cycles
 
-        # -- Build Report with Order Grouper
-        @report = OpenFoodNetwork::OrdersAndFulfillmentsReport.new spree_current_user,
-                                                                   raw_params,
-                                                                   render_content?
-        @table = order_grouper_table
-        csv_file_name = "#{params[:report_type]}_#{timestamp}.csv"
+        @report_message = I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
 
-        render_report(@report.header, @table, params[:csv], csv_file_name)
+        render_report2
       end
 
       def products_and_inventory
@@ -190,19 +190,27 @@ module Spree
         @searching
       end
 
+      def render_report2
+        @report_subtypes = report_types[action_name.to_sym]
+        @report_subtype = params[:report_subtype]
+        klass = "OpenFoodNetwork::#{action_name.camelize}Report".constantize
+        @report = klass.new spree_current_user, raw_params, render_content?
+
+        if report_format.present?
+          data = Reporting::ReportRenderer.new(@report).public_send("to_#{report_format}")
+          send_data data, filename: report_filename
+        else
+          @header = @report.table_headers
+          @table = @report.table_rows
+
+          render "show"
+        end
+      end
+
       def render_report(header, table, create_csv, csv_file_name)
         send_data csv_report(header, table), filename: csv_file_name if create_csv
         @header = header
         @table = table
-        # Rendering HTML is the default.
-      end
-
-      def load_associated_data
-        form_options = Reporting::FrontendData.new(spree_current_user)
-
-        @distributors = form_options.distributors
-        @suppliers = form_options.suppliers
-        @order_cycles = form_options.order_cycles
       end
 
       def csv_report(header, table)
@@ -298,12 +306,6 @@ module Spree
 
       def timestamp
         Time.zone.now.strftime("%Y%m%d")
-      end
-
-      def orders_and_fulfillment_default_filters
-        now = Time.zone.now
-        { completed_at_gt: (now - 1.month).beginning_of_day,
-          completed_at_lt: (now + 1.day).beginning_of_day }
       end
     end
   end

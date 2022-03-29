@@ -1,0 +1,17 @@
+= form_for @report.search, :url => url_for(only_path: false) do |f|
+  %fieldset.no-border-bottom.print-hidden
+    %legend{ align: 'center'}= t(:report_filters)
+    = render partial: "spree/admin/reports/filters/#{action_name}", locals: { f: f }
+
+  %fieldset.print-hidden
+    %legend{ align: 'center'}= t(:report_render_options)
+    = render partial: "admin/reports/rendering_options"
+
+    .actions.filter-actions
+      = button t(:go), "report__submit-btn"
+
+- if @report_message.present?
+  %p.report__message.print-hidden= @report_message
+
+- if render_content?
+  = render "table"

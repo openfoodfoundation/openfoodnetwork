@@ -1,4 +1,4 @@
-- if @report_subtypes.any?
+- if @report_subtypes.present? && @report_subtypes.count > 1
   .row
     .alpha.two.columns= label_tag nil, t(:report_type)
     .omega.fourteen.columns

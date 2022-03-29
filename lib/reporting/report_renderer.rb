@@ -9,11 +9,11 @@ module Reporting
     end
 
     def table_headers
-      @report.report_data.columns
+      @report.respond_to?(:report_data) ? @report.report_data.columns : @report.table_headers
     end
 
     def table_rows
-      @report.report_data.rows
+      @report.respond_to?(:report_data) ? @report.report_data.rows : @report.table_rows
     end
 
     def as_json
