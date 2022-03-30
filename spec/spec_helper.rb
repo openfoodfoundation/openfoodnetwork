@@ -6,6 +6,7 @@ require 'database_cleaner'
 require 'webdrivers'
 require 'selenium-webdriver'
 require 'view_component/test_helpers'
+require 'puffing-billy/rspec'
 
 # This spec_helper.rb is being used by the custom engines in engines/. The engines are not set up to
 # use Knapsack, and this provides the option to disable it when running the tests in CI services.
@@ -17,7 +18,7 @@ end
 
 Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
-    args: %w[headless disable-gpu no-sandbox window-size=1280,768]
+    args: %w[disable-gpu no-sandbox window-size=1280,768]
   )
   options.add_preference(:download, default_directory: DownloadsHelper.path.to_s)
 
@@ -55,6 +56,29 @@ RSpec.configure do |config|
   config.after(:each, js: true) do
     Capybara.reset_sessions!
   end
+
+  # setup puffing-billy
+  config.before :each, billy: true do
+    Capybara.current_driver = :selenium_chrome_billy
+    Capybara.javascript_driver = :selenium_chrome_billy
+  end
+
+  config.after do
+    Capybara.javascript_driver = :chrome
+  end
+
+  # Patch `puffing-billy`'s proxy so that it doesn't try to stop
+  # eventmachine's reactor if it's not running.
+  # taken from https://github.com/oesmith/puffing-billy/issues/253
+  module BillyProxyPatch
+    def stop
+      return unless EM.reactor_running?
+
+      super
+    end
+  end
+
+  Billy::Proxy.prepend(BillyProxyPatch)
 
   # Precompile Webpacker assets (once) when starting the suite. The default setup can result
   # in the assets getting compiled many times throughout the build, slowing it down.
