@@ -458,7 +458,7 @@ en:
   components:
     search_input:
       placeholder: Search
-    super_selector:
+    selector_with_filter:
       selected_items: "%{count} selected"
       search_placeholder: Search
 # Admin

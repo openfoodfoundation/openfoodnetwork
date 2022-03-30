@@ -70,12 +70,12 @@ class ProductsTableComponent < ViewComponentReflex::Component
 
   def toggle_category
     category_clicked = element.dataset['value']
-    @categories_selected = toggle_super_selector(category_clicked, @categories_selected)
+    @categories_selected = toggle_selector_with_filter(category_clicked, @categories_selected)
   end
 
   def toggle_producer
     producer_clicked = element.dataset['value']
-    @producers_selected = toggle_super_selector(producer_clicked, @producers_selected)
+    @producers_selected = toggle_selector_with_filter(producer_clicked, @producers_selected)
   end
 
   def change_page
@@ -93,7 +93,7 @@ class ProductsTableComponent < ViewComponentReflex::Component
     @columns.unshift(ALL_COLUMN)
   end
 
-  def toggle_super_selector(clicked, selected)
+  def toggle_selector_with_filter(clicked, selected)
     selected = if selected.include?(clicked)
                  selected - [clicked]
                else
