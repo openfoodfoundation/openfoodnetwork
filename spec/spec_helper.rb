@@ -67,6 +67,10 @@ RSpec.configure do |config|
     Capybara.javascript_driver = :chrome
   end
 
+  config.before :each, payments: true do
+    stub_stripe!
+  end
+
   # Patch `puffing-billy`'s proxy so that it doesn't try to stop
   # eventmachine's reactor if it's not running.
   # taken from https://github.com/oesmith/puffing-billy/issues/253

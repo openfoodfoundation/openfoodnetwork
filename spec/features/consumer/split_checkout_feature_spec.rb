@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "As a consumer, I want to checkout my order", js: true, billy: true do
+describe "As a consumer, I want to checkout my order", js: true, payments: true, billy: true do
   include ShopWorkflow
   include SplitCheckoutHelper
   include FileHelper
@@ -92,9 +92,6 @@ describe "As a consumer, I want to checkout my order", js: true, billy: true do
           fill_out_card_details
           proceed_to_summary
         end
-
-        #it " fills in card data and saves a Stripe card" do
-        #end
       end
     end
 
