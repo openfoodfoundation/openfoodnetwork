@@ -1,6 +1,8 @@
 en_US:
   language_name: "English"
   activerecord:
+    models:
+      spree/product: Product
     attributes:
       spree/user:
         password: "Password"
@@ -227,7 +229,7 @@ en_US:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
     welcome:
-      subject: "%{enterprise}: Welcome to the %{sitename}Community!"
+      subject: "%{enterprise}: Welcome to the %{sitename} Community!"
       email_welcome: "Welcome"
       email_registered: "is now part of"
       email_userguide_html: "Hey you made it! Thanks for joining the party. The Open Food Network is a powerful platform, and we've all been on that learning curve, which is sometimes steep - but we'll help you get comfy ASAP! The many humans who create, use, and care for OFN are ready to help you get set up and be successful. Please take a look at our Support page for a start, and we have put together a User Guide with detailed support for setting up your Producer Enterprise or Hub here: %{link}. We also offer drop in \"office hours\" most Mondays and Fridays at 9am Pacific Time, 10 Mountain, 11 Central, and noon Eastern - just point your browser to meet.openfoodnetwork.net."
@@ -1345,6 +1347,7 @@ en_US:
       stripe_connect_settings:
         resource: Stripe Connect configuration
   api:
+    unknown_error: "Uh oh! Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
     unauthorized: "You are not authorized to perform that action."
     invalid_resource: "Invalid resource. Please fix errors and try again."
@@ -1422,6 +1425,7 @@ en_US:
         login: "login"
         contact: "contact"
         require_customer_login: "Only approved customers can access this shop."
+        require_login_link_html: "If you're already an approved customer, %{login} to proceed."
         require_login_2_html: "Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
         require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
       select_oc:
@@ -2712,6 +2716,7 @@ en_US:
     admin:
       unit_price_tooltip: "The unit price increases transparency by allowing your customers to easily compare prices between different products and packaging sizes. Note, that the final unit price displayed in the shopfront might differ if it includes taxes & fees."
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
+      deleting_item_will_cancel_order: "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
       modals:
         got_it: "Got it"
         close: "Close"
@@ -2902,6 +2907,8 @@ en_US:
           invalid: "Invalid"
         quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
         quantity_unchanged: "Quantity unchanged from previous amount."
+        cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
+        cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -3268,6 +3275,7 @@ en_US:
     tracking: "Tracking"
     tracking_number: "Tracking Number"
     order_total: "Order Total"
+    order_updated: "Order updated"
     customer_details: "Customer Details"
     customer_details_updated: "Customer Details updated"
     customer_search: "Customer Search"
