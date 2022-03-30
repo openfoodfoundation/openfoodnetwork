@@ -25,7 +25,7 @@ module OpenFoodNetwork
         if @coordinator.sells == "any"
           # If the coordinator sells any, relationships come into play
           related_enterprises_granting(:add_to_order_cycle,
-                                        to: [@coordinator.id]).each do |enterprise_id|
+                                       to: [@coordinator.id]).each do |enterprise_id|
             coordinator_permitted_ids << enterprise_id
           end
 
@@ -125,7 +125,7 @@ module OpenFoodNetwork
     # Find the variants that a user can POTENTIALLY see within incoming exchanges
     def visible_variants_for_incoming_exchanges_from(producer)
       if @order_cycle &&
-          (user_manages_coordinator_or(producer) || user_is_permitted_add_to_oc_by(producer))
+         (user_manages_coordinator_or(producer) || user_is_permitted_add_to_oc_by(producer))
         all_variants_supplied_by(producer)
       else
         no_variants
@@ -212,8 +212,8 @@ module OpenFoodNetwork
         # Variants produced by MY PRODUCERS that are in this OC,
         #   where my producer has granted P-OC to the hub
         granting_producer_ids = related_enterprises_granting(:add_to_order_cycle,
-                                                              to: [hub.id],
-                                                              scope: granted_producers)
+                                                             to: [hub.id],
+                                                             scope: granted_producers)
         permitted_variants = variants_from_suppliers(granting_producer_ids)
 
         Spree::Variant.where(id: permitted_variants)

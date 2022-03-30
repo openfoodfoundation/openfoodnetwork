@@ -21,12 +21,14 @@ describe Admin::ReportsController, type: :controller do
 
   # Given two order cycles with both distributors
   let(:ocA) {
-    create(:simple_order_cycle, coordinator: coordinator1, distributors: [distributor1, distributor2],
+    create(:simple_order_cycle, coordinator: coordinator1,
+                                distributors: [distributor1, distributor2],
                                 suppliers: [supplier1, supplier2, supplier3],
                                 variants: [product1.master, product3.master])
   }
   let(:ocB) {
-    create(:simple_order_cycle, coordinator: coordinator2, distributors: [distributor1, distributor2],
+    create(:simple_order_cycle, coordinator: coordinator2,
+                                distributors: [distributor1, distributor2],
                                 suppliers: [supplier1, supplier2, supplier3],
                                 variants: [product2.master])
   }
@@ -157,7 +159,8 @@ describe Admin::ReportsController, type: :controller do
         spree_get :index
 
         report_types = assigns(:reports).keys
-        expect(report_types).to include :orders_and_fulfillment, :products_and_inventory, :packing # and others
+        expect(report_types).to include :orders_and_fulfillment,
+                                        :products_and_inventory, :packing # and others
         expect(report_types).to_not include :sales_tax
       end
     end

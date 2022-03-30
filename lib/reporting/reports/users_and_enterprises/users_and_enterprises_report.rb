@@ -4,7 +4,6 @@ module Reporting
   module Reports
     module UsersAndEnterprises
       class UsersAndEnterprisesReport < ReportObjectTemplate
-
         def initialize(user, params = {})
           super(user, params)
 

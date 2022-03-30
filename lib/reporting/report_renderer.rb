@@ -19,7 +19,7 @@ module Reporting
     def as_json
       table_rows.map do |row|
         result = {}
-        table_headers.zip(row) { |a,b| result[a.to_sym] = b }
+        table_headers.zip(row) { |a, b| result[a.to_sym] = b }
         result
       end.as_json
     end

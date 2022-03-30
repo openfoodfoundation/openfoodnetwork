@@ -4,7 +4,6 @@
 # The result from those models
 module Reporting
   class ReportObjectTemplate < ReportTemplate
-
     def table_headers
       raise NotImplementedError
     end
