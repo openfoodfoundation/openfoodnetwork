@@ -1285,7 +1285,6 @@ en:
         name: Customers
       products_and_inventory:
         name: Products & Inventory
-        description:
       users_and_enterprises:
         name: Users & Enterprises
         description: Enterprise Ownership & Status
@@ -1330,8 +1329,6 @@ en:
         hide_summary_rows: "Hide summary Rows"
       packing:
         name: "Packing Reports"
-        customer_report: "Pack By Customer"
-        supplier_report: "Pack By Supplier"
     subscriptions:
       index:
         title: "Subscriptions"

@@ -6,6 +6,7 @@
       - report.table_headers.each do |heading|
         %th
           = t("admin.reports.table.headings.#{heading}")
+          -# = heading
   %tbody
     - report.table_rows.each do |row|
       - if row

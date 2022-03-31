@@ -4,13 +4,16 @@ module Reporting
   module Reports
     module BulkCoop
       class BulkCoopReport < ReportObjectTemplate
-
         def initialize(user, params = {})
           super(user, params)
 
           @supplier_report = BulkCoopSupplierReport.new
           @allocation_report = BulkCoopAllocationReport.new
           @filter_canceled = false
+        end
+
+        def message
+          I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
         end
 
         def table_headers

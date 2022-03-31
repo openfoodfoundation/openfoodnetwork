@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-include Spree::ReportsHelper
-
 module Reporting
   module Reports
     module OrdersAndFulfillment
       class OrdersAndFulfillmentReport < ReportObjectTemplate
+        include ReportsHelper
+
         attr_reader :report_type
 
         delegate :table_headers, :rules, :columns, to: :report
@@ -19,6 +19,10 @@ module Reporting
             completed_at_gt: (now - 1.month).beginning_of_day,
             completed_at_lt: (now + 1.day).beginning_of_day
           }
+        end
+
+        def message
+          I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
         end
 
         def search

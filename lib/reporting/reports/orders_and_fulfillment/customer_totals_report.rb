@@ -5,6 +5,8 @@ module Reporting
   module Reports
     module OrdersAndFulfillment
       class CustomerTotalsReport
+        include ReportsHelper
+
         REPORT_TYPE = "order_cycle_customer_totals"
 
         attr_reader :context

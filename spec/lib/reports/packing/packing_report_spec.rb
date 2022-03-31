@@ -20,7 +20,7 @@ describe "Packing Reports" do
     let(:report_contents) { subject.report_data.rows.flatten }
     let(:row_count) { subject.report_data.rows.count }
 
-    subject { Reporting::Reports::Packing::Customer.new user, params }
+    subject { Reporting::Reports::Packing::Customer.new user, { q: params } }
 
     before do
       order.line_items << line_item

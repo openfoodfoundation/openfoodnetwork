@@ -4,7 +4,7 @@ module Reporting
   module Reports
     module SalesTax
       class SalesTaxReport < ReportObjectTemplate
-        include Spree::ReportsHelper
+        include ReportsHelper
 
         def table_headers
           case params[:report_subtype]

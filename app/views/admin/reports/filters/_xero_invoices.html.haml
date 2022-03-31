@@ -1,12 +1,12 @@
-= render 'spree/admin/reports/date_range_form', f: f
+= render 'admin/reports/date_range_form', f: f
 
 .row
   .two.columns.alpha= label_tag nil, t(:report_hubs)
-  .fourteen.columns.omega= f.collection_select(:distributor_id_eq, @distributors, :id, :name, {:include_blank => 'All'}, {:class => "select2 fullwidth light"})
+  .fourteen.columns.omega= f.collection_select(:distributor_id_eq, @data.distributors, :id, :name, {:include_blank => 'All'}, {:class => "select2 fullwidth light"})
 .row
   .two.columns.alpha= label_tag nil, t(:report_order_cycle)
   .fourteen.columns.omega= f.select(:order_cycle_id_eq,
-    options_for_select(report_order_cycle_options(@order_cycles), params.dig(:q, :order_cycle_id_eq)),
+    options_for_select(report_order_cycle_options(@data.order_cycles), params.dig(:q, :order_cycle_id_eq)),
     {:include_blank => true}, {:class => "select2 fullwidth light"})
 
 .row

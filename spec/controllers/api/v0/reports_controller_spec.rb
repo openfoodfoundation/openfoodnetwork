@@ -63,7 +63,6 @@ describe Api::V0::ReportsController, type: :controller do
 
       it "returns an error" do
         api_get :show, report_type: "packing"
-
         expect(response.status).to eq 422
         expect(json_response["error"]).to eq(
           I18n.t('errors.missing_ransack_params', scope: i18n_scope)

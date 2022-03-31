@@ -4,7 +4,9 @@ module Reporting
   module Reports
     module Packing
       class Base < ReportQueryTemplate
-        SUBTYPES = ["customer", "supplier"]
+        def message
+          I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
+        end
 
         def primary_model
           Spree::LineItem

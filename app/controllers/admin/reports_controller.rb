@@ -5,12 +5,21 @@ module Admin
     include ReportsActions
     helper ReportsHelper
 
-    before_action :authorize_report
+    before_action :authorize_report, only: [:show]
+
+    # Define custom model class for Cancan permissions
+    def model_class
+      Admin::ReportsController
+    end
+
+    def index
+      @reports = reports.select do |report_type, _description|
+        can? report_type, :report
+      end
+    end
 
     def show
-      render_report && return if ransack_params.blank?
-
-      @report = report_class.new(spree_current_user, ransack_params, report_options)
+      @report = report_class.new(spree_current_user, params)
 
       if report_format.present?
         export_report
@@ -27,29 +36,15 @@ module Admin
 
     def render_report
       assign_view_data
-      load_form_options
       render "show"
     end
 
     def assign_view_data
       @report_type = report_type
-      @report_subtype = report_subtype || report_loader.default_report_subtype
-      @report_subtypes = report_class.report_subtypes.map do |subtype|
-        [t("packing.#{subtype}_report", scope: i18n_scope), subtype]
-      end
-      if @report_type == "packing"
-        @report_message = I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
-      end
-    end
+      @report_subtypes = report_subtypes
+      @report_subtype = report_subtype
 
-    def load_form_options
-      return unless form_options_required?
-
-      form_options = Reporting::FrontendData.new(spree_current_user)
-
-      @distributors = form_options.distributors.to_a
-      @suppliers = form_options.suppliers.to_a
-      @order_cycles = form_options.order_cycles.to_a
+      @data = Reporting::FrontendData.new(spree_current_user)
     end
   end
 end

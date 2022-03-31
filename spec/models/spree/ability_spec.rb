@@ -5,8 +5,6 @@ require 'cancan/matchers'
 require 'support/ability_helpers'
 
 describe Spree::Ability do
-  include ::AbilityHelper
-
   let(:user) { create(:user) }
   let(:subject) { Spree::Ability.new(user) }
   let(:token) { nil }
@@ -441,8 +439,11 @@ describe Spree::Ability do
 
       it "should be able to read some reports" do
         is_expected.to have_ability(
-          [:admin, :index, :customers, :bulk_coop, :orders_and_fulfillment, :products_and_inventory,
-           :order_cycle_management], for: Spree::Admin::ReportsController
+          [:admin, :index, :show], for: Admin::ReportsController
+        )
+        is_expected.to have_ability(
+          [:customers, :bulk_coop, :orders_and_fulfillment, :products_and_inventory,
+           :order_cycle_management], for: :report
         )
       end
 
@@ -451,7 +452,7 @@ describe Spree::Ability do
       it "should not be able to read other reports" do
         is_expected.not_to have_ability(
           [:group_buys, :payments, :orders_and_distributors, :users_and_enterprises,
-           :xero_invoices], for: Spree::Admin::ReportsController
+           :xero_invoices], for: :report
         )
       end
 
@@ -671,8 +672,12 @@ describe Spree::Ability do
 
       it "should be able to read some reports" do
         is_expected.to have_ability(
-          [:admin, :index, :customers, :sales_tax, :group_buys, :bulk_coop, :payments,
-           :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :xero_invoices], for: Spree::Admin::ReportsController
+          [:admin, :index, :show], for: Admin::ReportsController
+        )
+        is_expected.to have_ability(
+          [:customers, :sales_tax, :group_buys, :bulk_coop, :payments,
+           :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
+           :order_cycle_management, :xero_invoices], for: :report
         )
       end
 
@@ -680,7 +685,7 @@ describe Spree::Ability do
 
       it "should not be able to read other reports" do
         is_expected.not_to have_ability([:users_and_enterprises],
-                                        for: Spree::Admin::ReportsController)
+                                        for: :report)
       end
 
       it "should be able to access customer actions" do

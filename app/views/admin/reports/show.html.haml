@@ -1,7 +1,7 @@
-= form_tag main_app.admin_reports_path, report_type: @report_type do
+= form_for @report.search, :url => url_for(only_path: false) do |f|
   %fieldset.no-border-bottom.print-hidden
     %legend{ align: 'center'}= t(:report_filters)
-    = render partial: "admin/reports/filters/#{@report_type}"
+    = render partial: "admin/reports/filters/#{@report_type}", locals: { f: f }
 
   %fieldset.print-hidden
     %legend{ align: 'center'}= t(:report_render_options)
@@ -10,8 +10,10 @@
     .actions.filter-actions
       = button t(:go), "report__submit-btn"
 
-- if @report_message.present?
-  %p.report__message.print-hidden= @report_message
+- if @report.message.present?
+  %p.report__message.print-hidden= @report.message
 
-- if params[:q].present?
+/ We don't want to render data unless search params are supplied.
+/ Compiling data can take a long time.
+- if request.post?
   = render "table"

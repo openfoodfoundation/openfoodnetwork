@@ -1,0 +1,25 @@
+- content_for :page_title do
+  = t(:listing_reports)
+
+.columns.twelve
+  %table.index
+    %thead
+      %tr
+        %th= t(:name)
+        %th= t(:description)
+    %tbody
+      - @reports.each do |report_type, report_subtypes|
+        %tr
+          %td
+            - name = I18n.t(:name, scope: [:admin, :reports, report_type])
+            - url = main_app.admin_report_url(report_type: report_type)
+            = link_to name, url
+          %td
+            - begin
+              = I18n.t!(:description, scope: [:admin, :reports, report_type])
+            - rescue I18n::MissingTranslationData
+              %ul{style: "margin-left: 12pt"}
+                - report_subtypes.each do |report_subtype|
+                  %li
+                    - url = main_app.admin_report_url(report_type: report_type, report_subtype: report_subtype[1])
+                    = link_to report_subtype[0], url

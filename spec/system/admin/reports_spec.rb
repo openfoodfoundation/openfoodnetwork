@@ -33,7 +33,7 @@ describe '
 
   describe "Customers report" do
     before do
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
     end
 
     it "customers report" do
@@ -64,7 +64,7 @@ describe '
 
   describe "Order cycle management report" do
     before do
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
     end
 
     it "payment method report" do
@@ -92,7 +92,7 @@ describe '
   end
 
   it "orders and distributors report" do
-    login_as_admin_and_visit spree.admin_reports_path
+    login_as_admin_and_visit admin_reports_path
     click_link 'Orders And Distributors'
     click_button 'Go'
 
@@ -100,7 +100,7 @@ describe '
   end
 
   it "payments reports" do
-    login_as_admin_and_visit spree.admin_reports_path
+    login_as_admin_and_visit admin_reports_path
     click_link 'Payment Reports'
     click_button 'Go'
 
@@ -162,7 +162,7 @@ describe '
                        payment_method: create(:payment_method, distributors: [distributor1]))
       break unless order1.next! until order1.complete?
 
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
       click_link "Sales Tax"
       select("Tax Types", from: "report_subtype")
     end
@@ -198,7 +198,7 @@ describe '
 
   describe "orders & fulfilment reports" do
     it "loads the report page" do
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
       click_link 'Orders & Fulfillment Reports'
 
       expect(page).to have_content 'Supplier'
@@ -293,7 +293,7 @@ describe '
     end
 
     it "shows products and inventory report" do
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
 
       expect(page).to have_content "All products"
       expect(page).to have_content "Inventory (on hand)"
@@ -321,7 +321,7 @@ describe '
     end
 
     it "shows the LettuceShare report" do
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
       click_link 'LettuceShare'
       click_button "Go"
 
@@ -341,7 +341,7 @@ describe '
     before do
       enterprise3.enterprise_roles.build( user: enterprise1.owner ).save
 
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
 
       click_link 'Users & Enterprises'
     end
@@ -382,7 +382,7 @@ describe '
 
   describe 'bulk coop report' do
     before do
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
       click_link 'Bulk Co-Op'
     end
 
@@ -539,7 +539,7 @@ describe '
         order1.reload
         order1.create_tax_charge!
 
-        login_as_admin_and_visit spree.admin_reports_path
+        login_as_admin_and_visit admin_reports_path
         click_link 'Xero Invoices'
       end
 

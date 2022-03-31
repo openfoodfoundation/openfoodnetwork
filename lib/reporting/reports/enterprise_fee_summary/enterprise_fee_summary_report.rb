@@ -19,6 +19,10 @@ module Reporting
           @parameters.authorize!(@permissions)
         end
 
+        def message
+          I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
+        end
+
         def table_headers
           data_row_attributes.map do |attribute|
             header_label(attribute)

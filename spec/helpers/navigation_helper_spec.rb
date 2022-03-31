@@ -14,8 +14,8 @@ module Spree
           expect(helper.klass_for('lions')).to eq(:lion)
         end
 
-        it "returns Spree::Admin::ReportsController for reports" do
-          expect(helper.klass_for('reports')).to eq(Spree::Admin::ReportsController)
+        it "returns Admin::ReportsController for reports" do
+          expect(helper.klass_for('reports')).to eq(::Admin::ReportsController)
         end
 
         it "returns :overview for the dashboard" do
