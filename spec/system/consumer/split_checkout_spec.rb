@@ -162,10 +162,21 @@ describe "As a consumer, I want to checkout my order", js: true do
     context "on the 'details' step" do
       before do
         visit checkout_step_path(:details)
+        click_on "Checkout as guest"
       end
 
       it "should allow visit '/checkout/details'" do
         expect(page).to have_current_path("/checkout/details")
+      end
+
+      it 'does not show the save as default bill address checkbox' do
+        expect(page).not_to have_content "Save as default billing address"
+      end
+
+      it 'does not show the save as default ship address checkbox' do
+        choose free_shipping_with_required_address.name
+        uncheck "ship_address_same_as_billing"
+        expect(page).not_to have_content "Save as default shipping address"
       end
 
       it_behaves_like "when I have an out of stock product in my cart"
