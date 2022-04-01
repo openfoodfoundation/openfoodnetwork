@@ -1,6 +1,8 @@
 de_DE:
   language_name: "Deutsch"
   activerecord:
+    models:
+      spree/product: Produkt
     attributes:
       spree/user:
         password: "Passwort"
@@ -1659,6 +1661,9 @@ de_DE:
     your_details_without_number: Ihre Daten
     payment_method_without_number: Zahlungsart
     order_summary_without_number: Bestellübersicht
+    already_ordered:
+      cart: "im Warenkorb"
+      message_html: "Sie haben bereits eine Bestellung für diesen Bestellzyklus. Überprüfen Sie den %{cart}, um die Artikel zu sehen, die Sie zuvor bestellt haben. Sie können Artikel auch stornieren, solange der Bestellzyklus geöffnet ist."
     step1:
       your_details:
         title: Ihre Daten
