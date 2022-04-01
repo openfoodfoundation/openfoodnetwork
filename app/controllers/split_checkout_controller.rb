@@ -14,6 +14,7 @@ class SplitCheckoutController < ::BaseController
   helper 'terms_and_conditions'
   helper 'checkout'
   helper 'spree/orders'
+  helper EnterprisesHelper
   helper OrderHelper
 
   before_action :set_checkout_redirect
