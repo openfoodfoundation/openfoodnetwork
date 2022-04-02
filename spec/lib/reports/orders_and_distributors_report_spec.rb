@@ -5,10 +5,10 @@ require 'spec_helper'
 module Reporting
   module Reports
     module OrdersAndDistributors
-      describe OrdersAndDistributorsReport do
+      describe Base do
         describe 'orders and distributors report' do
           it 'should return a header row describing the report' do
-            subject = OrdersAndDistributorsReport.new nil
+            subject = Base.new nil
 
             expect(subject.table_headers).to eq(
               [
@@ -45,7 +45,7 @@ module Reporting
             end
 
             it 'should denormalise order and distributor details for display as csv' do
-              subject = OrdersAndDistributorsReport.new create(:admin_user), {}
+              subject = Base.new create(:admin_user), {}
 
               table = subject.table_rows
 
@@ -77,7 +77,7 @@ module Reporting
             it "prints one row per line item" do
               create(:line_item_with_shipment, order: order)
 
-              subject = OrdersAndDistributorsReport.new(create(:admin_user))
+              subject = Base.new(create(:admin_user))
 
               table = subject.table_rows
               expect(table.size).to eq 2
