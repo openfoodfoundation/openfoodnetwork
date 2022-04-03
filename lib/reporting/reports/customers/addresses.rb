@@ -8,19 +8,13 @@ module Reporting
           {
             first_name: proc { |order| order.billing_address.firstname },
             last_name: proc { |order| order.billing_address.lastname },
-            billing_address: proc { |order| address_from(order.billing_address) },
+            billing_address: proc { |order| order.billing_address.address_and_city },
             email: proc { |order| order.email },
             phone: proc { |order| order.billing_address.phone },
             hub: proc { |order| order.distributor&.name },
-            hub_address: proc { |order| address_from(order.distributor&.address) },
+            hub_address: proc { |order| order.distributor&.address&.address_and_city },
             shipping_method: proc { |order| order.shipping_method&.name },
           }
-        end
-
-        private
-
-        def address_from(address)
-          [address&.address1, address&.address2, address&.city].join(" ")
         end
       end
     end

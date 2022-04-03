@@ -5,9 +5,9 @@ require 'spec_helper'
 module Reporting
   module Reports
     module OrderCycleManagement
-      describe OrderCycleManagementReport do
+      describe Base do
         context "as a site admin" do
-          subject { OrderCycleManagementReport.new(user, params) }
+          subject { Base.new(user, params) }
           let(:params) { {} }
 
           let(:user) do
@@ -63,7 +63,7 @@ module Reporting
         context "as an enterprise user" do
           let!(:user) { create(:user) }
 
-          subject { OrderCycleManagementReport.new user, {} }
+          subject { Base.new user, {} }
 
           describe "fetching orders" do
             let(:supplier) { create(:supplier_enterprise) }
@@ -148,13 +148,13 @@ module Reporting
           end
 
           describe '#table_rows' do
-            subject { OrderCycleManagementReport.new(user, params) }
+            subject { Base.new(user, params) }
 
             let(:distributor) { create(:distributor_enterprise) }
             before { distributor.enterprise_roles.create!(user: user) }
 
             context 'when the report type is payment_methods' do
-              let(:params) { { report_subtype: 'payment_methods' } }
+              subject { PaymentMethods.new(user) }
 
               let!(:order) do
                 create(
@@ -180,8 +180,8 @@ module Reporting
               end
             end
 
-            context 'when the report type is not payment_methods' do
-              let(:params) { {} }
+            context 'when the report type is delivery' do
+              subject { Delivery.new(user) }
               let!(:order) do
                 create(
                   :completed_order_with_totals,

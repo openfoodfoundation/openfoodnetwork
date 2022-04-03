@@ -73,7 +73,7 @@ describe '
       rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
-        ["First Name", "Last Name", "Hub", "Hub Code", "Email", "Phone", "Shipping Method",
+        ["First Name", "Last Name", "Hub", "Customer Code", "Email", "Phone", "Shipping Method",
          "Payment Method", "Amount", "Balance"].map(&:upcase)
       ].sort)
     end
@@ -84,7 +84,7 @@ describe '
       rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
-        ["First Name", "Last Name", "Hub", "Hub Code", "Delivery Address", "Delivery Postcode",
+        ["First Name", "Last Name", "Hub", "Customer Code", "Delivery Address", "Delivery Postcode",
          "Phone", "Shipping Method", "Payment Method", "Amount", "Balance",
          "Temp Controlled Items?", "Special Instructions"].map(&:upcase)
       ].sort)
