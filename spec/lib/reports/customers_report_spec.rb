@@ -5,19 +5,17 @@ require 'spec_helper'
 module Reporting
   module Reports
     module Customers
-      describe CustomersReport do
+      describe Base do
         context "as a site admin" do
           let(:user) do
             user = create(:user)
             user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
             user
           end
-          subject { CustomersReport.new user, {} }
+          subject { Base.new user, {} }
 
           describe "mailing list report" do
-            before do
-              allow(subject).to receive(:params).and_return(report_subtype: "mailing_list")
-            end
+            subject { MailingList.new user, {} }
 
             it "returns headers for mailing_list" do
               expect(subject.table_headers).to eq(["Email", "First Name", "Last Name", "Suburb"])
@@ -28,7 +26,7 @@ module Reporting
               address = double(:billing_address, firstname: "Firsty",
                                                  lastname: "Lasty", city: "Suburbia")
               allow(order).to receive(:billing_address).and_return address
-              allow(subject).to receive(:orders).and_return [order]
+              allow(subject).to receive(:query_result).and_return [order]
 
               expect(subject.table_rows).to eq([[
                                                  "test@test.com", "Firsty", "Lasty", "Suburbia"
@@ -37,9 +35,7 @@ module Reporting
           end
 
           describe "addresses report" do
-            before do
-              allow(subject).to receive(:params).and_return(report_subtype: "addresses")
-            end
+            subject { Addresses.new user, {} }
 
             it "returns headers for addresses" do
               expect(subject.table_headers).to eq(["First Name", "Last Name", "Billing Address", "Email",
@@ -52,7 +48,7 @@ module Reporting
               o = create(:order, distributor: d, bill_address: a)
               o.shipments << create(:shipment)
 
-              allow(subject).to receive(:orders).and_return [o]
+              allow(subject).to receive(:query_result).and_return [o]
               expect(subject.table_rows).to eq([[
                                                  a.firstname, a.lastname,
                                                  [a.address1, a.address2, a.city].join(" "),
@@ -67,13 +63,13 @@ module Reporting
             it "fetches completed orders" do
               o1 = create(:order)
               o2 = create(:order, completed_at: 1.day.ago)
-              expect(subject.orders).to eq([o2])
+              expect(subject.query_result).to eq([o2])
             end
 
             it "does not show cancelled orders" do
               o1 = create(:order, state: "canceled", completed_at: 1.day.ago)
               o2 = create(:order, completed_at: 1.day.ago)
-              expect(subject.orders).to eq([o2])
+              expect(subject.query_result).to eq([o2])
             end
           end
         end
@@ -86,7 +82,7 @@ module Reporting
             user
           end
 
-          subject { CustomersReport.new user, {} }
+          subject { Base.new user, {} }
 
           describe "fetching orders" do
             let(:supplier) { create(:supplier_enterprise) }
@@ -103,7 +99,7 @@ module Reporting
               o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
 
               expect(subject).to receive(:filter).with([o1]).and_return([o1])
-              expect(subject.orders).to eq([o1])
+              expect(subject.query_result).to eq([o1])
             end
 
             it "does not show orders through a hub that the current user does not manage" do
@@ -113,7 +109,7 @@ module Reporting
 
               # When I fetch orders, I should see no orders
               expect(subject).to receive(:filter).with([]).and_return([])
-              expect(subject.orders).to eq([])
+              expect(subject.query_result).to eq([])
             end
           end
 

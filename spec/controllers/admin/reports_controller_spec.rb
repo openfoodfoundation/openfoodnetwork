@@ -295,8 +295,8 @@ describe Admin::ReportsController, type: :controller do
       expect(assigns(:report_subtypes)).to eq(subject.reports[:customers])
     end
 
-    it "creates a CustomersReport" do
-      allow(Reporting::Reports::Customers::CustomersReport).to receive(:new)
+    it "creates a report object" do
+      allow(Reporting::Reports::Customers::Base).to receive(:new)
         .and_return(report = double(:report))
       allow(report).to receive(:table_headers).and_return []
       allow(report).to receive(:table_rows).and_return []
