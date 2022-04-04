@@ -10,8 +10,11 @@
     .actions.filter-actions
       = button t(:go), "report__submit-btn"
 
-- if @report.message.present?
-  %p.report__message.print-hidden= @report.message
+.report__header.print-hidden
+  - if @report.message.present?
+    %p.report__message= @report.message
+  - if request.post?
+    %button.btn-print.icon-print{ onclick: "window.print()"}= t(:report_print)
 
 / We don't want to render data unless search params are supplied.
 / Compiling data can take a long time.

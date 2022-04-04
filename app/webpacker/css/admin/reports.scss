@@ -1,5 +1,5 @@
 table.report__table {
-  margin-top: 2em;
+  margin-top: 1em;
   @media print {
     margin: 0;
   }
@@ -31,13 +31,24 @@ table.report__table {
   }
 }
 
-.report__message {
+.report__header {
+  display: flex;
   margin-top: 2em;
-  border: 1px solid $pale-blue;
-  border-radius: .5em;
-  padding: .5em;
-  text-align: center;
+  justify-content: flex-end;
+
+  .btn-print {
+    margin-left: 1em;
+  }
+  .report__message {
+    border: 1px solid $pale-blue;
+    border-radius: .5em;
+    padding: .5em;
+    text-align: center;
+    flex-grow: 1;
+  }
 }
+
+
 
 .customer-names-tip {
   margin-top: 1em;
