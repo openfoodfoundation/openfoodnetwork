@@ -1,6 +1,8 @@
 fr_CA:
   language_name: "Français"
   activerecord:
+    models:
+      spree/product: Produit
     attributes:
       spree/user:
         password: "Mot de passe"
@@ -527,7 +529,7 @@ fr_CA:
         edit_ship_address: "Modifier l'adresse de livraison"
         required_fileds: "Les champs obligatoires sont indiqués avec un astérisque *"
         select_country: "Choisir le pays"
-        select_state: "Choisir le département"
+        select_state: "Choisir la Région:"
         edit: "Modifier"
         update_address: "Mettre à jour l'adresse"
         confirm_delete: "Confirmer suppression?"
@@ -1510,7 +1512,7 @@ fr_CA:
   postcode: Code postal
   postcode_placeholder: 'ex: 44000'
   suburb: Ville
-  state: Département
+  state: 'Région:'
   country: Pays
   unauthorized: Non authorisé
   terms_of_service: "Conditions d'utilisation"
@@ -1659,6 +1661,9 @@ fr_CA:
     your_details_without_number: Vos informations
     payment_method_without_number: Méthode de paiement
     order_summary_without_number: Récapitulatif de la commande
+    already_ordered:
+      cart: "panier"
+      message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
     step1:
       your_details:
         title: Vos informations
@@ -1687,7 +1692,7 @@ fr_CA:
           label: Ville
           placeholder: ex. Metz
         state_id:
-          label: Département
+          label: 'Région:'
         zipcode:
           label: Code postal
           placeholder: ex. N0B2L0
@@ -2302,7 +2307,7 @@ fr_CA:
   admin_enterprise_groups_contact_city_placeholder: "ex: Bordeaux"
   admin_enterprise_groups_contact_zipcode: "Code postal"
   admin_enterprise_groups_contact_zipcode_placeholder: "ex: 44000"
-  admin_enterprise_groups_contact_state_id: "Département"
+  admin_enterprise_groups_contact_state_id: "Région:"
   admin_enterprise_groups_contact_country_id: "Pays"
   admin_enterprise_groups_web: "Liens web"
   admin_enterprise_groups_web_twitter: "ex: @OpenFoodNet_fr"
@@ -2431,7 +2436,7 @@ fr_CA:
   admin_share_city: "Ville"
   admin_share_zipcode: "Code postal"
   admin_share_country: "Pays"
-  admin_share_state: "Département"
+  admin_share_state: "Région:"
   hub_sidebar_hubs: "Hubs"
   hub_sidebar_none_available: "Aucun disponible"
   hub_sidebar_manage: "Gérer"
@@ -3301,7 +3306,7 @@ fr_CA:
     city: "Ville"
     zip: "Code postal"
     country: "Pays"
-    state: "Département"
+    state: "Région:"
     phone: "n° tel"
     update: "Mettre à jour"
     use_billing_address: "Utiliser l'adresse de facturation"

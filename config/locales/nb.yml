@@ -1,6 +1,8 @@
 nb:
   language_name: "Norsk"
   activerecord:
+    models:
+      spree/product: Produkt
     attributes:
       spree/user:
         password: "Passord"
@@ -1607,6 +1609,9 @@ nb:
     your_details_without_number: Dine detaljer
     payment_method_without_number: Betalingsmetode
     order_summary_without_number: Sammendrag Bestilling
+    already_ordered:
+      cart: "handlekurv"
+      message_html: "Du har allerede en bestilling for denne bestillingsrunden. Sjekk %{cart}en for å se varene du bestilte før. Du kan også avbryte varer så lenge bestillingsrunden er åpen."
     step1:
       your_details:
         title: Dine detaljer

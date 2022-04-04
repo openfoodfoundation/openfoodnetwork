@@ -1,6 +1,8 @@
 it:
   language_name: "Italiano"
   activerecord:
+    models:
+      spree/product: Prodotto
     attributes:
       spree/user:
         password: "Password"
@@ -1656,6 +1658,9 @@ it:
     your_details_without_number: I tuoi dettagli
     payment_method_without_number: Metodo di pagamento
     order_summary_without_number: Riepilogo ordine
+    already_ordered:
+      cart: "carrello"
+      message_html: "Hai già un ordine per questo ciclo d'ordine. Controlla%{cart} per vedere gli articoli ordinati in precedenza. Puoi anche cancellare gli articoli finché il ciclo dell'ordine è aperto."
     step1:
       your_details:
         title: I tuoi dettagli

@@ -1,6 +1,8 @@
 ar:
   language_name: "عربي"
   activerecord:
+    models:
+      spree/product: المنتج
     attributes:
       spree/user:
         password: "كلمه السر"
@@ -1656,6 +1658,9 @@ ar:
     your_details_without_number: تفاصيلك
     payment_method_without_number: 'طريقة الدفع '
     order_summary_without_number: ملخص الطلب
+    already_ordered:
+      cart: "سلة التسوق"
+      message_html: "لديك طلب لدورة الطلب هذه بالفعل. تحقق من %{cart} لرؤية العناصر التي طلبتها من قبل. يمكنك أيضًا إلغاء العناصر طالما كانت دورة الطلب مفتوحة."
     step1:
       your_details:
         title: تفاصيلك

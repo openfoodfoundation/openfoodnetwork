@@ -1,6 +1,8 @@
 pl:
   language_name: "Polski"
   activerecord:
+    models:
+      spree/product: Produkt
     attributes:
       spree/user:
         password: "Hasło"
@@ -1463,6 +1465,8 @@ pl:
   checkout_back_to_cart: "Powrót do koszyka"
   cost_currency: "Waluta kosztu"
   split_checkout:
+    already_ordered:
+      cart: "koszyk"
     step1:
       your_details:
         email:

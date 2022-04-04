@@ -1,6 +1,8 @@
 nl_BE:
   language_name: "Nederlands"
   activerecord:
+    models:
+      spree/product: Product
     attributes:
       spree/user:
         password: "Wachtwoord"
@@ -1478,6 +1480,9 @@ nl_BE:
   cost_currency: "Kosten in deviezen "
   split_checkout:
     your_details_without_number: Jouw gegevens
+    already_ordered:
+      cart: "winkelwagentje"
+      message_html: "Je hebt al een bestelling voor deze bestellingscyclus. Controleer de %{cart} om de artikels te zien die je voordien besteld hebt. Je kan ook artikels annuleren zolang de bestellingscyclus openstaat."
     step1:
       your_details:
         title: Jouw gegevens

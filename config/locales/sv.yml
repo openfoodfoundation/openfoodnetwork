@@ -1,6 +1,8 @@
 sv:
   language_name: "Svenska"
   activerecord:
+    models:
+      spree/product: Produkt
     attributes:
       spree/user:
         password: "Lösenord"
@@ -854,6 +856,9 @@ sv:
   checkout_back_to_cart: "Tillbaka till Varukorg"
   split_checkout:
     your_details_without_number: Dina detaljer
+    already_ordered:
+      cart: "vagn"
+      message_html: "Du har redan en beställning för denna beställningsomgång. Kontrollera %{cart} för att se föremålen du beställde tidigare. Du kan också ta bort varor/artiklar så länge som beställningsomgången är öppen."
     step1:
       your_details:
         title: Dina detaljer

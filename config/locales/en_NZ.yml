@@ -1,6 +1,8 @@
 en_NZ:
   language_name: "English"
   activerecord:
+    models:
+      spree/product: Product
     attributes:
       spree/user:
         password: "Password"
@@ -1506,6 +1508,9 @@ en_NZ:
   cost_currency: "Cost Currency"
   split_checkout:
     your_details_without_number: Your details
+    already_ordered:
+      cart: "cart"
+      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     step1:
       your_details:
         title: Your details

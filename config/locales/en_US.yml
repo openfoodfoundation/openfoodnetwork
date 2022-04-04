@@ -782,7 +782,7 @@ en_US:
           desc_long: About Us
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
         business_details:
-          abn: Tax ID, DUNS Number, or other business ID
+          abn: License, Certification, or Business ID
           abn_placeholder: eg. 123456789
           acn: Legal Business Name
           acn_placeholder: eg. Martin's Produce LLC
@@ -1451,7 +1451,7 @@ en_US:
   tax_total: "Total tax (%{rate}):"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
-  abn: "Tax ID, DUNS Number, or other business ID"
+  abn: "License, Certification, or Business ID:"
   acn: "Legal Business Name"
   invoice_issued_on: "Invoice issued on:"
   order_number: "Invoice number:"
@@ -1659,6 +1659,9 @@ en_US:
     your_details_without_number: Your details
     payment_method_without_number: Payment method
     order_summary_without_number: Order summary
+    already_ordered:
+      cart: "cart"
+      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     step1:
       your_details:
         title: Your details
@@ -2187,7 +2190,7 @@ en_US:
         enterprise_long_desc: "Long Description"
         enterprise_long_desc_placeholder: "This is your opportunity to tell the story of your enterprise - what makes you different and wonderful? We'd suggest keeping your description to under 600 characters or 150 words."
         enterprise_long_desc_length: "%{num} characters / up to 600 recommended"
-        enterprise_abn: "Tax ID, DUNS Number, or other business ID"
+        enterprise_abn: "License, Certification, or Business ID"
         enterprise_abn_placeholder: "eg. 123456789"
         enterprise_acn: "Legal Business Name"
         enterprise_acn_placeholder: "eg. Justins Produce LLC"

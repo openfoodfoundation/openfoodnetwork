@@ -1,6 +1,8 @@
 tr:
   language_name: "Türkçe"
   activerecord:
+    models:
+      spree/product: Ürün
     attributes:
       spree/user:
         password: "Parola"
@@ -1569,6 +1571,9 @@ tr:
   split_checkout:
     your_details_without_number: Bilgilerin
     payment_method_without_number: Ödeme yöntemi
+    already_ordered:
+      cart: "sepet"
+      message_html: "Bu sipariş dönemi için zaten bir siparişiniz var. Daha önce sipariş ettiğiniz ürünleri görmek için %{cart} adresini kontrol edin. Sipariş dönemi açık olduğu sürece siparişlerinizde değişiklik yapabilirsiniz."
     step1:
       your_details:
         title: Bilgilerin

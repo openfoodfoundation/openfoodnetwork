@@ -1,6 +1,8 @@
 ca:
   language_name: "Català"
   activerecord:
+    models:
+      spree/product: Producte
     attributes:
       spree/user:
         password: "Contrasenya"
@@ -41,6 +43,8 @@ ca:
           attributes:
             email:
               taken: "Ja hi ha un compte per a aquest correu electrònic. Si us plau, inicia sessió o restableix la contrasenya."
+            reset_password_token:
+              invalid: és vàlid
         spree/order:
           no_card: No hi ha targetes de crèdit autoritzades disponibles per carregar
         spree/credit_card:
@@ -56,6 +60,40 @@ ca:
             using_producer_stock_settings_but_count_on_hand_set: "ha d'estar en blanc perquè s'utilitza la configuració d'estoc de la productora"
             on_demand_but_count_on_hand_set: "ha d'estar en blanc si és sota demanda"
             limited_stock_but_no_count_on_hand: "cal especificar-se perquè força existències limitades"
+  stripe:
+    error_code:
+      incorrect_number: "El número de la targeta és incorrecte."
+      invalid_number: "El número de la targeta no és un número vàlid de targeta de crèdit."
+      invalid_expiry_month: "El mes de caducitat de la targeta no és vàlid."
+      invalid_expiry_year: "L'any de caducitat de la targeta no és vàlid."
+      invalid_cvc: "El codi de seguretat de la targeta no és vàlid."
+      expired_card: "La targeta ha caducat."
+      incorrect_cvc: "El codi de seguretat de la targeta no és correcte."
+      incorrect_zip: "La validació del codi postal associat a la targeta ha fallat."
+      card_declined: "La targeta ha estat refusada."
+      missing: "No es troba cap targeta d'aquest consumidor per carregar la compra."
+      processing_error: "S'ha produït un error en processar la targeta."
+      rate_limit: "S'ha produït un error a causa de que les sol·licituds arriben a l'API massa ràpidament. Feu-nos saber si us trobeu aquest error sovint."
+      authentication_required: "La targeta s'ha rebutjat perquè la transacció requereix autenticació."
+      approve_with_id: "No es pot autoritzar el pagament."
+      call_issuer: "La targeta s'ha rebutjat per un motiu desconegut."
+      card_not_supported: "La targeta no admet aquest tipus de compra."
+      card_velocity_exceeded: "El consumidor ha superat el saldo o el límit de crèdit disponible a la seva targeta."
+      currency_not_supported: "La targeta no admet la divisa especificada."
+      do_not_honor: "La targeta s'ha rebutjat per un motiu desconegut."
+      do_not_try_again: "La targeta s'ha rebutjat per un motiu desconegut."
+      duplicate_transaction: "Fa molt poc que s'ha enviat una transacció amb la mateixa quantitat i informació de la mateixa targeta de crèdit."
+      fraudulent: "El pagament s'ha rebutjat perquè Stripe sospita que és fraudulent."
+      generic_decline: "La targeta s'ha rebutjat per un motiu desconegut."
+      no_action_taken: "La targeta s'ha rebutjat per un motiu desconegut."
+      revocation_of_all_authorizations: "La targeta s'ha rebutjat per un motiu desconegut."
+      revocation_of_authorization: "La targeta s'ha rebutjat per un motiu desconegut."
+      security_violation: "La targeta s'ha rebutjat per un motiu desconegut."
+      service_not_allowed: "La targeta s'ha rebutjat per un motiu desconegut."
+      stop_payment_order: "La targeta s'ha rebutjat per un motiu desconegut."
+      transaction_not_allowed: "La targeta s'ha rebutjat per un motiu desconegut."
+      try_again_later: "La targeta s'ha rebutjat per un motiu desconegut."
+      withdrawal_count_limit_exceeded: "El consumidor ha superat el saldo o el límit de crèdit disponible a la seva targeta."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -398,7 +436,7 @@ ca:
     whats_this: Què és això?
     tag_has_rules: "Regles existents per a aquesta etiqueta: %{num}"
     has_one_rule: "té una regla"
-    has_n_rules: "té%{num} regles"
+    has_n_rules: "té %{num} regles"
     unsaved_confirm_leave: "Hi ha canvis no desats canviats en aquesta pàgina. Continua sense desar?"
     unsaved_changes: "Teniu canvis sense desar"
     available_units: "Unitats disponibles"
@@ -789,7 +827,7 @@ ca:
           visible: Visible
           not_visible: No visible
           permalink: Permalink (sense espais)
-          permalink_tip: "Aquest enllaç permanent s'utilitza per crear l'url a la vostra botiga: %{link}your-shop-name / shop"
+          permalink_tip: "Aquest enllaç permanent s'utilitza per crear l'url a la vostra botiga: %{link} el-nom-de-la-vostra-botiga /botiga"
           link_to_front: Enllaç a la botiga
           link_to_front_tip: Un enllaç directe a la vostra botiga a l'Open Food Netwok.
           ofn_uid: UID d'OFN
@@ -1067,7 +1105,7 @@ ca:
       bulk_update:
         no_data: Hm, alguna cosa ha sortit malament. No s'ha trobat cap cicle de comanda.
       date_warning:
-        msg: Aquest cicle de comanda està enllaçat amb %{n}comandes de subscripció obertes . Si canvieu aquesta data ara això no afectarà comandes que ja s'hagin realitzat però cal evitar-ho si és possible. Esteu segur que voleu continuar?
+        msg: Aquest cicle de comanda està enllaçat amb %{n} comandes de subscripció obertes . Si canvieu aquesta data ara això no afectarà comandes que ja s'hagin realitzat però cal evitar-ho si és possible. Esteu segur que voleu continuar?
         cancel: Cancel·lar
         proceed: Procedeix
     producer_properties:
@@ -1569,6 +1607,9 @@ ca:
   cost_currency: "Moneda del cost"
   split_checkout:
     your_details_without_number: Els teus detalls
+    already_ordered:
+      cart: "cistella"
+      message_html: "Ja teniu una comanda per a aquest cicle de comanda. Consulteu %{cart} per veure els articles que heu demanat anteriorment. També podeu cancel·lar articles sempre que el cicle de comanda estigui obert."
     step1:
       your_details:
         title: Els teus detalls
@@ -1707,7 +1748,7 @@ ca:
   invite_email:
     greeting: "Hola! "
     invited_to_manage: "Has estat convidada a gestionar %{enterprise} a %{instance}."
-    confirm_your_email: "Hauries d'haver rebut o aviat rebràs un correu electrònic amb un enllaç de confirmació. No podràs accedir al perfil de%{enterprise} fins que no hagis confirmat el teu correu electrònic."
+    confirm_your_email: "Hauries d'haver rebut o aviat rebràs un correu electrònic amb un enllaç de confirmació. No podràs accedir al perfil de %{enterprise} fins que no hagis confirmat el teu correu electrònic."
     set_a_password: "A continuació se us demanarà que configureu una contrasenya abans de poder administrar l'organització."
     mistakenly_sent: "No esteu segur de perquè heu rebut aquest correu electrònic? Poseu-vos en contacte amb %{owner_email} per obtenir més informació."
   producer_mail_greeting: "Benvolguda"
@@ -1730,7 +1771,7 @@ ca:
   shopping_contact_web: "Contacte"
   shopping_contact_social: "Segueix"
   shopping_groups_part_of: "forma part de:"
-  shopping_producers_of_hub: "Productores de%{hub}:"
+  shopping_producers_of_hub: "Productores de %{hub}:"
   enterprises_next_closing: "La següent comanda tanca"
   enterprises_currently_open: "Les comandes estan obertes"
   enterprises_ready_for: "Llest per"
@@ -1753,7 +1794,7 @@ ca:
   hubs_matches: "Volies dir?"
   hubs_intro: 'Compreu a la vostra zona '
   hubs_distance: El més proper a
-  hubs_distance_filter: "Mostra'm botigues properes a%{location}"
+  hubs_distance_filter: "Mostra'm botigues properes a %{location}"
   shop_changeable_orders_alert_html:
     one: La vostra comanda amb <a href='%{path}' target='_blank'>%{shop} / %{order}</a> està oberta per revisió. Podeu fer canvis fins %{oc_close}.
     few: Tens <a href='%{path}' target='_blank'> %{count} comandes amb %{shop} </a> actualment obertes per a la seva revisió. Pots fer canvis fins %{oc_close}.
@@ -1905,9 +1946,9 @@ ca:
   orders_cannot_remove_the_final_item: "No es pot eliminar l'article final d'una comanda, si us plau, en comptes d'això cancel·leu la comanda."
   orders_bought_items_notice:
     one: "Ja s'ha confirmat un article addicional per a aquest cicle de comanda"
-    few: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
-    many: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
-    other: "%{count}articles addicionals confirmats per a aquest cicle de comandes"
+    few: "%{count} articles addicionals confirmats per a aquest cicle de comandes"
+    many: "%{count} articles addicionals confirmats per a aquest cicle de comandes"
+    other: "%{count} articles addicionals confirmats per a aquest cicle de comandes"
   orders_bought_edit_button: "Edita articles confirmats"
   orders_bought_already_confirmed: "* ja confirmat"
   orders_confirm_cancel: "Estàs segur que vols cancel·lar aquesta comanda?"
@@ -1919,7 +1960,7 @@ ca:
   products_oc: "Cicle de comanda per a la teva comanda:"
   products_oc_change: "El cicle de comandes d'aquesta comanda canviarà a %{name} si afegeixes aquest producte a la cistella."
   products_oc_is: "El cicle de comandes per a aquesta comanda és %{name}."
-  products_oc_error: "Si us plau valideu la comanda de%{link} abans de comprar en un cicle de comanda diferent."
+  products_oc_error: "Si us plau valideu la comanda de %{link} abans de comprar en un cicle de comanda diferent."
   products_oc_current: "el vostre cicle de comanda actual"
   products_max_quantity: Quantitat màxima
   products_distributor: Distribuïdora
@@ -2081,7 +2122,7 @@ ca:
       social:
         title: "Social"
         enterprise_final_step: "Pas final!"
-        enterprise_social_text: "Com poden la gent trobar %{enterprise}en línia?"
+        enterprise_social_text: "Com poden la gent trobar %{enterprise} en línia?"
         website: "Lloc web"
         website_placeholder: "per exemple: katuma.org"
         facebook: "Facebook"
@@ -2099,7 +2140,7 @@ ca:
         action: "Torna a la pàgina d'inici"
       finished:
         headline: "Acabat!"
-        thanks: "Gràcies per omplir els detalls de%{enterprise}."
+        thanks: "Gràcies per omplir els detalls de %{enterprise}."
         login: "Pots canviar o actualitzar la teva organització en qualsevol moment accedint a Katuma i anant a Admin."
         action: "Vés al panell de control de l'organització"
   back: "Enrere"
@@ -2812,7 +2853,7 @@ ca:
           Mentre heu estat comprant, s'han reduït els nivells d'existències d'un o
           més dels productes de la cistella. Aquí podeu veure el que ha canviat:
       now_out_of_stock: ara està fora d'estoc.
-      only_n_remainging: "ara només n'hi ha %{num}restants."
+      only_n_remainging: "ara només n'hi ha %{num} restants."
     shopfront:
       variant:
         add_to_cart: "Afegeix"

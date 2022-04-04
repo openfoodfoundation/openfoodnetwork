@@ -1,6 +1,8 @@
 es_US:
   language_name: "Español"
   activerecord:
+    models:
+      spree/product: Producto
     attributes:
       spree/user:
         password: "Contraseña"
@@ -472,7 +474,12 @@ es_US:
         select_file: "Seleccione un archivo primero."
       show:
         title: "Archivos de términos de servicio"
+        no_files: "Aún no se han subido términos de servicio."
+        using_default_terms_html: "El sitio actualmente está vinculado a su antiguo %{tos_link}"
+        current_terms_html: "Ver el actual %{tos_link}. Tiempo de carga: %{datetime}."
         terms_of_service: "La latitud y longitud son necesarias para mostrar su empresa en el mapa."
+        delete: "Borrar archivo"
+        confirm_delete: "¿Está seguro de que desea eliminar el archivo de Términos de servicio actual?"
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Usar la logica internacional separador miles/decimales"
@@ -697,6 +704,8 @@ es_US:
         display_name: Nombre para mostrar
         category: Categoría
         description: Descripción
+        units: Unidades
+        unit_type: Tipo de unidad
         variant_unit_name: Nombre de la unidad de la variante
         price: Precio
         on_hand: Disponibles
@@ -782,6 +791,7 @@ es_US:
           terms_and_conditions: "Términos y Condiciones"
           remove_terms_and_conditions: "Eliminar archivo"
           uploaded_on: "Subido en"
+          reset_form: "Restablecer formulario"
         business_address:
           address2: Dirección (cont.)
         contact:
@@ -1612,6 +1622,9 @@ es_US:
   cost_currency: "Moneda"
   split_checkout:
     your_details_without_number: Sus detalles
+    already_ordered:
+      cart: "carrito"
+      message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
     step1:
       your_details:
         title: Sus detalles

@@ -1,6 +1,8 @@
 fil_PH:
   language_name: "Filipino"
   activerecord:
+    models:
+      spree/product: Produkto
     attributes:
       spree/user:
         password: "Password"
@@ -1452,6 +1454,9 @@ fil_PH:
   cost_currency: "halaga ng pera"
   split_checkout:
     your_details_without_number: ang inyong detalye
+    already_ordered:
+      cart: "cart"
+      message_html: "mayroon ka ng order para sa order cycle na ito. tingnan ang%{cart}para makita ang mga item na dating inorder. maaari  mo ring kanselahin ang mga item habang ang order cycle ay bukas pa."
     step1:
       your_details:
         title: ang inyong detalye

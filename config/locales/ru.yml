@@ -1,6 +1,8 @@
 ru:
   language_name: "Русский"
   activerecord:
+    models:
+      spree/product: Товар
     attributes:
       spree/user:
         password: "Пароль"
@@ -1659,6 +1661,9 @@ ru:
     your_details_without_number: Информация о Вас
     payment_method_without_number: Способ оплаты
     order_summary_without_number: Итог заказа
+    already_ordered:
+      cart: "корзина"
+      message_html: "У вас уже есть заказ для этого цикла заказов. Проверьте %{cart}, чтобы увидеть товары, которые вы заказали ранее. Вы также можете отменять позиции, пока открыт цикл заказа."
     step1:
       your_details:
         title: Информация о Вас

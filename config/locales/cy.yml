@@ -1,6 +1,8 @@
 cy:
   language_name: "Gymraeg"
   activerecord:
+    models:
+      spree/product: Cynnyrch
     attributes:
       spree/user:
         password: "Cyfrinair"
@@ -1422,6 +1424,7 @@ cy:
         login: "Mewngofnodi"
         contact: "cysylltu"
         require_customer_login: "Dim ond cwsmeriaid cymeradwy sy'n gallu cael mynediad at y siop hon."
+        require_login_link_html: "Os ydych eisoes yn gwsmer a gymeradwywyd, dylid %{login} i barhau."
         require_login_2_html: "Eisiau dechrau siopa yma? Os gwelwch yn dda %{contact} %{enterprise} a gofyn i ymuno."
         require_customer_html: "Os hoffech chi ddechrau siopa yma, %{contact} %{enterprise} i ofyn i ymuno."
       select_oc:
@@ -1655,6 +1658,9 @@ cy:
     your_details_without_number: Eich manylion
     payment_method_without_number: Dull talu
     order_summary_without_number: Crynodeb o'r archeb
+    already_ordered:
+      cart: "troli"
+      message_html: "Mae gennych chi archeb ar gyfer y cylch archebu hwn eisoes. Gwiriwch y %{cart} i weld yr eitemau a archebwyd o'r blaen. Gallwch hefyd ganslo eitemau cyn belled â bod y cylch archebu ar agor."
     step1:
       your_details:
         title: Eich manylion
@@ -2712,6 +2718,7 @@ cy:
     admin:
       unit_price_tooltip: "Mae pris yr uned yn cynyddu tryloywder trwy ganiatau i'ch cwsmeriaid gymharu prisiau cynnyrch gwahanol a meintiau pecynnu yn rhwydd.  Noder: efallai y bydd y pris uned terfynol a ddangosir yn ffrynt y siop yn wahanol oherwydd mae'n cynnwys trethi a ffioedd."
       enterprise_limit_reached: "Rydych wedi cyrraedd uchafswm safonol nifer y mentrau fesul cyfrif. Ysgrifennwch at %{contact_email} os oes angen i chi ei gynyddu."
+      deleting_item_will_cancel_order: "Bydd y weithred hon yn golygu un neu fwy o archebion gwag, fydd yn cael eu canslo. Ydych chi'n siwr eich bod am wneud hyn?"
       modals:
         got_it: "Yn deall"
         close: "Cau"
@@ -2904,6 +2911,8 @@ cy:
           invalid: "annilys"
         quantity_adjusted: "Dim digon o stoc ar gael.  Diweddarwyd llinell yr eitem i'r uchafswm sydd ar gael."
         quantity_unchanged: "Ni newidiwyd y nifer/maint o'r nifer/maint blaenorol."
+        cancel_the_order_html: "Trwy hyn byddwch yn canslo'r archeb presennol.<br />Ydych chi'n siwr eich bod am wneud hyn?"
+        cancel_the_order_send_cancelation_email: "Anfon ebost canslo at y cwsmer"
       resend_user_email_confirmation:
         resend: "Ailanfon"
         sending: "Ailanfon ..."
@@ -3318,6 +3327,7 @@ cy:
     tracking: "Tracio"
     tracking_number: "Rhif tracio"
     order_total: "Cyfanswm yr archeb"
+    order_updated: "Diweddarwyd yr archeb"
     customer_details: "Manylion Cwsmer"
     customer_details_updated: "Diweddarwyd manylion y Cwsmer"
     customer_search: "Chwilio am gwsmer"

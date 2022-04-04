@@ -1,6 +1,8 @@
 es_CO:
   language_name: "Español"
   activerecord:
+    models:
+      spree/product: Producto
     attributes:
       spree/user:
         password: "Contraseña"
@@ -1492,6 +1494,9 @@ es_CO:
   cost_currency: "Moneda"
   split_checkout:
     your_details_without_number: Sus detalles
+    already_ordered:
+      cart: "carrito"
+      message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
     step1:
       your_details:
         title: Sus detalles

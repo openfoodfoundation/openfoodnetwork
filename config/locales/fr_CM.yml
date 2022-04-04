@@ -1,6 +1,8 @@
 fr_CM:
   language_name: "Français"
   activerecord:
+    models:
+      spree/product: Produit
     attributes:
       spree/user:
         password: "Mot de passe"
@@ -1613,6 +1615,9 @@ fr_CM:
     your_details_without_number: Vos informations
     payment_method_without_number: Moyen de paiement
     order_summary_without_number: Récapitulatif de la commande
+    already_ordered:
+      cart: "panier"
+      message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
     step1:
       your_details:
         title: Vos informations

@@ -1,6 +1,8 @@
 pt_BR:
   language_name: "Português do Brasil"
   activerecord:
+    models:
+      spree/product: Produto
     attributes:
       spree/user:
         password: "Senha"
@@ -1552,6 +1554,9 @@ pt_BR:
   cost_currency: "Custo"
   split_checkout:
     your_details_without_number: Seus detalhes
+    already_ordered:
+      cart: "carrinho"
+      message_html: "Você já possui um pedido para esta compra. Verifique o %{cart} para ver os itens já encomendados. Você também pode cancelar itens enquanto o ciclo estiver aberto."
     step1:
       your_details:
         title: Seus detalhes

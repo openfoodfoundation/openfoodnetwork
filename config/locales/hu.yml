@@ -1,6 +1,8 @@
 hu:
   language_name: "Magyar"
   activerecord:
+    models:
+      spree/product: Termék
     attributes:
       spree/user:
         password: "Jelszó"
@@ -1666,6 +1668,9 @@ hu:
     your_details_without_number: Az adataid
     payment_method_without_number: Fizetési mód
     order_summary_without_number: Megrendelés-összesítő
+    already_ordered:
+      cart: "szekér"
+      message_html: "Már van rendelése ehhez a rendelési ciklushoz. Tekintse meg a %{kosarat}, hogy megtekinthesse a korábban megrendelt tételeket. A tételeket törölheti is, amíg a rendelési ciklus nyitva van."
     step1:
       your_details:
         title: Az adataid
