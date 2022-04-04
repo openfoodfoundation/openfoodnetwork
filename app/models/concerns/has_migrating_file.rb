@@ -3,6 +3,16 @@
 module HasMigratingFile
   extend ActiveSupport::Concern
 
+  @migrating_models = []
+
+  def self.migrating_models
+    @migrating_models
+  end
+
+  included do
+    HasMigratingFile.migrating_models.push(name)
+  end
+
   class_methods do
     def has_one_migrating(name, paperclip_options = {})
       # Active Storage declaration
