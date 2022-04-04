@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class TermsOfServiceFile < ApplicationRecord
-  has_attached_file :attachment
+  include HasMigratingFile
+
+  has_one_migrating :attachment
 
   validates :attachment, presence: true
 
