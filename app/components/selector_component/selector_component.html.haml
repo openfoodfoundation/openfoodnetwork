@@ -1,9 +1,9 @@
 = component_controller do
   .selector{ class: ("selector-close" if @state == :close) }
-    .selector-main 
+    .selector-main{data: reflex_data_attributes(:toggle)}
       .selector-main-title 
         = @title
-      .selector-arrow{data: reflex_data_attributes(:toggle)}
+      .selector-arrow
     .selector-wrapper
       .selector-items
         - @items.each do |item|

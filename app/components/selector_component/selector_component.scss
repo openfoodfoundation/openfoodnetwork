@@ -5,6 +5,7 @@
     border: 1px solid $disabled-light;
     height: 3em;
     position: relative;
+    cursor: pointer;
 
     .selector-main-title {
       line-height: 3em;
@@ -18,7 +19,6 @@
       height: 3em;
       width: 1.5em;
       top: -1px;
-      cursor: pointer;
 
       &:after {
         content: "";
