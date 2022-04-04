@@ -1,24 +1,25 @@
 # frozen_string_literal: true
 
 require "open_food_network/reports/line_items"
-require "open_food_network/orders_and_fulfillments_report/supplier_totals_report"
-require "open_food_network/orders_and_fulfillments_report/supplier_totals_by_distributor_report"
-require "open_food_network/orders_and_fulfillments_report/distributor_totals_by_supplier_report"
-require "open_food_network/orders_and_fulfillments_report/customer_totals_report"
-require 'open_food_network/orders_and_fulfillments_report/default_report'
+require "open_food_network/orders_and_fulfillment_report/supplier_totals_report"
+require "open_food_network/orders_and_fulfillment_report/supplier_totals_by_distributor_report"
+require "open_food_network/orders_and_fulfillment_report/distributor_totals_by_supplier_report"
+require "open_food_network/orders_and_fulfillment_report/customer_totals_report"
+require 'open_food_network/orders_and_fulfillment_report/default_report'
+require 'open_food_network/order_grouper'
 
 include Spree::ReportsHelper
 
 module OpenFoodNetwork
-  class OrdersAndFulfillmentsReport
+  class OrdersAndFulfillmentReport
     attr_reader :options, :report_type
 
-    delegate :header, :rules, :columns, to: :report
+    delegate :table_headers, :rules, :columns, to: :report
 
     def initialize(user, options = {}, render_table = false)
       @user = user
       @options = options
-      @report_type = options[:report_type]
+      @report_type = options[:report_subtype]
       @render_table = render_table
       @variant_scopers_by_distributor_id = {}
     end
@@ -31,6 +32,11 @@ module OpenFoodNetwork
       return [] unless @render_table
 
       report_line_items.list(report.line_item_includes)
+    end
+
+    def table_rows
+      order_grouper = OpenFoodNetwork::OrderGrouper.new report.rules, report.columns, report
+      order_grouper.table(table_items)
     end
 
     def line_item_name

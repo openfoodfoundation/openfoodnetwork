@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'open_food_network/orders_and_fulfillments_report'
+require 'open_food_network/orders_and_fulfillment_report'
 require 'open_food_network/order_grouper'
 
-describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
+describe OpenFoodNetwork::OrdersAndFulfillmentReport do
   include AuthenticationHelper
 
   let(:distributor) { create(:distributor_enterprise) }
@@ -163,8 +163,8 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
       ]
 
       report_types.each do |report_type|
-        report = described_class.new(admin_user, report_type: report_type)
-        expect(report.header.size).to eq(report.columns.size)
+        report = described_class.new(admin_user, report_subtype: report_type)
+        expect(report.table_headers.size).to eq(report.columns.size)
       end
     end
   end
@@ -179,8 +179,8 @@ describe OpenFoodNetwork::OrdersAndFulfillmentsReport do
     end
 
     let(:items) {
-      report = described_class.new(admin_user, { report_type: "order_cycle_customer_totals" }, true)
-      OpenFoodNetwork::OrderGrouper.new(report.rules, report.columns).table(report.table_items)
+      described_class.new(admin_user, { report_subtype: "order_cycle_customer_totals" }, true)
+        .table_rows
     }
 
     before do

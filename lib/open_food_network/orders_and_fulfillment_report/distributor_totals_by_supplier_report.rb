@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module OpenFoodNetwork
-  class OrdersAndFulfillmentsReport
+  class OrdersAndFulfillmentReport
     class DistributorTotalsBySupplierReport
       REPORT_TYPE = "order_cycle_distributor_totals_by_supplier"
 
@@ -11,7 +11,7 @@ module OpenFoodNetwork
         @context = context
       end
 
-      def header
+      def table_headers
         [I18n.t(:report_header_hub), I18n.t(:report_header_producer),
          I18n.t(:report_header_product), I18n.t(:report_header_variant),
          I18n.t(:report_header_quantity), I18n.t(:report_header_curr_cost_per_unit),

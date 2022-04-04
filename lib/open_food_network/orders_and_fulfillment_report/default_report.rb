@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module OpenFoodNetwork
-  class OrdersAndFulfillmentsReport
+  class OrdersAndFulfillmentReport
     class DefaultReport
       delegate :line_item_name, :supplier_name, :product_name, :line_items_name, to: :context
 
@@ -9,7 +9,7 @@ module OpenFoodNetwork
         @context = context
       end
 
-      def header
+      def table_headers
         [
           I18n.t(:report_header_producer),
           I18n.t(:report_header_product),

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'open_food_network/orders_and_fulfillments_report/distributor_totals_by_supplier_report'
+require 'open_food_network/orders_and_fulfillment_report/distributor_totals_by_supplier_report'
 
-RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::DistributorTotalsBySupplierReport do
+RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentReport::DistributorTotalsBySupplierReport do
   let!(:distributor) { create(:distributor_enterprise) }
 
   let!(:order) do
@@ -13,12 +13,12 @@ RSpec.describe OpenFoodNetwork::OrdersAndFulfillmentsReport::DistributorTotalsBy
   let(:current_user) { distributor.owner }
 
   let(:report) do
-    report_options = { report_type: described_class::REPORT_TYPE }
-    OpenFoodNetwork::OrdersAndFulfillmentsReport.new(current_user, report_options, true)
+    report_options = { report_subtype: described_class::REPORT_TYPE }
+    OpenFoodNetwork::OrdersAndFulfillmentReport.new(current_user, report_options, true)
   end
 
   let(:report_table) do
-    OpenFoodNetwork::OrderGrouper.new(report.rules, report.columns).table(report.table_items)
+    report.table_rows
   end
 
   it "generates the report" do

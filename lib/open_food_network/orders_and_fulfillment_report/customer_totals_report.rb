@@ -2,7 +2,7 @@
 
 # rubocop:disable Metrics/ClassLength
 module OpenFoodNetwork
-  class OrdersAndFulfillmentsReport
+  class OrdersAndFulfillmentReport
     class CustomerTotalsReport
       REPORT_TYPE = "order_cycle_customer_totals"
 
@@ -17,7 +17,7 @@ module OpenFoodNetwork
       end
 
       # rubocop:disable Metrics/AbcSize
-      def header
+      def table_headers
         [I18n.t(:report_header_hub), I18n.t(:report_header_customer), I18n.t(:report_header_email),
          I18n.t(:report_header_phone), I18n.t(:report_header_producer),
          I18n.t(:report_header_product), I18n.t(:report_header_variant),
