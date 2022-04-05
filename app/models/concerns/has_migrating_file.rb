@@ -22,10 +22,10 @@ module HasMigratingFile
       # We store files with Paperclip *and* Active Storage while we migrate
       # old Paperclip files to Active Storage. This enables availability
       # during the migration.
-      after_post_process do
-        if public_send(name).errors.blank?
-          file = File.open(processed_local_file_path)
-          attach_file(name, file)
+      public_send("after_#{name}_post_process") do
+        path = processed_local_file_path(name)
+        if public_send(name).errors.blank? && path.present?
+          attach_file(name, File.open(path))
         end
       end
     end
