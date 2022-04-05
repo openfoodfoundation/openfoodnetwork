@@ -21,4 +21,9 @@ class TermsOfServiceFile < ApplicationRecord
   def self.updated_at
     current&.updated_at || Time.zone.now
   end
+
+  def touch(_)
+    # Ignore Active Storage changing the timestamp during migrations.
+    # This can be removed once we got rid of Paperclip.
+  end
 end
