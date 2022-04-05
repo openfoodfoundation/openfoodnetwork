@@ -5,6 +5,10 @@ module Spree
     class FileConfiguration < Configuration
       def self.preference(name, type, *args)
         if type == :file
+          # Active Storage blob id:
+          super "#{name}_blob_id", :integer, *args
+
+          # Paperclip attachment attributes:
           super "#{name}_file_name",    :string,  *args
           super "#{name}_content_type", :string,  *args
           super "#{name}_file_size",    :integer, *args
@@ -17,7 +21,12 @@ module Spree
 
       def get_preference(key)
         if !has_preference?(key) && has_attachment?(key)
+          # Call Paperclip's attachment method:
           public_send key
+        elsif key.ends_with?("_blob")
+          # Find referenced Active Storage blob:
+          blob_id = super("#{key}_id")
+          ActiveStorage::Blob.find_by(id: blob_id)
         else
           super key
         end
@@ -37,7 +46,11 @@ module Spree
       # errors if respond_to? isn't correct, so we override it here.
       def respond_to?(method, include_all = false)
         name = method.to_s.delete('=')
-        super(self.class.preference_getter_method(name), include_all) || super(method, include_all)
+        reference_name = "#{name}_id"
+
+        super(self.class.preference_getter_method(name), include_all) ||
+          super(reference_name, include_all) ||
+          super(method, include_all)
       end
 
       def has_attachment?(name)

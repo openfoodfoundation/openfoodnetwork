@@ -14,6 +14,25 @@ namespace :from_paperclip_to_active_storage do
     end
   end
 
+  # We have a special class called ContentConfiguration which is not a model
+  # and therfore can't use the normal Active Storage magic.
+  #
+  # It uses `Spree::Preference`s to store all the Paperclip attributes. These
+  # files are stored locally and we can replace them with preferences pointing
+  # to an Active Storage blob.
+  desc "Associate ContentConfig to ActiveStorage blobs"
+  task copy_content_config: :environment do
+    [
+      :logo,
+      :logo_mobile,
+      :logo_mobile_svg,
+      :home_hero,
+      :footer_logo,
+    ].each do |name|
+      migrate_content_config_file(name)
+    end
+  end
+
   def migrate_model(model)
     duplicated_attachment_names(model).each do |name|
       migrate_attachment(model, name)
@@ -69,6 +88,23 @@ namespace :from_paperclip_to_active_storage do
       blob: blob,
       created_at: paperclip.updated_at,
     )
+  end
+
+  def migrate_content_config_file(name)
+    paperclip = ContentConfig.public_send(name)
+
+    return if ContentConfig.public_send("#{name}_blob_id")
+    return if paperclip.path.blank? || !paperclip.exists?
+
+    blob = ActiveStorage::Blob.create_and_upload!(
+      io: File.open(paperclip.path),
+      filename: paperclip.original_filename,
+      content_type: paperclip.content_type,
+      identify: false,
+    )
+
+    ContentConfig.public_send("#{name}_blob_id=", blob.id)
+    puts "Copied #{name}"
   end
 
   def duplicated_attachment_names(model)

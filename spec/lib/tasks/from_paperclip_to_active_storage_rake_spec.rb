@@ -31,7 +31,7 @@ describe "from_paperclip_to_active_storage.rake" do
   end
 
   describe ":migrate" do
-    it "creates Active Storage records for existing images on disk" do |example|
+    it "creates Active Storage records for existing images on disk" do
       image = Spree::Image.create!(attachment: file)
       image.attachment_attachment.delete
       image.attachment_blob.delete
@@ -43,7 +43,7 @@ describe "from_paperclip_to_active_storage.rake" do
       }.to(true)
     end
 
-    it "creates Active Storage records for existing images on disk" do |example|
+    it "creates Active Storage records for images on AWS S3" do
       attachment_definition = Spree::Image.attachment_definitions[:attachment]
       allow(Spree::Image).to receive(:attachment_definitions).and_return(
         attachment: attachment_definition.merge(s3_config)
@@ -71,6 +71,35 @@ describe "from_paperclip_to_active_storage.rake" do
       }.to(true)
 
       expect(image.attachment_blob.checksum).to eq "md5sum000test000example"
+    end
+  end
+
+  describe ":copy_content_config" do
+    it "doesn't copy default images" do
+      run_task "from_paperclip_to_active_storage:copy_content_config"
+
+      expect(ContentConfig.logo_blob).to eq nil
+    end
+
+    it "copies uploaded images" do
+      ContentConfig.logo = file
+      ContentConfig.logo.save
+
+      run_task "from_paperclip_to_active_storage:copy_content_config"
+
+      expect(ContentConfig.logo_blob).to be_a ActiveStorage::Blob
+    end
+
+    it "doesn't copy twice" do
+      ContentConfig.logo = file
+      ContentConfig.logo.save
+
+      expect {
+        run_task "from_paperclip_to_active_storage:copy_content_config"
+        run_task "from_paperclip_to_active_storage:copy_content_config"
+      }.to change {
+        ActiveStorage::Blob.count
+      }.by(1)
     end
   end
 
