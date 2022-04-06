@@ -6,13 +6,17 @@ module Reporting
     def report_data
       @report_data ||= report_query.raw_result
     end
+    alias_method :query_result, :report_data
 
     def report_query
       raise NotImplementedError
     end
 
-    def table_headers
-      report_data.columns
+    # ReportQueryTemplate work differently than ReportObjectTemplate
+    # Here the query_result is already the expected result, so we just create
+    # a fake columns method to copy the sql result into the row result
+    def columns
+      report_data.columns.map { |field| [field.to_sym, proc { |data| data[field] }] }.to_h
     end
 
     def table_rows

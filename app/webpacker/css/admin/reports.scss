@@ -1,7 +1,33 @@
-.report__table {
+table.report__table {
   margin-top: 2em;
   @media print {
     margin: 0;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 6px;
+  }
+
+  .header-row {
+    &.h1, &.h2, &.h3 {
+      font-weight: bold;
+      margin-top: 8px;
+    }
+    &.h1 {
+      font-size: 2em;
+    }
+    &.h2 {
+      font-size: 1.5em;
+    }
+    &.h3 {
+      font-size: 1.25em;
+    }
+    &.h4 {
+      font-size: 1;
+    }
+    &.with-background {
+      background-color: #eef5fc;
+    }
   }
 }
 
@@ -15,20 +41,6 @@
 
 .customer-names-tip {
   margin-top: 1em;
-}
-
-.rendering-options {
-  select {
-    display: block;
-    float: left;
-  }
-
-  .inline-checkbox {
-    line-height: 2.5em;
-    margin-left: 1em;
-    display: block;
-    float: left;
-  }
 }
 
 .report__submit-btn {

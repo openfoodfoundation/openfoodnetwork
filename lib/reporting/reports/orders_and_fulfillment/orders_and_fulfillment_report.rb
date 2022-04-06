@@ -4,8 +4,6 @@ module Reporting
   module Reports
     module OrdersAndFulfillment
       class OrdersAndFulfillmentReport < ReportObjectTemplate
-        include ReportsHelper
-
         attr_reader :report_type
 
         delegate :table_headers, :rules, :columns, to: :report

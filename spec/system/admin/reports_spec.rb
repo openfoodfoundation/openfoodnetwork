@@ -237,7 +237,9 @@ describe '
       it "is precise to time of day, not just date" do
         # When I generate a customer report
         # with a timeframe that includes one order but not the other
-        login_as_admin_and_visit spree.orders_and_fulfillment_admin_reports_path
+        login_as_admin_and_visit admin_reports_path
+        click_link 'Orders & Fulfillment Reports'
+        click_button 'Go'
 
         pick_datetime "#q_completed_at_gt", datetime_start
         pick_datetime "#q_completed_at_lt", datetime_end
@@ -255,7 +257,9 @@ describe '
                                        orders_open_at: Time.zone.now, orders_close_at: nil)
       o = create(:order, order_cycle: oc, distributor: distributor)
 
-      login_as_admin_and_visit spree.orders_and_fulfillment_admin_reports_path
+      login_as_admin_and_visit admin_reports_path
+      click_link 'Orders & Fulfillment Reports'
+      click_button 'Go'
 
       expect(page).to have_content "My Order Cycle"
     end

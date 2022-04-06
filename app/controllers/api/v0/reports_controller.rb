@@ -10,6 +10,7 @@ module Api
       before_action :validate_report, :authorize_report, :validate_query
 
       def show
+        params[:report_format] = 'json'
         @report = report_class.new(current_api_user, params)
 
         render_report

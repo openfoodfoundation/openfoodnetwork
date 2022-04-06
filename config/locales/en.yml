@@ -1255,6 +1255,8 @@ en:
       unitsize: UNITSIZE
       total: TOTAL
       total_items: TOTAL ITEMS
+      total_by_customer: Total By Customer
+      total_by_supplier: Total By Supplier
       supplier_totals: Order Cycle Supplier Totals
       supplier_totals_by_distributor: Order Cycle Supplier Totals by Distributor
       totals_by_supplier: Order Cycle Distributor Totals by Supplier
@@ -1326,7 +1328,9 @@ en:
         csv_spreadsheet: "CSV Spreadsheet"
         excel_spreadsheet: "Excel Spreadsheet"
         openoffice_spreadsheet: "OpenOffice Spreadsheet"
-        hide_summary_rows: "Hide summary Rows"
+        display: Display
+        summary_row: Summary Row
+        header_row: Header Row
       packing:
         name: "Packing Reports"
     subscriptions:
@@ -2627,7 +2631,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_tax_rates: Tax rates
   report_tax_types: Tax types
   report_filters: Report Filters
-  report_render_options: Render Options
+  report_render_options: Rendering Options
   report_header_order_cycle: Order Cycle
   report_header_user: User
   report_header_email: Email

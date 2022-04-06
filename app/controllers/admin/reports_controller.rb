@@ -7,7 +7,7 @@ module Admin
 
     before_action :authorize_report, only: [:show]
 
-    # Define custom model class for Cancan permissions
+    # Define model class for Can? permissions
     def model_class
       Admin::ReportsController
     end
@@ -43,6 +43,9 @@ module Admin
       @report_type = report_type
       @report_subtypes = report_subtypes
       @report_subtype = report_subtype
+
+      # Initialize data
+      params[:display_summary_row] = true if request.get?
 
       @data = Reporting::FrontendData.new(spree_current_user)
     end

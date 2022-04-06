@@ -539,6 +539,7 @@ Metrics/ClassLength:
     - 'lib/reporting/reports/payments/payments_report.rb'
     - 'lib/reporting/reports/users_and_enterprises/users_and_enterprises_report.rb'
     - 'lib/reporting/reports/xero_invoices/xero_invoices_report.rb'
+    - 'lib/reporting/report_grouper.rb'
 
 # Offense count: 39
 # Configuration parameters: IgnoredMethods, Max.

@@ -4,6 +4,19 @@
     .omega.fourteen.columns
       = select_tag(:report_subtype, options_for_select(@report_subtypes, @report_subtype))
 
+- if @report.header_option? || @report.summary_row_option?
+  .row
+    .alpha.two.columns= label_tag nil, t(".display")
+    .omega.fourteen.columns
+      - if @report.header_option?
+        %span.inline-checkbox{ style: "margin-right: 1rem;" }
+          = check_box_tag :display_header_row, true, params[:display_header_row]
+          = label_tag :display_header_row, t(".header_row")
+      - if @report.summary_row_option?
+        %span.inline-checkbox
+          = check_box_tag :display_summary_row, true, params[:display_summary_row]
+          = label_tag :display_summary_row, t(".summary_row")
+
 .row.rendering-options
   .alpha.two.columns
     = label_tag :report_format, t(".generate_report")
@@ -15,6 +28,4 @@
       t('.excel_spreadsheet') => 'xlsx', |
       t('.openoffice_spreadsheet') => 'ods'})
 
--#.inline-checkbox
--#  = check_box_tag "options[exclude_summaries]", true, params[:options].andand[:exclude_summaries]
--#  = label_tag t(".hide_summary_rows")
+

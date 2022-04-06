@@ -44,6 +44,14 @@ module Reporting
           end
         end
 
+        def rules
+          []
+        end
+
+        def columns
+          {}
+        end
+
         def sku_for(variant)
           return variant.sku if variant.sku.present?
 

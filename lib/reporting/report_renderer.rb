@@ -17,9 +17,16 @@ module Reporting
     end
 
     def as_json
+      # columns methods give the headers code, but as not reports are implementing it
+      # we fallback with the translated headers with table_headers
+      headers = begin
+        @report.columns.keys
+      rescue NotImplementedError, NoMethodError
+        table_headers
+      end
       table_rows.map do |row|
         result = {}
-        table_headers.zip(row) { |a, b| result[a.to_sym] = b }
+        headers.zip(row) { |a, b| result[a.to_sym] = b }
         result
       end.as_json
     end

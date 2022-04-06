@@ -48,6 +48,14 @@ module Reporting
           end
         end
 
+        def rules
+          []
+        end
+
+        def columns
+          {}
+        end
+
         private
 
         def gst(variant)

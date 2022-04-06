@@ -29,4 +29,16 @@ module ReportsHelper
   def currency_symbol
     Spree::Money.currency_symbol
   end
+
+  def format_cell(value)
+    return "" if value.nil?
+
+    if value.in? [true, false] # Boolean
+      value ? I18n.t(:yes) : I18n.t(:no)
+    elsif value.respond_to?(:strftime) # Date
+      value.to_datetime.in_time_zone.strftime "%Y-%m-%d %H:%M"
+    else
+      value
+    end
+  end
 end
