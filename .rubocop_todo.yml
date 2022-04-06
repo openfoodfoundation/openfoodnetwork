@@ -128,7 +128,7 @@ Layout/LineLength:
     - 'lib/reporting/reports/payments/payments_report.rb'
     - 'lib/reporting/reports/products_and_inventory/lettuce_share_report.rb'
     - 'lib/reporting/reports/sales_tax/sales_tax_report.rb'
-    - 'lib/reporting/reports/xero_invoices/xero_invoices_report.rb'
+    - 'lib/reporting/reports/xero_invoices/base.rb'
     - 'lib/spree/localized_number.rb'
     - 'lib/tasks/data.rake'
     - 'lib/tasks/enterprises.rake'
@@ -536,7 +536,7 @@ Metrics/ClassLength:
     - 'lib/reporting/reports/order_cycle_management/order_cycle_management_report.rb'
     - 'lib/open_food_network/order_cycle_permissions.rb'
     - 'lib/reporting/reports/payments/payments_report.rb'
-    - 'lib/reporting/reports/xero_invoices/xero_invoices_report.rb'
+    - 'lib/reporting/reports/xero_invoices/base.rb'
     - 'lib/reporting/report_grouper.rb'
 
 # Offense count: 39
@@ -571,7 +571,7 @@ Metrics/CyclomaticComplexity:
     - 'lib/reporting/reports/customers/customers_report.rb'
     - 'lib/reporting/reports/orders_and_fulfillment/customer_totals_report.rb'
     - 'lib/reporting/reports/payments/payments_report.rb'
-    - 'lib/reporting/reports/xero_invoices/xero_invoices_report.rb'
+    - 'lib/reporting/reports/xero_invoices/base.rb'
     - 'lib/spree/core/controller_helpers/order.rb'
     - 'lib/spree/core/controller_helpers/respond_with.rb'
     - 'lib/spree/localized_number.rb'
@@ -600,7 +600,7 @@ Metrics/MethodLength:
     - 'lib/reporting/reports/order_cycle_management/order_cycle_management_report.rb'
     - 'lib/open_food_network/order_cycle_permissions.rb'
     - 'lib/reporting/reports/payments/payments_report.rb'
-    - 'lib/reporting/reports/xero_invoices/xero_invoices_report.rb'
+    - 'lib/reporting/reports/xero_invoices/base.rb'
     - 'lib/tasks/sample_data/product_factory.rb'
 
 # Offense count: 54
@@ -668,7 +668,7 @@ Metrics/ParameterLists:
   Exclude:
     - 'app/helpers/angular_form_builder.rb'
     - 'app/models/product_import/entry_processor.rb'
-    - 'lib/reporting/reports/xero_invoices/xero_invoices_report.rb'
+    - 'lib/reporting/reports/xero_invoices/base.rb'
     - 'spec/support/controller_requests_helper.rb'
     - 'spec/system/admin/reports_spec.rb'
 

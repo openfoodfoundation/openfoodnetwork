@@ -582,8 +582,8 @@ describe '
         fill_in 'account_code', with: 'abc123'
         click_button 'Go'
 
-        opts = { invoice_number: '5', invoice_date: '2021-02-12 00:00',
-                 due_date: '2021-03-12 00:00', account_code: 'abc123' }
+        opts = { invoice_number: '5', invoice_date: '2021-02-12',
+                 due_date: '2021-03-12', account_code: 'abc123' }
 
         expect(xero_invoice_table).to match_table [
           xero_invoice_header,

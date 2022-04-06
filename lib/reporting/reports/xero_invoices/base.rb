@@ -3,23 +3,36 @@
 module Reporting
   module Reports
     module XeroInvoices
-      class XeroInvoicesReport < ReportObjectTemplate
+      class Base < ReportObjectTemplate
         def initialize(user, params = {})
+          params.reverse_merge!(report_subtype: 'summary',
+                                invoice_date: Time.zone.today,
+                                due_date: Time.zone.today + 1.month,
+                                account_code: 'food sales')
           super(user, params)
-
-          @params = @params.
-            symbolize_keys.
-            reject { |_k, v| v.blank? }.
-            reverse_merge( report_subtype: 'summary',
-                           invoice_date: Time.zone.today,
-                           due_date: Time.zone.today + 1.month,
-                           account_code: 'food sales' )
         end
 
-        def table_headers
-          # NOTE: These are NOT to be translated, they need to be in this exact format to work with Xero
+        def xero_columns
+          # These are NOT to be translated, they need to be in this exact format to work with Xero
           %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4
-             POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme Paid?)
+             POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate *DueDate
+             InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode *TaxType
+             TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency
+             BrandingTheme Paid?)
+        end
+
+        def custom_headers
+          xero_columns.index_by(&:to_sym)
+        end
+
+        # This report calculate data in a specific way, so instead of refactoring it
+        # we just encapsulate the result in the columns method
+        def columns
+          result = {}
+          xero_columns.each_with_index do |header, id|
+            result[header.to_sym] = proc { |row| row[id] }
+          end
+          result
         end
 
         def search
@@ -27,14 +40,15 @@ module Reporting
           permissions.editable_orders.complete.not_state(:canceled).ransack(params[:q])
         end
 
-        def orders
-          search.result.reorder('id DESC')
-        end
+        # In the new way of managing reports, query_result should be an ActiveRecordRelation
+        # Here we directly transform the ActiveRecordRelation into table_rows without using the
+        # new ReportGrouper, so we can keep the old report without refactoring it
+        def query_result
+          search_result = search.result.reorder('id DESC')
 
-        def table_rows
           rows = []
 
-          orders.each_with_index do |order, i|
+          search_result.each_with_index do |order, i|
             invoice_number = invoice_number_for(order, i)
             rows += detail_rows_for_order(order, invoice_number, params) if detail?
             rows += summary_rows_for_order(order, invoice_number, params)
@@ -137,6 +151,7 @@ module Reporting
           row order, '', description, '1', amount, invoice_number, tax_type, opts
         end
 
+        # rubocop:disable Metrics/AbcSize
         def row(order, sku, description, quantity, amount, invoice_number, tax_type, opts = {})
           return nil if amount == 0
 
@@ -147,13 +162,13 @@ module Reporting
            '',
            '',
            order.bill_address&.city,
-           order.bill_address&.state,
+           order.bill_address&.state.to_s,
            order.bill_address&.zipcode,
            order.bill_address&.country&.name,
            invoice_number,
            order.number,
-           opts[:invoice_date],
-           opts[:due_date],
+           opts[:invoice_date].to_date.to_s,
+           opts[:due_date].to_date.to_s,
            sku,
            description,
            quantity,
@@ -169,6 +184,7 @@ module Reporting
            '',
            order.paid? ? I18n.t(:y) : I18n.t(:n)]
         end
+        # rubocop:enable Metrics/AbcSize
 
         def admin_adjustments(order)
           order.adjustments.admin
@@ -179,7 +195,11 @@ module Reporting
         end
 
         def invoice_number_for(order, idx)
-          params[:initial_invoice_number] ? params[:initial_invoice_number].to_i + idx : order.number
+          if params[:initial_invoice_number].present?
+            params[:initial_invoice_number].to_i + idx
+          else
+            order.number
+          end
         end
 
         def total_untaxable_products(order)

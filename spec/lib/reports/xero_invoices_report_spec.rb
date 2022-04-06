@@ -5,31 +5,28 @@ require 'spec_helper'
 module Reporting
   module Reports
     module XeroInvoices
-      describe XeroInvoicesReport do
-        subject { XeroInvoicesReport.new user, {} }
+      describe Base do
+        subject { Base.new user, {} }
 
         let(:user) { create(:user) }
 
         describe "option defaults" do
-          let(:report) {
-            XeroInvoicesReport.new user, initial_invoice_number: '', invoice_date: '', due_date: '',
-                                         account_code: ''
-          }
+          let(:report) { Base.new user }
 
           around { |example| Timecop.travel(Time.zone.local(2015, 5, 5, 14, 0, 0)) { example.run } }
 
           it "uses defaults when blank params are passed" do
-            expect(report.instance_variable_get(:@params)).to eq(invoice_date: Date.civil(2015, 5, 5),
-                                                                 due_date: Date.civil(2015, 6, 5),
-                                                                 account_code: 'food sales',
-                                                                 report_subtype: 'summary' )
+            expect(report.params).to eq(invoice_date: Date.civil(2015, 5, 5),
+                                        due_date: Date.civil(2015, 6, 5),
+                                        account_code: 'food sales',
+                                        report_subtype: 'summary' )
           end
         end
 
         describe "summary rows" do
           let(:report) {
-            XeroInvoicesReport.new user, initial_invoice_number: '', invoice_date: '', due_date: '',
-                                         account_code: ''
+            Base.new user, initial_invoice_number: '', invoice_date: '', due_date: '',
+                           account_code: ''
           }
           let(:order) { double(:order) }
           let(:summary_rows) { report.__send__(:summary_rows_for_order, order, 1, {}) }
@@ -86,7 +83,7 @@ module Reporting
           end
 
           describe "when an initial invoice number is given" do
-            subject { XeroInvoicesReport.new user, initial_invoice_number: '123' }
+            subject { Base.new user, initial_invoice_number: '123' }
 
             it "increments the number by the index" do
               expect(subject.send(:invoice_number_for, order, 456)).to eq(579)

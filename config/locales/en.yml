@@ -2767,10 +2767,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_transaction_fee: Transaction Fee (no tax)
   report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
   report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
-  initial_invoice_number: "Initial invoice number:"
-  invoice_date: "Invoice date:"
-  due_date: "Due date:"
-  account_code: "Account code:"
+  report_xero_configuration: Xero Configuration
+  initial_invoice_number: "Initial invoice number"
+  invoice_date: "Invoice date"
+  due_date: "Due date"
+  account_code: "Account code"
   equals: "Equals"
   contains: "contains"
   discount: "Discount"
