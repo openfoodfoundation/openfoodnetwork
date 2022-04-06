@@ -125,7 +125,9 @@ module Reporting
       label = label.call(*proc_args) if label.respond_to?(:call)
       # Adds Total before first non empty column
       row.each_pair do |key, value|
-        row[previous_key] = label and break if value.present?
+        if value.present? && previous_key.present? && row[previous_key].blank?
+          row[previous_key] = label and break
+        end
 
         previous_key = key
       end

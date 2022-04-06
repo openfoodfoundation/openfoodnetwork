@@ -3,15 +3,10 @@
 module Reporting
   module Reports
     module OrdersAndFulfillment
-      class OrdersAndFulfillmentReport < ReportObjectTemplate
-        attr_reader :report_type
-
-        delegate :table_headers, :rules, :columns, to: :report
-
+      class Base < ReportObjectTemplate
         def initialize(user, params = {})
           super(user, params)
-          @report_type = params[:report_subtype]
-          @variant_scopers_by_distributor_id = {}
+
           now = Time.zone.now
           params[:q] ||= {
             completed_at_gt: (now - 1.month).beginning_of_day,
@@ -27,20 +22,23 @@ module Reporting
           report_line_items.orders
         end
 
-        def table_items
-          report_line_items.list(report.line_item_includes)
+        def query_result
+          report_line_items.list(line_item_includes).group_by(&:variant).values
         end
 
-        def table_rows
-          order_grouper = Reporting::OrderGrouper.new report.rules, report.columns, report
-          order_grouper.table(table_items)
+        private
+
+        def order_permissions
+          return @order_permissions unless @order_permissions.nil?
+
+          @order_permissions = ::Permissions::Order.new(@user, params[:q])
         end
 
-        def line_item_name
-          proc { |line_item| line_item.variant.full_name }
+        def report_line_items
+          @report_line_items ||= Reporting::LineItems.new(order_permissions, params)
         end
 
-        def line_items_name
+        def variant_name
           proc { |line_items| line_items.first.variant.full_name }
         end
 
@@ -50,6 +48,10 @@ module Reporting
 
         def product_name
           proc { |line_items| line_items.first.variant.product.name }
+        end
+
+        def hub_name
+          proc { |line_items| line_items.first.order.distributor.name }
         end
 
         def total_units(line_items)
@@ -64,28 +66,12 @@ module Reporting
         end
 
         def variant_scoper_for(distributor_id)
+          @variant_scopers_by_distributor_id ||= {}
           @variant_scopers_by_distributor_id[distributor_id] ||=
             OpenFoodNetwork::ScopeVariantToHub.new(
               distributor_id,
               report_variant_overrides[distributor_id] || {},
             )
-        end
-
-        private
-
-        def report
-          @report ||= report_klass.new(self)
-        end
-
-        def report_klass
-          case report_type
-          when SupplierTotalsReport::REPORT_TYPE then SupplierTotalsReport
-          when SupplierTotalsByDistributorReport::REPORT_TYPE then SupplierTotalsByDistributorReport
-          when DistributorTotalsBySupplierReport::REPORT_TYPE then DistributorTotalsBySupplierReport
-          when CustomerTotalsReport::REPORT_TYPE then CustomerTotalsReport
-          else
-            DefaultReport
-          end
         end
 
         def not_all_have_unit?(line_items)
@@ -94,16 +80,6 @@ module Reporting
 
         def scale_factor(product)
           product.variant_unit == 'weight' ? 1000 : 1
-        end
-
-        def order_permissions
-          return @order_permissions unless @order_permissions.nil?
-
-          @order_permissions = ::Permissions::Order.new(@user, params[:q])
-        end
-
-        def report_line_items
-          @report_line_items ||= Reporting::LineItems.new(order_permissions, params)
         end
 
         def report_variant_overrides

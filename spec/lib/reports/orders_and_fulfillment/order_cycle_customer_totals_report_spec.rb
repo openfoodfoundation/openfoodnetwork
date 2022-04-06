@@ -5,15 +5,12 @@ require "spec_helper"
 module Reporting
   module Reports
     module OrdersAndFulfillment
-      describe CustomerTotalsReport do
+      describe OrderCycleCustomerTotals do
         let!(:distributor) { create(:distributor_enterprise) }
         let!(:customer) { create(:customer, enterprise: distributor) }
         let(:current_user) { distributor.owner }
-
-        let(:report) do
-          report_options = { report_subtype: described_class::REPORT_TYPE }
-          OrdersAndFulfillmentReport.new(current_user, report_options)
-        end
+        let(:params) { { display_summary_row: true } }
+        let(:report) { OrderCycleCustomerTotals.new(current_user, params) }
 
         let(:report_table) do
           report.table_rows
@@ -35,25 +32,11 @@ module Reporting
 
             customer_name_field = report_table.first[1]
             expect(customer_name_field).to eq order.bill_address.full_name
-
-            total_field = report_table.last[5]
-            expect(total_field).to eq I18n.t("admin.reports.total")
           end
 
           it 'includes the order number and date in item rows' do
-            order_number_and_date_fields = report_table.first[33..34]
-            expect(order_number_and_date_fields).to eq([
-                                                         order.number,
-                                                         order.completed_at.strftime("%F %T"),
-                                                       ])
-          end
-
-          it 'includes the order number and date in total rows' do
-            order_number_and_date_fields = report_table.last[33..34]
-            expect(order_number_and_date_fields).to eq([
-                                                         order.number,
-                                                         order.completed_at.strftime("%F %T"),
-                                                       ])
+            expect(report.rows.first.order_number).to eq order.number
+            expect(report.rows.first.date).to eq order.completed_at.strftime("%F %T")
           end
         end
 
@@ -78,8 +61,7 @@ module Reporting
           end
 
           it "displays the correct shipping_method" do
-            shipping_method_name_field = report_table.first[15]
-            expect(shipping_method_name_field).to eq shipping_method2.name
+            expect(report.rows.first.shipping).to eq shipping_method2.name
           end
         end
 
@@ -98,8 +80,7 @@ module Reporting
             end
 
             it "shows the correct payment fee amount for the order" do
-              payment_fee_field = report_table.last[12]
-              expect(payment_fee_field).to eq completed_payment.adjustment.amount
+              expect(report.rows.last.pay_fee_price).to eq completed_payment.adjustment.amount
             end
           end
         end
@@ -121,8 +102,7 @@ module Reporting
           end
 
           it 'uses the sku from the variant override' do
-            sku_field = report_table.first[23]
-            expect(sku_field).to eq overidden_sku
+            expect(report.rows.first.sku).to eq overidden_sku
           end
         end
       end

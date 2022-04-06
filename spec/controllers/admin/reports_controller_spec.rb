@@ -78,8 +78,9 @@ describe Admin::ReportsController, type: :controller do
 
   # Results
   let(:resulting_orders_prelim) { assigns(:report).search.result }
-  let(:resulting_orders) { assigns(:report).table_items.map(&:order) }
-  let(:resulting_products) { assigns(:report).table_items.map(&:product) }
+  let(:resulting_line_items) { assigns(:report).query_result.flatten }
+  let(:resulting_orders) { resulting_line_items.map(&:order).uniq }
+  let(:resulting_products) { resulting_line_items.map(&:product).uniq }
 
   # As manager of a coordinator (coordinator1)
   context "Coordinator Enterprise User" do
@@ -194,8 +195,7 @@ describe Admin::ReportsController, type: :controller do
           it "only shows product line items that I am supplying" do
             spree_post :show, report_type: :orders_and_fulfillment, q: {}
 
-            table_items = assigns(:report).table_items
-            variant = Spree::Variant.unscoped.find(table_items.first.variant_id)
+            variant = Spree::Variant.unscoped.find(resulting_line_items.first.variant_id)
 
             expect(variant.product).to eq(product1)
           end

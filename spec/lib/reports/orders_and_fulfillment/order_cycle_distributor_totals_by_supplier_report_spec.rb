@@ -5,7 +5,7 @@ require 'spec_helper'
 module Reporting
   module Reports
     module OrdersAndFulfillment
-      describe SupplierTotalsReport do
+      describe OrderCycleDistributorTotalsBySupplier do
         let!(:distributor) { create(:distributor_enterprise) }
 
         let!(:order) do
@@ -13,10 +13,9 @@ module Reporting
         end
 
         let(:current_user) { distributor.owner }
-
+        let(:params) { { display_summary_row: true } }
         let(:report) do
-          report_options = { report_subtype: described_class::REPORT_TYPE }
-          OrdersAndFulfillmentReport.new(current_user, report_options)
+          OrderCycleDistributorTotalsBySupplier.new(current_user, params)
         end
 
         let(:report_table) do
@@ -24,12 +23,15 @@ module Reporting
         end
 
         it "generates the report" do
-          expect(report_table.length).to eq(1)
+          expect(report_table.length).to eq(2)
         end
 
-        it "has a variant row" do
+        it "has a variant row under the distributor" do
+          distributor_name_field = report_table.first[0]
+          expect(distributor_name_field).to eq distributor.name
+
           supplier = order.line_items.first.variant.product.supplier
-          supplier_name_field = report_table.first[0]
+          supplier_name_field = report_table.first[1]
           expect(supplier_name_field).to eq supplier.name
         end
       end
