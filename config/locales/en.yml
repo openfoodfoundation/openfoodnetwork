@@ -1272,6 +1272,7 @@ en:
       tax_rates: Tax Rates
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
+      pack_by_product: Pack By Product
       orders_and_distributors:
         name: Orders And Distributors
         description: Orders with distributor details

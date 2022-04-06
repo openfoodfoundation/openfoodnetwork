@@ -76,7 +76,8 @@ module Reporting
       def packing_report_types
         [
           [i18n_translate("pack_by_customer"), :customer],
-          [i18n_translate("pack_by_supplier"), :supplier]
+          [i18n_translate("pack_by_supplier"), :supplier],
+          [i18n_translate("pack_by_product"), :product]
         ]
       end
 
