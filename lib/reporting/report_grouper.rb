@@ -139,9 +139,7 @@ module Reporting
     end
 
     def slice_row_fields(row)
-      result = row.clone
-      report.fields_to_hide.each { |field| result.delete_field!(field) }
-      result
+      OpenStruct.new(row.to_h.reject { |k, _v| k.in?(report.fields_to_hide) })
     end
 
     # Compute the query result item into a result row

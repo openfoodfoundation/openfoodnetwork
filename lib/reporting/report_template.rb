@@ -28,11 +28,17 @@ module Reporting
       Ransack::Search.new(Spree::Order)
     end
 
+    def available_headers
+      columns.is_a?(Hash) ? columns.keys.map { |key| [translate_header(key), key] } : nil
+    rescue NotImplementedError
+      nil
+    end
+
     # Can be re implemented in subclasses if they not use yet the new syntax
     # with columns method
     def table_headers
       columns.keys.filter{ |key| !key.in?(fields_to_hide) }.map do |key|
-        custom_headers[key] || I18n.t("report_header_#{key}")
+        translate_header(key)
       end
     end
 
@@ -57,7 +63,11 @@ module Reporting
         formatted_rules.map { |rule| rule[:fields_used_in_header] }.flatten.reject(&:blank?)
       else
         []
-      end
+      end.concat(params_fields_to_hide)
+    end
+
+    def params_fields_to_hide
+      params[:fields_to_hide]&.map(&:to_sym) || []
     end
 
     # Rules for grouping, ordering, and summary rows
