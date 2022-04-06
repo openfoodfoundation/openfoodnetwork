@@ -128,7 +128,6 @@ Layout/LineLength:
     - 'lib/reporting/reports/payments/payments_report.rb'
     - 'lib/reporting/reports/products_and_inventory/lettuce_share_report.rb'
     - 'lib/reporting/reports/sales_tax/sales_tax_report.rb'
-    - 'lib/reporting/reports/users_and_enterprises/users_and_enterprises_report.rb'
     - 'lib/reporting/reports/xero_invoices/xero_invoices_report.rb'
     - 'lib/spree/localized_number.rb'
     - 'lib/tasks/data.rake'
@@ -537,7 +536,6 @@ Metrics/ClassLength:
     - 'lib/reporting/reports/order_cycle_management/order_cycle_management_report.rb'
     - 'lib/open_food_network/order_cycle_permissions.rb'
     - 'lib/reporting/reports/payments/payments_report.rb'
-    - 'lib/reporting/reports/users_and_enterprises/users_and_enterprises_report.rb'
     - 'lib/reporting/reports/xero_invoices/xero_invoices_report.rb'
     - 'lib/reporting/report_grouper.rb'
 
