@@ -2,7 +2,7 @@
   %ul.off-canvas-list
     %li.ofn-logo
       %a{href: main_app.root_path}
-        %img{src: ContentConfig.logo_mobile.url, srcset: ContentConfig.logo_mobile_svg.url, width: "75", height: "26"}
+        %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}
     - [*1..7].each do |menu_number|
       - menu_name = "menu_#{menu_number}"
       - if ContentConfig[menu_name].present?

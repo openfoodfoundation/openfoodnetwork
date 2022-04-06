@@ -10,13 +10,13 @@ module Admin
 
     def update
       params.each do |name, value|
-        if ContentConfig.has_preference?(name) || ContentConfig.has_attachment?(name)
-          ContentConfig.public_send("#{name}=", value)
+        if value.is_a?(ActionDispatch::Http::UploadedFile)
+          blob = store_file(value)
+          update_preference("#{name}_blob_id", blob.id)
+        else
+          update_preference(name, value)
         end
       end
-
-      # Save any uploaded images
-      ContentConfig.save
 
       flash[:success] =
         t(:successfully_updated, resource: I18n.t('admin.contents.edit.your_content'))
@@ -25,6 +25,22 @@ module Admin
     end
 
     private
+
+    def store_file(attachable)
+      ActiveStorage::Blob.create_and_upload!(
+        io: attachable.open,
+        filename: attachable.original_filename,
+        content_type: attachable.content_type,
+        service_name: :local,
+        identify: false,
+      )
+    end
+
+    def update_preference(name, value)
+      return unless ContentConfig.has_preference?(name)
+
+      ContentConfig.public_send("#{name}=", value)
+    end
 
     def preference_sections
       [

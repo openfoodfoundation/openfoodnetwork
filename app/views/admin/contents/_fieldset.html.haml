@@ -8,5 +8,8 @@
       - text = t(key)
     .field
       = label_tag(key, text + ': ') + tag(:br) if type != :boolean
-      = preference_field_tag(key, ContentConfig[key], :type => type)
+      - if type == :file
+        = file_field_tag(key, type: type)
+      - else
+        = preference_field_tag(key, ContentConfig[key], type: type)
       = label_tag(key, text) + tag(:br) if type == :boolean

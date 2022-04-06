@@ -96,7 +96,7 @@
     .row.legal
       .small-12.medium-3.medium-offset-2.columns.text-left
         %a{href: main_app.root_path}
-          %img{src: ContentConfig.footer_logo.url, width: "220"}
+          %img{src: ContentConfig.url_for(:footer_logo), width: "220"}
       .small-12.medium-5.columns.text-left
         %p.text-small
           = t '.footer_legal_call'
