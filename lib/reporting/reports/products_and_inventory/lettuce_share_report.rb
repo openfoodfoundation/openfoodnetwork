@@ -31,8 +31,6 @@ module Reporting
         end
 
         def table_rows
-          return [] unless render_table
-
           variants.select(&:in_stock?)
             .map do |variant|
             [

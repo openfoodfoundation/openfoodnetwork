@@ -9,6 +9,9 @@ module Reporting
 
       def all
         {
+          orders_and_distributors: [],
+          bulk_coop: bulk_coop_report_types,
+          payments: payments_report_types,
           orders_and_fulfillment: orders_and_fulfillment_report_types,
           products_and_inventory: products_and_inventory_report_types,
           customers: customers_report_types,
@@ -38,6 +41,14 @@ module Reporting
           [i18n_translate("all_products"), :all_products],
           [i18n_translate("inventory"), :inventory],
           [i18n_translate("lettuce_share"), :lettuce_share]
+        ]
+      end
+
+      def payments_report_types
+        [
+          [I18n.t(:report_payment_by), :payments_by_payment_type],
+          [I18n.t(:report_itemised_payment), :itemised_payment_totals],
+          [I18n.t(:report_payment_totals), :payment_totals]
         ]
       end
 

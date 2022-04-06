@@ -3,18 +3,17 @@
 module Reporting
   module Reports
     module XeroInvoices
-      class XeroInvoicesReport
-        def initialize(user, opts = {}, compile_table = false)
-          @user = user
+      class XeroInvoicesReport < ReportObjectTemplate
+        def initialize(user, params = {})
+          super(user, params)
 
-          @opts = opts.
+          @params = @params.
             symbolize_keys.
             reject { |_k, v| v.blank? }.
             reverse_merge( report_subtype: 'summary',
                            invoice_date: Time.zone.today,
                            due_date: Time.zone.today + 1.month,
                            account_code: 'food sales' )
-          @compile_table = compile_table
         end
 
         def table_headers
@@ -25,7 +24,7 @@ module Reporting
 
         def search
           permissions = ::Permissions::Order.new(@user)
-          permissions.editable_orders.complete.not_state(:canceled).ransack(@opts[:q])
+          permissions.editable_orders.complete.not_state(:canceled).ransack(params[:q])
         end
 
         def orders
@@ -33,14 +32,12 @@ module Reporting
         end
 
         def table_rows
-          return [] unless @compile_table
-
           rows = []
 
           orders.each_with_index do |order, i|
             invoice_number = invoice_number_for(order, i)
-            rows += detail_rows_for_order(order, invoice_number, @opts) if detail?
-            rows += summary_rows_for_order(order, invoice_number, @opts)
+            rows += detail_rows_for_order(order, invoice_number, params) if detail?
+            rows += summary_rows_for_order(order, invoice_number, params)
           end
 
           rows.compact
@@ -49,7 +46,7 @@ module Reporting
         private
 
         def report_options
-          @opts.merge(line_item_includes: line_item_includes)
+          params.merge(line_item_includes: line_item_includes)
         end
 
         def line_item_includes
@@ -186,7 +183,7 @@ module Reporting
         end
 
         def invoice_number_for(order, idx)
-          @opts[:initial_invoice_number] ? @opts[:initial_invoice_number].to_i + idx : order.number
+          params[:initial_invoice_number] ? params[:initial_invoice_number].to_i + idx : order.number
         end
 
         def total_untaxable_products(order)
@@ -227,7 +224,7 @@ module Reporting
         end
 
         def detail?
-          @opts[:report_subtype] == 'detailed'
+          params[:report_subtype] == 'detailed'
         end
 
         def tax_type(taxable)

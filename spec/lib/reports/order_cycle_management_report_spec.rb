@@ -7,7 +7,7 @@ module Reporting
     module OrderCycleManagement
       describe OrderCycleManagementReport do
         context "as a site admin" do
-          subject { OrderCycleManagementReport.new(user, params, true) }
+          subject { OrderCycleManagementReport.new(user, params) }
           let(:params) { {} }
 
           let(:user) do
@@ -63,7 +63,7 @@ module Reporting
         context "as an enterprise user" do
           let!(:user) { create(:user) }
 
-          subject { OrderCycleManagementReport.new user, {}, true }
+          subject { OrderCycleManagementReport.new user, {} }
 
           describe "fetching orders" do
             let(:supplier) { create(:supplier_enterprise) }
@@ -148,7 +148,7 @@ module Reporting
           end
 
           describe '#table_rows' do
-            subject { OrderCycleManagementReport.new(user, params, true) }
+            subject { OrderCycleManagementReport.new(user, params) }
 
             let(:distributor) { create(:distributor_enterprise) }
             before { distributor.enterprise_roles.create!(user: user) }

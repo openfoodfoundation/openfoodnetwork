@@ -3,13 +3,10 @@
 module Reporting
   module Reports
     module UsersAndEnterprises
-      class UsersAndEnterprisesReport
-        attr_reader :params
+      class UsersAndEnterprisesReport < ReportObjectTemplate
 
-        def initialize(user, params = {}, compile_table = false)
-          @user = user
-          @params = params
-          @compile_table = compile_table
+        def initialize(user, params = {})
+          super(user, params)
 
           # Convert arrays of ids to comma delimited strings
           if @params[:enterprise_id_in].is_a? Array
@@ -31,8 +28,6 @@ module Reporting
         end
 
         def table_rows
-          return [] unless @compile_table
-
           users_and_enterprises.map do |uae|
             [
               uae["user_email"],

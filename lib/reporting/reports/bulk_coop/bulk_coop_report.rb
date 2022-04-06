@@ -3,13 +3,10 @@
 module Reporting
   module Reports
     module BulkCoop
-      class BulkCoopReport
-        attr_reader :params
+      class BulkCoopReport < ReportObjectTemplate
 
-        def initialize(user, params = {}, render_table = false)
-          @params = params
-          @user = user
-          @render_table = render_table
+        def initialize(user, params = {})
+          super(user, params)
 
           @supplier_report = BulkCoopSupplierReport.new
           @allocation_report = BulkCoopAllocationReport.new
@@ -52,8 +49,6 @@ module Reporting
         end
 
         def table_items
-          return [] unless @render_table
-
           report_line_items.list(line_item_includes)
         end
 

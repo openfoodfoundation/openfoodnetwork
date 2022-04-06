@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Reporting::Reports::BulkCoop::BulkCoopReport do
-  subject { Reporting::Reports::BulkCoop::BulkCoopReport.new user, params, true }
+  subject { Reporting::Reports::BulkCoop::BulkCoopReport.new user, params }
   let(:user) { create(:admin_user) }
 
   describe '#table_items' do
@@ -61,16 +61,16 @@ describe Reporting::Reports::BulkCoop::BulkCoopReport do
         li2 = build(:line_item_with_shipment)
         o2.line_items << li2
 
-        report = Reporting::Reports::BulkCoop::BulkCoopReport.new user, {}, true
+        report = Reporting::Reports::BulkCoop::BulkCoopReport.new user, {}
         expect(report.table_items).to match_array [li1, li2]
 
         report = Reporting::Reports::BulkCoop::BulkCoopReport.new(
-          user, { q: { completed_at_gt: 2.days.ago } }, true
+          user, { q: { completed_at_gt: 2.days.ago } }
         )
         expect(report.table_items).to eq([li1])
 
         report = Reporting::Reports::BulkCoop::BulkCoopReport.new(
-          user, { q: { completed_at_lt: 2.days.ago } }, true
+          user, { q: { completed_at_lt: 2.days.ago } }
         )
         expect(report.table_items).to eq([li2])
       end
@@ -85,16 +85,16 @@ describe Reporting::Reports::BulkCoop::BulkCoopReport do
         li2 = build(:line_item_with_shipment)
         o2.line_items << li2
 
-        report = Reporting::Reports::BulkCoop::BulkCoopReport.new user, {}, true
+        report = Reporting::Reports::BulkCoop::BulkCoopReport.new user, {}
         expect(report.table_items).to match_array [li1, li2]
 
         report = Reporting::Reports::BulkCoop::BulkCoopReport.new(
-          user, { q: { distributor_id_in: [d1.id] } }, true
+          user, { q: { distributor_id_in: [d1.id] } }
         )
         expect(report.table_items).to eq([li1])
 
         report = Reporting::Reports::BulkCoop::BulkCoopReport.new(
-          user, { q: { distributor_id_in: [d2.id] } }, true
+          user, { q: { distributor_id_in: [d2.id] } }
         )
         expect(report.table_items).to eq([li2])
       end
@@ -102,7 +102,7 @@ describe Reporting::Reports::BulkCoop::BulkCoopReport do
 
     context "as a manager of a supplier" do
       let!(:user) { create(:user) }
-      subject { Reporting::Reports::BulkCoop::BulkCoopReport.new user, {}, true }
+      subject { Reporting::Reports::BulkCoop::BulkCoopReport.new user, {} }
 
       let(:s1) { create(:supplier_enterprise) }
 

@@ -5,16 +5,8 @@ require 'open_food_network/scope_variant_to_hub'
 module Reporting
   module Reports
     module ProductsAndInventory
-      class ProductsAndInventoryReport
-        attr_reader :params, :render_table
-
+      class ProductsAndInventoryReport < ReportObjectTemplate
         delegate :table_rows, :table_headers, :rules, :columns, :sku_for, to: :report
-
-        def initialize(user, params = {}, render_table = false)
-          @user = user
-          @params = params
-          @render_table = render_table
-        end
 
         def report
           @report ||= report_klass.new(self)

@@ -3,15 +3,14 @@
 module Reporting
   module Reports
     module OrderCycleManagement
-      class OrderCycleManagementReport
+      class OrderCycleManagementReport < ReportObjectTemplate
         DEFAULT_DATE_INTERVAL = { from: -1.month, to: 1.day }.freeze
 
-        attr_reader :params
-
-        def initialize(user, params = {}, render_table = false)
-          @params = sanitize_params(params)
-          @user = user
-          @render_table = render_table
+        def initialize(user, params = {})
+          super(user, params)
+          params[:q] ||= {}
+          params[:q][:completed_at_gt] ||= Time.zone.today + DEFAULT_DATE_INTERVAL[:from]
+          params[:q][:completed_at_lt] ||= Time.zone.today + DEFAULT_DATE_INTERVAL[:to]
         end
 
         def table_headers
@@ -66,8 +65,6 @@ module Reporting
         end
 
         def table_rows
-          return [] unless @render_table
-
           if is_payment_methods?
             orders.map { |o| payment_method_row o }
           else
@@ -156,13 +153,6 @@ module Reporting
         def customer_code(email)
           customer = Customer.where(email: email).first
           customer.nil? ? "" : customer.code
-        end
-
-        def sanitize_params(params)
-          params[:q] ||= {}
-          params[:q][:completed_at_gt] ||= Time.zone.today + DEFAULT_DATE_INTERVAL[:from]
-          params[:q][:completed_at_lt] ||= Time.zone.today + DEFAULT_DATE_INTERVAL[:to]
-          params
         end
       end
     end

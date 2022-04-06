@@ -5,17 +5,20 @@ include Spree::ReportsHelper
 module Reporting
   module Reports
     module OrdersAndFulfillment
-      class OrdersAndFulfillmentReport
-        attr_reader :options, :report_type
+      class OrdersAndFulfillmentReport < ReportObjectTemplate
+        attr_reader :report_type
 
         delegate :table_headers, :rules, :columns, to: :report
 
-        def initialize(user, options = {}, render_table = false)
-          @user = user
-          @options = options
-          @report_type = options[:report_subtype]
-          @render_table = render_table
+        def initialize(user, params = {})
+          super(user, params)
+          @report_type = params[:report_subtype]
           @variant_scopers_by_distributor_id = {}
+          now = Time.zone.now
+          params[:q] ||= {
+            completed_at_gt: (now - 1.month).beginning_of_day,
+            completed_at_lt: (now + 1.day).beginning_of_day
+          }
         end
 
         def search
@@ -23,8 +26,6 @@ module Reporting
         end
 
         def table_items
-          return [] unless @render_table
-
           report_line_items.list(report.line_item_includes)
         end
 
@@ -96,11 +97,11 @@ module Reporting
         def order_permissions
           return @order_permissions unless @order_permissions.nil?
 
-          @order_permissions = ::Permissions::Order.new(@user, options[:q])
+          @order_permissions = ::Permissions::Order.new(@user, params[:q])
         end
 
         def report_line_items
-          @report_line_items ||= Reporting::LineItems.new(order_permissions, options)
+          @report_line_items ||= Reporting::LineItems.new(order_permissions, params)
         end
 
         def report_variant_overrides

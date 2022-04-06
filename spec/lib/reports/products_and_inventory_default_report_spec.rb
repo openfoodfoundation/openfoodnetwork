@@ -13,7 +13,7 @@ module Reporting
             user
           end
           subject do
-            ProductsAndInventoryReport.new user, {}, true
+            ProductsAndInventoryReport.new user, {}
           end
 
           it "Should return headers" do
@@ -82,7 +82,7 @@ module Reporting
           end
 
           subject do
-            ProductsAndInventoryReport.new enterprise_user, {}, true
+            ProductsAndInventoryReport.new enterprise_user, {}
           end
 
           describe "fetching child variants" do

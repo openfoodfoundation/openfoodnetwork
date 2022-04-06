@@ -12,7 +12,7 @@ module Reporting
             user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
             user
           end
-          subject { CustomersReport.new user, {}, true }
+          subject { CustomersReport.new user, {} }
 
           describe "mailing list report" do
             before do
@@ -86,7 +86,7 @@ module Reporting
             user
           end
 
-          subject { CustomersReport.new user, {}, true }
+          subject { CustomersReport.new user, {} }
 
           describe "fetching orders" do
             let(:supplier) { create(:supplier_enterprise) }

@@ -59,12 +59,6 @@ module Spree
       end
 
       def orders_and_fulfillment
-        now = Time.zone.now
-        raw_params[:q] ||= {
-          completed_at_gt: (now - 1.month).beginning_of_day,
-          completed_at_lt: (now + 1.day).beginning_of_day
-        }
-
         form_options = Reporting::FrontendData.new(spree_current_user)
 
         @distributors = form_options.distributors
@@ -118,14 +112,10 @@ module Spree
         @report_subtypes = report_types[action_name.to_sym]
         @report_subtype = params[:report_subtype]
         klass = "Reporting::Reports::#{action_name.camelize}::#{action_name.camelize}Report".constantize
-        @report = klass.new spree_current_user, raw_params, render_content?
+        @report = klass.new spree_current_user, raw_params
         if report_format.present?
-          data = Reporting::ReportRenderer.new(@report).public_send("to_#{report_format}")
-          send_data data, filename: report_filename
+          send_data @report.public_send("to_#{report_format}"), filename: report_filename
         else
-          @header = @report.table_headers
-          @table = @report.table_rows
-
           render "show"
         end
       end

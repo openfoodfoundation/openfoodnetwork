@@ -28,7 +28,7 @@ module Reporting
           before { order.line_items << line_item }
 
           context "as a site admin" do
-            subject { described_class.new(admin_user, {}, true) }
+            subject { described_class.new(admin_user, {}) }
 
             it "fetches completed orders" do
               o2 = create(:order)
@@ -44,7 +44,7 @@ module Reporting
           end
 
           context "as a manager of a supplier" do
-            subject { described_class.new(user, {}, true) }
+            subject { described_class.new(user, {}) }
 
             let(:s1) { create(:supplier_enterprise) }
 
@@ -129,7 +129,7 @@ module Reporting
           end
 
           context "as a manager of a distributor" do
-            subject { described_class.new(user, {}, true) }
+            subject { described_class.new(user, {}) }
 
             before do
               distributor.enterprise_roles.create!(user: user)
@@ -180,7 +180,7 @@ module Reporting
           end
 
           let(:items) {
-            described_class.new(admin_user, { report_subtype: "order_cycle_customer_totals" }, true)
+            described_class.new(admin_user, { report_subtype: "order_cycle_customer_totals" })
               .table_rows
           }
 

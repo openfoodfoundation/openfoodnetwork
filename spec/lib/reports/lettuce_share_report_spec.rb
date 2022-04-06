@@ -8,7 +8,7 @@ module Reporting
       describe LettuceShareReport do
         let(:user) { create(:user) }
         let(:base_report) {
-          ProductsAndInventoryReport.new(user, { report_subtype: 'lettuce_share' }, true)
+          ProductsAndInventoryReport.new(user, { report_subtype: 'lettuce_share' })
         }
         let(:report) { base_report.report }
         let(:variant) { create(:variant) }

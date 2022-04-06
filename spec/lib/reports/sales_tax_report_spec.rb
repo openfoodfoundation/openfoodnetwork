@@ -7,7 +7,7 @@ module Reporting
     module SalesTax
       describe SalesTaxReport do
         let(:user) { create(:user) }
-        let(:report) { SalesTaxReport.new(user, {}, true) }
+        let(:report) { SalesTaxReport.new(user, {}) }
 
         describe "calculating totals for line items" do
           let(:li1) { double(:line_item, quantity: 1, amount: 12) }

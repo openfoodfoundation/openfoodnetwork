@@ -12,7 +12,7 @@ module Reporting
 
         let(:report) do
           report_options = { report_subtype: described_class::REPORT_TYPE }
-          OrdersAndFulfillmentReport.new(current_user, report_options, true)
+          OrdersAndFulfillmentReport.new(current_user, report_options)
         end
 
         let(:report_table) do

@@ -2,10 +2,10 @@
 %table.report__table
   %thead
     %tr
-      - @header.each do |heading|
+      - @report.table_headers.each do |heading|
         %th= heading
   %tbody
-    - @table.each do |row|
+    - @report.table_rows.each do |row|
       %tr
         - row.each_with_index do |cell_value, column_index|
           %td
@@ -14,6 +14,6 @@
               = render partial, value: cell_value
             - else
               = cell_value
-    - if @table.empty?
+    - if @report.table_rows.empty?
       %tr
-        %td{colspan: @header.count}= t(:none)
+        %td{colspan: @report.table_headers.count}= t(:none)

@@ -28,8 +28,6 @@ module Reporting
         end
 
         def table_rows
-          return [] unless render_table
-
           variants.map do |variant|
             [
               variant.product.supplier.name,

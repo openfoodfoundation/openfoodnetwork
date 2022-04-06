@@ -3,10 +3,11 @@
 module Reporting
   module Reports
     module EnterpriseFeeSummary
-      class EnterpriseFeeSummaryReport
-        attr_accessor :permissions, :parameters, :user
+      class EnterpriseFeeSummaryReport < ReportObjectTemplate
+        attr_accessor :permissions, :parameters
 
-        def initialize(user, params = {}, render_table = false)
+        def initialize(user, params = {})
+          super(user, params)
           p = params[:q]
           if p.present?
             p['start_at'] = p.delete('completed_at_gt')
@@ -14,8 +15,6 @@ module Reporting
           end
           @parameters = Reporting::Reports::EnterpriseFeeSummary::Parameters.new(p || {})
           @parameters.validate!
-          @user = user
-          @render_table = render_table
           @permissions = Permissions.new(user)
           @parameters.authorize!(@permissions)
         end
@@ -27,20 +26,11 @@ module Reporting
         end
 
         def table_rows
-          return [] unless @render_table
-
           enterprise_fee_type_total_list.sort.map do |data|
             data_row_attributes.map do |attribute|
               data.public_send(attribute)
             end
           end
-        end
-
-        # This report does not use ransack search, but all other are, so creating a fake
-        # Ransack search at least for the view to display correctly the selected
-        # ransack params like completed_at_gt and completed_at_lt
-        def search
-          Spree::Order.where('1=2').ransack(parameters)
         end
 
         private

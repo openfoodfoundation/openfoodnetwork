@@ -9,7 +9,7 @@ module Reporting
         describe "users_and_enterprises" do
           let!(:owners_and_enterprises) { double(:owners_and_enterprises) }
           let!(:managers_and_enterprises) { double(:managers_and_enterprises) }
-          let!(:subject) { UsersAndEnterprisesReport.new(nil, {}, true) }
+          let!(:subject) { UsersAndEnterprisesReport.new(nil, {}) }
 
           before do
             allow(subject).to receive(:owners_and_enterprises) { owners_and_enterprises }
@@ -26,7 +26,7 @@ module Reporting
         end
 
         describe "sorting results" do
-          let!(:subject) { UsersAndEnterprisesReport.new(nil, {}, true) }
+          let!(:subject) { UsersAndEnterprisesReport.new(nil, {}) }
 
           it "sorts by creation date" do
             uae_mock = [
@@ -70,7 +70,7 @@ module Reporting
           describe "for owners and enterprises" do
             describe "by enterprise id" do
               let!(:params) { { enterprise_id_in: [enterprise1.id.to_s] } }
-              let!(:subject) { UsersAndEnterprisesReport.new nil, params, true }
+              let!(:subject) { UsersAndEnterprisesReport.new nil, params }
 
               it "excludes enterprises that are not explicitly requested" do
                 results = subject.owners_and_enterprises.to_a.map{ |oae| oae["name"] }
@@ -81,7 +81,7 @@ module Reporting
 
             describe "by user id" do
               let!(:params) { { user_id_in: [enterprise1.owner.id.to_s] } }
-              let!(:subject) { UsersAndEnterprisesReport.new nil, params, true }
+              let!(:subject) { UsersAndEnterprisesReport.new nil, params }
 
               it "excludes enterprises that are not explicitly requested" do
                 results = subject.owners_and_enterprises.to_a.map{ |oae| oae["name"] }
@@ -94,7 +94,7 @@ module Reporting
           describe "for managers and enterprises" do
             describe "by enterprise id" do
               let!(:params) { { enterprise_id_in: [enterprise1.id.to_s] } }
-              let!(:subject) { UsersAndEnterprisesReport.new nil, params, true }
+              let!(:subject) { UsersAndEnterprisesReport.new nil, params }
 
               it "excludes enterprises that are not explicitly requested" do
                 results = subject.managers_and_enterprises.to_a.map{ |mae| mae["name"] }
@@ -107,7 +107,7 @@ module Reporting
               let!(:manager1) { create(:user) }
               let!(:manager2) { create(:user) }
               let!(:params) { { user_id_in: [manager1.id.to_s] } }
-              let!(:subject) { UsersAndEnterprisesReport.new nil, params, true }
+              let!(:subject) { UsersAndEnterprisesReport.new nil, params }
 
               before do
                 enterprise1.enterprise_roles.build(user: manager1).save

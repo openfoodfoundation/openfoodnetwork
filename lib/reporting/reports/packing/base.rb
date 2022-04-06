@@ -3,7 +3,7 @@
 module Reporting
   module Reports
     module Packing
-      class Base < ReportTemplate
+      class Base < ReportQueryTemplate
         SUBTYPES = ["customer", "supplier"]
 
         def primary_model

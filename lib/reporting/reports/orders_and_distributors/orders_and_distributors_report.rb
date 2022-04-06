@@ -3,12 +3,9 @@
 module Reporting
   module Reports
     module OrdersAndDistributors
-      class OrdersAndDistributorsReport
-        def initialize(user, params = {}, render_table = false)
-          @params = params
-          @user = user
-          @render_table = render_table
-
+      class OrdersAndDistributorsReport < ReportObjectTemplate
+        def initialize(user, params = {})
+          super(user, params)
           @permissions = ::Permissions::Order.new(user, @params[:q])
         end
 
@@ -44,8 +41,6 @@ module Reporting
         end
 
         def table_rows
-          return [] unless @render_table
-
           orders = search.result
 
           orders.select{ |order| orders_with_hidden_details(orders).include? order }.each do |order|

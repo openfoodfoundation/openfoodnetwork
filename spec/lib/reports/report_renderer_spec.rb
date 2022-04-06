@@ -9,9 +9,7 @@ describe Reporting::ReportRenderer do
       { "id" => 2, "name" => "onions", "quantity" => 6 }
     ]
   }
-  let(:report_data) { ActiveRecord::Result.new(data.first.keys, data.map(&:values)) }
-  let(:report) { OpenStruct.new(report_data: report_data)
-  }
+  let(:report) { OpenStruct.new(table_headers: data.first.keys, table_rows: data.map(&:values)) }
   let(:service) { described_class.new(report) }
 
   describe "#table_headers" do

@@ -45,7 +45,7 @@ module Reporting
             end
 
             it 'should denormalise order and distributor details for display as csv' do
-              subject = OrdersAndDistributorsReport.new create(:admin_user), {}, true
+              subject = OrdersAndDistributorsReport.new create(:admin_user), {}
 
               table = subject.table_rows
 
@@ -77,7 +77,7 @@ module Reporting
             it "prints one row per line item" do
               create(:line_item_with_shipment, order: order)
 
-              subject = OrdersAndDistributorsReport.new(create(:admin_user), {}, true)
+              subject = OrdersAndDistributorsReport.new(create(:admin_user))
 
               table = subject.table_rows
               expect(table.size).to eq 2

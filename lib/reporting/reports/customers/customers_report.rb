@@ -3,15 +3,7 @@
 module Reporting
   module Reports
     module Customers
-      class CustomersReport
-        attr_reader :params
-
-        def initialize(user, params = {}, compile_table = false)
-          @params = params
-          @user = user
-          @compile_table = compile_table
-        end
-
+      class CustomersReport < ReportObjectTemplate
         def table_headers
           if is_mailing_list?
             [I18n.t(:report_header_email),
@@ -31,8 +23,6 @@ module Reporting
         end
 
         def table_rows
-          return [] unless @compile_table
-
           orders.map do |order|
             if is_mailing_list?
               [order.email,

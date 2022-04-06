@@ -22,7 +22,7 @@ module Admin
     private
 
     def export_report
-      send_data @report.public_send("to_#{report_format}"), filename: report_filename
+      send_data @report.public_send("to_#{report_format}", self), filename: report_filename
     end
 
     def render_report

@@ -3,15 +3,7 @@
 module Reporting
   module Reports
     module Payments
-      class PaymentsReport
-        attr_reader :params
-
-        def initialize(user, params = {}, render_table = false)
-          @params = params
-          @user = user
-          @render_table = render_table
-        end
-
+      class PaymentsReport < ReportObjectTemplate
         def table_headers
           case params[:report_subtype]
           when "payments_by_payment_type"
@@ -43,8 +35,6 @@ module Reporting
         end
 
         def table_items
-          return [] unless @render_table
-
           orders = search.result
           payments = orders.includes(:payments).map do |order|
             order.payments.select(&:completed?)

@@ -3,15 +3,8 @@
 module Reporting
   module Reports
     module SalesTax
-      class SalesTaxReport
+      class SalesTaxReport < ReportObjectTemplate
         include Spree::ReportsHelper
-        attr_accessor :user, :params
-
-        def initialize(user, params, render_table)
-          @user = user
-          @params = params
-          @render_table = render_table
-        end
 
         def table_headers
           case params[:report_subtype]
@@ -49,8 +42,6 @@ module Reporting
         end
 
         def table_rows
-          return [] unless @render_table
-
           case params[:report_subtype]
           when "tax_rates"
             orders.map do |order|
