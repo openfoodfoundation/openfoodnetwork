@@ -5,7 +5,7 @@ require 'spec_helper'
 module Reporting
   module Reports
     module ProductsAndInventory
-      describe ProductsAndInventoryDefaultReport do
+      describe Base do
         context "As a site admin" do
           let(:user) do
             user = create(:user)
@@ -13,7 +13,7 @@ module Reporting
             user
           end
           subject do
-            ProductsAndInventoryReport.new user, {}
+            Base.new user, {}
           end
 
           it "Should return headers" do
@@ -48,7 +48,7 @@ module Reporting
                                                     :taxons).and_return [double(name: "taxon1"),
                                                                          double(name: "taxon2")]
             allow(variant).to receive_message_chain(:product, :group_buy_unit_size).and_return(21)
-            allow(subject).to receive(:variants).and_return [variant]
+            allow(subject).to receive(:query_result).and_return [variant]
 
             expect(subject.table_rows).to eq([[
                                                "Supplier",
@@ -67,7 +67,7 @@ module Reporting
           it "fetches variants for some params" do
             expect(subject).to receive(:child_variants).and_return ["children"]
             expect(subject).to receive(:filter).with(['children']).and_return ["filter_children"]
-            expect(subject.variants).to eq(["filter_children"])
+            expect(subject.query_result).to eq(["filter_children"])
           end
         end
 
@@ -82,7 +82,7 @@ module Reporting
           end
 
           subject do
-            ProductsAndInventoryReport.new enterprise_user, {}
+            Base.new enterprise_user, {}
           end
 
           describe "fetching child variants" do
@@ -112,7 +112,7 @@ module Reporting
                 product1 = create(:simple_product, supplier: supplier, on_hand: 99)
                 product2 = create(:simple_product, supplier: supplier, on_hand: 0)
 
-                allow(subject).to receive(:params).and_return(report_subtype: 'inventory')
+                subject = Inventory.new enterprise_user
                 expect(subject.filter(variants)).to eq([product1.variants.first])
               end
             end
@@ -225,17 +225,17 @@ module Reporting
                 ]
               )
 
+              subject = Inventory.new enterprise_user
               allow(subject).to receive(:params).and_return(
                 order_cycle_id: order_cycle.id,
                 supplier_id: supplier.id,
-                distributor_id: distributor.id,
-                report_subtype: 'inventory'
+                distributor_id: distributor.id
               )
 
               expect(subject.filter(variants)).to match_array [not_filtered_variant]
 
               # And it integrates with the ordering of the `variants` method.
-              expect(subject.variants).to match_array [not_filtered_variant]
+              expect(subject.query_result).to match_array [not_filtered_variant]
             end
           end
 
@@ -243,12 +243,15 @@ module Reporting
             let(:variant) { create(:variant) }
             let(:product) { variant.product }
 
-            before { product.update_attribute(:sku, "Product SKU") }
+            before {
+              product.update_attribute(:sku, "Product SKU")
+              allow(subject).to receive(:query_result).and_return([variant])
+            }
 
             context "when the variant has an SKU set" do
               before { variant.update_attribute(:sku, "Variant SKU") }
               it "returns it" do
-                expect(subject.__send__(:sku_for, variant)).to eq "Variant SKU"
+                expect(subject.rows.first.sku).to eq "Variant SKU"
               end
             end
 
@@ -256,7 +259,7 @@ module Reporting
               before { variant.update_attribute(:sku, "") }
 
               it "returns the product's SKU" do
-                expect(subject.__send__(:sku_for, variant)).to eq "Product SKU"
+                expect(subject.rows.first.sku).to eq "Product SKU"
               end
             end
           end

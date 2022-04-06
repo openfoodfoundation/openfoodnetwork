@@ -5,12 +5,9 @@ require 'spec_helper'
 module Reporting
   module Reports
     module ProductsAndInventory
-      describe LettuceShareReport do
+      describe LettuceShare do
         let(:user) { create(:user) }
-        let(:base_report) {
-          ProductsAndInventoryReport.new(user, { report_subtype: 'lettuce_share' })
-        }
-        let(:report) { base_report.report }
+        let(:report) { LettuceShare.new(user) }
         let(:variant) { create(:variant) }
 
         describe "grower and method" do
@@ -54,18 +51,17 @@ module Reporting
             }
 
             it "all items" do
-              allow(base_report).to receive(:child_variants) {
-                                      Spree::Variant.where(id: [variant, variant2, variant3])
-                                    }
+              allow(report).to receive(:child_variants) {
+                                 Spree::Variant.where(id: [variant, variant2, variant3])
+                               }
               expect(report.table_rows.count).to eq 3
             end
 
             it "only available items" do
               variant.on_hand = 0
-              allow(base_report).to receive(:child_variants) {
-                                      Spree::Variant.where(id: [variant, variant2, variant3,
-                                                                variant4])
-                                    }
+              allow(report).to receive(:child_variants) {
+                                 Spree::Variant.where(id: [variant, variant2, variant3, variant4])
+                               }
               expect(report.table_rows.count).to eq 3
             end
 
@@ -75,10 +71,10 @@ module Reporting
               # create the overrides
               variant2_override
               variant3_override
-              allow(base_report).to receive(:child_variants) {
-                                      Spree::Variant.where(id: [variant, variant2, variant3])
-                                    }
-              allow(base_report).to receive(:params) {
+              allow(report).to receive(:child_variants) {
+                                 Spree::Variant.where(id: [variant, variant2, variant3])
+                               }
+              allow(report).to receive(:params) {
                 { distributor_id: hub.id, report_subtype: 'lettuce_share' }
               }
               rows = report.table_rows

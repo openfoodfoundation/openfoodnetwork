@@ -246,7 +246,7 @@ describe Admin::ReportsController, type: :controller do
     end
 
     it "creates a ProductAndInventoryReport" do
-      allow(Reporting::Reports::ProductsAndInventory::ProductsAndInventoryReport).to receive(:new)
+      allow(Reporting::Reports::ProductsAndInventory::Base).to receive(:new)
         .and_return(report = double(:report))
       allow(report).to receive(:table_headers).and_return []
       allow(report).to receive(:table_rows).and_return []

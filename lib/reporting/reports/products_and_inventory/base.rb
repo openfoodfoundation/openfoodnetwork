@@ -5,35 +5,30 @@ require 'open_food_network/scope_variant_to_hub'
 module Reporting
   module Reports
     module ProductsAndInventory
-      class ProductsAndInventoryReport < ReportObjectTemplate
-        delegate :table_rows, :table_headers, :rules, :columns, :sku_for, to: :report
-
-        def report
-          @report ||= report_klass.new(self)
-        end
-
-        def report_type
-          params[:report_subtype]
-        end
-
-        def report_klass
-          if report_type == 'lettuce_share'
-            LettuceShareReport
-          else
-            ProductsAndInventoryDefaultReport
-          end
-        end
-
-        def permissions
-          @permissions ||= OpenFoodNetwork::Permissions.new(@user)
-        end
-
-        def visible_products
-          @visible_products ||= permissions.visible_products
-        end
-
-        def variants
+      class Base < ReportObjectTemplate
+        def query_result
           filter(child_variants)
+        end
+
+        # rubocop:disable Metrics/AbcSize
+        def columns
+          {
+            supplier: proc { |variant| variant.product.supplier.name },
+            producer_suburb: proc { |variant| variant.product.supplier.address.city },
+            product: proc { |variant| variant.product.name },
+            product_properties: proc { |v| v.product.properties.map(&:name).join(", ") },
+            taxons: proc { |variant| variant.product.taxons.map(&:name).join(", ") },
+            variant_value: proc { |variant| variant.full_name },
+            price: proc { |variant| variant.price },
+            group_buy_unit_quantity: proc { |variant| variant.product.group_buy_unit_size },
+            amount: proc { |_variant| "" },
+            sku: proc { |variant| variant.sku.presence || variant.product.sku },
+          }
+        end
+        # rubocop:enable Metrics/AbcSize
+
+        def filter(variants)
+          filter_on_hand filter_to_distributor filter_to_order_cycle filter_to_supplier variants
         end
 
         def child_variants
@@ -45,17 +40,23 @@ module Reporting
             order('spree_products.name')
         end
 
-        def filter(variants)
-          filter_on_hand filter_to_distributor filter_to_order_cycle filter_to_supplier variants
+        private
+
+        def report_type
+          params[:report_subtype]
+        end
+
+        def visible_products
+          @visible_products ||= permissions.visible_products
+        end
+
+        def permissions
+          @permissions ||= OpenFoodNetwork::Permissions.new(@user)
         end
 
         # Using the `in_stock?` method allows overrides by distributors.
         def filter_on_hand(variants)
-          if report_type == 'inventory'
-            variants.select(&:in_stock?)
-          else
-            variants
-          end
+          variants.select(&:in_stock?)
         end
 
         def filter_to_supplier(variants)

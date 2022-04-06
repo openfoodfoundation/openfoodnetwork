@@ -1,59 +1,39 @@
 # frozen_string_literal: true
 
-# require 'variant_units/option_value_namer'
-
 module Reporting
   module Reports
     module ProductsAndInventory
-      class LettuceShareReport
-        attr_reader :context
-
-        delegate :variants, :render_table, to: :context
-
-        def initialize(context)
-          @context = context
-        end
-
-        def table_headers
-          # NOTE: These are NOT to be translated, they need to be in this exact format to work with LettucShare
-          [
-            "PRODUCT",
-            "Description",
-            "Qty",
-            "Pack Size",
-            "Unit",
-            "Unit Price",
-            "Total",
-            "GST incl.",
-            "Grower and growing method",
-            "Taxon"
-          ]
-        end
-
-        def table_rows
-          variants.select(&:in_stock?)
-            .map do |variant|
-            [
-              variant.product.name,
-              variant.full_name,
-              '',
-              VariantUnits::OptionValueNamer.new(variant).value,
-              VariantUnits::OptionValueNamer.new(variant).unit,
-              variant.price,
-              '',
-              gst(variant),
-              grower_and_method(variant),
-              variant.product.primary_taxon.name
-            ]
-          end
-        end
-
-        def rules
-          []
+      class LettuceShare < Base
+        # NOTE: These are NOT to be translated, they need to be in this exact format
+        # to work with LettucShare
+        def custom_headers
+          {
+            product: "PRODUCT",
+            description: "Description",
+            quantity: "Qty",
+            pack_size: "Pack Size",
+            unit: "Unit",
+            unit_price: "Unit Price",
+            total: "Total",
+            gst: "GST incl.",
+            grower: "Grower and growing method",
+            taxon: "Taxon"
+          }
         end
 
         def columns
-          {}
+          {
+            product: proc { |variant| variant.product.name },
+            description: proc { |variant| variant.full_name },
+            quantity: proc { |_variant| '' },
+            pack_size: proc { |variant| VariantUnits::OptionValueNamer.new(variant).value },
+            unit: proc { |variant| VariantUnits::OptionValueNamer.new(variant).unit },
+            unit_price: proc { |variant| variant.price },
+            total: proc { |_variant| '' },
+            gst: proc { |variant| gst(variant) },
+            grower: proc { |variant| grower_and_method(variant) },
+            taxon: proc { |variant| variant.product.primary_taxon.name }
+          }
         end
 
         private
