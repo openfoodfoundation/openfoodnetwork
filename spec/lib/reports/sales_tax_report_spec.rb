@@ -5,14 +5,15 @@ require 'spec_helper'
 module Reporting
   module Reports
     module SalesTax
-      describe SalesTaxReport do
+      describe TaxTypes do
         let(:user) { create(:user) }
-        let(:report) { SalesTaxReport.new(user, {}) }
+        let(:report) { TaxTypes.new(user, {}) }
 
         describe "calculating totals for line items" do
           let(:li1) { double(:line_item, quantity: 1, amount: 12) }
           let(:li2) { double(:line_item, quantity: 2, amount: 24) }
-          let(:totals) { report.__send__(:totals_of, [li1, li2]) }
+          let(:order) { double(:order, id: 1, line_items: [li1, li2]) }
+          let(:totals) { report.__send__(:totals_of, order) }
 
           before do
             allow(report).to receive(:tax_included_in).and_return(2, 4)
