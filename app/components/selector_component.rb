@@ -12,15 +12,6 @@ class SelectorComponent < ViewComponentReflex::Component
       }
     end
     @selected = selected
-    @state = :close
     @data = data
-  end
-
-  def toggle
-    @state = @state == :open ? :close : :open
-  end
-
-  def close
-    @state = :close
   end
 end

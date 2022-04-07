@@ -1,6 +1,6 @@
 = component_controller do
-  .selector{ class: ("selector-close" if @state == :close) }
-    .selector-main{data: reflex_data_attributes(:toggle)}
+  .selector
+    .selector-main{ data: { action: "click->selector#toggle" } }
       .selector-main-title 
         = @title
       .selector-arrow

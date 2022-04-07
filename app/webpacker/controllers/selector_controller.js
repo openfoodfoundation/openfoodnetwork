@@ -1,8 +1,6 @@
 import ApplicationController from "./application_controller";
 
 export default class extends ApplicationController {
-  reflex = "SelectorComponent";
-
   connect() {
     super.connect();
     window.addEventListener("click", this.closeOnClickOutside);
@@ -14,16 +12,26 @@ export default class extends ApplicationController {
     window.removeEventListener("click", this.closeOnClickOutside);
   }
 
+  initialize() {
+    this.close();
+  }
+
   afterReflex() {
     this.computeItemsHeight();
   }
 
+  toggle = (event) => {
+    event.preventDefault();
+    this.element.querySelector(".selector").classList.toggle("selector-close");
+  };
+
+  // Private
   closeOnClickOutside = (event) => {
     if (
       !this.element.contains(event.target) &&
       this.isVisible(this.element.querySelector(".selector-wrapper"))
     ) {
-      this.stimulate(`${this.reflex}#close`, this.element);
+      this.close();
     }
   };
 
@@ -36,5 +44,9 @@ export default class extends ApplicationController {
   isVisible = (element) => {
     const style = window.getComputedStyle(element);
     return style.display !== "none" && style.visibility !== "hidden";
+  };
+
+  close = () => {
+    this.element.querySelector(".selector").classList.add("selector-close");
   };
 }
