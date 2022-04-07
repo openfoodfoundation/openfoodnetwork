@@ -17,7 +17,7 @@ module Api
       end
 
       def show
-        render json: Api::V1::CustomerSerializer.new(@customer)
+        render json: Api::V1::CustomerSerializer.new(@customer, include_options)
       end
 
       def create
@@ -58,7 +58,7 @@ module Api
       end
 
       def search_customers
-        customers = visible_customers
+        customers = visible_customers.includes(:bill_address, :ship_address)
         customers = customers.where(enterprise_id: params[:enterprise_id]) if params[:enterprise_id]
         customers.ransack(params[:q]).result
       end
@@ -70,11 +70,66 @@ module Api
       end
 
       def customer_params
-        params.require(:customer).permit(:email, :enterprise_id)
+        attributes = params.require(:customer).permit(
+          :email, :enterprise_id,
+          :code, :first_name, :last_name,
+          :billing_address, shipping_address: [
+            :phone, :latitude, :longitude,
+            :first_name, :last_name,
+            :street_address_1, :street_address_2,
+            :postal_code, :locality, :region, :country,
+          ]
+        ).to_h
+
+        attributes.merge!(tag_list: params[:tags]) if params.key?(:tags)
+
+        transform_address!(attributes, :billing_address, :bill_address)
+        transform_address!(attributes, :shipping_address, :ship_address)
+
+        attributes
+      end
+
+      def transform_address!(attributes, from, to)
+        return unless attributes.key?(from)
+
+        address = attributes.delete(from)
+
+        if address.nil?
+          attributes[to] = nil
+          return
+        end
+
+        address.transform_keys! do |key|
+          {
+            phone: :phone, latitude: :latitude, longitude: :longitude,
+            first_name: :firstname, last_name: :lastname,
+            street_address_1: :address1, street_address_2: :address2,
+            postal_code: :zipcode,
+            locality: :city,
+            region: :state_name,
+            country: :country,
+          }.with_indifferent_access[key]
+        end
+
+        if address[:state_name].present?
+          address[:state] = Spree::State.find_by(name: address[:state_name])
+        end
+
+        if address[:country].present?
+          address[:country] = Spree::Country.find_by(name: address[:country])
+        end
+
+        attributes["#{to}_attributes"] = address
       end
 
       def editable_enterprises
         OpenFoodNetwork::Permissions.new(current_api_user).editable_enterprises.select(:id)
+      end
+
+      def include_options
+        fields = [params.fetch(:include, [])].flatten
+
+        { include: fields.map(&:to_s) }
       end
     end
   end

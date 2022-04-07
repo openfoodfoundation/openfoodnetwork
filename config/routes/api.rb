@@ -87,13 +87,11 @@ Openfoodnetwork::Application.routes.draw do
           constraints: lambda { |_| Flipper.enabled?(:api_reports) }
     end
 
-    unless Rails.env.production?
-      namespace :v1 do
-        resources :customers
+    namespace :v1, constraints: ->(request) { Flipper.enabled?(:api_v1, request.env["warden"].user) } do
+      resources :customers
 
-        resources :enterprises do
-          resources :customers, only: :index
-        end
+      resources :enterprises do
+        resources :customers, only: :index
       end
     end
 
