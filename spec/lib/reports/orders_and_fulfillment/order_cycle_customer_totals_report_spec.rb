@@ -80,6 +80,7 @@ module Reporting
             end
 
             it "shows the correct payment fee amount for the order" do
+              allow(report).to receive(:raw_render?).and_return(true)
               expect(report.rows.last.pay_fee_price).to eq completed_payment.adjustment.amount
             end
           end

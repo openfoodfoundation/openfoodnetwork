@@ -13,10 +13,10 @@
     = render partial: 'admin/reports/row_group', locals: { report: report, data: group_or_row[:data] }
     / Summary Row
     - if group_or_row[:summary_row].present? && report.display_summary_row?
-      %tr.summary_row{ class: group_or_row[:summary_row_class] }
+      %tr.summary-row{ class: group_or_row[:summary_row_class] }
         - group_or_row[:summary_row].to_h.each do |key, value|
-          %td= format_cell(value)
+          %td= value
   - else
     %tr
       - group_or_row.row.to_h.each do |key, value|
-        %td= format_cell(value)
+        %td= value

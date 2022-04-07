@@ -537,7 +537,6 @@ Metrics/ClassLength:
     - 'lib/open_food_network/order_cycle_permissions.rb'
     - 'lib/reporting/reports/payments/payments_report.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
-    - 'lib/reporting/report_rows_builder.rb'
 
 # Offense count: 39
 # Configuration parameters: IgnoredMethods, Max.

@@ -6,6 +6,7 @@ module Reporting
 
     def initialize(report)
       @report = report
+      @builder = ReportRowBuilder.new(report)
     end
 
     # Structured data by groups. This tree is used to render
@@ -38,8 +39,8 @@ module Reporting
 
     def computed_data
       @computed_data ||= report.query_result.map { |item|
-        row = build_row(item)
-        OpenStruct.new(item: item, full_row: row, row: slice_row_fields(row))
+        row = @builder.build_row(item)
+        OpenStruct.new(item: item, full_row: row, row: @builder.slice_and_format_row(row))
       }
     end
 
@@ -78,9 +79,9 @@ module Reporting
       sorted_groups.each do |group_value, group_datas|
         result << {
           is_group: true,
-          header: build_header(rule, group_value, group_datas),
+          header: @builder.build_header(rule, group_value, group_datas),
           header_class: rule[:header_class],
-          summary_row: build_summary_row(rule, group_value, group_datas),
+          summary_row: @builder.build_summary_row(rule, group_value, group_datas),
           summary_row_class: rule[:summary_row_class],
           data: build_tree(group_datas, remaining_rules)
         }
@@ -108,57 +109,6 @@ module Reporting
           group_key.is_a?(String) ? group_key.downcase : group_key.to_s
         end
       end.to_h
-    end
-
-    def build_header(rule, group_value, group_datas)
-      return if rule[:header].blank?
-
-      rule[:header].call(group_value, group_datas.map(&:item), group_datas.map(&:full_row))
-    end
-
-    def build_summary_row(rule, group_value, datas)
-      return if rule[:summary_row].blank?
-
-      proc_args = [group_value, datas.map(&:item), datas.map(&:full_row)]
-      row = rule[:summary_row].call(*proc_args)
-      row = slice_row_fields(OpenStruct.new(row.reverse_merge!(blank_row)))
-      add_summary_row_label(row, rule, proc_args)
-    end
-
-    def add_summary_row_label(row, rule, proc_args)
-      previous_key = nil
-      label = rule[:summary_row_label]
-      label = label.call(*proc_args) if label.respond_to?(:call)
-      # Adds Total before first non empty column
-      row.each_pair do |key, value|
-        if value.present? && previous_key.present? && row[previous_key].blank?
-          row[previous_key] = label and break
-        end
-
-        previous_key = key
-      end
-      row
-    end
-
-    def blank_row
-      report.columns.transform_values { |_v| "" }
-    end
-
-    def slice_row_fields(row)
-      OpenStruct.new(row.to_h.reject { |k, _v| k.in?(report.fields_to_hide) })
-    end
-
-    # Compute the query result item into a result row
-    # We use OpenStruct to it's easier to access the properties
-    # i.e. row.my_field, rows.sum(&:quantity)
-    def build_row(item)
-      OpenStruct.new(report.columns.transform_values do |column_constructor|
-        if column_constructor.is_a?(Symbol)
-          report.__send__(column_constructor, item)
-        else
-          column_constructor.call(item)
-        end
-      end)
     end
   end
 end

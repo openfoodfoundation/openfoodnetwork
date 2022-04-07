@@ -12,6 +12,10 @@ module Reporting
       @report.params[:report_format].in?(['json', 'csv'])
     end
 
+    def html_render?
+      @report.params[:report_format].in?(['', 'pdf'])
+    end
+
     def display_header_row?
       @report.params[:display_header_row].present? && !raw_render?
     end

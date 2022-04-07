@@ -182,8 +182,8 @@ describe '
       expect(page).to have_content order1.number.to_s
 
       # And the totals and sales tax should be correct
-      expect(page).to have_content "1512.99" # items total
-      expect(page).to have_content "1500.45" # taxable items total
+      expect(page).to have_content "1,512.99" # items total
+      expect(page).to have_content "1,500.45" # taxable items total
       expect(page).to have_content "250.08" # sales tax
       expect(page).to have_content "20.0" # enterprise fee tax
 
@@ -310,17 +310,17 @@ describe '
       expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city,
                                       "Product Name",
                                       product1.properties.map(&:presentation).join(", "),
-                                      product1.primary_taxon.name, "Test", "100.0",
+                                      product1.primary_taxon.name, "Test", "$100.00",
                                       product1.group_buy_unit_size.to_s, "", "sku1"]
       expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city,
                                       "Product Name",
                                       product1.properties.map(&:presentation).join(", "),
-                                      product1.primary_taxon.name, "Something", "80.0",
+                                      product1.primary_taxon.name, "Something", "$80.00",
                                       product1.group_buy_unit_size.to_s, "", "sku2"]
       expect(page).to have_table_row [product2.supplier.name, product1.supplier.address.city,
                                       "Product 2",
                                       product1.properties.map(&:presentation).join(", "),
-                                      product2.primary_taxon.name, "100g", "99.0",
+                                      product2.primary_taxon.name, "100g", "$99.00",
                                       product1.group_buy_unit_size.to_s, "", "product_sku"]
     end
 
@@ -332,7 +332,7 @@ describe '
       expect(page).to have_table_row ['PRODUCT', 'Description', 'Qty', 'Pack Size', 'Unit',
                                       'Unit Price', 'Total', 'GST incl.',
                                       'Grower and growing method', 'Taxon'].map(&:upcase)
-      expect(page).to have_table_row ['Product 2', '100g', '', '100', 'g', '99.0', '', '0',
+      expect(page).to have_table_row ['Product 2', '100g', '', '100', 'g', '$99.00', '', '0',
                                       'Supplier Name (Organic - NASAA 12345)', 'Taxon Name']
     end
   end
@@ -559,7 +559,7 @@ describe '
           xero_invoice_header,
           xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,
                                    'GST Free Income'),
-          xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45,
+          xero_invoice_summary_row('Total taxable produce (tax inclusive)',  '1,500.45',
                                    'GST on Income'),
           xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,
                                    'GST Free Income'),
@@ -589,7 +589,7 @@ describe '
           xero_invoice_header,
           xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,
                                    'GST Free Income', opts),
-          xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45,
+          xero_invoice_summary_row('Total taxable produce (tax inclusive)',  '1,500.45',
                                    'GST on Income',   opts),
           xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,
                                    'GST Free Income', opts),

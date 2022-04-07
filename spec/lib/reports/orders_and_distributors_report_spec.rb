@@ -46,7 +46,7 @@ module Reporting
 
             it 'should denormalise order and distributor details for display as csv' do
               subject = Base.new create(:admin_user), {}
-
+              allow(subject).to receive(:raw_render?).and_return(true)
               table = subject.table_rows
 
               expect(table.size).to eq 1

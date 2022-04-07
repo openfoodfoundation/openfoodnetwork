@@ -101,6 +101,7 @@ module Reporting
       end
 
       it "get correct data" do
+        allow(subject).to receive(:raw_render?).and_return(true)
         @expected_table_rows = [
           [5, "My Hub"],
           [12, "My Other Hub"],
@@ -132,6 +133,7 @@ module Reporting
             { group_by: :customer, header: true }
           ]
           allow(subject).to receive(:display_header_row?).and_return(true)
+          allow(subject).to receive(:raw_render?).and_return(true)
           @expected_rows = [
             { header: "Hub 1" },
             { header: "Abby" },

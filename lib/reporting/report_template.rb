@@ -6,7 +6,7 @@ module Reporting
     attr_accessor :user, :params, :ransack_params
 
     delegate :as_json, :as_arrays, :to_csv, :to_xlsx, :to_ods, :to_pdf, :to_json, to: :renderer
-    delegate :raw_render?, :display_header_row?, :display_summary_row?, to: :renderer
+    delegate :raw_render?, :html_render?, :display_header_row?, :display_summary_row?, to: :renderer
 
     delegate :rows, :table_rows, :grouped_data, to: :rows_builder
     delegate :available_headers, :table_headers, :fields_to_hide, to: :headers_builder
@@ -45,6 +45,11 @@ module Reporting
     # }
     def columns
       raise NotImplementedError
+    end
+
+    # Exple { total_price: :currency }
+    def columns_format
+      {}
     end
 
     # Headers are automatically translated with table_headers method
