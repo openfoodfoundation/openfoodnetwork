@@ -8,7 +8,7 @@ module Reporting
 
       attr_reader :grouping_fields
 
-      def initialize(model, grouping_fields = [])
+      def initialize(model, grouping_fields = proc { [] })
         @grouping_fields = instance_exec(&grouping_fields)
 
         super model.arel_table

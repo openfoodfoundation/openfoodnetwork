@@ -56,7 +56,7 @@ describe Api::V0::ReportsController, type: :controller do
       results << __send__("#{user_type}_report_row", line_item)
     end
 
-    results << summary_row(order)
+    results
   end
 
   def distributor_report_row(line_item)
@@ -70,8 +70,8 @@ describe Api::V0::ReportsController, type: :controller do
       "variant" => line_item.full_name,
       "quantity" => line_item.quantity,
       "price" => (line_item.quantity * line_item.price).to_s,
-      "temp_controlled" =>
-        line_item.product.shipping_category&.temperature_controlled ? I18n.t(:yes) : I18n.t(:no)
+      "phone" => line_item.order.bill_address.phone,
+      "temp_controlled" => line_item.product.shipping_category&.temperature_controlled
     }
   end
 
@@ -81,28 +81,13 @@ describe Api::V0::ReportsController, type: :controller do
       "customer_code" => I18n.t("hidden_field", scope: i18n_scope),
       "first_name" => I18n.t("hidden_field", scope: i18n_scope),
       "last_name" => I18n.t("hidden_field", scope: i18n_scope),
+      "phone" => I18n.t("hidden_field", scope: i18n_scope),
       "supplier" => line_item.product.supplier.name,
       "product" => line_item.product.name,
       "variant" => line_item.full_name,
       "quantity" => line_item.quantity,
       "price" => (line_item.quantity * line_item.price).to_s,
-      "temp_controlled" =>
-        line_item.product.shipping_category&.temperature_controlled ? I18n.t(:yes) : I18n.t(:no)
-    }
-  end
-
-  def summary_row(order)
-    {
-      "hub" => "",
-      "customer_code" => "",
-      "first_name" => "",
-      "last_name" => "",
-      "supplier" => "",
-      "product" => I18n.t("total", scope: i18n_scope),
-      "variant" => "",
-      "quantity" => order.line_items.sum(&:quantity),
-      "price" => order.line_items.sum(&:price).to_s,
-      "temp_controlled" => "",
+      "temp_controlled" => line_item.product.shipping_category&.temperature_controlled
     }
   end
 

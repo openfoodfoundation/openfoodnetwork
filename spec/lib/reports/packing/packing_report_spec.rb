@@ -174,7 +174,7 @@ describe "Packing Reports" do
 
       it "groups and orders by distributor and order" do
         expect(subject.report_data.rows.map(&:first)).to eq(
-          [order.distributor.name, "", order2.distributor.name, order2.distributor.name, ""]
+          [order.distributor.name, order2.distributor.name, order2.distributor.name]
         )
       end
     end
