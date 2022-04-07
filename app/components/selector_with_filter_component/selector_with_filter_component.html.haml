@@ -15,8 +15,8 @@
       .selector-arrow
     .selector-wrapper
       .super-selector-search
-        %input{type: "text", placeholder: t("components.selector_with_filter.search_placeholder"), data: reflex_data_attributes("debounced:input->search"), value: @query}
+        %input{type: "text", placeholder: t("components.selector_with_filter.search_placeholder"), data: { action: "debounced:input->selector-with-filter#filter" } }
       .selector-items
-        - @filtered_items.each do |item|
-          .selector-item{ class: ("selected" if item[:selected]), data: @data, "data-value": item[:value] }
+        - @items.each do |item|
+          .selector-item{ class: ("selected" if item[:selected]), data: @data.merge({ "selector-with-filter-target": "items" }), "data-value": item[:value] }
             = item[:label]
