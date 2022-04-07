@@ -115,7 +115,7 @@ module Reporting
         end
 
         def variant_product_group_buy_unit_size_f(line_items)
-          group_buy_unit_size(line_items)
+          group_buy_unit_size(line_items).to_i
         end
 
         def variant_product_name(line_items)

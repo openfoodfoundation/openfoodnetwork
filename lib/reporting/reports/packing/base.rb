@@ -25,6 +25,10 @@ module Reporting
             ordered_by(ordering_fields)
         end
 
+        def columns_format
+          { price: :currency, quantity: :quantity }
+        end
+
         private
 
         def select_fields
