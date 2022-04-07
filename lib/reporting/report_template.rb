@@ -9,11 +9,9 @@ module Reporting
     delegate :formatted_rules, :header_option?, :summary_row_option?, to: :ruler
     delegate :grouped_data, :rows, to: :grouper
 
-    OPTIONAL_HEADERS = [].freeze
-
-    def initialize(user, params)
+    def initialize(user, params = {})
       @user = user
-      @params = params || {}
+      @params = params
       @params = @params.permit!.to_h unless @params.is_a? Hash
       @ransack_params = @params[:q] || {}
     end

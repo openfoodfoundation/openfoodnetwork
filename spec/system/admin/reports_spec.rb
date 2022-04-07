@@ -390,7 +390,7 @@ describe '
       click_link 'Bulk Co-Op'
     end
 
-    xit "generating Bulk Co-op Supplier Report" do
+    it "generating Bulk Co-op Supplier Report" do
       select "Bulk Co-op Supplier Report", from: "report_subtype"
       click_button 'Go'
 
@@ -406,10 +406,10 @@ describe '
         "Units Required",
         "Unallocated",
         "Max Quantity Excess"
-      ]
+      ].map(&:upcase)
     end
 
-    xit "generating Bulk Co-op Allocation report" do
+    it "generating Bulk Co-op Allocation report" do
       select "Bulk Co-op Allocation", from: "report_subtype"
       click_button 'Go'
 
@@ -425,10 +425,10 @@ describe '
         "Total available",
         "Unallocated",
         "Max Quantity Excess"
-      ]
+      ].map(&:upcase)
     end
 
-    xit "generating Bulk Co-op Packing Sheets report" do
+    it "generating Bulk Co-op Packing Sheets report" do
       select "Bulk Co-op Packing Sheets", from: "report_subtype"
       click_button 'Go'
 
@@ -437,10 +437,10 @@ describe '
         "Product",
         "Variant",
         "Sum Total"
-      ]
+      ].map(&:upcase)
     end
 
-    xit "generating Bulk Co-op Customer Payments report" do
+    it "generating Bulk Co-op Customer Payments report" do
       select "Bulk Co-op Customer Payments", from: "report_subtype"
       click_button 'Go'
 
@@ -450,7 +450,7 @@ describe '
         "Total Cost",
         "Amount Owing",
         "Amount Paid"
-      ]
+      ].map(&:upcase)
     end
   end
 

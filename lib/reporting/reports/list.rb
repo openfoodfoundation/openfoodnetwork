@@ -89,15 +89,15 @@ module Reporting
 
       def bulk_coop_report_types
         [
-          bulk_coop_item(:bulk_coop_supplier_report),
-          bulk_coop_item(:bulk_coop_allocation),
-          bulk_coop_item(:bulk_coop_packing_sheets),
-          bulk_coop_item(:bulk_coop_customer_payments)
+          bulk_coop_item(:supplier_report),
+          bulk_coop_item(:allocation),
+          bulk_coop_item(:packing_sheets),
+          bulk_coop_item(:customer_payments)
         ]
       end
 
       def bulk_coop_item(key)
-        [I18n.t("order_management.reports.bulk_coop.filters.#{key}"), key]
+        [I18n.t("order_management.reports.bulk_coop.filters.bulk_coop_#{key}"), key]
       end
 
       def i18n_translate(key)
