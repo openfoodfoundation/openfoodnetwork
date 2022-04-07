@@ -3,9 +3,9 @@
 module Reporting
   module Reports
     module Payments
-      class Base < ReportObjectTemplate
+      class Base < ReportTemplate
         def search
-          Spree::Order.complete.not_state(:canceled).managed_by(@user).ransack(params[:q])
+          Spree::Order.complete.not_state(:canceled).managed_by(@user).ransack(ransack_params)
         end
 
         def query_result

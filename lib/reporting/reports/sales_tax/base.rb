@@ -3,10 +3,10 @@
 module Reporting
   module Reports
     module SalesTax
-      class Base < ReportObjectTemplate
+      class Base < ReportTemplate
         def search
           permissions = ::Permissions::Order.new(user)
-          permissions.editable_orders.complete.not_state(:canceled).ransack(params[:q])
+          permissions.editable_orders.complete.not_state(:canceled).ransack(ransack_params)
         end
 
         def query_result

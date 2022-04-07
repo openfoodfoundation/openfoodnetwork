@@ -3,7 +3,7 @@
 module Reporting
   module Reports
     module OrdersAndFulfillment
-      class Base < ReportObjectTemplate
+      class Base < ReportTemplate
         def initialize(user, params = {})
           super(user, params)
 
@@ -31,7 +31,7 @@ module Reporting
         def order_permissions
           return @order_permissions unless @order_permissions.nil?
 
-          @order_permissions = ::Permissions::Order.new(@user, params[:q])
+          @order_permissions = ::Permissions::Order.new(@user, ransack_params)
         end
 
         def report_line_items

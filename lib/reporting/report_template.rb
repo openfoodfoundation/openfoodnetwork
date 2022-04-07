@@ -6,8 +6,12 @@ module Reporting
     attr_accessor :user, :params, :ransack_params
 
     delegate :as_json, :as_arrays, :to_csv, :to_xlsx, :to_ods, :to_pdf, :to_json, to: :renderer
+    delegate :raw_render?, :display_header_row?, :display_summary_row?, to: :renderer
+
+    delegate :rows, :table_rows, :grouped_data, to: :rows_builder
+    delegate :available_headers, :table_headers, :fields_to_hide, to: :headers_builder
+
     delegate :formatted_rules, :header_option?, :summary_row_option?, to: :ruler
-    delegate :grouped_data, :rows, to: :grouper
 
     def initialize(user, params = {})
       @user = user
@@ -28,46 +32,25 @@ module Reporting
       Ransack::Search.new(Spree::Order)
     end
 
-    def available_headers
-      columns.is_a?(Hash) ? columns.keys.map { |key| [translate_header(key), key] } : nil
-    rescue NotImplementedError
-      nil
+    # The search result, usually an ActiveRecord Array
+    def query_result
+      raise NotImplementedError
     end
 
-    # Can be re implemented in subclasses if they not use yet the new syntax
-    # with columns method
-    def table_headers
-      columns.keys.filter{ |key| !key.in?(fields_to_hide) }.map do |key|
-        translate_header(key)
-      end
-    end
-
-    def translate_header(key)
-      # Quite some headers use currency interpolation, so providing it by default
-      default_params = { currency: currency_symbol, currency_symbol: currency_symbol }
-      custom_headers[key] || I18n.t("report_header_#{key}", **default_params)
+    # Convert the query_result into expected row result (which will be displayed)
+    # Example
+    # {
+    #   name: proc { |model| model.display_name },
+    #   best_friend: proc { |model| model.friends.first.first_name }
+    # }
+    def columns
+      raise NotImplementedError
     end
 
     # Headers are automatically translated with table_headers method
     # You can customize some header name if needed
     def custom_headers
       {}
-    end
-
-    def table_rows
-      raise NotImplementedError
-    end
-
-    def fields_to_hide
-      if params[:display_header_row]
-        formatted_rules.map { |rule| rule[:fields_used_in_header] }.flatten.reject(&:blank?)
-      else
-        []
-      end.concat(params_fields_to_hide)
-    end
-
-    def params_fields_to_hide
-      params[:fields_to_hide]&.map(&:to_sym) || []
     end
 
     # Rules for grouping, ordering, and summary rows
@@ -101,16 +84,16 @@ module Reporting
 
     private
 
-    def raw_render?
-      params[:report_format].in?(['json', 'csv'])
-    end
-
     def renderer
       @renderer ||= ReportRenderer.new(self)
     end
 
-    def grouper
-      @grouper ||= ReportGrouper.new(self)
+    def rows_builder
+      @rows_builder ||= ReportRowsBuilder.new(self)
+    end
+
+    def headers_builder
+      @headers_builder ||= ReportHeadersBuilder.new(self)
     end
 
     def ruler

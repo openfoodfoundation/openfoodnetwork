@@ -3,7 +3,7 @@
 module Reporting
   module Reports
     module XeroInvoices
-      class Base < ReportObjectTemplate
+      class Base < ReportTemplate
         def initialize(user, params = {})
           params.reverse_merge!(report_subtype: 'summary',
                                 invoice_date: Time.zone.today,
@@ -37,7 +37,7 @@ module Reporting
 
         def search
           permissions = ::Permissions::Order.new(@user)
-          permissions.editable_orders.complete.not_state(:canceled).ransack(params[:q])
+          permissions.editable_orders.complete.not_state(:canceled).ransack(ransack_params)
         end
 
         # In the new way of managing reports, query_result should be an ActiveRecordRelation

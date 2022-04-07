@@ -8,12 +8,8 @@ module Reporting
           I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
         end
 
-        def primary_model
-          Spree::LineItem
-        end
-
         def report_query
-          Queries::QueryBuilder.new(primary_model).
+          Queries::QueryBuilder.new(Spree::LineItem).
             scoped_to_orders(visible_orders_relation).
             scoped_to_line_items(ransacked_line_items_relation).
             with_managed_orders(managed_orders_relation).
@@ -28,6 +24,8 @@ module Reporting
             selecting(select_fields).
             ordered_by(ordering_fields)
         end
+
+        private
 
         def select_fields
           lambda do
@@ -46,8 +44,6 @@ module Reporting
             }
           end
         end
-
-        private
 
         def row_header(row)
           result = "#{row.last_name} #{row.first_name}"

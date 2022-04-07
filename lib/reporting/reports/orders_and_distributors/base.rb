@@ -3,7 +3,7 @@
 module Reporting
   module Reports
     module OrdersAndDistributors
-      class Base < ReportObjectTemplate
+      class Base < ReportTemplate
         def initialize(user, params = {})
           super(user, params)
         end
@@ -38,7 +38,7 @@ module Reporting
         def search
           permissions.visible_orders.select("DISTINCT spree_orders.*").
             complete.not_state(:canceled).
-            ransack(@params[:q])
+            ransack(ransack_params)
         end
 
         def query_result
@@ -55,7 +55,7 @@ module Reporting
         private
 
         def permissions
-          @permissions ||= ::Permissions::Order.new(user, params[:q])
+          @permissions ||= ::Permissions::Order.new(user, ransack_params)
         end
       end
     end

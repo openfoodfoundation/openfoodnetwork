@@ -3,14 +3,14 @@
 module Reporting
   module Reports
     module OrderCycleManagement
-      class Base < ReportObjectTemplate
+      class Base < ReportTemplate
         DEFAULT_DATE_INTERVAL = { from: -1.month, to: 1.day }.freeze
 
         def initialize(user, params = {})
-          super(user, params)
           params[:q] ||= {}
           params[:q][:completed_at_gt] ||= Time.zone.today + DEFAULT_DATE_INTERVAL[:from]
           params[:q][:completed_at_lt] ||= Time.zone.today + DEFAULT_DATE_INTERVAL[:to]
+          super(user, params)
         end
 
         def search
@@ -19,7 +19,7 @@ module Reporting
             not_state(:canceled).
             distributed_by_user(@user).
             managed_by(@user).
-            ransack(params[:q])
+            ransack(ransack_params)
         end
 
         # This result is used in _order_cucle_management.html so caching it

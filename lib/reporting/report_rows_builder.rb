@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Reporting
-  class ReportGrouper
+  class ReportRowsBuilder
     attr_reader :report
 
     def initialize(report)
@@ -46,8 +46,14 @@ module Reporting
     def extract_rows(data, result)
       data.each do |group_or_row|
         if group_or_row[:is_group].present?
+          # Header Row
+          if group_or_row[:header].present? && report.display_header_row?
+            result << OpenStruct.new(header: group_or_row[:header])
+          end
+          # Normal Row
           extract_rows(group_or_row[:data], result)
-          if group_or_row[:summary_row].present? && report.params[:display_summary_row].present?
+          # Summary Row
+          if group_or_row[:summary_row].present? && report.display_summary_row?
             result << group_or_row[:summary_row]
           end
         else
@@ -99,7 +105,7 @@ module Reporting
           rule[:sort_by].call(group_key)
         else
           # downcase for better comparaison
-          group_key.is_a?(String) ? group_key.downcase : group_key
+          group_key.is_a?(String) ? group_key.downcase : group_key.to_s
         end
       end.to_h
     end

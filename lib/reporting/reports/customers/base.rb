@@ -3,7 +3,7 @@
 module Reporting
   module Reports
     module Customers
-      class Base < ReportObjectTemplate
+      class Base < ReportTemplate
         def query_result
           filter Spree::Order.managed_by(@user)
             .distributed_by_user(@user)

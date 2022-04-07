@@ -5,7 +5,7 @@ require 'open_food_network/scope_variant_to_hub'
 module Reporting
   module Reports
     module ProductsAndInventory
-      class Base < ReportObjectTemplate
+      class Base < ReportTemplate
         def query_result
           filter(child_variants)
         end

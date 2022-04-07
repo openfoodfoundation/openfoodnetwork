@@ -3,7 +3,7 @@
 module Reporting
   module Reports
     module EnterpriseFeeSummary
-      class Base < ReportObjectTemplate
+      class Base < ReportTemplate
         attr_accessor :permissions, :parameters
 
         def initialize(user, params = {})
@@ -19,8 +19,8 @@ module Reporting
           @parameters.authorize!(@permissions)
         end
 
-        def translate_header(key)
-          I18n.t("header.#{key}", scope: i18n_scope)
+        def custom_headers
+          data_attributes.map { |attr| [attr, I18n.t("header.#{attr}", scope: i18n_scope)] }.to_h
         end
 
         def i18n_scope
