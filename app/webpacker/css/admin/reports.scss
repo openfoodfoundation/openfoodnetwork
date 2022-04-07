@@ -2,6 +2,10 @@ table.report__table {
   margin-top: 1em;
   @media print {
     margin: 0;
+    td, th {
+      border-left: none;
+      border-right: none;
+    }
   }
   thead th {
     text-align: left;
@@ -47,8 +51,6 @@ table.report__table {
     flex-grow: 1;
   }
 }
-
-
 
 .customer-names-tip {
   margin-top: 1em;

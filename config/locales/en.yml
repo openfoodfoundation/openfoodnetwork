@@ -1325,13 +1325,12 @@ en:
       rendering_options:
         generate_report: "Generate report"
         on_screen: "On screen"
-        pdf: PDF
-        csv_spreadsheet: "CSV Spreadsheet"
-        excel_spreadsheet: "Excel Spreadsheet"
-        openoffice_spreadsheet: "OpenOffice Spreadsheet"
+        spreadsheet: "Spreadsheet (Excel, OpenOffice..)"
         display: Display
         summary_row: Summary Row
         header_row: Header Row
+        raw_data: Raw Data
+        formatted_data: Formatted Data
       packing:
         name: "Packing Reports"
     subscriptions:
