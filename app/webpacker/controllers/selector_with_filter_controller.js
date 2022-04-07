@@ -1,5 +1,3 @@
 import SelectorController from "./selector_controller";
 
-export default class extends SelectorController {
-  reflex = "SelectorWithFilterComponent";
-}
+export default class extends SelectorController {}

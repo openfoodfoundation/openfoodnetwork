@@ -1,6 +1,6 @@
 = component_controller do
-  .super-selector.selector{ class: ("selector-close" if @state == :close) }
-    .selector-main{data: reflex_data_attributes(:toggle)}
+  .super-selector.selector
+    .selector-main{ data: { action: "click->selector-with-filter#toggle" } }
       .super-selector-label
         = @title
       .super-selector-selected-items
