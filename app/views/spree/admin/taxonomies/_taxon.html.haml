@@ -2,6 +2,6 @@
   %ul
     - taxon.children.each do |child|
       %li{id: "#{child.id}", rel: "taxon"}
-        %a{href: "#", style: "background-image: url(#{child.icon.url});"}= child.name
+        %a{href: "#"}= child.name
         - if child.children.length > 0
           = render partial: 'taxon', locals: { taxon: child }

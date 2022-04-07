@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_21_165207) do
+ActiveRecord::Schema.define(version: 2022_04_07_051248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -976,10 +976,6 @@ ActiveRecord::Schema.define(version: 2022_02_21_165207) do
     t.datetime "updated_at", null: false
     t.integer "lft"
     t.integer "rgt"
-    t.string "icon_file_name", limit: 255
-    t.string "icon_content_type", limit: 255
-    t.integer "icon_file_size"
-    t.datetime "icon_updated_at"
     t.text "description"
     t.string "meta_title", limit: 255
     t.string "meta_description", limit: 255
