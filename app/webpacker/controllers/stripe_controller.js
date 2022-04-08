@@ -56,7 +56,8 @@ export default class extends Controller {
         this.brandTarget.setAttribute("value", response.paymentMethod.card.brand);
         this.last4Target.setAttribute("value", response.paymentMethod.card.last4);
         this.catchFormSubmit = false;
-        this.parentForm.requestSubmit();
+        
+        event.submitter.click();
       }
     });
   }
