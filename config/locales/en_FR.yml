@@ -1350,6 +1350,8 @@ en_FR:
     unknown_error: "Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
     unauthorized: "You are not authorized to perform that action."
+    unpermitted_parameters: "Parameters not allowed in this request: %{params}"
+    missing_parameter: "A required parameter is missing or empty: %{param}"
     invalid_resource: "Invalid resource. Please fix errors and try again."
     resource_not_found: "The resource you were looking for could not be found."
     enterprise_logo:
