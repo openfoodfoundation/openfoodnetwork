@@ -1349,6 +1349,8 @@ ar:
     unknown_error: "هناك خطأ ما. تم إخطار فريقنا."
     invalid_api_key: "مفتاح API المحدد غير صالح (%{key})."
     unauthorized: "غير مصرح لك بتنفيذ هذا الإجراء."
+    unpermitted_parameters: "المعلمات غير مسموح بها في هذا الطلب: %{params}"
+    missing_parameter: "المعلمة المطلوبة مفقودة أو فارغة: %{param}"
     invalid_resource: "مورد غير صالح. يرجى إصلاح الأخطاء والمحاولة مرة أخرى."
     resource_not_found: "لا يمكن العثور على الموارد الذي تبحث عنه."
     enterprise_logo:
