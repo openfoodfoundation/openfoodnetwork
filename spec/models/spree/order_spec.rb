@@ -1297,4 +1297,23 @@ describe Spree::Order do
       end
     end
   end
+
+  describe "#sort_line_items" do 
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { create(:order_with_line_items, distributor: distributor) }
+
+    context "when the distributor has preferred_invoice_order_by_supplier set to true" do
+      it "sorts the line items by supplier" do
+        order.distributor.update_attribute(:preferred_invoice_order_by_supplier, true)
+        expect(order.sorted_line_items).to eq(order.line_items.sort_by { |li| [li.supplier.name, li.product.name] })
+      end
+    end
+
+    context "when the distributor has preferred_invoice_order_by_supplier set to false" do
+      it "sorts the line items by product" do
+        order.distributor.update_attribute(:preferred_invoice_order_by_supplier, false)
+        expect(order.sorted_line_items).to eq(order.line_items.sort_by { |li| [li.product.name] })
+      end
+    end
+  end
 end
