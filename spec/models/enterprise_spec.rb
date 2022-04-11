@@ -153,6 +153,7 @@ describe Enterprise do
       it "sets the enterprise contact to the owner by default" do
         expect(enterprise.contact).to eq enterprise.owner
       end
+      
       context "prevent a wrong instagram link pattern" do
         it "invalidates the instagram attribute https://facebook.com/user" do
           e = build(:enterprise, instagram: 'https://facebook.com/user')
