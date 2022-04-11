@@ -105,12 +105,11 @@ class Enterprise < ApplicationRecord
   validate :shopfront_taxons
   validate :shopfront_producers
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
+  validates :instagram, format: /\A[a-zA-Z0-9._-]{1,30}\z/, allow_blank: true
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :set_unused_address_fields
   after_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
-
-  validates :instagram, format: /\A[a-zA-Z0-9._-]{1,30}\z/, allow_blank: true
 
   after_touch :touch_distributors
   after_create :set_default_contact
