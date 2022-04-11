@@ -153,6 +153,95 @@ describe Enterprise do
       it "sets the enterprise contact to the owner by default" do
         expect(enterprise.contact).to eq enterprise.owner
       end
+      context "prevent a wrong instagram link pattern" do
+        it "invalidates the instagram attribute https://facebook.com/user" do
+          e = build(:enterprise, instagram: 'https://facebook.com/user')
+          expect(e).to_not be_valid
+        end
+
+        it "invalidates the instagram attribute tagram.com/user" do
+          e = build(:enterprise, instagram: 'tagram.com/user')
+          expect(e).to_not be_valid
+        end
+
+        it "invalidates the instagram attribute https://instagram.com/user/preferences" do
+          e = build(:enterprise, instagram: 'https://instagram.com/user/preferences')
+          expect(e).to_not be_valid
+        end
+      end
+
+      context "accepted pattern" do
+        it "validates empty instagram attribute" do
+          e = build(:enterprise, instagram: '')
+          expect(e).to be_valid
+          expect(e.instagram).to eq ""
+        end
+
+        it "validates the instagram attribute @my-user" do
+          e = build(:enterprise, instagram: '@my-user')
+          expect(e).to be_valid
+          expect(e.instagram).to eq "my-user"
+        end
+
+        it "validates the instagram attribute user" do
+          e = build(:enterprise, instagram: 'user')
+          expect(e).to be_valid
+          expect(e.instagram).to eq "user"
+        end
+
+        it "validates the instagram attribute my_www5.example" do
+          e = build(:enterprise, instagram: 'my_www5.example')
+          expect(e).to be_valid
+          expect(e.instagram).to eq "my_www5.example"
+        end
+
+        it "validates the instagram attribute http://instagram.com/user" do
+          e = build(:enterprise, instagram: 'http://instagram.com/user')
+          expect(e).to be_valid
+          expect(e.instagram).to eq "user"
+        end
+
+        it "validates the instagram attribute https://instagram.com/user/" do
+          e = build(:enterprise, instagram: 'https://instagram.com/user/')
+          expect(e).to be_valid
+          expect(e.instagram).to eq "user"
+        end
+
+        it "validates the instagram attribute https://www.instagram.com/user" do
+          e = build(:enterprise, instagram: 'https://www.instagram.com/user')
+          expect(e).to be_valid
+          expect(e.instagram).to eq "user"
+        end
+
+        it "validates the instagram attribute https://www.instagram.com/@user" do
+          e = build(:enterprise, instagram: 'https://www.instagram.com/@user')
+          expect(e).to be_valid
+          expect(e.instagram).to eq "user"
+        end
+
+        it "validates the instagram attribute instagram.com/@user" do
+          e = build(:enterprise, instagram: 'instagram.com/@user')
+          expect(e).to be_valid
+          expect(e.instagram).to eq "user"
+        end
+
+        it "validates the instagram attribute Https://www.Instagram.com/@User" do
+          e = build(:enterprise, instagram: 'Https://www.Instagram.com/@User')
+          expect(e).to be_valid
+          expect(e.instagram).to eq "user"
+        end
+
+        it "validates the instagram attribute instagram.com/user" do
+          e = build(:enterprise, instagram: 'instagram.com/user')
+          expect(e).to be_valid
+          expect(e.instagram).to eq "user"
+        end
+
+        it "renders the expected pattern" do
+          e = build(:enterprise, instagram: 'instagram.com/user')
+          expect(e.instagram).to eq "user"
+        end
+      end
     end
 
     describe "preferred_shopfront_taxon_order" do
