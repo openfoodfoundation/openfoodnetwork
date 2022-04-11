@@ -110,15 +110,17 @@ describe '
     accept_alert do
       click_link "Primary Details"
     end
-    uncheck 'enterprise_is_primary_producer'
+    uncheck 'enterprise_is_primary_producer' # unchecking...
     choose 'None'
     expect(page).not_to have_selector "#enterprise_fees"
     expect(page).not_to have_selector "#payment_methods"
     expect(page).not_to have_selector "#shipping_methods"
-    check 'enterprise_is_primary_producer'
+    expect(page).not_to have_selector "#properties" # ...hides the Properties tab
+    check 'enterprise_is_primary_producer' # checking...
     expect(page).to have_selector "#enterprise_fees"
     expect(page).not_to have_selector "#payment_methods"
     expect(page).not_to have_selector "#shipping_methods"
+    expect(page).to have_selector "#properties"  # ...displays the Properties tab
     uncheck 'enterprise_is_primary_producer'
     choose 'Own'
     expect(page).to have_selector "#enterprise_fees"
