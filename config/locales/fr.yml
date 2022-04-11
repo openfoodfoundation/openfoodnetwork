@@ -1352,6 +1352,8 @@ fr:
     unknown_error: "Quelque chose n'a pas fonctionné. Notre équipe a été notifiée."
     invalid_api_key: "La clé API (%{key}) n'est pas valide."
     unauthorized: "Vous n'êtes pas autorisé à réaliser cette action."
+    unpermitted_parameters: "Les paramètres non autorisés dans cette requête : %{params}"
+    missing_parameter: "Un paramètre nécessaire est manquant ou vide : %{param}"
     invalid_resource: "La resource est invalide. Veuillez corriger les erreurs et recommencer."
     resource_not_found: "La ressource recherchée n'a pas été trouvée."
     enterprise_logo:

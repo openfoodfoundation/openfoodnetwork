@@ -1352,6 +1352,8 @@ de_DE:
     unknown_error: "Etwas ist schief gelaufen. Unser Team wurde benachrichtigt."
     invalid_api_key: "Ungültiger API-Schlüssel (%{key}) angegeben."
     unauthorized: "Sie sind nicht berechtigt, diese Aktion auszuführen."
+    unpermitted_parameters: "Die folgenden Parameter sind in dieser Anfrage nicht zulässig: %{params}"
+    missing_parameter: "Der folgende erforderliche Parameter fehlt oder ist leer: %{param}"
     invalid_resource: "Ungültige Ressource. Bitte beheben Sie die Fehler und versuchen Sie es erneut."
     resource_not_found: "Die gesuchte Ressource wurde nicht gefunden."
     enterprise_logo:
