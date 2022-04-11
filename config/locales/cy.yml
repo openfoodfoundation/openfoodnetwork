@@ -1,5 +1,5 @@
 cy:
-  language_name: "Gymraeg"
+  language_name: "Cymraeg"
   activerecord:
     models:
       spree/product: Cynnyrch

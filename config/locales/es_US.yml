@@ -793,7 +793,13 @@ es_US:
           uploaded_on: "Subido en"
           reset_form: "Restablecer formulario"
         business_address:
+          company_legal_name: Razón social de la empresa
+          company_placeholder: Ejemplo Inc.
+          address1: Dirección Legal
+          address1_placeholder: Calle Alta 123
           address2: Dirección (cont.)
+          legal_phone_number: Número de teléfono legal
+          phone_placeholder: "98 123 4565"
         contact:
           name: Nombre
           name_placeholder: ej. Gustav Plum
@@ -907,6 +913,9 @@ es_US:
           shopfront_category_ordering_note: "(de arriba hacia abajo)"
           open_date: "Fecha de Inicio"
           close_date: "Fecha de Finalización"
+          display_ordering_in_shopfront: "Mostrar pedidos en el escaparate:"
+          shopfront_sort_by_category: "Por categoría"
+          shopfront_sort_by_producer: "Por productor"
           shopfront_sort_by_category_placeholder: "Categoría"
           shopfront_sort_by_producer_placeholder: "Productora"
         social:
@@ -1036,6 +1045,8 @@ es_US:
         back_to_list: "Regresar a la lista"
         save_and_back_to_list: "Salvar y volver a lista"
         choose_products_from: "Escoger Productos desde:"
+        re_notify_producers: Re notificar a productores
+        notify_producers_tip: Esto enviará un correo electrónico a cada productor con la lista de sus pedidos.
       incoming:
         incoming: "Entrante"
         supplier: "Proveedora"
@@ -1076,6 +1087,8 @@ es_US:
         add_supplier: 'Añadir proveedora'
         add_distributor: 'Añadir distribuidora'
       advanced_settings:
+        automatic_notifications: Notificaciones automáticas
+        automatic_notifications_tip: Notifique automáticamente a los productores con sus pedidos por correo electrónico cuando cierren los ciclos de pedidos
         title: Configuración Avanzada
         choose_product_tip: Puede restringir los productos entrantes y salientes a solo el inventario de %{inventory}.
         preferred_product_selection_from_coordinator_inventory_only_here: Solo el Inventario de la Coordinadora
@@ -1106,6 +1119,7 @@ es_US:
         schedule: Programación
         schedules: Programación
         new_schedule: Nueva programación
+        new_schedule_tooltip: La frecuencia con la que se realiza un pedido de suscripción.
       name_and_timing_form:
         name: Nombre
         orders_open: Pedidos abiertos a
@@ -1201,6 +1215,11 @@ es_US:
       enterprise_fee_summary:
         name: "Resumen de las comisiones de la organización"
         description: "Resumen de las comisiones de la organización recolectadas"
+      errors:
+        no_report_type: "Especifique un tipo de informe"
+        report_not_found: "Informe no encontrado"
+        missing_ransack_params: "Proporcione los parámetros de búsqueda de Ransack en la solicitud"
+      hidden_field: "< Escondido >"
       summary_row:
         total: "TOTAL"
       table:
@@ -1216,6 +1235,9 @@ es_US:
           quantity: "Cantidad"
           is_temperature_controlled: "¿Control de Temperatura?"
           temp_controlled: "¿Control de Temperatura?"
+      rendering_options:
+        generate_report: "Generar reporte:"
+        on_screen: "En pantalla"
       packing:
         name: "Informes de empaquetado"
         customer_report: "Pack por Consumidor"
