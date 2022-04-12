@@ -1298,21 +1298,54 @@ describe Spree::Order do
     end
   end
 
-  describe "#sort_line_items" do 
+  describe "#sort_line_items" do
+    let(:aaron) { create(:supplier_enterprise, name: "Aaron the farmer") }
+    let(:zed) { create(:supplier_enterprise, name: "Zed the farmer") }
+
+    let(:aaron_apple) { create(:product, name: "Apple", supplier: aaron) }
+    let(:aaron_banana) { create(:product, name: "Banana", supplier: aaron) }
+    let(:zed_apple) { create(:product, name: "Apple", supplier: zed) }
+    let(:zed_banana) { create(:product, name: "Banana", supplier: zed) }
+
     let(:distributor) { create(:distributor_enterprise) }
-    let(:order) { create(:order_with_line_items, distributor: distributor) }
+    let(:order) do
+      create(:order, distributor: distributor).tap do |order|
+        order.line_items << build(:line_item, variant: aaron_apple.variants.first)
+        order.line_items << build(:line_item, variant: zed_banana.variants.first)
+        order.line_items << build(:line_item, variant: zed_apple.variants.first)
+        order.line_items << build(:line_item, variant: aaron_banana.variants.first)
+      end
+    end
+
+    let(:line_item_names) do
+      order.sorted_line_items.map do |item|
+        "#{item.product.name} - #{item.supplier.name}"
+      end
+    end
 
     context "when the distributor has preferred_invoice_order_by_supplier set to true" do
       it "sorts the line items by supplier" do
-        order.distributor.update_attribute(:preferred_invoice_order_by_supplier, true)
-        expect(order.sorted_line_items).to eq(order.line_items.sort_by { |li| [li.supplier.name, li.product.name] })
+        distributor.update_attribute(:preferred_invoice_order_by_supplier, true)
+
+        expect(line_item_names).to eq [
+          "Apple - Aaron the farmer",
+          "Banana - Aaron the farmer",
+          "Apple - Zed the farmer",
+          "Banana - Zed the farmer",
+        ]
       end
     end
 
     context "when the distributor has preferred_invoice_order_by_supplier set to false" do
       it "sorts the line items by product" do
-        order.distributor.update_attribute(:preferred_invoice_order_by_supplier, false)
-        expect(order.sorted_line_items).to eq(order.line_items.sort_by { |li| [li.product.name] })
+        distributor.update_attribute(:preferred_invoice_order_by_supplier, false)
+
+        expect(line_item_names).to eq [
+          "Apple - Aaron the farmer",
+          "Apple - Zed the farmer",
+          "Banana - Zed the farmer",
+          "Banana - Aaron the farmer",
+        ]
       end
     end
   end
