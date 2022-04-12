@@ -977,8 +977,8 @@ en:
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
-          display_remaining_stock: "Display remaining stock in shopfront"
-          display_remaining_stock_tip: "Display remaining stock in shopfront"
+          display_remaining_stock: "Display remaining stock in shopfront if low on-hand"
+          display_remaining_stock_tip: "Let shoppers know when there are only 3 or less items left."
           enabled: "Enabled"
           disabled: "Disabled"
         social:
