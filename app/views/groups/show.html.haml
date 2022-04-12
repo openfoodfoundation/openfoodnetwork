@@ -3,7 +3,7 @@
 - content_for(:description) do
   = @group.description
 - content_for(:image) do
-  = @group.logo.url
+  = url_for(@group.logo) if @group.logo.attached?
 
 - content_for :scripts do
   = render partial: "shared/google_maps_js"
@@ -22,14 +22,13 @@
     %header
       .row
         .small-12.columns
-          - if @group.promo_image.present?
-            %img{"src" => @group.promo_image}
+          = image_tag @group.promo_image.variant(resize_to_limit: [1200, 260]) if @group.promo_image.attached?
       .row
         .small-12.columns.group-header.pad-top
-          - if @group.logo.present?
-            %img.group-logo{"src" => @group.logo}
+          - if @group.logo.attached?
+            = image_tag @group.logo.variant(resize_to_limit: [100, 100]), class: "group-logo"
           - else
-            %img.group-logo{"src" => '/noimage/group.png' }
+            = image_tag "/noimage/group.png", class: "group-logo"
           %h2.group-name= @group.name
           %p= @group.description
 

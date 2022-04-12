@@ -39,8 +39,8 @@ describe EnterpriseGroup do
       e = build(:enterprise_group, description: '')
     end
 
-    it { is_expected.to have_attached_file :promo_image }
-    it { is_expected.to have_attached_file :logo }
+    it { is_expected.to have_one_attached :promo_image }
+    it { is_expected.to have_one_attached :logo }
   end
 
   describe "relations" do
@@ -50,13 +50,6 @@ describe EnterpriseGroup do
       eg.enterprises << e
       expect(eg.reload.enterprises).to eq([e])
     end
-
-    # it "can have an image" do
-    #   eg = create(:enterprise_group)
-    #   image_file = File.open(File.expand_path('../../../app/assets/images/logo-white.png', __FILE__))
-    #   image = Spree::Image.create(viewable_id: eg.id, viewable_type: 'EnterpriseGroup', attachment: image_file)
-    #   eg.reload.image.should == image
-    # end
   end
 
   describe "scopes" do

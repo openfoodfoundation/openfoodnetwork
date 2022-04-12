@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
 require 'open_food_network/locking'
-require 'spree/core/s3_support'
 
 class EnterpriseGroup < ApplicationRecord
-  include HasMigratingFile
   include PermalinkGenerator
-  include Spree::Core::S3Support
 
   acts_as_list
 
@@ -28,21 +25,11 @@ class EnterpriseGroup < ApplicationRecord
 
   delegate :phone, :address1, :address2, :city, :zipcode, :state, :country, to: :address
 
-  has_one_migrating :logo,
-                    styles: { medium: "100x100" },
-                    url: '/images/enterprise_groups/logos/:id/:style/:basename.:extension',
-                    path: 'public/images/enterprise_groups/logos/:id/:style/:basename.:extension'
+  has_one_attached :logo
+  has_one_attached :promo_image
 
-  has_one_migrating :promo_image,
-                    styles: { large: ["1200x260#", :jpg] },
-                    url: '/images/enterprise_groups/promo_images/:id/:style/:basename.:extension',
-                    path: 'public/images/enterprise_groups/promo_images/:id/:style/:basename.:extension'
-
-  validates_attachment_content_type :logo, content_type: %r{\Aimage/.*\Z}
-  validates_attachment_content_type :promo_image, content_type: %r{\Aimage/.*\Z}
-
-  supports_s3 :logo
-  supports_s3 :promo_image
+  validates :logo, content_type: %r{\Aimage/.*\Z}
+  validates :promo_image, content_type: %r{\Aimage/.*\Z}
 
   scope :by_position, -> { order('position ASC') }
   scope :on_front_page, -> { where(on_front_page: true) }
