@@ -78,11 +78,11 @@
     %div{'ofn-with-tip' => t('.display_remaining_stock_tip')}
       %a= t 'admin.whats_this'
   .three.columns
-    = f.radio_button :preferred_product_stock_display, true, 'ng-model' => 'Enterprise.preferred_product_stock_display', 'ng-value' => 'true'
-    = f.label :preferred_product_stock_display, t('.enabled'), value: :true
+    = f.radio_button :preferred_product_low_stock_display, true, 'ng-model' => 'Enterprise.preferred_product_low_stock_display', 'ng-value' => 'true'
+    = f.label :preferred_product_low_stock_display, t('.enabled'), value: :true
   .five.columns.omega
-    = f.radio_button :preferred_product_stock_display, false, 'ng-model' => 'Enterprise.preferred_product_stock_display', 'ng-value' => 'false' 
-    = f.label :preferred_product_stock_display, t('.disabled'), value: :false
+    = f.radio_button :preferred_product_low_stock_display, false, 'ng-model' => 'Enterprise.preferred_product_low_stock_display', 'ng-value' => 'false' 
+    = f.label :preferred_product_low_stock_display, t('.disabled'), value: :false
 
 .row
   .three.columns.alpha

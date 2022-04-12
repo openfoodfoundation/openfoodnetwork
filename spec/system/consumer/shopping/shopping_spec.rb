@@ -377,7 +377,7 @@ describe "As a consumer I want to shop with a distributor", js: true do
       end
 
       it "shows quantity of remaining stock for products with quantity less < 3 when product_stock_display is true" do
-        distributor.set_preference(:product_stock_display, true)
+        distributor.set_preference(:product_low_stock_display, true)
         variant.update on_hand: 2
         visit shop_path
 

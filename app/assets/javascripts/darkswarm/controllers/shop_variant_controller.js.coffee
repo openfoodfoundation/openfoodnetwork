@@ -71,4 +71,4 @@ angular.module('Darkswarm').controller "ShopVariantCtrl", ($scope, $modal, Cart,
     $modal.open(templateUrl: "bulk_buy_modal.html", scope: $scope, windowClass: "product-bulk-modal")
 
   $scope.displayRemainingInStock = ->
-    Shopfront.shopfront.preferred_product_stock_display && $scope.available() <= 3 && !$scope.variant.line_item.quantity
+    Shopfront.shopfront.preferred_product_low_stock_display && $scope.available() <= 3 && !$scope.variant.line_item.quantity
