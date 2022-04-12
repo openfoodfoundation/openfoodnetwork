@@ -4,17 +4,14 @@ module Reporting
   class ReportLoader
     def initialize(report_type, report_subtype = nil)
       @report_type = report_type
-      @report_subtype = report_subtype || "base"
+      @report_subtype = report_subtype
     end
 
-    # We currently use two types of report : old report inheriting from ReportObjectReport
-    # And new ones inheriting gtom ReportQueryReport
-    # They use different namespace and we try to load them both
     def report_class
-      "#{report_module}::#{report_type.camelize}Report".constantize
+      "#{report_module}::#{report_subtype.camelize}".constantize
     rescue NameError
       begin
-        "#{report_module}::#{report_subtype.camelize}".constantize
+        "#{report_module}::Base".constantize
       rescue NameError
         raise Reporting::Errors::ReportNotFound
       end

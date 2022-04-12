@@ -11,12 +11,5 @@
       - if report.grouped_data.present?
         = render partial: 'admin/reports/row_group', locals: { report: report, data: report.grouped_data }
       - else
-        - report.table_rows.each do |row|
-          - if row
-            %tr
-              - row.each do |cell|
-                %td
-                  = cell
-        - if report.table_rows.empty?
-          %tr
-            %td{colspan: report.table_headers.count}= t(:none)
+        %tr
+          %td{colspan: report.table_headers.count}= t(:none)

@@ -177,8 +177,8 @@ module Reporting
         end
 
         # Yes, I know testing a private method is bad practice but report's design, tighly coupling
-        # Reporting::OrderGrouper and Base, makes it
-        # very hard to make things testeable without ending up in a wormwhole. This is a trade-off.
+        # makes it very hard to make things testeable without ending up in a wormwhole.
+        # This is a trade-off.
         describe '#customer_payments_amount_owed' do
           let(:params) { {} }
           let(:user) { build(:user) }
