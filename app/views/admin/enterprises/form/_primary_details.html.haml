@@ -42,11 +42,14 @@
     %div{'ofn-with-tip' => t('.visible_in_search_tip')}
       %a= t('admin.whats_this')
   .two.columns
-    = f.radio_button :visible, true
-    = f.label :visible, t('.visible'), value: 'true'
-  .five.columns.omega
-    = f.radio_button :visible, false
-    = f.label :visible, t('.not_visible'), value: 'false'
+    = f.radio_button :visible, "public", 'ng-model' => 'Enterprise.visible'
+    = f.label :visible, t('.visible'), value: 'public'
+  .two.columns
+    = f.radio_button :visible, "only_through_links", 'ng-model' => 'Enterprise.visible'
+    = f.label :visible, t('.not_visible'), value: 'only_through_links'
+  .four.columns.omega
+    = f.radio_button :visible, "hidden", 'ng-model' => 'Enterprise.visible'
+    = f.label :visible, t('.hidden'), value: 'hidden'
 .permalink{ ng: { controller: "permalinkCtrl" } }
   .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
     .three.columns.alpha

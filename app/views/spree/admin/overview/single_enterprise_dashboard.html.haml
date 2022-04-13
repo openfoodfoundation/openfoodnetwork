@@ -26,7 +26,7 @@
 #package_selection{ hidden: true }
   = render partial: "/admin/enterprises/change_type_form"
 
-- if !@enterprise.visible
+- unless @enterprise.public?
   .alert-box
     %strong
       = t "spree_admin_single_enterprise_hint"

@@ -28,6 +28,12 @@ FactoryBot.define do
     sells { "none" }
   end
 
+  factory :supplier_enterprise_hidden, parent: :enterprise do
+    is_primary_producer { true }
+    sells { "none" }
+    visible { "hidden" }
+  end
+
   factory :distributor_enterprise, parent: :enterprise do
     is_primary_producer { false }
     sells { "any" }
