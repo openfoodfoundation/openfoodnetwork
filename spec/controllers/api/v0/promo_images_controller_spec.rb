@@ -35,7 +35,7 @@ module Api
           expect(response.status).to eq 200
           expect(json_response["id"]).to eq enterprise.id
           enterprise.reload
-          expect(enterprise.promo_image?).to be false
+          expect(enterprise.promo_image).to_not be_attached
         end
 
         context "when promo image does not exist" do
@@ -75,7 +75,7 @@ module Api
           spree_delete :destroy, enterprise_id: enterprise
           expect(response.status).to eq(401)
           enterprise.reload
-          expect(enterprise.promo_image?).to be true
+          expect(enterprise.promo_image).to be_attached
         end
       end
 
@@ -86,7 +86,7 @@ module Api
           spree_delete :destroy, enterprise_id: enterprise
           expect(response.status).to eq(401)
           enterprise.reload
-          expect(enterprise.promo_image?).to be true
+          expect(enterprise.promo_image).to be_attached
         end
       end
     end

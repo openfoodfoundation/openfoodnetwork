@@ -22,21 +22,26 @@ module Api
       has_one :business_address, serializer: Api::AddressSerializer
 
       def logo
-        attachment_urls(object.logo, [:thumb, :small, :medium])
+        attachment_urls(object.logo, Enterprise::LOGO_SIZES)
       end
 
       def promo_image
-        attachment_urls(object.promo_image, [:thumb, :medium, :large])
+        attachment_urls(object.promo_image, Enterprise::PROMO_IMAGE_SIZES)
       end
 
       def terms_and_conditions
-        return unless object.terms_and_conditions.file?
+        return unless object.terms_and_conditions.attached?
 
-        object.terms_and_conditions.url
+        Rails.application.routes.url_helpers.
+          url_for(object.terms_and_conditions)
+      end
+
+      def terms_and_conditions_file_name
+        object.terms_and_conditions_blob&.filename
       end
 
       def terms_and_conditions_updated_at
-        object.terms_and_conditions_updated_at&.to_s
+        object.terms_and_conditions_blob&.created_at&.to_s
       end
 
       def tag_groups
@@ -76,19 +81,19 @@ module Api
 
       # Returns a hash of URLs for specified versions of an attachment.
       #
-      # Example:
+      # Example result:
       #
-      #   attachment_urls(object.logo, [:thumb, :small, :medium])
-      #   # {
-      #   #   thumb: LOGO_THUMB_URL,
-      #   #   small: LOGO_SMALL_URL,
-      #   #   medium: LOGO_MEDIUM_URL
-      #   # }
-      def attachment_urls(attachment, versions)
-        return unless attachment.file?
+      #   {
+      #     thumb: LOGO_THUMB_URL,
+      #     small: LOGO_SMALL_URL,
+      #     medium: LOGO_MEDIUM_URL
+      #   }
+      def attachment_urls(attachment, styles)
+        return unless attachment.attached?
 
-        versions.each_with_object({}) do |version, urls|
-          urls[version] = attachment.url(version)
+        styles.transform_values do |transformation|
+          Rails.application.routes.url_helpers.
+            url_for(attachment.variant(transformation))
         end
       end
     end

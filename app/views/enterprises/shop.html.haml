@@ -3,7 +3,7 @@
 - content_for(:description) do
   = current_distributor.description
 - content_for(:image) do
-  = current_distributor.logo.url
+  = url_for(current_distributor.logo) if current_distributor.logo.attached?
 
 - content_for :injection_data do
   - cache(*CacheService::FragmentCaching.ams_shop(@enterprise)) do

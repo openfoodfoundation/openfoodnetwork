@@ -6,7 +6,8 @@
           = t(".customer_greeting", name: @order.bill_address.firstname)
         %h4
           = t(".instructions_html", distributor: @order.distributor.name )
-        %img{src: "#{@order.distributor.logo.url(:medium)}"}
+        - if @order.distributor.logo.attached?
+          = image_tag @order.distributor.logo_url(:medium)
 
 %p.callout
   = t(".dont_cancel", email: @order.distributor.contact.email)

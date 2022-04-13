@@ -6,13 +6,12 @@ module Spree
   describe Image do
     include FileHelper
 
-    let(:file) { Rack::Test::UploadedFile.new(black_logo_file, 'image/png') }
     let(:product) { create(:product) }
 
     describe "using local storage" do
       it "stores a new image" do
         image = Spree::Image.create!(
-          attachment: file,
+          attachment: black_logo_file,
           viewable: product.master,
         )
 
@@ -78,7 +77,7 @@ module Spree
         stub_request(:put, as_upload_pattern).to_return(status: 200, body: "", headers: {})
 
         image = Spree::Image.create!(
-          attachment: file,
+          attachment: black_logo_file,
           viewable: product.master,
         )
 

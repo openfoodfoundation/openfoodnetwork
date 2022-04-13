@@ -11,7 +11,8 @@
       %table.column{:align => "left"}
         %tr
           %td{:align => "right"}
-            %img.float-right{:src => "#{@shop.logo.url(:medium)}"}/
+            - if @shop.logo.attached?
+              = image_tag @shop.logo_variant(:medium), class: "float-right"
       %span.clear
 
 = render 'summary_overview', summary: @summary

@@ -5,7 +5,7 @@ class TermsOfService
     return false unless accepted_at = customer&.terms_and_conditions_accepted_at
 
     accepted_at > if distributor
-                    distributor.terms_and_conditions_updated_at
+                    distributor.terms_and_conditions_blob.created_at
                   else
                     TermsOfServiceFile.updated_at
                   end
@@ -20,6 +20,6 @@ class TermsOfService
   end
 
   def self.distributor_terms_required?(distributor)
-    distributor.terms_and_conditions.file?
+    distributor.terms_and_conditions.attached?
   end
 end
