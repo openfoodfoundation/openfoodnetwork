@@ -672,9 +672,9 @@ describe "As a consumer, I want to checkout my order", js: true do
         end
       end
 
-      describe "hidding a payment method with a default rule" do
+      describe "hiding a payment method with a default rule" do
         let!(:tagged_customer) { create(:customer, user: user, enterprise: distributor) }
-        let!(:hidden_payment) {
+        let!(:hidden_method) {
           create(:payment_method, distributors: [distributor], name: "Hidden", tag_list: "hide_pm")
         }
         before do
@@ -688,7 +688,7 @@ describe "As a consumer, I want to checkout my order", js: true do
 
         context "with no exceptions set to a customer" do
           it "hides the payment method" do
-            expect(page).not_to have_content hidden_payment.name
+            expect(page).not_to have_content hidden_method.name
           end
         end
 
@@ -702,8 +702,9 @@ describe "As a consumer, I want to checkout my order", js: true do
             tagged_customer.update_attribute(:tag_list, "show_pm")
             visit checkout_step_path(:payment)
           end
+
           it "displays the payment method" do
-            expect(page).to have_content hidden_payment.name
+            expect(page).to have_content hidden_method.name
           end
         end
       end
