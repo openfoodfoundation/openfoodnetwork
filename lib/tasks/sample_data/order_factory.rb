@@ -31,6 +31,7 @@ module SampleData
 
       log "- complete order - shipped"
       order = create_complete_order
+      order.payments.first.amount = order.total
       order.payments.first.capture!
       order.save
       order.shipment.reload.ship!
