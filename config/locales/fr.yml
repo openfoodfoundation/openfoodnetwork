@@ -296,6 +296,7 @@ fr:
   producers_join: Les producteurs et autres circuits courts basés en France sont invités à rejoindre CoopCircuits.
   charges_sales_tax: Soumis à la TVA?
   business_address: "Adresse du siège social"
+  Invoice_item_sorting: "Ordre d'affichage sur facture"
   print_invoice: "Imprimer la facture"
   print_ticket: "Imprimer ticket de caisse"
   select_ticket_printer: "Choisir l'imprimante tickets"
@@ -792,6 +793,11 @@ fr:
           remove_terms_and_conditions: "Supprimer le fichier"
           uploaded_on: "mis en ligne le"
           reset_form: "Vider les champs"
+          Invoice_item_sorting: Changement d'ordre d'affichage sur facture
+          sort_items_by_supplier?: Ranger par producteur ?
+          sort_items_by_supplier_tip: "Lorsque possible, les éléments seront rangés par producteur."
+          enabled: Activer
+          disabled: Désactiver
         business_address:
           company_legal_name: Raison sociale
           company_placeholder: Indiquez ici le nom légal de votre entreprise
