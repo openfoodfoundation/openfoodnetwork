@@ -187,7 +187,7 @@ module OpenFoodNetwork
       end
     end
 
-    describe "finding editable products" do
+    describe "#editable_products" do
       let!(:p1) { create(:simple_product, supplier: create(:supplier_enterprise) ) }
       let!(:p2) { create(:simple_product, supplier: create(:supplier_enterprise) ) }
 
@@ -199,14 +199,27 @@ module OpenFoodNetwork
       end
 
       it "returns products produced by managed enterprises" do
-        allow(permissions).to receive(:managed_enterprise_products) { Spree::Product.where(id: p1) }
+        allow(user).to receive(:admin?) { false }
+        allow(user).to receive(:enterprises) { [p1.supplier] }
+
         expect(permissions.editable_products).to eq([p1])
       end
 
       it "returns products produced by permitted enterprises" do
+        allow(user).to receive(:admin?) { false }
+        allow(user).to receive(:enterprises) { [] }
         allow(permissions).to receive(:related_enterprises_granting).
-          with(:manage_products) { Enterprise.where(id: p2.supplier).select(:id) }
+          with(:manage_products) { Enterprise.where(id: p2.supplier) }
+
         expect(permissions.editable_products).to eq([p2])
+      end
+
+      context "as superadmin" do
+        it "returns all products" do
+          allow(user).to receive(:admin?) { true }
+
+          expect(permissions.editable_products).to include p1, p2
+        end
       end
     end
 
@@ -226,20 +239,36 @@ module OpenFoodNetwork
       end
 
       it "returns products produced by managed enterprises" do
-        allow(permissions).to receive(:managed_enterprise_products) { Spree::Product.where(id: p1) }
+        allow(user).to receive(:admin?) { false }
+        allow(user).to receive(:enterprises) { Enterprise.where(id: p1.supplier_id) }
+
         expect(permissions.visible_products).to eq([p1])
       end
 
       it "returns products produced by enterprises that have granted manage products" do
+        allow(user).to receive(:admin?) { false }
+        allow(user).to receive(:enterprises) { [] }
         allow(permissions).to receive(:related_enterprises_granting).
-          with(:manage_products) { Enterprise.where(id: p2.supplier).select(:id) }
+          with(:manage_products) { Enterprise.where(id: p2.supplier) }
+
         expect(permissions.visible_products).to eq([p2])
       end
 
       it "returns products produced by enterprises that have granted P-OC" do
+        allow(user).to receive(:admin?) { false }
+        allow(user).to receive(:enterprises) { [] }
         allow(permissions).to receive(:related_enterprises_granting).
           with(:add_to_order_cycle) { Enterprise.where(id: p3.supplier).select(:id) }
+
         expect(permissions.visible_products).to eq([p3])
+      end
+
+      context "as superadmin" do
+        it "returns all products" do
+          allow(user).to receive(:admin?) { true }
+
+          expect(permissions.visible_products.to_a).to include p1, p2, p3
+        end
       end
     end
 
