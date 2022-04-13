@@ -120,17 +120,39 @@ describe 'OrderCycle service', ->
       ]
 
   describe 'adding distributors', ->
-    exchange = null
+    $httpBackend = null
+    Enterprise = null
 
     beforeEach ->
       # Initialise OC
       OrderCycle.new()
-      $httpBackend.flush()
+      inject ($injector, _$httpBackend_)->
+        Enterprise = $injector.get('Enterprise')
+        $httpBackend = _$httpBackend_
+        $httpBackend.whenGET('/admin/enterprises/for_order_cycle.json').respond [
+          {id: 1, name: 'Three', sells: 'any'}
+        ]
 
     it 'adds the distributor to outgoing exchanges', ->
+      $httpBackend.flush()
       OrderCycle.addDistributor('123')
       expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
         {enterprise_id: '123', incoming: false, active: true, variants: {}, enterprise_fees: []}
+      ]
+
+    it 'selects all variants if only one distributor', ->
+      Enterprise.index()
+      $httpBackend.flush()
+      OrderCycle.order_cycle.editable_variants_for_outgoing_exchanges = {
+        123: [123, 234, 456, 789]
+      }
+      OrderCycle.order_cycle.incoming_exchanges = [
+        {variants: {123: true, 234: true}}
+        {variants: {456: true, 789: false}}
+      ]
+      OrderCycle.addDistributor('123')
+      expect(OrderCycle.order_cycle.outgoing_exchanges).toEqual [
+        {enterprise_id: '123', incoming: false, active: true, variants: {123: true, 234: true, 456: true}, enterprise_fees: []}
       ]
 
   describe 'removing exchanges', ->

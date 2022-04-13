@@ -1,4 +1,4 @@
-angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, $timeout, StatusMessage, Panels) ->
+angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, $timeout, StatusMessage, Panels, Enterprise) ->
   OrderCycleResource = $resource '/admin/order_cycles/:action_name/:order_cycle_id.json', {}, {
     'index':  { method: 'GET', isArray: true}
     'new'   : { method: 'GET', params: { action_name: "new" } }
@@ -50,7 +50,14 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, $
         (callback || angular.noop)()
 
     addDistributor: (new_distributor_id, callback) ->
-      this.order_cycle.outgoing_exchanges.push({ enterprise_id: new_distributor_id, incoming: false, active: true, variants: {}, enterprise_fees: [] })
+      exchange = { enterprise_id: new_distributor_id, incoming: false, active: true, variants: {}, enterprise_fees: [] }
+      if (Enterprise.hub_enterprises.length == 1)
+        editable = this.order_cycle["editable_variants_for_outgoing_exchanges"][new_distributor_id] || []
+        variants = this.incomingExchangesVariants()
+        for variant in variants when variant in editable
+          exchange.variants[variant] = true
+
+      this.order_cycle.outgoing_exchanges.push(exchange)
       $timeout ->
         (callback || angular.noop)()
 
