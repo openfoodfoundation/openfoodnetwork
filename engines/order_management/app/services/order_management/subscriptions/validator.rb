@@ -97,7 +97,7 @@ module OrderManagement
       end
 
       def subscription_line_items_present?
-        return if subscription_line_items.reject(&:marked_for_destruction?).any?
+        return if subscription_line_items.any? { |sli| sli.quantity > 0 && !sli.marked_for_destruction? }
 
         errors.add(:subscription_line_items, :at_least_one_product)
       end
