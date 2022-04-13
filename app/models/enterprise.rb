@@ -19,6 +19,7 @@ class Enterprise < ApplicationRecord
   preference :shopfront_producer_order, :string, default: ""
   preference :shopfront_order_cycle_order, :string, default: "orders_close_at"
   preference :shopfront_product_sorting_method, :string, default: "by_category"
+  preference :invoice_order_by_supplier, :boolean, default: false
 
   # Allow hubs to restrict visible variants to only those in their inventory
   preference :product_selection_from_inventory_only, :boolean, default: false

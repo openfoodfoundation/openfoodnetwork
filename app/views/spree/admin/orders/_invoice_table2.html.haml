@@ -13,7 +13,7 @@
         %th{:align => "right", :width => "15%"}
           %h5= t(:invoice_column_tax_rate)
   %tbody
-    - @order.line_items.sort_by{ |li| li.product.name }.each do |item|
+    - @order.sorted_line_items.each do |item|
       %tr
         %td
           = render 'spree/shared/line_item_name', line_item: item
@@ -29,6 +29,7 @@
         - if @order.total_tax > 0
           %td{:align => "right"}
             = display_line_item_tax_rates(item)
+
     - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
       %tr
         %td

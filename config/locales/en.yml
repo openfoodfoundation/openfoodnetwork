@@ -323,6 +323,7 @@ en:
   producers_join: Australian producers are now welcome to join the Open Food Network. #FIXME
   charges_sales_tax: Charges GST?
   business_address: "Business Address"
+  Invoice_item_sorting: "Invoice sorting"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -849,6 +850,11 @@ en:
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
           reset_form: "Reset Form"
+          Invoice_item_sorting: Invoice item sorting
+          sort_items_by_supplier?: Sort items by supplier?
+          sort_items_by_supplier_tip: "When enabled, Items will be sorted by supplier name."
+          enabled: Enable
+          disabled: Disable
         business_address:
           company_legal_name: Company Legal Name
           company_placeholder: Example Inc.

@@ -609,6 +609,14 @@ module Spree
       address
     end
 
+    def sorted_line_items
+      if distributor.preferred_invoice_order_by_supplier
+        line_items.sort_by { |li| [li.supplier.name, li.product.name] }
+      else
+        line_items.sort_by { |li| [li.product.name] }
+      end
+    end
+
     private
 
     def fee_handler
