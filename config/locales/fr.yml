@@ -3,6 +3,7 @@ fr:
   activerecord:
     models:
       spree/product: Produit
+      spree/shipping_method: Option d'expédition
     attributes:
       spree/user:
         password: "Mot de passe"
