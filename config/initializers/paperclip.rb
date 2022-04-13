@@ -36,4 +36,11 @@ module UpdatedUrlGenerator
   end
 end
 
+module PaperclipImageErrors
+  def mark_invalid(record, attribute, types)
+    record.errors.add attribute, :invalid, **options.merge(:types => types.join(', '))
+  end
+end
+
 Paperclip::UrlGenerator.prepend(UpdatedUrlGenerator)
+Paperclip::Validators::AttachmentPresenceValidator.prepend(PaperclipImageErrors)
