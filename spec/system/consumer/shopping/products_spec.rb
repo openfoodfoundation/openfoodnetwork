@@ -102,13 +102,13 @@ describe "As a consumer I want to view products", js: true do
       end
 
       context "product taxonomies" do
-
         before do
+          distributor.preferred_shopfront_product_sorting_method = "by_category"
+          distributor.preferred_shopfront_taxon_order = taxon.id.to_s
           visit shop_path
         end
 
         it "filters out variants according to the selected taxon" do
-
           expect(page).to have_content variant.name.to_s
           expect(page).to have_content variant2.name.to_s
 
@@ -116,7 +116,7 @@ describe "As a consumer I want to view products", js: true do
             expect(page).to have_content "Tricky Taxon"
             toggle_filter taxon.name
           end
-          
+
           expect(page).to have_content variant.name.to_s
           expect(page).not_to have_content variant2.name.to_s
         end
@@ -130,6 +130,7 @@ describe "As a consumer I want to view products", js: true do
             toggle_filter property.presentation
           end
 
+          pending("Closing issue #9046")
           expect(page).to have_content variant.name.to_s
           expect(page).not_to have_content variant2.name.to_s
         end
