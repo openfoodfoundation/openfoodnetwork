@@ -208,6 +208,22 @@ describe '
     end
   end
 
+  context "user can cancel an order" do
+    before do
+      login_as_admin_and_visit spree.edit_admin_order_path(order)
+    end
+
+    it "by clicking on the cancel button" do
+      expect do
+        accept_alert do
+          click_button "Cancel"
+        end
+        expect(page).to have_content "Order updated"
+        expect(order.reload.state).to eq("canceled")
+      end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+    end
+  end
+
   it "can't add more items than are available" do
     # Move the order back to the cart state
     order.state = 'cart'
