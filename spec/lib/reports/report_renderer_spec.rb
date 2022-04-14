@@ -21,21 +21,17 @@ describe Reporting::ReportRenderer do
       table_rows: data.map(&:values)
     )
   }
-  let(:service) { described_class.new(report) }
+  let(:subject) { described_class.new(report) }
 
-  describe "#as_json" do
+  describe ".as_json" do
     it "returns the report's data as hashes" do
-      expect(service.as_json).to eq data.as_json
+      expect(subject.as_json).to eq data.as_json
     end
   end
 
-  describe "#as_arrays" do
-    it "returns the report's data as arrays" do
-      expect(service.as_arrays).to eq [
-        ["id", "name", "quantity"],
-        [1, "carrots", 3],
-        [2, "onions", 6]
-      ]
+  describe ".render_as" do
+    it "raise an error if format is not supported" do
+      expect { subject.render_as("give_me_everything") }.to raise_error
     end
   end
 end

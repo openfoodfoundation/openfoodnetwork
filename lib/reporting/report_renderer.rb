@@ -4,6 +4,8 @@ require 'spreadsheet_architect'
 
 module Reporting
   class ReportRenderer
+    REPORT_FORMATS = [:csv, :json, :xlsx, :pdf].freeze
+
     def initialize(report)
       @report = report
     end
@@ -36,8 +38,12 @@ module Reporting
       @report.rows.map(&:to_h).as_json
     end
 
-    def as_arrays
-      @as_arrays ||= [table_headers] + table_rows
+    def render_as(target_format, controller: nil)
+      unless target_format.to_sym.in?(REPORT_FORMATS)
+        raise ActionController::BadRequest, "report_format should be in #{REPORT_FORMATS}"
+      end
+
+      public_send("to_#{target_format}", controller)
     end
 
     def to_csv(_context_controller = nil)
