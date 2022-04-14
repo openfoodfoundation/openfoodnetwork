@@ -40,8 +40,8 @@ handle_rename = (e, data) ->
   node = data.rslt.obj
   name = data.rslt.new_name
 
-  url = Spree.url(base_url).clone()
-  url.pathname = url.pathname + '/' + node.attr("id")
+  url =  $.extend(true, {}, base_url)
+  url = url['href'] + '/' + node.attr("id")
 
   $.ajax
     type: "POST",
