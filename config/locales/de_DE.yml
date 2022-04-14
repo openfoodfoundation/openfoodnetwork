@@ -3,6 +3,7 @@ de_DE:
   activerecord:
     models:
       spree/product: Produkt
+      spree/shipping_method: Lieferoption
     attributes:
       spree/user:
         password: "Passwort"
@@ -296,6 +297,7 @@ de_DE:
   producers_join: 'Wir laden Produzenten ein, jetzt dem Open Food Network beizutreten. '
   charges_sales_tax: Berechnen Sie Steuern?
   business_address: "Unternehmensdaten"
+  Invoice_item_sorting: "Sortierung der Artikel auf Rechnungen"
   print_invoice: "Rechnung drucken"
   print_ticket: "Beleg drucken"
   select_ticket_printer: "Wählen Sie einen Drucker für die Belege."
@@ -792,6 +794,11 @@ de_DE:
           remove_terms_and_conditions: "Datei löschen"
           uploaded_on: "hochgeladen am"
           reset_form: "zurücksetzen"
+          Invoice_item_sorting: Rechnungseinstellungen
+          sort_items_by_supplier?: Artikel nach Lieferanten gruppieren?
+          sort_items_by_supplier_tip: "Wenn aktiviert, werden die Artikel nach Lieferanten gruppiert."
+          enabled: Aktiviert
+          disabled: Deaktiviert
         business_address:
           company_legal_name: Unternehmensname
           company_placeholder: z. B. Charlies großartige Farm

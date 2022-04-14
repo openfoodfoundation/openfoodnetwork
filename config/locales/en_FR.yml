@@ -3,6 +3,7 @@ en_FR:
   activerecord:
     models:
       spree/product: Product
+      spree/shipping_method: Shipping Method
     attributes:
       spree/user:
         password: "Password"
@@ -296,6 +297,7 @@ en_FR:
   producers_join: Producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges GST?
   business_address: "Business Address"
+  Invoice_item_sorting: "Invoice sorting"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -792,6 +794,11 @@ en_FR:
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
           reset_form: "Reset Form"
+          Invoice_item_sorting: Invoice item sorting
+          sort_items_by_supplier?: Sort items by supplier?
+          sort_items_by_supplier_tip: "When enabled, Items will be sorted by supplier name."
+          enabled: Enable
+          disabled: Disable
         business_address:
           company_legal_name: Company Legal Name
           company_placeholder: Example Inc.
