@@ -30,13 +30,18 @@ module SampleData
       order.save
 
       log "- complete order - shipped"
+      create_shipped_order
+    end
+
+    private
+
+    def create_shipped_order
       order = create_complete_order
+      order.payments.first.amount = order.total
       order.payments.first.capture!
       order.save
       order.shipment.reload.ship!
     end
-
-    private
 
     def create_cart_order
       order = create_order
