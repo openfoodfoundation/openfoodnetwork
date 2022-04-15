@@ -33,9 +33,7 @@ module Api
       end
 
       def image
-        return if object.product.images.empty?
-
-        object.product.images.first.mini_url
+        object.product.images.first&.url(:mini)
       end
 
       def in_stock

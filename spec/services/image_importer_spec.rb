@@ -15,7 +15,7 @@ describe ImageImporter do
       }.by(1)
 
       expect(product.images.count).to eq 1
-      expect(product.images.first.attachment.size).to eq 6274
+      expect(product.images.first.attachment_blob.byte_size).to eq 6274
     end
   end
 end

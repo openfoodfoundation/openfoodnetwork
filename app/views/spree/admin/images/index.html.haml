@@ -32,7 +32,9 @@
           %td.no-border
             %span.handle
           %td
-            = link_to image_tag(image.attachment.url(:mini)), image.attachment.url(:product)
+            - # A Rails bug makes it necessary to call `main_app.url_for` here.
+            - # https://github.com/rails/rails/issues/31325
+            = link_to image_tag(main_app.url_for(image.variant(:mini))), main_app.url_for(image.variant(:product))
           %td= options_text_for(image)
           %td= image.alt
           %td.actions
