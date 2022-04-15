@@ -40,7 +40,7 @@ handle_rename = (e, data) ->
   node = data.rslt.obj
   name = data.rslt.new_name
 
-  url =  $.extend(true, {}, base_url)
+  url = Object.assign(base_url, {})
   url = url['href'] + '/' + node.attr("id")
 
   $.ajax
