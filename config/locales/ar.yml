@@ -3,6 +3,7 @@ ar:
   activerecord:
     models:
       spree/product: المنتج
+      spree/shipping_method: طريقة الشحن
     attributes:
       spree/user:
         password: "كلمه السر"

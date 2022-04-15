@@ -3,6 +3,7 @@ tr:
   activerecord:
     models:
       spree/product: Ürün
+      spree/shipping_method: TESLİMAT YÖNTEMİ
     attributes:
       spree/user:
         password: "Parola"

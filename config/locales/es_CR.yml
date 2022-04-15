@@ -3,6 +3,7 @@ es_CR:
   activerecord:
     models:
       spree/product: Producto
+      spree/shipping_method: Método de envío
     attributes:
       spree/user:
         password: "Contraseña"

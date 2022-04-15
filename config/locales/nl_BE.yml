@@ -3,6 +3,7 @@ nl_BE:
   activerecord:
     models:
       spree/product: Product
+      spree/shipping_method: Het verschepen Methode
     attributes:
       spree/user:
         password: "Wachtwoord"

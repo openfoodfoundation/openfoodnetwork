@@ -3,6 +3,7 @@ ru:
   activerecord:
     models:
       spree/product: Товар
+      spree/shipping_method: Способ Доставки
     attributes:
       spree/user:
         password: "Пароль"

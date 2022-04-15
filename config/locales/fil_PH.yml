@@ -3,6 +3,7 @@ fil_PH:
   activerecord:
     models:
       spree/product: Produkto
+      spree/shipping_method: paraan ng pagpapadala
     attributes:
       spree/user:
         password: "Password"

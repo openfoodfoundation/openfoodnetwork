@@ -796,7 +796,7 @@ de_DE:
           reset_form: "zurücksetzen"
           Invoice_item_sorting: Rechnungseinstellungen
           sort_items_by_supplier?: Artikel nach Lieferanten gruppieren?
-          sort_items_by_supplier_tip: "Wenn aktiviert, werden die Artikel nach Lieferanten gruppiert."
+          sort_items_by_supplier_tip: "Wenn aktiviert, werden die Artikel nach Lieferanten gruppiert und dann alphabetisch sortiert. Wenn deaktiviert, werden die Artikel unabhängig vom Lieferanten alphabetisch sortiert."
           enabled: Aktiviert
           disabled: Deaktiviert
         business_address:

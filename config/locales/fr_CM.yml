@@ -3,6 +3,7 @@ fr_CM:
   activerecord:
     models:
       spree/product: Produit
+      spree/shipping_method: Méthode de Livraison
     attributes:
       spree/user:
         password: "Mot de passe"

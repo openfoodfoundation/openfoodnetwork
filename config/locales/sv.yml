@@ -3,6 +3,7 @@ sv:
   activerecord:
     models:
       spree/product: Produkt
+      spree/shipping_method: Fraktmetod
     attributes:
       spree/user:
         password: "Lösenord"

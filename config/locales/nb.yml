@@ -3,6 +3,7 @@ nb:
   activerecord:
     models:
       spree/product: Produkt
+      spree/shipping_method: Leveringsmetode
     attributes:
       spree/user:
         password: "Passord"

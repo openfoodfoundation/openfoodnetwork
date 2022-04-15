@@ -3,6 +3,7 @@ pt:
   activerecord:
     models:
       spree/product: Produto
+      spree/shipping_method: Método de Envio
     attributes:
       spree/user:
         password: "Palavra-passe"

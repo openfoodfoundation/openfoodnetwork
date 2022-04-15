@@ -3,6 +3,7 @@ hu:
   activerecord:
     models:
       spree/product: Termék
+      spree/shipping_method: Szállítási Mód
     attributes:
       spree/user:
         password: "Jelszó"

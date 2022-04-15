@@ -3,6 +3,7 @@ pt_BR:
   activerecord:
     models:
       spree/product: Produto
+      spree/shipping_method: Método de envio
     attributes:
       spree/user:
         password: "Senha"
