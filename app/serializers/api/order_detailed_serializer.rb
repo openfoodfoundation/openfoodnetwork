@@ -10,7 +10,7 @@ module Api
 
     has_many :payments, serializer: Api::PaymentSerializer
 
-    attributes :adjustments
+    attributes :adjustments, :customer_id
 
     def adjustments
       adjustments = object.all_adjustments.where(
