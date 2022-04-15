@@ -14,6 +14,7 @@ module Api
       attr_accessor :current_api_user
 
       before_action :authenticate_user
+      before_action :restrict_feature
 
       rescue_from StandardError, with: :error_during_processing
       rescue_from CanCan::AccessDenied, with: :unauthorized
@@ -36,6 +37,10 @@ module Api
         return if (@current_api_user = Spree::User.find_by(spree_api_key: api_key.to_s))
 
         invalid_api_key
+      end
+
+      def restrict_feature
+        not_found unless Flipper.enabled?(:api_v1, @current_api_user)
       end
 
       def current_ability
