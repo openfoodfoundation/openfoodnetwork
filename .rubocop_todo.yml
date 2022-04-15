@@ -366,11 +366,6 @@ Lint/IneffectiveAccessModifier:
   Exclude:
     - 'app/models/spree/user.rb'
 
-# Offense count: 2
-Lint/MissingSuper:
-  Exclude:
-    - 'app/components/distributor_title_component.rb'
-    - 'app/components/example_component.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
