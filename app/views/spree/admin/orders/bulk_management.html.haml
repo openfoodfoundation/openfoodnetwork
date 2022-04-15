@@ -182,3 +182,5 @@
             %a{ ng: { href: "/admin/orders/{{line_item.order.number}}/edit" }, :class => "edit-order icon-edit no-text", 'confirm-link-click' => 'confirmRefresh()' }
           %td.actions
             %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }
+
+= render 'spree/admin/shared/custom-confirm'
