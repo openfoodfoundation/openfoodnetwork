@@ -87,7 +87,7 @@ Openfoodnetwork::Application.routes.draw do
           constraints: lambda { |_| Flipper.enabled?(:api_reports) }
     end
 
-    namespace :v1, constraints: ->(request) { Flipper.enabled?(:api_v1, request.env["warden"].user) } do
+    namespace :v1 do
       resources :customers
 
       resources :enterprises do
