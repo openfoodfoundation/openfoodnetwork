@@ -41,12 +41,12 @@ handle_rename = (e, data) ->
   name = data.rslt.new_name
 
   url = Object.assign(base_url, {})
-  url = url['href'] + '/' + node.attr("id")
+  url.pathname = url.pathname + '/' + node.attr("id")
 
   $.ajax
     type: "POST",
     dataType: "json",
-    url: url.toString(),
+    url: url.pathname.toString(),
     data: {_method: "put", "taxon[name]": name },
     error: handle_ajax_error
 
