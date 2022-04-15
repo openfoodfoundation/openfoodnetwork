@@ -6,6 +6,7 @@
 
 - is_shipping_address = name == Spree.t(:shipping_address)
 - s_or_b = is_shipping_address ? 's' : 'b'
+- address_type = is_shipping_address ? 'shipping' : 'billing'
 
 - display_style = (use_billing && (!(@order.bill_address.empty? && @order.ship_address.empty?) && @order.bill_address == @order.ship_address)) ? 'none' : 'block'
 
@@ -28,14 +29,18 @@
   %div{class: "field"}
     = f.label :zipcode, Spree.t(:zip) + ':'
     = f.text_field :zipcode, class: 'fullwidth'
-  %div{class: "field"}
-    = f.label :country_id, Spree.t(:country) + ':'
-    %span{id: "#{s_or_b}country"}
-      = f.collection_select :country_id, available_countries, :id, :name, {}, {class: 'select2 fullwidth', onchange: "update_state('#{s_or_b}')"}
-  %div{class: "field"}
-    = f.label :state_id, Spree.t(:state) + ':'
-    %span{id: "#{s_or_b}state"}
-      = f.collection_select :state_id, f.object.country.states.sort, :id, :name, {include_blank: true}, {class: 'select2 fullwidth', disabled: f.object.country.states.empty?}
+  %div{"data-controller": "dependant-select", "data-dependant-select-options-value": countries_with_states }
+    %div{class: "field"}
+      = f.label :country_id, Spree.t(:country) + ':'
+      %span{id: "#{s_or_b}country"}
+        = f.select :country_id, countries, { selected: @order.send("#{address_type}_address").country_id },
+        { "data-controller": "tom-select", "data-dependant-select-target": "source", "data-action": "dependant-select#handleSelectChange", class: "primary" }
+    %div{class: "field"}
+      = f.label :state_id, Spree.t(:state) + ':'
+      %span{id: "#{s_or_b}state"}
+        = f.select :state_id, states_for_country(@order.send("#{address_type}_address").country), { selected: @order.send("#{address_type}_address").state_id },
+        { "data-controller": "tom-select", "data-dependant-select-target": "select", class: "primary" }
+
   %div{class: "field"}
     = f.label :phone, Spree.t(:phone) + ':'
     = f.phone_field :phone, class: 'fullwidth'

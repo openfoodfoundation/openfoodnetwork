@@ -38,7 +38,7 @@ describe '
     click_link 'New Adjustment'
     fill_in 'adjustment_amount', with: 110
     fill_in 'adjustment_label', with: 'Late fee'
-    select2_select 'GST', from: 'adjustment_tax_category_id'
+    select 'GST', from: 'adjustment_tax_category_id'
     click_button 'Continue'
 
     # Then I should see the adjustment, with the correct tax

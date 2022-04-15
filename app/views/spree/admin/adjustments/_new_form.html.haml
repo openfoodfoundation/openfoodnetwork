@@ -11,7 +11,8 @@
       = select_tag "adjustment[tax_category_id]",
         options_from_collection_for_select(Spree::TaxCategory.all, :id, :name),
         prompt: t(:none),
-        class: 'select2 fullwidth'
+        "data-controller": "tom-select",
+        class: "primary"
       = f.error_message_on :tax_category
 
 .row

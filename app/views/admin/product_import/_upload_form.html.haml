@@ -4,7 +4,9 @@
 
     %h6= t('admin.product_import.index.choose_import_type')
     %br
-    = select_tag "settings[import_into]", options_for_select({"#{t('admin.product_import.index.product_list')}" => :product_list, "#{t('admin.product_import.index.inventories')}" => :inventories}), {class: 'select2 select2-no-search', 'ng-model' => 'settings.import_into'}
+    = select_tag "settings[import_into]",
+      options_for_select({"#{t('admin.product_import.index.product_list')}" => :product_list, "#{t('admin.product_import.index.inventories')}" => :inventories}),
+      { "data-controller": "tom-select", class: "primary inline no-search", "ng-model": "settings.import_into" }
     %br
     %br
     %br
