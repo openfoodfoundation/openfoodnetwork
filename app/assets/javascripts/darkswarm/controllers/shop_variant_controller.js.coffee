@@ -1,4 +1,4 @@
-angular.module('Darkswarm').controller "ShopVariantCtrl", ($scope, $modal, Cart) ->
+angular.module('Darkswarm').controller "ShopVariantCtrl", ($scope, $modal, Cart, Shopfront) ->
   $scope.updateCart = (line_item) ->
     Cart.adjust($scope.variant.line_item)
 
@@ -69,3 +69,6 @@ angular.module('Darkswarm').controller "ShopVariantCtrl", ($scope, $modal, Cart)
   $scope.addBulk = (quantity) ->
     $scope.add(quantity)
     $modal.open(templateUrl: "bulk_buy_modal.html", scope: $scope, windowClass: "product-bulk-modal")
+
+  $scope.displayRemainingInStock = ->
+    Shopfront.shopfront.preferred_product_low_stock_display && $scope.available() <= 3 && !$scope.variant.line_item.quantity

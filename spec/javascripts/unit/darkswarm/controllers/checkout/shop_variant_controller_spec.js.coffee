@@ -20,7 +20,7 @@ describe "ShopVariantCtrl", ->
       CartMock =
         adjust: ->
           true
-      ctrl = $controller 'ShopVariantCtrl', {$scope: scope, $modal: $modal, Cart: CartMock}
+      ctrl = $controller 'ShopVariantCtrl', {$scope: scope, $modal: $modal, Cart: CartMock, Shopfront: {}}
 
   it "initializes the quantity for shop display", ->
     expect(scope.variant.line_item.quantity).toEqual 0

@@ -9,7 +9,7 @@ module Api
                :instagram, :linkedin, :twitter, :facebook, :is_primary_producer, :is_distributor,
                :phone, :visible, :email_address, :hash, :logo, :promo_image, :path, :category,
                :active, :producers, :orders_close_at, :hubs, :taxons, :supplied_taxons, :pickup,
-               :delivery
+               :delivery, :preferred_product_low_stock_display
 
     has_one :address, serializer: Api::AddressSerializer
     has_many :supplied_properties, serializer: Api::PropertySerializer

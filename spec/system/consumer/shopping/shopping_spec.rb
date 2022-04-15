@@ -376,6 +376,16 @@ describe "As a consumer I want to shop with a distributor", js: true do
         end
       end
 
+      it "shows quantity of remaining stock for products with quantity less < 3 when product_stock_display is true" do
+        distributor.set_preference(:product_low_stock_display, true)
+        variant.update on_hand: 2
+        visit shop_path
+
+        within_variant(variant) do
+          expect(page).to have_content "Only 2 left"
+        end
+      end
+
       it "alerts us when we enter a quantity greater than the stock available" do
         variant.update on_hand: 5
         visit shop_path
