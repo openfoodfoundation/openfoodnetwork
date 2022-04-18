@@ -1,12 +1,19 @@
 .row
-  .columns.small-12.medium-3
+  .columns.small-12.medium-5
     - if current_order.nil? || current_order.distributor.nil? || current_order.distributor == @order.distributor
       - if current_order&.line_items.present?
         = link_to main_app.cart_path, :class => "button expand" do
           = t(:order_back_to_cart)
       - else
-        = link_to "#{main_app.enterprise_shop_path(@order.distributor)}#/shop", class: "button expand" do
-          = t(:order_back_to_store)
+      .wrapper
+        .row
+          .columns.small-12.medium-6
+            = link_to "#{main_app.enterprise_shop_path(@order.distributor)}#/shop", class: "button expand" do
+              = t(:order_back_to_store)
+          .columns.small-12.medium-6
+            - if @order.distributor.website.present?
+              = link_to_service "https://", current_order.distributor.website, class: "button expand" do
+                = t(:order_back_to_website)
     - else
       &nbsp;
   - if order.changes_allowed?

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module GroupsHelper
+module LinkHelper
   def link_to_service(baseurl, name, html_options = {}, &block)
     return if name.blank?
 
@@ -14,9 +14,5 @@ module GroupsHelper
     else
       prefix + url
     end
-  end
-
-  def strip_url(url)
-    url&.sub(%r{^https?://}i, '')
   end
 end
