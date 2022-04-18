@@ -2061,10 +2061,10 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@orchidjs/sifter@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@orchidjs/sifter/-/sifter-0.9.0.tgz#07eab78de2ac1799d2c169bf1f2e3e746d86c32c"
-  integrity sha512-NDYPhjdydJNbwDRvMFyUFFeImj1a+CJAwpjh/goKmvTHi726DPAJ1nW0X05p/GsorQgXHwhgDPyu6WaYqd4cRA==
+"@orchidjs/sifter@^0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@orchidjs/sifter/-/sifter-0.9.1.tgz#20580cb75bcc1de3c9b9c021e0e546eb59ff2813"
+  integrity sha512-bdW8vKTlWXfoAvUud0a4OeVPrtdvHH8gTshKqndzxAI6bXGPBejgry2wvIz0OZOqOuWuFAJWgNCjq/6S85U77A==
 
 "@popperjs/core@^2.5.4", "@popperjs/core@^2.6.0":
   version "2.9.1"
@@ -12185,11 +12185,11 @@ toidentifier@1.0.0:
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
 
 tom-select@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/tom-select/-/tom-select-2.0.0.tgz#751ac1087cce29bd40e09f1a604e9ad69451fc86"
-  integrity sha512-ArECm8bNnv8GMTpvSQawesKX6IDv32cylqivjbghwCddYwfngmz+nOtEhQZkEye7BY415eutqhb4XYim2EL8Hg==
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/tom-select/-/tom-select-2.0.1.tgz#e3a6e6de61070274f746543f177107970a36b878"
+  integrity sha512-HTFf0OTwA2k8YCUqIZOenvr+ZrV4LMOUjCn3n5XS8wIpigcxKVvs5XRhBSGedhRJ8s+VmemIqy6rnabgBYX+6w==
   dependencies:
-    "@orchidjs/sifter" "^0.9.0"
+    "@orchidjs/sifter" "^0.9.1"
 
 tough-cookie@^4.0.0:
   version "4.0.0"
