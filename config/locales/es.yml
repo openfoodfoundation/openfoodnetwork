@@ -914,6 +914,8 @@ es:
           shopfront_sort_by_producer: "Por productora"
           shopfront_sort_by_category_placeholder: "Categoría"
           shopfront_sort_by_producer_placeholder: "Productora"
+          enabled: "Habilitado"
+          disabled: "Deshabilitado"
         social:
           twitter_placeholder: "ej: the_prof"
           instagram_placeholder: "p.ej. @mi_huerta"

@@ -874,6 +874,8 @@ nb:
           shopfront_sort_by_producer: "Etter produsent"
           shopfront_sort_by_category_placeholder: "Kategori"
           shopfront_sort_by_producer_placeholder: "Produsent"
+          enabled: "Aktivert"
+          disabled: "Deaktivert"
         social:
           twitter_placeholder: "f.eks. @the_prof"
           instagram_placeholder: "f.eks. the_prof"

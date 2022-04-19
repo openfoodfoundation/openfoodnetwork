@@ -762,6 +762,8 @@ fil_PH:
           close_date: "petsa ng pagsasara"
           shopfront_sort_by_category_placeholder: "kategorya"
           shopfront_sort_by_producer_placeholder: "Producer"
+          enabled: "pinagana"
+          disabled: "huwag paganahin"
         social:
           twitter_placeholder: "hal. @the_prof"
           instagram_placeholder: "hal. the_prof"

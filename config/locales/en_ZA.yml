@@ -759,6 +759,8 @@ en_ZA:
           close_date: "Close Date"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
+          enabled: "Enabled"
+          disabled: "Disabled"
         social:
           twitter_placeholder: "e.g. @siyastrawberries"
           instagram_placeholder: "e.g. siyastraw"

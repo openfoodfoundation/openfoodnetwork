@@ -779,6 +779,8 @@ nl_BE:
           close_date: "Sluiten Datum"
           shopfront_sort_by_category_placeholder: "Categorie"
           shopfront_sort_by_producer_placeholder: "Producent"
+          enabled: "Activeer"
+          disabled: "Deactiveer"
         social:
           twitter_placeholder: "bv. @de_prof"
           instagram_placeholder: "bv. de_prof"

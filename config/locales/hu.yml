@@ -927,6 +927,8 @@ hu:
           shopfront_sort_by_producer: "A producer által"
           shopfront_sort_by_category_placeholder: "Kategória"
           shopfront_sort_by_producer_placeholder: "Termelő"
+          enabled: "Engedélyezve"
+          disabled: "Tiltva"
         social:
           twitter_placeholder: "például. @the_prof"
           instagram_placeholder: "például. the_prof"

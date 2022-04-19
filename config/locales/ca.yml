@@ -886,6 +886,8 @@ ca:
           shopfront_sort_by_producer: "Per productora"
           shopfront_sort_by_category_placeholder: "Categoria"
           shopfront_sort_by_producer_placeholder: "Productora"
+          enabled: "Habilitat"
+          disabled: "Deshabilitat"
         social:
           twitter_placeholder: "p. ex: @horta_josepribes"
           instagram_placeholder: "p. ex: horta_josepribes"

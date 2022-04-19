@@ -837,6 +837,8 @@ pt_BR:
           close_date: "Dia de fechamento"
           shopfront_sort_by_category_placeholder: "Categoria"
           shopfront_sort_by_producer_placeholder: "Produtor"
+          enabled: "Ativado"
+          disabled: "Desativado"
         social:
           twitter_placeholder: "ex:  @o_prof"
           instagram_placeholder: "ex. the_prof"

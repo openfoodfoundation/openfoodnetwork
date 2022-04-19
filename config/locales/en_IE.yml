@@ -297,6 +297,7 @@ en_IE:
   producers_join: Producers are now welcome to join Open Food Network Ireland.
   charges_sales_tax: Charges VAT?
   business_address: "Business Address"
+  Invoice_item_sorting: "Invoice sorting"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -793,6 +794,11 @@ en_IE:
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
           reset_form: "Reset Form"
+          Invoice_item_sorting: Invoice item sorting
+          sort_items_by_supplier?: Sort items by supplier?
+          sort_items_by_supplier_tip: "When enabled, Items will be sorted by supplier name."
+          enabled: Enable
+          disabled: Disable
         business_address:
           company_legal_name: Company Legal Name
           company_placeholder: Example Inc.
@@ -917,6 +923,8 @@ en_IE:
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
+          enabled: "Enabled"
+          disabled: "Disabled"
         social:
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. the_prof"
@@ -1348,8 +1356,11 @@ en_IE:
       stripe_connect_settings:
         resource: Stripe Connect configuration
   api:
+    unknown_error: "Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
     unauthorized: "You are not authorised to perform that action."
+    unpermitted_parameters: "Parameters not allowed in this request: %{params}"
+    missing_parameter: "A required parameter is missing or empty: %{param}"
     invalid_resource: "Invalid resource. Please fix errors and try again."
     resource_not_found: "The resource you were looking for could not be found."
     enterprise_logo:
@@ -2719,6 +2730,7 @@ en_IE:
     admin:
       unit_price_tooltip: "The unit price increases transparency by allowing your customers to easily compare prices between different products and packaging sizes. Note, that the final unit price displayed in the shopfront might differ as it is includes taxes & fees."
       enterprise_limit_reached: "You have reached the standard limit of enterprises per account. Write to %{contact_email} if you need to increase it."
+      deleting_item_will_cancel_order: "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
       modals:
         got_it: "Got it"
         close: "Close"

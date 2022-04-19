@@ -876,6 +876,8 @@ fr_CM:
           shopfront_sort_by_producer: "Par producteur"
           shopfront_sort_by_category_placeholder: "Catégorie"
           shopfront_sort_by_producer_placeholder: "Producteur"
+          enabled: "Activé"
+          disabled: "Désactivé"
         social:
           twitter_placeholder: "ex. @OpenFoodNet_fr"
           instagram_placeholder: "ex: OpenFoodNet_fr"

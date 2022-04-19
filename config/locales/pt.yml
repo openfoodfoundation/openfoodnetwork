@@ -821,6 +821,8 @@ pt:
           close_date: "Data de fecho"
           shopfront_sort_by_category_placeholder: "Categoria"
           shopfront_sort_by_producer_placeholder: "Produtor/a"
+          enabled: "Activo"
+          disabled: "Desactivado"
         social:
           twitter_placeholder: "ex:  @o_prof"
           instagram_placeholder: "ex. o_agricultor"

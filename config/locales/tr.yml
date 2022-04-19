@@ -849,6 +849,8 @@ tr:
           shopfront_sort_by_producer: "Üretici"
           shopfront_sort_by_category_placeholder: "Kategori"
           shopfront_sort_by_producer_placeholder: "ÜRETİCİ"
+          enabled: "Etkin"
+          disabled: "Kapalı"
         social:
           twitter_placeholder: "Örn.  @the_usta"
           instagram_placeholder: "Örn. ciftlik   (başına @ işareti koymayınız)"

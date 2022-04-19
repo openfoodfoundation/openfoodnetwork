@@ -925,6 +925,10 @@ de_DE:
           shopfront_sort_by_producer: "Nach Produzent"
           shopfront_sort_by_category_placeholder: "Kategorie"
           shopfront_sort_by_producer_placeholder: "Produzent"
+          display_remaining_stock: "Restbestand anzeigen, wenn nur noch wenige Artikel verfügbar"
+          display_remaining_stock_tip: "Wenn nur noch 3 oder weniger Artikel eines Produkts verfügbar sind, wird der Restbestand im Online-Shop angezeigt. "
+          enabled: "aktiviert"
+          disabled: "deaktiviert"
         social:
           twitter_placeholder: "z. B. @the_prof"
           instagram_placeholder: "z. B. the_prof"
@@ -2983,6 +2987,7 @@ de_DE:
         add_to_cart: "Hinzufügen"
         in_cart: "im Warenkorb"
         quantity_in_cart: "%{quantity} im Warenkorb"
+        remaining_in_stock: "Nur noch %{quantity} verfügbar! "
       bulk_buy_modal:
         min_quantity: "Minimale Menge"
         max_quantity: "Maximale Menge"

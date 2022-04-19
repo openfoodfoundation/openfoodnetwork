@@ -919,6 +919,8 @@ ru:
           shopfront_sort_by_producer: "По производителю"
           shopfront_sort_by_category_placeholder: "Категория"
           shopfront_sort_by_producer_placeholder: "Производитель"
+          enabled: "Включено"
+          disabled: "Выключено"
         social:
           twitter_placeholder: "напр. @the_prof"
           instagram_placeholder: "напр. the_prof"
