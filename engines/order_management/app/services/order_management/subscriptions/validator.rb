@@ -103,7 +103,11 @@ module OrderManagement
       end
 
       def requested_variants_available?
-        subscription_line_items.each { |sli| verify_availability_of(sli.variant) }
+        persisting_line_items.each { |sli| verify_availability_of(sli.variant) }
+      end
+
+      def persisting_line_items
+        subscription_line_items.reject(&:marked_for_destruction?)
       end
 
       def verify_availability_of(variant)

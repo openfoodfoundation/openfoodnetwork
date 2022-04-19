@@ -513,7 +513,9 @@ describe 'Subscriptions' do
       let!(:customer) { create(:customer, enterprise: shop) }
       let!(:credit_card) { create(:stored_credit_card, user: customer.user) }
       let!(:shop_product) { create(:product, supplier: shop) }
+      let!(:shop_product2) { create(:product, supplier: shop) }
       let!(:shop_variant) { create(:variant, product: shop_product, unit_value: "2000") }
+      let!(:shop_variant2) { create(:variant, product: shop_product2, unit_value: "1000") }
       let!(:permitted_supplier) do
         create(:supplier_enterprise).tap do |supplier|
           create(:enterprise_relationship, child: shop, parent: supplier,
@@ -562,13 +564,14 @@ describe 'Subscriptions' do
         # Add products
         expect(page).to have_content "NAME OR SKU"
         add_variant_to_subscription shop_variant, 3
-        expect_not_in_open_or_upcoming_order_cycle_warning 1
-        add_variant_to_subscription permitted_supplier_variant, 4
+        add_variant_to_subscription shop_variant2, 1
         expect_not_in_open_or_upcoming_order_cycle_warning 2
+        add_variant_to_subscription permitted_supplier_variant, 4
+        expect_not_in_open_or_upcoming_order_cycle_warning 3
         add_variant_to_subscription incoming_exchange_variant, 5
-        expect_not_in_open_or_upcoming_order_cycle_warning 3
+        expect_not_in_open_or_upcoming_order_cycle_warning 4
         add_variant_to_subscription outgoing_exchange_variant, 6
-        expect_not_in_open_or_upcoming_order_cycle_warning 3
+        expect_not_in_open_or_upcoming_order_cycle_warning 4
         click_button "Next"
 
         # Submit form
@@ -579,7 +582,7 @@ describe 'Subscriptions' do
 
         # Subscription line items are created
         subscription = Subscription.last
-        expect(subscription.subscription_line_items.count).to eq 4
+        expect(subscription.subscription_line_items.count).to eq 5
 
         # Edit the subscription
         visit edit_admin_subscription_path(subscription)
@@ -596,6 +599,25 @@ describe 'Subscriptions' do
         expect(page).to have_current_path admin_subscriptions_path
 
         # Subscription is saved
+        visit edit_admin_subscription_path(subscription)
+        expect(page).to have_selector "#subscription-line-items .item", count: 4
+
+        # Delete an existing product
+        login_as_admin_and_visit spree.admin_products_path
+        within "#p_#{shop_product2.id}" do
+          accept_alert { page.find("[data-powertip=Remove]").click }
+        end
+
+        visit edit_admin_subscription_path(subscription)
+
+        # Remove deleted shop_variant from the subscription
+        click_button "edit-products"
+        within "#sli_0" do
+          expect(page).to have_selector ".description", text: shop_variant2.name
+          find("a.delete-item").click
+        end
+        click_button "Save Changes"
+        expect(page).to have_current_path admin_subscriptions_path
         visit edit_admin_subscription_path(subscription)
         expect(page).to have_selector "#subscription-line-items .item", count: 3
       end
