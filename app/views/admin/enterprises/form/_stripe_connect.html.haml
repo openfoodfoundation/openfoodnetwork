@@ -1,4 +1,3 @@
-= render 'admin/enterprises/form/stripe_connect/confirm_modal'
 
 - if @stripe_account = @enterprise.stripe_account
   .stripe-info
@@ -11,5 +10,8 @@
     .six.columns.alpha
       =t('.stripe_connect_intro')
     .five.columns.omega.text-right
-      %a.stripe-connect.help-modal{ template: 'admin/modals/stripe_connect_confirm.html' }
+      %a.stripe-connect{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "stripe_connect_confirm_modal" }
         %span= t('.connect_with_stripe')
+
+  = render HelpModalComponent.new(id: "stripe_connect_confirm_modal", close_button: false) do
+    = render 'admin/enterprises/form/stripe_connect/confirm_modal'

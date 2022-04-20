@@ -4,7 +4,7 @@
       .small-12.medium-6.columns
         %h3
           = t(:saved_cards)
-          %button.button.secondary.tiny.help-btn.ng-scope{ "help-modal" => t('.saved_cards_popover') }
+          %button.button.secondary.tiny.help-btn{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "saved_cards_modal" }
             %i.ofn-i_013-help
 
         .saved_cards{ ng: { show: 'savedCreditCards.length > 0' } }
@@ -22,3 +22,9 @@
           %h3
             = t('.authorised_shops')
           = render 'authorised_shops'
+
+      = render HelpModalComponent.new(id: "saved_cards_modal") do
+        %p.text-center.text-vbig
+          %i.ofn-i_013-help
+        %p
+          = t('.saved_cards_popover')

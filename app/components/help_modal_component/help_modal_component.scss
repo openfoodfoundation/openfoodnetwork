@@ -1,0 +1,10 @@
+.help-modal {
+  visibility: visible;
+  position: fixed;
+  top: 3em;
+}
+
+/* prevent arrow on selected admin menu item appearing above modal */
+body.modal-open #admin-menu li.selected a::after {
+  z-index: 0;
+}
