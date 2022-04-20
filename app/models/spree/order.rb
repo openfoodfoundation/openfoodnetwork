@@ -669,11 +669,12 @@ module Spree
       shipments.each(&:cancel!)
 
       OrderMailer.cancel_email(id).deliver_later if send_cancellation_email
-      self.payment_state = 'credit_owed' unless shipped?
+      update(payment_state: updater.update_payment_state)
     end
 
     def after_resume
       shipments.each(&:resume!)
+      update(payment_state: updater.update_payment_state)
     end
 
     def use_billing?

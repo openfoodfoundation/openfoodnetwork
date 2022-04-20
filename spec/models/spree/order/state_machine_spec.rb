@@ -136,20 +136,11 @@ describe Spree::Order do
       end
 
       context "without shipped items" do
-        it "should set payment state to 'credit owed'" do
-          order.cancel!
-          expect(order.payment_state).to eq 'credit_owed'
-        end
-      end
-
-      context "with shipped items" do
-        before do
-          allow(order).to receive_messages shipment_state: 'partial'
-        end
-
-        it "should not alter the payment state" do
-          order.cancel!
-          expect(order.payment_state).to be_nil
+        it "should set payment state to 'void'" do
+          expect {
+            order.cancel!
+            order.reload
+          }.to change { order.payment_state }.to("void")
         end
       end
     end
@@ -157,10 +148,41 @@ describe Spree::Order do
 
   # Another regression test for Spree #729
   context "#resume" do
-    before do
-      allow(order).to receive_messages email: "user@spreecommerce.com"
-      allow(order).to receive_messages state: "canceled"
-      allow(order).to receive_messages allow_resume?: true
+    context "resets payment state" do
+      let!(:variant) { build(:variant) }
+      before do
+        allow(order).to receive_messages email: "user@spreecommerce.com"
+        allow(order).to receive_messages allow_cancel?: true
+        allow(order).to receive_messages allow_resume?: true
+        allow(order).to receive_messages line_items:
+                                           [build(:line_item, variant: variant, quantity: 2)]
+        allow(order.line_items).to receive_messages find_by_variant_id: order.line_items.first
+        order.update(total: 10)
+        order.cancel!
+      end
+
+      it "should set payment state to 'balance due'" do
+        expect {
+          order.resume!
+          order.reload
+        }.to change { order.payment_state }.to("balance_due")
+      end
+
+      it "should set payment state to 'paid'" do
+        expect {
+          order.update(payment_total: 10)
+          order.resume!
+          order.reload
+        }.to change { order.payment_state }.to("paid")
+      end
+
+      it "should set payment state to 'credit owed'" do
+        expect {
+          order.update(payment_total: 20)
+          order.resume!
+          order.reload
+        }.to change { order.payment_state }.to("credit_owed")
+      end
     end
   end
 end
