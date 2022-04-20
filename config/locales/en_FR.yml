@@ -4044,6 +4044,8 @@ en_FR:
         spree/payment:
           one: Payments
           other: Payments
+    unit: unit
+    per_unit: per unit
   datetime:
     distance_in_words:
       about_x_hours:
