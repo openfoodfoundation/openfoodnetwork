@@ -58,42 +58,54 @@ describe '
     expect(page).to have_selector "#sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_flat_percent[value='12.34']"
   end
 
-  it "editing an enterprise fee" do
+  context "editing an enterprise fee" do
     # Given an enterprise fee
-    fee = create(:enterprise_fee)
-    enterprise = create(:enterprise, name: 'Foo')
+    let!(:fee) { create(:enterprise_fee) }
+    let!(:enterprise) { create(:enterprise, name: 'Foo') }
 
-    # When I go to the enterprise fees page
-    login_as_admin_and_visit admin_enterprise_fees_path
+    before do
+      # When I go to the enterprise fees page
+      login_as_admin_and_visit admin_enterprise_fees_path
+      # And I update the fields for the enterprise fee and click update
+      select 'Foo', from: 'sets_enterprise_fee_set_collection_attributes_0_enterprise_id'
+      select 'Admin', from: 'sets_enterprise_fee_set_collection_attributes_0_fee_type'
+      fill_in 'sets_enterprise_fee_set_collection_attributes_0_name', with: 'Greetings!'
+      select 'Inherit From Product', from: 'sets_enterprise_fee_set_collection_attributes_0_tax_category_id'
+      select 'Flat Percent', from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
+      click_button 'Update'
+    end
 
-    # And I update the fields for the enterprise fee and click update
-    select 'Foo', from: 'sets_enterprise_fee_set_collection_attributes_0_enterprise_id'
-    select 'Admin', from: 'sets_enterprise_fee_set_collection_attributes_0_fee_type'
-    fill_in 'sets_enterprise_fee_set_collection_attributes_0_name', with: 'Greetings!'
-    select 'Inherit From Product',
-           from: 'sets_enterprise_fee_set_collection_attributes_0_tax_category_id'
-    select 'Flat Percent', from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
-    click_button 'Update'
+    it "handle the default cases" do
+      # Then I should see the updated fields for my fee
+      expect(page).to have_select "sets_enterprise_fee_set_collection_attributes_0_enterprise_id",
+                                  selected: 'Foo'
+      expect(page).to have_select "sets_enterprise_fee_set_collection_attributes_0_fee_type",
+                                  selected: 'Admin fee'
+      expect(page).to have_selector "input[value='Greetings!']"
+      expect(page).to have_select 'sets_enterprise_fee_set_collection_attributes_0_tax_category_id',
+                                  selected: 'Inherit From Product'
+      expect(page).to have_selector "option[selected]", text: 'Flat Percent (per item)'
 
-    # Then I should see the updated fields for my fee
-    expect(page).to have_select "sets_enterprise_fee_set_collection_attributes_0_enterprise_id",
-                                selected: 'Foo'
-    expect(page).to have_select "sets_enterprise_fee_set_collection_attributes_0_fee_type",
-                                selected: 'Admin fee'
-    expect(page).to have_selector "input[value='Greetings!']"
-    expect(page).to have_select 'sets_enterprise_fee_set_collection_attributes_0_tax_category_id',
-                                selected: 'Inherit From Product'
-    expect(page).to have_selector "option[selected]", text: 'Flat Percent (per item)'
+      fee.reload
+      expect(fee.enterprise).to eq(enterprise)
+      expect(fee.name).to eq('Greetings!')
+      expect(fee.fee_type).to eq('admin')
+      expect(fee.calculator_type).to eq("Calculator::FlatPercentPerItem")
 
-    fee.reload
-    expect(fee.enterprise).to eq(enterprise)
-    expect(fee.name).to eq('Greetings!')
-    expect(fee.fee_type).to eq('admin')
-    expect(fee.calculator_type).to eq("Calculator::FlatPercentPerItem")
+      # Sets tax_category and inherits_tax_category
+      expect(fee.tax_category).to eq(nil)
+      expect(fee.inherits_tax_category).to eq(true)
+    end
 
-    # Sets tax_category and inherits_tax_category
-    expect(fee.tax_category).to eq(nil)
-    expect(fee.inherits_tax_category).to eq(true)
+    it "handle when updating calculator type for Weight to Flat Rate" do
+      select 'Weight (per kg or lb)', from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
+      click_button 'Update'
+
+      select 'Flat Rate (per item)', from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
+      click_button 'Update'
+
+      expect(fee.reload.calculator_type).to eq("Calculator::PerItem")
+    end
   end
 
   it "deleting an enterprise fee" do

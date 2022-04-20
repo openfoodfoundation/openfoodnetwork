@@ -71,6 +71,18 @@ describe 'shipping methods' do
       expect(page).to have_field "shipping_method_distributor_ids_#{distributor2.id}",
                                  checked: false
     end
+
+    it "handle when updating calculator type for Weight to Flat Rate" do
+      visit spree.edit_admin_shipping_method_path(@shipping_method)
+
+      select2_select 'Weight (per kg or lb)', from: 'calc_type'
+      click_button 'Update'
+
+      select2_select 'Flat Rate (per item)', from: 'calc_type'
+      click_button 'Update'
+
+      expect(@shipping_method.reload.calculator_type).to eq("Calculator::PerItem")
+    end
   end
 
   context "as an enterprise user", js: true do
