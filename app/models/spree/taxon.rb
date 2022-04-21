@@ -2,8 +2,6 @@
 
 module Spree
   class Taxon < ApplicationRecord
-    include Spree::Core::S3Support
-
     acts_as_nested_set dependent: :destroy
 
     belongs_to :taxonomy, class_name: 'Spree::Taxonomy', touch: true
@@ -13,15 +11,6 @@ module Spree
     before_create :set_permalink
 
     validates :name, presence: true
-
-    has_attached_file :icon,
-                      styles: { mini: '32x32>', normal: '128x128>' },
-                      default_style: :mini,
-                      url: '/spree/taxons/:id/:style/:basename.:extension',
-                      path: ':rails_root/public/spree/taxons/:id/:style/:basename.:extension',
-                      default_url: '/assets/default_taxon.png'
-
-    supports_s3 :icon
 
     # Indicate which filters should be used for this taxon
     def applicable_filters
