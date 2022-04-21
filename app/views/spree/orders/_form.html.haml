@@ -19,7 +19,7 @@
       %tbody#line_items{"data-hook" => ""}
         = render partial: 'line_item', collection: order_form.object.line_items, locals: {order_form: order_form}
 
-      = render 'bought' if show_bought_items? && @order.cart?
+      = render 'bought' if show_bought_items? && !@order.complete?
 
       %tfoot#edit-cart
         = render 'spree/orders/form/cart_actions_row' unless @order.complete?

@@ -887,12 +887,22 @@ describe "As a consumer, I want to checkout my order", js: true do
                order_cycle: order_cycle, distributor: distributor, user_id: order.user_id)
       }
 
-      it "informs about previous orders if distributor allow order changes" do
-        order.distributor.allow_order_changes = true
-        order.distributor.save
-        visit checkout_step_path(:summary)
+      context "when distributor allows order changes" do
+        before do
+          order.distributor.allow_order_changes = true
+          order.distributor.save
+          visit checkout_step_path(:summary)
+        end
 
-        expect(page).to have_content("You have an order for this order cycle already.")
+        it "informs about previous orders" do
+          expect(page).to have_content("You have an order for this order cycle already.")
+        end
+
+        it "show a link to /cart#bought-products page" do
+          expect(page).to have_link("cart", href: "/cart#bought-products")
+          click_on "cart"
+          expect(page).to have_text "#{prev_order.line_items.length} additional items already confirmed for this order cycle"
+        end
       end
 
       it "don't display any message if distributor don't allow order changes" do
