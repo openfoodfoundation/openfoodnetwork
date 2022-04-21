@@ -297,7 +297,7 @@ it:
   producers_join: I Produttori sono ora invitati ad unirsi ad Open Food Network
   charges_sales_tax: Vuoi calcolare gli importi IVA delle tue vendite?
   business_address: "Indirizzo azienda"
-  Invoice_item_sorting: "Ordina per conferma d'ordine"
+  enterprise_permissions: "Permessi Azienda"
   print_invoice: "Stampa Conferma d'ordine"
   print_ticket: "Stampa Biglietto"
   select_ticket_printer: "Seleziona la stampante per i biglietti"
@@ -823,6 +823,8 @@ it:
           manage_fees: Gestisci tariffe azienda
           no_fees_yet: Non hai ancora nessuna tariffa aziendale
           create_button: Creane una ora
+        enterprise_permissions:
+          enterprise_relationships: Relazioni dell'azienda
         images:
           logo: Logo
           promo_image_placeholder: 'Questa immagine sarà visibile in "Chi Siamo"'

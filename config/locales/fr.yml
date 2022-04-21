@@ -297,7 +297,7 @@ fr:
   producers_join: Les producteurs et autres circuits courts basés en France sont invités à rejoindre CoopCircuits.
   charges_sales_tax: Soumis à la TVA?
   business_address: "Adresse du siège social"
-  Invoice_item_sorting: "Ordre d'affichage sur facture"
+  enterprise_permissions: "Permissions Inter-entreprises"
   print_invoice: "Imprimer la facture"
   print_ticket: "Imprimer ticket de caisse"
   select_ticket_printer: "Choisir l'imprimante tickets"
@@ -823,6 +823,8 @@ fr:
           manage_fees: Gérer les marges et commissions
           no_fees_yet: Vous n'avez pas encore défini de commissions
           create_button: Créer une commission
+        enterprise_permissions:
+          enterprise_relationships: Permissions inter-entreprises
         images:
           logo: Logo
           promo_image_placeholder: 'Cette image est affichée dans "A propos"'
