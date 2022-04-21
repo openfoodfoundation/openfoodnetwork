@@ -925,6 +925,10 @@ fr:
           shopfront_sort_by_producer: "Par producteur"
           shopfront_sort_by_category_placeholder: "Catégorie"
           shopfront_sort_by_producer_placeholder: "Producteur"
+          display_remaining_stock: "Affiche le stock restant d'un produit sur la boutique si le stock est faible"
+          display_remaining_stock_tip: "Permet aux acheteurs de savoir lorsqu'il reste 3 éléments (ou moins) pour un produit."
+          enabled: "Activé"
+          disabled: "Désactivé"
         social:
           twitter_placeholder: "ex. @OpenFoodNet_fr"
           instagram_placeholder: "ex: OpenFoodNet_fr"
@@ -3002,6 +3006,7 @@ fr:
         add_to_cart: "Ajouter"
         in_cart: "au panier"
         quantity_in_cart: "%{quantity} au panier"
+        remaining_in_stock: "Seulement %{quantity}produits restant"
       bulk_buy_modal:
         min_quantity: "Quantité min"
         max_quantity: "Quantité max"
@@ -4069,6 +4074,8 @@ fr:
         spree/payment:
           one: Paiement
           other: Paiements
+    unit: unité
+    per_unit: par unité
   datetime:
     distance_in_words:
       about_x_hours:

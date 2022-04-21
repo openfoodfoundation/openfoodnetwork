@@ -297,6 +297,7 @@ ar:
   producers_join: المنتجون الأستراليون مدعوون الآن للانضمام إلى شبكة الغذاء المفتوح.
   charges_sales_tax: رسوم ضريبة السلع والخدمات؟
   business_address: "عنوان العمل"
+  Invoice_item_sorting: "فرز الفاتورة"
   print_invoice: "طباعة الفاتورة"
   print_ticket: "طباعة التذكرة"
   select_ticket_printer: "حدد الطابعة للتذاكر"
@@ -793,6 +794,11 @@ ar:
           remove_terms_and_conditions: "إزالة الملف"
           uploaded_on: "تم الرفع في"
           reset_form: "إعادة تعيين النموذج"
+          Invoice_item_sorting: فرز بند الفاتورة
+          sort_items_by_supplier?: فرز العناصر حسب المورد؟
+          sort_items_by_supplier_tip: "عند التمكين ، سيتم فرز العناصر حسب اسم المورد."
+          enabled: تمكين
+          disabled: إبطال
         business_address:
           company_legal_name: الاسم القانوني للشركة
           company_placeholder: شركة مثال
@@ -916,6 +922,10 @@ ar:
           shopfront_sort_by_producer: "حسب المنتج"
           shopfront_sort_by_category_placeholder: "الفئة"
           shopfront_sort_by_producer_placeholder: "المنتج"
+          display_remaining_stock: "عرض المخزون المتبقي في واجهة المتجر إذا كان منخفضًا في المتناول"
+          display_remaining_stock_tip: "دع المتسوقين يعرفون عندما لا يتبقى سوى 3 عناصر أو أقل."
+          enabled: "تمكين"
+          disabled: "تعليق"
         social:
           twitter_placeholder: "على سبيل المثال. the_prof"
           instagram_placeholder: "على سبيل المثال. the_prof"
@@ -2959,6 +2969,7 @@ ar:
         add_to_cart: "إضافة"
         in_cart: "في السلة"
         quantity_in_cart: "%{quantity} في السلة"
+        remaining_in_stock: "بقي %{quantity} فقط"
       bulk_buy_modal:
         min_quantity: "اقل كمية "
         max_quantity: "اعلى كمية"
