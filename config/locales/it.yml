@@ -297,6 +297,7 @@ it:
   producers_join: I Produttori sono ora invitati ad unirsi ad Open Food Network
   charges_sales_tax: Vuoi calcolare gli importi IVA delle tue vendite?
   business_address: "Indirizzo azienda"
+  Invoice_item_sorting: "Ordina per conferma d'ordine"
   print_invoice: "Stampa Conferma d'ordine"
   print_ticket: "Stampa Biglietto"
   select_ticket_printer: "Seleziona la stampante per i biglietti"
@@ -793,6 +794,11 @@ it:
           remove_terms_and_conditions: "Rimuovi File"
           uploaded_on: "caricato il"
           reset_form: "Cancella"
+          Invoice_item_sorting: Ordina per articoli nelle conferme d'ordine
+          sort_items_by_supplier?: Ordina articoli per produttore?
+          sort_items_by_supplier_tip: "Se selezionato, i prodotti saranno ordinati per nome del produttore"
+          enabled: Attiva
+          disabled: Disattiva
         business_address:
           company_legal_name: Ragione Sociale
           company_placeholder: Esempio
@@ -918,6 +924,10 @@ it:
           shopfront_sort_by_producer: "Per produttore"
           shopfront_sort_by_category_placeholder: "Categoria"
           shopfront_sort_by_producer_placeholder: "Produttore"
+          display_remaining_stock: "Mostra le disponibilità di prodotto nella vetrina se basse"
+          display_remaining_stock_tip: "Fai sapere ai clienti quando ci sono solo 3 o meno articoli rimasti."
+          enabled: "Abilitata"
+          disabled: "Disabilitata"
         social:
           twitter_placeholder: "es. @the_prof"
           instagram_placeholder: "es. the_prof"
@@ -1349,8 +1359,11 @@ it:
       stripe_connect_settings:
         resource: 'Configurazione Stripe Connect '
   api:
+    unknown_error: "Qualcosa non ha funzionato. La nostra squadra è stata avvisata."
     invalid_api_key: "Chiave API (%{key}) specificata non valida."
     unauthorized: "Non sei autorizzato a eseguire questa azione."
+    unpermitted_parameters: "Parametri non permessi in questa richiesta: %{params}"
+    missing_parameter: "Un parametro obbligatorio non è indicato: %{param}"
     invalid_resource: "Risorsa non valida. Per favore correggi gli errori e riprova."
     resource_not_found: "La risorsa che stavi cercando non è stata trovata."
     enterprise_logo:
@@ -1426,6 +1439,7 @@ it:
         login: "accedi"
         contact: "contatti"
         require_customer_login: "Solo clienti approvati hanno accesso a questo negozio"
+        require_login_link_html: "Se sei già un cliente confermato, %{login} per procedere."
         require_login_2_html: "Vuoi iniziare a acquistare qui? Per favore %{contact} %{enterprise} e chiedi di essere aggiunto."
         require_customer_html: "Se vuoi iniziare a comprare, per favore %{contact} %{enterprise} per chiedere di aggiungerti ai clienti."
       select_oc:
@@ -2719,6 +2733,7 @@ it:
     admin:
       unit_price_tooltip: "Il prezzo unitario migliora la trasparenza, permettendo ai consumatori di comparare i prezzi tra prodotti e confezioni differenti. Nota che il prezzo unitario finale visibile nella vetrina può differire in quanto include eventuali tariffe e maggiorazioni."
       enterprise_limit_reached: "Hai raggiunto il limite standard di aziende per account. Scrivi a  %{contact_email} se hai bisogno di aumentarlo."
+      deleting_item_will_cancel_order: "Questa operazione risulterà in una o più gentili richieste vuote che saranno cancellate. Desideri proseguire?"
       modals:
         got_it: "Capito"
         close: "Ok"
@@ -2912,6 +2927,8 @@ it:
           invalid: "invalido"
         quantity_adjusted: "Disponibilità insufficiente.  Quantità aggiornata alla massima quantità disponibile."
         quantity_unchanged: "Quantità non modificata rispetto a quantità precedente."
+        cancel_the_order_html: "Questo eliminerà la gentile richiesta corrente.<br />Sei sicuro di voler procedere?"
+        cancel_the_order_send_cancelation_email: "Invia una mail di cancellazione al cliente"
       resend_user_email_confirmation:
         resend: "Invia nuovamente"
         sending: "Invia di nuovo..."
@@ -2964,6 +2981,7 @@ it:
         add_to_cart: "Aggiungi"
         in_cart: "nel carrello"
         quantity_in_cart: "%{quantity} nel carrello"
+        remaining_in_stock: "Solo %{quantity} rimanenti"
       bulk_buy_modal:
         min_quantity: "Quantità minima"
         max_quantity: "Quantità massima"
@@ -3278,6 +3296,7 @@ it:
     tracking: "Tracciamento"
     tracking_number: "Numero Tracciamento"
     order_total: "Ordine totale"
+    order_updated: "Gentile richiesta aggiornata"
     customer_details: "Dettagli Cliente"
     customer_details_updated: "Dettagli Consumatore aggiornati"
     customer_search: "Ricerca Clienti"
@@ -4029,6 +4048,8 @@ it:
         spree/payment:
           one: Pagamento
           other: Pagamenti
+    unit: unità
+    per_unit: per unità
   datetime:
     distance_in_words:
       about_x_hours:
