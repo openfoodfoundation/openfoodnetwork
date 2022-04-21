@@ -16,6 +16,7 @@ angular.module("admin.enterprises")
       { name: 'shipping_methods', label: t('shipping_methods'), icon_class: "icon-truck", show: "showShippingMethods()" }
       { name: 'payment_methods', label: t('payment_methods'), icon_class: "icon-money", show: "showPaymentMethods()" }
       { name: 'enterprise_fees', label: t('enterprise_fees'), icon_class: "icon-tasks", show: "showEnterpriseFees()" }
+      { name: 'enterprise_permissions', label: t('enterprise_permissions'), icon_class: "icon-plug" }
       { name: 'inventory_settings', label: t('inventory_settings'), icon_class: "icon-list-ol", show: "enterpriseIsShop()" }
       { name: 'tag_rules', label: t('tag_rules'), icon_class: "icon-random", show: "enterpriseIsShop()" }
       { name: 'shop_preferences', label: t('shop_preferences'), icon_class: "icon-shopping-cart", show: "enterpriseIsShop()" }
@@ -44,3 +45,5 @@ angular.module("admin.enterprises")
 
     $scope.enterpriseIsShop = ->
       $scope.Enterprise.sells != "none"
+
+    $scope.menu.redirect_function('enterprise_permissions', '/admin/enterprise_relationships')

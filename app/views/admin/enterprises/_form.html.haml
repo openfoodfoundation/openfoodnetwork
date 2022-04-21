@@ -47,6 +47,9 @@
   %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/enterprise_fees', f: f
 
+%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='enterprise_permissions'" } }
+  %legend {{menu.selected.label}}
+
 %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='inventory_settings'" } }
   %legend {{menu.selected.label}}
   = render 'admin/enterprises/form/inventory_settings', f: f
