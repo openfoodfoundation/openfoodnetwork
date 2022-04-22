@@ -43,7 +43,7 @@ module OpenFoodNetwork
     def warnings
       warnings = []
 
-      unless @enterprise.visible
+      unless @enterprise.public?
         warnings << {
           description: I18n.t('admin.enterprise_issues.not_visible', enterprise: @enterprise.name),
           link: "<a class='button fullwidth' href='#{edit_admin_enterprise_path(@enterprise)}'>#{I18n.t(:edit)}</a>"

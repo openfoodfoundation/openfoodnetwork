@@ -201,7 +201,7 @@ describe '
     expect(page).to have_field 'enterprise_name', with: 'Eaterprises'
     @enterprise.reload
     expect(@enterprise.owner).to eq user
-    expect(page).to have_checked_field "enterprise_visible_true"
+    expect(page).to have_checked_field "enterprise_visible_public"
 
     click_link "Business Details"
     expect(page).to have_checked_field "enterprise_charges_sales_tax_true"
