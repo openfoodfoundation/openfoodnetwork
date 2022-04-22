@@ -823,6 +823,8 @@ en_FR:
           manage_fees: Manage Enterprise Fees
           no_fees_yet: You don't have any enterprise fees yet.
           create_button: Create One Now
+        enterprise_permissions:
+          enterprise_relationships: Enterprise Relationships
         images:
           logo: Logo
           promo_image_placeholder: 'This image is displayed in "About Us"'
@@ -863,9 +865,10 @@ en_FR:
           sells: Sells
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
           visible_in_search: Visible in search?
-          visible_in_search_tip: Determines whether this enterprise will be visible to customers when searching the site.
-          visible: Visible
-          not_visible: Not visible
+          visible_in_search_tip: "Shops can be <br /> 1. publicly visible, appearing on the OFN map and listings.<br /> 2. Hidden on maps and listings but referenced by other shops and linked in their profile. <br /> 3. Completely hidden."
+          visible: Public
+          not_visible: Hidden
+          hidden: Hide all references
           permalink: Permalink (no spaces)
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front
