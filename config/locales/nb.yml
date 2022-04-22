@@ -75,6 +75,44 @@ nb:
       missing: "Det er ikke noe kort på en kunde som blir belastet."
       processing_error: "Det oppstod en feil under behandling av kortet."
       rate_limit: "Det oppstod en feil på grunn av forespørsler som traff API-en for raskt. Gi oss beskjed hvis du stadig opplever denne feilen."
+      authentication_required: "Kortet ble avvist da transaksjonen krever autentisering."
+      approve_with_id: "Betalingen kan ikke godkjennes."
+      call_issuer: "Kortet har blitt avvist av ukjent årsak."
+      card_not_supported: "Kortet støtter ikke denne typen kjøp."
+      card_velocity_exceeded: "Kunden har overskredet saldoen eller kredittgrensen som er tilgjengelig på kortet sitt."
+      currency_not_supported: "Kortet støtter ikke den angitte valutaen."
+      do_not_honor: "Kortet har blitt avvist av ukjent årsak."
+      do_not_try_again: "Kortet har blitt avvist av ukjent årsak."
+      duplicate_transaction: "En transaksjon med identisk beløp og kredittkortinformasjon ble sendt inn ganske nylig."
+      fraudulent: "Betalingen har blitt avvist da Stripe mistenker at det er uredelig."
+      generic_decline: "Kortet har blitt avvist av ukjent årsak."
+      incorrect_pin: "PIN-koden som er angitt er feil. Denne avslagskoden gjelder kun for betalinger gjort med kortleser."
+      insufficient_funds: "Kortet har ikke nok midler til å fullføre kjøpet."
+      invalid_account: "Kortet, eller kontoen kortet er koblet til, er ugyldig."
+      invalid_amount: "Betalingsbeløpet er ugyldig, eller overstiger beløpet som er tillatt."
+      invalid_pin: "PIN-koden som er angitt er feil. Denne avslagskoden gjelder kun for betalinger gjort med kortleser."
+      issuer_not_available: "Kortutstederen kunne ikke nås, så betalingen kunne ikke godkjennes."
+      lost_card: "Betalingen er avvist fordi kortet er meldt tapt."
+      merchant_blacklist: "Betalingen har blitt avvist fordi den samsvarer med en verdi på Stripe-brukerens blokkeringsliste."
+      new_account_information_available: "Kortet, eller kontoen kortet er koblet til, er ugyldig."
+      no_action_taken: "Kortet har blitt avvist av ukjent årsak."
+      not_permitted: "Betalingen er ikke tillatt."
+      offline_pin_required: "Kortet har blitt avvist da det krever en PIN-kode."
+      online_or_offline_pin_required: "Kortet har blitt avvist da det krever en PIN-kode."
+      pickup_card: "Kortet kan ikke brukes til å foreta denne betalingen (det er mulig det er meldt tapt eller stjålet)."
+      pin_try_exceeded: "Det tillatte antallet PIN-forsøk er overskredet."
+      reenter_transaction: "Betalingen kunne ikke behandles av utstederen av en ukjent årsak."
+      restricted_card: "Kortet kan ikke brukes til å foreta denne betalingen (det er mulig det er meldt tapt eller stjålet)."
+      revocation_of_all_authorizations: "Kortet har blitt avvist av ukjent årsak."
+      revocation_of_authorization: "Kortet har blitt avvist av ukjent årsak."
+      security_violation: "Kortet har blitt avvist av ukjent årsak."
+      service_not_allowed: "Kortet har blitt avvist av ukjent årsak."
+      stolen_card: "Betalingen er avvist fordi kortet er meldt stjålet."
+      stop_payment_order: "Kortet har blitt avvist av ukjent årsak."
+      testmode_decline: "Et Stripe-testkortnummer ble brukt."
+      transaction_not_allowed: "Kortet har blitt avvist av ukjent årsak."
+      try_again_later: "Kortet har blitt avvist av ukjent årsak."
+      withdrawal_count_limit_exceeded: "Kunden har overskredet saldoen eller kredittgrensen som er tilgjengelig på kortet sitt."
   activemodel:
     attributes:
       order_management/reports/enterprise_fee_summary/parameters:
@@ -140,6 +178,9 @@ nb:
       already_registered: "Denne epostadressen er allerede registrert. Vennligst logg inn for å fortsette, eller gå tilbake og bruk en annen epostadresse."
     success:
       logged_in_succesfully: "Innlogging vellykket"
+    sessions:
+      signed_out: "Utlogging vellykket."
+      already_signed_out: "Utlogging vellykket."
     user_passwords:
       spree_user:
         updated_not_active: "Ditt passord har blitt tilbakestilt, men epostadressen din er ikke bekreftet enda."
@@ -665,6 +706,8 @@ nb:
         display_name: Visningsnavn
         category: Kategori
         description: Beskrivelse
+        units: Enheter
+        unit_type: Enhetstype
         variant_unit_name: Enhetsnavn Variant
         price: Pris
         on_hand: Tilgjengelig
@@ -751,6 +794,11 @@ nb:
           remove_terms_and_conditions: "Fjern Fil"
           uploaded_on: "lastet opp den"
           reset_form: "Tilbakestill skjema"
+          Invoice_item_sorting: Sortering av fakturavare
+          sort_items_by_supplier?: Sortere varer etter leverandør?
+          sort_items_by_supplier_tip: "Når den er aktivert, vil varer sorteres etter leverandørnavn."
+          enabled: Aktiver
+          disabled: Deaktiver
         business_address:
           company_legal_name: Selskapets juridiske navn
           company_placeholder: Eksempel AS
@@ -817,9 +865,10 @@ nb:
           sells: Selger
           sells_tip: "Ingen - bedriften selger ikke til kunder direkte.<br />Egne - Bedrift selger egne produkter til kunder.<br />Både og - Bedrift kan selge egne eller andre bedrfiters produkter.<br />"
           visible_in_search: Synlig i søk?
-          visible_in_search_tip: Bestemmer om denne bedriften vil være synlig til kunder når man søker på siden.
-          visible: Synlig
-          not_visible: Ikke synlig
+          visible_in_search_tip: "Butikker kan være<br /> 1. offentlig synlig, vises på OFN-kartet og listene.<br /> 2. Skjult på kart og oppføringer, men referert av andre butikker og koblet til i deres profil.<br /> 3. Helt skjult."
+          visible: Offentlig
+          not_visible: Skjult
+          hidden: Skjul alle referanser
           permalink: Permalink (ingen mellomrom)
           permalink_tip: "Denne permalinken brukes til å opprette url-en til din butikk: %{link}din-butikks-navn/shop"
           link_to_front: Lenke til butikkvindu
@@ -877,6 +926,8 @@ nb:
           shopfront_sort_by_producer: "Etter produsent"
           shopfront_sort_by_category_placeholder: "Kategori"
           shopfront_sort_by_producer_placeholder: "Produsent"
+          display_remaining_stock: "Vis gjenværende lager i butikkfronten hvis det er lite tilgjengelig"
+          display_remaining_stock_tip: "Gi kunder beskjed når det bare er 3 eller færre varer igjen."
           enabled: "Aktivert"
           disabled: "Deaktivert"
         social:
@@ -1006,6 +1057,8 @@ nb:
         back_to_list: "Tilbake til Listen"
         save_and_back_to_list: "Lagre og Tilbake til Listen"
         choose_products_from: "Velg Produkter Fra:"
+        re_notify_producers: Varsle produsentene på nytt
+        notify_producers_tip: Dette vil sende en epost til hver produsent med listen over deres bestillinger.
       incoming:
         incoming: "Innkommende"
         supplier: "Leverandør"
@@ -1046,6 +1099,8 @@ nb:
         add_supplier: 'Legg til leverandør'
         add_distributor: 'Legg til distributør'
       advanced_settings:
+        automatic_notifications: Automatiske varsler
+        automatic_notifications_tip: Gi automatisk beskjed til produsentene om bestillingene sine via epost når bestillingsrundene lukkes
         title: Avanserte Innstillinger
         choose_product_tip: Du kan begrense innkommende og utgående produkter til kun %{inventory}s lagerbeholdning.
         preferred_product_selection_from_coordinator_inventory_only_here: Kun Koordinators varelager
@@ -1306,8 +1361,11 @@ nb:
       stripe_connect_settings:
         resource: Stripe Connect-konfigurasjon
   api:
+    unknown_error: "Noe gikk galt. Teamet vårt har blitt varslet."
     invalid_api_key: "Ugyldig API-nøkkel (%{key}) spesifisert."
     unauthorized: "Du er ikke autorisert til å utføre handlingen."
+    unpermitted_parameters: "Parametre som ikke er tillatt i denne forespørselen: %{params}"
+    missing_parameter: "En nødvendig parameter mangler eller er tom: %{param}"
     invalid_resource: "Ugyldig ressurs. Vennligst rett feil og prøv igjen."
     resource_not_found: "Ressursen du lette etter, ble ikke funnet."
     enterprise_logo:
@@ -1332,6 +1390,7 @@ nb:
       terms_and_conditions: "Vilkår og Betingelser"
     failed: "Utsjekk fra kassen mislyktes. Gi oss beskjed slik at vi kan behandle bestillingen din."
     payment_cancelled_due_to_stock: "Betaling kansellert: utsjekk kunne ikke fullføres på grunn av lagerproblemer."
+    order_not_loaded: "Fant ingen gyldig ordre for betalingsbehandling"
   shops:
     hubs:
       show_closed_shops: "Vis stengte butikker"
@@ -1382,6 +1441,7 @@ nb:
         login: "innlogging"
         contact: "kontakt"
         require_customer_login: "Kun godkjente kunder kan få tilgang til denne butikken."
+        require_login_link_html: "Hvis du allerede er en godkjent kunde, %{login} for å fortsette."
         require_login_2_html: "Vil du begynne å handle her? Vennligst %{contact} %{enterprise} og spør om å bli med."
         require_customer_html: "Hvis du vil begynne å handle her, vennligst %{contact} %{enterprise} for å spørre om å bli med."
       select_oc:
@@ -1662,10 +1722,18 @@ nb:
       form:
         card_number:
           label: Kortnummer
+          placeholder: f.eks. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
         card_month:
           label: Måned
         card_year:
           label: År
+        stripe:
+          use_saved_card: Bruk lagret kort
+          use_new_card: Skriv inn kortdetaljene dine
+          save_card: Lagre kortet for fremtidig bruk
+          create_new_card: eller skriv inn nye kortdetaljer nedenfor
       explaination: Du kan gå gjennom og bekrefte bestillingen din i neste trinn som inkluderer de endelige kostnadene.
       submit: Neste - Bestillingssammendrag
       cancel: Tilbake til dine detaljer
@@ -2667,6 +2735,7 @@ nb:
     admin:
       unit_price_tooltip: "Enhetsprisen øker gjennomsiktigheten ved at kundene dine enkelt kan sammenligne priser mellom forskjellige produkter og emballasjestørrelser. Merk at den endelige enhetsprisen som vises i butikken, kan variere ettersom den inkluderer skatter og avgifter."
       enterprise_limit_reached: "Du har nådd standardgrensen for bedrifter per konto. Skriv til %{contact_email} hvis du trenger å øke den."
+      deleting_item_will_cancel_order: "Denne operasjonen vil resultere i en eller flere tomme bestillinger, som vil bli kansellert. Ønsker du å fortsette?"
       modals:
         got_it: "Jeg forstår"
         close: "Lukk"
@@ -2857,6 +2926,8 @@ nb:
           invalid: "ugyldig"
         quantity_adjusted: "Utilstrekkelig lager tilgjengelig. Ordrelinje oppdatert til maksimalt tilgjengelig antall."
         quantity_unchanged: "Antall uendret fra forrige mengde."
+        cancel_the_order_html: "Dette vil kansellere gjeldende bestilling.<br /> Er du sikker på at du vil fortsette?"
+        cancel_the_order_send_cancelation_email: "Send en kanselleringsmail til kunden"
       resend_user_email_confirmation:
         resend: "Send på nytt"
         sending: "Send på nytt ..."
@@ -2909,6 +2980,7 @@ nb:
         add_to_cart: "Legg til"
         in_cart: "i handlekurv"
         quantity_in_cart: "%{quantity} i handlekurven"
+        remaining_in_stock: "Kun %{quantity} igjen"
       bulk_buy_modal:
         min_quantity: "Min. mengde"
         max_quantity: "Max mengde"
@@ -3220,6 +3292,7 @@ nb:
     tracking: "Sporing"
     tracking_number: "Sporingsnummer"
     order_total: "Bestilling Totalt"
+    order_updated: "Bestillingen er oppdatert"
     customer_details: "Kundedetaljer"
     customer_details_updated: "Kundedetaljer oppdatert"
     customer_search: "Kundesøk"
@@ -3481,6 +3554,7 @@ nb:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Kan ikke legge varen til den avbrutte bestillingen"
+          include_out_of_stock_variants: "Inkluder varianter uten tilgjengelig lager"
         index:
           listing_orders: "Lister opp bestillinger"
           new_order: "Ny bestilling"
@@ -3971,6 +4045,7 @@ nb:
           one: innbetaling
           other: Betalinger
     unit: enhet
+    per_unit: per enhet
   datetime:
     distance_in_words:
       about_x_hours:
