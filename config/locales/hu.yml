@@ -3,6 +3,7 @@ hu:
   activerecord:
     models:
       spree/product: Termék
+      spree/shipping_method: Szállítási Mód
     attributes:
       spree/user:
         password: "Jelszó"
@@ -296,6 +297,7 @@ hu:
   producers_join: Az ausztrál termelők most már csatlakozhatnak az Open Food Networkhöz.
   charges_sales_tax: GST-t fizet?
   business_address: "Üzleti cím"
+  enterprise_permissions: "Vállalati engedélyek"
   print_invoice: "Számla nyomtatása"
   print_ticket: "Jegy nyomtatása"
   select_ticket_printer: "Válasszon nyomtatót a jegyekhez"
@@ -926,6 +928,8 @@ hu:
           shopfront_sort_by_producer: "A producer által"
           shopfront_sort_by_category_placeholder: "Kategória"
           shopfront_sort_by_producer_placeholder: "Termelő"
+          enabled: "Engedélyezve"
+          disabled: "Tiltva"
         social:
           twitter_placeholder: "például. @the_prof"
           instagram_placeholder: "például. the_prof"

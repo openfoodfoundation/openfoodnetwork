@@ -3,6 +3,7 @@ en_ZA:
   activerecord:
     models:
       spree/product: Product
+      spree/shipping_method: Shipping Method
     attributes:
       spree/user:
         password: "Password"
@@ -196,6 +197,7 @@ en_ZA:
   search_by_name: Search by name, town, province or postcode...
   producers_join: South African producers are now welcome to join Open Food Network SA.
   charges_sales_tax: Charges VAT?
+  enterprise_permissions: "Enterprise Permissions"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -758,6 +760,8 @@ en_ZA:
           close_date: "Close Date"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
+          enabled: "Enabled"
+          disabled: "Disabled"
         social:
           twitter_placeholder: "e.g. @siyastrawberries"
           instagram_placeholder: "e.g. siyastraw"

@@ -104,15 +104,21 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     else
       StatusMessage.display 'failure', t "unsaved_changes_error"
 
-  $scope.cancelOrder = (order) ->
+  $scope.cancelOrder = (order, sendEmailCancellation) ->
     return $http(
       method: 'GET'
-      url: "/admin/orders/#{order.number}/fire?e=cancel")
+      url: "/admin/orders/#{order.number}/fire?e=cancel&send_cancellation_email=#{sendEmailCancellation}")
   
   $scope.deleteLineItem = (lineItem) ->
     if lineItem.order.item_count == 1
-      if confirm(t('js.admin.deleting_item_will_cancel_order'))
-        $scope.cancelOrder(lineItem.order).then(-> $scope.refreshData())
+      ofnCancelOrderAlert((confirm, sendEmailCancellation) ->
+        if confirm
+          $scope.cancelOrder(lineItem.order, sendEmailCancellation).then(->
+            $scope.refreshData()
+          )
+        else
+          $scope.refreshData()
+      , "js.admin.deleting_item_will_cancel_order")
     else if ($scope.confirmDelete && confirm(t "are_you_sure")) || !$scope.confirmDelete
       LineItems.delete(lineItem, () -> $scope.refreshData())
 
@@ -129,13 +135,14 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       willCancelOrders = true if (order.item_count == itemsPerOrder.get(order).length)
 
     if willCancelOrders
-      return unless confirm(t("js.admin.deleting_item_will_cancel_order"))
-
-    itemsPerOrder.forEach (items, order) =>
-      if order.item_count == items.length
-        $scope.cancelOrder(order).then(-> $scope.refreshData())
-      else
-        Promise.all(LineItems.delete(item) for item in items).then(-> $scope.refreshData())
+      ofnCancelOrderAlert((confirm, sendEmailCancellation) ->
+        if confirm
+          itemsPerOrder.forEach (items, order) =>
+            if order.item_count == items.length
+              $scope.cancelOrder(order, sendEmailCancellation).then(-> $scope.refreshData())
+            else
+              Promise.all(LineItems.delete(item) for item in items).then(-> $scope.refreshData())
+      , "js.admin.deleting_item_will_cancel_order")   
 
   $scope.allBoxesChecked = ->
     checkedCount = $scope.filteredLineItems.reduce (count,lineItem) ->

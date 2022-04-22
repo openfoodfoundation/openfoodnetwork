@@ -115,3 +115,8 @@
 
 @import "../shared/question-mark-icon";
 @import "question-mark-tooltip";
+
+@import "~tom-select/src/scss/tom-select.default";
+@import "components/tom_select";
+
+@import 'app/components/help_modal_component/help_modal_component';

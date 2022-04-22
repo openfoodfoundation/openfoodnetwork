@@ -7,9 +7,34 @@
         %td
           %h5
             = t('.by_default')
-          %i.text-big.icon-question-sign.help-modal{ template: 'admin/modals/tag_rule_help.html' }
+          %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "tag_rule_help_modal" }
   .no_rules{ ng: { show: "defaultTagGroup.rules.length == 0" } }
     = t('.no_rules_yet')
   .tag_rule{ ng: { repeat: "rule in defaultTagGroup.rules" } }
   .add_rule.text-center
     %input.button.icon-plus{ type: 'button', value: t('.add_new_button'), "add-new-rule-to" => "addNewRuleTo", "tag-group" => "defaultTagGroup", "new-tag-rule-dialog" => true }
+
+= render HelpModalComponent.new(id: "tag_rule_help_modal") do
+  #tag-rule-help
+    .margin-bottom-30.text-center
+      .text-big
+        = t('js.admin.modals.tag_rule_help.title')
+
+    .margin-bottom-30
+      .text-normal
+        = t('js.admin.modals.tag_rule_help.overview')
+      %p
+        = t('js.admin.modals.tag_rule_help.overview_text')
+
+    .margin-bottom-30
+      .text-normal
+        = t('js.admin.modals.tag_rule_help.by_default_rules')
+      %p
+        = t('js.admin.modals.tag_rule_help.by_default_rules_text')
+
+    .margin-bottom-30
+      .text-normal
+        = t('js.admin.modals.tag_rule_help.customer_tagged_rules')
+      %p
+        = t('js.admin.modals.tag_rule_help.customer_tagged_rules_text')
+

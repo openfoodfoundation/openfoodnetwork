@@ -3,6 +3,7 @@ fil_PH:
   activerecord:
     models:
       spree/product: Produkto
+      spree/shipping_method: paraan ng pagpapadala
     attributes:
       spree/user:
         password: "Password"
@@ -196,6 +197,7 @@ fil_PH:
   search_by_name: Hanapin gamit ang pangalan o lungsod...
   producers_join: Ang mga Pilipinong producers ay inaanyayahang naming sumali sa Open Food Network.
   charges_sales_tax: naniningil ng GST?
+  enterprise_permissions: "mga permiso ng enterprise"
   print_invoice: "i-print ang invoice"
   print_ticket: "i-print ang ticket"
   select_ticket_printer: "pumili ng printer para sa mga ticket"
@@ -761,6 +763,8 @@ fil_PH:
           close_date: "petsa ng pagsasara"
           shopfront_sort_by_category_placeholder: "kategorya"
           shopfront_sort_by_producer_placeholder: "Producer"
+          enabled: "pinagana"
+          disabled: "huwag paganahin"
         social:
           twitter_placeholder: "hal. @the_prof"
           instagram_placeholder: "hal. the_prof"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_21_165207) do
+ActiveRecord::Schema.define(version: 2022_04_10_162955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -191,7 +191,6 @@ ActiveRecord::Schema.define(version: 2022_02_21_165207) do
     t.string "promo_image_content_type", limit: 255
     t.integer "promo_image_file_size"
     t.datetime "promo_image_updated_at"
-    t.boolean "visible", default: true
     t.string "facebook", limit: 255
     t.string "instagram", limit: 255
     t.string "linkedin", limit: 255
@@ -213,6 +212,7 @@ ActiveRecord::Schema.define(version: 2022_02_21_165207) do
     t.datetime "terms_and_conditions_updated_at"
     t.integer "business_address_id"
     t.boolean "show_customer_names_to_suppliers", default: false, null: false
+    t.string "visible", limit: 255, default: "public", null: false
     t.index ["address_id"], name: "index_enterprises_on_address_id"
     t.index ["is_primary_producer", "sells"], name: "index_enterprises_on_is_primary_producer_and_sells"
     t.index ["name"], name: "index_enterprises_on_name", unique: true
@@ -976,10 +976,6 @@ ActiveRecord::Schema.define(version: 2022_02_21_165207) do
     t.datetime "updated_at", null: false
     t.integer "lft"
     t.integer "rgt"
-    t.string "icon_file_name", limit: 255
-    t.string "icon_content_type", limit: 255
-    t.integer "icon_file_size"
-    t.datetime "icon_updated_at"
     t.text "description"
     t.string "meta_title", limit: 255
     t.string "meta_description", limit: 255

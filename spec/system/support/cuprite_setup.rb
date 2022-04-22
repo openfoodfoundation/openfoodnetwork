@@ -34,7 +34,8 @@ RSpec.configure do |config|
   # Make sure url helpers in mailers use the Capybara server host.
   config.around(:each, type: :system) do |example|
     original_host = Rails.application.default_url_options[:host]
-    Rails.application.default_url_options[:host] = Capybara.server_host
+    Rails.application.default_url_options[:host] =
+      "#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}"
     example.run
     Rails.application.default_url_options[:host] = original_host
   end

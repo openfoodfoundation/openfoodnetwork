@@ -3,6 +3,7 @@ es_CR:
   activerecord:
     models:
       spree/product: Producto
+      spree/shipping_method: Método de envío
     attributes:
       spree/user:
         password: "Contraseña"
@@ -293,6 +294,7 @@ es_CR:
   producers_join: Los productores costarricenses son bienvenidos a unirse ahora a Open Food Network (LaFeriaCR).
   charges_sales_tax: ¿Cargos de IVA?
   business_address: "Dirección del negocio"
+  enterprise_permissions: "Permisos de la organización"
   print_invoice: "Imprimir factura"
   print_ticket: "Imprimir Ticket"
   select_ticket_printer: "Seleccionar impresora para los tickets"
@@ -893,6 +895,8 @@ es_CR:
           close_date: "Fecha de Finalización"
           shopfront_sort_by_category_placeholder: "Categoría"
           shopfront_sort_by_producer_placeholder: "Productor"
+          enabled: "Habilitado"
+          disabled: "Deshabilitado"
         social:
           twitter_placeholder: "ej: the_prof"
           instagram_placeholder: "p.ej. @mi_huerta"

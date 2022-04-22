@@ -3,6 +3,7 @@ pt:
   activerecord:
     models:
       spree/product: Produto
+      spree/shipping_method: Método de Envio
     attributes:
       spree/user:
         password: "Palavra-passe"
@@ -232,6 +233,7 @@ pt:
   search_by_name: Procurar por nome ou localidade...
   producers_join: Produtores e produtoras de proximidade, estão convidados a juntarem-se à Open Food Network!
   charges_sales_tax: Cobra IVA?
+  enterprise_permissions: "Permissões das Organizações"
   print_invoice: "Imprimir factura"
   print_ticket: "Imprimir bilhete"
   select_ticket_printer: "Seleccionar impressora"
@@ -730,6 +732,8 @@ pt:
           manage_fees: Gerir Taxas da Organização
           no_fees_yet: Ainda não tem nenhuma taxa de organização definida.
           create_button: Criar uma agora
+        enterprise_permissions:
+          enterprise_relationships: Relações da Organização
         images:
           logo: Logo
           promo_image_placeholder: 'Esta imagem aparece em "Sobre nós"'
@@ -820,6 +824,8 @@ pt:
           close_date: "Data de fecho"
           shopfront_sort_by_category_placeholder: "Categoria"
           shopfront_sort_by_producer_placeholder: "Produtor/a"
+          enabled: "Activo"
+          disabled: "Desactivado"
         social:
           twitter_placeholder: "ex:  @o_prof"
           instagram_placeholder: "ex. o_agricultor"
@@ -3487,3 +3493,4 @@ pt:
         spree/payment:
           one: Pagamento
           other: Pagamentos
+    unit: unidade

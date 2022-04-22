@@ -298,7 +298,7 @@ describe "Product Import", js: true do
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
-      select2_select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+      select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
@@ -359,7 +359,7 @@ describe "Product Import", js: true do
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
-      select2_select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+      select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
@@ -394,7 +394,7 @@ describe "Product Import", js: true do
 
       File.write('/tmp/test.csv', csv_data)
       visit main_app.admin_product_import_path
-      select2_select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+      select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
       proceed_to_validation
@@ -428,7 +428,7 @@ describe "Product Import", js: true do
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
-      select2_select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+      select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 

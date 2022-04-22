@@ -5,12 +5,17 @@ require 'spec_helper'
 describe Api::EnterpriseShopfrontSerializer do
   let!(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let!(:producer) { create(:supplier_enterprise) }
+  let!(:producer_hidden) { create(:supplier_enterprise_hidden) }
   let!(:relationship) { create(:enterprise_relationship, parent: hub, child: producer) }
+  let!(:relationship2) { create(:enterprise_relationship, parent: hub, child: producer_hidden) }
 
   let!(:taxon1) { create(:taxon, name: 'Meat') }
   let!(:taxon2) { create(:taxon, name: 'Veg') }
   let!(:product) {
     create(:product, supplier: producer, primary_taxon: taxon1, taxons: [taxon1, taxon2] )
+  }
+  let!(:product2) {
+    create(:product, supplier: producer_hidden, primary_taxon: taxon1, taxons: [taxon1, taxon2] )
   }
 
   let(:close_time) { 2.days.from_now }
@@ -19,6 +24,10 @@ describe Api::EnterpriseShopfrontSerializer do
   let!(:ex) {
     create(:exchange, order_cycle: oc, incoming: false,
                       sender: producer, receiver: hub)
+  }
+  let!(:ex2) {
+    create(:exchange, order_cycle: oc, incoming: false,
+                      sender: producer_hidden, receiver: hub)
   }
 
   let(:serializer) { Api::EnterpriseShopfrontSerializer.new hub }
@@ -41,7 +50,7 @@ describe Api::EnterpriseShopfrontSerializer do
     expect(serializer.serializable_hash[:hubs].to_json).to match hub.name
   end
 
-  it "serializes an array of producers" do
+  it "serializes an array of producers that are public or linked by links" do
     expect(serializer.serializable_hash[:producers]).to be_a ActiveModel::ArraySerializer
     expect(serializer.serializable_hash[:producers].to_json).to match producer.name
   end

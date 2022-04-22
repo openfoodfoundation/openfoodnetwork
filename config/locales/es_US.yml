@@ -3,6 +3,7 @@ es_US:
   activerecord:
     models:
       spree/product: Producto
+      spree/shipping_method: Método de envío
     attributes:
       spree/user:
         password: "Contraseña"
@@ -296,6 +297,7 @@ es_US:
   producers_join: Las productoras australianas ahora son bienvenidas a unirse a Open Food Network.
   charges_sales_tax: ¿Cargos de IVA?
   business_address: "Dirección de negocio"
+  enterprise_permissions: "Permisos de la organización"
   print_invoice: "Imprimir factura"
   print_ticket: "Imprimir Ticket"
   select_ticket_printer: "Seleccionar impresora para los tickets"
@@ -918,6 +920,8 @@ es_US:
           shopfront_sort_by_producer: "Por productor"
           shopfront_sort_by_category_placeholder: "Categoría"
           shopfront_sort_by_producer_placeholder: "Productora"
+          enabled: "Habilitado"
+          disabled: "Deshabilitado"
         social:
           twitter_placeholder: "ej: the_prof"
           instagram_placeholder: "p.ej. @mi_huerta"

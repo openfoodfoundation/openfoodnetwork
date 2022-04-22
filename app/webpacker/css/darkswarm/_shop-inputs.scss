@@ -71,17 +71,24 @@ button.variant-quantity {
   }
 }
 
-.variant-quantity-display {
-  display: inline-block;
+.variant-quantity-display, .variant-remaining-stock {
   font-size: 0.875em;
   margin-top: 0.25em;
   text-align: center;
   width: 7rem;
+  display: inline-block;
+}
+
+.variant-quantity-display {
   visibility: hidden;
 
   &.visible {
     visibility: visible;
   }
+}
+
+.variant-remaining-stock {
+  color: $red-500;
 }
 
 button.bulk-buy.variant-quantity {

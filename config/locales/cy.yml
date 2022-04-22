@@ -3,6 +3,7 @@ cy:
   activerecord:
     models:
       spree/product: Cynnyrch
+      spree/shipping_method: Dull Anfon
     attributes:
       spree/user:
         password: "Cyfrinair"
@@ -296,6 +297,7 @@ cy:
   producers_join: Bellach mae croeso i gynhyrchwyr y DU ymuno â'r Rhwydwaith Bwyd Agored.
   charges_sales_tax: Angen talu TAW?
   business_address: "Cyfeiriad Busnes"
+  enterprise_permissions: "Caniatâd y Fenter"
   print_invoice: "Argraffu Anfoneb"
   print_ticket: "Argraffu Tocyn"
   select_ticket_printer: "Dewiswch argraffydd ar gyfer tocynnau"
@@ -916,6 +918,8 @@ cy:
           shopfront_sort_by_producer: "Yn ôl cynhyrchydd"
           shopfront_sort_by_category_placeholder: "Categori"
           shopfront_sort_by_producer_placeholder: "Cynhyrchydd"
+          enabled: "Galluogwyd"
+          disabled: "Analluogwyd"
         social:
           twitter_placeholder: "e.e. @the_prof"
           instagram_placeholder: "e.e. the_prof"
@@ -963,7 +967,7 @@ cy:
           email_not_confirmed: "E-bost heb ei gadarnhau"
       actions:
         edit_profile: Gosodiadau
-        properties: Priodweddau
+        properties: Manylion
         payment_methods: Dulliau Talu
         payment_methods_tip: Nid oes gan y fenter hon unrhyw ddulliau talu
         shipping_methods: Dulliau Anfon
@@ -1145,7 +1149,7 @@ cy:
         proceed: Ewch ymlaen
     producer_properties:
       index:
-        title: Priodweddau Cynhyrchwyr
+        title: Manylion Cynhyrchwyr
     proxy_orders:
       cancel:
         could_not_cancel_the_order: Methu canslo'r archeb
@@ -1361,7 +1365,7 @@ cy:
       failed_to_update: "Wedi methu diweddaru'r archeb"
   checkout:
     already_ordered:
-      cart: "troli"
+      cart: "basged"
       message_html: "Mae gennych chi archeb ar gyfer y cylch archebu hwn eisoes. Gwiriwch y %{cart} i weld yr eitemau a archebwyd o'r blaen. Gallwch hefyd ganslo eitemau cyn belled â bod y cylch archebu ar agor."
     terms_and_conditions:
       message_html: "Rwy'n cytuno i %{terms_and_conditions_link} y gwerthwr."
@@ -1386,19 +1390,19 @@ cy:
         powered_html: "%{open_food_network} sy'n pweru eich profiad siopa."
     menu:
       cart:
-        cart: "Troli"
+        cart: "Basged"
       cart_sidebar:
         checkout: "Til"
         edit_cart: "Golygu'r troli"
-        items_in_cart_singular: "%{num} eitem yn eich troli"
-        items_in_cart_plural: "%{num} eitem yn eich troli"
+        items_in_cart_singular: "%{num} eitemau yn eich basged"
+        items_in_cart_plural: "%{num} eitemau yn eich basged"
         close: "Caewch"
-        cart_empty: "Mae'ch troli'n wag"
+        cart_empty: "Mae'ch basged yn wag"
         take_me_shopping: "Ewch â fi i siopa!"
       signed_in:
         profile: "Proffil"
       mobile_menu:
-        cart: "Troli"
+        cart: "Basged"
     register_call:
       selling_on_ofn: "Oes gennych chi ddiddordeb mewn mynd ar y Rhwydwaith Bwyd Agored?"
       register: "Cofrestrwch yma"
@@ -1544,9 +1548,9 @@ cy:
   cart_items: "eitemau"
   cart_headline: "Eich troli siopa"
   total: "Cyfanswm"
-  cart_updating: "Yn diweddaru'r troli ..."
-  cart_empty: "Mae'r troli'n wag"
-  cart_edit: "Golygu'ch troli"
+  cart_updating: "Yn diweddaru'r basged ..."
+  cart_empty: "Mae'r basged yn wag"
+  cart_edit: "Golygu'ch basged"
   item: "Eitem"
   qty: "Nifer"
   card_number: Rhif y cerdyn
@@ -1576,12 +1580,12 @@ cy:
       header: "Sut Rydym yn Defnyddio Cwcis"
       desc_part_1: "Ffeiliau testun bach iawn yw cwcis sy'n cael eu storio ar eich cyfrifiadur pan ymwelwch â rhai gwefannau."
       desc_part_2: "Mae'r RhBA yn parchu'ch preifatrwydd yn llwyr. Rydym yn defnyddio'r cwcis yn unig sy'n angenrheidiol ar gyfer cyflwyno'r gwasanaeth i chi o ran gwerthu / prynu bwyd ar-lein. Nid ydym yn gwerthu unrhyw ran o'ch data. Efallai y byddwn yn y dyfodol yn cynnig ichi rannu peth o'ch data i adeiladu gwasanaethau cyffredin newydd a allai fod yn ddefnyddiol i'r ecosystem (megis gwasanaethau logisteg ar gyfer systemau bwyd byr) ond nid ydym yno eto, ac ni fyddwn yn ei wneud heb eich awdurdod :-)"
-      desc_part_3: "Rydyn ni'n defnyddio cwcis yn bennaf i gofio pwy ydych chi os ydych chi'n 'mewngofnodi' i'r gwasanaeth, neu i allu cofio'r eitemau rydych chi'n eu rhoi yn eich troli hyd yn oed os nad ydych chi wedi mewngofnodi. Os ydych chi'n dal i lywio'r wefan heb glicio ar “Derbyn cwcis”, rydym yn cymryd eich bod yn rhoi caniatâd i ni storio'r cwcis sy'n hanfodol i redeg y wefan. Dyma'r rhestr o gwcis rydyn ni'n eu defnyddio!"
+      desc_part_3: "Rydyn ni'n defnyddio cwcis yn bennaf i gofio pwy ydych chi os ydych chi'n 'mewngofnodi' i'r gwasanaeth, neu i allu cofio'r eitemau rydych chi'n eu rhoi yn eich basged hyd yn oed os nad ydych chi wedi mewngofnodi. Os ydych chi'n dal i lywio'r wefan heb glicio ar “Derbyn cwcis”, rydym yn cymryd eich bod yn rhoi caniatâd i ni storio'r cwcis sy'n hanfodol i redeg y wefan. Dyma'r rhestr o gwcis rydyn ni'n eu defnyddio!"
       essential_cookies: "Cwcis Hanfodol"
       essential_cookies_desc: "Mae'r cwcis canlynol yn gwbl angenrheidiol ar gyfer gweithredu ein gwefan."
       essential_cookies_note: "Mae'r mwyafrif o gwcis yn cynnwys dynodwr unigryw, ond dim data arall, felly nid yw'ch cyfeiriad e-bost a'ch cyfrinair er enghraifft byth yn cael eu cynnwys ynddynt ac nid ydynt yn cael eu rhyddhau."
       cookie_domain: "Gosodwyd Gan:"
-      cookie_session_desc: "Fe'i defnyddir i ganiatáu i'r wefan gofio defnyddwyr rhwng ymweliadau, er enghraifft, cofio eitemau yn eich troli."
+      cookie_session_desc: "Fe'i defnyddir i ganiatáu i'r wefan gofio defnyddwyr rhwng ymweliadau, er enghraifft, cofio eitemau yn eich basged."
       cookie_consent_desc: "Fe'i defnyddir i gynnal statws caniatâd defnyddiwr i storio cwcis"
       cookie_remember_me_desc: "Defnyddir hwn os yw'r defnyddiwr wedi gofyn i'r wefan ei gofio. Caiff y cwci hwn ei ddileu'n awtomatig ar ôl 12 diwrnod. Os ydych chi fel defnyddiwr eisiau i'r cwci hwnnw gael ei ddileu, y cwbl sydd angen ei wneud yw allgofnodi. Os nad ydych chi am i'r cwci hwnnw gael ei osod ar eich cyfrifiadur peidiwch â thicio'r blwch gwirio “cofio fi” wrth fewngofnodi."
       cookie_openstreemap_desc: "Yn cael ei ddefnyddio gan ein darparwr mapio ffynhonnell agored cyfeillgar (OpenStreetMap) i sicrhau nad yw'n derbyn gormod o geisiadau yn ystod cyfnod penodol, i atal cam-ddefnyddio eu gwasanaethau."
@@ -1599,16 +1603,16 @@ cy:
       disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
       disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/cy-ww/cookies/"
-      disabling_cookies_note: "Ond byddwch yn ymwybodol, os byddwch chi'n dileu neu'n addasu'r cwcis hanfodol a ddefnyddir gan y Rhwydwaith Bwyd Agored, ni fydd y wefan yn gweithio, ni fyddwch yn gallu ychwanegu unrhyw beth at eich troli na thalu, er enghraifft."
+      disabling_cookies_note: "Ond byddwch yn ymwybodol, os byddwch chi'n dileu neu'n addasu'r cwcis hanfodol a ddefnyddir gan y Rhwydwaith Bwyd Agored, ni fydd y wefan yn gweithio, ni fyddwch yn gallu ychwanegu unrhyw beth at eich basged na thalu, er enghraifft."
     cookies_banner:
       cookies_usage: "Mae'r wefan hon yn defnyddio cwcis er mwyn hwyluso a diogelu eich profiad llywio, ac i'n helpu ni i ddeall sut rydych chi'n ei defnyddio er mwyn gwella'r nodweddion rydyn ni'n eu cynnig."
       cookies_definition: "Ffeiliau testun bach iawn yw cwcis sy'n cael eu storio ar eich cyfrifiadur wrth ichi ymweld â rhai gwefannau."
-      cookies_desc: "Rydym yn defnyddio'r cwcis yn unig sy'n angenrheidiol i ddarparu gwasanaeth i chi o ran gwerthu / prynu bwyd ar-lein. Nid ydym yn gwerthu unrhyw ran o'ch data. Rydyn ni'n defnyddio cwcis yn bennaf i gofio pwy ydych chi os ydych chi'n 'mewngofnodi i'r gwasanaeth, neu i allu cofio'r eitemau rydych chi'n eu rhoi yn eich troli hyd yn oed os nad ydych chi wedi mewngofnodi. Os ydych chi'n dal i lywio ar y wefan heb glicio ar “Derbyn cwcis”, rydym yn cymryd eich bod yn rhoi caniatâd i ni storio'r cwcis sy'n hanfodol ar gyfer rhedeg y wefan."
+      cookies_desc: "Rydym yn defnyddio'r cwcis yn unig sy'n angenrheidiol i ddarparu gwasanaeth i chi o ran gwerthu / prynu bwyd ar-lein. Nid ydym yn gwerthu unrhyw ran o'ch data. Rydyn ni'n defnyddio cwcis yn bennaf i gofio pwy ydych chi os ydych chi'n 'mewngofnodi i'r gwasanaeth, neu i allu cofio'r eitemau rydych chi'n eu rhoi yn eich basged hyd yn oed os nad ydych chi wedi mewngofnodi. Os ydych chi'n dal i lywio ar y wefan heb glicio ar “Derbyn cwcis”, rydym yn cymryd eich bod yn rhoi caniatâd i ni storio'r cwcis sy'n hanfodol ar gyfer rhedeg y wefan."
       cookies_policy_link_desc: "Os ydych chi eisiau dysgu mwy, gwiriwch ein"
       cookies_policy_link: "polisi cwcis"
       cookies_accept_button: "Derbyn Cwcis"
   home_shop: Siopa Nawr
-  brandstory_headline: "Bwyd, anghorfforedig"
+  brandstory_headline: "Tyfu bwyd lleol ar lein."
   brandstory_intro: "Weithiau y ffordd orau i drwsio'r system yw trwy cychwyn un newydd ....."
   brandstory_part1: "Rydym yn cychwyn o'r gwaelod. Gyda ffermwyr a thyfwyr sy'n barod i adrodd eu hanesion, llawn gwirionedd a balchder. Gyda dosbarthwyr sy'n barpod i gysylltu pobl â chynnyrch mewn ffordd deg ac onest. Gyda phrynwyr sy'n credu y gall penderfyniadau gwell am y siopa bob wythnos newid y byd o ddifrif."
   brandstory_part2: "Wedyn mae angen inni ei wireddu. Ffordd i rymuso pawb sy'n tyfu, yn gwerthu ac yn prynu bwyd. Ffordd i adrodd yr holl hanesion, delio gyda'r logisteg. Ffordd i droi trafodion yn drawsnewid bob dydd."
@@ -1649,17 +1653,17 @@ cy:
   checkout_payment: Taliad
   checkout_send: Archebwch nawr
   checkout_your_order: Eich archeb
-  checkout_cart_total: Cyfanswm y troli
+  checkout_cart_total: Cyfanswm y basged
   checkout_shipping_price: Anfon
   checkout_total_price: Cyfanswm
-  checkout_back_to_cart: "Yn ôl i'r troli"
+  checkout_back_to_cart: "Yn ôl i'r basged"
   cost_currency: "Cost Arian Cyfred"
   split_checkout:
     your_details_without_number: Eich manylion
     payment_method_without_number: Dull talu
     order_summary_without_number: Crynodeb o'r archeb
     already_ordered:
-      cart: "troli"
+      cart: "basged"
       message_html: "Mae gennych chi archeb ar gyfer y cylch archebu hwn eisoes. Gwiriwch y %{cart} i weld yr eitemau a archebwyd o'r blaen. Gallwch hefyd ganslo eitemau cyn belled â bod y cylch archebu ar agor."
     step1:
       your_details:
@@ -1771,7 +1775,7 @@ cy:
   order_payment_paypal_successful: Proseswyd eich taliad trwy PayPal yn llwyddiannus.
   order_hub_info: Gwybodaeth Hwb
   order_back_to_store: Yn ôl i'r siop
-  order_back_to_cart: Yn ôl i'r troli
+  order_back_to_cart: Yn ôl i'r basged
   bom_tip: "Defnyddiwch y dudalen hon i newid nifer cynnyrch ar draws sawl archeb. Gellir hefyd dileu cynnyrch o archebion yn gyfan gwbl, pe dymunir."
   unsaved_changes_warning: "Mae newidiadau heb eu cadw yn bodoli a byddant yn cael eu colli os byddwch yn parhau."
   unsaved_changes_error: "Mae'r meysydd â ffiniau coch yn cynnwys gwallau."
@@ -1913,9 +1917,9 @@ cy:
   products_filter_clear: "Clirio"
   products_filter_done: "Wedi'i wneud"
   products_loading: "Llwytho cynnyrch ..."
-  products_updating_cart: "Diweddaru'r troli ..."
-  products_cart_empty: "Mae'r troli'n wag"
-  products_edit_cart: "Golygu'ch troli"
+  products_updating_cart: "Diweddaru'r basged ..."
+  products_cart_empty: "Mae'r basged yn wag"
+  products_edit_cart: "Golygu'ch basged"
   products_from: o
   products_change: "Dim newidiadau i'w harbed."
   products_update_error: "Methwyd ag arbed oherwydd y gwall (au) canlynol:"
@@ -2018,12 +2022,12 @@ cy:
   shops_signup_detail: Dyma'r manylion.
   orders: "Archebion"
   orders_fees: "Ffioedd ..."
-  orders_edit_title: "Troli Siopa"
-  orders_edit_headline: "Eich troli siopa"
+  orders_edit_title: "Basged Siopa"
+  orders_edit_headline: "Eich basged siopa"
   orders_edit_time: "Archeb yn barod ar gyfer"
   orders_edit_continue: "Parhau i siopa"
   orders_edit_checkout: "Desg dalu"
-  orders_form_empty_cart: "Gwagio'r troli"
+  orders_form_empty_cart: "Gwagio'r basged"
   orders_form_update_cart: "Diweddaru"
   orders_form_subtotal: "Is-gyfanswm cynnyrch"
   orders_form_admin: "Gweinyddu a Thrin"
@@ -2052,11 +2056,11 @@ cy:
   orders_confirm_cancel: "Ydych chi'n siŵr eich bod chi am ganslo'r archeb hon?"
   order_processed_successfully: "Llwyddwyd i brosesu eich archeb "
   products_cart_distributor_choice: "Y dosbarthwr ar gyfer eich archeb:"
-  products_cart_distributor_change: "Bydd eich dosbarthwr ar gyfer yr archeb hon yn cael ei newid i %{name} os ychwanegwch y cynnyrch yma at eich troli."
+  products_cart_distributor_change: "Bydd eich dosbarthwr ar gyfer yr archeb hon yn cael ei newid i %{name} os ychwanegwch y cynnyrch yma at eich basged."
   products_cart_distributor_is: "Eich dosbarthwr ar gyfer yr archeb hon yw %{name}."
   products_distributor_error: "Gorffennwch eich archeb yn %{link} cyn siopa gyda dosbarthwr arall."
   products_oc: "Y cylch archebu ar gyfer eich archeb:"
-  products_oc_change: "Bydd eich cylch archebu ar gyfer yr archeb hon yn cael ei newid i %{name} os ychwanegwch y cynnyrch yma at eich troli."
+  products_oc_change: "Bydd eich cylch archebu ar gyfer yr archeb hon yn cael ei newid i %{name} os ychwanegwch y cynnyrch yma at eich basged."
   products_oc_is: "Eich cylch archebu ar gyfer yr archeb hon yw %{name}."
   products_oc_error: "Gorffennwch eich archeb gan %{link} cyn siopa mewn cylch archebu gwahanol"
   products_oc_current: "eich cylch archebu cyfredol"
@@ -2081,8 +2085,8 @@ cy:
   one_filter_applied: "Defnydiwyd 1 hidlydd"
   x_filters_applied: "defnyddiwyd hidlwyr "
   submitting_order: "Yn anfon eich archeb: arhoswch eiliad"
-  confirm_hub_change: "Wyt ti'n siwr? Bydd hyn yn newid yr hwb a ddewiswyd gennych ac yn cael gwagio'r holl eitemau o'ch troli siopa."
-  confirm_oc_change: "Wyt ti'n siwr? Bydd hyn yn newid y cylch archebu a ddewiswyd gennych ac yn gwagio unrhyw eitemau o'ch troli siopa."
+  confirm_hub_change: "Wyt ti'n siwr? Bydd hyn yn newid yr hwb a ddewiswyd gennych ac yn cael gwagio'r holl eitemau o'ch basged siopa."
+  confirm_oc_change: "Wyt ti'n siwr? Bydd hyn yn newid y cylch archebu a ddewiswyd gennych ac yn gwagio unrhyw eitemau o'ch basged siopa."
   location_placeholder: "Teipiwch leoliad ..."
   error_required: "ni chaniateir ei adael yn wag"
   error_number: "rhaid defnyddio rhif"
@@ -2397,8 +2401,8 @@ cy:
   spree_admin_eg_pickup_from_school: "e.e. 'Casglu o'r Ysgol Gynradd'"
   spree_admin_eg_collect_your_order: "e.e. 'Dylid casglu eich archeb o 123 Ffordd y Don, Pwllheli'"
   spree_classification_primary_taxon_error: "Tacson %{taxon} yw prif dacson %{product} ac ni ellir ei ddileu"
-  spree_order_availability_error: "Ni all dosbarthwr neu gylch archebu gyflenwi'r cynnyrch yn eich troli"
-  spree_order_populator_error: "Ni all y dosbarthwr neu'r cylch archebu dan sylw gyflenwi'r holl gynnyrch yn eich troli. Dewiswch un arall."
+  spree_order_availability_error: "Ni all dosbarthwr neu gylch archebu gyflenwi'r cynnyrch yn eich basged"
+  spree_order_populator_error: "Ni all y dosbarthwr neu'r cylch archebu dan sylw gyflenwi'r holl gynnyrch yn eich basged. Dewiswch un arall."
   spree_order_cycle_error: "Dewiswch gylch archebu ar gyfer archeb hwn."
   spree_order_populator_availability_error: "Nid yw'r cynnyrch hwnnw ar gael  gan y dosbarthwr neu'r cylch archebu a ddewiswyd."
   spree_distributors_error: "Rhaid dewis o leiaf un hwb"
@@ -2512,7 +2516,7 @@ cy:
   report_header_customer: Cwsmer
   report_header_customer_code: Cod Cwsmer
   report_header_product: Cynnyrch
-  report_header_product_properties: Priodweddau Cynnyrch
+  report_header_product_properties: Manylion Cynnyrch
   report_header_quantity: Nifer
   report_header_max_quantity: Uchafswm nifer
   report_header_variant: Amrywiolyn
@@ -2623,7 +2627,7 @@ cy:
   contact: "Cysylltu"
   social: "Cymdeithasol"
   business_details: "Manylion Busnes"
-  properties: "Eiddo"
+  properties: "Manylion"
   shipping: "Anfon"
   shipping_methods: "Dulliau anfon"
   payment_methods: "Dulliau Talu"
@@ -2880,7 +2884,7 @@ cy:
           adjustments: "addasiadau"
           awaiting_return: "yn aros dychwelyd"
           canceled: "canslwyd"
-          cart: "troli"
+          cart: "basged"
           complete: "cyflawn"
           confirm: "cadarnhau"
           delivery: "danfon"
@@ -3465,7 +3469,7 @@ cy:
     my_account: "Fy nghyfrif"
     date: "Dyddiad"
     time: "Amser"
-    inventory_error_flash_for_insufficient_quantity: "Nid yw eitem yn eich troli ar gael bellach."
+    inventory_error_flash_for_insufficient_quantity: "Nid yw eitem yn eich basged ar gael bellach."
     inventory: Stocrestr
     zipcode: Cod post
     weight: Pwysau (fesul kg neu bwys)
@@ -3526,7 +3530,7 @@ cy:
         subscriptions: "Tanysgrifiadau"
         products: "Cynnyrch"
         option_types: "Mathau Opsiwn"
-        properties: "Priodweddau"
+        properties: "Manylion"
         variant_overrides: "Stocrestr"
         reports: "Adroddiadau"
         configuration: "Ffurfweddiad"
@@ -3540,10 +3544,10 @@ cy:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Etifeddu eiddo gan %{supplier}? (oni bai ei fod yn cael ei ddiystyru uchod)"
-          add_product_properties: "Ychwanegu Priodweddau Cynnyrch"
+          add_product_properties: "Ychwanegu Manylion Cynnyrch"
       properties:
         index:
-          properties: "Priodweddau"
+          properties: "Manylion cynnyrch"
           new_property: "Eiddo Newydd"
           name: "Enw"
           presentation: "Cyflwyniad"
@@ -3551,7 +3555,7 @@ cy:
           new_property: "Eiddo Newydd"
         edit:
           editing_property: "Yn golygu Eiddo"
-          back_to_properties_list: "Yn ôl i'r Rhestr Eiddo"
+          back_to_properties_list: "Yn ôl i'r Rhestr Manylion Cynnyrch"
         form:
           name: "Enw"
           presentation: "Cyflwyniad"
@@ -3774,7 +3778,7 @@ cy:
             display_as: Arddangos fel
             category: Categori
             tax_category: Categori Treth
-            inherits_properties?: Yn etifeddu eiddo?
+            inherits_properties?: Yn etifeddu manylion cynnyrch?
             available_on: Ar gael ar
             av_on: "Cyfartaledd ar"
             import_date: "Dyddiad Mewnforio"
@@ -3887,7 +3891,7 @@ cy:
       now: "Nawr"
       close: "Cau"
     orders:
-      error_flash_for_unavailable_items: "Nid yw eitem yn eich troli ar gael bellach. Dylid diweddaru'r nifer a ddewiswyd."
+      error_flash_for_unavailable_items: "Nid yw eitem yn eich basged ar gael bellach. Dylid diweddaru'r nifer a ddewiswyd."
       edit:
         login_to_view_order: "Dylech fewngofnodi i weld eich archeb."
       bought:
@@ -3976,7 +3980,7 @@ cy:
       adjustments: addasiadau
       awaiting_return: yn aros dychwelyd
       canceled: canslwyd
-      cart: troli
+      cart: basged
       confirmation: "cadarnhad"
       complete: cyflawn
       confirm: cadarnhau

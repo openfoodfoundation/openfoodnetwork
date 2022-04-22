@@ -71,10 +71,20 @@ describe 'Groups', js: true do
                                     coordinator: create(:distributor_enterprise))
       }
       let(:producer) { create(:supplier_enterprise) }
-      let(:d1) { create(:distributor_enterprise, with_payment_and_shipping: true, visible: true) }
-      let(:d2) { create(:distributor_enterprise, with_payment_and_shipping: true, visible: true) }
-      let(:d3) { create(:distributor_enterprise, with_payment_and_shipping: true, visible: false) }
-      let(:d4) { create(:distributor_enterprise, with_payment_and_shipping: true, visible: true) }
+      let(:d1) {
+        create(:distributor_enterprise, with_payment_and_shipping: true, visible: "public")
+      }
+      let(:d2) {
+        create(:distributor_enterprise, with_payment_and_shipping: true, visible: "public")
+      }
+      let(:d3) {
+        create(:distributor_enterprise,
+               with_payment_and_shipping: true,
+               visible: "only_through_links")
+      }
+      let(:d4) {
+        create(:distributor_enterprise, with_payment_and_shipping: true, visible: "public")
+      }
       let(:p1) { create(:simple_product, supplier: producer) }
       let(:p2) { create(:simple_product, supplier: create(:supplier_enterprise)) }
       let(:p3) { create(:simple_product, supplier: create(:supplier_enterprise)) }

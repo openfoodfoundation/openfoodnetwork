@@ -3,6 +3,7 @@ sv:
   activerecord:
     models:
       spree/product: Produkt
+      spree/shipping_method: Fraktmetod
     attributes:
       spree/user:
         password: "Lösenord"
@@ -345,6 +346,8 @@ sv:
           manage_fees: Skötsel av företagsavgifter
           no_fees_yet: Du har inga företagsavgifter ännu.
           create_button: Skapa en nu
+        enterprise_permissions:
+          enterprise_relationships: Företagssamband
         images:
           logo: Logotyp
           promo_image_placeholder: 'Denna bild visas under "Om oss"'

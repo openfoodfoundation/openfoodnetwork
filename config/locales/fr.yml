@@ -3,6 +3,7 @@ fr:
   activerecord:
     models:
       spree/product: Produit
+      spree/shipping_method: Option d'expédition
     attributes:
       spree/user:
         password: "Mot de passe"
@@ -296,6 +297,7 @@ fr:
   producers_join: Les producteurs et autres circuits courts basés en France sont invités à rejoindre CoopCircuits.
   charges_sales_tax: Soumis à la TVA?
   business_address: "Adresse du siège social"
+  enterprise_permissions: "Permissions Inter-entreprises"
   print_invoice: "Imprimer la facture"
   print_ticket: "Imprimer ticket de caisse"
   select_ticket_printer: "Choisir l'imprimante tickets"
@@ -792,6 +794,11 @@ fr:
           remove_terms_and_conditions: "Supprimer le fichier"
           uploaded_on: "mis en ligne le"
           reset_form: "Vider les champs"
+          Invoice_item_sorting: Changement d'ordre d'affichage sur facture
+          sort_items_by_supplier?: Ranger par producteur ?
+          sort_items_by_supplier_tip: "Lorsque possible, les éléments seront rangés par producteur."
+          enabled: Activer
+          disabled: Désactiver
         business_address:
           company_legal_name: Raison sociale
           company_placeholder: Indiquez ici le nom légal de votre entreprise
@@ -816,6 +823,8 @@ fr:
           manage_fees: Gérer les marges et commissions
           no_fees_yet: Vous n'avez pas encore défini de commissions
           create_button: Créer une commission
+        enterprise_permissions:
+          enterprise_relationships: Permissions inter-entreprises
         images:
           logo: Logo
           promo_image_placeholder: 'Cette image est affichée dans "A propos"'
@@ -918,6 +927,10 @@ fr:
           shopfront_sort_by_producer: "Par producteur"
           shopfront_sort_by_category_placeholder: "Catégorie"
           shopfront_sort_by_producer_placeholder: "Producteur"
+          display_remaining_stock: "Affiche le stock restant d'un produit sur la boutique si le stock est faible"
+          display_remaining_stock_tip: "Permet aux acheteurs de savoir lorsqu'il reste 3 éléments (ou moins) pour un produit."
+          enabled: "Activé"
+          disabled: "Désactivé"
         social:
           twitter_placeholder: "ex. @OpenFoodNet_fr"
           instagram_placeholder: "ex: OpenFoodNet_fr"
@@ -2995,6 +3008,7 @@ fr:
         add_to_cart: "Ajouter"
         in_cart: "au panier"
         quantity_in_cart: "%{quantity} au panier"
+        remaining_in_stock: "Seulement %{quantity}produits restant"
       bulk_buy_modal:
         min_quantity: "Quantité min"
         max_quantity: "Quantité max"
@@ -4062,6 +4076,8 @@ fr:
         spree/payment:
           one: Paiement
           other: Paiements
+    unit: unité
+    per_unit: par unité
   datetime:
     distance_in_words:
       about_x_hours:

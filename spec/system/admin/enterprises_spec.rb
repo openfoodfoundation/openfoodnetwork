@@ -8,6 +8,8 @@ describe '
 ' do
   include WebHelper
   include AuthenticationHelper
+  include ShopWorkflow
+  include UIComponentHelper
 
   it "viewing an enterprise" do
     e = create(:enterprise)
@@ -110,15 +112,19 @@ describe '
     accept_alert do
       click_link "Primary Details"
     end
+    # Unchecking hides the Properties tab
     uncheck 'enterprise_is_primary_producer'
     choose 'None'
     expect(page).not_to have_selector "#enterprise_fees"
     expect(page).not_to have_selector "#payment_methods"
     expect(page).not_to have_selector "#shipping_methods"
+    expect(page).not_to have_selector "#properties"
+    # Checking displays the Properties tab
     check 'enterprise_is_primary_producer'
     expect(page).to have_selector "#enterprise_fees"
     expect(page).not_to have_selector "#payment_methods"
     expect(page).not_to have_selector "#shipping_methods"
+    expect(page).to have_selector "#properties"
     uncheck 'enterprise_is_primary_producer'
     choose 'Own'
     expect(page).to have_selector "#enterprise_fees"
@@ -195,7 +201,7 @@ describe '
     expect(page).to have_field 'enterprise_name', with: 'Eaterprises'
     @enterprise.reload
     expect(@enterprise.owner).to eq user
-    expect(page).to have_checked_field "enterprise_visible_true"
+    expect(page).to have_checked_field "enterprise_visible_public"
 
     click_link "Business Details"
     expect(page).to have_checked_field "enterprise_charges_sales_tax_true"
@@ -448,6 +454,69 @@ describe '
 
       expect(page).to have_content 'Enterprise "First Supplier" has been successfully updated!'
       expect(supplier1.producer_properties.reload).to be_empty
+    end
+
+    describe "setting ordering preferences" do
+      let(:taxon) { create(:taxon, name: "Tricky Taxon") }
+      let(:property) { create(:property, presentation: "Fresh and Fine") }
+      let(:user) { create(:user, enterprise_limit: 1) }
+      let(:oc1) {
+        create(:simple_order_cycle, distributors: [distributor1],
+                                    coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now)
+      }
+      let(:product) {
+        create(:simple_product, supplier: supplier1, primary_taxon: taxon, properties: [property], name: "Beans")
+      }
+      let(:variant) { product.variants.first }
+      let(:exchange1) { oc1.exchanges.to_enterprises(distributor1).outgoing.first }
+      let(:order) { create(:order, distributor: distributor1) }
+
+      before do
+        exchange1.update_attribute :pickup_time, "monday"
+        add_variant_to_order_cycle(exchange1, variant)
+      end
+
+      context "sorting by category" do
+        before do
+          visit edit_admin_enterprise_path(distributor1)
+
+          within(".side_menu") do
+            click_link "Shop Preferences"
+          end
+          
+          choose "enterprise_preferred_shopfront_product_sorting_method_by_category"
+          find("#s2id_autogen7").click
+          find(".select2-result-label", text: "Tricky Taxon").click
+          click_button 'Update'
+          expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
+        end
+
+        it "sets the preference correctly" do
+          expect(distributor1.preferred_shopfront_product_sorting_method).to eql("by_category")
+          expect(distributor1.preferred_shopfront_taxon_order).to eql(taxon.id.to_s)
+        end
+      end
+
+      context "sorting by producer" do
+        before do
+          visit edit_admin_enterprise_path(distributor1)
+
+          within(".side_menu") do
+            click_link "Shop Preferences"
+          end
+          
+          choose "enterprise_preferred_shopfront_product_sorting_method_by_producer"
+          find("#s2id_autogen8").click
+          find(".select2-result-label", text: "First Supplier").click
+          click_button 'Update'
+          expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
+        end
+
+        it "sets the preference correctly" do
+          expect(distributor1.preferred_shopfront_product_sorting_method).to eql("by_producer")
+          expect(distributor1.preferred_shopfront_producer_order).to eql(supplier1.id.to_s)
+        end
+      end
     end
   end
 end

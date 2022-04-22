@@ -8,16 +8,29 @@ export default class extends Controller {
     this.populateSelect(parseInt(this.sourceTarget.value));
   }
 
+  // private
+
   populateSelect(sourceId) {
     this.removeCurrentOptions()
-
-    this.dependantOptionsFor(sourceId).forEach((item) => {
-      this.addOption(item[0], item[1])
-    });
+    this.populateNewOptions(sourceId)
   }
 
   removeCurrentOptions() {
     this.selectTarget.innerHTML = ""
+
+    this.selectTarget.tomselect?.clear()
+    this.selectTarget.tomselect?.clearOptions()
+  }
+
+  populateNewOptions(sourceId) {
+    const options = this.dependantOptionsFor(sourceId)
+
+    options.forEach((item) => {
+      this.addOption(item[0], item[1])
+    });
+
+    this.selectTarget.tomselect?.sync()
+    this.selectTarget.tomselect?.addItem(options[0]?.[1])
   }
 
   addOption(label, value) {

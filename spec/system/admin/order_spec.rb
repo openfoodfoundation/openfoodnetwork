@@ -172,6 +172,7 @@ describe '
       context "it shows a second modal about last item deletion and therefore about order cancellation" do
         it "that the user can close and then nothing change" do
           expect(page).to have_content "This will cancel the current order."
+          expect(page).to have_checked_field "Send a cancellation email to the customer"
           within(".modal", visible: true) do
             click_on("Cancel")
           end
@@ -184,6 +185,7 @@ describe '
           it "and then the order is cancelled and no email is sent by default" do
             expect do
               within(".modal", visible: true) do
+                uncheck("send_cancellation_email")
                 click_on("OK")
               end
               expect(page).to have_content "Cannot add item to canceled order"
@@ -195,7 +197,6 @@ describe '
           it "and check the checkbox to send an email to the customer about its order cancellation" do
             expect do
               within(".modal", visible: true) do
-                check("send_cancellation_email")
                 click_on("OK")
               end
               expect(page).to have_content "Cannot add item to canceled order"

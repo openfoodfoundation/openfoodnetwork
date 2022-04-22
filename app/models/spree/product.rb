@@ -78,8 +78,7 @@ module Spree
         where(producer_properties: { property_id: property_ids }).
         or(
           where(spree_product_properties: { property_id: property_ids })
-        ).
-        distinct
+        )
     }
 
     delegate_belongs_to :master, :sku, :price, :currency, :display_amount, :display_price, :weight,

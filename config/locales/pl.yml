@@ -3,6 +3,7 @@ pl:
   activerecord:
     models:
       spree/product: Produkt
+      spree/shipping_method: Metoda dostawy
     attributes:
       spree/user:
         password: "Hasło"
@@ -208,6 +209,7 @@ pl:
   search_by_name: Szukaj według nazwy lub miejscowości ...
   producers_join: Australijscy producenci mogą teraz dołączyć do Open Food Network.
   charges_sales_tax: Pobiera podatek VAT?
+  enterprise_permissions: "Uprawnienia podmiotu"
   print_invoice: "Wydrukować fakturę"
   print_ticket: "Wydrukuj bilet"
   select_ticket_printer: "Wybierz drukarkę do wydruku biletów"

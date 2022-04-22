@@ -3,6 +3,7 @@ de_DE:
   activerecord:
     models:
       spree/product: Produkt
+      spree/shipping_method: Lieferoption
     attributes:
       spree/user:
         password: "Passwort"
@@ -296,6 +297,7 @@ de_DE:
   producers_join: 'Wir laden Produzenten ein, jetzt dem Open Food Network beizutreten. '
   charges_sales_tax: Berechnen Sie Steuern?
   business_address: "Unternehmensdaten"
+  enterprise_permissions: "Unternehmensberechtigungen"
   print_invoice: "Rechnung drucken"
   print_ticket: "Beleg drucken"
   select_ticket_printer: "Wählen Sie einen Drucker für die Belege."
@@ -792,6 +794,11 @@ de_DE:
           remove_terms_and_conditions: "Datei löschen"
           uploaded_on: "hochgeladen am"
           reset_form: "zurücksetzen"
+          Invoice_item_sorting: Rechnungseinstellungen
+          sort_items_by_supplier?: Artikel nach Lieferanten gruppieren?
+          sort_items_by_supplier_tip: "Wenn aktiviert, werden die Artikel nach Lieferanten gruppiert und dann alphabetisch sortiert. Wenn deaktiviert, werden die Artikel unabhängig vom Lieferanten alphabetisch sortiert."
+          enabled: Aktiviert
+          disabled: Deaktiviert
         business_address:
           company_legal_name: Unternehmensname
           company_placeholder: z. B. Charlies großartige Farm
@@ -918,6 +925,10 @@ de_DE:
           shopfront_sort_by_producer: "Nach Produzent"
           shopfront_sort_by_category_placeholder: "Kategorie"
           shopfront_sort_by_producer_placeholder: "Produzent"
+          display_remaining_stock: "Restbestand anzeigen, wenn nur noch wenige Artikel verfügbar"
+          display_remaining_stock_tip: "Wenn nur noch 3 oder weniger Artikel eines Produkts verfügbar sind, wird der Restbestand im Online-Shop angezeigt. "
+          enabled: "aktiviert"
+          disabled: "deaktiviert"
         social:
           twitter_placeholder: "z. B. @the_prof"
           instagram_placeholder: "z. B. the_prof"
@@ -2976,6 +2987,7 @@ de_DE:
         add_to_cart: "Hinzufügen"
         in_cart: "im Warenkorb"
         quantity_in_cart: "%{quantity} im Warenkorb"
+        remaining_in_stock: "Nur noch %{quantity} verfügbar! "
       bulk_buy_modal:
         min_quantity: "Minimale Menge"
         max_quantity: "Maximale Menge"

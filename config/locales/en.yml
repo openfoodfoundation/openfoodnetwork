@@ -24,6 +24,7 @@ en:
   activerecord:
     models:
       spree/product: Product
+      spree/shipping_method: Shipping Method
     attributes:
       spree/user:
         password: "Password"
@@ -323,7 +324,7 @@ en:
   producers_join: Australian producers are now welcome to join the Open Food Network. #FIXME
   charges_sales_tax: Charges GST?
   business_address: "Business Address"
-  Invoice_item_sorting: "Invoice sorting"
+  enterprise_permissions: "Enterprise Permissions"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -879,6 +880,8 @@ en:
           manage_fees: Manage Enterprise Fees
           no_fees_yet: You don't have any enterprise fees yet.
           create_button: Create One Now
+        enterprise_permissions:
+          enterprise_relationships: Enterprise Relationships
         images:
           logo: Logo
           promo_image_placeholder: 'This image is displayed in "About Us"'
@@ -919,9 +922,10 @@ en:
           sells: Sells
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
           visible_in_search: Visible in search?
-          visible_in_search_tip: Determines whether this enterprise will be visible to customers when searching the site.
-          visible: Visible
-          not_visible: Not visible
+          visible_in_search_tip: "Shops can be <br />1. publicly visible, appearing on the OFN map and listings. <br />2. Hidden on maps and listings but referenced by other shops and linked in their profile. <br />3. Completely hidden."
+          visible: Public
+          not_visible: Hidden
+          hidden: Hide all references
           permalink: Permalink (no spaces)
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front
@@ -976,6 +980,10 @@ en:
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
+          display_remaining_stock: "Display remaining stock in shopfront if low on-hand"
+          display_remaining_stock_tip: "Let shoppers know when there are only 3 or less items left."
+          enabled: "Enabled"
+          disabled: "Disabled"
         social:
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. the_prof"
@@ -3103,6 +3111,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
+        remaining_in_stock: "Only %{quantity} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
@@ -4206,6 +4215,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         spree/payment:
           one: Payment
           other: Payments
+    unit: unit
+    per_unit: per unit
   datetime:
     distance_in_words:
       about_x_hours:

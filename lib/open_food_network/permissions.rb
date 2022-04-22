@@ -60,21 +60,23 @@ module OpenFoodNetwork
     end
 
     def editable_products
-      permitted_enterprise_products_ids = product_ids_supplied_by(
-        related_enterprises_granting(:manage_products)
-      )
-      Spree::Product.where(
-        id: managed_enterprise_products.select(:id) | permitted_enterprise_products_ids
+      return Spree::Product.all if admin?
+
+      Spree::Product.where(supplier_id: @user.enterprises).or(
+        Spree::Product.where(supplier_id: related_enterprises_granting(:manage_products))
       )
     end
 
     def visible_products
-      permitted_enterprise_products_ids = product_ids_supplied_by(
-        related_enterprises_granting(:manage_products) |
-          related_enterprises_granting(:add_to_order_cycle)
-      )
+      return Spree::Product.all if admin?
+
       Spree::Product.where(
-        id: managed_enterprise_products.select(:id) | permitted_enterprise_products_ids
+        supplier_id: @user.enterprises
+      ).or(
+        Spree::Product.where(
+          supplier_id: related_enterprises_granting(:manage_products) |
+            related_enterprises_granting(:add_to_order_cycle)
+        )
       )
     end
 

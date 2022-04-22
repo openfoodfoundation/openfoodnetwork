@@ -3,6 +3,7 @@ en_FR:
   activerecord:
     models:
       spree/product: Product
+      spree/shipping_method: Shipping Method
     attributes:
       spree/user:
         password: "Password"
@@ -296,6 +297,7 @@ en_FR:
   producers_join: Producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges GST?
   business_address: "Business Address"
+  enterprise_permissions: "Enterprise Permissions"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -792,6 +794,11 @@ en_FR:
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
           reset_form: "Reset Form"
+          Invoice_item_sorting: Invoice item sorting
+          sort_items_by_supplier?: Sort items by supplier?
+          sort_items_by_supplier_tip: "When enabled, Items will be sorted by supplier name."
+          enabled: Enable
+          disabled: Disable
         business_address:
           company_legal_name: Company Legal Name
           company_placeholder: Example Inc.
@@ -916,6 +923,10 @@ en_FR:
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
+          display_remaining_stock: "Display remaining stock in shopfront if low on-hand"
+          display_remaining_stock_tip: "Let shoppers know when there are only 3 or less items left."
+          enabled: "Enabled"
+          disabled: "Disabled"
         social:
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. the_prof"
@@ -2966,6 +2977,7 @@ en_FR:
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
+        remaining_in_stock: "Only %{quantity} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
@@ -4032,6 +4044,8 @@ en_FR:
         spree/payment:
           one: Payments
           other: Payments
+    unit: unit
+    per_unit: per unit
   datetime:
     distance_in_words:
       about_x_hours:

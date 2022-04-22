@@ -35,7 +35,6 @@
 @import 'footer';
 @import 'forms';
 @import 'groups';
-@import 'help-modal';
 @import 'home_panes';
 @import 'home_tagline';
 @import 'hub_node';
@@ -76,3 +75,5 @@ ofn-modal {
 
 @import "../shared/question-mark-icon";
 @import '../admin/shared/scroll_bar';
+
+@import 'app/components/help_modal_component/help_modal_component';

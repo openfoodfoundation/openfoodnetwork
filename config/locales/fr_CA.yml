@@ -3,6 +3,7 @@ fr_CA:
   activerecord:
     models:
       spree/product: Produit
+      spree/shipping_method: Option d'expédition
     attributes:
       spree/user:
         password: "Mot de passe"
@@ -297,6 +298,7 @@ fr_CA:
   producers_join: Les producteurs et autres hubs basés au Québec sont invités à rejoindre Open Food Network Canada.
   charges_sales_tax: Soumis aux taxes?
   business_address: "Adresse du siège social"
+  enterprise_permissions: "Permissions Inter-entreprises"
   print_invoice: "Imprimer la facture"
   print_ticket: "Imprimer ticket de caisse"
   select_ticket_printer: "Choisir l'imprimante tickets"
@@ -817,6 +819,8 @@ fr_CA:
           manage_fees: Gérer les marges et commissions
           no_fees_yet: Vous n'avez pas encore défini de commissions
           create_button: Créer une commission
+        enterprise_permissions:
+          enterprise_relationships: Relations inter-entreprises
         images:
           logo: Logo
           promo_image_placeholder: 'Cette image est affichée dans "A propos"'
@@ -919,6 +923,8 @@ fr_CA:
           shopfront_sort_by_producer: "Par producteur"
           shopfront_sort_by_category_placeholder: "Catégorie"
           shopfront_sort_by_producer_placeholder: "Producteur"
+          enabled: "Activée"
+          disabled: "Désactivée"
         social:
           twitter_placeholder: "ex. @OpenFoodNet_fr"
           instagram_placeholder: "ex. @OpenFoodNet_fr"

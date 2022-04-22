@@ -9,9 +9,9 @@ angular.module("admin.enterpriseFees").directive 'spreeEnsureCalculatorPreferenc
       settings = element.parent().parent().find('div.calculator-settings')
       if value == orig_calculator_type
         settings.show()
-        settings.find('input').prop 'disabled', false
+        settings.find('input, select').prop 'disabled', false
       else
         settings.hide()
-        settings.find('input').prop 'disabled', true
+        settings.find('input, select').prop 'disabled', true
       return
     return

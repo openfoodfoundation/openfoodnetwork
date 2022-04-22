@@ -119,24 +119,18 @@ describe "LineItemsCtrl", ->
         }
         scope.line_items = [ line_item1, line_item2 ]
 
-      it "shows a different message if order will be canceled", ->
-        spyOn(window, "confirm")
+      it "show popup about order cancellation only on last item deletion", ->
+        spyOn(window, "ofnCancelOrderAlert")
         scope.deleteLineItem(line_item2)
-        expect(confirm).not.toHaveBeenCalledWith("This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?")
+        expect(ofnCancelOrderAlert).not.toHaveBeenCalled()
         scope.deleteLineItem(line_item1)
-        expect(confirm).toHaveBeenCalledWith("This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?")
+        expect(ofnCancelOrderAlert).toHaveBeenCalled()
 
       it "deletes the line item", ->
         spyOn(window, "confirm").and.callFake(-> return true)
         spyOn(LineItems, "delete")
         scope.deleteLineItem(line_item2)
         expect(LineItems.delete).toHaveBeenCalledWith(line_item2, jasmine.anything())
-
-      it "cancels empty order", ->
-        spyOn(window, "confirm").and.callFake(-> return true)
-        spyOn(scope, "cancelOrder").and.callFake(-> return Promise.resolve())
-        scope.deleteLineItem(line_item1)
-        expect(scope.cancelOrder).toHaveBeenCalledWith(order1)
     
     describe "deleting 'checked' line items", ->
       line_item1 = line_item2 = line_item3 = line_item4 = null
@@ -169,34 +163,11 @@ describe "LineItemsCtrl", ->
         scope.line_items = [ line_item1, line_item2, line_item3, line_item4 ]
 
       it "asks for confirmation only if orders will be canceled", ->
-        spyOn(window, "confirm")
+        spyOn(window, "ofnCancelOrderAlert")
         line_item3.checked = true
         scope.deleteLineItems(scope.line_items)
-        expect(confirm).not.toHaveBeenCalled()
         line_item1.checked = true
         scope.deleteLineItems(scope.line_items)
-        expect(confirm).toHaveBeenCalledWith("This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?")
-
-
-      it "deletes checked line items for non-empty orders", ->
-        line_item1.checked = true
-        line_item3.checked = true
-        spyOn(window, "confirm").and.callFake(-> return true)
-        spyOn(LineItems, "delete")
-        scope.deleteLineItems(scope.line_items)
-        expect(LineItems.delete).toHaveBeenCalledWith(line_item3)
-        expect(LineItems.delete).not.toHaveBeenCalledWith(line_item1)
-        expect(LineItems.delete).not.toHaveBeenCalledWith(line_item2)
-        expect(LineItems.delete).not.toHaveBeenCalledWith(line_item4)
-
-      it "cancels all empty orders", ->
-        line_item1.checked = true
-        line_item3.checked = true
-        spyOn(window, "confirm").and.callFake(-> return true)
-        spyOn(scope, "cancelOrder").and.callFake(-> return Promise.resolve())
-        scope.deleteLineItems(scope.line_items)
-        expect(scope.cancelOrder).toHaveBeenCalledWith(order1)
-        expect(scope.cancelOrder).not.toHaveBeenCalledWith(order3)
 
     describe "check boxes for line items", ->
       line_item1 = line_item2 = null

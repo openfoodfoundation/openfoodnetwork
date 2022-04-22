@@ -3,6 +3,7 @@ ca:
   activerecord:
     models:
       spree/product: Producte
+      spree/shipping_method: Mètode d'enviament
     attributes:
       spree/user:
         password: "Contrasenya"
@@ -271,6 +272,7 @@ ca:
   search_by_name: Cercar per nom o barri ...
   producers_join: Els productors australians son ara benvinguts a unir-se a Open Food Network.
   charges_sales_tax: Càrrecs d'IVA?
+  enterprise_permissions: "Permisos de l'organització"
   print_invoice: "Imprimir Factura"
   print_ticket: "Imprimir tiquet"
   select_ticket_printer: "Seleccionar la impressora de tiquets"
@@ -885,6 +887,8 @@ ca:
           shopfront_sort_by_producer: "Per productora"
           shopfront_sort_by_category_placeholder: "Categoria"
           shopfront_sort_by_producer_placeholder: "Productora"
+          enabled: "Habilitat"
+          disabled: "Deshabilitat"
         social:
           twitter_placeholder: "p. ex: @horta_josepribes"
           instagram_placeholder: "p. ex: horta_josepribes"

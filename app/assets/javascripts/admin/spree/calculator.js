@@ -7,11 +7,11 @@ $(function() {
     if (calculator_select.val() === original_calc_type) {
       $('div.calculator-settings').show();
       $('.calculator-settings-warning').hide();
-      $('.calculator-settings').find('input,textarea').prop("disabled", false);
+      $('.calculator-settings').find('input,textarea,select').prop("disabled", false);
     } else {
       $('div.calculator-settings').hide();
       $('.calculator-settings-warning').show();
-      $('.calculator-settings').find('input,textarea').prop("disabled", true);
+      $('.calculator-settings').find('input,textarea,select').prop("disabled", true);
     }
   });
 })

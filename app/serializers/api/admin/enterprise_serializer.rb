@@ -13,7 +13,8 @@ module Api
                  :default_tag_group, :require_login, :allow_guest_orders, :allow_order_changes,
                  :logo, :promo_image, :terms_and_conditions,
                  :terms_and_conditions_file_name, :terms_and_conditions_updated_at,
-                 :preferred_invoice_order_by_supplier
+                 :preferred_invoice_order_by_supplier, :preferred_product_low_stock_display,
+                 :visible
 
       has_one :owner, serializer: Api::Admin::UserSerializer
       has_many :users, serializer: Api::Admin::UserSerializer

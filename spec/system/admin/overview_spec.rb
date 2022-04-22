@@ -32,7 +32,7 @@ describe '
 
       context "when visibilty is set to false" do
         before do
-          d1.visible = false
+          d1.visible = "only_through_links"
           d1.save!
         end
 

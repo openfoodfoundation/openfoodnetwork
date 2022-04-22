@@ -105,6 +105,10 @@ Lint/UselessAssignment:
   Exclude:
   - spec/**/*
 
+Lint/MissingSuper:
+  Exclude:
+    - 'app/components/**/*'
+
 Metrics/AbcSize:
   Max: 30 # default 17
 

@@ -3,6 +3,7 @@ tr:
   activerecord:
     models:
       spree/product: Ürün
+      spree/shipping_method: TESLİMAT YÖNTEMİ
     attributes:
       spree/user:
         password: "Parola"
@@ -237,6 +238,7 @@ tr:
   search_by_name: Üretici adına veya konuma göre arama yapın...
   producers_join: Bağımsız gıda üreticileri! Açık Gıda Ağı sizler için kullanıma açıldı.
   charges_sales_tax: KDV Uyguluyor mu?
+  enterprise_permissions: "İŞLETME İZİNLERİ"
   print_invoice: "Faturayı yazdır"
   print_ticket: "Etiketi Yazdır"
   select_ticket_printer: "Etiketler için yazıcı seçin"
@@ -848,6 +850,8 @@ tr:
           shopfront_sort_by_producer: "Üretici"
           shopfront_sort_by_category_placeholder: "Kategori"
           shopfront_sort_by_producer_placeholder: "ÜRETİCİ"
+          enabled: "Etkin"
+          disabled: "Kapalı"
         social:
           twitter_placeholder: "Örn.  @the_usta"
           instagram_placeholder: "Örn. ciftlik   (başına @ işareti koymayınız)"

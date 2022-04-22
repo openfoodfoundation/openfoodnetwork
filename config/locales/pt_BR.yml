@@ -3,6 +3,7 @@ pt_BR:
   activerecord:
     models:
       spree/product: Produto
+      spree/shipping_method: Método de envio
     attributes:
       spree/user:
         password: "Senha"
@@ -230,6 +231,7 @@ pt_BR:
   search_by_name: Procurar por nome ou localidade
   producers_join: Produtores nacionais estão convidados a se unirem à Open Food Brasil.
   charges_sales_tax: Cobra imposto sobre bens e serviços?
+  enterprise_permissions: "Permissões da Iniciativa"
   print_invoice: "Imprimir fatura"
   print_ticket: "Imprimir bilhetes"
   select_ticket_printer: "Selecione a impressora para bilhetes"
@@ -740,6 +742,8 @@ pt_BR:
           manage_fees: Gerenciar taxas da iniciativa
           no_fees_yet: Você ainda não possui nenhuma taxa de iniciativa.
           create_button: Criar uma agora
+        enterprise_permissions:
+          enterprise_relationships: Relações da iniciativa
         images:
           logo: Logo
           promo_image_placeholder: 'Essa imagem aparece em "Sobre nós"'
@@ -836,6 +840,8 @@ pt_BR:
           close_date: "Dia de fechamento"
           shopfront_sort_by_category_placeholder: "Categoria"
           shopfront_sort_by_producer_placeholder: "Produtor"
+          enabled: "Ativado"
+          disabled: "Desativado"
         social:
           twitter_placeholder: "ex:  @o_prof"
           instagram_placeholder: "ex. the_prof"

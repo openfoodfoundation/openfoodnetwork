@@ -20,6 +20,7 @@ class Enterprise < ApplicationRecord
   preference :shopfront_order_cycle_order, :string, default: "orders_close_at"
   preference :shopfront_product_sorting_method, :string, default: "by_category"
   preference :invoice_order_by_supplier, :boolean, default: false
+  preference :product_low_stock_display, :boolean, default: false
 
   # Allow hubs to restrict visible variants to only those in their inventory
   preference :product_selection_from_inventory_only, :boolean, default: false
@@ -119,7 +120,8 @@ class Enterprise < ApplicationRecord
   after_rollback :restore_permalink
 
   scope :by_name, -> { order('name') }
-  scope :visible, -> { where(visible: true) }
+  scope :visible, -> { where(visible: "public") }
+  scope :not_hidden, -> { where.not(visible: "hidden") }
   scope :activated, -> { where("sells != 'unspecified'") }
   scope :ready_for_checkout, lambda {
     joins(:shipping_methods).
@@ -266,7 +268,7 @@ class Enterprise < ApplicationRecord
 
   def plus_relatives_and_oc_producers(order_cycles)
     oc_producer_ids = Exchange.in_order_cycle(order_cycles).incoming.pluck :sender_id
-    Enterprise.is_primary_producer.relatives_of_one_union_others(id, oc_producer_ids | [id])
+    Enterprise.not_hidden.is_primary_producer.relatives_of_one_union_others(id, oc_producer_ids | [id])
   end
 
   def relatives_including_self
@@ -398,6 +400,10 @@ class Enterprise < ApplicationRecord
 
   def can_invoice?
     abn.present?
+  end
+
+  def public?
+    visible == "public"
   end
 
   protected
