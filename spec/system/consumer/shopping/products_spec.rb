@@ -130,7 +130,6 @@ describe "As a consumer I want to view products", js: true do
             toggle_filter property.presentation
           end
 
-          pending("Closing issue #9046")
           expect(page).to have_content variant.name.to_s
           expect(page).not_to have_content variant2.name.to_s
         end

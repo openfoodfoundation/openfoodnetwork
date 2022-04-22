@@ -63,12 +63,16 @@ module Api
       end
 
       context "with property filters" do
+        before do
+          product1.update!(properties: [property1, property2])
+        end
+
         it "filters by product property" do
           api_get :products, id: order_cycle.id, distributor: distributor.id,
                              q: { with_properties: [property1.id, property2.id] }
 
           expect(response.status).to eq 200
-          expect(product_ids).to include product1.id, product2.id
+          expect(product_ids).to eq [product1.id, product2.id]
           expect(product_ids).to_not include product3.id
         end
 
@@ -87,7 +91,7 @@ module Api
                                q: { with_properties: [supplier_property.id] }
 
             expect(response.status).to eq 200
-            expect(product_ids).to include product1.id, product2.id
+            expect(product_ids).to eq [product1.id, product2.id]
             expect(product_ids).to_not include product3.id
           end
         end
