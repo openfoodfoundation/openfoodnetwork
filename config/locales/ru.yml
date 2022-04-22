@@ -298,6 +298,7 @@ ru:
   producers_join: Производители теперь могут присоединиться к Открытой Сети Продуктов.
   charges_sales_tax: Сбор налога с продаж?
   business_address: "Юридический Адрес"
+  enterprise_permissions: "Разрешения Предприятия"
   print_invoice: "Счёт"
   print_ticket: "Печать счета"
   select_ticket_printer: "Выбрать принтер для счетов"
@@ -919,6 +920,8 @@ ru:
           shopfront_sort_by_producer: "По производителю"
           shopfront_sort_by_category_placeholder: "Категория"
           shopfront_sort_by_producer_placeholder: "Производитель"
+          enabled: "Включено"
+          disabled: "Выключено"
         social:
           twitter_placeholder: "напр. @the_prof"
           instagram_placeholder: "напр. the_prof"

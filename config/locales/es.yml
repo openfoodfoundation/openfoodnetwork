@@ -294,6 +294,7 @@ es:
   producers_join: Las productoras australianas ahora son bienvenidas a unirse a Open Food Network.
   charges_sales_tax: ¿Cargos de IVA?
   business_address: "Dirección de Negocios"
+  enterprise_permissions: "Permisos de la organización"
   print_invoice: "Imprimir factura"
   print_ticket: "Imprimir Ticket"
   select_ticket_printer: "Seleccionar impresora para los tickets"
@@ -812,6 +813,8 @@ es:
           manage_fees: Gestiona las comisiones de la Organización
           no_fees_yet: No tienes comisiones para la organización.
           create_button: Crear una ahora
+        enterprise_permissions:
+          enterprise_relationships: Relaciones de la Organización
         images:
           logo: Logo
           promo_image_placeholder: 'Esta imagen aparece en "Sobre nosotras"'
@@ -914,6 +917,8 @@ es:
           shopfront_sort_by_producer: "Por productora"
           shopfront_sort_by_category_placeholder: "Categoría"
           shopfront_sort_by_producer_placeholder: "Productora"
+          enabled: "Habilitado"
+          disabled: "Deshabilitado"
         social:
           twitter_placeholder: "ej: the_prof"
           instagram_placeholder: "p.ej. @mi_huerta"

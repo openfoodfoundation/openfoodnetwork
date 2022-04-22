@@ -256,6 +256,7 @@ nb:
   producers_join: Norske produsenter er nå velkommen til å bli med i Open Food Network.
   charges_sales_tax: MVA-pliktig?
   business_address: "Forretningsadresse"
+  enterprise_permissions: "Bedriftsrettigheter"
   print_invoice: "Skriv ut Faktura"
   print_ticket: "Skriv ut kvittering"
   select_ticket_printer: "Velg skriver for kvitteringer"
@@ -774,6 +775,8 @@ nb:
           manage_fees: Administrer Bedriftsavgifter
           no_fees_yet: Du har ingen bedriftsavgifter ennå.
           create_button: Opprett en nå
+        enterprise_permissions:
+          enterprise_relationships: Bedriftsrelasjoner
         images:
           logo: Logo
           promo_image_placeholder: 'Dette bildet vises i "Om Oss"'
@@ -874,6 +877,8 @@ nb:
           shopfront_sort_by_producer: "Etter produsent"
           shopfront_sort_by_category_placeholder: "Kategori"
           shopfront_sort_by_producer_placeholder: "Produsent"
+          enabled: "Aktivert"
+          disabled: "Deaktivert"
         social:
           twitter_placeholder: "f.eks. @the_prof"
           instagram_placeholder: "f.eks. the_prof"
@@ -3965,6 +3970,7 @@ nb:
         spree/payment:
           one: innbetaling
           other: Betalinger
+    unit: enhet
   datetime:
     distance_in_words:
       about_x_hours:

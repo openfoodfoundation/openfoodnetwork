@@ -201,6 +201,7 @@ nl_BE:
   search_by_name: Zoeken op naam of voorstad....
   producers_join: Belgische producenten zijn nu welkom om zich aan te sluiten bij het Open Food Network.
   charges_sales_tax: Kosten GST?
+  enterprise_permissions: "Bedrijfstoestemming"
   print_invoice: "Factuur afdrukken"
   print_ticket: "Ticket afdrukken"
   select_ticket_printer: "Selecteer printer voor tickets"
@@ -779,6 +780,8 @@ nl_BE:
           close_date: "Sluiten Datum"
           shopfront_sort_by_category_placeholder: "Categorie"
           shopfront_sort_by_producer_placeholder: "Producent"
+          enabled: "Activeer"
+          disabled: "Deactiveer"
         social:
           twitter_placeholder: "bv. @de_prof"
           instagram_placeholder: "bv. de_prof"

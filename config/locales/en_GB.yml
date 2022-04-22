@@ -297,6 +297,7 @@ en_GB:
   producers_join: UK producers are now welcome to join Open Food Network UK.
   charges_sales_tax: Charges VAT?
   business_address: "Business Address"
+  enterprise_permissions: "Enterprise Permissions"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -817,6 +818,8 @@ en_GB:
           manage_fees: Manage Enterprise Fees
           no_fees_yet: You don't have any enterprise fees yet.
           create_button: Create One Now
+        enterprise_permissions:
+          enterprise_relationships: Enterprise Relationships
         images:
           logo: Logo
           promo_image_placeholder: 'This image is displayed in "About Us"'
@@ -917,6 +920,8 @@ en_GB:
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
+          enabled: "Enabled"
+          disabled: "Disabled"
         social:
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. the_prof"
@@ -4037,6 +4042,7 @@ en_GB:
         spree/payment:
           one: Payment
           other: Payments
+    unit: unit
   datetime:
     distance_in_words:
       about_x_hours:

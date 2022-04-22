@@ -297,7 +297,7 @@ en_IE:
   producers_join: Producers are now welcome to join Open Food Network Ireland.
   charges_sales_tax: Charges VAT?
   business_address: "Business Address"
-  Invoice_item_sorting: "Invoice sorting"
+  enterprise_permissions: "Enterprise Permissions"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -923,6 +923,8 @@ en_IE:
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
+          enabled: "Enabled"
+          disabled: "Disabled"
         social:
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. the_prof"

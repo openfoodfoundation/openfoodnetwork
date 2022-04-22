@@ -297,6 +297,7 @@ cy:
   producers_join: Bellach mae croeso i gynhyrchwyr y DU ymuno â'r Rhwydwaith Bwyd Agored.
   charges_sales_tax: Angen talu TAW?
   business_address: "Cyfeiriad Busnes"
+  enterprise_permissions: "Caniatâd y Fenter"
   print_invoice: "Argraffu Anfoneb"
   print_ticket: "Argraffu Tocyn"
   select_ticket_printer: "Dewiswch argraffydd ar gyfer tocynnau"
@@ -917,6 +918,8 @@ cy:
           shopfront_sort_by_producer: "Yn ôl cynhyrchydd"
           shopfront_sort_by_category_placeholder: "Categori"
           shopfront_sort_by_producer_placeholder: "Cynhyrchydd"
+          enabled: "Galluogwyd"
+          disabled: "Analluogwyd"
         social:
           twitter_placeholder: "e.e. @the_prof"
           instagram_placeholder: "e.e. the_prof"
@@ -964,7 +967,7 @@ cy:
           email_not_confirmed: "E-bost heb ei gadarnhau"
       actions:
         edit_profile: Gosodiadau
-        properties: Priodweddau
+        properties: Manylion
         payment_methods: Dulliau Talu
         payment_methods_tip: Nid oes gan y fenter hon unrhyw ddulliau talu
         shipping_methods: Dulliau Anfon
@@ -1146,7 +1149,7 @@ cy:
         proceed: Ewch ymlaen
     producer_properties:
       index:
-        title: Priodweddau Cynhyrchwyr
+        title: Manylion Cynhyrchwyr
     proxy_orders:
       cancel:
         could_not_cancel_the_order: Methu canslo'r archeb
@@ -1609,7 +1612,7 @@ cy:
       cookies_policy_link: "polisi cwcis"
       cookies_accept_button: "Derbyn Cwcis"
   home_shop: Siopa Nawr
-  brandstory_headline: "Bwyd, anghorfforedig"
+  brandstory_headline: "Tyfu bwyd lleol ar lein."
   brandstory_intro: "Weithiau y ffordd orau i drwsio'r system yw trwy cychwyn un newydd ....."
   brandstory_part1: "Rydym yn cychwyn o'r gwaelod. Gyda ffermwyr a thyfwyr sy'n barod i adrodd eu hanesion, llawn gwirionedd a balchder. Gyda dosbarthwyr sy'n barpod i gysylltu pobl â chynnyrch mewn ffordd deg ac onest. Gyda phrynwyr sy'n credu y gall penderfyniadau gwell am y siopa bob wythnos newid y byd o ddifrif."
   brandstory_part2: "Wedyn mae angen inni ei wireddu. Ffordd i rymuso pawb sy'n tyfu, yn gwerthu ac yn prynu bwyd. Ffordd i adrodd yr holl hanesion, delio gyda'r logisteg. Ffordd i droi trafodion yn drawsnewid bob dydd."
@@ -2513,7 +2516,7 @@ cy:
   report_header_customer: Cwsmer
   report_header_customer_code: Cod Cwsmer
   report_header_product: Cynnyrch
-  report_header_product_properties: Priodweddau Cynnyrch
+  report_header_product_properties: Manylion Cynnyrch
   report_header_quantity: Nifer
   report_header_max_quantity: Uchafswm nifer
   report_header_variant: Amrywiolyn
@@ -2624,7 +2627,7 @@ cy:
   contact: "Cysylltu"
   social: "Cymdeithasol"
   business_details: "Manylion Busnes"
-  properties: "Eiddo"
+  properties: "Manylion"
   shipping: "Anfon"
   shipping_methods: "Dulliau anfon"
   payment_methods: "Dulliau Talu"
@@ -3527,7 +3530,7 @@ cy:
         subscriptions: "Tanysgrifiadau"
         products: "Cynnyrch"
         option_types: "Mathau Opsiwn"
-        properties: "Priodweddau"
+        properties: "Manylion"
         variant_overrides: "Stocrestr"
         reports: "Adroddiadau"
         configuration: "Ffurfweddiad"
@@ -3541,10 +3544,10 @@ cy:
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Etifeddu eiddo gan %{supplier}? (oni bai ei fod yn cael ei ddiystyru uchod)"
-          add_product_properties: "Ychwanegu Priodweddau Cynnyrch"
+          add_product_properties: "Ychwanegu Manylion Cynnyrch"
       properties:
         index:
-          properties: "Priodweddau"
+          properties: "Manylion cynnyrch"
           new_property: "Eiddo Newydd"
           name: "Enw"
           presentation: "Cyflwyniad"
@@ -3552,7 +3555,7 @@ cy:
           new_property: "Eiddo Newydd"
         edit:
           editing_property: "Yn golygu Eiddo"
-          back_to_properties_list: "Yn ôl i'r Rhestr Eiddo"
+          back_to_properties_list: "Yn ôl i'r Rhestr Manylion Cynnyrch"
         form:
           name: "Enw"
           presentation: "Cyflwyniad"
@@ -3775,7 +3778,7 @@ cy:
             display_as: Arddangos fel
             category: Categori
             tax_category: Categori Treth
-            inherits_properties?: Yn etifeddu eiddo?
+            inherits_properties?: Yn etifeddu manylion cynnyrch?
             available_on: Ar gael ar
             av_on: "Cyfartaledd ar"
             import_date: "Dyddiad Mewnforio"

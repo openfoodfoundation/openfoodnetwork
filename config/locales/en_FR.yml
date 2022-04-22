@@ -297,7 +297,7 @@ en_FR:
   producers_join: Producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges GST?
   business_address: "Business Address"
-  Invoice_item_sorting: "Invoice sorting"
+  enterprise_permissions: "Enterprise Permissions"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"

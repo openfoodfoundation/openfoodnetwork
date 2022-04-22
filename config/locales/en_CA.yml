@@ -297,6 +297,7 @@ en_CA:
   producers_join: Producers are  welcome to join the Open Food Network.
   charges_sales_tax: Charges sales tax?
   business_address: "Business Address"
+  enterprise_permissions: "Enterprise Permissions"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -917,6 +918,8 @@ en_CA:
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
+          enabled: "Enabled"
+          disabled: "Disabled"
         social:
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. www.instagram.com/YourAccountHere"

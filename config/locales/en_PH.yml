@@ -197,6 +197,7 @@ en_PH:
   search_by_name: Search by name or city...
   producers_join: Philippine producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges VAT?
+  enterprise_permissions: "Enterprise Permissions"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -759,6 +760,8 @@ en_PH:
           close_date: "Close Date"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
+          enabled: "Enabled"
+          disabled: "Disabled"
         social:
           twitter_placeholder: "e.g. @OFNPhilippines"
           instagram_placeholder: "e.g. OFNPhilippines"

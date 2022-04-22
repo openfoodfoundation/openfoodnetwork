@@ -297,7 +297,7 @@ ar:
   producers_join: المنتجون الأستراليون مدعوون الآن للانضمام إلى شبكة الغذاء المفتوح.
   charges_sales_tax: رسوم ضريبة السلع والخدمات؟
   business_address: "عنوان العمل"
-  Invoice_item_sorting: "فرز الفاتورة"
+  enterprise_permissions: "أذونات المؤسسة"
   print_invoice: "طباعة الفاتورة"
   print_ticket: "طباعة التذكرة"
   select_ticket_printer: "حدد الطابعة للتذاكر"
