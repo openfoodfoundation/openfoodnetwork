@@ -269,6 +269,21 @@ describe "full-page cart", js: true do
           end
         end
       end
+
+      describe "when user changes number in text input, check price" do
+        it "allows updating the quantity" do
+          variant.update!(on_hand: 5, on_demand: true)
+
+          visit main_app.enterprise_shop_path(distributor)
+
+          fill_in "variant_line_item_quantity_#{variant2.id}", with: '3'
+          expect(page).to have_field "variant_line_item_quantity_#{variant.id}", with: '3'
+          
+          visit main_app.cart_path
+
+          expect(page).to have_selector '.cart-item-total', text: with_currency(330.00)
+        end
+      end
     end
 
     context "when ordered in the same order cycle" do
