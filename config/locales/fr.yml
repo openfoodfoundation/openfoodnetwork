@@ -866,9 +866,10 @@ fr:
           sells: Produits vendus
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
           visible_in_search: Apparaît sur la plateforme?
-          visible_in_search_tip: Indiquez si vous souhaitez ou ne souhaitez pas que votre entreprise apparaisse sur la carte et dans la liste des boutiques.
-          visible: Visible
+          visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de CoopCircuits et la liste des boutiques. <br /> Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
+          visible: Boutique publique (visible par tous)
           not_visible: Invisible
+          hidden: Masquer toutes les références
           permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre boutique: %{link}ma-boutique/shop"
           link_to_front: Lien URL de la boutique
