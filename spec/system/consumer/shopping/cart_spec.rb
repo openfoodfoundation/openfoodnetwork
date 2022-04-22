@@ -276,7 +276,7 @@ describe "full-page cart", js: true do
 
           visit main_app.enterprise_shop_path(distributor)
 
-          fill_in "variant_line_item_quantity_#{variant2.id}", with: '3'
+          fill_in "variant_line_item_quantity_#{variant.id}", with: '3'
           expect(page).to have_field "variant_line_item_quantity_#{variant.id}", with: '3'
           
           visit main_app.cart_path
