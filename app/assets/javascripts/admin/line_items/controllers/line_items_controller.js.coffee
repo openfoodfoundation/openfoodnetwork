@@ -211,11 +211,11 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.fulfilled = (sumOfUnitValues) ->
     # A Units Variant is an API object which holds unit properies of a variant
-    if $scope.selectedUnitsProduct.hasOwnProperty("group_buy_unit_size") && $scope.selectedUnitsProduct.group_buy_unit_size > 0 &&
-      $scope.selectedUnitsProduct.hasOwnProperty("variant_unit") &&
-      ( $scope.selectedUnitsProduct.variant_unit == "weight" || $scope.selectedUnitsProduct.variant_unit == "volume" )
-        scale = $scope.selectedUnitsProduct.variant_unit_scale
-        sumOfUnitValues = sumOfUnitValues * scale unless scale == 28.35 || scale == 453.6
+    if $scope.selectedUnitsProduct.hasOwnProperty("group_buy_unit_size")&& $scope.selectedUnitsProduct.group_buy_unit_size > 0 &&
+      $scope.selectedUnitsProduct.hasOwnProperty("variant_unit")
+        if $scope.selectedUnitsProduct.variant_unit == "weight" || $scope.selectedUnitsProduct.variant_unit == "volume"
+          scale = $scope.selectedUnitsProduct.variant_unit_scale
+          sumOfUnitValues = sumOfUnitValues * scale unless scale == 28.35 || scale == 453.6
         $scope.roundToThreeDecimals(sumOfUnitValues / $scope.selectedUnitsProduct.group_buy_unit_size)
     else
       ''
