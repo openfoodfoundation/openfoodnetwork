@@ -201,4 +201,36 @@ describe Spree::User do
       expect(user.flipper_id).to eq "Spree::User;42"
     end
   end
+
+  describe "#disable!" do
+    it "sets disabled datetime" do
+      user = create(:user)
+      expect(user.disabled_at).to be_nil
+      user.disable!
+      expect(user.disabled_at).not_to be_nil
+    end
+  end
+
+  describe "#enable!" do
+    it "clears disabled datetime" do
+      user = create(:user, disabled_at: Time.zone.now)
+      expect(user.disabled_at).not_to be_nil
+      user.enable!
+      expect(user.disabled_at).to be_nil
+    end
+  end
+
+  describe "#disabled?" do
+    it "returns true with a disabled datetime" do
+      user = create(:user)
+      user.disable!
+      expect(user.disabled?).to be_truthy
+    end
+
+    it "returns false without a disabled datetime" do
+      user = create(:user)
+      user.enable!
+      expect(user.disabled?).to be_falsey
+    end
+  end
 end
