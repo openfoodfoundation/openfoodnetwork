@@ -305,10 +305,9 @@ describe "LineItemsCtrl", ->
         it "returns '' if selectedUnitsVariant has no property 'variant_unit'", ->
           expect(scope.formattedValueWithUnitName(1,{})).toEqual ''
 
-        it "returns '', and does not call Math.round if variant_unit is 'items'", ->
+        it "returns the value, and does not call Math.round if variant_unit is 'items'", ->
           unitsProduct = { variant_unit: "items" }
-          expect(scope.formattedValueWithUnitName(1,unitsProduct,unitsVariant)).toEqual ''
-          expect(Math.round).not.toHaveBeenCalled()
+          expect(scope.formattedValueWithUnitName(1, unitsProduct, unitsVariant)).toEqual "1 items"
 
         it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
           unitsProduct = { variant_unit: "weight", variant_unit_scale: 1 }

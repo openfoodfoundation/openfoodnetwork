@@ -185,6 +185,8 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.getScale = (unitsProduct, unitsVariant) ->
     if unitsProduct.hasOwnProperty("variant_unit") && (unitsProduct.variant_unit == "weight" || unitsProduct.variant_unit == "volume")
       unitsProduct.variant_unit_scale
+    else if unitsProduct.hasOwnProperty("variant_unit") && unitsProduct.variant_unit == "items"
+      1
     else
       null
 
