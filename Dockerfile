@@ -42,8 +42,7 @@ RUN git clone --depth 1 https://github.com/rbenv/rbenv.git ${RBENV_ROOT} && \
     git clone --depth 1 https://github.com/rbenv/ruby-build.git ${RBENV_ROOT}/plugins/ruby-build && \
     echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh && \
     RUBY_CONFIGURE_OPTS=--with-jemalloc rbenv install $(cat .ruby-version) && \
-    rbenv global $(cat .ruby-version) && \
-    gem install bundler --version=2.3.5
+    rbenv global $(cat .ruby-version)
 
 # Install Postgres
 RUN sh -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main' >> /etc/apt/sources.list.d/pgdg.list" && \
@@ -69,6 +68,9 @@ RUN wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.z
 
 # Copy code and install app dependencies
 COPY . /usr/src/app/
+
+# Install Bundler
+RUN ./script/install-bundler
 
 # Install front-end dependencies
 RUN yarn install
