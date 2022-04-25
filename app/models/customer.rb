@@ -10,7 +10,7 @@ class Customer < ApplicationRecord
   belongs_to :enterprise
   belongs_to :user, class_name: "Spree::User"
   has_many :orders, class_name: "Spree::Order"
-  before_destroy :check_for_orders
+  before_destroy :update_orders_and_delete_canceled_subscriptions
 
   belongs_to :bill_address, class_name: "Spree::Address"
   alias_attribute :billing_address, :bill_address
@@ -52,10 +52,12 @@ class Customer < ApplicationRecord
     self.user = user || Spree::User.find_by(email: email)
   end
 
-  def check_for_orders
-    return true unless orders.any?
-
-    errors.add(:base, I18n.t('admin.customers.destroy.has_associated_orders'))
-    throw :abort
+  def update_orders_and_delete_canceled_subscriptions
+    if Subscription.where(customer_id: id).not_canceled.any?
+      errors.add(:base, I18n.t('admin.customers.destroy.has_associated_subscriptions'))
+      throw :abort
+    end
+    Subscription.where(customer_id: id).destroy_all
+    orders.update_all(customer_id: nil)
   end
 end
