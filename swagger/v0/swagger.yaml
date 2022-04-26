@@ -63,4 +63,60 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/Order_Concise"
+        default:
+          description: error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  "/api/v0/orders/{number}":
+    get:
+      summary: show orders
+      tags:
+      - Orders
+      parameters:
+      - name: X-Spree-Token
+        in: header
+        schema:
+          type: string
+      - name: number
+        in: path
+        required: true
+        description: Order number
+        schema:
+          type: string
+      responses:
+        '200':
+          description: show order
+          content:
+            application/json:
+              schema:
                 "$ref": "#/components/schemas/Order_Concise"
+        default:
+          description: error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+components:
+  schemas:
+    Order_Concise:
+      type: object
+      properties:
+        id:
+          type: integer
+        number:
+          type: string
