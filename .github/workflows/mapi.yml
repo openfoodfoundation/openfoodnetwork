@@ -10,7 +10,7 @@ jobs:
     - run: docker/build
     - run: docker-compose up --detach
     - run: until curl -f -s http://localhost:3000; do echo "waiting for api server"; sleep 1; done
-    - run: docker-compose exec db psql postgresql://ofn:f00d@localhost:5432/open_food_network_dev --command="update spree_users set spree_api_key='testing' where login='ofn@example.com'"
+    - run: docker-compose exec -T db psql postgresql://ofn:f00d@localhost:5432/open_food_network_dev --command="update spree_users set spree_api_key='testing' where login='ofn@example.com'"
 
     # Run Mayhem for API
     - name: Run Mayhem for API
