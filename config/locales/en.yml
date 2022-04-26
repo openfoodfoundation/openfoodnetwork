@@ -606,7 +606,6 @@ en:
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
       destroy:
-        has_associated_orders: "Delete failed: customer has associated orders with his shop"
         has_associated_subscriptions: "Delete failed: customer has active associated subscriptions with shops"
     contents:
       edit:
