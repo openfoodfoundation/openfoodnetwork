@@ -265,11 +265,19 @@ describe "LineItemsCtrl", ->
           expect(scope.allFinalWeightVolumesPresent()).toEqual true
 
       describe "sumUnitValues()", ->
-        it "returns the sum of the final_weight_volumes line_items", ->
+        it "returns the sum of the final_weight_volumes line_items if volume", ->
           scope.filteredLineItems = [
-            { final_weight_volume: 2 }
-            { final_weight_volume: 7 }
-            { final_weight_volume: 21 }
+            { final_weight_volume: 2, units_product: { variant_unit: "volume" } }
+            { final_weight_volume: 7, units_product: { variant_unit: "volume" } }
+            { final_weight_volume: 21, units_product: { variant_unit: "volume" } }
+          ]
+          expect(scope.sumUnitValues()).toEqual 30
+
+        it "returns the sum of the quantity line_items if items", ->
+          scope.filteredLineItems = [
+            { quantity: 2, units_product: { variant_unit: "items" } }
+            { quantity: 7, units_product: { variant_unit: "items" } }
+            { quantity: 21, units_product: { variant_unit: "items" } }
           ]
           expect(scope.sumUnitValues()).toEqual 30
 
@@ -285,12 +293,21 @@ describe "LineItemsCtrl", ->
       describe "sumMaxUnitValues()", ->
         it "returns the sum of the product of unit_value and maxOf(max_quantity, pristine quantity) for specified line_items", ->
           scope.filteredLineItems = [
-            { id: 1, units_variant: { unit_value: 1 }, max_quantity: 5 }
-            { id: 2, units_variant: { unit_value: 2 }, max_quantity: 1 }
-            { id: 3, units_variant: { unit_value: 3 }, max_quantity: 10 }
+            { id: 1, units_variant: { unit_value: 1 }, max_quantity: 5, units_product: { variant_unit: "volume", variant_unit_scale: 1 } }
+            { id: 2, units_variant: { unit_value: 2 }, max_quantity: 1, units_product: { variant_unit: "volume", variant_unit_scale: 1 } }
+            { id: 3, units_variant: { unit_value: 3 }, max_quantity: 10, units_product: { variant_unit: "volume", variant_unit_scale: 1 } }
           ]
 
           expect(scope.sumMaxUnitValues()).toEqual 37
+
+        it "returns the sum of the product of max_quantity for specified line_items if variant_unit is `items`", ->
+          scope.filteredLineItems = [
+            { id: 1, units_variant: { unit_value: 1 }, max_quantity: 5, units_product: { variant_unit: "items" } }
+            { id: 2, units_variant: { unit_value: 2 }, max_quantity: 1, units_product: { variant_unit: "items" } }
+            { id: 3, units_variant: { unit_value: 3 }, max_quantity: 10, units_product: { variant_unit: "items" } }
+          ]
+
+          expect(scope.sumMaxUnitValues()).toEqual 16
 
       describe "formatting a value based upon the properties of a specified Units Variant", ->
         # A Units Variant is an API object which holds unit properies of a variant

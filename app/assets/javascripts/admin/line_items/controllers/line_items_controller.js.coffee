@@ -166,12 +166,18 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.sumUnitValues = ->
     sum = $scope.filteredLineItems?.reduce (sum, lineItem) ->
-      sum + $scope.roundToThreeDecimals(lineItem.final_weight_volume / $scope.getLineItemScale(lineItem))
+      if lineItem.units_product.variant_unit == "items"
+        sum + lineItem.quantity
+      else
+        sum + $scope.roundToThreeDecimals(lineItem.final_weight_volume / $scope.getLineItemScale(lineItem))
     , 0
 
   $scope.sumMaxUnitValues = ->
     sum = $scope.filteredLineItems?.reduce (sum,lineItem) ->
-      sum + lineItem.max_quantity * $scope.roundToThreeDecimals(lineItem.units_variant.unit_value / $scope.getLineItemScale(lineItem))
+      if lineItem.units_product.variant_unit == "items"
+        sum + lineItem.max_quantity
+      else
+        sum + lineItem.max_quantity * $scope.roundToThreeDecimals(lineItem.units_variant.unit_value / $scope.getLineItemScale(lineItem))
     , 0
 
   $scope.roundToThreeDecimals = (value) ->
