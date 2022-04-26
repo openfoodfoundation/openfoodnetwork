@@ -27,12 +27,10 @@ RSpec.configure do |config|
       components: {
         schemas: {
           error_response: ErrorsSchema.schema,
-          resources: {
-            customer: CustomerSchema.schema(require_all: true),
-            customers_collection: CustomerSchema.collection(require_all: true)
-          }
+          customer: CustomerSchema.schema(require_all: true),
+          customers_collection: CustomerSchema.collection(require_all: true)
         },
-        securitySchemas: {
+        securitySchemes: {
           api_key_header: {
             type: :apiKey,
             name: 'X-Api-Token',
@@ -46,7 +44,7 @@ RSpec.configure do |config|
             description: "Authenticates via API key passed in specified query param"
           },
           session: {
-            type: :http,
+            type: :apiKey,
             name: '_ofn_session',
             in: :cookie,
             description: "Authenticates using the current user's session if logged in"

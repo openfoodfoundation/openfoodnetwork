@@ -14,7 +14,7 @@ class CustomerSchema < JsonApiSchema
       code: { type: :string, nullable: true, example: "BUYER1" },
       email: { type: :string, example: "alice@example.com" },
       allow_charges: { type: :boolean, example: false },
-      tags: { type: :array, example: ["staff", "discount"] },
+      tags: { type: :array, items: { type: :string }, example: ["staff", "discount"] },
       terms_and_conditions_accepted_at: {
         type: :string, format: "date-time", nullable: true,
         example: "2022-03-12T15:55:00.000+11:00",

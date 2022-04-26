@@ -1,0 +1,45 @@
+name: 'Mayhem for API'
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+    - uses: actions/checkout@v2
+    - run: docker/build
+    - run: docker-compose up --detach
+    - run: until curl -f -s http://localhost:3000; do echo "waiting for api server"; sleep 1; done
+    - run: docker-compose exec -T db psql postgresql://ofn:f00d@localhost:5432/open_food_network_dev --command="update spree_users set spree_api_key='testing' where login='ofn@example.com'"
+    # equivalent to Flipper.enable(:api_v1)
+    - run: docker-compose exec -T db psql postgresql://ofn:f00d@localhost:5432/open_food_network_dev --command="insert into flipper_features (key, created_at, updated_at) values ('api_v1', localtimestamp, localtimestamp)"
+    - run: docker-compose exec -T db psql postgresql://ofn:f00d@localhost:5432/open_food_network_dev --command="insert into flipper_gates (feature_key, key, value, created_at, updated_at) values ('api_v1', 'boolean', 'true', localtimestamp, localtimestamp)"
+
+    # Run Mayhem for API
+    - name: Run Mayhem for API
+      uses: ForAllSecure/mapi-action@v1
+      continue-on-error: true
+      with:
+        mapi-token: ${{ secrets.MAPI_TOKEN }}
+        api-url: http://localhost:3000
+        api-spec: swagger/v1/swagger.yaml
+        target: mayhemheroes/openfoodnetwork
+        duration: 1min
+        sarif-report: mapi.sarif
+        html-report: mapi.html
+        run-args: |
+          --header-auth
+          X-Api-Token: testing
+
+    # Archive HTML report
+    - name: Archive Mayhem for API report
+      uses: actions/upload-artifact@v2
+      with:
+        name: mapi-report
+        path: mapi.html
+
+    # Upload SARIF file (only available on public repos or github enterprise)
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: mapi.sarif

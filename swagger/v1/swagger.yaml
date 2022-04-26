@@ -23,11 +23,119 @@ components:
             - detail
       required:
       - errors
-    resources:
-      customer:
-        type: object
-        properties:
-          data:
+    customer:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              example: '1'
+            type:
+              type: string
+              example: customer
+            attributes:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                enterprise_id:
+                  type: integer
+                  example: 2
+                first_name:
+                  type: string
+                  nullable: true
+                  example: Alice
+                last_name:
+                  type: string
+                  nullable: true
+                  example: Springs
+                code:
+                  type: string
+                  nullable: true
+                  example: BUYER1
+                email:
+                  type: string
+                  example: alice@example.com
+                allow_charges:
+                  type: boolean
+                  example: false
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - staff
+                  - discount
+                terms_and_conditions_accepted_at:
+                  type: string
+                  format: date-time
+                  nullable: true
+                  example: '2022-03-12T15:55:00.000+11:00'
+                billing_address:
+                  type: object
+                  nullable: true
+                  example:
+                shipping_address:
+                  type: object
+                  nullable: true
+                  example:
+                    phone: 0404 333 222 111
+                    latitude: -37.8173751
+                    longitude: 144.964803195704
+                    first_name: Alice
+                    last_name: Springs
+                    street_address_1: 1 Flinders Street
+                    street_address_2: ''
+                    postal_code: '1234'
+                    locality: Melbourne
+                    region: Victoria
+                    country: Australia
+              required:
+              - id
+              - enterprise_id
+              - first_name
+              - last_name
+              - code
+              - email
+              - allow_charges
+              - tags
+              - terms_and_conditions_accepted_at
+              - billing_address
+              - shipping_address
+            relationships:
+              type: object
+              properties:
+                enterprise:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                          example: enterprise
+                    links:
+                      type: object
+                      properties:
+                        related:
+                          type: string
+        meta:
+          type: object
+        links:
+          type: object
+      required:
+      - data
+    customers_collection:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
             type: object
             properties:
               id:
@@ -65,6 +173,8 @@ components:
                     example: false
                   tags:
                     type: array
+                    items:
+                      type: string
                     example:
                     - staff
                     - discount
@@ -123,153 +233,46 @@ components:
                         properties:
                           related:
                             type: string
-          meta:
-            type: object
-          links:
-            type: object
-        required:
-        - data
-      customers_collection:
-        type: object
-        properties:
-          data:
-            type: array
-            items:
+        meta:
+          type: object
+          properties:
+            pagination:
               type: object
               properties:
-                id:
-                  type: string
-                  example: '1'
-                type:
-                  type: string
-                  example: customer
-                attributes:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      example: 1
-                    enterprise_id:
-                      type: integer
-                      example: 2
-                    first_name:
-                      type: string
-                      nullable: true
-                      example: Alice
-                    last_name:
-                      type: string
-                      nullable: true
-                      example: Springs
-                    code:
-                      type: string
-                      nullable: true
-                      example: BUYER1
-                    email:
-                      type: string
-                      example: alice@example.com
-                    allow_charges:
-                      type: boolean
-                      example: false
-                    tags:
-                      type: array
-                      example:
-                      - staff
-                      - discount
-                    terms_and_conditions_accepted_at:
-                      type: string
-                      format: date-time
-                      nullable: true
-                      example: '2022-03-12T15:55:00.000+11:00'
-                    billing_address:
-                      type: object
-                      nullable: true
-                      example:
-                    shipping_address:
-                      type: object
-                      nullable: true
-                      example:
-                        phone: 0404 333 222 111
-                        latitude: -37.8173751
-                        longitude: 144.964803195704
-                        first_name: Alice
-                        last_name: Springs
-                        street_address_1: 1 Flinders Street
-                        street_address_2: ''
-                        postal_code: '1234'
-                        locality: Melbourne
-                        region: Victoria
-                        country: Australia
-                  required:
-                  - id
-                  - enterprise_id
-                  - first_name
-                  - last_name
-                  - code
-                  - email
-                  - allow_charges
-                  - tags
-                  - terms_and_conditions_accepted_at
-                  - billing_address
-                  - shipping_address
-                relationships:
-                  type: object
-                  properties:
-                    enterprise:
-                      type: object
-                      properties:
-                        data:
-                          type: object
-                          properties:
-                            id:
-                              type: string
-                            type:
-                              type: string
-                              example: enterprise
-                        links:
-                          type: object
-                          properties:
-                            related:
-                              type: string
-          meta:
-            type: object
-            properties:
-              pagination:
-                type: object
-                properties:
-                  results:
-                    type: integer
-                    example: 250
-                  pages:
-                    type: integer
-                    example: 5
-                  page:
-                    type: integer
-                    example: 2
-                  per_page:
-                    type: integer
-                    example: 50
-            required:
-            - pagination
-          links:
-            type: object
-            properties:
-              self:
-                type: string
-              first:
-                type: string
-              prev:
-                type: string
-                nullable: true
-              next:
-                type: string
-                nullable: true
-              last:
-                type: string
-        required:
-        - data
-        - meta
-        - links
-  securitySchemas:
+                results:
+                  type: integer
+                  example: 250
+                pages:
+                  type: integer
+                  example: 5
+                page:
+                  type: integer
+                  example: 2
+                per_page:
+                  type: integer
+                  example: 50
+          required:
+          - pagination
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+            first:
+              type: string
+            prev:
+              type: string
+              nullable: true
+            next:
+              type: string
+              nullable: true
+            last:
+              type: string
+      required:
+      - data
+      - meta
+      - links
+  securitySchemes:
     api_key_header:
       type: apiKey
       name: X-Api-Token
@@ -281,7 +284,7 @@ components:
       in: query
       description: Authenticates via API key passed in specified query param
     session:
-      type: http
+      type: apiKey
       name: _ofn_session
       in: cookie
       description: Authenticates using the current user's session if logged in
@@ -302,7 +305,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/resources/customers_collection"
+                "$ref": "#/components/schemas/customers_collection"
     post:
       summary: Create customer
       tags:
@@ -314,7 +317,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/resources/customer"
+                "$ref": "#/components/schemas/customer"
         '422':
           description: Unprocessable entity
           content:
@@ -347,6 +350,8 @@ paths:
                   example: alice@example.com
                 tags:
                   type: array
+                  items:
+                    type: string
                   example:
                   - staff
                   - discount
@@ -389,7 +394,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/resources/customer"
+                "$ref": "#/components/schemas/customer"
         '404':
           description: Not found
           content:
@@ -418,7 +423,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/resources/customer"
+                "$ref": "#/components/schemas/customer"
         '422':
           description: Unprocessable entity
           content:
@@ -451,6 +456,8 @@ paths:
                   example: alice@example.com
                 tags:
                   type: array
+                  items:
+                    type: string
                   example:
                   - staff
                   - discount
@@ -492,7 +499,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/resources/customer"
+                "$ref": "#/components/schemas/customer"
   "/api/v1/enterprises/{enterprise_id}/customers":
     get:
       summary: List customers of an enterprise
@@ -511,6 +518,6 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/resources/customers_collection"
+                "$ref": "#/components/schemas/customers_collection"
 servers:
 - url: "/"
