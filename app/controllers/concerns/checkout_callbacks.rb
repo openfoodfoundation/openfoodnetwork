@@ -47,7 +47,7 @@ module CheckoutCallbacks
   end
 
   def load_shipping_methods
-    @shipping_methods = available_shipping_methods
+    @shipping_methods = available_shipping_methods.sort_by(&:name)
   end
 
   def redirect_to_shop?
