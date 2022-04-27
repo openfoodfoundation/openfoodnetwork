@@ -79,7 +79,7 @@ module Reporting
       end
 
       describe "fields_to_hide" do
-        let(:params) { { fields_to_hide: [:product], report_format: 'json' } }
+        let(:params) { { fields_to_hide: [:product] } }
 
         it "works" do
           @expected_headers = ['Hub', 'Price']
