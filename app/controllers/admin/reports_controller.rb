@@ -19,7 +19,7 @@ module Admin
     end
 
     def show
-      @report = report_class.new(spree_current_user, params)
+      @report = report_class.new(spree_current_user, params, request)
 
       if report_format.present?
         export_report

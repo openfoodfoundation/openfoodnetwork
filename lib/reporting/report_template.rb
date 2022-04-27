@@ -13,7 +13,7 @@ module Reporting
 
     delegate :formatted_rules, :header_option?, :summary_row_option?, to: :ruler
 
-    def initialize(user, params = {})
+    def initialize(user, params = {}, _request = nil)
       @user = user
       @params = params
       @params = @params.permit!.to_h unless @params.is_a? Hash

@@ -4,12 +4,14 @@ module Reporting
   module Reports
     module XeroInvoices
       class Base < ReportTemplate
-        def initialize(user, params = {})
-          params.reverse_merge!(report_subtype: 'summary',
-                                invoice_date: Time.zone.today,
-                                due_date: Time.zone.today + 1.month,
-                                account_code: 'food sales')
-          super(user, params)
+        def initialize(user, params = {}, request = nil)
+          if request&.get?
+            params.reverse_merge!(report_subtype: 'summary',
+                                  invoice_date: Time.zone.today,
+                                  due_date: Time.zone.today + 1.month,
+                                  account_code: 'food sales')
+          end
+          super(user, params, request)
         end
 
         def xero_columns

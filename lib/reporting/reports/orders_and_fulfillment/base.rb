@@ -4,8 +4,8 @@ module Reporting
   module Reports
     module OrdersAndFulfillment
       class Base < ReportTemplate
-        def initialize(user, params = {})
-          super(user, params)
+        def initialize(user, params = {}, request = nil)
+          super(user, params, request)
 
           now = Time.zone.now
           params[:q] ||= {
