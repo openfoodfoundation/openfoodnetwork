@@ -794,6 +794,11 @@ en_CA:
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
           reset_form: "Reset Form"
+          Invoice_item_sorting: Invoice item sorting
+          sort_items_by_supplier?: Sort items by supplier?
+          sort_items_by_supplier_tip: "When enabled, items will be sorted by supplier name."
+          enabled: Enable
+          disabled: Disable
         business_address:
           company_legal_name: Company Legal Name
           company_placeholder: Example Inc.
@@ -818,6 +823,8 @@ en_CA:
           manage_fees: Manage Enterprise Fees
           no_fees_yet: You don't have any enterprise fees yet.
           create_button: Create One Now
+        enterprise_permissions:
+          enterprise_relationships: Enterprise Relationships
         images:
           logo: Logo
           promo_image_placeholder: 'This image is displayed in "About Us"'
@@ -858,9 +865,10 @@ en_CA:
           sells: Sells
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
           visible_in_search: Visible in search?
-          visible_in_search_tip: Determines whether this enterprise will be visible to customers when searching the site.
-          visible: Visible
-          not_visible: Not visible
+          visible_in_search_tip: "Shops can be <br />1. publicly visible, appearing on the OFN map and listings. <br /> 2. Hidden on maps and listings but referenced by other shops and linked in their profile. <br />3. Completely hidden."
+          visible: Public
+          not_visible: Hidden
+          hidden: Hide all references
           permalink: Permalink (no spaces)
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front
@@ -918,6 +926,8 @@ en_CA:
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
+          display_remaining_stock: "Display remaining stock in shopfront if the on-hand amount is low."
+          display_remaining_stock_tip: "Let shoppers know when there are only 3 or fewer items left."
           enabled: "Enabled"
           disabled: "Disabled"
         social:
@@ -1354,6 +1364,8 @@ en_CA:
     unknown_error: "Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
     unauthorized: "You are not authorized to perform that action."
+    unpermitted_parameters: "Parameteres not allowed in this request: %{params}"
+    missing_parameter: "A required parameter is missing or empty: %{param}"
     invalid_resource: "Invalid resource. Please fix errors and try again."
     resource_not_found: "The resource you were looking for could not be found."
     enterprise_logo:
@@ -2967,6 +2979,7 @@ en_CA:
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
+        remaining_in_stock: "Only %{quantity} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
@@ -4033,6 +4046,8 @@ en_CA:
         spree/payment:
           one: Payment
           other: Payments
+    unit: unit
+    per_unit: per unit
   datetime:
     distance_in_words:
       about_x_hours:
