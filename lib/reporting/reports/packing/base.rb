@@ -35,6 +35,13 @@ module Reporting
           { price: :currency, quantity: :quantity }
         end
 
+        def custom_headers
+          return {} if html_render?
+
+          # Use non translated headers to avoid breaking changes
+          @custom_headers ||= report_data.columns.index_by(&:itself).symbolize_keys
+        end
+
         private
 
         def select_fields
