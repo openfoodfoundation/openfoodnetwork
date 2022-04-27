@@ -6,7 +6,7 @@ module Reporting
       class Customer < Base
         def columns
           # Reorder default columns
-          super.slice(:hub, :customer_code, :last_name, :first_name, :phone,
+          super.slice(:hub, :customer_code, :first_name, :last_name, :phone,
                       :supplier, :product, :variant, :quantity, :price, :temp_controlled)
         end
 
