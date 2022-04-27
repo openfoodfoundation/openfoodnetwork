@@ -795,6 +795,11 @@ fr_CA:
           remove_terms_and_conditions: "Supprimer le fichier"
           uploaded_on: "mis en ligne le"
           reset_form: "Vider les champs"
+          Invoice_item_sorting: Changement d'ordre d'affichage sur facture
+          sort_items_by_supplier?: Ranger par producteur ?
+          sort_items_by_supplier_tip: "Lorsque possible, les éléments seront rangés par producteur."
+          enabled: Activer
+          disabled: Désactiver
         business_address:
           company_legal_name: Raison sociale
           company_placeholder: Indiquez ici le nom légal de votre entreprise
@@ -862,9 +867,10 @@ fr_CA:
           sells: Produits vendus
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
           visible_in_search: Apparaît dans la recherche?
-          visible_in_search_tip: Indiquez si vous souhaitez ou ne souhaitez pas que votre entreprise apparaisse sur la carte et dans la liste des boutiques.
-          visible: Visible
+          visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de CoopCircuits et la liste des boutiques. <br /> 2. Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
+          visible: Visible par tous
           not_visible: Invisible
+          hidden: Masquer toutes les références
           permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre boutique: %{link}ma-boutique/shop"
           link_to_front: Lien URL de la boutique
@@ -923,6 +929,8 @@ fr_CA:
           shopfront_sort_by_producer: "Par producteur"
           shopfront_sort_by_category_placeholder: "Catégorie"
           shopfront_sort_by_producer_placeholder: "Producteur"
+          display_remaining_stock: "Affiche le stock restant d'un produit sur la boutique si le stock est faible"
+          display_remaining_stock_tip: "Permet aux acheteurs de savoir lorsqu'il reste 3 éléments (ou moins) pour un produit."
           enabled: "Activée"
           disabled: "Désactivée"
         social:
@@ -1358,6 +1366,8 @@ fr_CA:
     unknown_error: "Quelque chose n'a pas fonctionné. Notre équipe a été notifiée."
     invalid_api_key: " La clé API (%{key}) n'est pas valide."
     unauthorized: "Vous n'êtes pas autorisé à réaliser cette action."
+    unpermitted_parameters: "Les paramètres non autorisés dans cette requête:  %{params}"
+    missing_parameter: "Un paramètre nécessaire est manquant ou vide : %{param}"
     invalid_resource: "La resource est invalide. Veuillez corriger les erreurs et recommencer."
     resource_not_found: "La ressource recherchée n'a pas été trouvée."
     enterprise_logo:
@@ -2983,6 +2993,7 @@ fr_CA:
         add_to_cart: "Ajouter"
         in_cart: "au panier"
         quantity_in_cart: "%{quantity} au panier"
+        remaining_in_stock: "Seulement %{quantity} produits restants"
       bulk_buy_modal:
         min_quantity: "Quantité min"
         max_quantity: "Quantité max"
@@ -4050,6 +4061,8 @@ fr_CA:
         spree/payment:
           one: Paiement
           other: Paiements
+    unit: unité
+    per_unit: par unité
   datetime:
     distance_in_words:
       about_x_hours:
