@@ -4,10 +4,6 @@ module Reporting
   module Reports
     module UsersAndEnterprises
       class Base < ReportTemplate
-        def initialize(user, params = {}, request = nil)
-          super(user, params, request)
-        end
-
         def query_result
           sort(owners_and_enterprises.concat(managers_and_enterprises))
         end

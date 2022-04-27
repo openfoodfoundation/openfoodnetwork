@@ -13,7 +13,12 @@ module Reporting
 
     delegate :formatted_rules, :header_option?, :summary_row_option?, to: :ruler
 
-    def initialize(user, params = {}, _request = nil)
+    def initialize(user, params = {}, request = nil)
+      if request.nil? || request.get?
+        params.reverse_merge!(default_params)
+        params[:q] ||= {}
+        params[:q].reverse_merge!(default_params[:q]) if default_params[:q].present?
+      end
       @user = user
       @params = params
       @params = @params.permit!.to_h unless @params.is_a? Hash
@@ -85,6 +90,11 @@ module Reporting
     # }
     def rules
       []
+    end
+
+    # Default filters/search params to be used
+    def default_params
+      {}
     end
 
     private

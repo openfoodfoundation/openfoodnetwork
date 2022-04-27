@@ -4,12 +4,6 @@ module Reporting
   module Reports
     module Packing
       class Base < ReportQueryTemplate
-        def initialize(user, params = {}, request = nil)
-          # Prevent breaking change in this report by hidding new columns by default
-          params.reverse_merge!(fields_to_hide: ["phone", "price"]) if request&.get?
-          super(user, params, request)
-        end
-
         def message
           I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
         end
@@ -40,6 +34,11 @@ module Reporting
 
           # Use non translated headers to avoid breaking changes
           @custom_headers ||= report_data.columns.index_by(&:itself).symbolize_keys
+        end
+
+        def default_params
+          # Prevent breaking change in this report by hidding new columns by default
+          { fields_to_hide: ["phone", "price"] }
         end
 
         private

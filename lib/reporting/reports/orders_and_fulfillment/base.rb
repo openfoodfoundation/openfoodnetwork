@@ -4,18 +4,17 @@ module Reporting
   module Reports
     module OrdersAndFulfillment
       class Base < ReportTemplate
-        def initialize(user, params = {}, request = nil)
-          super(user, params, request)
-
-          now = Time.zone.now
-          params[:q] ||= {
-            completed_at_gt: (now - 1.month).beginning_of_day,
-            completed_at_lt: (now + 1.day).beginning_of_day
-          }
-        end
-
         def message
           I18n.t("spree.admin.reports.customer_names_message.customer_names_tip")
+        end
+
+        def default_params
+          {
+            q: {
+              completed_at_gt: 1.month.ago.beginning_of_day,
+              completed_at_lt: 1.day.from_now.beginning_of_day
+            }
+          }
         end
 
         def search

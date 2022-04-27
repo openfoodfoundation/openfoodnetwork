@@ -4,16 +4,6 @@ module Reporting
   module Reports
     module XeroInvoices
       class Base < ReportTemplate
-        def initialize(user, params = {}, request = nil)
-          if request&.get?
-            params.reverse_merge!(report_subtype: 'summary',
-                                  invoice_date: Time.zone.today,
-                                  due_date: Time.zone.today + 1.month,
-                                  account_code: 'food sales')
-          end
-          super(user, params, request)
-        end
-
         def xero_columns
           # These are NOT to be translated, they need to be in this exact format to work with Xero
           %w(*ContactName EmailAddress POAddressLine1 POAddressLine2 POAddressLine3 POAddressLine4
@@ -35,6 +25,15 @@ module Reporting
             result[header.to_sym] = proc { |row| row[id] }
           end
           result
+        end
+
+        def default_params
+          {
+            report_subtype: 'summary',
+            invoice_date: Time.zone.today,
+            due_date: Time.zone.today + 1.month,
+            account_code: 'food sales'
+          }
         end
 
         def search

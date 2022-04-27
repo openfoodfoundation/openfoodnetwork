@@ -4,10 +4,6 @@ module Reporting
   module Reports
     module OrdersAndDistributors
       class Base < ReportTemplate
-        def initialize(user, params = {}, request = nil)
-          super(user, params, request)
-        end
-
         # rubocop:disable Metrics/AbcSize
         def columns
           {

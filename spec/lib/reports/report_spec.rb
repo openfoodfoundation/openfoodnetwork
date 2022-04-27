@@ -26,6 +26,29 @@ module Reporting
     end
     # rubocop:enable Metrics/AbcSize
 
+    describe ".default_params" do
+      it "use correctly the default values" do
+        default_params = {
+          filter: "default__filter",
+          other_filter: "default_other_filter",
+          q: { hub: "default_hub", customer: "default_customer" }
+        }
+        real_params = {
+          filter: "test_filter",
+          q: { hub: "test_hub" }
+        }
+        expected_params = {
+          filter: "test_filter",
+          other_filter: "default_other_filter",
+          q: { hub: "test_hub", customer: "default_customer" }
+        }
+        allow_any_instance_of(described_class).to receive(:default_params)
+          .and_return(default_params)
+        report = described_class.new(user, real_params)
+        expect(report.params).to eq(expected_params)
+      end
+    end
+
     describe ".columns" do
       before do
         @query_result = [

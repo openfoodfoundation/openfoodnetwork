@@ -19,7 +19,8 @@ module Reporting
             expect(report.params).to eq(invoice_date: Date.civil(2015, 5, 5),
                                         due_date: Date.civil(2015, 6, 5),
                                         account_code: 'food sales',
-                                        report_subtype: 'summary' )
+                                        report_subtype: 'summary',
+                                        q: {})
           end
         end
 

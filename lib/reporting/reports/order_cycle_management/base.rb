@@ -4,13 +4,13 @@ module Reporting
   module Reports
     module OrderCycleManagement
       class Base < ReportTemplate
-        DEFAULT_DATE_INTERVAL = { from: -1.month, to: 1.day }.freeze
-
-        def initialize(user, params = {}, request = nil)
-          params[:q] ||= {}
-          params[:q][:completed_at_gt] ||= Time.zone.today + DEFAULT_DATE_INTERVAL[:from]
-          params[:q][:completed_at_lt] ||= Time.zone.today + DEFAULT_DATE_INTERVAL[:to]
-          super(user, params, request)
+        def default_params
+          {
+            q: {
+              completed_at_gt: 1.month.ago.beginning_of_day,
+              completed_at_lt: 1.day.from_now.beginning_of_day
+            }
+          }
         end
 
         def search
