@@ -139,8 +139,7 @@
 
     #distributor_address.panel {
       span {
-        white-space: pre-wrap;
-        word-wrap: break-word;
+        @include force-wrap;
       }
     }
     
@@ -281,8 +280,7 @@
   }
 
   .summary-description {
-    white-space: pre-wrap;
-    word-wrap: break-word;
+    @include force-wrap;
   }
 
   .summary-edit {

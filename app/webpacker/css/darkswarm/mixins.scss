@@ -211,3 +211,7 @@
     @media all and (max-width: $mobile_breakpoint)  { @content; }
   }
 }
+
+@mixin force-wrap {
+  word-wrap: break-word;
+}
