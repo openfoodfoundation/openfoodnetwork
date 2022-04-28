@@ -14,7 +14,7 @@
       .text-big
         = t :order_payment
         %strong=  last_payment_method(order)&.name
-      %p.text-small.text-skinny.pre-line
+      %p.text-small.text-skinny.pre-line.word-wrap
         %em= last_payment_method(order)&.description
 
     .order-summary.text-small
