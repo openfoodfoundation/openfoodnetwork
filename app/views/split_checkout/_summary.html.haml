@@ -46,8 +46,8 @@
         = t("split_checkout.step1.delivery_address.title")
       %span.summary-value
         = @order.shipping_method.name
-      %div
-      = @order.shipping_method.description
+      %div.summary-description
+        = @order.shipping_method.description
     
       %a.summary-edit{href: main_app.checkout_step_path(:details)}
         = t("split_checkout.step3.your_details.edit")

@@ -140,6 +140,7 @@
     #distributor_address.panel {
       span {
         white-space: pre-wrap;
+        word-wrap: break-word;
       }
     }
     
@@ -279,8 +280,9 @@
     font-weight: bold;
   }
 
-  .summary-value {
-
+  .summary-description {
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 
   .summary-edit {
