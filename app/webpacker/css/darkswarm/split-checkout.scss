@@ -185,6 +185,10 @@
     }
   }
 
+  .paymentmethod-container .paymentmethod-description.panel {
+    @include force-wrap;
+  }
+
   .checkout-step3 {
     padding-left: 15px;
     padding-right: 15px;
@@ -281,6 +285,7 @@
 
   .summary-description {
     @include force-wrap;
+    color: $min-accessible-grey;
   }
 
   .summary-edit {
