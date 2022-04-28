@@ -23,7 +23,7 @@ jobs:
         mapi-token: ${{ secrets.MAPI_TOKEN }}
         api-url: http://localhost:3000
         api-spec: swagger/v1/swagger.yaml
-        target: mayhemheroes/openfoodnetwork
+        target: openfoodfoundation/openfoodnetwork
         duration: 1min
         sarif-report: mapi.sarif
         html-report: mapi.html
