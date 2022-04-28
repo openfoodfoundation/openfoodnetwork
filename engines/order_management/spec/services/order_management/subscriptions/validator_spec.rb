@@ -507,15 +507,25 @@ module OrderManagement
           end
 
           context "when subscription line items exist" do
-            let(:variant1) { instance_double(Spree::Variant, id: 1) }
+            let(:variant1) { instance_double(Spree::Variant, id: 1, deleted_at: nil) }
             let(:variant2) { instance_double(Spree::Variant, id: 2) }
+            let(:variant3) { instance_double(Spree::Variant, id: 1, deleted_at: Time.zone.now ) }
             let(:subscription_line_item1) {
-              instance_double(SubscriptionLineItem, variant: variant1)
+              instance_double(SubscriptionLineItem,
+                              variant: variant1,
+                              marked_for_destruction?: false)
             }
             let(:subscription_line_item2) {
-              instance_double(SubscriptionLineItem, variant: variant2)
+              instance_double(SubscriptionLineItem,
+                              variant: variant2,
+                              marked_for_destruction?: false)
             }
-            let(:subscription_line_items) { [subscription_line_item1] }
+            let(:subscription_line_item3) {
+              instance_double(SubscriptionLineItem,
+                              variant: variant3,
+                              marked_for_destruction?: true)
+            }
+            let(:subscription_line_items) { [subscription_line_item1, subscription_line_item3] }
 
             context "but some variants are unavailable" do
               let(:product) { instance_double(Spree::Product, name: "some_name") }
