@@ -23,7 +23,9 @@ RUN apt-get update && apt-get install -y \
   imagemagick \
   unzip \
   libjemalloc-dev \
-  libssl-dev
+  libssl-dev \
+  ca-certificates \
+  gnupg
 
 # Setup ENV variables
 ENV PATH /usr/local/src/rbenv/shims:/usr/local/src/rbenv/bin:$PATH
@@ -40,14 +42,13 @@ RUN git clone --depth 1 https://github.com/rbenv/rbenv.git ${RBENV_ROOT} && \
     git clone --depth 1 https://github.com/rbenv/ruby-build.git ${RBENV_ROOT}/plugins/ruby-build && \
     echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh && \
     RUBY_CONFIGURE_OPTS=--with-jemalloc rbenv install $(cat .ruby-version) && \
-    rbenv global $(cat .ruby-version) && \
-    gem install bundler --version=1.17.3
+    rbenv global $(cat .ruby-version)
 
 # Install Postgres
-RUN sh -c "echo 'deb https://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main' > /etc/apt/sources.list.d/pgdg.list" && \
-    wget --quiet -O - https://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | apt-key add - && \
+RUN sh -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main' >> /etc/apt/sources.list.d/pgdg.list" && \
+    curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null && \
     apt-get update && \
-    apt-get install -yqq --no-install-recommends postgresql-client-9.5 libpq-dev
+    apt-get install -yqq --no-install-recommends postgresql-client-10 libpq-dev
 
 # Install NodeJs and yarn
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
@@ -67,6 +68,9 @@ RUN wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.z
 
 # Copy code and install app dependencies
 COPY . /usr/src/app/
+
+# Install Bundler
+RUN ./script/install-bundler
 
 # Install front-end dependencies
 RUN yarn install

@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    image: postgres:9.5
+    image: postgres:10.19
     restart: always
     environment:
       POSTGRES_PASSWORD: f00d
@@ -36,7 +36,8 @@ services:
     command: >
       bash -c "wait-for-it -t 30 db:5432 &&
                rm -f tmp/pids/server.pid &&
-               (bundle check || bundle install)
+               (bundle check || bundle install) &&
+               bundle exec rake db:create &&
                yarn install &&
                bundle exec rails s -p 3000 -b '0.0.0.0'"
   webpack:
@@ -68,7 +69,7 @@ services:
       OFN_REDIS_JOBS_URL: redis://redis
     command: >
       bash -c "wait-for-it -t 30 db:5432 &&
-               (bundle check || bundle install)
+               (bundle check || bundle install) &&
                bundle exec sidekiq -q mailers -q default"
 volumes:
   gems:
