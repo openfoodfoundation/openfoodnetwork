@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class TermsOfServiceFile < ApplicationRecord
-  has_attached_file :attachment
+  include HasMigratingFile
+
+  has_one_migrating :attachment
 
   validates :attachment, presence: true
 
@@ -18,5 +20,10 @@ class TermsOfServiceFile < ApplicationRecord
   # been updated last. So we return the most recent possible update time.
   def self.updated_at
     current&.updated_at || Time.zone.now
+  end
+
+  def touch(_)
+    # Ignore Active Storage changing the timestamp during migrations.
+    # This can be removed once we got rid of Paperclip.
   end
 end

@@ -4,6 +4,7 @@ require 'open_food_network/locking'
 require 'spree/core/s3_support'
 
 class EnterpriseGroup < ApplicationRecord
+  include HasMigratingFile
   include PermalinkGenerator
   include Spree::Core::S3Support
 
@@ -27,12 +28,12 @@ class EnterpriseGroup < ApplicationRecord
 
   delegate :phone, :address1, :address2, :city, :zipcode, :state, :country, to: :address
 
-  has_attached_file :logo,
+  has_one_migrating :logo,
                     styles: { medium: "100x100" },
                     url: '/images/enterprise_groups/logos/:id/:style/:basename.:extension',
                     path: 'public/images/enterprise_groups/logos/:id/:style/:basename.:extension'
 
-  has_attached_file :promo_image,
+  has_one_migrating :promo_image,
                     styles: { large: ["1200x260#", :jpg] },
                     url: '/images/enterprise_groups/promo_images/:id/:style/:basename.:extension',
                     path: 'public/images/enterprise_groups/promo_images/:id/:style/:basename.:extension'

@@ -15,6 +15,7 @@ db/*.csv
 log/*.log
 log/*.log.lck
 log/*.log.*
+/storage
 tmp/
 .idea/*
 \#*

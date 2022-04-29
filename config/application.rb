@@ -3,7 +3,7 @@ require_relative 'boot'
 require "rails"
 [
   "active_record/railtie",
-  #"active_storage/engine",
+  "active_storage/engine",
   "action_controller/railtie",
   "action_view/railtie",
   "action_mailer/railtie",
@@ -238,5 +238,7 @@ module Openfoodnetwork
     Rails.application.routes.default_url_options[:host] = ENV["SITE_URL"]
 
     Rails.autoloaders.main.ignore(Rails.root.join('app/webpacker'))
+
+    config.active_storage.service = ENV["S3_BUCKET"].present? ? :amazon : :local
   end
 end

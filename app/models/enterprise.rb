@@ -3,6 +3,7 @@
 require 'spree/core/s3_support'
 
 class Enterprise < ApplicationRecord
+  include HasMigratingFile
   include Spree::Core::S3Support
 
   SELLS = %w(unspecified none own any).freeze
@@ -72,12 +73,12 @@ class Enterprise < ApplicationRecord
                                               tag_rule[:preferred_customer_tags].blank?
                                             }
 
-  has_attached_file :logo,
+  has_one_migrating :logo,
                     styles: { medium: "300x300>", small: "180x180>", thumb: "100x100>" },
                     url: '/images/enterprises/logos/:id/:style/:basename.:extension',
                     path: 'public/images/enterprises/logos/:id/:style/:basename.:extension'
 
-  has_attached_file :promo_image,
+  has_one_migrating :promo_image,
                     styles: {
                       large: ["1200x260#", :jpg],
                       medium: ["720x156#", :jpg],
@@ -88,7 +89,7 @@ class Enterprise < ApplicationRecord
   validates_attachment_content_type :logo, content_type: %r{\Aimage/.*\Z}
   validates_attachment_content_type :promo_image, content_type: %r{\Aimage/.*\Z}
 
-  has_attached_file :terms_and_conditions,
+  has_one_migrating :terms_and_conditions,
                     url: '/files/enterprises/terms_and_conditions/:id/:basename.:extension',
                     path: 'public/files/enterprises/terms_and_conditions/:id/:basename.:extension'
   validates_attachment_content_type :terms_and_conditions,
