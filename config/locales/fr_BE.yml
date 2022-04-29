@@ -729,9 +729,7 @@ fr_BE:
           sells: Produits vendus
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
           visible_in_search: Apparaît sur la plateforme?
-          visible_in_search_tip: Indiquez si vous souhaitez ou ne souhaitez pas que votre entreprise apparaisse sur la carte et dans la liste des comptoirs.
-          visible: Visible
-          not_visible: Invisible
+          visible: Visible par tous
           permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre comptoir: %{link}ma-boutique/shop"
           link_to_front: Lien URL du comptoir

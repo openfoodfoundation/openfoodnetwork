@@ -297,7 +297,7 @@ de_DE:
   producers_join: 'Wir laden Produzenten ein, jetzt dem Open Food Network beizutreten. '
   charges_sales_tax: Berechnen Sie Steuern?
   business_address: "Unternehmensdaten"
-  enterprise_permissions: "Unternehmensberechtigungen"
+  enterprise_permissions: "Berechtigungen"
   print_invoice: "Rechnung drucken"
   print_ticket: "Beleg drucken"
   select_ticket_printer: "Wählen Sie einen Drucker für die Belege."
@@ -864,9 +864,7 @@ de_DE:
           sells: vertreibt
           sells_tip: "Keine - Unternehmen verkauft nicht direkt an Kunden. <br /> Eigene - Unternehmen verkauft eigene Produkte an Kunden. <br /> Alle - Unternehmen verkauft eigene Produkte und Produkte anderer. <br />"
           visible_in_search: öffentlich sichtbar in der Suche
-          visible_in_search_tip: Bestimmt, ob dieses Unternehmen für Kunden beim Durchsuchen des Open Food Network sichtbar ist.
-          visible: öffentlich sichtbar
-          not_visible: nicht sichtbar
+          visible: Alle Nutzer
           permalink: Permalink (keine Leerzeichen)
           permalink_tip: "Dieser Permalink wird verwendet, um die URL zu Ihrem Laden zu erstellen: %{link}name-ihres-ladens/shop"
           link_to_front: Link zum Laden
@@ -892,8 +890,8 @@ de_DE:
           allow_guest_orders_true: "Gasteinkauf erlauben"
           allow_order_changes: "Bestellungen nachträglich ändern"
           allow_order_changes_tip: "Wählen Sie aus, ob Kunden ihre Bestellung ändern können, solange der Bestellzyklus geöffnet ist."
-          allow_order_changes_false: "Bestellungen können nicht geändert oder storniert werden"
-          allow_order_changes_true: "Kunden können Bestellungen ändern oder stornieren, während der Bestellzyklus geöffnet ist"
+          allow_order_changes_false: "Kunden können Bestellungen nicht ändern oder stornieren "
+          allow_order_changes_true: "Kunden können Bestellungen ändern oder stornieren, solange der Bestellzyklus geöffnet ist"
           enable_subscriptions: "Abonnements"
           enable_subscriptions_tip: "Aktivieren Sie Abonnements, um Kunden eine automatische, regelmäßige Bestellung Ihrer Produkte einzurichten. Dies kann z. B. das Abonnement einer wöchentlichen Gemüsekiste sein."
           enable_subscriptions_false: "deaktiviert"
@@ -925,7 +923,7 @@ de_DE:
           shopfront_sort_by_producer: "Nach Produzent"
           shopfront_sort_by_category_placeholder: "Kategorie"
           shopfront_sort_by_producer_placeholder: "Produzent"
-          display_remaining_stock: "Restbestand anzeigen, wenn nur noch wenige Artikel verfügbar"
+          display_remaining_stock: "Restbestand anzeigen"
           display_remaining_stock_tip: "Wenn nur noch 3 oder weniger Artikel eines Produkts verfügbar sind, wird der Restbestand im Online-Shop angezeigt. "
           enabled: "aktiviert"
           disabled: "deaktiviert"

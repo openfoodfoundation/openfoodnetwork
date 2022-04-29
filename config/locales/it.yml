@@ -866,9 +866,7 @@ it:
           sells: Vende
           sells_tip: "Nessuno -  L'azienda non vende direttamente ai clienti.<br />Proprio - L'azienda vende i propri prodotti ai clienti.<br />Proprio e altrui - L'azienda può vendere prodotti propri o di altre aziende.<br />"
           visible_in_search: Visibile nella ricerca?
-          visible_in_search_tip: Determina se questa azienda sarà visibile ai clienti quando cercano nel sito.
-          visible: Visibile
-          not_visible: Non visibile
+          visible: Pubblica
           permalink: Permalink (nessuno spazio)
           permalink_tip: "Questo permalink serve a creare l'url al tuo negozio: %{link}nome-del-tuo-negozio/negozio"
           link_to_front: Link alla tua vetrina

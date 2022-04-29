@@ -234,10 +234,10 @@ cy:
       email_welcome: "Croeso"
       email_registered: "bellach yn rhan o"
       email_userguide_html: "Mae'r Canllaw Defnyddiwr gyda chymorth manwl ar sefydlu'ch Cynhyrchydd neu Hwb yma: %{link}"
-      userguide: "Canllaw Defnyddiwr Rhwydwaith Bwyd Agored"
+      userguide: "Canllaw Defnyddiwr Open Food Network"
       email_admin_html: "Gallwch reoli'ch cyfrif trwy fewngofnodi i'r %{link} neu drwy glicio ar yr olwyn yn ochr dde uchaf y dudalen hafan, a dewis Gweinyddiaeth."
       admin_panel: "Panel Gweinyddol"
-      email_community_html: "Hefyd mae gennym fforwm ar-lein ar gyfer trafodaeth gymunedol sy'n ymwneud â meddalwedd OFN a heriau unigryw rhedeg menter fwyd. Byddem yn eich annog i ymuno â'r fforwm. Rydym yn esblygu'n barhaus a bydd eich mewnbwn i'r fforwm hwn yn llywiio'r hyn sy'n digwydd nesaf. %{link}"
+      email_community_html: "Hefyd mae gennym fforwm ar-lein ar gyfer trafodaeth gymunedol sy'n ymwneud â meddalwedd Open Food Network a heriau unigryw rhedeg menter fwyd. Byddem yn eich annog i ymuno â'r fforwm. Rydym yn esblygu'n barhaus a bydd eich mewnbwn i'r fforwm hwn yn llywiio'r hyn sy'n digwydd nesaf. %{link}"
       join_community: "Ymunwch â'r gymuned"
     invite_manager:
       subject: "mae %{enterprise} wedi eich gwahodd i fod yn rheolwr"
@@ -289,12 +289,12 @@ cy:
       other:
         title: Methiant Eraill (archebion%{count})
         explainer: Methwyd â phrosesu'r archebion hyn yn awtomatig am reswm anhysbys. Ni ddylai hyn ddigwydd, cysylltwch â ni os ydych chi'n derbyn y neges yma.
-  home: "OFN"
-  title: "Rhwydwaith Bwyd Agored"
+  home: "Open Food Network"
+  title: "Open Food Network"
   welcome_to: "Croeso i"
   site_meta_description: "Mae platfform meddalwedd y Rhwydwaith Bwyd Agored yn caniatáu i ffermwyr werthu cynnyrch ar-lein am bris addas iddyn nhw. Adeiladwyd y platfform yn benodol i werthu bwyd er mwyn gallu delio gyda phwysau cymhleth neu lefelau stoc sydd gan fwyd yn unig - dwsin o wyau, swp o bersli, cyw iâr gyfan sy'n amrywio o ran pwysau!"
   search_by_name: Chwilio yn ôl enw, tref, sir neu god post…
-  producers_join: Bellach mae croeso i gynhyrchwyr y DU ymuno â'r Rhwydwaith Bwyd Agored.
+  producers_join: Bellach mae croeso i gynhyrchwyr y DU ymuno â'r Open Food Network.
   charges_sales_tax: Angen talu TAW?
   business_address: "Cyfeiriad Busnes"
   enterprise_permissions: "Caniatâd y Fenter"
@@ -514,7 +514,7 @@ cy:
         matomo_site_id: "ID Safle Matomo"
         matomo_tag_manager_url: "URL Rheolwr Tag Matomo"
         info_html: "Mae Matomo yn gymhwysiad Gwe a Dadansoddeg Symudol. Gallwch naill ai ddefnyddio Matomo yn yr adeilad neu ddefnyddio gwasanaeth a gynhelir gan gwmwl. Gweler <a href='http://matomo.org' target='_blank'>matomo.org</a> i gael mwy o wybodaeth."
-        config_instructions_html: "Yma gallwch chi ffurfweddu integreiddiad OFN Matomo. Dylai'r URL Matomo isod dynnu sylw at enghraifft Matomo lle anfonir gwybodaeth olrhain y defnyddiwr; os caiff ei adael yn wag, ni  alluogir dull olrhain defnyddiwr Matomo. Nid yw'r Safle ID Safle yn orfodol ond mae'n ddefnyddiol os ydych chi'n olrhain mwy nag un gwefan ar Matomo; mae i'w weld ar gonsol enghraifft Matomo."
+        config_instructions_html: "Yma gallwch chi ffurfweddu y integreiddiad Open Food Network Matomo. Dylai'r URL Matomo isod dynnu sylw at enghraifft Matomo lle anfonir gwybodaeth olrhain y defnyddiwr; os caiff ei adael yn wag, ni  alluogir dull olrhain defnyddiwr Matomo. Nid yw'r Safle ID Safle yn orfodol ond mae'n ddefnyddiol os ydych chi'n olrhain mwy nag un gwefan ar Matomo; mae i'w weld ar gonsol enghraifft Matomo."
         config_instructions_tag_manager_html: "Mae gosod URL Rheolwr Tag Matomo yn galluogi Rheolwr Tag Matomo. Mae'r arf hwn yn caniatáu ichi sefydlu digwyddiadau dadansoddeg. Mae URL Rheolwr Tag Matomo yn cael ei gopïo o adran Gosod Cod Rheolwr Tag Matomo. Gofalwch eich bod yn dewis y cynhwysydd a'r amgylchedd cywir oherwydd mae'r opsiynau hyn newid yr URL."
     customers:
       index:
@@ -858,15 +858,13 @@ cy:
           sells: Gwerthu
           sells_tip: "Dim - nid yw'r fenter yn gwerthu i gwsmeriaid yn uniongyrchol.<br /> Fy Menter - Mae'r Fenter yn gwerthu ei chynnyrch ei hun i gwsmeriaid.<br /> Unrhyw un - Gall y Fenter werthu ei chynnyrch ei hun neu gynnyrch mentrau eraill.<br />"
           visible_in_search: Yn amlwg wrth chwilio?
-          visible_in_search_tip: Yn penderfynu a fydd y fenter hon yn weladwy i gwsmeriaid wrth chwilio'r wefan.
-          visible: Gweladwy
-          not_visible: Ddim yn weladwy
+          visible: Cyhoeddus
           permalink: Permaddolen (dim bylchau)
           permalink_tip: "Defnyddir y permaddolen hon i greu'r url ar gyfer eich siop: %{link}enw-eich-siop / siop"
           link_to_front: Dolen i ffrynt y siop
-          link_to_front_tip: Dolen uniongyrchol i ffrynt eich siop ar y Rhwydwaith Bwyd Agored.
-          ofn_uid: OFN UID
-          ofn_uid_tip: Yr dull adnabod unigryw a ddefnyddir i nodi'r fenter ar  y Rhwydwaith Bwyd Agored.
+          link_to_front_tip: Dolen uniongyrchol i ffrynt eich siop ar y Open Food Network.
+          ofn_uid: Open Food Network UID
+          ofn_uid_tip: Yr dull adnabod unigryw a ddefnyddir i nodi'r fenter ar  y Open Food Network.
         shipping_methods:
           name: "Enw"
           applies: "Egnïol?"
@@ -927,14 +925,14 @@ cy:
           linkedin_placeholder: "e.e. www.linkedin.com/in/YourNameHere"
         stripe_connect:
           connect_with_stripe: "Cysylltu â Stripe"
-          stripe_connect_intro: "I dderbyn taliadau trwy gerdyn credyd, bydd angen i chi gysylltu eich cyfrif Sttipe â'r Rhwydwaith Bwyd Agored. Defnyddiwch y botwm ar y dde i ddechrau."
+          stripe_connect_intro: "I dderbyn taliadau trwy gerdyn credyd, bydd angen i chi gysylltu eich cyfrif Sttipe â'rOpen Food Network. Defnyddiwch y botwm ar y dde i ddechrau."
           stripe_account_connected: "Cysylltwyd â'ch cyfrif Stripe"
           disconnect: "Datgysylltwch y cyfrif"
           confirm_modal:
             title: Cysylltu â Stripe
-            part1: Mae Stripe yn wasanaeth prosesu taliadau sy'n caniatáu i siopau ar y RhBA dderbyn taliadau cardiau credyd gan gwsmeriaid.
-            part2: I ddefnyddio'r nodwedd hon, rhaid i chi gysylltu eich cyfrif Stripe â'r RhBA. Trwy glicio 'Rwy'n Cytuno' isod, cewch eich atgyfeirio at wefan Stripe lle gallwch gysylltu cyfrif Stripe sy'n bodoli eisoes, neu greu un newydd os nad oes gennych un yn barod.
-            part3: Bydd hyn yn caniatáu i'r Rhwydwaith Bwyd Agored dderbyn taliadau cardiau credyd gan gwsmeriaid ar eich rhan. Noder y bydd angen i chi gynnal eich cyfrif Stripe eich hun, talu ffioedd Stripe a delio gydag unrhyw ad-daliadau a gwasanaeth cwsmer eich hun.
+            part1: Mae Stripe yn wasanaeth prosesu taliadau sy'n caniatáu i siopau ar y Open Food Network dderbyn taliadau cardiau credyd gan gwsmeriaid.
+            part2: I ddefnyddio'r nodwedd hon, rhaid i chi gysylltu eich cyfrif Stripe â'r Open Food Network. Trwy glicio 'Rwy'n Cytuno' isod, cewch eich atgyfeirio at wefan Stripe lle gallwch gysylltu cyfrif Stripe sy'n bodoli eisoes, neu greu un newydd os nad oes gennych un yn barod.
+            part3: Bydd hyn yn caniatáu i'r Open Food Network dderbyn taliadau cardiau credyd gan gwsmeriaid ar eich rhan. Noder y bydd angen i chi gynnal eich cyfrif Stripe eich hun, talu ffioedd Stripe a delio gydag unrhyw ad-daliadau a gwasanaeth cwsmer eich hun.
             i_agree: Rwy'n cytuno
             cancel: Canslo
         tag_rules:
@@ -983,22 +981,22 @@ cy:
         producer: Cynhyrchydd
       change_type_form:
         producer_profile: Proffil Cynhyrchydd
-        connect_ofn: Cysylltu trwy'r RhBA
+        connect_ofn: Cysylltu trwy'r Open Food Network
         always_free: AM DDIM BOB AMSER
-        producer_description_text: Ychwanegwch eich cynnyrch i'r Rhwydwaith Bwyd Agored, gan ganiatau i hybiau stocio eich cynnyrch yn eu siopau.
+        producer_description_text: Ychwanegwch eich cynnyrch i'r Open Food Network, gan ganiatau i hybiau stocio eich cynnyrch yn eu siopau.
         producer_shop: Siop Cynhyrchydd
         sell_your_produce: Gwerthu'ch cynnyrch eich hun
-        producer_shop_description_text: Gwerthu'ch cynnyrch yn uniongyrchol i gwsmeriaid trwy'ch ffrynt siop ar y Rhwydwaith Bwyd Agored.
+        producer_shop_description_text: Gwerthu'ch cynnyrch yn uniongyrchol i gwsmeriaid trwy'ch ffrynt siop ar y Open Food Network.
         producer_shop_description_text2: Mae Siop Cynhyrchydd ar gyfer eich cynnyrch chi'n unig, os ydych chi am werthu cynnyrch a dyfwyd/cynhyrchwyd ddi ar y safle, dewiswch 'Hwb Cynhyrchydd'.
         producer_hub: Hwb Cynhyrchydd
         producer_hub_text: Gwerthu eich cynnyrch chi a chynhyrchwyr eraill.
-        producer_hub_description_text: Eich menter yw asgwrn cefn eich system bwyd lleol.  Gallwch werthu eich cynnyrch eich hun ynghyd â chynnyrch mentrau eraill trwy eich ffrynt siop ar y Rhwydwaith Bwyd Agored.
+        producer_hub_description_text: Eich menter yw asgwrn cefn eich system bwyd lleol.  Gallwch werthu eich cynnyrch eich hun ynghyd â chynnyrch mentrau eraill trwy eich ffrynt siop ar y Open Food Network.
         profile: Proffil yn Unig
         get_listing: Trefnu rhestriad
-        profile_description_text: Gall pobl ddod o hyd i chi a chysylltu â chi ar y Rhwydwaith Bwyd Agored. Bydd eich menter  yn weladwy ar y map, a gellir chwilio amdani mewn rhestrau.
+        profile_description_text: Gall pobl ddod o hyd i chi a chysylltu â chi ar y Open Food Network. Bydd eich menter  yn weladwy ar y map, a gellir chwilio amdani mewn rhestrau.
         hub_shop: Siop Hwb
         hub_shop_text: Gwerthu cynnyrch gan eraill
-        hub_shop_description_text: Eich menter yw asgwrn cefn eich system bwyd lleol. Gallwch gronni a gwerthu cynnyrch mentrau eraill trwy eich ffrynt siop ar y Rhwydwaith Bwyd Agored.
+        hub_shop_description_text: Eich menter yw asgwrn cefn eich system bwyd lleol. Gallwch gronni a gwerthu cynnyrch mentrau eraill trwy eich ffrynt siop ar y Open Food Network.
         choose_option: Dewiswch un o'r opsiynau uchod.
         change_now: Newid nawr
       enterprise_user_index:
@@ -1022,7 +1020,7 @@ cy:
         title: Menter Newydd
         back_link: Yn ôl i'r rhestr mentrau
       welcome:
-        welcome_title: Croeso i'r Rhwydwaith Bwyd Agored!
+        welcome_title: Croeso i'r Open Food Network!
         welcome_text: 'Rydych chi wedi  llwyddo i greu '
         next_step: Y cam nesaf
         choose_starting_point: 'Dewiswch eich pecyn:'
@@ -1386,7 +1384,7 @@ cy:
   shared:
     mailers:
       powered_by:
-        open_food_network: "Rhwydwaith Bwyd Agored"
+        open_food_network: "Open Food Network"
         powered_html: "%{open_food_network} sy'n pweru eich profiad siopa."
     menu:
       cart:
@@ -1404,20 +1402,20 @@ cy:
       mobile_menu:
         cart: "Basged"
     register_call:
-      selling_on_ofn: "Oes gennych chi ddiddordeb mewn mynd ar y Rhwydwaith Bwyd Agored?"
+      selling_on_ofn: "Oes gennych chi ddiddordeb mewn mynd ar y Open Food Network?"
       register: "Cofrestrwch yma"
     footer:
       footer_secure: "Diogel a dibynadwy"
-      footer_secure_text: "Mae'r Rhwydwaith Bwyd Agored yn defnyddio dull amgryptio SSL (2048 bit RSA) ym mhobman i gadw'ch gwybodaeth siopa a thalu yn breifat. Nid yw ein gweinyddwyr yn storio manylion eich cerdyn credyd ac mae taliadau'n cael eu prosesu gan wasanaethau sy'n cydymffurfio â PCI."
+      footer_secure_text: "Mae'r Open Food Network yn defnyddio dull amgryptio SSL (2048 bit RSA) ym mhobman i gadw'ch gwybodaeth siopa a thalu yn breifat. Nid yw ein gweinyddwyr yn storio manylion eich cerdyn credyd ac mae taliadau'n cael eu prosesu gan wasanaethau sy'n cydymffurfio â PCI."
       footer_contact_headline: "Cadw mewn cysylltiad"
       footer_contact_email: "E-bostiwch ni"
       footer_nav_headline: "Llywiwch"
       footer_join_headline: "Ymunwch â ni"
-      footer_join_body: "Creu rhestr, siop neu gyfeirlyfr grŵp ar y Rhwydwaith Bwyd Agored."
+      footer_join_body: "Creu rhestr, siop neu gyfeirlyfr grŵp ar y Open Food Network."
       footer_join_cta: "Dywedwch fwy wrthyf!"
       footer_legal_call: "Darllenwch ein"
       footer_legal_visit: "Dewch o hyd i ni ar"
-      footer_legal_text_html: "Mae'r Rhwydwaith Bwyd Agored yn blatfform meddalwedd ffynhonnell agored ac am ddim. Trwyddedwyd ein cynnwys trwy%{content_license} a'n cod trwy%{code_license}."
+      footer_legal_text_html: "Mae'r Open Food Network yn blatfform meddalwedd ffynhonnell agored ac am ddim. Trwyddedwyd ein cynnwys trwy%{content_license} a'n cod trwy%{code_license}."
       footer_data_text_with_privacy_policy_html: "Rydym yn gofalu am eich data. Gweler ein %{privacy_policy} ac %{cookies_policy}"
       footer_data_text_without_privacy_policy_html: "Rydym yn gofalu am eich data. Gweler ein %{cookies_policy}"
       footer_data_privacy_policy: "polisi preifatrwydd"
@@ -1570,16 +1568,16 @@ cy:
   card_could_not_be_removed: Mae'n ddrwg gennym, nid oedd yn bosib dileu'r cerdyn
   invalid_credit_card: "Cerdyn credyd annilys"
   ie_warning_headline: "Mae eich porwr yn hen :-("
-  ie_warning_text: "I gael y profiad gorau gyda'r Rhwydwaith Bwyd Agored rydym yn argymell yn gryf uwchraddio'ch porwr:"
+  ie_warning_text: "I gael y profiad gorau gyda'r Open Food Network rydym yn argymell yn gryf uwchraddio'ch porwr:"
   ie_warning_chrome: Dadlwytho Chrome
   ie_warning_firefox: Dadlwytho Firefox
   ie_warning_ie: Uwchraddio Internet Explorer
-  ie_warning_other: "Methu uwchraddio'ch porwr? Rhowch gynnig ar y Rhwydwaith Bwyd Agored ar eich ffôn clyfar :-)"
+  ie_warning_other: "Methu uwchraddio'ch porwr? Rhowch gynnig ar y Open Food Network ar eich ffôn clyfar :-)"
   legal:
     cookies_policy:
       header: "Sut Rydym yn Defnyddio Cwcis"
       desc_part_1: "Ffeiliau testun bach iawn yw cwcis sy'n cael eu storio ar eich cyfrifiadur pan ymwelwch â rhai gwefannau."
-      desc_part_2: "Mae'r RhBA yn parchu'ch preifatrwydd yn llwyr. Rydym yn defnyddio'r cwcis yn unig sy'n angenrheidiol ar gyfer cyflwyno'r gwasanaeth i chi o ran gwerthu / prynu bwyd ar-lein. Nid ydym yn gwerthu unrhyw ran o'ch data. Efallai y byddwn yn y dyfodol yn cynnig ichi rannu peth o'ch data i adeiladu gwasanaethau cyffredin newydd a allai fod yn ddefnyddiol i'r ecosystem (megis gwasanaethau logisteg ar gyfer systemau bwyd byr) ond nid ydym yno eto, ac ni fyddwn yn ei wneud heb eich awdurdod :-)"
+      desc_part_2: "Mae'r Open Food Network yn parchu'ch preifatrwydd yn llwyr. Rydym yn defnyddio'r cwcis yn unig sy'n angenrheidiol ar gyfer cyflwyno'r gwasanaeth i chi o ran gwerthu / prynu bwyd ar-lein. Nid ydym yn gwerthu unrhyw ran o'ch data. Efallai y byddwn yn y dyfodol yn cynnig ichi rannu peth o'ch data i adeiladu gwasanaethau cyffredin newydd a allai fod yn ddefnyddiol i'r ecosystem (megis gwasanaethau logisteg ar gyfer systemau bwyd byr) ond nid ydym yno eto, ac ni fyddwn yn ei wneud heb eich awdurdod :-)"
       desc_part_3: "Rydyn ni'n defnyddio cwcis yn bennaf i gofio pwy ydych chi os ydych chi'n 'mewngofnodi' i'r gwasanaeth, neu i allu cofio'r eitemau rydych chi'n eu rhoi yn eich basged hyd yn oed os nad ydych chi wedi mewngofnodi. Os ydych chi'n dal i lywio'r wefan heb glicio ar “Derbyn cwcis”, rydym yn cymryd eich bod yn rhoi caniatâd i ni storio'r cwcis sy'n hanfodol i redeg y wefan. Dyma'r rhestr o gwcis rydyn ni'n eu defnyddio!"
       essential_cookies: "Cwcis Hanfodol"
       essential_cookies_desc: "Mae'r cwcis canlynol yn gwbl angenrheidiol ar gyfer gweithredu ein gwefan."
@@ -1598,12 +1596,12 @@ cy:
       cookie_matomo_heatmap_desc: "Map Gwres Matomo a Chwci Cofnodi Sesiwn."
       cookie_matomo_ignore_desc: "Defnyddir y cwci i atal olrhain defnyddiwr."
       disabling_cookies_header: "Rhybudd ar anablu cwcis"
-      disabling_cookies_desc: "Fel defnyddiwr, gallwch chi bob amser ganiatáu, blocio neu ddileu cwcis y Rhwydwaith Bwyd Agored neu unrhyw gwcis gwefan eraill pryd bynnag y dymunwch trwy reoli gosodiadau'ch porwr. Mae gan bob porwr weithredwr gwahanol. Dyma'r dolenni:"
+      disabling_cookies_desc: "Fel defnyddiwr, gallwch chi bob amser ganiatáu, blocio neu ddileu cwcis y Open Food Network neu unrhyw gwcis gwefan eraill pryd bynnag y dymunwch trwy reoli gosodiadau'ch porwr. Mae gan bob porwr weithredwr gwahanol. Dyma'r dolenni:"
       disabling_cookies_firefox_link: "https://support.mozilla.org/cy-US/kb/enable-and-disable-cookies-website-preferences"
       disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
       disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/cy-ww/cookies/"
-      disabling_cookies_note: "Ond byddwch yn ymwybodol, os byddwch chi'n dileu neu'n addasu'r cwcis hanfodol a ddefnyddir gan y Rhwydwaith Bwyd Agored, ni fydd y wefan yn gweithio, ni fyddwch yn gallu ychwanegu unrhyw beth at eich basged na thalu, er enghraifft."
+      disabling_cookies_note: "Ond byddwch yn ymwybodol, os byddwch chi'n dileu neu'n addasu'r cwcis hanfodol a ddefnyddir gan y Open Food Network, ni fydd y wefan yn gweithio, ni fyddwch yn gallu ychwanegu unrhyw beth at eich basged na thalu, er enghraifft."
     cookies_banner:
       cookies_usage: "Mae'r wefan hon yn defnyddio cwcis er mwyn hwyluso a diogelu eich profiad llywio, ac i'n helpu ni i ddeall sut rydych chi'n ei defnyddio er mwyn gwella'r nodweddion rydyn ni'n eu cynnig."
       cookies_definition: "Ffeiliau testun bach iawn yw cwcis sy'n cael eu storio ar eich cyfrifiadur wrth ichi ymweld â rhai gwefannau."
@@ -1618,7 +1616,7 @@ cy:
   brandstory_part2: "Wedyn mae angen inni ei wireddu. Ffordd i rymuso pawb sy'n tyfu, yn gwerthu ac yn prynu bwyd. Ffordd i adrodd yr holl hanesion, delio gyda'r logisteg. Ffordd i droi trafodion yn drawsnewid bob dydd."
   brandstory_part3: "Felly, dyma ddatblygu marchnad ar-lein sy'n cynnig yr un cyfle i bawb.  Mae'n dryloyw, felly mae'n creu cysylltiadau. Ffynhonnell agored yw, felly mae'n eiddo i bawb. Mae'n gweithio ar lefel ranbarthol a chenedlaethol, felly mae pawb yn cychwyn eu fersiynau unigryw ledled y byd."
   brandstory_part4: "Mae'n gweithio ym mhobman.  Mae'n newid popeth."
-  brandstory_part5_strong: "Ei enw yw y Rhwydwaith Bwyd Agored."
+  brandstory_part5_strong: "Ei enw yw y Open Food Network."
   brandstory_part6: "Mae pawb yn caru bwyd. Nawr gallwn garu ein system bwyd hefyd."
   system_headline: "Siopa - fel hyn mae'n gweithio."
   system_step1: "1.  Chwilio"
@@ -1929,7 +1927,7 @@ cy:
   products_no_results_html: "Mae'n ddrwg gennym, ni chafwyd hyd i unrhyw ganlyniadau ar gyfer %{query}"
   products_clear_search: "Clirio'r chwiliad"
   search_no_results_html: "Mae'n ddrwg gennym, ni chafwyd hyd i unrhyw ganlyniadau ar gyfer %{query}. Rhowch gynnig ar chwiliad arall?"
-  components_profiles_popover: "Ar y Rhwydwaith Bwyd Agored nid oes ffrynt siop ar gyfer proffiliau  ond hwyrach y bydd ganddynt siop gorfforol neu siop ar-lein yn rhywle arall"
+  components_profiles_popover: "Ar y Open Food Network nid oes ffrynt siop ar gyfer proffiliau ond hwyrach y bydd ganddynt siop gorfforol neu siop ar-lein yn rhywle arall."
   components_profiles_show: "Dangos proffiliau"
   components_filters_nofilters: "Dim hidlwyr"
   components_filters_clearfilters: "Cliriwch yr holl hidlwyr"
@@ -1956,14 +1954,14 @@ cy:
   groups_signup_motivation3: Rydym yn gwybod bod gennych chi syniadau mawr, ac rydyn ni am helpu. Byddwn yn rhannu ein gwybodaeth, ein rhwydweithiau a'n hadnoddau. Rydym yn gwybod nad yw gweithio ar eich pen eich hun yn arwain at newid, felly byddwn yn bartner ichi.
   groups_signup_motivation4: Byddwn yn cwrdd â chi yn eich lleoliad chi.
   groups_signup_motivation5: Hwyrach eich bod yn gynghrair o hybiau bwyd, cynhyrchwyr, neu ddosbarthwyr, corff  y diwydiant, neu lywodraeth leol.
-  groups_signup_motivation6: Beth bynnag fo'ch rôl yn eich mudiad bwyd lleol, rydym yn barod i helpu. Fodd bynnag, byddwch yn myfyrio ar sut olwg fyddai ar y Rhwydwaith Bwyd Agored neu'r hyn mae'n ei wneud yn eich ardal leol chi, gadewch i ni agor sgwrs.
+  groups_signup_motivation6: Beth bynnag fo'ch rôl yn eich mudiad bwyd lleol, rydym yn barod i helpu. Fodd bynnag, byddwch yn myfyrio ar sut olwg fyddai ar y Open Food Network neu'r hyn mae'n ei wneud yn eich ardal leol chi, gadewch i ni agor sgwrs.
   groups_signup_motivation7: Rydym yn gwneud i'r drefn o symud bwyd wneud mwy o synnwyr.
   groups_signup_motivation8: Mae angen i chi actifadu a galluogi'ch rhwydweithiau, rydym yn cynnig platfform i sgwrsio a gweithredu. Mae angen ymgysylltu go iawn. Byddwn yn helpu i gyrraedd yr holl chwaraewyr, yr holl randdeiliaid, yr holl sectorau.
   groups_signup_motivation9: Mae angen adnoddau arnoch. Byddwn yn defnyddio ein holl brofiad. Mae angen cydweithrediad arnoch. Byddwn yn creu cysylltiadau gwell ichi â rhwydwaith fyd-eang o bobl ym maes bwyd.
   groups_signup_pricing: Cyfrif Grŵp
   groups_signup_studies: Astudiaethau achos
   groups_signup_contact: Yn barod i drafod?
-  groups_signup_contact_text: "Cysylltwch â ni i ddarganfod beth all y RhBA ei wneud i chi:"
+  groups_signup_contact_text: "Cysylltwch â ni i ddarganfod beth all y Open Food Network ei wneud i chi:"
   groups_signup_detail: "Dyma'r manylion"
   login_invalid: "E-bost neu gyfrinair annilys"
   producers_about: Amdanom ni
@@ -1996,18 +1994,18 @@ cy:
   name_or_sku: "ENW NEU COD Y CYNNYRCH"
   register_title: Cofrestru
   sell_title: "Cofrestru"
-  sell_headline: "Ewch ar y Rhwydwaith Bwyd Agored!"
+  sell_headline: "Ewch ar y Open Food Network!"
   sell_motivation: "Arddangos eich bwyd hardd."
   sell_producers: "Cynhyrchwyr"
   sell_hubs: "Hybiau"
   sell_groups: "Grwpiau"
-  sell_producers_detail: "Sefydlu proffil ar gyfer eich busnes ar y RhBA mewn munudau'n unig. Ar unrhyw adeg gallwch chi uwchraddio'ch proffil i siop ar-lein a gwerthu'ch cynnyrch yn uniongyrchol i gwsmeriaid."
-  sell_hubs_detail: "Sefydlu proffil ar gyfer eich menter neu sefydliad bwyd ar y RhBA. Ar unrhyw adeg gallwch uwchraddio'ch proffil i siop aml-gynhyrchydd."
+  sell_producers_detail: "Sefydlu proffil ar gyfer eich busnes ar y Open Food Network mewn munudau'n unig. Ar unrhyw adeg gallwch chi uwchraddio'ch proffil i siop ar-lein a gwerthu'ch cynnyrch yn uniongyrchol i gwsmeriaid."
+  sell_hubs_detail: "Sefydlu proffil ar gyfer eich menter neu sefydliad bwyd ar y Open Food Network. Ar unrhyw adeg gallwch uwchraddio'ch proffil i siop aml-gynhyrchydd."
   sell_groups_detail: "Sefydlu cyfeirlyfr pwrpasol o fentrau (cynhyrchwyr a mentrau bwyd eraill) ar gyfer eich rhanbarth neu ar gyfer eich sefydliad."
   sell_user_guide: "Dysgu mwy yn ein canllaw defnyddiwr."
-  sell_listing_price: "Does dim cost ar gyfer rhestriad ar y RhBA.  Gellir agor a rhedeg siop ar y RhBA am ddim hyd at werthiant misol o $500. Os byddwch yn gwerthu mwy, gallwch ddewis eich cyfraniad cymunedol o rhwng 1% a 3% o'ch gwerthiant. Am fwy o fanylion ynglyn â phrisio, ewch i'r adran Platfform Meddalwedd trwy'r ddolen Amdanom yn y brif ddewislen."
-  sell_embed: "Hefyd gallwn ymwreiddio siop y RhBA yn eich gwefan unigol chi, neu gallwn adeiladu gwefan bwrpasol i rwydwaith bwyd lleol ar gyfer eich rhanbarth chi."
-  sell_ask_services: "Gofynnwch i ni am wasanaethau y RhBA."
+  sell_listing_price: "Does dim cost ar gyfer rhestriad ar y Open Food Network.  Gellir agor a rhedeg siop ar y Open Food Network am ddim hyd at werthiant misol o $500. Os byddwch yn gwerthu mwy, gallwch ddewis eich cyfraniad cymunedol o rhwng 1% a 3% o'ch gwerthiant. Am fwy o fanylion ynglyn â phrisio, ewch i'r adran Platfform Meddalwedd trwy'r ddolen Amdanom yn y brif ddewislen."
+  sell_embed: "Hefyd gallwn ymwreiddio siop y Open Food Network yn eich gwefan unigol chi, neu gallwn adeiladu gwefan bwrpasol i rwydwaith bwyd lleol ar gyfer eich rhanbarth chi."
+  sell_ask_services: "Gofynnwch i ni am wasanaethau y Open Food Network."
   shops_title: Siopiau
   shops_headline: Siopa a drawsnewidiwyd.
   shops_text: Mae bwyd yn tyfu mewn cylchoedd, mae ffermwyr yn cynaeafu mewn cylchoedd, ac rydym ni'n archebu bwyd mewn cylchoedd. Os dewch o hyd i gylch archebu sydd ar gau, dewch yn ôl yn fuan.
@@ -2132,9 +2130,9 @@ cy:
         registration_promo_image: "Delwedd tirwedd ar gyfer eich proffil"
         registration_about_us: "Testun 'Amdanom Ni'"
         registration_outcome_headline: "Beth ydw i'n ei dderbyn?"
-        registration_outcome1_html: "Mae eich proffil yn helpu pobl i <strong>ddod</strong> o <strong>hyd i</strong> chi a <strong>chysylltu â nhw</strong> ar y Rhwydwaith Bwyd Agored."
+        registration_outcome1_html: "Mae eich proffil yn helpu pobl i <strong>ddod</strong> o <strong>hyd i</strong> chi a <strong>chysylltu â nhw</strong> ar y Open Food Network."
         registration_outcome2: "Defnyddiwch y gofod hwn i adrodd stori eich menter, i helpu meithrin cysylltiadau â'ch presenoldeb cymdeithasol ac ar-lein."
-        registration_outcome3: "Hwn yw'r cam cyntaf hefyd tuag at fasnachu ar y Rhwydwaith Bwyd Agored, neu agor siop ar-lein."
+        registration_outcome3: "Hwn yw'r cam cyntaf hefyd tuag at fasnachu ar y Open Food Network, neu agor siop ar-lein."
         registration_action: "Gadewch inni ddechrau!"
       details:
         title: "Manylion"
@@ -2186,7 +2184,7 @@ cy:
         title: "Amdanom"
         headline: "Gwych!"
         message: "Nawr, gadewch i ni ychwanegu mwy o fanylion am"
-        success: "Ardderchog! ychwanegwyd %{enterprise} at y Rhwydwaith Bwyd Agored"
+        success: "Ardderchog! ychwanegwyd %{enterprise} at y Open Food Network"
         registration_exit_message: "Os byddwch yn gadael y dewin hwn ar unrhyw adeg, gallwch barhau i greu eich proffil trwy fynd i'r rhyngwyneb gweinyddol."
         enterprise_description: "Disgrifiad Byr"
         enterprise_description_placeholder: "Brawddeg fer sy'n disgrifio'ch menter"
@@ -2226,7 +2224,7 @@ cy:
         enterprise_final_step: "Y cam olaf!"
         enterprise_social_text: "Sut gall pobl ddod o hyd i %{enterprise} ar-lein?"
         website: "Gwefan"
-        website_placeholder: "ee. cawscymru.cym"
+        website_placeholder: "ee. openfoodnetwork.org.uk"
         facebook: "Facebook"
         facebook_placeholder: "ee. www.facebook.com/PageNameHere"
         linkedin: "LinkedIn"
@@ -2243,7 +2241,7 @@ cy:
       finished:
         headline: "Wedi gorffen!"
         thanks: "Diolch am lenwi'r manylion ar gyfer %{enterprise}."
-        login: "Gallwch newid neu ddiweddaru eich menter ar unrhyw adeg trwy fewngofnodi i'r Rhwydwaith Bwyd Agored a dewis Gweinyddu."
+        login: "Gallwch newid neu ddiweddaru eich menter ar unrhyw adeg trwy fewngofnodi i'r Open Food Network a dewis Gweinyddu."
         action: "Ewch i Ddangosfwrdd y Fenter"
   back: "Yn ôl"
   continue: "Parhau"
@@ -2676,7 +2674,7 @@ cy:
   enterprise_register_success_notice: "Llongyfarchiadau! Cwblhawyd y cofrestriad ar gyfer %{enterprise}!"
   enterprise_bulk_update_success_notice: "Llwyddwyd i ddiweddaru'r mentrau "
   enterprise_bulk_update_error: 'Diweddariad wedi methu'
-  enterprise_shop_show_error: "Nid yw'r siop rydych chi'n chwilio amdani'n bodoli neu nid yw'n weithredol ar y RhBA. Gwiriwch siopau eraill."
+  enterprise_shop_show_error: "Nid yw'r siop rydych chi'n chwilio amdani'n bodoli neu nid yw'n weithredol ar y Open Food Network. Gwiriwch siopau eraill."
   order_cycles_create_notice: 'Crëwyd eich cylch archebu.'
   order_cycles_update_notice: 'Diweddarwyd eich cylch archebu.'
   order_cycles_bulk_update_notice: 'Diweddarwyd y cylchoedd archebu.'
@@ -2764,16 +2762,16 @@ cy:
           hub_profile: Proffil Hwb
           hub_profile_cost: "COST: AM DDIM BOB TRO"
           hub_profile_text1: >
-              Gall pobl gael hyd ichi a chysyltu â chi ar y Rhwydwaith Bwyd Agored.
-              Bydd eich menter yn weladwy ar fap, a gellir chwilio amdani mewn rhestrau.
+              Gall pobl gael hyd ichi a chysyltu â chi ar y Open Food Network. Bydd
+              eich menter yn weladwy ar fap, a gellir chwilio amdani mewn rhestrau.
           hub_profile_text2: >
               Mae cael proffil a chreu cysylltiadau gyda'ch system bwyd lleol trwy'r
-              Rhwydwaith Bwyd Agored ar gael yn rhad ac am ddim.
+              Open Food Network ar gael yn rhad ac am ddim.
           hub_shop: Siop yr Hwb
           hub_shop_text1: >
               Eich menter yw asgwrn cefn eich system bwyd lleol. Rydych yn cydgasglu
               cynnyrch gan fentrau eraill, a gellir ei werthu trwy eich siop ar y
-              Rhwydwaith Bwyd Agored.
+              Open Food Network.
           hub_shop_text2: >
               Mae Hybiau'n gallu bodoli mewn nifer o ffurfiau, boed yn gydweithfa
               bwyd, grwp prynu, rhaglen blychau llysiau neu siop fwyd leol.
@@ -2795,14 +2793,14 @@ cy:
           profile_only_text2: >
               Os bvyddai'n well gennych ganolbwyntio ar gynhyrchu bwyd, ac rydym am
               adael i rywun arall delio gyda'r gwaith gwerthu, ni fydd angen ichi
-              agor siop ar y Rhwydwaith Bwyd Agored.
+              agor siop ar y Open Food Network.
           profile_only_text3: >
-              Cofiwch ychwanegu eich cynnyrch at y Rhwydwaith Bwyd Agored, i ganiatau
-              i hybiau stocio eich cynnyrch yn eu siopau nhw.
+              Cofiwch ychwanegu eich cynnyrch at y Open Food Network, i ganiatau i
+              hybiau stocio eich cynnyrch yn eu siopau nhw.
           producer_shop: Siop Cynhyrchydd
           producer_shop_text1: >
               Gallwch werthu eich cynnyrch yn uniongyrchol i gwsmeriaid trwy eich
-              ffrynt siop personol ar y Rhwydwaith Bwyd Agored.
+              ffrynt siop personol ar y Open Food Network.
           producer_shop_text2: >
               Mae Siop Cynhyrchudd ar gyfer eich cynnyrch chi'n unig, ios hoffech
               werthu cynnyrch a dyfir neu a gynhyrchir oddi ar eich safle, dylech
@@ -2810,13 +2808,13 @@ cy:
           producer_hub: Hwb Cynhyrchydd
           producer_hub_text1: >
               Mae Hybiau'n gallu dod mewn nifer o ffurfiau - AGG, cynlluniau blychau
-              llysiau, cydweithfa bwyd, grŵp prynu cymunedol, marchnad ffermwyr, siop
-              ar-lein ar gyfer siop annibynnol a nifer o rai eraill!
+              llysiau, cydweithfa bwyd, grŵp prynu cymunedol, marchnad ffermwyr, siopau
+              ar-lein ar gyfer siopau annibynnol a nifer o rai eraill!
           producer_hub_text2: >
               Gall Hybiau Cynhyrchydd ddod mewn nifer o ffurfiau, boed yn CSA, rhaglen
               blychau llysiau, neu gydweithfa bwyd gyda gardd ar ben y to.
           producer_hub_text3: >
-              Nod y Rhwydwaith Bwyd Agored yw cefnogi cymaint o hybiau â phosib, felly
+              Nod y Open Food Network yw cefnogi cymaint o hybiau â phosib, felly
               beth bynnag fo'ch sefyllfa, rydym yn awyddus i gynnig yr arfau sydd
               eu hangen arnoch i redeg eich sefydliad neu'ch busnes bwyd lleol.
           get_listing: Gofyn am restriad
@@ -2832,12 +2830,12 @@ cy:
               godro neu ei fowldio.
           producer_text2: >
               Hefyd gall cynhyrchwyr bwyd gwerthu eu cynnyrch (a chynnyrch pobl eraill)
-              trwy Siopau neu Hybiau ar y Rhwydwaith Bwyd Agored.
+              trwy Siopau neu Hybiau ar y Open Food Network.
           non_producer: Nid cynhyrchydd
           non_producer_text1: >
               Nid yw unigolion nad ydynt yn Cynhyrchu yn cynhyrchu unrhyw fwyd eu
               hunain, sy'n golygu nad ydynt yn gallu creu eu cynnyrch eu hunain i'w
-              werthu trwy'r Rhwydwaith Bwyd Agored.
+              werthu trwy'r Open Food Network.
           non_producer_text2: >
               Yn hytrach, mae unigolion nad ydynt yn cynhyrchu'n arbenigo mewn cysylltu
               cynhyrchwyr â'r bobl sy'n bwyta'r cynnyrch yn y pen draw, boed trwy
@@ -3035,7 +3033,7 @@ cy:
       users:
         order: "Archeb"
     registration:
-      welcome_to_ofn: "Croeso i'r Rhwydwaith Bwyd Agored!"
+      welcome_to_ofn: "Croeso i'r Open Food Network!"
       signup_or_login: "Dechreuwch Trwy Gofrestru (neu fewngofnodi)"
       have_an_account: "Oes gennych gyfrif eisoes?"
       action_login: "Mewngofnodi nawr."
@@ -3385,7 +3383,7 @@ cy:
     display_currency: "Arddangos arian cyfred"
     choose_currency: "Dewis Arian Cyfred"
     mail_method_settings: "Gosodiadau Dull Postio"
-    mail_settings_notice_html: "Nid yw'n bosib golygu rhai o'r gosodiadau canlynol, ac fe'u rhestrir yma at ddibenion dadfygio'n unig.  Gellir eu newid trwy ddiweddaru cyfrinachau'r achos a'u darparu trwy ddefnyddio  ofn-install .  Cysylltwch <a href='https://github.com/openfoodfoundation/ofn-install'></a>â thîm byd-eang y RhBA am fanylion pellach."
+    mail_settings_notice_html: "Nid yw'n bosib golygu rhai o'r gosodiadau canlynol, ac fe'u rhestrir yma at ddibenion dadfygio'n unig.  Gellir eu newid trwy ddiweddaru cyfrinachau'r achos a'u darparu trwy ddefnyddio  ofn-install .  Cysylltwch <a href='https://github.com/openfoodfoundation/ofn-install'></a>â thîm byd-eang y Open Food Network am fanylion pellach."
     general: "Cyffredinol"
     enable_mail_delivery: "Galluogi Dosbarthu trwy'r Post"
     send_mails_as: "Anfon eitemau drwy'r Post fel"
@@ -3635,7 +3633,7 @@ cy:
           order_total: "Cyfanswm yr archeb"
       overview:
         enterprises_header:
-          ofn_with_tip: Cynhyrchwyr a / neu Hybiau yw mentrau a nhw yw'r uned sefydliadol sylfaenol yn y Rhwydwaith Bwyd Agored.
+          ofn_with_tip: Cynhyrchwyr a / neu Hybiau yw mentrau a nhw yw'r uned sefydliadol sylfaenol yn y Open Food Network.
         enterprise_row:
           has_no_enterprise_fees: "does dim ffioedd busnes"
           has_no_payment_methods: "does dim dulliau talu"
@@ -3953,10 +3951,10 @@ cy:
             Os byddwch yn cael problemau o hyd, croeso ichi gysylltu â ni.
         subject: "Cyfarwyddiadau ailosod cyfrinair"
       confirmation_instructions:
-        subject: "Gofynnir ichi gadarnhau eich cyfrif y RhBA os gwelwch yn dda"
+        subject: "Gofynnir ichi gadarnhau eich cyfrif y Open Food Network os gwelwch yn dda"
     payment_mailer:
       authorize_payment:
-        subject: "Gofynnir ichi awdurdodi eich taliad i %{distributor} ar y RhBA"
+        subject: "Gofynnir ichi awdurdodi eich taliad i %{distributor} ar y Open Food Network"
         instructions: "Mae angen dilysu ychwanegol ar gyfer eich taliad o %{amount} i %{distributor} .  Dilynwch yr URL canlynol i awdurdodi eich taliad."
       authorization_required:
         subject: "Mae angen i gwsmer awdurdodi taliad."

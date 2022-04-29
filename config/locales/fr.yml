@@ -866,7 +866,7 @@ fr:
           sells: Produits vendus
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
           visible_in_search: Apparaît sur la plateforme?
-          visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de CoopCircuits et la liste des boutiques. <br /> Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
+          visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de CoopCircuits et la liste des boutiques. <br /> 2. Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
           visible: Boutique publique (visible par tous)
           not_visible: Invisible
           hidden: Masquer toutes les références
@@ -3009,7 +3009,7 @@ fr:
         add_to_cart: "Ajouter"
         in_cart: "au panier"
         quantity_in_cart: "%{quantity} au panier"
-        remaining_in_stock: "Seulement %{quantity}produits restant"
+        remaining_in_stock: "Seulement %{quantity} produits restants"
       bulk_buy_modal:
         min_quantity: "Quantité min"
         max_quantity: "Quantité max"

@@ -735,9 +735,7 @@ en_AU:
           sells: Sells
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
           visible_in_search: Visible in search?
-          visible_in_search_tip: Determines whether this enterprise will be visible to customers when searching the site.
-          visible: Visible
-          not_visible: Not visible
+          visible: Public
           permalink: Permalink (no spaces)
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front

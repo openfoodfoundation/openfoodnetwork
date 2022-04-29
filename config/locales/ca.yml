@@ -825,9 +825,7 @@ ca:
           sells: Ven
           sells_tip: "Cap: l'organització no ven als clients directament. <br /> Propietari: l'organització ven productes propis als clients. <br /> Qualsevol: l'organització pot vendre productes propis o d'altres empreses. <br />"
           visible_in_search: Visible a la cerca?
-          visible_in_search_tip: Determina si aquesta organització serà visible per a les consumidores en cercar el lloc.
-          visible: Visible
-          not_visible: No visible
+          visible: Públic
           permalink: Permalink (sense espais)
           permalink_tip: "Aquest enllaç permanent s'utilitza per crear l'url a la vostra botiga: %{link} el-nom-de-la-vostra-botiga /botiga"
           link_to_front: Enllaç a la botiga

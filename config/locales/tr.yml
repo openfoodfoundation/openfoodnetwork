@@ -790,9 +790,7 @@ tr:
           sells: NE SATIYOR
           sells_tip: "Satış Yapmıyor - İşletme müşterilere doğrudan satış yapmaz. <br /> Kendi Ürünleri - İşletme müşterilerine kendi ürünlerini satar. <br /> Kendi ve/veya başkasının ürünleri - İşletme kendi ürünlerini ve/veya diğer işletmelerin ürünlerini satabilir. <br />"
           visible_in_search: ARAMADA GÖRÜNÜR MÜ?
-          visible_in_search_tip: Sitede arama yapılırken bu işletmenin müşteriler tarafından görünür olup olmayacağını belirler.
-          visible: GÖRÜNÜR
-          not_visible: GİZLİ
+          visible: Herkese açık
           permalink: Bağlantı Adı (boşluk yok)
           permalink_tip: "Bağlantı adı, mağazanızın bağlantı URL'sini oluşturmak için kullanılır: %{link}sectiginiz-ad/dükkan"
           link_to_front: Dükkan linkiniz

@@ -862,9 +862,7 @@ hu:
           sells: Eladja
           sells_tip: "Nincs - a vállalat nem értékesít közvetlenül a vevőknek.<br />Saját - Vállalat saját termékeket ad el az ügyfeleknek.<br />Bármelyik - Vállalat saját vagy más vállalkozás termékeit értékesítheti.<br />"
           visible_in_search: Látható a keresésben?
-          visible_in_search_tip: Meghatározza, hogy ez a vállalkozás látható lesz-e az ügyfelek számára, amikor a webhelyen keresnek.
-          visible: Látható
-          not_visible: Nem látható
+          visible: Nyilvános
           permalink: Permalink (szóközök nélkül)
           permalink_tip: "Ezt az állandó linket használják az üzlet URL-jének létrehozására: %{link}a bolt neve/üzlete"
           link_to_front: Link a bolt elején

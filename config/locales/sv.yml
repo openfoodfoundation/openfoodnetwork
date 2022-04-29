@@ -387,9 +387,7 @@ sv:
           sells: Säljer
           sells_tip: "Inget - företag säljer direkt till kunderna.<br />Egna - Företag säljer egna produkter till kunder.<br />Några - Företag kan sälja egna eller andra företags produkter.<br />"
           visible_in_search: Synlig vid sökning?
-          visible_in_search_tip: Bestämmer om detta företag kommer att bli synligt för kunder då man söker på hemsidan.
-          visible: Synlg
-          not_visible: Ej synlig
+          visible: Offentlig
           permalink: Permalänk (inga mellanrum)
           permalink_tip: "Denna permalänk används för att skapa URL:en till din butik: %{link}din-butiks-namn/butik"
           link_to_front: Länk till sitt skyltfönster

@@ -784,9 +784,7 @@ pt_BR:
           sells: Vende
           sells_tip: "Nenhum - iniciativa não vende diretamente para compradores. <br /> Próprio - iniciativa vende produtos próprios para compradores. <br /> Qualquer - iniciativa vende produtos próprios ou de outras iniciativas. <br />"
           visible_in_search: Visível na busca?
-          visible_in_search_tip: Determine se esta iniciativa estará visível para clientes quando pesquisarem no site.
-          visible: Visível
-          not_visible: Invisível
+          visible: Publico
           permalink: Permalink (sem espaços)
           permalink_tip: "Esse link é usado para criar a URL para a sua loja: %{link}nome-loja/loja"
           link_to_front: Link para a loja

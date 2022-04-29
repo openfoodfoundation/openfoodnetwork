@@ -3,7 +3,7 @@ en_CA:
   activerecord:
     models:
       spree/product: Product
-      spree/shipping_method: Shipping Method
+      spree/shipping_method: Shipping/Pick-up Method
     attributes:
       spree/user:
         password: "Password"
@@ -122,7 +122,7 @@ en_CA:
         producer_ids: "Producers"
         order_cycle_ids: "Order Cycles"
         enterprise_fee_ids: "Names for Fees"
-        shipping_method_ids: "Shipping Methods"
+        shipping_method_ids: "Shipping/Pick Up Methods"
         payment_method_ids: "Payment Methods"
     errors:
       messages:
@@ -431,7 +431,7 @@ en_CA:
     quantity: Quantity
     schedule: Schedule
     shipping: Shipping
-    shipping_method: Shipping Method
+    shipping_method: Shipping/Pick-up Method
     shop: Shop
     sku: SKU
     status_state: State

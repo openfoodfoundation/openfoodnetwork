@@ -725,9 +725,6 @@ pl:
           sells: Sprzedaje
           sells_tip: "Brak - podmiot nie prowadzi sprzedaży bezpośredniej klientom. <br /> Własne - podmiot sprzedaje klientom własne produkty. <br /> Dowolne - podmiot może sprzedawać własne lub produkty innego podmiotu. <br />"
           visible_in_search: Widoczne w wynikach wyszukiwania?
-          visible_in_search_tip: Określa, czy ten podmiot będzie widoczny dla klientów podczas wyszukiwania w witrynie.
-          visible: Widoczny
-          not_visible: Niewidoczny
           permalink: Permalink (bez spacji)
           permalink_tip: "Ten link bezpośredni służy do tworzenia adresu URL do Twojego sklepu: %{link} nazwa-Twojego-sklepu / sklepu"
           link_to_front: Link do strony sklepu

@@ -859,9 +859,7 @@ es_US:
           sells: Vende
           sells_tip: "Ninguno - La organización no vende directamente a los consumidores.<br />Popios - La organización vende sus propios productos a los consumidores.<br />Cualquiera -  La organización vende sus propios productos o de otros.<br />"
           visible_in_search: ¿Visible en la búsqueda?
-          visible_in_search_tip: Determina qué organizaciones son visibles para los consumidores cuando buscan en el site.
-          visible: Visible
-          not_visible: No visible
+          visible: Pública
           permalink: Permalink (sin espacios)
           permalink_tip: "Se usa para crear la URL de tu tienda: %{link}nombre-de-tu-tienda/shop"
           link_to_front: Link a la tienda
