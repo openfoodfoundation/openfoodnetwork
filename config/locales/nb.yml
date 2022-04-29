@@ -61,6 +61,27 @@ nb:
             using_producer_stock_settings_but_count_on_hand_set: "må være tomt fordi du bruker produsentens lagerinnstillinger"
             on_demand_but_count_on_hand_set: "må være tom hvis på forespørsel"
             limited_stock_but_no_count_on_hand: "må spesifiseres fordi det tvinger begrenset lager"
+  errors:
+    messages:
+      content_type_invalid: "har en ugyldig innholdstype"
+      file_size_out_of_range: "størrelse %{file_size} er ikke i det nødvendige området"
+      limit_out_of_range: "totalt antall er utenfor rekkevidde"
+      image_metadata_missing: "er ikke et gyldig bilde"
+      dimension_min_inclusion: "må være større enn eller lik %{width} x %{height} piksel."
+      dimension_max_inclusion: "må være mindre enn eller lik %{width} x %{height} piksel."
+      dimension_width_inclusion: "bredde er ikke inkludert mellom %{min} og %{max} piksel."
+      dimension_height_inclusion: "høyde er ikke inkludert mellom %{min} og %{max} piksel."
+      dimension_width_greater_than_or_equal_to: "bredden må være større enn eller lik %{length} piksel."
+      dimension_height_greater_than_or_equal_to: "høyden må være større enn eller lik %{length} piksel."
+      dimension_width_less_than_or_equal_to: "bredden må være mindre enn eller lik %{length} piksel."
+      dimension_height_less_than_or_equal_to: "høyden må være mindre enn eller lik %{length} piksel."
+      dimension_width_equal_to: "bredde må være lik %{length} piksel."
+      dimension_height_equal_to: "høyden må være lik %{length} piksel."
+      aspect_ratio_not_square: "må være et firkantet bilde"
+      aspect_ratio_not_portrait: "må være et portrettbilde"
+      aspect_ratio_not_landscape: "må være et landskapsbilde"
+      aspect_ratio_is_not: "må ha et størrelsesforhold på %{aspect_ratio}"
+      aspect_ratio_unknown: "har et ukjent størrelsesforhold"
   stripe:
     error_code:
       incorrect_number: "Kortnummeret er feil."
