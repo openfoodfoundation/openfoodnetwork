@@ -55,7 +55,7 @@ describe "from_paperclip_to_active_storage.rake" do
       stub_request(:head, /amazonaws/).to_return(
         status: 200, body: "",
         headers: {
-          "ETag" => "md5sum000test000example"
+          "ETag" => "87b0a401e077485a078c0a15ceb7eb39"
         }
       )
       stub_request(:put, /amazonaws/).to_return(status: 200, body: "", headers: {})
@@ -70,7 +70,14 @@ describe "from_paperclip_to_active_storage.rake" do
         image.reload.active_storage_attachment.attached?
       }.to(true)
 
-      expect(image.attachment_blob.checksum).to eq "md5sum000test000example"
+      # The checksum can be computed with Active Storage:
+      #
+      #   ActiveStorage::Blob.build_after_unfurling(
+      #     io: file, identify: false,
+      #     filename: "logo-black.png",
+      #     content_type: "image/png",
+      #   ).checksum
+      expect(image.attachment_blob.checksum).to eq "h7CkAeB3SFoHjAoVzrfrOQ=="
     end
   end
 
