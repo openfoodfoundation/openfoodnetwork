@@ -10,10 +10,11 @@ export default class extends Controller {
     allowEmptyOption: true,
   };
 
-  connect() {
+  connect(options = {}) {
     this.control = new TomSelect(this.element, {
       ...this.constructor.defaults,
       ...this.optionsValue,
+      ...options,
     });
   }
 
