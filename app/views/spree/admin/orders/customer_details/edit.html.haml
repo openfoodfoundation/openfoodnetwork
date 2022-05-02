@@ -17,8 +17,8 @@
       %legend{:align => "center"}= Spree.t(:customer_search)
       - content_for :main_ng_app_name do
         = "admin.orders"
-      = hidden_field_tag :customer_search_override,  nil, distributor_id: @order.distributor_id, :class => 'fullwidth title customer-search-override'
-      = render :partial => "spree/admin/orders/customer_details/autocomplete", :formats => :js
+      %label{for: "customer_search_override"}= Spree.t(:choose_a_customer)
+      %select{name: "customer_search_override", "data-controller": "select-customer", "data-select-customer-distributor-value": @order.distributor_id, class: "primary", placeholder: Spree.t(:choose_a_customer) }
 
 = render :partial => 'spree/shared/error_messages', :locals => { :target => @order }
 
