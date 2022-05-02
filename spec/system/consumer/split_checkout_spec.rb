@@ -627,6 +627,7 @@ describe "As a consumer, I want to checkout my order", js: true do
             it "selects Stripe SCA and proceeds to the summary step" do
               choose pay_method.to_s
               fill_out_card_details
+              click_on "Next - Order summary"
               proceed_to_summary
             end
           end

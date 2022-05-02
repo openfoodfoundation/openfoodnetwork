@@ -15,6 +15,7 @@ export default class extends Controller {
 
   initialize() {
     this.parentForm = this.pmIdTarget.form;
+    this.catchFormSubmit = true;
 
     // Initialize Stripe JS
     this.stripe = Stripe(this.data.get("key"));
@@ -40,7 +41,7 @@ export default class extends Controller {
   // Before the form is submitted we send the card details directly to Stripe (via StripeJS),
   // and receive a token which represents the card object, and add that token into the form.
   stripeSubmit = (event) => {
-    if(!this.stripeSelected()) { return }
+    if(!this.stripeSelected() || !this.catchFormSubmit) { return }
 
     event.preventDefault();
     event.stopPropagation();
@@ -54,8 +55,9 @@ export default class extends Controller {
         this.expYearTarget.setAttribute("value", response.paymentMethod.card.exp_year);
         this.brandTarget.setAttribute("value", response.paymentMethod.card.brand);
         this.last4Target.setAttribute("value", response.paymentMethod.card.last4);
-
-        this.parentForm.submit();
+        this.catchFormSubmit = false;
+        
+        event.submitter.click();
       }
     });
   }

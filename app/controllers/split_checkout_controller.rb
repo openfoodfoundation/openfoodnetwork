@@ -31,12 +31,16 @@ class SplitCheckoutController < ::BaseController
       advance_order_state
       redirect_to_step
     else
-      flash.now[:error] = I18n.t('split_checkout.errors.global')
+      flash.now[:error] ||= I18n.t('split_checkout.errors.global')
 
       render status: :unprocessable_entity, operations: cable_car.
         replace("#checkout", partial("split_checkout/checkout")).
         replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
     end
+  rescue Spree::Core::GatewayError => e
+    flash[:error] = I18n.t(:spree_gateway_error_flash_for_checkout, error: e.message)
+    @order.update_column(:state, "payment")
+    render operations: cable_car.redirect_to(url: checkout_step_path(:payment))
   end
 
   private
