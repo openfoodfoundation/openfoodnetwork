@@ -61,6 +61,27 @@ en_GB:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
+  errors:
+    messages:
+      content_type_invalid: "has an invalid content type"
+      file_size_out_of_range: "size %{file_size} is not between required range"
+      limit_out_of_range: "total number is out of range"
+      image_metadata_missing: "is not a valid image"
+      dimension_min_inclusion: "must be greater than or equal to %{width} x %{height} pixel."
+      dimension_max_inclusion: "must be less than or equal to %{width} x %{height} pixel."
+      dimension_width_inclusion: "width is not included between %{min} and %{max} pixel."
+      dimension_height_inclusion: "height is not included between %{min} and %{max} pixel."
+      dimension_width_greater_than_or_equal_to: "width must be greater than or equal to %{length} pixel."
+      dimension_height_greater_than_or_equal_to: "height must be greater than or equal to %{length} pixel."
+      dimension_width_less_than_or_equal_to: "width must be less than or equal to %{length} pixel."
+      dimension_height_less_than_or_equal_to: "height must be less than or equal to %{length} pixel."
+      dimension_width_equal_to: "width must be equal to %{length} pixel."
+      dimension_height_equal_to: "height must be equal to %{length} pixel."
+      aspect_ratio_not_square: "must be a square image"
+      aspect_ratio_not_portrait: "must be a portrait image"
+      aspect_ratio_not_landscape: "must be a landscape image"
+      aspect_ratio_is_not: "must have an aspect ratio of %{aspect_ratio}"
+      aspect_ratio_unknown: "has an unknown aspect ratio"
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -794,6 +815,11 @@ en_GB:
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
           reset_form: "Reset Form"
+          Invoice_item_sorting: Invoice item sorting
+          sort_items_by_supplier?: Sort items by supplier?
+          sort_items_by_supplier_tip: "When enabled, Items will be sorted by supplier name."
+          enabled: Enable
+          disabled: Disable
         business_address:
           company_legal_name: Company Legal Name
           company_placeholder: Example.
@@ -860,7 +886,10 @@ en_GB:
           sells: Sells
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
           visible_in_search: Visible in search?
+          visible_in_search_tip: "Shops can be <br />1. publicly visible, appearing on the OFN map and listings. <br />2. Hidden on maps and listings but referenced by other shops and linked in their profile. <br />3. Completely hidden."
           visible: Public
+          not_visible: Hidden
+          hidden: Hide all references
           permalink: Permalink (no spaces)
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front
@@ -918,6 +947,8 @@ en_GB:
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
+          display_remaining_stock: "Display remaining number of items in shopfront if low in stock"
+          display_remaining_stock_tip: "Let shoppers know when there are only 3 or less items left."
           enabled: "Enabled"
           disabled: "Disabled"
         social:
@@ -1354,6 +1385,8 @@ en_GB:
     unknown_error: "Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
     unauthorized: "You are not authorised to perform that action."
+    unpermitted_parameters: "Parameters not allowed in this request: %{params}"
+    missing_parameter: "A required parameter is missing or empty: %{param}"
     invalid_resource: "Invalid resource. Please fix errors and try again."
     resource_not_found: "The resource you were looking for could not be found."
     enterprise_logo:
@@ -2974,6 +3007,7 @@ en_GB:
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
+        remaining_in_stock: "Only %{quantity} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
@@ -4041,6 +4075,7 @@ en_GB:
           one: Payment
           other: Payments
     unit: unit
+    per_unit: per unit
   datetime:
     distance_in_words:
       about_x_hours:
