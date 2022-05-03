@@ -30,7 +30,7 @@ describe "Customers", type: :request do
 
       response "200", "Customers list" do
         param(:enterprise_id) { enterprise1.id }
-        schema "$ref": "#/components/schemas/resources/customers_collection"
+        schema "$ref": "#/components/schemas/customers_collection"
 
         run_test!
       end
@@ -123,7 +123,7 @@ describe "Customers", type: :request do
             enterprise_id: enterprise1.id.to_s
           }
         end
-        schema "$ref": "#/components/schemas/resources/customer"
+        schema "$ref": "#/components/schemas/customer"
 
         run_test! do
           expect(json_response[:data][:attributes]).to include(
@@ -141,7 +141,7 @@ describe "Customers", type: :request do
             enterprise_id: enterprise1.id,
           )
         end
-        schema "$ref": "#/components/schemas/resources/customer"
+        schema "$ref": "#/components/schemas/customer"
 
         run_test! do
           expect(json_response[:data][:attributes]).to include(
@@ -191,7 +191,7 @@ describe "Customers", type: :request do
 
       response "200", "Customer" do
         param(:id) { customer1.id }
-        schema "$ref": "#/components/schemas/resources/customer"
+        schema "$ref": "#/components/schemas/customer"
 
         run_test! do
           date_time_string =
@@ -292,7 +292,7 @@ describe "Customers", type: :request do
             enterprise_id: enterprise1.id.to_s
           }
         end
-        schema "$ref": "#/components/schemas/resources/customer"
+        schema "$ref": "#/components/schemas/customer"
 
         run_test! do
           # Tags should not be overridden when the param is missing:
@@ -318,7 +318,7 @@ describe "Customers", type: :request do
 
       response "200", "Customer deleted" do
         param(:id) { customer1.id }
-        schema "$ref": "#/components/schemas/resources/customer"
+        schema "$ref": "#/components/schemas/customer"
 
         run_test!
       end
@@ -333,7 +333,7 @@ describe "Customers", type: :request do
 
       response "200", "Customers list" do
         param(:enterprise_id) { enterprise1.id }
-        schema "$ref": "#/components/schemas/resources/customers_collection"
+        schema "$ref": "#/components/schemas/customers_collection"
 
         run_test!
       end
