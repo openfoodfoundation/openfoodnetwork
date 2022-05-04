@@ -29,8 +29,6 @@ module Reporting
     private
 
     def translate_header(key)
-      return key.to_s if report.raw_render?
-
       # Quite some headers use currency interpolation, so providing it by default
       default_params = { currency: currency_symbol, currency_symbol: currency_symbol }
       report.custom_headers[key] || I18n.t("report_header_#{key}", **default_params)
