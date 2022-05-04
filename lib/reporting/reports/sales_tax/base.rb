@@ -20,13 +20,13 @@ module Reporting
         end
 
         def order_number_column(order)
-          if raw_render?
-            order.number
-          else
+          if html_render?
             url = Spree::Core::Engine.routes.url_helpers.edit_admin_order_path(order.number)
             <<-HTML
               <a href=#{url} class="edit-order" target="_blank">#{order.number}</a>
             HTML
+          else
+            order.number
           end
         end
       end

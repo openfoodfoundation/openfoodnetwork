@@ -80,6 +80,9 @@ module Reporting
       # Quantity
       elsif report.columns_format[column] == :quantity && report.html_render?
         format_quantity(value)
+      # Numeric
+      elsif report.columns_format[column] == :numeric
+        format_numeric(value)
       # Boolean
       elsif value.in? [true, false]
         format_boolean(value)
@@ -89,9 +92,6 @@ module Reporting
       # Date
       elsif value.is_a?(Date)
         format_date(value)
-      # Numeric
-      elsif value.is_a?(Numeric)
-        format_numeric(value)
       # Default
       else
         value
@@ -100,7 +100,7 @@ module Reporting
     # rubocop:enable Metrics/CyclomaticComplexity
 
     def format_currency(value)
-      number_to_currency(value, unit: Spree::Money.currency_symbol)
+      value.present? ? number_to_currency(value, unit: Spree::Money.currency_symbol) : ""
     end
 
     def format_quantity(value)

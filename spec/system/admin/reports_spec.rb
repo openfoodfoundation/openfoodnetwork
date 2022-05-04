@@ -182,8 +182,8 @@ describe '
       expect(page).to have_content order1.number.to_s
 
       # And the totals and sales tax should be correct
-      expect(page).to have_content "1,512.99" # items total
-      expect(page).to have_content "1,500.45" # taxable items total
+      expect(page).to have_content "1512.99" # items total
+      expect(page).to have_content "1500.45" # taxable items total
       expect(page).to have_content "250.08" # sales tax
       expect(page).to have_content "20.0" # enterprise fee tax
 
@@ -559,7 +559,7 @@ describe '
           xero_invoice_header,
           xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,
                                    'GST Free Income'),
-          xero_invoice_summary_row('Total taxable produce (tax inclusive)',  '1,500.45',
+          xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45,
                                    'GST on Income'),
           xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,
                                    'GST Free Income'),
@@ -589,7 +589,7 @@ describe '
           xero_invoice_header,
           xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,
                                    'GST Free Income', opts),
-          xero_invoice_summary_row('Total taxable produce (tax inclusive)',  '1,500.45',
+          xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45,
                                    'GST on Income',   opts),
           xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,
                                    'GST Free Income', opts),
