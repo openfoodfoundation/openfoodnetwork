@@ -22,7 +22,7 @@ module Reporting
         end
 
         def query_result
-          report_line_items.list(line_item_includes).group_by(&:variant).values
+          report_line_items.list(line_item_includes).group_by(&:variant_id).values
         end
 
         private

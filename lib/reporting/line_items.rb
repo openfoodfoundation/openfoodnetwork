@@ -14,8 +14,9 @@ module Reporting
       @orders ||= search_orders
     end
 
-    def list(line_item_includes = nil)
+    def list(line_item_includes = [variant: [product: :supplier]])
       line_items = order_permissions.visible_line_items.in_orders(orders.result)
+        .order("supplier.name", "product.name", "variant.display_name")
 
       if @params[:supplier_id_in].present?
         line_items = line_items.supplied_by_any(@params[:supplier_id_in])

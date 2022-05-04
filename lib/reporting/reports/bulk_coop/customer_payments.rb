@@ -5,7 +5,7 @@ module Reporting
     module BulkCoop
       class CustomerPayments < Base
         def query_result
-          table_items.group_by(&:order).values
+          table_items.reorder("spree_orders.completed_at").group_by(&:order).values
         end
 
         def columns
@@ -16,22 +16,6 @@ module Reporting
             amount_owing: :customer_payments_amount_owed,
             amount_paid: :customer_payments_amount_paid
           }
-        end
-
-        def rules
-          [
-            {
-              group_by: :customer,
-              header: true,
-              summary_row: proc do |_key, _items, rows|
-                {
-                  total_cost: rows.sum(&:total_cost),
-                  amount_owing: rows.sum(&:amount_owing),
-                  amount_paid: rows.sum(&:amount_paid),
-                }
-              end
-            }
-          ]
         end
 
         private
