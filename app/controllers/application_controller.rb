@@ -39,6 +39,7 @@ class ApplicationController < ActionController::Base
   include Spree::Core::ControllerHelpers::Common
 
   before_action :set_cache_headers # prevent cart emptying via cache when using back button #1213
+  before_action :check_disabled_user, if: :spree_user_signed_in?
   before_action :set_after_login_url
 
   include RawParams
@@ -158,6 +159,14 @@ class ApplicationController < ActionController::Base
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
+  end
+
+  def check_disabled_user
+    return unless current_spree_user.disabled?
+
+    flash[:success] = nil
+    flash.now[:error] = I18n.t("devise.failure.disabled")
+    sign_out current_spree_user
   end
 end
 

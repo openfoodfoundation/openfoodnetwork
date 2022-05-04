@@ -207,6 +207,9 @@ en:
         signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
         unknown_error: "Something went wrong while creating your account. Check your email address and try again."
     failure:
+      disabled: |
+        Your account has been disabled.
+        Please contact an adminsitrator to solve this issue.
       invalid: |
         Invalid email or password.
         Were you a guest last time?  Perhaps you need to create an account or reset your password.
