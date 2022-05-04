@@ -9,9 +9,9 @@ module Reporting
             producer: supplier_name,
             product: product_name,
             variant: variant_name,
-            curr_cost_per_unit: proc { |line_items| line_items.first.price },
             hub: hub_name,
             quantity: proc { |line_items| line_items.to_a.sum(&:quantity) },
+            curr_cost_per_unit: proc { |line_items| line_items.first.price },
             total_cost: proc { |line_items| line_items.sum(&:amount) },
             shipping_method: proc { |line_items| line_items.first.order.shipping_method&.name }
           }

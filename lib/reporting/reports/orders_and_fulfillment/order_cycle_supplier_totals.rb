@@ -9,10 +9,10 @@ module Reporting
             producer: supplier_name,
             product: product_name,
             variant: variant_name,
-            curr_cost_per_unit: proc { |line_items| line_items.first.price },
             quantity: proc { |line_items| line_items.sum(&:quantity) },
             total_units: proc { |line_items| total_units(line_items) },
-            total_cost: proc { |line_items| line_items.sum(&:amount) },
+            curr_cost_per_unit: proc { |line_items| line_items.first.price },
+            total_cost: proc { |line_items| line_items.sum(&:amount) }
           }
         end
 

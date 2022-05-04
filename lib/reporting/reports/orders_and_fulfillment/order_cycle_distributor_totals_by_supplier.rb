@@ -13,8 +13,8 @@ module Reporting
             quantity: proc { |line_items| line_items.to_a.sum(&:quantity) },
             curr_cost_per_unit: proc { |line_items| line_items.first.price },
             total_cost: proc { |line_items| line_items.sum(&:amount) },
-            shipping_method: proc { |line_items| line_items.first.order.shipping_method&.name },
-            total_shipping_cost: proc { |_line_items| "" }
+            total_shipping_cost: proc { |_line_items| "" },
+            shipping_method: proc { |line_items| line_items.first.order.shipping_method&.name }
           }
         end
 
