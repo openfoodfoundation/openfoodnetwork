@@ -2,7 +2,7 @@ name: 'Mayhem for API'
 on: [push]
 jobs:
   test:
-    if: ${{ github.repository_owner == "openfoodfoundation" }}
+    if: github.repository_owner == "openfoodfoundation"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
