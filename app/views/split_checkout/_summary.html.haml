@@ -46,8 +46,8 @@
         = t("split_checkout.step1.delivery_address.title")
       %span.summary-value
         = @order.shipping_method.name
-      %div
-      = @order.shipping_method.description
+      %div.summary-description
+        = @order.shipping_method.description
     
       %a.summary-edit{href: main_app.checkout_step_path(:details)}
         = t("split_checkout.step3.your_details.edit")
@@ -59,8 +59,8 @@
     %div.summary
       %span.summary-value
         = last_payment_method(@order)&.name
-        %p.text-small.text-skinny.pre-line
-          %em= last_payment_method(@order)&.description
+      %div.summary-description
+        = last_payment_method(@order)&.description
       %a.summary-edit{href: main_app.checkout_step_path(:payment)}
         = t("split_checkout.step3.payment_method.edit")
 

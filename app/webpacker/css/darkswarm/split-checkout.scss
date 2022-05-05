@@ -139,7 +139,7 @@
 
     #distributor_address.panel {
       span {
-        white-space: pre-wrap;
+        @include force-wrap;
       }
     }
     
@@ -183,6 +183,10 @@
     &:empty {
       display: none;
     }
+  }
+
+  .paymentmethod-container .paymentmethod-description.panel {
+    @include force-wrap;
   }
 
   .checkout-step3 {
@@ -279,8 +283,9 @@
     font-weight: bold;
   }
 
-  .summary-value {
-
+  .summary-description {
+    @include force-wrap;
+    color: $min-accessible-grey;
   }
 
   .summary-edit {
