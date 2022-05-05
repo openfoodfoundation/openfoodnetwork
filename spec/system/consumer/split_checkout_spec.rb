@@ -182,6 +182,11 @@ describe "As a consumer, I want to checkout my order", js: true do
         expect(page).not_to have_content "Save as default shipping address"
       end
 
+      it 'display shipping methods alphabetically' do
+        shipping_methods = page.all(:field, "shipping_method_id").map { |field| field.sibling("label") }.map(&:text)
+        expect(shipping_methods).to eq ["A Free Shipping with required address", "Free Shipping", "Local", "Shipping with Fee", "Z Free Shipping without required address"]
+      end
+
       it_behaves_like "when I have an out of stock product in my cart"
     end
 
