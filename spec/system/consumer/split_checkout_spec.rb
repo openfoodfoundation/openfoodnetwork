@@ -36,7 +36,7 @@ describe "As a consumer, I want to checkout my order", js: true do
     create(:shipping_method, require_ship_address: true, name: "A Free Shipping with required address")
   }
   let(:free_shipping) {
-    create(:shipping_method, require_ship_address: false, name: "Free Shipping", description: "yellow",
+    create(:shipping_method, require_ship_address: false, name: "free Shipping", description: "yellow",
                              calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
   let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, zone: zone, included_in_price: true) }
@@ -184,7 +184,7 @@ describe "As a consumer, I want to checkout my order", js: true do
 
       it 'display shipping methods alphabetically' do
         shipping_methods = page.all(:field, "shipping_method_id").map { |field| field.sibling("label") }.map(&:text)
-        expect(shipping_methods).to eq ["A Free Shipping with required address", "Free Shipping", "Local", "Shipping with Fee", "Z Free Shipping without required address"]
+        expect(shipping_methods).to eq ["A Free Shipping with required address", "free Shipping", "Local", "Shipping with Fee", "Z Free Shipping without required address"]
       end
 
       it_behaves_like "when I have an out of stock product in my cart"
