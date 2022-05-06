@@ -60,6 +60,9 @@ fr_BE:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car les paramètres de stock du producteur sont utilisés"
             on_demand_but_count_on_hand_set: "doit être vide si à la demande"
             limited_stock_but_no_count_on_hand: "doit être spécifié car le stock limité est forcé"
+  errors:
+    messages:
+      image_metadata_missing: "n'est pas une image valide"
   stripe:
     error_code:
       incorrect_number: "Le numéro de carte est incorrect."
@@ -729,7 +732,10 @@ fr_BE:
           sells: Produits vendus
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
           visible_in_search: Apparaît sur la plateforme?
+          visible_in_search_tip: "Les profils peuvent être 1 1. Visibles publiquement, sur la carte et la liste des comptoirs. 2 2. Invisibles sur la carte et la liste des comptoirs, mais référencées sur les profils des comptoirs et producteurs de leur réseau. 3 3. Complètement invisibles (sauf si on dispose du lien)."
           visible: Visible par tous
+          not_visible: Invisible
+          hidden: Masquer toutes les références
           permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre comptoir: %{link}ma-boutique/shop"
           link_to_front: Lien URL du comptoir
