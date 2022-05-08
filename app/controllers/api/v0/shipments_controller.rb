@@ -79,8 +79,9 @@ module Api
       def remove
         variant = scoped_variant(params[:variant_id])
         quantity = params[:quantity].to_i
+        restock_item = params.fetch(:restock_item, "true") == "true"
 
-        @order.contents.remove(variant, quantity, @shipment)
+        @order.contents.remove(variant, quantity, @shipment, restock_item)
         @shipment.reload if @shipment.persisted?
 
         render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok

@@ -19,8 +19,8 @@ module Spree
 
     # Get current line item for variant
     # Remove variant qty from line_item
-    def remove(variant, quantity = nil, shipment = nil)
-      line_item = remove_from_line_item(variant, quantity, shipment)
+    def remove(variant, quantity = nil, shipment = nil, restock_item = true)
+      line_item = remove_from_line_item(variant, quantity, shipment, restock_item)
       update_shipment(shipment)
       order.update_order_fees! if order.completed?
       update_order
@@ -97,9 +97,9 @@ module Spree
       line_item
     end
 
-    def remove_from_line_item(variant, quantity, shipment = nil)
+    def remove_from_line_item(variant, quantity, shipment = nil, restock_item = true)
       line_item = find_line_item_by_variant(variant, true)
-
+      line_item.restock_item = restock_item
       quantity.present? ? line_item.quantity += -quantity : line_item.quantity = 0
       line_item.target_shipment = shipment
 

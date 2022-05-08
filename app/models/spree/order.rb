@@ -106,6 +106,7 @@ module Spree
     after_save_commit DefaultAddressUpdater
 
     attribute :send_cancellation_email, type: :boolean, default: true
+    attribute :restock_items, type: :boolean, default: true
     # -- Scopes
     scope :not_empty, -> {
       left_outer_joins(:line_items).where.not(spree_line_items: { id: nil })

@@ -153,6 +153,13 @@ describe Api::V0::ShipmentsController, type: :controller do
             api_put :remove, params.merge(variant_id: existing_variant.to_param)
           }.to change { existing_variant.reload.on_hand }.by(2)
         end
+
+        it 'does not adjust stock when removing a variant' do
+          expect {
+            api_put :remove, params.merge(variant_id: existing_variant.to_param,
+                                          restock_item: 'false')
+          }.to change { existing_variant.reload.on_hand }.by(0)
+        end
       end
 
       context "for canceled orders" do

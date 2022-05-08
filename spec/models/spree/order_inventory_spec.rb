@@ -89,12 +89,21 @@ describe Spree::OrderInventory do
 
         it "doesn't restock items" do
           expect(shipment.stock_location).not_to receive(:restock)
-          expect(subject.send(:remove_from_shipment, shipment, variant, 1)).to eq 1
+          expect(subject.send(:remove_from_shipment, shipment, variant, 1, true)).to eq 1
+        end
+      end
+
+      context "order is completed" do
+        before { allow(order).to receive_messages completed?: true }
+
+        it "doesn't restock items" do
+          expect(shipment.stock_location).not_to receive(:restock)
+          expect(subject.send(:remove_from_shipment, shipment, variant, 1, false)).to eq 1
         end
       end
 
       it 'should create stock_movement' do
-        expect(subject.send(:remove_from_shipment, shipment, variant, 1)).to eq 1
+        expect(subject.send(:remove_from_shipment, shipment, variant, 1, true)).to eq 1
 
         stock_item = shipment.stock_location.stock_item(variant)
         movement = stock_item.stock_movements.last
@@ -112,7 +121,7 @@ describe Spree::OrderInventory do
         expect(shipment.inventory_units_for[1]).not_to receive(:destroy)
         expect(shipment.inventory_units_for[2]).to receive(:destroy)
 
-        expect(subject.send(:remove_from_shipment, shipment, variant, 2)).to eq 2
+        expect(subject.send(:remove_from_shipment, shipment, variant, 2, true)).to eq 2
       end
 
       it 'should destroy unshipped units first' do
@@ -123,7 +132,7 @@ describe Spree::OrderInventory do
         expect(shipment.inventory_units_for[0]).not_to receive(:destroy)
         expect(shipment.inventory_units_for[1]).to receive(:destroy)
 
-        expect(subject.send(:remove_from_shipment, shipment, variant, 1)).to eq 1
+        expect(subject.send(:remove_from_shipment, shipment, variant, 1, true)).to eq 1
       end
 
       it 'only attempts to destroy as many units as are eligible, and return amount destroyed' do
@@ -134,14 +143,14 @@ describe Spree::OrderInventory do
         expect(shipment.inventory_units_for[0]).not_to receive(:destroy)
         expect(shipment.inventory_units_for[1]).to receive(:destroy)
 
-        expect(subject.send(:remove_from_shipment, shipment, variant, 1)).to eq 1
+        expect(subject.send(:remove_from_shipment, shipment, variant, 1, true)).to eq 1
       end
 
       it 'should destroy self if not inventory units remain' do
         allow(shipment.inventory_units).to receive_messages(count: 0)
         expect(shipment).to receive(:destroy)
 
-        expect(subject.send(:remove_from_shipment, shipment, variant, 1)).to eq 1
+        expect(subject.send(:remove_from_shipment, shipment, variant, 1, true)).to eq 1
       end
     end
   end
