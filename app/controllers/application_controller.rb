@@ -162,7 +162,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_disabled_user
-    return unless current_spree_user.disabled?
+    return unless current_spree_user.disabled
 
     flash[:success] = nil
     flash.now[:error] = I18n.t("devise.failure.disabled")
