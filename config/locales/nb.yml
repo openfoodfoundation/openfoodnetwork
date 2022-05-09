@@ -2949,6 +2949,8 @@ nb:
         quantity_unchanged: "Antall uendret fra forrige mengde."
         cancel_the_order_html: "Dette vil kansellere gjeldende bestilling.<br /> Er du sikker på at du vil fortsette?"
         cancel_the_order_send_cancelation_email: "Send en kanselleringsmail til kunden"
+        restock_item: "Flytt til Varelager: returner denne varen til lager"
+        restock_items: "Flytt til Varelager: returner alle varer til lager"
       resend_user_email_confirmation:
         resend: "Send på nytt"
         sending: "Send på nytt ..."
