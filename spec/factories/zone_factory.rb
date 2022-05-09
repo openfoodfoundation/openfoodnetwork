@@ -13,4 +13,12 @@ FactoryBot.define do
       Spree::ZoneMember.create!(zone: zone, zoneable: Spree::Country.find_by(name: 'Australia'))
     end
   end
+
+  factory :zone_with_state_member, parent: :zone do
+    default_tax { true }
+
+    after(:create) do |zone|
+      Spree::ZoneMember.create!(zone: zone, zoneable: Spree::State.find_by(name: 'Victoria'))
+    end
+  end
 end
