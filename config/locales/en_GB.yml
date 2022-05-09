@@ -2955,6 +2955,8 @@ en_GB:
         quantity_unchanged: "Quantity unchanged from previous amount."
         cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
+        restock_item: "Restock Items: return this item to stock"
+        restock_items: "Restock Items: return all items to stock"
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
