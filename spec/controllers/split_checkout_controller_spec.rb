@@ -227,7 +227,7 @@ describe SplitCheckoutController, type: :controller do
         it "completes the order and redirects to order confirmation" do
           put :update, params: params
 
-          expect(response).to redirect_to order_path(order)
+          expect(response).to redirect_to order_path(order, order_token: order.token)
           expect(order.reload.state).to eq "complete"
         end
       end
@@ -255,7 +255,7 @@ describe SplitCheckoutController, type: :controller do
           it "completes the order and redirects to order confirmation" do
             put :update, params: params
 
-            expect(response).to redirect_to order_path(order)
+            expect(response).to redirect_to order_path(order, order_token: order.token)
             expect(order.reload.state).to eq "complete"
           end
         end

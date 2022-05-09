@@ -132,7 +132,7 @@ class SplitCheckoutController < ::BaseController
     when "confirmation"
       redirect_to checkout_step_path(:summary)
     else
-      redirect_to order_path(@order)
+      redirect_to order_path(@order, order_token: @order.token)
     end
   end
 
