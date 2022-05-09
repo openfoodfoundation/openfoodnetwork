@@ -90,6 +90,14 @@ describe "Managing users" do
           click_button "Clear key"
           expect(page).to have_content "NO KEY"
         end
+
+        it "should allow to disable the user" do
+          check "Disabled"
+          click_button "Update"
+
+          expect(page).to have_content("Account updated")
+          expect(page).to have_checked_field "Disabled"
+        end
       end
     end
 
