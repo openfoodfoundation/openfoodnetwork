@@ -2977,6 +2977,8 @@ fr:
         quantity_unchanged: "La quantité n'a pas été modifiée."
         cancel_the_order_html: "Cette action va annuler la commande. <br /> Etes-vous sûr de vouloir continuer ?"
         cancel_the_order_send_cancelation_email: "Envoyer un email d'annulation à l'acheteur"
+        restock_item: "Recharger le stock de ce produit"
+        restock_items: "Recharger le stock de tous les produits"
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoi...."
