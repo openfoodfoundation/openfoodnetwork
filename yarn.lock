@@ -12185,9 +12185,9 @@ toidentifier@1.0.0:
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
 
 tom-select@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/tom-select/-/tom-select-2.0.1.tgz#e3a6e6de61070274f746543f177107970a36b878"
-  integrity sha512-HTFf0OTwA2k8YCUqIZOenvr+ZrV4LMOUjCn3n5XS8wIpigcxKVvs5XRhBSGedhRJ8s+VmemIqy6rnabgBYX+6w==
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/tom-select/-/tom-select-2.0.2.tgz#c2829cd17d996694aa3bc9e43a046c4951bd01d1"
+  integrity sha512-C78Ckq+r9B6lbIYSwV3R+6FPDCjRs49Wam+eaARnPxcekJI4SR78KKpb4QSg62y5mWYpKkxjKVZhslxZWIw6aQ==
   dependencies:
     "@orchidjs/sifter" "^0.9.1"
 
