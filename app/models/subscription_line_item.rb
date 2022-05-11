@@ -9,6 +9,7 @@ class SubscriptionLineItem < ApplicationRecord
   validates :quantity, presence: true, numericality: { only_integer: true }
 
   default_scope { order('id ASC') }
+  scope :nil_price_estimate, -> { where(price_estimate: nil) }
 
   def total_estimate
     (price_estimate || 0) * (quantity || 0)
