@@ -61,6 +61,27 @@ cy:
             using_producer_stock_settings_but_count_on_hand_set: "rhaid bod yn wag oherwydd defnydd o osodiadau stoc cynhyrchwyr"
             on_demand_but_count_on_hand_set: "rhaid iddo fod yn wag os ar alw"
             limited_stock_but_no_count_on_hand: "rhaid nodi hyn oherwydd gorfodi stoc gyfyngedig"
+  errors:
+    messages:
+      content_type_invalid: "math o gynnwys annilys"
+      file_size_out_of_range: "nid yw'r maint %{file_size} rhwng yr ystod ofynnol"
+      limit_out_of_range: "mae'r cyfanswm rhif tu hwnt i'r ystod"
+      image_metadata_missing: "nid yw'n llun dilys"
+      dimension_min_inclusion: "mae'n gorfod bod yn fwy neu'r un faint â %{width} x %{height} picsel."
+      dimension_max_inclusion: "mae'n gorfod bod yn llai neu'r un faint â %{width} x %{height} picsel."
+      dimension_width_inclusion: "nid yw lled yn cael ei gynnwys rhwng %{min} ac %{max} picsel."
+      dimension_height_inclusion: "nid yw uchder yn cael ei gynnwys rhwng %{min} acd %{max} picsel."
+      dimension_width_greater_than_or_equal_to: "mae'r lled yn gorfod bod yn fwy neu'r un faint â %{length} picsel."
+      dimension_height_greater_than_or_equal_to: "mae'r uchder yn gorfod bod yn fwy neu'r un faint â %{length} picsel."
+      dimension_width_less_than_or_equal_to: "mae'r lled yn gorfod bod yn llai neu'r un faint â %{length} picsel."
+      dimension_height_less_than_or_equal_to: "mae'r uchder yn gorfod bod yn llai neu'r un faint â %{length} picsel."
+      dimension_width_equal_to: "mae'r lled yn gorfod bod yr un faint â %{length} picsel."
+      dimension_height_equal_to: "mae'r uchder yn gorfod bod yr un faint â %{length} picsel."
+      aspect_ratio_not_square: "mae'n gorfod bod yn llun sgwâr"
+      aspect_ratio_not_portrait: "mae'n gorfod bod yn llun siâp portread"
+      aspect_ratio_not_landscape: "mae'n gorfod bod yn llun siâp tirlun"
+      aspect_ratio_is_not: "mae'n rhaid cael cymhareb agwedd o %{aspect_ratio}"
+      aspect_ratio_unknown: "yn meddu ar gymhareb agwedd anhysbys"
   stripe:
     error_code:
       incorrect_number: "Mae rhif y cerdyn yn anghywir"
@@ -794,6 +815,11 @@ cy:
           remove_terms_and_conditions: "Dileu Ffeil"
           uploaded_on: "lanlwythwyd ar"
           reset_form: "Ailosod Ffurflen "
+          Invoice_item_sorting: Didoli eitem anfoneb
+          sort_items_by_supplier?: Didoli eitemau fesul cyflenwr?
+          sort_items_by_supplier_tip: "Ar ôl ei alluogi, caiff eitemau eu didoli yn ôl enw cyflenwr."
+          enabled: Galluogi
+          disabled: Analluogi
         business_address:
           company_legal_name: Enw Cyfreithiol y Cwmni
           company_placeholder: Enghraifft
@@ -858,7 +884,10 @@ cy:
           sells: Gwerthu
           sells_tip: "Dim - nid yw'r fenter yn gwerthu i gwsmeriaid yn uniongyrchol.<br /> Fy Menter - Mae'r Fenter yn gwerthu ei chynnyrch ei hun i gwsmeriaid.<br /> Unrhyw un - Gall y Fenter werthu ei chynnyrch ei hun neu gynnyrch mentrau eraill.<br />"
           visible_in_search: Yn amlwg wrth chwilio?
+          visible_in_search_tip: "Gall siopau fod yn: <br />1. yn weladwy'n gyhoeddus, yn ymddangos ar fap a rhestrau'r OFN; <br />2. Yn gudd ar fapiau a rhestrau ond gyda chyfeirnod trwy siopau eraill a gyda chysylltiad yn eu proffil; <br />3. Yn gwbl gudd."
           visible: Cyhoeddus
+          not_visible: Cudd
+          hidden: Cuddio pob cyfeirnod
           permalink: Permaddolen (dim bylchau)
           permalink_tip: "Defnyddir y permaddolen hon i greu'r url ar gyfer eich siop: %{link}enw-eich-siop / siop"
           link_to_front: Dolen i ffrynt y siop
@@ -916,6 +945,8 @@ cy:
           shopfront_sort_by_producer: "Yn ôl cynhyrchydd"
           shopfront_sort_by_category_placeholder: "Categori"
           shopfront_sort_by_producer_placeholder: "Cynhyrchydd"
+          display_remaining_stock: "Arddangos nifer yr eitemau sy'n weddill os bydd stoc ffrynt y siop yn isel"
+          display_remaining_stock_tip: "Hysbysu siopwyr pan fydd 3 eitem yn unig neu lai ar ôl."
           enabled: "Galluogwyd"
           disabled: "Analluogwyd"
         social:
@@ -1349,8 +1380,11 @@ cy:
       stripe_connect_settings:
         resource: Cyfluniad Stripe Connect
   api:
+    unknown_error: "Aeth rhywbeth o'i le. Hysbyswyd ein tîm."
     invalid_api_key: "Nodwyd allwedd API annilys (%{key}) ."
     unauthorized: "Nid oes gennych awdurdod i gyflawni'r weithred honno."
+    unpermitted_parameters: "Ni chaniateir paramedrau yn y cais hwn: %{params}"
+    missing_parameter: "Mae paramedr gofynnol ar goll neu'n wag: %{param}"
     invalid_resource: "Adnodd annilys. Trwsiwch wallau a rhoi cynnig arall arni."
     resource_not_found: "Nid oedd yn bosib dod o hyd i'r adnodd yr oeddech yn chwilio amdano."
     enterprise_logo:
@@ -1697,8 +1731,8 @@ cy:
           placeholder: e.e. CF1 0AA
         country_id:
           label: Gwlad
-      delivery_address:
-        title: Cyfeiriad dosbarthu
+      shipping_info:
+        title: Gwybodaeth anfon
       submit: Nesaf - Dull talu
       cancel: Nôl i Olygu'r fasged
     step2:
@@ -2915,6 +2949,8 @@ cy:
         quantity_unchanged: "Ni newidiwyd y nifer/maint o'r nifer/maint blaenorol."
         cancel_the_order_html: "Trwy hyn byddwch yn canslo'r archeb presennol.<br />Ydych chi'n siwr eich bod am wneud hyn?"
         cancel_the_order_send_cancelation_email: "Anfon ebost canslo at y cwsmer"
+        restock_item: "Ailstocio eitemau: dychwelyd yr eitem hon i stoc"
+        restock_items: "Ailstocio eitemau: dychwelyd pob eitem i stoc"
       resend_user_email_confirmation:
         resend: "Ailanfon"
         sending: "Ailanfon ..."
@@ -2967,6 +3003,7 @@ cy:
         add_to_cart: "Ychwanegu"
         in_cart: "yn y fasged"
         quantity_in_cart: "%{quantity} yn y fasged"
+        remaining_in_stock: "Dim ond %{quantity} sydd ar ôl"
       bulk_buy_modal:
         min_quantity: "Lleiafswm nifer"
         max_quantity: "Uchfafswm nifer"
@@ -4083,6 +4120,7 @@ cy:
           two: Taliadau
           many: Taliadau
           other: Taliadau
+    per_unit: fesul uned
   datetime:
     distance_in_words:
       about_x_hours:

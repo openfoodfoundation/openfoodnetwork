@@ -1671,8 +1671,8 @@ es_US:
           label: Código Postal
         country_id:
           label: País
-      delivery_address:
-        title: Dirección de entrega
+      shipping_info:
+        title: Información de envío
     step2:
       form:
         card_number:

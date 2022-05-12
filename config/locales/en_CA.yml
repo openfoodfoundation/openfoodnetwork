@@ -1712,8 +1712,8 @@ en_CA:
           placeholder: e.g. N0B 2L0
         country_id:
           label: Country
-      delivery_address:
-        title: Delivery address
+      shipping_info:
+        title: Shipping info
       submit: Next - Payment Method
       cancel: Back to edit basket
     step2:

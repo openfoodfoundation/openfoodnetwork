@@ -1707,8 +1707,8 @@ hu:
           placeholder: pl. SW11 3QN
         country_id:
           label: Ország
-      delivery_address:
-        title: Szállítási cím
+      shipping_info:
+        title: Szállítási információ
       submit: Következő - Fizetési mód
       cancel: Vissza a kosár szerkesztéséhez
     step2:

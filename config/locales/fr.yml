@@ -1735,8 +1735,8 @@ fr:
           placeholder: ex. 57000
         country_id:
           label: Pays
-      delivery_address:
-        title: Adresse de livraison
+      shipping_info:
+        title: Informations de livraison ou de retrait
       submit: Etape suivante - Moyen de Paiement
       cancel: Retour au panier
     step2:

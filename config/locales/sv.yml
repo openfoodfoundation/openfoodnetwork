@@ -882,7 +882,7 @@ sv:
           label: Postkod
         country_id:
           label: Land
-      delivery_address:
+      shipping_info:
         title: 'Leveransadress '
     step3:
       your_details:

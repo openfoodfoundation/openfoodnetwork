@@ -1706,8 +1706,8 @@ ar:
           placeholder: على سبيل المثال SW11 3QN
         country_id:
           label: بلد
-      delivery_address:
-        title: عنوان التسليم
+      shipping_info:
+        title: معلومات الشحن
       submit: التالي - طريقة الدفع
       cancel: رجوع إلى تعديل السلة
     step2:

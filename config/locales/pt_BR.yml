@@ -1583,8 +1583,8 @@ pt_BR:
           label: CEP
         country_id:
           label: País
-      delivery_address:
-        title: Endereço para entrega
+      shipping_info:
+        title: Informações para envio
     step2:
       form:
         card_number:

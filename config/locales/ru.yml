@@ -1736,8 +1736,8 @@ ru:
           placeholder: например, 123456
         country_id:
           label: Страна
-      delivery_address:
-        title: Адрес доставки
+      shipping_info:
+        title: Информация о доставке
       submit: Далее - Способ оплаты
       cancel: Назад Изменить корзину
     step2:

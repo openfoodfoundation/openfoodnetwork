@@ -1709,8 +1709,8 @@ de_DE:
           placeholder: z. B. 30701
         country_id:
           label: Land
-      delivery_address:
-        title: Liefer-/Abholinformationen
+      shipping_info:
+        title: Lieferinformationen
       submit: Weiter - Zahlungsart
       cancel: Zurück - Warenkorb
     step2:

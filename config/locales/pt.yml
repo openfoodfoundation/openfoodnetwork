@@ -1528,8 +1528,8 @@ pt:
           label: Código postal
         country_id:
           label: País
-      delivery_address:
-        title: Morada de entrega
+      shipping_info:
+        title: Informações para envio
     step2:
       form:
         card_month:

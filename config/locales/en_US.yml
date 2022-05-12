@@ -1700,8 +1700,8 @@ en_US:
           placeholder: e.g. 92202
         country_id:
           label: Country
-      delivery_address:
-        title: Delivery address
+      shipping_info:
+        title: Shipping info
       submit: Next - Payment method
       cancel: Back to Edit basket
     step2:

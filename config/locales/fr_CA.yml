@@ -1714,8 +1714,8 @@ fr_CA:
           placeholder: ex. N0B2L0
         country_id:
           label: Pays
-      delivery_address:
-        title: Adresse de livraison
+      shipping_info:
+        title: Informations de livraison
       submit: Etape suivante - Moyen de Paiement
       cancel: Retour au panier
     step2:

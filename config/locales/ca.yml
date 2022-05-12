@@ -1634,8 +1634,8 @@ ca:
           label: Codi postal
         country_id:
           label: País
-      delivery_address:
-        title: Adreça de lliurament
+      shipping_info:
+        title: Informació d'enviament
     step2:
       form:
         card_number:

@@ -1521,8 +1521,8 @@ es_CO:
           label: Código postal
         country_id:
           label: País
-      delivery_address:
-        title: Dirección de entrega
+      shipping_info:
+        title: Información de envío
     step2:
       form:
         card_month:

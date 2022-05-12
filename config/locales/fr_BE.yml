@@ -1524,8 +1524,8 @@ fr_BE:
           label: Code postal
         country_id:
           label: Pays
-      delivery_address:
-        title: Adresse de livraison
+      shipping_info:
+        title: Informations de livraison
     step2:
       form:
         card_month:

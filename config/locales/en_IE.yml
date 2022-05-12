@@ -1705,8 +1705,8 @@ en_IE:
           placeholder: e.g. D01 XXXX
         country_id:
           label: Country
-      delivery_address:
-        title: Delivery address
+      shipping_info:
+        title: Shipping info
       submit: Next - Payment method
       cancel: Back to Edit basket
     step2:

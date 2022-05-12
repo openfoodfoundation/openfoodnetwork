@@ -1710,8 +1710,8 @@ it:
           placeholder: e.g. SW11 3QN
         country_id:
           label: Stato
-      delivery_address:
-        title: Indirizzo di consegna
+      shipping_info:
+        title: Informazioni sulla spedizione
       submit: Prossimo - Metodo di pagamento
       cancel: Indietro a Modifica carrello
     step2:

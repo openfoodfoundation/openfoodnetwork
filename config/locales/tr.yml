@@ -1609,8 +1609,8 @@ tr:
           label: Posta kodu
         country_id:
           label: Ülke
-      delivery_address:
-        title: Teslimat adresi
+      shipping_info:
+        title: Teslimat bilgileri
       submit: Sonraki - Ödeme yöntemi
       cancel: Sepeti düzenlemeye geri dön
     step2:

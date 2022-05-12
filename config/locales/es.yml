@@ -1694,8 +1694,8 @@ es:
           placeholder: ej. SW11 3QN
         country_id:
           label: País
-      delivery_address:
-        title: Dirección de entrega
+      shipping_info:
+        title: Información de envío
       submit: Siguente - método de pago
       cancel: Regresar a Editar cesta
     step2:
