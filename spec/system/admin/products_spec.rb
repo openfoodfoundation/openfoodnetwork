@@ -137,6 +137,7 @@ describe '
       fill_in 'product_name', with: 'Hot Cakes'
       select 'New supplier', from: 'product_supplier_id'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
+      fill_in "product_unit_value_with_description", with: ""
       select taxon.name, from: "product_primary_taxon_id"
       fill_in 'product_price', with: '1.99'
       fill_in 'product_on_hand', with: 0
