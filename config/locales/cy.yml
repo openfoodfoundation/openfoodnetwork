@@ -844,6 +844,8 @@ cy:
           manage_fees: Rheoli Ffioedd Menter
           no_fees_yet: Nid oes gennych unrhyw ffioedd menter eto.
           create_button: Creu Un Nawr
+        enterprise_permissions:
+          enterprise_relationships: Cysylltiadau Mentro
         images:
           logo: Logo
           promo_image_placeholder: 'Mae''r ddelwedd hon i''w gweld yn ''Amdanom Ni'''
@@ -4120,6 +4122,7 @@ cy:
           two: Taliadau
           many: Taliadau
           other: Taliadau
+    unit: Uned
     per_unit: fesul uned
   datetime:
     distance_in_words:
