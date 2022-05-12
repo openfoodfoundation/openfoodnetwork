@@ -205,7 +205,7 @@ describe Spree::User do
   describe "#disabled=" do
     context 'when the value is truthy' do
       it "sets disabled datetime" do
-        user = create(:user)
+        user = Spree::User.new
         expect(user.disabled_at).to be_nil
         user.disabled = '1'
         expect(user.disabled_at).not_to be_nil
@@ -214,7 +214,7 @@ describe Spree::User do
 
     context 'when the value is falsey' do
       it "clears disabled datetime" do
-        user = create(:user, disabled_at: Time.zone.now)
+        user = Spree::User.new(disabled_at: Time.zone.now)
         expect(user.disabled_at).not_to be_nil
         user.disabled = '0'
         expect(user.disabled_at).to be_nil
@@ -224,13 +224,13 @@ describe Spree::User do
 
   describe "#disabled" do
     it "returns true with a disabled datetime" do
-      user = create(:user)
+      user = Spree::User.new
       user.disabled = '1'
       expect(user.disabled).to be_truthy
     end
 
     it "returns false without a disabled datetime" do
-      user = create(:user)
+      user = Spree::User.new(disabled_at: Time.zone.now)
       user.disabled = '0'
       expect(user.disabled).to be_falsey
     end

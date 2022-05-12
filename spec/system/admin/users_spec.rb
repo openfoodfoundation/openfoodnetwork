@@ -91,12 +91,18 @@ describe "Managing users" do
           expect(page).to have_content "NO KEY"
         end
 
-        it "should allow to disable the user" do
+        it "should allow to disable the user and to enable it" do
+          expect(page).to have_unchecked_field "Disabled"
           check "Disabled"
           click_button "Update"
 
           expect(page).to have_content("Account updated")
           expect(page).to have_checked_field "Disabled"
+          uncheck "Disabled"
+          click_button "Update"
+
+          expect(page).to have_content("Account updated")
+          expect(page).to have_unchecked_field "Disabled"
         end
       end
     end
