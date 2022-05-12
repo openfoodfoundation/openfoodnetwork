@@ -61,6 +61,27 @@ ru:
             using_producer_stock_settings_but_count_on_hand_set: "должно быть пустым, потому что используются настройки склада производителя"
             on_demand_but_count_on_hand_set: "должен быть пустым, если по требованию'"
             limited_stock_but_no_count_on_hand: "необходимо указать, поскольку принудительный ограниченный запас"
+  errors:
+    messages:
+      content_type_invalid: "имеет неверный тип контента"
+      file_size_out_of_range: "размер %{file_size} не входит в требуемый диапазон"
+      limit_out_of_range: "общее количество вне диапазона"
+      image_metadata_missing: "недопустимое изображение"
+      dimension_min_inclusion: "должно быть больше или равно %{width} x %{height} пикселей."
+      dimension_max_inclusion: "должно быть меньше или равно %{width} x %{height} пикселей."
+      dimension_width_inclusion: "ширина не включена между %{min} и %{max} пикселей."
+      dimension_height_inclusion: "высота не включена между %{min} и %{max} пикселями."
+      dimension_width_greater_than_or_equal_to: "ширина должна быть больше или равна %{length} пикселя."
+      dimension_height_greater_than_or_equal_to: "высота должна быть больше или равна %{length} пикселя."
+      dimension_width_less_than_or_equal_to: "ширина должна быть меньше или равна %{length} пикселя."
+      dimension_height_less_than_or_equal_to: "высота должна быть меньше или равна %{length} пикселя."
+      dimension_width_equal_to: "ширина должна быть равна %{length} пикселю."
+      dimension_height_equal_to: "высота должна быть равна %{length} пикселю."
+      aspect_ratio_not_square: "должно быть квадратное изображение"
+      aspect_ratio_not_portrait: "должно быть портретное изображение"
+      aspect_ratio_not_landscape: "должно быть пейзажное изображение"
+      aspect_ratio_is_not: "должен иметь соотношение сторон %{aspect_ratio}"
+      aspect_ratio_unknown: "имеет неизвестное соотношение сторон"
   stripe:
     error_code:
       incorrect_number: "Номер карты неверный."
@@ -795,6 +816,11 @@ ru:
           remove_terms_and_conditions: "Удалить Файл"
           uploaded_on: "загружено на"
           reset_form: "Отчистить Форму"
+          Invoice_item_sorting: Сортировка позиций счета
+          sort_items_by_supplier?: Сортировать позиции по поставщику?
+          sort_items_by_supplier_tip: "Если включено, элементы будут сортироваться по имени поставщика."
+          enabled: Включить
+          disabled: Выключить
         business_address:
           company_legal_name: Юридическое Название Компании
           company_placeholder: Пример Inc.
@@ -819,6 +845,8 @@ ru:
           manage_fees: Управление сборами Предприятия
           no_fees_yet: У Вас еще нет сборов предприятия.
           create_button: Создать сейчас
+        enterprise_permissions:
+          enterprise_relationships: Отношения с Предприятием
         images:
           logo: Логотип
           promo_image_placeholder: 'Это изображение будет отображаться в "О Нас"'
@@ -860,7 +888,10 @@ ru:
           sells: Продажи
           sells_tip: "Нет - Предприятие не продает клиентам напрямую.<br />Своё - Предприятие продает собственные продукты клиентам.<br />Любое - предприятие может продавать продукцию собственного или другого предприятия.<br />"
           visible_in_search: Видно в поиске?
+          visible_in_search_tip: "Магазины могут быть<br /> 1. общедоступный, отображаемый на карте и в списках ОСП.<br /> 2. Скрыт на картах и в списках, но на него ссылаются другие магазины и в их профилях.<br /> 3. Полностью скрыт."
           visible: Доступно всем
+          not_visible: Скрытый
+          hidden: Скрыть все ссылки
           permalink: Постоянная ссылка (без пробелов)
           permalink_tip: "Эта постоянная ссылка используется для создания URL вашего магазина: %{link}your-shop-name/shop"
           link_to_front: Ссылка на витрину магазина
@@ -918,6 +949,8 @@ ru:
           shopfront_sort_by_producer: "По производителю"
           shopfront_sort_by_category_placeholder: "Категория"
           shopfront_sort_by_producer_placeholder: "Производитель"
+          display_remaining_stock: "Отображать остатки товаров на витрине магазина, если их мало"
+          display_remaining_stock_tip: "Сообщить покупателям, когда товара останется 3 или меньше."
           enabled: "Включено"
           disabled: "Выключено"
         social:
@@ -1355,6 +1388,8 @@ ru:
     unknown_error: "Что-то пошло не так. Наша команда уже уведомлена."
     invalid_api_key: "Указан неверный API ключ (%{key})."
     unauthorized: "Вам не разрешается выполнять это действие."
+    unpermitted_parameters: "В этом запросе запрещены параметры: %{params}"
+    missing_parameter: "Обязательный параметр отсутствует или пуст: %{param}"
     invalid_resource: "Неверный ресурс. Пожалуйста, исправьте ошибки и попробуйте снова."
     resource_not_found: "Не удалось найти ресурс, который Вы искали."
     enterprise_logo:
@@ -2922,6 +2957,8 @@ ru:
         quantity_unchanged: "Количество не изменилось по сравнению с предыдущим."
         cancel_the_order_html: "Это отменит текущий заказ.<br /> Вы уверены, что хотите продолжить?"
         cancel_the_order_send_cancelation_email: "Отправить клиенту электронное письмо об отмене"
+        restock_item: "Restock Items: вернуть этот товар на склад"
+        restock_items: "Restock Items: вернуть все товары на склад"
       resend_user_email_confirmation:
         resend: "Повторно отправить"
         sending: "Повторная Отправка..."
@@ -2974,6 +3011,7 @@ ru:
         add_to_cart: "Добавить"
         in_cart: "в корзине"
         quantity_in_cart: "%{quantity} в корзине"
+        remaining_in_stock: "Остался только %{quantity}"
       bulk_buy_modal:
         min_quantity: "Мин. количество"
         max_quantity: "Макс количество"
@@ -4091,6 +4129,8 @@ ru:
           few: Платежи
           many: Платежи
           other: Платежи
+    unit: Ед. изм
+    per_unit: за единицу
   datetime:
     distance_in_words:
       about_x_hours:
