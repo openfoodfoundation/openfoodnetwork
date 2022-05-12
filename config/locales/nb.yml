@@ -1733,8 +1733,8 @@ nb:
           placeholder: f.eks. SW11 3QN
         country_id:
           label: Land
-      delivery_address:
-        title: Leveringsadresse
+      shipping_info:
+        title: Leveringsinformasjon
       submit: Neste - Betalingsmåte
       cancel: Tilbake til Rediger kurv
     step2:
