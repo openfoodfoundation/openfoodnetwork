@@ -36,6 +36,8 @@ module Spree
               redirect_to spree.admin_products_path
             end
           else
+            # Re-fill the form with deleted params on product
+            @on_hand = request.params[:product][:on_hand]
             render :new
           end
         end

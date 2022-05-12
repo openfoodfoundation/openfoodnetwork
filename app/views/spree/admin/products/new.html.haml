@@ -77,7 +77,7 @@
           = f.field_container :on_hand do
             = f.label :on_hand, t(".on_hand")
             %br/
-            = f.text_field :on_hand, class: 'fullwidth'
+            = f.text_field :on_hand, class: 'fullwidth', value: @on_hand
             = f.error_message_on :on_hand
         .three.columns.omega
           = f.field_container :on_demand do
