@@ -33,9 +33,12 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
       options = for unit_type, _ of @units
         for scale in @unitScales(unit_type, available)
           name = @getUnitName(scale, unit_type)
-          ["#{I18n.t(unit_type)} (#{name})", "#{unit_type}_#{scale}"]
+          ["#{I18n.t(unit_type)} (#{name})", @getUnitWithScale(unit_type, scale)]
       options.push [[I18n.t('items'), 'items']]
       options = [].concat options...
+
+    @getUnitWithScale: (unit_type, scale) ->
+      "#{unit_type}_#{scale}"
 
     @getUnitName: (scale, unitType) ->
       if @units[unitType][scale]

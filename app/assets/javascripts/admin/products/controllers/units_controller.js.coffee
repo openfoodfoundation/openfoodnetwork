@@ -21,6 +21,8 @@ angular.module("admin.products")
         else
           $scope.product.variant_unit = $scope.product.variant_unit_with_scale
           $scope.product.variant_unit_scale = null
+      else if $scope.product.variant_unit && $scope.product.variant_unit_scale
+        $scope.product.variant_unit_with_scale = VariantUnitManager.getUnitWithScale($scope.product.variant_unit, parseFloat($scope.product.variant_unit_scale))
       else
         $scope.product.variant_unit = $scope.product.variant_unit_scale = null
 

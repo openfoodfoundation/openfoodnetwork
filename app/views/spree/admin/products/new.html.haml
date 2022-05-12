@@ -25,10 +25,10 @@
           = f.field_container :units do
             = f.label :variant_unit_with_scale, t(".units")
             %span.required *
-            %select.select2.fullwidth{ id: 'product_variant_unit_with_scale', 'ng-model' => 'product.variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
+            %select{id: 'product_variant_unit_with_scale', 'ng-model' => 'product.variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options',"data-controller": "tom-select", class: "primary"}
               %option{'value' => '', 'ng-hide' => "hasUnit(product)"}
-            %input{ type: 'hidden', 'ng-value' => 'product.variant_unit', name: 'product[variant_unit]' }
-            %input{ type: 'hidden', 'ng-value' => 'product.variant_unit_scale', name: 'product[variant_unit_scale]' }
+            %input{ type: 'hidden', 'ng-value': 'product.variant_unit', "ng-init": "product.variant_unit='#{@product.variant_unit}'", name: 'product[variant_unit]' }
+            %input{ type: 'hidden', 'ng-value': 'product.variant_unit_scale', "ng-init": "product.variant_unit_scale='#{@product.variant_unit_scale}'", name: 'product[variant_unit_scale]' }
         .two.columns
           = f.field_container :unit_value do
             = f.label :unit_value_with_description, t(".value"), 'ng-disabled' => "!hasUnit(product)"
