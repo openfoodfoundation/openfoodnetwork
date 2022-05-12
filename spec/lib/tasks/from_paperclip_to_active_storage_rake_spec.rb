@@ -55,7 +55,7 @@ describe "from_paperclip_to_active_storage.rake" do
       stub_request(:head, /amazonaws/).to_return(
         status: 200, body: "",
         headers: {
-          "ETag" => "87b0a401e077485a078c0a15ceb7eb39"
+          "ETag" => '"87b0a401e077485a078c0a15ceb7eb39"'
         }
       )
       stub_request(:put, /amazonaws/).to_return(status: 200, body: "", headers: {})

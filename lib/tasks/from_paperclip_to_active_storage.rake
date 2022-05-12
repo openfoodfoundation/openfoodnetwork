@@ -74,7 +74,7 @@ namespace :from_paperclip_to_active_storage do
   # stored on AWS S3. Getting the checksum requires a HEAD request.
   # In my tests, I could process 100 records per minute this way.
   def storage_record_for(name, paperclip)
-    checksum = hex_to_base64_digest(paperclip.s3_object.etag)
+    checksum = hex_to_base64_digest(paperclip.s3_object(:original).etag.delete('"'))
 
     blob = ActiveStorage::Blob.new(
       key: paperclip.path(:original),
