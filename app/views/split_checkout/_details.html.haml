@@ -69,7 +69,7 @@
   %div.checkout-substep{ "data-controller": "toggle shippingmethod" }
     - selected_shipping_method = @order.shipping_method&.id || params[:shipping_method_id]
     %div.checkout-title
-      = t("split_checkout.step1.delivery_address.title")
+      = t("split_checkout.step1.shipping_info.title")
 
     - display_ship_address = false
     - ship_method_description = nil
