@@ -13,66 +13,69 @@ describe "As a consumer, I want to see adjustment breakdown" do
   let!(:address_within_zone) { create(:address, state_id: Spree::State.first.id) }
   let!(:address_outside_zone) { create(:address, state_id: Spree::State.second.id) }
 
-  let!(:user_within_zone) { create(:user, bill_address_id: address_within_zone.id,
-    ship_address_id: address_within_zone.id) }
+  let!(:user_within_zone) {
+    create(:user, bill_address_id: address_within_zone.id,
+                  ship_address_id: address_within_zone.id)
+  }
 
-  let!(:user_outside_zone) { create(:user, bill_address_id: address_outside_zone.id,
-    ship_address_id: address_outside_zone.id) }
+  let!(:user_outside_zone) {
+    create(:user, bill_address_id: address_outside_zone.id,
+                  ship_address_id: address_outside_zone.id)
+  }
 
-  let!(:zone) { create(:zone_with_state_member, name: 'Victoria', default_tax: false) } 
+  let!(:zone) { create(:zone_with_state_member, name: 'Victoria', default_tax: false) }
   let!(:tax_category) { create(:tax_category, name: "Veggies", is_default: "f") }
 
-  #sets up tax rate -> this is the setting Split-Checkout will consider. Updates below will not take effect (!)
-  let!(:tax_rate) { create(:tax_rate, name: "Tax rate - included or not", amount: 0.13,
-                            zone_id: zone.id, tax_category_id: tax_category.id, included_in_price: false)
+  let!(:tax_rate) {
+    create(:tax_rate, name: "Tax rate - included or not", amount: 0.13,
+                      zone_id: zone.id, tax_category_id: tax_category.id, included_in_price: false)
   }
 
   let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:supplier) { create(:supplier_enterprise) }
-  
-  #sets up product
+
   let!(:product_with_tax) {
     create(:simple_product, supplier: supplier, price: 10, tax_category_id: tax_category.id)
   }
   let!(:variant_with_tax) { product_with_tax.variants.first }
-  
-  # sets up order cycle
+
   let!(:order_cycle) {
     create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor],
                                 coordinator: distributor, variants: [variant_with_tax])
   }
-  
+
   let!(:free_shipping) {
     create(:shipping_method, distributors: [distributor], require_ship_address: false,
-                              name: "Pick-up", description: "Payment without fee",
-                              calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
+                             name: "Pick-up", description: "Payment without fee",
+                             calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
-  
+
   let!(:free_payment) {
     create(:payment_method, distributors: [distributor],
-                          name: "Payment without Fee", description: "Payment without fee",
-                          calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
+                            name: "Payment without Fee", description: "Payment without fee",
+                            calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
 
   let!(:order_within_zone) {
-    create(:order, order_cycle: order_cycle, distributor: distributor, user_id: user_within_zone.id,
-      bill_address_id: address_within_zone.id, ship_address_id: address_within_zone.id, state: "cart",
+    create(:order, order_cycle: order_cycle, distributor: distributor,
+                   user_id: user_within_zone.id, bill_address_id: address_within_zone.id,
+                   ship_address_id: address_within_zone.id, state: "cart",
                    line_items: [create(:line_item, variant: variant_with_tax)])
   }
 
   let!(:order_outside_zone) {
-    create(:order, order_cycle: order_cycle, distributor: distributor, user_id: user_outside_zone.id,
-      bill_address_id: address_outside_zone.id, ship_address_id: address_outside_zone.id, state: "cart",
+    create(:order, order_cycle: order_cycle, distributor: distributor,
+                   user_id: user_outside_zone.id, bill_address_id: address_outside_zone.id,
+                   ship_address_id: address_outside_zone.id, state: "cart",
                    line_items: [create(:line_item, variant: variant_with_tax)])
   }
 
-    before do
-      # assures tax is charged in dependence of shipping address
-      Spree::Config.set(tax_using_ship_address: true)
-    end
+  before do
+    # assures tax is charged in dependence of shipping address
+    Spree::Config.set(tax_using_ship_address: true)
+  end
 
   describe "a not-included tax" do
-
     before do
       zone.update!(default_tax: false)
       tax_rate.update!(included_in_price: false)
@@ -80,14 +83,12 @@ describe "As a consumer, I want to see adjustment breakdown" do
     end
 
     context "as superadmin" do
-
       before { login_as_admin }
 
       it "checks all tax settings are correctly set" do
-
         visit "/admin/zones/#{zone.id}/edit"
         expect(page).to have_field('zone_default_tax', checked: false)
-        
+
         visit "/admin/tax_settings/edit"
         expect(page).to have_field('preferences_products_require_tax_category', checked: false)
 
@@ -98,11 +99,10 @@ describe "As a consumer, I want to see adjustment breakdown" do
         expect(page).to have_field('tax_rate_included_in_price', checked: false)
       end
 
-      after {logout}
+      after { logout }
     end
 
     describe "for a customer with shipping address within the tax zone" do
-
       context "on legacy checkout" do
         before do
           set_order order_within_zone
@@ -110,14 +110,13 @@ describe "As a consumer, I want to see adjustment breakdown" do
         end
 
         it "will be charged tax on the order" do
-
           visit checkout_path
-          
+
           find(:xpath, '//*[@id="shipping"]/ng-form/dd').click
-          choose "#{free_shipping.name}"
+          choose free_shipping.name.to_s
 
           within "#payment" do
-            choose "#{free_payment.name}"
+            choose free_payment.name.to_s
           end
 
           click_on "Place order now"
@@ -130,11 +129,10 @@ describe "As a consumer, I want to see adjustment breakdown" do
           assert_db_tax
         end
 
-        after {logout}
+        after { logout }
       end
 
       context "on split-checkout" do
-
         before do
           allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
           allow(Flipper).to receive(:enabled?).with(:split_checkout, anything).and_return(true)
@@ -145,17 +143,17 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
         it "will be charged tax on the order" do
           visit checkout_step_path(:details)
-          
+
           choose "Pick-up"
 
           click_button "Next - Payment method"
           click_on "Next - Order summary"
           click_on "Complete order"
-          
+
           expect(page).to have_selector('#order_total', text: with_currency(11.30))
           expect(page).to have_selector('#tax-row', text: with_currency(1.30))
 
-          #views confirmation page
+          # views confirmation page
           expect(page).to have_content("Confirmed")
 
           # DB checks
@@ -165,23 +163,20 @@ describe "As a consumer, I want to see adjustment breakdown" do
     end
 
     describe "for a customer with shipping address outside the tax zone" do
-
       context "on legacy checkout" do
-
         before do
           set_order order_outside_zone
           login_as(user_outside_zone)
         end
 
-        it "will be charged tax on the order" do
-
+        it "will not be charged tax on the order" do
           visit checkout_path
-          
+
           find(:xpath, '//*[@id="shipping"]/ng-form/dd').click
-          choose "#{free_shipping.name}"
+          choose free_shipping.name.to_s
 
           within "#payment" do
-            choose "#{free_payment.name}"
+            choose free_payment.name.to_s
           end
 
           click_on "Place order now"
@@ -194,11 +189,10 @@ describe "As a consumer, I want to see adjustment breakdown" do
           assert_db_no_tax
         end
 
-        after {logout}
+        after { logout }
       end
 
       context "on split-checkout" do
-
         before do
           allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
           allow(Flipper).to receive(:enabled?).with(:split_checkout, anything).and_return(true)
@@ -207,40 +201,102 @@ describe "As a consumer, I want to see adjustment breakdown" do
           login_as(user_outside_zone)
         end
 
-        it "will be charged tax on the order" do
+        it "will not be charged tax on the order" do
           visit checkout_step_path(:details)
-          
+
           choose "Pick-up"
 
           click_button "Next - Payment method"
           click_on "Next - Order summary"
           click_on "Complete order"
-          
+
           expect(page).to have_selector('#order_total', text: with_currency(10.00))
           expect(page).not_to have_content("includes tax")
 
-          #views confirmation page
+          # views confirmation page
           expect(page).to have_content("Confirmed")
 
           # DB checks
           assert_db_no_tax
         end
       end
+
+      context "reproducing issues #9131 and #9153" do
+        before do
+          allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
+          allow(Flipper).to receive(:enabled?).with(:split_checkout, anything).and_return(true)
+
+          set_order order_outside_zone
+          login_as(user_outside_zone)
+        end
+
+        # reproducing bug #9131
+        context "redirection to /summary page with no shipping method selected" do
+          it "fails to render the /summary page" do
+            pending("#9131")
+            visit checkout_step_path(:summary)
+          end
+        end
+
+        # reproducing bug #9153
+        context "changing the address on the /details step" do
+          before do
+            visit checkout_step_path(:details)
+            choose "Pick-up"
+
+            click_button "Next - Payment method"
+            click_on "Next - Order summary"
+
+            expect(page).to have_selector('#order_total', text: with_currency(10.00))
+
+            # customer goes back from Summary to Details step, to change Delivery
+            click_on "Back to Payment method"
+            click_on "Back to Your details"
+          end
+
+          it "should re-calculate the tax accordingly" do
+            pending("#9153")
+            select "Victoria", from: "order_bill_address_attributes_state_id"
+
+            # it should not be necessary to save as new default bill address
+            check "order_save_bill_address"
+
+            choose "Pick-up"
+            click_button "Next - Payment method"
+
+            click_on "Next - Order summary"
+
+            # bill address should have state Victoria
+
+            # Summary step should reflect changes
+            expect(page).to have_selector('#order_total', text: with_currency(11.30))
+            expect(page).to have_selector('#tax-row', text: with_currency(1.30))
+
+            click_on "Complete order"
+
+            # Order confirmation page should reflect changes
+            expect(page).to have_selector('#order_total', text: with_currency(11.30))
+            expect(page).to have_selector('#tax-row', text: with_currency(1.30))
+
+            # views confirmation page
+            expect(page).to have_content("Confirmed")
+
+            # DB checks
+            assert_db_no_tax
+          end
+        end
+      end
     end
   end
-
 end
 
 private
 
 def assert_db_tax
-  # DB checks
-  order_within_zone.reload # If page (above) was rendered containing the right values,
-               #why do we need to reload the order? If we don't the spec fails.
-  
+  order_within_zone.reload
+
   if tax_rate.included_in_price?
     expect(tax_rate.included_in_price).to eq(true)
-    expect(order_within_zone.included_tax_total).to eq(0.115e1)
     expect(order_within_zone.additional_tax_total).to eq(0.0)
   else
     expect(tax_rate.included_in_price).to eq(false)
@@ -250,17 +306,13 @@ def assert_db_tax
 end
 
 def assert_db_no_tax
-  # DB checks
-  order_outside_zone.reload # If page (above) was rendered containing the right values,
-               #why do we need to reload the order? If we don't the spec fails.
-  
+  order_outside_zone.reload
+
   if tax_rate.included_in_price?
     expect(tax_rate.included_in_price).to eq(true)
-    expect(order_outside_zone.included_tax_total).to eq(0.0)
-    expect(order_outside_zone.additional_tax_total).to eq(0.0)
   else
     expect(tax_rate.included_in_price).to eq(false)
-    expect(order_outside_zone.included_tax_total).to eq(0.0)
-    expect(order_outside_zone.additional_tax_total).to eq(0.0)
   end
+  expect(order_outside_zone.included_tax_total).to eq(0.0)
+  expect(order_outside_zone.additional_tax_total).to eq(0.0)
 end
