@@ -30,11 +30,7 @@ module Spree
           @object.attributes = permitted_resource_params
           if @object.save
             flash[:success] = flash_message_for(@object, :successfully_created)
-            if params[:button] == "add_another"
-              redirect_to spree.new_admin_product_path
-            else
-              redirect_to spree.admin_products_path
-            end
+            redirect_after_save
           else
             # Re-fill the form with deleted params on product
             @on_hand = request.params[:product][:on_hand]
@@ -142,6 +138,14 @@ module Spree
       end
 
       private
+
+      def redirect_after_save
+        if params[:button] == "add_another"
+          redirect_to spree.new_admin_product_path
+        else
+          redirect_to spree.admin_products_path
+        end
+      end
 
       def product_set_from_params
         collection_hash = Hash[products_bulk_params[:products].each_with_index.map { |p, i|
