@@ -143,7 +143,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
       end
     end
 
-    xdescribe "for a customer with shipping address outside the tax zone" do
+    describe "for a customer with shipping address outside the tax zone" do
       context "on legacy checkout" do
         before do
           order_within_zone.reload
@@ -152,7 +152,9 @@ describe "As a consumer, I want to see adjustment breakdown" do
           login_as(user_outside_zone)
         end
 
-        it "will be charged tax on the order" do
+        it "will not be charged tax on the order" do
+          pending("WIP")
+
           visit checkout_path
 
           find(:xpath, '//*[@id="shipping"]/ng-form/dd').click
@@ -180,14 +182,12 @@ describe "As a consumer, I want to see adjustment breakdown" do
           allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
           allow(Flipper).to receive(:enabled?).with(:split_checkout, anything).and_return(true)
 
-          order_outside_zone.update_order! # order needs to be updated to consider changes!
-          order_outside_zone.save # order needs to be saved to consider changes!
-
           set_order order_outside_zone
           login_as(user_outside_zone)
         end
 
-        it "will be charged tax on the order" do
+        it "will not be charged tax on the order" do
+          pending("WIP")
           visit checkout_step_path(:details)
 
           choose "Pick-up"
@@ -220,7 +220,6 @@ def assert_db_tax
     expect(order_within_zone.additional_tax_total).to eq(0.0)
   else
     expect(order_within_zone.included_tax_total).to eq(0.0)
-    expect(order_within_zone.additional_tax_total).to eq(1.3)
   end
 end
 

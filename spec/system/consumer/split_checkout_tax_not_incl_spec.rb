@@ -156,7 +156,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
           login_as(user_outside_zone)
         end
 
-        it "will be charged tax on the order" do
+        it "will not be charged tax on the order" do
           visit checkout_path
 
           find(:xpath, '//*[@id="shipping"]/ng-form/dd').click
@@ -188,7 +188,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
           login_as(user_outside_zone)
         end
 
-        it "will be charged tax on the order" do
+        it "will not be charged tax on the order" do
           visit checkout_step_path(:details)
 
           choose "Pick-up"
@@ -207,6 +207,72 @@ describe "As a consumer, I want to see adjustment breakdown" do
           assert_db_no_tax
         end
       end
+
+      context "reproducing issues #9131 and #9153" do
+        before do
+          allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
+          allow(Flipper).to receive(:enabled?).with(:split_checkout, anything).and_return(true)
+
+          set_order order_outside_zone
+          login_as(user_outside_zone)
+        end
+
+        # reproducing bug #9131
+        context "redirection to /summary page with no shipping method selected" do
+          it "fails to render the /summary page" do
+            pending("#9131")
+            visit checkout_step_path(:summary)
+          end
+        end
+
+        # reproducing bug #9153
+        context "changing the address on the /details step" do
+          before do
+            visit checkout_step_path(:details)
+            choose "Pick-up"
+
+            click_button "Next - Payment method"
+            click_on "Next - Order summary"
+
+            expect(page).to have_selector('#order_total', text: with_currency(10.00))
+
+            # customer goes back from Summary to Details step, to change Delivery
+            click_on "Back to Payment method"
+            click_on "Back to Your details"
+          end
+
+          it "should re-calculate the tax accordingly" do
+            pending("#9153")
+            select "Victoria", from: "order_bill_address_attributes_state_id"
+
+            # it should not be necessary to save as new default bill address
+            check "order_save_bill_address"
+
+            choose "Pick-up"
+            click_button "Next - Payment method"
+
+            click_on "Next - Order summary"
+
+            # bill address should have state Victoria
+
+            # Summary step should reflect changes
+            expect(page).to have_selector('#order_total', text: with_currency(11.30))
+            expect(page).to have_selector('#tax-row', text: with_currency(1.30))
+
+            click_on "Complete order"
+
+            # Order confirmation page should reflect changes
+            expect(page).to have_selector('#order_total', text: with_currency(11.30))
+            expect(page).to have_selector('#tax-row', text: with_currency(1.30))
+
+            # views confirmation page
+            expect(page).to have_content("Confirmed")
+
+            # DB checks
+            assert_db_no_tax
+          end
+        end
+      end
     end
   end
 end
@@ -217,7 +283,6 @@ def assert_db_tax
   order_within_zone.reload
 
   if tax_rate.included_in_price?
-    expect(order_within_zone.included_tax_total).to eq(1.15)
     expect(order_within_zone.additional_tax_total).to eq(0.0)
   else
     expect(order_within_zone.included_tax_total).to eq(0.0)
