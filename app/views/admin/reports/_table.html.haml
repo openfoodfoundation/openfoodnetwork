@@ -1,20 +1,15 @@
-- if params[:q].present?
-  %table.report__table{id: id}
+- report ||= @report
+
+.report__table-container
+  %table.report__table
     %thead
       %tr
-        - @report.table_headers.each do |heading|
+        - report.table_headers.each do |heading|
           %th
-            = t("admin.reports.table.headings.#{heading}")
+            = heading
     %tbody
-      - @report.table_rows.each do |row|
-        - if row
-          %tr
-            - row.each do |cell|
-              %td
-                = cell
-      - if @report.table_rows.empty?
+      - if report.grouped_data.present?
+        = render partial: 'admin/reports/row_group', locals: { report: report, data: report.grouped_data }
+      - else
         %tr
-          %td{colspan: @report.table_headers.count}= t(:none)
-- else
-  %p.report__message
-    = t(".select_and_search", option: msg_option.upcase)
+          %td{colspan: report.table_headers.count}= t(:none)

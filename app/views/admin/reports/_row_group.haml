@@ -1,0 +1,22 @@
+-# Locals :
+-#  - data
+-#  - report
+
+- data.each do |group_or_row|
+  - if group_or_row[:is_group].present?
+    / Header Row
+    - if group_or_row[:header].present? && report.display_header_row?
+      %tr
+        %td.header-row{ colspan: report.table_headers.count, class: group_or_row[:header_class] }
+          = group_or_row[:header].html_safe
+    / Rows
+    = render partial: 'admin/reports/row_group', locals: { report: report, data: group_or_row[:data] }
+    / Summary Row
+    - if group_or_row[:summary_row].present? && report.display_summary_row?
+      %tr.summary-row{ class: group_or_row[:summary_row_class] }
+        - group_or_row[:summary_row].to_h.each do |key, value|
+          %td= value
+  - else
+    %tr
+      - group_or_row.row.to_h.each do |key, value|
+        %td= value

@@ -92,8 +92,8 @@ module OpenFoodNetwork
           variant_ids = Spree::Variant.joins(:exchanges).
             where(
               "exchanges.receiver_id IN (?)
-                AND exchanges.order_cycle_id = (?)
-                AND exchanges.incoming = 'f'",
+            AND exchanges.order_cycle_id = (?)
+            AND exchanges.incoming = 'f'",
               managed_participating_hubs.select("enterprises.id"),
               @order_cycle
             ).pluck(:id).uniq
@@ -188,8 +188,8 @@ module OpenFoodNetwork
         #   so things don't break. TODO: Remove this when all P-OC are sorted out
         active_variants = Spree::Variant.joins(:exchanges, :product).
           where("exchanges.receiver_id = (?)
-                  AND spree_products.supplier_id IN (?)
-                  AND incoming = 'f'",
+              AND spree_products.supplier_id IN (?)
+              AND incoming = 'f'",
                 hub.id,
                 managed_producer_ids)
 
@@ -299,8 +299,8 @@ module OpenFoodNetwork
       #   any incoming exchanges supplying variants in my outgoing exchanges
       variant_ids = Spree::Variant.joins(:exchanges).
         where("exchanges.receiver_id IN (?)
-                AND exchanges.order_cycle_id = (?)
-                AND exchanges.incoming = 'f'",
+            AND exchanges.order_cycle_id = (?)
+            AND exchanges.incoming = 'f'",
               hubs.select("enterprises.id"),
               @order_cycle).pluck(:id).uniq
 

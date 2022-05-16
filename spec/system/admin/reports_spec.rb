@@ -33,16 +33,15 @@ describe '
 
   describe "Customers report" do
     before do
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
     end
 
     it "customers report" do
       click_link "Mailing List"
-      expect(page).to have_select('report_type', selected: 'Mailing List')
-      expect(page).to have_content "click on GO"
+      expect(page).to have_select('report_subtype', selected: 'Mailing List')
       click_button "Go"
 
-      rows = find("table#listing_customers").all("thead tr")
+      rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["Email", "First Name", "Last Name", "Suburb"].map(&:upcase)
@@ -51,10 +50,10 @@ describe '
 
     it "customers report" do
       click_link "Addresses"
-      expect(page).to have_select('report_type', selected: 'Addresses')
+      expect(page).to have_select('report_subtype', selected: 'Addresses')
 
       click_button "Go"
-      rows = find("table#listing_customers").all("thead tr")
+      rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address",
@@ -65,27 +64,27 @@ describe '
 
   describe "Order cycle management report" do
     before do
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
     end
 
     it "payment method report" do
       click_link "Payment Methods Report"
-      click_button "Search"
-      rows = find("table#listing_ocm_orders").all("thead tr")
+      click_button "Go"
+      rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
-        ["First Name", "Last Name", "Hub", "Hub Code", "Email", "Phone", "Shipping Method",
+        ["First Name", "Last Name", "Hub", "Customer Code", "Email", "Phone", "Shipping Method",
          "Payment Method", "Amount", "Balance"].map(&:upcase)
       ].sort)
     end
 
     it "delivery report" do
       click_link "Delivery Report"
-      click_button "Search"
-      rows = find("table#listing_ocm_orders").all("thead tr")
+      click_button "Go"
+      rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
-        ["First Name", "Last Name", "Hub", "Hub Code", "Delivery Address", "Delivery Postcode",
+        ["First Name", "Last Name", "Hub", "Customer Code", "Delivery Address", "Delivery Postcode",
          "Phone", "Shipping Method", "Payment Method", "Amount", "Balance",
          "Temp Controlled Items?", "Special Instructions"].map(&:upcase)
       ].sort)
@@ -93,17 +92,17 @@ describe '
   end
 
   it "orders and distributors report" do
-    login_as_admin_and_visit spree.admin_reports_path
+    login_as_admin_and_visit admin_reports_path
     click_link 'Orders And Distributors'
-    click_button 'Search'
+    click_button 'Go'
 
     expect(page).to have_content 'ORDER DATE'
   end
 
   it "payments reports" do
-    login_as_admin_and_visit spree.admin_reports_path
+    login_as_admin_and_visit admin_reports_path
     click_link 'Payment Reports'
-    click_button 'Search'
+    click_button 'Go'
 
     expect(page).to have_content 'PAYMENT STATE'
   end
@@ -163,9 +162,9 @@ describe '
                        payment_method: create(:payment_method, distributors: [distributor1]))
       break unless order1.next! until order1.complete?
 
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
       click_link "Sales Tax"
-      select("Tax types", from: "report_type")
+      select("Tax Types", from: "report_subtype")
     end
 
     it "reports" do
@@ -177,7 +176,7 @@ describe '
 
       # When I filter to just one distributor
       select user1.enterprises.first.name, from: 'q_distributor_id_eq'
-      click_button 'Search'
+      click_button 'Go'
 
       # Then I should see the relevant order
       expect(page).to have_content order1.number.to_s
@@ -199,7 +198,7 @@ describe '
 
   describe "orders & fulfilment reports" do
     it "loads the report page" do
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
       click_link 'Orders & Fulfillment Reports'
 
       expect(page).to have_content 'Supplier'
@@ -238,15 +237,17 @@ describe '
       it "is precise to time of day, not just date" do
         # When I generate a customer report
         # with a timeframe that includes one order but not the other
-        login_as_admin_and_visit spree.orders_and_fulfillment_admin_reports_path
+        login_as_admin_and_visit admin_reports_path
+        click_link 'Orders & Fulfillment Reports'
+        click_button 'Go'
 
         pick_datetime "#q_completed_at_gt", datetime_start
         pick_datetime "#q_completed_at_lt", datetime_end
 
-        select 'Order Cycle Customer Totals', from: 'report_type'
-        click_button 'Search'
+        select 'Order Cycle Customer Totals', from: 'report_subtype'
+        click_button 'Go'
         # Then I should see the rows for the first order but not the second
-        expect(all('table#listing_orders tbody tr').count).to eq(4) # Two rows per order
+        expect(all('table.report__table tbody tr').count).to eq(4) # Two rows per order
       end
     end
 
@@ -256,7 +257,9 @@ describe '
                                        orders_open_at: Time.zone.now, orders_close_at: nil)
       o = create(:order, order_cycle: oc, distributor: distributor)
 
-      login_as_admin_and_visit spree.orders_and_fulfillment_admin_reports_path
+      login_as_admin_and_visit admin_reports_path
+      click_link 'Orders & Fulfillment Reports'
+      click_button 'Go'
 
       expect(page).to have_content "My Order Cycle"
     end
@@ -294,7 +297,7 @@ describe '
     end
 
     it "shows products and inventory report" do
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
 
       expect(page).to have_content "All products"
       expect(page).to have_content "Inventory (on hand)"
@@ -307,29 +310,29 @@ describe '
       expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city,
                                       "Product Name",
                                       product1.properties.map(&:presentation).join(", "),
-                                      product1.primary_taxon.name, "Test", "100.0",
+                                      product1.primary_taxon.name, "Test", "$100.00",
                                       product1.group_buy_unit_size.to_s, "", "sku1"]
       expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city,
                                       "Product Name",
                                       product1.properties.map(&:presentation).join(", "),
-                                      product1.primary_taxon.name, "Something", "80.0",
+                                      product1.primary_taxon.name, "Something", "$80.00",
                                       product1.group_buy_unit_size.to_s, "", "sku2"]
       expect(page).to have_table_row [product2.supplier.name, product1.supplier.address.city,
                                       "Product 2",
                                       product1.properties.map(&:presentation).join(", "),
-                                      product2.primary_taxon.name, "100g", "99.0",
+                                      product2.primary_taxon.name, "100g", "$99.00",
                                       product1.group_buy_unit_size.to_s, "", "product_sku"]
     end
 
     it "shows the LettuceShare report" do
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
       click_link 'LettuceShare'
       click_button "Go"
 
       expect(page).to have_table_row ['PRODUCT', 'Description', 'Qty', 'Pack Size', 'Unit',
                                       'Unit Price', 'Total', 'GST incl.',
                                       'Grower and growing method', 'Taxon'].map(&:upcase)
-      expect(page).to have_table_row ['Product 2', '100g', '', '100', 'g', '99.0', '', '0',
+      expect(page).to have_table_row ['Product 2', '100g', '', '100', 'g', '$99.00', '', '0',
                                       'Supplier Name (Organic - NASAA 12345)', 'Taxon Name']
     end
   end
@@ -342,15 +345,15 @@ describe '
     before do
       enterprise3.enterprise_roles.build( user: enterprise1.owner ).save
 
-      login_as_admin_and_visit spree.admin_reports_path
+      login_as_admin_and_visit admin_reports_path
 
       click_link 'Users & Enterprises'
     end
 
     it "shows users and enterprises report" do
-      click_button "Search"
+      click_button "Go"
 
-      rows = find("table#users_and_enterprises").all("tr")
+      rows = find("table.report__table").all("tr")
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 
       expect(table.sort).to eq([
@@ -369,15 +372,85 @@ describe '
       select enterprise3.name, from:  "enterprise_id_in"
       select enterprise1.owner.email, from: "user_id_in"
 
-      click_button "Search"
+      click_button "Go"
 
-      rows = find("table#users_and_enterprises").all("tr")
+      rows = find("table.report__table").all("tr")
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 
       expect(table.sort).to eq([
         ["User", "Relationship", "Enterprise"].map(&:upcase),
         [enterprise1.owner.email, "manages", enterprise3.name]
       ].sort)
+    end
+  end
+
+  describe 'bulk coop report' do
+    before do
+      login_as_admin_and_visit admin_reports_path
+      click_link 'Bulk Co-Op'
+    end
+
+    it "generating Bulk Co-op Supplier Report" do
+      select "Bulk Co-op Supplier Report", from: "report_subtype"
+      click_button 'Go'
+
+      expect(page).to have_table_row [
+        "Supplier",
+        "Product",
+        "Bulk Unit Size",
+        "Variant",
+        "Variant Value",
+        "Variant Unit",
+        "Weight",
+        "Sum Total",
+        "Units Required",
+        "Unallocated",
+        "Max Quantity Excess"
+      ].map(&:upcase)
+    end
+
+    it "generating Bulk Co-op Allocation report" do
+      select "Bulk Co-op Allocation", from: "report_subtype"
+      click_button 'Go'
+
+      expect(page).to have_table_row [
+        "Customer",
+        "Product",
+        "Bulk Unit Size",
+        "Variant",
+        "Variant Value",
+        "Variant Unit",
+        "Weight",
+        "Sum Total",
+        "Total available",
+        "Unallocated",
+        "Max Quantity Excess"
+      ].map(&:upcase)
+    end
+
+    it "generating Bulk Co-op Packing Sheets report" do
+      select "Bulk Co-op Packing Sheets", from: "report_subtype"
+      click_button 'Go'
+
+      expect(page).to have_table_row [
+        "Customer",
+        "Product",
+        "Variant",
+        "Sum Total"
+      ].map(&:upcase)
+    end
+
+    it "generating Bulk Co-op Customer Payments report" do
+      select "Bulk Co-op Customer Payments", from: "report_subtype"
+      click_button 'Go'
+
+      expect(page).to have_table_row [
+        "Customer",
+        "Date of Order",
+        "Total Cost",
+        "Amount Owing",
+        "Amount Paid"
+      ].map(&:upcase)
     end
   end
 
@@ -470,7 +543,7 @@ describe '
         order1.reload
         order1.create_tax_charge!
 
-        login_as_admin_and_visit spree.admin_reports_path
+        login_as_admin_and_visit admin_reports_path
         click_link 'Xero Invoices'
       end
 
@@ -481,7 +554,7 @@ describe '
       end
 
       it "shows Xero invoices report" do
-        click_button "Search"
+        click_button "Go"
         expect(xero_invoice_table).to match_table [
           xero_invoice_header,
           xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,
@@ -507,10 +580,10 @@ describe '
         pick_datetime '#due_date', Date.new(2021, 3, 12)
 
         fill_in 'account_code', with: 'abc123'
-        click_button 'Search'
+        click_button 'Go'
 
-        opts = { invoice_number: '5', invoice_date: '2021-02-12 00:00',
-                 due_date: '2021-03-12 00:00', account_code: 'abc123' }
+        opts = { invoice_number: '5', invoice_date: '2021-02-12',
+                 due_date: '2021-03-12', account_code: 'abc123' }
 
         expect(xero_invoice_table).to match_table [
           xero_invoice_header,
@@ -532,8 +605,8 @@ describe '
       end
 
       it "generates a detailed report" do
-        select 'Detailed', from: 'report_type'
-        click_button 'Search'
+        select 'Detailed', from: 'report_subtype'
+        click_button 'Go'
 
         opts = {}
 
@@ -556,7 +629,7 @@ describe '
     private
 
     def xero_invoice_table
-      find("table#listing_invoices")
+      find("table.report__table")
     end
 
     def xero_invoice_header

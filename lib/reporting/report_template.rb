@@ -2,61 +2,117 @@
 
 module Reporting
   class ReportTemplate
-    delegate :as_json, :as_arrays, :table_headers, :table_rows,
-             :to_csv, :to_xlsx, :to_ods, :to_json, to: :renderer
+    include ReportsHelper
+    attr_accessor :user, :params, :ransack_params
 
-    attr_reader :options
+    delegate :render_as, :as_json, :to_csv, :to_xlsx, :to_pdf, :to_json, to: :renderer
+    delegate :raw_render?, :html_render?, :display_header_row?, :display_summary_row?, to: :renderer
 
-    SUBTYPES = []
+    delegate :rows, :table_rows, :grouped_data, to: :rows_builder
+    delegate :available_headers, :table_headers, :fields_to_hide, to: :headers_builder
 
-    def self.report_subtypes
-      self::SUBTYPES
+    delegate :formatted_rules, :header_option?, :summary_row_option?, to: :ruler
+
+    def initialize(user, params = {}, request = nil)
+      if request.nil? || request.get?
+        params.reverse_merge!(default_params)
+        params[:q] ||= {}
+        params[:q].reverse_merge!(default_params[:q]) if default_params[:q].present?
+      end
+      @user = user
+      @params = params
+      @params = @params.permit!.to_h unless @params.is_a? Hash
+      @ransack_params = @params[:q] || {}
     end
 
-    def initialize(current_user, ransack_params, options = {})
-      @current_user = current_user
-      @ransack_params = ransack_params.with_indifferent_access
-      @options = ( options || {} ).with_indifferent_access
+    # Message to be displayed at the top of rendered table
+    def message
+      ""
     end
 
-    def report_data
-      @report_data ||= report_query.raw_result
+    # Ransack search to get base ActiveRelation
+    # If the report object do not use ransack search, create a fake one just for the form_for
+    # in reports/show.haml
+    def search
+      Ransack::Search.new(Spree::Order)
+    end
+
+    # The search result, usually an ActiveRecord Array
+    def query_result
+      raise NotImplementedError
+    end
+
+    # Convert the query_result into expected row result (which will be displayed)
+    # Example
+    # {
+    #   name: proc { |model| model.display_name },
+    #   best_friend: proc { |model| model.friends.first.first_name }
+    # }
+    def columns
+      raise NotImplementedError
+    end
+
+    # Exple { total_price: :currency }
+    def columns_format
+      {}
+    end
+
+    # Headers are automatically translated with table_headers method
+    # You can customize some header name if needed
+    def custom_headers
+      {}
+    end
+
+    # Rules for grouping, ordering, and summary rows
+    # Rule Full Example. In the following item reference the query_result item and
+    #                    row the transformation of this item into the expected result
+    # {
+    #   group_by: proc { |item, row| row.last_name },
+    #   group_by: :last_name, # same that previous line,
+    #   group_by: proc { |line_item, row| line_item.product },
+    #   sort_by: proc { |product| product.name },
+    #   header: proc { |group_key, items, rows| items.first.display_name },
+    #   header: true, # shortcut to use group_key as header
+    #   header: :supplier, # shortcut to use supplier column as header
+    #   header: [:last_name, :first_name], # shortcut to use last_name & first_name as header
+    #   header_class: "h1 h2 h3 h4 text-center background", # class applies to the header row
+    #   # Those fields will be hidden when the header_row is activated
+    #   fields_used_in_header: [:first_name, :last_name],
+    #   summary_row: proc do |group_key, items, rows|
+    #     {
+    #       quantity: rows.sum(&:quantity),
+    #       price: "#{rows.sum(&:price)} #{currency_symbol}"
+    #     }
+    #   end,
+    #   summary_row_class: "", # by default 'text-bold'
+    #   summary_row_label: "Total by Customer" # by default 'TOTAL'
+    #   summary_row_label: proc { |group_key, items, rows| "Total for #{group_key}" }
+    # }
+    def rules
+      []
+    end
+
+    # Default filters/search params to be used
+    def default_params
+      {}
     end
 
     private
-
-    attr_reader :current_user, :ransack_params
 
     def renderer
       @renderer ||= ReportRenderer.new(self)
     end
 
-    def ransacked_orders_relation
-      visible_orders_relation.ransack(ransack_params).result
+    def rows_builder
+      @rows_builder ||= ReportRowsBuilder.new(self)
     end
 
-    def ransacked_line_items_relation
-      visible_line_items_relation.ransack(ransack_params).result
+    def headers_builder
+      @headers_builder ||= ReportHeadersBuilder.new(self)
     end
 
-    def visible_orders_relation
-      ::Permissions::Order.new(current_user).
-        visible_orders.complete.not_state(:canceled).
-        select(:id).distinct
-    end
-
-    def visible_line_items_relation
-      ::Permissions::Order.new(current_user).
-        visible_line_items.
-        select(:id).distinct
-    end
-
-    def managed_orders_relation
-      ::Enterprise.managed_by(current_user).select(:id).distinct
-    end
-
-    def i18n_scope
-      "admin.reports"
+    def ruler
+      @ruler ||= ReportRuler.new(self)
     end
   end
 end

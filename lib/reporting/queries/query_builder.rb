@@ -8,7 +8,7 @@ module Reporting
 
       attr_reader :grouping_fields
 
-      def initialize(model, grouping_fields = [])
+      def initialize(model, grouping_fields = proc { [] })
         @grouping_fields = instance_exec(&grouping_fields)
 
         super model.arel_table
@@ -84,7 +84,7 @@ module Reporting
       end
 
       def summary_row_title
-        I18n.t("total_items", scope: i18n_scope)
+        I18n.t("total", scope: i18n_scope)
       end
 
       def i18n_scope

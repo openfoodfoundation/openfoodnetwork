@@ -9,7 +9,24 @@ module ReportsHelper
     end
   end
 
-  def report_subtypes(report)
-    Reporting::ReportLoader.new(report).report_subtypes
+  def report_payment_method_options(orders)
+    orders.map do |order|
+      payment_method = order.payments.last&.payment_method
+
+      next unless payment_method
+
+      [payment_method.name, payment_method.id]
+    end.compact.uniq
+  end
+
+  def report_shipping_method_options(orders)
+    orders.map do |o|
+      sm = o.shipping_method
+      [sm&.name, sm&.id]
+    end.uniq
+  end
+
+  def currency_symbol
+    Spree::Money.currency_symbol
   end
 end

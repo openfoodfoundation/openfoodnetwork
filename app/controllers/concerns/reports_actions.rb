@@ -3,10 +3,14 @@
 module ReportsActions
   extend ActiveSupport::Concern
 
+  def reports
+    Reporting::Reports::List.all
+  end
+
   private
 
   def authorize_report
-    authorize! report_type&.to_sym, :report
+    authorize! report_type.to_sym, :report
   end
 
   def report_class
@@ -23,29 +27,24 @@ module ReportsActions
     params[:report_type]
   end
 
+  def report_subtypes
+    reports[report_type.to_sym] || []
+  end
+
+  def report_subtypes_codes
+    report_subtypes.map(&:second).map(&:to_s)
+  end
+
   def report_subtype
-    params[:report_subtype]
+    params[:report_subtype] || report_subtypes_codes.first
   end
 
   def ransack_params
     raw_params[:q]
   end
 
-  def report_options
-    raw_params[:options]
-  end
-
   def report_format
     params[:report_format]
-  end
-
-  def export_spreadsheet?
-    ['xlsx', 'ods', 'csv'].include?(report_format)
-  end
-
-  def form_options_required?
-    [:packing, :customers, :products_and_inventory, :order_cycle_management].
-      include? report_type.to_sym
   end
 
   def report_filename

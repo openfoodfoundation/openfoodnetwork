@@ -46,22 +46,22 @@ describe "Packing Reports", js: true do
         click_link "Pack By Customer"
         fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
         fill_in 'q_completed_at_lt', with: '2013-04-25 16:00:00'
-        click_button 'Search'
+        click_button 'Go'
 
-        rows = find("table#listing_orders").all("thead tr")
+        rows = find("table.report__table").all("thead tr")
         table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
         expect(table).to eq([
                               ["Hub", "Code", "First Name", "Last Name", "Supplier",
                                "Product", "Variant", "Quantity", "TempControlled?"].map(&:upcase)
                             ])
-        expect(page).to have_selector 'table#listing_orders tbody tr', count: 5 # Totals row per order
+        expect(page).to have_selector 'table.report__table tbody tr', count: 5 # Totals row per order
       end
 
       it "sorts alphabetically" do
         click_link "Pack By Customer"
-        click_button 'Search'
+        click_button 'Go'
 
-        rows = find("table#listing_orders").all("tr")
+        rows = find("table.report__table").all("tr")
         table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[3] }
         expect(table).to eq([
                               "LAST NAME",
@@ -79,15 +79,15 @@ describe "Packing Reports", js: true do
         click_link "Pack By Supplier"
         fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
         fill_in 'q_completed_at_lt', with: '2013-04-25 16:00:00'
-        click_button 'Search'
+        click_button 'Go'
 
-        rows = find("table#listing_orders").all("thead tr")
+        rows = find("table.report__table").all("thead tr")
         table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
         expect(table).to eq([
                               ["Hub", "Supplier", "Code", "First Name", "Last Name",
                                "Product", "Variant", "Quantity", "TempControlled?"].map(&:upcase)
                             ])
-        expect(all('table#listing_orders tbody tr').count).to eq(4) # Totals row per supplier
+        expect(all('table.report__table tbody tr').count).to eq(4) # Totals row per supplier
       end
     end
   end

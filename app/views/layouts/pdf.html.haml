@@ -1,0 +1,56 @@
+!!!
+%html
+  %head
+    %meta{charset: 'utf-8'}
+    -# Using wicked_pdf_stylesheet_pack_tag with a new pdf pack was not working when using
+    -# WickedPdf.new.pdf_from_string cause the css file reference was not absolute
+    -# So I ended up putting inline css here, so it's included for sure in the PDF
+    :css
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+        color: #212529;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th {
+        text-align: left;
+      }
+      th, td {
+        padding: 7px 5px;
+        vertical-align: middle;
+        text-overflow: ellipsis;
+        padding-top: 12px;
+      }
+      tr {
+        border-bottom: 1px solid #e2e2e2;
+      }
+      thead {
+        background-color: #f6f6f6;
+        border-bottom: 1px solid grey;
+      }
+      .h1, .h2, .h3 {
+        font-weight: bold;
+        padding-top: 15px;
+      }
+      .h1 {
+        font-size: 1.6rem;
+        padding-top: 20px;
+      }
+      .h2 {
+        font-size: 1.3rem;
+      }
+      .h3 {
+        font-size: 1.15rem;
+      }
+      .text-bold {
+        font-weight: bold;
+      }
+
+  %body
+    = yield

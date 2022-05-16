@@ -11,8 +11,8 @@ RSpec::Matchers.define :have_table_row do |row|
     !rows_under(node).include? row # Robust check of columns
   end
 
-  failure_message do |_text|
-    "expected to find table row #{@row}"
+  failure_message do |text|
+    "expected to find table row #{@row}, got #{text}"
   end
 
   failure_message_when_negated do |_text|

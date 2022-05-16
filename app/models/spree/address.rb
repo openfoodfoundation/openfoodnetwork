@@ -105,6 +105,10 @@ module Spree
       render_address([city, zipcode, state&.name])
     end
 
+    def address_and_city
+      [address1, address2, city].select(&:present?).join(' ')
+    end
+
     private
 
     def require_zipcode?

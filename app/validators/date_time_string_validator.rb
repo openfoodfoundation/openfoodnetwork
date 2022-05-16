@@ -38,8 +38,13 @@
 #   post.valid?                 # => false
 #   post.errors[:published_at]  # => ["must be valid"]
 class DateTimeStringValidator < ActiveModel::EachValidator
-  NOT_STRING_ERROR = I18n.t("validators.date_time_string_validator.not_string_error")
-  INVALID_FORMAT_ERROR = I18n.t("validators.date_time_string_validator.invalid_format_error")
+  def self.not_string_error
+    I18n.t("validators.date_time_string_validator.not_string_error")
+  end
+
+  def self.invalid_format_error
+    I18n.t("validators.date_time_string_validator.invalid_format_error")
+  end
 
   def validate_each(record, attribute, value)
     return if value.nil? || value == ""
@@ -53,13 +58,13 @@ class DateTimeStringValidator < ActiveModel::EachValidator
   def validate_attribute_is_string(record, attribute, value)
     return if value.is_a?(String)
 
-    record.errors.add(attribute, NOT_STRING_ERROR)
+    record.errors.add(attribute, DateTimeStringValidator.not_string_error)
   end
 
   def validate_attribute_is_datetime_string(record, attribute, value)
     return unless value.is_a?(String)
 
     datetime = Time.zone.parse(value)
-    record.errors.add(attribute, INVALID_FORMAT_ERROR) if datetime.blank?
+    record.errors.add(attribute, DateTimeStringValidator.invalid_format_error) if datetime.blank?
   end
 end

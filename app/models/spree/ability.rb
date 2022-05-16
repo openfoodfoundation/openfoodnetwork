@@ -236,12 +236,10 @@ module Spree
            :validate_data, :reset_absent_products], ProductImport::ProductImporter
 
       # Reports page
-      can [:admin, :index, :customers, :orders_and_distributors, :group_buys, :payments,
-           :orders_and_fulfillment, :products_and_inventory, :order_cycle_management, :packing],
-          Spree::Admin::ReportsController
-      can [:admin, :show, :packing], :report
-      add_bulk_coop_abilities
-      add_enterprise_fee_summary_abilities
+      can [:admin, :index, :show], ::Admin::ReportsController
+      can [:admin, :show, :customers, :orders_and_distributors, :group_buys, :payments,
+           :orders_and_fulfillment, :products_and_inventory, :order_cycle_management,
+           :packing, :enterprise_fee_summary, :bulk_coop], :report
     end
 
     def add_order_cycle_management_abilities(user)
@@ -317,11 +315,10 @@ module Spree
       end
 
       # Reports page
-      can [:admin, :index, :customers, :group_buys, :sales_tax, :payments,
+      can [:admin, :index, :show], ::Admin::ReportsController
+      can [:admin, :customers, :group_buys, :sales_tax, :payments,
            :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
-           :order_cycle_management, :xero_invoices], Spree::Admin::ReportsController
-      add_bulk_coop_abilities
-      add_enterprise_fee_summary_abilities
+           :order_cycle_management, :xero_invoices, :enterprise_fee_summary, :bulk_coop], :report
 
       can [:create], Customer
       can [:admin, :index, :update,
@@ -345,20 +342,6 @@ module Spree
         user.enterprises.include?(enterprise_relationship.parent) ||
           user.enterprises.include?(enterprise_relationship.child)
       end
-    end
-
-    def add_bulk_coop_abilities
-      # Reveal the report link in spree/admin/reports#index
-      can [:bulk_coop], Spree::Admin::ReportsController
-      # Allow direct access to the report resource
-      can [:admin, :new, :create], :bulk_coop
-    end
-
-    def add_enterprise_fee_summary_abilities
-      # Reveal the report link in spree/admin/reports#index
-      can [:enterprise_fee_summary], Spree::Admin::ReportsController
-      # Allow direct access to the report resource
-      can [:admin, :new, :create], :enterprise_fee_summary
     end
   end
 end

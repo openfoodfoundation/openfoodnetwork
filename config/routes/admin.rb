@@ -115,6 +115,7 @@ Openfoodnetwork::Application.routes.draw do
       put :resume, on: :member, format: :json
     end
 
-    match '/reports/:report_type(/:report_subtype)', to: 'reports#show', via: [:get, :post], as: :reports
+    get '/reports', to: 'reports#index', as: :reports
+    match '/reports/:report_type(/:report_subtype)', to: 'reports#show', via: [:get, :post], as: :report
   end
 end

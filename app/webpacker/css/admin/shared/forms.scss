@@ -242,3 +242,17 @@ select {
   @extend input, [type="text"];
   background-color: white;
 }
+
+.inline-checkbox {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 3px;
+
+  input, label {
+    cursor: pointer;
+  }
+  label {
+    margin: 0;
+    padding-left: .4rem;
+  }
+}

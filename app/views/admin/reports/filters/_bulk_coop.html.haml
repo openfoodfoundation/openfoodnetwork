@@ -1,0 +1,6 @@
+= render 'admin/reports/date_range_form', f: f
+
+.row
+  .alpha.two.columns= label_tag nil, t(:report_hubs)
+  .omega.fourteen.columns
+    = f.collection_select(:distributor_id_in, @data.distributors, :id, :name, {}, {class: "select2 fullwidth", multiple: true})

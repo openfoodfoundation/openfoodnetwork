@@ -4,30 +4,35 @@ module Reporting
   module Reports
     module Packing
       class Supplier < Base
-        def select_fields
-          lambda do
-            {
-              hub: default_blank(distributor_alias[:name]),
-              supplier: default_blank(supplier_alias[:name]),
-              customer_code: default_blank(customer_table[:code]),
-              first_name: default_blank(masked(bill_address_alias[:firstname])),
-              last_name: default_blank(masked(bill_address_alias[:lastname])),
-              product: default_string(product_table[:name], summary_row_title),
-              variant: default_blank(variant_full_name),
-              quantity: sum_values(line_item_table[:quantity]),
-              temp_controlled: boolean_blank(shipping_category_table[:temperature_controlled]),
-            }
-          end
+        def columns
+          # Reorder default columns
+          super.slice(:hub, :supplier, :customer_code, :first_name, :last_name, :phone,
+                      :product, :variant, :quantity, :price, :temp_controlled)
         end
 
-        def group_sets
-          lambda do
-            [
-              distributor_alias[:name],
-              supplier_alias[:name],
-              grouping_sets([parenthesise(supplier_alias[:name]), parenthesise(grouping_fields)])
-            ]
-          end
+        def rules
+          [
+            {
+              group_by: :hub,
+              header: true,
+              header_class: "h1 with-background text-center",
+            },
+            {
+              group_by: :supplier,
+              header: true,
+              summary_row: summary_row,
+              summary_row_label: I18n.t('admin.reports.total_by_supplier').upcase
+            },
+            {
+              group_by: proc { |_item, row| row_header(row) },
+              header: true,
+              header_class: 'h4',
+              fields_used_in_header: [:first_name, :last_name, :customer_code, :phone],
+              summary_row: summary_row,
+              summary_row_class: "",
+              summary_row_label: I18n.t('admin.reports.total_by_customer')
+            }
+          ]
         end
 
         def ordering_fields
@@ -35,7 +40,6 @@ module Reporting
             [
               distributor_alias[:name],
               supplier_alias[:name],
-              sql_grouping(grouping_fields),
               Arel.sql("product"),
               Arel.sql("variant"),
               Arel.sql("last_name")

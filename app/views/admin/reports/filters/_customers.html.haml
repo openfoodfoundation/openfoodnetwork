@@ -1,0 +1,18 @@
+.row
+  .alpha.two.columns= label_tag nil, t(:report_customers_distributor)
+  .omega.fourteen.columns
+    = select_tag(:distributor_id,
+      options_from_collection_for_select(@data.distributors, :id, :name, params[:distributor_id]),
+      {:include_blank => true, :class => "select2 fullwidth light"})
+.row
+  .alpha.two.columns= label_tag nil, t(:report_customers_supplier)
+  .omega.fourteen.columns
+    = select_tag(:supplier_id,
+      options_from_collection_for_select(@data.suppliers, :id, :name, params[:supplier_id]),
+      {:include_blank => true, :class => "select2 fullwidth light"})
+.row
+  .alpha.two.columns= label_tag nil, t(:report_customers_cycle)
+  .omega.fourteen.columns
+    = select_tag(:order_cycle_id,
+      options_for_select(report_order_cycle_options(@data.order_cycles), params[:order_cycle_id]),
+      {:include_blank => true, :class => "select2 fullwidth light"})
