@@ -233,7 +233,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
         # reproducing bug #9131
         context "redirection to /summary page with no shipping method selected" do
           it "fails to render the /summary page" do
-            pending("#9131")
             visit checkout_step_path(:summary)
           end
         end
