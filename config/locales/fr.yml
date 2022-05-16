@@ -135,16 +135,6 @@ fr:
       try_again_later: "La carte a été refusée pour une raison inconnue."
       withdrawal_count_limit_exceeded: "L'acheteur a dépassé son plafond de carte bancaire."
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Début"
-        end_at: "Fin"
-        distributor_ids: "Boutique"
-        producer_ids: "Producteurs"
-        order_cycle_ids: "Cycles de vente"
-        enterprise_fee_ids: "Nom des marges et commissions"
-        shipping_method_ids: "Méthodes de livraison"
-        payment_method_ids: "Méthodes de paiement"
     errors:
       messages:
         inclusion: "n'est pas inclus dans la liste"
@@ -1207,6 +1197,8 @@ fr:
       unitsize: Unité de mesure
       total: Total
       total_items: Nb Articles
+      total_by_customer: Total par acheteur
+      total_by_supplier: Total par producteur
       supplier_totals: Totaux Cycle de Vente par Producteur
       supplier_totals_by_distributor: Totaux Cycle de Vente par Producteur pour chaque boutique
       totals_by_supplier: Totaux Cycle de Vente par boutique pour chaque Producteur
@@ -1222,6 +1214,7 @@ fr:
       tax_rates: Par taux de taxe
       pack_by_customer: Préparation des commandes par Acheteur
       pack_by_supplier: Préparation des commandes par Producteur
+      pack_by_product: Préparation des commandes par Produit
       orders_and_distributors:
         name: Commandes et Boutiques
         description: Liste des Commandes avec les détails par boutique
@@ -1270,17 +1263,18 @@ fr:
           quantity: "Quantité"
           is_temperature_controlled: "Temp Contrôlée ?"
           temp_controlled: "Temp Contrôlée ?"
+          price: "Prix"
       rendering_options:
-        generate_report: "Générer le rapport :"
+        generate_report: "Générer le rapport"
         on_screen: "A l'écran"
-        csv_spreadsheet: "CSV"
-        excel_spreadsheet: "Excel"
-        openoffice_spreadsheet: "OpenOffice"
-        hide_summary_rows: "Masquer les lignes de totaux"
+        spreadsheet: "Tableur (Excel, LibreOffice,...)"
+        display: Afficher
+        summary_row: Ligne de synthèse
+        header_row: Ligne titre
+        raw_data: Données brutes
+        formatted_data: Données formatées
       packing:
         name: "Rapports de préparation des paniers"
-        customer_report: "Préparation des commandes par Acheteur"
-        supplier_report: "Préparation des commandes par Producteur"
     subscriptions:
       index:
         title: "Abonnements"
@@ -2486,20 +2480,25 @@ fr:
   report_customers_cycle: "Cycle de vente"
   report_customers_type: "Type de rapport"
   report_customers_csv: "Télécharger en csv"
-  report_producers: "Producteurs:"
-  report_type: "Type de rapport: "
-  report_hubs: "Boutiques :"
-  report_payment: "Méthodes de paiement:"
-  report_distributor: "Distributeurs:"
+  report_producers: "Producteurs"
+  report_type: "Type de rapport"
+  report_hubs: "Boutiques"
+  report_payment: "Méthodes de paiement"
+  report_distributor: "Boutique"
   report_payment_by: 'Paiements par type'
   report_itemised_payment: 'Détail du paiement'
   report_payment_totals: 'Total des paiements'
   report_all: 'tous'
-  report_order_cycle: "Cycle de vente:"
-  report_enterprises: "Entreprises:"
-  report_users: "Utilisateurs :"
+  report_order_cycle: "Cycle de Vente"
+  report_hide_columns: Colonnes à masquer
+  report_enterprises: "Entreprises"
+  report_enterprise_fee: "Nom des marges et commissions"
+  report_users: "Gestionnaires"
   report_tax_rates: TVA par taux
   report_tax_types: TVA par type de produit/service
+  report_filters: Filtres
+  report_print: Imprimer
+  report_render_options: Mise en forme
   report_header_order_cycle: Cycle de Vente
   report_header_user: Utilisateur
   report_header_email: Email
@@ -2634,10 +2633,11 @@ fr:
   report_header_transaction_fee: Frais de Transaction (TVA non incluse)
   report_header_total_untaxable_admin: Total ajustements non taxables
   report_header_total_taxable_admin: Total ajustments soumis à TVA (inclut TVA)
-  initial_invoice_number: "N° de facture initial:"
-  invoice_date: "Date de facture:"
-  due_date: "Date d'échéance:"
-  account_code: "Code compte:"
+  report_xero_configuration: Configuration Xero
+  initial_invoice_number: "N° de facture initial :"
+  invoice_date: "Date de facture :"
+  due_date: "Date d'échéance :"
+  account_code: "Code compte :"
   equals: "Egal"
   contains: "contient"
   discount: "Réduction"
@@ -3192,9 +3192,6 @@ fr:
           bulk_coop_customer_payments: "Achats groupés - Paiement des acheteurs"
           bulk_coop_packing_sheets: "Achats groupés - Feuilles de préparation des paniers"
           bulk_coop_supplier_report: "Achats groupés - Totaux par Producteur"
-          date_range: "Plage de dates"
-          generate_report: "Générer le rapport"
-          report_format_csv: "Format de rapport CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Période"
@@ -3812,11 +3809,6 @@ fr:
       reports:
         table:
           select_and_search: "Sélectionner les filtres et cliquer sur %{option} pour accéder aux données."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Achats groupés - Totaux par Producteur'
-          bulk_coop_allocation: 'Achats groupés - Allocation'
-          bulk_coop_packing_sheets: 'Achats groupés - Feuilles de préparation des paniers'
-          bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteurs'
         customer_names_message:
           customer_names_tip: "Si les noms des acheteurs sont masqués, vous pouvez contacter le gestionnaire de la boutique. Il pourra vous donner accès à cette information."
       users:
