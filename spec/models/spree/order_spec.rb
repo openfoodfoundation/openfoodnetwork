@@ -315,7 +315,7 @@ describe Spree::Order do
       allow(order).to receive_messages(line_items: line_items = [])
       allow(order).to receive_messages(adjustments: adjustments = [])
       expect(order.line_items).to receive(:destroy_all)
-      expect(order.adjustments).to receive(:destroy_all)
+      expect(order.all_adjustments).to receive(:destroy_all)
 
       order.empty!
     end

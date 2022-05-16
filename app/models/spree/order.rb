@@ -430,7 +430,7 @@ module Spree
 
     def empty!
       line_items.destroy_all
-      adjustments.destroy_all
+      all_adjustments.destroy_all
       payments.clear
       shipments.destroy_all
     end
