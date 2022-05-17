@@ -1,6 +1,6 @@
 class RemoveBillAddressesWithNullPhone < ActiveRecord::Migration[6.1]
   class BillAddress < ActiveRecord::Base
-    self.table_name "spree_addresses"
+    self.table_name = "spree_addresses"
 
     scope :invalid, -> { where(phone: nil) }
   end
