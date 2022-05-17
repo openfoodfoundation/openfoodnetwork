@@ -31,7 +31,8 @@ module Admin
     private
 
     def export_report
-      send_data @report.render_as(report_format, controller: self), filename: report_filename
+      send_data @report.render_as(report_format, controller: self), filename: report_filename,
+                                                                    type: report_format
     end
 
     def render_report
