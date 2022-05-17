@@ -30,7 +30,7 @@
   .omega.fourteen.columns
     = select_tag :report_format, grouped_options_for_select({ |
       t('.formatted_data') => { t('.on_screen') => '', "PDF" => 'pdf', t('.spreadsheet') => 'xlsx' }, |
-      t('.raw_data') => { "CSV" => 'csv', "JSON" => 'json'}, |
+      t('.raw_data') => { "CSV" => 'csv' }, |
     })
 
 
