@@ -98,6 +98,28 @@ describe '
       end
     end
   end
+
+  shared_examples "Check display on each invoice: legacy and alternative" do |alternative_invoice|
+    let!(:completed_order) do
+      create(:completed_order_with_fees, distributor: distributor, order_cycle: order_cycle,
+                                         user: create(:user, email: "xxxxxx@example.com"),
+                                         bill_address: create(:address, phone: '1234567890'))
+    end
+
+    before do
+      allow(Spree::Config).to receive(:invoice_style2?).and_return(alternative_invoice)
+      login_as_admin_and_visit spree.print_admin_order_path(completed_order)
+      convert_pdf_to_page
+    end
+
+    it "display phone number and email of the customer" do
+      expect(page).to have_content "1234567890"
+      expect(page).to have_content "xxxxxx@example.com"
+    end
+  end
+
+  it_behaves_like "Check display on each invoice: legacy and alternative", false
+  it_behaves_like "Check display on each invoice: legacy and alternative", true
 end
 
 def convert_pdf_to_page
