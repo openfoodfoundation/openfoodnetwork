@@ -9,7 +9,7 @@ module Reporting
     end
 
     def table_headers
-      report.columns.keys.filter{ |key| !key.in?(fields_to_hide) }.map do |key|
+      report.columns.keys.filter{ |key| key.in?(fields_to_show) }.map do |key|
         translate_header(key)
       end
     end
@@ -18,12 +18,15 @@ module Reporting
       report.columns.keys.map { |key| [translate_header(key), key] }
     end
 
-    def fields_to_hide
-      if report.display_header_row?
-        report.formatted_rules.map { |rule| rule[:fields_used_in_header] }.flatten.reject(&:blank?)
-      else
-        []
-      end.concat(params_fields_to_hide)
+    def fields_to_show
+      fields_in_headers = if report.display_header_row?
+                            report.formatted_rules.map { |rule|
+                              rule[:fields_used_in_header]
+                            }.flatten.reject(&:blank?)
+                          else
+                            []
+                          end
+      params_fields_to_show - fields_in_headers
     end
 
     private
@@ -38,8 +41,8 @@ module Reporting
       Spree::Money.currency_symbol
     end
 
-    def params_fields_to_hide
-      report.params[:fields_to_hide]&.map(&:to_sym) || []
+    def params_fields_to_show
+      report.params[:fields_to_show]&.map(&:to_sym) || report.columns.keys
     end
   end
 end

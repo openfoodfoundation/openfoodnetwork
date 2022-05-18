@@ -9,7 +9,7 @@ module Reporting
     delegate :raw_render?, :html_render?, :display_header_row?, :display_summary_row?, to: :renderer
 
     delegate :rows, :table_rows, :grouped_data, to: :rows_builder
-    delegate :available_headers, :table_headers, :fields_to_hide, to: :headers_builder
+    delegate :available_headers, :table_headers, :fields_to_show, to: :headers_builder
 
     delegate :formatted_rules, :header_option?, :summary_row_option?, to: :ruler
 
