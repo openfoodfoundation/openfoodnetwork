@@ -250,6 +250,7 @@ describe Admin::ReportsController, type: :controller do
         .and_return(report = double(:report))
       allow(report).to receive(:table_headers).and_return []
       allow(report).to receive(:table_rows).and_return []
+      allow(report).to receive(:columns).and_return({})
       spree_get :show, report_type: :products_and_inventory, test: "foo"
       expect(assigns(:report)).to eq(report)
     end
@@ -300,6 +301,7 @@ describe Admin::ReportsController, type: :controller do
         .and_return(report = double(:report))
       allow(report).to receive(:table_headers).and_return []
       allow(report).to receive(:table_rows).and_return []
+      allow(report).to receive(:columns).and_return({})
       spree_get :show, report_type: :customers, test: "foo"
       expect(assigns(:report)).to eq(report)
     end

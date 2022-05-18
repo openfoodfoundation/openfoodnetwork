@@ -19,9 +19,9 @@
 
 - if @report.available_headers.present?
   .row
-    .alpha.two.columns= label_tag nil, t(:report_hide_columns)
+    .alpha.two.columns= label_tag nil, t(:report_columns)
     .omega.fourteen.columns
-      = select_tag(:fields_to_hide, options_for_select(@report.available_headers, params[:fields_to_hide]),
+      = select_tag(:fields_to_show, options_for_select(@report.available_headers, params[:fields_to_show]),
                   class: "select2 fullwidth", multiple: true)
 
 .row.rendering-options
