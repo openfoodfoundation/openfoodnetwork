@@ -66,6 +66,12 @@
         %br
         - if @order.bill_address
           = @order.bill_address.address_part2
+        - if @order.bill_address.phone.present?
+          %br
+          = @order.bill_address.phone
+        - if @order&.customer&.email.present?
+          %br
+          = @order.customer.email
 
 = render 'spree/admin/orders/invoice_table2'
 
