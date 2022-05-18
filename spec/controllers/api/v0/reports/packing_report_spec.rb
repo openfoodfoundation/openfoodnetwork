@@ -6,9 +6,6 @@ describe Api::V0::ReportsController, type: :controller do
   let(:params) {
     {
       report_type: 'packing',
-      # rspec seems to remove empty values to setting something dummy so the
-      # default_params will not overwritting this params
-      fields_to_hide: [:none],
       q: { order_created_at_lt: Time.zone.now }
     }
   }
