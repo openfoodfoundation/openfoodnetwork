@@ -21,6 +21,7 @@
     = render 'spree/admin/orders/_form/distribution_fields'
     -# This param passed to stop validation error in next page due to no line items in order yet:
     = hidden_field_tag 'suppress_error_msg', "true"
+    = hidden_field_tag "set_distribution_step", "true"
     = button_tag :class => 'secondary radius expand small', :id => 'update-button' do
       %i.icon-arrow-right
       = t(:next)
