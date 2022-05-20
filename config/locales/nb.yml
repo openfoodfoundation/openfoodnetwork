@@ -135,16 +135,6 @@ nb:
       try_again_later: "Kortet har blitt avvist av ukjent årsak."
       withdrawal_count_limit_exceeded: "Kunden har overskredet saldoen eller kredittgrensen som er tilgjengelig på kortet sitt."
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Start"
-        end_at: "Slutt"
-        distributor_ids: "Hubs"
-        producer_ids: "Produsenter"
-        order_cycle_ids: "Bestillingsrunder"
-        enterprise_fee_ids: "Avgiftsnavn"
-        shipping_method_ids: "Leveringsmetoder"
-        payment_method_ids: "Betalingsmetoder"
     errors:
       messages:
         inclusion: "er ikke inkludert i listen"
@@ -1205,6 +1195,8 @@ nb:
       unitsize: ENHETSSTØRRELSE
       total: SUM
       total_items: TOTALT ANTALL
+      total_by_customer: Totalt etter Kunde
+      total_by_supplier: Totalt etter Leverandør
       supplier_totals: Bestillingsrunde Leverandør Sum
       supplier_totals_by_distributor: Bestillingsrunde Leverandør Totaler etter Distributør
       totals_by_supplier: Bestillingsrunde Distributør Totaler etter Leverandør
@@ -1220,6 +1212,7 @@ nb:
       tax_rates: Avgiftsrater
       pack_by_customer: Pakk etter Kunde
       pack_by_supplier: Pakk etter Leverandør
+      pack_by_product: Pakke etter Produkt
       orders_and_distributors:
         name: Bestillinger og Distributører
         description: Bestillinger med distributørdetaljer
@@ -1268,17 +1261,18 @@ nb:
           quantity: "Mengde"
           is_temperature_controlled: "Temperaturkontrollert?"
           temp_controlled: "Temperaturkontrollert?"
+          price: "Pris"
       rendering_options:
-        generate_report: "Generer rapport:"
+        generate_report: "Generer rapport"
         on_screen: "På skjermen"
-        csv_spreadsheet: "CSV-regneark"
-        excel_spreadsheet: "Excel regneark"
-        openoffice_spreadsheet: "OpenOffice-regneark"
-        hide_summary_rows: "Skjul sammendragsrader"
+        spreadsheet: "Regneark (Excel, OpenOffice..)"
+        display: Visning
+        summary_row: Sammendragsrad
+        header_row: Overskriftsrad
+        raw_data: Rådata
+        formatted_data: Formaterte data
       packing:
         name: "Pakkerapporter"
-        customer_report: "Pakk etter Kunde"
-        supplier_report: "Pakk etter Leverandør"
     subscriptions:
       index:
         title: "Abonnement"
@@ -2484,20 +2478,25 @@ nb:
   report_customers_cycle: "Bestillingsrunde"
   report_customers_type: "Rapporttype"
   report_customers_csv: "Last ned som csv"
-  report_producers: "Produsenter:"
-  report_type: "Rapporttype:"
-  report_hubs: "Hubs:"
-  report_payment: "Betalingsmetoder:"
-  report_distributor: "Distributør:"
+  report_producers: "Produsenter"
+  report_type: "Rapporttype"
+  report_hubs: "Hubs"
+  report_payment: "Betalingsmetoder"
+  report_distributor: "Distributør"
   report_payment_by: 'Betalinger Etter Type:'
   report_itemised_payment: 'Betalingstotaler etter Artikkel'
   report_payment_totals: 'Betalingstotaler'
   report_all: 'alle'
-  report_order_cycle: "Bestillingsrunde:"
-  report_enterprises: "Bedrifter:"
-  report_users: "Brukere:"
+  report_order_cycle: "Bestillingsrunde"
+  report_hide_columns: Kolonner å Skjule
+  report_enterprises: "Bedrifter"
+  report_enterprise_fee: "Avgiftsnavn"
+  report_users: "Brukere"
   report_tax_rates: Avgiftsrater
   report_tax_types: Avgiftstyper
+  report_filters: Rapportfiltre
+  report_print: Skriv ut rapport
+  report_render_options: Visningsalternativer
   report_header_order_cycle: Bestillingsrunde
   report_header_user: Bruker
   report_header_email: Epost
@@ -2632,10 +2631,11 @@ nb:
   report_header_transaction_fee: Transaksjonsgebyr (ingen skatt)
   report_header_total_untaxable_admin: Samlede avgiftsfrie administreringsjusteringer (ingen skatt)
   report_header_total_taxable_admin: Sum skattepliktige adminintreringsjusteringer (inklusive skatt)
-  initial_invoice_number: "Første fakturanummer:"
-  invoice_date: "Fakturadato:"
-  due_date: "Tidsfrist:"
-  account_code: "Kontokode:"
+  report_xero_configuration: Xero-konfigurasjon
+  initial_invoice_number: "Opprinnelig fakturanummer"
+  invoice_date: "Fakturadato"
+  due_date: "Tidsfrist"
+  account_code: "Kontokode"
   equals: "Tilsvarer"
   contains: "inneholder"
   discount: "Rabatt"
@@ -3160,9 +3160,6 @@ nb:
           bulk_coop_customer_payments: "Bulk Co-op kundebetalinger"
           bulk_coop_packing_sheets: "Bulk Co-op pakkeliste"
           bulk_coop_supplier_report: "Bulk Co-op Leverandørrapport"
-          date_range: "Datointervall"
-          generate_report: "Generer rapport"
-          report_format_csv: "Rapportformat CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Datointervall"
@@ -3780,11 +3777,6 @@ nb:
       reports:
         table:
           select_and_search: "Velg filtre og klikk på %{option} for å få tilgang til dine data."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Bulk Co-op - Totaler etter Leverandør'
-          bulk_coop_allocation: 'Bulk Co-op - Allokering'
-          bulk_coop_packing_sheets: 'Bulk Co-op - Pakkseddel'
-          bulk_coop_customer_payments: 'Bulk Co-op - Kunde Betalinger'
         customer_names_message:
           customer_names_tip: "Hvis kundenavnene er skjult for bestillinger du har levert, kan du kontakte distributøren og spørre om de kan oppdatere sine butikkinnstillinger slik at leverandørene kan se kundenavn."
       users:
