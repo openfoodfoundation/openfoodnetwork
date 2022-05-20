@@ -277,32 +277,10 @@ describe '
 
       login_as user
       new_order_with_distribution(distributor, order_cycle)
-      expect(page).to have_content I18n.t('spree.add_product').upcase
+      expect(page).to have_selector 'h1', text: "Customer Details"
     end
 
     it "creates order and shipment successfully and allows proceeding to payment" do
-      select2_select product.name, from: 'add_variant_id', search: true
-
-      within("table.stock-levels") do
-        expect(page).to have_selector("#stock_item_quantity")
-        fill_in "stock_item_quantity", with: 50
-        find("button.add_variant").click
-      end
-
-      expect(page).to_not have_selector("table.stock-levels")
-      expect(page).to have_selector("table.stock-contents")
-
-      within("tr.stock-item") do
-        expect(page).to have_text("50")
-      end
-
-      order = Spree::Order.last
-      expect(order.line_items.first.quantity).to eq(50)
-      expect(order.shipments.count).to eq(1)
-
-      click_button "Update And Recalculate Fees"
-      expect(page).to have_selector 'h1', text: "Customer Details"
-
       fill_in "order_email", with: "test@test.com"
       
       expect(page).to have_selector('#order_ship_address_attributes_firstname')
@@ -326,19 +304,40 @@ describe '
       select "Victoria", from: "order_bill_address_attributes_state_id"
       fill_in "order_bill_address_attributes_phone", with: "111 1111 1111"
 
-      expect { click_button "Update" }.to change { Customer.count }.by(1)
+      click_button "Update"
+
+      expect(page).to have_content "Customer Details updated"
+      click_link "Order Details"
+
+      expect(page).to have_content I18n.t('spree.add_product').upcase
+      select2_select product.name, from: 'add_variant_id', search: true
+
+      within("table.stock-levels") do
+        expect(page).to have_selector("#stock_item_quantity")
+        fill_in "stock_item_quantity", with: 50
+        find("button.add_variant").click
+      end
+
+      expect(page).to_not have_selector("table.stock-levels")
+      expect(page).to have_selector("table.stock-contents")
+
+      within("tr.stock-item") do
+        expect(page).to have_text("50")
+      end
+
+      order = Spree::Order.last
+      expect(order.line_items.first.quantity).to eq(50)
+      expect(order.shipments.count).to eq(1)
 
       new_customer = Customer.last
-
       expect(new_customer.full_name).to eq('Clark Kent')
       expect(new_customer.bill_address.address1).to eq('Smallville')
       expect(new_customer.bill_address.city).to eq('Kansas')
       expect(new_customer.bill_address.zipcode).to eq('SP1 M11')
       expect(new_customer.bill_address.phone).to eq('111 1111 1111')
-
       expect(new_customer.bill_address).to eq(new_customer.ship_address)
 
-      expect(page).to have_content "Customer Details updated"
+      click_button "Update And Recalculate Fees"
 
       click_link "Payments"
 
