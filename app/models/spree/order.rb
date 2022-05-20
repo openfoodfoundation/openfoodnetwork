@@ -433,6 +433,7 @@ module Spree
       all_adjustments.destroy_all
       payments.clear
       shipments.destroy_all
+      restart_checkout_flow if state == "payment"
     end
 
     def state_changed(name)
