@@ -65,16 +65,6 @@ pt_BR:
     error_code:
       incorrect_number: "O número do cartão está incorreto."
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Início"
-        end_at: "Fim"
-        distributor_ids: "Centrais"
-        producer_ids: "Produtores"
-        order_cycle_ids: "Ciclos de pedidos"
-        enterprise_fee_ids: "Nomes das taxas"
-        shipping_method_ids: "Método de Envio"
-        payment_method_ids: "Métodos de pagamento"
     errors:
       messages:
         inclusion: "não está incluso na lista"
@@ -1146,10 +1136,11 @@ pt_BR:
           quantity: "Quantidade"
           is_temperature_controlled: "Temperatura controlada?"
           temp_controlled: "Temperatura controlada?"
+          price: "Preço"
+      rendering_options:
+        display: Exibição
       packing:
         name: "Relatórios de pacotes"
-        customer_report: "Pacote por cliente"
-        supplier_report: "Pacote por fornecedor"
     subscriptions:
       index:
         title: "Assinaturas"
@@ -2295,18 +2286,17 @@ pt_BR:
   report_customers_cycle: "Ciclo de pedidos"
   report_customers_type: "Relatar tipo"
   report_customers_csv: "Fazer download como csv"
-  report_producers: "Produtores:"
-  report_type: "Relatar tipo:"
-  report_hubs: "Centrais:"
+  report_producers: "Produtores"
+  report_type: "Relatar tipo"
   report_payment: "Métodos de pagamento"
-  report_distributor: "Distribuidor:"
+  report_distributor: "Distribuidor"
   report_payment_by: 'Pagamentos por tipo'
   report_itemised_payment: 'Total de pagamentos discriminados'
   report_payment_totals: 'Total de pagamentos'
   report_all: 'todos'
-  report_order_cycle: "Ciclo de pedidos:"
-  report_enterprises: "Iniciativas:"
-  report_users: "Usuários:"
+  report_order_cycle: "Ciclo de pedidos"
+  report_enterprises: "Iniciativas"
+  report_users: "Usuários"
   report_tax_rates: Alíquotas das taxas
   report_tax_types: Tipos de impostos
   report_header_order_cycle: Ciclo de pedidos
@@ -2443,10 +2433,6 @@ pt_BR:
   report_header_transaction_fee: Taxa de transação (sem impostos)
   report_header_total_untaxable_admin: Total de ajustes de administração não tributáveis (sem impostos)
   report_header_total_taxable_admin: Total de ajustes de administração tributáveis (com impostos)
-  initial_invoice_number: "Número de recibo inicial:"
-  invoice_date: "Data de recibo:"
-  due_date: "Data limite:"
-  account_code: "Código de conta:"
   equals: "Equivalente a"
   contains: "contém"
   discount: "Desconto"
@@ -2962,11 +2948,6 @@ pt_BR:
       start_free_profile: "Comece com um perfil gratuito e expanda quando estiver pronto!"
   order_management:
     reports:
-      bulk_coop:
-        filters:
-          date_range: "Período"
-          generate_report: "Gerar Relatório"
-          report_format_csv: "Relatório formato CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Período"
@@ -3578,11 +3559,6 @@ pt_BR:
       reports:
         table:
           select_and_search: "Selecione os filtros e clique em %{option} para acessar seus dados."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Atacado Cooperativa - Totais por Fornecedor'
-          bulk_coop_allocation: 'Atacado Cooperativa - Alocação'
-          bulk_coop_packing_sheets: 'Atacado Cooperativa - Folhas de Empacotamento'
-          bulk_coop_customer_payments: 'Atacado Cooperativa - Pagamentos de Cliente'
         customer_names_message:
           customer_names_tip: "Se os nomes dos clientes estiverem ocultos na lista, você pode entrar em contato com o seu distribuidor e perguntar se ele pode atualizar as preferências de modo que os fornecedores possam ver os nomes dos clientes."
       users:

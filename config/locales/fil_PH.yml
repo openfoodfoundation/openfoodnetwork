@@ -55,16 +55,6 @@ fil_PH:
             on_demand_but_count_on_hand_set: "ay dapat blanko kung on demand"
             limited_stock_but_no_count_on_hand: "ay dapat matukoy sapagkat ipipilit ang limitadong stock"
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Magsisimula"
-        end_at: "Magtatapos"
-        distributor_ids: "Hubs"
-        producer_ids: "Producers"
-        order_cycle_ids: "Order Cycles"
-        enterprise_fee_ids: "pangalan ng mga Fees"
-        shipping_method_ids: "Mga Paraan ng Pagpapadala"
-        payment_method_ids: "Mga Paraan ng Pagbabayad"
     errors:
       messages:
         inclusion: "ay hindi kasama sa listahan"
@@ -1069,10 +1059,11 @@ fil_PH:
           quantity: "Dami"
           is_temperature_controlled: "TempControlled?"
           temp_controlled: "TempControlled?"
+          price: "Presyo"
+      rendering_options:
+        display: Ipakita
       packing:
         name: "ulat sa pagbabalot"
-        customer_report: "ibinalot ng Customer"
-        supplier_report: "ibinalot ng Supplier"
     subscriptions:
       index:
         title: "mga nauulit na order"
@@ -2153,18 +2144,19 @@ fil_PH:
   report_customers_cycle: "order cycle"
   report_customers_type: "uri ng ulat"
   report_customers_csv: "i-download bilang csv"
-  report_producers: "mga producer:"
-  report_type: "uri ng ulat:"
-  report_hubs: "mga Hub:"
-  report_payment: "mga uri ng pagbabayad:"
-  report_distributor: "Distributor:"
+  report_producers: "Mga Producer"
+  report_type: "uri ng ulat"
+  report_hubs: "mga Hub"
+  report_payment: "Mga Paraan ng Pagbabayad"
+  report_distributor: "Distributor"
   report_payment_by: 'pagbabayad kada uri'
   report_itemised_payment: 'kabuuan ng mga in-itemise na bayad'
   report_payment_totals: 'kabuuan ng bayad'
   report_all: 'lahat'
-  report_order_cycle: "Order Cycle:"
-  report_enterprises: "mga Enterprise:"
-  report_users: "mga gumagamit:"
+  report_order_cycle: "Order Cycle"
+  report_enterprises: "mga enterprise"
+  report_enterprise_fee: "pangalan ng mga Fees"
+  report_users: "mga gumagamit"
   report_tax_rates: mga rate ng tax
   report_tax_types: mga uri ng tax
   report_header_order_cycle: order cycle
@@ -2301,10 +2293,6 @@ fil_PH:
   report_header_transaction_fee: Bayad sa Transaksiyon (walang tax)
   report_header_total_untaxable_admin: kabuuang untaxable na pagsasaayos ng admin (walang tax)
   report_header_total_taxable_admin: kabuuang taxable na pagsasaayos ng admin (kasama ang tax)
-  initial_invoice_number: "paunang numero ng invoice:"
-  invoice_date: "Petsa ng Invoice:"
-  due_date: "Due Date:"
-  account_code: "code ng Account:"
   equals: "katumbas"
   contains: "naglalaman"
   discount: "Diskuwento"
@@ -2793,9 +2781,6 @@ fil_PH:
       start_free_profile: "Magsimula sa libreng profile at palawakin kapag handa ka na!"
   order_management:
     reports:
-      bulk_coop:
-        filters:
-          generate_report: "Bumuo ng ulat"
       enterprise_fee_summaries:
         filters:
           date_range: "saklaw na petsa"
@@ -3307,11 +3292,6 @@ fil_PH:
       reports:
         table:
           select_and_search: "pumili ng mga filter at pindutin ang%{option} para ma-access ang inyong data."
-        bulk_coop:
-          bulk_coop_supplier_report: 'bultuhang Co-Op - kabuuan galing sa Supplier'
-          bulk_coop_allocation: 'bultuhang Co-Op - Alokasyon'
-          bulk_coop_packing_sheets: 'bultuhang Co-Op - piraso ng pagbabalot'
-          bulk_coop_customer_payments: 'bultuhang Co-Op - mga bayad ng customer'
       users:
         index:
           listing_users: "Nililista ang mga User"

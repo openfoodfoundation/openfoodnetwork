@@ -1269,7 +1269,7 @@ fr:
         on_screen: "A l'écran"
         spreadsheet: "Tableur (Excel, LibreOffice,...)"
         display: Afficher
-        summary_row: Ligne de synthèse
+        summary_row: Ligne TOTAL
         header_row: Ligne titre
         raw_data: Données brutes
         formatted_data: Données formatées

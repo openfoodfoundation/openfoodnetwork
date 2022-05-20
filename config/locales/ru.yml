@@ -135,16 +135,6 @@ ru:
       try_again_later: "Карта была отклонена по неизвестной причине."
       withdrawal_count_limit_exceeded: "Клиент превысил баланс или кредитный лимит, доступный на его карте."
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Начало"
-        end_at: "Конец"
-        distributor_ids: "Центры"
-        producer_ids: "Производители"
-        order_cycle_ids: "Циклы Заказов"
-        enterprise_fee_ids: "Названия Оплаты"
-        shipping_method_ids: "Способы Доставки"
-        payment_method_ids: "Способы Оплаты"
     errors:
       messages:
         inclusion: "не включён в список"
@@ -1270,17 +1260,12 @@ ru:
           quantity: "Количество"
           is_temperature_controlled: "Контроль Температуры?"
           temp_controlled: "Контроль Температуры?"
+          price: "Цена"
       rendering_options:
-        generate_report: "Создать отчет:"
         on_screen: "На экране"
-        csv_spreadsheet: "Таблица CSV"
-        excel_spreadsheet: "Таблица Excel"
-        openoffice_spreadsheet: "Таблица OpenOffice"
-        hide_summary_rows: "Скрыть сводные Строки"
+        display: Показать
       packing:
         name: "Выборочные Отчёты"
-        customer_report: "Выборка по Клиенту"
-        supplier_report: "Выборка по Поставщику"
     subscriptions:
       index:
         title: "Подписки"
@@ -2487,18 +2472,19 @@ ru:
   report_customers_cycle: "Цикл Заказа"
   report_customers_type: "Тип Отчета"
   report_customers_csv: "Скачать как csv"
-  report_producers: "Производители:"
-  report_type: "Тип Отчета:"
-  report_hubs: "Центры:"
-  report_payment: "Способ Оплаты:"
-  report_distributor: "Дистрибьютор:"
+  report_producers: "Производители"
+  report_type: "Тип Отчета"
+  report_hubs: "Центры"
+  report_payment: "Способы Оплаты"
+  report_distributor: "Дистрибьютор"
   report_payment_by: 'Платежи По Типу'
   report_itemised_payment: 'Детальные Итоги Платежей'
   report_payment_totals: 'Итоги Платежей'
   report_all: 'все'
-  report_order_cycle: "Цикл Заказа:"
-  report_enterprises: "Предприятия:"
-  report_users: "Пользователи:"
+  report_order_cycle: "Цикл заказа"
+  report_enterprises: "Предприятия"
+  report_enterprise_fee: "Названия Оплаты"
+  report_users: "Пользователи"
   report_tax_rates: Налоговые Ставки
   report_tax_types: Типы Налогов
   report_header_order_cycle: Цикл Заказа
@@ -2635,10 +2621,6 @@ ru:
   report_header_transaction_fee: Комиссия за Операцию (без налога)
   report_header_total_untaxable_admin: Всего необлагаемых налогом административных корректировок (без налогов)
   report_header_total_taxable_admin: Всего налогооблагаемых административных корректировок (включая налоги)
-  initial_invoice_number: "Начальный номер счета:"
-  invoice_date: "Дата Счёта:"
-  due_date: "Срок Выполнения:"
-  account_code: "Код счета:"
   equals: "Равно"
   contains: "содержит"
   discount: "Скидка"
@@ -3219,9 +3201,6 @@ ru:
           bulk_coop_customer_payments: "Массовые Платежи Клиентов Кооперативов"
           bulk_coop_packing_sheets: "Упаковочные листы для массовых кооперативов"
           bulk_coop_supplier_report: "Отчет о массовых кооперативных поставках"
-          date_range: "Диапазон дат"
-          generate_report: "Создать отчет"
-          report_format_csv: "Формат отчета CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Диапозон даты"
@@ -3839,11 +3818,6 @@ ru:
       reports:
         table:
           select_and_search: "Для получения данных, выберите фильры и нажмите на %{option}."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Массовая Кооперация - Итоги по Поставщикам'
-          bulk_coop_allocation: 'Массовая Кооперация - Размещение'
-          bulk_coop_packing_sheets: 'Массовая Кооперация - Упаковочные листы'
-          bulk_coop_customer_payments: 'Массовая Кооперация - Клиентские Платежи'
         customer_names_message:
           customer_names_tip: "Если имена клиентов скрыты для заказов, которые вы предоставили, вы можете связаться с дистрибьютором и спросить, могут ли они обновить настройки своего магазина, чтобы их поставщики могли просматривать имена клиентов."
       users:

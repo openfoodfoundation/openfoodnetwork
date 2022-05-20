@@ -114,16 +114,6 @@ hu:
       try_again_later: "A kártyát ismeretlen okból elutasították."
       withdrawal_count_limit_exceeded: "Az ügyfél túllépte a kártyáján rendelkezésre álló egyenleget vagy hitelkeretet."
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Rajt"
-        end_at: "Vége"
-        distributor_ids: "Hubok"
-        producer_ids: "Producerek"
-        order_cycle_ids: "Ciklusok rendelése"
-        enterprise_fee_ids: "Díjak nevek"
-        shipping_method_ids: "Szállítási módok"
-        payment_method_ids: "fizetési módok"
     errors:
       messages:
         inclusion: "nem szerepel a listán"
@@ -1245,17 +1235,12 @@ hu:
           quantity: "Mennyiség"
           is_temperature_controlled: "TempControlled?"
           temp_controlled: "TempControlled?"
+          price: "Ár"
       rendering_options:
-        generate_report: "Jelentést készít:"
         on_screen: "A képernyőn"
-        csv_spreadsheet: "CSV-táblázat"
-        excel_spreadsheet: "Exel táblázat"
-        openoffice_spreadsheet: "OpenOffice táblázat"
-        hide_summary_rows: "Összefoglaló sorok elrejtése"
+        display: Kijelző
       packing:
         name: "Csomagolási jelentések"
-        customer_report: "Csomagolás Ügyfél által"
-        supplier_report: "Csomagolás Szállító által"
     subscriptions:
       index:
         title: "Előfizetések"
@@ -2458,18 +2443,19 @@ hu:
   report_customers_cycle: "Rendelési ciklus"
   report_customers_type: "Jelentés típusa"
   report_customers_csv: "Letöltés csv-ként"
-  report_producers: "Gyártók:"
-  report_type: "Jelentés típusa:"
-  report_hubs: "Hubok:"
-  report_payment: "Fizetési módok:"
-  report_distributor: "Elosztó:"
+  report_producers: "Producerek"
+  report_type: "Jelentés típusa"
+  report_hubs: "Hubok"
+  report_payment: "fizetési módok"
+  report_distributor: "Elosztó"
   report_payment_by: 'Fizetés típusonként'
   report_itemised_payment: 'Tételes kifizetési összegek'
   report_payment_totals: 'Fizetési összegek'
   report_all: 'minden'''
-  report_order_cycle: "Rendelési ciklus:"
-  report_enterprises: "Vállalkozások:"
-  report_users: "Felhasználók:"
+  report_order_cycle: "Rendelési ciklus"
+  report_enterprises: "Vállalkozások"
+  report_enterprise_fee: "Díjak nevek"
+  report_users: "Felhasználók"
   report_tax_rates: Adókulcsok
   report_tax_types: Adófajták
   report_header_order_cycle: Rendelési ciklus
@@ -2606,10 +2592,6 @@ hu:
   report_header_transaction_fee: Tranzakciós díj (adó nélkül)
   report_header_total_untaxable_admin: Összes adózhatatlan rendszergazdai korrekció (adó nélkül)
   report_header_total_taxable_admin: Összes adóköteles rendszergazdai korrekció (adóval együtt)
-  initial_invoice_number: "Kezdeti számla száma:"
-  invoice_date: "Számla kiállítási dátuma:"
-  due_date: "Határidő:"
-  account_code: "Fiók kód:"
   equals: "Egyenlő"
   contains: "tartalmaz"
   discount: "Kedvezmény"
@@ -3186,9 +3168,6 @@ hu:
           bulk_coop_customer_payments: "Tömeges Co-op ügyfélfizetések"
           bulk_coop_packing_sheets: "Tömeges Co-op csomagolólapok"
           bulk_coop_supplier_report: "Tömeges szövetkezeti beszállítói jelentés"
-          date_range: "Időintervallum"
-          generate_report: "Jelentést készít"
-          report_format_csv: "Jelentés formátuma CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Időintervallum"
@@ -3806,11 +3785,6 @@ hu:
       reports:
         table:
           select_and_search: "Válassza ki a szűrőket, és kattintson a %{option} elemre az adatok eléréséhez."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Tömeges együttműködés – összesítés szállító szerint'
-          bulk_coop_allocation: 'Tömeges együttműködés – kiosztás”'
-          bulk_coop_packing_sheets: 'Tömeges együttműködés – csomagolólapok'
-          bulk_coop_customer_payments: 'Tömeges együttműködés – Ügyfélfizetések'
         customer_names_message:
           customer_names_tip: "Ha az Ön által szállított rendeléseknél a vásárlók nevei el vannak rejtve, felveheti a kapcsolatot a forgalmazóval, és megkérdezheti, hogy frissítheti-e bolti beállításait, hogy beszállítóik megtekinthessék a vásárlók nevét."
       users:

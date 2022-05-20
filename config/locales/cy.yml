@@ -135,16 +135,6 @@ cy:
       try_again_later: "Gwrthodwyd y cerdyn am reswm anhysbys."
       withdrawal_count_limit_exceeded: "Mae'r cwsmer wedi mynd dros y balans neu'r cyfyngiad credyd sydd ar gael er ei gerdyn."
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Dechrau"
-        end_at: "Diwedd"
-        distributor_ids: "Hybiau"
-        producer_ids: "Prynu bwyd"
-        order_cycle_ids: "Cylchoedd Archebu"
-        enterprise_fee_ids: "Enwau Ffioedd"
-        shipping_method_ids: "Dulliau Cludo"
-        payment_method_ids: "Dulliau Talu"
     errors:
       messages:
         inclusion: "heb ei gynnwys ar y rhestr"
@@ -1268,17 +1258,12 @@ cy:
           quantity: "Nifer"
           is_temperature_controlled: "Tymheredd a reolir?"
           temp_controlled: "Tymheredd a reolir?"
+          price: "Pris"
       rendering_options:
-        generate_report: "Creu adroddiad:"
         on_screen: "Ar y sgrin"
-        csv_spreadsheet: "Taenlen CSV"
-        excel_spreadsheet: "Taenlen Excel"
-        openoffice_spreadsheet: "Taenlen OpenOffice"
-        hide_summary_rows: "Cuddio Rhesi cryno"
+        display: Arddangos
       packing:
         name: "Adroddiadau Pacio"
-        customer_report: "Pecynnu fesul Cwsmer"
-        supplier_report: "Pecynnu fesul Cyflenwr"
     subscriptions:
       index:
         title: "Tanysgrifiadau"
@@ -2484,18 +2469,19 @@ cy:
   report_customers_cycle: "Cylch archebu "
   report_customers_type: "Math o Adroddiad"
   report_customers_csv: "Lawrlwytho fel csv"
-  report_producers: "Cynhyrchwyr:"
-  report_type: "Math o Adroddiad:"
-  report_hubs: "Hybiau:"
-  report_payment: "Dulliau Talu:"
-  report_distributor: "Dosbarthwr:"
+  report_producers: "Prynu bwyd"
+  report_type: "Math o Adroddiad"
+  report_hubs: "Hybiau"
+  report_payment: "Dulliau Talu"
+  report_distributor: "Dosbarthwr"
   report_payment_by: 'Taliadau yn ôl Math'
   report_itemised_payment: 'Cyfanswm Taliadau Unigol'
   report_payment_totals: 'Cyfanswm Taliadau'
   report_all: 'I gyd'
-  report_order_cycle: "Cylch Archebu:"
-  report_enterprises: "Mentrau:"
-  report_users: "Defnyddwyr:"
+  report_order_cycle: "Cylch archebu"
+  report_enterprises: "Mentrau"
+  report_enterprise_fee: "Enwau Ffioedd"
+  report_users: "Defnyddwyr"
   report_tax_rates: Cyfraddau treth
   report_tax_types: Mathau treth
   report_header_order_cycle: Cylch archebu
@@ -2632,10 +2618,6 @@ cy:
   report_header_transaction_fee: Ffi Trafodiad (dim treth)
   report_header_total_untaxable_admin: Cyfanswm addasiadau gweinyddol na ellir eu  trethu (dim treth)
   report_header_total_taxable_admin: Cyfanswm addasiadau gweinyddol trethadwy (sy'n cynnwys treth)
-  initial_invoice_number: "Rhif anfoneb cychwynnol:"
-  invoice_date: "Dyddiad yr anfoneb:"
-  due_date: "Dyddiad  dyledus:"
-  account_code: "Cod cyfrif:"
   equals: "Yn cyfateb i"
   contains: "yn cynnwys"
   discount: "Gostyngiad"
@@ -3213,9 +3195,6 @@ cy:
           bulk_coop_customer_payments: "Taliadau Cwsmer Swmp gydweithfa"
           bulk_coop_packing_sheets: "Dalenni Pecynnu Swmp gydweithfa"
           bulk_coop_supplier_report: "Adroddiad Cyflenwr Swmp gydweithfa"
-          date_range: "Ystod dyddiad"
-          generate_report: "Cynhyrchu Adroddiad"
-          report_format_csv: "Fformat adroddiad CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Ystod Dyddiad"
@@ -3833,11 +3812,6 @@ cy:
       reports:
         table:
           select_and_search: "Dewis hidlwyr a chlicio ar %{option} i gael mynediad i'ch data."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Cydweithfa Swmp - Cyfanswm gan Gyflenwr'
-          bulk_coop_allocation: 'Cydweithfa Swmp - Dyraniad'
-          bulk_coop_packing_sheets: 'Cydweithfa Swmp - Taflenni Pacio'
-          bulk_coop_customer_payments: 'Cydweithfa Swmp - Taliadau Cwsmer'
         customer_names_message:
           customer_names_tip: "Os cuddiwyd enwau cwsmeriaid ar gyfer archebion a gyflenwyd gennych, gallwch gysylltu â'r dosbarthwr a gofyn a yw'n bosib iddyn nhw ddiweddaru eu dewisiadau siop i ganiatáu i'w cyflenwyr weld enwau cwsmeriaid."
       users:

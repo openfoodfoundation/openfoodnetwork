@@ -114,16 +114,6 @@ it:
       try_again_later: "La carta non è stata accettata per ragioni sconosciute."
       withdrawal_count_limit_exceeded: "Il cliente ha "
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Inizio"
-        end_at: "Fine"
-        distributor_ids: "Distributori"
-        producer_ids: "Produttori"
-        order_cycle_ids: "Cicli di Richieste"
-        enterprise_fee_ids: "Nomi Tariffe"
-        shipping_method_ids: "Metodi di Spedizione"
-        payment_method_ids: "Metodi di Pagamento"
     errors:
       messages:
         inclusion: "non incluso nella lista"
@@ -1245,17 +1235,12 @@ it:
           quantity: "Quantità"
           is_temperature_controlled: "Controllo Temperatura?"
           temp_controlled: "Controllo Temperatura?"
+          price: "Prezzo"
       rendering_options:
-        generate_report: "Genera resoconto:"
         on_screen: "Sullo schermo"
-        csv_spreadsheet: "Foglio CSV"
-        excel_spreadsheet: "Foglio Excel"
-        openoffice_spreadsheet: "Foglio OpenOffice"
-        hide_summary_rows: "Nascondi righe totali"
+        display: Visualizza
       packing:
         name: "Resoconti smistamento/imballaggio"
-        customer_report: "Imballato dal Cliente"
-        supplier_report: "Smistato dai fornitori"
     subscriptions:
       index:
         title: "Abbonamenti"
@@ -2461,18 +2446,19 @@ it:
   report_customers_cycle: "Ciclo di richieste"
   report_customers_type: "Tipo di rapporto"
   report_customers_csv: "Scarica come csv"
-  report_producers: "Produttori:"
-  report_type: "Tipo di rapporto:"
-  report_hubs: "Hubs:"
-  report_payment: "Metodi di Pagamento:"
-  report_distributor: "Distributore:"
+  report_producers: "Produttori"
+  report_type: "Tipo di rapporto"
+  report_hubs: "Distributori"
+  report_payment: "Metodi di Pagamento"
+  report_distributor: "Distributore"
   report_payment_by: 'Pagamenti per tipo'
   report_itemised_payment: 'Totali dei pagamenti dettagliati'
   report_payment_totals: 'Totale pagamenti'
   report_all: 'tutti'
-  report_order_cycle: "Ciclo d'ordine:"
-  report_enterprises: "Aziende:"
-  report_users: "Utenti:"
+  report_order_cycle: "Ciclo di richieste"
+  report_enterprises: "Aziende"
+  report_enterprise_fee: "Nomi Tariffe"
+  report_users: "Utenti"
   report_tax_rates: Tariffe
   report_tax_types: Tipo tariffe
   report_header_order_cycle: Ciclo di richieste
@@ -2609,10 +2595,6 @@ it:
   report_header_transaction_fee: Commissioni di transazione (no tasse)
   report_header_total_untaxable_admin: Aggiustamenti amministrativi totali non tassabili (nessuna imposta)
   report_header_total_taxable_admin: Totale rettifiche amministrative tassabili (tasse incluse)
-  initial_invoice_number: "Numero documento iniziale:"
-  invoice_date: "Data documento:"
-  due_date: "Scadenza:"
-  account_code: "Codice account:"
   equals: "Uguale a"
   contains: "contiene"
   discount: "Sconto"
@@ -3141,9 +3123,6 @@ it:
           bulk_coop_customer_payments: "Pagamenti clienti in serie"
           bulk_coop_packing_sheets: "Fogli Imballaggi in serie"
           bulk_coop_supplier_report: "Report fornitori in serie"
-          date_range: "Range di date"
-          generate_report: "Genera report"
-          report_format_csv: "Report formato CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Intervallo di date"
@@ -3761,11 +3740,6 @@ it:
       reports:
         table:
           select_and_search: "Seleziona filtri e clicca su %{option} per accedere al tuo dato"
-        bulk_coop:
-          bulk_coop_supplier_report: 'Totali per fornitore - tabella'
-          bulk_coop_allocation: 'Assegnazione - tabella'
-          bulk_coop_packing_sheets: 'Imballaggio - tabella'
-          bulk_coop_customer_payments: 'Bulk Co-op - Pagamenti Clienti'
         customer_names_message:
           customer_names_tip: "Se i nomi dei clienti sono nascosti nelle gentili richieste che hai evaso, puoi contattare il distributore e chiedergli di aggiornare le sue impostazioni per permettere ai suoi fornitori di visualizzare i nomi dei clienti."
       users:

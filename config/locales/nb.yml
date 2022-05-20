@@ -1195,7 +1195,7 @@ nb:
       unitsize: ENHETSSTØRRELSE
       total: SUM
       total_items: TOTALT ANTALL
-      total_by_customer: Totalt etter Kunde
+      total_by_customer: Totalt etter kunde
       total_by_supplier: Totalt etter Leverandør
       supplier_totals: Bestillingsrunde Leverandør Sum
       supplier_totals_by_distributor: Bestillingsrunde Leverandør Totaler etter Distributør

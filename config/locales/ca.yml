@@ -96,16 +96,6 @@ ca:
       try_again_later: "La targeta s'ha rebutjat per un motiu desconegut."
       withdrawal_count_limit_exceeded: "El consumidor ha superat el saldo o el límit de crèdit disponible a la seva targeta."
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Començar"
-        end_at: "Acabar"
-        distributor_ids: "Grups"
-        producer_ids: "Productors"
-        order_cycle_ids: "Cicles de comanda"
-        enterprise_fee_ids: "Noms de les comissions"
-        shipping_method_ids: "Mètodes d'enviament"
-        payment_method_ids: "Mètodes de Pagament"
     errors:
       messages:
         inclusion: "no està inclòs a la llista"
@@ -1195,10 +1185,11 @@ ca:
           quantity: "Quantitat"
           is_temperature_controlled: "Control de temperatura?"
           temp_controlled: "Control de temperatura?"
+          price: "Preu"
+      rendering_options:
+        display: Mostra
       packing:
         name: "Informes d'embalatge"
-        customer_report: "Paquets per consumidora"
-        supplier_report: "Paquets per proveïdora"
     subscriptions:
       index:
         title: "Subscripcions"
@@ -2347,18 +2338,19 @@ ca:
   report_customers_cycle: "Cicle de Comanda"
   report_customers_type: "Tipus d'informe"
   report_customers_csv: "Descarrega com a csv"
-  report_producers: "Productores:"
-  report_type: "Tipus d'informe:"
-  report_hubs: "Grups:"
-  report_payment: "Mètodes de pagament:"
-  report_distributor: "Distribuïdora:"
+  report_producers: "Productors"
+  report_type: "Tipus d'informe"
+  report_hubs: "Grups"
+  report_payment: "Mètodes de Pagament"
+  report_distributor: "Distribuïdora"
   report_payment_by: 'Pagaments per tipus'
   report_itemised_payment: 'Totals de pagament especificats'
   report_payment_totals: 'Totals de pagament'
   report_all: 'tot'
-  report_order_cycle: "Cicle de comanda:"
-  report_enterprises: "Organitzacions:"
-  report_users: "Usuàries:"
+  report_order_cycle: "Cicle de comanda"
+  report_enterprises: "Organitzacions"
+  report_enterprise_fee: "Noms de les comissions"
+  report_users: "Usuàries"
   report_tax_rates: Taxes d'impostos
   report_tax_types: Tipus d'impostos
   report_header_order_cycle: Cicle de comanda
@@ -2495,10 +2487,6 @@ ca:
   report_header_transaction_fee: Comissió de transacció (sense impostos)
   report_header_total_untaxable_admin: Total d'ajustaments d'administració no imputables (sense impostos)
   report_header_total_taxable_admin: Total d'ajustaments administratius imposables (impostos inclosos)
-  initial_invoice_number: "Número de la comanda inicial:"
-  invoice_date: "Data del comprovant de compra:"
-  due_date: "Data de venciment:"
-  account_code: "Codi del compte:"
   equals: "És igual a"
   contains: "conté"
   discount: "Descompte"
@@ -3018,9 +3006,6 @@ ca:
           bulk_coop_customer_payments: "Compra grupal - Pagaments de les consumidores"
           bulk_coop_packing_sheets: "Compra grupal - Fulls de preparació de cistelles"
           bulk_coop_supplier_report: "Compra grupal - Totals per proveïdor"
-          date_range: "Interval de dates"
-          generate_report: "Generar informe"
-          report_format_csv: "Descarrega com a CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Interval de dates"
@@ -3635,11 +3620,6 @@ ca:
       reports:
         table:
           select_and_search: "Seleccioneu els filtres i feu clic a %{option} per accedir a les vostres dades."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Compra grupal - Totals per proveïdor'
-          bulk_coop_allocation: 'Compra grupal - Assignació'
-          bulk_coop_packing_sheets: 'Compra grupal - Fulls de preparació de cistelles'
-          bulk_coop_customer_payments: 'Compra grupal - Pagaments de les consumidores'
         customer_names_message:
           customer_names_tip: "Si els noms de les consumidores per a les comandes que heu subministrat apareixen amagats, podeu contactar amb la distribuïdora i preguntar-los si poden actualitzar les seves preferències de la botiga per permetre als seus proveïdors visualitzar els noms de les consumidores."
       users:

@@ -69,16 +69,6 @@ fr_BE:
       invalid_number: "Le numéro de carte bancaire n'est pas un numéro valide."
       approve_with_id: "Le paiement ne peut pas être autorisé."
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Début"
-        end_at: "Fin"
-        distributor_ids: "Comptoirs"
-        producer_ids: "Producteurs"
-        order_cycle_ids: "Cycles de vente"
-        enterprise_fee_ids: "Nom des commissions "
-        shipping_method_ids: "Méthodes de livraison"
-        payment_method_ids: "Méthodes de paiement"
     errors:
       messages:
         inclusion: "N'est pas inclus dans la liste"
@@ -1104,10 +1094,11 @@ fr_BE:
           quantity: "Nb commandé"
           is_temperature_controlled: "Temp Contrôlée ?"
           temp_controlled: "Temp Contrôlée ?"
+          price: "Prix"
+      rendering_options:
+        display: Ecran
       packing:
         name: "Rapports de préparation des paniers"
-        customer_report: "Préparation des commandes par Acheteur·euse"
-        supplier_report: "Préparation des commandes par Producteur·trice"
     subscriptions:
       index:
         title: "commandes récurrantes"
@@ -2214,18 +2205,19 @@ fr_BE:
   report_customers_cycle: "Cycle de vente"
   report_customers_type: "Type de rapport"
   report_customers_csv: "Télécharger en csv"
-  report_producers: "Producteurs:"
-  report_type: "Type de rapport: "
-  report_hubs: "Comptoirs:"
-  report_payment: "Méthodes de paiement:"
-  report_distributor: "Distributeurs:"
+  report_producers: "Producteur·trice·s"
+  report_type: "Type de rapport"
+  report_hubs: "Comptoirs"
+  report_payment: "Méthodes de paiement"
+  report_distributor: "Comptoir"
   report_payment_by: 'Paiements par type'
   report_itemised_payment: 'Détail du paiement'
   report_payment_totals: 'Total des paiements'
   report_all: 'tous'
-  report_order_cycle: "Cycle de vente:"
-  report_enterprises: "Entreprises:"
-  report_users: "Managers:"
+  report_order_cycle: "Cycle de vente"
+  report_enterprises: "Entreprises"
+  report_enterprise_fee: "Nom des commissions "
+  report_users: "gestionnaire"
   report_tax_rates: TVA par taux
   report_tax_types: TVA par type de produit/service
   report_header_order_cycle: Cycle de Vente
@@ -2362,10 +2354,6 @@ fr_BE:
   report_header_transaction_fee: Frais de Transaction (TVA non incluse)
   report_header_total_untaxable_admin: Total ajustements non taxables
   report_header_total_taxable_admin: Total ajustments soumis à TVA (inclut TVA)
-  initial_invoice_number: "N° de facture initial:"
-  invoice_date: "Date de facture:"
-  due_date: "Date d'échéance:"
-  account_code: "Code compte:"
   equals: "Egal"
   contains: "contient"
   discount: "Réduction"
@@ -2790,9 +2778,6 @@ fr_BE:
       start_free_profile: "Commencez par créer votre profil entreprise, et présentez votre formule quand vous êtes prêt !"
   order_management:
     reports:
-      bulk_coop:
-        filters:
-          generate_report: "Générer un rapport"
       enterprise_fee_summaries:
         filters:
           date_range: "Plage de dates"
@@ -3329,11 +3314,6 @@ fr_BE:
       reports:
         table:
           select_and_search: "Sélectionnez les filtres et cliquez sur %{option} pour accéder à vos données."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Achats groupés - Totaux par Producteur·trice'
-          bulk_coop_allocation: 'Achats groupés - Allocation'
-          bulk_coop_packing_sheets: 'Achats groupés - Feuilles de préparation des paniers'
-          bulk_coop_customer_payments: 'Achats groupés - Paiement des acheteur·euse·s'
         customer_names_message:
           customer_names_tip: "Si le nom des client est cacher pour des commande que vous avez faite, vous pouvez contacter le distributeur est leur demander de changer les préférence pour savoir laisser leur fournisseur voire les nom des client. "
       users:

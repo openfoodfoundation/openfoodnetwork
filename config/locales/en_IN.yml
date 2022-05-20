@@ -55,16 +55,6 @@ en_IN:
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Start"
-        end_at: "End"
-        distributor_ids: "Hubs"
-        producer_ids: "Pricing"
-        order_cycle_ids: "Order Cycles"
-        enterprise_fee_ids: "Fees Names"
-        shipping_method_ids: "Shipping Methods"
-        payment_method_ids: "Payment Methods"
     errors:
       messages:
         inclusion: "is not included in the list"
@@ -1074,10 +1064,11 @@ en_IN:
           quantity: "Quantity"
           is_temperature_controlled: "TempControlled?"
           temp_controlled: "TempControlled?"
+          price: "Price"
+      rendering_options:
+        display: Display
       packing:
         name: "Packing Reports"
-        customer_report: "Pack By Customer"
-        supplier_report: "Pack By Supplier"
     subscriptions:
       index:
         title: "Subscriptions"
@@ -2175,18 +2166,19 @@ en_IN:
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"
   report_customers_csv: "Download as csv"
-  report_producers: "Producers:"
-  report_type: "Report Type:"
-  report_hubs: "Hubs:"
-  report_payment: "Payment Methods:"
-  report_distributor: "Distributor:"
+  report_producers: "Producers"
+  report_type: "Report Type"
+  report_hubs: "Hubs"
+  report_payment: "Payment Methods"
+  report_distributor: "Distributor"
   report_payment_by: 'Payments By Type'
   report_itemised_payment: 'Itemised Payment Totals'
   report_payment_totals: 'Payment Totals'
   report_all: 'all'
-  report_order_cycle: "Order Cycle:"
-  report_enterprises: "Enterprises:"
-  report_users: "Users:"
+  report_order_cycle: "Order Cycle"
+  report_enterprises: "Enterprises"
+  report_enterprise_fee: "Fees Names"
+  report_users: "Users"
   report_tax_rates: Tax rates
   report_tax_types: Tax types
   report_header_order_cycle: Order Cycle
@@ -2323,10 +2315,6 @@ en_IN:
   report_header_transaction_fee: Transaction Fee (no tax)
   report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
   report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
-  initial_invoice_number: "Initial invoice number:"
-  invoice_date: "Invoice date:"
-  due_date: "Invoice date:"
-  account_code: "Account code:"
   equals: "Equals"
   contains: "contains"
   discount: "Discount"
@@ -2817,9 +2805,6 @@ en_IN:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
   order_management:
     reports:
-      bulk_coop:
-        filters:
-          generate_report: "Generate Report"
       enterprise_fee_summaries:
         filters:
           date_range: "Date Range"
@@ -3353,11 +3338,6 @@ en_IN:
       reports:
         table:
           select_and_search: "Select filters and click on %{option} to access your data."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Bulk Co-op - Totals by Supplier'
-          bulk_coop_allocation: 'Bulk Co-op - Allocation'
-          bulk_coop_packing_sheets: 'Bulk Co-op - Packing Sheets'
-          bulk_coop_customer_payments: 'Bulk Co-op - Customer Payments'
       users:
         index:
           listing_users: "Listing Users"

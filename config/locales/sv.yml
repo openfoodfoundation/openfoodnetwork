@@ -26,14 +26,6 @@ sv:
           attributes:
             email:
               taken: "Det finns redan ett konto med denna mailadress. Logga in eller återställ ditt lösenord."
-  activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        distributor_ids: "Hubbar"
-        producer_ids: "Producenter "
-        order_cycle_ids: "Beställningsomgångar"
-        shipping_method_ids: "Transportsätt"
-        payment_method_ids: "Betalningssätt"
   customer_instructions: "Kundinstruktioner"
   devise:
     failure:
@@ -650,10 +642,9 @@ sv:
           quantity: "Antal"
           is_temperature_controlled: "Temperaturkontrollerad?"
           temp_controlled: "Temperaturkontrollerad?"
+          price: "Pris"
       packing:
         name: "Förpackningsrapporter"
-        customer_report: "Packas av kund"
-        supplier_report: "Packas av leverantör"
     subscriptions:
       autocomplete:
         quantity: "Antal"
@@ -1483,18 +1474,18 @@ sv:
   report_customers_cycle: "Ordercykel"
   report_customers_type: "Rapporttyp"
   report_customers_csv: "Ladda ned sm csv"
-  report_producers: "Producenter:"
-  report_type: "Rapporttyper:"
-  report_hubs: "Matställen:"
-  report_payment: "Betalningssätt:"
-  report_distributor: "Distributör:"
+  report_producers: "Producenter "
+  report_type: "Rapporttyp"
+  report_hubs: "Hubbar"
+  report_payment: "Betalningssätt"
+  report_distributor: "Distributör"
   report_payment_by: 'Betalningar per typ'
   report_itemised_payment: 'Betalningstotaler per varuslag'
   report_payment_totals: 'Betalningstotaler'
   report_all: 'alla'
-  report_order_cycle: "Beställningsrundor"
-  report_enterprises: "Företag:"
-  report_users: "Användare:"
+  report_order_cycle: "Beställningsomgång"
+  report_enterprises: "Företag"
+  report_users: "Användare"
   report_tax_rates: Skattesatser
   report_tax_types: Typer av skatt
   report_header_order_cycle: Beställningsomgång
@@ -1631,10 +1622,6 @@ sv:
   report_header_transaction_fee: Transaktionsavgift (ingen moms)
   report_header_total_untaxable_admin: Totalt obeskattade justeringar (ingen moms)
   report_header_total_taxable_admin: Totalt obeskattade justeringar (inklusive moms)
-  initial_invoice_number: "Initialt fakturanummer"
-  invoice_date: "Fakturadatum:"
-  due_date: "Sista betalningsdag:"
-  account_code: "Kontonummer:"
   equals: "Lika med"
   contains: "innehåller"
   discount: "Rabatt"
@@ -2151,12 +2138,6 @@ sv:
             inherits_properties?: Ärva egenskaper?
             available_on: 'Tillgänglig '
             av_on: "Md. På"
-      reports:
-        bulk_coop:
-          bulk_coop_supplier_report: 'Bulk Co-op - Totaler per leverantör'
-          bulk_coop_allocation: 'Bulk Co-op - Allokering'
-          bulk_coop_packing_sheets: 'Bulk Co-op - Förpackningssedlar'
-          bulk_coop_customer_payments: 'Bulk Co-op - kundbetalningar'
       users:
         index:
           user: "Användare"

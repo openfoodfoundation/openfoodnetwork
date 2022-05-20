@@ -68,16 +68,6 @@ pl:
       invalid_expiry_month: "Miesiąc ważności karty jest nieprawidłowy."
       invalid_expiry_year: "Rok ważności karty jest nieprawidłowy."
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Początek"
-        end_at: "Koniec"
-        distributor_ids: "Huby"
-        producer_ids: "Producenci"
-        order_cycle_ids: "Cykle zamówień"
-        enterprise_fee_ids: "Nazwy opłat"
-        shipping_method_ids: "Metody dostaw"
-        payment_method_ids: "Metody płatności"
     errors:
       messages:
         inclusion: "nie znajduje się na liście"
@@ -1078,6 +1068,7 @@ pl:
           product: "Produkt"
           variant: "Wariant"
           quantity: "Ilość"
+          price: "Cena"
       packing:
         name: "Raporty pakowania"
     subscriptions:
@@ -2148,18 +2139,16 @@ pl:
   report_customers_cycle: "Cykl zamówień"
   report_customers_type: "Typ raportu"
   report_customers_csv: "Pobierz jako plik csv"
-  report_producers: "Producenci:"
-  report_type: "Typ raportu:"
-  report_hubs: "Huby:"
-  report_payment: "Metody Płatności:"
-  report_distributor: "Dystrybutor:"
+  report_producers: "Producenci"
+  report_hubs: "Huby"
+  report_payment: "Metody płatności"
   report_payment_by: 'Płatności według rodzaju'
   report_itemised_payment: 'Wyszczególnione sumy płatności'
   report_payment_totals: 'Sumy płatności'
   report_all: 'wszystko'
-  report_order_cycle: "Cykl zamówień:"
-  report_enterprises: "Podmioty:"
-  report_users: "Użytkownicy:"
+  report_order_cycle: "Cykl zamówień"
+  report_enterprises: "Podmioty"
+  report_enterprise_fee: "Nazwy opłat"
   report_tax_rates: Wysokość podatków
   report_tax_types: Rodzaje podatków
   report_header_order_cycle: Cykl zamówień
@@ -2296,10 +2285,6 @@ pl:
   report_header_transaction_fee: Opłata transakcyjna (bez podatku)
   report_header_total_untaxable_admin: Całkowite niepodlegające opodatkowaniu korekty administracyjne (bez podatku)
   report_header_total_taxable_admin: Łączne korekty administracyjne podlegające opodatkowaniu (z podatkiem)
-  initial_invoice_number: "Numer początkowej faktury:"
-  invoice_date: "Data faktury:"
-  due_date: "Termin:"
-  account_code: "Kod do konta:"
   equals: "Równa się"
   contains: "zawiera"
   discount: "Zniżka"
@@ -3358,11 +3343,6 @@ pl:
       reports:
         table:
           select_and_search: "Wybierz filtry i kliknij %{option}, aby uzyskać dostęp do swoich danych."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Bulk Co-op - sumy według dostawcy'
-          bulk_coop_allocation: 'Bulk Co-op - alokacja'
-          bulk_coop_packing_sheets: 'Bulk Co-op - Arkusze do pakowania'
-          bulk_coop_customer_payments: 'Współpraca zbiorcza - płatności klientów'
         customer_names_message:
           customer_names_tip: "Jeśli nazwy klientów są ukryte w zamówieniach, które dostarczyłeś, możesz skontaktować się z dystrybutorem i zapytać, czy może zaktualizować preferencje sklepu, aby umożliwić dostawcom przeglądanie nazw klientów."
       users:

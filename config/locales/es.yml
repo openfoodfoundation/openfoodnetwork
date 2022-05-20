@@ -114,16 +114,6 @@ es:
       try_again_later: "La tarjeta ha sido denegada por una razón desconocida."
       withdrawal_count_limit_exceeded: "El cliente ha superado el saldo o límite de crédito disponible en su tarjeta."
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Inicio"
-        end_at: "Final"
-        distributor_ids: "Hubs"
-        producer_ids: "Productoras"
-        order_cycle_ids: "Ciclos de Pedido"
-        enterprise_fee_ids: "Nombres de las comisiones"
-        shipping_method_ids: "Métodos de envío"
-        payment_method_ids: "Métodos de Pago"
     errors:
       messages:
         inclusion: "no está incluido en la lista"
@@ -1234,17 +1224,12 @@ es:
           quantity: "Cantidad"
           is_temperature_controlled: "¿Control de Temperatura?"
           temp_controlled: "¿Control de Temperatura?"
+          price: "Precio"
       rendering_options:
-        generate_report: "Generar reporte:"
         on_screen: "En pantalla"
-        csv_spreadsheet: "Hoja de cálculo CSV"
-        excel_spreadsheet: "Hoja de cálculo Excel"
-        openoffice_spreadsheet: "Hoja de cálculo OpenOffice"
-        hide_summary_rows: "Esconder filas de resumen"
+        display: Mostrar
       packing:
         name: "Informes de empaquetado"
-        customer_report: "Pack por Consumidor"
-        supplier_report: "Pack por proveedor"
     subscriptions:
       index:
         title: "Suscripciones"
@@ -2445,18 +2430,19 @@ es:
   report_customers_cycle: "Ciclo de Pedido"
   report_customers_type: "Tipo de Informe"
   report_customers_csv: "Descargar como CSV"
-  report_producers: "Productoras:"
-  report_type: "Tipo de Informe:"
-  report_hubs: "Hubs: "
-  report_payment: "Métodos de Pago:"
-  report_distributor: "Distribuidora:"
+  report_producers: "Productoras"
+  report_type: "Tipo de Informe"
+  report_hubs: "Hubs"
+  report_payment: "Métodos de Pago"
+  report_distributor: "Distribuidora"
   report_payment_by: 'Pagos por Tipo'
   report_itemised_payment: 'Pagos Totales Detallados'
   report_payment_totals: 'Pagos Totales'
   report_all: 'Todo'
-  report_order_cycle: "Ciclo de Pedido:"
-  report_enterprises: "Organizaciones:"
-  report_users: "Usuarias:"
+  report_order_cycle: "Ciclo de Pedido"
+  report_enterprises: "Organizaciones"
+  report_enterprise_fee: "Nombres de las comisiones"
+  report_users: "Usuarias"
   report_tax_rates: Porcentajes de los Impuestos
   report_tax_types: Tipos de Impuestos
   report_header_order_cycle: Ciclo de Pedido
@@ -2593,10 +2579,6 @@ es:
   report_header_transaction_fee: Comisión por transacción (sin impuestos)
   report_header_total_untaxable_admin: Total de ajustes administrativos no tributables (sin impuestos)
   report_header_total_taxable_admin: Total de ajustes tributarios de administración (impuestos incluidos)
-  initial_invoice_number: "Número inicial de Factura:"
-  invoice_date: "Fecha de la factura:"
-  due_date: "Fecha de vencimiento:"
-  account_code: "Código de la Cuenta:"
   equals: "Iguales"
   contains: "Contiene"
   discount: "Descuento"
@@ -3120,9 +3102,6 @@ es:
           bulk_coop_customer_payments: "Compra grupal - Pagos de las consumidoras"
           bulk_coop_packing_sheets: "Compra grupal - Hojas de embalaje"
           bulk_coop_supplier_report: "Compra grupal - Totales por proveedor"
-          date_range: "Rango de fechas"
-          generate_report: "Generar informe"
-          report_format_csv: "Descargar como CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "Rango de fechas"
@@ -3739,11 +3718,6 @@ es:
       reports:
         table:
           select_and_search: "Seleccione filtros y haga clic en %{option} para acceder a sus datos."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Bulk Co-op - Totales por Proveedor'
-          bulk_coop_allocation: 'Bulk Co-op - Asignación'
-          bulk_coop_packing_sheets: 'Bulk Co-op - Hojas de Empaquetado'
-          bulk_coop_customer_payments: 'Bulk Co-op - Pagos de las Consumidoras'
         customer_names_message:
           customer_names_tip: "Si los nombres de las consumidoras están ocultos para los pedidos que ha suministrado, puede comunicarse con la distribuidora y preguntar si pueden actualizar sus preferencias de tienda para permitir que sus proveedores vean los nombres de las consumidoras."
       users:

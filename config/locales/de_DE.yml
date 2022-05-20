@@ -114,16 +114,6 @@ de_DE:
       try_again_later: "Die Karte wurde aus unbekanntem Grund abgelehnt."
       withdrawal_count_limit_exceeded: "Der/die Kund/in hat das auf seiner/ihrer Karte verfügbare Guthaben oder Kreditlimit überschritten."
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Von"
-        end_at: "Bis"
-        distributor_ids: "Hubs"
-        producer_ids: "Produzenten"
-        order_cycle_ids: "Bestellzyklen"
-        enterprise_fee_ids: "Gebührennamen"
-        shipping_method_ids: "Lieferoptionen"
-        payment_method_ids: "Zahlungsarten"
     errors:
       messages:
         inclusion: "ist in der Liste nicht enthalten"
@@ -1244,17 +1234,12 @@ de_DE:
           quantity: "Menge"
           is_temperature_controlled: "Temperaturüberwachte Artikel?"
           temp_controlled: "Temperaturüberwachte Artikel?"
+          price: "Preis"
       rendering_options:
-        generate_report: "Bericht erstellen:"
         on_screen: "Auf dem Bildschirm"
-        csv_spreadsheet: "csv-Datei"
-        excel_spreadsheet: "Excel-Datei"
-        openoffice_spreadsheet: "OpenOffice-Tabelle"
-        hide_summary_rows: "Zusammenfassungszeilen ausblenden"
+        display: Anzeige
       packing:
         name: "Packlisten"
-        customer_report: "Packliste nach Kunden"
-        supplier_report: "Packliste nach Lieferanten"
     subscriptions:
       index:
         title: "Abonnements"
@@ -2460,18 +2445,19 @@ de_DE:
   report_customers_cycle: "Bestellzyklus"
   report_customers_type: "Berichtsart"
   report_customers_csv: "Als csv-Datei herunterladen"
-  report_producers: "Produzenten:"
+  report_producers: "Unsere Produzenten"
   report_type: "Berichtsart"
-  report_hubs: "Hubs:"
-  report_payment: "Zahlungsarten:"
-  report_distributor: "Verteilstelle:"
+  report_hubs: "Hubs"
+  report_payment: "Zahlungsarten"
+  report_distributor: "Verteilstelle"
   report_payment_by: 'Zahlungen nach Art'
   report_itemised_payment: 'Aufgeschlüsselte Zahlungssummen'
   report_payment_totals: 'Zahlungssummen'
   report_all: 'alle'
-  report_order_cycle: "Bestellzyklus:"
-  report_enterprises: "Unternehmen:"
-  report_users: "Benutzer:"
+  report_order_cycle: "Bestellzyklus"
+  report_enterprises: "Unternehmen"
+  report_enterprise_fee: "Gebührennamen"
+  report_users: "Benutzer"
   report_tax_rates: Steuersätze
   report_tax_types: Steuerarten
   report_header_order_cycle: Bestellzyklus
@@ -2608,10 +2594,6 @@ de_DE:
   report_header_transaction_fee: Transaktionsgebühr (keine Steuern)
   report_header_total_untaxable_admin: Summe nicht steuerpflichtiger Admin-Anpassungen (keine Steuern)
   report_header_total_taxable_admin: Summe steuerpflichtiger Admin-Anpassungen (inkl. Steuern)
-  initial_invoice_number: "Ursprüngliche Rechnungsnummer"
-  invoice_date: "Rechnungsdatum:"
-  due_date: "Fälligkeitsdatum:"
-  account_code: "Xero Kontoschlüssel:"
   equals: "Entspricht"
   contains: "enthält"
   discount: "Rabatt"
@@ -3144,9 +3126,6 @@ de_DE:
           bulk_coop_customer_payments: "Gruppenkäufe - Kundenzahlungen"
           bulk_coop_packing_sheets: "Gruppenkäufe - Packlisten"
           bulk_coop_supplier_report: "Gruppenkäufe - Lieferanten"
-          date_range: "Datumsbereich"
-          generate_report: "Suche"
-          report_format_csv: "Als csv-Datei herunterladen"
       enterprise_fee_summaries:
         filters:
           date_range: "Datumsbereich"
@@ -3764,11 +3743,6 @@ de_DE:
       reports:
         table:
           select_and_search: "Treffen Sie Ihre Auswahl und klicken Sie auf %{option}, um den Bericht zu erstellen."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Gruppenkäufe - Lieferanten'
-          bulk_coop_allocation: 'Gruppenkäufe - Zuteilung'
-          bulk_coop_packing_sheets: 'Gruppenkäufe - Packlisten'
-          bulk_coop_customer_payments: 'Gruppenkäufe - Kundenzahlungen'
         customer_names_message:
           customer_names_tip: "Wenn Kundennamen für von Ihnen gelieferte Bestellungen ausgeblendet sind, können Sie sich an den Händler wenden und ihn bitten, seine Ladeneinstellungen anzupassen, damit seine Lieferanten Kundennamen anzeigen können."
       users:

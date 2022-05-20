@@ -114,16 +114,6 @@ ar:
       try_again_later: "تم رفض البطاقة لسبب غير معروف."
       withdrawal_count_limit_exceeded: "تجاوز العميل الرصيد أو حد الائتمان المتاح على بطاقته."
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "البداية "
-        end_at: "النهاية"
-        distributor_ids: "مراكز بيع"
-        producer_ids: "المنتجين"
-        order_cycle_ids: "دورات الطلب"
-        enterprise_fee_ids: "أسماء الرسوم"
-        shipping_method_ids: "طرق الشحن"
-        payment_method_ids: "طرق الدفع"
     errors:
       messages:
         inclusion: "غير مدرجة في القائمة"
@@ -1241,17 +1231,12 @@ ar:
           quantity: "الكمية"
           is_temperature_controlled: "التحكم المؤقت؟"
           temp_controlled: "التحكم المؤقت؟"
+          price: "السعر"
       rendering_options:
-        generate_report: "انشاء تقرير:"
         on_screen: "على الشاشة"
-        csv_spreadsheet: "جدول بيانات CSV"
-        excel_spreadsheet: "جداول البيانات إكسل"
-        openoffice_spreadsheet: "جدول بيانات OpenOffice"
-        hide_summary_rows: "إخفاء صفوف التلخيص"
+        display: عرض
       packing:
         name: "تقارير التعبئة"
-        customer_report: "تم التعبئة من العملاء"
-        supplier_report: "تم التعبئة من  المورد"
     subscriptions:
       index:
         title: "الاشتراكات"
@@ -2457,18 +2442,18 @@ ar:
   report_customers_cycle: "ترتيب الدورة"
   report_customers_type: "نوع التقرير"
   report_customers_csv: "تنزيل بتنسيق CSV"
-  report_producers: "المنتجين:"
-  report_type: "نوع التقرير:"
-  report_hubs: "مراكز البيع :"
-  report_payment: "طرق الدفع:"
-  report_distributor: "موزع:"
+  report_producers: "المنتجين"
+  report_type: "نوع التقرير"
+  report_hubs: "مراكز بيع"
+  report_distributor: "الموزع"
   report_payment_by: 'المدفوعات حسب النوع'
   report_itemised_payment: 'مجاميع الدفع المفصلة حسب المادة'
   report_payment_totals: 'مجاميع الدفع'
   report_all: 'الكل'
-  report_order_cycle: "دورة الطلب:"
-  report_enterprises: "المؤسسات:"
-  report_users: "الأعضاء:"
+  report_order_cycle: "ترتيب الدورة"
+  report_enterprises: "المؤسسات"
+  report_enterprise_fee: "أسماء الرسوم"
+  report_users: "المستخدمين"
   report_tax_rates: معدلات الضريبة
   report_tax_types: أنواع الضرائب
   report_header_order_cycle: ترتيب الدورة
@@ -2605,10 +2590,6 @@ ar:
   report_header_transaction_fee: رسوم المعاملة (بدون ضريبة)
   report_header_total_untaxable_admin: إجمالي تعديلات المشرف غير القابلة للضريبة (بدون ضريبة)
   report_header_total_taxable_admin: إجمالي تعديلات المشرف الخاضع للضريبة (شاملة الضريبة)
-  initial_invoice_number: "رقم الفاتورة الأولية:"
-  invoice_date: "تاريخ الفاتورة:"
-  due_date: "تاريخ الاستحقاق:"
-  account_code: "رمز الحساب:"
   equals: "يساوي"
   contains: "يحتوي على"
   discount: "خصم"
@@ -3223,9 +3204,6 @@ ar:
           bulk_coop_customer_payments: "مدفوعات العملاء الجماعية"
           bulk_coop_packing_sheets: "أوراق التعبئة التعاونية السائبة"
           bulk_coop_supplier_report: "تقرير المورد التعاوني المجمع"
-          date_range: "نطاق الموعد"
-          generate_report: "توليد تقرير"
-          report_format_csv: "تنسيق التقرير CSV"
       enterprise_fee_summaries:
         filters:
           date_range: "نطاق الموعد"
@@ -3843,11 +3821,6 @@ ar:
       reports:
         table:
           select_and_search: "حدد المرشحات وانقر على %{option} للوصول إلى البيانات الخاصة بك."
-        bulk_coop:
-          bulk_coop_supplier_report: 'معظم التعاونية - المجاميع من قبل المورد'
-          bulk_coop_allocation: 'معظم التعاونية - تخصيص'
-          bulk_coop_packing_sheets: 'معظم التعاونية - صحائف التعبئة'
-          bulk_coop_customer_payments: ' الجمعية التعاونية - مدفوعات العملاء بالجملة'
         customer_names_message:
           customer_names_tip: "إذا كانت أسماء العملاء مخفية للطلبات التي قدمتها ، فيمكنك الاتصال بالموزع والسؤال عما إذا كان بإمكانهم تحديث تفضيلات متجرهم للسماح لمورديهم بمشاهدة أسماء العملاء."
       users:

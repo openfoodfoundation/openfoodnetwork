@@ -74,16 +74,6 @@ pt:
       card_declined: "O cartão foi recusado."
       processing_error: "Ocorreu um erro ao processar o cartão."
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Começar"
-        end_at: "Terminar"
-        distributor_ids: "Centrais"
-        producer_ids: "Produtores"
-        order_cycle_ids: "Ciclos de Encomendas"
-        enterprise_fee_ids: "Nomes das Taxas"
-        shipping_method_ids: "Métodos de Envio"
-        payment_method_ids: "Métodos de pagamento"
     errors:
       messages:
         inclusion: "não está incluído na lista"
@@ -1124,10 +1114,11 @@ pt:
           quantity: "Quantidade"
           is_temperature_controlled: "TempControlada?"
           temp_controlled: "TempControlada?"
+          price: "Preço"
+      rendering_options:
+        display: Mostrar
       packing:
         name: "Relatórios de Embalamento"
-        customer_report: "Embalar por Consumidor"
-        supplier_report: "Embalar por Fornecedor"
     subscriptions:
       index:
         title: "Subscrições"
@@ -2208,18 +2199,19 @@ pt:
   report_customers_cycle: "Ciclo de Encomendas"
   report_customers_type: "Tipo de Relatório"
   report_customers_csv: "Descarregar como csv"
-  report_producers: "Produtores:"
+  report_producers: "Produtores"
   report_type: "Tipo de Relatório"
-  report_hubs: "Centrais:"
-  report_payment: "Métodos de Pagamento"
-  report_distributor: "Distribuidor:"
+  report_hubs: "Centrais"
+  report_payment: "Métodos de pagamento"
+  report_distributor: "Distribuidor"
   report_payment_by: 'Pagamentos Por Tipo'
   report_itemised_payment: 'Totais dos Pagamentos Discriminados'
   report_payment_totals: 'Totais dos Pagamanetos'
   report_all: 'todos'
-  report_order_cycle: "Ciclo de Encomendas:"
-  report_enterprises: "Organizações:"
-  report_users: "Utilizadores:"
+  report_order_cycle: "Ciclo de Encomendas"
+  report_enterprises: "Organizações"
+  report_enterprise_fee: "Nomes das Taxas"
+  report_users: "Utilizadores"
   report_tax_rates: Taxas de imposto
   report_tax_types: Tipos de imposto
   report_header_order_cycle: Ciclo de Encomendas
@@ -2356,10 +2348,6 @@ pt:
   report_header_transaction_fee: Taxa de transacção (sem impostos)
   report_header_total_untaxable_admin: Total de ajustes de administração não taxáveis (sem impostos)
   report_header_total_taxable_admin: Total de ajustes de administração taxáveis (inclui impostos)
-  initial_invoice_number: "Número da factura inicial:"
-  invoice_date: "Data da factura:"
-  due_date: "Data de vencimento:"
-  account_code: "Código de conta:"
   equals: "Igual a"
   contains: "contém"
   discount: "Desconto"
@@ -2787,9 +2775,6 @@ pt:
       start_free_profile: "Comece com um perfil gratuito e expanda quando estivere pronto/a!"
   order_management:
     reports:
-      bulk_coop:
-        filters:
-          generate_report: "Gerar Relatório"
       enterprise_fee_summaries:
         filters:
           date_range: "Intervalo de Datas"
@@ -3266,11 +3251,6 @@ pt:
       reports:
         table:
           select_and_search: "Selecione os filtros e carregue em %{option} para ver os seus dados."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Compra em Grupo - Totais por Fornecedor'
-          bulk_coop_allocation: 'Compra em Grupo - Alocação'
-          bulk_coop_packing_sheets: 'Compra em Grupo - Folhas de Empacotamento'
-          bulk_coop_customer_payments: 'Compra em Grupo - Pagamentos do Consumidor'
       users:
         index:
           listing_users: "Lista de Utilizadores"

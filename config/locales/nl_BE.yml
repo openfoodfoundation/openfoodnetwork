@@ -58,16 +58,6 @@ nl_BE:
             on_demand_but_count_on_hand_set: "moet leeg zijn op aanvraag"
             limited_stock_but_no_count_on_hand: "moet worden opgegeven omdat een beperkte voorraad wordt geforceerd"
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "Start"
-        end_at: "Eind"
-        distributor_ids: "Hubs"
-        producer_ids: "Producenten"
-        order_cycle_ids: "Bestel cycli"
-        enterprise_fee_ids: "Vergoedingen Namen"
-        shipping_method_ids: "Verzendmethodes"
-        payment_method_ids: "Betaalmethodes"
     errors:
       messages:
         inclusion: "Is niet in de lijst toegevoegd"
@@ -1087,10 +1077,11 @@ nl_BE:
           quantity: "Kwantiteit"
           is_temperature_controlled: "Onder gecontroleerde temperatuur ?"
           temp_controlled: "Onder gecontroleerde temperatuur ?"
+          price: "Prijs"
+      rendering_options:
+        display: Display
       packing:
         name: "Verpakkingsrapporten"
-        customer_report: "Verpakking per klant"
-        supplier_report: "Verpakking per leverancier"
     subscriptions:
       index:
         title: "Abonnementen"
@@ -2197,17 +2188,18 @@ nl_BE:
   report_customers_cycle: "Bestelcyclus"
   report_customers_type: "Vermeld Type"
   report_customers_csv: "Download als csv"
-  report_producers: "Producenten : "
-  report_type: "Vermeld Type:"
-  report_hubs: "Hubs:"
-  report_payment: "Betaalmethodes : "
-  report_distributor: "Verdeler : "
+  report_producers: "Producenten"
+  report_type: "Vermeld Type"
+  report_hubs: "Hubs"
+  report_payment: "Betalingsmethode"
+  report_distributor: "Distributeur"
   report_payment_by: 'Betalingen per middel'
   report_itemised_payment: 'Artikel Betaal Totaal'
   report_payment_totals: 'BetaalTotaal'
   report_all: 'alle'
-  report_order_cycle: "Bestelcyclus :"
-  report_enterprises: "Bedrijven :  "
+  report_order_cycle: "Bestelcyclus"
+  report_enterprises: "Ondernemingen"
+  report_enterprise_fee: "Vergoedingen Namen"
   report_users: "Gebruikers"
   report_tax_rates: Belastingspercentage
   report_tax_types: Belasting Type
@@ -2345,10 +2337,6 @@ nl_BE:
   report_header_transaction_fee: Transactiekosten (exl.BTW)
   report_header_total_untaxable_admin: Totaal aanpassingen niet belastbaar (geen beslasting)
   report_header_total_taxable_admin: Totaal admin aanpassingen aan BTW onderworpen(incl.BTW)
-  initial_invoice_number: "Oorspronkelijke faktuurnummer"
-  invoice_date: "Faktuurdatum"
-  due_date: "Vervaldatum"
-  account_code: "Code rekening :"
   equals: "Gelijk"
   contains: "bevat"
   discount: "Korting"
@@ -2766,9 +2754,6 @@ nl_BE:
       start_free_profile: "Eerst uw bedrijfsprofiel maken en wijzig de formule als U klaar bent !"
   order_management:
     reports:
-      bulk_coop:
-        filters:
-          generate_report: "Ontwikkel verslag"
       enterprise_fee_summaries:
         filters:
           date_range: "Datumbereik"
@@ -3303,11 +3288,6 @@ nl_BE:
       reports:
         table:
           select_and_search: "Selecteer de filters en klik op 1%{option} om uw gegevens tebereiken"
-        bulk_coop:
-          bulk_coop_supplier_report: 'Groepsaankoop - Totaal per producent '
-          bulk_coop_allocation: 'Groepsaankoop-Toelage'
-          bulk_coop_packing_sheets: 'Groepsaankoop- voorbereidingsdokumenten voor de manden'
-          bulk_coop_customer_payments: 'Groepsaankoop-betalingen van de klanten'
         customer_names_message:
           customer_names_tip: "Als klanten namen verstopt zijn voor bestelingen dat u heb geleverd, dan kunt u de distibuteur contacteren en vragen of ze hun shop voorkeur kunnen bijwerken zodat de leveranciers de namen van de klanten kan zien."
       users:

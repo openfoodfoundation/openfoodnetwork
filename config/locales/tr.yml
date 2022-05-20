@@ -62,16 +62,6 @@ tr:
             on_demand_but_count_on_hand_set: "talep üzerine is boş bırakılmalıdır"
             limited_stock_but_no_count_on_hand: "Sınırlı stok durumundan dolayı belirtilmeli"
   activemodel:
-    attributes:
-      order_management/reports/enterprise_fee_summary/parameters:
-        start_at: "BAŞLANGIÇ"
-        end_at: "BİTİŞ"
-        distributor_ids: "Pazarlar"
-        producer_ids: "ÜRETİCİLER"
-        order_cycle_ids: "Sipariş Dönemleri"
-        enterprise_fee_ids: "ÜCRET İSİMLERİ"
-        shipping_method_ids: "TESLİMAT YÖNTEMLERİ"
-        payment_method_ids: "ÖDEME YÖNTEMLERİ"
     errors:
       messages:
         inclusion: "Listeye dahil değil"
@@ -1158,10 +1148,11 @@ tr:
           quantity: "Miktar"
           is_temperature_controlled: "SoğukSevkiyat?"
           temp_controlled: "SoğukSevkiyat?"
+          price: "Fiyat"
+      rendering_options:
+        display: GÖSTER
       packing:
         name: "Paketleme Raporları"
-        customer_report: "Müşteriye göre Paketle"
-        supplier_report: "Tedarikçiye Göre Paketle"
     subscriptions:
       index:
         title: "Üyelikler"
@@ -2343,18 +2334,19 @@ tr:
   report_customers_cycle: "Sipariş Dönemi"
   report_customers_type: "Rapor türü"
   report_customers_csv: "Csv olarak indir"
-  report_producers: "ÜRECİTİLER:"
-  report_type: "Rapor türü:"
-  report_hubs: "Pazarlar:"
-  report_payment: "ÖDEME YÖNTEMLERİ:"
-  report_distributor: "Dağıtımcı:"
+  report_producers: "ÜRETİCİLER"
+  report_type: "Rapor türü"
+  report_hubs: "Pazarlar"
+  report_payment: "ÖDEME YÖNTEMLERİ"
+  report_distributor: "Dağıtımcı"
   report_payment_by: 'Türüne Göre Ödemeler'
   report_itemised_payment: 'Ayrıntılı Ödeme Toplamları'
   report_payment_totals: 'Ödeme Toplamları'
   report_all: 'hepsi'
-  report_order_cycle: "Sipariş Dönemi:"
-  report_enterprises: "İşletmeler:"
-  report_users: "Kullanıcılar:"
+  report_order_cycle: "Sipariş Dönemi"
+  report_enterprises: "İşletmeler"
+  report_enterprise_fee: "ÜCRET İSİMLERİ"
+  report_users: "Kullanıcılar"
   report_tax_rates: Vergi oranları
   report_tax_types: Vergi türleri
   report_header_order_cycle: Sipariş Dönemi
@@ -2491,10 +2483,6 @@ tr:
   report_header_transaction_fee: İşlem Ücreti (vergi yok)
   report_header_total_untaxable_admin: Toplam vergisiz yönetici düzenlemeleri (vergi yok)
   report_header_total_taxable_admin: Vergiye tabi toplam yönetim düzenlemeleri (vergi dahil)
-  initial_invoice_number: "Başlangıç fatura numarası:"
-  invoice_date: "Fatura tarihi:"
-  due_date: "Vade tarihi:"
-  account_code: "Hesap kodu:"
   equals: "Eşittir"
   contains: "İÇERİYOR"
   discount: "İndirim"
@@ -3014,9 +3002,6 @@ tr:
           bulk_coop_customer_payments: "Toplu Kooperatif Müşteri Ödemeleri"
           bulk_coop_packing_sheets: "Toplu Kooperatif Paket Sayfaları"
           bulk_coop_supplier_report: "Toplu Kooperatif Tedarikçi Raporu"
-          date_range: "Tarih aralığı"
-          generate_report: "Rapor Oluştur"
-          report_format_csv: "CSV formatında"
       enterprise_fee_summaries:
         filters:
           date_range: "Tarih Aralığı"
@@ -3629,11 +3614,6 @@ tr:
       reports:
         table:
           select_and_search: "Filtreleri seçin ve verilerinize erişmek için %{option} üzerine tıklayın."
-        bulk_coop:
-          bulk_coop_supplier_report: 'Tedarikçi Bazında Toplu Alım Rakamları'
-          bulk_coop_allocation: 'Müşteri Bazında Toplu Alım Rakamları'
-          bulk_coop_packing_sheets: 'Toplu Alım - Paketleme Sayfaları'
-          bulk_coop_customer_payments: 'Toplu Alım - Müşteri Ödemeleri'
         customer_names_message:
           customer_names_tip: "Tedarik ettiğiniz siparişlerde müşteri isimleri gizli ise dağıtımcıya ulaşıp alışveriş tercihlerini tedarikçilerinin müşteri isimlerini görebilmelerini sağlayacak şekilde güncellemelerini isteyebilirsiniz. "
       users:
