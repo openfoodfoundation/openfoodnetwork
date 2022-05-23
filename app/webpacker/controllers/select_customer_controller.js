@@ -39,6 +39,9 @@ export default class extends TomSelectController {
   }
 
   renderOption(item, escape) {
+    if (!item.bill_address) {
+      return this.renderWithNoBillAddress(item, escape);
+    }
     return `<div class='customer-autocomplete-item'>
               <div class='customer-details'>
                 <h5>${escape(item.email)}</h5>
@@ -70,6 +73,12 @@ export default class extends TomSelectController {
                     : ""
                 }
               </div>
+            </div>`;
+  }
+
+  renderWithNoBillAddress(item, escape) {
+    return `<div class='customer-autocomplete-item'>
+              <div class='customer-details'><h5>${escape(item.email)}</h5></div>
             </div>`;
   }
 
