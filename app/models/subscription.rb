@@ -19,7 +19,7 @@ class Subscription < ApplicationRecord
   belongs_to :ship_address, class_name: "Spree::Address"
   has_many :subscription_line_items, inverse_of: :subscription, dependent: :destroy
   has_many :order_cycles, through: :schedule
-  has_many :proxy_orders
+  has_many :proxy_orders, dependent: :destroy
   has_many :orders, through: :proxy_orders
 
   alias_attribute :billing_address, :bill_address
