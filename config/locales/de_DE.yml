@@ -61,6 +61,27 @@ de_DE:
             using_producer_stock_settings_but_count_on_hand_set: "muss leer sein, da die Einstellungen des Produzentenbestands verwendet werden"
             on_demand_but_count_on_hand_set: "muss leer sein, wenn unbegrenzt verfügbar oder die Produktion auf Bestellung erfolgt"
             limited_stock_but_no_count_on_hand: "muss angegeben werden, da nur begrenzte Lagerbestände verfügbar sind"
+  errors:
+    messages:
+      content_type_invalid: "hat ein ungültiges Datenformat"
+      file_size_out_of_range: "Dateigröße %{file_size} liegt außerhalb des zulässigen Bereichs"
+      limit_out_of_range: "Gesamtzahl liegt außerhalb des zulässigen Bereichs"
+      image_metadata_missing: "ist kein gültiges Bild"
+      dimension_min_inclusion: "muss größer oder gleich %{width} x %{height} Pixel sein"
+      dimension_max_inclusion: "muss kleiner oder gleich %{width} x %{height} Pixel sein"
+      dimension_width_inclusion: "Breite liegt nicht zwischen %{min} und %{max} Pixel"
+      dimension_height_inclusion: "Höhe liegt nicht zwischen %{min} und %{max} Pixel"
+      dimension_width_greater_than_or_equal_to: "Breite muss größer oder gleich %{length} Pixel sein"
+      dimension_height_greater_than_or_equal_to: "Höhe muss größer oder gleich %{length} Pixel sein"
+      dimension_width_less_than_or_equal_to: "Breite muss kleiner oder gleich %{length} Pixel sein"
+      dimension_height_less_than_or_equal_to: "Höhe muss kleiner oder gleich %{length} Pixel sein"
+      dimension_width_equal_to: "Breite muss %{length} Pixel sein"
+      dimension_height_equal_to: "Höhe muss %{length} Pixel sein"
+      aspect_ratio_not_square: "muss ein quadratisches Bild sein"
+      aspect_ratio_not_portrait: "muss ein Bild im Hochformat sein"
+      aspect_ratio_not_landscape: "muss ein Bild im Querformat sein"
+      aspect_ratio_is_not: "muss ein Seitenverhältnis von %{aspect_ratio} haben"
+      aspect_ratio_unknown: "hat ein unbekanntes Seitenverhältnis"
   stripe:
     error_code:
       incorrect_number: "Die Kreditkartennummer ist fehlerhaft."
@@ -813,6 +834,8 @@ de_DE:
           manage_fees: Unternehmensgebühren verwalten
           no_fees_yet: Sie erheben noch keine Unternehmensgebühren.
           create_button: Jetzt erstellen
+        enterprise_permissions:
+          enterprise_relationships: Unternehmensbeziehungen
         images:
           logo: Logo
           promo_image_placeholder: 'Dieses Bild wird in "Über uns" angezeigt.'
@@ -854,7 +877,10 @@ de_DE:
           sells: vertreibt
           sells_tip: "Keine - Unternehmen verkauft nicht direkt an Kunden. <br /> Eigene - Unternehmen verkauft eigene Produkte an Kunden. <br /> Alle - Unternehmen verkauft eigene Produkte und Produkte anderer. <br />"
           visible_in_search: öffentlich sichtbar in der Suche
+          visible_in_search_tip: "Unternehmen können<br /> 1. öffentlich sichtbar sein und auf OFN-Karten und -Listen erscheinen.<br /> 2. auf OFN-Karten und -Listen versteckt sein, aber von anderen Unternehmen referenziert werden und in deren Profil verlinkt sein.<br /> 3. vollständig versteckt sein."
           visible: Alle Nutzer
+          not_visible: Versteckt aber referenziert
+          hidden: vollständig versteckt
           permalink: Permalink (keine Leerzeichen)
           permalink_tip: "Dieser Permalink wird verwendet, um die URL zu Ihrem Laden zu erstellen: %{link}name-ihres-ladens/shop"
           link_to_front: Link zum Laden
@@ -1171,6 +1197,8 @@ de_DE:
       unitsize: EINHEIT
       total: SUMME
       total_items: GESAMTANZAHL
+      total_by_customer: Gesamtsummen nach Kunden
+      total_by_supplier: Gesamtsummen nach Lieferanten
       supplier_totals: Lieferantengesamtsummen
       supplier_totals_by_distributor: Lieferantengesamtsummen nach Verteilstelle
       totals_by_supplier: Verteilstellengesamtsummen nach Lieferanten
@@ -1186,6 +1214,7 @@ de_DE:
       tax_rates: Steuersätze
       pack_by_customer: Packliste nach Kunden
       pack_by_supplier: Packliste nach Lieferanten
+      pack_by_product: Packliste nach Produkten
       orders_and_distributors:
         name: Bestellungen und Verteilstellen
         description: Bestellungen mit Verteilstellendetails
@@ -1236,8 +1265,14 @@ de_DE:
           temp_controlled: "Temperaturüberwachte Artikel?"
           price: "Preis"
       rendering_options:
+        generate_report: "Bericht erstellen"
         on_screen: "Auf dem Bildschirm"
+        spreadsheet: "Tabellenkalkulation (Excel, OpenOffice, ..)"
         display: Anzeige
+        summary_row: Zeilen mit Zwischensummen
+        header_row: Kopfzeile
+        raw_data: Rohdaten
+        formatted_data: Formatierte Daten
       packing:
         name: "Packlisten"
     subscriptions:
@@ -2455,11 +2490,15 @@ de_DE:
   report_payment_totals: 'Zahlungssummen'
   report_all: 'alle'
   report_order_cycle: "Bestellzyklus"
+  report_hide_columns: ausgeblendete Spalten
   report_enterprises: "Unternehmen"
   report_enterprise_fee: "Gebührennamen"
   report_users: "Benutzer"
   report_tax_rates: Steuersätze
   report_tax_types: Steuerarten
+  report_filters: Berichtseinstellungen
+  report_print: Bericht drucken
+  report_render_options: Darstellungsoptionen
   report_header_order_cycle: Bestellzyklus
   report_header_user: Benutzer
   report_header_email: E-Mail-Adresse
@@ -2594,6 +2633,11 @@ de_DE:
   report_header_transaction_fee: Transaktionsgebühr (keine Steuern)
   report_header_total_untaxable_admin: Summe nicht steuerpflichtiger Admin-Anpassungen (keine Steuern)
   report_header_total_taxable_admin: Summe steuerpflichtiger Admin-Anpassungen (inkl. Steuern)
+  report_xero_configuration: Xero-Konfiguration
+  initial_invoice_number: "Ursprüngliche Rechnungsnummer"
+  invoice_date: "Rechnungsdatum"
+  due_date: "Fälligkeitsdatum"
+  account_code: "Benutzerkonto Code"
   equals: "Entspricht"
   contains: "enthält"
   discount: "Rabatt"
@@ -2915,6 +2959,8 @@ de_DE:
         quantity_unchanged: "Menge wurde nicht geändert."
         cancel_the_order_html: "Wenn Sie fortfahren, wird die aktuelle Bestellung storniert.<br /> Sind Sie sicher, dass Sie fortfahren möchten?"
         cancel_the_order_send_cancelation_email: "Bestätigung der Stornierung per E-Mail an den Kunden senden"
+        restock_item: "Artikel zurückbuchen: Fügen Sie diesen Artikel wieder dem Lagerbestand hinzu"
+        restock_items: "Artikel zurückbuchen: Fügen Sie diesen Artikel wieder dem Lagerbestand hinzu"
       resend_user_email_confirmation:
         resend: "Erneut senden"
         sending: "Wird erneut gesendet ..."
@@ -3130,7 +3176,7 @@ de_DE:
         filters:
           date_range: "Datumsbereich"
           report_format_csv: "Als csv-Datei herunterladen"
-          generate_report: "Suche"
+          generate_report: "Bericht erstellen"
         report:
           none: "Keine"
           select_and_search: "Treffen Sie Ihre Auswahl und klicken Sie auf SUCHE, um den Bericht zu erstellen."
@@ -4024,6 +4070,8 @@ de_DE:
         spree/payment:
           one: Zahlung
           other: Zahlungen
+    unit: Einheit
+    per_unit: pro Einheit
   datetime:
     distance_in_words:
       about_x_hours:
