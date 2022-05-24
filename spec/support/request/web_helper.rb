@@ -127,12 +127,6 @@ module WebHelper
     page.find(:css, 'body').click
   end
 
-  def tomselect_search_and_select(value, options)
-    page.find("[name='#{options[:from]}']").sibling(".ts-wrapper").click
-    page.find(:css, '.ts-dropdown input.dropdown-input').set(value)
-    page.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
-  end
-
   def accept_js_alert
     page.driver.browser.switch_to.alert.accept
   end
