@@ -115,6 +115,9 @@ export default class extends TomSelectController {
   }
 
   setValueOnTomSelectController = (element, value) => {
+    if (!value) {
+      return;
+    }
     this.application
       .getControllerForElementAndIdentifier(element, "tom-select")
       .control.setValue(value, true);
