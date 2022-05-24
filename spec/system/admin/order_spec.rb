@@ -383,7 +383,7 @@ describe '
     expect(page).to have_selector '#select-customer'
 
     # And I select that customer's email address and save the order
-    tomselect_search_and_select customer.email, from: 'customer_search_override'
+    select2_select customer.email, from: 'customer_search_override', search: true
     click_button 'Update'
     expect(page).to have_selector "h1.js-admin-page-title", text: "Customer Details"
 
@@ -391,10 +391,6 @@ describe '
     order = Spree::Order.last
     expect(order.ship_address.lastname).to eq customer.ship_address.lastname
     expect(order.bill_address.lastname).to eq customer.bill_address.lastname
-    expect(order.ship_address.zipcode).to eq customer.ship_address.zipcode
-    expect(order.bill_address.zipcode).to eq customer.bill_address.zipcode
-    expect(order.ship_address.city).to eq customer.ship_address.city
-    expect(order.bill_address.city).to eq customer.bill_address.city
   end
 
   context "as an enterprise manager" do
