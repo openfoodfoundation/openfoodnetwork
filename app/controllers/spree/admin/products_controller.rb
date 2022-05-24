@@ -34,6 +34,7 @@ module Spree
           else
             # Re-fill the form with deleted params on product
             @on_hand = request.params[:product][:on_hand]
+            @on_demand = request.params[:product][:on_demand]
             render :new
           end
         end

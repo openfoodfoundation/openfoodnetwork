@@ -83,7 +83,7 @@
           = f.field_container :on_demand do
             = f.label :on_demand, t(".on_demand")
             %br/
-            = f.check_box :on_demand
+            = f.check_box :on_demand, value: '1', checked: @on_demand == '1'
             = f.error_message_on :on_demand
 
       .sixteen.columns.alpha
