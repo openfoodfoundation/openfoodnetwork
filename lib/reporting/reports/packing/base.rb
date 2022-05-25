@@ -38,7 +38,9 @@ module Reporting
 
         def default_params
           # Prevent breaking change in this report by hidding new columns by default
-          { fields_to_hide: ["phone", "price"] }
+          { fields_to_hide: ["phone", "price"],
+            q: {  order_completed_at_gt: 1.month.ago.beginning_of_day,
+                  order_completed_at_lt: 1.day.from_now.beginning_of_day } }
         end
 
         private
