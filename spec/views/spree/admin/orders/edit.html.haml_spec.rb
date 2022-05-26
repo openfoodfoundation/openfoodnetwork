@@ -62,7 +62,7 @@ describe "spree/admin/orders/edit.html.haml" do
 
     it "doesn't display closed associated adjustments" do
       render
-      
+
       expect(rendered).to_not have_content "Associated adjustment closed"
     end
   end
@@ -102,7 +102,7 @@ describe "spree/admin/orders/edit.html.haml" do
 
     it "doesn't display closed associated adjustments" do
       render
-      
+
       expect(rendered).to_not have_content "Associated adjustment closed"
     end
   end
