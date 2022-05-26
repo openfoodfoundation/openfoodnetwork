@@ -6,8 +6,9 @@ module Reporting
   module Reports
     module OrdersAndFulfillment
       describe OrderCycleCustomerTotals do
-        let!(:distributor) { create(:distributor_enterprise) }
-        let!(:customer) { create(:customer, enterprise: distributor) }
+        let!(:distributor) { create(:distributor_enterprise, name: "Apple Market") }
+        let!(:customer) { create(:customer, enterprise: distributor, user: user, code: "JHN") }
+        let(:user) { create(:user, email: "john@example.net") }
         let(:current_user) { distributor.owner }
         let(:params) { { display_summary_row: true } }
         let(:report) { OrderCycleCustomerTotals.new(current_user, params) }
@@ -18,12 +19,31 @@ module Reporting
 
         context "viewing the report" do
           let!(:order) do
-            create(:completed_order_with_totals, line_items_count: 1, user: customer.user,
-                                                 customer: customer, distributor: distributor)
+            create(
+              :completed_order_with_totals,
+              number: "R644360121",
+              line_items_count: 1,
+              user: customer.user,
+              customer: customer,
+              distributor: distributor,
+              completed_at: Date.parse("2022-05-26"),
+            ).tap do |order|
+              order.line_items[0].product.supplier.update(name: "Apple Farmer")
+              order.line_items[0].product.update(name: "Apples")
+              order.line_items[0].variant.update(sku: "APP")
+            end
+          end
+          let(:comparison_report) do
+            File.read(Rails.root.join(report_file_name))
+          end
+          let(:report_file_name) do
+            "spec/fixtures/reports/orders_and_fulfillment/order_cycle_customer_totals_report.csv"
           end
 
           it "generates the report" do
             expect(report_table.length).to eq(2)
+
+            expect(report.render_as(:csv)).to eq comparison_report
           end
 
           it "has a line item row" do
