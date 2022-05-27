@@ -28,6 +28,12 @@ $ git clone git@github.com:openfoodfoundation/openfoodnetwork.git
 ```sh
 $ cd openfoodnetwork
 ```
+* If this is your first time using docker, make sure docker-compose is installed:
+
+```sh
+$ sudo apt install docker-compose
+```
+
 * Download the Docker images, build the Docker containers, seed the database with sample data, AND log the screen output from these tasks:
 ```sh
 $ docker/build
