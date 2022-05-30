@@ -11,8 +11,8 @@ module Api
       attribute :street_address_2, &:address2
       attribute :postal_code, &:zipcode
       attribute :locality, &:city
-      attribute :region, &:state_name
-      attribute :country, ->(object, _) { object.country.name }
+      attribute :region, type: :object, &:state_name
+      attribute :country, type: :object, &:country
     end
   end
 end

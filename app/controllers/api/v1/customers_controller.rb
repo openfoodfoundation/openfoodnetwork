@@ -77,7 +77,11 @@ module Api
             :phone, :latitude, :longitude,
             :first_name, :last_name,
             :street_address_1, :street_address_2,
-            :postal_code, :locality, :region, :country,
+            :postal_code, :locality,
+            {
+              region: [:code, :name],
+              country: [:code, :name],
+            }
           ]
         ).to_h
 
