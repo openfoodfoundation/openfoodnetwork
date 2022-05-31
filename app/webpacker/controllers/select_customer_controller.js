@@ -1,9 +1,11 @@
 import TomSelectController from "./tom_select_controller";
+import { useSearchCustomer } from "./mixins/useSearchCustomer";
 
 export default class extends TomSelectController {
   static values = { options: Object, distributor: Number };
 
   connect() {
+    useSearchCustomer(this);
     const options = {
       valueField: "id",
       labelField: "email",
@@ -17,25 +19,6 @@ export default class extends TomSelectController {
     super.connect(options);
     this.control.on("item_add", this.onItemSelect.bind(this));
     this.items = [];
-  }
-
-  load(query, callback) {
-    var params = {
-      q: query,
-      distributor_id: this.distributorValue,
-    };
-
-    fetch("/admin/search/customers.json?" + new URLSearchParams(params))
-      .then((response) => response.json())
-      .then((json) => {
-        this.items = json;
-        callback(json);
-      })
-      .catch((error) => {
-        this.items = [];
-        console.log(error);
-        callback();
-      });
   }
 
   renderOption(item, escape) {
