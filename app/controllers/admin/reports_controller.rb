@@ -46,7 +46,10 @@ module Admin
 
       # Initialize data
       params[:display_summary_row] = true if request.get?
-      params[:fields_to_show] = @report.columns.keys if request.get?
+      if OpenFoodNetwork::FeatureToggle.enabled?(:report_inverse_columns_logic,
+                                                 spree_current_user) && request.get?
+        params[:fields_to_show] = @report.columns.keys
+      end
 
       @data = Reporting::FrontendData.new(spree_current_user)
     end
