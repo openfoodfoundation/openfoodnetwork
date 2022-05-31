@@ -4,9 +4,9 @@ module Reporting
   class ReportRowsBuilder
     attr_reader :report
 
-    def initialize(report)
+    def initialize(report, current_user)
       @report = report
-      @builder = ReportRowBuilder.new(report)
+      @builder = ReportRowBuilder.new(report, current_user)
     end
 
     # Structured data by groups. This tree is used to render

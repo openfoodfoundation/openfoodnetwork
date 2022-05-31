@@ -4,18 +4,33 @@ module Reporting
   class ReportHeadersBuilder
     attr_reader :report
 
-    def initialize(report)
+    def initialize(report, current_user)
       @report = report
+      @current_user = current_user
     end
 
     def table_headers
-      report.columns.keys.filter{ |key| key.in?(fields_to_show) }.map do |key|
+      filter = if OpenFoodNetwork::FeatureToggle.enabled?(:report_inverse_columns_logic,
+                                                          @current_user)
+                 proc { |key| key.in?(fields_to_show) }
+               else
+                 proc { |key| !key.in?(fields_to_hide) }
+               end
+      report.columns.keys.filter { |key| filter.call(key) }.map do |key|
         translate_header(key)
       end
     end
 
     def available_headers
       report.columns.keys.map { |key| [translate_header(key), key] }
+    end
+
+    def fields_to_hide
+      if report.display_header_row?
+        report.formatted_rules.map { |rule| rule[:fields_used_in_header] }.flatten.reject(&:blank?)
+      else
+        []
+      end.concat(params_fields_to_hide)
     end
 
     def fields_to_show
@@ -39,6 +54,10 @@ module Reporting
 
     def currency_symbol
       Spree::Money.currency_symbol
+    end
+
+    def params_fields_to_hide
+      report.params[:fields_to_hide]&.map(&:to_sym) || []
     end
 
     def params_fields_to_show
