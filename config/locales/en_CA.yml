@@ -61,6 +61,27 @@ en_CA:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because you are using producer stock settings"
             on_demand_but_count_on_hand_set: "must be blank if 'on demand' is used"
             limited_stock_but_no_count_on_hand: "must be specified because you are forcing limited stock"
+  errors:
+    messages:
+      content_type_invalid: "has an invalid content type"
+      file_size_out_of_range: "size %{file_size} is not within required range"
+      limit_out_of_range: "total number is out of range"
+      image_metadata_missing: "is not a valid image"
+      dimension_min_inclusion: "must be greater than or equal to %{width} x %{height} pixels."
+      dimension_max_inclusion: "must be less than or equal to %{width} x %{height} pixels."
+      dimension_width_inclusion: "width is not between %{min} and %{max} pixels."
+      dimension_height_inclusion: "height is not between %{min} and %{max} pixels."
+      dimension_width_greater_than_or_equal_to: "width must be greater than or equal to %{length} pixels."
+      dimension_height_greater_than_or_equal_to: "height must be greater than or equal to %{length} pixels."
+      dimension_width_less_than_or_equal_to: "width must be less than or equal to %{length} pixels."
+      dimension_height_less_than_or_equal_to: "height must be less than or equal to %{length} pixels."
+      dimension_width_equal_to: "width must be equal to %{length} pixels."
+      dimension_height_equal_to: "height must be equal to %{length} pixels."
+      aspect_ratio_not_square: "must be a square image"
+      aspect_ratio_not_portrait: "must be a portrait image"
+      aspect_ratio_not_landscape: "must be a landscape image"
+      aspect_ratio_is_not: "must have an aspect ration of %{aspect_ratio}"
+      aspect_ratio_unknown: "has an unknown aspect ration"
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -1174,6 +1195,8 @@ en_CA:
       unitsize: UNITSIZE
       total: TOTAL
       total_items: TOTAL ITEMS
+      total_by_customer: Total by Customer
+      total_by_supplier: Total By Supplier
       supplier_totals: Order Cycle Supplier Totals
       supplier_totals_by_distributor: Order Cycle Supplier Totals by Distributor
       totals_by_supplier: Order Cycle Distributor Totals by Supplier
@@ -1189,6 +1212,7 @@ en_CA:
       tax_rates: Tax Rates
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
+      pack_by_product: Pack By Product
       orders_and_distributors:
         name: Orders And Distributors
         description: Orders with distributor details
@@ -1239,8 +1263,14 @@ en_CA:
           temp_controlled: "TempControlled?"
           price: "Price"
       rendering_options:
+        generate_report: "Generate report"
         on_screen: "On screen"
+        spreadsheet: "Spreadsheet (Excel, OpenOffice...)"
         display: Display
+        summary_row: Summary Row
+        header_row: Header Row
+        raw_data: Raw Data
+        formatted_data: Formatted Data
       packing:
         name: "Packing Reports"
     subscriptions:
@@ -2458,11 +2488,15 @@ en_CA:
   report_payment_totals: 'Payment Totals'
   report_all: 'all'
   report_order_cycle: "Order Cycle"
+  report_hide_columns: Columns to Hide
   report_enterprises: "Enterprises"
   report_enterprise_fee: "Names for Fees"
   report_users: "Users"
   report_tax_rates: Tax rates
   report_tax_types: Tax types
+  report_filters: Report Filters
+  report_print: Print Report
+  report_render_options: Rendering Options
   report_header_order_cycle: Order Cycle
   report_header_user: User
   report_header_email: Email
@@ -2597,6 +2631,11 @@ en_CA:
   report_header_transaction_fee: Transaction Fee (no tax)
   report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
   report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
+  report_xero_configuration: Xero Configuration
+  initial_invoice_number: "Initial invoice number"
+  invoice_date: "Invoice date"
+  due_date: "Due date"
+  account_code: "Account code"
   equals: "Equals"
   contains: "contains"
   discount: "Discount"
@@ -2909,6 +2948,8 @@ en_CA:
         quantity_unchanged: "Quantity unchanged from previous amount."
         cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer."
+        restock_item: "Restock Items: Return this item to stock"
+        restock_items: "Restock Items: Return all items to stock"
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
