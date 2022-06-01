@@ -3,7 +3,7 @@ angular.module('Darkswarm').directive 'mapSearch', ($timeout, Search) ->
   restrict: 'E'
   require: ['^uiGmapGoogleMap', 'ngModel']
   replace: true
-  template: '<input id="pac-input" ng-model="query" placeholder="' + t('location_placeholder') + '"></input>'
+  template: '<input id="pac-input" ng-model="query" placeholder="' + t('location_placeholder') + '" onfocus="this.select()"></input>'
   scope: {}
 
   controller: ($scope) ->
