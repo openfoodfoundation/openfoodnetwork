@@ -22,10 +22,10 @@
     %header
       .row
         .small-12.columns
-          = image_tag @group.promo_image.variant(resize_to_limit: [1200, 260]) if @group.promo_image.attached?
+          = image_tag @group.promo_image.variant(resize_to_limit: [1200, 260]) if @group.promo_image.variable?
       .row
         .small-12.columns.group-header.pad-top
-          - if @group.logo.attached?
+          - if @group.logo.variable?
             = image_tag @group.logo.variant(resize_to_limit: [100, 100]), class: "group-logo"
           - else
             = image_tag "/noimage/group.png", class: "group-logo"

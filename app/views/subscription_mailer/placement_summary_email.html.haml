@@ -11,7 +11,7 @@
       %table.column{:align => "left"}
         %tr
           %td{:align => "right"}
-            - if @shop.logo.attached?
+            - if @shop.logo.variable?
               = image_tag @shop.logo_variant(:medium), class: "float-right"
       %span.clear
 

@@ -89,7 +89,7 @@ module Api
       #     medium: LOGO_MEDIUM_URL
       #   }
       def attachment_urls(attachment, styles)
-        return unless attachment.attached?
+        return unless attachment.variable?
 
         styles.transform_values do |transformation|
           Rails.application.routes.url_helpers.

@@ -6,7 +6,7 @@
       %td{ :align => "left" }
         %h4
           = t :tax_invoice
-      - if @order.distributor.display_invoice_logo? && @order.distributor.logo.attached?
+      - if @order.distributor.display_invoice_logo? && @order.distributor.logo.variable?
         %td{ :align => "right", rowspan: 2 }
           = wicked_pdf_image_tag @order.distributor.logo.variant(resize_to_limit: [150, 150])
     %tr{ valign: "top" }

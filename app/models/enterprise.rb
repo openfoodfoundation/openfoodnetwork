@@ -277,7 +277,7 @@ class Enterprise < ApplicationRecord
   end
 
   def logo_url(name)
-    return unless logo.attached?
+    return unless logo.variable?
 
     Rails.application.routes.url_helpers.url_for(
       logo.variant(LOGO_SIZES[name])
@@ -285,7 +285,7 @@ class Enterprise < ApplicationRecord
   end
 
   def promo_image_url(name)
-    return unless promo_image.attached?
+    return unless promo_image.variable?
 
     Rails.application.routes.url_helpers.url_for(
       promo_image.variant(PROMO_IMAGE_SIZES[name])

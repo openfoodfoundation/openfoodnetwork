@@ -4,7 +4,7 @@
   %distributor.details.row
     .small-12.medium-12.large-8.columns
       #distributor_title
-        - if distributor.logo.attached?
+        - if distributor.logo.variable?
           = image_tag distributor.logo_url(:thumb), class: "left"
         = render DistributorTitleComponent.new(name: distributor.name)
         %location= distributor.address.city

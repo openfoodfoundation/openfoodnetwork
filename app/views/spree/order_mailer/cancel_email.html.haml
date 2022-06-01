@@ -6,7 +6,7 @@
           = t(".customer_greeting", name: @order.bill_address.firstname)
         %h4
           = t(".instructions_html", distributor: @order.distributor.name )
-        - if @order.distributor.logo.attached?
+        - if @order.distributor.logo.variable?
           = image_tag @order.distributor.logo_url(:medium)
 
 %p.callout
