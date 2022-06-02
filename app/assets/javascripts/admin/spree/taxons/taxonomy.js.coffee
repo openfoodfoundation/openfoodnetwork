@@ -8,7 +8,7 @@ handle_move = (e, data) ->
   node = data.rslt.o
   new_parent = data.rslt.np
 
-  url = Spree.url(base_url).clone()
+  url = new URL(base_url)
   url.pathname = url.pathname + '/' + node.attr("id")
   $.ajax
     type: "POST",
@@ -40,7 +40,7 @@ handle_rename = (e, data) ->
   node = data.rslt.obj
   name = data.rslt.new_name
 
-  url = Spree.url(base_url).clone()
+  url = new URL(base_url)
   url.pathname = url.pathname + '/' + node.attr("id")
 
   $.ajax
@@ -53,8 +53,8 @@ handle_rename = (e, data) ->
 handle_delete = (e, data) ->
   last_rollback = data.rlbk
   node = data.rslt.obj
-  delete_url = base_url.clone()
-  delete_url.setPath delete_url.path() + '/' + node.attr("id")
+  delete_url = new URL(base_url)
+  delete_url.pathname = delete_url.pathname + '/' + node.attr("id")
   if confirm(Spree.translations.are_you_sure_delete)
     $.ajax
       type: "POST",
