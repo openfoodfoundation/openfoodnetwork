@@ -49,6 +49,8 @@ handle_rename = (e, data) ->
   last_rollback = data.rlbk
   node = data.rslt.obj
   name = data.rslt.new_name
+  # change the name inside the main input field as well if taxon is the root one
+  document.getElementById("taxonomy_name").value = name if node.parents("[id]").attr("id") == "taxonomy_tree"
 
   url = new URL(base_url)
   url.pathname = url.pathname + '/' + node.attr("id")
