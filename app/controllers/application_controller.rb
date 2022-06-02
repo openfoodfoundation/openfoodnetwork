@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
   helper 'footer_links'
   helper 'discourse'
   helper 'checkout'
+  helper 'link'
   helper 'terms_and_conditions'
 
   protect_from_forgery
