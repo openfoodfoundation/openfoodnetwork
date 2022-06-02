@@ -17,6 +17,8 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.18.2",
+    "@babel/plugin-proposal-private-property-in-object": "^7.17.12",
     "@storybook/addon-controls": "^6.4.13",
     "@storybook/addon-docs": "^6.4.13",
     "@storybook/server": "^6.4.13",
