@@ -509,6 +509,90 @@ describe 'Subscriptions' do
       end
     end
 
+    describe "with an inactive order cycle" do
+      let!(:customer) { create(:customer, enterprise: shop) }
+      let!(:product1) { create(:product, supplier: shop) }
+      let!(:product2) { create(:product, supplier: shop) }
+      let!(:variant1) {
+        create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: [])
+      }
+      let!(:variant2) {
+        create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: [])
+      }
+      let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
+      let!(:order_cycle) {
+        create(:simple_order_cycle,
+               coordinator: shop,
+               orders_open_at: 7.days.ago,
+               orders_close_at: 2.days.ago)
+      }
+      let!(:outgoing_exchange) {
+        order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant1, variant2],
+                                     enterprise_fees: [enterprise_fee])
+      }
+      let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
+      let!(:payment_method) { create(:payment_method, distributors: [shop]) }
+      let!(:stripe_payment_method) {
+        create(:stripe_sca_payment_method, name: 'Credit Card', distributors: [shop])
+      }
+      let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
+      let!(:subscription) {
+        create(:subscription,
+               shop: shop,
+               customer: customer,
+               schedule: schedule,
+               payment_method: payment_method,
+               shipping_method: shipping_method,
+               subscription_line_items: [create(:subscription_line_item,
+                                                variant: variant1,
+                                                quantity: 2, price_estimate: 13.75)],
+               with_proxy_orders: true)
+      }
+
+      it "that adding new subscription line item, price estimate will be nil" do
+        visit edit_admin_subscription_path(subscription)
+        click_button 'edit-products'
+
+        add_variant_to_subscription(variant2, 1)
+
+        # expect $NaN estimate price with expired oc
+        within "#sli_1" do
+          expect(page).to have_selector '.description',
+                                        text: "#{product2.name} - #{variant2.full_name}"
+          expect(page).to have_selector 'td.price', text: "$NaN"
+          expect(page).to have_input 'quantity', with: "1"
+        end
+
+        expect(page).to have_selector '#order_form_total', text: "$NAN"
+      end
+
+      it "update oc to be upcoming and price estimates are not nil" do
+        visit edit_admin_order_cycle_path(order_cycle)
+
+        # update orders close
+        find('#order_cycle_orders_close_at').click
+
+        select_datetime_from_datepicker Time.zone.at(Time.zone.local(2040, 10, 24, 17, 0o0, 0o0))
+        find("body").send_keys(:escape)
+
+        click_button 'Save'
+
+        visit edit_admin_subscription_path(subscription)
+        click_button 'edit-products'
+
+        add_variant_to_subscription(variant2, 1)
+
+        within "#sli_1" do
+          expect(page).to have_selector '.description',
+                                        text: "#{product2.name} - #{variant2.full_name}"
+          expect(page).to have_selector 'td.price', text: "$6.00"
+          expect(page).to have_input 'quantity', with: "1"
+        end
+
+        expect(page).to have_selector '#order_form_total', text: "$33.50"
+      end
+    end
+
     describe "allowed variants" do
       let!(:customer) { create(:customer, enterprise: shop) }
       let!(:credit_card) { create(:stored_credit_card, user: customer.user) }
