@@ -9,12 +9,17 @@ handle_move = (e, data) ->
   new_parent = data.rslt.np
 
   url = new URL(base_url)
-  url.pathname = url.pathname + '/' + node.attr("id")
+  url.pathname = url.pathname + '/' + node.attr("id") 
+  data = {
+    _method: "put",
+    "taxon[position]": position,
+    "taxon[parent_id]": if !isNaN(new_parent.attr("id")) then new_parent.attr("id") else undefined
+  }
   $.ajax
     type: "POST",
     dataType: "json",
     url: url.toString(),
-    data: ({_method: "put", "taxon[parent_id]": new_parent.attr("id"), "taxon[position]": position }),
+    data: data,
     error: handle_ajax_error
 
   true
@@ -26,11 +31,16 @@ handle_create = (e, data) ->
   position = data.rslt.position
   new_parent = data.rslt.parent
 
+  data = {
+    "taxon[name]": name,
+    "taxon[position]": position
+    "taxon[parent_id]": if !isNaN(new_parent.attr("id")) then new_parent.attr("id") else undefined
+  }
   $.ajax
     type: "POST",
     dataType: "json",
     url: base_url.toString(),
-    data: ({"taxon[name]": name, "taxon[parent_id]": new_parent.attr("id"), "taxon[position]": position }),
+    data: data,
     error: handle_ajax_error,
     success: (data,result) ->
       node.attr('id', data.id)
