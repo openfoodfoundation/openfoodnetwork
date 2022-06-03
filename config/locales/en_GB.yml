@@ -2478,7 +2478,7 @@ en_GB:
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"
   report_customers_csv: "Download as csv"
-  report_producers: "Buy Food"
+  report_producers: "Producers"
   report_type: "Report Type"
   report_hubs: "Hubs"
   report_payment: "Payment Methods"

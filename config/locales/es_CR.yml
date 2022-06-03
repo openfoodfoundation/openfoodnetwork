@@ -61,6 +61,27 @@ es_CR:
             using_producer_stock_settings_but_count_on_hand_set: "debe estar en blanco porque está usando la configuración de inventario del productor"
             on_demand_but_count_on_hand_set: "debe estar en blanco si es bajo demanda"
             limited_stock_but_no_count_on_hand: "debe estar especificado porque se ha definido un inventario limitado"
+  errors:
+    messages:
+      content_type_invalid: "tiene un tipo de contenido no válido"
+      file_size_out_of_range: "el tamaño %{file_size} no está entre el rango requerido"
+      limit_out_of_range: "el número total está fuera de rango"
+      image_metadata_missing: "no es una imagen valida"
+      dimension_min_inclusion: "debe ser mayor o igual a %{width}x %{height} píxel."
+      dimension_max_inclusion: "debe ser menor o igual a %{width} x %{height} píxel."
+      dimension_width_inclusion: "el ancho no está incluido entre %{min} y %{max} píxel."
+      dimension_height_inclusion: "la altura no está incluida entre %{min} y %{max} píxel."
+      dimension_width_greater_than_or_equal_to: "el ancho debe ser mayor o igual al %{length} píxel."
+      dimension_height_greater_than_or_equal_to: "la altura debe ser mayor o igual al %{length} píxel."
+      dimension_width_less_than_or_equal_to: "el ancho debe ser menor o igual al %{length} píxel."
+      dimension_height_less_than_or_equal_to: "la altura debe ser menor o igual al %{length} píxel."
+      dimension_width_equal_to: "el ancho debe ser igual al %{length} píxel."
+      dimension_height_equal_to: "la altura debe ser igual al %{length} píxel."
+      aspect_ratio_not_square: "debe ser una imagen cuadrada"
+      aspect_ratio_not_portrait: "debe ser una imagen de retrato"
+      aspect_ratio_not_landscape: "debe ser una imagen de paisaje"
+      aspect_ratio_is_not: "debe tener una relación de aspecto de %{aspect_ratio}"
+      aspect_ratio_unknown: "tiene una relación de aspecto desconocida"
   stripe:
     error_code:
       incorrect_number: "El número de tarjeta es incorrecto."
@@ -168,6 +189,9 @@ es_CR:
       already_registered: "Esta dirección de correo electrónico ya está registrada. Inicie sesión para continuar, o vuelva atrás y use otra dirección de correo electrónico."
     success:
       logged_in_succesfully: "Sesión iniciada con éxito"
+    sessions:
+      signed_out: "Cerrado con éxito."
+      already_signed_out: "Cerrado con éxito."
     user_passwords:
       spree_user:
         updated_not_active: "Su contraseña ha sido restablecida, pero su correo electrónico aún no ha sido confirmado."
@@ -693,6 +717,8 @@ es_CR:
         display_name: Nombre para mostrar
         category: Categoría
         description: Descripción
+        units: unidades
+        unit_type: tipo de unidad
         variant_unit_name: Nombre de la unidad de la variante
         price: Precio
         on_hand: Disponibles
@@ -726,6 +752,8 @@ es_CR:
       controls:
         back_to_my_inventory: Volver a mi inventario
     orders:
+      edit:
+        order_sure_want_to: ¿Estás segura de que quieres %{event} este pedido? 
       invoice_email_sent: 'Se ha enviado correo electrónico con la factura.'
       order_email_resent: 'El correo electrónico del pedido se ha reenviado'
       bulk_management:
@@ -735,6 +763,7 @@ es_CR:
         order_date: "Completado en"
         max: "Max"
         product_unit: "Producto: Unidad"
+        weight_volume: "Peso/Volumen (g)"
         ask: "¿Pregunta?"
         page_title: "Gestor de Multiples Pedidos"
         actions_delete: "Borrar Seleccionados"
@@ -772,8 +801,23 @@ es_CR:
           acn_placeholder: ej. 123 456 789
           display_invoice_logo: Mostrar logo en facturas
           invoice_text: Añadir texto personalizado al final de las facturas
+          terms_and_conditions: "Términos y condiciones"
+          remove_terms_and_conditions: "Remover archivo"
+          uploaded_on: "subido en"
+          reset_form: "Restablecer formulario"
+          Invoice_item_sorting: Clasificación de artículos de factura
+          sort_items_by_supplier?: ¿Ordenar artículos por proveedor?
+          sort_items_by_supplier_tip: "Cuando está habilitado, los artículos se ordenarán por nombre de proveedor."
+          enabled: Habilitar
+          disabled: Deshabilitar
         business_address:
+          company_legal_name: Nombre legal de la compañía
+          company_placeholder: Ejemplo Inc.
+          address1: Dirección legal
+          address1_placeholder: 123 Calle Alta
           address2: Dirección (continuación)
+          legal_phone_number: Número de teléfono legal
+          phone_placeholder: "98 123 4565"
         contact:
           name: Nombre
           name_placeholder: ej. Gustav Plum
@@ -790,6 +834,8 @@ es_CR:
           manage_fees: Gestiona las comisiones de la Organización
           no_fees_yet: No tienes comisiones para la organización.
           create_button: Crear una ahora
+        enterprise_permissions:
+          enterprise_relationships: Relaciones empresariales
         images:
           logo: Logo
           promo_image_placeholder: 'Esta imagen aparece en "Sobre nosotras"'
@@ -831,7 +877,10 @@ es_CR:
           sells: Vende
           sells_tip: "Ninguno - La organización no vende directamente a los consumidores.<br />Popios - La organización vende sus propios productos a los consumidores.<br />Cualquiera -  La organización vende sus propios productos o de otros.<br />"
           visible_in_search: ¿Visible en la búsqueda?
+          visible_in_search_tip: "Las tiendas pueden ser <br />1. públicamente visibles, apareciendo en el mapa y listados de OFN. <br />2. Oculto en mapas y listados pero mencionado por otras tiendas y vinculado en su perfil. <br />3. Completamente oculto."
           visible: Pública
+          not_visible: Oculto
+          hidden: Ocultar todas las referencias
           permalink: Permalink (sin espacios)
           permalink_tip: "Se usa para crear la URL de tu tienda: %{link}nombre-de-tu-tienda/shop"
           link_to_front: Link a la tienda
@@ -840,6 +889,7 @@ es_CR:
           ofn_uid_tip: La identificación única utilizada para identificar la organización en Open Food Network.
         shipping_methods:
           name: "Nombre"
+          applies: "Activo?"
           manage: "Gestionar métodos de envío"
           create_button: "Crear nuevo método de envío"
           create_one_button: "Crear una ahora"
@@ -862,6 +912,8 @@ es_CR:
           enable_subscriptions_tip: "¿Habilitar la funcionalidad de suscripciones?"
           enable_subscriptions_false: "Deshabilitado"
           enable_subscriptions_true: "Habilitado"
+          customer_names_in_reports: "Nombres de clientes en informes"
+          customer_names_tip: "Permita que sus proveedores vean los nombres de sus clientes en los informes"
           customer_names_false: "Deshabilitado"
           customer_names_true: "Habilitado"
           shopfront_message: "Mensaje de la tienda"
@@ -879,10 +931,16 @@ es_CR:
               en tu tienda sólo cuando no tienes ciclos de pedidos activos (p.e. la
               tienda está cerrada).
           shopfront_category_ordering: "Orden de las categorías de la tienda"
+          shopfront_category_ordering_note: "(de arriba hacia abajo)"
           open_date: "Fecha de Inicio"
           close_date: "Fecha de Finalización"
+          display_ordering_in_shopfront: "Mostrar pedidos en el escaparate:"
+          shopfront_sort_by_category: "Por categoría"
+          shopfront_sort_by_producer: "Por productor"
           shopfront_sort_by_category_placeholder: "Categoría"
           shopfront_sort_by_producer_placeholder: "Productor"
+          display_remaining_stock: "Muestre el stock restante en el escaparate si hay poco disponible"
+          display_remaining_stock_tip: "Informe a los compradores cuando solo queden 3 artículos o menos."
           enabled: "Habilitado"
           disabled: "Deshabilitado"
         social:
@@ -1012,10 +1070,13 @@ es_CR:
         back_to_list: "Regresar a la lista"
         save_and_back_to_list: "Guardar y volver a lista"
         choose_products_from: "Escoger productos desde:"
+        re_notify_producers: Re notificar a los productores
+        notify_producers_tip: Esto enviará un correo electrónico a cada productor con la lista de sus pedidos.
       incoming:
         incoming: "Entrante"
         supplier: "Proveedor"
         products: "Productos"
+        receival_details: "Detalles de recepción"
         fees: "Comisiones"
         save: "Guardar"
         save_and_next: "Guardar y continuar"
@@ -1051,6 +1112,8 @@ es_CR:
         add_supplier: 'Añadir proveedor'
         add_distributor: 'Añadir distribuidor'
       advanced_settings:
+        automatic_notifications: Notificaciones automáticas
+        automatic_notifications_tip: Notifique automáticamente a los productores con sus pedidos por correo electrónico cuando cierren los ciclos de pedidos
         title: Configuración avanzada
         choose_product_tip: Puede restringir los productos entrantes y salientes a solo el inventario de %{inventory}.
         preferred_product_selection_from_coordinator_inventory_only_here: Solo el inventario del coordinador
@@ -1081,6 +1144,7 @@ es_CR:
         schedule: Programación
         schedules: Programación
         new_schedule: Nueva programación
+        new_schedule_tooltip: La frecuencia con la que se realiza un pedido de suscripción.
       name_and_timing_form:
         name: Nombre
         orders_open: Pedidos abiertos a
@@ -1133,6 +1197,8 @@ es_CR:
       unitsize: TAMAÑO DE LA UNIDAD
       total: TOTAL
       total_items: ARTÍCULOS TOTALES
+      total_by_customer: Total por cliente
+      total_by_supplier: Total por proveedor
       supplier_totals: Totales de proveedores del Ciclo de Pedido
       supplier_totals_by_distributor: Totales de proveedores por Distribuidor del Ciclo de pedidos
       totals_by_supplier: Totales del distribuidor por proveedor del Ciclos de Pedido 
@@ -1148,6 +1214,7 @@ es_CR:
       tax_rates: Tarifas de impuesto
       pack_by_customer: Paquete por cliente
       pack_by_supplier: Pack por proveedor
+      pack_by_product: Paquete por producto
       orders_and_distributors:
         name: Pedidos y distribuidores
         description: Pedidos con detalles de distribuidor
@@ -1176,6 +1243,9 @@ es_CR:
       enterprise_fee_summary:
         name: "Resumen de las comisiones de la organización"
         description: "Resumen de las comisiones de la organización recolectadas"
+      errors:
+        no_report_type: "Especifique un tipo de informe"
+        report_not_found: "Informe no encontrado"
       summary_row:
         total: "TOTAL"
       table:
@@ -1312,6 +1382,10 @@ es_CR:
     already_ordered:
       cart: "carrito"
       message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
+    terms_and_conditions:
+      link_text: "Términos y condiciones"
+    all_terms_and_conditions:
+      terms_and_conditions: "Términos y condiciones"
     failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
   shops:
     hubs:
@@ -1617,6 +1691,10 @@ es_CR:
         title: Sus detalles
       billing_address:
         title: Dirección de cobro
+      terms_and_conditions:
+        link_text: "Términos y condiciones"
+      all_terms_and_conditions:
+        terms_and_conditions: "Términos y condiciones"
     errors:
       invalid_email: "Introduce un correo electrónico válido"
   order_paid: PAGADO
@@ -2839,75 +2917,99 @@ es_CR:
   inflections:
     each:
       one: "each"
+      many: "cada"
       other: "cada"
     bunch:
       one: "manojo"
+      many: "manojos"
       other: "manojos"
     pack:
       one: "paquete"
+      many: "paquetes"
       other: "paquetes"
     box:
       one: "caja"
+      many: "cajas"
       other: "cajas"
     bottle:
       one: "botella"
+      many: "botellas"
       other: "botellas"
     jar:
       one: "frasco"
+      many: "frascos"
       other: "frascos"
     head:
       one: "cabeza"
+      many: "cabezas"
       other: "cabezas"
     bag:
       one: "bolsa"
+      many: "bolsas"
       other: "bolsas"
     loaf:
       one: "hogaza"
+      many: "hogazas"
       other: "hogazas"
     single:
       one: "single"
+      many: "individuales"
       other: "individuales"
     tub:
       one: "tub"
+      many: "recipientes"
       other: "recipientes"
     punnet:
       one: "canastilla"
+      many: "canastillas"
       other: "canastillas"
     packet:
       one: "paquete"
+      many: "paquetes"
       other: "paquetes"
     item:
       one: "elemento"
+      many: "elementos"
       other: "elementos"
     dozen:
       one: "docena"
+      many: "docenas"
       other: "docenas"
     unit:
       one: "unidad"
+      many: "unidades"
       other: "unidades"
     serve:
       one: "serve"
+      many: "porción"
       other: "porción"
     tray:
       one: "bandeja"
+      many: "bandejas"
       other: "bandejas"
     piece:
       one: "pieza"
+      many: "piezas"
       other: "piezas"
     pot:
       one: "maceta"
+      many: "contenedores"
       other: "contenedores"
     bundle:
       one: "haz"
+      many: "paquetes"
       other: "paquetes"
     flask:
       one: "flask"
+      many: "frascos"
       other: "frascos"
     basket:
       one: "canasta"
+      many: "canastas"
       other: "canastas"
     sack:
       one: "sacos"
+      many: "sacos"
       other: "sacos"
   producers:
     signup:

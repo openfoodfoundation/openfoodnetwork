@@ -2873,75 +2873,99 @@ pt_BR:
   inflections:
     each:
       one: "cada"
+      many: "cada"
       other: "cada"
     bunch:
       one: "maço"
+      many: "maços"
       other: "maços"
     pack:
       one: "pacote"
+      many: "pacotes"
       other: "pacotes"
     box:
       one: "caixa"
+      many: "caixas"
       other: "caixas"
     bottle:
       one: "garrafa"
+      many: "garrafas"
       other: "garrafas"
     jar:
       one: "jarro"
+      many: "jarros"
       other: "jarros"
     head:
       one: "cabeça"
+      many: "cabeças"
       other: "cabeças"
     bag:
       one: "sacolas"
+      many: "sacolas"
       other: "sacolas"
     loaf:
       one: "pão"
+      many: "pães"
       other: "pães"
     single:
       one: "simples"
+      many: "simples"
       other: "simples"
     tub:
       one: "vaso"
+      many: "vasos"
       other: "vasos"
     punnet:
       one: "vasilha"
+      many: "vasilhas"
       other: "vasilhas"
     packet:
       one: "pacote"
+      many: "pacotes"
       other: "pacotes"
     item:
       one: "item"
+      many: "items"
       other: "items"
     dozen:
       one: "dúzia"
+      many: "dúzias"
       other: "dúzias"
     unit:
       one: "unidade"
+      many: "unidades"
       other: "unidades"
     serve:
       one: "servido"
+      many: "servidos"
       other: "servidos"
     tray:
       one: "bandeja"
+      many: "bandejas"
       other: "bandejas"
     piece:
       one: "pedaço"
+      many: "pedaços"
       other: "pedaços"
     pot:
       one: "pote"
+      many: "potes"
       other: "potes"
     bundle:
       one: "pacote"
+      many: "pacotes"
       other: "pacotes"
     flask:
       one: "frasco"
+      many: "frascos"
       other: "frascos"
     basket:
       one: "cesta"
+      many: "cestas"
       other: "cestas"
     sack:
       one: "saco"
+      many: "sacos"
       other: "sacos"
   producers:
     signup:
@@ -3837,43 +3861,56 @@ pt_BR:
       models:
         spree/payment:
           one: Pagamentos
+          many: Pagamentos
           other: Pagamentos
   datetime:
     distance_in_words:
       about_x_hours:
         one: cerca de 1 hora
+        many: cerca de %{count}horas
         other: cerca de %{count}horas
       about_x_months:
         one: cerca de 1 mês
+        many: cerca de %{count}mês
         other: cerca de %{count}mês
       about_x_years:
         one: cerca de 1 ano
+        many: cerca de %{count} anos
         other: cerca de %{count} anos
       almost_x_years:
         one: quase 1 ano
+        many: quase %{count}anos
         other: quase %{count}anos
       half_a_minute: meio minuto
       less_than_x_seconds:
         one: menos de 1 segundo
+        many: menos de %{count}segundos
         other: menos de %{count}segundos
       less_than_x_minutes:
         one: menos de um minuto
+        many: menos de %{count}minutos
         other: menos de %{count}minutos
       over_x_years:
         one: mais de 1 ano
+        many: mais de %{count}anos
         other: mais de %{count}anos
       x_seconds:
         one: "1 segundo"
+        many: "%{count}segundos"
         other: "%{count}segundos"
       x_minutes:
         one: "1 minuto"
+        many: "%{count}minutos"
         other: "%{count}minutos"
       x_days:
         one: "1 dia"
+        many: "%{count}dias"
         other: "%{count}dias"
       x_months:
         one: "1 mês"
+        many: "%{count}meses"
         other: "%{count}meses"
       x_years:
         one: "1 ano"
+        many: "%{count}anos"
         other: "%{count}anos"

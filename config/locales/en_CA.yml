@@ -3643,7 +3643,7 @@ en_CA:
       shipping_methods:
         index:
           shipping_methods: "Shipping Methods"
-          new_shipping_method: "No Shipping Method"
+          new_shipping_method: "New Shipping Method"
           name: "Name"
           products_distributor: "Distributor"
           zone: "Zone"

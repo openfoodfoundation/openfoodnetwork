@@ -872,14 +872,14 @@ de_DE:
           primary_producer_tip: Wählen Sie "Produzent", wenn Sie eigene Produkte herstellen und diese über das Open Food Network verkaufen möchten.
           producer: Produzent
           any: Alle
-          none: Keine
+          none: Nichts
           own: Eigene
           sells: vertreibt
-          sells_tip: "Keine - Unternehmen verkauft nicht direkt an Kunden. <br /> Eigene - Unternehmen verkauft eigene Produkte an Kunden. <br /> Alle - Unternehmen verkauft eigene Produkte und Produkte anderer. <br />"
+          sells_tip: "Nichts - Unternehmen verkauft nicht direkt an Kunden. <br /> Eigene - Unternehmen verkauft eigene Produkte an Kunden. <br /> Alle - Unternehmen verkauft eigene Produkte und Produkte anderer. <br />"
           visible_in_search: öffentlich sichtbar in der Suche
           visible_in_search_tip: "Unternehmen können<br /> 1. öffentlich sichtbar sein und auf OFN-Karten und -Listen erscheinen.<br /> 2. auf OFN-Karten und -Listen versteckt sein, aber von anderen Unternehmen referenziert werden und in deren Profil verlinkt sein.<br /> 3. vollständig versteckt sein."
-          visible: Alle Nutzer
-          not_visible: Versteckt aber referenziert
+          visible: öffentlich sichtbar
+          not_visible: versteckt aber referenziert
           hidden: vollständig versteckt
           permalink: Permalink (keine Leerzeichen)
           permalink_tip: "Dieser Permalink wird verwendet, um die URL zu Ihrem Laden zu erstellen: %{link}name-ihres-ladens/shop"

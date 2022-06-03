@@ -3006,75 +3006,99 @@ fr_CM:
   inflections:
     each:
       one: "chacun"
+      many: "chacun"
       other: "chacun"
     bunch:
       one: "bouquet"
+      many: "bouquets"
       other: "bouquets"
     pack:
       one: "caisse"
+      many: "caisses"
       other: "caisses"
     box:
       one: "boîte"
+      many: "boîtes"
       other: "boîtes"
     bottle:
       one: "bouteille"
+      many: "bouteilles"
       other: "bouteilles"
     jar:
       one: "bocal"
+      many: "bocaux"
       other: "bocaux"
     head:
       one: "tête"
+      many: "têtes"
       other: "têtes"
     bag:
       one: "sac"
+      many: "sacs"
       other: "sacs"
     loaf:
       one: "miche"
+      many: "miches"
       other: "miches"
     single:
       one: "unité"
+      many: "unités"
       other: "unités"
     tub:
       one: "bac"
+      many: "bacs"
       other: "bacs"
     punnet:
       one: "barquette"
+      many: "barquettes"
       other: "barquettes"
     packet:
       one: "paquet"
+      many: "paquets"
       other: "paquets"
     item:
       one: "article"
+      many: "articles"
       other: "articles"
     dozen:
       one: "dizaine"
+      many: "dizaines"
       other: "dizaines"
     unit:
       one: "unité"
+      many: "unités"
       other: "unités"
     serve:
       one: "service"
+      many: "services"
       other: "services"
     tray:
       one: "plateau"
+      many: "plateaux"
       other: "plateaux"
     piece:
       one: "pièce"
+      many: "pièces"
       other: "pièces"
     pot:
       one: "pot"
+      many: "pots"
       other: "pots"
     bundle:
       one: "botte"
+      many: "bottes"
       other: "bottes"
     flask:
       one: "flacon"
+      many: "flacons"
       other: "flacons"
     basket:
       one: "panier"
+      many: "paniers"
       other: "paniers"
     sack:
       one: "sachet"
+      many: "sachets"
       other: "sachets"
   producers:
     signup:
@@ -3985,43 +4009,56 @@ fr_CM:
       models:
         spree/payment:
           one: Paiement
+          many: Paiements
           other: Paiements
   datetime:
     distance_in_words:
       about_x_hours:
         one: environ 1 heure
+        many: environ %{count}heures
         other: environ %{count}heures
       about_x_months:
         one: environ 1 mois
+        many: environ %{count} mois
         other: environ %{count} mois
       about_x_years:
         one: environ 1 année
+        many: environ %{count} années
         other: environ %{count} années
       almost_x_years:
         one: presque 1 année
+        many: presque %{count} années
         other: presque %{count} années
       half_a_minute: moins d'une minute
       less_than_x_seconds:
         one: moins d' 1 seconde
+        many: moins de %{count} secondes
         other: moins de %{count} secondes
       less_than_x_minutes:
         one: moins d'une minute
+        many: moins de %{count} minutes
         other: moins de %{count} minutes
       over_x_years:
         one: plus d' 1 an
+        many: plus de %{count} années
         other: plus de %{count} années
       x_seconds:
         one: "1 seconde"
+        many: "%{count} secondes"
         other: "%{count} secondes"
       x_minutes:
         one: "1 minute"
+        many: "%{count} minutes"
         other: "%{count} minutes"
       x_days:
         one: "1 jour"
+        many: "%{count} jours"
         other: "%{count} jours"
       x_months:
         one: "1 mois"
+        many: "%{count} mois"
         other: "%{count} mois"
       x_years:
         one: "1 an"
+        many: "%{count} ans"
         other: "%{count} ans"

@@ -2768,75 +2768,99 @@ es_CO:
   inflections:
     each:
       one: "each"
+      many: "cada"
       other: "cada"
     bunch:
       one: "manojo"
+      many: "manojos"
       other: "manojos"
     pack:
       one: "paquete"
+      many: "paquetes"
       other: "paquetes"
     box:
       one: "caja"
+      many: "cajas"
       other: "cajas"
     bottle:
       one: "botella"
+      many: "botellas"
       other: "botellas"
     jar:
       one: "frasco"
+      many: "frascos"
       other: "frascos"
     head:
       one: "cabeza"
+      many: "cabezas"
       other: "cabezas"
     bag:
       one: "bolsa"
+      many: "bolsas"
       other: "bolsas"
     loaf:
       one: "hogaza"
+      many: "hogazas"
       other: "hogazas"
     single:
       one: "single"
+      many: "individuales"
       other: "individuales"
     tub:
       one: "tub"
+      many: "recipientes"
       other: "recipientes"
     punnet:
       one: "canastilla"
+      many: "canastillas"
       other: "canastillas"
     packet:
       one: "paquete"
+      many: "paquetes"
       other: "paquetes"
     item:
       one: "elemento"
+      many: "elementos"
       other: "elementos"
     dozen:
       one: "docena"
+      many: "docenas"
       other: "docenas"
     unit:
       one: "unidad"
+      many: "unidades"
       other: "unidades"
     serve:
       one: "serve"
+      many: "porción"
       other: "porción"
     tray:
       one: "bandeja"
+      many: "bandejas"
       other: "bandejas"
     piece:
       one: "pieza"
+      many: "piezas"
       other: "piezas"
     pot:
       one: "maceta"
+      many: "contenedores"
       other: "contenedores"
     bundle:
       one: "haz"
+      many: "paquetes"
       other: "paquetes"
     flask:
       one: "flask"
+      many: "frascos"
       other: "frascos"
     basket:
       one: "canasta"
+      many: "canastas"
       other: "canastas"
     sack:
       one: "sacos"
+      many: "sacos"
       other: "sacos"
   producers:
     signup:
@@ -3615,4 +3639,5 @@ es_CO:
       models:
         spree/payment:
           one: Pago
+          many: Pagos
           other: Pagos

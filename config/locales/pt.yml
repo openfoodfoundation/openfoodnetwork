@@ -2736,39 +2736,51 @@ pt:
   inflections:
     packet:
       one: "pacote"
+      many: "pacotes"
       other: "pacotes"
     item:
       one: "item"
+      many: "itens"
       other: "itens"
     dozen:
       one: "dúzia"
+      many: "dúzias"
       other: "dúzias"
     unit:
       one: "unidade"
+      many: "unidades"
       other: "unidades"
     serve:
       one: "dose"
+      many: "doses"
       other: "doses"
     tray:
       one: "bandeja"
+      many: "bandejas"
       other: "bandejas"
     piece:
       one: "parte"
+      many: "partes"
       other: "partes"
     pot:
       one: "pote"
+      many: "potes"
       other: "potes"
     bundle:
       one: "pacote"
+      many: "pacotes"
       other: "pacotes"
     flask:
       one: "frasco"
+      many: "frascos"
       other: "frascos"
     basket:
       one: "cesto"
+      many: "cestos"
       other: "cestos"
     sack:
       one: "saco"
+      many: "sacos"
       other: "sacos"
   producers:
     signup:
@@ -3470,5 +3482,6 @@ pt:
       models:
         spree/payment:
           one: Pagamento
+          many: Pagamentos
           other: Pagamentos
     unit: unidade

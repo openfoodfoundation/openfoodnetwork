@@ -61,6 +61,11 @@ ca:
             using_producer_stock_settings_but_count_on_hand_set: "ha d'estar en blanc perquè s'utilitza la configuració d'estoc de la productora"
             on_demand_but_count_on_hand_set: "ha d'estar en blanc si és sota demanda"
             limited_stock_but_no_count_on_hand: "cal especificar-se perquè força existències limitades"
+  errors:
+    messages:
+      file_size_out_of_range: "la mida %{file_size} no és entre el rang necessari"
+      limit_out_of_range: "el total està fora del marge"
+      image_metadata_missing: "no és una imatge vàlida"
   stripe:
     error_code:
       incorrect_number: "El número de la targeta és incorrecte."
@@ -2353,6 +2358,7 @@ ca:
   report_users: "Usuàries"
   report_tax_rates: Taxes d'impostos
   report_tax_types: Tipus d'impostos
+  report_print: Imprimir informe
   report_header_order_cycle: Cicle de comanda
   report_header_user: Usuàries
   report_header_email: Correu electrònic
@@ -2487,6 +2493,7 @@ ca:
   report_header_transaction_fee: Comissió de transacció (sense impostos)
   report_header_total_untaxable_admin: Total d'ajustaments d'administració no imputables (sense impostos)
   report_header_total_taxable_admin: Total d'ajustaments administratius imposables (impostos inclosos)
+  invoice_date: "Data de factura"
   equals: "És igual a"
   contains: "conté"
   discount: "Descompte"
@@ -2849,6 +2856,7 @@ ca:
         add_to_cart: "Afegeix"
         in_cart: "a la cistella"
         quantity_in_cart: "%{quantity} a la cistella"
+        remaining_in_stock: "Només queda %{quantity}"
       bulk_buy_modal:
         min_quantity: "Quantitat mínima"
         max_quantity: "Quantitat màxima"
@@ -3901,6 +3909,8 @@ ca:
         spree/payment:
           one: Pagament
           other: Pagaments
+    unit: unitat
+    per_unit: per unitat
   datetime:
     distance_in_words:
       about_x_hours:

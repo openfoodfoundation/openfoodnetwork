@@ -3042,75 +3042,99 @@ it:
   inflections:
     each:
       one: "ogni"
+      many: "ogni"
       other: "ogni"
     bunch:
       one: "mazzo"
+      many: "grappoli"
       other: "grappoli"
     pack:
       one: "imballare"
+      many: "confezioni"
       other: "confezioni"
     box:
       one: "scatola"
+      many: "scatole"
       other: "scatole"
     bottle:
       one: "bottiglia"
+      many: "bottiglie"
       other: "bottiglie"
     jar:
       one: "vaso"
+      many: "barattoli"
       other: "barattoli"
     head:
       one: "testa"
+      many: "teste"
       other: "teste"
     bag:
       one: "Borsa"
+      many: "borse"
       other: "borse"
     loaf:
       one: "pagnotta"
+      many: "pagnotte"
       other: "pagnotte"
     single:
       one: "singolo"
+      many: "singoli"
       other: "singoli"
     tub:
       one: "vasca"
+      many: "vasche"
       other: "vasche"
     punnet:
       one: "cestino"
+      many: "cestini"
       other: "cestini"
     packet:
       one: "pacchetto"
+      many: "pacchetti"
       other: "pacchetti"
     item:
       one: "articolo"
+      many: "elementi"
       other: "elementi"
     dozen:
       one: "dozzina"
+      many: "dozzine"
       other: "dozzine"
     unit:
       one: "unità"
+      many: "unità"
       other: "unità"
     serve:
       one: "servire"
+      many: "porzioni"
       other: "porzioni"
     tray:
       one: "vassoio"
+      many: "vassoi"
       other: "vassoi"
     piece:
       one: "pezzo"
+      many: "pezzi"
       other: "pezzi"
     pot:
       one: "pentola"
+      many: "vasi"
       other: "vasi"
     bundle:
       one: "fascio"
+      many: "gruppi"
       other: "gruppi"
     flask:
       one: "borraccia"
+      many: "fiaschi"
       other: "fiaschi"
     basket:
       one: "cestino"
+      many: "cesti"
       other: "cesti"
     sack:
       one: "sacco"
+      many: "sacchi"
       other: "sacchi"
   producers:
     signup:
@@ -4021,6 +4045,7 @@ it:
       models:
         spree/payment:
           one: Pagamento
+          many: Pagamenti
           other: Pagamenti
     unit: unità
     per_unit: per unità
@@ -4028,38 +4053,50 @@ it:
     distance_in_words:
       about_x_hours:
         one: circa 1 ora
+        many: circa %{count} ore
         other: circa %{count} ore
       about_x_months:
         one: circa 1 mese
+        many: circa %{count} mesi
         other: circa %{count} mesi
       about_x_years:
         one: cica 1 anno
+        many: circa %{count} anni
         other: circa %{count} anni
       almost_x_years:
         one: almeno 1 anno
+        many: almeno %{count} anni
         other: almeno %{count} anni
       half_a_minute: mezzo minuto
       less_than_x_seconds:
         one: meno di 1 secondo
+        many: meno di %{count} secondi
         other: meno di %{count} secondi
       less_than_x_minutes:
         one: meno di un minuto
+        many: meno di %{count} minuti
         other: meno di %{count} minuti
       over_x_years:
         one: oltre 1 anno
+        many: oltre %{count} anni
         other: oltre %{count} anni
       x_seconds:
         one: "1 secondo"
+        many: "%{count} secondi"
         other: "%{count} secondi"
       x_minutes:
         one: "1 minuto"
+        many: "%{count} minuti"
         other: "%{count} minuti"
       x_days:
         one: "1 giorno"
+        many: "%{count} giorni"
         other: "%{count} giorni"
       x_months:
         one: "1 mese"
+        many: "%{count} mesi"
         other: "%{count} mesi"
       x_years:
         one: "1 anno"
+        many: "%{count} anni"
         other: "%{count} anni"
