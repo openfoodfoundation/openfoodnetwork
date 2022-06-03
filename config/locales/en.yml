@@ -2336,7 +2336,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         contact_field_placeholder: "Contact Name"
         contact_field_required: "You need to enter a primary contact."
         phone_field: "Phone number"
+        whatsapp_phone_field: "WhatsApp phone number"
         phone_field_placeholder: "eg. (03) 1234 5678"
+        whatsapp_phone_field_placeholder: "eg. +61 4 1234 5678"
       type:
         title: "Type"
         headline: "Last step to add %{enterprise}!"
