@@ -24,7 +24,7 @@ module PermittedAttributes
 
     def self.basic_permitted_attributes
       [
-        :id, :name, :visible, :permalink, :owner_id, :contact_name, :email_address, :phone,
+        :id, :name, :visible, :permalink, :owner_id, :contact_name, :email_address, :phone, :whatsapp_phone,
         :is_primary_producer, :sells, :website, :facebook, :instagram, :linkedin, :twitter,
         :description, :long_description, :logo, :promo_image, :terms_and_conditions,
         :allow_guest_orders, :allow_order_changes, :require_login, :enable_subscriptions,
