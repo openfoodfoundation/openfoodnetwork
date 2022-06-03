@@ -38,6 +38,11 @@ module Reporting
             expect(report.rows.first.order_number).to eq order.number
             expect(report.rows.first.date).to eq order.completed_at.strftime("%F %T")
           end
+
+          it 'includes the summary row' do
+            expect(report.rows.second.quantity).to eq "TOTAL"
+            expect(report.rows.second.date).to eq order.completed_at.strftime("%F %T")
+          end
         end
 
         context "loading shipping methods" do

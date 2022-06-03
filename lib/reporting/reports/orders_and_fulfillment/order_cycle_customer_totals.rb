@@ -126,7 +126,7 @@ module Reporting
             order_cycle: order.order_cycle&.name,
             payment_method: order.payments.first&.payment_method&.name,
             order_number: order.number,
-            date: order.completed_at,
+            date: order.completed_at.strftime("%F %T"),
           }
         end
 
