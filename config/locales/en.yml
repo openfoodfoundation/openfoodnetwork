@@ -888,6 +888,9 @@ en:
           email_address_tip: "This email address will be displayed in your public profile"
           phone: Phone
           phone_placeholder: eg. 98 7654 3210
+          whatsapp_phone: WhatsApp phone number
+          whatsapp_phone_placeholder: eg. +61 4 9876 5432
+          whatsapp_phone_tip: "This number will be displayed in your public profile to be opened as a WhatsApp link."
           website: Website
           website_placeholder: eg. www.truffles.com
         enterprise_fees:

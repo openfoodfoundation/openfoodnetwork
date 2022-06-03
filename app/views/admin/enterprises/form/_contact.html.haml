@@ -17,6 +17,13 @@
     = f.text_field :phone, { placeholder: t('.phone_placeholder') }
 .row
   .alpha.three.columns
+    = f.label :whatsapp_phone, t('.whatsapp_phone')
+    %div{'ofn-with-tip' => t('.whatsapp_phone_tip')}
+      %a= t('admin.whats_this')
+  .omega.eight.columns
+    = f.text_field :whatsapp_phone, { placeholder: t('.whatsapp_phone_placeholder') }
+.row
+  .alpha.three.columns
     = f.label :website, t('.website')
   .omega.eight.columns
     = f.text_field :website, { placeholder: t('.website_placeholder') }
