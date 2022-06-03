@@ -312,6 +312,10 @@ class Enterprise < ApplicationRecord
     correct_instagram_url self[:instagram]
   end
 
+  def whatsapp_phone
+    correct_whatsapp_phone self[:whatsapp_phone]
+  end
+
   def inventory_variants
     if prefers_product_selection_from_inventory_only?
       Spree::Variant.visible_for(self)
@@ -446,6 +450,10 @@ class Enterprise < ApplicationRecord
 
   def strip_url(url)
     url&.sub(%r{(https?://)?}, '')
+  end
+
+  def correct_whatsapp_phone(phone_number)
+    phone_number&.tr('+ ', '')
   end
 
   def correct_instagram_url(url)
