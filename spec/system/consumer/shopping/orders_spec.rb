@@ -56,6 +56,17 @@ describe "Order Management", js: true do
         visit order_path(order)
         expect(page).to be_confirmed_order_page
       end
+
+      it "allows the user to see a link to distributor website when distributor has one" do
+        distributor.update!(website: "www.example.com")
+        visit order_path(order, order_token: order.token)
+        expect(page).to have_link "Back To Website", href: "https://www.example.com"
+      end
+
+      it "doesn't show any link if the distributor doesn't have a website" do
+        visit order_path(order, order_token: order.token)
+        expect(page).not_to have_link "Back To Website"
+      end
     end
 
     context "when logged in as the customer" do
