@@ -441,7 +441,6 @@ Metrics/AbcSize:
     - 'lib/reporting/reports/payments/payments_report.rb'
     - 'lib/reporting/reports/sales_tax/sales_tax_report.rb'
     - 'lib/spree/core/controller_helpers/order.rb'
-    - 'lib/spree/core/s3_support.rb'
     - 'lib/tasks/enterprises.rake'
     - 'spec/services/order_checkout_restart_spec.rb'
 

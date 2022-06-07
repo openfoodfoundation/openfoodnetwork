@@ -1,13 +1,20 @@
 # frozen_string_literal: false
 
-require 'spree/core/s3_support'
-
 class Enterprise < ApplicationRecord
-  include HasMigratingFile
-  include Spree::Core::S3Support
-
   SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100
+  # The next Rails version will have named variants but we need to store them
+  # ourselves for now.
+  LOGO_SIZES = {
+    thumb: { resize_to_limit: [100, 100] },
+    small: { resize_to_limit: [180, 180] },
+    medium: { resize_to_limit: [300, 300] },
+  }.freeze
+  PROMO_IMAGE_SIZES = {
+    thumb: { resize_to_limit: [100, 100] },
+    medium: { resize_to_fill: [720, 156] },
+    large: { resize_to_fill: [1200, 260] },
+  }.freeze
 
   searchable_attributes :sells, :is_primary_producer
   searchable_associations :properties
@@ -73,31 +80,16 @@ class Enterprise < ApplicationRecord
                                               tag_rule[:preferred_customer_tags].blank?
                                             }
 
-  has_one_migrating :logo,
-                    styles: { medium: "300x300>", small: "180x180>", thumb: "100x100>" },
-                    url: '/images/enterprises/logos/:id/:style/:basename.:extension',
-                    path: 'public/images/enterprises/logos/:id/:style/:basename.:extension'
+  has_one_attached :logo
+  has_one_attached :promo_image
+  has_one_attached :terms_and_conditions
 
-  has_one_migrating :promo_image,
-                    styles: {
-                      large: ["1200x260#", :jpg],
-                      medium: ["720x156#", :jpg],
-                      thumb: ["100x100>", :jpg]
-                    },
-                    url: '/images/enterprises/promo_images/:id/:style/:basename.:extension',
-                    path: 'public/images/enterprises/promo_images/:id/:style/:basename.:extension'
-  validates_attachment_content_type :logo, content_type: %r{\Aimage/.*\Z}
-  validates_attachment_content_type :promo_image, content_type: %r{\Aimage/.*\Z}
-
-  has_one_migrating :terms_and_conditions,
-                    url: '/files/enterprises/terms_and_conditions/:id/:basename.:extension',
-                    path: 'public/files/enterprises/terms_and_conditions/:id/:basename.:extension'
-  validates_attachment_content_type :terms_and_conditions,
-                                    content_type: "application/pdf",
-                                    message: I18n.t(:enterprise_terms_and_conditions_type_error)
-
-  supports_s3 :logo
-  supports_s3 :promo_image
+  validates :logo, content_type: %r{\Aimage/.*\Z}
+  validates :promo_image, content_type: %r{\Aimage/.*\Z}
+  validates :terms_and_conditions, content_type: {
+    in: "application/pdf",
+    message: I18n.t(:enterprise_terms_and_conditions_type_error),
+  }
 
   validates :name, presence: true
   validate :name_is_unique
@@ -282,6 +274,22 @@ class Enterprise < ApplicationRecord
 
   def suppliers
     relatives_including_self.is_primary_producer
+  end
+
+  def logo_url(name)
+    return unless logo.variable?
+
+    Rails.application.routes.url_helpers.url_for(
+      logo.variant(LOGO_SIZES[name])
+    )
+  end
+
+  def promo_image_url(name)
+    return unless promo_image.variable?
+
+    Rails.application.routes.url_helpers.url_for(
+      promo_image.variant(PROMO_IMAGE_SIZES[name])
+    )
   end
 
   def website

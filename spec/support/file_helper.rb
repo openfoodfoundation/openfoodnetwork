@@ -2,11 +2,11 @@
 
 module FileHelper
   def black_logo_file
-    File.open(black_logo_path)
+    Rack::Test::UploadedFile.new(black_logo_path)
   end
 
   def white_logo_file
-    File.open(black_logo_path)
+    Rack::Test::UploadedFile.new(white_logo_path)
   end
 
   def black_logo_path

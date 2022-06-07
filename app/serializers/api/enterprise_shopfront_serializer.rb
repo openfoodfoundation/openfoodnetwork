@@ -41,11 +41,11 @@ module Api
     end
 
     def logo
-      enterprise.logo(:medium) if enterprise.logo?
+      enterprise.logo_url(:medium)
     end
 
     def promo_image
-      enterprise.promo_image(:large) if enterprise.promo_image?
+      enterprise.promo_image_url(:large)
     end
 
     def path

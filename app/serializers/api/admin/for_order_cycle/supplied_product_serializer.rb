@@ -11,7 +11,7 @@ module Api
         end
 
         def image_url
-          object.images.present? ? object.images.first.attachment.url(:mini) : nil
+          object.images.first&.url(:mini)
         end
 
         def master_id

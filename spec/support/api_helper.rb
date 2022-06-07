@@ -28,7 +28,7 @@ module OpenFoodNetwork
     end
 
     def image(filename)
-      File.open(Rails.root + "spec/support/fixtures" + filename)
+      Rack::Test::UploadedFile.new(Rails.root + "spec/support/fixtures" + filename)
     end
   end
 end

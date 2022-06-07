@@ -70,11 +70,8 @@ describe Spree::Core::ProductDuplicator do
     expect(new_variant).to receive(:price=).with(variant.price)
     expect(new_variant).to receive(:currency=).with(variant.currency)
 
-    expect(image.attachment).to receive(:clone).and_return(image.attachment)
-
-    expect(new_image).to receive(:assign_attributes).
-      with(attachment: image.attachment).
-      and_return(new_image)
+    expect(image).to receive(:attachment_blob)
+    expect(new_image).to receive_message_chain(:attachment, :attach)
 
     expect(new_property).to receive(:created_at=).with(nil)
     expect(new_property).to receive(:updated_at=).with(nil)

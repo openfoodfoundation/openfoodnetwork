@@ -16,8 +16,7 @@ describe Api::Admin::EnterpriseSerializer do
 
     context "when there is a logo" do
       let(:image) do
-        image = white_logo_file
-        Rack::Test::UploadedFile.new(image, "image/png")
+        black_logo_file
       end
 
       it "includes URLs of image versions" do
@@ -42,14 +41,13 @@ describe Api::Admin::EnterpriseSerializer do
 
     context "when there is a promo image" do
       let(:image) do
-        image = black_logo_file
-        Rack::Test::UploadedFile.new(image, "image/png")
+        black_logo_file
       end
 
       it "includes URLs of image versions" do
         serializer = Api::Admin::EnterpriseSerializer.new(enterprise)
         expect(serializer.as_json[:promo_image]).to_not be_blank
-        expect(serializer.as_json[:promo_image][:medium]).to match(/logo-black.jpg/)
+        expect(serializer.as_json[:promo_image][:medium]).to match(/logo-black\.png$/)
       end
     end
 

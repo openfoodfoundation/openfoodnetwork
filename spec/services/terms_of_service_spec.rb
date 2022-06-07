@@ -34,12 +34,17 @@ describe TermsOfService do
   context "a customer has accepted the distributor terms of service" do
     before do
       allow(customer).to receive(:terms_and_conditions_accepted_at) { Time.zone.now - 1.week }
-      allow(distributor).to receive(:terms_and_conditions_updated_at) { Time.zone.now - 2.weeks }
+      allow(distributor).to receive(:terms_and_conditions_blob) {
+        ActiveStorage::Blob.new(created_at: Time.zone.now - 2.weeks)
+      }
     end
 
     it "should reflect whether the platform TOS have been accepted since the last update" do
       expect {
         allow(distributor).to receive(:terms_and_conditions_updated_at) { Time.zone.now }
+        allow(distributor).to receive(:terms_and_conditions_blob) {
+          ActiveStorage::Blob.new(created_at: Time.zone.now)
+        }
       }.to change {
         TermsOfService.tos_accepted?(customer, distributor)
       }.from(true).to(false)

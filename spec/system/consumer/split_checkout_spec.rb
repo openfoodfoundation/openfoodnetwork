@@ -747,6 +747,15 @@ describe "As a consumer, I want to checkout my order", js: true do
       end
 
       describe "terms and conditions" do
+        let(:system_terms_path) { Rails.root.join("public/Terms-of-service.pdf") }
+        let(:shop_terms_path) { Rails.root.join("public/Terms-of-ServiceUK.pdf") }
+        let(:system_terms) {
+          Rack::Test::UploadedFile.new(system_terms_path, "application/pdf")
+        }
+        let(:shop_terms) {
+          Rack::Test::UploadedFile.new(shop_terms_path, "application/pdf")
+        }
+
         context "when none are required" do
           it "doesn't show checkbox or links" do
             visit checkout_step_path(:summary)
@@ -760,21 +769,14 @@ describe "As a consumer, I want to checkout my order", js: true do
         end
 
         context "when distributor has T&Cs" do
-          let(:fake_terms_and_conditions_path) { white_logo_path }
-          let(:terms_and_conditions_file) {
-            Rack::Test::UploadedFile.new(fake_terms_and_conditions_path, "application/pdf")
-          }
-          let(:terms_url) { order.distributor.terms_and_conditions.url }
-
           before do
-            order.distributor.terms_and_conditions = terms_and_conditions_file
-            order.distributor.save
+            order.distributor.update!(terms_and_conditions: shop_terms)
           end
 
           describe "when customer has not accepted T&Cs before" do
             it "shows a link to the T&Cs and disables checkout button until terms are accepted" do
               visit checkout_step_path(:summary)
-              expect(page).to have_link "Terms and Conditions", href: terms_url
+              expect(page).to have_link "Terms and Conditions", href: /#{shop_terms_path.basename}$/
               expect(page).to have_field "order_accept_terms", checked: false
             end
           end
@@ -791,7 +793,7 @@ describe "As a consumer, I want to checkout my order", js: true do
             end
 
             describe "but afterwards the enterprise has uploaded a new T&Cs file" do
-              before { order.distributor.update terms_and_conditions_updated_at: Time.zone.now }
+              before { order.distributor.update!(terms_and_conditions: shop_terms) }
 
               it "disables checkout button until terms are accepted" do
                 visit checkout_step_path(:summary)
@@ -820,7 +822,7 @@ describe "As a consumer, I want to checkout my order", js: true do
           context "when the terms have been accepted in the past" do
             before do
               TermsOfServiceFile.create!(
-                attachment: File.open(Rails.root.join("public/Terms-of-service.pdf")),
+                attachment: system_terms,
                 updated_at: 1.day.ago,
               )
               customer = create(:customer, enterprise: order.distributor, user: user)
@@ -837,16 +839,10 @@ describe "As a consumer, I want to checkout my order", js: true do
         end
 
         context "when the seller's terms and the platform's terms have to be accepted" do
-          let(:fake_terms_and_conditions_path) { white_logo_path }
-          let(:terms_and_conditions_file) {
-            Rack::Test::UploadedFile.new(fake_terms_and_conditions_path, "application/pdf")
-          }
           let(:tos_url) { "https://example.org/tos" }
-          let(:terms_url) { order.distributor.terms_and_conditions.url }
 
           before do
-            order.distributor.terms_and_conditions = terms_and_conditions_file
-            order.distributor.save!
+            order.distributor.update!(terms_and_conditions: shop_terms)
 
             allow(Spree::Config).to receive(:shoppers_require_tos).and_return(true)
             allow(Spree::Config).to receive(:footer_tos_url).and_return(tos_url)
@@ -855,7 +851,7 @@ describe "As a consumer, I want to checkout my order", js: true do
           it "shows links to both terms and all need accepting" do
             visit checkout_step_path(:summary)
 
-            expect(page).to have_link "Terms and Conditions", href: terms_url
+            expect(page).to have_link "Terms and Conditions", href: /#{shop_terms_path.basename}$/
             expect(page).to have_link "Terms of service", href: tos_url
             expect(page).to have_field "order_accept_terms", checked: false
           end

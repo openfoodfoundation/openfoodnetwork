@@ -6,13 +6,13 @@
       %div{'ofn-with-tip' => t('admin_enterprise_groups_data_powertip_logo')}
         %a= t 'admin.whats_this'
     .omega.eight.columns
-      = image_tag @object.logo.url if @object.logo.present?
-      = f.file_field :logo
+      = image_tag @object.logo if @object.logo.attached?
+      = f.file_field :logo, accept: "image/*"
   .row
     .alpha.three.columns
       = f.label :promo_image, 'ofn-with-tip' => t(:admin_enterprise_groups_data_powertip_promo_image)
       %div{'ofn-with-tip' => t('admin_enterprise_groups_data_powertip_promo_image')}
         %a= t 'admin.whats_this'
     .omega.eight.columns
-      = image_tag @object.promo_image.url if @object.promo_image.present?
-      = f.file_field :promo_image
+      = image_tag @object.promo_image if @object.promo_image.attached?
+      = f.file_field :promo_image, accept: "image/*"

@@ -9,7 +9,7 @@ module Api
     end
 
     def logo
-      object.logo(:small) if object.logo?
+      object.logo_url(:small)
     end
   end
 end

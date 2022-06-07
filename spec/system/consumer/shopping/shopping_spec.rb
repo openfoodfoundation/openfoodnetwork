@@ -30,8 +30,7 @@ describe "As a consumer I want to shop with a distributor", js: true do
 
     it "shows a distributor with images" do
       # Given the distributor has a logo
-      distributor.logo = File.new(white_logo_path)
-      distributor.save!
+      distributor.update!(logo: white_logo_file)
 
       # Then we should see the distributor and its logo
       visit shop_path
@@ -39,7 +38,7 @@ describe "As a consumer I want to shop with a distributor", js: true do
       within ".tab-buttons" do
         click_link "About"
       end
-      expect(first("distributor img")['src']).to include distributor.logo.url(:thumb)
+      expect(first("distributor img")['src']).to include "logo-white.png"
     end
 
     it "shows the producers for a distributor" do

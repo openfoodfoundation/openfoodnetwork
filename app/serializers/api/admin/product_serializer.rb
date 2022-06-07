@@ -13,19 +13,11 @@ module Api
       has_one :master, serializer: Api::Admin::VariantSerializer
 
       def image_url
-        if object.images.present?
-          object.images.first.attachment.url(:product)
-        else
-          "/noimage/product.png"
-        end
+        object.images.first&.url(:product) || "/noimage/product.png"
       end
 
       def thumb_url
-        if object.images.present?
-          object.images.first.attachment.url(:mini)
-        else
-          "/noimage/mini.png"
-        end
+        object.images.first&.url(:mini) || "/noimage/mini.png"
       end
 
       def on_hand

@@ -14,7 +14,6 @@ require 'rspec/rails'
 require 'capybara'
 require 'rspec/retry'
 require 'paper_trail/frameworks/rspec'
-require "paperclip/matchers"
 require "factory_bot_rails"
 
 require 'shoulda/matchers'
@@ -126,7 +125,6 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.include FactoryBot::Syntax::Methods
-  config.include Paperclip::Shoulda::Matchers
   config.include JsonSpec::Helpers
 
   config.include Rails.application.routes.url_helpers

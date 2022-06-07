@@ -39,9 +39,6 @@ module Spree
             render :new
           end
         end
-      rescue Paperclip::Errors::NotIdentifiedByImageMagickError
-        @object.errors.add(:base, t('spree.admin.products.image_upload_error'))
-        respond_with(@object)
       end
 
       def show
