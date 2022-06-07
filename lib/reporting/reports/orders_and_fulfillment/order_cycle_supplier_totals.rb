@@ -35,12 +35,6 @@ module Reporting
         def line_item_includes
           [{ variant: [{ option_values: :option_type }, { product: :supplier }] }]
         end
-
-        def query_result
-          report_line_items.list(line_item_includes).group_by { |e|
-            [e.variant_id, e.price]
-          }.values
-        end
       end
     end
   end
