@@ -23,7 +23,7 @@ module Reporting
 
         def query_result
           report_line_items.list(line_item_includes).group_by { |e|
-            [e.variant_id, e.price]
+            [e.variant_id, e.price, e.order.distributor_id]
           }.values
         end
 
