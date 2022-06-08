@@ -55,9 +55,6 @@ module Spree
     }
 
     scope :by_name, -> { order('spree_shipping_methods.name ASC') }
-    scope :display_on_checkout, -> {
-      where("spree_shipping_methods.display_on is null OR spree_shipping_methods.display_on = ''")
-    }
 
     # Here we allow checkout with shipping methods without zones (see issue #3928 for details)
     #   and also checkout with addresses outside of the zones of the selected shipping method
