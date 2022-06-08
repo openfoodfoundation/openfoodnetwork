@@ -2337,6 +2337,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         contact_field_required: "You need to enter a primary contact."
         phone_field: "Phone number"
         whatsapp_phone_field: "WhatsApp phone number"
+        whatsapp_phone_tooltip: "This number will be displayed in your public profile to be opened as a WhatsApp link."
         phone_field_placeholder: "eg. (03) 1234 5678"
         whatsapp_phone_field_placeholder: "eg. +61 4 1234 5678"
       type:
