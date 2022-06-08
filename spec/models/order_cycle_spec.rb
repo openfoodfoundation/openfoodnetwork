@@ -610,6 +610,20 @@ describe OrderCycle do
     end
   end
 
+  describe "#simple?" do
+    it "returns true if the coordinator sells their own products i.e. shops" do
+      order_cycle = build(:simple_order_cycle, coordinator: build(:enterprise, sells: "own"))
+
+      expect(order_cycle).to be_simple
+    end
+
+    it "returns false if the coordinator can sell other people's products i.e. hubs" do
+      order_cycle = build(:simple_order_cycle, coordinator: build(:enterprise, sells: "any"))
+
+      expect(order_cycle).not_to be_simple
+    end
+  end
+
   def core_exchange_attributes(exchange)
     exterior_attribute_keys = %w(id order_cycle_id created_at updated_at)
     exchange.attributes.

@@ -274,6 +274,10 @@ class OrderCycle < ApplicationRecord
     items.each { |li| scoper.scope(li.variant) }
   end
 
+  def simple?
+    coordinator.sells == 'own'
+  end
+
   private
 
   def opening?
