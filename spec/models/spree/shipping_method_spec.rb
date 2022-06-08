@@ -143,6 +143,23 @@ module Spree
         expect(shipping_method.errors[:name].first).to eq "can't be blank"
       end
 
+      describe "#display_on" do
+        it "is valid when it's set to nil, an empty string or 'back_end'" do
+          shipping_method = build_stubbed(:shipping_method)
+          [nil, "", "back_end"].each do |display_on_option|
+            shipping_method.display_on = display_on_option
+            shipping_method.valid?
+            expect(shipping_method.errors[:display_on]).to be_empty
+          end
+        end
+
+        it "is not valid when it's set to an unknown value" do
+          shipping_method = build_stubbed(:shipping_method, display_on: "front_end")
+          expect(shipping_method).not_to be_valid
+          expect(shipping_method.errors[:display_on]).to eq ["is not included in the list"]
+        end
+      end
+
       context "shipping category" do
         it "validates presence of at least one" do
           shipping_method = build_stubbed(

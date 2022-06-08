@@ -3,7 +3,10 @@
 module Spree
   class ShippingMethod < ApplicationRecord
     include CalculatedAdjustments
-    DISPLAY = [:both, :front_end, :back_end].freeze
+    DISPLAY_ON_OPTIONS = {
+      both: "",
+      back_end: "back_end"
+    }.freeze
 
     acts_as_paranoid
     acts_as_taggable
@@ -27,6 +30,7 @@ module Spree
     validates :name, presence: true
     validate :distributor_validation
     validate :at_least_one_shipping_category
+    validates :display_on, inclusion: { in: DISPLAY_ON_OPTIONS.values }, allow_nil: true
 
     after_save :touch_distributors
 
@@ -101,12 +105,12 @@ module Spree
       ]
     end
 
-    def self.on_backend_query
-      "#{table_name}.display_on != 'front_end' OR #{table_name}.display_on IS NULL"
+    def self.backend
+      where("spree_shipping_methods.display_on = ?", DISPLAY_ON_OPTIONS[:back_end])
     end
 
-    def self.on_frontend_query
-      "#{table_name}.display_on != 'back_end' OR #{table_name}.display_on IS NULL"
+    def self.frontend
+      where("spree_shipping_methods.display_on IS NULL OR spree_shipping_methods.display_on = ''")
     end
 
     private
