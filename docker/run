@@ -12,11 +12,11 @@ function cleanup {
 
   # ignore errors
   set +e
-  docker-compose down
+  docker compose down
 
   exit $code
 }
 
 trap cleanup EXIT
 
-docker-compose run web $@
+docker compose run web $@

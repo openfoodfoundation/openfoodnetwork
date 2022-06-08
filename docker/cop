@@ -3,9 +3,9 @@
 # This script runs RuboCop.
 
 echo '-------------------------------------------------'
-echo 'BEGIN: docker-compose run web bundle exec rubocop'
+echo 'BEGIN: docker compose run web bundle exec rubocop'
 echo '-------------------------------------------------'
-docker-compose run web bundle exec rubocop
+docker compose run web bundle exec rubocop
 echo '-----------------------------------------------'
-echo 'END: docker-compose run web bundle exec rubocop'
+echo 'END: docker compose run web bundle exec rubocop'
 echo '-----------------------------------------------'
