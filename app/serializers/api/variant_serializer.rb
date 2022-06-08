@@ -35,11 +35,7 @@ class Api::VariantSerializer < ActiveModel::Serializer
   end
 
   def thumb_url
-    if object.product.images.present?
-      object.product.images.first.attachment.url(:mini)
-    else
-      "/noimage/mini.png"
-    end
+    object.product.images.first&.url(:mini) || "/noimage/mini.png"
   end
 
   def unit_price_price

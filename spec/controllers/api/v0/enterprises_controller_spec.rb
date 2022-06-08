@@ -85,14 +85,14 @@ describe Api::V0::EnterprisesController, type: :controller do
         api_post :update_image, logo: logo, id: enterprise.id
         expect(response.status).to eq 200
         expect(response.content_type).to eq "text/html"
-        expect(response.body).to match %r{/images/enterprises/logos/\d*/medium/logo\.png\?\d*}
+        expect(response.body).to match /logo\.png$/
       end
 
       it "I can update enterprise promo image" do
         api_post :update_image, promo: logo, id: enterprise.id
         expect(response.status).to eq 200
         expect(response.content_type).to eq "text/html"
-        expect(response.body).to match %r{/images/enterprises/promo_images/\d*/medium/logo\.jpg\?\d*}
+        expect(response.body).to match /logo\.png$/
       end
     end
   end

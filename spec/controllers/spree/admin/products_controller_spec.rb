@@ -163,9 +163,8 @@ describe Spree::Admin::ProductsController, type: :controller do
           }
         )
 
-        expect do
-          spree_put :create, product: product_attrs_with_image
-        end.not_to raise_error Paperclip::Errors::NotIdentifiedByImageMagickError
+        spree_put :create, product: product_attrs_with_image
+
         expect(response.status).to eq 200
       end
     end

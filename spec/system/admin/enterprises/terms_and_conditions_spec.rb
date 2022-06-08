@@ -24,48 +24,36 @@ describe "Uploading Terms and Conditions PDF" do
         end
       end
 
-      let(:white_pdf_file_name) { Rails.root.join("app/webpacker/images/logo-white.pdf") }
-      let(:black_pdf_file_name) { Rails.root.join("app/webpacker/images/logo-black.pdf") }
-
-      around do |example|
-        # Create fake PDFs from PNG images
-        FileUtils.cp(white_logo_path, white_pdf_file_name)
-        FileUtils.cp(black_logo_path, black_pdf_file_name)
-
-        example.run
-
-        # Delete fake PDFs
-        FileUtils.rm_f(white_pdf_file_name)
-        FileUtils.rm_f(black_pdf_file_name)
-      end
+      let(:original_terms) { Rails.root.join("public/Terms-of-service.pdf") }
+      let(:updated_terms) { Rails.root.join("public/Terms-of-ServiceUK.pdf") }
 
       it "uploading terms and conditions" do
         go_to_business_details
 
         # Add PDF
-        attach_file "enterprise[terms_and_conditions]", white_pdf_file_name
+        attach_file "enterprise[terms_and_conditions]", original_terms
 
         time = Time.zone.local(2002, 4, 13, 0, 0, 0)
         Timecop.freeze(run_time = time) do
           click_button "Update"
-          expect(distributor.reload.terms_and_conditions_updated_at).to eq run_time
+          expect(distributor.reload.terms_and_conditions_blob.created_at).to eq run_time
         end
         expect(page).
           to have_content "Enterprise \"#{distributor.name}\" has been successfully updated!"
 
         go_to_business_details
-        expect(page).to have_selector "a[href*='logo-white.pdf'][target=\"_blank\"]"
+        expect(page).to have_selector "a[href*='Terms-of-service.pdf'][target=\"_blank\"]"
         expect(page).to have_content time.strftime("%F %T")
 
         # Replace PDF
-        attach_file "enterprise[terms_and_conditions]", black_pdf_file_name
+        attach_file "enterprise[terms_and_conditions]", updated_terms
         click_button "Update"
         expect(page).
           to have_content "Enterprise \"#{distributor.name}\" has been successfully updated!"
-        expect(distributor.reload.terms_and_conditions_updated_at).to_not eq run_time
+        expect(distributor.reload.terms_and_conditions_blob.created_at).to_not eq run_time
 
         go_to_business_details
-        expect(page).to have_selector "a[href*='logo-black.pdf']"
+        expect(page).to have_selector "a[href*='Terms-of-ServiceUK.pdf']"
       end
     end
   end

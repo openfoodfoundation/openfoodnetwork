@@ -1,23 +1,17 @@
 # frozen_string_literal: true
 
-require 'open_food_network/paperclippable'
-
-class ContentConfiguration < Spree::Preferences::FileConfiguration
-  include OpenFoodNetwork::Paperclippable
+class ContentConfiguration < Spree::Preferences::Configuration
+  include FilePreferences
 
   # Header
-  preference :logo, :file
-  preference :logo_mobile, :file
-  preference :logo_mobile_svg, :file
-  has_attached_file :logo, default_url: "/default_images/ofn-logo.png"
-  has_attached_file :logo_mobile
-  has_attached_file :logo_mobile_svg, default_url: "/default_images/ofn-logo-mobile.svg"
+  file_preference :logo, default_url: "/default_images/ofn-logo.png"
+  file_preference :logo_mobile
+  file_preference :logo_mobile_svg, default_url: "/default_images/ofn-logo-mobile.svg"
 
   # Home page
   preference :home_page_alert_html, :text
-  preference :home_hero, :file
+  file_preference :home_hero, default_url: "/default_images/home.jpg"
   preference :home_show_stats, :boolean, default: true
-  has_attached_file :home_hero, default_url: "/default_images/home.jpg"
 
   # Map
   preference :open_street_map_enabled, :boolean, default: false
@@ -66,8 +60,7 @@ class ContentConfiguration < Spree::Preferences::FileConfiguration
   preference :menu_7_icon_name, :string, default: "ofn-i_013-help"
 
   # Footer
-  preference :footer_logo, :file
-  has_attached_file :footer_logo, default_url: "/default_images/ofn-logo-footer.png"
+  file_preference :footer_logo, default_url: "/default_images/ofn-logo-footer.png"
 
   # Other
   preference :footer_facebook_url, :string, default: "https://www.facebook.com/OpenFoodNet"

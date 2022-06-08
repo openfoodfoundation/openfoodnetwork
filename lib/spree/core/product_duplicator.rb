@@ -46,7 +46,7 @@ module Spree
 
       def duplicate_image(image)
         new_image = image.dup
-        new_image.assign_attributes(attachment: image.attachment.clone)
+        new_image.attachment.attach(image.attachment_blob)
         new_image
       end
 

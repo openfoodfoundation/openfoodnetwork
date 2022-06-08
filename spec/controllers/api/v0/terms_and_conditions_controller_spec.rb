@@ -12,15 +12,15 @@ module Api
     let(:enterprise_manager) { create(:user, enterprises: [enterprise]) }
 
     describe "removing terms and conditions file" do
-      let(:fake_terms_file_path) { black_logo_file }
+      let(:terms_file_path) { Rails.root.join("public/Terms-of-service.pdf") }
       let(:terms_and_conditions_file) {
-        Rack::Test::UploadedFile.new(fake_terms_file_path, "application/pdf")
+        Rack::Test::UploadedFile.new(terms_file_path, "application/pdf")
       }
       let(:enterprise) { create(:enterprise, owner: enterprise_owner) }
 
       before do
         allow(controller).to receive(:spree_current_user) { current_user }
-        enterprise.update terms_and_conditions: terms_and_conditions_file
+        enterprise.update!(terms_and_conditions: terms_and_conditions_file)
       end
 
       context "as manager" do
@@ -32,7 +32,7 @@ module Api
           expect(response.status).to eq 200
           expect(json_response["id"]).to eq enterprise.id
           enterprise.reload
-          expect(enterprise.terms_and_conditions?).to be false
+          expect(enterprise.terms_and_conditions).to_not be_attached
         end
 
         context "when terms and conditions file does not exist" do

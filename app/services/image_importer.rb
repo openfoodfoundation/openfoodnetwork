@@ -2,21 +2,12 @@
 
 class ImageImporter
   def import(url, product)
-    attach(download(url), product)
-  end
+    valid_url = URI.parse(url)
+    file = open(valid_url.to_s)
+    filename = File.basename(valid_url.path)
 
-  private
-
-  def download(url)
-    local_file = Tempfile.new
-    remote_file = open(url)
-    IO.copy_stream(remote_file, local_file)
-    local_file
-  end
-
-  def attach(file, product)
     Spree::Image.create(
-      attachment: file,
+      attachment: { io: file, filename: filename },
       viewable_id: product.master.id,
       viewable_type: Spree::Variant,
     )

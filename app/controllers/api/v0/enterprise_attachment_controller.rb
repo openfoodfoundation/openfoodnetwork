@@ -14,7 +14,7 @@ module Api
       respond_to :json
 
       def destroy
-        unless @enterprise.public_send("#{attachment_name}?")
+        unless @enterprise.public_send(attachment_name).attached?
           return respond_with_conflict(error: destroy_attachment_does_not_exist_error_message)
         end
 

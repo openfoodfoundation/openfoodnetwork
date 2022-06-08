@@ -80,7 +80,7 @@ describe "Managing enterprise images" do
 
         go_to_images
         within ".page-admin-enterprises-form__promo-image-field-group" do
-          expect_preview_image "logo-white.jpg"
+          expect_preview_image "logo-white.png"
         end
 
         # Replacing image
@@ -91,7 +91,7 @@ describe "Managing enterprise images" do
 
         go_to_images
         within ".page-admin-enterprises-form__promo-image-field-group" do
-          expect_preview_image "logo-black.jpg"
+          expect_preview_image "logo-black.png"
         end
 
         # Removing image

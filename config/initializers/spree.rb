@@ -29,11 +29,6 @@ Rails.application.reloader.to_prepare do
   # applied correctly in Spree::Config.
   MailConfiguration.apply!
 
-  # Attachments settings
-  Spree::Image.set_attachment_attribute(:path, ENV['ATTACHMENT_PATH']) if ENV['ATTACHMENT_PATH']
-  Spree::Image.set_attachment_attribute(:url, ENV['ATTACHMENT_URL']) if ENV['ATTACHMENT_URL']
-  Spree::Image.set_storage_attachment_attributes
-
   # TODO Work out why this is necessary
   # Seems like classes within OFN module become 'uninitialized' when server reloads
   # unless the empty module is explicity 'registered' here. Something to do with autoloading?

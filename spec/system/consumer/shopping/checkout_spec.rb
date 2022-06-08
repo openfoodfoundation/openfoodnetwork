@@ -88,6 +88,12 @@ describe "As a consumer I want to check out my cart", js: true do
 
   context 'login in as user' do
     let(:user) { create(:user) }
+    let(:pdf_upload) {
+      Rack::Test::UploadedFile.new(
+        Rails.root.join("public/Terms-of-service.pdf"),
+        "application/pdf"
+      )
+    }
 
     before do
       login_as(user)
@@ -158,21 +164,16 @@ describe "As a consumer I want to check out my cart", js: true do
     end
 
     context "when distributor has T&Cs" do
-      let(:fake_terms_and_conditions_path) { white_logo_path }
-      let(:terms_and_conditions_file) {
-        Rack::Test::UploadedFile.new(fake_terms_and_conditions_path, "application/pdf")
-      }
-
       before do
-        order.distributor.terms_and_conditions = terms_and_conditions_file
-        order.distributor.save
+        order.distributor.terms_and_conditions = pdf_upload
+        order.distributor.save!
       end
 
       describe "when customer has not accepted T&Cs before" do
         it "shows a link to the T&Cs and disables checkout button until terms are accepted" do
           visit checkout_path
-          expect(page).to have_link("Terms and Conditions",
-                                    href: order.distributor.terms_and_conditions.url)
+
+          expect(page).to have_link("Terms and Conditions")
 
           expect(page).to have_button("Place order now", disabled: true)
 
@@ -193,7 +194,7 @@ describe "As a consumer I want to check out my cart", js: true do
         end
 
         describe "but afterwards the enterprise has uploaded a new T&Cs file" do
-          before { order.distributor.update terms_and_conditions_updated_at: Time.zone.now }
+          before { order.distributor.terms_and_conditions.attach(pdf_upload) }
 
           it "disables checkout button until terms are accepted" do
             visit checkout_path
@@ -230,7 +231,7 @@ describe "As a consumer I want to check out my cart", js: true do
       context "when the terms have been accepted in the past" do
         before do
           TermsOfServiceFile.create!(
-            attachment: File.open(Rails.root.join("public/Terms-of-service.pdf")),
+            attachment: pdf_upload,
             updated_at: 1.day.ago,
           )
           customer = create(:customer, enterprise: order.distributor, user: user)
@@ -255,14 +256,10 @@ describe "As a consumer I want to check out my cart", js: true do
     end
 
     context "when the seller's terms and the platform's terms have to be accepted" do
-      let(:fake_terms_and_conditions_path) { white_logo_path }
-      let(:terms_and_conditions_file) {
-        Rack::Test::UploadedFile.new(fake_terms_and_conditions_path, "application/pdf")
-      }
       let(:tos_url) { "https://example.org/tos" }
 
       before do
-        order.distributor.terms_and_conditions = terms_and_conditions_file
+        order.distributor.terms_and_conditions = pdf_upload
         order.distributor.save!
 
         allow(Spree::Config).to receive(:shoppers_require_tos).and_return(true)
@@ -273,8 +270,7 @@ describe "As a consumer I want to check out my cart", js: true do
         visit checkout_path
 
         within "#checkout_form" do
-          expect(page).to have_link("Terms and Conditions",
-                                    href: order.distributor.terms_and_conditions.url)
+          expect(page).to have_link("Terms and Conditions")
           expect(page).to have_link("Terms of service", href: tos_url)
           expect(page).to have_button("Place order now", disabled: true)
         end
