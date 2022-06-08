@@ -73,6 +73,11 @@ en:
           attributes:
             base:
               card_expired: "has expired"
+        spree/shipping_method:
+          attributes:
+            base:
+              switching_to_backoffice_only_leaves_order_cycles_without_shipping_methods: Unable to switch to backoffice only, some open or upcoming order cycles would be left without any shipping methods
+              destroy_leaves_order_cycles_without_shipping_methods: Unable to delete, some open or upcoming order cycles would be left without any shipping methods
         order_cycle:
           attributes:
             base:

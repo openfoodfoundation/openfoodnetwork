@@ -30,7 +30,10 @@ module Spree
     validates :name, presence: true
     validate :distributor_validation
     validate :at_least_one_shipping_category
+    validate :switching_to_backoffice_only_wont_leave_order_cycles_without_shipping_methods
     validates :display_on, inclusion: { in: DISPLAY_ON_OPTIONS.values }, allow_nil: true
+
+    before_destroy :check_destroy_wont_leave_order_cycles_without_shipping_methods
 
     after_save :touch_distributors
 
@@ -112,6 +115,20 @@ module Spree
 
     private
 
+    def no_active_or_upcoming_non_simple_order_cycles_with_only_one_shipping_method?
+      return true if new_record?
+
+      OrderCycle.active.or(OrderCycle.upcoming).joins(:coordinator, :shipping_methods).where("
+        sells != 'own' AND
+        spree_shipping_methods.id = ? AND
+        NOT EXISTS(
+          SELECT 1
+          FROM order_cycle_shipping_methods
+          WHERE order_cycle_id = order_cycles.id AND
+          shipping_method_id != ?
+        )", id, id).none?
+    end
+
     def at_least_one_shipping_category
       return unless shipping_categories.empty?
 
@@ -126,6 +143,20 @@ module Spree
 
     def distributor_validation
       validates_with DistributorsValidator
+    end
+
+    def check_destroy_wont_leave_order_cycles_without_shipping_methods
+      return if no_active_or_upcoming_non_simple_order_cycles_with_only_one_shipping_method?
+
+      errors.add(:base, :destroy_leaves_order_cycles_without_shipping_methods)
+      throw :abort
+    end
+
+    def switching_to_backoffice_only_wont_leave_order_cycles_without_shipping_methods
+      return if frontend? ||
+                no_active_or_upcoming_non_simple_order_cycles_with_only_one_shipping_method?
+
+      errors.add(:base, :switching_to_backoffice_only_leaves_order_cycles_without_shipping_methods)
     end
   end
 end
