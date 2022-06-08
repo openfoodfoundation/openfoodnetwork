@@ -39,7 +39,7 @@
         %span{"ng-bind" => "::producer.phone"}
 
       %p.word-wrap{"ng-if" => "::producer.whatsapp_phone"}
-        %a{"ng-href" => "http://wa.me/{{::producer.whatsapp_phone}}", target: "_blank"}
+        %a{"ng-href" => "{{::producer.whatsapp_url}}", target: "_blank"}
           %span{"ng-bind" => "::producer.whatsapp_phone"}
 
       %p.word-wrap{"ng-if" => "::producer.email_address"}

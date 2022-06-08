@@ -14,9 +14,9 @@ module Api
 
     attributes :name, :id, :description, :latitude, :longitude,
                :long_description, :website, :instagram, :linkedin, :twitter,
-               :facebook, :is_primary_producer, :is_distributor, :phone, :whatsapp_phone, :visible,
-               :email_address, :hash, :logo, :promo_image, :path, :pickup, :delivery,
-               :icon, :icon_font, :producer_icon_font, :category
+               :facebook, :is_primary_producer, :is_distributor, :phone, :whatsapp_phone,
+               :whatsapp_url, :visible, :email_address, :hash, :logo, :promo_image, :path, :pickup,
+               :delivery, :icon, :icon_font, :producer_icon_font, :category
 
     attributes :taxons, :supplied_taxons
 

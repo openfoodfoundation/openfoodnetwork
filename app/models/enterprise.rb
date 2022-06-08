@@ -312,8 +312,8 @@ class Enterprise < ApplicationRecord
     correct_instagram_url self[:instagram]
   end
 
-  def whatsapp_phone
-    correct_whatsapp_phone self[:whatsapp_phone]
+  def whatsapp_url
+    correct_whatsapp_url self[:whatsapp_phone]
   end
 
   def inventory_variants
@@ -452,8 +452,8 @@ class Enterprise < ApplicationRecord
     url&.sub(%r{(https?://)?}, '')
   end
 
-  def correct_whatsapp_phone(phone_number)
-    phone_number&.tr('+ ', '')
+  def correct_whatsapp_url(phone_number)
+    phone_number && "https://wa.me/" + phone_number.tr('+ ', '')
   end
 
   def correct_instagram_url(url)
