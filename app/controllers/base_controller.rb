@@ -15,8 +15,12 @@ class BaseController < ApplicationController
 
   private
 
+  def all_distributor_order_cycles_invalid?
+    OrderCycle.with_distributor(@distributor).active.all?(&:invalid?)
+  end
+
   def set_order_cycles
-    unless @distributor.ready_for_checkout?
+    if !@distributor.ready_for_checkout? || all_distributor_order_cycles_invalid?
       @order_cycles = OrderCycle.where('false')
       return
     end
