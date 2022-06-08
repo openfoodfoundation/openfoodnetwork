@@ -41,7 +41,7 @@ module Spree
     accepts_nested_attributes_for :bill_address
     accepts_nested_attributes_for :ship_address
 
-    after_create :associate_customers
+    after_create :associate_customers, :associate_orders
 
     validate :limit_owned_enterprises
 
@@ -111,6 +111,12 @@ module Spree
 
     def associate_customers
       self.customers = Customer.where(email: email)
+    end
+
+    def associate_orders
+      Spree::Order.where(customer: customers).find_each do |order|
+        order.associate_user!(self)
+      end
     end
 
     def can_own_more_enterprises?

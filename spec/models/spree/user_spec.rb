@@ -100,12 +100,17 @@ describe Spree::User do
       let(:enterprise2) { create(:enterprise) }
       let!(:customer1) { create(:customer, user: nil, email: email, enterprise: enterprise1) }
       let!(:customer2) { create(:customer, user: nil, email: email, enterprise: enterprise2) }
+      let!(:order) { create(:order, customer: customer1) }
       let!(:user) { create(:user, email: email) }
 
       it "should associate these customers with the created user" do
         expect(user.customers.reload).to include customer1, customer2
         expect(user.customer_of(enterprise1)).to be_truthy
         expect(user.customer_of(enterprise2)).to be_truthy
+      end
+
+      it "should associate the orders passed by customer linked to the created user" do
+        expect(user.orders.reload).to include order
       end
     end
   end
