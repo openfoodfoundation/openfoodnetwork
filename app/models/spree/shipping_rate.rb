@@ -12,13 +12,6 @@ module Spree
               references(:shipping_method).
               order("cost ASC")
           }
-    scope :backend,
-          -> {
-            includes(:shipping_method).
-              where(ShippingMethod.on_backend_query).
-              references(:shipping_method).
-              order("cost ASC")
-          }
 
     delegate :order, :currency, to: :shipment
     delegate :name, to: :shipping_method
