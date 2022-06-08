@@ -42,6 +42,7 @@ describe "Check out with Paypal", js: true do
 
   before do
     distributor.shipping_methods << free_shipping
+    order_cycle.shipping_methods << free_shipping
     set_order order
     add_product_to_cart order, product
   end

@@ -34,7 +34,9 @@ describe "Check out with Stripe", js: true do
     setup_stripe
     set_order order
     add_product_to_cart order, product
-    distributor.shipping_methods << [shipping_with_fee, free_shipping]
+    shipping_methods = [shipping_with_fee, free_shipping]
+    distributor.shipping_methods << shipping_methods
+    order_cycle.shipping_methods << shipping_methods
   end
 
   describe "using Stripe SCA" do

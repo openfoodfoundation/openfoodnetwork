@@ -10,7 +10,10 @@ describe "Shops caching", js: true, caching: true do
     create(:distributor_enterprise, with_payment_and_shipping: true, is_primary_producer: true)
   }
   let!(:order_cycle) {
-    create(:open_order_cycle, distributors: [distributor], coordinator: distributor)
+    create(:open_order_cycle,
+           distributors: [distributor],
+           coordinator: distributor,
+           shipping_methods: [distributor.shipping_methods.first])
   }
 
   describe "caching enterprises AMS data" do

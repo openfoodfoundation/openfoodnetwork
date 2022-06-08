@@ -10,7 +10,7 @@ module OpenFoodNetwork
     let(:producer) { create(:supplier_enterprise) }
     let(:user) { double(:user) }
     let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
-    let(:permissions) { OrderCyclePermissions.new(user, oc) }
+    let(:permissions) { OrderCyclePermissions.new(user, oc.reload) }
 
     describe "finding enterprises that can be viewed in the order cycle interface" do
       context "when permissions are initialized without an order_cycle" do
@@ -53,7 +53,7 @@ module OpenFoodNetwork
           end
 
           context "where the coordinator sells 'own'" do
-            before { allow(coordinator).to receive(:sells) { 'own' } }
+            before { allow(oc.coordinator).to receive(:sells) { 'own' } }
             it "returns just the coordinator" do
               enterprises = permissions.visible_enterprises
               expect(enterprises).to_not include hub, producer
@@ -80,7 +80,7 @@ module OpenFoodNetwork
             end
 
             context "where the coordinator sells 'own'" do
-              before { allow(coordinator).to receive(:sells) { 'own' } }
+              before { allow(oc.coordinator).to receive(:sells) { 'own' } }
               it "returns just the coordinator" do
                 enterprises = permissions.visible_enterprises
                 expect(enterprises).to_not include hub, producer

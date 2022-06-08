@@ -434,39 +434,65 @@ describe OrderCycle do
     end
   end
 
-  it "clones itself" do
-    coordinator = create(:enterprise);
-    oc = create(:simple_order_cycle,
-                coordinator_fees: [create(:enterprise_fee, enterprise: coordinator)],
-                preferred_product_selection_from_coordinator_inventory_only: true,
-                automatic_notifications: true, processed_at: Time.zone.now, mails_sent: true)
-    schedule = create(:schedule, order_cycles: [oc])
-    ex1 = create(:exchange, order_cycle: oc)
-    ex2 = create(:exchange, order_cycle: oc)
-    oc.clone!
+  describe "clone!" do
+    it "clones itself" do
+      coordinator = create(:enterprise);
+      oc = create(:simple_order_cycle,
+                  coordinator_fees: [create(:enterprise_fee, enterprise: coordinator)],
+                  preferred_product_selection_from_coordinator_inventory_only: true,
+                  automatic_notifications: true, processed_at: Time.zone.now, mails_sent: true)
+      schedule = create(:schedule, order_cycles: [oc])
+      ex1 = create(:exchange, order_cycle: oc)
+      ex2 = create(:exchange, order_cycle: oc)
+      oc.clone!
 
-    occ = OrderCycle.last
-    expect(occ.name).to eq("COPY OF #{oc.name}")
-    expect(occ.orders_open_at).to be_nil
-    expect(occ.orders_close_at).to be_nil
-    expect(occ.coordinator).not_to be_nil
-    expect(occ.preferred_product_selection_from_coordinator_inventory_only).to be true
-    expect(occ.automatic_notifications).to eq(oc.automatic_notifications)
-    expect(occ.processed_at).to eq(nil)
-    expect(occ.mails_sent).to eq(nil)
-    expect(occ.coordinator).to eq(oc.coordinator)
+      occ = OrderCycle.last
+      expect(occ.name).to eq("COPY OF #{oc.name}")
+      expect(occ.orders_open_at).to be_nil
+      expect(occ.orders_close_at).to be_nil
+      expect(occ.coordinator).not_to be_nil
+      expect(occ.preferred_product_selection_from_coordinator_inventory_only).to be true
+      expect(occ.automatic_notifications).to eq(oc.automatic_notifications)
+      expect(occ.processed_at).to eq(nil)
+      expect(occ.mails_sent).to eq(nil)
+      expect(occ.coordinator).to eq(oc.coordinator)
 
-    expect(occ.coordinator_fee_ids).not_to be_empty
-    expect(occ.coordinator_fee_ids).to eq(oc.coordinator_fee_ids)
-    expect(occ.preferred_product_selection_from_coordinator_inventory_only).to eq(oc.preferred_product_selection_from_coordinator_inventory_only)
-    expect(occ.schedule_ids).not_to be_empty
-    expect(occ.schedule_ids).to eq(oc.schedule_ids)
+      expect(occ.coordinator_fee_ids).not_to be_empty
+      expect(occ.coordinator_fee_ids).to eq(oc.coordinator_fee_ids)
+      expect(occ.preferred_product_selection_from_coordinator_inventory_only).to eq(oc.preferred_product_selection_from_coordinator_inventory_only)
+      expect(occ.schedule_ids).not_to be_empty
+      expect(occ.schedule_ids).to eq(oc.schedule_ids)
 
-    # Check that the exchanges have been cloned.
-    original_exchange_attributes = oc.exchanges.map { |ex| core_exchange_attributes(ex) }
-    cloned_exchange_attributes = occ.exchanges.map { |ex| core_exchange_attributes(ex) }
+      # Check that the exchanges have been cloned.
+      original_exchange_attributes = oc.exchanges.map { |ex| core_exchange_attributes(ex) }
+      cloned_exchange_attributes = occ.exchanges.map { |ex| core_exchange_attributes(ex) }
 
-    expect(cloned_exchange_attributes).to match_array original_exchange_attributes
+      expect(cloned_exchange_attributes).to match_array original_exchange_attributes
+    end
+
+    context "distributor order cycle created before the customisable shipping methods feature was available" do
+      it "allows the clone to have customisable shipping methods" do
+        order_cycle = create(:distributor_order_cycle, shipping_methods_customisable: false)
+
+        order_cycle.clone!
+
+        order_cycle_clone = OrderCycle.last
+        expect(order_cycle_clone.shipping_methods_customisable).to eq(true)
+      end
+    end
+
+    context "when it has shipping methods which can longer be applied validly e.g. shipping method is backoffice only" do
+      it "raises an error (TODO: display a message to user explaining why clone failed)" do
+        distributor = create(:distributor_enterprise)
+        shipping_method = create(:shipping_method, distributors: [distributor])
+        order_cycle = create(:distributor_order_cycle, distributors: [distributor], shipping_methods: [shipping_method])
+        shipping_method.update_column(:display_on, "back_end")
+
+        expect {
+          order_cycle.clone!
+        }.to raise_error ActiveRecord::RecordInvalid
+      end
+    end
   end
 
   describe "finding recently closed order cycles" do

@@ -12,7 +12,8 @@ describe "shopping with variant overrides defined", js: true do
   let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let(:producer) { create(:supplier_enterprise) }
   let(:oc) {
-    create(:simple_order_cycle, suppliers: [producer], coordinator: hub, distributors: [hub])
+    create(:simple_order_cycle,
+           suppliers: [producer], coordinator: hub, distributors: [hub], shipping_methods: [sm])
   }
   let(:outgoing_exchange) { oc.exchanges.outgoing.first }
   let(:sm) { hub.shipping_methods.first }

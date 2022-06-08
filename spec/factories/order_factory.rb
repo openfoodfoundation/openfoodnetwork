@@ -13,7 +13,7 @@ FactoryBot.define do
 
     factory :order_ready_for_details do
       distributor { create(:distributor_enterprise, with_payment_and_shipping: true) }
-      order_cycle { create(:order_cycle, distributors: [distributor]) }
+      order_cycle { create(:order_cycle, distributors: [distributor], shipping_methods: [shipping_method]) }
 
       after(:create) do |order|
         order.line_items << build(:line_item, order: order)
