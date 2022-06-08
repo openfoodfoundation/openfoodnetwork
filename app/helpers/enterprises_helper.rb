@@ -14,15 +14,7 @@ module EnterprisesHelper
   end
 
   def available_shipping_methods
-    return [] if current_distributor.blank?
-
-    shipping_methods = current_distributor.shipping_methods.frontend.to_a
-
-    applicator = OpenFoodNetwork::TagRuleApplicator.new(current_distributor,
-                                                        "FilterShippingMethods", current_customer&.tag_list)
-    applicator.filter!(shipping_methods)
-
-    shipping_methods.uniq
+    OrderAvailableShippingMethods.new(current_order, current_customer).to_a
   end
 
   def available_payment_methods
