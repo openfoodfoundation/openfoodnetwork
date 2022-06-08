@@ -22,6 +22,8 @@ describe '
     v2 = create(:variant, product: product)
     distributor = create(:distributor_enterprise, name: 'My distributor',
                                                   with_payment_and_shipping: true)
+    shipping_method_i = distributor.shipping_methods.first
+    shipping_method_ii = create(:shipping_method, distributors: [distributor])
 
     # Relationships required for interface to work
     create(:enterprise_relationship, parent: supplier, child: coordinator,
@@ -129,6 +131,12 @@ describe '
     select 'Distributor fee',
            from: 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id'
 
+    click_button 'Save and Next'
+
+    # And I select preferred shipping methods
+    check "order_cycle_preferred_shipping_method_ids_#{shipping_method_i.id}"
+    uncheck "order_cycle_preferred_shipping_method_ids_#{shipping_method_ii.id}"
+
     click_button 'Save and Back to List'
 
     oc = OrderCycle.last
@@ -161,5 +169,8 @@ describe '
     expect(exchange.pickup_time).to eq('pickup time')
     expect(exchange.pickup_instructions).to eq('pickup instructions')
     expect(exchange.tag_list).to eq(['wholesale'])
+
+    # And the shipping method should be attached
+    expect(oc.shipping_methods).to eq([shipping_method_i])
   end
 end

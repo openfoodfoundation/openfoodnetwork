@@ -1173,15 +1173,29 @@ en:
         tags: "Tags"
         delivery_details: "Delivery Details"
         fees: "Fees"
+        next: "Next"
         previous: "Previous"
         save: "Save"
-        save_and_back_to_list: "Save and Back to List"
+        save_and_next: "Save and Next"
         cancel: "Cancel"
         back_to_list: "Back To List"
+      checkout_options:
+        back_end: "Back office only"
+        cancel: "Cancel"
+        checkout_options: "Checkout options"
+        distributor: "Distributor"
+        no_payment_methods: Each distributor on this order cycle requires at least one payment method.
+        no_shipping_methods: Each distributor on this order cycle requires at least one shipping method.
+        payment_methods: "Payment Methods"
+        save: "Save"
+        save_and_back_to_list: "Save and Back to List"
+        shared: "Shared"
+        shipping_methods: "Shipping Methods"
       wizard_progress:
         edit: "1. General Settings"
         incoming: "2. Incoming Products"
         outgoing: "3. Outgoing Products"
+        checkout_options: "4. Checkout Options"
       exchange_form:
         pickup_time_tip: When orders from this OC will be ready for the customer
         pickup_instructions_placeholder: "Pick-up instructions"

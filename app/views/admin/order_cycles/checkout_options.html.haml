@@ -1,0 +1,83 @@
+= render partial: "/admin/order_cycles/order_cycle_top_buttons"
+
+- content_for :page_title do
+  = t :edit_order_cycle
+
+- shared_payment_methods = order_cycle_shared_payment_methods(@order_cycle)
+- shared_shipping_methods = order_cycle_shared_shipping_methods(@order_cycle)
+
+= form_for [main_app, :admin, @order_cycle], html: { class: "order_cycle" } do |f|
+
+  = render 'wizard_progress'
+
+  %fieldset.no-border-bottom
+    %legend{ align: 'center'}= t('.checkout_options')
+
+  %table.checkout-options
+    %thead
+      %tr
+        %th= t('.distributor')
+        %th= t('.shipping_methods')
+        %th= t('.payment_methods')
+      - @order_cycle.distributors.each do |distributor|
+        - payment_methods = @order_cycle.attachable_payment_methods.where("distributor_id = ?", distributor.id).reject { |payment_method| shared_payment_methods.include?(payment_method) }
+        - shipping_methods = @order_cycle.attachable_shipping_methods.where("distributor_id = ?", distributor.id).reject { |shipping_method| shared_shipping_methods.include?(shipping_method) }
+        %tr
+          %td= distributor.name
+          %td
+            - shipping_methods.each do |shipping_method|
+              %p
+                %label
+                  = check_box_tag "order_cycle[preferred_shipping_method_ids][]",
+                      shipping_method.id, @order_cycle.shipping_methods.include?(shipping_method),
+                      id: "order_cycle_preferred_shipping_method_ids_#{shipping_method.id}"
+                  = shipping_method.name
+            - distributor.shipping_methods.backend.each do |shipping_method|
+              %label.disabled
+                = check_box_tag nil, nil, false, disabled: true
+                = shipping_method.name
+                = "(#{t('.back_end')})"
+            - if shipping_methods.none? && distributor.shipping_methods.backend.none?
+              %p.text-center
+                = t('.no_shipping_methods')
+          %td
+            - if payment_methods.any?
+              %ul
+                - payment_methods.each do |payment_method|
+                  %li= payment_method.name
+            - else
+              %p.text-center
+                = t('.no_payment_methods')
+      - if shared_payment_methods.any? || shared_shipping_methods.any?
+        %tr
+          %td= t('.shared')
+          %td
+            - if shared_shipping_methods.any?
+              = f.collection_check_boxes :shipping_method_ids, shared_shipping_methods, :id, :name do |input|
+                - shared_shipping_method = input.object
+                %p
+                  = input.check_box
+                  = input.label
+                %p
+                  = "&mdash;<em>#{shared_shipping_method.distributors.where(id: @order_cycle.distributor_ids).map(&:name).join(", ")}</em>".html_safe
+          %td
+            - if shared_payment_methods.any?
+              %ul
+                - shared_payment_methods.each do |shared_payment_method|
+                  %li
+                    = shared_payment_method.name
+                    %p
+                      = "&mdash;<em>#{shared_payment_method.distributors.where(id: @order_cycle.distributor_ids).map(&:name).join(", ")}</em>".html_safe
+
+  %div#save-bar
+    %div.container
+      %div.seven.columns.alpha
+        - if @order_cycle.errors.any?
+          %h5#status-message.error
+            = @order_cycle.errors.to_a.to_sentence
+      %div.nine.columns.omega.text-right
+        = hidden_field_tag :context, :checkout_options
+        = f.submit t('.save'), class: "red", name: :save
+        = f.submit t('.save_and_back_to_list'), class: "red", name: :save_and_back_to_list
+        %a.button.cancel{ href: main_app.admin_order_cycles_path }
+          = t('.cancel')

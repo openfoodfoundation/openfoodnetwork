@@ -156,6 +156,23 @@ class OrderCycle < ApplicationRecord
     ]
   end
 
+  def attachable_payment_methods
+    Spree::PaymentMethod.available(:both).
+      joins("INNER JOIN distributors_payment_methods
+             ON payment_method_id = spree_payment_methods.id").
+      where("distributor_id IN (?)", distributor_ids).
+      distinct
+  end
+
+  def attachable_shipping_methods
+    return Spree::ShippingMethod.none if simple? || !shipping_methods_customisable?
+
+    Spree::ShippingMethod.frontend.
+      joins(:distributor_shipping_methods).
+      where("distributor_id IN (?)", distributor_ids).
+      distinct
+  end
+
   def clone!
     oc = dup
     oc.name = I18n.t("models.order_cycle.cloned_order_cycle_name", order_cycle: oc.name)

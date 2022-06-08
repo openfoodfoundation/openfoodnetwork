@@ -677,6 +677,24 @@ describe OrderCycle do
     end
   end
 
+  describe "#attachable_shipping_methods" do
+    it "includes shipping methods from the distributors on the order cycle" do
+      shipping_method = create(:shipping_method)
+      enterprise = create(:enterprise, shipping_methods: [shipping_method])
+      oc = create(:simple_order_cycle, distributors: [enterprise])
+
+      expect(oc.attachable_shipping_methods).to eq([shipping_method])
+    end
+
+    it "does not include backoffice only shipping methods" do
+      shipping_method = create(:shipping_method, display_on: "back_end")
+      enterprise = create(:enterprise, shipping_methods: [shipping_method])
+      oc = create(:simple_order_cycle, distributors: [enterprise])
+
+      expect(oc.attachable_shipping_methods).to be_empty
+    end
+  end
+
   describe "#simple?" do
     it "returns true if the coordinator sells their own products i.e. shops" do
       order_cycle = build(:simple_order_cycle, coordinator: build(:enterprise, sells: "own"))

@@ -1,0 +1,29 @@
+# frozen_string_literal: true
+
+class OrderAvailableShippingMethods < Struct.new(:order, :customer)
+  delegate :distributor,
+           :order_cycle,
+           to: :order
+
+  def to_a
+    return [] if distributor.blank?
+
+    shipping_methods = shipping_methods_before_tag_rules_applied
+
+    applicator = OpenFoodNetwork::TagRuleApplicator.new(distributor,
+                                                        "FilterShippingMethods", customer&.tag_list)
+    applicator.filter!(shipping_methods)
+
+    shipping_methods.uniq
+  end
+
+  private
+
+  def shipping_methods_before_tag_rules_applied
+    if order_cycle.nil? || order_cycle.simple?
+      distributor.shipping_methods
+    else
+      distributor.shipping_methods.where(id: order_cycle.shipping_methods.select(:id))
+    end.frontend.to_a
+  end
+end
