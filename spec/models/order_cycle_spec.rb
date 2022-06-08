@@ -20,6 +20,72 @@ describe OrderCycle do
     expect(oc).to_not be_valid
   end
 
+  describe "#at_least_one_shipping_method_selected_for_each_distributor" do
+    context "distributor order cycle i.e. :sells is 'any'" do
+      context "when multiple distributors have been added to the order cycle already" do
+        it "is valid when adding a shipping method for *all* distributors" do
+          distributor_i = create(:distributor_enterprise)
+          distributor_ii = create(:distributor_enterprise)
+          distributor_i_shipping_method = create(:shipping_method, distributors: [distributor_i])
+          distributor_ii_shipping_method = create(:shipping_method, distributors: [distributor_ii])
+          order_cycle = create(:distributor_order_cycle, distributors: [distributor_i, distributor_ii])
+
+          order_cycle.shipping_method_ids = [distributor_i_shipping_method.id, distributor_ii_shipping_method.id]
+
+          expect(order_cycle).to be_valid
+        end
+      end
+
+      it "is not valid when adding a shipping method for *some but not all* distributors" do
+        distributor_i = create(:distributor_enterprise)
+        distributor_ii = create(:distributor_enterprise)
+        distributor_i_shipping_method = create(:shipping_method, distributors: [distributor_i])
+        distributor_ii_shipping_method = create(:shipping_method, distributors: [distributor_i])
+        order_cycle = create(:distributor_order_cycle, distributors: [distributor_i, distributor_ii])
+
+        order_cycle.shipping_method_ids = [distributor_i_shipping_method.id]
+
+        expect(order_cycle).to be_invalid
+        expect(order_cycle.errors.to_a).to eq ["You need to select at least one shipping method for each distributor"]
+      end
+    end
+  end
+
+  describe "#no_invalid_shipping_methods" do
+    context "when a shipping method is not valid" do
+      it "adds a validation error, and it is more meaningful than the default 'Order cycle shipping methods is invalid'" do
+        order_cycle = create(:distributor_order_cycle, with_distributor_and_shipping_method: true)
+        shipping_method = order_cycle.shipping_methods.first
+
+        shipping_method.update_column(:display_on, "back_end")
+
+        expect(order_cycle).to be_invalid
+        expect(order_cycle.errors.to_a).to eq ["Shipping method must be available at checkout"]
+
+        shipping_method.update_column(:display_on, "")
+
+        expect(order_cycle.reload).to be_valid
+      end
+    end
+  end
+
+  describe "#validate_shipping_methods" do
+    it "doesn't skip shipping method validations by default" do
+      order_cycle = create(:distributor_order_cycle, distributors: [create(:distributor_enterprise)])
+
+      expect(order_cycle).to be_invalid
+      expect(order_cycle.errors.to_a).to eq ["You need to select at least one shipping method for each distributor"]
+    end
+
+    it "allows shipping method validations to be skipped because distributors need to be saved before shipping methods" do
+      order_cycle = create(:distributor_order_cycle, distributors: [create(:distributor_enterprise)])
+
+      order_cycle.validate_shipping_methods = false
+
+      expect(order_cycle).to be_valid
+    end
+  end
+
   it "has a coordinator and associated fees" do
     oc = create(:simple_order_cycle)
 
@@ -132,7 +198,7 @@ describe OrderCycle do
   end
 
   it "reports its distributors" do
-    oc = create(:simple_order_cycle)
+    oc = create(:simple_order_cycle, validate_shipping_methods: false)
 
     e1 = create(:exchange, incoming: false,
                            order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
@@ -143,7 +209,7 @@ describe OrderCycle do
   end
 
   it "checks for existance of distributors" do
-    oc = create(:simple_order_cycle)
+    oc = create(:simple_order_cycle, validate_shipping_methods: false)
     d1 = create(:distributor_enterprise)
     d2 = create(:distributor_enterprise)
     create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1, incoming: false)
@@ -506,7 +572,7 @@ describe OrderCycle do
   end
 
   describe "version tracking", versioning: true do
-    let!(:oc) { create(:order_cycle, name: "Original") }
+    let!(:oc) { create(:sells_own_order_cycle, name: "Original") }
 
     it "remembers old versions" do
       expect {
@@ -551,11 +617,12 @@ describe OrderCycle do
   end
 
   describe "syncing subscriptions" do
-    let!(:oc) {
-      create(:simple_order_cycle, orders_open_at: 1.week.ago, orders_close_at: 1.day.ago)
-    }
-    let(:schedule) { create(:schedule, order_cycles: [oc]) }
-    let!(:subscription) { create(:subscription, schedule: schedule, with_items: true) }
+    let!(:subscription) { create(:subscription, with_items: true) }
+    let!(:oc) { subscription.order_cycles.first }
+
+    before do
+      oc.update_columns(orders_open_at: 1.week.ago, orders_close_at: 1.day.ago)
+    end
 
     it "syncs subscriptions when transitioning from closed to open" do
       expect(OrderManagement::Subscriptions::ProxyOrderSyncer).to receive(:new).and_call_original

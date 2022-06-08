@@ -22,17 +22,23 @@ class OrderCycle < ApplicationRecord
 
   has_many :suppliers, -> { distinct }, source: :sender, through: :cached_incoming_exchanges
   has_many :distributors, -> { distinct }, source: :receiver, through: :cached_outgoing_exchanges
-
   has_many :order_cycle_schedules
   has_many :schedules, through: :order_cycle_schedules
+  has_many :order_cycle_shipping_methods
+  has_many :shipping_methods, class_name: "Spree::ShippingMethod",
+                              through: :order_cycle_shipping_methods
   has_paper_trail meta: { custom_data: proc { |order_cycle| order_cycle.schedule_ids.to_s } }
 
   attr_accessor :incoming_exchanges, :outgoing_exchanges
+
+  attribute :validate_shipping_methods, :boolean, default: true
 
   before_update :reset_processed_at, if: :will_save_change_to_orders_close_at?
   after_save :sync_subscriptions, if: :opening?
 
   validates :name, :coordinator_id, presence: true
+  validate :at_least_one_shipping_method_selected_for_each_distributor
+  validate :no_invalid_shipping_methods
   validate :orders_close_at_after_orders_open_at?
 
   preference :product_selection_from_coordinator_inventory_only, :boolean, default: false
@@ -159,8 +165,12 @@ class OrderCycle < ApplicationRecord
     oc.preferred_product_selection_from_coordinator_inventory_only = preferred_product_selection_from_coordinator_inventory_only
     # rubocop:enable Layout/LineLength
     oc.schedule_ids = schedule_ids
+    oc.shipping_methods_customisable = true
     oc.save!
+    oc.validate_shipping_methods = false
     exchanges.each { |e| e.clone!(oc) }
+    oc.validate_shipping_methods = true
+    oc.shipping_method_ids = shipping_method_ids
     sync_subscriptions
     oc.reload
   end
@@ -279,6 +289,29 @@ class OrderCycle < ApplicationRecord
   end
 
   private
+
+  def all_distributors_have_at_least_one_shipping_method?
+    distributors.all? { |distributor| (distributor.shipping_method_ids & shipping_method_ids).any? }
+  end
+
+  def at_least_one_shipping_method_selected_for_each_distributor
+    return if !validate_shipping_methods? ||
+              coordinator.nil? ||
+              simple? ||
+              !shipping_methods_customisable? ||
+              all_distributors_have_at_least_one_shipping_method?
+
+    errors.add(:base, :at_least_one_shipping_method_per_distributor)
+  end
+
+  def no_invalid_shipping_methods
+    return if order_cycle_shipping_methods.all?(&:valid?)
+
+    errors.add(
+      :base,
+      order_cycle_shipping_methods.map(&:errors).map(&:to_a).flatten.uniq.to_sentence
+    )
+  end
 
   def opening?
     (open? || upcoming?) && saved_change_to_orders_close_at? && was_closed?

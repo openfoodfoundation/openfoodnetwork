@@ -75,6 +75,8 @@ en:
               card_expired: "has expired"
         order_cycle:
           attributes:
+            base:
+              at_least_one_shipping_method_per_distributor: "You need to select at least one shipping method for each distributor"
             orders_close_at:
               after_orders_open_at: must be after open date
         order_cycle_shipping_method:

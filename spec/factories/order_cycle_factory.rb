@@ -72,12 +72,15 @@ FactoryBot.define do
     coordinator { Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise) }
 
     transient do
+      shipping_methods { [] }
       suppliers { [] }
       distributors { [] }
       variants { [] }
+      with_distributor_and_shipping_method { false }
     end
 
     after(:create) do |oc, proxy|
+
       # Incoming Exchanges
       proxy.suppliers.each.with_index do |supplier, i|
         ex = create(:exchange, order_cycle: oc,
@@ -86,6 +89,10 @@ FactoryBot.define do
                                incoming: true,
                                receival_instructions: "instructions #{i}")
         proxy.variants.each { |v| ex.variants << v }
+      end
+
+      if proxy.with_distributor_and_shipping_method
+        proxy.distributors << oc.coordinator if proxy.distributors.empty?
       end
 
       # Outgoing Exchanges
@@ -97,6 +104,26 @@ FactoryBot.define do
                                pickup_time: "time #{i}",
                                pickup_instructions: "instructions #{i}")
         proxy.variants.each { |v| ex.variants << v }
+      end
+
+      if proxy.with_distributor_and_shipping_method || proxy.shipping_methods.any?
+        oc.reload # so outgoing exchanges/distributors attached above are present
+        distributor = oc.distributors.first
+        if proxy.shipping_methods.empty?
+          proxy.shipping_methods << create(:shipping_method, distributors: [distributor])
+        else
+          proxy.shipping_methods.each do |shipping_method|
+            # ensure shipping methods belong to a distributor on the order cycle
+            if !shipping_method.distributors.include?(distributor)
+              shipping_method.distributors << distributor
+            end
+          end
+        end
+        oc.shipping_methods = proxy.shipping_methods
+      end
+
+      if proxy.distributors.any? || proxy.shipping_methods.any?
+        oc.reload # so shipping methods attached above are present
       end
     end
   end
