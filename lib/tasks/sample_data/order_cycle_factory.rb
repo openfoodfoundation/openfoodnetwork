@@ -57,6 +57,9 @@ module SampleData
       log "- #{name}"
       cycle = create_order_cycle_with_fee(name, coordinator)
       create_exchanges(cycle, supplier_names, distributor_names, data)
+      return if cycle.reload.attachable_shipping_methods.none?
+
+      cycle.shipping_method_ids = cycle.attachable_shipping_methods.pluck(:id)
     end
 
     def create_order_cycle_with_fee(name, coordinator)
