@@ -11,11 +11,13 @@ class OrderCycleForm
     @user = user
     @permissions = OpenFoodNetwork::Permissions.new(user)
     @schedule_ids = order_cycle_params.delete(:schedule_ids)
+    @shipping_method_ids = order_cycle_params.delete(:shipping_method_ids)
   end
 
   def save
     schedule_ids = build_schedule_ids
     order_cycle.assign_attributes(order_cycle_params)
+    order_cycle.validate_shipping_methods = false
     return false unless order_cycle.valid?
 
     order_cycle.transaction do
@@ -23,10 +25,12 @@ class OrderCycleForm
       order_cycle.schedule_ids = schedule_ids
       order_cycle.save!
       apply_exchange_changes
+      attach_shipping_methods
       sync_subscriptions
       true
     end
-  rescue ActiveRecord::RecordInvalid
+  rescue ActiveRecord::RecordInvalid => e
+    add_exception_to_order_cycle_errors(e)
     false
   end
 
@@ -34,10 +38,24 @@ class OrderCycleForm
 
   attr_accessor :order_cycle, :order_cycle_params, :user, :permissions
 
+  def add_exception_to_order_cycle_errors(exception)
+    error = exception.message.split(":").last.strip
+    order_cycle.errors.add(:base, error) if !order_cycle.errors.to_a.include?(error)
+  end
+
   def apply_exchange_changes
     return if exchanges_unchanged?
 
     OpenFoodNetwork::OrderCycleFormApplicator.new(order_cycle, user).go!
+  end
+
+  def attach_shipping_methods
+    return if @shipping_method_ids.nil?
+
+    order_cycle.reload # so outgoing exchanges are up-to-date for shipping method validations
+    order_cycle.validate_shipping_methods = true
+    order_cycle.shipping_method_ids = @shipping_method_ids
+    order_cycle.save!
   end
 
   def exchanges_unchanged?

@@ -119,34 +119,138 @@ describe OrderCycleForm do
     end
   end
 
-  describe "updating exchanges" do
-    let(:user) { instance_double(Spree::User) }
-    let(:order_cycle) { create(:simple_order_cycle) }
-    let(:form_applicator_mock) { instance_double(OpenFoodNetwork::OrderCycleFormApplicator) }
-    let(:form) { OrderCycleForm.new(order_cycle, params, user) }
+  context "distributor order cycle" do
+    let(:order_cycle) { create(:distributor_order_cycle) }
+    let(:distributor) { order_cycle.coordinator }
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:user) { distributor.owner }
+    let(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
+    let(:variant) { create(:variant, product: create(:product, supplier: supplier)) }
     let(:params) { { name: 'Some new name' } }
-
-    before do
-      allow(OpenFoodNetwork::OrderCycleFormApplicator).to receive(:new) { form_applicator_mock }
-      allow(form_applicator_mock).to receive(:go!)
+    let(:form) { OrderCycleForm.new(order_cycle, params, user) }
+    let(:outgoing_exchange_params) do
+      {
+        enterprise_id: distributor.id,
+        incoming: false,
+        active: true,
+        variants: { variant.id => true },
+        pickup_time: "Saturday morning",
+        enterprise_fee_ids: []
+      }
     end
 
-    context "when exchange params are provided" do
-      let(:exchange_params) { { incoming_exchanges: [], outgoing_exchanges: [] } }
-      before { params.merge!(exchange_params) }
-
-      it "runs the OrderCycleFormApplicator, and saves other changes" do
+    context "basic update i.e. without exchanges or shipping methods" do
+      it do
         expect(form.save).to be true
-        expect(form_applicator_mock).to have_received(:go!)
         expect(order_cycle.name).to eq 'Some new name'
       end
     end
 
-    context "when no exchange params are provided" do
-      it "does not run the OrderCycleFormApplicator, but saves other changes" do
+    context "updating basics, incoming and outcoming exchanges, shipping methods simultaneously" do
+      before do
+        params.merge!(
+          incoming_exchanges: [{
+            enterprise_id: supplier.id,
+            incoming: true,
+            active: true,
+            variants: { variant.id => true },
+            receival_instructions: "Friday evening",
+            enterprise_fee_ids: []
+          }],
+          outgoing_exchanges: [outgoing_exchange_params],
+          shipping_method_ids: [shipping_method.id]
+        )
+      end
+
+      it "saves everything i.e. the basics, incoming and outgoing exchanges and shipping methods" do
         expect(form.save).to be true
-        expect(form_applicator_mock).to_not have_received(:go!)
         expect(order_cycle.name).to eq 'Some new name'
+        expect(order_cycle.cached_incoming_exchanges.count).to eq 1
+        expect(order_cycle.cached_outgoing_exchanges.count).to eq 1
+        expect(order_cycle.shipping_methods).to eq [shipping_method]
+      end
+    end
+
+    context "updating outgoing exchanges without specifying any shipping methods" do
+      before do
+        params.merge!(
+          outgoing_exchanges: [outgoing_exchange_params],
+          shipping_method_ids: nil
+        )
+      end
+
+      it "saves the outgoing exchanges,
+         it doesn't return a validation error because no shipping methods are present yet" do
+        expect(form.save).to be true
+        expect(order_cycle.cached_outgoing_exchanges.count).to eq 1
+      end
+    end
+
+    context "updating outgoing exchanges but specifying an invalid shipping method" do
+      let(:other_distributor_shipping_method) do
+        create(:shipping_method, distributors: [create(:distributor_enterprise)])
+      end
+
+      before do
+        params.merge!(
+          outgoing_exchanges: [outgoing_exchange_params],
+          shipping_method_ids: [other_distributor_shipping_method.id]
+        )
+      end
+
+      it "returns a validation error" do
+        expect(form.save).to be false
+        expect(order_cycle.errors.to_a).to eq [
+          "Shipping method must be from a distributor on the order cycle"
+        ]
+      end
+    end
+
+    context "when shipping methods already exist
+             and doing an update without the :shipping_methods_id parameter" do
+      it "doesn't return a validation error on shipping methods" do
+        order_cycle = create(:distributor_order_cycle, with_distributor_and_shipping_method: true)
+
+        form = OrderCycleForm.new(
+          order_cycle,
+          params.except(:shipping_method_ids),
+          order_cycle.coordinator
+        )
+
+        expect(form.save).to be true
+      end
+    end
+
+    context "updating shipping methods" do
+      context "and it's valid" do
+        it "saves the changes" do
+          distributor = create(:distributor_enterprise)
+          shipping_method = create(:shipping_method, distributors: [distributor])
+          order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+
+          form = OrderCycleForm.new(order_cycle,
+                                    { shipping_method_ids: [shipping_method.id] },
+                                    order_cycle.coordinator)
+
+          expect(form.save).to be true
+          expect(order_cycle.shipping_methods).to eq [shipping_method]
+        end
+      end
+
+      context "and it's invalid" do
+        it "returns a validation error" do
+          distributor = create(:distributor_enterprise)
+          order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+
+          form = OrderCycleForm.new(order_cycle,
+                                    { shipping_method_ids: [] },
+                                    order_cycle.coordinator)
+
+          expect(form.save).to be false
+          expect(order_cycle.errors.to_a).to eq [
+            "You need to select at least one shipping method for each distributor"
+          ]
+        end
       end
     end
   end
