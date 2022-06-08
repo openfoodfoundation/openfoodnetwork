@@ -77,6 +77,16 @@ en:
           attributes:
             orders_close_at:
               after_orders_open_at: must be after open date
+        order_cycle_shipping_method:
+          attributes:
+            base:
+              shipping_method_already_used_in_order_cycle: "This shipping method has already been selected on orders in this order cycle and cannot be removed"
+            order_cycle:
+              must_not_be_simple: "is simple, all shipping methods are available by default and cannot be customised"
+              must_support_customisable_shipping_methods: "shipping methods cannot be customised, all shipping methods are available by default"
+            shipping_method:
+              must_be_available_at_checkout: "must be available at checkout"
+              must_belong_to_order_cycle_distributor: "must be from a distributor on the order cycle"
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"

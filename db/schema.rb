@@ -318,6 +318,15 @@ ActiveRecord::Schema.define(version: 2022_09_07_055044) do
     t.index ["schedule_id"], name: "index_order_cycle_schedules_on_schedule_id"
   end
 
+  create_table "order_cycle_shipping_methods", force: :cascade do |t|
+    t.bigint "order_cycle_id"
+    t.bigint "shipping_method_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_cycle_id"], name: "index_order_cycle_shipping_methods_on_order_cycle_id"
+    t.index ["shipping_method_id"], name: "index_order_cycle_shipping_methods_on_shipping_method_id"
+  end
+
   create_table "order_cycles", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.datetime "orders_open_at"
@@ -328,6 +337,7 @@ ActiveRecord::Schema.define(version: 2022_09_07_055044) do
     t.datetime "processed_at"
     t.boolean "automatic_notifications", default: false
     t.boolean "mails_sent", default: false
+    t.boolean "shipping_methods_customisable", default: true
   end
 
   create_table "producer_properties", id: :serial, force: :cascade do |t|
@@ -1253,6 +1263,7 @@ ActiveRecord::Schema.define(version: 2022_09_07_055044) do
   add_foreign_key "exchanges", "order_cycles", name: "exchanges_order_cycle_id_fk"
   add_foreign_key "order_cycle_schedules", "order_cycles", name: "oc_schedules_order_cycle_id_fk"
   add_foreign_key "order_cycle_schedules", "schedules", name: "oc_schedules_schedule_id_fk"
+  add_foreign_key "order_cycle_shipping_methods", "spree_shipping_methods", column: "shipping_method_id"
   add_foreign_key "order_cycles", "enterprises", column: "coordinator_id", name: "order_cycles_coordinator_id_fk"
   add_foreign_key "producer_properties", "enterprises", column: "producer_id", name: "producer_properties_producer_id_fk"
   add_foreign_key "producer_properties", "spree_properties", column: "property_id", name: "producer_properties_property_id_fk"
