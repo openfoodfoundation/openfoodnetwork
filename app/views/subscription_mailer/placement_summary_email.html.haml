@@ -12,7 +12,7 @@
         %tr
           %td{:align => "right"}
             - if @shop.logo.variable?
-              = image_tag @shop.logo_variant(:medium), class: "float-right"
+              = image_tag @shop.logo_url(:medium), class: "float-right"
       %span.clear
 
 = render 'summary_overview', summary: @summary
