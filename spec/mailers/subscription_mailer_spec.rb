@@ -240,14 +240,21 @@ describe SubscriptionMailer, type: :mailer do
         allow(summary).to receive(:order_count) { 37 }
         allow(summary).to receive(:issue_count) { 0 }
         allow(summary).to receive(:issues) { {} }
-        SubscriptionMailer.placement_summary_email(summary).deliver_now
       end
 
       it "sends the email, which notifies the enterprise that all orders were successfully processed" do
+        SubscriptionMailer.placement_summary_email(summary).deliver_now
+
         expect(body).to include I18n.t("#{scope}.placement_summary_email.intro", shop: shop.name)
         expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 37)
         expect(body).to include I18n.t("#{scope}.summary_overview.success_all")
         expect(body).to_not include I18n.t("#{scope}.summary_overview.issues")
+      end
+
+      it "renders the shop's logo" do
+        shop.update!(logo: fixture_file_upload("logo.png", "image/png"))
+        SubscriptionMailer.placement_summary_email(summary).deliver_now
+        expect(SubscriptionMailer.deliveries.last.body).to include "logo.png"
       end
     end
 
