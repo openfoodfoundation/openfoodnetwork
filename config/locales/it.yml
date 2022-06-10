@@ -1536,7 +1536,7 @@ it:
   label_logout: "Logout"
   label_signup: "Iscriviti"
   label_administration: "Amministrazione"
-  label_admin: "Admin"
+  label_admin: "Costo di gestione"
   label_account: "Account"
   label_more: "Mostra di più"
   label_less: "Mostra meno"
@@ -2026,7 +2026,7 @@ it:
   orders_form_empty_cart: "Svuota carrello"
   orders_form_update_cart: "Aggiorna"
   orders_form_subtotal: "Calcola il subtotale"
-  orders_form_admin: "Admin"
+  orders_form_admin: "Costi di gestione"
   orders_form_total: "Totale"
   orders_oc_expired_headline: "Gli ordini sono chiusi per questo ciclo di ordini"
   orders_oc_expired_text: "Spiacenti, gli ordini per questo ciclo son chiusi %{time} da! Per favore contatta direttamente il tuo hub per sapere se accettano ordini tardivi."
@@ -2563,7 +2563,7 @@ it:
   report_header_payment_type: Tipo Pagamento
   report_header_item_price: "Articolo (%{currency})"
   report_header_item_fees_price: "Articolo + maggiorazioni (%{currency})"
-  report_header_admin_handling_fees: "Admin (%{currency})"
+  report_header_admin_handling_fees: "Costi di gestione (%{currency})"
   report_header_ship_price: "Consegna (%{currency})"
   report_header_pay_fee_price: "Tassa pagamento (%{currency})"
   report_header_total_price: "Totale (%{currency})"
@@ -3716,7 +3716,6 @@ it:
             no_payment_via_admin_backend: I pagamenti con Paypal non possono comparire nel Pannello di Controllo
       products:
         image_upload_error: "L'immagine del prodotto non è stata riconosciuta. Carica un'immagine in formato PNG o JPG."
-        paperclip_image_error: "Paperclip riporta errori  per il file '%{attachment_file_name}' - controlla l'istallazione di ImageMagick o la fonte del file immagine."
         new:
           title: "Nuovo prodotto"
           new_product: "Nuovo prodotto"

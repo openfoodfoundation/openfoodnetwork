@@ -3773,7 +3773,6 @@ ar:
             no_payment_via_admin_backend: لا يمكن التقاط مدفوعات Paypal في Backoffice
       products:
         image_upload_error: "لم يتم التعرف على صورة المنتج. يرجى تحميل صورة بتنسيق PNG أو JPG."
-        paperclip_image_error: "عرض مشبك الورق أخطاء للملف '%{attachment_file_name}' - تحقق من تثبيت ImageMagick أو ملف مصدر الصورة."
         new:
           title: "منتج جديد"
           new_product: "منتج جديد"

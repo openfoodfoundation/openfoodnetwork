@@ -3729,7 +3729,6 @@ nb:
             no_payment_via_admin_backend: Paypal-betalinger kan ikke behandles i Backoffice
       products:
         image_upload_error: "Produktbildet ble ikke gjenkjent. Last opp et bilde i PNG- eller JPG-format."
-        paperclip_image_error: "Paperclip returnerte feil for filen &#39;%{attachment_file_name}&#39; - sjekk ImageMagick-installasjonen eller kildefilen til bildet."
         new:
           title: "Nytt produkt"
           new_product: "Nytt produkt"

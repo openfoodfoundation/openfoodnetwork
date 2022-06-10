@@ -16,7 +16,7 @@ ko:
         shipment_state: 배송 현황
         completed_at: 완료
         number: 숫자
-        state: 상태
+        state: 주
         email: 고객의 이메일 주소
       spree/payment:
         amount: 수량
@@ -3680,7 +3680,6 @@ ko:
             no_payment_via_admin_backend: 고객들을 직접 상대하지 않는 부서 전용에서 페이팔 결제를 캡처할 수 없습니다.
       products:
         image_upload_error: "제품 이미지를 인식할 수 없습니다. PNG 또는 JPG 형식으로 이미지를 업로드하십시오."
-        paperclip_image_error: "페이퍼 클립에서 파일 '%{attachment_file_name}'에 대한 오류를 반환했습니다. ImageMagick를 설치 하시거나 이미지 원본 파일을 확인하십시오.."
         new:
           title: "새 상품"
           new_product: "새 상품"

@@ -3744,7 +3744,6 @@ hu:
             no_payment_via_admin_backend: A Paypal fizetések nem rögzíthetők a Backoffice-ban
       products:
         image_upload_error: "A termék képét nem ismerték fel. Kérjük, töltsön fel egy képet PNG vagy JPG formátumban."
-        paperclip_image_error: "A gémkapocs hibákat adott vissza a '%{attachment_file_name}' fájlhoz – ellenőrizze az ImageMagick telepítését vagy a képforrásfájlt."
         new:
           title: "Új termék"
           new_product: "Új termék"
