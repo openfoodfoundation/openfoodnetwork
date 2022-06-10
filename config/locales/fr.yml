@@ -1806,6 +1806,7 @@ fr:
   order_hub_info: Info Boutique
   order_back_to_store: Retour à la boutique
   order_back_to_cart: Retour au panier
+  order_back_to_website: Retour vers le site
   bom_tip: "Utilisez cette page pour modifier les quantités sur plusieurs commandes à la fois. Les produits peuvent aussi être supprimés des commandes si nécessaire."
   unsaved_changes_warning: "Des modifications n'ont pas été enregistrées et seront perdues si vous continuez."
   unsaved_changes_error: "Les champs entourés en rouge contiennent des erreurs."

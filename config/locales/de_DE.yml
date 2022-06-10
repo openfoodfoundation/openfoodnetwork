@@ -1806,6 +1806,7 @@ de_DE:
   order_hub_info: Informationen über den Laden
   order_back_to_store: Zurück zum Laden
   order_back_to_cart: Zurück zum Warenkorb
+  order_back_to_website: 'Zurück zur Website '
   bom_tip: "Verwenden Sie diese Seite, um Produktmengen über mehrere Bestellungen hinweg zu ändern. Produkte können bei Bedarf auch komplett aus Bestellungen entfernt werden."
   unsaved_changes_warning: "Sie haben nicht gespeicherte Änderungen, die beim Fortfahren verloren gehen."
   unsaved_changes_error: "Felder mit roten Rahmen enthalten Fehler."
