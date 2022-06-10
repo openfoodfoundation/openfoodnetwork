@@ -40,18 +40,6 @@
               = label_tag 'selected_shipping_rate_id', Spree.t(:shipping_method)
               = select_tag :selected_shipping_rate_id, options_for_select(shipment.shipping_rates.backend.map { |sr| ["#{sr.name} #{sr.display_price}", sr.id] }, shipment.selected_shipping_rate_id), { :class => 'select2 fullwidth', :data => { 'shipment-number' => shipment.number } }
 
-            - if shipment.fee_adjustment&.closed?
-              %div.field.omega.four.columns
-                %label
-                  = Spree.t(:associated_adjustment_closed)
-                %ul
-                  %li
-                    = radio_button_tag :open_adjustment, 'yes', false, :data => { 'shipment-number' => shipment.number }
-                    = "Yes"
-                  %li
-                    = radio_button_tag :open_adjustment, 'no', true, :data => {'shipment-number' => shipment.number }
-                    = "No"
-
           %td.actions
             - if can? :update, shipment
               = link_to '', '', :class => 'save-method icon_link icon-ok no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'save' }, title: I18n.t('actions.save')
