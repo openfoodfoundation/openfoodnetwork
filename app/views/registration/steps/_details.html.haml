@@ -28,6 +28,9 @@
           .field
             %label{ for: 'enterprise_address2' }= t(".address2_field")
             %input.chunky{ id: 'enterprise_address2', name: 'address2', required: false, placeholder: "", required: false, ng: { model: 'enterprise.address.address2' } }
+          .field
+            %label{ for: 'enterprise_landmark' }= t(".landmark_field")
+            %input.chunky{ id: 'enterprise_landmark', name: 'landmark', required: false, placeholder: "", ng: { model: 'enterprise.address.landmark' } }
 
         .small-12.medium-9.large-6.columns.end
           .row
