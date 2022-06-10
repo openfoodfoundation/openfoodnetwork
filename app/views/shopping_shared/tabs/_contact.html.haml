@@ -12,6 +12,9 @@
               - unless current_distributor.address.address2.blank?
                 %br
                 = current_distributor.address.address2
+              - unless current_distributor.address.landmark.blank?
+                %br
+                = current_distributor.address.landmark
               %br
               = current_distributor.address.city
               = current_distributor.address.state
