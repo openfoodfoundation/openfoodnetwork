@@ -1611,6 +1611,7 @@ en:
   address: Address
   address_placeholder: eg. 123 High Street
   address2: Address (contd.)
+  landmark: Landmark
   city: City
   city_placeholder: eg. Northcote
   latitude: Latitude
