@@ -59,6 +59,12 @@ describe "spree/admin/orders/edit.html.haml" do
                                               text: out_of_stock_line_item.variant.display_name
       end
     end
+
+    it "doesn't display closed associated adjustments" do
+      render
+
+      expect(rendered).to_not have_content "Associated adjustment closed"
+    end
   end
 
   context "when order is incomplete" do
@@ -92,6 +98,12 @@ describe "spree/admin/orders/edit.html.haml" do
 
         expect(rendered).to_not have_content "Out of Stock"
       end
+    end
+
+    it "doesn't display closed associated adjustments" do
+      render
+
+      expect(rendered).to_not have_content "Associated adjustment closed"
     end
   end
 end

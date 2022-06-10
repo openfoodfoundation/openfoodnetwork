@@ -202,6 +202,7 @@ fr_BE:
   search_by_name: Recherche par nom ou province...
   producers_join: Les producteurs et autres magasins basés en Belgique sont invités à rejoindre Open Food Network.
   charges_sales_tax: Soumis à la TVA?
+  business_address: "Adresse de facturation"
   enterprise_permissions: "Permissions Inter-entreprises"
   print_invoice: "Imprimer la facture"
   print_ticket: "Imprimer ticket de caisse"
@@ -333,7 +334,7 @@ fr_BE:
     volume: Volume
     items: Pièce
     select_all: Tout sélectionner
-    quick_search: Recherche rapide
+    quick_search: 'Recherche rapide '
     clear_all: Vider
     start_date: "Date de début"
     end_date: "Date de fin"
@@ -663,8 +664,18 @@ fr_BE:
           acn_placeholder: 'ex: 000 000 000'
           display_invoice_logo: Afficher le logo sur la facture
           invoice_text: Ajouter une mention spécifique en bas des factures
+          terms_and_conditions: "Termes et conditions"
+          reset_form: "Vider les champs"
+          Invoice_item_sorting: Ordre d'affichage sur facture
+          sort_items_by_supplier?: Classer par producteur ?
+          sort_items_by_supplier_tip: "Lorsqu'activé, les éléments seront classés par producteur."
+          enabled: Activer
+          disabled: Désactiver
         business_address:
+          company_legal_name: Nom légal d'entreprise
+          address1: Adresse du siège social
           address2: Adresse (suite)
+          legal_phone_number: Numéro de téléphone
         contact:
           name: Nom
           name_placeholder: 'ex: Bernard Dupont'
@@ -758,7 +769,7 @@ fr_BE:
           enable_subscriptions_false: "Désactivé"
           enable_subscriptions_true: "Activé"
           customer_names_in_reports: "Nom de client dans le rapport"
-          customer_names_tip: "Activer vos fourniseur pour voir les noms des client dans le rapport "
+          customer_names_tip: "Autoriser vos fourniseur à voir les noms des clients dans le rapport "
           customer_names_false: "Désactivé"
           customer_names_true: "Activé"
           shopfront_message: "Message d'accueil comptoir ouvert"
@@ -776,12 +787,16 @@ fr_BE:
               n'y a pas de cycle de vente en cours (donc quand votre comptoir est
               fermé).
           shopfront_category_ordering: "Ordre d'affichage des catégories"
+          shopfront_category_ordering_note: "(de haut en bas)"
           open_date: "Date d'ouverture"
           close_date: "Date de fermeture"
+          display_ordering_in_shopfront: "Ordre d'affichage sur le comptoir :"
           shopfront_sort_by_category: "Par catégorie"
           shopfront_sort_by_producer: "Par producteur"
           shopfront_sort_by_category_placeholder: "Catégorie"
           shopfront_sort_by_producer_placeholder: "Producteur·trice"
+          display_remaining_stock: "Affiche le stock restant d'un produit sur la boutique si le stock est faible"
+          display_remaining_stock_tip: "Permet aux acheteurs de savoir lorsqu'il reste 3 éléments (ou moins) pour un produit."
           enabled: "Activé"
           disabled: "Désactivé"
         social:
@@ -953,6 +968,7 @@ fr_BE:
         add_supplier: 'Ajouter un fournisseur'
         add_distributor: 'Ajouter un distributeur'
       advanced_settings:
+        automatic_notifications: Notifications automatiques
         automatic_notifications_tip: Envoi un email automatiquement à tous les producteurs lorsque le cycle de vente ferme.
         title: Paramétrages avancés
         choose_product_tip: Vous pouvez limiter les produits entrants et sortants à l'inventaire uniquement%{inventory}.
@@ -1051,6 +1067,7 @@ fr_BE:
       tax_rates: Par taux de taxe
       pack_by_customer: Préparation des commandes par Acheteur·euse
       pack_by_supplier: Préparation des commandes par Producteur·trice
+      pack_by_product: Préparation des commandes par produit
       orders_and_distributors:
         name: Commandes et Comptoir
         description: Liste des Commandes avec les détails des Comptoirs
@@ -1096,7 +1113,14 @@ fr_BE:
           temp_controlled: "Temp Contrôlée ?"
           price: "Prix"
       rendering_options:
+        generate_report: "Générer le rapport"
+        on_screen: "A l'écran"
+        spreadsheet: "Tableur (Excel, LibreOffice,...)"
         display: Ecran
+        summary_row: Ligne TOTAL
+        header_row: Ligne titre
+        raw_data: Données brutes
+        formatted_data: Données formatées
       packing:
         name: "Rapports de préparation des paniers"
     subscriptions:
@@ -1215,6 +1239,10 @@ fr_BE:
     already_ordered:
       cart: "panier"
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
+    terms_and_conditions:
+      link_text: "Termes et conditions"
+    all_terms_and_conditions:
+      terms_and_conditions: "Termes et conditions"
     failed: "La vente a échouée. Veuillez nous le faire savoir afin que nous puissions traiter votre commande."
   shops:
     hubs:
@@ -1340,6 +1368,8 @@ fr_BE:
   address2: Adresse (suite)
   city: Ville
   city_placeholder: 'ex: Wavre'
+  latitude_longitude_tip: La latitude et la longitude sont nécessaires pour afficher votre profil sur la carte.
+  use_geocoder: Souhaitez-vous calculer automatiquement la latitude et la longitude depuis l'adresse ?
   postcode: Code postal
   postcode_placeholder: 'ex: 1300'
   suburb: Ville
@@ -1528,6 +1558,10 @@ fr_BE:
         title: Vos informations
       billing_address:
         title: Adresse de facturation
+      terms_and_conditions:
+        link_text: "Termes et conditions"
+      all_terms_and_conditions:
+        terms_and_conditions: "Termes et conditions"
     errors:
       invalid_email: "Veuillez entrer un email valide"
   order_paid: RÉGLÉ
@@ -2215,11 +2249,14 @@ fr_BE:
   report_payment_totals: 'Total des paiements'
   report_all: 'tous'
   report_order_cycle: "Cycle de vente"
+  report_hide_columns: Colonnes à masquer
   report_enterprises: "Entreprises"
   report_enterprise_fee: "Nom des commissions "
   report_users: "gestionnaire"
   report_tax_rates: TVA par taux
   report_tax_types: TVA par type de produit/service
+  report_filters: Filtres
+  report_render_options: Mise en forme
   report_header_order_cycle: Cycle de Vente
   report_header_user: Utilisateur
   report_header_email: Email
@@ -2227,7 +2264,7 @@ fr_BE:
   report_header_comments: Commentaire
   report_header_first_name: Prénom
   report_header_last_name: Nom
-  report_header_phone: n° tel
+  report_header_phone: N° tel
   report_header_suburb: Ville
   report_header_address: Adresse
   report_header_billing_address: Adresse de facturation
@@ -2469,6 +2506,7 @@ fr_BE:
           Il y a eu un problème pour ajouter ce produit au panier. Il est peut-être
           devenu indisponible ou le magasin est en train de fermer.
     admin:
+      unit_price_tooltip: "Le prix unitaire permet aux acheteurs de comparer les prix entre les produits et/ou les conditionnements. Attention, le prix final observé par l'acheteur peut être différent si des marges et/ou commissions sont appliquées."
       enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
       modals:
         got_it: "J'ai compris"
@@ -2493,6 +2531,13 @@ fr_BE:
               En créant une règle spécifique à un tag, vous pouvez modifier le contenu
               vu par défaut (afficher ou masquer) par les acheteur·euse·s associés
               à ce tag.
+        terms_and_conditions_info:
+          title: "Mise à jour des CGU & CGV"
+          message_1: "Les CGV représentent le contrat entre vous, le vendeur, et l'acheteur. Ajouter un fichier ici permet à vos acheteurs de valider ce contrat lors de leur commande sous la forme d'une case à cocher avant la validation du paiement. Pour rappel, la mise en place de CGV est une obligation réglementaire."
+        terms_and_conditions_warning:
+          title: "Mise à jour des CGU & CGV"
+        business_address_info:
+          message: "Ces informations légales seront uniquement utilisées sur vos factures. Si vous ne renseignez pas ces champs, vos coordonnées publiques (présentes dans le menu Adresse) seront utilisées sur les factures."
       panels:
         save: Enregistrer
         saved: Enregistré
@@ -3053,6 +3098,7 @@ fr_BE:
           header:
             store: Aperçu
     admin:
+      unit_price_tooltip: "Le prix unitaire permet aux acheteurs de comparer les prix entre les produits et/ou les conditionnements. Attention, le prix final observé par l'acheteur peut être différent si des marges et/ou commissions sont appliquées."
       subscriptions:
         number: "N° commande"
       tab:
@@ -3259,6 +3305,7 @@ fr_BE:
           deactivation_warning: "La désactivation d'une méthode de payement peux faire que la méthode de payement disparait de votre liste. Alternative, vous savez cacher la méthode de payement depuis la page de payement en changeant les options de 'affichages' vers \"retour a back office seulement\""
         providers:
           provider: "Fournisseur"
+          check: "Espèces / chèques / virements / autres (sans validation automatique)"
       payments:
         source_forms:
           stripe:
@@ -3278,6 +3325,7 @@ fr_BE:
           unit_name: "Nom de l'unité"
           price: "Prix"
           unit_price: "Prix unitaire"
+          unit_price_legend: "Calcul basé sur le prix à l'unité"
           on_hand: "En stock"
           on_demand: "A volonté"
           product_description: "Description du Produit"

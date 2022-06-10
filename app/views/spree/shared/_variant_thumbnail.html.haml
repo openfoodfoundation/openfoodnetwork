@@ -1,6 +1,1 @@
-- if variant.product.images.length == 0
-  = image_tag("/noimage/mini.png")
-- else
-  - # A Rails bug makes it necessary to call `main_app.url_for` here.
-  - # https://github.com/rails/rails/issues/31325
-  = image_tag(main_app.url_for(variant.product.images.first.variant(:mini)))
+= image_tag(variant.product.images.first&.url(:mini) || "/noimage/mini.png")

@@ -27,6 +27,9 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
         1000.0:
           name: 'kL'
           system: 'metric'
+      'items':
+        1:
+          name: 'items'
 
     @variantUnitOptions: ->
       available = availableUnits.split(",")

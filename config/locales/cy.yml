@@ -3764,7 +3764,6 @@ cy:
             no_payment_via_admin_backend: Ni ellir cipio taliadau Paypal yn y Swyddfa Gefn
       products:
         image_upload_error: "Nid oedd yn bosib adnabod delwedd y cynnyrch. Lanlwythwch ddelwedd mewn fformat PNG neu JPG."
-        paperclip_image_error: "Paperclip wedi dychwelyd namau ar y ffeil %{attachment_file_name} - gwiriwch osodiad ImageMagick neu ffynhonnell y ddelwedd."
         new:
           title: "Cynnyrch Newydd"
           new_product: "Cynnyrch Newydd"

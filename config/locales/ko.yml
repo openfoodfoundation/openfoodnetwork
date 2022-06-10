@@ -1,0 +1,4039 @@
+ko:
+  language_name: "English"
+  activerecord:
+    models:
+      spree/product: 상품
+      spree/shipping_method: 배송 방법
+    attributes:
+      spree/user:
+        password: "비밀번호"
+        password_confirmation: "비밀번호 확인"
+        reset_password_token: 비밀번호 초기화
+      enterprise_fee:
+        fee_type: 지불 방식
+      spree/order:
+        payment_state: 결제 현황
+        shipment_state: 배송 현황
+        completed_at: 완료
+        number: 숫자
+        state: 주
+        email: 고객의 이메일 주소
+      spree/payment:
+        amount: 수량
+        state: 상태
+        source: 자원
+      spree/product:
+        primary_taxon: "물품 목록"
+        supplier: "공급업체"
+        shipping_category_id: "전송물품 목록"
+        variant_unit: "구성 단위 변경"
+        variant_unit_name: "변경된 구성 단위 이름"
+      spree/credit_card:
+        base: "신용카드"
+        number: "숫자"
+        month: "Month"
+        verification_value: "CVV"
+        year: "Year"
+      order_cycle:
+        orders_close_at: 만료 기간
+      variant_override:
+        count_on_hand: "대기 중"
+    errors:
+      models:
+        spree/user:
+          attributes:
+            email:
+              taken: "이 이메일 주소에 대한 계정이 이미 존재합니다.\n로그인을 하거나 비밀번호를 초기화 해주세요."
+            reset_password_token:
+              invalid: 사용 불가
+        spree/order:
+          no_card: 결제 가능한 인증된 신용 카드가 없습니다.
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "만료되었습니다."
+        order_cycle:
+          attributes:
+            orders_close_at:
+              after_orders_open_at: 제조 일자 이후여야 합니다.
+        variant_override:
+          count_on_hand:
+            using_producer_stock_settings_but_count_on_hand_set: "생산자 제고 관리를 위해 빈 칸으로 남겨야 합니다."
+            on_demand_but_count_on_hand_set: "요구 사항이 있을 경우 빈 칸으로 남겨야 합니다."
+            limited_stock_but_no_count_on_hand: "한정된 재고 사항에 따라 명시되어야 합니다."
+  errors:
+    messages:
+      content_type_invalid: "사용 불가한 컨텐츠 타입입니다."
+      file_size_out_of_range: "%{file_size}의 크기는 요구된 범위에 있지 않습니다."
+      limit_out_of_range: "총합이 범위를 넘어섭니다."
+      image_metadata_missing: "가능한 이미지 파일이 아닙니다."
+      dimension_min_inclusion: "%{width} x %{height} 픽셀보다 크거나 같아야 합니다."
+      dimension_max_inclusion: "%{width} x %{height} 픽셀보다 작거나 같아야 합니다."
+      dimension_width_inclusion: "가로의 길이가 %{min} 과 %{max} 픽셀 사이에 있지 않습니다."
+      dimension_height_inclusion: "세로이 길이가 %{min} 과%{max} 픽셀 사이에 있지 않습니다."
+      dimension_width_greater_than_or_equal_to: "가로의 길이는%{length} 픽셀보다 크거나 같아야 합니다."
+      dimension_height_greater_than_or_equal_to: "세로의 길이는 %{length} 픽셀보다 크거나 같아야 합니다."
+      dimension_width_less_than_or_equal_to: "가로의 길이는 %{length} 픽셀보다 작거나 같아야 합니다."
+      dimension_height_less_than_or_equal_to: "세로의 길이는 %{length} 픽셀보다 작거나 같아야 합니다."
+      dimension_width_equal_to: "가로의 길이는 %{length} 픽셀이어야 합니다."
+      dimension_height_equal_to: "세로의 길이는 %{length} 픽셀이어야 합니다."
+      aspect_ratio_not_square: "정사각형 형태의 사진이어야 합니다."
+      aspect_ratio_not_portrait: "세로로 찍은 사진이어야 합니다."
+      aspect_ratio_not_landscape: "가로로 찍은 사진이어야 합니다."
+      aspect_ratio_is_not: "화면 비율이 %{aspect_ratio} 이어야 합니다."
+      aspect_ratio_unknown: "알 수 없는 화면 비율 입니다."
+  stripe:
+    error_code:
+      incorrect_number: "카드 숫자가 맞지 않습니다."
+      invalid_number: "카드 숫자가 사용 가능한 신용 카드 숫자가 아닙니다."
+      invalid_expiry_month: "카드의 만료기간 중 month가 맞지 않습니다."
+      invalid_expiry_year: "카드의 만료기간 중 year이 맞지 않습니다."
+      invalid_cvc: "카드의 보안 코드가 확인 불가합니다."
+      expired_card: "카드가 만료되었습니다."
+      incorrect_cvc: "카드의 보안 코드가 맞지 않습니다."
+      incorrect_zip: "카드의 zip code를 확인하는데 실패하였습니다."
+      card_declined: "카드가 반려되었습니다"
+      missing: "구매자에게 충전된 카드가 존재하지 않습니다."
+      processing_error: "카드를 사용하는 도중 에러가 발생했습니다."
+      rate_limit: "API에 도달하는 요청이 너무 빠름에 따라 에러가 발생했습니다. 이런 문제가 지속해서 발생할 경우 저희에게 알려주십시오."
+      authentication_required: "거래하는데 인증이 필요함에 따라 카드가 반려되었습니다."
+      approve_with_id: "지불 방식이 인증되지 않았습니다."
+      call_issuer: "알 수 없는 이유로 카드가 반려되었습니다."
+      card_not_supported: "이 타입의 구매의 경우 카드가 지원되지 않습니다."
+      card_velocity_exceeded: "고객님의 계좌 잔고나 카드의 신용 한도를 초과합니다."
+      currency_not_supported: "이 카드는 지정된 통화를 제공하지 않습니다."
+      do_not_honor: "알 수 없는 이유로 카드가 반려되었습니다."
+      do_not_try_again: "알 수 없는 이유로 카드가 반려되었습니다."
+      duplicate_transaction: "동일 금액의 거래와 신용 카드 정보가 최근에 제출되었습니다."
+      fraudulent: "Stripe 결제 중 사기로 의심되는 측면으로 인하여 결제가 반려되었습니다."
+      generic_decline: "알 수 없는 이유로 카드가 반려되었습니다."
+      incorrect_pin: "등록하신 PIN 넘버가 맞지 않습니다. 이 반려 코드는 카드 리더기로 결제할 때만 발생합니다."
+      insufficient_funds: "카드 잔고 부족으로 결제가 불가능합니다."
+      invalid_account: "계좌에 연결된 카드 또는 카드가 맞지 않습니다."
+      invalid_amount: "요구하신 결제 수량이 불가능하거나, 허용된 결제 수량을 초과했습니다."
+      invalid_pin: "등록하신 PIN 넘버가 맞지 않습니다. 이 반려 코드는 카드 리더기로 결제할 때만 발생합니다."
+      issuer_not_available: "카드 발급사에 접근할 수 없습니다. 이에 결제 방식이 인증될 수 없습니다."
+      lost_card: "카드의 기록이 분실됨에 따라 결제가 반려되었습니다"
+      merchant_blacklist: "Stripe 사용자 정보가 차단 리스트 안에 존재함에 따라 결제가 반려되었습니다."
+      new_account_information_available: "계좌에 연결된 카드 또는 카드가 맞지 않습니다."
+      no_action_taken: "알 수 없는 이유로 카드가 반려되었습니다."
+      not_permitted: "허용되지 않은 결제 방법입니다."
+      offline_pin_required: "카드의 PIN 넘버를 필요로 하므로 반려되었습니다."
+      online_or_offline_pin_required: "카드의 PIN 넘버를 필요로 하므로 반려되었습니다."
+      pickup_card: "이 카드는 이 결제를 위해 사용될 수 없습니다.(분실되거나 빼앗겼을 가능성이 있습니다.)"
+      pin_try_exceeded: "PIN 넘버 시도 횟수를 초과하였습니다."
+      reenter_transaction: "알 수 없는 이유로 발급사에 의하여 결제가 불가능합니다."
+      restricted_card: "이 카드는 이 결제를 위해 사용될 수 없습니다.(분실되거나 빼앗겼을 가능성이 있습니다.)"
+      revocation_of_all_authorizations: "알 수 없는 이유로 카드가 반려되었습니다."
+      revocation_of_authorization: "알 수 없는 이유로 카드가 반려되었습니다."
+      security_violation: "알 수 없는 이유로 카드가 반려되었습니다."
+      service_not_allowed: "알 수 없는 이유로 카드가 반려되었습니다."
+      stolen_card: "분실된 카드 접수 기록으로 인하여 결제가 취소되었습니다."
+      stop_payment_order: "알 수 없는 이유로 카드가 반려되었습니다."
+      testmode_decline: "Stripe의 테스트 카드 번호가 이미 사용되었습니다."
+      transaction_not_allowed: "알 수 없는 이유로 카드가 반려되었습니다."
+      try_again_later: "알 수 없는 이유로 카드가 반려되었습니다."
+      withdrawal_count_limit_exceeded: "고객님의 계좌 잔고나 카드의 신용 한도를 초과합니다."
+  activemodel:
+    errors:
+      messages:
+        inclusion: "리스트에 포함되지 않습니다."
+      models:
+        order_management/subscriptions/validator:
+          attributes:
+            subscription_line_items:
+              at_least_one_product: "적어도 한 개 이상의 상품을 추가해 주세요."
+              not_available: "선택된 스케줄에 %{name}가 존재하지 않습니다."
+            ends_at:
+              after_begins_at: "시간으로 시작되어야 합니다."
+            customer:
+              does_not_belong_to_shop: "%{shop}에 속하지 않습니다."
+            schedule:
+              not_coordinated_by_shop: "%{shop}과 협력하지 않습니다."
+            payment_method:
+              not_available_to_shop: "%{shop}은 사용할 수 없습니다."
+              invalid_type: "현금 또는 Stripe 결제 방식이어야 합니다."
+              charges_not_allowed: "이 고객에게는 신용 카드 결제가 허락되지 않습니다."
+              no_default_card: "이 고객에게는 사용가능한 기본 신용 카드가 존재하지 않습니다."
+            shipping_method:
+              not_available_to_shop: "%{shop}은 사용할 수 없습니다."
+  card_details: "카드 세부사항"
+  card_type: "카드 타입"
+  cardholder_name: "카드 소지자 이름"
+  community_forum_url: "커뮤니티 포럼 URL 주소"
+  customer_instructions: "고객 소개"
+  devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "사용자 비밀번호는 빈 칸으로 둘 수 없습니다. 비밀번호를 입력하세요."
+    confirmations:
+      send_instructions: "당신은 몇 분 안에 계정을 확인하는 이메일을 전달받을 것입니다."
+      failed_to_send: "확인 이메일이 전달하는 동안 문제가 발생하였습니다."
+      resend_confirmation_email: "확인 이메일 재전송"
+      confirmed: "이메일로 확인해 주셔서 감사합니다! 이제 로그인을 할 수 있습니다."
+      not_confirmed: "당신의 이메일 주소가 사용될 수 없습니다. 이미 이 단계를 완료하지 않으셨나요?"
+    user_confirmations:
+      spree_user:
+        send_instructions: "당신은 몇 분 안에 계정을 확인하는 이메일을 전달받을 것입니다."
+        confirmation_sent: "확인 이메일 전송"
+        confirmation_not_sent: "확인 이메일 전송 중 오류 발생"
+    user_registrations:
+      spree_user:
+        signed_up_but_unconfirmed: "당신 이메일 주소로 확인 링크가 담겨진 메세지를 보냈습니다. 링크를 열어 당신의 계정을 활성화 하세요."
+        unknown_error: "계정 생성 도중 문제가 발생하였습니다. 이메일 주소를 확인하고 다시 시도하십시오."
+    failure:
+      invalid: |
+          접근 불가한 이메일과 비밀번호 입니다.
+          혹시 게스트로 방문하셨나요? 만약 그렇다면 새 계정을 생성하거나 비밀번호를 초기화 해주세요.
+      unconfirmed: "진행하기 전에 당신의 계정을 확인해야 합니다."
+      already_registered: "이 이메일 주소는 이미 등록되어있습니다. 계속해서 로그인을 하시거나, 돌아와서 다른 이메일 주소를 사용해 주세요."
+    success:
+      logged_in_succesfully: "로그인 성공"
+    sessions:
+      signed_out: "로그아웃 성공"
+      already_signed_out: "로그아웃 성공"
+    user_passwords:
+      spree_user:
+        updated_not_active: "당신의 비밀번호가 초기화 되었지만, 당신의 이메일은 확인되지 않았습니다."
+        updated: "당신의 비밀번호가 성공적으로 변경되었습니다. 로그인을 해주세요."
+        send_instructions: "당신에게 계좌를 짧은 시간 안에 확인하는 방법이 담긴 이메일을 전달할 것 입니다."
+  home_page_alert_html: "홈페이지 알림 HTML"
+  hub_signup_case_studies_html: "허브 가입 사례 연구 HTML"
+  hub_signup_detail_html: "허브 가입 세부사항 HTML"
+  hub_signup_pricing_table_html: "허브 가입 가격표 HTML"
+  group_signup_case_studies_html: "모임 가입 사례 연구 HTML"
+  group_signup_detail_html: "모임 가입 세부사항 HTML"
+  group_signup_pricing_table_html: "모임 가입 가격표 HTML"
+  item_description: "항목 설명"
+  menu_1_icon_name: "메뉴 1번 아이콘 이름"
+  menu_2_icon_name: "메뉴 2번 아이콘 이름"
+  menu_3_icon_name: "메뉴 3번 아이콘 이름"
+  menu_4_icon_name: "메뉴 4번 아이콘 이름"
+  menu_5_icon_name: "메뉴 5번 아이콘 이름"
+  menu_6_icon_name: "메뉴 6번 아이콘 이름"
+  menu_7_icon_name: "메뉴 7번 아이콘 이름"
+  models:
+    order_cycle:
+      cloned_order_cycle_name: "%{order_cycle} 복사본"
+    tax_rate:
+      included_in_price: "가격에 포함되어있음"
+  open_street_map_enabled: "Open Street Map 사용 가능"
+  open_street_map_default_latitude: "Open Street Map 기본 위도"
+  open_street_map_default_longitude: "Open Street Map 기본 경도"
+  open_street_map_provider_name: "Open Street Map 제공자 이름"
+  open_street_map_provider_options: "Open Street Map 제공자 옵션"
+  producer_signup_case_studies_html: "생산자 가입 사례 연구들 HTML"
+  producer_signup_detail_html: "생산자 가입 세부 사항 HTML"
+  producer_signup_pricing_table_html: "생산자 가입 가격표 HTML"
+  producers_social: "생산자 사회보장"
+  resume_order: "이력서 주문"
+  sku: "재고 관리 단위"
+  subtotal: "소계(小計)"
+  tax_rate: "세율"
+  validators:
+    date_time_string_validator:
+      not_string_error: "문자 형태여야 합니다."
+      invalid_format_error: "유효한 상태여야 합니다."
+    integer_array_validator:
+      not_array_error: "배열 형태여야 합니다."
+      invalid_element_error: "허용되는 숫자 형태만을 포함해야 합니다."
+  enterprise_mailer:
+    confirmation_instructions:
+      subject: "%{enterprise}의 이메일 주소를 확인해 주세요."
+    welcome:
+      subject: "%{enterprise}는 이제 %{sitename}라는 사이트 이름을 갖게 되었습니다."
+      email_welcome: "환영합니다."
+      email_registered: "이제 일부 중 하나 입니다."
+      email_userguide_html: "당신의 생산자 또는 허브를 세팅하는데 도와줄 세부 사항들에 대한 사용자 가이드를 원하신다면 %{link}을 클릭해 주세요."
+      userguide: "Open Food Network 사용자 가이드"
+      email_admin_html: "당신은 %{link}로 로그인하거나, 홈페이지 우측 상단에 있는 톱니바퀴를 누르고 Administration을 선택하면서 당신의 계정을 관리할 수 있습니다."
+      admin_panel: "관리자 패널"
+      email_community_html: "우리는 또한 OFN software과 음식 회사 운영에 대한 기발한 시도들이 연관되어 있는 커뮤니티 토론을 위한 온라인 포럼을 개최하고 있습니다. 당신이 참가했으면 좋겠군요. 우리는 계속해서 진보하고 있으며 포럼에 들어갈 당신의 의견은 다음에 일어날 일들을 형성시킬 것입니다. %{link}"
+      join_community: "커뮤니티에 참여하세요"
+    invite_manager:
+      subject: "%{enterprise}가 당신을 매니저로 초대합니다."
+  producer_mailer:
+    order_cycle:
+      subject: "%{producer}의 주문 사이클 기록"
+  provider_settings: "제공자 설정"
+  shipment_mailer:
+    shipped_email:
+      dear_customer: "고객님 에게,"
+      instructions: "당신의 주문은 방금 전송되기 시작했습니다."
+      shipment_summary: "전송 요약"
+      subject: "전송 통지서"
+      thanks: "당신의 사업에 대해 감사를 표합니다."
+      track_information: "추적 정보: %{tracking}"
+      track_link: "추적 링크 : %{url}"
+  subscription_mailer:
+    placement_summary_email:
+      subject: 최근에 적합한 정기 구독 주문들에 대한 요약
+      greeting: "안녕하세요 %{name}님,"
+      intro: "아래 내역은 %{shop}에 적합한 구독 주문들에 대한 요약입니다."
+    confirmation_summary_email:
+      subject: 최근 확인된 구독 주문들에 대한 요약
+      greeting: "안녕하세요 %{name}님,"
+      intro: "아래 내역은 %{shop}에 최종 결정된 구독 주문들에 대한 요약입니다."
+    summary_overview:
+      total: '%{count}개의 구독들이 자동 처리로 표기되었습니다.'
+      success_zero: 이들 중, 성공적으로 진행된 것은 없습니다.
+      success_some: 이들 중, %{count}개가 성공적으로 진행되었습니다.
+      success_all: 모든 것들이 성공적으로 진행되었습니다.
+      issues: 발생한 문제에 대한 자세한 내용은 다음과 같습니다.
+    summary_detail:
+      no_message_provided: 에러 메세지가 없습니다.
+      changes:
+        title: 재고 부족(%{count}개의 주문)
+        explainer: 이 주문은 처리되었지만 일부 요청된 품목에 대해 재고가 부족합니다.
+      empty:
+        title: 재고 없음(%{count}개 주문 )
+        explainer: 요청한 품목에 사용할 수 있는 재고가 없기 때문에 이 주문을 처리할 수 없습니다.
+      complete:
+        title: 이미 처리됨(%{count}개 주문)
+        explainer: 이 주문들은 이미 완료된 것으로 표시되었기에 건드리지 않은 채로 남겨졌습니다.
+      processing:
+        title: 오류 발생(%{count}개 주문)
+        explainer: 오류로 인해 이러한 주문을 자동으로 처리하지 못했습니다. 가능한 경우 오류가 나열됩니다.
+      failed_payment:
+        title: 결제 실패(%{count} 주문들)
+        explainer: 오류로 인해 이 주문에 대한 결제가 자동으로 처리되지 못했습니다. 가능한 경우 오류가 나열됩니다.
+      other:
+        title: 다른 실패(%{count} 주문들)
+        explainer: 알 수 없는 이유로 이 주문을 자동으로 처리하지 못했습니다. 이런 일이 일어나면 안 되기에, 이런 일이 보이면 저희에게 연락하세요.
+  home: "OFN"
+  title: "Open Food Network"
+  welcome_to: "오신 것을 환영합니다"
+  site_meta_description: "우리는 땅에서부터 시작합니다. 농부들의 진실되고 자랑스러운 이야기와 함께. 유통업체들의 공정하고 정직한 유대와 함께. 소비자들의 더 좋은 물건 선택에 대한 믿음과 함께..."
+  search_by_name: 이름 또는 일부를 이용해서 검색...
+  producers_join: 호주 생산자들은 Open Food Network에 가입하는 것을 환영하고 있습니다.
+  charges_sales_tax: 부가가치세를 부과하실겁니까?
+  business_address: "사업자 주소"
+  enterprise_permissions: "회사 권한"
+  print_invoice: "청구서 출력"
+  print_ticket: "티켓 출력"
+  select_ticket_printer: "티켓을 출력할 프린터를 선택하세요"
+  send_invoice: "청구서 전송"
+  resend_confirmation: "확인서 재전송"
+  view_order: "주문 보기"
+  edit_order: "주문 편집"
+  ship_order: "주문 출하"
+  cancel_order: "주문 취소"
+  confirm_send_invoice: "이 주문에 대한 청구서가 고객님께 보내질 예정입니다. 계속해서 진행하시겠습니까?"
+  confirm_resend_order_confirmation: "주문 확인 이메일을 재전송하기를 원하시는 것이 확실합니까?"
+  must_have_valid_business_number: "%{enterprise_name}는 청구서가 보내기 전에 사용가능한 호주 사업 번호를 가져야 합니다. "
+  invoice: "청구서"
+  more: "추가 정보"
+  say_no: "아니오"
+  say_yes: "예"
+  ongoing: 진행중
+  bill_address: 청구서 발송지
+  ship_address: 배송지 주소
+  sort_order_cycles_on_shopfront_by: "매장 내 주문 주기 정렬 기준"
+  required_fields: 필수 필드는 별도로 표기됩니다.
+  select_continue: 선택 후 계속
+  remove: 제거
+  collapse_all: 모두 축소
+  expand_all: 모두 확대
+  loading: 로딩 중...
+  show_more: 더 보기
+  show_all: 모두 보기
+  show_all_with_more: "모두 보기(%{num}개 더)"
+  cancel: 취소
+  edit: 편집
+  clone: 복사
+  distributors: 유통업체
+  bulk_order_management: 대량 주문 관리
+  enterprises: 회사
+  enterprise_groups: 그룹
+  reports: 보고서
+  listing_reports: 상장 보고서
+  variant_overrides: 물품 목록
+  import: 수입
+  spree_products: 사치품목
+  all: 모두
+  current: 현재
+  available: 사용가능
+  dashboard: 대쉬보드
+  undefined: 정의되지 않음
+  unused: 사용되지 않음
+  admin_and_handling: 관리 및 처리
+  profile: 프로필
+  supplier_only: 공급업체 전용
+  has_shopfront: 상점 존재
+  weight: 무게
+  volume: 크기
+  items: 항목
+  summary: 요약
+  detailed: 세부 사항
+  updated: 업데이트 완료
+  'yes': "예"
+  'no': "아니오"
+  y: 'Y'
+  n: 'N'
+  powered_by: 제작자
+  blocked_cookies_alert: "당신의 브라우저가 이 상점을 사용하는데 필요한 쿠키를 차단하고 있을 수 있습니다. 쿠키를 허용하고 페이지를 다시 로드하려면 아래를 클릭하십시오."
+  allow_cookies: "쿠키 허용"
+  notes: 기록
+  error: 오류
+  processing_payment: "결제가 진행 중입니다..."
+  no_pending_payments: "미지금급"
+  invalid_payment_state: "잘못된 결제 상태 : %{state}"
+  filter_results: 필터링 결과
+  clear_filters: 필터 제거
+  quantity: 수량
+  pick_up: 선택
+  copy: 복사
+  change_my_password: "비밀번호 교체"
+  update_password: "비밀번호 갱신"
+  password_confirmation: 비밀번호 확인
+  reset_password_token: 비밀번호 초기화
+  expired: 만료되었습니다. 새로 요청하세요.
+  back_to_payments_list: "결제 리스트로 돌아가기"
+  maestro_or_solo_cards: "마스터/전용 카드"
+  backordered: "일시 품절됨"
+  on hand: "대기 중"
+  ship: "출하"
+  shipping_category: "전송물품 목록"
+  height: "높이"
+  width: "너비"
+  depth: "깊이"
+  payment_could_not_process: "결제를 처리할 수 없습니다."
+  payment_could_not_complete: "결제를 완료할 수 없습니다."
+  actions:
+    create_and_add_another: "추가 및 생성"
+    create: "생성"
+    cancel: "취소"
+    resume: "계속"
+    save: "저장"
+    edit: "편집"
+    update: "업데이트"
+    delete: "삭제"
+    add: "추가"
+    cut: "잘라내기"
+    paste: "붙여넣기"
+    destroy: "제거"
+    rename: "개명"
+  admin:
+    adjustments:
+      skipped_changing_canceled_order: "취소된 명령을 바꿀 수 없습니다."
+    begins_at: 시작 시간
+    begins_on: 시작 날
+    bill_address: "어음 주소"
+    ship_address: "발송 주소"
+    customer: 고객
+    date: 날짜
+    email: 이메일
+    ends_at: 끝나는 시간
+    ends_on: 끝나는 날짜
+    name: 이름
+    first_name: 이름
+    last_name: 성
+    on_hand: 대기 중
+    on_demand: 수요로 함
+    on_demand?: 필요하신가요?
+    order_cycle: 주문 주기
+    payment: 결제
+    payment_method: 결제 방식
+    phone: 전화번호
+    price: 가격
+    producer: 제공자
+    image: 사진
+    product: 생산물
+    quantity: 수량
+    schedule: 스케줄
+    shipping: 배송
+    shipping_method: 배송 방법
+    shop: 쇼핑
+    sku: 재고 관리 단위
+    status_state: 상태
+    tags: 태그
+    variant: 변경
+    weight: 무게
+    volume: 크기
+    items: 항목
+    select_all: 모두 선택
+    quick_search: 빠른 검색
+    clear_all: 모두 지우기
+    start_date: "시작 날짜"
+    end_date: "종료 날짜"
+    form_invalid: "양식에 누락되거나 잘못된 필드가 있습니다."
+    clear_filters: 필터 지우기
+    clear: 지우기
+    save: 저장
+    cancel: 취소
+    back: 뒤로
+    show_more: 더 보기
+    show_n_more: '%{num}를 더 보기'
+    choose: "선택..."
+    please_select: 선택 해주세요...
+    column_save_as_default: 기본값으로 설정
+    columns: 열
+    actions: 사용자 응용
+    viewing: "보기 : %{current_view_name}"
+    description: 설명
+    whats_this: 무엇 인가요?
+    tag_has_rules: "이 태그에 대한 기본 규칙 : %{num}"
+    has_one_rule: "한 가지 규칙 있음"
+    has_n_rules: "%{num}개의 규칙 있음"
+    unsaved_confirm_leave: "이 페이지에 대한 변경사항이 저장되지 않았습니다. 저장하지 않고 진행할까요?"
+    unsaved_changes: "저장되지 않은 변경이 있습니다."
+    available_units: "사용 가능 단위"
+    shopfront_settings:
+      embedded_shopfront_settings: "내부 매장 설정"
+      enable_embedded_shopfronts: "사용 가능한 내부 매장"
+      embedded_shopfronts_whitelist: "외부 도메인 화이트리스트"
+    terms_of_service_files:
+      create:
+        select_file: "먼저 파일 선택을 해주세요."
+      show:
+        title: "서비스 약관 파일"
+        no_files: "아직 업로드된 서비스 약관이 없습니다."
+        using_default_terms_html: "사이트가 현재 이전 %{tos_link} 사이트에 링크되어 있습니다."
+        current_terms_html: "현재 %{tos_link} 사이트 보기. 업로드 시간 : %{datetime}"
+        terms_of_service: "서비스 약관"
+        delete: "파일 삭제"
+        confirm_delete: "현재 서비스 약관 파일을 삭제하시겠습니까?"
+    number_localization:
+      number_localization_settings: "번호 현지화 설정"
+      enable_localized_number: "국제 천자리 단위, 소수 구분 기호 논리 사용"
+    invoice_settings:
+      edit:
+        title: "청구서 설정"
+        enable_invoices?: "청구서를 사용하시겠습니까?"
+        invoice_style2?: "비율별 총 세금 내역 및 품목별 세율 정보를 포함하는 대체 송장 모델을 사용해 주세요. (세금을 제외한 가격을 표시하는 국가에는 아직 적합하지 않음)"
+        enable_receipt_printing?: "열 프린터를 사용하여 영수증을 인쇄하는 옵션을 드롭다운 순서대로 표시하시겠습니까?"
+    stripe_connect_settings:
+      edit:
+        title: "Stripe Connect"
+        settings: "설정"
+        stripe_connect_enabled: 상점들이 Stripe Connect를 사용하여 결제를 수락할 수 있습니까?
+        no_api_key_msg: 이 회사에 대한 Stripe 계정이 존재하지 않습니다.
+        configuration_explanation_html: 'Stripe Connect 통합 서비스에 대해 좀 더 알고 싶다면 <a href=''https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance'' target=''_blank''>이 가이드를 </a> 참고하세요. '
+        status: 상태
+        ok: 확인
+        instance_secret_key: 인스턴스 암호 키
+        account_id: ID 계정
+        business_name: 사업자명
+        charges_enabled: 충전 사용 가능
+        charges_enabled_warning: "경고 : 계정에 대한 요금제가 활성화되지 않았습니다"
+        auth_fail_error: 제공하신 API 키가 맞지 않습니다.
+        empty_api_key_error_html: Stripe API 키가 제공되지 않았습니다.  당신의 API 키를 설정하기 위해, <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">이 지침들</a>을 따라주세요.
+    matomo_settings:
+      edit:
+        title: "Matomo 설정"
+        matomo_url: "Matomo URL"
+        matomo_site_id: "Matomo 사이트 ID"
+        matomo_tag_manager_url: "Matomo 태그 관리자 URL"
+        info_html: "Matomo는 웹, 모바일 분석 어플리케이션 입니다. Matomo를 사내에서 호스팅하거나 클라우드 호스팅 서비스를 사용할 수 있습니다. 좀 더 알고 싶다면 <a href='http://matomo.org' target='_blank'>matomo.org</a>를 참고하세요."
+        config_instructions_html: "여기서 OFN Matomo 통합을 구성할 수 있습니다. 아래 Matomo URL은 사용자 추적 정보가 전송될 Matomo 인스턴스를 가리켜야 합니다. 만약 비워 두신다면, Matomo 사용자 추적이 비활성화됩니다.사이트 ID 필드는 필수 항목은 아니지만 단일 Matomo 인스턴스에서 둘 이상의 웹 사이트를 추적하는 경우 유용합니다. Matomo 인스턴스 콘솔에서 찾을 수 있습니다."
+        config_instructions_tag_manager_html: "Matomo 태그 관리자 URL을 설정하면 Matomo 태그 관리자가 활성화됩니다. 이 도구를 사용하여 분석 이벤트를 설정할 수 있습니다. Matomo 태그 관리자 URL은 Matomo 태그 관리자의 설치 코드 섹션에서 복사됩니다. 이러한 옵션은 URL을 변경하므로 올바른 컨테이너 및 환경을 선택해야 합니다."
+    customers:
+      index:
+        new_customer: "새로오신 손님"
+        code: 코드
+        duplicate_code: "이 코드는 이미 사용되고 있습니다."
+        bill_address: "청구서 발송지"
+        ship_address: "배송지 주소"
+        balance: "잔고"
+        update_address_success: "주소가 업데이트되었습니다."
+        update_address_error: "죄송합니다! 필수 필드를 모두 입력해주세요!"
+        edit_bill_address: "청구 주소 편집"
+        edit_ship_address: "배송 주소 편집"
+        required_fileds: "필수 필드는 별표로 표시됩니다."
+        select_country: "국가 선택"
+        select_state: "주 선택"
+        edit: "편집"
+        update_address: "주소 업데이트"
+        confirm_delete: "삭제하시겠습니까?"
+        search_by_email: "이메일/코드별 검색..."
+        guest_label: "게스트 체크아웃"
+        credit_owed: "외상값"
+        balance_due: "잔액 만기"
+      destroy:
+        has_associated_orders: "삭제 실패: 고객님께서 자신의 상점과 주문을 연결했습니다."
+    contents:
+      edit:
+        title: 콘텐트
+        header: 헤더
+        home_page: 홈페이지
+        producer_signup_page: 생산자 등록 페이지
+        hub_signup_page: 허브 등록 페이지
+        group_signup_page: 그룹 등록 페이지
+        main_links: 메인 메뉴 링크
+        footer_and_external_links: 바닥글 및 외부 링크
+        your_content: 당신의 콘텐트
+        user_guide: 사용자 가이드
+        map: 지도
+    enterprise_fees:
+      index:
+        title: "회사 수수료"
+        enterprise: "회사"
+        fee_type: "지불 방식"
+        name: "이름"
+        tax_category: "세금 목록"
+        calculator: "계산기"
+        calculator_values: "계산 결과"
+        search: "탐색"
+        name_placeholder: "예시. 포장비"
+    enterprise_groups:
+      index:
+        new_button: 새로운 회사 그룹
+    enterprise_roles:
+      form:
+        manages: 관리
+      enterprise_role:
+        manages: 관리
+    products:
+      unit_name_placeholder: '예시.  한 묶음'
+      index:
+        unit: 단위
+        display_as: 다른 이름으로 표시
+        category: 목록
+        tax_category: 세금 목록
+        inherits_properties?: 속성을 상속하시겠습니까?
+        available_on: 사용 가능 날짜
+        av_on: "사용 가능 날짜"
+        import_date: 수입품
+        upload_an_image: 이미지 파일을 올리세요
+      seo:
+        product_search_keywords: "제품 검색 키워드"
+        product_search_tip: "매장에서 제품을 검색하는 데 도움이 되는 단어를 입력하십시오. 각 키워드를 구분하려면 공백을 사용합니다."
+        SEO_keywords: "SEO 키워드"
+        seo_tip: "웹에서 제품을 검색하는 데 도움이 되는 단어를 입력하십시오. 각 키워드를 구분하려면 공백을 사용합니다."
+      search: "탐색"
+      properties:
+        property_name: "속성 이름"
+        inherited_property: "적용된 속성"
+      variants:
+        infinity: "무한성"
+        to_order_tip: "주문 제작 품목은 갓 주문한 빵 덩어리와 같이 정해진 재고 수준이 없습니다."
+      back_to_products_list: "제품 목록으로 돌아가기"
+      editing_product: "제품 편집"
+      tabs:
+        product_details: "상품 세부사항"
+        group_buy_options: "단체 구매 옵션"
+        images: "사진"
+        variants: "변경사항"
+        product_properties: "제품 속성"
+    product_import:
+      title: 제품 가져오기
+      file_not_found: 파일을 찾을 수 없거나 열 수 없습니다.
+      no_data: 스프레드시트에서 데이터를 찾을 수 없습니다.
+      confirm_reset: "업로드된 파일에 없는 회사에 대한 모든 제품의 재고 수준을 0으로 설정합니다."
+      model:
+        no_file: "에러: 업로드된 파일이 없습니다."
+        could_not_process: "파일을 처리할 수 없습니다. : 잘못된 파일 형식"
+        incorrect_value: 부정확한 값입니다.
+        conditional_blank: 단위 형태가 비어있으면 빈 칸으로 둘 수 없습니다.
+        no_product: 데이터베이스에 있는 어떤 제품도 일치하지 않습니다.
+        not_found: 데이터베이스에서 찾을 수 없습니다.
+        not_updatable: '''제품 가져오기'' 를 통해 기존 제품을 업데이트할 수 없습니다.'
+        blank: 빈칸이 될 수 없습니다.
+        products_no_permission: 이 기업의 제품을 관리할 수 있는 권한이 없습니다.
+        inventory_no_permission: 이 생산자에 대한 인벤토리를 생성할 권한이 없습니다.
+        none_saved: 제품을 저장하지 않았습니다.
+        line_number: "%{number}번째 줄:"
+        encoding_error: "소스 파일의 언어 설정을 확인하고 UTF-8 인코딩으로 저장되었는지 확인하십시오."
+        unexpected_error: "파일을 여는 동안 제품 가져오기 오류가 발생했습니다. :  %{error_message}"
+        malformed_csv: "제품 가져오기에서 잘못된 CSV가 발생했습니다 : %{error_message}"
+      index:
+        notice: "공지사항"
+        beta_notice: "이 기능은 아직 베타 버전입니다. 사용하는 동안 일부 오류가 발생할 수 있습니다. 주저하지 말고 지원부에 문의하십시오."
+        select_file: 업로드할 스프레드시트 선택
+        spreadsheet: 스프레드시트
+        choose_import_type: 가져오기 유형 선택
+        import_into: 유형 가져오기
+        product_list: 제품 목록
+        inventories: 인벤토리
+        import: 수입
+        upload: 업로드
+        csv_templates: CSV 템플릿
+        product_list_template: 제품 목록 템플릿 다운로드
+        inventory_template: 인벤토리 템플릿 다운로드
+        category_values: 사용 가능한 카테고리 값
+        product_categories: 제품 카테고리
+        tax_categories: 세금 카테고리
+        shipping_categories: 배송 카테고리
+      import:
+        review: 리뷰
+        import: 수입
+        save: 저장
+        results: 결과
+        save_imported: 가져온 제품 저장
+        no_valid_entries: 올바른 항목을 찾을 수 없습니다.
+        none_to_save: 저장할 수 있는 항목이 없습니다.
+        some_invalid_entries: 가져온 파일에 잘못된 항목이 있습니다.
+        fix_before_import: 이 오류를 수정하고 파일을 다시 가져오십시오.
+        save_valid?: 현재 유효한 항목을 저장하고 다른 항목을 삭제하시겠습니까?
+        no_errors: 검색된 오류가 없습니다!
+        save_all_imported?: 가져온 제품을 모두 저장하시겠습니까?
+        options_and_defaults: 가져오기 옵션 및 기본값
+        no_permission: 이 기업을 관리할 수 있는 권한이 없습니다.
+        not_found: 데이터베이스 내에서 회사를 찾을 수 없습니다.
+        no_name: 이름 없음
+        blank_enterprise: 일부 제품이 회사가 정의되지 않았습니다.
+        reset_absent?: 없는 제품 재설정하기
+        reset_absent_tip: 파일에 없는 모든 기존 제품에 대해 재고를 0으로 설정하기
+        overwrite_all: 모두 덮어쓰기
+        overwrite_empty: 비어 있는 경우 덮어쓰기
+        default_stock: 재고 수준 설정
+        default_tax_cat: 세금 카테고리 설정
+        default_shipping_cat: 발송 카테고리 설정
+        default_available_date: 사용 가능한 날짜 설정
+        validation_overview: 유효성 검사 개요 가져오기
+        entries_found: 가져온 파일에 있는 항목
+        entries_with_errors: 항목에 오류가 있어 가져올 수 없습니다.
+        products_to_create: 제품 항목이 생성됩니다.
+        products_to_update: 제품 항목이 업데이트됩니다.
+        inventory_to_create: 인벤토리 항목이 생성됩니다.
+        inventory_to_update: 인벤토리 항목이 업데이트됩니다.
+        products_to_reset: 기존 제품은 재고가 0으로 재설정됩니다.
+        inventory_to_reset: 기존 인벤토리는 재고가 0으로 재설정됩니다.
+        line: 라인
+        item_line: 항목 라인
+      import_review:
+        not_updatable_tip: "다음 필드가 기존 제품의 대량 가져오기에 의한 업데이트를 할 수 없습니다."
+        fields_ignored: 가져온 제품이 저장될 때 이 필드는 무시됩니다.
+      entries_table:
+        not_updatable: 이 필드는 기존 제품의 대량 가져오기를 통해 업데이트할 수 없습니다.
+      save_results:
+        final_results: 최종 결과 가져오기
+        products_created: 생성된 제품
+        products_updated: 업데이트된 제품
+        inventory_created: 인벤토리 항목 생성
+        inventory_updated: 인벤토리 항목 업데이트
+        products_reset: 제품의 재고 수준을 0으로 재설정했습니다.
+        inventory_reset: 인벤토리 항목의 재고 수준을 0으로 재설정했습니다.
+        all_saved: "모든 항목이 성공적으로 저장됨"
+        some_saved: "성공적으로 저장된 항목"
+        save_errors: 저장 오류
+        import_again: 다른 파일 업로드
+        view_products: 제품 페이지로 이동
+        view_inventory: 인벤토리 페이지로 이동
+      product_headings:
+        producer: 제공자
+        sku: 재고 관리 단위
+        name: 이름
+        display_name: 이름 표시
+        category: 목록
+        description: 설명
+        units: 단위
+        unit_type: 단위 타입
+        variant_unit_name: 변경된 구성 단위 이름
+        price: 가격
+        on_hand: 대기 중
+        on_demand: 수요로 함
+        shipping_category: 전송물품 목록
+        tax_category: 세금 목록
+    variant_overrides:
+      loading_flash:
+        loading_inventory: 인벤토리 로딩 중
+      index:
+        title: 물품 목록
+        description: 이 페이지에서는 기업의 인벤토리를 관리합니다. 여기에 설정된 모든 제품 세부 정보는 '제품' 페이지에 설정된 정보보다 우선합니다.
+        enable_reset?: 재고를 재설정하시겠습니까?
+        default_stock: "기본 재고"
+        inherit?: 계속하시겠습니까?
+        add: 추가
+        hide: 숨기기
+        import_date: 수입품
+        select_a_shop: 상점 선택
+        review_now: 지금 검토
+        new_products_alert_message: 재고에 추가할 수 있는 신제품이 %{new_product_count}개 있습니다.
+        currently_empty: 현재 인벤토리가 비어 있습니다.
+        no_matching_products: 인벤토리에서 일치하는 제품을 찾을 수 없습니다.
+        no_hidden_products: 이 인벤토리에서 숨겨진 제품이 없습니다.
+        no_matching_hidden_products: 검색 조건과 일치하는 숨겨진 제품이 없습니다.
+        no_new_products: 이 인벤토리에 추가할 수 있는 새 제품이 없습니다.
+        no_matching_new_products: 검색 조건과 일치하는 새 제품이 없습니다.
+        inventory_powertip: 이것은 당신의 제품 인벤토리입니다. 제품을 인벤토리에 추가하려면 Viewing dropdown에서 '새 제품'을 선택하십시오.
+        hidden_powertip: 이러한 제품은 인벤토리에서 숨겨져 있으므로 상점에 추가할 수 없습니다. '추가'를 클릭하여 인벤토리에 제품을 추가할 수 있습니다.
+        new_powertip: 이러한 제품을 인벤토리에 추가할 수 있습니다. 제품을 인벤토리에 추가하려면 '추가'를 클릭하고 보기에서 숨기려면 '숨기기'를 클릭합니다. 여러분은 언제든지 마음대로 바꿀 수 있어요!
+      controls:
+        back_to_my_inventory: 내 인벤토리로 돌아가기
+    orders:
+      edit:
+        order_sure_want_to: '%{event} 주문을 하시겠습니까?'
+      invoice_email_sent: '청구서 이메일이 보내졌습니다.'
+      order_email_resent: '주문 이메일이 재전송되었습니다'
+      bulk_management:
+        tip: "이 페이지에서는 여러 주문에 걸쳐 제품 수량을 변경합니다. 필요한 경우 제품을 주문에서 완전히 제거할 수도 있습니다."
+        shared: "공유 자원입니까?"
+        order_no: "주문 번호 :"
+        order_date: "완료 날짜 :"
+        max: "최고 :"
+        product_unit: "제품 : 구성단위"
+        weight_volume: "무게/크기 (g)"
+        ask: "요청하시겠습니까?"
+        page_title: "대량 주문 관리"
+        actions_delete: "선택한 항목 삭제"
+        loading: "주문 로딩 중"
+        no_results: "주문을 찾을 수 없습니다."
+        group_buy_unit_size: "단체 구매 단위 크기"
+        total_qtt_ordered: "총 주문 수량"
+        max_qtt_ordered: "최고 주문 수량"
+        current_fulfilled_units: "현재 충족 단위"
+        max_fulfilled_units: "최고 충족 단위"
+        order_error: "주문을 업데이트하려면 먼저 일부 오류를 해결해야 합니다.\n빨간색 테두리가 있는 모든 필드에 오류가 있습니다."
+        variants_without_unit_value: "경고 : 일부 변경사항에는 단위 값이 없습니다."
+        all: "모두"
+      select_variant: "변경할 항목을 선택하세요."
+    enterprise:
+      select_outgoing_oc_products_from: '출품되는 청구 제품 선택 '
+    enterprises:
+      index:
+        title: 회사
+        new_enterprise: 새로운 회사
+        producer?: "생산자 이십니까?"
+        package: 포장
+        status: 상태
+        manage: 관리
+      form:
+        about_us:
+          desc_short: 간단한 설명
+          desc_short_placeholder: 귀사에 대해 한두 문장으로 설명해 주십시오.
+          desc_long: About Us
+          desc_long_placeholder: 고객에게 당신에 대해 설명하세요. 이 정보는 공개 프로필에 나타납니다.
+        business_details:
+          abn: ABN
+          abn_placeholder: eg. 99 123 456 789
+          acn: ACN
+          acn_placeholder: eg. 123 456 789
+          display_invoice_logo: 청구서에 로고 표시
+          invoice_text: 청구서 끝에 사용자 지정 텍스트 추가
+          terms_and_conditions: "조건"
+          remove_terms_and_conditions: "파일 삭제"
+          uploaded_on: "이미 업로드 됨"
+          reset_form: "양식 재설정"
+          Invoice_item_sorting: 청구서 품목 분류
+          sort_items_by_supplier?: 공급업체별로 항목을 정렬하시겠습니까?
+          sort_items_by_supplier_tip: "이 옵션을 선택하면 공급업체 이름별로 항목이 정렬됩니다."
+          enabled: 사용 가능함
+          disabled: 사용 불가
+        business_address:
+          company_legal_name: 회사 법적 이름
+          company_placeholder: 회사 예시
+          address1: 법적 주소
+          address1_placeholder: 123 High St.
+          address2: 주소 (계속)
+          legal_phone_number: 법적 전화번호
+          phone_placeholder: "98 123 4565"
+        contact:
+          name: 이름
+          name_placeholder: 예. Gustav Plum
+          email_address: 공용 전자 메일 주소
+          email_address_placeholder: 예시. inquiries@fresh-food.com
+          email_address_tip: "이 이메일 주소는 공개 프로필에 표시됩니다."
+          phone: 전화번호
+          phone_placeholder: 예시. 98 7654 3210
+          website: 웹사이트
+          website_placeholder: 예시. www.truffles.com
+        enterprise_fees:
+          name: 이름
+          fee_type: 지불 방식
+          manage_fees: 회사 요금 관리
+          no_fees_yet: 회사 비용이 아직 없습니다.
+          create_button: 지금 만들기
+        enterprise_permissions:
+          enterprise_relationships: 기업 관계
+        images:
+          logo: 로고
+          promo_image_placeholder: '이 이미지는 "About Us"에 전시됩니다.'
+          promo_image_note1: '참고 사항: '
+          promo_image_note2: 여기에 업로드된 프로모션 이미지는 1200 x 260으로 잘립니다.
+          promo_image_note3: 프로모션 이미지는 기업의 프로필 페이지 및 팝업 맨 위에 표시됩니다.
+          remove_logo: "사진 삭제"
+          remove_promo_image: "사진 삭제"
+        inventory_settings:
+          text1: 다음을 통해 재고 수준 및 가격을 관리할 수 있습니다.
+          inventory: 인벤토리
+          text2: >
+              인벤토리 도구를 사용하는 경우 공급업체에서 추가한 새 제품을 인벤토리에 추가해야 재고가 있는지 여부를 선택할 수 있습니다.
+              인벤토리를 사용하여 제품을 관리하지 않는 경우 아래의 '권장' 옵션을 선택해야 합니다.
+          preferred_product_selection_from_inventory_only_yes: 신상품을 당신의 매장 안에 넣을 수 있습니다. (권장 사항)
+          preferred_product_selection_from_inventory_only_no: 새 제품을 내 상점에 넣기 전에 내 인벤토리에 추가해야 합니다.
+        payment_methods:
+          name: 이름
+          applies: 추가하시겠습니까?
+          manage: 결제 방법 관리
+          no_method_yet: 아직 결제 방법이 없습니다.
+          create_button: 새로운 결제 방법 생성
+          create_one_button: 지금 만들기
+        primary_details:
+          name: 이름
+          name_placeholder: 예시. Professor Plum's Biodynamic Truffles
+          groups: 그룹
+          groups_tip: 사용자가 구성원인 단체 또는 영역을 선택합니다. 이렇게 하면 고객이 기업을 찾는 데 도움이 됩니다.
+          groups_placeholder: 사용 가능한 단체를 검색하시려면 입력을 시작하십시오...
+          primary_producer: 1차 생산자 입니까?
+          primary_producer_tip: 식품의 주요 생산자시라면 '생산자'를 선택하세요.
+          producer: 제공자
+          any: Any
+          none: None
+          own: Own
+          sells: Sells
+          sells_tip: "None - 기업이 고객에게 직접 판매하지 않습니다. <br />Own - 기업이 고객에게 자신의 생산품만 판매합니다.<br />Any - 기업이 고객에게 자신의 생산품과 다른 회사의 생산품도 판매합니다.<br />"
+          visible_in_search: 검색어 안에 있나요?
+          visible_in_search_tip: "상점들은 다음과 같은 설정을 할 수 있습니다 <br />1. 공개적으로 볼 수 있으며, OFN 지도에서 볼 수 있게 할 수 있습니다. <br /> 2. 지도 및 목록에 숨겨져 있지만 다른 가게들에 참조 되게 하거나 상점들의 프로필에 링크를 연결하게 할 수 있습니다. <br />3.  완전히 숨길 수 있습니다."
+          visible: 공용
+          not_visible: 숨김
+          hidden: 모든 참조 숨기기
+          permalink: 하이퍼링크 (공백 없음)
+          permalink_tip: "이 하이퍼링크는 가게의 URL을 만드는 데 사용됩니다 :%{link}당신의 가게 이름/가게"
+          link_to_front: 상점 앞 링크
+          link_to_front_tip: Open Food Network의 상점에 대한 직접 연결된 링크입니다.
+          ofn_uid: OFN UID
+          ofn_uid_tip: Open Food Network내 기업을 식별하는 데 사용되는 고유 ID
+        shipping_methods:
+          name: "이름"
+          applies: "활성화 하시겠습니까?"
+          manage: "배송 방법 관리"
+          create_button: "새로운 배송 방법 생성"
+          create_one_button: "지금 만들기"
+          no_method_yet: "아직 배송 방법이 없습니다."
+        shop_preferences:
+          shopfront_requires_login: "눈에 보이는 상점으로 공개할까요?"
+          shopfront_requires_login_tip: "고객이 상점을 보도록 로그인하거나 모든 사람이 볼 수 있도록 할 지 선택해야 합니다."
+          shopfront_requires_login_false: "공용"
+          shopfront_requires_login_true: "등록된 고객만 볼 수 있습니다."
+          recommend_require_login: "주문을 변경할 수 있을 때 사용자에게 로그인을 요구하는 것이 좋습니다."
+          allow_guest_orders: "고객 주문"
+          allow_guest_orders_tip: "고객의 체크아웃을 허용하거나 등록된 사용자가 필요합니다."
+          allow_guest_orders_false: "주문을 위해서는 로그인이 필요합니다"
+          allow_guest_orders_true: "고객의 체크아웃 허용"
+          allow_order_changes: "주문 전환"
+          allow_order_changes_tip: "주문 주기가 열려 있는 동안 고객이 주문을 변경할 수 있도록 허용합니다."
+          allow_order_changes_false: "배치된 주문은 변경 / 취소 할 수 없습니다."
+          allow_order_changes_true: "고객은 주문 주기가 열려 있는 동안 주문을 변경 / 취소할 수 있습니다."
+          enable_subscriptions: "구독"
+          enable_subscriptions_tip: "구독 기능을 사용하시겠습니까?"
+          enable_subscriptions_false: "비활성화"
+          enable_subscriptions_true: "활성화"
+          customer_names_in_reports: "보고서내 고객 이름"
+          customer_names_tip: "공급업체가 보고서에서 고객 이름을 볼 수 있도록 지원"
+          customer_names_false: "비활성화"
+          customer_names_true: "활성화"
+          shopfront_message: "상점 메세지"
+          shopfront_message_placeholder: >
+              고객을 환영하고 함께 쇼핑하는 방법을 설명하는 선택적 메시지입니다. 여기에 텍스트를 입력하면 고객이 처음 상점에 도착했을
+              때 홈 탭에 표시됩니다.
+          shopfront_message_link_tooltip: "링크 삽입 / 수정"
+          shopfront_message_link_prompt: "삽입할 URL을 입력하십시오."
+          shopfront_closed_message: "매장 폐쇄 메시지"
+          shopfront_closed_message_placeholder: >
+              가게가 문을 닫은 이유 및/또는 고객이 가게가 언제 다시 문을 열 것으로 예상할 수 있는지에 대하여 보다 자세한 설명을 제공하는
+              메시지입니다. 활성화된 주문 주기가 없는 경우에만 해당 가게에 표시됩니다. (예. 가게가 문을 닫았습니다. )
+          shopfront_category_ordering: "매장 카테고리 주문"
+          shopfront_category_ordering_note: "(상하정렬)"
+          open_date: "개업일"
+          close_date: "휴무일"
+          display_ordering_in_shopfront: "매장 내 주문 표시 :"
+          shopfront_sort_by_category: "카테고리별 정렬"
+          shopfront_sort_by_producer: "생산자별 정렬"
+          shopfront_sort_by_category_placeholder: "목록"
+          shopfront_sort_by_producer_placeholder: "제공자"
+          display_remaining_stock: "재고가 부족할 경우 매장 전면에 남은 재고 표시"
+          display_remaining_stock_tip: "3개 이하의 물건만 남아 있을 때 손님들에게 알려주세요."
+          enabled: "활성화"
+          disabled: "비활성화"
+        social:
+          twitter_placeholder: "예. @the_prof"
+          instagram_placeholder: "예. 전문가"
+          facebook_placeholder: "예. www.facebook.com/PageNameHere"
+          linkedin_placeholder: "예. www.linkedin.com/in/YourNameHere"
+        stripe_connect:
+          connect_with_stripe: "Stripe에 연결하기"
+          stripe_connect_intro: "신용 카드 결제 방식을 허용하려면,  stripe 계정을 Open Food Network에 연결해야 합니다. 시작하려면 오른쪽에 있는 버튼을 사용하십시오."
+          stripe_account_connected: "Stripe 계정에 연결되었습니다."
+          disconnect: "계정 연결 끊기"
+          confirm_modal:
+            title: Stripe에 연결하기
+            part1: Stripe는 OFN에 있는 상점들이 고객들로부터 신용카드 결제를 받을 수 있도록 하는 결제 처리 서비스 입니다.
+            part2: 이 기능을 사용하려면 Stripe 계정을 OFN에 연결해야 합니다. 아래의 '동의합니다'를 클릭하면 기존 Stripe 계정을 연결할 수 있는 Stripe 웹 사이트로 이동하거나 아직 계정이 없는 경우 새 계정을 만들 수 있습니다.
+            part3: 이것은 Open Food Network가 당신을 대신해서 고객들로부터 신용카드 결제를 받을 수 있게 해줄 것입니다. 귀하의 Stripe 계정을 유지하고, Stripe가 청구하는 수수료를 납부해야 하며, 비용청구 및 고객 서비스를 직접 처리해야 합니다.
+            i_agree: 동의합니다
+            cancel: 취소
+        tag_rules:
+          default_rules:
+            by_default: 기본값 설정
+            no_rules_yet: 아직 적용되는 기본 규칙이 없습니다.
+            add_new_button: '+ 새 기본 규칙 추가'
+          no_tags_yet: 아직 이 회사에 적용되는 태그가 없습니다.
+          no_rules_yet: 아직 이 태그에 적용되는 규칙이 없습니다.
+          for_customers_tagged: '태그된 고객의 경우:'
+          add_new_rule: '+ 새 규칙 추가'
+          add_new_tag: '+ 새 태그 추가'
+        users:
+          email_confirmation_notice_html: "이메일 확인이 보류 중입니다. %{email}에게 확인 메일을 보냈습니다."
+          resend: 재전송
+          owner: '오너'
+          contact: "연락처"
+          contact_tip: "주문 및 알림에 대한 회사 이메일을 수신할 관리자입니다. 확인된 이메일 주소가 있어야 합니다."
+          owner_tip: 이 회사를 담당하는 기본 사용자입니다.
+          notifications: 알림
+          notifications_tip: 주문에 대한 알림이 이 이메일 주소로 전송됩니다.
+          notifications_placeholder: 예. gustav@truffles.com
+          notifications_note: '참고: 사용하기 전에 새 이메일 주소를 확인해야 할 수 있습니다.'
+          managers: 관리자
+          managers_tip: 이 회사를 관리할 수 있는 권한이 있는 다른 사용자.
+          invite_manager: "관리자 초대"
+          invite_manager_tip: "등록되지 않은 사용자를 등록하고 이 회사의 관리자가 되도록 초대합니다."
+          add_unregistered_user: "등록되지 않은 사용자 추가"
+          email_confirmed: "확인한 이메일"
+          email_not_confirmed: "확인안한 이메일"
+      actions:
+        edit_profile: 설정
+        properties: 특성
+        payment_methods: 결제 방법
+        payment_methods_tip: 이 사업은 지불 방법이 없습니다.
+        shipping_methods: 전송 방법
+        shipping_methods_tip: 이 사업은 전송 방법이 있습니다.
+        enterprise_fees: 기업 수수료
+        enterprise_fees_tip: 이 사업은 수수료가 없습니다.
+      admin_index:
+        name: 이름
+        role: 역할
+        sells: 판매할 물품
+        visible: 표시하시겠습니까?
+        owner: 오너
+        producer: 제공자
+      change_type_form:
+        producer_profile: 생산자 프로필
+        connect_ofn: OFN을 통해 연결
+        always_free: 항상 무료
+        producer_description_text: 제품을 Open Food Network에 추가하여 물류 센터를 통해 제품을 가게에 저장할 수 있도록 합니다.
+        producer_shop: 생산자 가게
+        sell_your_produce: 당신만의 농산물을 파세요.
+        producer_shop_description_text: 당신만의 Open Food Network 상점을 통해 고객에게 직접 제품을 판매하세요.
+        producer_shop_description_text2: Producer Shop은 귀사의 제품만을 위한 것입니다. 재배/생산된 제품을 부지 밖에서 판매하려면 'Producer Hub'를 선택하십시오.
+        producer_hub: 생산자 허브
+        producer_hub_text: 자신과 다른 사람의 농산물을 판매하기
+        producer_hub_description_text: 당신의 회사는 당신의 지역 식품 시스템의 중추입니다. 당신은 Open Food Network에서 당신의 상점을 통해 당신 자신의 생산물뿐만 아니라 다른 기업으로부터 수집된 생산물도 판매할 수 있습니다.
+        profile: 프로필 전용
+        get_listing: 목록 가져오기
+        profile_description_text: 사람들은 Open Food Network에서 당신을 찾고 연락할 수 있습니다. 당신의 기업이 지도에 표시되고, 목록에서 검색할 수 있습니다.
+        hub_shop: 중심 가게
+        hub_shop_text: 다른 사람의 농산물 판매하기
+        hub_shop_description_text: 당신의 사업은 당신의 지역 식품 시스템의 중추입니다. 당신은 다른 기업들의 농산물을 모아서 Open Food Network내 당신의 상점을 통해 판매할 수 있습니다.
+        choose_option: 위의 옵션 중 하나를 선택하십시오.
+        change_now: 지금 변경
+      enterprise_user_index:
+        loading_enterprises: 회사 목록 가져오는 중
+        no_enterprises_found: 회사를 찾을 수 없습니다.
+        search_placeholder: 이름으로 찾기
+        manage: 관리
+        manage_link: 설정
+        producer?: "생산자 이십니까?"
+        package: "포장"
+        status: "상태"
+      new_form:
+        owner: 오너
+        owner_tip: 이 회사를 담당하는 기본 사용자입니다.
+        i_am_producer: 저는 생산자 입니다.
+        contact_name: 연락처 이름
+      edit:
+        editing: '설정 :'
+        back_link: 회사 목록으로 돌아가기
+      new:
+        title: 새로운 회사
+        back_link: 회사 목록으로 돌아가기
+      welcome:
+        welcome_title: Open Food Network에 오신 것을 환영합니다!
+        welcome_text: 성공적으로 생성되었습니다.
+        next_step: 다음 단계
+        choose_starting_point: '패키지를 선택하세요 :'
+        profile: '프로필'
+        producer_profile: '생산자 프로필'
+      invite_manager:
+        user_already_exists: "사용자가 이미 존재합니다."
+        error: "무언가 문제가 생겼습니다"
+    order_cycles:
+      loading_flash:
+        loading_order_cycles: 주문 사이클 로딩 중
+        loading: 로딩 중...
+      new:
+        create: "생성"
+        cancel: "취소"
+        back_to_list: "목록으로 돌아가기"
+      edit:
+        save: "저장"
+        save_and_next: "저장 후 다음"
+        next: "다음"
+        cancel: "취소"
+        back_to_list: "리스트로 돌아가기"
+        save_and_back_to_list: "저장 후 목록으로 돌아가기"
+        choose_products_from: "제품 위치 선택:"
+        re_notify_producers: 생산자에게 재통보
+        notify_producers_tip: 이렇게 하면 각 생산자에게 주문 목록과 함께 이메일이 전송됩니다.
+      incoming:
+        incoming: "새로 들어옴"
+        supplier: "공급업체"
+        products: "생산품"
+        receival_details: "수신 세부 정보"
+        fees: "수수료"
+        save: "저장"
+        save_and_next: "저장 후 다음"
+        next: "다음"
+        cancel: "취소"
+        back_to_list: "리스트로 돌아가기"
+      outgoing:
+        outgoing: "방출됨"
+        distributor: "유통업체"
+        products: "생산품"
+        tags: "태그"
+        delivery_details: "배달 세부 사항"
+        fees: "수수료"
+        previous: "이전으로"
+        save: "저장"
+        save_and_back_to_list: "저장 후 목록으로 돌아가기"
+        cancel: "취소"
+        back_to_list: "리스트로 돌아가기"
+      wizard_progress:
+        edit: "1. 일반 설정"
+        incoming: "2. 들어오는 제품"
+        outgoing: "3. 나가는 제품"
+      exchange_form:
+        pickup_time_tip: 초과 주문이 고객에게 준비되는 시기
+        pickup_instructions_placeholder: "선택 지침"
+        pickup_instructions_tip: 이러한 지침은 고객이 주문을 완료한 후 고객에게 보여 줍니다.
+        pickup_time_placeholder: "(예. 날짜 / 시간)에 준비됨."
+        receival_instructions_placeholder: "수신 지침"
+        add_fee: '수수료 추가'
+        remove: '제거'
+        selected: '선택됨'
+      add_exchange_form:
+        add_supplier: '공급업체 추가'
+        add_distributor: '유통업체 추가'
+      advanced_settings:
+        automatic_notifications: 자동 알림
+        automatic_notifications_tip: 주문 주기가 종료될 때 이메일을 통해 생산자에게 자동으로 주문 알림
+        title: 고급 설정
+        choose_product_tip: 들어오고 나가는 제품을 %{inventory}의 인벤토리로만 제한할 수 있습니다.
+        preferred_product_selection_from_coordinator_inventory_only_here: 협력자 인벤토리만
+        preferred_product_selection_from_coordinator_inventory_only_all: 사용 가능한 모든 제품
+        save_reload: 저장 후 페이지 새로 고침
+      order_cycle_top_buttons:
+        advanced_settings: "고급 설정"
+      coordinator_fees:
+        add: 협력자 수수료 추가
+      filters:
+        search_by_order_cycle_name: "주문 주기 이름으로 검색..."
+        involving: "포함"
+        any_enterprise: "모든 회사"
+        any_schedule: "모든 스케줄"
+      form:
+        general_settings: "일반 설정"
+        incoming: 새로 생성됨
+        supplier: 공급업체
+        receival_details: 수취 내역
+        fees: 수수료
+        outgoing: 방출됨
+        distributor: 유통업체
+        products: 생산품
+        tags: 태그
+        add_a_tag: 태그 추가
+        delivery_details: 픽업 / 배달 세부사항
+      index:
+        schedule: 스케줄
+        schedules: 스케줄
+        new_schedule: 새 스케줄
+        new_schedule_tooltip: 구독 주문이 실행되는 빈도
+      name_and_timing_form:
+        name: 이름
+        orders_open: '주문 시작 시간 :'
+        coordinator: 협력자
+        orders_close: 주문 마감
+      row:
+        suppliers: 공급업체
+        distributors: 유통업체
+        variants: 변경 사항
+      simple_form:
+        ready_for: 준비 완료
+        ready_for_placeholder: 날짜 / 시간
+        customer_instructions: 고객 소개
+        customer_instructions_placeholder: 픽업 또는 배송 노트
+        products: 생산품
+        fees: 수수료
+      destroy_errors:
+        orders_present: 해당 주문 주기는 고객이 선택했으며 삭제할 수 없습니다. 고객이 접근하지 못하도록 하려면 대신 닫으십시오.
+        schedule_present: 해당 주문 주기는 예약에 연결되어 있으므로 삭제할 수 없습니다. 먼저 일정을 연결 해제하거나 삭제하십시오.
+      bulk_update:
+        no_data: 흠, 뭔가 잘못됐군요. 주문 주기 데이터를 찾을 수 없습니다.
+      date_warning:
+        msg: 이 주문 주기는 %{n} 열린 구독 주문에 연결됩니다. 이 날짜를 지금 변경해도 이미 발주된 주문에는 영향을 미치지 않지만 가능하면 취소해야 합니다. 계속 진행하시겠습니까?
+        cancel: 취소
+        proceed: 진행하다
+    producer_properties:
+      index:
+        title: 생산자 속성
+    proxy_orders:
+      cancel:
+        could_not_cancel_the_order: 주문을 취소할 수 없습니다.
+      resume:
+        could_not_resume_the_order: 주문을 진행할 수 없습니다.
+    shared:
+      user_guide_link:
+        user_guide: 사용자 가이드
+      enterprises_hubs_tabs:
+        has_no_payment_methods: "%{enterprise}는 지불 방법이 없습니다."
+        has_no_shipping_methods: "%{enterprise}는 전송 방법이 없습니다."
+        has_no_enterprise_fees: "%{enterprise}는 회사 수수료가 없습니다."
+    enterprise_issues:
+      create_new: 새로 생성하기
+      resend_email: 이메일 재전송
+      has_no_payment_methods: "%{enterprise}는 현재 지불 방법이 없습니다."
+      has_no_shipping_methods: "%{enterprise}는 현재 전송 방법이 없습니다."
+      email_confirmation: "이메일 확인이 보류 중입니다. %{email}에게 확인 메일을 보냈습니다."
+      not_visible: "%{enterprise}가 표시되지 않으므로 지도 또는 검색에서 찾을 수 없습니다."
+    reports:
+      hidden: 숨김
+      unitsize: 단위 크기
+      total: 총량
+      total_items: 총 항목 수
+      total_by_customer: 고객별 합계
+      total_by_supplier: 공급업체별 합계
+      supplier_totals: 주문 주기 공급업체 총계
+      supplier_totals_by_distributor: 유통업체에 따른 주문 주기 공급업체 총계
+      totals_by_supplier: 공급업체에 따른 주문 사이클 유통업체 총합
+      customer_totals: 주문 주기 소비자 총계
+      all_products: 모든 상품
+      inventory: 인벤토리 (수중)
+      lettuce_share: 읽기 공유
+      mailing_list: 메일링 리스트
+      addresses: 주소
+      payment_methods: 결제 방법 보고서
+      delivery: 배달 보고서
+      tax_types: 조세 유형
+      tax_rates: 세율
+      pack_by_customer: 고객별 포장
+      pack_by_supplier: 공급업체별 포장
+      pack_by_product: 제품별 포장
+      orders_and_distributors:
+        name: 주문 및 대리점
+        description: 총판 세부 정보가 포함된 주문
+      bulk_coop:
+        name: 거대 협동조합
+        description: 거대 협동조합 주문 보고서
+      payments:
+        name: 결제 보고서
+        description: 결제 기록
+      orders_and_fulfillment:
+        name: 주문 & 이행 보고서
+      customers:
+        name: 소비자
+      products_and_inventory:
+        name: 물품 & 인벤토리
+      users_and_enterprises:
+        name: 사용자 & 회사
+        description: 기업 소유권 & 상태
+      order_cycle_management:
+        name: 주문 사이클 관리
+      sales_tax:
+        name: 부가가치세
+      xero_invoices:
+        name: Xero 청구서
+        description: Xero에서 가져온 청구서
+      enterprise_fee_summary:
+        name: "회사 수수료 요약"
+        description: "징수된 회사 수수료 요약"
+      errors:
+        no_report_type: "보고서 유형을 지정하십시오."
+        report_not_found: "보고서를 찾을 수 없음"
+        missing_ransack_params: "요구 사항에 Ransack 검색 매개 변수를 제공하십시오."
+      hidden_field: "< 숨기기 >"
+      summary_row:
+        total: "총량"
+      table:
+        select_and_search: "필터를 선택하고 %{option}를 클릭하여 데이터에 액세스합니다."
+        headings:
+          hub: "물류"
+          customer_code: "코드"
+          first_name: "이름"
+          last_name: "성"
+          supplier: "공급업체"
+          product: "생산물"
+          variant: "변경"
+          quantity: "수량"
+          is_temperature_controlled: "온도를 제어하시겠습니까?"
+          temp_controlled: "온도를 제어하시겠습니까?"
+          price: "가격"
+      rendering_options:
+        generate_report: "보고서 생성"
+        on_screen: "화면상"
+        spreadsheet: "스프레드시트(Excel, OpenOffice..)"
+        display: 전시
+        summary_row: 요약 행
+        header_row: 헤더 행
+        raw_data: 원시 데이터
+        formatted_data: 포맷된 데이터
+      packing:
+        name: "포장 보고서"
+    subscriptions:
+      index:
+        title: "구독"
+        new: "새로운 구독"
+      issue: "이슈"
+      new:
+        title: "새로운 구독"
+      edit:
+        title: "구독 편집"
+      table:
+        edit_subscription: 구독 편집
+        pause_subscription: 구독 중지
+        unpause_subscription: 구독 재개
+        cancel_subscription: 구독 취소
+      filters:
+        query_placeholder: "이메일로 검색..."
+      setup_explanation:
+        title: "구독"
+        just_a_few_more_steps: '몇 단계만 더 진행하면 시작할 수 있습니다 :'
+        enable_subscriptions: "상점 중 하나 이상에 대한 구독 활성화"
+        enable_subscriptions_step_1_html: 1. %{enterprises_link}페이지로 가서, 가게를 찾고, "관리"를 클릭하세요
+        enable_subscriptions_step_2: 2. "샵 기본 설정"에서 구독 옵션 사용 가능으로 설정합니다.
+        set_up_shipping_and_payment_methods_html: '%{shipping_link}와 %{payment_link} 기법을 설정하세요'
+        set_up_shipping_and_payment_methods_note_html: 구독에는 현금과 Stripe 결제 방법만 사용할 수 있습니다.
+        ensure_at_least_one_customer_html: 하나 이상의 %{customer_link}가 존재하는지 확인하십시오.
+        create_at_least_one_schedule: 예약을 하나 이상 생성합니다.
+        create_at_least_one_schedule_step_1_html: 1. %{order_cycles_link} 페이지로 가세요.
+        create_at_least_one_schedule_step_2: 2. 아직 작성하지 않은 경우라면 주문 주기를 생성하세요
+        create_at_least_one_schedule_step_3: 3. '+ 새 스케줄'을 클릭하고 형식에 맞게 작성하세요
+        once_you_are_done_you_can_html: 다 끝나셨다면, 당신은 %{reload_this_page_link}를 할 수 있습니다.
+        reload_this_page: 이 페이지를 새로 고침
+      form:
+        create: "구독 생성"
+      steps:
+        details: 1. 기본 세부 사항
+        address: 2.  주소
+        products: 3. 물품 생성
+        review: 4. 리뷰 & 저장
+      subscription_line_items:
+        this_is_an_estimate: |
+            표시된 가격은 단지 견적일 뿐이며 구독을 변경할 때 계산됩니다.
+            가격이나 수수료를 변경하면 주문이 업데이트되지만 구독에는 이전 값이 계속 표시됩니다.
+        not_in_open_and_upcoming_order_cycles_warning: "이 제품에 대한 주문 주기가 열려 있거나 예정되어 있지 않습니다."
+      autocomplete:
+        name_or_sku: "이름 또는 SKU"
+        quantity: "수량"
+        add: "추가"
+      details:
+        details: 세부 사항
+        invalid_error: 이런! 필수 필드를 모두 입력해주세요...
+        allowed_payment_method_types_tip: 현재 현금이나 Stripe를 통한 지불 방법만이 사용될 수 있습니다.
+        credit_card: 신용카드
+        charges_not_allowed: 이 고객에게는 요금을 부가할 수 없습니다.
+        no_default_card: 고객에게 충전할 수 있는 카드가 없습니다.
+        card_ok: 고객에게 충전할 수 있는 카드가 있습니다.
+        begins_at_placeholder: "날짜 선택"
+        ends_at_placeholder: "선택 사항"
+      loading_flash:
+        loading: 구독 불러오는 중
+      review:
+        details: 세부 사항
+        address: 주소
+        products: 생산품
+        no_open_or_upcoming_order_cycle: "다가오는 주문 주기 없음"
+      products_panel:
+        save: "저장"
+        saving: "저장 중"
+        saved: "저장 성공"
+      product_already_in_order: 이 제품은 이미 주문에 추가되었습니다. 수량을 직접 수정해 주세요.
+      stock:
+        insufficient_stock: "재고 부족"
+        out_of_stock: "품절"
+      orders:
+        number: 숫자
+        confirm_edit: 이 주문을 편집하시겠습니까? 이렇게 하면 나중에 헤드라인 등록 변경 내용을 자동으로 동기화하기가 더 어려워질 수 있습니다.
+      confirm_cancel_msg: "이 구독을 취소하시겠습니까? 이 작업은 취소할 수 없습니다."
+      cancel_failure_msg: "죄송하지만, 취소하지 못했습니다!"
+      confirm_pause_msg: "이 구독을 일시 중지하시겠습니까?"
+      pause_failure_msg: "죄송하지만, 중단하지 못했습니다!"
+      confirm_unpause_msg: "이 구독 일정에 열린 주문 주기가 있는 경우 이 고객에 대한 주문이 만들어집니다. 이 구독의 일시 중지를 취소하시겠습니까?"
+      unpause_failure_msg: "죄송하지만, 재개하지 못했습니다!"
+      confirm_cancel_open_orders_msg: "이 구독에 대한 일부 주문이 현재 열려 있습니다. 고객에게 이미 주문이 들어간다는 통보를 받았습니다. 주문(들)을 취소하시거나 보관하시겠습니까?"
+      resume_canceled_orders_msg: "이 구독에 대한 일부 주문을 지금 다시 시작할 수 있습니다. 주문 드롭다운에서 다시 시작할 수 있습니다."
+      yes_cancel_them: 취소
+      no_keep_them: 유지
+      yes_i_am_sure: 예, 확실합니다.
+      number: "숫자"
+      order_update_issues_msg: 일부 주문은 수동으로 편집했기 때문에 자동으로 업데이트할 수 없습니다. 아래 나열된 문제를 검토하고 필요한 경우 개별 주문을 조정하십시오.
+      no_results:
+        no_subscriptions: 아직 구독이 없습니다...
+        why_dont_you_add_one: 하나 추가하는 게 어때요? :)
+        no_matching_subscriptions: 일치하는 구독을 찾을 수 없습니다.
+    schedules:
+      destroy:
+        associated_subscriptions_error: 연결된 구독이 있으므로 이 일정을 삭제할 수 없습니다.
+    controllers:
+      enterprises:
+        stripe_connect_cancelled: "Stripe와의 연결이 취소되었습니다"
+        stripe_connect_success: "Stripe 계정이 성공적으로 연결되었습니다."
+        stripe_connect_fail: 죄송합니다. 당신의 Stripe 계정에 연결하는 것이 실패했습니다.
+      stripe_connect_settings:
+        resource: Stripe Connect  환경 설정
+  api:
+    unknown_error: "문제가 발생했습니다. 저희 팀에 보고되었습니다."
+    invalid_api_key: "잘못된 API 키(%{key})가 지정되었습니다."
+    unauthorized: "해당 작업을 수행할 수 있는 권한이 없습니다."
+    unpermitted_parameters: "%{params} : 이 요청에는 매개 변수가 허용되지 않습니다."
+    missing_parameter: "%{param} : 필수 매개 변수가 없거나 비어 있습니다."
+    invalid_resource: "리소스가 잘못되었습니다. 오류를 수정한 후 다시 시도하십시오."
+    resource_not_found: "찾고 있는 리소스를 찾을 수 없습니다."
+    enterprise_logo:
+      destroy_attachment_does_not_exist: "로고가 존재하지 않습니다."
+    enterprise_promo_image:
+      destroy_attachment_does_not_exist: "프로모션 이미지가 존재하지 않습니다."
+    enterprise_terms_and_conditions:
+      destroy_attachment_does_not_exist: "계약 조건 파일이 존재하지 않습니다."
+    orders:
+      failed_to_update: "주문을 업데이트하는데 실패했습니다."
+  checkout:
+    already_ordered:
+      cart: "카트"
+      message_html: "이 주문 사이클에 대한 주문이 이미 있습니다. 이전에 주문하신 상품은 %{cart}에서 확인하시기 바랍니다. 주문 사이클가 열려 있는 동안 항목을 취소할 수도 있습니다."
+    terms_and_conditions:
+      message_html: "판매자의 %{terms_and_conditions_link} 이용약관에 대하여 동의합니다."
+      link_text: "조건"
+    platform_terms_of_service:
+      message_html: "플랫폼 %{tos_link}에 대하여 동의합니다."
+    all_terms_and_conditions:
+      message_html: "판매자 %{terms_and_conditions_link} 이용약관과 플랫폼 %{tos_link}에 대하여 동의합니다."
+      terms_and_conditions: "조건"
+    failed: "체크아웃에 실패했습니다. 우리가 당신의 주문을 처리할 수 있도록 우리에게 알려주세요."
+    payment_cancelled_due_to_stock: "결제 취소: 재고 문제로 인해 체크아웃을 완료할 수 없습니다."
+    order_not_loaded: "체크아웃 처리에 대한 올바른 주문을 찾을 수 없습니다."
+  shops:
+    hubs:
+      show_closed_shops: "휴무점 표시"
+      hide_closed_shops: "휴무점 숨기기"
+      show_on_map: "지도에 모두 표시"
+  shared:
+    mailers:
+      powered_by:
+        open_food_network: "Open Food Network"
+        powered_html: "%{open_food_network}를 통해 쇼핑 환경을 개선해보세요."
+    menu:
+      cart:
+        cart: "카트"
+      cart_sidebar:
+        checkout: "체크아웃"
+        edit_cart: "카트 편집"
+        items_in_cart_singular: "카트에 있는 %{num}개 항목"
+        items_in_cart_plural: "카트에 있는 %{num}개 항목"
+        close: "휴무"
+        cart_empty: "당신의 카트가 비어있습니다."
+        take_me_shopping: "나 좀 골라줘!"
+      signed_in:
+        profile: "프로필"
+      mobile_menu:
+        cart: "카트"
+    register_call:
+      selling_on_ofn: "Open Food Network에 관심이 있으십니까?"
+      register: "가입하기"
+    footer:
+      footer_secure: "안전하고 신뢰할 수 있습니다."
+      footer_secure_text: "Open Food Network는 어디에서나 SSL 암호화(2048비트 RSA)를 사용하여 쇼핑 및 결제 정보를 비공개로 유지합니다. 당사의 서버는 귀하의 신용 카드 세부 정보를 저장하지 않으며 결제는 PCI 호환 서비스를 통해 처리됩니다."
+      footer_contact_headline: "연락 주세요"
+      footer_contact_email: "이메일 주소"
+      footer_nav_headline: "위치"
+      footer_join_headline: "함께해요"
+      footer_join_body: "Open Food Network에 목록, 상점 또는 그룹 디렉터리를 만들어보세요."
+      footer_join_cta: "좀 더 알려주세요!"
+      footer_legal_call: "읽어보기"
+      footer_legal_visit: "다음 정보를 참조해보세요."
+      footer_legal_text_html: "Open Food Network는 자유 및 오픈 소스 소프트웨어 플랫폼입니다. 당사의 콘텐츠는 %{content_license}로, 코드는 %{code_license}로 라이센스가 부여됩니다."
+      footer_data_text_with_privacy_policy_html: "우리는 당신의 데이터를 철저히 관리합니다. %{privacy_policy} 와 %{cookies_policy}를 보세요."
+      footer_data_text_without_privacy_policy_html: "우리는 당신의 데이터를 철저히 관리합니다. %{cookies_policy}를 보세요."
+      footer_data_privacy_policy: "보안 정책"
+      footer_data_cookies_policy: "쿠키 정책"
+  shop:
+    messages:
+      customer_required:
+        login: "로그인"
+        contact: "연락처"
+        require_customer_login: "승인된 고객만 이 상점에 접근할 수 있습니다."
+        require_login_link_html: "이미 승인된 고객이시라면, %{login}을 계속 진행합니다."
+        require_login_2_html: "여기서 쇼핑하고 싶으세요? %{enterprise} %{contact}하고 가입에 대해 문의해 주십시오."
+        require_customer_html: "여기서 쇼핑하고 싶으시다면,  %{enterprise} %{contact}하고 가입에 대해 문의해 주십시오."
+      select_oc:
+        select_oc_html: "<span class='highlighted'>주문하실 때 선택하셔서</span> 어떤 제품이 있는지 확인하시기 바랍니다."
+    products:
+      summary:
+        bulk: "대형"
+  card_could_not_be_updated: 카드를 업데이트할 수 없습니다.
+  card_could_not_be_saved: 카드를 저장할 수 없습니다.
+  spree_gateway_error_flash_for_checkout: "결제 정보에 문제가 있습니다. : %{error}"
+  invoice_billing_address: "청구서 발송지 :"
+  invoice_column_tax: "물품·용역소비세"
+  invoice_column_price: "가격"
+  invoice_column_item: "항목"
+  invoice_column_qty: "수량"
+  invoice_column_unit_price_with_taxes: "단가 (세금 포함)"
+  invoice_column_unit_price_without_taxes: "단가 (세금 별도)"
+  invoice_column_price_with_taxes: "총 가격 (세금 포함)"
+  invoice_column_price_without_taxes: "총 가격 (세금 별도)"
+  invoice_column_tax_rate: "세율"
+  invoice_tax_total: "물품·용역소비세 총합 :"
+  tax_invoice: "세금 계산서"
+  tax_total: "총 세금 (%{rate}) :"
+  total_excl_tax: "총합 (세금 별도)"
+  total_incl_tax: "총합 (세금 포함) :"
+  abn: "호주 비즈니스 번호 :"
+  acn: "호주 회사 번호 :"
+  invoice_issued_on: "송장 발행일 :"
+  order_number: "송장 번호 :"
+  date_of_transaction: "거래 날짜 :"
+  ticket_column_qty: "수량"
+  ticket_column_item: "항목"
+  ticket_column_unit_price: "단가"
+  ticket_column_total_price: "총 가격"
+  menu_1_title: "가게"
+  menu_1_url: "/가게"
+  menu_2_title: "지도"
+  menu_2_url: "/지도"
+  menu_3_title: "생산자들"
+  menu_3_url: "/생산자"
+  menu_4_title: "그룹"
+  menu_4_url: "/그룹"
+  menu_5_title: "무엇인지 알고 싶으시다면"
+  menu_5_url: "https://about.openfoodnetwork.org.au/"
+  menu_6_title: "함께하고 싶으시다면"
+  menu_6_url: "https://openfoodnetwork.org/au/connect/"
+  menu_7_title: "좀 더 알고 싶으시다면"
+  menu_7_url: "https://openfoodnetwork.org/au/learn/"
+  logo: "로고 (640x130)"
+  logo_mobile: "모바일 로고 (75x26)"
+  logo_mobile_svg: "모바일 로고 (SVG파일)"
+  home_hero: "히어로 이미지"
+  home_show_stats: "통계 표시"
+  footer_logo: "로고 (220x76)"
+  footer_facebook_url: "페이스북 URL"
+  footer_twitter_url: "트위터 URL"
+  footer_instagram_url: "인스타그램 URL"
+  footer_linkedin_url: "링크드인 URL"
+  footer_googleplus_url: "구글 플러스 URL"
+  footer_pinterest_url: "핀터레스트 URL"
+  footer_email: "이메일"
+  footer_links_md: "링크"
+  footer_about_url: "URL에 대하여"
+  user_guide_link: "사용자 가이드 링크"
+  name: 이름
+  first_name: 이름
+  last_name: 성
+  email: 이메일
+  phone: 전화번호
+  next: 다음
+  address: 주소
+  address_placeholder: 예.  123 High Street
+  address2: 주소 (계속)
+  city: 시
+  city_placeholder: 예. Northcote
+  latitude: 위도
+  latitude_placeholder: 예. -37.4713077
+  latitude_longitude_tip: 지도에 기업을 표시하려면 위도와 경도가 필요합니다.
+  longitude: 경도
+  longitude_placeholder: 예. 144.7851531
+  use_geocoder: 주소에서 위도와 경도를 자동으로 계산하시겠습니까?
+  postcode: 우편번호
+  postcode_placeholder: 예. 3070
+  suburb: 교외
+  state: 상태
+  country: 나라
+  unauthorized: 공인되지 않음
+  terms_of_service: "서비스 약관"
+  on_demand: 요구 사항
+  none: 아니다
+  not_allowed: 허용되지 않음
+  no_shipping: 전송 방법 없음
+  no_payment: 결제 방법 없음
+  no_shipping_or_payment: 전송 혹은 결제 방법 없음
+  unconfirmed: 확인되지 않음
+  days: 날짜
+  authorization_failure: "인증 실패"
+  label_shop: "쇼핑"
+  label_shops: "가게"
+  label_map: "지도"
+  label_producer: "제공자"
+  label_producers: "생산자들"
+  label_groups: "그룹"
+  label_about: "좀 더 알고싶다면"
+  label_blog: "블로그"
+  label_support: "제공"
+  label_shopping: "쇼핑"
+  label_login: "로그인"
+  label_logout: "로그아웃"
+  label_signup: "가입하기"
+  label_administration: "관리직"
+  label_admin: "관리자"
+  label_account: "계정"
+  label_more: "더 보기"
+  label_less: "적게 표시"
+  label_notices: "공지사항"
+  cart_items: "항목"
+  cart_headline: "당신의 쇼핑 카트"
+  total: "총합"
+  cart_updating: "카트를 업데이트 중입니다..."
+  cart_empty: "카트가 비어있습니다."
+  cart_edit: "카트 편집"
+  item: "항목"
+  qty: "수량"
+  card_number: 카드 번호
+  card_securitycode: "보안 코드"
+  card_expiry_date: 만료 기간
+  card_masked_digit: "X"
+  card_expiry_abbreviation: "Exp"
+  new_credit_card: "새 신용 카드"
+  my_credit_cards: 내 신용 카드
+  add_new_credit_card: 새 신용 카드 추가
+  saved_cards: 저장한 카드
+  add_a_card: 카드 추가
+  add_card: 카드 추가
+  you_have_no_saved_cards: 아직 카드를 저장하지 않았습니다.
+  saving_credit_card: 신용 카드 저장 중...
+  card_has_been_removed: "카드가 제거되었습니다. (번호 : %{number})"
+  card_could_not_be_removed: 죄송합니다. 카드를 제거할 수 없습니다.
+  invalid_credit_card: "잘못된 신용 카드"
+  ie_warning_headline: "브라우저가 최신 버전이 아닙니다. :-("
+  ie_warning_text: "최고의 Open Food Network 환경을 위해 브라우저를 업그레이드하는 것을 추천합니다."
+  ie_warning_chrome: Chrome 다운로드
+  ie_warning_firefox: Firefox 다운로드
+  ie_warning_ie: Internet Explorer 업그레이드
+  ie_warning_other: "브라우저를 업그레이드할 수 없나요? 스마트폰으로 Open Food Network를 해보세요 :-)"
+  legal:
+    cookies_policy:
+      header: "쿠키 사용 용도"
+      desc_part_1: "쿠키는 일부 웹 사이트를 방문할 때 컴퓨터에 저장되는 매우 작은 텍스트 파일입니다."
+      desc_part_2: "OFN에서 우리는 당신의 사생활을 전적으로 존중합니다. 당사는 온라인으로 음식을 판매/구매하는 서비스를 제공하는 데 필요한 쿠키만 사용합니다. 우리는 당신의 데이터를 팔지 않습니다. 우리는 미래에 생태계에 유용할 수 있는 새로운 공통 서비스(예를 들어 쇼트 푸드 시스템의 물류 서비스)를 구축하기 위해 여러분의 데이터 중 일부를 당신에게 공유할 것을 제안할 수도 있지만, 우리는 제안 없이 함부로 사용하지 않습니다. 그리고 우리는 당신의 승인 없이는 그것을 하지 않을 것입니다 :-)"
+      desc_part_3: "우리는 주로 서비스에 '로그인'할 경우 자신이 누구인지 기억하거나, 로그인하지 않은 경우에도 카트에 넣은 항목을 기억할 수 있도록 쿠키를 사용합니다. \"쿠키 수락\"을 클릭하지 않고 웹 사이트를 계속 탐색하는 경우 웹 사이트의 기능에 필수적인 쿠키를 저장하는 데 동의한 것으로 가정합니다. 여기 우리가 사용하는 쿠키의 목록이 있습니다!"
+      essential_cookies: "필수 쿠키"
+      essential_cookies_desc: "다음 쿠키들은 저희 웹사이트 운영에 꼭 필요합니다."
+      essential_cookies_note: "대부분의 쿠키에는 고유 식별자만 포함되어 있고 다른 데이터는 포함되어 있지 않으므로 전자 메일 주소와 암호같은 것은 쿠키에 포함되어 있지 않으며 노출되지도 않습니다."
+      cookie_domain: "설정 기준 :"
+      cookie_session_desc: "카트에 있는 항목 기억과 같이 웹 사이트가 페이지 방문 사이에 사용자를 기억할 수 있도록 하는 데 사용됩니다."
+      cookie_consent_desc: "쿠키 저장에 대한 사용자 동의 상태를 유지하는 데 사용됩니다."
+      cookie_remember_me_desc: "사용자가 웹 사이트에서 자신을 기억하도록 요청한 경우 사용됩니다. 이 쿠키는 12일이 지나면 자동으로 삭제됩니다. 쿠키를 삭제하시려면 로그아웃만 하시면 됩니다. 해당 쿠키를 컴퓨터에 설치하지 않으려면 로그인할 때 \"기억\" 확인란을 선택하지 않아야 합니다."
+      cookie_openstreemap_desc: "오픈 소스 매핑 제공자(OpenStreetMap)가 주어진 시간 동안 너무 많은 요청을 받지 않도록 하여 서비스 오용을 방지합니다."
+      cookie_stripe_desc: "https://stripe.com/cookies-policy/legal 에서 우리의 결제 방식 Stripe에서 사기 방지를 위한 데이터를 수집중입니다. 모든 상점이 Stripe를 결제 수단으로 사용하는 것은 아니지만 모든 페이지에 적용하는 것은 사기 방지를 위한 좋은 시도입니다. Stripe는 아마도 우리의 페이지들 중 그들의 API와 상호작용을 하는지 그림을 만든 다음, 특이한 것에 플래그를 달 것입니다. 그래서 Stripe 쿠키를 설정하는 것은 단순히 사용자에게 결제 방법을 제공하는 것보다 더 많은 기능을 가지고 있습니다. 제거하면 서비스 자체의 보안에 영향을 미칠 수 있습니다. https://stripe.com/privacy 에서 Stripe에 대해 자세히 알아보고 개인 정보 보호 정책을 읽을 수 있습니다."
+      statistics_cookies: "통계 쿠키"
+      statistics_cookies_desc: "이건 엄밀히 말하자면 필수적인 것은 아니지만, 사용자 행동을 분석하고 가장 많이 사용하는 기능 또는 사용하지 않는 기능을 식별하여 최상의 사용자 환경을 제공하는 데 도움이 됩니다."
+      statistics_cookies_matomo_desc_html: "저희는 플랫폼 사용 데이터를 수집하고 분석하기 위해서  <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik)를 사용합니다. Matomo는 GDPR을 준수하고 개인 정보를 보호하는 오픈 소스 분석 도구입니다."
+      statistics_cookies_matomo_optout: "Matomo 분석에서 제외하시겠습니까? 저희는 개인 데이터를 수집하지 않으며, 마토모는 서비스 개선을 돕지만, 여러분의 선택을 존중합니다. :-)"
+      cookie_matomo_basics_desc: "통계를 수집하기 위한 Matomo 퍼스트 파티 쿠키입니다.\n(퍼스트 파티 쿠키는 유저가 방문한 웹사이트의 소유자가 직접 생성하는 쿠키입니다.)"
+      cookie_matomo_heatmap_desc: "Matomo Heatmap & 세션 기록 쿠키"
+      cookie_matomo_ignore_desc: "사용자를 추적에서 제외하는데 사용되는 쿠키입니다."
+      disabling_cookies_header: "쿠키 비활성화에 대한 경고"
+      disabling_cookies_desc: "사용자는 브라우저의 설정 제어를 통해 언제든지 Open Food Network 또는 기타 웹 사이트 쿠키를 허용, 차단 또는 삭제할 수 있습니다. 각 브라우저에는 서로 다른 운영 체제가 있습니다. 링크 :"
+      disabling_cookies_firefox_link: "https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
+      disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
+      disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
+      disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
+      disabling_cookies_note: "하지만 만약 당신이 Open Food Network에서 사용하는 필수 쿠키를 삭제하거나 수정한다면,  카트에 계산할 물품을 추가하는 것 등의 웹사이트 기능이 작동하지 않을 것입니다."
+    cookies_banner:
+      cookies_usage: "이 사이트에서는 쿠키를 사용하여 탐색에 마찰이 없고 보안이 유지되며 사용자가 쿠키를 사용하여 제공되는 기능을 개선하는 방법을 이해할 수 있습니다."
+      cookies_definition: "쿠키는 일부 웹 사이트를 방문할 때 컴퓨터에 저장되는 매우 작은 텍스트 파일입니다."
+      cookies_desc: "당사는 온라인으로 음식을 판매/구매하는 서비스를 제공하는 데 필요한 쿠키만 사용합니다. 우리는 당신의 데이터를 팔지 않습니다. 우리는 주로 서비스에 '로그인'할 경우 자신이 누구인지 기억하거나, 로그인하지 않은 경우에도 카트에 넣은 항목을 기억할 수 있도록 쿠키를 사용합니다. \"쿠키 허용\"을 클릭하지 않고 웹 사이트를 계속 탐색하는 경우 웹 사이트의 기능에 필수적인 쿠키를 저장하는 데 동의한 것으로 가정합니다."
+      cookies_policy_link_desc: "자세한 내용은 다음을 참조하십시오."
+      cookies_policy_link: "쿠키 정책"
+      cookies_accept_button: "쿠키 허용"
+  home_shop: 지금 쇼핑하기
+  brandstory_headline: "식품, 비법인."
+  brandstory_intro: "가끔 시스템을 복구하는 가장 좋은 방법은 새 시스템을 시작하는 것이죠...."
+  brandstory_part1: "우리는 맨 땅에서부터 시작합니다. 농부들과 재배자들은 그들의 이야기를 자랑스럽게 그리고 진실하게 말할 준비가 되어 있습니다. 사람들을 공정하고 정직하게 제품과 연결할 준비가 된 유통업체와 함께. 매주 더 나은 쇼핑 결정이 세상을 더 크게 바꿀 수 있다고 믿는 구매자들과 함께."
+  brandstory_part2: "식량을 재배, 판매, 구매하는 모든 사람들에게 권한을 부여하는 방법이라든가, 모든 물류를 처리할 수 있는 방법을 이야기 할 방법이라든가.  이렇게 혁신을 현실로 전환하는 방법이 필요합니다. "
+  brandstory_part3: "그래서 우리는 경쟁의 장을 평준화하는 온라인 마켓플레이스를 구축합니다. 그것은 투명해서, 진정한 관계를 만들어 냅니다. 오픈 소스라 모든 사람이 소유할 수 있습니다. 지역과 국가에 따라 확장되므로 사람들은 전 세계에 걸쳐 버전을 시작합니다."
+  brandstory_part4: "어느 때나 작동하고, 어느 것이든 바꿀 수 있습니다."
+  brandstory_part5_strong: "우리는 이걸 Open Food Network라 부르기로 했습니다."
+  brandstory_part6: "우리는 모두 음식을 좋아함으로서, 이제부터 우리는 음식 유통 시스템도 좋아할 수 있습니다."
+  system_headline: "쇼핑 - 이렇게 하면 됩니다."
+  system_step1: "1. 탐색"
+  system_step1_text: "다양한 독립 상점에서 계절에 맞는 로컬 음식을 검색해 보십시오. 지역 및 음식 범주 또는 배달 및 픽업을 선호하는지에 대한 여부를 기준으로 검색하십시오."
+  system_step2: "2. 쇼핑"
+  system_step2_text: "다양한 생산자와 허브의 저렴한 로컬 푸드로 거래를 전환해보세요. 여러분의 음식과 그것을 만든 사람들의 이야기를 알아보세요!"
+  system_step3: "3. 픽업 / 배달"
+  system_step3_text: "배달을 기다리거나, 당신의 음식과 더 개인적인 연결을 위해 당신의 생산자나 허브에 방문해보세요. 자연이 의도한 만큼 다양한 음식 쇼핑이 가능합니다."
+  cta_headline: "세상을 더 나은 곳으로 만드는 쇼핑."
+  cta_label: "준비됐어요."
+  stats_headline: "우리는 새로운 음식 시스템을 만들고 있습니다."
+  stats_producers: "음식 생산자"
+  stats_shops: "식품점"
+  stats_shoppers: "음식 쇼핑객"
+  stats_orders: "음식 주문"
+  checkout_title: 체크아웃
+  checkout_now: 지금 결제
+  checkout_order_ready: 주문 준비 완료
+  checkout_hide: 숨기기
+  checkout_expand: 확대
+  checkout_headline: "자, 결제할 준비가 되셨나요?"
+  checkout_as_guest: "게스트로 결제"
+  checkout_details: "세부 사항"
+  checkout_billing: "청구 정보"
+  checkout_default_bill_address: "기본 청구 주소로 저장"
+  checkout_shipping: 배송 정보
+  checkout_default_ship_address: "기본 배송 주소로 저장"
+  checkout_method_free: 무료
+  checkout_address_same: 배송지 주소와 청구지 주소가 같습니까?
+  checkout_ready_for: "준비 완료 :"
+  checkout_instructions: "기타 의견이나 특별한 요구사항이 있으십니까?"
+  checkout_payment: 결제
+  checkout_send: 지금 주문합니다.
+  checkout_your_order: 주문 사항
+  checkout_cart_total: 카트 총합
+  checkout_shipping_price: 배송
+  checkout_total_price: 총합
+  checkout_back_to_cart: "카트로 돌아가기"
+  cost_currency: "가격 통화"
+  split_checkout:
+    your_details_without_number: 세부 사항
+    payment_method_without_number: 결제 방식
+    order_summary_without_number: 주문 요약
+    already_ordered:
+      cart: "카트"
+      message_html: "이 주문 사이클에 대한 주문이 이미 있습니다. 이전에 주문하신 상품은 %{cart}에서 확인하시기 바랍니다. 주문 사이클가 열려 있는 한 항목을 취소할 수도 있습니다."
+    step1:
+      your_details:
+        title: 세부 사항
+        first_name:
+          label: 이름
+          placeholder: 예. Jane
+        last_name:
+          label: 성
+          placeholder: 예. Doe
+        email:
+          label: 이메일
+          placeholder: 예. Janedoe@email.com
+        phone:
+          label: 전화번호
+          placeholder: 예. 07987654321
+      billing_address:
+        title: '청구서 발송지 :'
+      address:
+        address1:
+          label: 주소 (도로명 + 집 번혼)
+          placeholder: 예. Flat 1 Elm apartments
+        address2:
+          label: 추가 주소 정보(선택 사항)
+          placeholder: 예. Cavalier avenur
+        city:
+          label: 시
+          placeholder: 예. London
+        state_id:
+          label: 상태
+        zipcode:
+          label: 우편번호
+          placeholder: 예. SW11 3QN
+        country_id:
+          label: 나라
+      shipping_info:
+        title: 배송 정보
+      submit: 다음 - 결제 방식
+      cancel: 장바구니 편집으로 돌아가기
+    step2:
+      payment_method:
+        title: 결제 방식
+      form:
+        card_number:
+          label: 카드 번호
+          placeholder: 예. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: 달
+        card_year:
+          label: Year
+        stripe:
+          use_saved_card: 저장된 카드 사용
+          use_new_card: 카드 식별자 입력
+          save_card: 나중에 사용할 수 있도록 카드 저장
+          create_new_card: 또는 아래에 새 카드 세부 정보를 입력
+      explaination: 최종 비용이 포함된 다음 단계에서 주문을 검토하고 확인할 수 있습니다.
+      submit: 다음 - 주문 요약
+      cancel: 세부 사항으로 돌아가기
+    step3:
+      your_details:
+        title: 세부 사항
+        edit: 세부 사항 편집
+      billing_address:
+        title: '청구서 발송지 :'
+      shipping_address:
+        title: 배송지 주소
+      delivery_info:
+        title: 배달 정보
+      payment_method:
+        title: 결제 방식
+        edit: 결제 방식 편집
+      order:
+        title: 주문 총합
+      terms_and_conditions:
+        message_html: "판매자의 %{terms_and_conditions_link} 이용약관에 대하여 동의합니다."
+        link_text: "조건"
+      platform_terms_of_service:
+        message_html: "플랫폼 %{tos_link}에 대하여 동의합니다."
+      all_terms_and_conditions:
+        message_html: "판매자 %{terms_and_conditions_link} 이용약관과 플랫폼 %{tos_link}에 대하여 동의합니다."
+        terms_and_conditions: "조건"
+      agree: '''주문 완료''를 클릭하면 주문이 처리되는 것에 동의하는 것입니다.'
+      submit: 주문 완료
+      cancel: 결제 방식으로 돌아가기
+    errors:
+      global: "저장하지 못했습니다. 강조 표시된 필드를 업데이트하세요."
+      terms_not_accepted: 약관에 동의하십시오.
+      required: 필드는 비워 둘 수 없습니다.
+      invalid_number: "올바른 전화 번호를 입력하십시오."
+      invalid_email: "올바른 이메일 주소를 입력하십시오."
+      select_a_shipping_method: 전송 방법을 선택하세요.
+      select_a_payment_method: 결제 방법을 선택하세요.
+  order_paid: 유료
+  order_not_paid: 무료
+  order_total: 총 주문
+  order_payment: "지불 방법 :"
+  order_billing_address: 청구서 발송지
+  order_delivery_on: 배달일
+  order_delivery_address: 배달 주소
+  order_delivery_time: 배달 시간
+  order_special_instructions: "메모 :"
+  order_pickup_time: 수집 준비 완료
+  order_pickup_instructions: 수집 지침
+  order_produce: 제공
+  order_total_price: 총합
+  order_includes_tax: (세금 포함)
+  order_payment_paypal_successful: PayPal을 통한 결제가 성공적으로 처리되었습니다.
+  order_hub_info: 허브 정보
+  order_back_to_store: 가게로 돌아가기
+  order_back_to_cart: 카트로 돌아가기
+  order_back_to_website: 웹 사이트로 돌아기기
+  bom_tip: "이 페이지에서는 여러 주문에 걸쳐 제품 수량을 변경합니다. 필요한 경우 제품을 주문에서 완전히 제거할 수도 있습니다."
+  unsaved_changes_warning: "저장되지 않은 변경 사항이 있으며 계속 진행하신다면 저장되지 않습니다."
+  unsaved_changes_error: "빨간색 테두리가 있는 필드에 오류가 있습니다."
+  products: "생산품"
+  products_in: "%{oc} 내에서"
+  products_at: "%{distributor} 에서"
+  products_elsewhere: "다른 곳에서 발견된 제품"
+  email_confirmed: "이메일 주소를 확인해주셔서 감사합니다."
+  email_confirmation_activate_account: "새 계정을 활성화하기 전에 이메일 주소를 확인해야 합니다."
+  email_confirmation_greeting: "안녕하세요,  %{contact}님!"
+  email_confirmation_profile_created: "%{name}에 대한 프로필이 성공적으로 생성되었습니다! 프로필을 활성화하려면 이 이메일 주소를 확인해야 합니다."
+  email_confirmation_click_link: "아래 링크를 클릭하여 이메일을 확인하고 프로필 설정을 계속하십시오."
+  email_confirmation_link_label: "이 이메일 주소 확인 »"
+  email_confirmation_help_html: "이메일을 확인한 후 이 기업의 관리 계정에 접근할 수 있습니다. %{sitename}의 기능에 대해 자세히 알아보고 프로필 또는 온라인 상점을 사용하려면 %{link}를 참조하십시오."
+  email_confirmation_notice_unexpected: "%{sitename}으로 등록하셨거나 아는 사람의 초대로 이 메시지를 받으셨습니다. 이 이메일을 받는 이유를 이해하지 못하셨을 경우, %{contact}로 메세지를 보내십시오."
+  email_social: "연락 방법 :"
+  email_contact: "이메일 주소 :"
+  email_signoff: "도움을 주신 분들,"
+  email_signature: "%{sitename} 팀"
+  email_confirm_customer_greeting: "안녕하세요 %{name}님,"
+  email_confirm_customer_intro_html: "<strong>%{distributor}</strong>에서 쇼핑해주셔서 감사합니다!"
+  email_confirm_customer_number_html: "주문 확인 <strong>#%{number}</strong>"
+  email_confirm_customer_details_html: "<strong>%{distributor}</strong>로부터 당신의 주문 세부사항이 있습니다 :"
+  email_confirm_customer_signoff: "안부의 말,"
+  email_confirm_shop_greeting: "안녕하세요 %{name}님,"
+  email_confirm_shop_order_html: "잘했습니다! <strong>%{distributor}</strong>의 새 주문을 얻으셨습니다!"
+  email_confirm_shop_number_html: "주문 확인 <strong>#%{number}</strong>"
+  email_order_summary_item: "항목"
+  email_order_summary_quantity: "수량"
+  email_order_summary_sku: "재고 관리 단위"
+  email_order_summary_price: "가격"
+  email_order_summary_subtotal: "소계(小計) :"
+  email_order_summary_total: "총합"
+  email_order_summary_includes_tax: "(세금 포함)"
+  email_payment_paid: 유료
+  email_payment_not_paid: 무료
+  email_payment_description: 체크아웃 시 결제 내용
+  email_payment_summary: 결제 요약
+  email_payment_method: "지불 방법 :"
+  email_so_placement_intro_html: "<strong>%{distributor}</strong>의 새 주문이 있습니다."
+  email_so_placement_details_html: "<strong>%{distributor}</strong> 주문의 세부사항이 있습니다 :"
+  email_so_placement_changes: "안타깝게도,  요청하셨던 모든 제품이 사용 가능하지 않습니다. 요청하셨던 원래 수량은 다음와 같습니다."
+  email_so_payment_success_intro_html: "<strong>%{distributor}</strong>의 주문에 대한 자동 결제가 처리되었습니다."
+  email_so_placement_explainer_html: "이 주문은 사용자를 위해 자동으로 작성되었습니다."
+  email_so_edit_true_html: "%{orders_close_at}때까지 <a href='%{order_url}'>변경</a>할 수 있습니다."
+  email_so_edit_false_html: "언제든지 <a href='%{order_url}'>이 주문의 세부 정보</a>를 볼 수 있습니다."
+  email_so_contact_distributor_html: "질문이 있으시다면 %{email}를 통해 <strong>%{distributor}</strong>에 연락할 수 있습니다."
+  email_so_contact_distributor_to_change_order_html: "이 주문은 사용자를 위해 자동으로 작성되었습니다. 주문이 취소될 때 까지 %{email}을 통해 <strong>%{distributor}</strong>에 연락함으로써 %{orders_close_at}에 대하여 변경할 수 있습니다."
+  email_so_confirmation_intro_html: "<strong>%{distributor}</strong>에 대한 주문이 확인되었습니다."
+  email_so_confirmation_explainer_html: "이 주문은 자동으로 이루어졌으며, 이제 주문이 완료되었습니다."
+  email_so_confirmation_details_html: "<strong>%{distributor}</strong>의 주문에 대한 모든 것이 여기에 있습니다 : "
+  email_so_empty_intro_html: "우리는 <strong>%{distributor}</strong>에 새로운 주문을 하려고 했지만, 문제가 생겼습니다..."
+  email_so_empty_explainer_html: "안타깝게도 주문하신 제품이 없어서 주문이 되지 않았습니다. 요청하신 원래 수량은 아래와 같습니다."
+  email_so_empty_details_html: "<strong>%{distributor}</strong>에 대한 미발주 주문에 대한 자세한 내용은 다음과 같습니다 :"
+  email_so_failed_payment_intro_html: "결제를 처리하려고 했지만 문제가 발생했습니다..."
+  email_so_failed_payment_explainer_html: "신용카드에 문제가 있어 <strong>%{distributor}</strong>에서 구독료를 지불하지 못했습니다. <strong>%{distributor}</strong>에서 이 지불 실패에 대하여 통보받았습니다."
+  email_so_failed_payment_details_html: "다음은 결제 게이트웨이가 제공하는 장애의 세부 정보입니다 :"
+  email_shipping_delivery_details: 배달 세부 사항
+  email_shipping_delivery_time: "배달 일"
+  email_shipping_delivery_address: "배달 주소"
+  email_shipping_collection_details: 수집 세부 사항
+  email_shipping_collection_time: "수집 준비 완료"
+  email_shipping_collection_instructions: "수집 지침 :"
+  email_special_instructions: "메모 :"
+  email_signup_greeting: 안녕하세요!
+  email_signup_welcome: "%{sitename}에 오신 걸 환영합니다!"
+  email_signup_confirmed_email: "이메일 주소를 확인해주셔서 감사합니다."
+  email_signup_shop_html: "이제 %{link}에 로그인 하실 수 있습니다."
+  email_signup_text: "네트워크에 가입해 주셔서 감사합니다. 만약 여러분이 고객이라면, 우리는 여러분에게 많은 환상적인 농부들, 멋진 음식 허브들, 그리고 맛있는 음식들을 소개해주는 것을 기대하고 있습니다! 만약 당신이 생산자나 식품 기업이라면, 우리는 당신이 네트워크의 한 부분으로 있다는 것에 기대됩니다."
+  email_signup_help_html: "모든 질문 및 피드백을 환영합니다. 사이트의 <em>피드백 보내기</em> 버튼을 사용하거나 %{email}로 이메일을 보내십시오."
+  invite_email:
+    greeting: "안녕하세요!"
+    invited_to_manage: "%{instance}에서 %{enterprise}를 관리하도록 초대되셨습니다."
+    confirm_your_email: "확인 링크가 포함된 이메일을 받으셨거나 곧 받으실 것입니다. 이메일을 확인할 때까지 %{enterprise}의 프로필에 접근하실 수 없습니다."
+    set_a_password: "그런 다음 기업을 관리하기 전에 암호를 설정하라는 메시지가 표시됩니다."
+    mistakenly_sent: "왜 이 이메일을 받았는지 확실하지 않으십니까? 자세한 내용은 %{owner_email}에 문의하십시오."
+  producer_mail_greeting: "친애하는"
+  producer_mail_text_before: "다음 주문 주기에 대한 업데이트를 아래에서 확인하십시오 :"
+  producer_mail_order_text: "다음은 귀사의 제품에 대한 주문 요약입니다 :"
+  producer_mail_delivery_instructions: "재고 픽업/배송 지침:"
+  producer_mail_signoff: "감사드리고 축복을 담아서"
+  producer_mail_order_customer_text: "다음은 고객별로 그룹화된 주문들의 요약입니다."
+  shopping_oc_closed: 주문이 마감되었습니다.
+  shopping_oc_closed_description: "다음 주기가 열릴 때까지 기다리십시오(또는 지연된 주문을 수락할 수 있는지 직접 문의해보세요)."
+  shopping_oc_last_closed: "마지막 주기는 %{distance_of_time} 전에 닫혔습니다."
+  shopping_oc_next_open: "다음 주기는 %{distance_of_time}에 열립니다."
+  shopping_oc_select: "선택하기..."
+  shopping_tabs_home: "홈"
+  shopping_tabs_shop: "쇼핑"
+  shopping_tabs_about: "좀 더 알고싶다면"
+  shopping_tabs_producers: "생산자들"
+  shopping_tabs_contact: "연락처"
+  shopping_tabs_groups: "그룹"
+  shopping_contact_address: "주소"
+  shopping_contact_web: "연락처"
+  shopping_contact_social: "팔로우"
+  shopping_groups_part_of: "다음 중 일부입니다 :"
+  shopping_producers_of_hub: "%{hub} 제공자 :"
+  enterprises_next_closing: "다음 주문 마감"
+  enterprises_currently_open: "주문이 현재 열려 있습니다."
+  enterprises_ready_for: "준비 완료"
+  enterprises_choose: "원하는 주문 시간 선택 :"
+  maps_open: "개장"
+  maps_closed: "휴무"
+  map_title: "지도"
+  hubs_buy: "쇼핑 대상 :"
+  hubs_shopping_here: "여기서 쇼핑하기"
+  hubs_orders_closed: "주문 마감"
+  hubs_profile_only: "프로필 전용"
+  hubs_delivery_options: "배달 옵션"
+  hubs_pickup: "직접 수령"
+  hubs_delivery: "배달"
+  hubs_producers: "우리의 생산자"
+  hubs_filter_by: "필터링 기준"
+  hubs_filter_type: "타입"
+  hubs_filter_delivery: "배달"
+  hubs_filter_property: "특성"
+  hubs_matches: "찾고 계신 것이 이것 아닌가요?"
+  hubs_intro: 해당 지역에서 쇼핑
+  hubs_distance: 가장 가까운 위치
+  hubs_distance_filter: "%{location} 근처에 있는 가게들 보기"
+  shop_changeable_orders_alert_html:
+    one: <a href='%{path}' target='_blank'>%{shop} / %{order}</a> 가 포함된 주문을 검토하실 수 있습니다. %{oc_close}까지 변경할 수 있습니다.
+    few: 현재 <a href='%{path}' target='_blank'>%{shop}내 %{count}개의 주문</a>을 검토하실 수 있습니다. %{oc_close}까지 변경할 수 있습니다.
+    many: 현재 <a href='%{path}' target='_blank'>%{shop}내 %{count}개의 주문</a>을 검토하실 수 있습니다. %{oc_close}까지 변경할 수 있습니다.
+    other: 현재 <a href='%{path}' target='_blank'>%{shop}내 %{count}개의 주문</a>을 검토하실 수 있습니다. %{oc_close}까지 변경할 수 있습니다.
+  orders_changeable_orders_alert_html: 이 주문은 확인되었지만, <strong>%{oc_close}</strong>까지 바꿀 수 있습니다.
+  products_clear: 지우기
+  products_showing: "보기 :"
+  products_results_for: "결과 :"
+  products_or: "또는"
+  products_and: "그리고"
+  products_filters_in: "안에"
+  products_with: 와
+  products_search: "탐색..."
+  products_filter_by: "필터링 기준"
+  products_filter_selected: "선택됨"
+  products_filter_heading: "필터"
+  products_filter_clear: "지우기"
+  products_filter_done: "완료"
+  products_loading: "제품을 로드하는 중..."
+  products_updating_cart: "카트를 업데이트 중입니다..."
+  products_cart_empty: "카트가 비어있습니다."
+  products_edit_cart: "카트 편집"
+  products_from: 부터
+  products_change: "저장할 변경 사항이 없습니다."
+  products_update_error: "다음 오류(들)로 인해 저장하지 못했습니다 :"
+  products_update_error_msg: "저장이 실패되었습니다."
+  products_update_error_data: "잘못된 데이터로 인하여 저장이 실패되었습니다 :"
+  products_changes_saved: "변경 내용이 저장되었습니다."
+  products_no_results_html: "죄송합니다. %{query}에 대한 결과를 찾을 수 없습니다."
+  products_clear_search: "검색 지우기"
+  search_no_results_html: "죄송합니다. %{query}에 대한 결과를 찾을 수 없습니다. 다른 검색을 시도하시겠습니까?"
+  components_profiles_popover: "프로필은 Open Food Network에서 매장이 없지만, 다른 곳에 자체적인 물리적 또는 온라인 매장이 있을 수 있습니다."
+  components_profiles_show: "프로필 보기"
+  components_filters_nofilters: "필터 없음"
+  components_filters_clearfilters: "모든 필터 지우기"
+  groups_title: 그룹
+  groups_headline: 그룹 / 지역
+  groups_text: "모든 생산자는 특별합니다. 사업마다 제공하는 것이 다릅니다. 우리 그룹은 지역, 농부 시장 또는 철학 같은 공통점을 공유하는 생산자, 허브 및 유통업체의 집합체입니다. 이것은 당신의 쇼핑을 더 쉽게 만들어 줍니다. 그룹을 탐색하고 큐레이팅 작업을 완료하십시오."
+  groups_search: "이름이나 키워드 찾기"
+  groups_no_groups: "그룹을 찾을 수 없습니다"
+  groups_about: "About Us"
+  groups_producers: "우리의 생산자"
+  groups_hubs: "우리 허브"
+  groups_contact_web: 연락처
+  groups_contact_social: 팔로우
+  groups_contact_address: 주소
+  groups_contact_email: 이메일 주소
+  groups_contact_website: 저희 사이트로 놀러오세요
+  groups_contact_facebook: Facebook으로 저희를 팔로우 해보세요
+  groups_signup_title: 그룹으로 가입하기
+  groups_signup_headline: 그룹 회원가입
+  groups_signup_intro: "우리는 협업 마케팅을 위한 놀라운 플랫폼으로, 회원과 이해 관계자가 새로운 시장에 진출할 수 있는 가장 쉬운 방법입니다. 우리는 비영리적이고, 저렴하며, 단순합니다."
+  groups_signup_email: 이메일 주소
+  groups_signup_motivation1: 우리는 식품 시스템을 공정하게 변화시킵니다.
+  groups_signup_motivation2: 저희가 매일 침대 밖을 향해 나아갈 수 있는 이유입니다. 우리는 오픈 소스 코드를 기반으로 한 글로벌 비영리 단체입니다. 우리는 정정당당하게 운영됩니다. 언제든지 저희를 믿으세요.
+  groups_signup_motivation3: 당신이 훌륭한 아이디어를 가지고 있고, 우리는 그걸 돕고 싶습니다. 우리는 지식, 네트워크 및 리소스 등을 공유합니다. 우리는 고립이 변화를 만들어낼 수 없다는 것을 알고 있기에, 우리는 당신과 협력할 것입니다.
+  groups_signup_motivation4: 당신이 있는 곳에서 당신을 만날 것입니다.
+  groups_signup_motivation5: 당신은 식품 허브, 생산자 또는 유통업체, 산업 단체 또는 지방 정부의 연합체일 수 있다.
+  groups_signup_motivation6: 지역 음식 활동 안에서 당신의 역할이 무엇이든 간에, 우리는 도울 준비가 되어 있습니다.  Open Food Network가 궁금해서든 당신의 지역에서 활동하든 간에, 우리는 대화를 시작할 것입니다.
+  groups_signup_motivation7: 우리는 음식의 이동을 더 이치에 맞게 만듭니다.
+  groups_signup_motivation8: 네트워크를 활성화한다면, 우리는 대화와 행동을 위한 플랫폼을 제공합니다. 당신의 진정한 약속이 필요합니다. 우리는 모든 참가자들, 모든 이해관계자들이 모든 부문에 도달할 수 있도록 도울 것입니다.
+  groups_signup_motivation9: 자원이 필요하신가요? 우리는 모든 경험들을 전달할 수 있습니다. 당신의 협력이 필요합니다.  당신을 더 나은 글로벌한 이웃 연대로 연결해 드릴 수 있습니다.
+  groups_signup_pricing: 그룹 계정
+  groups_signup_studies: 사례 연구
+  groups_signup_contact: 논의할 준비가 되었습니까?
+  groups_signup_contact_text: "OFN이 귀사에 어떤 도움을 줄 수 있는지 알아보려면 연락해 보십시오 :"
+  groups_signup_detail: "자세한 내용은 이렇습니다."
+  login_invalid: "잘못된 이메일 또는 비밀번호를 입력하셨습니다."
+  producers_about: About Us
+  producers_buy: 쇼핑 대상
+  producers_contact: 연락처
+  producers_contact_phone: 전화
+  producers_contact_social: 팔로우
+  producers_buy_at_html: "%{enterprise} 물품은 이곳에서 구매하실 수 있습니다 :"
+  producers_filter: 필터링 기준
+  producers_filter_type: 타입
+  producers_filter_property: 특성
+  producers_title: 생산자들
+  producers_headline: 지역 생산자 찾기
+  producers_signup_title: 생산자로 가입하기
+  producers_signup_headline: 식량 생산자들이 권한을 얻었습니다.
+  producers_signup_motivation: 당신의 음식을 팔고 당신의 이야기를 다양한 새로운 시장에 들려주세요. 돈, 시간에 대한 모든 간접 비용을 절약합니다. 우리는 리스크 없이 혁신을 지원합니다. 우리는 기울어진 운동장을 평평하게 만들었습니다.
+  producers_signup_send: 가입하기
+  producers_signup_enterprise: 회사 계정
+  producers_signup_studies: 우리 지역 생산자의 이야기
+  producers_signup_cta_headline: 지금 가입하세요!
+  producers_signup_cta_action: 가입하기
+  producers_signup_detail: 자세한 내용은 이렇습니다.
+  products_item: 항목
+  products_description: 설명
+  products_variant: 변경
+  products_quantity: 수량
+  products_available: 사용 가능합니까?
+  products_producer: "제공자"
+  products_price: "가격"
+  name_or_sku: "이름 또는 SKU"
+  register_title: 가입하기
+  sell_title: "가입하기"
+  sell_headline: "Open Food Network에 가입해 보세요!"
+  sell_motivation: "당신의 예술적인 음식을 전시 해보세요."
+  sell_producers: "생산자들"
+  sell_hubs: "물류센터"
+  sell_groups: "그룹"
+  sell_producers_detail: "몇 분 만에 OFN에서 귀사의 프로필을 설정할 수 있습니다. 언제든지 프로필을 온라인 상점으로 업그레이드하고 고객에게 직접 제품을 판매할 수 있습니다."
+  sell_hubs_detail: "OFN에서 식품 기업 또는 조직에 대한 프로필을 설정하십시오. 언제든지 멀티프로듀서샵으로 프로필을 업그레이드할 수 있습니다."
+  sell_groups_detail: "해당 지역 또는 조직에 맞는 기업(생산자 및 기타 식품 기업)의 맞춤형 디렉토리를 설정합니다."
+  sell_user_guide: "자세한 내용은 사용자 가이드를 참조하십시오."
+  sell_listing_price: "OFN 상장은 무료입니다. OFN에서 가게를 열고 운영하는 것은 월 매출 500달러까지 무료입니다. 더 많이 팔면 매출의 1%에서 3% 사이에서 커뮤니티 기여도를 선택할 수 있습니다. 가격에 대한 자세한 내용은 상단 메뉴의 정보 링크를 통해 소프트웨어 플랫폼 섹션을 참조하십시오."
+  sell_embed: "우리는 또한 귀사의 맞춤형 웹사이트에 OFN 샵을 포함하거나 귀사의 지역에 맞는 맞춤형 지역 음식 네트워크 웹사이트를 구축해 줄 수 있습니다."
+  sell_ask_services: "OFN 서비스에 대해 문의해보세요."
+  shops_title: 가게
+  shops_headline: 변화된 쇼핑
+  shops_text: 주기에 따라 음식은 성장하고, 농부들은 수확하고, 우리는 음식을 주문합니다. 주문 주기가 마감된 경우라면 잠시 후 다시 확인하십시오.
+  shops_signup_title: 허브로 가입하기
+  shops_signup_headline: 무제한의 먹거리 허브
+  shops_signup_motivation: 귀사의 모델이 무엇이든 간에, 우리는 당신을 지원합니다. 귀사가 어떻게 변화되든, 우린 당신의 편입니다. 우리는 비영리적이고, 독립적이며, 오픈 소스입니다. 우리는 귀사의 꿈꿔왔던 소프트웨어 파트너입니다.
+  shops_signup_action: 가입하기
+  shops_signup_pricing: 회사 계정
+  shops_signup_stories: 우리 지역 허브의 이야기
+  shops_signup_help: 우린 도울 준비가 됐습니다.
+  shops_signup_help_text: 당신은 더 나은 보상이 필요합니다. 당신은 새로운 구매자와 물류 파트너가 필요합니다. 도매상, 소매상, 식탁에 걸쳐 당신의 이야기를 들려주어야 합나다.
+  shops_signup_detail: 자세한 내용은 이렇습니다.
+  orders: "주문"
+  orders_fees: "수수료..."
+  orders_edit_title: "쇼핑 카트"
+  orders_edit_headline: "당신의 쇼핑 카트"
+  orders_edit_time: "주문 준비 완료"
+  orders_edit_continue: "쇼핑 계속하기"
+  orders_edit_checkout: "체크아웃"
+  orders_form_empty_cart: "카트가 비어있습니다"
+  orders_form_update_cart: "업데이트"
+  orders_form_subtotal: "소계 생산"
+  orders_form_admin: "관리 및 처리"
+  orders_form_total: "총합"
+  orders_oc_expired_headline: "이 주문 주기에 대한 주문이 마감되었습니다."
+  orders_oc_expired_text: "죄송하지만 이 주문 주기의 주문은 %{time} 전에 마감되었습니다! 허브에 직접 연락하여 지연된 주문을 받을 수 있는지 확인해보세요."
+  orders_oc_expired_text_others_html: "죄송하지만 이 주문 주기의 주문은 %{time} 전에 마감되었습니다! 허브에 직접 연락하여 지연 주문<strong>%{link}</strong>을 수락할 수 있는지 확인하십시오."
+  orders_oc_expired_text_link: "또는 이 허브에서 사용할 수 있는 다른 주문 사이클을 참조하십시오."
+  orders_oc_expired_email: "이메일 :"
+  orders_oc_expired_phone: "전화번호: "
+  orders_show_title: "주문 확인"
+  orders_show_time: "주문 준비 완료일"
+  orders_show_order_number: "주문 #%{number}"
+  orders_show_cancelled: "취소됨"
+  orders_show_confirmed: "확인됨"
+  orders_your_order_has_been_cancelled: "당신의 주문이 방금 취소되었습니다."
+  orders_could_not_cancel: "죄송합니다. 주문을 취소 시킬 수 없습니다."
+  orders_cannot_remove_the_final_item: "주문에서 최종 물품을 제거할 수 없습니다. 대신 주문을 취소하십시오."
+  orders_bought_items_notice:
+    one: "이 주문 주기에 대한 추가 품목이 이미 확인되었습니다."
+    few: "이 주문 주기에 대해 이미 확인된 추가 품목 %{count}개"
+    many: "이 주문 주기에 대해 이미 확인된 추가 품목 %{count}개"
+    other: "이 주문 주기에 대해 이미 확인된 추가 품목 %{count}개"
+  orders_bought_edit_button: "확인된 항목 편집"
+  orders_bought_already_confirmed: "이미 확인됨"
+  orders_confirm_cancel: "이 주문을 취소하시겠습니까?"
+  order_processed_successfully: "당신의 주문이 성공적으로 진행되었습니다."
+  products_cart_distributor_choice: "주문에 대한 대리점 :"
+  products_cart_distributor_change: "이 제품을 카트에 추가하면 이 주문의 대리점이 %{name}로 변경됩니다."
+  products_cart_distributor_is: "이 주문의 배포자는 %{name}과 같습니다."
+  products_distributor_error: "다른 대리점과 쇼핑하기 전에 %{link}에서 주문을 완료하십시오."
+  products_oc: "귀사의 주문에 대한 주문 주기:"
+  products_oc_change: "이 제품을 카트에 추가하면 이 주문의 주문 주기가 %{name}로 변경됩니다."
+  products_oc_is: "이 주문의 주문 주기는 %{name}입니다."
+  products_oc_error: "다른 주문 주기로 쇼핑하기 전에 %{link}에서 주문을 완료하십시오."
+  products_oc_current: "현재 주문 주기"
+  products_max_quantity: 최대 수량
+  products_distributor: 유통업체
+  products_distributor_info: 주문에 대한 대리점을 선택하면 대리점의 주소와 픽업 시간이 여기에 표시됩니다.
+  password: 비밀번호
+  remember_me: 기억해두세요
+  are_you_sure: "확실합니까?"
+  orders_open: "주문 시작"
+  closing: "마감 중"
+  going_back_to_home_page: "홈 페이지로 돌아가기"
+  creating: 생성 중
+  updating: 업데이트 중
+  failed_to_create_enterprise: "회사를 만드는데 실패하셨습니다."
+  failed_to_create_enterprise_unknown: "회사를 만드는데 실패하셨습니다.\n모든 필드가 완전히 입력되었는지 확인해보십시요."
+  failed_to_update_enterprise_unknown: "회사를 업데이트 하는데 실패하셨습니다.\n모든 필드가 완전히 입력되었는지 확인해보십시요."
+  enterprise_confirm_delete_message: "이 기업에서 제공하는 %{product}도 삭제됩니다. 계속하시겠습니까?"
+  order_not_saved_yet: "주문이 아직 저장되지 않았습니다. 끝날 때까지 몇 초만 기다려 주세요!"
+  filter_by: "필터링 기준"
+  hide_filters: "필터 숨기기"
+  one_filter_applied: "1개 필터 추가"
+  x_filters_applied: "다수의 필터 추가"
+  submitting_order: "주문 접수 중 : 기다려주십시요"
+  confirm_hub_change: "확실합니까? 선택한 허브가 변경되고 쇼핑 카트의 모든 항목이 제거됩니다."
+  confirm_oc_change: "확실합니까? 이렇게 하면 선택한 주문 주기가 변경되고 쇼핑 카트의 모든 항목이 제거됩니다."
+  location_placeholder: "위치를 입력하십시오...."
+  error_required: "빈칸이 될 수 없습니다."
+  error_number: "숫자여야 합니다"
+  error_email: "이메일 주소여야 합니다"
+  error_not_found_in_database: "데이터베이스에서 %{name}를 찾을 수 없습니다"
+  error_not_primary_producer: "%{name}는 생산자로 사용할 수 없습니다."
+  error_no_permission_for_enterprise: "\"%{name}\" : 이 회사의 제품을 관리할 수 있는 권한이 없습니다."
+  item_handling_fees: "품목 처리 수수료 (품목 총계에 포함함)"
+  january: "1 월"
+  february: "2 월"
+  march: "3 월"
+  april: "4 월"
+  may: "5 월"
+  june: "6 월"
+  july: "7 월"
+  august: "8 월"
+  september: "9 월"
+  october: "10 월"
+  november: "11 월"
+  december: "12 월"
+  email_not_found: "이메일 주소를 찾을 수 없습니다"
+  email_unconfirmed: "암호를 재설정하려면 먼저 이메일 주소를 확인해야 합니다."
+  email_required: "이메일 주소를 제공하셔야 합니다"
+  logging_in: "잠시만 기다려주십시요, 로그인 중입니다."
+  signup_email: "당신의 이메일"
+  choose_password: "비밀번호 입력"
+  confirm_password: "비밀번호 확인"
+  action_signup: "지금 가입하기"
+  forgot_password: "비밀번호를 잊으셨나요?"
+  password_reset_sent: "암호 재설정 설명이 포함된 이메일이 전송되었습니다."
+  reset_password: "비밀번호 초기화"
+  update_and_recalculate_fees: "수수료 업데이트 및 재계산"
+  registration:
+    steps:
+      introduction:
+        registration_greeting: "안녕하세요!"
+        registration_intro: "이제 생산자 또는 허브에 대한 프로필을 만들 수 있습니다."
+        registration_checklist: "뭐가 필요한가요?"
+        registration_time: "5-10 분"
+        registration_enterprise_address: "회사 주소"
+        registration_contact_details: "기본 연락처 세부 정보"
+        registration_logo: "귀사의 로고 이미지"
+        registration_promo_image: "귀사 프로필 배경 화면"
+        registration_about_us: "'About Us' 문장"
+        registration_outcome_headline: "무엇을 얻을 수 있나요?"
+        registration_outcome1_html: "당신의 프로필은 사람들이 Open Food Network에서 당신을 <strong>찾고</strong> <strong>연락하는</strong> 것을 도와줍니다."
+        registration_outcome2: "이 공간을 사용하여 회사의 사례를 소개하고 소셜 및 온라인 환경에 대한 연결을 촉진할 수 있습니다."
+        registration_outcome3: "이것은 또한 Open Food Network에서 거래하거나 온라인 상점을 여는 첫 번째 단계입니다."
+        registration_action: "시작해봅시다!"
+      details:
+        title: "세부 사항"
+        headline: "시작해봅시다"
+        enterprise: "우와! 먼저 귀사의 비즈니스에 대해 조금 더 알고 싶습니다."
+        producer: "우와! 먼저 귀사의 농장에 대해 조금 더 알고 싶습니다."
+        enterprise_name_field: "회사 이름 :"
+        producer_name_field: "농장 이름 :"
+        producer_name_field_placeholder: "예. Charlie's Awesome Farm"
+        producer_name_field_error: "회사의 특별한 이름을 지어보세요."
+        address1_field: "주소 1 번 :"
+        address1_field_placeholder: "예. 123 Cranberry Drive"
+        address1_field_error: "주소를 입력하십시오."
+        address2_field: "주소 2 번 :"
+        suburb_field: "교외 지역 :"
+        suburb_field_placeholder: "예. Northcote"
+        suburb_field_error: "교외 지역을 입력하십시오."
+        postcode_field: "우편번호 :"
+        postcode_field_placeholder: "예. 3070"
+        postcode_field_error: "우편번호가 필요합니다"
+        state_field: "주 :"
+        state_field_error: "주를 작성하셔야 합니다."
+        country_field: "국가 :"
+        country_field_error: "국가를 선택 해주세요."
+        map_location: "지역 지도"
+        locate_address: "지도에서 주소 찾기"
+        drag_pin: "정확하지 않은 경우 핀을 올바른 위치로 끌어 당기십시요."
+        confirm_address: "지도에 표시된 기업의 위치가 맞는지 확인합니다."
+        drag_map_marker: "농촌에서 활동하는 많은 생산자들로 인해 지도의 정확성은 항상 향상되고 있습니다. 위의 지도와 상호 작용하여 핀을 이동하려면 클릭하거나 눌러 핀을 고정시킨 다음 사용자가 알고 있는 정확한 위치로 끌어당기십시오."
+      contact:
+        title: "연락처"
+        who_is_managing_enterprise: "%{enterprise}의 관리책임자가 누구입니까?"
+        contact_field: "기본 연락처"
+        contact_field_placeholder: "연락처 이름"
+        contact_field_required: "기본 연락처를 입력하셔야 합니다."
+        phone_field: "전화번호"
+        phone_field_placeholder: "예. (03) 1234 5678"
+      type:
+        title: "타입"
+        headline: "%{enterprise}을 추가하는 최종 단계 입니다!"
+        question: "생산자 이십니까?"
+        yes_producer: "예, 저는 생산자입니다."
+        no_producer: "아니요, 저는 생산자가 아닙니다."
+        producer_field_error: "하나를 선택하세요. 생산자 이신가요?"
+        yes_producer_help: "생산자들은 먹거나 마실 수 있는 맛있는 것들을 만듭니다. 재배하고, 기르고, 양조하고, 굽고, 발효시키고, 우유를 짜고, 발효 식품을 만들면 생산자가 됩니다."
+        no_producer_help: "만약 여러분이 생산자가 아니라면, 여러분은 아마도 음식을 팔고 분배하는 사람일 겁니다. 당신은 허브, 협동조합, 구매 그룹, 소매업자, 도매업자 또는 그 외의 여러 직종일 수 있습니다."
+        create_profile: "프로필 생성"
+      about:
+        title: "좀 더 알고싶다면"
+        headline: "잘하셨습니다!"
+        message: "자, 이제 자세한 내용을 알아보겠습니다."
+        success: "성공하셨습니다! Open Food Network에 %{enterprise}가 추가되었습니다."
+        registration_exit_message: "어느 단계에서나 이 마법사를 종료하더라도 관리 인터페이스로 이동하여 프로필을 계속 만드실 수 있습니다."
+        enterprise_description: "간단한 설명"
+        enterprise_description_placeholder: "회사를 설명하는 짧은 문장"
+        enterprise_long_desc: "자세한 설명"
+        enterprise_long_desc_placeholder: "지금이 바로 여러분의 기업에 대한 이야기를 할 수 있는 기회입니다. 무엇이 여러분을 독특하고 멋지게 만드나요? 설명을 600자 이내로 또는 150자 이내로 유지하는 것이 좋습니다."
+        enterprise_long_desc_length: "%{num}자 / 최대 600자 권장"
+        enterprise_abn: "ABN"
+        enterprise_abn_placeholder: "eg. 99 123 456 789"
+        enterprise_acn: "ACN"
+        enterprise_acn_placeholder: "eg. 123 456 789"
+        enterprise_tax_required: "선택하십시요."
+      images:
+        title: "사진"
+        headline: "감사합니다!"
+        description: "예쁜 사진을 몇 장 올려서 프로필이 잘 보이도록 해보시죠! :)"
+        uploading: "업로딩 중..."
+        continue: "계속하기"
+        back: "뒤로"
+      logo:
+        select_logo: "1 단계. 로고 이미지 선택하기"
+        logo_tip: "팁 : 적어도 300×300 px의 정사각형 이미지가 가장 잘 작동합니다."
+        logo_label: "로고 이미지 고르기"
+        logo_drag: "여기에다 로고를 끌어당기세요."
+        review_logo: "2 단계. 로고 검토하기"
+        review_logo_tip: "팁 : 최고의 결과는 로고가 사용 가능한 공간을 채운 상태 입니다."
+        logo_placeholder: "업로드되면 검토를 위해 로고가 여기에 나타납니다."
+      promo:
+        select_promo_image: "3 단계. 프로모션 이미지 선택하기"
+        promo_image_tip: "팁 : 배너로 표시되며, 선호하는 크기는 1200x260 px입니다."
+        promo_image_label: "프로모션 이미지를 선택하세요"
+        promo_image_drag: "프로모션을 여기로 끌어당기세요."
+        review_promo_image: "4 단계. 프로모션 배너 검토하기"
+        review_promo_image_tip: "팁 : 최고의 결과는 프로모션 이미지가 사용 가능한 공간을 채운 상태 입니다."
+        promo_image_placeholder: "업로드되면 검토를 위해 로고가 여기에 나타납니다."
+      social:
+        title: "사회성"
+        enterprise_final_step: "마지막 단계!"
+        enterprise_social_text: "어떻게 하면 온라인으로 %{enterprise}를 찾을 수 있을까요?"
+        website: "웹사이트"
+        website_placeholder: "예. openfoodnetwork.org.au"
+        facebook: "페이스북"
+        facebook_placeholder: "예. www.facebook.com/PageNameHere"
+        linkedin: "링크드인"
+        linkedin_placeholder: "예. openfoodnetwork.org.au"
+        twitter: "트위터"
+        twitter_placeholder: "예. @twitter_handle"
+        instagram: "인스타그램"
+        instagram_placeholder: "예. @instagram_handle"
+      limit_reached:
+        headline: "오 이런!"
+        message: "한계에 도달했습니다!"
+        text: "에서 소유할 수 있는 기업 수에 대한 제한에 도달했습니다."
+        action: "홈페이지로 돌아가기"
+      finished:
+        headline: "마치셨습니다!"
+        thanks: "%{enterprise}에 대한 세부 정보를 작성해 주셔서 감사합니다."
+        login: "Open Food Network에 로그인하고 Admin으로 이동하여 언제든지 기업을 변경하거나 업데이트하실 수 있습니다."
+        action: "회사 대쉬보드로 가기"
+  back: "뒤로"
+  continue: "계속하기"
+  action_or: "또는"
+  enterprise_limit: 회사 최대치
+  shipping_method_destroy_error: "해당 발송 방법은 주문에 의해 참조되므로 삭제할 수 없습니다 : %{number}."
+  fees: "수수료"
+  item_cost: "물품 가격"
+  bulk: "대형"
+  shop_variant_quantity_min: "최소"
+  shop_variant_quantity_max: "최대"
+  follow: "팔로우"
+  shop_for_products_html: "<span class=\"turquoise\">%{enterprise}</span> 제품 구매:"
+  change_shop: "상점 변경 위치 :"
+  shop_at: "지금 쇼핑 :"
+  admin_fee: "관리자 수수료"
+  sales_fee: "판매 수수료"
+  packing_fee: "포장 수수료"
+  transport_fee: "수송 수수료"
+  fundraising_fee: "모금 수수료"
+  price_graph: "가격 그래프"
+  included_tax: "세금 포함"
+  tax: "세금"
+  tax_amount_included: "%{amount} (포함)"
+  balance: "잔고"
+  transaction: "거래"
+  transaction_date: "날짜"
+  payment_state: "결제 상태"
+  shipping_state: "배송 상태"
+  value: "가치"
+  balance_due: "잔액 만기"
+  credit: "신용 거래"
+  Paid: "유급"
+  Ready: "준비"
+  ok: 확인
+  not_visible: 볼 수 없음
+  you_have_no_orders_yet: "아직 주문이 없음"
+  show_only_complete_orders: "확정된 주문만 보기"
+  successfully_created: '%{resource}가 성공적으로 생성되었습니다!'
+  successfully_removed: '%{resource}가 성공적으로 제거되었습니다!'
+  successfully_updated: '%{resource}가 성공적으로 업데이트 되었습니다!'
+  running_balance: "계좌 실행"
+  outstanding_balance: "미지급 계좌"
+  admin_enterprise_relationships: "회사 권한"
+  admin_enterprise_relationships_everything: "모두보기"
+  admin_enterprise_relationships_permits: "허가"
+  admin_enterprise_relationships_seach_placeholder: "찾기"
+  admin_enterprise_relationships_button_create: "생성"
+  admin_enterprise_relationships_to: "에게"
+  admin_enterprise_groups: "회사 그룹"
+  admin_enterprise_groups_name: "이름"
+  admin_enterprise_groups_owner: "오너"
+  admin_enterprise_groups_on_front_page: "앞 부분에 두시겠습니까?"
+  admin_enterprise_groups_enterprise: "회사"
+  admin_enterprise_groups_data_powertip: "이 그룹을 담당하는 기본 사용자입니다."
+  admin_enterprise_groups_data_powertip_logo: "이것은 그룹의 로고입니다."
+  admin_enterprise_groups_data_powertip_promo_image: "이 이미지는 그룹 프로필 상단에 전시되어 있습니다"
+  admin_enterprise_groups_contact: "연락처"
+  admin_enterprise_groups_contact_phone_placeholder: "예시. 98 7654 3210"
+  admin_enterprise_groups_contact_address1_placeholder: "예.  123 High Street"
+  admin_enterprise_groups_contact_city: "교외"
+  admin_enterprise_groups_contact_city_placeholder: "예. Northcote"
+  admin_enterprise_groups_contact_zipcode: "우편번호"
+  admin_enterprise_groups_contact_zipcode_placeholder: "예. 3070"
+  admin_enterprise_groups_contact_state_id: "상태"
+  admin_enterprise_groups_contact_country_id: "나라"
+  admin_enterprise_groups_web: "웹 자원"
+  admin_enterprise_groups_web_twitter: "예. @the_prof"
+  admin_enterprise_groups_web_website_placeholder: "예시. www.truffles.com"
+  admin_order_cycles: "관리자 주문 주기"
+  open: "개장"
+  close: "휴무"
+  create: "생성"
+  search: "찾기"
+  supplier: "공급업체"
+  product_name: "제품 이름"
+  product_description: "제품 설명"
+  permalink: "하이퍼링크"
+  shipping_categories: "배송 카테고리"
+  units: "물건 크기"
+  coordinator: "협력자"
+  distributor: "유통업체"
+  enterprise_fees: "기업 수수료"
+  process_my_order: "내 주문 처리"
+  delivery_instructions: 배달 설명
+  delivery_method: 배달 방식
+  fee_type: "지불 방식"
+  tax_category: "세금 목록"
+  description: "설명"
+  display: "전시"
+  tags: "태그"
+  calculator: "계산기"
+  calculator_values: "계산 결과"
+  calculator_settings_warning: "계산기 유형을 변경하는 경우 계산기 설정을 편집하기 전에 먼저 저장해야 합니다."
+  calculator_preferred_unit_error: "kg 이나 Ib 단위여야 합니다."
+  calculator_preferred_value_error: "잘못된 입력입니다. 숫자만 사용하십시오. 예를 들어 10, 5.5, -20 같이 말입니다."
+  flat_percent_per_item: "고정 백분율(항목당)"
+  flat_rate_per_item: "고정 요금 (항목당)"
+  flat_rate_per_order: "고정 요금 (주문당)"
+  flexible_rate: "변동 요금"
+  price_sack: "가격 인하"
+  new_order_cycles: "새 주문 주기"
+  new_order_cycle: "새 주문 주기"
+  new_order_cycle_tooltip: "일정 기간 동안 가게 열기"
+  select_a_coordinator_for_your_order_cycle: "주문 주기에 대한 협력자 선택"
+  notify_producers: '생산자에게 통보'
+  edit_order_cycle: "주문 주기 편집"
+  roles: "역할"
+  update: "업데이트"
+  delete: 삭제
+  add_producer_property: "생산자 속성 추가"
+  in_progress: "진행 중"
+  started_at: "시작 기간"
+  queued: "대기 중"
+  scheduled_for: "예정 일"
+  customers: "소비자"
+  please_select_hub: "허브를 선택해 주세요"
+  loading_customers: "고객 로딩 중"
+  no_customers_found: "고객을 찾을 수 없습니다"
+  go: "진행"
+  hub: "물류"
+  producer: "제공자"
+  product: "생산물"
+  price: "가격"
+  on_hand: "대기 중"
+  review: "리뷰"
+  save_changes: "변경 내용 저장"
+  order_saved: "주문 저장됨"
+  no_products: 생산품 없음
+  spree_admin_overview_enterprises_header: "내 회사"
+  spree_admin_overview_enterprises_footer: "내 회사 관리하기"
+  spree_admin_enterprises_hubs_name: "이름"
+  spree_admin_enterprises_create_new: "새로 생성하기"
+  spree_admin_enterprises_shipping_methods: "전송 방법"
+  spree_admin_enterprises_fees: "기업 수수료"
+  spree_admin_enterprises_none_create_a_new_enterprise: "내 회사 생성하기"
+  spree_admin_enterprises_none_text: "아직 어떤 회사도 가지고 있지 않습니다"
+  spree_admin_enterprises_tabs_hubs: "허브"
+  spree_admin_enterprises_producers_manage_products: "생산품 관리"
+  spree_admin_enterprises_create_new_product: "새 생산품 생성하기"
+  spree_admin_single_enterprise_alert_mail_confirmation: "이메일 주소를 확인해 주십시요."
+  spree_admin_single_enterprise_alert_mail_sent: "이메일을 전송했습니다"
+  spree_admin_overview_action_required: "필요한 작업"
+  spree_admin_overview_check_your_inbox: "자세한 내용은 받은 편지함을 확인하시면 됩니다. 감사합니다!"
+  spree_admin_unit_value: 단위 값
+  spree_admin_unit_description: 단위 설명
+  spree_admin_variant_unit: 구성 단위 변경
+  spree_admin_variant_unit_scale: 변경할 구성 단위 크기
+  spree_admin_supplier: 공급업체
+  spree_admin_product_category: 물품 목록
+  spree_admin_variant_unit_name: 변경된 구성 단위 이름
+  unit_name: "단위 이름"
+  change_package: "패키지 변경"
+  spree_admin_single_enterprise_hint: "힌트 : 다른 사용자가 사용자를 찾을 수 있도록 하려면 다음에서 사용자 가시성을 켜십시오."
+  spree_admin_eg_pickup_from_school: "예. '초등학교에서 픽업'"
+  spree_admin_eg_collect_your_order: "예. '123 Imaginary St, Northcote, 3070번지에서 주문을 받으십시오.'"
+  spree_classification_primary_taxon_error: "분류군%{taxon}은 %{product}의 기본 분류군이며 삭제할 수 없습니다."
+  spree_order_availability_error: "대리점 또는 주문 주기가 카트의 제품을 제공할 수 없습니다."
+  spree_order_populator_error: "해당 유통업체나 주문 주기가 카트에 있는 모든 제품을 공급할 수는 없습니다. 다른 항목을 선택하십시오."
+  spree_order_cycle_error: "이 주문에 대한 주문 주기를 선택하십시오."
+  spree_order_populator_availability_error: "선택한 대리점 또는 주문 주기에서 해당 제품을 사용할 수 없습니다."
+  spree_distributors_error: "하나 이상의 허브를 선택해야 합니다."
+  spree_user_enterprise_limit_error: "%{email}은 더 이상 기업을 소유할 수 없습니다. ( %{enterprise_limit}까지가 최대치 )"
+  spree_variant_product_error: 하나 이상의 변경 사항이 있어야 합니다.
+  your_profil_live: "프로필 라이브"
+  see: "보기"
+  live: "라이브"
+  manage: "관리"
+  resend: "재전송"
+  add_and_manage_products: "제품 추가 및 관리"
+  add_and_manage_order_cycles: "주문 주기 추가 및 관리"
+  manage_order_cycles: "주문 주기 관리"
+  manage_products: "제품 관리"
+  edit_profile_details: "프로필 세부 사항 편집"
+  edit_profile_details_etc: "프로필 설명, 이미지 등을 변경합니다."
+  order_cycle: "주문 주기"
+  order_cycles: "주문 주기"
+  enterprise_relationships: "회사 권한"
+  remove_tax: "세금 제거"
+  first_name_begins_with: "이름"
+  last_name_begins_with: "성"
+  shipping_method: "배송 방법"
+  new_order: "새로운 주문"
+  enterprise_tos_link: "회사 서비스 약관 링크"
+  enterprise_tos_message: "저희는 저희의 목표와 가치를 공유하는 사람들과 일하고 싶습니다.  따라서 저희는 새 기업들에게 저희 의견에 동의하기를 원합니다."
+  enterprise_tos_agree: "위의 서비스 약관에 동의합니다."
+  tax_settings: "세금 설정"
+  products_require_tax_category: "제품에는 세금 카테고리가 필요합니다."
+  admin_shared_address_1: "주소"
+  admin_shared_address_2: "주소 (계속)"
+  admin_share_city: "시"
+  admin_share_zipcode: "우편번호"
+  admin_share_country: "나라"
+  admin_share_state: "상태"
+  hub_sidebar_hubs: "물류센터"
+  hub_sidebar_none_available: "사용 가능한 항목 없음"
+  hub_sidebar_manage: "관리"
+  hub_sidebar_at_least: "하나 이상의 허브를 선택해야 합니다."
+  hub_sidebar_blue: "파랑"
+  hub_sidebar_red: "빨강"
+  order_cycles_closed_for_hub: "선택한 허브는 주문 때문에 일시적으로 폐쇄되었습니다. 나중에 다시 시도해 주십시오."
+  report_customers_distributor: "유통업체"
+  report_customers_supplier: "공급업체"
+  report_customers_cycle: "주문 주기"
+  report_customers_type: "유형 기록하기"
+  report_customers_csv: "csv 형태로 다운로드"
+  report_producers: "생산자들"
+  report_type: "유형 기록하기"
+  report_hubs: "물류센터"
+  report_payment: "결제 방법"
+  report_distributor: "유통업체"
+  report_payment_by: '유형에 따른 결제 방법'
+  report_itemised_payment: '항목별 지급 합계'
+  report_payment_totals: '결제 총합'
+  report_all: '모두'
+  report_order_cycle: "주문 주기"
+  report_hide_columns: 숨길 열
+  report_enterprises: "회사"
+  report_enterprise_fee: "수수료 확인"
+  report_users: "사용자"
+  report_tax_rates: 세율
+  report_tax_types: 조세 유형
+  report_filters: 기록 필터
+  report_print: 보고서 출력
+  report_render_options: 렌더링 옵션
+  report_header_order_cycle: 주문 주기
+  report_header_user: 사용자
+  report_header_email: 이메일
+  report_header_status: 상태
+  report_header_comments: 코멘트
+  report_header_first_name: 이름
+  report_header_last_name: 성
+  report_header_phone: 전화번호
+  report_header_suburb: 교외
+  report_header_address: 주소
+  report_header_billing_address: 청구서 발송지
+  report_header_relationship: 관계
+  report_header_hub: 물류
+  report_header_hub_address: 허브 주소
+  report_header_to_hub: 허브에게
+  report_header_hub_code: 허브 코드
+  report_header_code: 코드
+  report_header_paid: 유급 입니까?
+  report_header_delivery: 배달 입니까?
+  report_header_shipping: 배송
+  report_header_shipping_method: 배송 방법
+  report_header_shipping_instructions: 배송 지침
+  report_header_ship_street: 주문 도로명
+  report_header_ship_street_2: 주문 도로명 2
+  report_header_ship_city: 주문 도시
+  report_header_ship_postcode: 주문 우편번호
+  report_header_ship_state: 주문 주
+  report_header_billing_street: 고지 도로명
+  report_header_billing_street_2: 고지 도로명 2
+  report_header_billing_street_3: 고지 도로명 3
+  report_header_billing_street_4: 고지 도로명 4
+  report_header_billing_city: 고지 도시
+  report_header_billing_postcode: 고지 우편번호
+  report_header_billing_state: 고지 주
+  report_header_incoming_transport: 수신 전송
+  report_header_special_instructions: 특별 지침
+  report_header_order_number: 주문 번호
+  report_header_date: 날짜
+  report_header_confirmation_date: 확인 날짜
+  report_header_tags: 태그
+  report_header_items: 항목
+  report_header_items_total: "품목 합계 %{currency_symbol}"
+  report_header_taxable_items_total: "과세 품목 합계 (%{currency_symbol})"
+  report_header_sales_tax: "판매세 (%{currency_symbol})"
+  report_header_delivery_charge: "배달 요금 (%{currency_symbol})"
+  report_header_tax_on_delivery: "배달 세금 (%{currency_symbol})"
+  report_header_tax_on_fees: "수수료 세금 (%{currency_symbol})"
+  report_header_total_tax: "세금 총합 (%{currency_symbol})"
+  report_header_enterprise: 회사
+  report_header_customer: 고객
+  report_header_customer_code: 소비자 코드
+  report_header_product: 생산물
+  report_header_product_properties: 상품 자산
+  report_header_quantity: 수량
+  report_header_max_quantity: 최대 수량
+  report_header_variant: 다른 상품
+  report_header_variant_value: 변경된 값
+  report_header_variant_unit: 구성 단위 변경
+  report_header_total_available: 사용 가능한 항목 총합
+  report_header_unallocated: 할당되지 않음
+  report_header_max_quantity_excess: 최대 수량 초과
+  report_header_taxons: 분류군
+  report_header_supplier: 공급업체
+  report_header_producer: 제공자
+  report_header_producer_suburb: 생산자 교외 지역
+  report_header_unit: 단위
+  report_header_group_buy_unit_quantity: 그룹 구매 단위 수량
+  report_header_cost: 비용
+  report_header_shipping_cost: 배송 비용
+  report_header_curr_cost_per_unit: 단위당 현재 비용
+  report_header_total_shipping_cost: 배송 비용 총합
+  report_header_payment_method: 결제 방식
+  report_header_sells: 판매할 물품
+  report_header_visible: 표시
+  report_header_price: 가격
+  report_header_unit_size: 물건 크기
+  report_header_distributor: 유통업체
+  report_header_distributor_address: 대리점 주소
+  report_header_distributor_city: 대리점 도시
+  report_header_distributor_postcode: 대리점 우편번호
+  report_header_delivery_address: 배달 주소
+  report_header_delivery_postcode: 배달 우편번호
+  report_header_bulk_unit_size: 대량 단위 크기
+  report_header_weight: 무게
+  report_header_sum_total: 총합
+  report_header_date_of_order: 주문 날짜
+  report_header_amount_owing: 미지급액
+  report_header_amount_paid: 지급액
+  report_header_units_required: 필요한 단위
+  report_header_remainder: 나머지
+  report_header_order_date: 주문일자
+  report_header_order_id: 주문 ID
+  report_header_item_name: 품명
+  report_header_temp_controlled_items: 온도 제어 항목입니까?
+  report_header_customer_name: 소비자 이름
+  report_header_customer_email: 소비자 이메일
+  report_header_customer_phone: 소비자 전화번호
+  report_header_customer_city: 소비자 도시
+  report_header_payment_state: 결제 상태
+  report_header_payment_type: 결제 유형
+  report_header_item_price: "물품 (%{currency})"
+  report_header_item_fees_price: "물품 + 수수료 (%{currency})"
+  report_header_admin_handling_fees: "관리 및 처리 (%{currency})"
+  report_header_ship_price: "수송 (%{currency})"
+  report_header_pay_fee_price: "지불 수수료 (%{currency})"
+  report_header_total_price: "총합 (%{currency})"
+  report_header_product_total_price: "물품 총합 (%{currency})"
+  report_header_shipping_total_price: "배송 총합 (%{currency})"
+  report_header_outstanding_balance_price: "미지급 잔액 (%{currency})"
+  report_header_eft_price: "계좌이체 (%{currency})"
+  report_header_paypal_price: "페이팔 (%{currency})"
+  report_header_sku: 재고 관리 단위
+  report_header_amount: 수량
+  report_header_balance: 잔고
+  report_header_total_cost: "비용 총합"
+  report_header_total_ordered: 주문 총합
+  report_header_total_max: 총 최대값
+  report_header_total_units: 총 단위
+  report_header_sum_max_total: "총합 최대 합계"
+  report_header_total_excl_vat: "세금 제외 합계 (%{currency_symbol})"
+  report_header_total_incl_vat: "세금 포함 합계 (%{currency_symbol})"
+  report_header_temp_controlled: 온도를 제어하시겠습니까?
+  report_header_is_producer: 생산자 이십니까?
+  report_header_not_confirmed: 확인되지 않음
+  report_header_gst_on_income: 소득 내 물품·용역소비세
+  report_header_gst_free_income: '무상 소득 내 물품·용역소비세 '
+  report_header_total_untaxable_produce: 과세 불능 생산액 (세금 없음)
+  report_header_total_taxable_produce: 과세 불능 생산액 (세금 포함)
+  report_header_total_untaxable_fees: 과세 불능 수수료 (세금 없음)
+  report_header_total_taxable_fees: 과세 불능 수수료 (세금 포함)
+  report_header_delivery_shipping_cost: 배송비 (세금 포함)
+  report_header_transaction_fee: 거래 수수료 (세금 없음)
+  report_header_total_untaxable_admin: 과세 불능 관리 조정 총합 (세금 없음)
+  report_header_total_taxable_admin: 과세 불능 관리 조정 총합 (세금 포함)
+  report_xero_configuration: Xero 환경 설정
+  initial_invoice_number: "초기 청구서 번호"
+  invoice_date: "청구 날짜"
+  due_date: "날짜 기한"
+  account_code: "계정 코드"
+  equals: "동등함"
+  contains: "포함됨"
+  discount: "할인"
+  filter_products: "생산품 필터"
+  delete_product_variant: "마지막 변경 사항을 삭제할 수 없습니다!"
+  progress: "진행"
+  saving: "저장 중..."
+  success: "성공"
+  failure: "실패"
+  unsaved_changes_confirmation: "저장하지 않은 변경 내용이 손실됩니다. 그래도 계속하시겠습니까?"
+  one_product_unsaved: "한 제품에 대한 변경 내용은 저장되지 않은 상태로 유지됩니다."
+  products_unsaved: "%{n}개 제품의 변경 내용은 저장되지 않은 상태로 유지됩니다."
+  is_already_manager: "이미 관리자 입니다!"
+  no_change_to_save: "저장할 변경 사항이 없습니다."
+  user_invited: "%{email}님이 기업을 관리하도록 초대되셨습니다."
+  add_manager: "기존 사용자 추가"
+  users: "사용자"
+  about: "좀 더 알고싶다면"
+  images: "사진"
+  web: "웹페이지"
+  primary_details: "기본 세부 사항"
+  adrdress: "주소"
+  contact: "연락처"
+  social: "사회성"
+  business_details: "사업 세부 사항"
+  properties: "특성"
+  shipping: "배송"
+  shipping_methods: "전송 방법"
+  payment_methods: "결제 방법"
+  payment_method_fee: "거래 수수료"
+  payment_processing_failed: "결제를 처리할 수 없습니다. 입력한 정보를 확인하십시오."
+  payment_method_not_supported: "해당 결제 방법은 지원되지 않습니다. 다른 항목을 선택하십시오."
+  payment_updated: "결제가 업데이트됨"
+  cannot_perform_operation: "결제를 업데이트를 할 수 없습니다."
+  action_required: "필요한 작업"
+  inventory_settings: "인벤토리 설정"
+  tag_rules: "태그 규칙"
+  shop_preferences: "상점 기본 설정"
+  enterprise_fee_whole_order: 전체 주문
+  enterprise_fee_by: "%{role}%{enterprise_name}의 %{type} 수수료"
+  validation_msg_relationship_already_established: "그 관계는 이미 정해져 있습니다."
+  validation_msg_at_least_one_hub: "적어도 하나 이상의 허브를 선택해야 합니다."
+  validation_msg_tax_category_cant_be_blank: "세금 카테고리는 비워 둘 수 없습니다."
+  validation_msg_is_associated_with_an_exising_customer: "기존 고객과 연결되어 있습니다."
+  content_configuration_pricing_table: "(할 일 : 가격표)"
+  content_configuration_case_studies: "(할 일 : 사례 연구)"
+  content_configuration_detail: "(할 일 :세부 사항)"
+  enterprise_name_error: "이미 가져갔습니다. 이 기업이 소유권을 주장하거나 이 기업과 거래하려면 이 프로필의 현재 관리자 %{email}에게 문의하십시오."
+  enterprise_owner_error: "%{email}은 더 이상 기업을 소유할 수 없습니다. ( %{enterprise_limit}까지가 최대치 )"
+  enterprise_role_uniqueness_error: "해당 역할이 이미 있습니다."
+  enterprise_terms_and_conditions_type_error: "PDF 파일만 허용됩니다."
+  inventory_item_visibility_error: 참 또는 거짓이어야 합니다.
+  product_importer_file_error: "에러: 업로드된 파일이 없습니다."
+  product_importer_spreadsheet_error: "파일을 처리할 수 없습니다. : 잘못된 파일 형식"
+  product_importer_products_save_error: 제품을 저장하지 않았습니다.
+  product_import_file_not_found_notice: '파일을 찾을 수 없거나 열 수 없습니다.'
+  product_import_no_data_in_spreadsheet_notice: '스프레드시트에서 데이터를 찾을 수 없습니다.'
+  order_choosing_hub_notice: 허브가 선택되었습니다.
+  order_cycle_selecting_notice: 주문 주기가 선택되었습니다.
+  adjustments_tax_rate_error: "이번 조정에 대한 세율이 맞는지 확인 부탁드립니다."
+  active_distributors_not_ready_for_checkout_message_singular: >-
+      허브 %{distributor_names}는 활성 주문 주기에 나열되지만 올바른 배송 및 결제 방법이 없습니다. 이러한 항목을 설정할 때까지
+      고객은 이 허브에서 쇼핑을 할 수 없습니다.
+  active_distributors_not_ready_for_checkout_message_plural: >-
+      허브 %{distributor_names}는 활성 주문 주기에 나열되어 있지만 유효한 배송 및 결제 방법이 없습니다. 이러한 허브를 설정할
+      때까지 고객은 이러한 허브에서 쇼핑을 할 수 없습니다.
+  enterprise_fees_update_notice: 회사 비용이 업데이트되었습니다.
+  enterprise_register_package_error: "패키지를 선택하십시오."
+  enterprise_register_error: "%{enterprise} 등록을 완료할 수 없습니다."
+  enterprise_register_success_notice: "축하합니다! %{enterprise} 등록이 완료되었습니다!"
+  enterprise_bulk_update_success_notice: "기업이 성공적으로 업데이트됨"
+  enterprise_bulk_update_error: '업데이트 실패됨'
+  enterprise_shop_show_error: "찾고 있는 상점이 없거나 OFN에서 비활성 상태입니다. 다른 상점도 확인해주세요."
+  order_cycles_create_notice: '주문 주기가 생성되었습니다.'
+  order_cycles_update_notice: '주문 주기가 업데이트 되었습니다.'
+  order_cycles_bulk_update_notice: '주문 주기가 업데이트 되었습니다.'
+  order_cycles_clone_notice: "%{name} 주문 주기가 복사되었습니다."
+  order_cycles_email_to_producers_notice: '생산자에게 보낼 이메일이 전송 대기열에 있습니다.'
+  order_cycles_no_permission_to_coordinate_error: "주문 주기를 조정할 권한이 있는 기업이 없습니다."
+  order_cycles_no_permission_to_create_error: "해당 기업에서 조정한 주문 주기를 생성할 권한이 없습니다."
+  order_cycle_closed: "선택한 주문 주기가 방금 마감되었습니다. 다시 시도하십시오!"
+  back_to_orders_list: "주문 목록으로 돌아가기"
+  no_orders_found: "주문을 찾을 수 없습니다."
+  order_information: "주문 정보"
+  new_payment: "새로운 결제"
+  date_completed: "완료된 날짜"
+  amount: "수량"
+  state_names:
+    ready: 준비
+    pending: 보류 중
+    shipped: 배송됨
+  js:
+    saving: '저장 중...'
+    changes_saved: '변경 내용이 저장되었습니다.'
+    authorising: "권한 부여 중..."
+    save_changes_first: 변경 사항을 먼저 저장합니다.
+    all_changes_saved: 모든 변경 내용이 저장되었습니다.
+    unsaved_changes: 저장되지 않은 변경이 있습니다.
+    all_changes_saved_successfully: 모든 변경 내용이 성공적으로 저장되었습니다.
+    oh_no: "이런! 변경 내용을 저장할 수 없습니다."
+    unauthorized: "이 페이지에 액세스할 권한이 없습니다."
+    error: 오류
+    unavailable: 사용 불가능
+    profile: 프로필
+    hub: 물류
+    shop: 쇼핑
+    choose: 선택하기
+    resolve_errors: 다음 오류를 해결하십시오.
+    more_items: "+ %{count}개 더 있음"
+    default_card_updated: 기본 카드 업데이트됨
+    default_card_voids_auth: 기본 카드를 변경하면 해당 카드를 충전할 수 있는 기존 권한이 제거됩니다. 기본 카드를 업데이트한 후 상점들을 재인증할 수 있습니다. 기본 카드를 변경하시겠습니까?
+    cart:
+      add_to_cart_failed: >
+          이 제품을 카트에 추가하는 동안 문제가 발생했습니다. 아마도 이용할 수 없게 되었거나 가게가 문을 닫고 있는 것 같습니다.
+    admin:
+      unit_price_tooltip: "단가는 고객이 다른 제품과 포장 크기 사이의 가격을 쉽게 비교할 수 있도록 하여 투명성을 높입니다. 참고로, 매장 내 최종 단가는 세금과 수수료가 포함되어 있기 때문에 다를 수 있습니다."
+      enterprise_limit_reached: "계정당 기업의 표준 한도에 도달했습니다. 증액이 필요하면 %{contact_email}로 쓰세요."
+      deleting_item_will_cancel_order: "이 작업을 수행하면 하나 이상의 주문이 비어 취소됩니다. 계속 진행하시겠습니까?"
+      modals:
+        got_it: "알겠습니다."
+        close: "휴무"
+        continue: "계속하기"
+        invite: "초대하기"
+        invite_title: "등록되지 않은 사용자 초대"
+        tag_rule_help:
+          title: 태그 규칙
+          overview: 개요
+          overview_text: >
+              태그 규칙은 어떤 항목이 표시되거나 어떤 고객에게 표시되는지 설명하는 방법을 제공합니다. 품목은 배송 방법, 지불 방법,
+              제품 및 주문 주기가 될 수 있습니다.
+          by_default_rules: "'기본값으로...' 규칙"
+          by_default_rules_text: >
+              기본 규칙을 사용하면 기본적으로 보이지 않도록 항목을 숨길 수 있습니다. 그런 다음 특정 태그가 있는 고객의 기본 규칙이
+              아닌 규칙에 따라 이 동작을 재정의할 수 있습니다.
+          customer_tagged_rules: "'태그 부착 고객...' 규칙"
+          customer_tagged_rules_text: >
+              특정 고객 태그와 관련된 규칙을 만들어 지정된 태그를 가진 고객의 기본 동작(항목 표시 또는 숨기기)을 재정의할 수 있습니다.
+        terms_and_conditions_info:
+          title: "이용약관 업로드 중"
+          message_1: "약관은 귀하, 판매자 및 구매자 간의 계약입니다. 여기에서 파일을 업로드하는 경우, 체크아웃을 완료하려면 구매자가 이용 약관에 동의해야 합니다. 쇼핑객의 경우 체크아웃 시 체크박스로 표시되며 체크아웃을 진행하기 위해 체크해야 합니다. 국가 법률에 따라 이용 약관을 업로드하는 것이 좋습니다."
+          message_2: "구매자는 약관에 한 번만 동의해야 합니다. 그러나 이용약관을 변경하는 경우, 고객이 체크아웃하기 전에 이용약관에 동의해야 합니다."
+        terms_and_conditions_warning:
+          title: "이용약관 업로드 중"
+          message_1: "모든 구매자는 체크아웃 시 한 번 동의해야 합니다. 파일을 업데이트하면 모든 구매자가 체크아웃 시 다시 동의해야 합니다."
+          message_2: "구독이 있는 구매자의 경우, 우선 이용약관(또는 변경된 내용)을 이메일로 보내야 합니다. 이러한 새로운 이용약관에 대해서는 어떤 것도 알려주지 않습니다."
+        business_address_info:
+          message: "회사 법률 이름, 법률 주소 및 법률 전화 번호는 서로 다른 세부 정보로 등록된 법인의 청구서를 해당 회사의 공개 거래 정보에 사용합니다. 이 세부 정보는 송장에만 사용됩니다. 이러한 세부 정보가 비어 있으면 공용 이름, 주소 및 전화 번호가 송장에 사용됩니다."
+      panels:
+        save: 저장
+        saved: 저장 성공
+        saving: 저장 중
+        enterprise_package:
+          hub_profile: 허브 프로필
+          hub_profile_cost: "비용 : 언제나 꽁짜"
+          hub_profile_text1: >
+              사람들은 Open Food Network에서 당신을 찾고 연락할 수 있습니다. 회사가 지도에 표시되고 목록에서 검색할 수
+              있습니다.
+          hub_profile_text2: >
+              프로필을 가지고 Open Food Network를 통해 지역 먹거리 시스템 내에서 네트워크를 만드는 것은 항상 무료입니다.
+          hub_shop: 중심 가게
+          hub_shop_text1: >
+              귀사는 귀사의 지역 식품 시스템의 중추입니다. 당신은 다른 기업의 농산물을 모아 Open Food Network의 당신의
+              상점을 통해 판매할 수 있습니다.
+          hub_shop_text2: >
+              허브는 식품 협동조합, 구매 그룹, 야채 상자 프로그램 또는 지역 식료품점 등으로 다양한 형태를 취할 수 있습니다.
+          hub_shop_text3: >
+              귀사의 제품도 판매하고 싶으시다면, 귀사를 생산자로 전환해야 할 것입니다.
+          choose_package: 패키지를 선택하십시오.
+          choose_package_text1: >
+              회사는 왼쪽 옵션에서 패키지를 선택할 때까지 완전히 활성화되지 않습니다.
+          choose_package_text2: >
+              각 패키지에 대한 자세한 정보를 보려면 옵션을 클릭하고, 완료되면 빨간색 저장 버튼을 눌러주세요!
+          profile_only: 프로필 전용
+          profile_only_cost: "비용 : 언제나 무료"
+          profile_only_text1: >
+              프로필은 다른 사람이 볼 수 있고 쉽게 연락할 수 있도록 하며, 여러분의 이야기를 공유하는 방법입니다.
+          profile_only_text2: >
+              만약 여러분이 음식을 생산하는 것에만 초점을 맞추고, 그것을 다른 사람에게 파는 일을 맡기고 싶으시다면, 여러분은 Open
+              Food Network에 가게가 필요하지 않으실 것입니다.
+          profile_only_text3: >
+              제품을 Open Food Network에 추가하여 물류 센터를 통해 제품을 가게에 저장할 수 있도록 합니다.
+          producer_shop: 생산자 가게
+          producer_shop_text1: >
+              독자적인 Open Food Network 상점을 통해 고객에게 직접 제품을 판매해보세요.
+          producer_shop_text2: >
+              Producer Shop은 귀사의 제품만을 위한 것입니다. 재배/생산된 제품을 부지 밖에서 판매하려면 'Producer Hub'를
+              선택하십시오.
+          producer_hub: 생산자 허브
+          producer_hub_text1: >
+              당신의 회사는 당신의 지역 식품 시스템의 중추입니다. 당신은 Open Food Network에서 당신의 상점을 통해 당신
+              자신의 생산물뿐만 아니라 다른 기업으로부터 수집된 생산물도 판매할 수 있습니다.
+          producer_hub_text2: >
+              제공자 허브는 CSA, 야채 상자 프로그램 또는 옥상 정원이 있는 식품 협동조합 등의 다양한 형태를 취할 수 있습니다.
+          producer_hub_text3: >
+              Open Food Network는 가능한 많은 허브 모델을 지원하는 것을 목표로 하고 있습니다. 따라서 귀하의 상황에 상관
+              없이 귀하의 조직 또는 지역 식품 사업을 운영하는 데 필요한 도구를 제공하고자 합니다.
+          get_listing: 목록 가져오기
+          always_free: 항상 무료
+          sell_produce_others: 다른 사람의 농산물 판매하기
+          sell_own_produce: 당신만의 농산물을 팔아라.
+          sell_both: 자신과 다른 사람의 농산물을 판매하기
+        enterprise_producer:
+          producer: 제공자
+          producer_text1: >
+              생산자들은 먹거나 마실 수 있는 맛있는 것들을 만듭니다. 재배하고, 기르고, 양조하고, 굽고, 발효시키고, 우유를 짜고,
+              발효 식품을 만들면 생산자가 됩니다.
+          producer_text2: >
+              생산자들은 또한 Open Food Network의 상점을 통해 다른 기업의 음식을 종합하고 판매하는 것과 같은 다른 기능들을
+              수행할 수 있습니다.
+          non_producer: 비생산자
+          non_producer_text1: >
+              비생산자들이 직접 식품을 생산하지 않는 것은 Open Food Network를 통해 판매용 제품을 직접 만들 수 없다는 것을
+              의미합니다.
+          non_producer_text2: >
+              대신, 비생산자들은 음식을 집계, 등급 매기기, 포장하기, 판매하기 또는 배달하기 위해 생산자와 최종 소비자를 연결하기 등을
+              전문적으로 합니다.
+          producer_desc: 음식 생산자
+          producer_example: 예시. 재배자, 제빵사, 양조업자, 제조업자
+          non_producer_desc: 기타 모든 식품 기업
+          non_producer_example: 예시. 식료품점, 식품 협동조합, 구매 그룹
+        enterprise_status:
+          status_title: "%{name}가 세팅을 마치고 준비가 되었습니다!"
+          severity: 심각성
+          description: 설명
+          resolve: 해결
+        exchange_products:
+          load_more_variants: "더 많은 변경 사항 부르기"
+          load_all_variants: "모든 변경 사항 부르기"
+          select_all_variants: "모든 %{total_number_of_variants}개의 변경 사항을 선택하기"
+          variants_loaded: "%{total_number_of_variants}개 중 %{num_of_variants_loaded}개의 변경사항 불러오기"
+          loading_variants: "변경 사항 불러오기"
+      tag_rules:
+        shipping_method_tagged_top: "태그된 배송 방법"
+        shipping_method_tagged_bottom: "다음 항목:"
+        payment_method_tagged_top: "태그된 결제 방법"
+        payment_method_tagged_bottom: "다음 항목:"
+        order_cycle_tagged_top: "태그된 주문 주기"
+        order_cycle_tagged_bottom: "다음 항목:"
+        inventory_tagged_top: "태그된 변경 사항 인벤토리"
+        inventory_tagged_bottom: "다음 항목:"
+      new_tag_rule_dialog:
+        select_rule_type: "규칙 유형 선택 :"
+        add_rule: "규칙 추가"
+      enterprise_fees:
+        inherit_from_product: "제품에서의 상속 사항"
+      orders:
+        index:
+          per_page: "페이지 당 %{results}"
+          view_file: "파일 보기"
+          compiling_invoices: "청구서 엮는 중"
+          bulk_invoice_created: "대량의 청구서가 생성되었습니다."
+          bulk_invoice_failed: "대량의 청구서 생성이 실패했습니다."
+          please_wait: "PDF가 준비될 때까지 기다렸다가 이 통합 파일을 닫으십시오."
+        order_state:
+          address: "주소"
+          adjustments: "조정"
+          awaiting_return: "돌아가기를 기다리는 중"
+          canceled: "취소됨"
+          cart: "카트"
+          complete: "완료"
+          confirm: "확인"
+          delivery: "배달"
+          paused: "일시 정지됨"
+          payment: "결제"
+          pending: "보류"
+          resumed: "재개됨"
+          returned: "반송됨"
+          skrill: "skrill"
+        shipment_states:
+          backorder: "일시 품절"
+          partial: "불완전힘"
+          pending: "보류"
+          ready: "준비"
+          shipped: "배송됨"
+          canceled: "취소됨"
+        payment_states:
+          balance_due: "잔액 만기"
+          completed: "완료됨"
+          checkout: "체크아웃"
+          credit_owed: "외상값"
+          failed: "실패함"
+          paid: "유급"
+          pending: "보류"
+          requires_authorization: "인증 필요"
+          processing: "진행 중"
+          void: "공백"
+          invalid: "효력 없음"
+        quantity_adjusted: "재고가 부족합니다. 라인 항목이 사용 가능한 최대 수량으로 업데이트되었습니다."
+        quantity_unchanged: "이전 수량과 비교할 때 변동사항이 없습니다."
+        cancel_the_order_html: "현재 주문이 취소됩니다. <br />계속하시겠습니까?"
+        cancel_the_order_send_cancelation_email: "고객에게 취소 이메일 보내기"
+        restock_item: "재입고 품목: 이 품목을 재고로 반환"
+        restock_items: "재입고 품목: 모든 품목을 재고로 반환"
+      resend_user_email_confirmation:
+        resend: "재전송"
+        sending: "재전송..."
+        done: "재전송 완료 ✓"
+        failed: "재전송 실패 ✗"
+      order_cycles:
+        schedules:
+          adding_a_new_schedule: "새 예약 추가"
+          updating_a_schedule: "일정 업데이트"
+          create_schedule: "일정 생성"
+          update_schedule: "일정 업데이트"
+          delete_schedule: "일정 삭제"
+          schedule_name_placeholder: "일정 이름"
+          created_schedule: "생성된 일정"
+          updated_schedule: "업데이트된 일정"
+          deleted_schedule: "삭제된 일정"
+          name_required_error: "이 일정의 이름을 입력하십시오."
+          no_order_cycles_error: "하나 이상의 주문 주기(드래그하는 걸 이용하세요)를 선택하십시오."
+          available: "사용 가능"
+          selected: "선택됨"
+      customers:
+        index:
+          add_customer: "고객 추가"
+          add_a_new_customer_for: "%{shop_name}의 고객 추가"
+          customer_placeholder: "customer@example.org"
+          valid_email_error: "올바른 이메일 주소를 입력하십시오."
+      subscriptions:
+        error_saving: "구독 저장 중 오류 발생"
+        new:
+          please_select_a_shop: "가게를 선택해 주세요"
+      enterprises:
+        form:
+          images:
+            removed_logo_successfully: "로고가 삭제되었습니다."
+            immediate_logo_removal_warning: "확인 후 로고가 즉시 제거됩니다."
+            removed_promo_image_successfully: "프로모션 이미지가 제거되었습니다."
+            immediate_promo_image_removal_warning: "확인 후 바로 프로모션 이미지가 제거됩니다."
+            immediate_terms_and_conditions_removal_warning: "확인 후 계약 조건 파일이 즉시 제거됩니다."
+            removed_terms_and_conditions_successfully: "계약 조건 파일이 제거되었습니다."
+    insufficient_stock: "재고 부족, %{on_hand}만 남아 있습니다."
+    out_of_stock:
+      reduced_stock_available: 재고 감소 가능
+      out_of_stock_text: >
+          쇼핑하는 동안 카트에 있는 하나 이상의 제품에 대한 재고 수준이 감소했습니다. 변경된 내용은 다음과 같습니다 :
+      now_out_of_stock: 현재 품절되었습니다.
+      only_n_remainging: "이제 %{num}개만 남았습니다."
+    shopfront:
+      variant:
+        add_to_cart: "추가"
+        in_cart: "내 카트"
+        quantity_in_cart: "카트 내에 %{quantity}개 있습니다."
+        remaining_in_stock: "%{quantity}만 남았습니다."
+      bulk_buy_modal:
+        min_quantity: "최소 수량"
+        max_quantity: "최대 수량"
+      price_breakdown: "가격 내역"
+      unit_price_tooltip: "이것은 이 제품의 단가입니다. 포장 크기 및 무게에 관계없이 제품 가격을 비교할 수 있습니다."
+    variants:
+      on_demand:
+        'yes': "요구 사항"
+    variant_overrides:
+      on_demand:
+        use_producer_settings: "생산자 재고 설정 사용"
+        'yes': "예"
+        'no': "아니오"
+      inventory_products: "제품 인벤토리"
+      hidden_products: "숨겨진 제품"
+      new_products: "새 상품"
+      reset_stock_levels: 재고 수준을 기본값으로 재설정
+      changes_to: 변경 사항
+      one_override: 하나 덮어쓰기
+      overrides: 여러 개 덮어쓰기
+      remain_unsaved: 저장하지 않은 상태 입니다.
+      no_changes_to_save: 저장할 변경 사항이 없습니다.
+      no_authorisation: "변경 내용을 저장할 수 있는 권한을 얻을 수 없으므로 저장되지 않은 상태로 남아 있습니다."
+      some_trouble: "저장하는 데 문제가 발생했습니다 : %{errors}"
+      changing_on_hand_stock: 재고 수준 변경 중...
+      stock_reset: 재고를 기본값으로 재설정했습니다.
+    tag_rules:
+      show_hide_variants: '내 매장 안에 변경 사항 보여주기 또는 숨기기'
+      show_hide_shipping: '체크아웃 시 배송 방법 표시 또는 숨기기'
+      show_hide_payment: '체크아웃 시 결제 방법 표시 또는 숨기기'
+      show_hide_order_cycles: '내 상점에서 주문 주기 표시 또는 숨기기.'
+      visible: 표시
+      not_visible: 숨기기
+    services:
+      unsaved_changes_message: 저장하지 않은 변경 사항이 현재 존재합니다. 지금 저장하시겠습니까? 아니면 무시하시겠습니까?
+      save: 저장
+      ignore: 무시하기
+      add_to_order_cycle: "주문 주기 추가"
+      manage_products: "제품 관리"
+      edit_profile: "프로필 편집"
+      add_products_to_inventory: "제품 인벤토리 추가"
+    resources:
+      could_not_delete_customer: '고객을 삭제할 수 없습니다.'
+    product_import:
+      confirmation: |
+          업로드된 파일에 없는 이 기업의 모든 제품에 대한 재고 수준이 0으로 설정됩니다.
+    order_cycles:
+      create_failure: "주문 주기를 생성하지 못했습니다."
+      update_success: '주문 주기가 업데이트 되었습니다.'
+      update_failure: "주문 주기를 업데이트하지 못했습니다."
+      no_distributors: 이 주문 주기에 대리점이 없습니다. 이 주문 주기는 추가할 때까지 고객에게 표시되지 않습니다. 이 주문 주기를 계속 저장하시겠습니까?'
+    enterprises:
+      producer: "제공자"
+      non_producer: "비생산자"
+    customers:
+      select_shop: '먼저 가게 선택을 해주세요.'
+      could_not_create: 죄송합니다! 만들 수 없습니다.
+    subscriptions:
+      closes: 휴무
+      closed: 휴무
+      close_date_not_set: 휴무일 설정을 하지 않았습니다.
+    spree:
+      users:
+        order: "주문"
+    registration:
+      welcome_to_ofn: "Open Food Network에 오신 것을 환영합니다!"
+      signup_or_login: "가입(또는 로그인)으로 시작하기"
+      have_an_account: "계정이 있으신가요?"
+      action_login: "지금 로그인하기."
+    stripe_elements:
+      unknown_error_from_stripe: |
+          결제 게이트웨이에서 카드를 설정하는 동안 문제가 발생했습니다.
+          페이지를 새로 고친 후 다시 시도하십시오. 만약 다시 실패하신면,
+          저희에게 지원을 요청해주세요.
+  inflections:
+    each:
+      other: "각"
+    bunch:
+      other: "묶음"
+    pack:
+      other: "팩"
+    box:
+      other: "상자"
+    bottle:
+      other: "병"
+    jar:
+      other: "항아리"
+    head:
+      other: "두"
+    bag:
+      other: "개"
+    loaf:
+      other: "덩이"
+    single:
+      other: "싱글"
+    tub:
+      other: "통"
+    punnet:
+      other: "과일 바구니 갯수"
+    packet:
+      other: "봉지"
+    item:
+      other: "개"
+    dozen:
+      other: "십여 개"
+    unit:
+      other: "단위"
+    serve:
+      other: "인분"
+    tray:
+      other: "접시"
+    piece:
+      other: "조각"
+    pot:
+      other: "냄비 갯수"
+    bundle:
+      other: "묶음"
+    flask:
+      other: "플라스크 몇 개"
+    basket:
+      other: "바구니"
+    sack:
+      other: "자루"
+  producers:
+    signup:
+      start_free_profile: "무료 프로필로 시작해보시고, 준비가 되면 확장해보세요!"
+  order_management:
+    reports:
+      bulk_coop:
+        filters:
+          bulk_coop_allocation: "대량 공동 작업 할당"
+          bulk_coop_customer_payments: "거대 협동조합 고객 결제"
+          bulk_coop_packing_sheets: "대량 공동 포장 시트"
+          bulk_coop_supplier_report: "대량 협동조합 공급업체 보고서"
+      enterprise_fee_summaries:
+        filters:
+          date_range: "날짜 범위"
+          report_format_csv: "csv 형태로 다운로드"
+          generate_report: "보고서 생성"
+        report:
+          none: "아니다"
+          select_and_search: "필터를 선택하고 '보고서 생성'을 클릭하여 데이터에 접근합니다."
+      enterprise_fee_summary:
+        date_end_before_start_error: "시작 이후여야 합니다."
+        parameter_not_allowed_error: "이 보고서에 대해 하나 이상의 선택된 필터를 사용할 수 있는 권한이 없습니다."
+        fee_calculated_on_transfer_through_all: "모두"
+        fee_calculated_on_transfer_through_entire_orders: "%{distributor} 전체 주문 내용"
+        tax_category_various: "여러가지"
+        fee_type:
+          payment_method: "결제 거래"
+          shipping_method: "수송"
+        fee_placements:
+          supplier: "새로 생성됨"
+          distributor: "방출됨"
+          coordinator: "협력자"
+        tax_category_name:
+          shipping_instance_rate: "플랫폼 요금"
+        formats:
+          csv:
+            header:
+              fee_type: "지불 방식"
+              enterprise_name: "회사 주인"
+              fee_name: "수수료 이름"
+              customer_name: "고객"
+              fee_placement: "요금 할당"
+              fee_calculated_on_transfer_through_name: "전송 시 요금 계산"
+              tax_category_name: "세금 목록"
+              total_amount: "$$ 합"
+          html:
+            header:
+              fee_type: "지불 방식"
+              enterprise_name: "회사 주인"
+              fee_name: "수수료 이름"
+              customer_name: "고객"
+              fee_placement: "요금 할당"
+              fee_calculated_on_transfer_through_name: "전송 시 요금 계산"
+              tax_category_name: "세금 목록"
+              total_amount: "$$ 합"
+        invalid_filter_parameters: "이 보고서에 대해 선택한 필터가 잘못되었습니다."
+      report:
+        none: "아니다"
+  order: "주문"
+  distribution: "분배"
+  order_details: "주문 세부 사항"
+  customer_details: "고객 세부 사항"
+  adjustments: "조정"
+  payments: "결제"
+  return_authorizations: "반품 승인"
+  credit_owed: "외상값"
+  new_adjustment: "새 조정"
+  payment: "결제"
+  payment_method: "결제 방식"
+  shipment: "수송 비용"
+  shipment_inc_vat: "VAT 포함 수송 비용"
+  shipping_tax_rate: "배송세율"
+  category: "목록"
+  import_date: "수입 날짜"
+  delivery: "배달"
+  temperature_controlled: "온도 제어"
+  new_product: "새 상품"
+  administration: "관리직"
+  logged_in_as: "로그인 방법"
+  account: "계정"
+  logout: "로그아웃"
+  date_range: "날짜 범위"
+  status: "상태"
+  new: "새로하기"
+  start: "시작"
+  end: "끝"
+  stop: "정지"
+  first: "첫 번째"
+  previous: "이전으로"
+  last: "마지막"
+  spree:
+    add_country: "나라 추가"
+    add_state: "주 추가"
+    adjustment: "조정"
+    all: "모두"
+    associated_adjustment_closed: "관련 조정 닫힘"
+    back_to_adjustments_list: "조정 메뉴로 돌아가기"
+    back_to_users_list: "사용자 메뉴로 돌아가기"
+    back_to_zones_list: "구역 메뉴로 돌아가기"
+    card_code: "카드 코드"
+    card_number: "카드 번호"
+    category: "목록"
+    created_successfully: "성공적으로 생성됨"
+    credit: "신용 거래"
+    editing_tax_category: "세금 카테고리 편집 중"
+    editing_tax_rate: "세율 편집 중"
+    editing_zone: "구역 편집 중"
+    expiration: "만표"
+    invalid_payment_provider: "잘못된 결제 제공자 입니다."
+    items_cannot_be_shipped: "품목을 발송할 수 없습니다."
+    gateway_config_unavailable: "게이트웨이 구성을 사용할 수 없습니다"
+    gateway_error: "결제 실패"
+    more: "추가 정보"
+    new_adjustment: "새 조정"
+    new_order_completed: "신규 주문 완료"
+    new_tax_category: "신규 세금 카테고리"
+    new_taxon: "새 분류군"
+    new_user: "신규 사용자"
+    no_pending_payments: "미지금급"
+    none: "아니다"
+    not_found: "찾을 수 없습니다"
+    notice_messages:
+      variant_deleted: "삭제된 변경 사항"
+    payment_method_not_supported: "결제 방법이 지원되지 않습니다."
+    resend_authorization_email: "승인 이메일 다시 보내기"
+    rma_credit: "RMA 거래"
+    refund: "환불"
+    server_error: "서버 오류"
+    shipping_method_names:
+      UPS Ground: "UPS 배경"
+    start_date: "시작 날짜"
+    successfully_removed: "성공적으로 제거됨"
+    taxonomy_edit: "분류법 편집"
+    taxonomy_tree_error: "분류법 트리 오류"
+    taxonomy_tree_instruction: "분류법 트리 소개"
+    tree: "트리"
+    updating: "업데이트 중"
+    your_order_is_empty_add_product: "주문이 비어 있습니다. 위의 제품을 검색하여 추가하십시오."
+    add_product: "상품 추가"
+    name_or_sku: "이름 또는 재고 관리 단위 (제품 이름의 처음 글자의 4자 이상 입력해야 합니다.)"
+    resend: "재전송"
+    back_to_orders_list: "주문 목록으로 돌아가기"
+    back_to_payments_list: "결제 목록으로 돌아가기"
+    return_authorizations: "반품 승인"
+    cannot_create_returns: "이 주문에는 발송된 유닛이 없으므로 반품을 만들 수 없습니다."
+    select_stock: "재고 선택"
+    location: "지역"
+    count_on_hand: "직접 세기"
+    quantity: "수량"
+    on_demand: "수요로 함"
+    on_hand: "대기 중"
+    package_from: "포장한 곳"
+    item_description: "항목 설명"
+    price: "가격"
+    total: "총합"
+    edit: "편집"
+    split: "쪼개기"
+    delete: "삭제"
+    cannot_set_shipping_method_without_address: "고객 세부 정보를 제공해야 발송 방법을 설정할 수 있습니다."
+    no_tracking_present: "추적 세부 정보를 제공하지 않았습니다."
+    tracking: "추적"
+    tracking_number: "추적 번호"
+    order_total: "주문 총합"
+    order_updated: "주문 업데이트됨"
+    customer_details: "고객 세부 사항"
+    customer_details_updated: "고객 세부 사항 업데이트됨"
+    customer_search: "고객 찾기"
+    choose_a_customer: "고객 선택"
+    account: "계정"
+    billing_address: "청구서 발송지"
+    shipping_address: "배송지 주소"
+    first_name: "이름"
+    last_name: "성"
+    street_address: "도로명 주소"
+    street_address_2: "도로명 주소 (계속)"
+    city: "시"
+    zip: "Zip"
+    country: "나라"
+    state: "상태"
+    phone: "전화번호"
+    update: "업데이트"
+    use_billing_address: "청구 주소 사용"
+    adjustments: "조정"
+    continue: "계속하기"
+    fill_in_customer_info: "고객 정보를 입력하십시오."
+    credit_card: "신용카드"
+    new_payment: "새로운 결제"
+    capture: "캡처"
+    void: "공백"
+    login: "로그인"
+    password: "비밀번호"
+    signature: "시그니처"
+    solution: "해결책"
+    landing_page: "연결 페이지"
+    server: "서버"
+    test_mode: "테스트 모드"
+    logourl: "로고 URL"
+    are_you_sure_delete: "이 기록을 삭제하시겠습니까?"
+    confirm_delete: "삭제 확인"
+    configurations: "환경 설정"
+    general_settings: "일반 설정"
+    site_name: "사이트 이름"
+    site_url: "사이트 URL"
+    default_seo_title: "기본 검색 엔진 최적화 제목"
+    default_meta_description: "기본 메타 설명"
+    default_meta_keywords: "기본 메타 키워드"
+    security_settings: "보안 설정"
+    allow_ssl_in_production: "프로덕션 모드에서 SSL 사용 허용"
+    allow_ssl_in_staging: "스테이징 모드에서 SSL 사용 허용"
+    currency_decimal_mark: "통화 소수 표"
+    currency_settings: "통화 설정"
+    currency_symbol_position: '"통화 기호"를 달러 액수 앞이나 뒤에 붙이시겠습니까?'
+    currency_thousands_separator: "통화 천 단위 구분 기호"
+    hide_cents: "센트 단위 숨기기"
+    display_currency: "통화 표시"
+    choose_currency: "통화 선택"
+    mail_method_settings: "메일 방법 설정"
+    mail_settings_notice_html: "다음 설정 중 일부는 편집할 수 없으며 단지 디버깅을 위해 여기에 나열됩니다. 임시 암호를 업데이트하고 <a href='https://github.com/openfoodfoundation/ofn-install'>ofn 설치</a> 사용을 제공하여 변경할 수 있습니다. 자세한 내용은 OFN 국제 팀에 문의하세요."
+    general: "일반"
+    enable_mail_delivery: "메일 배달 사용"
+    send_mails_as: "다른 이름으로 메일 보내기"
+    smtp_send_all_emails_as_from_following_address: "다음 주소로 모든 메일을 보내기"
+    send_copy_of_all_mails_to: "모든 메일의 복사본 보내기 대상"
+    smtp_send_copy_to_this_addresses: "모든 발신 메일의 복사본을 이 주소로 보냅니다. 주소가 여러 개인 경우 쉼표로 구분합니다."
+    intercept_email_address: "이메일 주소 가로채기"
+    intercept_email_instructions: "전자 메일 수신자를 재정의하고 이 주소로 대체합니다."
+    tax_categories: "세금 카테고리"
+    listing_tax_categories: "세금 카테고리 정렬하기"
+    back_to_tax_categories_list: "세금 카테고리 리스트로 돌아가기"
+    tax rate: "세율"
+    new_tax_rate: "신규 세율"
+    tax_category: "세금 목록"
+    tax_rates: "세율"
+    rate: "비율"
+    tax_rate_amount_explanation: "세율은 소수로 계산하면 도움이 됩니다. (예: 세율이 5%인 경우라면 0.05를 입력하세요.)"
+    included_in_price: "가격에 포함되어있음"
+    show_rate_in_label: "레이블에 비율 표시"
+    back_to_tax_rates_list: "세율 리스트로 돌아가기"
+    tax_settings: "세금 설정"
+    zones: "구역"
+    new_zone: "신규 구역"
+    default_tax: "세금 기본값"
+    default_tax_zone: "기본 세금 구역"
+    country_based: "국가 기반"
+    state_based: "주 기반"
+    countries: "국가"
+    listing_countries: "국가 나열하기"
+    iso_name: "ISO 이름"
+    states_required: "주를 작성하셔야 합니다."
+    editing_country: "국가 편집"
+    back_to_countries_list: "국가 리스트로 돌아가기"
+    states: "주"
+    abbreviation: "축약"
+    new_state: "신규 주"
+    payment_methods: "결제 방법"
+    taxonomies: "분류법"
+    new_taxonomy: "신규 분류법"
+    back_to_taxonomies_list: "분류법 리스트로 돌아가기"
+    shipping_methods: "전송 방법"
+    shipping_method: "배송 방법"
+    shipment: "수송"
+    payment: "결제"
+    status: "상태"
+    shipping_categories: "배송 카테고리"
+    new_shipping_category: "신규 발송 카테고리"
+    back_to_shipping_categories: "발송 카테고리로 돌아가기"
+    name: "이름"
+    description: "설명"
+    type: "타입"
+    default: "기본값"
+    calculator: "계산기"
+    zone: "구역"
+    display: "전시"
+    environment: "환경"
+    active: "활성화"
+    nore: "추가 정보"
+    no_results: "결과 없음"
+    create: "생성"
+    loading: "로딩 중"
+    flat_percent: "무계층 백분율"
+    per_kg: "kg 당"
+    amount: "수량"
+    currency: "통화"
+    first_item: "첫 번째 물건 비용"
+    additional_item: "추가 품목 비용"
+    max_items: "최고 품목"
+    minimal_amount: "최소량"
+    normal_amount: "평균가격"
+    discount_amount: "할인액"
+    no_images_found: "이미지를 찾을 수 없습니다"
+    new_image: "신규 이미지"
+    filename: "파일이름"
+    alt_text: "대체 텍스트"
+    thumbnail: "썸네일"
+    back_to_images_list: "이미지 리스트로 돌아가기"
+    email: 이메일
+    account_updated: "계정 업데이트 됨!"
+    email_updated: "새 이메일이 확인되면 계정이 업데이트됩니다."
+    my_account: "내 계정"
+    date: "날짜"
+    time: "시간"
+    inventory_error_flash_for_insufficient_quantity: "카트의 항목을 사용할 수 없습니다."
+    inventory: 물품 목록
+    zipcode: 우편번호
+    weight: 무게(kg 또는 lb당)
+    error_user_destroy_with_orders: "주문이 완료된 사용자는 삭제할 수 없습니다."
+    cannot_create_payment_without_payment_methods: "지불 방법이 정의가 안된 주문에 대하여 지불을 생성할 수 없습니다."
+    please_define_payment_methods: "먼저 일부 결제 방법을 정의하십시오."
+    options: "옵션"
+    has_no_shipped_units: "출하된 물건이 없습니다."
+    successfully_created: '%{resource}가 성공적으로 생성되었습니다!'
+    successfully_updated: '%{resource}가 성공적으로 업데이트 되었습니다!'
+    payment_method: "결제 방식"
+    payment_processing_failed: "결제를 처리할 수 없습니다. 입력한 정보를 확인하십시오."
+    not_available: "N/A"
+    sku: "재고 관리 단위"
+    there_are_no_items_for_this_order: "이 주문에 대한 항목이 없습니다."
+    order_populator:
+      out_of_stock: '%{item}은 품절되었습니다.'
+    actions:
+      update: "업데이트"
+      cancel: "취소"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "1개의 오류로 인하여 이 기록을 저장할 수 없습니다 :"
+          few: "%{count}개의 오류로 인하여 이 기록을 저장할 수 없습니다 :"
+          many: "%{count}개의 오류로 인하여 이 기록을 저장할 수 없습니다 :"
+          other: "%{count}개의 오류로 인하여 이 기록을 저장할 수 없습니다 :"
+        there_were_problems_with_the_following_fields: "다음 필드에 문제가 있습니다."
+      payments_list:
+        date_time: "날짜 / 시간"
+        amount: "수량"
+        payment_method: "결제 방식"
+        payment_state: "결제 상태"
+    errors:
+      messages:
+        included_price_validation: "기본 세금 영역을 설정하지 않은 경우 선택할 수 없습니다."
+        blank: "빈칸이 될 수 없습니다."
+    layouts:
+      admin:
+        login_nav:
+          header:
+            store: 가게
+    validation:
+      must_be_int: "정수여야 합니다"
+    admin:
+      mail_methods:
+        send_testmail: "테스트 이메일 보내기"
+        testmail:
+          delivery_success: "테스트 이메일을 보냈습니다."
+          error: "테스트 이메일을 보내는 동안 오류가 발생했습니다."
+      unit_price_tooltip: "단가는 고객이 다른 제품과 포장 크기 사이의 가격을 쉽게 비교할 수 있도록 하여 투명성을 높입니다. 참고로, 매장 내 최종 단가는 세금과 수수료가 포함되어 있기 때문에 다를 수 있습니다."
+      subscriptions:
+        number: "숫자"
+      tab:
+        dashboard: "대쉬보드"
+        orders: "주문"
+        bulk_order_management: "대량 주문 관리"
+        subscriptions: "구독"
+        products: "생산품"
+        option_types: "옵션 유형"
+        properties: "특성"
+        variant_overrides: "물품 목록"
+        reports: "기록"
+        configuration: "환경 설정"
+        users: "사용자"
+        roles: "역할"
+        order_cycles: "주문 주기"
+        enterprises: "회사"
+        enterprise_relationships: "사용 권한"
+        customers: "소비자"
+        groups: "그룹"
+      product_properties:
+        index:
+          inherits_properties_checkbox_hint: "%{supplier} 속성을 상속하시겠습니까? (위에서 재정의하지 않는 경우)"
+          add_product_properties: "제품 속성 추가"
+      properties:
+        index:
+          properties: "특성"
+          new_property: "신규 속성"
+          name: "이름"
+          presentation: "발표"
+        new:
+          new_property: "신규 속성"
+        edit:
+          editing_property: "속성 편집"
+          back_to_properties_list: "속성 리스트로 돌아가기"
+        form:
+          name: "이름"
+          presentation: "발표"
+      return_authorizations:
+        index:
+          new_return_authorization: "신규 반품 승인"
+          return_authorizations: "반품 승인"
+          back_to_orders_list: "주문 목록으로 돌아가기"
+          rma_number: "제품 반송 승인 서비스 번호"
+          status: "상태"
+          amount: "수량"
+          cannot_create_returns: "이 주문에는 발송된 유닛이 없으므로 반품을 만들 수 없습니다."
+          continue: "계속하기"
+        new:
+          new_return_authorization: "신규 반품 승인"
+          back_to_return_authorizations_list: "반품 승인 리스트로 돌아가기"
+          continue: "계속하기"
+        edit:
+          receive: "수신"
+          are_you_sure: "확실합니까?"
+          return_authorization: "반품 승인"
+        form:
+          product: "생산물"
+          quantity_shipped: "출하 수량"
+          quantity_returned: "반품 수량"
+          return_quantity: "반품 수량"
+          amount: "수량"
+          rma_value: "제품 반송 승인 서비스 값"
+          reason: "이유"
+          stock_location: "재고 지역"
+        states:
+          authorized: "승인됨"
+          received: "수신됨"
+          canceled: "취소됨"
+      orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "취소된 주문에 항목을 추가할 수 없습니다."
+          include_out_of_stock_variants: "재고가 없는 변경 사항 포함하기"
+        index:
+          listing_orders: "주문 정렬 중"
+          new_order: "새로운 주문"
+          capture: "캡처"
+          ship: "출하"
+          edit: "편집"
+          order_not_updated: "주문을 업데이트할 수 없습니다."
+          note: "기록"
+          first: "첫 번째"
+          last: "마지막"
+          previous: "이전으로"
+          next: "다음"
+          loading: "로딩 중"
+          no_orders_found: "주문을 찾을 수 없습니다."
+          results_found: "%{number}개의 결과를 찾았습니다."
+          viewing: "%{start}에서 %{end}까지 보기"
+          print_invoices: "청구서 출력"
+        sortable_header:
+          payment_state: "결제 상태"
+          shipment_state: "배송 현황"
+          completed_at: "완료"
+          number: "숫자"
+          state: "상태"
+          email: "고객의 이메일 주소"
+        invoice:
+          issued_on: "발행일"
+          tax_invoice: "세금 계산서"
+          code: "코드"
+          from: "부터"
+          to: "청구처"
+          shipping: "배송"
+        form:
+          distribution_fields:
+            title: "분배"
+            distributor: "유통업체 :"
+            order_cycle: "주문 주기 :"
+          line_item_adjustments: "라인 항목 조정"
+          order_adjustments: "주문 조정"
+          order_total: "주문 총합"
+      overview:
+        enterprises_header:
+          ofn_with_tip: 기업은 생산자 및/또는 허브이며 Open Food Network 내의 기본 조직 단위입니다.
+        enterprise_row:
+          has_no_enterprise_fees: "기업 수수료가 없습니다."
+          has_no_payment_methods: "결제 방법이 없습니다."
+          has_no_shipping_methods: "배송 방법이 없습니다."
+        products:
+          active_products:
+            zero: "활성화된 제품이 없습니다."
+            one: "1개의 활성화된 제품이 있습니다."
+            few: "%{count}개의 활성화된 제품이 있습니다."
+            many: "%{count}개의 활성화된 제품이 있습니다."
+            other: "%{count}개의 활성화된 제품이 있습니다."
+        order_cycles:
+          order_cycles: "주문 주기"
+          order_cycles_tip: "주문 주기에 따라 고객이 제품을 사용할 수 있는 시기와 장소가 결정됩니다."
+          you_have_active:
+            zero: "활성화된 주문 주기가 없습니다."
+            one: "1개의 활성화된 주문 주기가 있습니다."
+            few: "%{count}개의 활성화된 주문 주기가 있습니다."
+            many: "%{count}개의 활성화된 주문 주기가 있습니다."
+            other: "%{count}개의 활성화된 주문 주기가 있습니다."
+          manage_order_cycles: "주문 주기 관리"
+      shipping_methods:
+        index:
+          shipping_methods: "전송 방법"
+          new_shipping_method: "신규 배송 방법"
+          name: "이름"
+          products_distributor: "유통업체"
+          zone: "구역"
+          calculator: "계산기"
+          display: "전시"
+          both: "체크아웃 및 고객들을 직접 상대하지 않는 부서 모두"
+          back_end: "고객들을 직접 상대하지 않는 부서 전용"
+          no_shipping_methods_found: "전송 방법 찾을 수 없음"
+        new:
+          new_shipping_method: "신규 배송 방법"
+          back_to_shipping_methods_list: "배송 방법 리스트로 돌아가기"
+        edit:
+          editing_shipping_method: "배송 방법 편집"
+          new: "새로하기"
+          back_to_shipping_methods_list: "배송 방법 리스트로 돌아가기"
+        form:
+          categories: "카테고리"
+          tax_category: "세금 목록"
+          zones: "구역"
+          both: "체크아웃 및 고객들을 직접 상대하지 않는 부서 모두"
+          back_end: "고객들을 직접 상대하지 않는 부서 전용"
+          deactivation_warning: "발송 방법을 비활성화하면 발송 방법이 목록에서 사라지게 하실 수 있습니다. 또는 '표시' 옵션을 '고객들을 직접 상대하지 않는 부서 전용'으로 설정하여 체크아웃 페이지에서 배송 방법을 숨길 수 있습니다."
+      payment_methods:
+        index:
+          payment_methods: "결제 방법"
+          new_payment_method: "신규 결제 방식"
+          name: "이름"
+          products_distributor: "유통업체"
+          provider: "제공자"
+          environment: "환경"
+          display: "전시"
+          active: "활성화"
+          both: "둘 다"
+          back_end: "고객들을 직접 상대하지 않는 부서 전용"
+          active_yes: "예"
+          active_no: "아니오"
+          no_payment_methods_found: "결제 방법 찾을 수 없음"
+        new:
+          new_payment_method: "신규 결제 방식"
+          back_to_payment_methods_list: "결제 방법 리스트로 돌아가기"
+        edit:
+          new: "새로하기"
+          editing_payment_method: "결제 방식 편집"
+          back_to_payment_methods_list: "결제 방법 리스트로 돌아가기"
+        stripe_connect:
+          enterprise_select_placeholder: 선택...
+          loading_account_information_msg: stripe으로 부터 계정 정보를 가져오고 있는 중입니다...
+          stripe_disabled_msg: Stripe 결재가 시스템 관리자로 인하여 사용이 불가하게 되었습니다.
+          request_failed_msg: 죄송합니다. Stripe 계정 정보를 확인하는 동안 오류가 발생했습니다.
+          account_missing_msg: 이 회사에 대한 Stripe 계정이 존재하지 않습니다.
+          connect_one: 1번 연결
+          access_revoked_msg: 이 Stripe 계정으로의 접속이 파기되었으므로, 당신의 계정으로 재연결 해주십시오.
+          status: 상태
+          connected: 연결됨
+          account_id: ID 계정
+          business_name: 사업자명
+          charges_enabled: 충전 사용 가능
+        form:
+          name: "이름"
+          description: "설명"
+          environment: "환경"
+          display: "전시"
+          active: "활성화"
+          active_yes: "예"
+          active_no: "아니오"
+          both: "체크아웃 및 고객들을 직접 상대하지 않는 부서 모두"
+          back_end: "고객들을 직접 상대하지 않는 부서 전용"
+          tags: "태그"
+          deactivation_warning: "결제 방법을 비활성화하면 결제 방법이 목록에서 사라지게 하실 수 있습니다. 또는 '표시' 옵션을 '고객들을 직접 상대하지 않는 부서 전용'으로 설정하여 체크아웃 페이지에서 결제 방법을 숨길 수 있습니다."
+        providers:
+          provider: "제공자"
+          check: "현금/온라인 이체/기타 등등 (자동 유효성 검사가 필요하지 않은 지불)"
+          pin: "핀 결제"
+          paypalexpress: "페이팔 익스프레스"
+          stripeconnect: "Stripe"
+          stripesca: "Stripe SCA"
+          bogus: "보거스"
+          bogussimple: "보거스심플"
+      payments:
+        source_forms:
+          stripe:
+            error_saving_payment: 결제 저장 중 오류
+            submitting_payment: 결제 제출 중...
+          paypal:
+            no_payment_via_admin_backend: 고객들을 직접 상대하지 않는 부서 전용에서 페이팔 결제를 캡처할 수 없습니다.
+      products:
+        image_upload_error: "제품 이미지를 인식할 수 없습니다. PNG 또는 JPG 형식으로 이미지를 업로드하십시오."
+        new:
+          title: "새 상품"
+          new_product: "새 상품"
+          supplier: "공급업체"
+          product_name: "제품 이름"
+          units: "물건 크기"
+          value: "가치"
+          unit_name: "단위 이름"
+          price: "가격"
+          unit_price: "단가"
+          unit_price_legend: "품목 가격을 기준으로 계산됩니다."
+          on_hand: "대기 중"
+          on_demand: "수요로 함"
+          product_description: "제품 설명"
+          image: "사진"
+        unit_name_placeholder: '예시.  한 묶음'
+        index:
+          header:
+            title: 제품 대량 편집
+          indicators:
+            title: 제품 로딩 중
+            no_products: "아직 제품이 없습니다. 몇 개 넣어보시는게 어떠신가요?"
+            no_results: "죄송합니다. 일치하는 결과가 없습니다."
+          products_head:
+            name: 이름
+            unit: 단위
+            display_as: 다른 이름으로 표시
+            category: 목록
+            tax_category: 세금 목록
+            inherits_properties?: 속성을 상속하시겠습니까?
+            available_on: 사용 가능 날짜
+            av_on: "사용 가능 날짜"
+            import_date: "수입 날짜"
+          products_variant:
+            variant_has_n_overrides: "이 변경 사항에는 %{n}개의 덮어쓰기가 있습니다."
+            new_variant: "새로운 변경사항"
+          product_name: 제품 이름
+        primary_taxon_form:
+          product_category: 물품 목록
+        group_buy_form:
+          group_buy: "단체 구매를 하시겠습니까?"
+          bulk_unit_size: 대량 단위 크기
+        display_as:
+          display_as: 다른 이름으로 표시
+      reports:
+        table:
+          select_and_search: "필터를 선택하고 %{option}를 클릭하여 데이터에 액세스합니다."
+        customer_names_message:
+          customer_names_tip: "제공한 주문에 대해 고객 이름이 숨겨져 있는 경우 대리점에 연락하여 공급업체가 고객 이름을 볼 수 있도록 상점 기본 설정을 업데이트할 수 있는지 물어볼 수 있습니다."
+      users:
+        index:
+          listing_users: "사용자 정렬"
+          new_user: "신규 사용자"
+          user: "사용자"
+          enterprise_limit: "회사 최대치"
+          search: "찾기"
+          email: "이메일"
+        edit:
+          editing_user: "사용자 편집"
+          back_to_users_list: "사용자 리스트로 돌아가기"
+          general_settings: "일반 설정"
+        form:
+          email: "이메일"
+          roles: "역할"
+          enterprise_limit: "회사 최대치"
+          confirm_password: "비밀번호 확인"
+          password: "비밀번호"
+        email_confirmation:
+          confirmation_pending: "이메일 확인이 보류 중입니다. %{address}에게 확인 메일을 보냈습니다."
+      variants:
+        index:
+          sku: "재고 관리 단위"
+          price: "가격"
+          options: "옵션"
+          no_results: "결과 없음"
+          option_types: "옵션 유형"
+          option_values: "옵션 값"
+          and: "그리고"
+          new_variant: "새로운 변경사항"
+          show_active: "활성화 항목 보기"
+          show_deleted: "삭제된 항목 보기"
+        new:
+          new_variant: "새로운 변경사항"
+        form:
+          sku: "재고 관리 단위"
+          price: "가격"
+          unit_price: "단가"
+          display_as: "다른 이름으로 표시"
+          display_name: "이름 표시"
+          display_as_placeholder: '예. 2 kg'
+          display_name_placeholder: '예. Tomatoes'
+        autocomplete:
+          out_of_stock: "품절"
+          producer_name: "제공자"
+          unit: "단위"
+      shared:
+        configuration_menu:
+          terms_of_service: "서비스 약관"
+        sortable_header:
+          name: "이름"
+          number: "숫자"
+          state: "상태"
+          payment_state: "결제 상태"
+          shipment_state: "배송 현황"
+          email: "이메일"
+          total: "총합"
+          bill_address_lastname: "이름"
+      general_settings:
+        edit:
+          legal_settings: "법적 설정"
+          cookies_consent_banner_toggle: "쿠키 동의 배너 표시"
+          privacy_policy_url: "개인 정보 보호 정책 URL"
+          enterprises_require_tos: "기업은 서비스 약관에 동의해야 합니다."
+          shoppers_require_tos: "구매자는 서비스 약관에 동의해야 합니다."
+          cookies_policy_matomo_section: "쿠키 정책 페이지에 Matomo 섹션 표시"
+          footer_tos_url: "서비스 약관 URL"
+    checkout:
+      payment:
+        stripe:
+          choose_one: 하나 선택하기
+          enter_new_card: 새 카드에 대한 세부 정보 입력
+          used_saved_card: "저장된 카드 사용 :"
+          or_enter_new_card: "또는, 새 카드에 대한 세부 정보 입력 :"
+          remember_this_card: 이 카드를 기억하시겠습니까?
+        stripe_sca:
+          choose_one: 하나 선택하기
+          enter_new_card: 새 카드에 대한 세부 정보 입력
+          used_saved_card: "저장된 카드 사용"
+          or_enter_new_card: "또는, 새 카드에 대한 세부 정보 입력 :"
+          remember_this_card: 이 카드를 기억하시겠습니까?
+    date_picker:
+      flatpickr_date_format: "년-월-일"
+      flatpickr_datetime_format: "년-월-일 시:분"
+      today: "오늘"
+      now: "지금"
+      close: "휴무"
+    orders:
+      error_flash_for_unavailable_items: "카트의 항목을 사용할 수 없습니다. 선택한 수량을 업데이트하십시오."
+      edit:
+        login_to_view_order: "로그인하여 주문을 확인하십시오."
+      bought:
+        item: "이 주문 주기에 이미 주문됨"
+      line_item:
+        insufficient_stock: "재고 부족, %{on_hand}만 남아 있습니다."
+        out_of_stock: "품절"
+        unavailable_item: "현재 사용할 수 없음"
+    shipment_states:
+      backorder: 일시 품절
+      partial: 불완전힘
+      pending: 보류
+      ready: 준비
+      shipped: 배송됨
+      canceled: 최소됨
+    payment_states:
+      balance_due: 잔액 만기
+      completed: 완료됨
+      checkout: 체크아웃
+      credit_owed: 외상값
+      failed: 실패함
+      paid: 유급
+      pending: 보류
+      processing: 진행 중
+      requires_authorization: "인증 필요"
+      void: 공백
+      invalid: 효력 없음
+      authorise: 권한 부여
+    order_mailer:
+      cancel_email:
+        customer_greeting: "%{name}에게,"
+        instructions_html: "<strong>%{distributor}</strong> 과의 주문이 취소되었습니다. 기록을 위해 이 취소 정보를 보관하십시오."
+        dont_cancel: "마음이 바뀌셨거나 이 주문을 취소하고 싶지 않으신 경우 %{email}로 문의하십시오."
+        order_summary_canceled_html: "<strong>주문 요약 #%{number} [취소됨]</strong>"
+        details: "주문하신 상품의 상세 내역은 다음과 같습니다 :"
+        unpaid_order: "당신의 주문이 미지급되어 환불이 되지 않았습니다."
+        paid_order: "당신의 주문은 지불되었으므로 %{distributor}은 전액을 환불하였습니다."
+        credit_order: "주문이 결제되면서 계정의 신용 거래가 실행되었습니다."
+        subject: "주문 취소"
+      cancel_email_for_shop:
+        greeting: "%{name}에게,"
+        subject: "주문 취소"
+        intro: "고객 #%{number}이 주문을 취소했습니다."
+        view_cancelled_order: "취소된 주문 보기"
+      confirm_email:
+        subject: "주문 확인"
+      invoice_email:
+        hi: "안녕하세요 %{name}님"
+        invoice_attached_text: 첨부된 최근 주문에 대한 청구서를 찾아주세요.
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            암호 재설정 요청이 수행되었습니다.
+            이 요청을 하지 않으셨다면 이 이메일을 무시하세요.
+        link_text: >
+            이 요청을 한 경우 아래 링크를 클릭하십시오 :
+        issue_text: |
+            위의 URL이 작동하지 않으면 복사하여 브라우저에 붙여넣어 보세요.
+            문제가 계속 발생할 경우 언제든지 문의해 주십시오.
+        subject: "비밀번호 지침 초기화"
+      confirmation_instructions:
+        subject: "OFN 계정을 확인하세요."
+    payment_mailer:
+      authorize_payment:
+        subject: "OFN으로 %{distributor}에게 지불을 승인하십시오."
+        instructions: "%{distributor}에게 %{amount}를 지불하시려면 추가 인증이 필요합니다. 결제를 승인하려면 다음 URL을 방문하십시오."
+      authorization_required:
+        subject: "결제를 수행하려면 고객의 승인이 필요합니다."
+        message: "주문 %{order_number}에 대한 결제는 고객의 추가 승인이 필요합니다. 고객에게 이메일을 통해 통보되었으며 결제가 승인될 때까지 보류 중인 것으로 표시됩니다."
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "고객님 에게,"
+        instructions: "%{distributor}에서 주문하신 상품이 발송되었습니다."
+        shipment_summary: "전송 요약"
+        subject: "전송 통지서"
+        thanks: "당신의 사업에 대해 감사를 표합니다."
+        track_information: "추적 정보: %{tracking}"
+        track_link: "추적 링크 : %{url}"
+    test_mailer:
+      test_email:
+        greeting: "축하드립니다!"
+        message: "이 이메일을 받은 경우 이메일 설정이 올바른 것을 알 수 있습니다."
+        subject: "테스트 메일"
+    order_state:
+      address: 주소
+      adjustments: 조정
+      awaiting_return: 돌아가기를 기다리는 중
+      canceled: 최소됨
+      cart: 카트
+      confirmation: "확인"
+      complete: 완료
+      confirm: 확인
+      delivery: 배달
+      paused: 일시 정지됨
+      payment: 결제
+      pending: 보류
+      resumed: 재개됨
+      returned: 반송됨
+      skrill: skrill
+    subscription_state:
+      active: 활성화
+      pending: 보류
+      ended: 종료
+      paused: 일시 정지됨
+      canceled: 최소됨
+    paypal:
+      already_refunded: "이 지불은 환불되었으며 더 이상 조치를 취할 수 없습니다."
+      no_payment_via_admin_backend: "지금은 관리 백엔드를 통해 페이팔 계정을 청구할 수 없습니다."
+      transaction: "페이팔 거래"
+      payer_id: "결제자 ID"
+      transaction_id: "거래 ID"
+      token: "토큰"
+      refund: "환불"
+      refund_amount: "수량"
+      original_amount: "원래 금액 : %{amount}"
+      refund_successful: "페이팔 환불이 완료되었습니다."
+      refund_unsuccessful: "페이팔 환불이 실패했습니다."
+      actions:
+        refund: "환불"
+      flash:
+        cancel: "페이팔을 사용하지 않으신가요? 상관없습니다."
+        connection_failed: "페이팔에 연결할 수 없습니다."
+        generic_error: "페이팔을 사용할 수 없습니다. %{reasons}"
+    users:
+      form:
+        account_settings: 계정 설정
+      show:
+        tabs:
+          orders: 주문 내역
+          cards: 신용 카드
+          transactions: 거래
+          settings: 계정 설정
+        unconfirmed_email: "%{unconfirmed_email}에 대한 이메일 확인 보류 중입니다. 새 이메일이 확인되면 이메일 주소가 업데이트됩니다."
+      orders:
+        open_orders: 무조건 주문 내역
+        past_orders: 과거 주문 내역
+      transactions:
+        transaction_history: 거래 내역
+        authorisation_required: 인증 필요
+        authorise: 승인
+      open_orders:
+        order: 주문
+        shop: 쇼핑
+        changes_allowed_until: 변경 허용 기간
+        items: 항목
+        total: 총합
+        edit: 편집
+        cancel: 취소
+        closed: 휴무
+        until: 까지
+      past_orders:
+        order: 주문
+        shop: 쇼핑
+        completed_at: '완료 시간:'
+        items: 항목
+        total: 총합
+        paid?: 유급 입니까?
+        view: 보기
+      saved_cards:
+        default?: 기본값으로 설정하시겠습니까?
+        delete?: 삭제하시겠습니까?
+      cards:
+        authorised_shops: 인증된 가게
+        authorised_shops_agreement: '이 목록은 가입(예: 반복 주문)에 대한 기본 신용 카드를 충전할 수 있는 상점 목록입니다. 카드 세부 정보는 안전하게 유지되며 상점 주인과 공유되지 않습니다. 청구되면 항상 알림을 받게 됩니다. 상점 내 체크박스를 선택하게되면 해당 상점에서 해당 상점에서 만든 가입 조건에 따라 카드를 발급한 금융 기관에 결제 지침을 보낼 수 있는 권한을 부여하는 데 동의하게 됩니다.'
+        saved_cards_popover: 나중에 사용하기 위해 저장하도록 선택한 카드 목록입니다. '기본값'은 주문을 체크아웃할 때 자동으로 선택되며, 체크아웃을 허용한 모든 상점에서 청구할 수 있습니다(오른쪽 참조).
+      authorised_shops:
+        shop_name: "가게 이름"
+        allow_charges?: "기본으로 설정된 카드로 요금을 지불하시겠습니까?"
+    localized_number:
+      invalid_format: 형식이 잘못되었습니다. 숫자를 입력해주십시오.
+    api:
+      invalid_api_key: "잘못된 API 키(%{key})가 지정되었습니다."
+      unauthorized: "해당 작업을 수행할 수 있는 권한이 없습니다."
+      invalid_resource: "리소스가 잘못되었습니다. 오류를 수정한 후 다시 시도하십시오."
+      resource_not_found: "찾고 있는 리소스를 찾을 수 없습니다."
+      access: "API 접근"
+      key: "키"
+      clear_key: "키 지우기"
+      regenerate_key: "키 재생성"
+      no_key: "키 없음"
+      generate_key: "API 키 생성"
+      key_generated: "키 생성됨"
+      key_cleared: "키 지워짐"
+      shipment:
+        cannot_ready: "발송을 준비할 수 없습니다."
+      invalid_taxonomy_id: "분류법 ID가 잘못되었습니다."
+    activerecord:
+      models:
+        spree/payment:
+          other: 결제
+    unit: 단위
+    per_unit: 당 단위
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        other: '%{count} 시간 정도'
+      about_x_months:
+        other: '%{count} 달 정도 '
+      about_x_years:
+        other: '%{count} 년 정도'
+      almost_x_years:
+        other: 거의 %{count} 년
+      half_a_minute: 30분
+      less_than_x_seconds:
+        other: '%{count}초 이하'
+      less_than_x_minutes:
+        other: '%{count}분 이하'
+      over_x_years:
+        other: '%{count}년 이상'
+      x_seconds:
+        other: "%{count}초"
+      x_minutes:
+        other: "%{count}분"
+      x_days:
+        other: "%{count}일"
+      x_months:
+        other: "%{count}개월"
+      x_years:
+        other: "%{count}년"

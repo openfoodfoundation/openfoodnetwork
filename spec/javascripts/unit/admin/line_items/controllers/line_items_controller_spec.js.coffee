@@ -207,18 +207,15 @@ describe "LineItemsCtrl", ->
           scope.selectedUnitsProduct = { variant_unit: "weight" }
           expect(scope.fulfilled()).toEqual ''
 
-        it "returns '', and does not call Math.round if variant_unit is 'items'", ->
-          spyOn(Math,"round")
-          scope.selectedUnitsProduct = { variant_unit: "items", group_buy_unit_size: 10 }
-          expect(scope.fulfilled()).toEqual ''
-          expect(Math.round).not.toHaveBeenCalled()
-
-        it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
+        it "calls Math.round() if variant_unit is 'weight', 'volume', or items", ->
           spyOn(Math,"round")
           scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 10 }
           scope.fulfilled()
           expect(Math.round).toHaveBeenCalled()
           scope.selectedUnitsProduct = { variant_unit: "volume", group_buy_unit_size: 10 }
+          scope.fulfilled()
+          expect(Math.round).toHaveBeenCalled()
+          scope.selectedUnitsProduct = { variant_unit: "items", group_buy_unit_size: 10 }
           scope.fulfilled()
           expect(Math.round).toHaveBeenCalled()
 
@@ -268,11 +265,19 @@ describe "LineItemsCtrl", ->
           expect(scope.allFinalWeightVolumesPresent()).toEqual true
 
       describe "sumUnitValues()", ->
-        it "returns the sum of the final_weight_volumes line_items", ->
+        it "returns the sum of the final_weight_volumes line_items if volume", ->
           scope.filteredLineItems = [
-            { final_weight_volume: 2 }
-            { final_weight_volume: 7 }
-            { final_weight_volume: 21 }
+            { final_weight_volume: 2, units_product: { variant_unit: "volume" } }
+            { final_weight_volume: 7, units_product: { variant_unit: "volume" } }
+            { final_weight_volume: 21, units_product: { variant_unit: "volume" } }
+          ]
+          expect(scope.sumUnitValues()).toEqual 30
+
+        it "returns the sum of the quantity line_items if items", ->
+          scope.filteredLineItems = [
+            { quantity: 2, units_product: { variant_unit: "items" } }
+            { quantity: 7, units_product: { variant_unit: "items" } }
+            { quantity: 21, units_product: { variant_unit: "items" } }
           ]
           expect(scope.sumUnitValues()).toEqual 30
 
@@ -288,12 +293,21 @@ describe "LineItemsCtrl", ->
       describe "sumMaxUnitValues()", ->
         it "returns the sum of the product of unit_value and maxOf(max_quantity, pristine quantity) for specified line_items", ->
           scope.filteredLineItems = [
-            { id: 1, units_variant: { unit_value: 1 }, max_quantity: 5 }
-            { id: 2, units_variant: { unit_value: 2 }, max_quantity: 1 }
-            { id: 3, units_variant: { unit_value: 3 }, max_quantity: 10 }
+            { id: 1, units_variant: { unit_value: 1 }, max_quantity: 5, units_product: { variant_unit: "volume", variant_unit_scale: 1 } }
+            { id: 2, units_variant: { unit_value: 2 }, max_quantity: 1, units_product: { variant_unit: "volume", variant_unit_scale: 1 } }
+            { id: 3, units_variant: { unit_value: 3 }, max_quantity: 10, units_product: { variant_unit: "volume", variant_unit_scale: 1 } }
           ]
 
           expect(scope.sumMaxUnitValues()).toEqual 37
+
+        it "returns the sum of the product of max_quantity for specified line_items if variant_unit is `items`", ->
+          scope.filteredLineItems = [
+            { id: 1, units_variant: { unit_value: 1 }, max_quantity: 5, units_product: { variant_unit: "items" } }
+            { id: 2, units_variant: { unit_value: 2 }, max_quantity: 1, units_product: { variant_unit: "items" } }
+            { id: 3, units_variant: { unit_value: 3 }, max_quantity: 10, units_product: { variant_unit: "items" } }
+          ]
+
+          expect(scope.sumMaxUnitValues()).toEqual 16
 
       describe "formatting a value based upon the properties of a specified Units Variant", ->
         # A Units Variant is an API object which holds unit properies of a variant
@@ -305,10 +319,9 @@ describe "LineItemsCtrl", ->
         it "returns '' if selectedUnitsVariant has no property 'variant_unit'", ->
           expect(scope.formattedValueWithUnitName(1,{})).toEqual ''
 
-        it "returns '', and does not call Math.round if variant_unit is 'items'", ->
+        it "returns the value, and does not call Math.round if variant_unit is 'items'", ->
           unitsProduct = { variant_unit: "items" }
-          expect(scope.formattedValueWithUnitName(1,unitsProduct,unitsVariant)).toEqual ''
-          expect(Math.round).not.toHaveBeenCalled()
+          expect(scope.formattedValueWithUnitName(1, unitsProduct, unitsVariant)).toEqual "1 items"
 
         it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
           unitsProduct = { variant_unit: "weight", variant_unit_scale: 1 }

@@ -1246,6 +1246,8 @@ es_CR:
       errors:
         no_report_type: "Especifique un tipo de informe"
         report_not_found: "Informe no encontrado"
+        missing_ransack_params: "Proporcione los parámetros de búsqueda de Ransack en la solicitud"
+      hidden_field: "< Oculto >"
       summary_row:
         total: "TOTAL"
       table:
@@ -1263,13 +1265,21 @@ es_CR:
           temp_controlled: "¿Control de Temperatura?"
           price: "Precio"
       rendering_options:
+        generate_report: "Generar reporte"
+        on_screen: "En pantalla"
+        spreadsheet: "Hoja de cálculo (Excel, OpenOffice..)"
         display: Mostrar
+        summary_row: Fila de resumen
+        header_row: Fila de encabezado
+        raw_data: Datos sin procesar
+        formatted_data: Datos formateados
       packing:
         name: "Reportes de empaquetado"
     subscriptions:
       index:
         title: "Suscripciones"
         new: "Nueva suscripción"
+      issue: "Tema"
       new:
         title: "Nueva suscripción"
       edit:
@@ -1368,14 +1378,19 @@ es_CR:
       stripe_connect_settings:
         resource: Configuración de Stripe Connect
   api:
+    unknown_error: "Algo salió mal. Nuestro equipo ha sido notificado."
     invalid_api_key: "La llave de API utilizada (%{key}) es inválida."
     unauthorized: "No está autorizado para realizar esta acción."
+    unpermitted_parameters: "Parámetros no permitidos en esta solicitud: %{params}"
+    missing_parameter: "Falta un parámetro obligatorio o está vacío: %{param}"
     invalid_resource: "Recurso inválido. Por favor corrija los errores e intente nuevamente."
     resource_not_found: "El recurso que buscaba no fue encontrado."
     enterprise_logo:
       destroy_attachment_does_not_exist: "El logotipo no existe"
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "La imágen promocional no existe"
+    enterprise_terms_and_conditions:
+      destroy_attachment_does_not_exist: "El archivo de términos y condiciones no existe"
     orders:
       failed_to_update: "Error al actualizar pedido"
   checkout:
@@ -1383,10 +1398,16 @@ es_CR:
       cart: "carrito"
       message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
     terms_and_conditions:
+      message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor."
       link_text: "Términos y condiciones"
+    platform_terms_of_service:
+      message_html: "Estoy de acuerdo con la plataforma %{tos_link}."
     all_terms_and_conditions:
+      message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor y la plataforma %{tos_link}."
       terms_and_conditions: "Términos y condiciones"
     failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
+    payment_cancelled_due_to_stock: "Pago cancelado: no se pudo completar el pago por problemas de stock."
+    order_not_loaded: "No se encontró un pedido válido para procesar el pago"
   shops:
     hubs:
       show_closed_shops: "Mostrar tiendas cerradas"
@@ -1396,12 +1417,18 @@ es_CR:
     mailers:
       powered_by:
         open_food_network: "Open Food Network"
+        powered_html: "Su experiencia de compra está impulsada por %{open_food_network}."
     menu:
       cart:
         cart: "Carrito"
       cart_sidebar:
         checkout: "Validar el carrito"
+        edit_cart: "editar carrito"
+        items_in_cart_singular: "%{num}artículo en tu carrito"
+        items_in_cart_plural: "%{num} artículos en tu carrito"
         close: "Cerrar"
+        cart_empty: "su carrito está vacío"
+        take_me_shopping: "¡Llévame de compras!"
       signed_in:
         profile: "Perfil"
       mobile_menu:
@@ -1431,7 +1458,11 @@ es_CR:
         login: "Ingresar"
         contact: "contactar"
         require_customer_login: "Sólo los clientes aprobados pueden acceder a esta tienda."
+        require_login_link_html: "Si ya es un cliente aprobado, %{login} para continuar."
+        require_login_2_html: "¿Quieres empezar a comprar aquí? Póngase en %{contact} con %{enterprise} y pregunte acerca de unirse."
         require_customer_html: "Si desea comenzar a comprar aquí, por favor %{contact} %{enterprise} para preguntar acerca de incorporación."
+      select_oc:
+        select_oc_html: "Por favor <span class='highlighted'>elige cuando quieres tu pedido</span>, para ver que productos están disponibles."
     products:
       summary:
         bulk: "Agrupar"
@@ -1503,6 +1534,12 @@ es_CR:
   address2: Dirección (continuación)
   city: Ciudad
   city_placeholder: ej. Alajuela
+  latitude: Latitud
+  latitude_placeholder: ej. -37.4713077
+  latitude_longitude_tip: La latitud y la longitud son necesarias para mostrar su empresa en el mapa.
+  longitude: Longitud
+  longitude_placeholder: ej. 144.7851531
+  use_geocoder: ¿Calcular latitud y longitud automáticamente desde la dirección?
   postcode: Código postal
   postcode_placeholder: ej. 20307
   suburb: Barrio
@@ -1653,6 +1690,8 @@ es_CR:
   cost_currency: "Moneda"
   split_checkout:
     your_details_without_number: Sus detalles
+    payment_method_without_number: Método de pago
+    order_summary_without_number: Resumen de compra
     already_ordered:
       cart: "carrito"
       message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
@@ -1661,39 +1700,69 @@ es_CR:
         title: Sus detalles
         first_name:
           label: Nombre
+          placeholder: ej. Jane
         last_name:
           label: Apellidos
+          placeholder: ej. Doe
         email:
           label: Correo electrónico
+          placeholder: ej. janedoe@email.com
         phone:
           label: Número de teléfono
+          placeholder: ej. 07987654321
       billing_address:
         title: Dirección de cobro
       address:
+        address1:
+          label: Dirección (Calle + Número de Casa)
+          placeholder: ej. Apartamentos Flat 1 Elm
+        address2:
+          label: Información de dirección adicional (opcional)
+          placeholder: ej. caballero aventurero
         city:
           label: Ciudad
+          placeholder: ej. Londres
         state_id:
           label: Provincia
         zipcode:
           label: Código postal
+          placeholder: ej. SW11 3QN
         country_id:
           label: País
       shipping_info:
         title: Información de envío
+      submit: Siguiente - Método de pago
+      cancel: Volver a Editar cesta
     step2:
+      payment_method:
+        title: Método de pago
       form:
+        card_number:
+          label: Número de tarjeta
+          placeholder: ej. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
         card_month:
           label: Mes
         card_year:
           label: Año
+        stripe:
+          use_saved_card: Utilizar tarjeta guardada
+          use_new_card: Ingrese los identificadores de su tarjeta
     step3:
       your_details:
         title: Sus detalles
       billing_address:
         title: Dirección de cobro
+      payment_method:
+        title: Método de pago
       terms_and_conditions:
+        message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor."
         link_text: "Términos y condiciones"
+      platform_terms_of_service:
+        message_html: "Estoy de acuerdo con la plataforma %{tos_link}."
       all_terms_and_conditions:
+        message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor y la plataforma %{tos_link}."
         terms_and_conditions: "Términos y condiciones"
     errors:
       invalid_email: "Introduce un correo electrónico válido"
@@ -3096,6 +3165,7 @@ es_CR:
   last: "Último"
   spree:
     all: "Todos"
+    card_number: "Número de tarjeta"
     category: "Categoría"
     credit: "Crédito"
     more: "Más"

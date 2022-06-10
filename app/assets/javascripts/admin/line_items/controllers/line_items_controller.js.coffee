@@ -166,12 +166,18 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.sumUnitValues = ->
     sum = $scope.filteredLineItems?.reduce (sum, lineItem) ->
-      sum + $scope.roundToThreeDecimals(lineItem.final_weight_volume / $scope.getLineItemScale(lineItem))
+      if lineItem.units_product.variant_unit == "items"
+        sum + lineItem.quantity
+      else
+        sum + $scope.roundToThreeDecimals(lineItem.final_weight_volume / $scope.getLineItemScale(lineItem))
     , 0
 
   $scope.sumMaxUnitValues = ->
     sum = $scope.filteredLineItems?.reduce (sum,lineItem) ->
-      sum + lineItem.max_quantity * $scope.roundToThreeDecimals(lineItem.units_variant.unit_value / $scope.getLineItemScale(lineItem))
+      if lineItem.units_product.variant_unit == "items"
+        sum + lineItem.max_quantity
+      else
+        sum + lineItem.max_quantity * $scope.roundToThreeDecimals(lineItem.units_variant.unit_value / $scope.getLineItemScale(lineItem))
     , 0
 
   $scope.roundToThreeDecimals = (value) ->
@@ -185,6 +191,8 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.getScale = (unitsProduct, unitsVariant) ->
     if unitsProduct.hasOwnProperty("variant_unit") && (unitsProduct.variant_unit == "weight" || unitsProduct.variant_unit == "volume")
       unitsProduct.variant_unit_scale
+    else if unitsProduct.hasOwnProperty("variant_unit") && unitsProduct.variant_unit == "items"
+      1
     else
       null
 
@@ -209,11 +217,11 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.fulfilled = (sumOfUnitValues) ->
     # A Units Variant is an API object which holds unit properies of a variant
-    if $scope.selectedUnitsProduct.hasOwnProperty("group_buy_unit_size") && $scope.selectedUnitsProduct.group_buy_unit_size > 0 &&
-      $scope.selectedUnitsProduct.hasOwnProperty("variant_unit") &&
-      ( $scope.selectedUnitsProduct.variant_unit == "weight" || $scope.selectedUnitsProduct.variant_unit == "volume" )
-        scale = $scope.selectedUnitsProduct.variant_unit_scale
-        sumOfUnitValues = sumOfUnitValues * scale unless scale == 28.35 || scale == 453.6
+    if $scope.selectedUnitsProduct.hasOwnProperty("group_buy_unit_size")&& $scope.selectedUnitsProduct.group_buy_unit_size > 0 &&
+      $scope.selectedUnitsProduct.hasOwnProperty("variant_unit")
+        if $scope.selectedUnitsProduct.variant_unit == "weight" || $scope.selectedUnitsProduct.variant_unit == "volume"
+          scale = $scope.selectedUnitsProduct.variant_unit_scale
+          sumOfUnitValues = sumOfUnitValues * scale unless scale == 28.35 || scale == 453.6
         $scope.roundToThreeDecimals(sumOfUnitValues / $scope.selectedUnitsProduct.group_buy_unit_size)
     else
       ''

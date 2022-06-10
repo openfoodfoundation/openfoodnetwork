@@ -28,19 +28,14 @@ module Api
         authorize! :read, Spree::Shipment
         @shipment = @order.shipments.find_by!(number: params[:id])
         params[:shipment] ||= []
-        unlock = params[:shipment].delete(:unlock)
 
-        if unlock == 'yes'
-          @shipment.fee_adjustment.fire_events(:open)
-        end
+        @shipment.fee_adjustment.fire_events(:open)
 
         if @shipment.update(shipment_params)
           @order.updater.update_totals_and_states
         end
 
-        if unlock == 'yes'
-          @shipment.fee_adjustment.close
-        end
+        @shipment.fee_adjustment.close
 
         render json: @shipment.reload, serializer: Api::ShipmentSerializer, status: :ok
       end
