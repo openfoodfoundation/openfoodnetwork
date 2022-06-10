@@ -43,8 +43,6 @@ describe "spree/orders/show.html.haml" do
   end
 
   it "handles broken images" do
-    pending "https://github.com/openfoodfoundation/openfoodnetwork/issues/9279"
-
     image, = order.line_items.first.variant.product.images << Spree::Image.new(
       attachment: fixture_file_upload("logo.png", "image/png")
     )
