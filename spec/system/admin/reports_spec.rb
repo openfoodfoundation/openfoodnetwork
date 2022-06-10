@@ -31,36 +31,53 @@ describe '
     end
   end
 
-  describe "Customers report" do
+  shared_examples "Can access Customers reports and generate report" do |inverse_columns_logic|
     before do
-      login_as_admin_and_visit admin_reports_path
+      allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(
+        :report_inverse_columns_logic, anything
+      ).and_return(inverse_columns_logic)
     end
 
-    it "customers report" do
-      click_link "Mailing List"
-      expect(page).to have_select('report_subtype', selected: 'Mailing List')
-      click_button "Go"
+    describe "Customers report" do
+      before do
+        login_as_admin_and_visit admin_reports_path
+      end
 
-      rows = find("table.report__table").all("thead tr")
-      table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-      expect(table.sort).to eq([
-        ["Email", "First Name", "Last Name", "Suburb"].map(&:upcase)
-      ].sort)
-    end
+      it "customers report" do
+        click_link "Mailing List"
+        unless inverse_columns_logic
+          expect(page).to have_select('report_subtype',
+                                      selected: 'Mailing List')
+        end
+        click_button "Go"
 
-    it "customers report" do
-      click_link "Addresses"
-      expect(page).to have_select('report_subtype', selected: 'Addresses')
+        rows = find("table.report__table").all("thead tr")
+        table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+        expect(table.sort).to eq([
+          ["Email", "First Name", "Last Name", "Suburb"].map(&:upcase)
+        ].sort)
+      end
 
-      click_button "Go"
-      rows = find("table.report__table").all("thead tr")
-      table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-      expect(table.sort).to eq([
-        ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address",
-         "Shipping Method"].map(&:upcase)
-      ].sort)
+      it "customers report" do
+        click_link "Addresses"
+        unless inverse_columns_logic
+          expect(page).to have_select('report_subtype',
+                                      selected: 'Addresses')
+        end
+
+        click_button "Go"
+        rows = find("table.report__table").all("thead tr")
+        table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+        expect(table.sort).to eq([
+          ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address",
+           "Shipping Method"].map(&:upcase)
+        ].sort)
+      end
     end
   end
+
+  it_behaves_like "Can access Customers reports and generate report", true
+  it_behaves_like "Can access Customers reports and generate report", false
 
   describe "Order cycle management report" do
     before do
