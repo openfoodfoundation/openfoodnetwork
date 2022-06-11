@@ -884,7 +884,6 @@ describe "As a consumer, I want to checkout my order", js: true do
         end
 
         it "emptying the cart changes the order state back to address" do
-          pending "fixing issue #9299"
           visit main_app.cart_path
           expect {
             find('#clear_cart_link').click
