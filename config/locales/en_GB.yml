@@ -1804,6 +1804,7 @@ en_GB:
   order_hub_info: Hub info
   order_back_to_store: Back To Store
   order_back_to_cart: Back To Cart
+  order_back_to_website: Back To Website
   bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
   unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
   unsaved_changes_error: "Fields with red borders contain errors."
