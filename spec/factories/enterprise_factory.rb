@@ -23,6 +23,14 @@ FactoryBot.define do
     end
   end
 
+  trait :with_logo_image do
+    logo { Rack::Test::UploadedFile.new('spec/fixtures/files/logo.png', 'image/png') }
+  end
+
+  trait :with_promo_image do
+    logo { Rack::Test::UploadedFile.new('spec/fixtures/files/promo.png', 'image/png') }
+  end
+
   factory :supplier_enterprise, parent: :enterprise do
     is_primary_producer { true }
     sells { "none" }

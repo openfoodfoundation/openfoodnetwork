@@ -225,7 +225,7 @@ describe SubscriptionMailer, type: :mailer do
   end
 
   describe "order placement summary" do
-    let!(:shop) { create(:enterprise) }
+    let!(:shop) { create(:enterprise, :with_logo_image) }
     let!(:summary) { double(:summary, shop_id: shop.id) }
     let(:body) { strip_tags(SubscriptionMailer.deliveries.last.body.encoded) }
     let(:scope) { "subscription_mailer" }
