@@ -252,7 +252,6 @@ describe SubscriptionMailer, type: :mailer do
       end
 
       it "renders the shop's logo" do
-        shop.update!(logo: fixture_file_upload("logo.png", "image/png"))
         SubscriptionMailer.placement_summary_email(summary).deliver_now
         expect(SubscriptionMailer.deliveries.last.body).to include "logo.png"
       end
