@@ -124,7 +124,7 @@ describe '
     expect(page).to have_content 'PAYMENT STATE'
   end
 
-  describe "sales tax report" do
+  shared_examples "sales tax report" do |inverse_columns_logic|
     let(:distributor1) {
       create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true)
     }
@@ -168,6 +168,9 @@ describe '
     }
 
     before do
+      allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(
+        :report_inverse_columns_logic, anything
+      ).and_return(inverse_columns_logic)
       order1.reload
       break unless order1.next! until order1.delivery?
 
@@ -180,11 +183,15 @@ describe '
       break unless order1.next! until order1.complete?
 
       login_as_admin_and_visit admin_reports_path
-      click_link "Sales Tax"
-      select("Tax Types", from: "report_subtype")
     end
 
-    it "reports" do
+    it "generate Tax Types reports" do
+      if inverse_columns_logic
+        click_link "Tax Types"
+      else
+        click_link "Sales Tax"
+        select("Tax Types", from: "report_subtype")
+      end
       # Then it should give me access only to managed enterprises
       expect(page).to     have_select 'q_distributor_id_eq',
                                       with_options: [user1.enterprises.first.name]
@@ -211,7 +218,26 @@ describe '
       # And the total tax should be correct
       expect(page).to have_content "286.84" # total tax
     end
+
+    it "generate Tax Rates report" do
+      if inverse_columns_logic
+        click_link "Tax Rates"
+      else
+        click_link "Sales Tax"
+        select("Tax Rates", from: "report_subtype")
+      end
+
+      click_button 'Go'
+      expect(page).to have_css(".report__table thead th", text: "20.0% ($)")
+      expect(page).to have_css(".report__table thead th", text: "0.0% ($)")
+
+      expect(page).to have_table_row [order1.number, "1446.7", "16.76", "0", "270.08", "286.84",
+                                      "1733.54"]
+    end
   end
+
+  it_behaves_like "sales tax report", false
+  it_behaves_like "sales tax report", true
 
   describe "orders & fulfilment reports" do
     it "loads the report page" do

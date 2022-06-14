@@ -12,9 +12,9 @@ module Reporting
     def table_headers
       filter = if OpenFoodNetwork::FeatureToggle.enabled?(:report_inverse_columns_logic,
                                                           @current_user)
-                 proc { |key| key.in?(fields_to_show) }
+                 proc { |key| key.to_sym.in?(fields_to_show) }
                else
-                 proc { |key| !key.in?(fields_to_hide) }
+                 proc { |key| !key.to_sym.in?(fields_to_hide) }
                end
       report.columns.keys.filter { |key| filter.call(key) }.map do |key|
         translate_header(key)
