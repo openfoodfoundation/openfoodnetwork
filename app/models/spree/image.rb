@@ -15,11 +15,15 @@ module Spree
     validate :no_attachment_errors
 
     def variant(name)
-      attachment.variant(SIZES[name])
+      if attachment.variable?
+        attachment.variant(SIZES[name])
+      else
+        attachment
+      end
     end
 
     def url(size)
-      return unless attachment.variable?
+      return unless attachment.attached?
 
       Rails.application.routes.url_helpers.url_for(variant(size))
     end
