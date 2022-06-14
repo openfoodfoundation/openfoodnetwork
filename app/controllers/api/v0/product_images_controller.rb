@@ -16,9 +16,12 @@ module Api
 
         success_status = image.persisted? ? :ok : :created
 
-        image.update(attachment: params[:file])
-
-        render json: image, serializer: ImageSerializer, status: success_status
+        if image.update(attachment: params[:file])
+          render json: image, serializer: ImageSerializer, status: success_status
+        else
+          error_json = { errors: image.errors.full_messages }
+          render json: error_json, status: :unprocessable_entity
+        end
       end
     end
   end
