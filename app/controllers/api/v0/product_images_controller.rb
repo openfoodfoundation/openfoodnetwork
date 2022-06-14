@@ -6,21 +6,19 @@ module Api
       respond_to :json
 
       def update_product_image
-        @product = Spree::Product.find(params[:product_id])
+        product = Spree::Product.find(params[:product_id])
         authorize! :update, @product
 
-        if @product.images.first.nil?
-          @image = Spree::Image.create(
-            attachment: params[:file],
-            viewable_id: @product.master.id,
-            viewable_type: 'Spree::Variant'
-          )
-          render json: @image, serializer: ImageSerializer, status: :created
-        else
-          @image = @product.images.first
-          @image.update(attachment: params[:file])
-          render json: @image, serializer: ImageSerializer, status: :ok
-        end
+        image = product.images.first || Spree::Image.new(
+          viewable_id: product.master.id,
+          viewable_type: 'Spree::Variant'
+        )
+
+        success_status = image.persisted? ? :ok : :created
+
+        image.update(attachment: params[:file])
+
+        render json: image, serializer: ImageSerializer, status: success_status
       end
     end
   end
