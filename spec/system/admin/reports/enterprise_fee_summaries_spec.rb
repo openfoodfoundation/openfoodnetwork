@@ -15,13 +15,12 @@ describe "enterprise fee summaries" do
   before do
     login_as current_user
   end
-  
+
   describe "visiting the reports page" do
-        
     before do
       visit admin_reports_path
     end
-  
+
     describe "navigation" do
       context "when accessing the report as an superadmin" do
         let(:current_user) { create(:admin_user) }
