@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require "system_helper"
 
-feature "enterprise fee summaries", js: true do
+describe "enterprise fee summaries" do
   include AuthenticationHelper
   include WebHelper
 
@@ -15,36 +15,40 @@ feature "enterprise fee summaries", js: true do
   before do
     login_as current_user
   end
-
-  describe "navigation" do
-    context "when accessing the report as an superadmin" do
-      let(:current_user) { create(:admin_user) }
-
-      it "shows link and allows access to the report" do
-        visit spree.admin_reports_path
-        click_on I18n.t("admin.reports.enterprise_fee_summary.name")
-        expect(page).to have_button("Go")
-      end
+  
+  describe "visiting the reports page" do
+        
+    before do
+      visit admin_reports_path
     end
+  
+    describe "navigation" do
+      context "when accessing the report as an superadmin" do
+        let(:current_user) { create(:admin_user) }
 
-    context "when accessing the report as an admin" do
-      let(:current_user) { distributor.owner }
-
-      it "shows link and allows access to the report" do
-        visit spree.admin_reports_path
-        click_on I18n.t("admin.reports.enterprise_fee_summary.name")
-        expect(page).to have_button("Go")
+        it "shows link and allows access to the report" do
+          click_on I18n.t("admin.reports.enterprise_fee_summary.name")
+          expect(page).to have_button("Go")
+        end
       end
-    end
 
-    context "when accessing the report as an enterprise user without sufficient permissions" do
-      let(:current_user) { create(:user) }
+      context "when accessing the report as an admin" do
+        let(:current_user) { distributor.owner }
 
-      it "does not allow access to the report" do
-        visit spree.admin_reports_path
-        expect(page).to have_no_link(I18n.t("admin.reports.enterprise_fee_summary.name"))
-        visit main_app.admin_report_path(report_type: 'enterprise_fee_summary')
-        expect(page).to have_content(I18n.t("unauthorized"))
+        it "shows link and allows access to the report" do
+          click_on I18n.t("admin.reports.enterprise_fee_summary.name")
+          expect(page).to have_button("Go")
+        end
+      end
+
+      context "when accessing the report as an enterprise user without sufficient permissions" do
+        let(:current_user) { create(:user) }
+
+        it "does not allow access to the report" do
+          expect(page).to have_no_link(I18n.t("admin.reports.enterprise_fee_summary.name"))
+          visit main_app.admin_report_path(report_type: 'enterprise_fee_summary')
+          expect(page).to have_content(I18n.t("unauthorized"))
+        end
       end
     end
   end
@@ -91,8 +95,8 @@ feature "enterprise fee summaries", js: true do
                                              distributor: distributor)
         end
         let(:current_user) { create(:admin_user) }
-
         it "generates file with data for all enterprises" do
+          pending "reports overhaul spec update"
           check I18n.t("filters.report_format_csv", scope: i18n_scope)
           click_on "Go"
 
@@ -113,6 +117,7 @@ feature "enterprise fee summaries", js: true do
         let(:current_user) { distributor.owner }
 
         it "generates file with data for the enterprise" do
+          pending "reports overhaul spec update"
           check I18n.t("filters.report_format_csv", scope: i18n_scope)
           click_on "Go"
 
@@ -144,6 +149,7 @@ feature "enterprise fee summaries", js: true do
       end
 
       it "generates file with data for selected order cycle" do
+        pending "reports overhaul spec update"
         select order_cycle.name, from: "report_order_cycle_ids"
         check I18n.t("filters.report_format_csv", scope: i18n_scope)
         click_on "Go"
