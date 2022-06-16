@@ -38,5 +38,6 @@ RSpec.configure do |config|
       "#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}"
     example.run
     Rails.application.default_url_options[:host] = original_host
+    remove_downloaded_files
   end
 end

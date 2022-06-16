@@ -4,7 +4,7 @@ module DownloadsHelper
   TIMEOUT = 10
 
   def self.path
-    Rails.root.join("tmp", "downloads")
+    Rails.root.join("tmp", "capybara")
   end
 
   def downloaded_filename
@@ -17,16 +17,10 @@ module DownloadsHelper
     File.read(downloaded_filename)
   end
 
-  def with_empty_downloads_folder
-    remove_downloaded_files
-    yield
-    remove_downloaded_files
-  end
-
   private
 
   def downloaded_filenames
-    Dir[DownloadsHelper.path.join("*")]
+    Dir[DownloadsHelper.path.join("*")].select { |f| File.file?(f) }
   end
 
   def wait_for_download
