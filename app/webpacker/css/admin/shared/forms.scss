@@ -106,6 +106,10 @@ span.info {
       input {
         border-color: very-light($color-error, 15);
       }
+
+      select {
+        border-color: very-light($color-error, 15);
+      }
     }
     .formError {
       color: very-light($color-error, 30);

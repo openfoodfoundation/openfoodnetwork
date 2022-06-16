@@ -109,7 +109,7 @@ module Spree
                              if: proc { Spree::Config[:products_require_tax_category] }
 
     validates :variant_unit, presence: true
-    validates :unit_value, presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
+    validates :unit_value, presence: true
     validates :variant_unit_scale,
               presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
     validates :variant_unit_name,
