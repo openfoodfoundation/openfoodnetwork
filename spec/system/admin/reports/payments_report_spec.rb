@@ -36,8 +36,6 @@ describe "Payments Reports" do
 
   context "when choosing itemised payments report type" do
     it "shows orders with payment state, their balance and totals" do
-      pending "reports overhaul spec update"
-
       select I18n.t(:report_itemised_payment), from: "report_subtype"
       find("[type='submit']").click
 
@@ -53,10 +51,10 @@ describe "Payments Reports" do
       expect(page.find("table.report__table tbody tr").text).to have_content([
         order.payment_state,
         order.distributor.name,
-        order.item_total.to_f + other_order.item_total.to_f,
-        order.ship_total.to_f + other_order.ship_total.to_f,
-        order.outstanding_balance.to_f + other_order.outstanding_balance.to_f,
-        order.total.to_f + other_order.total.to_f
+        with_currency(order.item_total.to_f + other_order.item_total.to_f),
+        with_currency(order.ship_total.to_f + other_order.ship_total.to_f),
+        with_currency(order.outstanding_balance.to_f + other_order.outstanding_balance.to_f),
+        with_currency(order.total.to_f + other_order.total.to_f)
       ].compact.join(" "))
     end
   end
@@ -73,8 +71,6 @@ describe "Payments Reports" do
     }
 
     it 'shows orders with payment state, their balance and and payment totals' do
-      pending "reports overhaul spec update"
-
       select I18n.t(:report_payment_totals), from: "report_subtype"
       find("[type='submit']").click
 
@@ -89,6 +85,7 @@ describe "Payments Reports" do
         I18n.t(:report_header_outstanding_balance_price, currency: currency_symbol),
       ].join(" ").upcase)
 
+      pending "PR #9229 which will remove currency from the figures below"
       expect(page.find("table.report__table tbody tr").text).to have_content([
         order.payment_state,
         order.distributor.name,
@@ -97,7 +94,7 @@ describe "Payments Reports" do
         order.total.to_f + other_order.total.to_f,
         eft_payment.amount.to_f,
         paypal_payment.amount.to_f,
-        order.outstanding_balance.to_f + other_order.outstanding_balance.to_f,
+        with_currency(order.outstanding_balance + other_order.outstanding_balance),
       ].join(" "))
     end
   end

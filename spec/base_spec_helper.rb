@@ -140,6 +140,7 @@ RSpec.configure do |config|
   config.include ActionView::Helpers::DateHelper
   config.include OpenFoodNetwork::PerformanceHelper
   config.include ActiveJob::TestHelper
+  config.include ReportsHelper
 
   config.include Features::DatepickerHelper, type: :system
   config.include DownloadsHelper, type: :system
