@@ -106,11 +106,11 @@ module Spree
     end
 
     def self.backend
-      where("spree_shipping_methods.display_on = ?", DISPLAY_ON_OPTIONS[:back_end])
+      where(display_on: DISPLAY_ON_OPTIONS[:back_end])
     end
 
     def self.frontend
-      where("spree_shipping_methods.display_on IS NULL OR spree_shipping_methods.display_on = ''")
+      where(display_on: [nil, ""])
     end
 
     private
