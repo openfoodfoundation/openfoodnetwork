@@ -65,9 +65,9 @@ describe "As a consumer I want to check out my cart", js: true do
     set_order order
     add_product_to_cart order, product
 
-    shipping_methods = [free_shipping, shipping_with_fee, tagged_shipping]
-    distributor.shipping_methods << shipping_methods
-    order_cycle.shipping_methods << shipping_methods
+    distributor.shipping_methods << free_shipping
+    distributor.shipping_methods << shipping_with_fee
+    distributor.shipping_methods << tagged_shipping
   end
 
   describe "when I have an out of stock product in my cart" do

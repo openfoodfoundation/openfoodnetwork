@@ -9,17 +9,13 @@ describe EnterprisesController, type: :controller do
     let(:line_item) { create(:line_item) }
     let!(:current_distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
-    let!(:shipping_method) { distributor.shipping_methods.first }
     let!(:order_cycle1) {
       create(:simple_order_cycle, distributors: [distributor], orders_open_at: 2.days.ago,
-                                  orders_close_at: 3.days.from_now,
-                                  shipping_methods: [shipping_method],
-                                  variants: [line_item.variant] )
+                                  orders_close_at: 3.days.from_now, variants: [line_item.variant] )
     }
     let!(:order_cycle2) {
       create(:simple_order_cycle, distributors: [distributor], orders_open_at: 3.days.ago,
-                                  orders_close_at: 4.days.from_now,
-                                  shipping_methods: [shipping_method])
+                                  orders_close_at: 4.days.from_now )
     }
 
     before do
@@ -59,10 +55,8 @@ describe EnterprisesController, type: :controller do
 
     context "using FilterOrderCycles tag rules" do
       let!(:order_cycle3) {
-        create(:simple_order_cycle, distributors: [distributor],
-                                    orders_open_at: 3.days.ago,
-                                    orders_close_at: 4.days.from_now,
-                                    shipping_methods: [shipping_method])
+        create(:simple_order_cycle, distributors: [distributor], orders_open_at: 3.days.ago,
+                                    orders_close_at: 4.days.from_now)
       }
       let!(:oc3_exchange) { order_cycle3.exchanges.outgoing.to_enterprise(distributor).first }
       let(:customer) { create(:customer, user: user, enterprise: distributor) }
@@ -122,10 +116,7 @@ describe EnterprisesController, type: :controller do
       let(:variant) { create(:variant, on_demand: false, on_hand: 10) }
       let(:line_item) { create(:line_item, variant: variant) }
       let(:order_cycle) {
-        create(:simple_order_cycle,
-               distributors: [current_distributor],
-               shipping_methods: [current_distributor.shipping_methods.first],
-               variants: [variant])
+        create(:simple_order_cycle, distributors: [current_distributor], variants: [variant])
       }
 
       before do

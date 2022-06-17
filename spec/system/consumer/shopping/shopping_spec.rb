@@ -14,15 +14,11 @@ describe "As a consumer I want to shop with a distributor", js: true do
     let(:supplier) { create(:supplier_enterprise) }
     let(:oc1) {
       create(:simple_order_cycle, distributors: [distributor],
-                                  coordinator: create(:distributor_enterprise),
-                                  orders_close_at: 2.days.from_now,
-                                  shipping_methods: [distributor.shipping_methods.first])
+                                  coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now)
     }
     let(:oc2) {
       create(:simple_order_cycle, distributors: [distributor],
-                                  coordinator: create(:distributor_enterprise),
-                                  orders_close_at: 3.days.from_now,
-                                  shipping_methods: [distributor.shipping_methods.first])
+                                  coordinator: create(:distributor_enterprise), orders_close_at: 3.days.from_now)
     }
     let(:product) { create(:simple_product, supplier: supplier, meta_keywords: "Domestic") }
     let(:variant) { product.variants.first }

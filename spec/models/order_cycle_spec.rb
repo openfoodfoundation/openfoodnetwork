@@ -582,7 +582,7 @@ describe OrderCycle do
   end
 
   describe "version tracking", versioning: true do
-    let!(:oc) { create(:sells_own_order_cycle, name: "Original") }
+    let!(:oc) { create(:order_cycle, name: "Original") }
 
     it "remembers old versions" do
       expect {
@@ -627,12 +627,11 @@ describe OrderCycle do
   end
 
   describe "syncing subscriptions" do
-    let!(:subscription) { create(:subscription, with_items: true) }
-    let!(:oc) { subscription.order_cycles.first }
-
-    before do
-      oc.update_columns(orders_open_at: 1.week.ago, orders_close_at: 1.day.ago)
-    end
+    let!(:oc) {
+      create(:simple_order_cycle, orders_open_at: 1.week.ago, orders_close_at: 1.day.ago)
+    }
+    let(:schedule) { create(:schedule, order_cycles: [oc]) }
+    let!(:subscription) { create(:subscription, schedule: schedule, with_items: true) }
 
     it "syncs subscriptions when transitioning from closed to open" do
       expect(OrderManagement::Subscriptions::ProxyOrderSyncer).to receive(:new).and_call_original

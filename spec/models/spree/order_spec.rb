@@ -711,8 +711,9 @@ describe Spree::Order do
     end
 
     it "keeps the order cycle when it is available at the new distributor" do
-      oc = create(:distributor_order_cycle, with_distributor_and_shipping_method: true)
-      d = oc.distributors.first
+      d = create(:distributor_enterprise)
+      oc = create(:simple_order_cycle)
+      create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d, incoming: false)
 
       subject.order_cycle = oc
       subject.set_distributor! d
@@ -758,7 +759,7 @@ describe Spree::Order do
   end
 
   describe "setting the order cycle" do
-    let(:oc) { create(:distributor_order_cycle, with_distributor_and_shipping_method: true) }
+    let(:oc) { create(:simple_order_cycle) }
 
     it "empties the cart when changing the order cycle" do
       expect(subject).to receive(:empty!)
@@ -776,7 +777,8 @@ describe Spree::Order do
     end
 
     it "keeps the distributor when it is available in the new order cycle" do
-      d = oc.distributors.first
+      d = create(:distributor_enterprise)
+      create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d, incoming: false)
 
       subject.distributor = d
       subject.set_order_cycle! oc

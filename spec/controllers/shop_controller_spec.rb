@@ -21,21 +21,21 @@ describe ShopController, type: :controller do
 
     describe "selecting an order cycle" do
       it "should select an order cycle when only one order cycle is open" do
-        oc1 = create(:simple_order_cycle, distributors: [distributor], shipping_methods: [sm])
+        oc1 = create(:simple_order_cycle, distributors: [distributor])
         get :show
         expect(controller.current_order_cycle).to eq(oc1)
       end
 
       it "should not set an order cycle when multiple order cycles are open" do
-        oc1 = create(:simple_order_cycle, distributors: [distributor], shipping_methods: [sm])
-        oc2 = create(:simple_order_cycle, distributors: [distributor], shipping_methods: [sm])
+        oc1 = create(:simple_order_cycle, distributors: [distributor])
+        oc2 = create(:simple_order_cycle, distributors: [distributor])
         get :show
         expect(controller.current_order_cycle).to be_nil
       end
 
       it "should allow the user to post to select the current order cycle" do
-        oc1 = create(:simple_order_cycle, distributors: [distributor], shipping_methods: [sm])
-        oc2 = create(:simple_order_cycle, distributors: [distributor], shipping_methods: [sm])
+        oc1 = create(:simple_order_cycle, distributors: [distributor])
+        oc2 = create(:simple_order_cycle, distributors: [distributor])
 
         spree_post :order_cycle, order_cycle_id: oc2.id
         expect(response.status).to eq 200
@@ -46,8 +46,8 @@ describe ShopController, type: :controller do
         render_views
 
         it "should return the order cycle details when the OC is selected" do
-          oc1 = create(:simple_order_cycle, distributors: [distributor], shipping_methods: [sm])
-          oc2 = create(:simple_order_cycle, distributors: [distributor], shipping_methods: [sm])
+          oc1 = create(:simple_order_cycle, distributors: [distributor])
+          oc2 = create(:simple_order_cycle, distributors: [distributor])
 
           spree_post :order_cycle, order_cycle_id: oc2.id
           expect(response.status).to eq 200
@@ -55,19 +55,15 @@ describe ShopController, type: :controller do
         end
 
         it "should return the current order cycle when hit with GET" do
-          oc1 = create(:simple_order_cycle, distributors: [distributor], shipping_methods: [sm])
+          oc1 = create(:simple_order_cycle, distributors: [distributor])
           allow(controller).to receive(:current_order_cycle).and_return oc1
           get :order_cycle
           expect(response.body).to have_content oc1.id
         end
 
         context "when the order cycle has already been set" do
-          let(:oc1) do
-            create(:simple_order_cycle, distributors: [distributor], shipping_methods: [sm])
-          end
-          let(:oc2) do
-            create(:simple_order_cycle, distributors: [distributor], shipping_methods: [sm])
-          end
+          let(:oc1) { create(:simple_order_cycle, distributors: [distributor]) }
+          let(:oc2) { create(:simple_order_cycle, distributors: [distributor]) }
           let(:order) { create(:order, order_cycle: oc1) }
 
           before { allow(controller).to receive(:current_order) { order } }
@@ -81,12 +77,9 @@ describe ShopController, type: :controller do
       end
 
       it "should not allow the user to select an invalid order cycle" do
-        oc1 = create(:simple_order_cycle, distributors: [distributor], shipping_methods: [sm])
-        oc2 = create(:simple_order_cycle, distributors: [distributor], shipping_methods: [sm])
-        other_distributor = create(:distributor_enterprise, with_payment_and_shipping: true)
-        oc3 = create(:simple_order_cycle,
-                     distributors: [other_distributor],
-                     shipping_methods: [other_distributor.shipping_methods.first])
+        oc1 = create(:simple_order_cycle, distributors: [distributor])
+        oc2 = create(:simple_order_cycle, distributors: [distributor])
+        oc3 = create(:simple_order_cycle, distributors: [create(:distributor_enterprise)])
 
         spree_post :order_cycle, order_cycle_id: oc3.id
         expect(response.status).to eq(404)
