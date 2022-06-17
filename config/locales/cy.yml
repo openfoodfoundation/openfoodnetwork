@@ -1195,6 +1195,7 @@ cy:
       unitsize: MAINT UNEDAU
       total: CYFANSWM
       total_items: CYFANSWM EITEMAU
+      total_by_supplier: Cyfanswm fesul Cyflenwr
       supplier_totals: Cyfanswm Cylch Archebu Cyflenwyr
       supplier_totals_by_distributor: Cyfanswm Cylch Archebu Cyflenwyr fesul Dosbarthwr
       totals_by_supplier: Cyfanswm Cylch Dosbarthu  Archebion fesul Cyflenwr
@@ -1210,6 +1211,7 @@ cy:
       tax_rates: Cyfraddau Treth
       pack_by_customer: Pecyn fesul Cwsmer
       pack_by_supplier: Pecyn fesul Cyflenwr
+      pack_by_product: Pecynnu yn ôl Cynnyrch
       orders_and_distributors:
         name: Archebion a Dosbarthwyr
         description: Archebion gyda manylion dosbarthwr
@@ -1260,8 +1262,14 @@ cy:
           temp_controlled: "Tymheredd a reolir?"
           price: "Pris"
       rendering_options:
+        generate_report: "Creu adroddiad"
         on_screen: "Ar y sgrin"
+        spreadsheet: "Taenlen (Excel, OpenOffice..)"
         display: Arddangos
+        summary_row: Rhes – Crynodeb
+        header_row: Rhes – Pennawd
+        raw_data: Data Craidd
+        formatted_data: Data wedi’i Fformatio
       packing:
         name: "Adroddiadau Pacio"
     subscriptions:
@@ -2479,11 +2487,15 @@ cy:
   report_payment_totals: 'Cyfanswm Taliadau'
   report_all: 'I gyd'
   report_order_cycle: "Cylch archebu"
+  report_hide_columns: Colofnau i’w cuddio
   report_enterprises: "Mentrau"
   report_enterprise_fee: "Enwau Ffioedd"
   report_users: "Defnyddwyr"
   report_tax_rates: Cyfraddau treth
   report_tax_types: Mathau treth
+  report_filters: Hidlau’r Adroddiad
+  report_print: Argraffu Adroddiad
+  report_render_options: Opsiynau Creu
   report_header_order_cycle: Cylch archebu
   report_header_user: Defnyddiwr
   report_header_email: E-bost
@@ -2618,6 +2630,11 @@ cy:
   report_header_transaction_fee: Ffi Trafodiad (dim treth)
   report_header_total_untaxable_admin: Cyfanswm addasiadau gweinyddol na ellir eu  trethu (dim treth)
   report_header_total_taxable_admin: Cyfanswm addasiadau gweinyddol trethadwy (sy'n cynnwys treth)
+  report_xero_configuration: Dim ffurfweddiad
+  initial_invoice_number: "Rhif anfoneb cychwynnol"
+  invoice_date: "Dyddiad yr anfoneb"
+  due_date: "Dyddiad dyledus"
+  account_code: "Cod y cyfrif"
   equals: "Yn cyfateb i"
   contains: "yn cynnwys"
   discount: "Gostyngiad"

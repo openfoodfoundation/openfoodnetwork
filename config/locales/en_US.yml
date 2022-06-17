@@ -2102,7 +2102,7 @@ en_US:
   confirm_password: "Confirm password"
   action_signup: "Sign up now"
   forgot_password: "Forgot password?"
-  password_reset_sent: "An email with instructions on resetting your password has been sent!"
+  password_reset_sent: "We have sent an email with instructions on resetting your password. If you don't see it in the next minute or two, please check your email Spam folder. If you still don't see it, please contact support-usa@openfoodnetwork.net."
   reset_password: "Reset password"
   update_and_recalculate_fees: "Update And Recalculate Fees"
   registration:

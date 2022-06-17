@@ -1,5 +1,5 @@
 hu:
-  language_name: "Magyar"
+  language_name: "Angol"
   activerecord:
     models:
       spree/product: Termék
@@ -290,7 +290,7 @@ hu:
   title: "Open Food Network"
   welcome_to: "Üdvözli az"
   site_meta_description: "Az alapoktól kezdjük. A gazdálkodókkal és termelőkkel, akik készen állnak arra, hogy büszkén és őszintén elmondják történeteiket. A forgalmazókkal, akik készen állnak arra, hogy tisztességesen és becsületesen összekapcsolják az embereket a termékekkel. Azokkal a vásárlókkal, akik hisznek abban, hogy jobb heti vásárlási döntések…"
-  search_by_name: Keresés név vagy előváros szerint...
+  search_by_name: Keresés név vagy település szerint...
   producers_join: Az ausztrál termelők most már csatlakozhatnak az Open Food Networkhöz.
   charges_sales_tax: GST-t fizet?
   business_address: "Üzleti cím"
@@ -1471,7 +1471,7 @@ hu:
   menu_3_url: "/producers"
   menu_4_title: "Csoportok"
   menu_4_url: "/groups"
-  menu_5_title: "Ról ről"
+  menu_5_title: "Rólunk"
   menu_5_url: "https://about.openfoodnetwork.org.au/"
   menu_6_title: "Csatlakozás"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
@@ -1532,7 +1532,7 @@ hu:
   label_producer: "Termelő"
   label_producers: "Termelők"
   label_groups: "Csoportok"
-  label_about: "Ról ről"
+  label_about: "Rólunk"
   label_blog: "Blog"
   label_support: "Támogatás"
   label_shopping: "Bevásárlás"
@@ -1865,7 +1865,7 @@ hu:
   shopping_oc_select: "Válassz..."
   shopping_tabs_home: "itthon"
   shopping_tabs_shop: "Üzlet"
-  shopping_tabs_about: "Ról ről"
+  shopping_tabs_about: "Rólunk"
   shopping_tabs_producers: "Termelők"
   shopping_tabs_contact: "Kapcsolatba lépni"
   shopping_tabs_groups: "Csoportok"
@@ -2009,8 +2009,8 @@ hu:
   sell_embed: "Ezenkívül beágyazhatunk egy OFN üzletet saját, személyre szabott webhelyébe, vagy személyre szabott helyi élelmiszer-hálózati webhelyet készíthetünk az Ön régiójában."
   sell_ask_services: "Kérdezzen minket az OFN szolgáltatásairól."
   shops_title: Üzletek
-  shops_headline: Bevásárlás, átalakult.
-  shops_text: Az élelmiszer ciklusokban nő, a gazdák ciklusokban aratnak,és ciklusokban rendelünk ételt. Ha lezárt rendelési ciklust talál, látogasson vissza hamarosan.
+  shops_headline: Bevásárlás, másképpen.
+  shops_text: A növénytermesztés és állattenyésztés ciklusokban történik. A gazdák éréskor aratnak, ezért a legmegfelelőbb pillanatban rendelünk ételt. Ha lezárt rendelési ciklust talál, látogasson vissza hamarosan.
   shops_signup_title: Regisztráljon hubként
   shops_signup_headline: Élelmiszer-központok, korlátlan.
   shops_signup_motivation: Bármi legyen is a modelled, támogatunk téged. Azonban változol, veled vagyunk. Mi non-profit, független," és nyílt forráskódú. Mi vagyunk azok a szoftverpartnerek, akikről álmodott.
@@ -2183,7 +2183,7 @@ hu:
         no_producer_help: "Ha nem vagy termelő, akkor valószínűleg olyan valaki, aki élelmiszert ad el és oszt el. Ön lehet egy csomópont, szövetkezet, vásárlási csoport, kiskereskedő, nagykereskedő vagy más."
         create_profile: "Profil létrehozása"
       about:
-        title: "Ról ről"
+        title: "Rólunk"
         headline: "Szép darab!"
         message: "Most lássuk a részleteket"
         success: "Siker! %{enterprise} hozzáadva az Open Food Networkhöz"
@@ -2616,7 +2616,7 @@ hu:
   user_invited: "%{email} meghívást kapott, hogy kezelje ezt a vállalatot"
   add_manager: "Meglévő felhasználó hozzáadása"
   users: "Felhasználók"
-  about: "Ról ről"
+  about: "Rólunk"
   images: "Képek"
   web: "Web"
   primary_details: "Elsődleges részletek"
