@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OrderCycleShippingMethod < ActiveRecord::Base
+class OrderCycleShippingMethod < ApplicationRecord
   belongs_to :order_cycle
   belongs_to :shipping_method, class_name: "Spree::ShippingMethod"
 
