@@ -146,7 +146,8 @@ describe OrderCycleForm do
       end
     end
 
-    context "updating basics, incoming and outcoming exchanges, shipping methods simultaneously" do
+    context "updating basics, incoming exchanges, outcoming exchanges
+             and preferred shipping methods simultaneously" do
       before do
         params.merge!(
           incoming_exchanges: [{
@@ -158,7 +159,7 @@ describe OrderCycleForm do
             enterprise_fee_ids: []
           }],
           outgoing_exchanges: [outgoing_exchange_params],
-          shipping_method_ids: [shipping_method.id]
+          preferred_shipping_method_ids: [shipping_method.id]
         )
       end
 
@@ -175,7 +176,7 @@ describe OrderCycleForm do
       before do
         params.merge!(
           outgoing_exchanges: [outgoing_exchange_params],
-          shipping_method_ids: nil
+          preferred_shipping_method_ids: nil
         )
       end
 
@@ -194,7 +195,7 @@ describe OrderCycleForm do
       before do
         params.merge!(
           outgoing_exchanges: [outgoing_exchange_params],
-          shipping_method_ids: [other_distributor_shipping_method.id]
+          preferred_shipping_method_ids: [other_distributor_shipping_method.id]
         )
       end
 
@@ -209,11 +210,13 @@ describe OrderCycleForm do
     context "when shipping methods already exist
              and doing an update without the :shipping_methods_id parameter" do
       it "doesn't return a validation error on shipping methods" do
-        order_cycle = create(:distributor_order_cycle, with_distributor_and_shipping_method: true)
+        distributor = create(:distributor_enterprise)
+        shipping_method = create(:shipping_method, distributors: [distributor])
+        order_cycle = create(:distributor_order_cycle, distributors: [distributor])
 
         form = OrderCycleForm.new(
           order_cycle,
-          params.except(:shipping_method_ids),
+          params.except(:preferred_shipping_method_ids),
           order_cycle.coordinator
         )
 
@@ -229,7 +232,7 @@ describe OrderCycleForm do
           order_cycle = create(:distributor_order_cycle, distributors: [distributor])
 
           form = OrderCycleForm.new(order_cycle,
-                                    { shipping_method_ids: [shipping_method.id] },
+                                    { preferred_shipping_method_ids: [shipping_method.id] },
                                     order_cycle.coordinator)
 
           expect(form.save).to be true
@@ -239,11 +242,15 @@ describe OrderCycleForm do
 
       context "and it's invalid" do
         it "returns a validation error" do
-          distributor = create(:distributor_enterprise)
-          order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+          distributor_i = create(:distributor_enterprise)
+          distributor_ii = create(:distributor_enterprise)
+          shipping_method_i = create(:shipping_method, distributors: [distributor_i])
+          shipping_method_ii = create(:shipping_method, distributors: [distributor_ii])
+          order_cycle = create(:distributor_order_cycle,
+                               distributors: [distributor_i, distributor_ii])
 
           form = OrderCycleForm.new(order_cycle,
-                                    { shipping_method_ids: [] },
+                                    { preferred_shipping_method_ids: [shipping_method_i.id] },
                                     order_cycle.coordinator)
 
           expect(form.save).to be false

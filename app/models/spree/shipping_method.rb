@@ -115,18 +115,14 @@ module Spree
 
     private
 
-    def no_active_or_upcoming_non_simple_order_cycles_with_only_one_shipping_method?
+    def no_active_or_upcoming_order_cycle_distributors_with_only_one_shipping_method?
       return true if new_record?
 
-      OrderCycle.active.or(OrderCycle.upcoming).joins(:coordinator, :shipping_methods).where("
-        sells != 'own' AND
-        spree_shipping_methods.id = ? AND
-        NOT EXISTS(
-          SELECT 1
-          FROM order_cycle_shipping_methods
-          WHERE order_cycle_id = order_cycles.id AND
-          shipping_method_id != ?
-        )", id, id).none?
+      distributors.
+        with_order_cycles_as_distributor_outer.
+        merge(OrderCycle.active.or(OrderCycle.upcoming)).none? do |distributor|
+        distributor.shipping_method_ids.one?
+      end
     end
 
     def at_least_one_shipping_category
@@ -146,7 +142,7 @@ module Spree
     end
 
     def check_destroy_wont_leave_order_cycles_without_shipping_methods
-      return if no_active_or_upcoming_non_simple_order_cycles_with_only_one_shipping_method?
+      return if no_active_or_upcoming_order_cycle_distributors_with_only_one_shipping_method?
 
       errors.add(:base, :destroy_leaves_order_cycles_without_shipping_methods)
       throw :abort
@@ -154,7 +150,7 @@ module Spree
 
     def switching_to_backoffice_only_wont_leave_order_cycles_without_shipping_methods
       return if frontend? ||
-                no_active_or_upcoming_non_simple_order_cycles_with_only_one_shipping_method?
+                no_active_or_upcoming_order_cycle_distributors_with_only_one_shipping_method?
 
       errors.add(:base, :switching_to_backoffice_only_leaves_order_cycles_without_shipping_methods)
     end

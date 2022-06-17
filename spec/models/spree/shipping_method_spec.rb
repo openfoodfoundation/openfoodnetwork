@@ -182,22 +182,38 @@ module Spree
       end
 
       context "when it is being changed to backoffice only" do
-        let!(:order_cycle) { create(:distributor_order_cycle, with_distributor_and_shipping_method: true) }
-        let(:distributor) { order_cycle.distributors.first }
-        let(:shipping_method) { order_cycle.shipping_methods.first }
+        let!(:order_cycle) { create(:distributor_order_cycle, distributors: [distributor]) }
+        let(:distributor) { create(:distributor_enterprise, shipping_methods: [shipping_method]) }
+        let(:shipping_method) { create(:shipping_method) }
 
-        context "when the shipping method is the only shipping method on a distributor order cycle" do
+        context "when one of its distributors has no other shipping methods available
+                 on an active or upcoming order cycle" do
           it "should not be valid" do
             shipping_method.display_on = "back_end"
 
             expect(shipping_method).not_to be_valid
-            expect(shipping_method.errors.to_a).to eq ["Unable to switch to backoffice only, some open or upcoming order cycles would be left without any shipping methods"]
+            expect(shipping_method.errors.to_a).to eq [
+              "Unable to switch to backoffice only, some open or upcoming order cycles would be " \
+              "left without any shipping methods"
+            ]
           end
         end
 
-        context "when the order cycles the shipping method is attached to has other valid shipping methods" do
-          it "is is valid" do
-            order_cycle.shipping_methods << create(:shipping_method, distributors: [distributor])
+        context "when one of its distributors has no other shipping methods available
+                 on an order cycle which isn't active or upcoming" do
+          it "is valid" do
+            order_cycle.update!(orders_open_at: 2.weeks.ago, orders_close_at: 1.week.ago)
+
+            shipping_method.display_on = "back_end"
+
+            expect(shipping_method).to be_valid
+          end
+        end
+
+        context "when one of its distributors has other shipping methods available
+                 on an active or upcoming order cycle" do
+          it "is valid" do
+            create(:shipping_method, distributors: [distributor])
 
             shipping_method.display_on = "back_end"
 
@@ -242,9 +258,10 @@ module Spree
     context "#destroy" do
       let(:shipping_method) { create(:shipping_method) }
       let(:distributor) { create(:distributor_enterprise, shipping_methods: [shipping_method]) }
-      let!(:order_cycle) { create(:distributor_order_cycle, distributors: [distributor], shipping_methods: [shipping_method]) }
+      let!(:order_cycle) { create(:distributor_order_cycle, distributors: [distributor]) }
 
-      context "when the shipping method is the only shipping method on a distributor order cycle" do
+      context "when its distributors are part of some order cycles
+               and have no other shipping methods available" do
         it "can be deleted if the order cycle is closed" do
           order_cycle.update!(orders_close_at: 1.minute.ago)
 
@@ -259,7 +276,10 @@ module Spree
           shipping_method.destroy
 
           expect(shipping_method).not_to be_deleted
-          expect(shipping_method.errors.to_a).to eq ["Unable to delete, some open or upcoming order cycles would be left without any shipping methods"]
+          expect(shipping_method.errors.to_a).to eq [
+            "Unable to delete, some open or upcoming order cycles would be left without any " \
+            "shipping methods"
+          ]
         end
 
         it "cannot be deleted if the order cycle is upcoming" do
@@ -268,13 +288,28 @@ module Spree
           shipping_method.destroy
 
           expect(shipping_method).not_to be_deleted
-          expect(shipping_method.errors.to_a).to eq ["Unable to delete, some open or upcoming order cycles would be left without any shipping methods"]
+          expect(shipping_method.errors.to_a).to eq [
+            "Unable to delete, some open or upcoming order cycles would be left without any " \
+            "shipping methods"
+          ]
         end
       end
 
-      context "when the order cycles the shipping method is attached to has other valid shipping methods" do
+      context "when its distributors are part of some active or upcoming order cycles
+               and have other shipping methods available" do
         it "can be deleted" do
-          order_cycle.shipping_methods << create(:shipping_method, distributors: [distributor])
+          create(:shipping_method, distributors: [distributor])
+
+          shipping_method.destroy
+
+          expect(shipping_method).to be_deleted
+        end
+      end
+
+      context "when its distributors have no other shipping methods available
+               but aren't part of active/upcoming order cycles" do
+        it "can be deleted" do
+          order_cycle.update!(orders_open_at: 2.weeks.ago, orders_close_at: 1.week.ago)
 
           shipping_method.destroy
 

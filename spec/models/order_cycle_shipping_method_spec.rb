@@ -51,22 +51,6 @@ describe OrderCycleShippingMethod do
     )
   end
 
-  it "is not valid if order cycle doesn't support customised shipping methods
-      e.g. the order cycle was created before the custom shipping methods feature was available" do
-    order_cycle = create(:distributor_order_cycle, shipping_methods_customisable: false)
-    shipping_method = create(:shipping_method, distributors: [order_cycle.coordinator])
-
-    order_cycle_shipping_method = OrderCycleShippingMethod.new(
-      order_cycle: order_cycle,
-      shipping_method: shipping_method
-    )
-
-    expect(order_cycle_shipping_method).to_not be_valid
-    expect(order_cycle_shipping_method.errors.to_a).to include(
-      "Order cycle shipping methods cannot be customised, all shipping methods are available by default"
-    )
-  end
-
   it "is valid if the shipping method belongs to one of the order cycle distributors" do
     shipping_method = create(:shipping_method)
     enterprise = create(:enterprise, shipping_methods: [shipping_method])

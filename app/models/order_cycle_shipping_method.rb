@@ -7,7 +7,6 @@ class OrderCycleShippingMethod < ActiveRecord::Base
   validate :shipping_method_belongs_to_order_cycle_distributor
   validate :shipping_method_available_at_checkout
   validate :order_cycle_not_simple
-  validate :order_cycle_shipping_methods_customisable
   validates_uniqueness_of :shipping_method, scope: :order_cycle_id
 
   before_destroy :check_shipping_method_not_selected_on_any_orders
@@ -34,12 +33,6 @@ class OrderCycleShippingMethod < ActiveRecord::Base
     return if order_cycle.nil? || !order_cycle.simple?
 
     errors.add(:order_cycle, :must_not_be_simple)
-  end
-
-  def order_cycle_shipping_methods_customisable
-    return if order_cycle.nil? || order_cycle.shipping_methods_customisable?
-
-    errors.add(:order_cycle, :must_support_customisable_shipping_methods)
   end
 
   def shipping_method_available_at_checkout

@@ -13,6 +13,8 @@
   %fieldset.no-border-bottom
     %legend{ align: 'center'}= t('.checkout_options')
 
+  = hidden_field_tag "order_cycle[preferred_shipping_method_ids][]", ""
+
   %table.checkout-options
     %thead
       %tr

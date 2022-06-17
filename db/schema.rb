@@ -323,6 +323,7 @@ ActiveRecord::Schema.define(version: 2022_09_07_055044) do
     t.bigint "shipping_method_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_cycle_id", "shipping_method_id"], name: "order_cycle_shipping_methods_join_index", unique: true
     t.index ["order_cycle_id"], name: "index_order_cycle_shipping_methods_on_order_cycle_id"
     t.index ["shipping_method_id"], name: "index_order_cycle_shipping_methods_on_shipping_method_id"
   end
@@ -337,7 +338,6 @@ ActiveRecord::Schema.define(version: 2022_09_07_055044) do
     t.datetime "processed_at"
     t.boolean "automatic_notifications", default: false
     t.boolean "mails_sent", default: false
-    t.boolean "shipping_methods_customisable", default: true
   end
 
   create_table "producer_properties", id: :serial, force: :cascade do |t|

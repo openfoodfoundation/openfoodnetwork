@@ -3,13 +3,7 @@
 FactoryBot.define do
   factory :subscription, class: Subscription do
     shop { create :enterprise }
-    schedule do
-      order_cycle = create(:distributor_order_cycle,
-                           coordinator: shop,
-                           distributors: [shop],
-                           shipping_methods: [shipping_method])
-      create(:schedule, order_cycles: [order_cycle])
-    end
+    schedule { create(:schedule, order_cycles: [create(:simple_order_cycle, coordinator: shop)]) }
     customer { create(:customer, enterprise: shop) }
     bill_address { create(:address, :randomized) }
     ship_address { create(:address, :randomized) }

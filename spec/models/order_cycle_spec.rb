@@ -28,9 +28,13 @@ describe OrderCycle do
           distributor_ii = create(:distributor_enterprise)
           distributor_i_shipping_method = create(:shipping_method, distributors: [distributor_i])
           distributor_ii_shipping_method = create(:shipping_method, distributors: [distributor_ii])
-          order_cycle = create(:distributor_order_cycle, distributors: [distributor_i, distributor_ii])
+          order_cycle = create(:distributor_order_cycle,
+                               distributors: [distributor_i, distributor_ii])
 
-          order_cycle.shipping_method_ids = [distributor_i_shipping_method.id, distributor_ii_shipping_method.id]
+          order_cycle.preferred_shipping_method_ids = [
+            distributor_i_shipping_method.id,
+            distributor_ii_shipping_method.id
+          ]
 
           expect(order_cycle).to be_valid
         end
@@ -43,19 +47,24 @@ describe OrderCycle do
         distributor_ii_shipping_method = create(:shipping_method, distributors: [distributor_i])
         order_cycle = create(:distributor_order_cycle, distributors: [distributor_i, distributor_ii])
 
-        order_cycle.shipping_method_ids = [distributor_i_shipping_method.id]
+        order_cycle.preferred_shipping_method_ids = [distributor_i_shipping_method.id]
 
         expect(order_cycle).to be_invalid
-        expect(order_cycle.errors.to_a).to eq ["You need to select at least one shipping method for each distributor"]
+        expect(order_cycle.errors.to_a).to eq [
+          "You need to select at least one shipping method for each distributor"
+        ]
       end
     end
   end
 
-  describe "#no_invalid_shipping_methods" do
-    context "when a shipping method is not valid" do
-      it "adds a validation error, and it is more meaningful than the default 'Order cycle shipping methods is invalid'" do
-        order_cycle = create(:distributor_order_cycle, with_distributor_and_shipping_method: true)
-        shipping_method = order_cycle.shipping_methods.first
+  describe "#no_invalid_order_cycle_shipping_methods" do
+    context "when a order cycle shipping method is not valid" do
+      it "adds a validation error,
+          and it is more meaningful than the default 'Order cycle shipping methods is invalid'" do
+        shipping_method = create(:shipping_method)
+        distributor = create(:distributor_enterprise, shipping_methods: [shipping_method])
+        order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+        order_cycle.preferred_shipping_methods << shipping_method
 
         shipping_method.update_column(:display_on, "back_end")
 
@@ -66,23 +75,6 @@ describe OrderCycle do
 
         expect(order_cycle.reload).to be_valid
       end
-    end
-  end
-
-  describe "#validate_shipping_methods" do
-    it "doesn't skip shipping method validations by default" do
-      order_cycle = create(:distributor_order_cycle, distributors: [create(:distributor_enterprise)])
-
-      expect(order_cycle).to be_invalid
-      expect(order_cycle.errors.to_a).to eq ["You need to select at least one shipping method for each distributor"]
-    end
-
-    it "allows shipping method validations to be skipped because distributors need to be saved before shipping methods" do
-      order_cycle = create(:distributor_order_cycle, distributors: [create(:distributor_enterprise)])
-
-      order_cycle.validate_shipping_methods = false
-
-      expect(order_cycle).to be_valid
     end
   end
 
@@ -198,7 +190,7 @@ describe OrderCycle do
   end
 
   it "reports its distributors" do
-    oc = create(:simple_order_cycle, validate_shipping_methods: false)
+    oc = create(:simple_order_cycle)
 
     e1 = create(:exchange, incoming: false,
                            order_cycle: oc, sender: oc.coordinator, receiver: create(:enterprise))
@@ -209,7 +201,7 @@ describe OrderCycle do
   end
 
   it "checks for existance of distributors" do
-    oc = create(:simple_order_cycle, validate_shipping_methods: false)
+    oc = create(:simple_order_cycle)
     d1 = create(:distributor_enterprise)
     d2 = create(:distributor_enterprise)
     create(:exchange, order_cycle: oc, sender: oc.coordinator, receiver: d1, incoming: false)
@@ -470,22 +462,14 @@ describe OrderCycle do
       expect(cloned_exchange_attributes).to match_array original_exchange_attributes
     end
 
-    context "distributor order cycle created before the customisable shipping methods feature was available" do
-      it "allows the clone to have customisable shipping methods" do
-        order_cycle = create(:distributor_order_cycle, shipping_methods_customisable: false)
-
-        order_cycle.clone!
-
-        order_cycle_clone = OrderCycle.last
-        expect(order_cycle_clone.shipping_methods_customisable).to eq(true)
-      end
-    end
-
-    context "when it has shipping methods which can longer be applied validly e.g. shipping method is backoffice only" do
+    context "when it has preferred shipping methods which can longer be applied validly
+             e.g. shipping method is backoffice only" do
       it "raises an error (TODO: display a message to user explaining why clone failed)" do
         distributor = create(:distributor_enterprise)
         shipping_method = create(:shipping_method, distributors: [distributor])
-        order_cycle = create(:distributor_order_cycle, distributors: [distributor], shipping_methods: [shipping_method])
+        order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+        order_cycle.preferred_shipping_methods << shipping_method
+
         shipping_method.update_column(:display_on, "back_end")
 
         expect {
@@ -718,6 +702,38 @@ describe OrderCycle do
       oc = create(:simple_order_cycle, distributors: [enterprise])
 
       expect(oc.attachable_shipping_methods).to be_empty
+    end
+  end
+
+  describe "#shipping_methods" do
+    let(:distributor) { create(:distributor_enterprise) }
+
+    it "returns all attachable shipping methods if the order cycle is simple" do
+      oc = create(:sells_own_order_cycle, distributors: [distributor])
+
+      shipping_method = create(:shipping_method, distributors: [distributor])
+
+      expect(oc.shipping_methods).to eq [shipping_method]
+    end
+
+    context "distributor order cycle i.e. non-simple" do
+      let(:oc) { create(:distributor_order_cycle, distributors: [distributor]) }
+
+      it "returns all attachable shipping methods if no preferred shipping methods have been chosen" do
+        shipping_method = create(:shipping_method, distributors: [distributor])
+
+        expect(oc.preferred_shipping_methods).to be_empty
+        expect(oc.shipping_methods).to eq [shipping_method]
+      end
+
+      it "returns preferred shipping methods if they have been specified" do
+        shipping_method_i = create(:shipping_method, distributors: [distributor])
+        shipping_method_ii = create(:shipping_method, distributors: [distributor])
+
+        oc.preferred_shipping_methods << shipping_method_ii
+
+        expect(oc.shipping_methods).to eq [shipping_method_ii]
+      end
     end
   end
 
