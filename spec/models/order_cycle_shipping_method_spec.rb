@@ -47,7 +47,8 @@ describe OrderCycleShippingMethod do
 
     expect(order_cycle_shipping_method).to_not be_valid
     expect(order_cycle_shipping_method.errors.to_a).to include(
-      "Order cycle is simple, all shipping methods are available by default and cannot be customised"
+      "Order cycle is simple, all shipping methods are available by default and cannot be " \
+      "customised"
     )
   end
 
@@ -108,7 +109,8 @@ describe OrderCycleShippingMethod do
 
     expect(order_cycle_shipping_method).not_to be_destroyed
     expect(order_cycle_shipping_method.errors.to_a).to eq [
-      "This shipping method has already been selected on orders in this order cycle and cannot be removed"
+      "This shipping method has already been selected on orders in this order cycle and cannot " \
+      "be removed"
     ]
   end
 end

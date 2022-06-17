@@ -72,14 +72,12 @@ FactoryBot.define do
     coordinator { Enterprise.is_distributor.first || FactoryBot.create(:distributor_enterprise) }
 
     transient do
-      shipping_methods { [] }
       suppliers { [] }
       distributors { [] }
       variants { [] }
     end
 
     after(:create) do |oc, proxy|
-
       # Incoming Exchanges
       proxy.suppliers.each.with_index do |supplier, i|
         ex = create(:exchange, order_cycle: oc,

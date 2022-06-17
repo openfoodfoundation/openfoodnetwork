@@ -1,9 +1,15 @@
 # frozen_string_literal: true
 
-class OrderAvailableShippingMethods < Struct.new(:order, :customer)
+class OrderAvailableShippingMethods
+  attr_reader :order, :customer
+
   delegate :distributor,
            :order_cycle,
            to: :order
+
+  def initialize(order, customer = nil)
+    @order, @customer = order, customer
+  end
 
   def to_a
     return [] if distributor.blank?

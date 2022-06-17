@@ -7,7 +7,7 @@ class OrderCycleShippingMethod < ApplicationRecord
   validate :shipping_method_belongs_to_order_cycle_distributor
   validate :shipping_method_available_at_checkout
   validate :order_cycle_not_simple
-  validates_uniqueness_of :shipping_method, scope: :order_cycle_id
+  validates :shipping_method, uniqueness: { scope: :order_cycle_id }
 
   before_destroy :check_shipping_method_not_selected_on_any_orders
 
