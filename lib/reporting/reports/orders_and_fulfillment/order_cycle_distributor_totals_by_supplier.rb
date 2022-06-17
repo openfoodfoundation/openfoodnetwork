@@ -26,8 +26,7 @@ module Reporting
               summary_row: proc do |_key, line_items, rows|
                 {
                   total_cost: rows.sum(&:total_cost),
-                  total_shipping_cost: line_items.map(&:first).map(&:order).uniq.sum(&:ship_total),
-                  shipping_method: rows.first.shipping_method
+                  total_shipping_cost: line_items.map(&:first).map(&:order).uniq.sum(&:ship_total)
                 }
               end
             }
