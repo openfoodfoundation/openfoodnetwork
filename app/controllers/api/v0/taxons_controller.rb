@@ -73,7 +73,7 @@ module Api
       def taxon_params
         return if params[:taxon].blank?
 
-        params.require(:taxon).permit([:name, :parent_id])
+        params.require(:taxon).permit([:name, :parent_id, :position])
       end
     end
   end

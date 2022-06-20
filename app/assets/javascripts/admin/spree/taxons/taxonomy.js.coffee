@@ -8,13 +8,18 @@ handle_move = (e, data) ->
   node = data.rslt.o
   new_parent = data.rslt.np
 
-  url = Spree.url(base_url).clone()
-  url.pathname = url.pathname + '/' + node.attr("id")
+  url = new URL(base_url)
+  url.pathname = url.pathname + '/' + node.attr("id") 
+  data = {
+    _method: "put",
+    "taxon[position]": position,
+    "taxon[parent_id]": if !isNaN(new_parent.attr("id")) then new_parent.attr("id") else undefined
+  }
   $.ajax
     type: "POST",
     dataType: "json",
     url: url.toString(),
-    data: ({_method: "put", "taxon[parent_id]": new_parent.attr("id"), "taxon[position]": position }),
+    data: data,
     error: handle_ajax_error
 
   true
@@ -26,11 +31,16 @@ handle_create = (e, data) ->
   position = data.rslt.position
   new_parent = data.rslt.parent
 
+  data = {
+    "taxon[name]": name,
+    "taxon[position]": position
+    "taxon[parent_id]": if !isNaN(new_parent.attr("id")) then new_parent.attr("id") else undefined
+  }
   $.ajax
     type: "POST",
     dataType: "json",
     url: base_url.toString(),
-    data: ({"taxon[name]": name, "taxon[parent_id]": new_parent.attr("id"), "taxon[position]": position }),
+    data: data,
     error: handle_ajax_error,
     success: (data,result) ->
       node.attr('id', data.id)
@@ -39,8 +49,10 @@ handle_rename = (e, data) ->
   last_rollback = data.rlbk
   node = data.rslt.obj
   name = data.rslt.new_name
+  # change the name inside the main input field as well if taxon is the root one
+  document.getElementById("taxonomy_name").value = name if node.parents("[id]").attr("id") == "taxonomy_tree"
 
-  url = Spree.url(base_url).clone()
+  url = new URL(base_url)
   url.pathname = url.pathname + '/' + node.attr("id")
 
   $.ajax
@@ -53,8 +65,8 @@ handle_rename = (e, data) ->
 handle_delete = (e, data) ->
   last_rollback = data.rlbk
   node = data.rslt.obj
-  delete_url = base_url.clone()
-  delete_url.setPath delete_url.path() + '/' + node.attr("id")
+  delete_url = new URL(base_url)
+  delete_url.pathname = delete_url.pathname + '/' + node.attr("id")
   if confirm(Spree.translations.are_you_sure_delete)
     $.ajax
       type: "POST",
