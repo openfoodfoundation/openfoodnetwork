@@ -14,10 +14,10 @@ class OrderCycleShippingMethod < ApplicationRecord
   private
 
   def shipping_method_not_selected_on_any_orders?
-    !Spree::Order.joins(shipments: :shipping_rates).where(
+    Spree::Order.joins(shipments: :shipping_rates).where(
       "order_cycle_id = ? AND spree_shipping_rates.shipping_method_id = ?",
       order_cycle_id, shipping_method_id
-    ).exists?
+    ).empty?
   end
 
   def check_shipping_method_not_selected_on_any_orders
