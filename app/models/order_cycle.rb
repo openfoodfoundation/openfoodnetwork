@@ -25,7 +25,7 @@ class OrderCycle < ApplicationRecord
   has_many :order_cycle_schedules
   has_many :schedules, through: :order_cycle_schedules
   has_many :order_cycle_shipping_methods
-  has_many :preferred_shipping_methods, class_name: "Spree::ShippingMethod",
+  has_many :selected_shipping_methods, class_name: "Spree::ShippingMethod",
                                         through: :order_cycle_shipping_methods,
                                         source: :shipping_method
   has_paper_trail meta: { custom_data: proc { |order_cycle| order_cycle.schedule_ids.to_s } }
@@ -181,7 +181,7 @@ class OrderCycle < ApplicationRecord
     oc.schedule_ids = schedule_ids
     oc.save!
     exchanges.each { |e| e.clone!(oc) }
-    oc.preferred_shipping_method_ids = preferred_shipping_method_ids
+    oc.selected_shipping_method_ids = selected_shipping_method_ids
     sync_subscriptions
     oc.reload
   end
@@ -296,10 +296,10 @@ class OrderCycle < ApplicationRecord
   end
 
   def shipping_methods
-    if simple? || preferred_shipping_methods.none?
+    if simple? || selected_shipping_methods.none?
       attachable_shipping_methods
     else
-      preferred_shipping_methods
+      selected_shipping_methods
     end
   end
 
@@ -311,12 +311,12 @@ class OrderCycle < ApplicationRecord
 
   def all_distributors_have_at_least_one_shipping_method?
     distributors.all? do |distributor|
-      (distributor.shipping_method_ids & preferred_shipping_method_ids).any?
+      (distributor.shipping_method_ids & selected_shipping_method_ids).any?
     end
   end
 
   def at_least_one_shipping_method_selected_for_each_distributor
-    return if preferred_shipping_methods.none? ||
+    return if selected_shipping_methods.none? ||
               coordinator.nil? ||
               simple? ||
               all_distributors_have_at_least_one_shipping_method?

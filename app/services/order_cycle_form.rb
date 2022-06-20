@@ -11,7 +11,7 @@ class OrderCycleForm
     @user = user
     @permissions = OpenFoodNetwork::Permissions.new(user)
     @schedule_ids = order_cycle_params.delete(:schedule_ids)
-    @preferred_shipping_method_ids = order_cycle_params.delete(:preferred_shipping_method_ids)
+    @selected_shipping_method_ids = order_cycle_params.delete(:selected_shipping_method_ids)
   end
 
   def save
@@ -24,7 +24,7 @@ class OrderCycleForm
       order_cycle.schedule_ids = schedule_ids
       order_cycle.save!
       apply_exchange_changes
-      attach_preferred_shipping_methods
+      attach_selected_shipping_methods
       sync_subscriptions
       true
     end
@@ -48,11 +48,11 @@ class OrderCycleForm
     OpenFoodNetwork::OrderCycleFormApplicator.new(order_cycle, user).go!
   end
 
-  def attach_preferred_shipping_methods
-    return if @preferred_shipping_method_ids.nil?
+  def attach_selected_shipping_methods
+    return if @selected_shipping_method_ids.nil?
 
     order_cycle.reload # so outgoing exchanges are up-to-date for shipping method validations
-    order_cycle.preferred_shipping_method_ids = preferred_shipping_method_ids
+    order_cycle.selected_shipping_method_ids = selected_shipping_method_ids
     order_cycle.save!
   end
 
@@ -62,14 +62,14 @@ class OrderCycleForm
     end
   end
 
-  def preferred_shipping_method_ids
-    @preferred_shipping_method_ids = @preferred_shipping_method_ids.reject(&:blank?).map(&:to_i)
+  def selected_shipping_method_ids
+    @selected_shipping_method_ids = @selected_shipping_method_ids.reject(&:blank?).map(&:to_i)
 
-    if order_cycle.attachable_shipping_methods.map(&:id).sort == @preferred_shipping_method_ids.sort
-      @preferred_shipping_method_ids = []
+    if order_cycle.attachable_shipping_methods.map(&:id).sort == @selected_shipping_method_ids.sort
+      @selected_shipping_method_ids = []
     end
 
-    @preferred_shipping_method_ids
+    @selected_shipping_method_ids
   end
 
   def schedule_ids?

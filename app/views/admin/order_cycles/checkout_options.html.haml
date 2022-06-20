@@ -13,7 +13,7 @@
   %fieldset.no-border-bottom
     %legend{ align: 'center'}= t('.checkout_options')
 
-  = hidden_field_tag "order_cycle[preferred_shipping_method_ids][]", ""
+  = hidden_field_tag "order_cycle[selected_shipping_method_ids][]", ""
 
   %table.checkout-options
     %thead
@@ -30,9 +30,9 @@
             - shipping_methods.each do |shipping_method|
               %p
                 %label
-                  = check_box_tag "order_cycle[preferred_shipping_method_ids][]",
+                  = check_box_tag "order_cycle[selected_shipping_method_ids][]",
                       shipping_method.id, @order_cycle.shipping_methods.include?(shipping_method),
-                      id: "order_cycle_preferred_shipping_method_ids_#{shipping_method.id}"
+                      id: "order_cycle_selected_shipping_method_ids_#{shipping_method.id}"
                   = shipping_method.name
             - distributor.shipping_methods.backend.each do |shipping_method|
               %label.disabled

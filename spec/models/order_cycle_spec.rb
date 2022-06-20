@@ -31,7 +31,7 @@ describe OrderCycle do
           order_cycle = create(:distributor_order_cycle,
                                distributors: [distributor_i, distributor_ii])
 
-          order_cycle.preferred_shipping_method_ids = [
+          order_cycle.selected_shipping_method_ids = [
             distributor_i_shipping_method.id,
             distributor_ii_shipping_method.id
           ]
@@ -47,7 +47,7 @@ describe OrderCycle do
         distributor_ii_shipping_method = create(:shipping_method, distributors: [distributor_i])
         order_cycle = create(:distributor_order_cycle, distributors: [distributor_i, distributor_ii])
 
-        order_cycle.preferred_shipping_method_ids = [distributor_i_shipping_method.id]
+        order_cycle.selected_shipping_method_ids = [distributor_i_shipping_method.id]
 
         expect(order_cycle).to be_invalid
         expect(order_cycle.errors.to_a).to eq [
@@ -64,7 +64,7 @@ describe OrderCycle do
         shipping_method = create(:shipping_method)
         distributor = create(:distributor_enterprise, shipping_methods: [shipping_method])
         order_cycle = create(:distributor_order_cycle, distributors: [distributor])
-        order_cycle.preferred_shipping_methods << shipping_method
+        order_cycle.selected_shipping_methods << shipping_method
 
         shipping_method.update_column(:display_on, "back_end")
 
@@ -468,7 +468,7 @@ describe OrderCycle do
         distributor = create(:distributor_enterprise)
         shipping_method = create(:shipping_method, distributors: [distributor])
         order_cycle = create(:distributor_order_cycle, distributors: [distributor])
-        order_cycle.preferred_shipping_methods << shipping_method
+        order_cycle.selected_shipping_methods << shipping_method
 
         shipping_method.update_column(:display_on, "back_end")
 
@@ -721,7 +721,7 @@ describe OrderCycle do
       it "returns all attachable shipping methods if no preferred shipping methods have been chosen" do
         shipping_method = create(:shipping_method, distributors: [distributor])
 
-        expect(oc.preferred_shipping_methods).to be_empty
+        expect(oc.selected_shipping_methods).to be_empty
         expect(oc.shipping_methods).to eq [shipping_method]
       end
 
@@ -729,7 +729,7 @@ describe OrderCycle do
         shipping_method_i = create(:shipping_method, distributors: [distributor])
         shipping_method_ii = create(:shipping_method, distributors: [distributor])
 
-        oc.preferred_shipping_methods << shipping_method_ii
+        oc.selected_shipping_methods << shipping_method_ii
 
         expect(oc.shipping_methods).to eq [shipping_method_ii]
       end

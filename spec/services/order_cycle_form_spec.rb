@@ -159,7 +159,7 @@ describe OrderCycleForm do
             enterprise_fee_ids: []
           }],
           outgoing_exchanges: [outgoing_exchange_params],
-          preferred_shipping_method_ids: [shipping_method.id]
+          selected_shipping_method_ids: [shipping_method.id]
         )
       end
 
@@ -176,7 +176,7 @@ describe OrderCycleForm do
       before do
         params.merge!(
           outgoing_exchanges: [outgoing_exchange_params],
-          preferred_shipping_method_ids: nil
+          selected_shipping_method_ids: nil
         )
       end
 
@@ -195,7 +195,7 @@ describe OrderCycleForm do
       before do
         params.merge!(
           outgoing_exchanges: [outgoing_exchange_params],
-          preferred_shipping_method_ids: [other_distributor_shipping_method.id]
+          selected_shipping_method_ids: [other_distributor_shipping_method.id]
         )
       end
 
@@ -216,7 +216,7 @@ describe OrderCycleForm do
 
         form = OrderCycleForm.new(
           order_cycle,
-          params.except(:preferred_shipping_method_ids),
+          params.except(:selected_shipping_method_ids),
           order_cycle.coordinator
         )
 
@@ -232,7 +232,7 @@ describe OrderCycleForm do
           order_cycle = create(:distributor_order_cycle, distributors: [distributor])
 
           form = OrderCycleForm.new(order_cycle,
-                                    { preferred_shipping_method_ids: [shipping_method.id] },
+                                    { selected_shipping_method_ids: [shipping_method.id] },
                                     order_cycle.coordinator)
 
           expect(form.save).to be true
@@ -250,7 +250,7 @@ describe OrderCycleForm do
                                distributors: [distributor_i, distributor_ii])
 
           form = OrderCycleForm.new(order_cycle,
-                                    { preferred_shipping_method_ids: [shipping_method_i.id] },
+                                    { selected_shipping_method_ids: [shipping_method_i.id] },
                                     order_cycle.coordinator)
 
           expect(form.save).to be false

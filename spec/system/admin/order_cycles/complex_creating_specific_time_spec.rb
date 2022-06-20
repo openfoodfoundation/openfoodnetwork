@@ -134,8 +134,8 @@ describe '
     click_button 'Save and Next'
 
     # And I select preferred shipping methods
-    check "order_cycle_preferred_shipping_method_ids_#{shipping_method_i.id}"
-    uncheck "order_cycle_preferred_shipping_method_ids_#{shipping_method_ii.id}"
+    check "order_cycle_selected_shipping_method_ids_#{shipping_method_i.id}"
+    uncheck "order_cycle_selected_shipping_method_ids_#{shipping_method_ii.id}"
 
     click_button 'Save and Back to List'
 

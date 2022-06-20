@@ -55,7 +55,7 @@ describe OrderAvailableShippingMethods do
         shipping_method_iv = create(:shipping_method, distributors: [distributor_ii])
         order_cycle = create(:distributor_order_cycle,
                              distributors: [distributor_i, distributor_ii])
-        order_cycle.preferred_shipping_methods << [shipping_method_i, shipping_method_iii]
+        order_cycle.selected_shipping_methods << [shipping_method_i, shipping_method_iii]
         order = build(:order, distributor: distributor_i, order_cycle: order_cycle)
 
         available_shipping_methods = OrderAvailableShippingMethods.new(order).to_a
