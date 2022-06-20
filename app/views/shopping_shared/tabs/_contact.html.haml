@@ -27,7 +27,7 @@
                 = current_distributor.phone
                 %br
               - if current_distributor.whatsapp_phone.present?
-                %a{href: "#{current_distributor.whatsapp_url}", target: "_blank" }
+                %a{href: current_distributor.whatsapp_url, target: "_blank" }
                   = current_distributor.whatsapp_phone
                   %br
               - if current_distributor.website.present?
