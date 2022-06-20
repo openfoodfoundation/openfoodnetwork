@@ -148,8 +148,7 @@ module Spree
           shipping_method = build_stubbed(:shipping_method)
           [nil, "", "back_end"].each do |display_on_option|
             shipping_method.display_on = display_on_option
-            shipping_method.valid?
-            expect(shipping_method.errors[:display_on]).to be_empty
+            expect(shipping_method).to be_valid
           end
         end
 
