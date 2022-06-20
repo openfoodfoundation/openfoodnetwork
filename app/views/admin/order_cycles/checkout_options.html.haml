@@ -61,7 +61,9 @@
                   = input.check_box
                   = input.label
                 %p
-                  = "&mdash;<em>#{shared_shipping_method.distributors.where(id: @order_cycle.distributor_ids).map(&:name).join(", ")}</em>".html_safe
+                  &mdash
+                  %em>
+                    = shared_shipping_method.distributors.where(id: @order_cycle.distributor_ids).map(&:name).join(", ")
           %td
             - if shared_payment_methods.any?
               %ul
