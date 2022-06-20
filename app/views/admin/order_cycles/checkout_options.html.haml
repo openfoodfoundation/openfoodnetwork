@@ -22,8 +22,8 @@
         %th= t('.shipping_methods')
         %th= t('.payment_methods')
       - @order_cycle.distributors.each do |distributor|
-        - payment_methods = @order_cycle.attachable_payment_methods.where("distributor_id = ?", distributor.id).reject { |payment_method| shared_payment_methods.include?(payment_method) }
-        - shipping_methods = @order_cycle.attachable_shipping_methods.where("distributor_id = ?", distributor.id).reject { |shipping_method| shared_shipping_methods.include?(shipping_method) }
+        - payment_methods = @order_cycle.attachable_payment_methods.where("distributor_id = ?", distributor.id) -  shared_payment_methods
+        - shipping_methods = @order_cycle.attachable_shipping_methods.where("distributor_id = ?", distributor.id) - shared_shipping_methods
         %tr
           %td= distributor.name
           %td
