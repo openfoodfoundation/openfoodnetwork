@@ -389,6 +389,9 @@ GEM
     marcel (1.0.2)
     matrix (0.4.2)
     method_source (1.0.0)
+    mime-types (3.4.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2021.0225)
     mimemagic (0.4.3)
       nokogiri (~> 1)
       rake
@@ -765,6 +768,7 @@ DEPENDENCIES
   knapsack
   letter_opener (>= 1.4.1)
   listen
+  mime-types
   mimemagic (> 0.3.5)
   mini_racer (= 0.4.0)
   monetize (~> 1.11)
