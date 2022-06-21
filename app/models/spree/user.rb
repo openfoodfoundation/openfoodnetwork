@@ -144,6 +144,14 @@ module Spree
       "#{self.class.name};#{id}"
     end
 
+    def disabled
+      disabled_at.present?
+    end
+
+    def disabled=(value)
+      self.disabled_at = value == '1' ? Time.zone.now : nil
+    end
+
     protected
 
     def password_required?

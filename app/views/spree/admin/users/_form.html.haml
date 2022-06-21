@@ -24,3 +24,7 @@
       = f.label :password_confirmation, t(".confirm_password")
       = f.password_field :password_confirmation, class: "fullwidth"
       = f.error_message_on :password_confirmation
+    = f.field_container :disabled do
+      = f.label :disabled, t(".disabled")
+      = f.check_box :disabled
+      = f.error_message_on :disabled
