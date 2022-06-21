@@ -9,7 +9,8 @@ module Reporting
     delegate :raw_render?, :html_render?, :display_header_row?, :display_summary_row?, to: :renderer
 
     delegate :rows, :table_rows, :grouped_data, to: :rows_builder
-    delegate :available_headers, :table_headers, :fields_to_hide, to: :headers_builder
+    delegate :available_headers, :table_headers, :fields_to_hide, :fields_to_show,
+             to: :headers_builder
 
     delegate :formatted_rules, :header_option?, :summary_row_option?, to: :ruler
 
@@ -104,11 +105,11 @@ module Reporting
     end
 
     def rows_builder
-      @rows_builder ||= ReportRowsBuilder.new(self)
+      @rows_builder ||= ReportRowsBuilder.new(self, @user)
     end
 
     def headers_builder
-      @headers_builder ||= ReportHeadersBuilder.new(self)
+      @headers_builder ||= ReportHeadersBuilder.new(self, @user)
     end
 
     def ruler

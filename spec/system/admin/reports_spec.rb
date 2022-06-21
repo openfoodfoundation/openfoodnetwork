@@ -31,36 +31,53 @@ describe '
     end
   end
 
-  describe "Customers report" do
+  shared_examples "Can access Customers reports and generate report" do |inverse_columns_logic|
     before do
-      login_as_admin_and_visit admin_reports_path
+      allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(
+        :report_inverse_columns_logic, anything
+      ).and_return(inverse_columns_logic)
     end
 
-    it "customers report" do
-      click_link "Mailing List"
-      expect(page).to have_select('report_subtype', selected: 'Mailing List')
-      click_button "Go"
+    describe "Customers report" do
+      before do
+        login_as_admin_and_visit admin_reports_path
+      end
 
-      rows = find("table.report__table").all("thead tr")
-      table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-      expect(table.sort).to eq([
-        ["Email", "First Name", "Last Name", "Suburb"].map(&:upcase)
-      ].sort)
-    end
+      it "customers report" do
+        click_link "Mailing List"
+        unless inverse_columns_logic
+          expect(page).to have_select('report_subtype',
+                                      selected: 'Mailing List')
+        end
+        click_button "Go"
 
-    it "customers report" do
-      click_link "Addresses"
-      expect(page).to have_select('report_subtype', selected: 'Addresses')
+        rows = find("table.report__table").all("thead tr")
+        table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+        expect(table.sort).to eq([
+          ["Email", "First Name", "Last Name", "Suburb"].map(&:upcase)
+        ].sort)
+      end
 
-      click_button "Go"
-      rows = find("table.report__table").all("thead tr")
-      table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-      expect(table.sort).to eq([
-        ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address",
-         "Shipping Method"].map(&:upcase)
-      ].sort)
+      it "customers report" do
+        click_link "Addresses"
+        unless inverse_columns_logic
+          expect(page).to have_select('report_subtype',
+                                      selected: 'Addresses')
+        end
+
+        click_button "Go"
+        rows = find("table.report__table").all("thead tr")
+        table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+        expect(table.sort).to eq([
+          ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address",
+           "Shipping Method"].map(&:upcase)
+        ].sort)
+      end
     end
   end
+
+  it_behaves_like "Can access Customers reports and generate report", true
+  it_behaves_like "Can access Customers reports and generate report", false
 
   describe "Order cycle management report" do
     before do
@@ -107,7 +124,7 @@ describe '
     expect(page).to have_content 'PAYMENT STATE'
   end
 
-  describe "sales tax report" do
+  shared_examples "sales tax report" do |inverse_columns_logic|
     let(:distributor1) {
       create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true)
     }
@@ -151,6 +168,9 @@ describe '
     }
 
     before do
+      allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(
+        :report_inverse_columns_logic, anything
+      ).and_return(inverse_columns_logic)
       order1.reload
       break unless order1.next! until order1.delivery?
 
@@ -163,11 +183,15 @@ describe '
       break unless order1.next! until order1.complete?
 
       login_as_admin_and_visit admin_reports_path
-      click_link "Sales Tax"
-      select("Tax Types", from: "report_subtype")
     end
 
-    it "reports" do
+    it "generate Tax Types reports" do
+      if inverse_columns_logic
+        click_link "Tax Types"
+      else
+        click_link "Sales Tax"
+        select("Tax Types", from: "report_subtype")
+      end
       # Then it should give me access only to managed enterprises
       expect(page).to     have_select 'q_distributor_id_eq',
                                       with_options: [user1.enterprises.first.name]
@@ -194,7 +218,26 @@ describe '
       # And the total tax should be correct
       expect(page).to have_content "286.84" # total tax
     end
+
+    it "generate Tax Rates report" do
+      if inverse_columns_logic
+        click_link "Tax Rates"
+      else
+        click_link "Sales Tax"
+        select("Tax Rates", from: "report_subtype")
+      end
+
+      click_button 'Go'
+      expect(page).to have_css(".report__table thead th", text: "20.0% ($)")
+      expect(page).to have_css(".report__table thead th", text: "0.0% ($)")
+
+      expect(page).to have_table_row [order1.number, "1446.7", "16.76", "0", "270.08", "286.84",
+                                      "1733.54"]
+    end
   end
+
+  it_behaves_like "sales tax report", false
+  it_behaves_like "sales tax report", true
 
   describe "orders & fulfilment reports" do
     it "loads the report page" do

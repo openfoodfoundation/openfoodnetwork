@@ -1,0 +1,5 @@
+%ul{style: "margin-left: 12pt"}
+  - report_subtypes.each do |report_subtype|
+    %li
+      - url = main_app.admin_report_url(report_type: report_type, report_subtype: report_subtype[1])
+      = link_to report_subtype[0], url

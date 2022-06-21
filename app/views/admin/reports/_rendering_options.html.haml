@@ -1,8 +1,12 @@
 - if @report_subtypes.present? && @report_subtypes.count > 1
-  .row
-    .alpha.two.columns= label_tag nil, t(:report_type)
-    .omega.fourteen.columns
-      = select_tag(:report_subtype, options_for_select(@report_subtypes, @report_subtype))
+  - if feature?(:report_inverse_columns_logic, spree_current_user)
+    %input{type: 'hidden', name: 'report_subtype', value: @report_subtype}
+  - else
+    .row
+      .alpha.two.columns= label_tag nil, t(:report_type)
+      .omega.fourteen.columns
+        = select_tag(:report_subtype, options_for_select(@report_subtypes, @report_subtype))  
+
 
 - if @report.header_option? || @report.summary_row_option?
   .row
@@ -19,10 +23,16 @@
 
 - if @report.available_headers.present?
   .row
-    .alpha.two.columns= label_tag nil, t(:report_hide_columns)
-    .omega.fourteen.columns
-      = select_tag(:fields_to_hide, options_for_select(@report.available_headers, params[:fields_to_hide]),
-                  class: "select2 fullwidth", multiple: true)
+    - if feature? :report_inverse_columns_logic, spree_current_user
+      .alpha.two.columns= label_tag nil, t(:report_columns)
+      .omega.fourteen.columns
+        = select_tag(:fields_to_show, options_for_select(@report.available_headers, @params_fields_to_show),
+                    class: "select2 fullwidth", multiple: true)
+    - else
+      .alpha.two.columns= label_tag nil, t(:report_hide_columns)
+      .omega.fourteen.columns
+        = select_tag(:fields_to_hide, options_for_select(@report.available_headers, params[:fields_to_hide]),
+                    class: "select2 fullwidth", multiple: true)
 
 .row.rendering-options
   .alpha.two.columns

@@ -102,7 +102,28 @@ module Reporting
       end
 
       describe "fields_to_hide" do
+        before do
+          allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(
+            :report_inverse_columns_logic, anything
+          ).and_return(false)
+        end
+
         let(:params) { { fields_to_hide: [:product] } }
+
+        it "works" do
+          @expected_headers = ['Hub', 'Price']
+          check_report
+        end
+      end
+
+      describe "fields_to_show" do
+        before do
+          allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(
+            :report_inverse_columns_logic, anything
+          ).and_return(true)
+        end
+
+        let(:params) { { fields_to_show: [:hub, :price] } }
 
         it "works" do
           @expected_headers = ['Hub', 'Price']
@@ -263,13 +284,26 @@ module Reporting
           }]
         end
 
-        let(:params) { { fields_to_hide: [:customer], report_format: 'json' } }
+        describe "for fields_to_show" do
+          let(:params) { { fields_to_show: [:hub, :quantity], report_format: 'json' } }
 
-        it "works" do
-          @expetec_rows = [
-            { hub: "Hub 1", quantity: 4 }
-          ]
-          check_report
+          it "works" do
+            @expetec_rows = [
+              { hub: "Hub 1", quantity: 4 }
+            ]
+            check_report
+          end
+        end
+
+        describe "for fields_to_hide" do
+          let(:params) { { fields_to_hide: [:customer], report_format: 'json' } }
+
+          it "works" do
+            @expetec_rows = [
+              { hub: "Hub 1", quantity: 4 }
+            ]
+            check_report
+          end
         end
       end
     end

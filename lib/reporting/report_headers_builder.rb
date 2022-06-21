@@ -4,12 +4,19 @@ module Reporting
   class ReportHeadersBuilder
     attr_reader :report
 
-    def initialize(report)
+    def initialize(report, current_user)
       @report = report
+      @current_user = current_user
     end
 
     def table_headers
-      report.columns.keys.filter{ |key| !key.in?(fields_to_hide) }.map do |key|
+      filter = if OpenFoodNetwork::FeatureToggle.enabled?(:report_inverse_columns_logic,
+                                                          @current_user)
+                 proc { |key| key.to_sym.in?(fields_to_show) }
+               else
+                 proc { |key| !key.to_sym.in?(fields_to_hide) }
+               end
+      report.columns.keys.filter { |key| filter.call(key) }.map do |key|
         translate_header(key)
       end
     end
@@ -26,6 +33,17 @@ module Reporting
       end.concat(params_fields_to_hide)
     end
 
+    def fields_to_show
+      fields_in_headers = if report.display_header_row?
+                            report.formatted_rules.map { |rule|
+                              rule[:fields_used_in_header]
+                            }.flatten.reject(&:blank?)
+                          else
+                            []
+                          end
+      params_fields_to_show - fields_in_headers
+    end
+
     private
 
     def translate_header(key)
@@ -40,6 +58,10 @@ module Reporting
 
     def params_fields_to_hide
       report.params[:fields_to_hide]&.map(&:to_sym) || []
+    end
+
+    def params_fields_to_show
+      report.params[:fields_to_show]&.map(&:to_sym) || report.columns.keys
     end
   end
 end

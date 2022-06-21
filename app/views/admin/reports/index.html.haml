@@ -17,9 +17,7 @@
           %td
             - begin
               = I18n.t!(:description, scope: [:admin, :reports, report_type])
+              - if feature? :report_inverse_columns_logic, spree_current_user
+                = render partial: "report_subtype", locals: { report_subtypes: report_subtypes, report_type: report_type }
             - rescue I18n::MissingTranslationData
-              %ul{style: "margin-left: 12pt"}
-                - report_subtypes.each do |report_subtype|
-                  %li
-                    - url = main_app.admin_report_url(report_type: report_type, report_subtype: report_subtype[1])
-                    = link_to report_subtype[0], url
+              = render partial: "report_subtype", locals: { report_subtypes: report_subtypes, report_type: report_type }
