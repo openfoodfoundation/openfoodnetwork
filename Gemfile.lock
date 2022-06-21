@@ -165,8 +165,6 @@ GEM
     awesome_print (1.9.2)
     aws-eventstream (1.2.0)
     aws-partitions (1.570.0)
-    aws-sdk (1.67.0)
-      aws-sdk-v1 (= 1.67.0)
     aws-sdk-core (3.130.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.525.0)
@@ -179,9 +177,6 @@ GEM
       aws-sdk-core (~> 3, >= 3.127.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.4)
-    aws-sdk-v1 (1.67.0)
-      json (~> 1.4)
-      nokogiri (~> 1)
     aws-sigv4 (1.4.0)
       aws-eventstream (~> 1, >= 1.0.2)
     axlsx_styler (1.1.0)
@@ -716,7 +711,6 @@ DEPENDENCIES
   arel-helpers (~> 2.12)
   awesome_nested_set
   awesome_print
-  aws-sdk (= 1.67.0)
   aws-sdk-s3
   bigdecimal (= 3.0.2)
   bootsnap
