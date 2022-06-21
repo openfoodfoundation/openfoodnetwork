@@ -4,7 +4,8 @@ class Api::VariantSerializer < ActiveModel::Serializer
   attributes :id, :is_master, :product_name, :sku,
              :options_text, :unit_value, :unit_description, :unit_to_display,
              :display_as, :display_name, :name_to_display,
-             :price, :on_demand, :on_hand, :fees, :price_with_fees,
+             :price, :on_demand, :on_hand,
+             :fees, :fees_name, :price_with_fees,
              :tag_list, :thumb_url,
              :unit_price_price, :unit_price_unit
 
@@ -13,6 +14,10 @@ class Api::VariantSerializer < ActiveModel::Serializer
   def fees
     options[:enterprise_fee_calculator]&.indexed_fees_by_type_for(object) ||
       object.fees_by_type_for(options[:current_distributor], options[:current_order_cycle])
+  end
+
+  def fees_name
+    object.fees_name_by_type_for(options[:current_distributor], options[:current_order_cycle])
   end
 
   def price_with_fees

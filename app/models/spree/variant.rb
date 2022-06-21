@@ -172,6 +172,11 @@ module Spree
       OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor, order_cycle).fees_by_type_for self
     end
 
+    def fees_name_by_type_for(distributor, order_cycle)
+      OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor,
+                                                   order_cycle).fees_name_by_type_for self
+    end
+
     def option_value(opt_name)
       option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
     end

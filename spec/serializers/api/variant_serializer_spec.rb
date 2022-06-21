@@ -20,6 +20,7 @@ describe Api::VariantSerializer do
         :on_demand,
         :price,
         :fees,
+        :fees_name,
         :price_with_fees,
         :product_name,
         :tag_list # Used to apply tag rules
