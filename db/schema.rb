@@ -1301,7 +1301,7 @@ ActiveRecord::Schema.define(version: 2022_06_21_230907) do
   add_foreign_key "spree_tax_rates", "spree_zones", column: "zone_id", name: "spree_tax_rates_zone_id_fk"
   add_foreign_key "spree_taxons", "spree_taxonomies", column: "taxonomy_id", name: "spree_taxons_taxonomy_id_fk"
   add_foreign_key "spree_taxons", "spree_taxons", column: "parent_id", name: "spree_taxons_parent_id_fk"
-  add_foreign_key "spree_users", "spree_addresses", column: "bill_address_id", name: "spree_users_bill_address_id_fk", on_delete: :nullify
+  add_foreign_key "spree_users", "spree_addresses", column: "bill_address_id", name: "spree_users_bill_address_id_fk"
   add_foreign_key "spree_users", "spree_addresses", column: "ship_address_id", name: "spree_users_ship_address_id_fk"
   add_foreign_key "spree_variants", "spree_products", column: "product_id", name: "spree_variants_product_id_fk"
   add_foreign_key "spree_zone_members", "spree_zones", column: "zone_id", name: "spree_zone_members_zone_id_fk"
