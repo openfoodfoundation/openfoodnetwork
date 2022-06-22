@@ -83,6 +83,7 @@ class Enterprise < ApplicationRecord
   has_one_attached :logo
   has_one_attached :promo_image
   has_one_attached :terms_and_conditions
+  has_one_attached :small_farmer_recognition_document
 
   validates :logo, content_type: %r{\Aimage/.*\Z}
   validates :promo_image, content_type: %r{\Aimage/.*\Z}
