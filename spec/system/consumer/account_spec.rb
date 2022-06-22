@@ -111,5 +111,16 @@ describe '
         expect(page).to have_content I18n.t(:you_have_no_orders_yet)
       end
     end
+
+    context "as a disabled user" do
+      before do
+        user.disabled = '1'
+      end
+
+      it "redirects to the login page" do
+        visit "/account"
+        expect(page).to have_current_path("/")
+      end
+    end
   end
 end
