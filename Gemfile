@@ -133,6 +133,8 @@ gem 'flipper-ui'
 
 gem "view_component", require: "view_component/engine"
 
+gem "phonelib"
+
 group :production, :staging do
   gem 'ddtrace'
   gem 'rack-timeout'
