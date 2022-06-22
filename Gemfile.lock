@@ -395,7 +395,7 @@ GEM
     mini_portile2 (2.8.0)
     mini_racer (0.4.0)
       libv8-node (~> 15.14.0.0)
-    minitest (5.15.0)
+    minitest (5.16.1)
     monetize (1.12.0)
       money (~> 6.12)
     money (6.16.0)
@@ -683,13 +683,13 @@ GEM
     websocket-extensions (0.1.5)
     whenever (1.0.0)
       chronic (>= 0.6.3)
-    wicked_pdf (2.1.0)
+    wicked_pdf (2.6.3)
       activesupport
     wkhtmltopdf-binary (0.12.6.5)
     xml-simple (1.1.8)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.5.3)
+    zeitwerk (2.6.0)
 
 PLATFORMS
   ruby
