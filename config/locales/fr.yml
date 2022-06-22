@@ -182,6 +182,7 @@ fr:
         signed_up_but_unconfirmed: "Un message avec un lien de confirmation a été envoyé à l'adresse email indiquée. Veuillez cliquer sur ce lien pour activer votre compte."
         unknown_error: "Une erreur s'est glissée lors de la création de votre compte. Vérifiez votre addresse email et recommencez."
     failure:
+      disabled: "Votre compte a été désactivé. Veuillez contacter support@coopcircuits.fr"
       invalid: |
           Email / mot de passe incorrect.
           Créez votre compte ou réinitialisez votre mot de passe.
@@ -2492,6 +2493,7 @@ fr:
   report_all: 'tous'
   report_order_cycle: "Cycle de Vente"
   report_hide_columns: Colonnes à masquer
+  report_columns: Colonnes
   report_enterprises: "Entreprises"
   report_enterprise_fee: "Nom des marges et commissions"
   report_users: "Gestionnaires"
@@ -3848,6 +3850,7 @@ fr:
           back_to_users_list: "Retour à la liste utilisateurs"
           general_settings: "Configurations générales"
         form:
+          disabled: "Désactivé?"
           email: "Email"
           roles: "Roles"
           enterprise_limit: "Nombre max d'entreprises"
