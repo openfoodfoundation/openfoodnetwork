@@ -157,8 +157,8 @@ GEM
       railties (>= 3, < 7)
     angularjs-file-upload-rails (2.4.1)
     angularjs-rails (1.8.0)
-    arel-helpers (2.12.1)
-      activerecord (>= 3.1.0, < 7)
+    arel-helpers (2.14.0)
+      activerecord (>= 3.1.0, < 8)
     ast (2.4.2)
     awesome_nested_set (3.4.0)
       activerecord (>= 4.0.0, < 7.0)
@@ -291,7 +291,7 @@ GEM
       cliver (~> 0.3)
       concurrent-ruby (~> 1.1)
       websocket-driver (>= 0.6, < 0.8)
-    ffaker (2.20.0)
+    ffaker (2.21.0)
     ffi (1.15.5)
     flipper (0.20.4)
     flipper-active_record (0.20.4)
@@ -395,7 +395,7 @@ GEM
     mini_portile2 (2.8.0)
     mini_racer (0.4.0)
       libv8-node (~> 15.14.0.0)
-    minitest (5.15.0)
+    minitest (5.16.1)
     monetize (1.12.0)
       money (~> 6.12)
     money (6.16.0)
@@ -689,7 +689,7 @@ GEM
     xml-simple (1.1.8)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.5.3)
+    zeitwerk (2.6.0)
 
 PLATFORMS
   ruby
