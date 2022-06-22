@@ -38,13 +38,13 @@ module OrderCyclesHelper
 
   def order_cycle_status_class(order_cycle)
     if order_cycle.undated?
-      I18n.t('admin.order_cycles.status.undated')
+      'undated'
     elsif order_cycle.upcoming?
-      I18n.t('admin.order_cycles.status.upcoming')
+      'upcoming'
     elsif order_cycle.open?
-      I18n.t('admin.order_cycles.status.open')
+      'open'
     elsif order_cycle.closed?
-      I18n.t('admin.order_cycles.status.closed')
+      'closed'
     end
   end
 

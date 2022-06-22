@@ -20,7 +20,7 @@ angular.module("admin.orders").controller "orderCtrl", ($scope, shops, orderCycl
     $scope.distributor_id && $scope.order_cycle_id
 
   for oc in $scope.orderCycles
-    oc.name_and_status = "#{oc.name} (#{oc.status})"
+    oc.name_and_status = "#{oc.name} (#{t("admin.order_cycles.status.#{oc.status}")})"
 
   for shop in $scope.shops
     shop.disabled = !$scope.distributorHasOrderCycles(shop)
