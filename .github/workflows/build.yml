@@ -12,6 +12,9 @@ env:
   RSPEC_RETRY_RETRY_COUNT: 3
   RAILS_ENV: test
 
+permissions:
+  contents: read
+
 jobs:
   rspec:
     runs-on: ubuntu-18.04
