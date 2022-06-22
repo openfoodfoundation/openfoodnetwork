@@ -291,7 +291,7 @@ GEM
       cliver (~> 0.3)
       concurrent-ruby (~> 1.1)
       websocket-driver (>= 0.6, < 0.8)
-    ffaker (2.20.0)
+    ffaker (2.21.0)
     ffi (1.15.5)
     flipper (0.20.4)
     flipper-active_record (0.20.4)
@@ -395,7 +395,7 @@ GEM
     mini_portile2 (2.8.0)
     mini_racer (0.4.0)
       libv8-node (~> 15.14.0.0)
-    minitest (5.15.0)
+    minitest (5.16.1)
     monetize (1.12.0)
       money (~> 6.12)
     money (6.16.0)
@@ -656,7 +656,7 @@ GEM
     view_component (2.41.0)
       activesupport (>= 5.0.0, < 8.0)
       method_source (~> 1.0)
-    view_component_storybook (0.10.1)
+    view_component_storybook (0.11.1)
       view_component (>= 2.36)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -689,7 +689,7 @@ GEM
     xml-simple (1.1.8)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.5.3)
+    zeitwerk (2.6.0)
 
 PLATFORMS
   ruby
