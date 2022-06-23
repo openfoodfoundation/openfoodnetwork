@@ -129,6 +129,7 @@ module Spree
     preference :enable_invoices?, :boolean, default: true
     preference :invoice_style2?, :boolean, default: false
     preference :enable_receipt_printing?, :boolean, default: false
+    preference :enterprise_number_required_on_invoices?, :boolean, default: true
 
     # Stripe payments
     preference :stripe_connect_enabled, :boolean, default: false
