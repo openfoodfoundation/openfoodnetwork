@@ -408,6 +408,8 @@ class Enterprise < ApplicationRecord
   end
 
   def can_invoice?
+    return true unless Spree::Config.enterprise_number_required_on_invoices?
+
     abn.present?
   end
 
