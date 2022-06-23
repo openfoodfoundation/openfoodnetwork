@@ -81,7 +81,7 @@ module Reporting
       return "" if value.nil?
 
       # Currency
-      if report.columns_format[column] == :currency || column.to_s.include?("price")
+      if report.columns_format[column] == :currency
         format_currency(value)
       # Quantity
       elsif report.columns_format[column] == :quantity && report.html_render?
