@@ -85,7 +85,6 @@ describe "Payments Reports" do
         I18n.t(:report_header_outstanding_balance_price, currency: currency_symbol),
       ].join(" ").upcase)
 
-      pending "PR #9229 which will remove currency from the figures below"
       expect(page.find("table.report__table tbody tr").text).to have_content([
         order.payment_state,
         order.distributor.name,
@@ -94,7 +93,7 @@ describe "Payments Reports" do
         order.total.to_f + other_order.total.to_f,
         eft_payment.amount.to_f,
         paypal_payment.amount.to_f,
-        with_currency(order.outstanding_balance + other_order.outstanding_balance),
+        order.outstanding_balance + other_order.outstanding_balance,
       ].join(" "))
     end
   end
