@@ -1484,6 +1484,7 @@ sv:
   report_payment_totals: 'Betalningstotaler'
   report_all: 'alla'
   report_order_cycle: "Beställningsomgång"
+  report_columns: Kolumner
   report_enterprises: "Företag"
   report_users: "Användare"
   report_tax_rates: Skattesatser

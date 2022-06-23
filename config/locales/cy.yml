@@ -2488,6 +2488,7 @@ cy:
   report_all: 'I gyd'
   report_order_cycle: "Cylch archebu"
   report_hide_columns: Colofnau i’w cuddio
+  report_columns: Colofnau
   report_enterprises: "Mentrau"
   report_enterprise_fee: "Enwau Ffioedd"
   report_users: "Defnyddwyr"

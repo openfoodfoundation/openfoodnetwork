@@ -2490,6 +2490,7 @@ en_GB:
   report_all: 'all'
   report_order_cycle: "Order Cycle"
   report_hide_columns: Columns to Hide
+  report_columns: Columns
   report_enterprises: "Enterprises"
   report_enterprise_fee: "Fees Names"
   report_users: "Users"

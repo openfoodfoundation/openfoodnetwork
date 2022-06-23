@@ -2448,6 +2448,7 @@ es:
   report_payment_totals: 'Pagos Totales'
   report_all: 'Todo'
   report_order_cycle: "Ciclo de Pedido"
+  report_columns: Columnas
   report_enterprises: "Organizaciones"
   report_enterprise_fee: "Nombres de las comisiones"
   report_users: "Usuarias"

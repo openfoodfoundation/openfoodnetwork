@@ -2451,6 +2451,7 @@ en_IE:
   report_payment_totals: 'Payment Totals'
   report_all: 'all'
   report_order_cycle: "Order Cycle"
+  report_columns: Columns
   report_enterprises: "Enterprises"
   report_enterprise_fee: "Fees Names"
   report_users: "Users"

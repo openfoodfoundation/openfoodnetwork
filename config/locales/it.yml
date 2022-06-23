@@ -2456,6 +2456,7 @@ it:
   report_payment_totals: 'Totale pagamenti'
   report_all: 'tutti'
   report_order_cycle: "Ciclo di richieste"
+  report_columns: Colonne
   report_enterprises: "Aziende"
   report_enterprise_fee: "Nomi Tariffe"
   report_users: "Utenti"

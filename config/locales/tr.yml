@@ -2344,6 +2344,7 @@ tr:
   report_payment_totals: 'Ödeme Toplamları'
   report_all: 'hepsi'
   report_order_cycle: "Sipariş Dönemi"
+  report_columns: Sütunlar
   report_enterprises: "İşletmeler"
   report_enterprise_fee: "ÜCRET İSİMLERİ"
   report_users: "Kullanıcılar"

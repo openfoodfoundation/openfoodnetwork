@@ -2489,6 +2489,7 @@ nb:
   report_all: 'alle'
   report_order_cycle: "Bestillingsrunde"
   report_hide_columns: Kolonner å Skjule
+  report_columns: Kolonner
   report_enterprises: "Bedrifter"
   report_enterprise_fee: "Avgiftsnavn"
   report_users: "Brukere"

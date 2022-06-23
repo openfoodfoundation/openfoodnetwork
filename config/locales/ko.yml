@@ -2485,6 +2485,7 @@ ko:
   report_all: '모두'
   report_order_cycle: "주문 주기"
   report_hide_columns: 숨길 열
+  report_columns: 열
   report_enterprises: "회사"
   report_enterprise_fee: "수수료 확인"
   report_users: "사용자"

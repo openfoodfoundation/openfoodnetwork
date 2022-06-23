@@ -1045,7 +1045,7 @@ fr_CH:
         title: Nouvelle entreprise
         back_link: Revenir à la liste des entreprises
       welcome:
-        welcome_title: Bienvenue sur CoopCircuits !
+        welcome_title: Bienvenue sur Open Food Suisse !
         welcome_text: 'Vous avez créé avec succès '
         next_step: Etape suivante
         choose_starting_point: 'Choisir votre type de profil :'
@@ -2492,6 +2492,7 @@ fr_CH:
   report_all: 'tous'
   report_order_cycle: "Cycle de Vente"
   report_hide_columns: Colonnes à masquer
+  report_columns: Colonnes
   report_enterprises: "Entreprises"
   report_enterprise_fee: "Nom des marges et commissions"
   report_users: "Gestionnaires"

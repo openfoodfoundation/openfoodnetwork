@@ -2154,6 +2154,7 @@ fil_PH:
   report_payment_totals: 'kabuuan ng bayad'
   report_all: 'lahat'
   report_order_cycle: "Order Cycle"
+  report_columns: hanay
   report_enterprises: "mga enterprise"
   report_enterprise_fee: "pangalan ng mga Fees"
   report_users: "mga gumagamit"

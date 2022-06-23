@@ -2198,6 +2198,7 @@ nl_BE:
   report_payment_totals: 'BetaalTotaal'
   report_all: 'alle'
   report_order_cycle: "Bestelcyclus"
+  report_columns: Kolommen
   report_enterprises: "Ondernemingen"
   report_enterprise_fee: "Vergoedingen Namen"
   report_users: "Gebruikers"

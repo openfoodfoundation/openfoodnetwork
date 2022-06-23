@@ -2353,6 +2353,7 @@ ca:
   report_payment_totals: 'Totals de pagament'
   report_all: 'tot'
   report_order_cycle: "Cicle de comanda"
+  report_columns: Columnes
   report_enterprises: "Organitzacions"
   report_enterprise_fee: "Noms de les comissions"
   report_users: "Usuàries"

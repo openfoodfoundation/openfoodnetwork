@@ -2295,6 +2295,7 @@ pt_BR:
   report_payment_totals: 'Total de pagamentos'
   report_all: 'todos'
   report_order_cycle: "Ciclo de pedidos"
+  report_columns: Colunas
   report_enterprises: "Iniciativas"
   report_users: "Usuários"
   report_tax_rates: Alíquotas das taxas

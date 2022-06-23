@@ -2400,6 +2400,7 @@ fr_CM:
   report_payment_totals: 'Total des paiements'
   report_all: 'tous'
   report_order_cycle: "Cycle de vente"
+  report_columns: Colonnes
   report_enterprises: "Entreprises"
   report_enterprise_fee: "Nom des marges et commissions"
   report_users: "Utilisateurs"

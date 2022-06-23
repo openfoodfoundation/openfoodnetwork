@@ -2147,6 +2147,7 @@ pl:
   report_payment_totals: 'Sumy płatności'
   report_all: 'wszystko'
   report_order_cycle: "Cykl zamówień"
+  report_columns: Kulumny
   report_enterprises: "Podmioty"
   report_enterprise_fee: "Nazwy opłat"
   report_tax_rates: Wysokość podatków

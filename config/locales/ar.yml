@@ -2451,6 +2451,7 @@ ar:
   report_payment_totals: 'مجاميع الدفع'
   report_all: 'الكل'
   report_order_cycle: "ترتيب الدورة"
+  report_columns: أعمدة
   report_enterprises: "المؤسسات"
   report_enterprise_fee: "أسماء الرسوم"
   report_users: "المستخدمين"

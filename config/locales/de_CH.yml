@@ -2492,6 +2492,7 @@ de_CH:
   report_all: 'alle'
   report_order_cycle: "Bestellzyklus"
   report_hide_columns: ausgeblendete Spalten
+  report_columns: Spalten
   report_enterprises: "Unternehmen"
   report_enterprise_fee: "Gebührennamen"
   report_users: "Benutzer"

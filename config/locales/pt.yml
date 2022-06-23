@@ -2209,6 +2209,7 @@ pt:
   report_payment_totals: 'Totais dos Pagamanetos'
   report_all: 'todos'
   report_order_cycle: "Ciclo de Encomendas"
+  report_columns: Colunas
   report_enterprises: "Organizações"
   report_enterprise_fee: "Nomes das Taxas"
   report_users: "Utilizadores"

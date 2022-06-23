@@ -773,7 +773,7 @@ hu:
         producer?: "Termelő?"
         package: Csomag
         status: Állapot
-        manage: Kezelése
+        manage: 'Beállítások:'
       form:
         about_us:
           desc_short: Rövid leírás
@@ -2409,7 +2409,7 @@ hu:
   spree_user_enterprise_limit_error: "^%{email} nem birtokolhat több vállalatot (a korlát %{enterprise_limit})."
   spree_variant_product_error: legalább egy változattal kell rendelkeznie
   your_profil_live: "Élő profilod"
-  see: "Lát"
+  see: "Megtekint:"
   live: "élő"
   manage: "Kezelése"
   resend: "Újraküldés"
@@ -2460,6 +2460,7 @@ hu:
   report_payment_totals: 'Fizetési összegek'
   report_all: 'minden'''
   report_order_cycle: "Rendelési ciklus"
+  report_columns: Oszlopok
   report_enterprises: "Vállalkozások"
   report_enterprise_fee: "Díjak nevek"
   report_users: "Felhasználók"

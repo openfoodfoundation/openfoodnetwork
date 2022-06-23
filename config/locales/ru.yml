@@ -2482,6 +2482,7 @@ ru:
   report_payment_totals: 'Итоги Платежей'
   report_all: 'все'
   report_order_cycle: "Цикл заказа"
+  report_columns: Колонки
   report_enterprises: "Предприятия"
   report_enterprise_fee: "Названия Оплаты"
   report_users: "Пользователи"
