@@ -109,11 +109,12 @@ describe "shopping with variant overrides defined", js: true do
           page.find(".graph-button").click
         end
       end
+
       it "shows the price breakdown modal" do
         within(:xpath, '//body') do
           within(".price_breakdown") do
             expect(page).to have_content("Price breakdown")
-            expect(page).to have_content("Packing fee")
+            expect(page).to have_content(enterprise_fee.name.to_s)
           end
         end
       end
