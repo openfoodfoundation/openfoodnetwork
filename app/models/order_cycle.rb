@@ -24,7 +24,7 @@ class OrderCycle < ApplicationRecord
   has_many :distributors, -> { distinct }, source: :receiver, through: :cached_outgoing_exchanges
   has_many :order_cycle_schedules
   has_many :schedules, through: :order_cycle_schedules
-  has_many :order_cycle_shipping_methods
+  has_many :order_cycle_shipping_methods, dependent: :destroy
   has_many :selected_shipping_methods, class_name: "Spree::ShippingMethod",
                                        through: :order_cycle_shipping_methods,
                                        source: :shipping_method
