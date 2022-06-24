@@ -179,7 +179,8 @@ class OrderCycle < ApplicationRecord
     oc.schedule_ids = schedule_ids
     oc.save!
     exchanges.each { |e| e.clone!(oc) }
-    oc.selected_shipping_method_ids = selected_shipping_method_ids
+    oc.selected_shipping_method_ids = attachable_shipping_methods.map(&:id) &
+                                      selected_shipping_method_ids
     sync_subscriptions
     oc.reload
   end

@@ -406,17 +406,20 @@ describe OrderCycle do
 
     context "when it has preferred shipping methods which can longer be applied validly
              e.g. shipping method is backoffice only" do
-      it "raises an error (TODO: display a message to user explaining why clone failed)" do
+      it "only attaches the valid ones to the clone" do
         distributor = create(:distributor_enterprise)
-        shipping_method = create(:shipping_method, distributors: [distributor])
+        shipping_method_i = create(:shipping_method, distributors: [distributor])
+        shipping_method_ii = create(
+          :shipping_method,
+          distributors: [distributor],
+          display_on: Spree::ShippingMethod::DISPLAY_ON_OPTIONS[:back_end]
+        )
         order_cycle = create(:distributor_order_cycle, distributors: [distributor])
-        order_cycle.selected_shipping_methods << shipping_method
+        order_cycle.selected_shipping_methods = [shipping_method_i, shipping_method_ii]
 
-        shipping_method.update_column(:display_on, "back_end")
+        cloned_order_cycle = order_cycle.clone!
 
-        expect {
-          order_cycle.clone!
-        }.to raise_error ActiveRecord::RecordInvalid
+        expect(cloned_order_cycle.shipping_methods).to eq [shipping_method_i]
       end
     end
   end

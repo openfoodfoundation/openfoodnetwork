@@ -30,10 +30,7 @@ module Spree
     validates :name, presence: true
     validate :distributor_validation
     validate :at_least_one_shipping_category
-    validate :switching_to_backoffice_only_wont_leave_order_cycles_without_shipping_methods
     validates :display_on, inclusion: { in: DISPLAY_ON_OPTIONS.values }, allow_nil: true
-
-    before_destroy :check_destroy_wont_leave_order_cycles_without_shipping_methods
 
     after_save :touch_distributors
 
@@ -139,20 +136,6 @@ module Spree
 
     def distributor_validation
       validates_with DistributorsValidator
-    end
-
-    def check_destroy_wont_leave_order_cycles_without_shipping_methods
-      return if no_active_or_upcoming_order_cycle_distributors_with_only_one_shipping_method?
-
-      errors.add(:base, :destroy_leaves_order_cycles_without_shipping_methods)
-      throw :abort
-    end
-
-    def switching_to_backoffice_only_wont_leave_order_cycles_without_shipping_methods
-      return if frontend? ||
-                no_active_or_upcoming_order_cycle_distributors_with_only_one_shipping_method?
-
-      errors.add(:base, :switching_to_backoffice_only_leaves_order_cycles_without_shipping_methods)
     end
   end
 end

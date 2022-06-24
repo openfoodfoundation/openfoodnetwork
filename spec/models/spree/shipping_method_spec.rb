@@ -182,47 +182,6 @@ module Spree
           it { expect(shipping_method).to be_valid }
         end
       end
-
-      context "when it is being changed to backoffice only" do
-        let!(:order_cycle) { create(:distributor_order_cycle, distributors: [distributor]) }
-        let(:distributor) { create(:distributor_enterprise, shipping_methods: [shipping_method]) }
-        let(:shipping_method) { create(:shipping_method) }
-
-        context "when one of its distributors has no other shipping methods available
-                 on an active or upcoming order cycle" do
-          it "should not be valid" do
-            shipping_method.display_on = "back_end"
-
-            expect(shipping_method).not_to be_valid
-            expect(shipping_method.errors.to_a).to eq [
-              "Unable to switch to backoffice only, some open or upcoming order cycles would be " \
-              "left without any shipping methods"
-            ]
-          end
-        end
-
-        context "when one of its distributors has no other shipping methods available
-                 on an order cycle which isn't active or upcoming" do
-          it "is valid" do
-            order_cycle.update!(orders_open_at: 2.weeks.ago, orders_close_at: 1.week.ago)
-
-            shipping_method.display_on = "back_end"
-
-            expect(shipping_method).to be_valid
-          end
-        end
-
-        context "when one of its distributors has other shipping methods available
-                 on an active or upcoming order cycle" do
-          it "is valid" do
-            create(:shipping_method, distributors: [distributor])
-
-            shipping_method.display_on = "back_end"
-
-            expect(shipping_method).to be_valid
-          end
-        end
-      end
     end
 
     # Regression test for Spree #4320
@@ -254,69 +213,6 @@ module Spree
 
       it "can gather all the related shipments" do
         expect(shipping_method.shipments).to include(shipment)
-      end
-    end
-
-    context "#destroy" do
-      let(:shipping_method) { create(:shipping_method) }
-      let(:distributor) { create(:distributor_enterprise, shipping_methods: [shipping_method]) }
-      let!(:order_cycle) { create(:distributor_order_cycle, distributors: [distributor]) }
-
-      context "when its distributors are part of some order cycles
-               and have no other shipping methods available" do
-        it "can be deleted if the order cycle is closed" do
-          order_cycle.update!(orders_close_at: 1.minute.ago)
-
-          shipping_method.destroy
-
-          expect(shipping_method).to be_deleted
-        end
-
-        it "cannot be deleted if the order cycle is active" do
-          order_cycle.update!(orders_open_at: 1.day.ago, orders_close_at: 1.week.from_now)
-
-          shipping_method.destroy
-
-          expect(shipping_method).not_to be_deleted
-          expect(shipping_method.errors.to_a).to eq [
-            "Unable to delete, some open or upcoming order cycles would be left without any " \
-            "shipping methods"
-          ]
-        end
-
-        it "cannot be deleted if the order cycle is upcoming" do
-          order_cycle.update!(orders_open_at: 1.day.from_now, orders_close_at: 1.week.from_now)
-
-          shipping_method.destroy
-
-          expect(shipping_method).not_to be_deleted
-          expect(shipping_method.errors.to_a).to eq [
-            "Unable to delete, some open or upcoming order cycles would be left without any " \
-            "shipping methods"
-          ]
-        end
-      end
-
-      context "when its distributors are part of some active or upcoming order cycles
-               and have other shipping methods available" do
-        it "can be deleted" do
-          create(:shipping_method, distributors: [distributor])
-
-          shipping_method.destroy
-
-          expect(shipping_method).to be_deleted
-        end
-      end
-
-      context "when its distributors have no other shipping methods available
-               but aren't part of active/upcoming order cycles" do
-        it "can be deleted" do
-          order_cycle.update!(orders_open_at: 2.weeks.ago, orders_close_at: 1.week.ago)
-
-          shipping_method.destroy
-
-          expect(shipping_method).to be_deleted
-        end
       end
     end
   end

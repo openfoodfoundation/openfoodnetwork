@@ -247,15 +247,15 @@ describe OrderCycleForm do
           shipping_method_i = create(:shipping_method, distributors: [distributor_i])
           shipping_method_ii = create(:shipping_method, distributors: [distributor_ii])
           order_cycle = create(:distributor_order_cycle,
-                               distributors: [distributor_i, distributor_ii])
+                               distributors: [distributor_i])
 
           form = OrderCycleForm.new(order_cycle,
-                                    { selected_shipping_method_ids: [shipping_method_i.id] },
+                                    { selected_shipping_method_ids: [shipping_method_ii.id] },
                                     order_cycle.coordinator)
 
           expect(form.save).to be false
           expect(order_cycle.errors.to_a).to eq [
-            "You need to select at least one shipping method for each distributor"
+            "Shipping method must be from a distributor on the order cycle"
           ]
         end
       end
