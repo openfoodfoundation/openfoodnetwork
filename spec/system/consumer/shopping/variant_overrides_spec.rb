@@ -102,6 +102,23 @@ describe "shopping with variant overrides defined", js: true do
       expect(page).to have_price with_currency(61.11)
     end
 
+    context "clicking the pie-chart icon" do
+      before do
+        visit shop_path
+        within "#variant-#{product1_variant1.id}" do
+          page.find(".graph-button").click
+        end
+      end
+      it "shows the price breakdown modal" do
+        within(:xpath, '//body') do
+          within(".price_breakdown") do
+            expect(page).to have_content("Price breakdown")
+            expect(page).to have_content("Packing fee")
+          end
+        end
+      end
+    end
+
     # The two specs below reveal an unrelated issue with fee calculation. See:
     # https://github.com/openfoodfoundation/openfoodnetwork/issues/312
 
