@@ -34,7 +34,7 @@ class OrderCartReset
   end
 
   def reset_order_cycle(current_customer)
-    listed_order_cycles = Shop::OrderCyclesList.new(distributor, current_customer).call
+    listed_order_cycles = Shop::OrderCyclesList.active_for(distributor, current_customer)
 
     if order_cycle_not_listed?(order.order_cycle, listed_order_cycles)
       order.order_cycle = nil

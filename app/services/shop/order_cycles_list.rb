@@ -3,12 +3,22 @@
 # Lists available order cycles for a given customer in a given distributor
 module Shop
   class OrderCyclesList
+    def self.active_for(distributor, customer)
+      new(distributor, customer).call(ready_for_checkout: false)
+    end
+
+    def self.ready_for_checkout_for(distributor, customer)
+      new(distributor, customer).call(ready_for_checkout: true)
+    end
+
     def initialize(distributor, customer)
       @distributor = distributor
       @customer = customer
     end
 
-    def call
+    def call(ready_for_checkout:)
+      return OrderCycle.none if ready_for_checkout && !@distributor.ready_for_checkout?
+
       order_cycles = OrderCycle.with_distributor(@distributor).active
         .order(@distributor.preferred_shopfront_order_cycle_order).to_a
 
