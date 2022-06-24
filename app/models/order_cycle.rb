@@ -36,8 +36,6 @@ class OrderCycle < ApplicationRecord
   after_save :sync_subscriptions, if: :opening?
 
   validates :name, :coordinator_id, presence: true
-  validate :at_least_one_shipping_method_selected_for_each_distributor
-  validate :no_invalid_order_cycle_shipping_methods
   validate :orders_close_at_after_orders_open_at?
 
   preference :product_selection_from_coordinator_inventory_only, :boolean, default: false
@@ -308,30 +306,6 @@ class OrderCycle < ApplicationRecord
   end
 
   private
-
-  def all_distributors_have_at_least_one_shipping_method?
-    distributors.all? do |distributor|
-      (distributor.shipping_method_ids & selected_shipping_method_ids).any?
-    end
-  end
-
-  def at_least_one_shipping_method_selected_for_each_distributor
-    return if selected_shipping_methods.none? ||
-              coordinator.nil? ||
-              simple? ||
-              all_distributors_have_at_least_one_shipping_method?
-
-    errors.add(:base, :at_least_one_shipping_method_per_distributor)
-  end
-
-  def no_invalid_order_cycle_shipping_methods
-    return if order_cycle_shipping_methods.all?(&:valid?)
-
-    errors.add(
-      :base,
-      order_cycle_shipping_methods.map(&:errors).map(&:to_a).flatten.uniq.to_sentence
-    )
-  end
 
   def opening?
     (open? || upcoming?) && saved_change_to_orders_close_at? && was_closed?
