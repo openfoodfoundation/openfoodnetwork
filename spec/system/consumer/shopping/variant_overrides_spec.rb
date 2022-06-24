@@ -57,7 +57,7 @@ describe "shopping with variant overrides defined", js: true do
                               default_stock: nil, resettable: false)
   }
   let(:enterprise_fee) {
-    create(:enterprise_fee, enterprise: hub, fee_type: 'packing',
+    create(:enterprise_fee, enterprise: hub, fee_type: 'packing', name: "Packing fee",
                             calculator: Calculator::FlatPercentPerItem.new(preferred_flat_percent: 10))
   }
   let!(:product4_variant1_override) {
