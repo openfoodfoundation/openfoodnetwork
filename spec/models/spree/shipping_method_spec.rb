@@ -145,7 +145,10 @@ module Spree
 
       describe "#display_on" do
         it "is valid when it's set to nil, an empty string or 'back_end'" do
-          shipping_method = build_stubbed(:shipping_method)
+          shipping_method = build_stubbed(
+            :shipping_method,
+            shipping_categories: [Spree::ShippingCategory.new(name: 'Test')]
+          )
           [nil, "", "back_end"].each do |display_on_option|
             shipping_method.display_on = display_on_option
             expect(shipping_method).to be_valid
