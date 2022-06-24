@@ -26,8 +26,8 @@ class OrderCycle < ApplicationRecord
   has_many :schedules, through: :order_cycle_schedules
   has_many :order_cycle_shipping_methods
   has_many :selected_shipping_methods, class_name: "Spree::ShippingMethod",
-                                        through: :order_cycle_shipping_methods,
-                                        source: :shipping_method
+                                       through: :order_cycle_shipping_methods,
+                                       source: :shipping_method
   has_paper_trail meta: { custom_data: proc { |order_cycle| order_cycle.schedule_ids.to_s } }
 
   attr_accessor :incoming_exchanges, :outgoing_exchanges
