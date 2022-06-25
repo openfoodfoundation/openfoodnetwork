@@ -55,7 +55,7 @@
           %td= t('.shared')
           %td
             - if shared_shipping_methods.any?
-              = f.collection_check_boxes :shipping_method_ids, shared_shipping_methods, :id, :name do |input|
+              = f.collection_check_boxes :selected_shipping_method_ids, shared_shipping_methods, :id, :name do |input|
                 - shared_shipping_method = input.object
                 %p
                   = input.check_box
