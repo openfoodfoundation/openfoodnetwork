@@ -31,12 +31,11 @@ describe "Payments Reports" do
     create(:line_item_with_shipment, order: other_order, product: product)
 
     login_as_admin
+    visit main_app.admin_report_path(report_type: 'payments')
   end
 
   context "when choosing itemised payments report type" do
     it "shows orders with payment state, their balance and totals" do
-      visit spree.payments_admin_reports_path
-
       select I18n.t(:report_itemised_payment), from: "report_subtype"
       find("[type='submit']").click
 
@@ -52,10 +51,10 @@ describe "Payments Reports" do
       expect(page.find("table.report__table tbody tr").text).to have_content([
         order.payment_state,
         order.distributor.name,
-        order.item_total.to_f + other_order.item_total.to_f,
-        order.ship_total.to_f + other_order.ship_total.to_f,
-        order.outstanding_balance.to_f + other_order.outstanding_balance.to_f,
-        order.total.to_f + other_order.total.to_f
+        with_currency(order.item_total.to_f + other_order.item_total.to_f),
+        with_currency(order.ship_total.to_f + other_order.ship_total.to_f),
+        with_currency(order.outstanding_balance.to_f + other_order.outstanding_balance.to_f),
+        with_currency(order.total.to_f + other_order.total.to_f)
       ].compact.join(" "))
     end
   end
@@ -72,8 +71,6 @@ describe "Payments Reports" do
     }
 
     it 'shows orders with payment state, their balance and and payment totals' do
-      visit spree.payments_admin_reports_path
-
       select I18n.t(:report_payment_totals), from: "report_subtype"
       find("[type='submit']").click
 
@@ -96,7 +93,7 @@ describe "Payments Reports" do
         order.total.to_f + other_order.total.to_f,
         eft_payment.amount.to_f,
         paypal_payment.amount.to_f,
-        order.outstanding_balance.to_f + other_order.outstanding_balance.to_f,
+        order.outstanding_balance + other_order.outstanding_balance,
       ].join(" "))
     end
   end

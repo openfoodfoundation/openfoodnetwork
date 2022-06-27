@@ -2,18 +2,18 @@
 
 require "system_helper"
 
-describe "Packing Reports", js: true do
+describe "Packing Reports" do
   include AuthenticationHelper
   include WebHelper
 
   describe "Packing reports" do
     before do
       login_as_admin
-      visit spree.admin_reports_path
+      visit admin_reports_path
     end
 
-    let(:bill_address1) { create(:address, lastname: "MULLER") }
-    let(:bill_address2) { create(:address, lastname: "Mistery") }
+    let(:bill_address1) { create(:address, lastname: "ABRA") }
+    let(:bill_address2) { create(:address, lastname: "KADABRA") }
     let(:distributor_address) {
       create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234")
     }
@@ -33,8 +33,8 @@ describe "Packing Reports", js: true do
     let(:product2) { create(:simple_product, name: "Product 2", supplier: supplier) }
 
     before do
-      Timecop.travel(Time.zone.local(2013, 4, 25, 14, 0, 0)) { order1.finalize! }
-      Timecop.travel(Time.zone.local(2013, 4, 25, 15, 0, 0)) { order2.finalize! }
+      Timecop.travel(Time.zone.local(2022, 4, 25, 14, 0, 0)) { order1.finalize! }
+      Timecop.travel(Time.zone.local(2022, 4, 25, 15, 0, 0)) { order2.finalize! }
 
       create(:line_item_with_shipment, variant: variant1, quantity: 1, order: order1)
       create(:line_item_with_shipment, variant: variant2, quantity: 3, order: order1)
@@ -44,14 +44,19 @@ describe "Packing Reports", js: true do
     describe "Pack By Customer" do
       it "displays the report" do
         click_link "Pack By Customer"
-        fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
-        fill_in 'q_completed_at_lt', with: '2013-04-25 16:00:00'
+
+        find('#q_order_completed_at_gt').click
+        select_date_from_datepicker Time.zone.at(order1.completed_at - 1.day)
+
+        find('#q_order_completed_at_lt').click
+        select_date_from_datepicker Time.zone.at(order1.completed_at + 1.day)
+
         click_button 'Go'
 
         rows = find("table.report__table").all("thead tr")
         table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
         expect(table).to eq([
-                              ["Hub", "Code", "First Name", "Last Name", "Supplier",
+                              ["Hub", "Customer Code", "First Name", "Last Name", "Supplier",
                                "Product", "Variant", "Quantity", "TempControlled?"].map(&:upcase)
                             ])
         expect(page).to have_selector 'table.report__table tbody tr', count: 5 # Totals row per order
@@ -59,16 +64,21 @@ describe "Packing Reports", js: true do
 
       it "sorts alphabetically" do
         click_link "Pack By Customer"
-        click_button 'Go'
 
+        find('#q_order_completed_at_gt').click
+        select_date_from_datepicker Time.zone.at(order1.completed_at - 1.day)
+
+        find('#q_order_completed_at_lt').click
+        select_date_from_datepicker Time.zone.at(order1.completed_at + 1.day)
+        click_button 'Go'
         rows = find("table.report__table").all("tr")
         table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[3] }
         expect(table).to eq([
                               "LAST NAME",
-                              order2.bill_address.lastname,
+                              order1.bill_address.lastname,
+                              order1.bill_address.lastname,
                               "",
-                              order1.bill_address.lastname,
-                              order1.bill_address.lastname,
+                              order2.bill_address.lastname,
                               ""
                             ])
       end
@@ -77,17 +87,24 @@ describe "Packing Reports", js: true do
     describe "Pack By Supplier" do
       it "displays the report" do
         click_link "Pack By Supplier"
-        fill_in 'q_completed_at_gt', with: '2013-04-25 13:00:00'
-        fill_in 'q_completed_at_lt', with: '2013-04-25 16:00:00'
+        find('#q_order_completed_at_gt').click
+        select_date_from_datepicker Time.zone.at(order1.completed_at - 1.day)
+
+        find('#q_order_completed_at_lt').click
+        select_date_from_datepicker Time.zone.at(order1.completed_at + 1.day)
+
+        find(:css, "#display_summary_row").set(false) # does not include summary rows
+
         click_button 'Go'
 
         rows = find("table.report__table").all("thead tr")
         table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
         expect(table).to eq([
-                              ["Hub", "Supplier", "Code", "First Name", "Last Name",
+                              ["Hub", "Supplier", "Customer Code", "First Name", "Last Name",
                                "Product", "Variant", "Quantity", "TempControlled?"].map(&:upcase)
                             ])
-        expect(all('table.report__table tbody tr').count).to eq(4) # Totals row per supplier
+
+        expect(all('table.report__table tbody tr').count).to eq(3) # Totals row per supplier
       end
     end
   end
@@ -96,7 +113,7 @@ describe "Packing Reports", js: true do
     let(:distributor) { create(:distributor_enterprise) }
     let(:oc) { create(:simple_order_cycle) }
     let(:order) {
-      create(:completed_order_with_totals, line_items_count: 0, completed_at: 1.day.ago,
+      create(:completed_order_with_totals, line_items_count: 0,
                                            order_cycle: oc, distributor: distributor)
     }
     let(:li1) { build(:line_item_with_shipment) }
@@ -105,7 +122,7 @@ describe "Packing Reports", js: true do
     before do
       order.line_items << li1
       order.line_items << li2
-      order.finalize!
+      Timecop.travel(Time.zone.local(2022, 4, 25, 14, 0, 0)) { order.finalize! }
       login_as_admin
     end
 
@@ -114,16 +131,16 @@ describe "Packing Reports", js: true do
         it "shows line items" do
           li1.variant.delete
 
-          visit spree.admin_reports_path
+          visit admin_reports_path
 
           click_on I18n.t("admin.reports.packing.name")
           select oc.name, from: "q_order_cycle_id_in"
 
-          find('#q_completed_at_gt').click
-          select_date(Time.zone.today - 1.day)
+          find('#q_order_completed_at_gt').click
+          select_date_from_datepicker Time.zone.at(order.completed_at - 1.day)
 
-          find('#q_completed_at_lt').click
-          select_date(Time.zone.today)
+          find('#q_order_completed_at_lt').click
+          select_date_from_datepicker Time.zone.at(order.completed_at + 1.day)
 
           find("button[type='submit']").click
 
