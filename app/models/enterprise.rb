@@ -100,9 +100,11 @@ class Enterprise < ApplicationRecord
   validate :shopfront_taxons
   validate :shopfront_producers
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
+  validates :phone, phone: { allow_blank: true, country_specifier: ->(instance) { instance.address.country.iso } }, unless: lambda { address.nil? }
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :set_unused_address_fields
+  before_validation :parse_phone
   after_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
 
   after_touch :touch_distributors
@@ -533,5 +535,9 @@ class Enterprise < ApplicationRecord
     Enterprise.distributing_products(supplied_products.select(:id)).
       where('enterprises.id != ?', id).
       update_all(updated_at: Time.zone.now)
+  end
+
+  def parse_phone
+    self.phone = address.nil? ? "" : Phonelib.parse(phone, address.country.iso).national(true)
   end
 end
