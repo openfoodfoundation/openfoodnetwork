@@ -26,4 +26,8 @@ angular.module('mm.foundation.offcanvas').directive 'offCanvasWrap', ($window) -
       # Bind hiding of the off-canvas that only happens when screen width is over 1024px.
       win.bind 'resize.body', ->
         isolatedScope.hide() if $(window).width() > 1024
+
+      win.bind 'click.body', (e) ->
+        if e.target.closest(".left-off-canvas-menu") == null && e.target.closest(".left-off-canvas-toggle") == null
+          isolatedScope.hide()
   }
