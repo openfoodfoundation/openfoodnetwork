@@ -7,8 +7,12 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
   let!(:customer) { create(:customer, enterprise: distributor, user: user, code: "JHN") }
   let(:user) { create(:user, email: "john@example.net") }
   let(:current_user) { distributor.owner }
-  let(:params) { { display_summary_row: true } }
+  let(:params) { { display_summary_row: true, q: search_params } }
+  let(:search_params) {
+    { completed_at_gt: 1.week.before(order_date), completed_at_lt: 1.week.after(order_date) }
+  }
   let(:report) { described_class.new(current_user, params) }
+  let(:order_date) { Date.parse("2022-05-26") }
 
   let(:report_table) do
     report.table_rows
@@ -23,7 +27,7 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
         user: customer.user,
         customer: customer,
         distributor: distributor,
-        completed_at: Date.parse("2022-05-26"),
+        completed_at: order_date,
       ).tap do |order|
         order.line_items[0].product.supplier.update(name: "Apple Farmer")
         order.line_items[0].product.update(name: "Apples")
@@ -73,8 +77,12 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
       create(:shipping_method, distributors: [distributor], name: "Third")
     }
     let!(:order) do
-      create(:completed_order_with_totals, line_items_count: 1, user: customer.user,
-                                           customer: customer, distributor: distributor)
+      create(
+        :completed_order_with_totals,
+        line_items_count: 1, user: customer.user,
+        customer: customer, distributor: distributor,
+        completed_at: order_date,
+      )
     end
 
     before do
@@ -90,8 +98,12 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
   context "displaying payment fees" do
     context "with both failed and completed payments present" do
       let!(:order) {
-        create(:order_ready_to_ship, user: customer.user,
-                                     customer: customer, distributor: distributor)
+        create(
+          :order_ready_to_ship,
+          user: customer.user,
+          customer: customer, distributor: distributor,
+          completed_at: order_date,
+        )
       }
       let(:completed_payment) { order.payments.completed.first }
       let!(:failed_payment) { create(:payment, order: order, state: "failed") }
@@ -110,8 +122,12 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
 
   context 'when a variant override applies' do
     let!(:order) do
-      create(:completed_order_with_totals, line_items_count: 1, user: customer.user,
-                                           customer: customer, distributor: distributor)
+      create(
+        :completed_order_with_totals,
+        line_items_count: 1, user: customer.user,
+        customer: customer, distributor: distributor,
+        completed_at: order_date,
+      )
     end
     let(:overidden_sku) { 'magical_sku' }
 
