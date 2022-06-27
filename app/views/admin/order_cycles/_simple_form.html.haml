@@ -19,6 +19,10 @@
     %tr.products
       %td{ ng: { include: "'admin/panels/exchange_products_simple.html'" } }
 
+%br
+= label_tag t('.tags')
+%tags-with-translation{ object: 'order_cycle.outgoing_exchanges[0]', form: 'order_cycle_form' }
+
 %br/
 = label_tag t('.fees')
 = render 'coordinator_fees', f: f
