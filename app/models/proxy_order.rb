@@ -5,7 +5,7 @@
 # This reduces the need to keep Orders in sync with their parent Subscriptions
 
 class ProxyOrder < ApplicationRecord
-  belongs_to :order, class_name: 'Spree::Order', dependent: :destroy
+  belongs_to :order, class_name: 'Spree::Order'
   belongs_to :subscription
   belongs_to :order_cycle
 
