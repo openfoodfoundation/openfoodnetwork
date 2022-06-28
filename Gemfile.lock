@@ -26,9 +26,9 @@ GIT
 
 GIT
   remote: https://github.com/roo-rb/roo.git
-  revision: 709464c77623be2bc09b2103405d90ded7604a75
+  revision: 3ae128fc05d330842852b897eb0c321755a2ba41
   specs:
-    roo (2.8.3)
+    roo (2.9.0)
       nokogiri (~> 1)
       rubyzip (>= 1.3.0, < 3.0.0)
 
@@ -157,8 +157,8 @@ GEM
       railties (>= 3, < 7)
     angularjs-file-upload-rails (2.4.1)
     angularjs-rails (1.8.0)
-    arel-helpers (2.12.1)
-      activerecord (>= 3.1.0, < 7)
+    arel-helpers (2.14.0)
+      activerecord (>= 3.1.0, < 8)
     ast (2.4.2)
     awesome_nested_set (3.4.0)
       activerecord (>= 4.0.0, < 7.0)
@@ -182,7 +182,7 @@ GEM
     axlsx_styler (1.1.0)
       activesupport (>= 3.1)
       caxlsx (>= 2.0.2)
-    bcrypt (3.1.16)
+    bcrypt (3.1.18)
     bigdecimal (3.0.2)
     bindex (0.8.1)
     bootsnap (1.10.1)
@@ -254,7 +254,7 @@ GEM
       warden (~> 1.2.3)
     devise-encryptable (0.2.0)
       devise (>= 2.1.0)
-    devise-i18n (1.10.0)
+    devise-i18n (1.10.2)
       devise (>= 4.8.0)
     devise-token_authenticatable (1.1.0)
       devise (>= 4.0.0, < 5.0.0)
