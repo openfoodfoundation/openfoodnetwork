@@ -182,6 +182,7 @@ ko:
         signed_up_but_unconfirmed: "당신 이메일 주소로 확인 링크가 담겨진 메세지를 보냈습니다. 링크를 열어 당신의 계정을 활성화 하세요."
         unknown_error: "계정 생성 도중 문제가 발생하였습니다. 이메일 주소를 확인하고 다시 시도하십시오."
     failure:
+      disabled: "계정이 비활성화되었습니다. 이 문제를 해결하려면 관리자에게 문의하십시오."
       invalid: |
           접근 불가한 이메일과 비밀번호 입니다.
           혹시 게스트로 방문하셨나요? 만약 그렇다면 새 계정을 생성하거나 비밀번호를 초기화 해주세요.
@@ -3743,6 +3744,7 @@ ko:
           back_to_users_list: "사용자 리스트로 돌아가기"
           general_settings: "일반 설정"
         form:
+          disabled: "비활성화 하시겠습니까?"
           email: "이메일"
           roles: "역할"
           enterprise_limit: "회사 최대치"
