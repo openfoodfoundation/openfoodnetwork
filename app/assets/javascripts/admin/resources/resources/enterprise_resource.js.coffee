@@ -17,4 +17,7 @@ angular.module("admin.resources").factory 'EnterpriseResource', ($resource) ->
     'removeTermsAndConditions':
       url: '/api/v0/enterprises/:id/terms_and_conditions.json'
       method: 'DELETE'
+    'removeSmallFarmerRecognitionDocument':
+      url: '/api/v0/enterprises/:id/small_farmer_recognition_document.json'
+      method: 'DELETE'
   })
