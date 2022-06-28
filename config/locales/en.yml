@@ -865,6 +865,8 @@ en:
           invoice_text: Add customized text at the end of invoices
           terms_and_conditions: "Terms and Conditions"
           remove_terms_and_conditions: "Remove File"
+          small_farmer_recognition_document: "Small Farmer Recognition"
+          remove_small_farmer_recognition_document: "Remove File"
           uploaded_on: "uploaded on"
           reset_form: "Reset Form"
           Invoice_item_sorting: Invoice item sorting
@@ -1457,6 +1459,8 @@ en:
       destroy_attachment_does_not_exist: "Promo image does not exist"
     enterprise_terms_and_conditions:
       destroy_attachment_does_not_exist: "Terms and Conditions file does not exist"
+    enterprise_small_farmer_recognition_document:
+      destroy_attachment_does_not_exist: "Small farmer recognition document file does not exist"
     orders:
       failed_to_update: "Failed to update order"
 
@@ -1629,6 +1633,7 @@ en:
   country: Country
   unauthorized: Unauthorized
   terms_of_service: "Terms of service"
+  small_farmer_recognition_document: "Small farmer recognition document"
   on_demand: On demand
   none: None
   not_allowed: Not allowed
@@ -2926,6 +2931,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           title: "Uploading Terms and Conditions"
           message_1: "Terms and Conditions are the contract between you, the seller, and the shopper. If you upload a file here shoppers must accept your Terms and Conditions in order to complete checkout. For the shopper this will appear as a checkbox at checkout that must be checked in order to proceed with checkout. We highly recommend you upload Terms and Conditions in alignment with national legislation."
           message_2: "Shoppers will only be required to accept Terms and Conditions once. However if you change you Terms and Conditions shoppers will again be required to accept them before they can checkout."
+        small_farmer_recognition_document_info:
+          title: "Uploading Small Farmer Recognition Document"
+          message_1: "This is a placeholder message for the document that proves you are recognized as a small farmer"
+          message_2: "This is a placeholder message for the more information about the document"
         terms_and_conditions_warning:
           title: "Uploading Terms and Conditions"
           message_1: "All your buyers will have to agree to them once at checkout. If you update the file, all your buyers will have to agree to them again at checkout."
@@ -3126,7 +3135,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             removed_promo_image_successfully: "Promo image removed successfully"
             immediate_promo_image_removal_warning: "The promo image will be removed immediately after you confirm."
             immediate_terms_and_conditions_removal_warning: "The Terms and Conditions file will be removed immediately after you confirm."
+            immediate_small_farmer_recognition_document_removal_warning: "The small farmer recognition document will be removed immediately after you confirm."
             removed_terms_and_conditions_successfully: "Terms and Conditions file removed successfully"
+            removed_small_farmer_recognition_document_successfully: "Small farmer recognition document removed successfully"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
     out_of_stock:
       reduced_stock_available: Reduced stock available
