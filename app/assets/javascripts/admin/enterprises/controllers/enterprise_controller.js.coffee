@@ -79,6 +79,9 @@ angular.module("admin.enterprises")
     $scope.removeTermsAndConditions = ->
       $scope.performEnterpriseAction("removeTermsAndConditions", "immediate_terms_and_conditions_removal_warning", "removed_terms_and_conditions_successfully")
 
+    $scope.removeSmallFarmerRecognitionDocument = ->
+      $scope.performEnterpriseAction("removeSmallFarmerRecognitionDocument", "immediate_small_farmer_recognition_document_removal_warning", "removed_small_farmer_recognition_document_successfully")
+
     $scope.performEnterpriseAction = (enterpriseActionName, warning_message_key, success_message_key) ->
       return unless confirm($scope.translation(warning_message_key))
 

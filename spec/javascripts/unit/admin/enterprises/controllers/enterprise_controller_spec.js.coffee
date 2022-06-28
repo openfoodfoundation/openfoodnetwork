@@ -102,6 +102,39 @@ describe "enterpriseCtrl", ->
       it "notifies user of failure", ->
         expect(StatusMessage.display).toHaveBeenCalledWith("failure", "Promo image does not exist")
 
+  describe "removing small farmer recognition document", ->
+    deferred = null
+
+    beforeEach inject ($q) ->
+      spyOn(scope, "$emit")
+      deferred = $q.defer()
+      spyOn(window, "confirm").and.returnValue(true)
+      spyOn(Enterprises, "removeSmallFarmerRecognitionDocument").and.returnValue(deferred.promise)
+      spyOn(StatusMessage, "display").and.callThrough()
+      scope.removeSmallFarmerRecognitionDocument()
+
+    describe "when successful", ->
+      beforeEach inject ($rootScope) ->
+        deferred.resolve()
+        $rootScope.$digest()
+
+      it "emits an 'enterprise:updated' event", ->
+        expect(scope.$emit).toHaveBeenCalledWith("enterprise:updated", scope.Enterprise)
+
+      it "notifies user of success", ->
+        expect(StatusMessage.display).toHaveBeenCalledWith("success", "Small farmer recognition document removed successfully")
+
+    describe "when unsuccessful", ->
+      beforeEach inject ($rootScope) ->
+        deferred.reject({ data: { error: "Small farmer recognition document does not exist" } })
+        $rootScope.$digest()
+
+      it "does not emit an 'enterprise:updated' event", ->
+        expect(scope.$emit).not.toHaveBeenCalled()
+
+      it "notifies user of failure", ->
+        expect(StatusMessage.display).toHaveBeenCalledWith("failure", "Small farmer recognition document does not exist")
+
   describe "adding managers", ->
     u1 = u2 = u3 = null
     beforeEach ->
