@@ -48,6 +48,22 @@
       %a.button.red{ href: '', ng: {click: 'removeTermsAndConditions()', if: 'Enterprise.terms_and_conditions'} }
         = t('.remove_terms_and_conditions')
 
+.row
+  .alpha.three.columns
+    = f.label :small_farmer_recognition_document, t('.small_farmer_recognition_document')
+    %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "small_farmer_recognition_document_info_modal" }
+
+  .omega.eight.columns
+    %a{ href: '{{ Enterprise.small_farmer_recognition_document }}', target: '_blank', ng: { if: 'Enterprise.small_farmer_recognition_document' } }
+      = '{{ Enterprise.small_farmer_recognition_document_file_name }}'
+      = t('.uploaded_on')
+      = '{{ Enterprise.small_farmer_recognition_document_uploaded_at }}'
+    .pad-top
+      = f.file_field :small_farmer_recognition_document
+    .pad-top
+      %a.button.red{ href: '', ng: {click: 'removeSmallFarmerRecognitionDocument()', if: 'Enterprise.small_farmer_recognition_document'} }
+        = t('.remove_small_farmer_recognition_document')
+
 
 = f.fields_for :business_address, @enterprise.business_address || @enterprise.build_business_address do |bf|
   %fieldset.alpha.no-border-bottom
@@ -82,3 +98,14 @@
   .margin-bottom-30
     %p
       = t('js.admin.modals.terms_and_conditions_info.message_2')
+
+= render HelpModalComponent.new(id: "small_farmer_recognition_document_info_modal") do
+  .margin-bottom-30.text-center
+    .text-big
+      = t('js.admin.modals.small_farmer_recognition_document_info.title')
+  .margin-bottom-30
+    %p
+      = t('js.admin.modals.small_farmer_recognition_document_info.message_1')
+  .margin-bottom-30
+    %p
+      = t('js.admin.modals.small_farmer_recognition_document_info.message_2')
