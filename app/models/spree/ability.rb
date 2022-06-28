@@ -141,6 +141,7 @@ module Spree
       can [:admin, :index, :create], Enterprise
       can [:read, :edit, :update,
            :remove_logo, :remove_promo_image, :remove_terms_and_conditions,
+           :remove_small_farmer_recognition_document,
            :bulk_update, :resend_confirmation], Enterprise do |enterprise|
         OpenFoodNetwork::Permissions.new(user).editable_enterprises.include? enterprise
       end

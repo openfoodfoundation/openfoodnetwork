@@ -542,14 +542,14 @@ describe Spree::Ability do
         it "should be able to edit enterprises it manages" do
           is_expected.to have_ability(
             [:read, :edit, :update, :remove_logo, :remove_promo_image, :remove_terms_and_conditions,
-             :bulk_update, :resend_confirmation], for: d1
+             :remove_small_farmer_recognition_document, :bulk_update, :resend_confirmation], for: d1
           )
         end
 
         it "should be able to edit enterprises it has permission to" do
           is_expected.to have_ability(
             [:read, :edit, :update, :remove_logo, :remove_promo_image, :remove_terms_and_conditions,
-             :bulk_update, :resend_confirmation], for: d_related
+             :remove_small_farmer_recognition_document, :bulk_update, :resend_confirmation], for: d_related
           )
         end
 
