@@ -14,7 +14,9 @@ module Api
                  :logo, :promo_image, :terms_and_conditions,
                  :terms_and_conditions_file_name, :terms_and_conditions_updated_at,
                  :preferred_invoice_order_by_supplier, :preferred_product_low_stock_display,
-                 :visible
+                 :visible, :small_farmer_recognition_document,
+                 :small_farmer_recognition_document_file_name,
+                 :small_farmer_recognition_document_uploaded_at
 
       has_one :owner, serializer: Api::Admin::UserSerializer
       has_many :users, serializer: Api::Admin::UserSerializer
@@ -42,6 +44,21 @@ module Api
 
       def terms_and_conditions_updated_at
         object.terms_and_conditions_blob&.created_at&.to_s
+      end
+
+      def small_farmer_recognition_document
+        return unless object.small_farmer_recognition_document.attached?
+
+        Rails.application.routes.url_helpers.
+          url_for(object.small_farmer_recognition_document)
+      end
+
+      def small_farmer_recognition_document_file_name
+        object.small_farmer_recognition_document_blob&.filename
+      end
+
+      def small_farmer_recognition_document_uploaded_at
+        object.small_farmer_recognition_document_blob&.created_at&.to_s
       end
 
       def tag_groups

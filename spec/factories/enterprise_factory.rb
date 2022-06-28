@@ -31,6 +31,15 @@ FactoryBot.define do
     logo { Rack::Test::UploadedFile.new('spec/fixtures/files/promo.png', 'image/png') }
   end
 
+  trait :with_small_farmer_recognition_document do
+    small_farmer_recognition_document {
+      Rack::Test::UploadedFile.new(
+        'spec/fixtures/files/small_farmer_recognition_document.png',
+        'image/png'
+      )
+    }
+  end
+
   factory :supplier_enterprise, parent: :enterprise do
     is_primary_producer { true }
     sells { "none" }

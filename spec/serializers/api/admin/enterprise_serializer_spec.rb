@@ -60,4 +60,30 @@ describe Api::Admin::EnterpriseSerializer do
       end
     end
   end
+
+  context "for small farmer recognition document" do
+    let(:enterprise) { create(:distributor_enterprise, small_farmer_recognition_document: image) }
+
+    context "when there is a document" do
+      let(:image) do
+        black_logo_file
+      end
+
+      it "includes information about the document" do
+        serializer = Api::Admin::EnterpriseSerializer.new(enterprise)
+        expect(serializer.as_json[:small_farmer_recognition_document]).to_not be_blank
+        expect(serializer.as_json[:small_farmer_recognition_document_file_name])
+          .to eq('logo-black.png')
+      end
+    end
+
+    context "when there is no document" do
+      let(:image) { nil }
+
+      it "does not include information about the document" do
+        serializer = Api::Admin::EnterpriseSerializer.new(enterprise)
+        expect(serializer.as_json[:small_farmer_recognition_document]).to be_nil
+      end
+    end
+  end
 end
