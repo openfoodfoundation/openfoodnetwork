@@ -1,4 +1,5 @@
-.per-page{'ng-show' => '!RequestMonitor.loading && orders.length > 0'}
+- position ||= ""
+.per-page{'ng-show' => '!RequestMonitor.loading && orders.length > 0', class: ("right" if position == "right") }
   %input.per-page-select.ofn-select2{type: 'number', data: 'per_page_options', 'min-search' => 999, 'ng-model' => 'per_page', 'ng-change' => 'fetchResults()'}
 
   %span.per-page-feedback
