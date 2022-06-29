@@ -44,6 +44,14 @@ module Spree
         end
       end
 
+      def print_invoice_link
+        if @order.distributor.can_invoice?
+          print_invoice_link_with_url
+        else
+          notify_about_required_enterprise_number
+        end
+      end
+
       def ticket_links
         return [] unless Spree::Config[:enable_receipt_printing?]
 
@@ -78,11 +86,18 @@ module Spree
           confirm: t(:must_have_valid_business_number, enterprise_name: @order.distributor.name) }
       end
 
-      def print_invoice_link
+      def print_invoice_link_with_url
         { name: t(:print_invoice),
           url: spree.print_admin_order_path(@order),
           icon: 'icon-print',
           target: "_blank" }
+      end
+
+      def notify_about_required_enterprise_number
+        { name: t(:print_invoice),
+          url: "#",
+          icon: 'icon-print',
+          confirm: t(:must_have_valid_business_number, enterprise_name: @order.distributor.name) }
       end
 
       def print_ticket_link

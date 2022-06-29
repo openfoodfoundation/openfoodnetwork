@@ -474,10 +474,69 @@ describe '
         within "#links-dropdown" do
           expect(page).to have_link "Resend Confirmation",
                                     href: spree.resend_admin_order_path(order)
-          expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
-          expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
           expect(page).to have_link "Cancel Order",
                                     href: spree.fire_admin_order_path(order, e: 'cancel')
+        end
+      end
+      
+      context "Check send/print invoice links" do
+        context "when abn number is not mandatory to send/print invoices" do
+          before do
+            Spree::Config[:enterprise_number_required_on_invoices?] = false
+          end
+
+          it "should display normal links" do
+            visit spree.edit_admin_order_path(order)
+
+            find("#links-dropdown .ofn-drop-down").click
+            expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
+            expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
+          end
+        end
+
+        context "when abn number is mandatory to send/print invoices" do
+          before do
+            Spree::Config[:enterprise_number_required_on_invoices?] = true
+          end
+
+          context "and a abn numer is set on the distributor" do
+            before do
+              distributor1.update_attribute(:abn, '12345678')
+            end
+            
+            it "should display normal links" do
+              visit spree.edit_admin_order_path(order)
+
+              find("#links-dropdown .ofn-drop-down").click
+              expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
+              expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
+            end
+          end
+
+          context "and a abn number is not set on the distributor" do
+            before do
+              distributor1.update_attribute(:abn, "")
+            end
+
+            it "should not display links but a js alert" do
+              visit spree.edit_admin_order_path(order)
+
+              find("#links-dropdown .ofn-drop-down").click
+              expect(page).to have_link "Send Invoice", href: "#"
+              expect(page).to have_link "Print Invoice", href: "#"
+
+              message = accept_prompt do
+                click_link "Print Invoice"
+              end
+              expect(message).to eq "#{distributor1.name} must have a valid ABN before invoices can be sent."
+
+              find("#links-dropdown .ofn-drop-down").click
+              message = accept_prompt do
+                click_link "Send Invoice"
+              end
+              expect(message).to eq "#{distributor1.name} must have a valid ABN before invoices can be sent."
+            end
+          end
         end
       end
 
