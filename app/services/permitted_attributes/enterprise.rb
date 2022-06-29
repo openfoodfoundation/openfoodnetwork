@@ -35,7 +35,7 @@ module PermittedAttributes
         :show_customer_names_to_suppliers, :preferred_shopfront_product_sorting_method,
         :preferred_invoice_order_by_supplier,
         :preferred_product_low_stock_display,
-        :small_farmer_recognition_document
+        :small_farmer_recognition_document, :entity_name
       ]
     end
   end
