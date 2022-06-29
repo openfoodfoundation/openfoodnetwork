@@ -43,6 +43,9 @@ $(document).ready(function() {
   $('a.edit-tracking').click(toggleTrackingEdit);
   $('a.cancel-tracking').click(toggleTrackingEdit);
 
+  $('a.edit-note').click(toggleNoteEdit);
+  $('a.cancel-note').click(toggleNoteEdit);
+
   handle_tracking_save = function(){
     var link = $(this);
     var shipment_number = link.data('shipment-number');

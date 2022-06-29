@@ -145,6 +145,12 @@ toggleTrackingEdit = function(){
   link.parents('tbody').find('tr.show-tracking').toggle();
 }
 
+toggleNoteEdit = function(){
+  var link = $(this);
+  link.parents('tbody').find('tr.edit-note').toggle();
+  link.parents('tbody').find('tr.show-note').toggle();
+}
+
 toggleMethodEdit = function(){
   var link = $(this);
   link.parents('tbody').find('tr.edit-method').toggle();

@@ -6,6 +6,7 @@
     = render 'spree/admin/orders/insufficient_stock_lines', insufficient_stock_lines: @order.insufficient_stock_lines
 
   = render :partial => "spree/admin/orders/shipment", :collection => @order.shipments, :locals => { :order => order }
+  = render partial: "spree/admin/orders/note", locals: { order: @order }
 
   = render :partial => "spree/admin/orders/_form/adjustments", :locals => { :adjustments => @order.line_item_adjustments, :title => t(".line_item_adjustments")}
   = render :partial => "spree/admin/orders/_form/adjustments", :locals => { :adjustments => order_adjustments_for_display(@order), :title => t(".order_adjustments")}

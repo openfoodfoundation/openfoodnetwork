@@ -90,6 +90,18 @@ table.index td.actions {
   text-align: left;
 }
 
+table.edit-note-table {
+	margin-top: -15px;
+
+	tr:first-child th, tr:first-child td {
+		border-top: none;
+	}
+
+	td.actions {
+		width: 15%;
+	}
+}
+
 .index-controls {
 
   button {
