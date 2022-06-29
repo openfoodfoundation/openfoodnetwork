@@ -635,6 +635,13 @@ describe '
       check   "order_cycle_incoming_exchange_0_variants_#{v3.id}"
       uncheck "order_cycle_incoming_exchange_0_variants_#{v3.id}"
 
+      # Add tags
+      expect(page).to have_content "TAGS"
+
+      within "tags-with-translation" do
+        find(:css, "tags-input .tags input").set "wholesale\n"
+      end
+
       # And I select some fees and update
       click_link 'order_cycle_coordinator_fee_0_remove'
       expect(page).not_to have_select 'order_cycle_coordinator_fee_0_id'
@@ -669,6 +676,9 @@ describe '
       ex = oc.exchanges.outgoing.first
       expect(ex.pickup_time).to eq('xy')
       expect(ex.pickup_instructions).to eq('yyz')
+
+      # And it should have the tags
+      expect(ex.tag_list).to eq ['wholesale']
     end
   end
 
