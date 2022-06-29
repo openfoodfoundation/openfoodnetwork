@@ -40,6 +40,7 @@
 
       %p.word-wrap{"ng-if" => "::producer.whatsapp_phone"}
         %a{"ng-href" => "{{::producer.whatsapp_url}}", target: "_blank"}
+          %img{ src: image_pack_path("social-logos/whatsapp.svg") }
           %span{"ng-bind" => "::producer.whatsapp_phone"}
 
       %p.word-wrap{"ng-if" => "::producer.email_address"}
