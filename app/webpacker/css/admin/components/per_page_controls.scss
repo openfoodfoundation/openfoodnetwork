@@ -1,6 +1,17 @@
 .per-page {
   float: left;
 
+  &.right {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+
+    .per-page-feedback {
+      margin-right: 1em;
+      margin-left: 0;
+    }
+  }
+
   .per-page-feedback {
     margin-left: 1em;
   }

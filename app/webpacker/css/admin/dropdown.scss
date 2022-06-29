@@ -11,14 +11,12 @@
 	color: #575757;
 }
 
-.ofn-drop-down {
+@mixin ofn-drop-down-style {
 	padding: 7px 15px;
 	border-radius: 3px;
 	border: 1px solid #d4d4d4;
 	background-color: #f5f5f5;
-	position: relative;
 	display: block;
-	float: left;
 	color: #828282;
 	cursor: pointer;
 	-moz-user-select: none;
@@ -28,6 +26,47 @@
 	user-select: none;
 	text-align: center;
   margin-right: 10px;
+
+	&.disabled {
+		opacity: 0.5;
+		
+		&:hover {
+			cursor: default;
+			border-color: #d4d4d4;
+			color: #828282;
+		}
+	}
+}
+
+.ofn-drop-down-with-prepend {
+	display: flex;
+
+	&.right {
+		float: right;
+
+	}
+
+	.ofn-drop-down {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	.ofn-drop-down-prepend {
+		@include ofn-drop-down-style;
+		
+		border-right: none;
+		margin-left: 0;
+		margin-right: 0;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+		cursor: default;
+	}
+}
+
+.ofn-drop-down {
+	@include ofn-drop-down-style;
+	position: relative;
+	float: left;
 
 	&.right {
 		float: right;

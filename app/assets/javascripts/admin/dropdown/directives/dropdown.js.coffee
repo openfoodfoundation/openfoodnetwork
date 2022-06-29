@@ -10,6 +10,7 @@
           scope.$emit "offClick"
 
     element.click (event) ->
+      return if event.target.closest(".ofn-drop-down").classList.contains "disabled" || event.target.classList.contains "disabled" 
       if !scope.expanded
         event.stopPropagation()
         scope.deregistrationCallback = scope.$on "offClick", ->
