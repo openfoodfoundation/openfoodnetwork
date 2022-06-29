@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_21_230907) do
+ActiveRecord::Schema.define(version: 2022_06_29_135005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -241,6 +241,7 @@ ActiveRecord::Schema.define(version: 2022_06_21_230907) do
     t.integer "business_address_id"
     t.boolean "show_customer_names_to_suppliers", default: false, null: false
     t.string "visible", limit: 255, default: "public", null: false
+    t.string "entity_name"
     t.index ["address_id"], name: "index_enterprises_on_address_id"
     t.index ["is_primary_producer", "sells"], name: "index_enterprises_on_is_primary_producer_and_sells"
     t.index ["name"], name: "index_enterprises_on_name", unique: true
