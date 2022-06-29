@@ -449,7 +449,7 @@ GEM
     raabro (1.4.0)
     racc (1.6.0)
     rack (2.2.3.1)
-    rack-mini-profiler (2.3.3)
+    rack-mini-profiler (2.3.4)
       rack (>= 1.2.0)
     rack-protection (2.1.0)
       rack
@@ -683,7 +683,7 @@ GEM
     websocket-extensions (0.1.5)
     whenever (1.0.0)
       chronic (>= 0.6.3)
-    wicked_pdf (2.1.0)
+    wicked_pdf (2.6.3)
       activesupport
     wkhtmltopdf-binary (0.12.6.5)
     xml-simple (1.1.8)
