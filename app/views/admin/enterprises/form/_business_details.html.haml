@@ -33,6 +33,12 @@
     = f.text_area :invoice_text, style: "width: 100%; height: 100px;"
 
 .row
+  .three.columns.alpha
+    = f.label :entity_name, t('.entity_name')
+  .eight.columns.omega
+    = f.select :entity_name, options_for_select(YAML.load(File.read(Rails.root.join('config/entities_list.yml')))['entities'], @enterprise.entity_name), { include_blank: true }, class: "select2 fullwidth"
+
+.row
   .alpha.three.columns
     = f.label :terms_and_conditions, t('.terms_and_conditions')
     %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "terms_and_conditions_info_modal" }
