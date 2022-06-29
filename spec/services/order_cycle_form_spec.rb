@@ -147,7 +147,7 @@ describe OrderCycleForm do
     end
 
     context "updating basics, incoming exchanges, outcoming exchanges
-             and preferred shipping methods simultaneously" do
+             and shipping methods simultaneously" do
       before do
         params.merge!(
           incoming_exchanges: [{
@@ -172,21 +172,6 @@ describe OrderCycleForm do
       end
     end
 
-    context "updating outgoing exchanges without specifying any shipping methods" do
-      before do
-        params.merge!(
-          outgoing_exchanges: [outgoing_exchange_params],
-          selected_shipping_method_ids: nil
-        )
-      end
-
-      it "saves the outgoing exchanges,
-         it doesn't return a validation error because no shipping methods are present yet" do
-        expect(form.save).to be true
-        expect(order_cycle.cached_outgoing_exchanges.count).to eq 1
-      end
-    end
-
     context "updating outgoing exchanges and shipping methods simultaneously but the shipping
              method doesn't belong to the new or any existing order cycle distributor" do
       let(:other_distributor_shipping_method) do
@@ -204,23 +189,6 @@ describe OrderCycleForm do
         expect(form.save).to be true
         expect(order_cycle.distributors).to eq [distributor]
         expect(order_cycle.shipping_methods).to be_empty
-      end
-    end
-
-    context "when shipping methods already exist
-             and doing an update without the :shipping_methods_id parameter" do
-      it "doesn't return a validation error on shipping methods" do
-        distributor = create(:distributor_enterprise)
-        shipping_method = create(:shipping_method, distributors: [distributor])
-        order_cycle = create(:distributor_order_cycle, distributors: [distributor])
-
-        form = OrderCycleForm.new(
-          order_cycle,
-          params.except(:selected_shipping_method_ids),
-          order_cycle.coordinator
-        )
-
-        expect(form.save).to be true
       end
     end
 
