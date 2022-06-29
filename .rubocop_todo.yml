@@ -732,7 +732,7 @@ Rails/FilePath:
     - 'spec/models/content_configuration_spec.rb'
     - 'spec/support/downloads_helper.rb'
 
-# Offense count: 11
+# Offense count: 12
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
 Rails/HasAndBelongsToMany:
@@ -740,6 +740,7 @@ Rails/HasAndBelongsToMany:
     - 'app/models/concerns/payment_method_distributors.rb'
     - 'app/models/enterprise.rb'
     - 'app/models/enterprise_group.rb'
+    - 'app/models/order_cycle.rb'
     - 'app/models/spree/line_item.rb'
     - 'app/models/spree/option_value.rb'
     - 'app/models/spree/role.rb'

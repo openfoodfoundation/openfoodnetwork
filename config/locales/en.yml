@@ -77,10 +77,6 @@ en:
           attributes:
             orders_close_at:
               after_orders_open_at: must be after open date
-        order_cycle_shipping_method:
-          attributes:
-            shipping_method:
-              must_belong_to_order_cycle_distributor: "must be from a distributor on the order cycle"
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"

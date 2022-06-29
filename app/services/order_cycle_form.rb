@@ -56,6 +56,10 @@ class OrderCycleForm
     order_cycle.save!
   end
 
+  def attachable_shipping_method_ids
+    @attachable_shipping_method_ids ||= order_cycle.attachable_shipping_methods.map(&:id)
+  end
+
   def exchanges_unchanged?
     [:incoming_exchanges, :outgoing_exchanges].all? do |direction|
       order_cycle_params[direction].nil?
@@ -63,9 +67,10 @@ class OrderCycleForm
   end
 
   def selected_shipping_method_ids
-    @selected_shipping_method_ids = @selected_shipping_method_ids.reject(&:blank?).map(&:to_i)
+    @selected_shipping_method_ids = attachable_shipping_method_ids &
+                                    @selected_shipping_method_ids.reject(&:blank?).map(&:to_i)
 
-    if order_cycle.attachable_shipping_methods.map(&:id).sort == @selected_shipping_method_ids.sort
+    if attachable_shipping_method_ids.sort == @selected_shipping_method_ids.sort
       @selected_shipping_method_ids = []
     end
 

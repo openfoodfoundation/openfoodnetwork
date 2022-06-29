@@ -13,7 +13,6 @@ module Spree
 
     default_scope -> { where(deleted_at: nil) }
 
-    has_many :order_cycle_shipping_methods, dependent: :destroy
     has_many :shipping_rates, inverse_of: :shipping_method
     has_many :shipments, through: :shipping_rates
     has_many :shipping_method_categories

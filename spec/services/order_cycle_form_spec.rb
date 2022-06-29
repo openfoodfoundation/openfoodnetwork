@@ -187,7 +187,8 @@ describe OrderCycleForm do
       end
     end
 
-    context "updating outgoing exchanges but specifying an invalid shipping method" do
+    context "updating outgoing exchanges and shipping methods simultaneously but the shipping
+             method doesn't belong to the new or any existing order cycle distributor" do
       let(:other_distributor_shipping_method) do
         create(:shipping_method, distributors: [create(:distributor_enterprise)])
       end
@@ -199,11 +200,10 @@ describe OrderCycleForm do
         )
       end
 
-      it "returns a validation error" do
-        expect(form.save).to be false
-        expect(order_cycle.errors.to_a).to eq [
-          "Shipping method must be from a distributor on the order cycle"
-        ]
+      it "saves the outgoing exchange but ignores the shipping method" do
+        expect(form.save).to be true
+        expect(order_cycle.distributors).to eq [distributor]
+        expect(order_cycle.shipping_methods).to be_empty
       end
     end
 
@@ -240,8 +240,8 @@ describe OrderCycleForm do
         end
       end
 
-      context "and it's invalid" do
-        it "returns a validation error" do
+      context "with a shipping method which doesn't belong to one of the order cycle's distributors" do
+        it "ignores it" do
           distributor_i = create(:distributor_enterprise)
           distributor_ii = create(:distributor_enterprise)
           shipping_method_i = create(:shipping_method, distributors: [distributor_i])
@@ -253,10 +253,8 @@ describe OrderCycleForm do
                                     { selected_shipping_method_ids: [shipping_method_ii.id] },
                                     order_cycle.coordinator)
 
-          expect(form.save).to be false
-          expect(order_cycle.errors.to_a).to eq [
-            "Shipping method must be from a distributor on the order cycle"
-          ]
+          expect(form.save).to be true
+          expect(order_cycle.shipping_methods).to eq [shipping_method_i]
         end
       end
     end
