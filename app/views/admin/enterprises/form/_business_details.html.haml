@@ -36,7 +36,7 @@
   .three.columns.alpha
     = f.label :entity_name, t('.entity_name')
   .eight.columns.omega
-    = f.select :entity_name, options_for_select(YAML.load(File.read(Rails.root.join('config/entities_list.yml')))['entities'], @enterprise.entity_name), { include_blank: true }, class: "select2 fullwidth"
+    = f.select :entity_name, options_for_select(entity_options, @enterprise.entity_name), { include_blank: true }, class: "select2 fullwidth"
 
 .row
   .alpha.three.columns
