@@ -208,7 +208,7 @@ describe OrderCycleForm do
         end
       end
 
-      context "with a shipping method which doesn't belong to one of the order cycle's distributors" do
+      context "with a shipping method which doesn't belong to any distributor on the order cycle" do
         it "ignores it" do
           distributor_i = create(:distributor_enterprise)
           distributor_ii = create(:distributor_enterprise)
