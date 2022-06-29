@@ -8,5 +8,8 @@
           = image_tag distributor.logo_url(:thumb), class: "left"
         = render DistributorTitleComponent.new(name: distributor.name)
         %location= distributor.address.city
+        - if distributor.small_farmer_recognition_document.attached?
+          .small{ style: "padding-top: 0.3em" }
+            = link_to t(".small_farmer_recognition_document"), url_for(distributor.small_farmer_recognition_document)
 
     = yield :ordercycle_sidebar

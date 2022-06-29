@@ -1542,6 +1542,9 @@ en:
     products:
       summary:
         bulk: "Bulk"
+  shopping_shared:
+    header:
+      small_farmer_recognition_document: "This is a small farmer"
 
   # Front-end controller translations
   card_could_not_be_updated: Card could not be updated
