@@ -4,11 +4,13 @@
 module Shop
   class OrderCyclesList
     def self.active_for(distributor, customer)
-      new(distributor, customer).call(ready_for_checkout: false)
+      new(distributor, customer).call
     end
 
     def self.ready_for_checkout_for(distributor, customer)
-      new(distributor, customer).call(ready_for_checkout: true)
+      return OrderCycle.none if !distributor.ready_for_checkout?
+
+      new(distributor, customer).call
     end
 
     def initialize(distributor, customer)
@@ -16,9 +18,7 @@ module Shop
       @customer = customer
     end
 
-    def call(ready_for_checkout:)
-      return OrderCycle.none if ready_for_checkout && !@distributor.ready_for_checkout?
-
+    def call
       order_cycles = OrderCycle.with_distributor(@distributor).active
         .order(@distributor.preferred_shopfront_order_cycle_order).to_a
 
