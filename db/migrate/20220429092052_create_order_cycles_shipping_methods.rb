@@ -1,13 +1,12 @@
-class CreateOrderCycleShippingMethods < ActiveRecord::Migration[6.1]
+class CreateOrderCyclesShippingMethods < ActiveRecord::Migration[6.1]
   def up
     create_table :order_cycles_shipping_methods, id: false do |t|
-      t.references :order_cycle
-      t.references :shipping_method, foreign_key: { to_table: :spree_shipping_methods }
+      t.belongs_to :order_cycle
+      t.belongs_to :shipping_method, foreign_key: { to_table: :spree_shipping_methods }
+      t.index [:order_cycle_id, :shipping_method_id],
+        name: "order_cycles_shipping_methods_join_index",
+        unique: true
     end
-    add_index :order_cycles_shipping_methods,
-      [:order_cycle_id, :shipping_method_id],
-      name: "order_cycles_shipping_methods_join_index",
-      unique: true
   end
 
   def down
