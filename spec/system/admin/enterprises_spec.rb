@@ -485,7 +485,7 @@ describe '
           end
           
           choose "enterprise_preferred_shopfront_product_sorting_method_by_category"
-          find("#s2id_autogen7").click
+          find("#s2id_autogen8").click
           find(".select2-result-label", text: "Tricky Taxon").click
           click_button 'Update'
           expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
@@ -506,7 +506,7 @@ describe '
           end
           
           choose "enterprise_preferred_shopfront_product_sorting_method_by_producer"
-          find("#s2id_autogen8").click
+          find("#s2id_autogen9").click
           find(".select2-result-label", text: "First Supplier").click
           click_button 'Update'
           expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
