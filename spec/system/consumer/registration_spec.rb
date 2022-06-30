@@ -65,7 +65,7 @@ describe "Registration", js: true do
       # Filling in Contact Details
       fill_in 'enterprise_contact', with: 'Saskia Munroe'
       expect(page).to have_field 'enterprise_email_address', with: user.email
-      fill_in 'enterprise_phone', with: '12 3456 7890'
+      fill_in 'enterprise_phone', with: '03 1234 5678'
       click_button "Continue"
       expect(page).to have_content 'Last step to add My Awesome Enterprise!'
 
