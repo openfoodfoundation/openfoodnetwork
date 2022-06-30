@@ -16,7 +16,7 @@ module Api
                  :preferred_invoice_order_by_supplier, :preferred_product_low_stock_display,
                  :visible, :small_farmer_recognition_document,
                  :small_farmer_recognition_document_file_name,
-                 :small_farmer_recognition_document_uploaded_at
+                 :small_farmer_recognition_document_uploaded_at, :entity_name
 
       has_one :owner, serializer: Api::Admin::UserSerializer
       has_many :users, serializer: Api::Admin::UserSerializer

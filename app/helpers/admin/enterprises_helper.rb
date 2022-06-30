@@ -13,5 +13,9 @@ module Admin
     def select_only_item(producers)
       producers.size == 1 ? producers.first.id : nil
     end
+
+    def entity_options
+      YAML.safe_load(File.read(Rails.root.join('config/entities_list.yml')))['entities']
+    end
   end
 end
