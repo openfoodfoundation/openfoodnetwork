@@ -62,7 +62,7 @@
                   = input.label
                 %p
                   &mdash;
-                  %em>
+                  %em
                     = shared_shipping_method.distributors.where(id: @order_cycle.distributor_ids).map(&:name).join(", ")
           %td
             - if shared_payment_methods.any?
