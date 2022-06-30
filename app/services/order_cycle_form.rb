@@ -39,7 +39,7 @@ class OrderCycleForm
 
   def add_exception_to_order_cycle_errors(exception)
     error = exception.message.split(":").last.strip
-    order_cycle.errors.add(:base, error) if !order_cycle.errors.to_a.include?(error)
+    order_cycle.errors.add(:base, error) if order_cycle.errors.to_a.exclude?(error)
   end
 
   def apply_exchange_changes
