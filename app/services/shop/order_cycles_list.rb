@@ -8,7 +8,7 @@ module Shop
     end
 
     def self.ready_for_checkout_for(distributor, customer)
-      return OrderCycle.none if !distributor.ready_for_checkout?
+      return OrderCycle.none unless distributor.ready_for_checkout?
 
       new(distributor, customer).call
     end
