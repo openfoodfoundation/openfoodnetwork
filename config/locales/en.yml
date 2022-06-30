@@ -874,6 +874,7 @@ en:
           sort_items_by_supplier_tip: "When enabled, Items will be sorted by supplier name."
           enabled: Enable
           disabled: Disable
+          entity_name: Entity name
         business_address:
           company_legal_name: Company Legal Name
           company_placeholder: Example Inc.
