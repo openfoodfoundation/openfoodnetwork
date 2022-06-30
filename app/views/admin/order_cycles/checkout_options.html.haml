@@ -39,11 +39,11 @@
                 = check_box_tag nil, nil, false, disabled: true
                 = shipping_method.name
                 = "(#{t('.back_end')})"
-            - if shipping_methods.none? && distributor.shipping_methods.backend.none?
+            - if distributor.shipping_methods.frontend.none?
               %p.text-center
                 = t('.no_shipping_methods')
           %td
-            - if payment_methods.any?
+            - if distributor.payment_methods.available(:both).any?
               %ul
                 - payment_methods.each do |payment_method|
                   %li= payment_method.name
