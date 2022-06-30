@@ -40,7 +40,7 @@
                 = shipping_method.name
                 = "(#{t('.back_end')})"
             - if distributor.shipping_methods.frontend.none?
-              %p.text-center
+              %p
                 = t('.no_shipping_methods')
           %td
             - if distributor.payment_methods.available(:both).any?
@@ -48,7 +48,7 @@
                 - payment_methods.each do |payment_method|
                   %li= payment_method.name
             - else
-              %p.text-center
+              %p
                 = t('.no_payment_methods')
       - if shared_payment_methods.any? || shared_shipping_methods.any?
         %tr
