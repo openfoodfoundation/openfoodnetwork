@@ -108,20 +108,72 @@ describe '
     end
   end
 
-  it "orders and distributors report" do
-    login_as_admin_and_visit admin_reports_path
-    click_link 'Orders And Distributors'
-    click_button 'Go'
+  context "for a complete, paid order" do
+    let!(:ready_to_ship_order) { create(:order_ready_to_ship) }
 
-    expect(page).to have_content 'ORDER DATE'
-  end
+    before do
+      login_as_admin_and_visit admin_reports_path
+    end
 
-  it "payments reports" do
-    login_as_admin_and_visit admin_reports_path
-    click_link 'Payment Reports'
-    click_button 'Go'
+    it "generates the orders and distributors report" do
+      click_link 'Orders And Distributors'
+      click_button 'Go'
 
-    expect(page).to have_content 'PAYMENT STATE'
+      rows = find("table.report__table").all("thead tr")
+      table_headers = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+
+      expect(table_headers).to eq([
+                                    [I18n.t("report_header_order_date"),
+                                     I18n.t("report_header_order_id"),
+                                     I18n.t("report_header_customer_name"),
+                                     I18n.t("report_header_customer_email"),
+                                     I18n.t("report_header_customer_phone"),
+                                     I18n.t("report_header_customer_city"),
+                                     I18n.t("report_header_sku"),
+                                     I18n.t("report_header_item_name"),
+                                     I18n.t("report_header_variant"),
+                                     I18n.t("report_header_quantity"),
+                                     I18n.t("report_header_max_quantity"),
+                                     I18n.t("report_header_cost"),
+                                     I18n.t("report_header_shipping_cost"),
+                                     I18n.t("report_header_payment_method"),
+                                     I18n.t("report_header_distributor"),
+                                     I18n.t("report_header_distributor_address"),
+                                     I18n.t("report_header_distributor_city"),
+                                     I18n.t("report_header_distributor_postcode"),
+                                     I18n.t("report_header_shipping_method"),
+                                     I18n.t("report_header_shipping_instructions")]
+                                           .map(&:upcase)
+                                  ])
+
+      expect(all('table.report__table tbody tr').count).to eq(
+        Spree::LineItem.where(
+          order_id: ready_to_ship_order.id # Total rows should equal number of line items, per order
+        ).count
+      )
+    end
+
+    it "generates the payments reports" do
+      click_link 'Payment Reports'
+      click_button 'Go'
+
+      rows = find("table.report__table").all("thead tr")
+      table_headers = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+
+      expect(table_headers).to eq([
+                                    [I18n.t("report_header_payment_state"),
+                                     I18n.t("report_header_distributor"),
+                                     I18n.t("report_header_payment_type"),
+                                     I18n.t("report_header_total_price", currency: currency_symbol)]
+                                           .map(&:upcase)
+                                  ])
+
+      expect(all('table.report__table tbody tr').count).to eq(
+        Spree::Payment.where(
+          order_id: ready_to_ship_order.id # Total rows should equal number of payments, per order
+        ).count
+      )
+    end
   end
 
   shared_examples "sales tax report" do |inverse_columns_logic|
