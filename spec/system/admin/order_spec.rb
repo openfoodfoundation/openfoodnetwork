@@ -525,6 +525,17 @@ describe '
         expect(page).to have_content test_tracking_number
       end
 
+      it "can edit note" do
+        test_note = "this is a note"
+        expect(page).to_not have_content test_note
+
+        find('.edit-note.icon-edit').click
+        fill_in "note", with: test_note
+        find('.save-note').click
+
+        expect(page).to have_content test_note
+      end
+
       it "viewing shipping fees" do
         shipping_fee = order.shipment_adjustments.first
 
