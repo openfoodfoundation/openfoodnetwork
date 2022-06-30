@@ -54,16 +54,17 @@
         %tr
           %td= t('.shared')
           %td
-            - if shared_shipping_methods.any?
-              = f.collection_check_boxes :selected_shipping_method_ids, shared_shipping_methods, :id, :name do |input|
-                - shared_shipping_method = input.object
-                %p
-                  = input.check_box
-                  = input.label
-                %p
-                  &mdash;
-                  %em
-                    = shared_shipping_method.distributors.where(id: @order_cycle.distributor_ids).map(&:name).join(", ")
+            - shared_shipping_methods.each do |shared_shipping_method|
+              %p
+                %label
+                  = check_box_tag "order_cycle[selected_shipping_method_ids][]",
+                      shared_shipping_method.id, @order_cycle.shipping_methods.include?(shared_shipping_method),
+                      id: "order_cycle_selected_shipping_method_ids_#{shared_shipping_method.id}"
+                  = shared_shipping_method.name
+              %p
+                &mdash;
+                %em
+                  = shared_shipping_method.distributors.where(id: @order_cycle.distributor_ids).map(&:name).join(", ")
           %td
             - if shared_payment_methods.any?
               %ul
