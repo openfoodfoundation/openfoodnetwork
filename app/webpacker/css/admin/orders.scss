@@ -82,6 +82,12 @@ div#group_buy_calculation {
 	}
 }
 
+// Changing placeholder text colour
+.items-placeholder::placeholder {
+  color: $white;
+  opacity: 1;
+}
+
 th.actions {
   white-space: nowrap;
 }
