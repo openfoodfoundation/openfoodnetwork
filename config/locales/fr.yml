@@ -503,6 +503,7 @@ fr:
         enable_invoices?: "Autoriser l'émission de factures ?"
         invoice_style2?: "Utiliser le modèle de facture alternatif qui détaille le montant de TVA agrégé par taux et l'information du taux de TVA par produit (pas adapté pour les instances affichant les prix HT)"
         enable_receipt_printing?: "Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?"
+        enterprise_number_required_on_invoices?: "Le SIRET est obligatoire pour générer une facture ?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -879,7 +880,7 @@ fr:
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
           visible_in_search: Apparaît sur la plateforme?
           visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de CoopCircuits et la liste des boutiques. <br /> 2. Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
-          visible: Boutique publique (visible par tous)
+          visible: Visible par tous
           not_visible: Invisible
           hidden: Masquer toutes les références
           permalink: Nom pour URL (sans espace)
@@ -898,7 +899,7 @@ fr:
         shop_preferences:
           shopfront_requires_login: "Boutique privée (accès contrôlé) ?"
           shopfront_requires_login_tip: "Choisissez si les acheteurs doivent être connectés pour voir la boutique ou si la boutique est visible par tout le monde."
-          shopfront_requires_login_false: "Boutique publique (visible par tous)"
+          shopfront_requires_login_false: "visible par tous"
           shopfront_requires_login_true: "Visible uniquement pour les acheteurs connectés ET figurant sur la liste \"acheteurs\" de la boutique (boutique privée)"
           recommend_require_login: "Nous recommandons de demander aux utilisateurs de se connecter si vous souhaitez leur permettre de modifier leur commande."
           allow_guest_orders: "Commandes des invités"
@@ -3651,6 +3652,7 @@ fr:
           results_found: "%{number} résultats trouvés"
           viewing: "Résultats %{start} à %{end} affichés."
           print_invoices: "Imprimer les factures"
+          selected: sélectionné
         sortable_header:
           payment_state: "Statut du Paiement"
           shipment_state: "Statut livraison"
