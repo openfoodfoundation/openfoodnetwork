@@ -1,0 +1,106 @@
+en_CH:
+  enterprise_mailer:
+    welcome:
+      userguide: "Open Food Switzerland User Guide"
+  title: "Open Food Switzerland"
+  producers_join: Swiss producers are now welcome to join the Open Food Switzerland.
+  admin:
+    enterprises:
+      form:
+        primary_details:
+          link_to_front_tip: A direct link to your shopfront on the Open Food Switzerland.
+          ofn_uid_tip: The unique id used to identify the enterprise on Open Food Switzerland.
+        stripe_connect:
+          stripe_connect_intro: "To accept payments using credit card, you will need to connect your stripe account to the Open Food Switzerland. Use the button to the right to get started."
+          confirm_modal:
+            part3: This will allow the Open Food Switzerland to accept credit card payments from customers on your behalf. Please note that you will need to maintain your own Stripe account, pay the fees Stripe charges and handle any chargebacks and customer service yourself.
+      change_type_form:
+        producer_description_text: Add your products to Open Food Switzerland, allowing hubs to stock your products in their stores.
+        producer_shop_description_text: Sell your products directly to customers through your very own Open Food Switzerland shopfront.
+        producer_hub_description_text: Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Switzerland.
+        profile_description_text: People can find and contact you on the Open Food Switzerland. Your enterprise will be visible on the map, and will be searchable in listings.
+        hub_shop_description_text: Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Switzerland.
+      welcome:
+        welcome_title: Welcome to the Open Food Switzerland!
+  shared:
+    mailers:
+      powered_by:
+        open_food_network: "Open Food Switzerland"
+    register_call:
+      selling_on_ofn: "Interested in getting on the Open Food Switzerland?"
+    footer:
+      footer_secure_text: "Open Food Switzerland uses SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private. Our servers do not store your credit card details and payments are processed by PCI-compliant services."
+      footer_join_body: "Create a listing, shop or group directory on the Open Food Switzerland."
+      footer_legal_text_html: "Open Food Switzerland is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
+  menu_5_url: "https://www.openfoodswitzerland.ch/"
+  menu_6_url: "https://www.openfoodswitzerland.ch"
+  menu_7_url: "https://www.openfoodswitzerland.ch/"
+  ie_warning_text: "For the best Open Food Switzerland experience, we strongly recommend upgrading your browser:"
+  ie_warning_other: "Can't upgrade your browser? Try Open Food Switzerland on your smartphone :-)"
+  legal:
+    cookies_policy:
+      disabling_cookies_desc: "As a user you can always allow, block or delete Open Food Switzerland’s or any other website cookies whenever you want to through your browser’s setting control. Each browser has a different operative. Here are the links:"
+      disabling_cookies_note: "But be aware that if you delete or modify the essential cookies used by Open Food Switzerland, the website won’t work, you will not be able to add anything to your cart neither to checkout for instance."
+  brandstory_part5_strong: "We call it Open Food Switzerland."
+  components_profiles_popover: "Profiles do not have a shopfront on the Open Food Switzerland, but may have their own physical or online shop elsewhere"
+  groups_signup_motivation6: Whatever your role in your local food movement, we're ready to help. However you come to wonder what Open Food Switzerland would look like or is doing in your part of the world, let's start the conversation.
+  sell_headline: "Get on the Open Food Switzerland!"
+  registration:
+    steps:
+      introduction:
+        registration_outcome1_html: "Your profile helps people <strong>find</strong> and <strong>contact</strong> you on the Open Food Switzerland."
+        registration_outcome3: "It's also the first step towards trading on the Open Food Switzerland, or opening an online store."
+      about:
+        success: "Success! %{enterprise} added to the Open Food Switzerland"
+      social:
+        website_placeholder: "eg. openfoodswitzerland.ch"
+      finished:
+        login: "You can change or update your enterprise at any stage by logging into Open Food Switzerland and going to Admin."
+  js:
+    admin:
+      panels:
+        enterprise_package:
+          hub_profile_text1: >
+              People can find and contact you on the Open Food Switzerland. Your enterprise
+              will be visible on the map, and will be searchable in listings.
+          hub_profile_text2: >
+              Having a profile, and making connections within your local food system
+              through the Open Food Switzerland will always be free.
+          hub_shop_text1: >
+              Your enterprise is the backbone of your local food system. You aggregate
+              produce from other enterprises and can sell it through your shop on
+              the Open Food Switzerland.
+          profile_only_text2: >
+              If you prefer to focus on producing food, and want to leave the work
+              of selling it to someone else, you won't require a shop on the Open
+              Food Switzerland.
+          profile_only_text3: >
+              Add your products to Open Food Switzerland, allowing hubs to stock your
+              products in their stores.
+          producer_shop_text1: >
+              Sell your products directly to customers through your very own Open
+              Food Switzerland shopfront.
+          producer_hub_text1: >
+              Your enterprise is the backbone of your local food system. You can sell
+              your own produce as well as produce aggregated from other enterprises
+              through your shopfront on the Open Food Switzerland.
+          producer_hub_text3: >
+              The Open Food Switzerland aims to support as many hub models as possible,
+              so no matter your situation, we want to provide the tools you need to
+              run your organisation or local food business.
+        enterprise_producer:
+          producer_text2: >
+              Producers can also perform other functions, such as aggregating food
+              from other enterprises and selling it through a shop on the Open Food
+              Switzerland.
+          non_producer_text1: >
+              Non-producers do not produce any food themselves, meaning that they
+              cannot create their own products for sale through the Open Food Switzerland.
+    registration:
+      welcome_to_ofn: "Welcome to the Open Food Switzerland!"
+  spree:
+    currency_symbol_position: Put "currency symbol before or after franc amount?"
+    admin:
+      overview:
+        enterprises_header:
+          ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Switzerland.
