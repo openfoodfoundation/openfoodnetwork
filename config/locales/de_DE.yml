@@ -321,7 +321,7 @@ de_DE:
   cancel_order: "Bestellung stornieren"
   confirm_send_invoice: "Eine Rechnung für diese Bestellung wird an den Kunden geschickt. Sind Sie sicher, dass sie fortfahren möchten?"
   confirm_resend_order_confirmation: "Sind Sie sicher, dass Sie die E-Mail-Bestätigung erneut senden wollen?"
-  must_have_valid_business_number: "%{enterprise_name} sollte eine gültige Steuer-ID-Nummer haben, bevor die Rechnung gesendet wird."
+  must_have_valid_business_number: "%{enterprise_name} muss eine gültige Umsatzsteueridentifikationsnummer (USt-IdNr.) haben, bevor Rechnungen gesendet werden können."
   invoice: "Rechnung"
   more: "Mehr"
   say_no: "Nein"
@@ -503,6 +503,7 @@ de_DE:
         enable_invoices?: "Rechnungen aktivieren?"
         invoice_style2?: "Verwenden Sie die Rechnungsvorlage mit Aufschlüsselung verschiedener Steuersätze pro Artikel (empfohlen in der EU, noch nicht für Länder mit Preisen ohne Steuern geeignet)."
         enable_receipt_printing?: "Optionen zum Drucken von Belegen mit Thermodruckern in der Dropdown-Liste anzeigen?"
+        enterprise_number_required_on_invoices?: "Umsatzsteueridentifikationsnummer (USt-IdNr.) erforderlich um Rechnungen zu erstellen?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1171,6 +1172,11 @@ de_DE:
         msg: Dieser Bestellzyklus enthält %{n} offene Abonnementbestellungen. Das Ändern des Datums wird bereits erteilte Bestellungen nicht beeinträchtigen, sollte wenn möglich aber vermieden werden. Sind Sie sicher, dass Sie fortfahren wollen?
         cancel: Abbrechen
         proceed: Fortfahren
+      status:
+        undated: nicht datiert
+        upcoming: bevorstehend
+        open: geöffnet
+        closed: geschlossen
     producer_properties:
       index:
         title: Produzenteneigenschaften
