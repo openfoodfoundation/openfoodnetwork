@@ -245,7 +245,7 @@ de_CH:
       email_welcome: "Willkommen"
       email_registered: "ist jetzt Teil des"
       email_userguide_html: "Das Benutzerhandbuch mit detaillierter Unterstützung für die Einrichtung Ihres Profils, Produzentenladens oder Hubs finden Sie hier: %{link}"
-      userguide: "Open Food Network Benutzerhandbuch"
+      userguide: "Open Food Schweiz Benutzerhandbuch"
       email_admin_html: "Sie können Ihr Konto verwalten, indem Sie direkt den Link %{link} verwenden oder indem Sie sich auf der Startseite einloggen und im Menü \"Verwaltung\" auswählen."
       admin_panel: "Verwaltung"
       email_community_html: "Wir haben auch ein Online-Forum für Diskussionen innerhalb der Community zu den Themen Open Food Network Software, Herausforderungen eines Lebensmittelunternehmens und mehr. Reden Sie doch mit. Wir entwickeln uns ständig weiter und mit Ihrem Beitrag in diesem Forum bestimmen Sie mit, was als nächstes passiert. %{link}"
@@ -301,11 +301,11 @@ de_CH:
         title: Andere Fehler (%{count} Bestellungen)
         explainer: Die automatische Verarbeitung dieser Bestellungen ist aus einem unbekannten Grund gescheitert. Dies sollte nicht geschehen, Bitte kontaktieren Sie uns, wenn Sie dies sehen.
   home: "OFN"
-  title: "Open Food Network"
+  title: "Open Food Schweiz"
   welcome_to: "Regionale Lebensmittel online bestellen im"
   site_meta_description: "Wir wagen den Neustart. Mit Bauern und Züchtern, die bereit sind, ihre Geschichten stolz und wahrhaftig zu erzählen. Mit Händlern, die bereit sind, Menschen fair und ehrlich mit Produkten zu verbinden. Mit Käufern, die glauben, dass ihr Einkaufsverhalten die Welt wirklich verändern kann."
   search_by_name: Suche nach Ort oder Name des Ladens/Produzents ...
-  producers_join: 'Wir laden Produzenten ein, jetzt dem Open Food Network beizutreten. '
+  producers_join: 'Wir laden Produzenten ein, jetzt dem Open Food Schweiz beizutreten. '
   charges_sales_tax: Berechnen Sie Steuern?
   business_address: "Unternehmensdaten"
   enterprise_permissions: "Berechtigungen"
@@ -884,9 +884,9 @@ de_CH:
           permalink: Permalink (keine Leerzeichen)
           permalink_tip: "Dieser Permalink wird verwendet, um die URL zu Ihrem Laden zu erstellen: %{link}name-ihres-ladens/shop"
           link_to_front: Link zum Laden
-          link_to_front_tip: Ein direkter Link zu Ihrem Laden im Open Food Network.
+          link_to_front_tip: Ein direkter Link zu Ihrem Laden im Open Food Schweiz.
           ofn_uid: OFN UID
-          ofn_uid_tip: Die eindeutige ID, mit der das Unternehmen im Open Food Network identifiziert wird.
+          ofn_uid_tip: Die eindeutige ID, mit der das Unternehmen im Open Food Schweiz identifiziert wird.
         shipping_methods:
           name: "Name der Lieferoption"
           applies: "Aktiv?"
@@ -950,14 +950,14 @@ de_CH:
           linkedin_placeholder: "z. B. www.linkedin.com/in/IhrName"
         stripe_connect:
           connect_with_stripe: "Stripe integrieren"
-          stripe_connect_intro: "Um Zahlungen mit Kreditkarte zu akzeptieren, müssen Sie Ihr Stripe-Konto mit dem Open Food Network verbinden. Verwenden Sie die Schaltfläche rechts, um loszulegen."
+          stripe_connect_intro: "Um Zahlungen mit Kreditkarte zu akzeptieren, müssen Sie Ihr Stripe-Konto mit dem Open Food Schweiz verbinden. Verwenden Sie die Schaltfläche rechts, um loszulegen."
           stripe_account_connected: "Stripe-Konto verbunden."
           disconnect: "Stripe-Konto trennen"
           confirm_modal:
             title: Stripe integrieren
             part1: Stripe ist ein Zahlungsdienst, der es Läden im Open Food Network ermöglicht, Kreditkartenzahlungen von Kunden entgegenzunehmen.
             part2: Um diese Funktion zu verwenden, müssen Sie Ihr Stripe-Konto mit dem Open Food Network verbinden. Klicken Sie "Zustimmen", um auf die Stripe-Website weitergeleitet zu werden, wo Sie ein bestehendes Stripe-Konto verbinden oder ein neues erstellen können.
-            part3: Dadurch kann das Open Food Network Kreditkartenzahlungen von Kunden in Ihrem Namen akzeptieren. Bitte beachten Sie, dass Sie ein eigenes Stripe-Konto benötigen, die entstehenden Stripe-Gebühren bezahlen und etwaige Rückbuchungen und Kundenservices selbst vornehmen müssen.
+            part3: Dadurch kann das Open Food Schweiz Kreditkartenzahlungen von Kunden in Ihrem Namen akzeptieren. Bitte beachten Sie, dass Sie ein eigenes Stripe-Konto benötigen, die entstehenden Stripe-Gebühren bezahlen und etwaige Rückbuchungen und Kundenservices selbst vornehmen müssen.
             i_agree: Zustimmen
             cancel: Abbrechen
         tag_rules:
@@ -1008,20 +1008,20 @@ de_CH:
         producer_profile: Profil
         connect_ofn: Stellen Sie sich und Ihre Produkte vor
         always_free: IMMER KOSTENLOS
-        producer_description_text: "Stellen Sie sich und Ihre Produkte im Open Food Network vor und vernetzen Sie sich mit anderen Produzenten und Läden. \nFügen Sie dem Profil Ihre Produkte hinzu, damit andere Läden sie zum Verkauf anbieten können. Wenn Sie Ihre Produkte selbst verkaufen möchten, wählen Sie \"Produzentenladen\"."
+        producer_description_text: "Stellen Sie sich und Ihre Produkte im Open Food Schweiz vor und vernetzen Sie sich mit anderen Produzenten und Läden. \nFügen Sie dem Profil Ihre Produkte hinzu, damit andere Läden sie zum Verkauf anbieten können. Wenn Sie Ihre Produkte selbst verkaufen möchten, wählen Sie \"Produzentenladen\"."
         producer_shop: Produzentenladen
         sell_your_produce: Verkaufen Sie Ihre eigenen Produkte
-        producer_shop_description_text: Verkaufen Sie Ihre eigenen Produkte direkt an Ihre Kunden durch Ihren eigenen Produzentenladen im Open Food Network.
+        producer_shop_description_text: Verkaufen Sie Ihre eigenen Produkte direkt an Ihre Kunden durch Ihren eigenen Produzentenladen im Open Food Schweiz.
         producer_shop_description_text2: Ein Produzentenladen ist nur für Ihre eigenen Produkte bestimmt. Wenn Sie Produkte anderer verkaufen möchten, wählen Sie "Hub".
         producer_hub: Hub
         producer_hub_text: Verkaufen Sie eigene Produkte und Produkte anderer
-        producer_hub_description_text: Verkaufen Sie eigene Produkte und Produkte anderer Produzenten oder Läden im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
+        producer_hub_description_text: Verkaufen Sie eigene Produkte und Produkte anderer Produzenten oder Läden im Open Food Schweiz. Mit Ihrem Laden sind Sie ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
         profile: Profil
         get_listing: Erstellen Sie ein Profil
-        profile_description_text: Stellen Sie sich im Open Food Network vor und vernetzen Sie sich mit anderen Produzenten und Läden. Sie können im Open Food Network gefunden und kontaktiert werden. Ihr Unternehmen wird auf der Karte und in Suchergebnissen angezeigt.
+        profile_description_text: Stellen Sie sich im Open Food Schweiz vor und vernetzen Sie sich mit anderen Produzenten und Läden. Sie können im Open Food Schweiz gefunden und kontaktiert werden. Ihr Unternehmen wird auf der Karte und in Suchergebnissen angezeigt.
         hub_shop: Hub
         hub_shop_text: Verkaufen Sie Produkte anderer
-        hub_shop_description_text: Verkaufen Sie Produkte anderer Produzenten oder Läden im Open Food Network. Sie führen die Produkte zusammen und sind mit Ihrem Laden ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
+        hub_shop_description_text: Verkaufen Sie Produkte anderer Produzenten oder Läden im Open Food Schweiz. Sie führen die Produkte zusammen und sind mit Ihrem Laden ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
         choose_option: Bitte wählen Sie eine der oben aufgeführten Optionen.
         change_now: Jetzt ändern
       enterprise_user_index:
@@ -1045,7 +1045,7 @@ de_CH:
         title: Neues Unternehmen
         back_link: Zurück zur Unternehmensliste
       welcome:
-        welcome_title: Willkommen im Open Food Network!
+        welcome_title: Willkommen im Open Food Schweiz!
         welcome_text: 'Erfolgreich erstellt:'
         next_step: Nächster Schritt
         choose_starting_point: 'Wählen Sie Ihr Paket:'
@@ -1416,7 +1416,7 @@ de_CH:
   shared:
     mailers:
       powered_by:
-        open_food_network: "Open Food Network"
+        open_food_network: "Open Food Schweiz"
         powered_html: "Ermöglicht durch das %{open_food_network}."
     menu:
       cart:
@@ -1434,20 +1434,20 @@ de_CH:
       mobile_menu:
         cart: "Warenkorb/Kasse"
     register_call:
-      selling_on_ofn: "Sie möchten selbst im Open Food Network verkaufen?"
+      selling_on_ofn: "Sie möchten selbst im Open Food Schweiz verkaufen?"
       register: "Hier registrieren!"
     footer:
       footer_secure: "Sicher und vertrauenswürdig."
-      footer_secure_text: "Open Food Network verwendet überall SSL-Verschlüsselung (2048 Bit RSA), um Ihre Einkaufs- und Zahlungsinformationen geheim zu halten. Unsere Server speichern Ihre Kreditkartendetails nicht und Zahlungen werden von PCI-konformen Dienstleistern verarbeitet."
+      footer_secure_text: "Open Food Schweiz verwendet überall SSL-Verschlüsselung (2048 Bit RSA), um Ihre Einkaufs- und Zahlungsinformationen geheim zu halten. Unsere Server speichern Ihre Kreditkartendetails nicht und Zahlungen werden von PCI-konformen Dienstleistern verarbeitet."
       footer_contact_headline: "Kontakt und mehr ..."
       footer_contact_email: "Schreiben Sie uns eine E-Mail!"
       footer_nav_headline: "Regional Einkaufen"
       footer_join_headline: "Eigene Produkte verkaufen"
-      footer_join_body: "Erstellen Sie ein Profil, einen Online-Shop oder eine Gruppe im Open Food Network."
+      footer_join_body: "Erstellen Sie ein Profil, einen Online-Shop oder eine Gruppe im Open Food Schweiz."
       footer_join_cta: "Los geht's!"
       footer_legal_call: "Lesen Sie unsere"
       footer_legal_visit: "Besuchen Sie uns auf"
-      footer_legal_text_html: "Open Food Network ist eine kostenlose Open-Source Software-Plattform. Unser Inhalt ist mit %{content_license} und unser Code mit %{code_license} lizenziert."
+      footer_legal_text_html: "Open Food Schweiz ist eine kostenlose Open-Source Software-Plattform. Unser Inhalt ist mit %{content_license} und unser Code mit %{code_license} lizenziert."
       footer_data_text_with_privacy_policy_html: "Wir passen auf Ihre Daten auf. Lesen Sie unsere %{privacy_policy} und %{cookies_policy}."
       footer_data_text_without_privacy_policy_html: "Wir passen auf Ihre Daten auf. Lesen Sie unsere %{cookies_policy}."
       footer_data_privacy_policy: "Datenschutz-Bestimmungen"
@@ -1502,11 +1502,11 @@ de_CH:
   menu_4_title: "Gruppen"
   menu_4_url: "/groups"
   menu_5_title: "Verkaufen"
-  menu_5_url: "https://openfoodnetwork.de/sell"
+  menu_5_url: "https://openfoodschweiz.ch/"
   menu_6_title: "Über OFN"
-  menu_6_url: "https://wp.openfoodnetwork.de/"
+  menu_6_url: "https://wp.openfoodschweiz.ch"
   menu_7_title: "Hilfe"
-  menu_7_url: "https://wp.openfoodnetwork.de/support/"
+  menu_7_url: "https://wp.openfoodschweiz.ch"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile Logo (75x26)"
   logo_mobile_svg: "Mobile Logo (SVG)"
@@ -1600,11 +1600,11 @@ de_CH:
   card_could_not_be_removed: Die Kreditkarte konnte nicht entfernt werden.
   invalid_credit_card: "Ungültige Kreditkarte"
   ie_warning_headline: "Ihr Browser ist veraltet. :-("
-  ie_warning_text: "Für das beste Open-Food-Network-Erlebnis empfehlen wir dringend, Ihren Browser zu aktualisieren:"
+  ie_warning_text: "Für das beste Open-Food-Schweiz-Erlebnis empfehlen wir dringend, Ihren Browser zu aktualisieren:"
   ie_warning_chrome: Chrome herunterladen
   ie_warning_firefox: Firefox herunterladen
   ie_warning_ie: Internet Explorer aktualisieren
-  ie_warning_other: "Können Sie Ihren Browser nicht aktualisieren? Versuchen Sie Open Food Network auf Ihrem Smartphone! :-)"
+  ie_warning_other: "Können Sie Ihren Browser nicht aktualisieren? Versuchen Sie Open Food Schweiz auf Ihrem Smartphone! :-)"
   legal:
     cookies_policy:
       header: "Wie wir Cookies verwenden"
@@ -1628,12 +1628,12 @@ de_CH:
       cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Aufnahme-Cookie."
       cookie_matomo_ignore_desc: "Cookie, um Benutzer von der Verfolgung im Internet auszuschließen."
       disabling_cookies_header: "Warnung zum Deaktivieren von Cookies"
-      disabling_cookies_desc: "Als Nutzer können Sie Cookies von Open Food Network oder einer anderen Website immer zulassen, blockieren oder löschen, indem Sie die Einstellungen Ihres Browsers nutzen. Dies funktioniert in jedem Browser anders. Schauen Sie unter folgenden Links nach für genauere Beschreibungen:"
+      disabling_cookies_desc: "Als Nutzer können Sie Cookies von Open Food Schweiz oder einer anderen Website immer zulassen, blockieren oder löschen, indem Sie die Einstellungen Ihres Browsers nutzen. Dies funktioniert in jedem Browser anders. Schauen Sie unter folgenden Links nach für genauere Beschreibungen:"
       disabling_cookies_firefox_link: "https://support.mozilla.org/de/kb/verbesserter-schutz-aktivitatenverfolgung-desktop"
       disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
       disabling_cookies_ie_link: "https://support.microsoft.com/de-de/topic/l%C3%B6schen-und-verwalten-von-cookies-168dab11-0753-043d-7c16-ede5947fc64d"
       disabling_cookies_safari_link: "https://www.apple.com/de/legal/privacy/de-ww/cookies/"
-      disabling_cookies_note: "Beachten Sie jedoch, dass die Website nicht funktioniert, wenn Sie die essentiellen Cookies, die von Open Food Network verwendet werden, löschen oder ändern. Sie können also nichts zum Warenkorb hinzufügen und auch nicht zur Kasse gehen."
+      disabling_cookies_note: "Beachten Sie jedoch, dass die Website nicht funktioniert, wenn Sie die essentiellen Cookies, die von Open Food Schweiz verwendet werden, löschen oder ändern. Sie können also nichts zum Warenkorb hinzufügen und auch nicht zur Kasse gehen."
     cookies_banner:
       cookies_usage: "Diese Website verwendet Cookies, um Ihr Kauferlebnis reibungslos und sicher zu gestalten und um darüber hinaus zu verstehen, wie Sie die Website verwenden, um die von uns angebotenen Funktionen zu verbessern."
       cookies_definition: "Cookies sind sehr kleine Textdateien, die beim Besuch einiger Websites auf Ihrem Computer gespeichert werden."
@@ -1648,7 +1648,7 @@ de_CH:
   brandstory_part2: "Kaufen Sie ein in Hofläden, auf Bauernmärkten, in Food-Hubs oder schließen Sie sich zu Einkaufsgemeinschaften, Kooperativen, Genossenschaften oder einer solidarischen Landwirtschaft zusammen."
   brandstory_part3: "Die Anbieter bilden gemeinsam ein regionales Netzwerk, in dem sich Käufer und Verkäufer wieder kennen und mit Vertrauen wertschätzend umgegangen wird."
   brandstory_part4: "Der Programmcode dieser Internet-Plattform ist öffentlich frei verfügbar (Open Source), sie gehört also auch Ihnen und ist unverkäuflich. Alle Einnahmen werden wieder in die Weiterentwicklung des Netzwerks investiert!"
-  brandstory_part5_strong: "Das ist das Open Food Network."
+  brandstory_part5_strong: "Das ist das Open Food Schweiz."
   brandstory_part6: "Sie lieben Ihr Essen! Jetzt können Sie auch Ihr regionales Lebensmittelsystem lieben!"
   system_headline: "So einfach regional einkaufen:"
   system_step1: "1. Wo kann ich regionale und saisonale Produkte kaufen?"
@@ -1960,7 +1960,7 @@ de_CH:
   products_no_results_html: "Leider wurden keine Ergebnisse gefunden für %{query}"
   products_clear_search: "Suche zurücksetzen"
   search_no_results_html: "Es wurden leider keine Ergebnisse für %{query} gefunden."
-  components_profiles_popover: "Profile haben keinen eigenen Laden im Open Food Network, verkaufen ihre Produkte aber möglicherweise online oder offline über andere Läden."
+  components_profiles_popover: "Profile haben keinen eigenen Laden im Open Food Schweiz, verkaufen ihre Produkte aber möglicherweise online oder offline über andere Läden."
   components_profiles_show: "Profile anzeigen"
   components_filters_nofilters: "Keine Filter"
   components_filters_clearfilters: "Filter zurücksetzen"
@@ -1987,7 +1987,7 @@ de_CH:
   groups_signup_motivation3: Wir wissen, dass Sie große Ideen haben und wir helfen wollen. Wir teilen unser Wissen, Netzwerke und Ressourcen. Wir wissen, dass Isolation keine Veränderung verursacht, also werden wir mit Ihnen zusammenarbeiten.
   groups_signup_motivation4: Wir treffen Sie, wo Sie sind.
   groups_signup_motivation5: Sie könnten ein Zusammenschluss von Hubs, Produzenten oder Verteilstellen sein, eine Industrieorganisation oder eine Lokalbehörde.
-  groups_signup_motivation6: Was auch immer Ihre Rolle in Ihrer lokalen Nahrungsmittelbewegung ist, wir sind bereit zu helfen. Wie auch immer Sie sich fragen, wie Open Food Network in Ihrem Teil der Welt aussehen würde oder wird, lassen Sie uns das Gespräch beginnen.
+  groups_signup_motivation6: Was auch immer Ihre Rolle in Ihrer lokalen Nahrungsmittelbewegung ist, wir sind bereit zu helfen. Wie auch immer Sie sich fragen, wie Open Food Schweiz in Ihrem Teil der Welt aussehen würde oder wird, lassen Sie uns das Gespräch beginnen.
   groups_signup_motivation7: Wir unterstützen Initiative dabei, den Trend zur Regionalität und Nachhaltigkeit zu stärken.
   groups_signup_motivation8: Sie müssen Ihre Netzwerke aktivieren und aktivieren, wir bieten eine Plattform für Konversation und Aktion. Sie brauchen echtes Engagement. Wir helfen, alle Akteure, alle Beteiligten, alle Sektoren zu erreichen.
   groups_signup_motivation9: Sie benötigen Ressourcen. Wir bringen all unsere Erfahrung ein. Sie brauchen Kooperation. Wir verbinden Sie besser mit einem globalen Netzwerk von Peers.
@@ -2027,7 +2027,7 @@ de_CH:
   name_or_sku: "NAME ODER ARTIKELNUMMER"
   register_title: Registrierung
   sell_title: "Registrieren"
-  sell_headline: "Werden Sie Teil des Open Food Network!"
+  sell_headline: "Werden Sie Teil des Open Food Schweiz!"
   sell_motivation: "Stellen Sie Ihre tollen Produkte vor."
   sell_producers: "Produzenten"
   sell_hubs: "Hubs"
@@ -2163,9 +2163,9 @@ de_CH:
         registration_promo_image: "Hintergrundbild für Ihr Profil (empfohlen)"
         registration_about_us: "\"Über uns\" Text (empfohlen)"
         registration_outcome_headline: "Was bekomme ich?"
-        registration_outcome1_html: "Ihr Profil hilft dabei, Sie im Open Food Network zu <strong>finden</strong> und zu <strong>kontaktieren</strong>."
+        registration_outcome1_html: "Ihr Profil hilft dabei, Sie im Open Food Schweiz zu <strong>finden</strong> und zu <strong>kontaktieren</strong>."
         registration_outcome2: "Nutzen Sie Ihr Profil, um die Geschichte Ihres Unternehmens zu erzählen und verknüpfen Sie Ihren Social-Media- und Web-Auftritt."
-        registration_outcome3: "Ihr Profil ist auch der erste Schritt, um im Open Food Network Produkte zu handeln oder einen Online-Shop zu eröffnen."
+        registration_outcome3: "Ihr Profil ist auch der erste Schritt, um im Open Food Schweiz Produkte zu handeln oder einen Online-Shop zu eröffnen."
         registration_action: "Los geht's!"
       details:
         title: "Ihr Unternehmen"
@@ -2217,7 +2217,7 @@ de_CH:
         title: "Über uns"
         headline: "Über uns"
         message: "Beschreiben Sie nun "
-        success: "Sehr gut! %{enterprise} wurde dem Open Food Network hinzugefügt."
+        success: "Sehr gut! %{enterprise} wurde dem Open Food Schweiz hinzugefügt."
         registration_exit_message: "Wenn Sie diesen Assistenten zu einem beliebigen Zeitpunkt beenden, können Sie mit der Erstellung Ihres Profils fortfahren, indem Sie sich einloggen und zum Menü \"Verwaltung\" wechseln."
         enterprise_description: "Kurzbeschreibung (empfohlen)"
         enterprise_description_placeholder: "Ein kurzer Satz, der Ihr Unternehmen beschreibt."
@@ -2257,7 +2257,7 @@ de_CH:
         enterprise_final_step: "Letzter Schritt!"
         enterprise_social_text: "Wie ist %{enterprise} im Internet erreichbar?"
         website: "Homepage (empfohlen)"
-        website_placeholder: "z. B. openfoodnetwork.de"
+        website_placeholder: "z. B. openfoodschweiz.ch"
         facebook: "Facebook (optional)"
         facebook_placeholder: "z. B. www.facebook.com/IhrNameHier"
         linkedin: "LinkedIn (optional)"
@@ -2803,16 +2803,16 @@ de_CH:
           hub_profile: Profil
           hub_profile_cost: "IMMER KOSTENLOS"
           hub_profile_text1: >
-              Stellen Sie sich im Open Food Network vor und vernetzen Sie sich mit
-              anderen Produzenten und Läden. Sie können im Open Food Network gefunden
+              Stellen Sie sich im Open Food Schweiz vor und vernetzen Sie sich mit
+              anderen Produzenten und Läden. Sie können im Open Food Schweiz gefunden
               und kontaktiert werden. Ihr Unternehmen wird auf der Karte und in Suchergebnissen
               angezeigt.
           hub_profile_text2: >
               Ein Profil zu haben und Verbindungen innerhalb Ihres lokalen Lebensmittelsystems
-              über das Open Food Network zu pflegen, wird immer kostenlos sein.
+              über das Open Food Schweiz zu pflegen, wird immer kostenlos sein.
           hub_shop: Hub
           hub_shop_text1: >
-              Verkaufen Sie Produkte anderer Produzenten oder Läden im Open Food Network.
+              Verkaufen Sie Produkte anderer Produzenten oder Läden im Open Food Schweiz.
               Sie führen die Produkte zusammen und sind mit Ihrem Laden ein zentraler
               Bestandteil Ihres lokalen Lebensmittelsystems.
           hub_shop_text2: >
@@ -2836,30 +2836,30 @@ de_CH:
           profile_only_text2: >
               Wenn Sie sich lieber auf die Lebensmittelerzeugung konzentrieren und
               den Verkauf anderen überlassen möchten, benötigen Sie keinen eigenen
-              Laden im Open Food Network. Fügen Sie Ihre Produkte dem Profil hinzu,
+              Laden im Open Food Schweiz. Fügen Sie Ihre Produkte dem Profil hinzu,
               damit andere Läden sie zum Verkauf anbieten können.
           profile_only_text3: >
               Wenn Sie Ihre Produkte selbst verkaufen möchten, wählen Sie "Produzentenladen".
 
               Ein Profil zu haben und Verbindungen innerhalb Ihres lokalen Lebensmittelsystems
-              über das Open Food Network zu pflegen, wird immer kostenlos sein.
+              über das Open Food Schweiz zu pflegen, wird immer kostenlos sein.
           producer_shop: Produzentenladen
           producer_shop_text1: >
               Verkaufen Sie Ihre eigenen Produkte direkt an Ihre Kunden durch Ihren
-              eigenen Produzentenladen im Open Food Network.
+              eigenen Produzentenladen im Open Food Schweiz.
           producer_shop_text2: >
               Ein Produzentenladen ist nur für Ihre eigenen Produkte bestimmt. Wenn
               Sie Produkte anderer verkaufen möchten, wählen Sie "Hub".
           producer_hub: Hub
           producer_hub_text1: >
               Verkaufen Sie eigene Produkte und Produkte anderer Produzenten oder
-              Läden im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil
+              Läden im Open Food Schweiz. Mit Ihrem Laden sind Sie ein zentraler Bestandteil
               Ihres lokalen Lebensmittelsystems.
           producer_hub_text2: >
               Hubs können viele Formen annehmen, sei es ein Bauernmarkt, eine Lebensmittelkooperative,
               eine Einkaufsgemeinschaft, ein Gemüsekistenabo oder ein lokales Lebensmittelgeschäft.
           producer_hub_text3: >
-              Das Open Food Network möchte mittels Hubs so viele Vertriebswege wie
+              Das Open Food Schweiz möchte mittels Hubs so viele Vertriebswege wie
               möglich unterstützen. Auch Ihnen versuchen wir, unabhängig von Ihrer
               individuellen Situation, die Tools zur Verfügung zu stellen, die Sie
               für Ihre Organisation oder Ihr lokales Lebensmittelgeschäft benötigen.
@@ -2877,11 +2877,11 @@ de_CH:
           producer_text2: >
               Produzenten können auch weitere Funktionen übernehmen, wie z. B. die
               Zusammenführung von Lebensmitteln anderer Unternehmen und den Verkauf
-              über einen Laden im Open Food Network.
+              über einen Laden im Open Food Schweiz.
           non_producer: Händler
           non_producer_text1: >
               Händler produzieren selbst keine Lebensmittel, d. h. sie können keine
-              eigenen Produkte über das Open Food Network anbieten.
+              eigenen Produkte über das Open Food Schweiz anbieten.
           non_producer_text2: >
               Stattdessen spezialisieren sich Händler darauf, Produzenten mit dem
               Endverbraucher zu verbinden, sei es durch Zusammenführung, Sortierung,
@@ -3082,7 +3082,7 @@ de_CH:
       users:
         order: "Bestellung"
     registration:
-      welcome_to_ofn: "Willkommen im Open Food Network!"
+      welcome_to_ofn: "Willkommen im Open Food Schweiz!"
       signup_or_login: "Beginnen Sie mit der Registrierung oder loggen Sie sich ein"
       have_an_account: "Haben Sie bereits ein Konto?"
       action_login: "Jetzt einloggen."
@@ -3374,7 +3374,7 @@ de_CH:
     allow_ssl_in_staging: "Zulassen, dass SSL im Staging-Modus verwendet wird"
     currency_decimal_mark: "Dezimalzeichen der Währung"
     currency_settings: "Währungseinstellungen"
-    currency_symbol_position: Währungssymbol (€) vor oder nach dem Betrag?
+    currency_symbol_position: Währungssymbol (CHF) vor oder nach dem Betrag?
     currency_thousands_separator: "Tausendertrennzeichen der Währung"
     hide_cents: "Cents ausblenden"
     display_currency: "Währung anzeigen"
@@ -3606,6 +3606,7 @@ de_CH:
           results_found: "%{number} Ergebnisse gefunden."
           viewing: "Angezeigt wird %{start} bis %{end}."
           print_invoices: "Rechnungen drucken"
+          selected: ausgewählt
         sortable_header:
           payment_state: "Zahlungsstatus"
           shipment_state: "Lieferstatus"
@@ -3630,7 +3631,7 @@ de_CH:
           order_total: "Bestellung insgesamt"
       overview:
         enterprises_header:
-          ofn_with_tip: Unternehmen sind Produzenten und/oder Hubs und sind die grundlegende Organisationseinheit innerhalb des Open Food Network.
+          ofn_with_tip: Unternehmen sind Produzenten und/oder Hubs und sind die grundlegende Organisationseinheit innerhalb des Open Food Schweiz.
         enterprise_row:
           has_no_enterprise_fees: "erhebt keine Unternehmensgebühren"
           has_no_payment_methods: "hat keine Zahlungsarten"

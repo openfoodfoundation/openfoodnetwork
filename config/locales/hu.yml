@@ -3608,6 +3608,7 @@ hu:
           results_found: "%{number} találat."
           viewing: "%{start} – %{end} megtekintése."
           print_invoices: "Számlák nyomtatása"
+          selected: kiválasztott
         sortable_header:
           payment_state: "Fizetési állapot"
           shipment_state: "Szállítási állapot"

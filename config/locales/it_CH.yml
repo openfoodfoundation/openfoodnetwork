@@ -3580,6 +3580,7 @@ it_CH:
           results_found: "%{number} Risultati trovati."
           viewing: "Guardando da %{start} a %{end}"
           print_invoices: "Stampa conferme d'ordine"
+          selected: selezionato
         sortable_header:
           payment_state: "Stato Pagamento"
           shipment_state: "Stato della spedizione"

@@ -3637,6 +3637,7 @@ ar:
           results_found: "تم العثور على النتائج %{number}."
           viewing: "عرض %{start} إلى %{end}."
           print_invoices: "طباعة الفواتير"
+          selected: تم الاختيار
         sortable_header:
           payment_state: "حالة الدفعة"
           shipment_state: "حالة الشحن"

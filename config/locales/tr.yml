@@ -3431,6 +3431,7 @@ tr:
           results_found: "%{number} Sonuç bulundu."
           viewing: "%{start} - %{end} görüntüleniyor."
           print_invoices: "Faturaları Yazdır"
+          selected: seçildi
         sortable_header:
           payment_state: "Ödeme Durumu"
           shipment_state: "Teslimat Durumu"

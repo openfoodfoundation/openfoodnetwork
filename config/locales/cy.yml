@@ -3645,6 +3645,7 @@ cy:
           results_found: "Cafwyd hyd i%{number} canlyniad."
           viewing: "Yn edrych ar %{start} i %{end}."
           print_invoices: "Argraffu anfonebau"
+          selected: dewiswyd
         sortable_header:
           payment_state: "Cyflwr Talu"
           shipment_state: "Sir anfon"

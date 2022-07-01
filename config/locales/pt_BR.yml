@@ -3400,6 +3400,7 @@ pt_BR:
           results_found: "%{number} Resultados encontrados."
           viewing: "Exibindo %{start} a %{end}."
           print_invoices: "Imprimir Faturas"
+          selected: selecionar
         sortable_header:
           payment_state: "Estado de pagamento"
           shipment_state: "Situação do Envio"

@@ -3607,6 +3607,7 @@ de_DE:
           results_found: "%{number} Ergebnisse gefunden."
           viewing: "Angezeigt wird %{start} bis %{end}."
           print_invoices: "Rechnungen drucken"
+          selected: ausgewählt
         sortable_header:
           payment_state: "Zahlungsstatus"
           shipment_state: "Lieferstatus"

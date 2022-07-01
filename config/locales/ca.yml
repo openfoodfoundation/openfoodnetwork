@@ -3445,6 +3445,7 @@ ca:
           results_found: "%{number} Resultats trobats."
           viewing: "Veient %{start} a %{end}."
           print_invoices: "Imprimir factures"
+          selected: seleccionat
         sortable_header:
           payment_state: "Estat del pagament"
           shipment_state: "Estat de la Tramesa"

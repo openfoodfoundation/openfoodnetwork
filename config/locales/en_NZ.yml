@@ -3269,6 +3269,7 @@ en_NZ:
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
+          selected: selected
         sortable_header:
           payment_state: "Payment State"
           shipment_state: "Shipment State"

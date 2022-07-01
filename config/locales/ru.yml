@@ -3634,6 +3634,7 @@ ru:
           results_found: "Найдено %{number} Результатов."
           viewing: "Просмотр с %{start} по %{end}."
           print_invoices: "Печать Счетов"
+          selected: выбраны
         sortable_header:
           payment_state: "Статус оплаты"
           shipment_state: "Статус доставки"
