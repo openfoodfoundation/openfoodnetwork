@@ -126,7 +126,7 @@ module Spree
       end
 
       def require_distributor_abn
-        return if @order.distributor.abn.present?
+        return if @order.distributor.can_invoice?
 
         flash[:error] = t(:must_have_valid_business_number,
                           enterprise_name: @order.distributor.name)

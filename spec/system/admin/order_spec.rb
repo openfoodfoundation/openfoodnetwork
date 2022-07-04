@@ -480,18 +480,31 @@ describe '
       end
       
       context "Check send/print invoice links" do
-        context "when abn number is not mandatory to send/print invoices" do
+        
+        shared_examples_for 'can send/print invoices' do
           before do
-            Spree::Config[:enterprise_number_required_on_invoices?] = false
+            visit spree.edit_admin_order_path(order)
+            find("#links-dropdown .ofn-drop-down").click
           end
 
-          it "should display normal links" do
-            visit spree.edit_admin_order_path(order)
-
-            find("#links-dropdown .ofn-drop-down").click
+          it 'shows the right links' do
             expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
             expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
           end
+
+          it 'can send invoices' do
+            click_link "Send Invoice"
+            expect(page).to have_content "Invoice email has been sent"
+          end
+        end
+
+        context "when abn number is not mandatory to send/print invoices" do
+          before do
+            Spree::Config[:enterprise_number_required_on_invoices?] = false
+            distributor1.update_attribute(:abn, "")
+          end
+
+          it_should_behave_like 'can send/print invoices'
         end
 
         context "when abn number is mandatory to send/print invoices" do
@@ -504,13 +517,7 @@ describe '
               distributor1.update_attribute(:abn, '12345678')
             end
             
-            it "should display normal links" do
-              visit spree.edit_admin_order_path(order)
-
-              find("#links-dropdown .ofn-drop-down").click
-              expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
-              expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
-            end
+            it_should_behave_like 'can send/print invoices'
           end
 
           context "and a abn number is not set on the distributor" do
