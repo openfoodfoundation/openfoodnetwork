@@ -278,8 +278,6 @@ describe '
     end
 
     context "handle the 'on_demand' variant case creation" do
-      # let(:variant) { create(:variant, product: p) }
-
       before do
         p = Spree::Product.first
         p.master.update_attribute(:on_hand, 5)
@@ -291,16 +289,46 @@ describe '
       end
 
       it "when variant unit value is: '120'" do
-        fill_in "variant_unit_value_with_description", with: "120"
-        check "variant_on_demand"
+        within "tr#v_#{Spree::Variant.second.id}" do
+          page.find(".add-variant").click
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120"
+          fill_in "variant_price", with: "6.66"
+        end
 
         click_button 'Save Changes', match: :first
         expect(page.find("#status-message")).to have_content "Changes saved."
       end
 
-      it "when variant unit value is: '120g'" do
-        fill_in "variant_unit_value_with_description", with: "120g"
-        check "variant_on_demand"
+      it "creating a variant with unit value is: '120g' and 'on_hand' filled" do
+        pending "#9068"
+        within "tr#v_#{Spree::Variant.second.id}" do
+          page.find(".add-variant").click
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120g"
+          fill_in "variant_price", with: "6.66"
+          fill_in "variant_on_hand", with: "222"
+        end
+
+        click_button 'Save Changes', match: :first
+        expect(page.find("#status-message")).to have_content "Changes saved."
+      end
+
+      it "creating a variant with unit value is: '120g' and 'on_demand' checked" do
+        pending "#9068"
+        within "tr#v_#{Spree::Variant.second.id}" do
+          page.find(".add-variant").click
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120g"
+          fill_in "variant_price", with: "6.66"
+          check "variant_on_demand"
+        end
 
         click_button 'Save Changes', match: :first
         expect(page.find("#status-message")).to have_content "Changes saved."
