@@ -114,6 +114,11 @@ module Sets
 
       variant = product.variants.create(variant_attributes)
 
+      if variant.errors.present?
+        product.errors.merge!(variant.errors)
+        return false
+      end
+
       begin
         variant.on_demand = on_demand if on_demand.present?
         variant.on_hand = on_hand.to_i if on_hand.present?

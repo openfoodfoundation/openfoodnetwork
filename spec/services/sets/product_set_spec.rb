@@ -173,10 +173,8 @@ describe Sets::ProductSet do
                 end
 
                 it 'does not create variant and notifies bugsnag still raising the exception' do
-                  expect(Bugsnag).to receive(:notify)
                   number_of_variants = Spree::Variant.all.size
-                  expect { product_set.save }
-                    .to raise_error(StandardError)
+                  expect(product_set.save).to eq(false)
                   expect(Spree::Variant.all.size).to eq number_of_variants
                   expect(Spree::Variant.last.sku).not_to eq('321')
                 end
