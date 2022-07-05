@@ -303,7 +303,6 @@ describe '
       end
 
       it "creating a variant with unit value is: '120g' and 'on_hand' filled" do
-        pending "#9068"
         within "tr#v_#{Spree::Variant.second.id}" do
           page.find(".add-variant").click
         end
@@ -315,11 +314,10 @@ describe '
         end
 
         click_button 'Save Changes', match: :first
-        expect(page.find("#status-message")).to have_content "Changes saved."
+        expect(page.find("#status-message")).to have_content "Unit value can't be blank Unit value is not a number"
       end
 
       it "creating a variant with unit value is: '120g' and 'on_demand' checked" do
-        pending "#9068"
         within "tr#v_#{Spree::Variant.second.id}" do
           page.find(".add-variant").click
         end
@@ -331,7 +329,7 @@ describe '
         end
 
         click_button 'Save Changes', match: :first
-        expect(page.find("#status-message")).to have_content "Changes saved."
+        expect(page.find("#status-message")).to have_content "Unit value can't be blank Unit value is not a number"
       end
     end
   end
