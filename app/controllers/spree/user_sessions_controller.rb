@@ -16,6 +16,7 @@ module Spree
     prepend_before_action :handle_unconfirmed_email
     before_action :set_checkout_redirect, only: :create
     after_action :ensure_valid_locale_persisted, only: :create
+    skip_before_action :check_disabled_user
 
     def create
       authenticate_spree_user!
