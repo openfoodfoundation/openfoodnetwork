@@ -3774,7 +3774,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
-          selected: selected
+          selected:
+            zero: "No order selected"
+            one: "1 order selected"
+            many: "%{count} orders selected"
         sortable_header:
           payment_state: "Payment State"
           shipment_state: "Shipment State"
