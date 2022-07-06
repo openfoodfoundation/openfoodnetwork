@@ -11,8 +11,7 @@
         %th.order7.text-right= t('.view')
       %tbody.transaction-group{"ng-repeat" => "order in Orders.all | filter:{changes_allowed:false} as pastOrders", "ng-class-odd"=>"'odd'", "ng-class-even"=>"'even'"}
         %tr.order-row
-          %td.order1
-            %a{"ng-href" => "{{::order.path}}", "ng-bind" => "::order.number"}
+          %td.order1{"ng-bind" => "::order.number"}
           %td.order2
             %a{"ng-href" => "{{::Orders.shopsByID[order.shop_id].hash}}#{main_app.shop_path}", "ng-bind" => "::Orders.shopsByID[order.shop_id].name"}
           %td.order3.show-for-large-up{"ng-bind" => "::order.completed_at"}
