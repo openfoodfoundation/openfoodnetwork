@@ -877,6 +877,20 @@ describe "As a consumer, I want to checkout my order", js: true do
           expect(page).to have_current_path checkout_step_path(:payment)
         end
       end
+
+      describe "order state" do
+        before do
+          visit checkout_step_path(:summary)
+        end
+
+        it "emptying the cart changes the order state back to address" do
+          visit main_app.cart_path
+          expect {
+            find('#clear_cart_link').click
+            expect(page).to have_current_path enterprise_shop_path(distributor)
+          }.to change { order.reload.state }.from("confirmation").to("address")
+        end
+      end
     end
 
     context "with previous open orders" do
