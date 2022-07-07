@@ -97,6 +97,7 @@ module Sets
       variants_attributes.each do |attributes|
         create_or_update_variant(product, attributes)
       end
+      product.errors.empty?
     end
 
     def create_or_update_variant(product, variant_attributes)
