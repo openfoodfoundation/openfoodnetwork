@@ -108,20 +108,72 @@ describe '
     end
   end
 
-  it "orders and distributors report" do
-    login_as_admin_and_visit admin_reports_path
-    click_link 'Orders And Distributors'
-    click_button 'Go'
+  context "for a complete, paid order" do
+    let!(:ready_to_ship_order) { create(:order_ready_to_ship) }
 
-    expect(page).to have_content 'ORDER DATE'
-  end
+    before do
+      login_as_admin_and_visit admin_reports_path
+    end
 
-  it "payments reports" do
-    login_as_admin_and_visit admin_reports_path
-    click_link 'Payment Reports'
-    click_button 'Go'
+    it "generates the orders and distributors report" do
+      click_link 'Orders And Distributors'
+      click_button 'Go'
 
-    expect(page).to have_content 'PAYMENT STATE'
+      rows = find("table.report__table").all("thead tr")
+      table_headers = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+
+      expect(table_headers).to eq([
+                                    [I18n.t("report_header_order_date"),
+                                     I18n.t("report_header_order_id"),
+                                     I18n.t("report_header_customer_name"),
+                                     I18n.t("report_header_customer_email"),
+                                     I18n.t("report_header_customer_phone"),
+                                     I18n.t("report_header_customer_city"),
+                                     I18n.t("report_header_sku"),
+                                     I18n.t("report_header_item_name"),
+                                     I18n.t("report_header_variant"),
+                                     I18n.t("report_header_quantity"),
+                                     I18n.t("report_header_max_quantity"),
+                                     I18n.t("report_header_cost"),
+                                     I18n.t("report_header_shipping_cost"),
+                                     I18n.t("report_header_payment_method"),
+                                     I18n.t("report_header_distributor"),
+                                     I18n.t("report_header_distributor_address"),
+                                     I18n.t("report_header_distributor_city"),
+                                     I18n.t("report_header_distributor_postcode"),
+                                     I18n.t("report_header_shipping_method"),
+                                     I18n.t("report_header_shipping_instructions")]
+                                           .map(&:upcase)
+                                  ])
+
+      expect(all('table.report__table tbody tr').count).to eq(
+        Spree::LineItem.where(
+          order_id: ready_to_ship_order.id # Total rows should equal number of line items, per order
+        ).count
+      )
+    end
+
+    it "generates the payments reports" do
+      click_link 'Payment Reports'
+      click_button 'Go'
+
+      rows = find("table.report__table").all("thead tr")
+      table_headers = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+
+      expect(table_headers).to eq([
+                                    [I18n.t("report_header_payment_state"),
+                                     I18n.t("report_header_distributor"),
+                                     I18n.t("report_header_payment_type"),
+                                     I18n.t("report_header_total_price", currency: currency_symbol)]
+                                           .map(&:upcase)
+                                  ])
+
+      expect(all('table.report__table tbody tr').count).to eq(
+        Spree::Payment.where(
+          order_id: ready_to_ship_order.id # Total rows should equal number of payments, per order
+        ).count
+      )
+    end
   end
 
   shared_examples "sales tax report" do |inverse_columns_logic|
@@ -238,75 +290,6 @@ describe '
 
   it_behaves_like "sales tax report", false
   it_behaves_like "sales tax report", true
-
-  describe "orders & fulfilment reports" do
-    it "loads the report page" do
-      login_as_admin_and_visit admin_reports_path
-      click_link 'Orders & Fulfillment Reports'
-
-      expect(page).to have_content 'Supplier'
-    end
-
-    context "with two orders on the same day at different times" do
-      let(:bill_address) { create(:address) }
-      let(:distributor_address) {
-        create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234")
-      }
-      let(:distributor) { create(:distributor_enterprise, address: distributor_address) }
-      let(:product) { create(:product) }
-      let(:shipping_instructions) { "pick up on thursday please!" }
-      let(:order1) {
-        create(:order, distributor: distributor, bill_address: bill_address,
-                       special_instructions: shipping_instructions)
-      }
-      let(:order2) {
-        create(:order, distributor: distributor, bill_address: bill_address,
-                       special_instructions: shipping_instructions)
-      }
-
-      let(:completed_at1) { Time.zone.now - 1500.hours } # 1500 hours in the past
-      let(:completed_at2) { Time.zone.now - 1510.hours } # 1510 hours in the past
-      let(:datetime_start) { Time.zone.now - 1600.hours } # 1600 hours in the past
-      let(:datetime_end) { Time.zone.now - 1400.hours } # 1400 hours in the past
-
-      before do
-        Timecop.travel(completed_at1) { order1.finalize! }
-        Timecop.travel(completed_at2) { order2.finalize! }
-
-        create(:line_item_with_shipment, product: product, order: order1)
-        create(:line_item_with_shipment, product: product, order: order2)
-      end
-
-      it "is precise to time of day, not just date" do
-        # When I generate a customer report
-        # with a timeframe that includes one order but not the other
-        login_as_admin_and_visit admin_reports_path
-        click_link 'Orders & Fulfillment Reports'
-        click_button 'Go'
-
-        pick_datetime "#q_completed_at_gt", datetime_start
-        pick_datetime "#q_completed_at_lt", datetime_end
-
-        select 'Order Cycle Customer Totals', from: 'report_subtype'
-        click_button 'Go'
-        # Then I should see the rows for the first order but not the second
-        expect(all('table.report__table tbody tr').count).to eq(4) # Two rows per order
-      end
-    end
-
-    it "handles order cycles with nil opening or closing times" do
-      distributor = create(:distributor_enterprise)
-      oc = create(:simple_order_cycle, name: "My Order Cycle", distributors: [distributor],
-                                       orders_open_at: Time.zone.now, orders_close_at: nil)
-      o = create(:order, order_cycle: oc, distributor: distributor)
-
-      login_as_admin_and_visit admin_reports_path
-      click_link 'Orders & Fulfillment Reports'
-      click_button 'Go'
-
-      expect(page).to have_content "My Order Cycle"
-    end
-  end
 
   describe "products and inventory report", js: true do
     let(:supplier) { create(:supplier_enterprise, name: 'Supplier Name') }
