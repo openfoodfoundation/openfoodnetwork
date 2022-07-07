@@ -119,7 +119,7 @@ GEM
     activerecord (6.1.6)
       activemodel (= 6.1.6)
       activesupport (= 6.1.6)
-    activerecord-import (1.3.0)
+    activerecord-import (1.4.0)
       activerecord (>= 4.2)
     activerecord-postgresql-adapter (0.0.1)
       pg
@@ -394,7 +394,7 @@ GEM
     mini_portile2 (2.8.0)
     mini_racer (0.4.0)
       libv8-node (~> 15.14.0.0)
-    minitest (5.16.1)
+    minitest (5.16.2)
     monetize (1.12.0)
       money (~> 6.12)
     money (6.16.0)
