@@ -1172,6 +1172,11 @@ fr:
         msg: Ce cycle de vente est lié à %{n} abonnements ouverts. Changer cette date maintenant n'impactera pas les commandes déjà réalisée, mais nous vous déconseillons cette action néanmoins. Etes-vous sûrs de vouloir poursuivre ?
         cancel: Annuler
         proceed: Continuer
+      status:
+        undated: sans date
+        upcoming: futur
+        open: ouvert
+        closed: fermé
     producer_properties:
       index:
         title: Propriétés / labels du producteur

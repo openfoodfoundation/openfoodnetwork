@@ -61,6 +61,27 @@ it:
             using_producer_stock_settings_but_count_on_hand_set: "deve restare vuoto perché si stanno utilizzando le impostazioni di magazzino del produttore"
             on_demand_but_count_on_hand_set: "deve restare vuoto se su richiesta"
             limited_stock_but_no_count_on_hand: "deve essere specificato a causa di una disponibilità limitata"
+  errors:
+    messages:
+      content_type_invalid: "tipo di contenuto non valido"
+      file_size_out_of_range: "la dimensione %{file_size} non rientra nell'intervallo richiesto"
+      limit_out_of_range: "numero totale fuori intervallo"
+      image_metadata_missing: "immagine non valida"
+      dimension_min_inclusion: "deve essere maggiore o uguale a %{width} x %{height} pixel."
+      dimension_max_inclusion: "deve essere minore o uguale a %{width} x %{height} pixel."
+      dimension_width_inclusion: "la larghezza non è inclusa tra %{min} e %{max} pixel."
+      dimension_height_inclusion: "l'altezza non è inclusa tra %{min} e %{max} pixel."
+      dimension_width_greater_than_or_equal_to: "la larghezza deve essere maggiore o uguale a %{length} pixel."
+      dimension_height_greater_than_or_equal_to: "l'altezza deve essere maggiore o uguale a %{length} pixel."
+      dimension_width_less_than_or_equal_to: "la larghezza deve essere minore o uguale a %{length} pixel."
+      dimension_height_less_than_or_equal_to: "l'altezza deve essere minore o uguale a %{length} pixel."
+      dimension_width_equal_to: "la larghezza deve essere uguale a %{length} pixel."
+      dimension_height_equal_to: "l'altezza deve essere uguale a %{length} pixel."
+      aspect_ratio_not_square: "deve essere un'immagine quadrata"
+      aspect_ratio_not_portrait: "deve essere un ritratto"
+      aspect_ratio_not_landscape: "deve essere un paesaggio"
+      aspect_ratio_is_not: "deve avere propozioni di %{aspect_ratio}"
+      aspect_ratio_unknown: "ha proporzioni sconosciute"
   stripe:
     error_code:
       incorrect_number: "Il numero di carta non è corretto"
@@ -161,6 +182,7 @@ it:
         signed_up_but_unconfirmed: "Abbiamo inviato un link di conferma al tuo indirizzo email. Per favore apri il link per attivare il tuo account."
         unknown_error: "Qualcosa è andato storto durante la creazione del tuo account. Controlla il tuo indirizzo email e riprova"
     failure:
+      disabled: "Il tuo profilo è stato disabilitato. Per favore contatta un amministratore per risolvere il problema."
       invalid: |
           Email o password non valida.
           La volta scorsa eri ospite? Forse devi creare un account o resettare la tua password.
@@ -481,6 +503,7 @@ it:
         enable_invoices?: "Abilita conferme d'ordine?"
         invoice_style2?: "Utilizzare il modello di fattura alternativa che include la ripartizione totale delle imposte per tariffa e le informazioni sulla tariffa fiscale per articolo (non ancora adatto per i paesi che visualizzano i prezzi al netto delle imposte)"
         enable_receipt_printing?: "Visualizzo le opzioni per stampare la ricevuta usando la stampante termica nel menù a cascata?"
+        enterprise_number_required_on_invoices?: "Richiedi un codice fiscale per generare una fattura?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -856,7 +879,10 @@ it:
           sells: Vende
           sells_tip: "Nessuno -  L'azienda non vende direttamente ai clienti.<br />Proprio - L'azienda vende i propri prodotti ai clienti.<br />Proprio e altrui - L'azienda può vendere prodotti propri o di altre aziende.<br />"
           visible_in_search: Visibile nella ricerca?
+          visible_in_search_tip: "I negozi possono essere <br />1. visibili pubblicamente: appaiono sulla mappa e sulle liste di OFN. <br />2. Nascosti su mappa e liste, ma possono essere citati e linkati da altri negozi. <br />3. Completamente nascosti."
           visible: Pubblica
+          not_visible: Nascosto
+          hidden: Nascondi tutte le referenze
           permalink: Permalink (nessuno spazio)
           permalink_tip: "Questo permalink serve a creare l'url al tuo negozio: %{link}nome-del-tuo-negozio/negozio"
           link_to_front: Link alla tua vetrina
@@ -1145,6 +1171,11 @@ it:
         msg: 'Questo ciclo di richieste è connesso a %{n} gentili richieste aperte. Modificare questo dato ora non modificherà le gentili richieste che sono già state confermate, ma dovrebbe essere evitato per quanto possibile. Sei sicura/o di voler procedere? '
         cancel: Annulla
         proceed: Procedi
+      status:
+        undated: senza data
+        upcoming: tra poco
+        open: aperto
+        closed: chiuso
     producer_properties:
       index:
         title: Proprietà produttore
@@ -1172,6 +1203,8 @@ it:
       unitsize: Dimensione unità
       total: TOTALE
       total_items: TOTALE ARTICOLI
+      total_by_customer: Totale Per Consumatore
+      total_by_supplier: Totale Per Fornitore
       supplier_totals: Totali Ciclo di richieste fornitori
       supplier_totals_by_distributor: Totali Ciclo di richieste fornitori per distributore
       totals_by_supplier: Totali Ciclo di richieste fornitori per fornitore
@@ -1187,6 +1220,7 @@ it:
       tax_rates: Aliquote IVA
       pack_by_customer: Imballato dal Cliente
       pack_by_supplier: Smistato dai fornitori
+      pack_by_product: Per Prodotto
       orders_and_distributors:
         name: Gentili richieste e distributori
         description: Gentili richieste con i dettagli del distributore
@@ -1237,8 +1271,14 @@ it:
           temp_controlled: "Controllo Temperatura?"
           price: "Prezzo"
       rendering_options:
+        generate_report: "Genera report"
         on_screen: "Sullo schermo"
+        spreadsheet: "Foglio di calcolo (Excel, OpenOffice..)"
         display: Visualizza
+        summary_row: Riga Totale
+        header_row: Riga di intestazione
+        raw_data: Dati Grezzi
+        formatted_data: Dati Formattati
       packing:
         name: "Resoconti smistamento/imballaggio"
     subscriptions:
@@ -1772,6 +1812,7 @@ it:
   order_hub_info: Info Hub
   order_back_to_store: Torna al negozio
   order_back_to_cart: Torna al carrello
+  order_back_to_website: Indietro al sito
   bom_tip: "Utilizza questa pagina per modificare le quantità di prodotto su ordini multipli. I prodotti possono anche essere rimossi completamente dagli ordini, se necessario."
   unsaved_changes_warning: "Ci sono cambiamenti non salvati che andranno persi se continui."
   unsaved_changes_error: "Campi con i bordi rossi contengono errori."
@@ -2456,12 +2497,16 @@ it:
   report_payment_totals: 'Totale pagamenti'
   report_all: 'tutti'
   report_order_cycle: "Ciclo di richieste"
+  report_hide_columns: Colonne da nascondere
   report_columns: Colonne
   report_enterprises: "Aziende"
   report_enterprise_fee: "Nomi Tariffe"
   report_users: "Utenti"
   report_tax_rates: Tariffe
   report_tax_types: Tipo tariffe
+  report_filters: Filtri Report
+  report_print: Stampa Report
+  report_render_options: Opzioni di restituzione
   report_header_order_cycle: Ciclo di richieste
   report_header_user: Utente
   report_header_email: Email
@@ -2596,6 +2641,11 @@ it:
   report_header_transaction_fee: Commissioni di transazione (no tasse)
   report_header_total_untaxable_admin: Aggiustamenti amministrativi totali non tassabili (nessuna imposta)
   report_header_total_taxable_admin: Totale rettifiche amministrative tassabili (tasse incluse)
+  report_xero_configuration: Configurazione Xero
+  initial_invoice_number: "Numero fattura iniziale"
+  invoice_date: "Data fattura"
+  due_date: "Scadenza"
+  account_code: "Codice account"
   equals: "Uguale a"
   contains: "contiene"
   discount: "Sconto"
@@ -2912,6 +2962,8 @@ it:
         quantity_unchanged: "Quantità non modificata rispetto a quantità precedente."
         cancel_the_order_html: "Questo eliminerà la gentile richiesta corrente.<br />Sei sicuro di voler procedere?"
         cancel_the_order_send_cancelation_email: "Invia una mail di cancellazione al cliente"
+        restock_item: "Re-immagazzina articolo: riporta questo articolo in magazzino"
+        restock_items: "Re-immagazzina articoli: riporta tutti gli articoli al magazzino"
       resend_user_email_confirmation:
         resend: "Invia nuovamente"
         sending: "Invia di nuovo..."
@@ -3780,6 +3832,7 @@ it:
           back_to_users_list: "Torna all'elenco degli utenti"
           general_settings: "Impostazioni generali"
         form:
+          disabled: "Disabilitato?"
           email: "Email"
           roles: "Ruoli"
           enterprise_limit: "Limite azienda"
