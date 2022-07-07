@@ -97,6 +97,7 @@ module Sets
       variants_attributes.each do |attributes|
         create_or_update_variant(product, attributes)
       end
+      product.errors.empty?
     end
 
     def create_or_update_variant(product, variant_attributes)
@@ -113,6 +114,11 @@ module Sets
       on_demand = variant_attributes.delete(:on_demand)
 
       variant = product.variants.create(variant_attributes)
+
+      if variant.errors.present?
+        product.errors.merge!(variant.errors)
+        return false
+      end
 
       begin
         variant.on_demand = on_demand if on_demand.present?

@@ -10,6 +10,9 @@ describe "ErrorsParser service", ->
     it "returns empty string for nil errors", ->
       expect(errorsParser.toString(null)).toEqual ""
 
+    it  "returns string for string errors", ->
+      expect(errorsParser.toString("error")).toEqual "error"
+
     it "returns the elements in the array if an array is provided", ->
       expect(errorsParser.toString(["1", "2"])).toEqual "1\n2\n"
 

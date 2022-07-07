@@ -227,51 +227,111 @@ describe '
     expect(page).to have_field "product_name", with: 'Big Bag Of Apples'
   end
 
-  it "creating new variants" do
-    # Given a product without variants or a unit
-    p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
-    login_as_admin
-    visit spree.admin_products_path
+  context "creating new variants" do
+    before do
+      # Given a product without variants or a unit
+      p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
+      login_as_admin
+      visit spree.admin_products_path
 
-    # I should see an add variant button
-    page.find('a.view-variants').click
-
-    # When I add three variants
-    page.find('a.add-variant', visible: true).click
-    page.find('a.add-variant', visible: true).click
-
-    # They should be added, and should not see edit buttons for new variants
-    expect(page).to have_selector "tr.variant", count: 3
-    expect(page).to have_selector "a.edit-variant", count: 1
-
-    # When I remove two, they should be removed
-    accept_alert do
-      page.all('a.delete-variant', visible: true).first.click
+      # I should see an add variant button
+      page.find('a.view-variants').click
     end
-    expect(page).to have_selector "tr.variant", count: 2
-    page.all('a.delete-variant', visible: true).first.click
-    expect(page).to have_selector "tr.variant", count: 1
 
-    # When I fill out variant details and hit update
-    fill_in "variant_display_name", with: "Case of 12 Bottles"
-    fill_in "variant_unit_value_with_description", with: "3 (12x250 mL bottles)"
-    fill_in "variant_display_as", with: "Case"
-    fill_in "variant_price", with: "4.0"
-    fill_in "variant_on_hand", with: "10"
+    it "handle the default behaviour" do
+      # When I add three variants
+      page.find('a.add-variant', visible: true).click
+      page.find('a.add-variant', visible: true).click
 
-    click_button 'Save Changes', match: :first
-    expect(page.find("#status-message")).to have_content "Changes saved."
+      # They should be added, and should not see edit buttons for new variants
+      expect(page).to have_selector "tr.variant", count: 3
+      expect(page).to have_selector "a.edit-variant", count: 1
 
-    updated_variant = Spree::Variant.where(deleted_at: nil).last
-    expect(updated_variant.display_name).to eq "Case of 12 Bottles"
-    expect(updated_variant.unit_value).to eq 3000
-    expect(updated_variant.unit_description).to eq "(12x250 mL bottles)"
-    expect(updated_variant.display_as).to eq "Case"
-    expect(updated_variant.price).to eq 4.0
-    expect(updated_variant.on_hand).to eq 10
+      # When I remove two, they should be removed
+      accept_alert do
+        page.all('a.delete-variant', visible: true).first.click
+      end
+      expect(page).to have_selector "tr.variant", count: 2
+      page.all('a.delete-variant', visible: true).first.click
+      expect(page).to have_selector "tr.variant", count: 1
 
-    # Then I should see edit buttons for the new variant
-    expect(page).to have_selector "a.edit-variant", visible: true
+      # When I fill out variant details and hit update
+      fill_in "variant_display_name", with: "Case of 12 Bottles"
+      fill_in "variant_unit_value_with_description", with: "3 (12x250 mL bottles)"
+      fill_in "variant_display_as", with: "Case"
+      fill_in "variant_price", with: "4.0"
+      fill_in "variant_on_hand", with: "10"
+
+      click_button 'Save Changes', match: :first
+      expect(page.find("#status-message")).to have_content "Changes saved."
+
+      updated_variant = Spree::Variant.where(deleted_at: nil).last
+      expect(updated_variant.display_name).to eq "Case of 12 Bottles"
+      expect(updated_variant.unit_value).to eq 3000
+      expect(updated_variant.unit_description).to eq "(12x250 mL bottles)"
+      expect(updated_variant.display_as).to eq "Case"
+      expect(updated_variant.price).to eq 4.0
+      expect(updated_variant.on_hand).to eq 10
+
+      # Then I should see edit buttons for the new variant
+      expect(page).to have_selector "a.edit-variant", visible: true
+    end
+
+    context "handle the 'on_demand' variant case creation" do
+      before do
+        p = Spree::Product.first
+        p.master.update_attribute(:on_hand, 5)
+        p.save
+        v1 = FactoryBot.create(:variant, product: p, is_master: false, on_hand: 4)
+        v2 = FactoryBot.create(:variant, product: p, is_master: false, on_demand: true)
+        p.variants << v1
+        p.variants << v2
+      end
+
+      it "when variant unit value is: '120'" do
+        within "tr#v_#{Spree::Variant.second.id}" do
+          page.find(".add-variant").click
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120"
+          fill_in "variant_price", with: "6.66"
+        end
+
+        click_button 'Save Changes', match: :first
+        expect(page.find("#status-message")).to have_content "Changes saved."
+      end
+
+      it "creating a variant with unit value is: '120g' and 'on_hand' filled" do
+        within "tr#v_#{Spree::Variant.second.id}" do
+          page.find(".add-variant").click
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120g"
+          fill_in "variant_price", with: "6.66"
+          fill_in "variant_on_hand", with: "222"
+        end
+
+        click_button 'Save Changes', match: :first
+        expect(page.find("#status-message")).to have_content "Unit value can't be blank Unit value is not a number"
+      end
+
+      it "creating a variant with unit value is: '120g' and 'on_demand' checked" do
+        within "tr#v_#{Spree::Variant.second.id}" do
+          page.find(".add-variant").click
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120g"
+          fill_in "variant_price", with: "6.66"
+          check "variant_on_demand"
+        end
+
+        click_button 'Save Changes', match: :first
+        expect(page.find("#status-message")).to have_content "Unit value can't be blank Unit value is not a number"
+      end
+    end
   end
 
   it "updating product attributes" do
