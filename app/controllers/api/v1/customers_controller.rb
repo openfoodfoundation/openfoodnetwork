@@ -77,7 +77,8 @@ module Api
             :phone, :latitude, :longitude,
             :first_name, :last_name,
             :street_address_1, :street_address_2,
-            :postal_code, :locality, :region, :country,
+            :postal_code, :locality,
+            { region: [:name, :code], country: [:name, :code] },
           ]
         ).to_h
 
@@ -112,11 +113,11 @@ module Api
         end
 
         if address[:state_name].present?
-          address[:state] = Spree::State.find_by(name: address[:state_name])
+          address[:state] = Spree::State.find_by(name: address[:state_name][:name])
         end
 
         if address[:country].present?
-          address[:country] = Spree::Country.find_by(name: address[:country])
+          address[:country] = Spree::Country.find_by(name: address[:country][:name])
         end
 
         attributes["#{to}_attributes"] = address
