@@ -1168,6 +1168,8 @@ nb:
         msg: Denne bestillingsrunden er knyttet til %{n} åpne abonnementsordrer. Endring av denne dato vil ikke påvirke noen ordre som allerede er utført, men bør unngås hvis det er mulig. Er du sikker på at du vil fortsette?
         cancel: Avbryt
         proceed: Fortsett
+      status:
+        closed: stengt
     producer_properties:
       index:
         title: Produsentegenskaper

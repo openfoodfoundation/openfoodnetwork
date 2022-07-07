@@ -1029,6 +1029,8 @@ pt:
         msg: Este ciclo de encomendas está ligado a %{n} encomendas de subscrições abertas. Mudar esta data não afetará as encomendas que já foram colocadas, mas deve ser evitado se possível. Tem a certeza que quer continuar?
         cancel: Cancelar
         proceed: Continuar
+      status:
+        closed: fechado
     producer_properties:
       index:
         title: Propriedades do Produtor

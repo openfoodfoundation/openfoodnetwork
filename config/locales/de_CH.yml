@@ -1170,6 +1170,8 @@ de_CH:
         msg: Dieser Bestellzyklus enthält %{n} offene Abonnementbestellungen. Das Ändern des Datums wird bereits erteilte Bestellungen nicht beeinträchtigen, sollte wenn möglich aber vermieden werden. Sind Sie sicher, dass Sie fortfahren wollen?
         cancel: Abbrechen
         proceed: Fortfahren
+      status:
+        closed: geschlossen
     producer_properties:
       index:
         title: Produzenteneigenschaften

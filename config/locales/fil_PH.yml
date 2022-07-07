@@ -974,6 +974,8 @@ fil_PH:
         msg: ang order cycle na ito ay naka-link sa %{n}na bukas na nauulit na order. ang pagpapalit ng petsa ngayon ay hindi maaapektuhan ang iba pang order na nagawa na, ngunit kung maaari ay iwasang gawin. nais bang magpatuloy?
         cancel: kanselahin
         proceed: magpatuloy
+      status:
+        closed: sarado
     producer_properties:
       index:
         title: mga katangian ng producer

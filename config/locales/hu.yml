@@ -1152,6 +1152,8 @@ hu:
         msg: Ez a rendelési ciklus %{n} nyitott előfizetéses megrendeléshez kapcsolódik. A dátum módosítása nem érinti a már leadott rendeléseket, de lehetőség szerint kerülni kell. Biztosan folytatja?
         cancel: Megszünteti
         proceed: Folytassa
+      status:
+        closed: zárva
     producer_properties:
       index:
         title: A gyártó tulajdonságai

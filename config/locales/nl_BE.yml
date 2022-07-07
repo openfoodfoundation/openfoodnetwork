@@ -993,6 +993,8 @@ nl_BE:
         msg: Deze ordercyclus is gekoppeld aan %{n}openstaande abonnementsorders. Het wijzigen van deze datum heeft geen invloed op de reeds geplaatste bestellingen, maar moet indien mogelijk worden vermeden. Weet u zeker dat u verder wilt gaan?
         cancel: Annuleren
         proceed: Ga verder
+      status:
+        closed: gesloten
     producer_properties:
       index:
         title: Producenten Eigenschappen

@@ -1171,6 +1171,8 @@ fr_CA:
         msg: 'Ce cycle de vente est lié aux ordres d''abonnements %{n}  ouverts. Changer cette date n''affectera pas les ordres ayant déjà été passé, mais devrait être éviter si possible. Êtes-vous sûr de vouloir procéder? '
         cancel: Annuler
         proceed: Procéder
+      status:
+        closed: fermé
     producer_properties:
       index:
         title: Propriétés / labels du producteur

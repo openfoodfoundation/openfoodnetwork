@@ -1052,6 +1052,8 @@ pt_BR:
         msg: Esse ciclo de pedidos está vinculado a %{n}de pedidos abertos. Alterar essa data agora não afetará nenhum pedido que já tenha sido feito, mas deve ser evitado, se possível. Tem certeza de que deseja continuar?
         cancel: Cancelar
         proceed: Continuar
+      status:
+        closed: fechados
     producer_properties:
       index:
         title: Propriedades do produtor

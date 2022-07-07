@@ -1145,6 +1145,8 @@ it_CH:
         msg: 'Questo ciclo di richieste è connesso a %{n} gentili richieste aperte. Modificare questo dato ora non modificherà le gentili richieste che sono già state confermate, ma dovrebbe essere evitato per quanto possibile. Sei sicura/o di voler procedere? '
         cancel: Annulla
         proceed: Procedi
+      status:
+        closed: chiuso
     producer_properties:
       index:
         title: Proprietà produttore

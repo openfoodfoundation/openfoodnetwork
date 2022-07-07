@@ -1164,6 +1164,8 @@ ko:
         msg: 이 주문 주기는 %{n} 열린 구독 주문에 연결됩니다. 이 날짜를 지금 변경해도 이미 발주된 주문에는 영향을 미치지 않지만 가능하면 취소해야 합니다. 계속 진행하시겠습니까?
         cancel: 취소
         proceed: 진행하다
+      status:
+        closed: 휴무
     producer_properties:
       index:
         title: 생산자 속성

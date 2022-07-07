@@ -1063,6 +1063,8 @@ tr:
         msg: Bu sipariş dönemine ait %{n} adet üye siparişi var. Tarihin şimdi değiştirilmesi, önceden verilen siparişleri etkilemeyecektir, ancak mümkünse bunu yapmaktan kaçınılmalıdır. Devam etmek istediğinizden emin misiniz?
         cancel: İptal et
         proceed: İlerle
+      status:
+        closed: kapalı
     producer_properties:
       index:
         title: Üretici Özellikleri

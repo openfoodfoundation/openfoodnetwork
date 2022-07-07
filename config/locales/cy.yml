@@ -1168,6 +1168,8 @@ cy:
         msg: Mae'r cylch archebu hwn wedi'i gysylltu ag archebion tanysgrifio agored %{n}. Ni fydd newid y dyddiad hwn nawr yn effeithio ar unrhyw archebion a wnaethpwyd eisoes, ond dylid osgoi hyn os yn bosibl. Ydych chi'n siŵr eich bod chi am symud ymlaen?
         cancel: Canslo
         proceed: Ewch ymlaen
+      status:
+        closed: ar gau
     producer_properties:
       index:
         title: Manylion Cynhyrchwyr

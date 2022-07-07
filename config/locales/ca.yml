@@ -1105,6 +1105,8 @@ ca:
         msg: Aquest cicle de comanda està enllaçat amb %{n} comandes de subscripció obertes . Si canvieu aquesta data ara això no afectarà comandes que ja s'hagin realitzat però cal evitar-ho si és possible. Esteu segur que voleu continuar?
         cancel: Cancel·lar
         proceed: Procedeix
+      status:
+        closed: tancat
     producer_properties:
       index:
         title: Propietats de la productora

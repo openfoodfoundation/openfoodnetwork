@@ -1006,6 +1006,8 @@ es_CO:
         msg: Este ciclo de pedido está vinculado a %{n}pedidos de suscripción abiertos. Cambiar esta fecha ahora no afectará ningun pedido que ya se haya realizado pero se debe evitar si es posible. ¿Estás seguro que deseas continuar?
         cancel: Cancelar
         proceed: Proceder
+      status:
+        closed: cerrado
     producer_properties:
       index:
         title: Propiedades del productor

@@ -1140,6 +1140,8 @@ en_IE:
         msg: This order cycle is linked to %{n} open subscription orders. Changing this date now will not affect any orders which have already been placed, but should be avoided if possible. Are you sure you want to proceed?
         cancel: Cancel
         proceed: Proceed
+      status:
+        closed: closed
     producer_properties:
       index:
         title: Producer Properties

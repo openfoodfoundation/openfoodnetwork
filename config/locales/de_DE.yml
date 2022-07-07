@@ -1114,7 +1114,7 @@ de_DE:
         add_supplier: 'Lieferant hinzufügen'
         add_distributor: 'Verteilstelle hinzufügen'
       advanced_settings:
-        automatic_notifications: Automatische Benachrichtigungen
+        automatic_notifications: Produzenten automatisch benachrichtigen
         automatic_notifications_tip: Benachrichtigen Sie die Produzenten automatisch per E-Mail über in diesem Bestellzyklus erhaltene Bestellungen, wenn der Bestellzyklus schließt.
         title: Erweiterte Einstellungen
         choose_product_tip: Sie können die eingehenden und ausgehenden Produkte auf den Katalog nur von %{inventory} beschränken.
