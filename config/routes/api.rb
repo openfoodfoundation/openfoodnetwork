@@ -18,7 +18,7 @@ Openfoodnetwork::Application.routes.draw do
 
       resources :variants, :only => [:index]
 
-      resources :orders, only: [:index, :show] do
+      resources :orders, only: [:index, :show, :update] do
         member do
           put :capture
           put :ship

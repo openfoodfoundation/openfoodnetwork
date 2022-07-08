@@ -839,6 +839,9 @@ en:
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
         all: "All"
       select_variant: "Select a variant"
+      note:
+        note_label: "Note:"
+        no_note_present: "No note provided."
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
 
@@ -3796,6 +3799,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           from: "From"
           to: "Bill to"
           shipping: "Shipping"
+        note:
+          note_label: "Note:"
+          no_note_present: "No note provided."
         form:
           distribution_fields:
             title: "Distribution"
