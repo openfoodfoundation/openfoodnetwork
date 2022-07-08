@@ -241,6 +241,7 @@ ActiveRecord::Schema.define(version: 2022_06_21_230907) do
     t.integer "business_address_id"
     t.boolean "show_customer_names_to_suppliers", default: false, null: false
     t.string "visible", limit: 255, default: "public", null: false
+    t.string "whatsapp_phone", limit: 255
     t.index ["address_id"], name: "index_enterprises_on_address_id"
     t.index ["is_primary_producer", "sells"], name: "index_enterprises_on_is_primary_producer_and_sells"
     t.index ["name"], name: "index_enterprises_on_name", unique: true
