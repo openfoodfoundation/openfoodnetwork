@@ -63,6 +63,23 @@ $(document).ready(function() {
     });
   }
 
+  handle_tracking_delete = function(){
+    var link = $(this);
+    var shipment_number = link.data('shipment-number');
+    var tracking = ''
+    var url = Spree.url( Spree.routes.orders_api + "/" + order_number + "/shipments/" + shipment_number + ".json");
+
+    $.ajax({
+      type: "PUT",
+      url: url,
+      data: { shipment: { tracking: tracking } }
+    }).done(function( msg ) {
+      window.location.reload();
+    }).error(function( msg ) {
+      console.log(msg);
+    });
+  }
+
   handle_note_save = function(){
     var link = $(this);
     var note = link.parents('tbody').find('#note').val();
@@ -96,6 +113,7 @@ $(document).ready(function() {
   }
 
   $('[data-hook=admin_order_edit_form] a.save-tracking').click(handle_tracking_save);
+  $('[data-hook=admin_order_edit_form] a.delete-tracking').click(handle_tracking_delete);
   $('[data-hook=admin_order_edit_form] a.save-note').click(handle_note_save);
   $('[data-hook=admin_order_edit_form] a.delete-note').click(handle_note_delete);
 });
