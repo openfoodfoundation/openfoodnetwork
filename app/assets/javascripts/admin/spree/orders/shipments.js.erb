@@ -79,6 +79,23 @@ $(document).ready(function() {
     });
   }
 
+  handle_note_delete = function(){
+    var link = $(this);
+    var note = ''
+    var url = Spree.url( Spree.routes.orders_api + "/" + order_number);
+
+    $.ajax({
+      type: "PUT",
+      url: url,
+      data: { note: note }
+    }).done(function( msg ) {
+      window.location.reload();
+    }).error(function( msg ) {
+      console.log(msg);
+    });
+  }
+
   $('[data-hook=admin_order_edit_form] a.save-tracking').click(handle_tracking_save);
   $('[data-hook=admin_order_edit_form] a.save-note').click(handle_note_save);
+  $('[data-hook=admin_order_edit_form] a.delete-note').click(handle_note_delete);
 });
