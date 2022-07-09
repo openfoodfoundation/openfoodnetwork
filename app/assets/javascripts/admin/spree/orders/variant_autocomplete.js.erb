@@ -147,7 +147,12 @@ toggleTrackingEdit = function(){
 
 toggleNoteEdit = function(){
   var link = $(this);
+  let input = link.parents('tbody').find('#note')[0]
   link.parents('tbody').find('tr.edit-note').toggle();
+  // Set focus on input and
+  // put cursor at it's end
+  input.focus()
+  input.setSelectionRange(-1, -1)
   link.parents('tbody').find('tr.show-note').toggle();
 }
 
