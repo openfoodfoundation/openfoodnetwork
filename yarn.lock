@@ -1850,10 +1850,10 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@orchidjs/sifter@^0.9.1":
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/@orchidjs/sifter/-/sifter-0.9.1.tgz#20580cb75bcc1de3c9b9c021e0e546eb59ff2813"
-  integrity sha512-bdW8vKTlWXfoAvUud0a4OeVPrtdvHH8gTshKqndzxAI6bXGPBejgry2wvIz0OZOqOuWuFAJWgNCjq/6S85U77A==
+"@orchidjs/sifter@^0.9.2":
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/@orchidjs/sifter/-/sifter-0.9.2.tgz#86c84589fe42c46bb1f5ec1ab8f747a4c928a83b"
+  integrity sha512-8eR1aNWPhDt+cqOevGUajriiZbMzs6nGGdErUjSr99vMAxwMBRztnJu72OT8M7emyHTVjBB8BPjj4rJIoXQgKA==
 
 "@rails/webpacker@5.4.3":
   version "5.4.3"
@@ -11906,11 +11906,11 @@ toidentifier@1.0.0:
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
 
 tom-select@^2.0.0:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/tom-select/-/tom-select-2.0.3.tgz#3fe57cf5da82be94b4083fb44c9edda5f198cc6e"
-  integrity sha512-IHcVHVb4/+I+4pAuXjEFVoH97mOvjp8CQ45PemnapcoRY46LqmH07hBwvRIIEznsXqBlFgZH7Uw7Cjh45mNlTA==
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/tom-select/-/tom-select-2.1.0.tgz#93316cf042a69d9462027b8d6380f18f2a002e9d"
+  integrity sha512-NtE8kACBlMv4QaDakYfnXtEAgM/AVmM7Hw5FNQmij0uwgRgyXC/2kpNJPD1AdT5q/l6mUNkTnInQpTmrwX/tWQ==
   dependencies:
-    "@orchidjs/sifter" "^0.9.1"
+    "@orchidjs/sifter" "^0.9.2"
 
 tough-cookie@^4.0.0:
   version "4.0.0"
