@@ -780,6 +780,9 @@ de_DE:
         variants_without_unit_value: "WARNUNG: Manche Produktvarianten haben keine Einheit"
         all: "Alle"
       select_variant: "Wählen Sie eine Produktvariante"
+      note:
+        note_label: "Anmerkung:"
+        no_note_present: "Keine Anmerkung vorhanden."
     enterprise:
       select_outgoing_oc_products_from: Wählen Sie die im Bestellzyklus ausgehenden Produkte von
     enterprises:
@@ -828,6 +831,9 @@ de_DE:
           email_address_tip: "Diese E-Mail-Adresse wird in Ihrem öffentlichen Profil angezeigt."
           phone: Telefonnummer
           phone_placeholder: z. B. +49 40 123 456
+          whatsapp_phone: WhatsApp-Telefonnummer
+          whatsapp_phone_placeholder: z. B. +49 170 1234567
+          whatsapp_phone_tip: "Diese Telefonnummer wird in Ihrem öffentlichen Profil als Link zu WhatsApp angezeigt."
           website: Homepage
           website_placeholder: z. B. www.truffles.com
         enterprise_fees:
@@ -1163,6 +1169,7 @@ de_DE:
         customer_instructions_placeholder: Abhol-/Lieferinformationen
         products: Produkte
         fees: Gebühren
+        tags: Stichwörter
       destroy_errors:
         orders_present: Dieser Bestellzyklus wurde von einem Kunden ausgewählt und kann nicht gelöscht werden. Um weitere Verwendung zu verhindern, können Sie ihn stattdessen schließen.
         schedule_present: Dieser Bestellzyklus ist mit einem Zeitplan verknüpft und kann nicht gelöscht werden. Bitte heben Sie zuerst die Verknüpfung auf oder löschen Sie den Zeitplan.
@@ -2209,7 +2216,10 @@ de_DE:
         contact_field_placeholder: "Vorname Nachname"
         contact_field_required: "Bitte geben Sie einen Hauptansprechpartner ein."
         phone_field: "Telefonnummer (optional)"
+        whatsapp_phone_field: "WhatsApp-Telefonnummer"
+        whatsapp_phone_tooltip: "Diese Telefonnummer wird in Ihrem öffentlichen Profil als Link zu WhatsApp angezeigt."
         phone_field_placeholder: "z. B. +49 40 123 456"
+        whatsapp_phone_field_placeholder: "z. B. +49 170 1234567"
       type:
         title: "Art des Profils"
         headline: "Wählen Sie bitte die Profilart für %{enterprise} aus!"
@@ -3329,7 +3339,7 @@ de_DE:
     split: "Teilen"
     delete: "Löschen"
     cannot_set_shipping_method_without_address: "Lieferoption kann nicht festgelegt werden, bis Kundendaten angegeben werden."
-    no_tracking_present: "Keine Details zur Sendungsverfolgung angegeben."
+    no_tracking_present: "Keine Details zur Sendungsverfolgung vorhanden."
     tracking: "Sendungsverfolgung"
     tracking_number: "Sendungscode"
     order_total: "Bestellung insgesamt"
@@ -3628,6 +3638,9 @@ de_DE:
           from: "Von"
           to: "Rechnungsempfänger"
           shipping: "Lieferung"
+        note:
+          note_label: "Anmerkung:"
+          no_note_present: "Keine Anmerkung vorhanden."
         form:
           distribution_fields:
             title: "Verteilung"
