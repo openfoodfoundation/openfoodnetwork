@@ -503,6 +503,7 @@ en_GB:
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
         enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
+        enterprise_number_required_on_invoices?: "Require a company number to generate an invoice?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -779,6 +780,9 @@ en_GB:
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
         all: "All"
       select_variant: "Select a variant"
+      note:
+        note_label: "Note:"
+        no_note_present: "No note provided."
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
     enterprises:
@@ -827,6 +831,9 @@ en_GB:
           email_address_tip: "This email address will be displayed in your public profile"
           phone: Phone
           phone_placeholder: eg. 98 7654 3210
+          whatsapp_phone: WhatsApp phone number
+          whatsapp_phone_placeholder: eg. +44 7545 123123
+          whatsapp_phone_tip: "This number will be displayed in your public profile to be opened as a WhatsApp link."
           website: Website
           website_placeholder: eg. www.truffles.co.uk
         enterprise_fees:
@@ -1160,6 +1167,7 @@ en_GB:
         customer_instructions_placeholder: Pick-up or delivery notes
         products: Products
         fees: Fees
+        tags: Tags
       destroy_errors:
         orders_present: That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead.
         schedule_present: That order cycle is linked to a schedule and cannot be deleted. Please unlink or delete the schedule first.
@@ -1170,6 +1178,9 @@ en_GB:
         cancel: Cancel
         proceed: Proceed
       status:
+        undated: undated
+        upcoming: upcoming
+        open: open
         closed: closed
     producer_properties:
       index:
@@ -2203,7 +2214,10 @@ en_GB:
         contact_field_placeholder: "Contact Name"
         contact_field_required: "Please enter a primary contact."
         phone_field: "Phone number"
+        whatsapp_phone_field: "WhatsApp phone number"
+        whatsapp_phone_tooltip: "This number will be displayed in your public profile to be opened as a WhatsApp link."
         phone_field_placeholder: "eg. 07123123123"
+        whatsapp_phone_field_placeholder: "eg. +44 7545 123123"
       type:
         title: "Type"
         headline: "Last step to add %{enterprise}!"
@@ -3621,6 +3635,9 @@ en_GB:
           from: "From"
           to: "Bill to"
           shipping: "Shipping"
+        note:
+          note_label: "Note:"
+          no_note_present: "No note provided."
         form:
           distribution_fields:
             title: "Distribution"
