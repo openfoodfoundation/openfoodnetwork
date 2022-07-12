@@ -241,5 +241,6 @@ module Openfoodnetwork
 
     config.active_storage.service = ENV["S3_BUCKET"].present? ? :amazon : :local
     config.active_storage.content_types_to_serve_as_binary -= ["image/svg+xml"]
+    config.active_storage.variable_content_types += ["image/svg+xml"]
   end
 end
