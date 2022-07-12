@@ -7,7 +7,7 @@ module Api
 
       def update_product_image
         product = Spree::Product.find(params[:product_id])
-        authorize! :update, @product
+        authorize! :update, product
 
         image = product.images.first || Spree::Image.new(
           viewable_id: product.master.id,
