@@ -3638,6 +3638,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     # TODO: remove 'account_updated' key once we get to Spree 2.0
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
+    show_api_key_view_toggled: "Show API key view has been changed!"
     my_account: "My account"
     date: "Date"
     time: "Time"
@@ -4192,10 +4193,16 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         connection_failed: "Could not connect to PayPal."
         generic_error: "PayPal failed. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Regenerate Key"
+        title: API key
+      developer_settings:
+        title: Developer Settings
       form:
         account_settings: Account Settings
       show:
         tabs:
+          developer_settings: Developer Settings
           orders: Orders
           cards: Credit Cards
           transactions: Transactions
@@ -4256,6 +4263,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       shipment:
         cannot_ready: "Cannot ready shipment."
       invalid_taxonomy_id: "Invalid taxonomy id."
+      toggle_api_key_view: "Show API key view for user"
     activerecord:
       models:
         spree/payment:

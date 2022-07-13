@@ -18,6 +18,7 @@ Spree::Core::Engine.routes.draw do
              :path_names => { :sign_out => 'logout' },
              :path_prefix => :user
 
+  resources :api_keys, :only => [:create, :destroy]
   resources :users, :only => [:edit, :update]
 
   devise_scope :spree_user do
@@ -111,13 +112,6 @@ Spree::Core::Engine.routes.draw do
         member do
           put :fire
         end
-      end
-    end
-
-    resources :users do
-      member do
-        put :generate_api_key
-        put :clear_api_key
       end
     end
 

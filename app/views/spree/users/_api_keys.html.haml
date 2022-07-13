@@ -1,0 +1,7 @@
+%hr
+%h3= t('.title')
+%br
+%p
+  = text_field_tag :api_key, @user.spree_api_key, disabled: true, class: 'title'
+= form_tag spree.api_keys_path(@user), method: :post, class: 'inline' do
+  = button_tag(t('.regenerate_key'), type: 'submit', class: "button primary")

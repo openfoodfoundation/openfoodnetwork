@@ -104,6 +104,27 @@ describe "Managing users" do
           expect(page).to have_content("Account updated")
           expect(page).to have_unchecked_field "Disabled"
         end
+
+        it "should toggle the api key generation view" do
+          user = Spree::User.find_by(email: "a@example.com")
+
+          expect(page).to have_content "NO KEY"
+          find_button("Generate API key").click
+          expect(page).to have_content("Key generated")
+
+          expect(page).to have_unchecked_field "Show API key view for user"
+          expect(user.show_api_key_view).to be_falsey
+
+          check "Show API key view for user"
+          expect(page).to have_content("Show API key view has been changed!")
+          expect(page).to have_checked_field "Show API key view for user"
+          expect(user.reload.show_api_key_view).to be_truthy
+
+          uncheck "Show API key view for user"
+          expect(page).to have_content("Show API key view has been changed!")
+          expect(page).to have_unchecked_field "Show API key view for user"
+          expect(user.reload.show_api_key_view).to be_falsey
+        end
       end
     end
 
