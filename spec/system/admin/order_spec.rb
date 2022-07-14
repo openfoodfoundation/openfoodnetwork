@@ -573,7 +573,7 @@ describe '
         end
       end
 
-      it "can edit tracking number" do
+      it "can edit and delete tracking number" do
         test_tracking_number = "ABCCBA"
         expect(page).to_not have_content test_tracking_number
 
@@ -582,9 +582,12 @@ describe '
         find('.save-tracking').click
 
         expect(page).to have_content test_tracking_number
+
+        find('.delete-tracking.icon-trash').click
+        expect(page).to_not have_content test_tracking_number
       end
 
-      it "can edit note" do
+      it "can edit and delete note" do
         test_note = "this is a note"
         expect(page).to_not have_content test_note
 
@@ -593,6 +596,9 @@ describe '
         find('.save-note').click
 
         expect(page).to have_content test_note
+
+        find('.delete-note.icon-trash').click
+        expect(page).to_not have_content test_note
       end
 
       it "viewing shipping fees" do

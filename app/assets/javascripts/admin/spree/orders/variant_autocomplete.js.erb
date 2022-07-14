@@ -141,14 +141,26 @@ doAdjustItems = function(shipment_number, variant_id, quantity, inventory_units,
 
 toggleTrackingEdit = function(){
   var link = $(this);
-  link.parents('tbody').find('tr.edit-tracking').toggle();
-  link.parents('tbody').find('tr.show-tracking').toggle();
+  var parent_node = link.parents('tbody')
+  let input = parent_node.find('#tracking')[0]
+  parent_node.find('tr.edit-tracking').toggle();
+  // Set focus on input and
+  // put cursor at it's end
+  input.focus()
+  input.setSelectionRange(-1, -1)
+  parent_node.find('tr.show-tracking').toggle();
 }
 
 toggleNoteEdit = function(){
   var link = $(this);
-  link.parents('tbody').find('tr.edit-note').toggle();
-  link.parents('tbody').find('tr.show-note').toggle();
+  var parent_node = link.parents('tbody')
+  let input = parent_node.find('#note')[0]
+  parent_node.find('tr.edit-note').toggle();
+  // Set focus on input and
+  // put cursor at it's end
+  input.focus()
+  input.setSelectionRange(-1, -1)
+  parent_node.find('tr.show-note').toggle();
 }
 
 toggleMethodEdit = function(){
