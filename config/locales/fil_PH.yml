@@ -965,6 +965,7 @@ fil_PH:
         customer_instructions_placeholder: tala para sa pag-pick-up o pagdeliver
         products: mga produkto
         fees: Fees
+        tags: tags
       destroy_errors:
         orders_present: ang order cycle ay napili na ng isang customer at hindi na maaaring alisin. upang maiwasan na ma-access muli, isarado muna ito.
         schedule_present: ang order cycle na ito ay naka-link sa isang iskedyul at hindi maaaring alisin. maaaring tanggalin muna ang link o alisin muna ang iskedyul.

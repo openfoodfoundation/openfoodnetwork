@@ -1096,6 +1096,7 @@ ca:
         customer_instructions_placeholder: Notes de recollida o de lliurament
         products: Productes
         fees: Comissions
+        tags: Etiquetes
       destroy_errors:
         orders_present: Una consumidora ha seleccionat aquest Cicle de Comanda i no es pot esborrar. Per evitar que les consumidores hi accedeixin, tanqueu-lo.
         schedule_present: Aquest cicle de comanda està vinculat a una programació i no es pot esborrar. Desenllaça o suprimeix primer la programació.

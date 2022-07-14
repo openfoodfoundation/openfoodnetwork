@@ -1143,6 +1143,7 @@ hu:
         customer_instructions_placeholder: Átvételi vagy szállítólevelek
         products: Termékek
         fees: Díjak
+        tags: Címkék
       destroy_errors:
         orders_present: Ezt a rendelési ciklust egy vásárló választotta ki, és nem törölhető. Hogy az ügyfelek ne férhessenek hozzá", inkább zárd be.
         schedule_present: Ez a rendelési ciklus ütemezéshez van kötve, és nem törölhető. Először szüntesse meg vagy törölje az ütemezést.

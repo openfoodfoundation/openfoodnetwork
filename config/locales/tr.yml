@@ -1054,6 +1054,7 @@ tr:
         customer_instructions_placeholder: Teslimat / Gönderim Notları
         products: Ürünler
         fees: ücretler
+        tags: ETİKETLER
       destroy_errors:
         orders_present: Bu sipariş dönemine ait bir müşteri talebi var ve bu sebeple silinemez. Müşterilerin erişimini önlemek için silmek yerine sipariş dönemini kapatmayı tercih edin.
         schedule_present: Bu sipariş dönemi bir takvimle bağlantılı ve silinemez. Lütfen önce takvim  bağlantısını kaldırın veya takvimi silin.

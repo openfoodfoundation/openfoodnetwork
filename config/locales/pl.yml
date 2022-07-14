@@ -979,6 +979,7 @@ pl:
         customer_instructions_placeholder: Dowody odbioru lub dostawy
         products: Produkty
         fees: Opłaty
+        tags: Tagi
       destroy_errors:
         orders_present: Ten cykl zamówień został wybrany przez klienta i nie można go usunąć. Aby uniemożliwić klientom dostęp do niego, zamknij go.
         schedule_present: Ten cykl zamówień jest powiązany z harmonogramem i nie można go usunąć. Najpierw odłącz lub usuń harmonogram.

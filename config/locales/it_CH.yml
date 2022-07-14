@@ -1136,6 +1136,7 @@ it_CH:
         customer_instructions_placeholder: Note per ritiro / consegna
         products: Prodotti
         fees: Tariffe
+        tags: Etichette
       destroy_errors:
         orders_present: Questo ciclo di richieste è stato selezionato da un cliente e non può essere cancellato. Per prevenire altri accessi da parte dei clienti, per favore chiudi il ciclo.
         schedule_present: Questo ciclo di richieste è connesso a un programma e non può essere cancellato. Puoi eliminare il link o cancellare il programma prima.

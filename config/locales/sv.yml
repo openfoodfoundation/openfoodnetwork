@@ -564,6 +564,7 @@ sv:
         customer_instructions_placeholder: Hämtnings eller leverans meddelanden
         products: Produkter
         fees: Avgifter
+        tags: Taggar
       date_warning:
         cancel: Avbryt
     producer_properties:

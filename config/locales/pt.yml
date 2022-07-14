@@ -1020,6 +1020,7 @@ pt:
         customer_instructions_placeholder: Notas de entrega ou levantamento
         products: Produtos
         fees: Taxas
+        tags: Etiquetas
       destroy_errors:
         orders_present: Esse ciclo de encomendas foi selecionado por um/a consumidor/a e não pode ser apagado. Para evitar que os consumidores acedam, por favor feche-o.
         schedule_present: Esse ciclo de encomendas está ligado a um horário e não pode ser apagado. Por favor elimine a ligação ou apague primeiro o horário.

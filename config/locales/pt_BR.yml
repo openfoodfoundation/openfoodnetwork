@@ -1043,6 +1043,7 @@ pt_BR:
         customer_instructions_placeholder: Notas de entrega ou retirada
         products: Produtos
         fees: Taxas
+        tags: Tags
       destroy_errors:
         orders_present: Esse ciclo de pedidos foi selecionado por um cliente e não pode ser excluído. Para impedir que os clientes acessem, feche-o.
         schedule_present: Esse ciclo de pedidos está vinculado a um cronograma e não pode ser excluído. Desvincule ou exclua o cronograma primeiro.

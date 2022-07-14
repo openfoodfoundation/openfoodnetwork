@@ -1161,6 +1161,7 @@ fr_CH:
         customer_instructions_placeholder: Commentaires pour le retrait / la livraison
         products: Produits
         fees: Commissions
+        tags: Tags
       destroy_errors:
         orders_present: Ce cycle de vente a déjà été utilisé par un acheteur et ne peut être supprimé. Pour empêcher aux acheteurs d'y accéder, veuillez plutôt le fermer.
         schedule_present: Ce cycle de vente est lié à un rythme d'abonnement et ne peut pas être supprimé. Veuillez d'abord supprimer ce lien ou supprimer le rythme d'abonnement.

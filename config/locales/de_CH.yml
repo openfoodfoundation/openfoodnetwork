@@ -1161,6 +1161,7 @@ de_CH:
         customer_instructions_placeholder: Abhol-/Lieferinformationen
         products: Produkte
         fees: Gebühren
+        tags: Stichwörter
       destroy_errors:
         orders_present: Dieser Bestellzyklus wurde von einem Kunden ausgewählt und kann nicht gelöscht werden. Um weitere Verwendung zu verhindern, können Sie ihn stattdessen schließen.
         schedule_present: Dieser Bestellzyklus ist mit einem Zeitplan verknüpft und kann nicht gelöscht werden. Bitte heben Sie zuerst die Verknüpfung auf oder löschen Sie den Zeitplan.

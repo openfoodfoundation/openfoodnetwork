@@ -997,6 +997,7 @@ es_CO:
         customer_instructions_placeholder: Notas de la recogida o entrega
         products: Productos
         fees: Comisiones
+        tags: Etiquetas
       destroy_errors:
         orders_present: Ese ciclo de pedido ha sido seleccionado por un cliente y no puede ser eliminado. Para evitar que los clientes accedan a él, ciérrelo.
         schedule_present: Ese ciclo de pedido está vinculado a una programación y no puede ser eliminado. Desvincula o elimina la programación primero.

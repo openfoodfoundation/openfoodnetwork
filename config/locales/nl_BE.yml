@@ -984,6 +984,7 @@ nl_BE:
         customer_instructions_placeholder: Afhaal of leveringsopmerkingen
         products: Producten
         fees: Vergoedingen
+        tags: Tags
       destroy_errors:
         orders_present: Die ordercyclus is door een klant geselecteerd en kan niet worden verwijderd. Om te voorkomen dat klanten er toegang toe hebben, verzoeken wij u deze in plaats daarvan te sluiten.
         schedule_present: Deze ordercyclus is gekoppeld aan een schema en kan niet worden verwijderd. Ontkoppel of verwijder eerst de planning.

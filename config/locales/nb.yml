@@ -1159,6 +1159,7 @@ nb:
         customer_instructions_placeholder: Hente- eller leveringsmerknader
         products: Produkter
         fees: Avgifter
+        tags: Merkelapper
       destroy_errors:
         orders_present: Denne bestillingsrunden er valgt av en kunde og kan ikke slettes. For å hindre at kundene får tilgang til det, må du lukke den i stedet.
         schedule_present: Denne bestillingsrunden er knyttet til en tidsplan og kan ikke slettes. Vennligst fjern koblingen eller slett tidsplanen først.
