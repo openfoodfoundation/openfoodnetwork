@@ -780,6 +780,9 @@ it:
         variants_without_unit_value: "ATTENZIONE: Alcune varianti non hanno il valore dell'unità"
         all: "Tutti"
       select_variant: "Seleziona una variante"
+      note:
+        note_label: "Note:"
+        no_note_present: "Nessuna nota fornita."
     enterprise:
       select_outgoing_oc_products_from: Seleziona prodotti OC in uscita da
     enterprises:
@@ -828,6 +831,9 @@ it:
           email_address_tip: "Questo indirizzo mail sarà visualizzato nel tuo profilo pubblico"
           phone: Telefono
           phone_placeholder: es. 02 4560 3210
+          whatsapp_phone: Numero WhatsApp
+          whatsapp_phone_placeholder: es +39 333 123456
+          whatsapp_phone_tip: "Questo numero sarà visualizzato nel tuo profilo pubblico e potrà essere aperto come link WhatsApp"
           website: Sito web
           website_placeholder: es. www.truffles.com
         enterprise_fees:
@@ -1162,6 +1168,7 @@ it:
         customer_instructions_placeholder: Note per ritiro / consegna
         products: Prodotti
         fees: Tariffe
+        tags: Etichette
       destroy_errors:
         orders_present: Questo ciclo di richieste è stato selezionato da un cliente e non può essere cancellato. Per prevenire altri accessi da parte dei clienti, per favore chiudi il ciclo.
         schedule_present: Questo ciclo di richieste è connesso a un programma e non può essere cancellato. Puoi eliminare il link o cancellare il programma prima.
@@ -2208,7 +2215,10 @@ it:
         contact_field_placeholder: "Nome contatto"
         contact_field_required: "E' necessario inserire un contatto principale."
         phone_field: "Numero di telefono"
+        whatsapp_phone_field: "Numero WhatsApp"
+        whatsapp_phone_tooltip: "Questo numero sarà visualizzato nel tuo profilo pubblico e potrà essere aperto come link WhatsApp"
         phone_field_placeholder: "es. (03) 1234 5678"
+        whatsapp_phone_field_placeholder: "es +39 333 123456"
       type:
         title: "Tipo"
         headline: "Ultimo passo per aggiungere %{enterprise}!"
@@ -2589,7 +2599,7 @@ it:
   report_header_distributor_postcode: CAP distributore
   report_header_delivery_address: Indirizzo consegna
   report_header_delivery_postcode: CAP consegna
-  report_header_bulk_unit_size: Misura dell'unità a granelli
+  report_header_bulk_unit_size: Quantità minima per Acquisto di Gruppo
   report_header_weight: Peso
   report_header_sum_total: Somma Tolale
   report_header_date_of_order: Data Richiesta
@@ -3647,6 +3657,9 @@ it:
           from: "Da"
           to: "Pagamento a"
           shipping: "Spedizione"
+        note:
+          note_label: "Note:"
+          no_note_present: "Nessuna nota fornita."
         form:
           distribution_fields:
             title: "Distribuzione"
@@ -3811,7 +3824,7 @@ it:
           product_category: Categoria prodotto
         group_buy_form:
           group_buy: "Acquisto di gruppo?"
-          bulk_unit_size: Dimensione unità - tabella
+          bulk_unit_size: Quantità minima per Acquisto di Gruppo
         display_as:
           display_as: Visualizza come
       reports:

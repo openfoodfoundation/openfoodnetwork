@@ -780,6 +780,9 @@ fr:
         variants_without_unit_value: "ATTENTION: certaines variantes n'ont pas de nombre d'unités"
         all: "Tous"
       select_variant: "Rechercher un produit et sélectionner une variante"
+      note:
+        note_label: "Note :"
+        no_note_present: "Aucune note n'a été ajoutée."
     enterprise:
       select_outgoing_oc_products_from: Sélectionner les produits sortants pour le cycle de vente parmi
     enterprises:
@@ -828,6 +831,9 @@ fr:
           email_address_tip: "Cette adresse email sera affichée sur votre profil public"
           phone: n° téléphone
           phone_placeholder: 'ex: 06 13 24 35 46'
+          whatsapp_phone: Numéro WhatsApp
+          whatsapp_phone_placeholder: ex. +336 00 00 00 00
+          whatsapp_phone_tip: "Ce numéro sera ajouté sur votre profil public pour être ouvert en tant que lien WhatsApp."
           website: Site internet
           website_placeholder: 'ex: www.maferme.fr'
         enterprise_fees:
@@ -1163,6 +1169,7 @@ fr:
         customer_instructions_placeholder: Commentaires pour le retrait / la livraison
         products: Produits
         fees: Commissions
+        tags: Tags
       destroy_errors:
         orders_present: Ce cycle de vente a déjà été utilisé par un acheteur et ne peut être supprimé. Pour empêcher aux acheteurs d'y accéder, veuillez plutôt le fermer.
         schedule_present: Ce cycle de vente est lié à un rythme d'abonnement et ne peut pas être supprimé. Veuillez d'abord supprimer ce lien ou supprimer le rythme d'abonnement.
@@ -2209,7 +2216,10 @@ fr:
         contact_field_placeholder: "Nom du contact principal"
         contact_field_required: "Vous devez saisir une personne référente"
         phone_field: "Numéro de téléphone"
+        whatsapp_phone_field: "Numéro WhatsApp"
+        whatsapp_phone_tooltip: "Ce numéro sera ajouté sur votre profil public pour être ouvert en tant que lien WhatsApp."
         phone_field_placeholder: "ex : 06 24 53 26 53"
+        whatsapp_phone_field_placeholder: "ex. +336 00 00 00 00"
       type:
         title: "Catégorie"
         headline: "Dites-nous en un peu plus sur %{enterprise}"
@@ -3672,6 +3682,9 @@ fr:
           from: "De"
           to: "Facturer à"
           shipping: "Envoi"
+        note:
+          note_label: "Note :"
+          no_note_present: "Aucune note n'a été ajoutée."
         form:
           distribution_fields:
             title: "Distribution"
