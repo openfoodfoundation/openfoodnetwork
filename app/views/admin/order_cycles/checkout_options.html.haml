@@ -3,8 +3,8 @@
 - content_for :page_title do
   = t :edit_order_cycle
 
-- shared_payment_methods = order_cycle_shared_payment_methods(@order_cycle)
-- shared_shipping_methods = order_cycle_shared_shipping_methods(@order_cycle)
+- payment_methods = order_cycle_distributors_payment_methods(@order_cycle)
+- shipping_methods = order_cycle_distributors_shipping_methods(@order_cycle)
 
 = form_for [main_app, :admin, @order_cycle], html: { class: "order_cycle" } do |f|
 
@@ -15,66 +15,58 @@
 
   = hidden_field_tag "order_cycle[selected_shipping_method_ids][]", ""
 
-  %table.checkout-options
-    %thead
-      %tr
-        %th= t('.distributor')
-        %th= t('.shipping_methods')
-        %th= t('.payment_methods')
-      - @order_cycle.distributors.each do |distributor|
-        - payment_methods = @order_cycle.attachable_payment_methods.where("distributor_id = ?", distributor.id) -  shared_payment_methods
-        - shipping_methods = @order_cycle.attachable_shipping_methods.where("distributor_id = ?", distributor.id) - shared_shipping_methods
-        %tr
-          %td= distributor.name
-          %td
-            - shipping_methods.each do |shipping_method|
-              %p
-                %label
-                  = check_box_tag "order_cycle[selected_shipping_method_ids][]",
-                      shipping_method.id, @order_cycle.shipping_methods.include?(shipping_method),
-                      id: "order_cycle_selected_shipping_method_ids_#{shipping_method.id}"
-                  = shipping_method.name
-            - distributor.shipping_methods.backend.each do |shipping_method|
-              %label.disabled
-                = check_box_tag nil, nil, false, disabled: true
-                = shipping_method.name
-                = "(#{t('.back_end')})"
-            - if distributor.shipping_methods.frontend.none?
-              %p
-                = t('.no_shipping_methods')
-          %td
-            - if distributor.payment_methods.available(:both).any?
-              %ul
-                - payment_methods.each do |payment_method|
-                  %li= payment_method.name
-            - else
-              %p
-                = t('.no_payment_methods')
-      - if shared_payment_methods.any? || shared_shipping_methods.any?
-        %tr
-          %td= t('.shared')
-          %td
-            - shared_shipping_methods.each do |shared_shipping_method|
-              %p
-                %label
-                  = check_box_tag "order_cycle[selected_shipping_method_ids][]",
-                      shared_shipping_method.id, @order_cycle.shipping_methods.include?(shared_shipping_method),
-                      id: "order_cycle_selected_shipping_method_ids_#{shared_shipping_method.id}"
-                  = shared_shipping_method.name
-              %p
-                &mdash;
-                %em
-                  = shared_shipping_method.distributors.where(id: @order_cycle.distributor_ids).map(&:name).join(", ")
-          %td
-            - if shared_payment_methods.any?
-              %ul
-                - shared_payment_methods.each do |shared_payment_method|
-                  %li
-                    = shared_payment_method.name
-                    %p
+  .row
+    .three.columns
+      &nbsp;
+    .ten.columns
+      %table.checkout-options
+        %thead
+          %tr
+            %th{ colspan: 2 }= t('.shipping_methods')
+          %tr{ "data-controller": "select-all" }
+            %td.text-center
+              %label
+                = check_box_tag "bla", nil, shipping_methods == @order_cycle.shipping_methods, { "data-action": "change->select-all#toggleAll", "data-select-all-target": "all" }
+                = "Select all"
+            %td
+              - if shipping_methods.any?
+                - shipping_methods.each do |shipping_method|
+                  %p
+                    %label{ class: ("disabled" if shipping_method.backend?) }
+                      = check_box_tag "order_cycle[selected_shipping_method_ids][]",
+                          shipping_method.id, @order_cycle.shipping_methods.include?(shipping_method),
+                          disabled: shipping_method.backend?,
+                          id: "order_cycle_selected_shipping_method_ids_#{shipping_method.id}",
+                          data: ({ "action" => "change->select-all#toggleCheckbox", "select-all-target" => "checkbox" } unless shipping_method.backend?)
+                      = shipping_method.name
+                      - if shipping_method.backend?
+                        = "(#{t('.back_end')})"
+                    - if @order_cycle.distributors.many?
                       &mdash;
-                      %em
-                        = shared_payment_method.distributors.where(id: @order_cycle.distributor_ids).map(&:name).join(", ")
+                      %small
+                        %em
+                          = shipping_method.distributors.map(&:name).join(", ")
+              - else
+                %p
+                  = t('.no_shipping_methods')
+          %tr
+            %th{ colspan: 2 }= t('.payment_methods')
+          %tr
+            %td
+            %td
+              - if payment_methods.any?
+                %ul
+                  - payment_methods.each do |payment_method|
+                    %li
+                      = payment_method.name
+                      - if @order_cycle.distributors.many?
+                        &mdash;
+                        %small
+                          %em
+                            = payment_method.distributors.map(&:name).join(", ")
+              - else
+                %p
+                  = t('.no_payment_methods')
 
   %div#save-bar
     %div.container
