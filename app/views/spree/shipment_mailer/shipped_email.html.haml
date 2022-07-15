@@ -14,7 +14,7 @@
     = item.variant.options_text
     %br
 
-- if @shipment.tracking
+- if @shipment.tracking.present?
   %p.lead
     = t('.track_information', tracking: @shipment.tracking)
 
