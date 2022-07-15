@@ -32,14 +32,14 @@
               - if shipping_methods.any?
                 - shipping_methods.each do |shipping_method|
                   %p
-                    %label{ class: ("disabled" if shipping_method.backend?) }
+                    %label{ class: ("disabled" unless shipping_method.frontend?) }
                       = check_box_tag "order_cycle[selected_shipping_method_ids][]",
                           shipping_method.id, @order_cycle.shipping_methods.include?(shipping_method),
-                          disabled: shipping_method.backend?,
+                          disabled: !shipping_method.frontend?,
                           id: "order_cycle_selected_shipping_method_ids_#{shipping_method.id}",
-                          data: ({ "action" => "change->select-all#toggleCheckbox", "select-all-target" => "checkbox" } unless shipping_method.backend?)
+                          data: ({ "action" => "change->select-all#toggleCheckbox", "select-all-target" => "checkbox" } if shipping_method.frontend?)
                       = shipping_method.name
-                      - if shipping_method.backend?
+                      - unless shipping_method.frontend?
                         = "(#{t('.back_end')})"
                     - if @order_cycle.distributors.many?
                       &mdash;
