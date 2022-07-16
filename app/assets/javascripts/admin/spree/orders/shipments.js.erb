@@ -69,15 +69,19 @@ $(document).ready(function() {
     var tracking = ''
     var url = Spree.url( Spree.routes.orders_api + "/" + order_number + "/shipments/" + shipment_number + ".json");
 
-    $.ajax({
-      type: "PUT",
-      url: url,
-      data: { shipment: { tracking: tracking } }
-    }).done(function( msg ) {
-      window.location.reload();
-    }).error(function( msg ) {
-      console.log(msg);
-    });
+    displayDeleteAlert(function(choice) {
+      if (choice) {
+        $.ajax({
+          type: "PUT",
+          url: url,
+          data: { shipment: { tracking: tracking } }
+        }).done(function( msg ) {
+          window.location.reload();
+        }).error(function( msg ) {
+          console.log(msg);
+        });
+      }
+    }); 
   }
 
   handle_note_save = function(){
@@ -100,16 +104,37 @@ $(document).ready(function() {
     var link = $(this);
     var note = ''
     var url = Spree.url( Spree.routes.orders_api + "/" + order_number);
+    displayDeleteAlert(function(choice) {
+      if (choice) {
+        $.ajax({
+          type: "PUT",
+          url: url,
+          data: { note: note }
+        }).done(function( msg ) {
+          window.location.reload();
+        }).error(function( msg ) {
+          console.log(msg);
+        });
+      }
+    }); 
+    return false;
+  }
 
-    $.ajax({
-      type: "PUT",
-      url: url,
-      data: { note: note }
-    }).done(function( msg ) {
-      window.location.reload();
-    }).error(function( msg ) {
-      console.log(msg);
+  displayDeleteAlert = function(callback) {
+    i18nKey = "are_you_sure";
+    $('#custom-confirm .message').html(
+      ` ${t(i18nKey)}
+              <div class="form">
+              </div>`);
+    $('#custom-confirm button.confirm').unbind( "click" ).click(() => {
+      $('#custom-confirm').hide();
+      callback(true);
     });
+    $('#custom-confirm button.cancel').click(() => {
+      $('#custom-confirm').hide();
+      callback(false)
+    });
+    $('#custom-confirm').show();
   }
 
   $('[data-hook=admin_order_edit_form] a.save-tracking').click(handle_tracking_save);
