@@ -95,6 +95,14 @@ describe "Orders And Fulfillment" do
                             ])
       end
 
+      it "pre selects the last order cycle when it exists" do
+        order_cycle = create(:simple_order_cycle, distributors: [distributor])
+
+        visit current_path
+
+        expect(find('#q_order_cycle_id_in').value).to eq [order_cycle.id.to_s]
+      end
+
       it "handles order cycles with nil opening or closing times" do
         distributor = create(:distributor_enterprise)
         oc = create(:simple_order_cycle, name: "My Order Cycle", distributors: [distributor],

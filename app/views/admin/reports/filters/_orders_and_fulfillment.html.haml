@@ -11,4 +11,4 @@
 .row
   .alpha.two.columns= label_tag nil, t(:report_customers_cycle)
   .omega.fourteen.columns
-    = f.select(:order_cycle_id_in, report_order_cycle_options(@data.order_cycles), {selected: params.dig(:q, :order_cycle_id_in)}, {class: "select2 fullwidth", multiple: true})
+    = f.select(:order_cycle_id_in, report_order_cycle_options(@data.order_cycles), { selected: params.dig(:q, :order_cycle_id_in) || @data.order_cycles.last&.id }, {class: "select2 fullwidth", multiple: true})
