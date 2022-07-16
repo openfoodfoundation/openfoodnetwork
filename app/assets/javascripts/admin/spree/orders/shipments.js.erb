@@ -39,85 +39,77 @@ $(document).ready(function() {
   }
   $('[data-hook=admin_order_edit_form] a.save-method').click(handle_shipping_method_save);
 
-  //handle tracking edit click
+  //handle tracking info edit/delete
+
+  // Show the input field to edit the tracking info
+  // And hide the input field when cancel is clicked
   $('a.edit-tracking').click(toggleTrackingEdit);
   $('a.cancel-tracking').click(toggleTrackingEdit);
 
+  saveTrackingInfo = function(){
+    let shipmentNumber = $(this).data('shipment-number');
+    let tracking = document.getElementById('tracking').value
+
+    makeApiCall(trackingUrl(shipmentNumber), { shipment: { tracking: tracking } } )
+  }
+
+  deleteTrackingInfo = function(){
+    let shipmentNumber = $(this).data('shipment-number');
+    let tracking = ''
+
+    confirmDelete(trackingUrl(shipmentNumber), { shipment: { tracking: tracking } })
+  }
+
+  trackingUrl = function(shipmentNumber){
+    return Spree.url( Spree.routes.orders_api + "/" + order_number + "/shipments/" + shipmentNumber + ".json");
+  }
+
+  $('[data-hook=admin_order_edit_form] a.save-tracking').click(saveTrackingInfo);
+  $('[data-hook=admin_order_edit_form] a.delete-tracking').click(deleteTrackingInfo);
+
+  // handle note edit/delete
+
+  // Show the input field to edit the note
+  // And hide the input field when cancel is clicked
   $('a.edit-note.icon-edit').click(toggleNoteEdit);
   $('a.cancel-note').click(toggleNoteEdit);
 
-  handle_tracking_save = function(){
-    var link = $(this);
-    var shipment_number = link.data('shipment-number');
-    var tracking = link.parents('tbody').find('input#tracking').val();
-    var url = Spree.url( Spree.routes.orders_api + "/" + order_number + "/shipments/" + shipment_number + ".json");
+  saveNote = function(){
+    let note = document.getElementById('note').value
+    makeApiCall(getNoteUrl(), { note: note })
+  }
 
+  deleteNote = function(){
+    let note = ''
+    confirmDelete(getNoteUrl(), { note: note })
+  }
+
+  getNoteUrl = function(){
+    return Spree.url( Spree.routes.orders_api + "/" + order_number);
+  }
+
+  confirmDelete = function(url, params){
+    displayDeleteAlert(function(confirmation) {
+      if (confirmation) {
+        makeApiCall(url, params)
+      }
+    }); 
+  }
+
+  $('[data-hook=admin_order_edit_form] a.save-note').click(saveNote);
+  $('[data-hook=admin_order_edit_form] a.delete-note').click(deleteNote);
+
+  // Makes API call for notes/tracking info
+  makeApiCall = function(url, params) {
     $.ajax({
       type: "PUT",
       url: url,
-      data: { shipment: { tracking: tracking } }
+      data: params
     }).done(function( msg ) {
       window.location.reload();
     }).error(function( msg ) {
       console.log(msg);
     });
-  }
-
-  handle_tracking_delete = function(){
-    var link = $(this);
-    var shipment_number = link.data('shipment-number');
-    var tracking = ''
-    var url = Spree.url( Spree.routes.orders_api + "/" + order_number + "/shipments/" + shipment_number + ".json");
-
-    displayDeleteAlert(function(choice) {
-      if (choice) {
-        $.ajax({
-          type: "PUT",
-          url: url,
-          data: { shipment: { tracking: tracking } }
-        }).done(function( msg ) {
-          window.location.reload();
-        }).error(function( msg ) {
-          console.log(msg);
-        });
-      }
-    }); 
-  }
-
-  handle_note_save = function(){
-    var link = $(this);
-    var note = link.parents('tbody').find('#note').val();
-    var url = Spree.url( Spree.routes.orders_api + "/" + order_number);
-
-    $.ajax({
-      type: "PUT",
-      url: url,
-      data: { note: note }
-    }).done(function( msg ) {
-      window.location.reload();
-    }).error(function( msg ) {
-      console.log(msg);
-    });
-  }
-
-  handle_note_delete = function(){
-    var link = $(this);
-    var note = ''
-    var url = Spree.url( Spree.routes.orders_api + "/" + order_number);
-    displayDeleteAlert(function(choice) {
-      if (choice) {
-        $.ajax({
-          type: "PUT",
-          url: url,
-          data: { note: note }
-        }).done(function( msg ) {
-          window.location.reload();
-        }).error(function( msg ) {
-          console.log(msg);
-        });
-      }
-    }); 
-    return false;
   }
 
   displayDeleteAlert = function(callback) {
@@ -137,8 +129,4 @@ $(document).ready(function() {
     $('#custom-confirm').show();
   }
 
-  $('[data-hook=admin_order_edit_form] a.save-tracking').click(handle_tracking_save);
-  $('[data-hook=admin_order_edit_form] a.delete-tracking').click(handle_tracking_delete);
-  $('[data-hook=admin_order_edit_form] a.save-note').click(handle_note_save);
-  $('[data-hook=admin_order_edit_form] a.delete-note').click(handle_note_delete);
 });
