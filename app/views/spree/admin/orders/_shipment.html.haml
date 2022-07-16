@@ -86,4 +86,4 @@
           - if can?(:update, shipment) && shipment.can_modify?
             = link_to '', '', :class => 'edit-tracking icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')
             - if shipment.tracking.present?
-              = link_to '', '', :class => 'delete-tracking icon_link icon-trash no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'delete' }
+              = link_to '', '', :class => 'delete-tracking icon_link icon-trash no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'remove' }, :title => Spree.t('delete')
