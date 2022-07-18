@@ -5,6 +5,8 @@ require 'open_food_network/permissions'
 module Api
   module V1
     class CustomersController < Api::V1::BaseController
+      include AddressTransformation
+
       skip_authorization_check only: :index
 
       before_action :authorize_action, only: [:show, :update, :destroy]
@@ -87,47 +89,6 @@ module Api
         transform_address!(attributes, :shipping_address, :ship_address)
 
         attributes
-      end
-
-      def transform_address!(attributes, from, to)
-        return unless attributes.key?(from)
-
-        address = attributes.delete(from)
-
-        if address.nil?
-          attributes[to] = nil
-          return
-        end
-
-        address.transform_keys! do |key|
-          {
-            phone: :phone, latitude: :latitude, longitude: :longitude,
-            first_name: :firstname, last_name: :lastname,
-            street_address_1: :address1, street_address_2: :address2,
-            postal_code: :zipcode,
-            locality: :city,
-            region: :state,
-            country: :country,
-          }.with_indifferent_access[key]
-        end
-
-        if address[:state].present?
-          address[:state] = Spree::State.find_by(
-            "LOWER(abbr) = ? OR LOWER(name) = ?",
-            address.dig(:state, :code)&.downcase,
-            address.dig(:state, :name)&.downcase,
-          )
-        end
-
-        if address[:country].present?
-          address[:country] = Spree::Country.find_by(
-            "LOWER(iso) = ? OR LOWER(name) = ?",
-            address.dig(:country, :code)&.downcase,
-            address.dig(:country, :name)&.downcase,
-          )
-        end
-
-        attributes["#{to}_attributes"] = address
       end
 
       def editable_enterprises
