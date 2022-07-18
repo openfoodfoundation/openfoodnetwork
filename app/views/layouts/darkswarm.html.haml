@@ -32,6 +32,8 @@
     = csrf_meta_tags
     %meta{name: "turbo-cache-control", content: "no-cache"}
 
+    = render "layouts/matomo_tag"
+
   %body{ class: body_classes, "body-scroll": "true", "data-turbo": "false" }
     / [if lte IE 8]
       = render partial: "shared/ie_warning"
@@ -56,7 +58,5 @@
     = inject_current_order
     = inject_currency_config
     = yield :injection_data
-
-    = render "layouts/matomo_tag"
 
     = render "layouts/login_modal"
