@@ -26,22 +26,23 @@ module AddressTransformation
       }.with_indifferent_access[key]
     end
 
-    if address[:state].present?
-      address[:state] = Spree::State.find_by(
-        "LOWER(abbr) = ? OR LOWER(name) = ?",
-        address.dig(:state, :code)&.downcase,
-        address.dig(:state, :name)&.downcase,
-      )
-    end
-
-    if address[:country].present?
-      address[:country] = Spree::Country.find_by(
-        "LOWER(iso) = ? OR LOWER(name) = ?",
-        address.dig(:country, :code)&.downcase,
-        address.dig(:country, :name)&.downcase,
-      )
-    end
+    address[:state] = find_state(address) if address[:state].present?
+    address[:country] = find_country(address) if address[:country].present?
 
     attributes["#{to}_attributes"] = address
+  end
+
+  private
+
+  def find_state(address)
+    Spree::State.find_by("LOWER(abbr) = ? OR LOWER(name) = ?",
+                         address.dig(:state, :code)&.downcase,
+                         address.dig(:state, :name)&.downcase)
+  end
+
+  def find_country(address)
+    Spree::Country.find_by("LOWER(iso) = ? OR LOWER(name) = ?",
+                           address.dig(:country, :code)&.downcase,
+                           address.dig(:country, :name)&.downcase)
   end
 end
