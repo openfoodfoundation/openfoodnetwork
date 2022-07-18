@@ -91,8 +91,12 @@ components:
                     street_address_2: ''
                     postal_code: '1234'
                     locality: Melbourne
-                    region: Victoria
-                    country: Australia
+                    region:
+                      code: Vic
+                      name: Victoria
+                    country:
+                      code: AU
+                      name: Australia
               required:
               - id
               - enterprise_id
@@ -200,8 +204,12 @@ components:
                       street_address_2: ''
                       postal_code: '1234'
                       locality: Melbourne
-                      region: Victoria
-                      country: Australia
+                      region:
+                        code: Vic
+                        name: Victoria
+                      country:
+                        code: AU
+                        name: Australia
                 required:
                 - id
                 - enterprise_id
@@ -372,8 +380,12 @@ paths:
                     street_address_2: ''
                     postal_code: '1234'
                     locality: Melbourne
-                    region: Victoria
-                    country: Australia
+                    region:
+                      code: Vic
+                      name: Victoria
+                    country:
+                      code: AU
+                      name: Australia
               required:
               - enterprise_id
               - email
@@ -478,8 +490,12 @@ paths:
                     street_address_2: ''
                     postal_code: '1234'
                     locality: Melbourne
-                    region: Victoria
-                    country: Australia
+                    region:
+                      code: Vic
+                      name: Victoria
+                    country:
+                      code: AU
+                      name: Australia
               required:
               - enterprise_id
               - email

@@ -20,7 +20,7 @@ module Api
       attribute :country do |object|
         {
           name: object.country.name,
-          code: object.country.iso3,
+          code: object.country.iso,
         }
       end
     end

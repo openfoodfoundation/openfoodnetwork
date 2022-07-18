@@ -107,17 +107,25 @@ module Api
             street_address_1: :address1, street_address_2: :address2,
             postal_code: :zipcode,
             locality: :city,
-            region: :state_name,
+            region: :state,
             country: :country,
           }.with_indifferent_access[key]
         end
 
-        if address[:state_name].present?
-          address[:state] = Spree::State.find_by(name: address[:state_name][:name])
+        if address[:state].present?
+          address[:state] = Spree::State.find_by(
+            "LOWER(abbr) = ? OR LOWER(name) = ?",
+            address.dig(:state, :code)&.downcase,
+            address.dig(:state, :name)&.downcase,
+          )
         end
 
         if address[:country].present?
-          address[:country] = Spree::Country.find_by(name: address[:country][:name])
+          address[:country] = Spree::Country.find_by(
+            "LOWER(iso) = ? OR LOWER(name) = ?",
+            address.dig(:country, :code)&.downcase,
+            address.dig(:country, :name)&.downcase,
+          )
         end
 
         attributes["#{to}_attributes"] = address

@@ -42,7 +42,7 @@ class CustomerSchema < JsonApiSchema
       postal_code: "1234",
       locality: "Melbourne",
       region: { code: "Vic", name: "Victoria" },
-      country: { code: "AUS", name: "Australia" },
+      country: { code: "AU", name: "Australia" },
     }
   end
 
