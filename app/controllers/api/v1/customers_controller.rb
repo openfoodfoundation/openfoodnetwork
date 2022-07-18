@@ -7,7 +7,6 @@ module Api
     class CustomersController < Api::V1::BaseController
       skip_authorization_check only: :index
 
-      before_action :set_customer, only: [:show, :update, :destroy]
       before_action :authorize_action, only: [:show, :update, :destroy]
 
       def index
@@ -17,44 +16,44 @@ module Api
       end
 
       def show
-        render json: Api::V1::CustomerSerializer.new(@customer, include_options)
+        render json: Api::V1::CustomerSerializer.new(customer, include_options)
       end
 
       def create
         authorize! :update, Enterprise.find(customer_params[:enterprise_id])
-        @customer = Customer.new(customer_params)
+        customer = Customer.new(customer_params)
 
-        if @customer.save
-          render json: Api::V1::CustomerSerializer.new(@customer), status: :created
+        if customer.save
+          render json: Api::V1::CustomerSerializer.new(customer), status: :created
         else
-          invalid_resource! @customer
+          invalid_resource! customer
         end
       end
 
       def update
-        if @customer.update(customer_params)
-          render json: Api::V1::CustomerSerializer.new(@customer)
+        if customer.update(customer_params)
+          render json: Api::V1::CustomerSerializer.new(customer)
         else
-          invalid_resource! @customer
+          invalid_resource! customer
         end
       end
 
       def destroy
-        if @customer.destroy
-          render json: Api::V1::CustomerSerializer.new(@customer)
+        if customer.destroy
+          render json: Api::V1::CustomerSerializer.new(customer)
         else
-          invalid_resource! @customer
+          invalid_resource! customer
         end
       end
 
       private
 
-      def set_customer
-        @customer = Customer.find(params[:id])
+      def customer
+        @customer ||= Customer.find(params[:id])
       end
 
       def authorize_action
-        authorize! action_name.to_sym, @customer
+        authorize! action_name.to_sym, customer
       end
 
       def search_customers
