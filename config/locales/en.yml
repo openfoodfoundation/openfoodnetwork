@@ -1171,6 +1171,7 @@ en:
         payment_methods: "Payment Methods"
         save: "Save"
         save_and_back_to_list: "Save and Back to List"
+        select_all: "Select all"
         shipping_methods: "Shipping Methods"
       wizard_progress:
         edit: "1. General Settings"

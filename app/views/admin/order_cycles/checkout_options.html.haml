@@ -27,7 +27,7 @@
             %td.text-center
               %label
                 = check_box_tag nil, nil, (shipping_methods - @order_cycle.shipping_methods).empty?, { "data-action": "change->select-all#toggleAll", "data-select-all-target": "all" }
-                = "Select all"
+                = t(".select_all")
             %td
               - if shipping_methods.any?
                 - shipping_methods.each do |shipping_method|
