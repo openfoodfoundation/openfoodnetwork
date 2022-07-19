@@ -135,6 +135,7 @@ describe '
     select 'My distributor', from: 'new_distributor_id'
     click_button 'Add distributor'
 
+    expect(page).to have_field "order_cycle_outgoing_exchange_0_pickup_time"
     fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
     fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'pickup instructions'
 
