@@ -158,10 +158,14 @@ describe '
   end
 
   def select_shipping_methods
+    expect(page).to have_checked_field "Select all"
+
     expect(page).to have_checked_field "Pickup - always available"
     expect(page).to have_checked_field "Delivery - sometimes available"
 
     uncheck "Delivery - sometimes available"
+
+    expect(page).to have_unchecked_field "Select all"
 
     click_button 'Save and Back to List'
   end
