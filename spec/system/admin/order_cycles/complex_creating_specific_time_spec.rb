@@ -38,6 +38,9 @@ describe '
                                      permissions_list: [:add_to_order_cycle])
     create(:enterprise_relationship, parent: supplier, child: distributor,
                                      permissions_list: [:add_to_order_cycle])
+
+    shipping_method_i.update!(name: "Pickup - always available")
+    shipping_method_ii.update!(name: "Delivery - sometimes available")
   end
 
   it "creating an order cycle with full interface", js: true do
@@ -155,8 +158,10 @@ describe '
   end
 
   def select_shipping_methods
-    check "order_cycle_selected_shipping_method_ids_#{shipping_method_i.id}"
-    uncheck "order_cycle_selected_shipping_method_ids_#{shipping_method_ii.id}"
+    expect(page).to have_checked_field "Pickup - always available"
+    expect(page).to have_checked_field "Delivery - sometimes available"
+
+    uncheck "Delivery - sometimes available"
 
     click_button 'Save and Back to List'
   end
@@ -194,6 +199,6 @@ describe '
     expect(exchange.tag_list).to eq(['wholesale'])
 
     # And the shipping method should be attached
-    expect(oc.shipping_methods).to eq([shipping_method_i])
+    expect(oc.shipping_methods.map(&:name)).to eq(["Pickup - always available"])
   end
 end
