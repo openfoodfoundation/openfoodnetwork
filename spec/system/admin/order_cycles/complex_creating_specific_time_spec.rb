@@ -167,6 +167,19 @@ describe '
 
     expect(page).to have_unchecked_field "Select all"
 
+    # Now test that the "Select all" input is doing what it's supposed to:
+    check "Select all"
+
+    expect(page).to have_checked_field "Pickup - always available"
+    expect(page).to have_checked_field "Delivery - sometimes available"
+
+    uncheck "Select all"
+
+    expect(page).to have_unchecked_field "Pickup - always available"
+    expect(page).to have_unchecked_field "Delivery - sometimes available"
+
+    # Our final selection:
+    check "Pickup - always available"
     click_button 'Save and Back to List'
   end
 
