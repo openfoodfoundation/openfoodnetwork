@@ -302,6 +302,59 @@ describe "Customers", type: :request do
         end
       end
 
+      describe "address" do
+        it "matches by country and state code" do
+          put "/api/v1/customers/#{customer1.id}", params: {
+            customer: {
+              shipping_address: CustomerSchema.address_example.merge(
+                region: { code: "Vic" },
+                country: { code: "AU" },
+              ),
+            }
+          }
+
+          expect(response).to have_http_status :ok
+          expect(json_response.dig(:data, :attributes, :shipping_address)).to include(
+            region: { code: "Vic", name: "Victoria" },
+            country: { code: "AU", name: "Australia" },
+          )
+        end
+
+        it "matches by country and state name" do
+          put "/api/v1/customers/#{customer1.id}", params: {
+            customer: {
+              shipping_address: CustomerSchema.address_example.merge(
+                region: { name: "Victoria" },
+                country: { name: "Australia" },
+              ),
+            }
+          }
+
+          expect(response).to have_http_status :ok
+          expect(json_response.dig(:data, :attributes, :shipping_address)).to include(
+            region: { code: "Vic", name: "Victoria" },
+            country: { code: "AU", name: "Australia" },
+          )
+        end
+
+        it "matches country and state case-insensitive" do
+          put "/api/v1/customers/#{customer1.id}", params: {
+            customer: {
+              shipping_address: CustomerSchema.address_example.merge(
+                region: { code: "VIC" },
+                country: { name: "AUSTRALIA" },
+              ),
+            }
+          }
+
+          expect(response).to have_http_status :ok
+          expect(json_response.dig(:data, :attributes, :shipping_address)).to include(
+            region: { code: "Vic", name: "Victoria" },
+            country: { code: "AU", name: "Australia" },
+          )
+        end
+      end
+
       response "422", "Unprocessable entity" do
         param(:id) { customer1.id }
         param(:customer) { {} }
