@@ -10,7 +10,6 @@ assignees: ''
 ## Preparation on Thursday
 
 - [ ] Merge pull requests in the [Ready To Go] column
-- [ ] Merge [Transifex pull request]
 - [ ] Include translations: `tx pull --force`
 - [ ] [Draft new release]. Look at previous [releases] for inspiration.
 - [ ] Notify [#instance-managers] of user-facing changes.
