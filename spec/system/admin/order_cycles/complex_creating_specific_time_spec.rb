@@ -13,18 +13,24 @@ describe '
   let(:order_cycle_opening_time) { 1.day.from_now(Time.zone.now) }
   let(:order_cycle_closing_time) { 2.days.from_now(Time.zone.now) }
 
-  it "creating an order cycle with full interface", js: true do
-    # Given coordinating, supplying and distributing enterprises with some products with variants
-    coordinator = create(:distributor_enterprise, name: 'My coordinator')
-    supplier = create(:supplier_enterprise, name: 'My supplier')
-    product = create(:product, supplier: supplier)
-    v1 = create(:variant, product: product)
-    v2 = create(:variant, product: product)
-    distributor = create(:distributor_enterprise, name: 'My distributor',
-                                                  with_payment_and_shipping: true)
-    shipping_method_i = distributor.shipping_methods.first
-    shipping_method_ii = create(:shipping_method, distributors: [distributor])
+  # Given coordinating, supplying and distributing enterprises with some products with variants
+  let!(:coordinator) { create(:distributor_enterprise, name: 'My coordinator') }
+  let!(:supplier) { create(:supplier_enterprise, name: 'My supplier') }
+  let!(:product) { create(:product, supplier: supplier) }
+  let!(:v1) { create(:variant, product: product) }
+  let!(:v2) { create(:variant, product: product) }
+  let!(:distributor) {
+    create(:distributor_enterprise, name: 'My distributor', with_payment_and_shipping: true)
+  }
+  let!(:shipping_method_i) { distributor.shipping_methods.first }
+  let!(:shipping_method_ii) { create(:shipping_method, distributors: [distributor]) }
 
+  # And some enterprise fees
+  let!(:supplier_fee) { create(:enterprise_fee, enterprise: supplier, name: 'Supplier fee') }
+  let!(:coordinator_fee) { create(:enterprise_fee, enterprise: coordinator, name: 'Coord fee') }
+  let!(:distributor_fee) { create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee') }
+
+  before do
     # Relationships required for interface to work
     create(:enterprise_relationship, parent: supplier, child: coordinator,
                                      permissions_list: [:add_to_order_cycle])
@@ -32,13 +38,10 @@ describe '
                                      permissions_list: [:add_to_order_cycle])
     create(:enterprise_relationship, parent: supplier, child: distributor,
                                      permissions_list: [:add_to_order_cycle])
+  end
 
-    # And some enterprise fees
-    supplier_fee = create(:enterprise_fee, enterprise: supplier, name: 'Supplier fee')
-    coordinator_fee = create(:enterprise_fee, enterprise: coordinator, name: 'Coord fee')
-    distributor_fee = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee')
-
-    # When I go to the new order cycle page
+  it "creating an order cycle with full interface", js: true do
+    ## CREATE
     login_as_admin_and_visit admin_order_cycles_path
     click_link 'New Order Cycle'
 
@@ -46,13 +49,33 @@ describe '
     select2_select 'My coordinator', from: 'coordinator_id'
     click_button "Continue >"
 
+    fill_in_order_cycle_name
+    select_opening_and_closing_times
+
+    click_button 'Add coordinator fee'
+    select 'Coord fee', from: 'order_cycle_coordinator_fee_0_id'
+
+    click_button 'Create'
+    expect(page).to have_content 'Your order cycle has been created.'
+
+    ## UPDATE
+    add_supplier_with_fees
+    add_distributor_with_fees
+    select_shipping_methods
+
+    expect_all_data_saved
+  end
+
+  def fill_in_order_cycle_name
     # I cannot save before filling in the required fields
     expect(page).to have_button("Create", disabled: true)
 
     # The Create button is enabled once Name is entered
-    fill_in 'order_cycle_name', with: 'Plums & Avos'
+    fill_in 'order_cycle_name', with: "Plums & Avos"
     expect(page).to have_button("Create", disabled: false)
+  end
 
+  def select_opening_and_closing_times
     # If I fill in the basic fields
     find('#order_cycle_orders_open_at').click
     # select date
@@ -75,14 +98,9 @@ describe '
     end
     # hide the datetimepicker
     find("body").send_keys(:escape)
+  end
 
-    # And I add a coordinator fee
-    click_button 'Add coordinator fee'
-    select 'Coord fee', from: 'order_cycle_coordinator_fee_0_id'
-
-    click_button 'Create'
-    expect(page).to have_content 'Your order cycle has been created.'
-
+  def add_supplier_with_fees
     # I should not be able to add a blank supplier
     expect(page).to have_select 'new_supplier_id', selected: ''
     expect(page).to have_button 'Add supplier', disabled: true
@@ -107,7 +125,9 @@ describe '
            from: 'order_cycle_incoming_exchange_0_enterprise_fees_0_enterprise_fee_id'
 
     click_button 'Save and Next'
+  end
 
+  def add_distributor_with_fees
     # And I add a distributor with the same products
     select 'My distributor', from: 'new_distributor_id'
     click_button 'Add distributor'
@@ -132,13 +152,16 @@ describe '
            from: 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id'
 
     click_button 'Save and Next'
+  end
 
-    # And I select preferred shipping methods
+  def select_shipping_methods
     check "order_cycle_selected_shipping_method_ids_#{shipping_method_i.id}"
     uncheck "order_cycle_selected_shipping_method_ids_#{shipping_method_ii.id}"
 
     click_button 'Save and Back to List'
+  end
 
+  def expect_all_data_saved
     oc = OrderCycle.last
     toggle_columns "Producers", "Shops"
 
