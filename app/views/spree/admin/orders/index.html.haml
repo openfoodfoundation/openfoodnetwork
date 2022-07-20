@@ -24,12 +24,7 @@
     - if Spree::Config[:enable_invoices?]
       .ofn-drop-down-with-prepend
         .ofn-drop-down-prepend{"ng-class": "selected_orders.length == 0 ? 'disabled' : ''"}
-          %span{"ng-show" => "selected_orders.length == 0"}
-            = t('.selected.zero')
-          %span{"ng-show" => "selected_orders.length == 1"}
-            = t('.selected.one')
-          %span{"ng-show" => "selected_orders.length > 1"}
-            = t('.selected.many', count: "{{ selected_orders.length }}")
+          {{ "spree.admin.orders.index.selected" | t:{count: selected_orders.length} }}
         .ofn-drop-down{"ng-class": "selected_orders.length == 0 ? 'disabled' : ''"}
           %span{ :class => 'icon-reorder' }
             ="#{t('admin.actions')}".html_safe
