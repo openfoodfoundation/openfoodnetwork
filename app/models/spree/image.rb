@@ -11,7 +11,7 @@ module Spree
 
     has_one_attached :attachment
 
-    validates :attachment, attached: true, content_type: %r{\Aimage/.*\Z}
+    validates :attachment, attached: true, content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml)\Z}
     validate :no_attachment_errors
 
     def variant(name)
