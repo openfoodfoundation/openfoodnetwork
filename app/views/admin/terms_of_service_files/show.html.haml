@@ -14,6 +14,6 @@
       = t(".using_default_terms_html", tos_link: link_to_platform_terms)
 
 = form_for [main_app, :admin, @new_file] do |f|
-  = f.label :attachment
+  = f.label :attachment, t(".attachment")
   = f.file_field :attachment
-  = f.submit
+  = f.submit t(".create_terms_of_service")
