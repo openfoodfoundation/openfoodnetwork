@@ -24,14 +24,6 @@ GIT
       sass-rails
       thor (>= 0.14)
 
-GIT
-  remote: https://github.com/roo-rb/roo.git
-  revision: 709464c77623be2bc09b2103405d90ded7604a75
-  specs:
-    roo (2.8.3)
-      nokogiri (~> 1)
-      rubyzip (>= 1.3.0, < 3.0.0)
-
 PATH
   remote: engines/catalog
   specs:
@@ -516,6 +508,9 @@ GEM
       builder (>= 3.0)
       dry-inflector (~> 0.1)
       rubyzip (>= 1.0)
+    roo (2.9.0)
+      nokogiri (~> 1)
+      rubyzip (>= 1.3.0, < 3.0.0)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
@@ -781,7 +776,7 @@ DEPENDENCIES
   responders
   rexml
   roadie-rails
-  roo!
+  roo
   rspec-rails (>= 3.5.2)
   rspec-retry
   rswag-api
