@@ -143,5 +143,77 @@ describe "Orders And Fulfillment" do
         end
       end
     end
+
+    describe "Order Cycle Supplier Totals" do
+      before do
+        click_link "Order Cycle Supplier Totals"
+      end
+
+      it "displays the report" do
+        click_button 'Go'
+
+        rows = find("table.report__table").all("thead tr")
+        table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+        expect(table).to eq([
+                              ["Producer",
+                               "Product",
+                               "Variant",
+                               "Quantity",
+                               "Total Units",
+                               "Curr. Cost per Unit",
+                               "Total Cost"]
+                               .map(&:upcase)
+                            ])
+      end
+    end
+
+    describe "Order Cycle Supplier Totals by Distributor" do
+      before do
+        click_link "Order Cycle Supplier Totals by Distributor"
+      end
+
+      it "displays the report" do
+        click_button 'Go'
+
+        rows = find("table.report__table").all("thead tr")
+        table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+        expect(table).to eq([
+                              ["Producer",
+                               "Product",
+                               "Variant",
+                               "Hub",
+                               "Quantity",
+                               "Curr. Cost per Unit",
+                               "Total Cost",
+                               "Shipping Method"]
+                               .map(&:upcase)
+                            ])
+      end
+    end
+
+    describe "Order Cycle Distributor Totals by Supplier" do
+      before do
+        click_link "Order Cycle Distributor Totals by Supplier"
+      end
+
+      it "displays the report" do
+        click_button 'Go'
+
+        rows = find("table.report__table").all("thead tr")
+        table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+        expect(table).to eq([
+                              ["Hub",
+                               "Producer",
+                               "Product",
+                               "Variant",
+                               "Quantity",
+                               "Curr. Cost per Unit",
+                               "Total Cost",
+                               "Total Shipping Cost",
+                               "Shipping Method"]
+                               .map(&:upcase)
+                            ])
+      end
+    end
   end
 end
