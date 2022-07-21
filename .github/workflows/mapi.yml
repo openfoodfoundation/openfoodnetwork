@@ -1,5 +1,5 @@
 name: 'Mayhem for API'
-on: [push]
+on: workflow_dispatch
 jobs:
   test:
     if: ${{ github.repository_owner == 'openfoodfoundation' }}
