@@ -213,6 +213,17 @@ describe Spree::CreditCardsController, type: :controller do
               expect(customer1.reload.allow_charges).to be false
               expect(customer2.reload.allow_charges).to be false
             end
+
+            context "when has any other saved cards" do
+              let!(:second_card) {
+                create(:stored_credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_AZNMJ')
+              }
+
+              it "should assign the second one as the default one" do
+                spree_delete :destroy, params
+                expect(Spree::CreditCard.find_by(id: second_card.id).is_default).to eq true
+              end
+            end
           end
         end
       end

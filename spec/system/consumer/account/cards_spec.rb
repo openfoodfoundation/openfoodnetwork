@@ -105,5 +105,21 @@ describe "Credit Cards", js: true do
       expect(page).to have_content I18n.t('js.changes_saved')
       expect(customer.reload.allow_charges).to be true
     end
+
+    it "assign the default card to the next one when the default is deleted" do
+      visit "/account"
+      find("a", text: /Credit Cards/i).click
+
+      within(".card#card#{default_card.id}") do
+        click_button "Delete"
+      end
+
+      expect(page).to have_content "Your card has been removed"
+
+      within ".card#card#{non_default_card.id}" do
+        expect(find_field('default_card')).to be_checked
+      end
+      expect(non_default_card.reload.is_default).to be true
+    end
   end
 end
