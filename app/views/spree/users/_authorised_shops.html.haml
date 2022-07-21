@@ -12,5 +12,6 @@
         name: 'allow_charges',
         ng: { model: 'customer.allow_charges',
           change: 'customer.update()',
+          disabled: "!hasOneDefaultSavedCards()",
           "true-value" => "true",
           "false-value" => "false" } }
