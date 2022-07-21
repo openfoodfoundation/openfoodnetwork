@@ -34,7 +34,8 @@ describe "Terms of Service files" do
 
     it "can delete the current file", js: true do
       attachment = File.open(Rails.root.join(test_file_path))
-      TermsOfServiceFile.create!(attachment: attachment)
+      file = Rack::Test::UploadedFile.new(attachment, "application/pdf")
+      TermsOfServiceFile.create!(attachment: file)
 
       visit admin_terms_of_service_files_path
 
