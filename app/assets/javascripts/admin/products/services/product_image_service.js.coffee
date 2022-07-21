@@ -13,3 +13,9 @@ angular.module("ofn.admin").factory "ProductImageService", (FileUploader, SpreeA
       @imageUploader.onSuccessItem = (image, response) =>
         product.thumb_url = response.thumb_url
         product.image_url = response.image_url
+      @imageUploader.onErrorItem = (image, response) =>
+        if Array.isArray(response.errors)
+          message = response.errors.join("\n")
+        else
+          message = response.error.toString()
+        alert(message)
