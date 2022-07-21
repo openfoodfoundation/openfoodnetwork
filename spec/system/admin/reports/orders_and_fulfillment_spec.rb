@@ -29,8 +29,8 @@ describe "Orders And Fulfillment" do
                                            bill_address: bill_address1,
                                            order_cycle_id: order_cycle.id)
     }
-    let(:supplier) { create(:supplier_enterprise, name: "Supplier") }
-    let(:product) { create(:simple_product, name: "Product", supplier: supplier ) }
+    let(:supplier) { create(:supplier_enterprise, name: "Supplier Name") }
+    let(:product) { create(:simple_product, name: "Baked Beans", supplier: supplier ) }
     let(:variant1) { create(:variant, product: product, unit_description: "Big") }
     let(:variant2) { create(:variant, product: product, unit_description: "Small") }
 
@@ -149,21 +149,119 @@ describe "Orders And Fulfillment" do
         click_link "Order Cycle Supplier Totals"
       end
 
-      it "displays the report" do
-        click_button 'Go'
+      context "with the header row option not selected" do
+        before do
+          find("#display_header_row").set(false) # hides the header row
+        end
 
-        rows = find("table.report__table").all("thead tr")
-        table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-        expect(table).to eq([
-                              ["Producer",
-                               "Product",
-                               "Variant",
-                               "Quantity",
-                               "Total Units",
-                               "Curr. Cost per Unit",
-                               "Total Cost"]
-                               .map(&:upcase)
-                            ])
+        it "displays the report" do
+          click_button 'Go'
+
+          rows = find("table.report__table").all("thead tr")
+          table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+
+          # displays the producer column
+          expect(table).to eq([
+                                ["Producer",
+                                 "Product",
+                                 "Variant",
+                                 "Quantity",
+                                 "Total Units",
+                                 "Curr. Cost per Unit",
+                                 "Total Cost"]
+                                 .map(&:upcase)
+                              ])
+
+          # displays the producer name in the respective column
+          # does not display the header row
+          within "td" do
+            expect(page).to have_content("Supplier Name")
+            expect(page).not_to have_css("td.header-row")
+          end
+        end
+      end
+
+      context "with the header row option selected" do
+        before do
+          find("#display_header_row").set(true) # displays the header row
+        end
+
+        it "displays the report" do
+          click_button 'Go'
+
+          rows = find("table.report__table").all("thead tr")
+          table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+
+          # hides the producer column
+          expect(table).to eq([
+                                ["Product",
+                                 "Variant",
+                                 "Quantity",
+                                 "Total Units",
+                                 "Curr. Cost per Unit",
+                                 "Total Cost"]
+                                 .map(&:upcase)
+                              ])
+
+          # displays the producer name in own row
+          within "td.header-row" do
+            expect(page).to have_content("Supplier Name")
+          end
+        end
+      end
+
+      context "for two different orders" do
+        let(:order3) {
+          create(:completed_order_with_totals, line_items_count: 0,
+                                               distributor: distributor,
+                                               bill_address: bill_address1,
+                                               order_cycle_id: order_cycle.id)
+        }
+
+        before do
+          create(:line_item_with_shipment, variant: variant2, quantity: 4, order: order1)
+          order3.finalize!
+          click_button 'Go'
+        end
+
+        it "aggregates results per variant" do
+          expect(all('table.report__table tbody tr').count).to eq(3)
+          # 1 row per variant = 2 rows
+          # 1 summary row
+          # 3 rows total
+
+          rows = find("table.report__table").all("tbody tr")
+          table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
+
+          expect(table[0]).to eq([
+                                   "Supplier Name",
+                                   "Baked Beans",
+                                   "1g Big, S",
+                                   "3",
+                                   "0.003",
+                                   "10.0",
+                                   "30.0"
+                                 ])
+
+          expect(table[1]).to eq([
+                                   "Supplier Name",
+                                   "Baked Beans",
+                                   "1g Small, S",
+                                   "7",
+                                   "0.007",
+                                   "10.0",
+                                   "70.0"
+                                 ])
+          expect(table[2]).to eq([
+                                   "",
+                                   "",
+                                   "TOTAL",
+                                   "10",
+                                   "0.01",
+                                   "",
+                                   "100.0"
+                                 ])
+        end
       end
     end
 
