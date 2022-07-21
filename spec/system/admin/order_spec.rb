@@ -591,6 +591,17 @@ describe '
         expect(page).to have_content test_tracking_number
 
         find('.delete-tracking.icon-trash').click
+        # Cancel Deletion
+        # Check if the alert box shows and after clicking cancel
+        # the alert box vanishes and tracking num is still present
+        expect(page).to have_content 'Are you sure?'
+        find('.cancel').click
+        expect(page).to_not have_content 'Are you sure?'
+        expect(page).to have_content test_tracking_number
+
+        find('.delete-tracking.icon-trash').click
+        expect(page).to have_content 'Are you sure?'
+        find('.confirm').click
         expect(page).to_not have_content test_tracking_number
       end
 
@@ -605,6 +616,17 @@ describe '
         expect(page).to have_content test_note
 
         find('.delete-note.icon-trash').click
+        # Cancel Deletion
+        # Check if the alert box shows and after clicking cancel
+        # the alert box vanishes and note is still present
+        expect(page).to have_content 'Are you sure?'
+        find('.cancel').click
+        expect(page).to_not have_content 'Are you sure?'
+        expect(page).to have_content test_note
+
+        find('.delete-note.icon-trash').click
+        expect(page).to have_content 'Are you sure?'
+        find('.confirm').click
         expect(page).to_not have_content test_note
       end
 

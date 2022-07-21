@@ -85,4 +85,5 @@
         %td.actions
           - if can?(:update, shipment) && shipment.can_modify?
             = link_to '', '', :class => 'edit-tracking icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')
-            = link_to '', '', :class => 'delete-tracking icon_link icon-trash no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'delete' }
+            - if shipment.tracking.present?
+              = link_to '', '', :class => 'delete-tracking icon_link icon-trash no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'remove' }, :title => Spree.t('delete')
