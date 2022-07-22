@@ -386,15 +386,142 @@ describe "Orders And Fulfillment" do
     end
 
     describe "Order Cycle Distributor Totals by Supplier" do
-      before do
-        click_link "Order Cycle Distributor Totals by Supplier"
-      end
+      context "for an OC supplied by two suppliers" do
+        let(:supplier2) { create(:supplier_enterprise, name: "Another Supplier Name") }
+        let(:product2) { create(:simple_product, name: "Salted Peanuts", supplier: supplier2 ) }
+        let(:variant3) { create(:variant, product: product2, unit_description: "Bag") }
+        let(:order4) {
+          create(:completed_order_with_totals, line_items_count: 0, distributor: distributor,
+                                               bill_address: bill_address1,
+                                               order_cycle_id: order_cycle.id)
+        }
 
-      it "displays the report" do
-        click_button 'Go'
+        before do
+          # order3 has one line items / variants
+          create(:line_item_with_shipment, variant: variant3, quantity: 2, order: order4)
+          order4.finalize!
+          click_link "Order Cycle Distributor Totals by Supplier"
+        end
 
-        rows = find("table.report__table").all("thead tr")
-        table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+        context "with the header row option not selected" do
+          before do
+            find("#display_header_row").set(false) # hides the header row
+            click_button 'Go'
+          end
+
+          it "displays the report" do
+            rows = find("table.report__table").all("thead tr")
+            table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+
+            # displays the producer column
+            expect(table).to eq([
+                                  ["Hub",
+                                   "Producer",
+                                   "Product",
+                                   "Variant",
+                                   "Quantity",
+                                   "Curr. Cost per Unit",
+                                   "Total Cost",
+                                   "Total Shipping Cost",
+                                   "Shipping Method"]
+                                   .map(&:upcase)
+                                ])
+
+            # displays the Distributor name in the respective column
+            # does not display the header row
+            within "td" do
+              expect(page).to have_content("Distributor Name")
+              expect(page).not_to have_css("td.header-row")
+            end
+          end
+
+          it "aggregates results per variant, per supplier" do
+            expect(all('table.report__table tbody tr').count).to eq(4)
+            # 1 row per supplier, per variant = 3 rows
+            # 1 TOTAL rows
+            # 4 rows total
+
+            rows = find("table.report__table").all("tbody tr")
+            table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
+
+            expect(table[0]).to eq([
+                                     "Distributor Name",
+                                     "Another Supplier Name",
+                                     "Salted Peanuts",
+                                     "1g Bag, S",
+                                     "2",
+                                     "10.0",
+                                     "20.0",
+                                     "",
+                                     "UPS Ground"
+                                   ])
+            expect(table[1]).to eq([
+                                     "Distributor Name",
+                                     "Supplier Name",
+                                     "Baked Beans",
+                                     "1g Small, S",
+                                     "3",
+                                     "10.0",
+                                     "30.0",
+                                     "",
+                                     "UPS Ground"
+                                   ])
+            expect(table[2]).to eq([
+                                     "Distributor Name",
+                                     "Supplier Name",
+                                     "Baked Beans",
+                                     "1g Big, S",
+                                     "3",
+                                     "10.0",
+                                     "30.0",
+                                     "",
+                                     "UPS Ground"
+                                   ])
+
+            expect(table[3]).to eq([
+                                     "",
+                                     "",
+                                     "",
+                                     "",
+                                     "",
+                                     "TOTAL",
+                                     "80.0",
+                                     "0.0",
+                                     ""
+                                   ])
+          end
+        end
+
+        context "with the header row option selected" do
+          before do
+            find("#display_header_row").set(true) # displays the header row
+          end
+
+          it "displays the report" do
+            click_button 'Go'
+
+            rows = find("table.report__table").all("thead tr")
+            table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+
+            # hides the Hub column
+            expect(table).to eq([
+                                  ["Producer",
+                                   "Product",
+                                   "Variant",
+                                   "Quantity",
+                                   "Curr. Cost per Unit",
+                                   "Total Cost",
+                                   "Total Shipping Cost",
+                                   "Shipping Method"]
+                                   .map(&:upcase)
+                                ])
+
+            # displays the Distributor name in own row
+            within "td.header-row" do
+              expect(page).to have_content("Hub #{distributor.name}")
+            end
+          end
+        end
       end
     end
   end
