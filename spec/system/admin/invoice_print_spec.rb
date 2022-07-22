@@ -215,7 +215,8 @@ describe '
         it "displays GST for enterprise fees" do
           pending "ii) for legend see picture on PR #9495"
           # enterprise fee of $20.00
-          expect(page).to have_content "Admin & Handling 1 $20.00 $120.00"
+          expect(page).to have_content "Whole order - #{enterprise_fee.name} fee by coordinator " \
+                                       "#{user1.enterprises.first.name} 1 $20.00 (included) $120.00"
         end
 
         it "displays the taxes correctly" do
@@ -225,7 +226,8 @@ describe '
           expect(page).to have_content "#{Spree::Product.second.name} 3 $250.08 $1,500.45"
           expect(page).to have_content "(1g)" # display as
           # Enterprise fee
-          expect(page).to have_content "Admin & Handling 1 $120.00"
+          expect(page).to have_content "Whole order - #{enterprise_fee.name} fee by coordinator " \
+                                       "#{user1.enterprises.first.name} 1 $15.65 (included) $120.00"
           # Shipping
           expect(page).to have_content "Shipping 1 $9.14 (included) $100.55"
           # Order Totals
@@ -257,7 +259,8 @@ describe '
           expect(page).to have_content "(1g)" # display as
           expect(page).to have_content "3 $500.15 $1,500.45 20.0%"
           # Enterprise fee
-          expect(page).to have_content "Admin & Handling $120.00"
+          expect(page).to have_content "#{enterprise_fee.name} fee by coordinator " \
+                                       "#{user1.enterprises.first.name} $120.00"
           # Shipping
           expect(page).to have_content "Shipping $100.55 10.0%"
           # Tax totals
@@ -357,14 +360,16 @@ describe '
         it "displays GST for enterprise fees" do
           pending "v) for legend see picture on PR #9495"
           # enterprise fee of $24.00
-          expect(page).to have_content "Admin & Handling 1 $20.00 $120.00"
+          expect(page).to have_content "Whole order - #{enterprise_fee.name} fee by coordinator " \
+                                       "#{user1.enterprises.first.name} 1 $20.00 $120.00"
         end
 
         it "displays the taxes correctly" do
           # header
           expect(page).to have_content "Item Qty GST Price"
           # Enterprise fee
-          expect(page).to have_content "Admin & Handling 1 $120.00"
+          expect(page).to have_content "Whole order - #{enterprise_fee.name} fee by coordinator " \
+                                       "#{user1.enterprises.first.name} 1 $18.00 $120.00"
           # Shipping
           expect(page).to have_content "Shipping 1 $10.06 $100.55"
           # Order Totals
@@ -395,7 +400,8 @@ describe '
           expect(page).to have_content "(1g)" # display as
           expect(page).to have_content "3 $500.15 $1,500.45 20.0%"
           # Enterprise fee
-          expect(page).to have_content "Admin & Handling $120.00"
+          expect(page).to have_content "#{enterprise_fee.name} fee by coordinator " \
+                                       "#{user1.enterprises.first.name} $120.00"
           # Shipping
           expect(page).to have_content "Shipping $100.55 10.0%"
           # Tax totals

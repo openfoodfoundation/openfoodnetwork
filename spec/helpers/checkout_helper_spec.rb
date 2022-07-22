@@ -148,7 +148,7 @@ describe CheckoutHelper, type: :helper do
       expect(adjustments).to include shipping_adjustment
 
       admin_fee_summary = adjustments.last
-      expect(admin_fee_summary.label).to eq I18n.t(:orders_form_admin)
+      expect(admin_fee_summary.label).to eq "Shipping"
       expect(admin_fee_summary.amount).to eq 123
     end
 
