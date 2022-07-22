@@ -84,8 +84,8 @@ class Enterprise < ApplicationRecord
   has_one_attached :promo_image
   has_one_attached :terms_and_conditions
 
-  validates :logo, content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml)\Z}
-  validates :promo_image, content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml)\Z}
+  validates :logo, content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
+  validates :promo_image, content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
   validates :terms_and_conditions, content_type: {
     in: "application/pdf",
     message: I18n.t(:enterprise_terms_and_conditions_type_error),

@@ -590,8 +590,8 @@ describe '
       attach_file('image_attachment', unsupported_image_file_path)
       click_button "Create"
 
-      expect(page).to have_text "The product image was not recognised."
-      expect(page).to have_text "Please upload an image in PNG or JPG format."
+      expect(page).to have_text "Attachment has an invalid content type"
+      expect(page).to have_text "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
     end
 
     it "deleting product images", js: true do
