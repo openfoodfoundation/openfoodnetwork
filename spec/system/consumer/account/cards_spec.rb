@@ -121,5 +121,18 @@ describe "Credit Cards", js: true do
       end
       expect(non_default_card.reload.is_default).to be true
     end
+
+    context "when no default card" do
+      before do
+        default_card.destroy
+      end
+
+      it "then all 'allow_charges' inputs are disabled" do
+        visit "/account"
+        find("a", text: /Credit Cards/i).click
+
+        expect(find_field('allow_charges', disabled: true)).to be_truthy
+      end
+    end
   end
 end
