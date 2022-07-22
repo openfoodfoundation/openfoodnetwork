@@ -30,7 +30,7 @@ module OpenFoodNetwork
     end
 
     def base_adjustment_label
-      I18n.t(:enterprise_fee_by, type: enterprise_fee.fee_type, role: role,
+      I18n.t(:enterprise_fee_by, name: enterprise_fee.name, role: role,
                                  enterprise_name: enterprise_fee.enterprise.name)
     end
 
