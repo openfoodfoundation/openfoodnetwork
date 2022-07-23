@@ -67,17 +67,6 @@ $(document).ready(function() {
   $('[data-hook=admin_order_edit_form] a.save-tracking').click(saveTrackingInfo);
   $('[data-hook=admin_order_edit_form] a.delete-tracking').click(deleteTrackingInfo);
 
-  // handle note edit/delete
-
-  deleteNote = function(){
-    let note = ''
-    confirmDelete(getNoteUrl(), { note: note })
-  }
-
-  getNoteUrl = function(){
-    return Spree.url( Spree.routes.orders_api + "/" + order_number);
-  }
-
   confirmDelete = function(url, params){
     displayDeleteAlert(function(confirmation) {
       if (confirmation) {
@@ -85,8 +74,6 @@ $(document).ready(function() {
       }
     }); 
   }
-
-  $('[data-hook=admin_order_edit_form] a.delete-note').click(deleteNote);
 
   // Makes API call for notes/tracking info
   makeApiCall = function(url, params) {

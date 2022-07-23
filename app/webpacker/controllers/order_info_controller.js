@@ -21,6 +21,11 @@ export default class extends Controller {
     this.makeApiCall(this.params(data));
   }
 
+  remove() {
+    let data = "";
+    this.confirmRemove(this.params(data));
+  }
+
   makeApiCall(params) {
     fetch(this.url, {
       method: "PUT",
@@ -37,6 +42,32 @@ export default class extends Controller {
 
   params(data) {
     return { note: data };
+  }
+
+  confirmRemove(params) {
+    this.displayAlert((confirmation) => {
+      if (confirmation) {
+        this.makeApiCall(params);
+      }
+    });
+  }
+
+  displayAlert(callback) {
+    let alertBox = document.querySelector("#custom-confirm");
+    let cancelBtn = alertBox.querySelector("button.cancel");
+    let confirmBtn = alertBox.querySelector("button.confirm");
+
+    confirmBtn.addEventListener("click", function () {
+      alertBox.style.display = "none";
+      callback(true);
+    });
+
+    cancelBtn.addEventListener("click", function () {
+      alertBox.style.display = "none";
+      callback(false);
+    });
+
+    alertBox.style.display = "block";
   }
 
   get url() {
