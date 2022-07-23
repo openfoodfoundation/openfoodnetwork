@@ -43,8 +43,6 @@ $(document).ready(function() {
 
   // Show the input field to edit the tracking info
   // And hide the input field when cancel is clicked
-  $('a.edit-tracking').click(toggleTrackingEdit);
-  $('a.cancel-tracking').click(toggleTrackingEdit);
 
   saveTrackingInfo = function(){
     let shipmentNumber = $(this).data('shipment-number');

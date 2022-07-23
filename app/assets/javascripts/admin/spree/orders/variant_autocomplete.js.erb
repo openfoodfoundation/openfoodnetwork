@@ -139,18 +139,6 @@ doAdjustItems = function(shipment_number, variant_id, quantity, inventory_units,
   }
 }
 
-toggleTrackingEdit = function(){
-  var link = $(this);
-  var parent_node = link.parents('tbody')
-  let input = parent_node.find('#tracking')[0]
-  parent_node.find('tr.edit-tracking').toggle();
-  // Set focus on input and
-  // put cursor at it's end
-  input.focus()
-  input.setSelectionRange(-1, -1)
-  parent_node.find('tr.show-tracking').toggle();
-}
-
 toggleMethodEdit = function(){
   var link = $(this);
   link.parents('tbody').find('tr.edit-method').toggle();
