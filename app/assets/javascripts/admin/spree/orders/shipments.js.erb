@@ -69,11 +69,6 @@ $(document).ready(function() {
 
   // handle note edit/delete
 
-  // Show the input field to edit the note
-  // And hide the input field when cancel is clicked
-  $('a.edit-note.icon-edit').click(toggleNoteEdit);
-  $('a.cancel-note').click(toggleNoteEdit);
-
   saveNote = function(){
     let note = document.getElementById('note').value
     makeApiCall(getNoteUrl(), { note: note })
