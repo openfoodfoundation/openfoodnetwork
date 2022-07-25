@@ -26,6 +26,7 @@
     "karma-chrome-launcher": "~3.1.0",
     "karma-coffee-preprocessor": "~1.0.1",
     "karma-jasmine": "~0.3.8",
+    "prettier": "2.7.1",
     "webpack-dev-server": "~3"
   },
   "license": "AGPL-3.0",
