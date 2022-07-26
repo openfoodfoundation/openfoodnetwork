@@ -40,21 +40,21 @@ describe "Payments Reports" do
       find("[type='submit']").click
 
       expect(page.find("table.report__table thead tr").text).to have_content([
-        I18n.t(:report_header_payment_state),
-        I18n.t(:report_header_distributor),
-        I18n.t(:report_header_product_total_price, currency: currency_symbol),
-        I18n.t(:report_header_shipping_total_price, currency: currency_symbol),
-        I18n.t(:report_header_outstanding_balance_price, currency: currency_symbol),
-        I18n.t(:report_header_total_price, currency: currency_symbol)
+        "Payment State",
+        "Distributor",
+        "Product Total ($)",
+        "Shipping Total ($)",
+        "Outstanding Balance ($)",
+        "Total ($)"
       ].join(" ").upcase)
 
       expect(page.find("table.report__table tbody tr").text).to have_content([
         order.payment_state,
         order.distributor.name,
-        with_currency(order.item_total.to_f + other_order.item_total.to_f),
-        with_currency(order.ship_total.to_f + other_order.ship_total.to_f),
-        with_currency(order.outstanding_balance.to_f + other_order.outstanding_balance.to_f),
-        with_currency(order.total.to_f + other_order.total.to_f)
+        order.item_total.to_f + other_order.item_total.to_f,
+        order.ship_total.to_f + other_order.ship_total.to_f,
+        order.outstanding_balance.to_f + other_order.outstanding_balance.to_f,
+        order.total.to_f + other_order.total.to_f
       ].compact.join(" "))
     end
   end
@@ -75,14 +75,14 @@ describe "Payments Reports" do
       find("[type='submit']").click
 
       expect(page.find("table.report__table thead tr").text).to have_content([
-        I18n.t(:report_header_payment_state),
-        I18n.t(:report_header_distributor),
-        I18n.t(:report_header_product_total_price, currency: currency_symbol),
-        I18n.t(:report_header_shipping_total_price, currency: currency_symbol),
-        I18n.t(:report_header_total_price, currency: currency_symbol),
-        I18n.t(:report_header_eft_price, currency: currency_symbol),
-        I18n.t(:report_header_paypal_price, currency: currency_symbol),
-        I18n.t(:report_header_outstanding_balance_price, currency: currency_symbol),
+        "Payment State",
+        "Distributor",
+        "Product Total ($)",
+        "Shipping Total ($)",
+        "Total ($)",
+        "EFT ($)",
+        "PayPal ($)",
+        "Outstanding Balance ($)"
       ].join(" ").upcase)
 
       expect(page.find("table.report__table tbody tr").text).to have_content([
