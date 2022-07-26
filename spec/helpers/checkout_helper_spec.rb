@@ -147,7 +147,7 @@ describe CheckoutHelper, type: :helper do
       shipping_adjustment = order.shipment_adjustments.first
       expect(adjustments).to include shipping_adjustment
 
-      admin_fee_summary = adjustments.last
+      admin_fee_summary = adjustments.reject { |a| a.id == shipping_adjustment.id }.first
       expect(admin_fee_summary.label).to eq "Shipping"
       expect(admin_fee_summary.amount).to eq 123
     end
