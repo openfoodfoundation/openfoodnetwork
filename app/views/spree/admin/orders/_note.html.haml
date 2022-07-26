@@ -1,5 +1,5 @@
-%table.index.edit-note-table{ data: { controller: "order-info", "order-info-order-number-value": order.number }}
-  %tr.edit-note.hidden.total{ data: { "order-info-target": "editor" }}
+%table.index.edit-note-table{ data: { controller: "order-info", "order-info-order-number-value": order.number  }}
+  %tr.edit-note.hidden.total{ data: { controller: "toggle-class", "order-info-target": "editor", "toggle-class-target": "mark" }}
     %td{ colspan: "5", data: { controller: "input-char-count" }, style: "position: relative;" }
       %label
         = t(".note_label")
@@ -7,10 +7,10 @@
       %span.edit-note-count{ data: { "input-char-count-target": "count" }, style: "position: absolute; right: 7px; top: 7px; font-size: 11px;" }
 
     %td.actions
-      = link_to '', '', class: 'save-note icon_link icon-ok no-text with-tip', data: { action: 'save order-info#save' }, title: I18n.t('actions.save')
-      = link_to '', '', class: 'cancel-note icon_link icon-cancel no-text with-tip', data: { action: 'cancel order-info#hideEditor' }, title: I18n.t('actions.cancel')
+      = link_to '', '', class: 'save-note icon_link icon-ok no-text with-tip', data: { action: 'order-info#save mouseenter->toggle-class#addClass mouseleave->toggle-class#removeClass', "toggle-class-class-list-param": ["highlight", "action-save"] }, title: I18n.t('actions.save')
+      = link_to '', '', class: 'cancel-note icon_link icon-cancel no-text with-tip', data: { action: 'order-info#hideEditor mouseenter->toggle-class#addClass mouseleave->toggle-class#removeClass', "toggle-class-class-list-param": ["highlight", "action-cancel"] }, title: I18n.t('actions.cancel')
 
-  %tr.show-note.total{ data: { "order-info-target": "resourceDisplayer" }}
+  %tr.show-note.total{ data: { controller: "toggle-class", "order-info-target": "resourceDisplayer", "toggle-class-target": "mark" }}
     %td{ :colspan => "5" }
       - if order.note.present?
         %strong
@@ -20,6 +20,6 @@
         = t(".no_note_present")
 
     %td.actions
-      = link_to '', '', class: 'edit-note icon_link icon-edit no-text with-tip', data: { action: 'edit order-info#showEditor' }, title: Spree.t('edit')
+      = link_to '', '', class: 'edit-note icon_link icon-edit no-text with-tip', data: { action: 'order-info#showEditor mouseenter->toggle-class#addClass mouseleave->toggle-class#removeClass', "toggle-class-class-list-param": ["highlight", "action-edit"] }, title: Spree.t('edit')
       - if @order.note.present?
-        = link_to '', '', class: 'delete-note icon_link icon-trash no-text with-tip', data: { action: 'remove order-info#remove' }, title: Spree.t('delete')
+        = link_to '', '', class: 'delete-note icon_link icon-trash no-text with-tip', data: { action: 'order-info#remove mouseenter->toggle-class#addClass mouseleave->toggle-class#removeClass', "toggle-class-class-list-param": ["highlight", "action-remove"] }, title: Spree.t('delete')

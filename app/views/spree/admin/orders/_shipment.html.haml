@@ -62,7 +62,7 @@
             - if can? :update, shipment
               = link_to '', '', :class => 'edit-method icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')
 
-      %tr.edit-tracking.hidden.total{ data: { "order-info-target": "editor" }}
+      %tr.edit-tracking.hidden.total{ data: {controller: "toggle-class", "toggle-class-target": "mark", "order-info-target": "editor" }}
         %td{ :colspan => "5" }
           %label
             = "#{Spree.t(:tracking_number)}:"
@@ -70,10 +70,10 @@
 
         %td.actions
           - if can?(:update, shipment) && !shipment.canceled?
-            = link_to '', '', :class => 'save-tracking icon_link icon-ok no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'save order-info#save' }, :title => I18n.t('actions.save')
-            = link_to '', '', :class => 'cancel-tracking icon_link icon-cancel no-text with-tip', :data => { :action => 'cancel order-info#hideEditor' }, :title => I18n.t('actions.cancel')
+            = link_to '', '', :class => 'save-tracking icon_link icon-ok no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'order-info#save mouseenter->toggle-class#addClass mouseleave->toggle-class#removeClass', "toggle-class-class-list-param": ["highlight", "action-save"] }, :title => I18n.t('actions.save')
+            = link_to '', '', :class => 'cancel-tracking icon_link icon-cancel no-text with-tip', :data => { :action => 'order-info#hideEditor mouseenter->toggle-class#addClass mouseleave->toggle-class#removeClass', "toggle-class-class-list-param": ["highlight", "action-cancel"] }, :title => I18n.t('actions.cancel')
 
-      %tr.show-tracking.total{ data: { "order-info-target": "resourceDisplayer" }}
+      %tr.show-tracking.total{ data: { controller: "toggle-class", "toggle-class-target": "mark", "order-info-target": "resourceDisplayer" }}
         %td{ :colspan => "5" }
           - if shipment.tracking.present?
             %strong
@@ -84,6 +84,6 @@
 
         %td.actions
           - if can?(:update, shipment) && shipment.can_modify?
-            = link_to '', '', :class => 'edit-tracking icon_link icon-edit no-text with-tip', :data => { :action => 'edit order-info#showEditor' }, :title => Spree.t('edit')
+            = link_to '', '', :class => 'edit-tracking icon_link icon-edit no-text with-tip', :data => { :action => 'order-info#showEditor mouseenter->toggle-class#addClass mouseleave->toggle-class#removeClass', "toggle-class-class-list-param": ["highlight", "action-edit"] }, :title => Spree.t('edit')
             - if shipment.tracking.present?
-              = link_to '', '', :class => 'delete-tracking icon_link icon-trash no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'remove order-info#remove' }, :title => Spree.t('delete')
+              = link_to '', '', :class => 'delete-tracking icon_link icon-trash no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'order-info#remove mouseenter->toggle-class#addClass mouseleave->toggle-class#removeClass', "toggle-class-class-list-param": ["highlight", "action-remove"] }, :title => Spree.t('delete')
