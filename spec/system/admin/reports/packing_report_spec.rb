@@ -126,14 +126,16 @@ describe "Packing Reports" do
       login_as_admin
     end
 
-    describe "viewing a report" do
+    describe "viewing the Pack by Product report" do
       context "when an associated variant has been soft-deleted" do
-        it "shows line items" do
+        
+        before do
           li1.variant.delete
-
           visit admin_reports_path
+          click_link "Pack By Product"
+        end
 
-          click_on I18n.t("admin.reports.packing.name")
+        it "shows line items" do
           select oc.name, from: "q_order_cycle_id_in"
 
           find('#q_order_completed_at_gt').click
