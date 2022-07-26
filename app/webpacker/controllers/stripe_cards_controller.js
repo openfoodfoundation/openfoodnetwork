@@ -6,7 +6,7 @@ export default class extends Controller {
   static targets = ["stripeelements", "select"];
 
   connect() {
-    this.initSelectedCard()
+    this.initSelectedCard();
   }
 
   initSelectedCard() {
