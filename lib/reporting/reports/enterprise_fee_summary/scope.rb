@@ -366,7 +366,7 @@ module Reporting
           chain_to_scope do
             select(
               <<-JOIN_STRING.strip_heredoc
-                SUM(spree_adjustments.amount)::NUMERIC AS total_amount,
+                SUM(spree_adjustments.amount) AS total_amount,
                   spree_payment_methods.name AS payment_method_name,
                   spree_shipping_methods.name AS shipping_method_name,
                   hubs.name AS hub_name,
