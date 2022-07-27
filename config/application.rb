@@ -226,6 +226,7 @@ module Openfoodnetwork
     config.active_record.belongs_to_required_by_default = false
     config.active_record.cache_versioning = false
     config.active_record.has_many_inversing = false
+    config.active_record.yaml_column_permitted_classes = [BigDecimal]
 
     config.active_support.escape_html_entities_in_json = true
 
