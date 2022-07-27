@@ -215,7 +215,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    combine_pdf (1.0.21)
+    combine_pdf (1.0.22)
+      matrix
       ruby-rc4 (>= 0.1.5)
     concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
