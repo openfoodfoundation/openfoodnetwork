@@ -22,5 +22,4 @@ angular.module('Darkswarm').controller "CreditCardsCtrl", ($scope, $http, Credit
 
 
   $scope.hasOneDefaultSavedCards = () ->
-    $scope.savedCreditCards.length > 0 && $scope.savedCreditCards.some((card) -> card.is_default)
-
+    $scope.savedCreditCards.some((card) -> card.is_default)
