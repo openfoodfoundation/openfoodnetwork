@@ -177,7 +177,7 @@ GEM
     bcrypt (3.1.18)
     bigdecimal (3.0.2)
     bindex (0.8.1)
-    bootsnap (1.10.1)
+    bootsnap (1.12.0)
       msgpack (~> 1.2)
     bugsnag (6.24.2)
       concurrent-ruby (~> 1.0)
@@ -215,7 +215,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    combine_pdf (1.0.21)
+    combine_pdf (1.0.22)
+      matrix
       ruby-rc4 (>= 0.1.5)
     concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
@@ -386,7 +387,7 @@ GEM
       money (~> 6.12)
     money (6.16.0)
       i18n (>= 0.6.4, <= 2)
-    msgpack (1.4.2)
+    msgpack (1.5.4)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     nio4r (2.5.8)
