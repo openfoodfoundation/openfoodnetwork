@@ -343,7 +343,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
-    json (2.6.1)
+    json (2.6.2)
     json-schema (2.8.1)
       addressable (>= 2.4)
     json_spec (1.1.5)
@@ -414,7 +414,7 @@ GEM
       xml-simple
     paypal-sdk-merchant (1.117.2)
       paypal-sdk-core (~> 0.3.0)
-    pdf-reader (2.5.0)
+    pdf-reader (2.10.0)
       Ascii85 (~> 1.0)
       afm (~> 0.2.1)
       hashery (~> 2.0)
