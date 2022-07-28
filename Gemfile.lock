@@ -415,7 +415,7 @@ GEM
       xml-simple
     paypal-sdk-merchant (1.117.2)
       paypal-sdk-core (~> 0.3.0)
-    pdf-reader (2.5.0)
+    pdf-reader (2.10.0)
       Ascii85 (~> 1.0)
       afm (~> 0.2.1)
       hashery (~> 2.0)
