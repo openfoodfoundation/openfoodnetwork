@@ -1,6 +1,6 @@
 Rails.application.reloader.to_prepare do
   WickedPdf.config = {
-    #:wkhtmltopdf => '/usr/local/bin/wkhtmltopdf',
+    :wkhtmltopdf => '/usr/local/bin/wkhtmltopdf',
     #:layout => "pdf.html",
     :exe_path => `bundle exec which wkhtmltopdf`.chomp
   }
