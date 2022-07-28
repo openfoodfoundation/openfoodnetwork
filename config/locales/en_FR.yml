@@ -494,6 +494,8 @@ en_FR:
         terms_of_service: "Terms of Service"
         delete: "Delete file"
         confirm_delete: "Are you sure you want to delete the current Terms of Service file?"
+        attachment: "Attachment"
+        create_terms_of_service: "Create Terms of service file"
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
@@ -3614,7 +3616,10 @@ en_FR:
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
-          selected: selected
+          selected:
+            zero: "No order selected"
+            one: "1 order selected"
+            other: "%{count} orders selected"
         sortable_header:
           payment_state: "Payment State"
           shipment_state: "Shipment State"

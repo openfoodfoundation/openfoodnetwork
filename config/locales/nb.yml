@@ -3596,7 +3596,6 @@ nb:
           results_found: "%{number} Resultater funnet."
           viewing: "Ser %{start} til %{end}."
           print_invoices: "Skriv ut fakturaer"
-          selected: valgt
         sortable_header:
           payment_state: "Betalingsstatus"
           shipment_state: "Leveringsstatus"

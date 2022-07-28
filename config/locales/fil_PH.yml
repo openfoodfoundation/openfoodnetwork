@@ -3136,7 +3136,6 @@ fil_PH:
           results_found: "%{number}Natagpuang resulta."
           viewing: "makikita ang%{start} hanggang%{end}."
           print_invoices: "i-print ang mga invoice"
-          selected: napili
         sortable_header:
           payment_state: "status ng pagbabayad"
           shipment_state: "status ng kargamento"

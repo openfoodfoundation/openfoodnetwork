@@ -182,6 +182,7 @@ ru:
         signed_up_but_unconfirmed: "На Ваш адрес электронной почты было отправлено сообщение со ссылкой для подтверждения. Пожалуйста, откройте ссылку, чтобы активировать свой аккаунт."
         unknown_error: "Ой! При создании учетной записи что-то пошло не так. Пожалуйста, проверьте свой адрес электронной почты и попробуйте снова."
     failure:
+      disabled: "Ваш аккаунт был отключен. Пожалуйста, свяжитесь с администратором для решения этой проблемы."
       invalid: |
           Неверный адрес электронной почты или пароль.
           Вы были гостем в прошлый раз? Возможно Вам необходимо создать учетную
@@ -494,6 +495,8 @@ ru:
         terms_of_service: "Условия Сервиса"
         delete: "Удалить файл"
         confirm_delete: "Вы уверены, что хотите удалить текущий файл Условий Сервиса?"
+        attachment: "Вложение"
+        create_terms_of_service: "Создать файл условий сервиса"
     number_localization:
       number_localization_settings: "Настройки локализации чисел"
       enable_localized_number: "Использовать международную логику разделителя тысяч/десятых"
@@ -503,6 +506,7 @@ ru:
         enable_invoices?: "Включить Счета?"
         invoice_style2?: "Используйте альтернативную модель счета-фактуры, которая включает общую разбивку налогов по ставке и информацию о ставке налога по каждой позиции (пока не подходит для стран, в которых цены отображаются без учета налогов)"
         enable_receipt_printing?: "Показать параметры для печати чеков с использованием термопринтеров в раскрывающемся списке?"
+        enterprise_number_required_on_invoices?: "Требовать ABN для создания счета?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -779,6 +783,9 @@ ru:
         variants_without_unit_value: "ВНИМАНИЕ: Некоторые варианты не имеют значения единицы"
         all: "Все"
       select_variant: "Выбрать вариант"
+      note:
+        note_label: "Примечание:"
+        no_note_present: "Примечаний нет."
     enterprise:
       select_outgoing_oc_products_from: Выберите исходящие товары OC из
     enterprises:
@@ -827,6 +834,9 @@ ru:
           email_address_tip: "Этот адрес электронной почты будет отображаться в вашем общедоступном профиле"
           phone: Телефон
           phone_placeholder: напр. +7(123)456-7891
+          whatsapp_phone: WhatsApp номер
+          whatsapp_phone_placeholder: например. +7 916 123 4567
+          whatsapp_phone_tip: "Этот номер будет отображаться в вашем общедоступном профиле, чтобы его можно было открыть как ссылку WhatsApp."
           website: Сайт
           website_placeholder: напр. www.example.ru
         enterprise_fees:
@@ -1172,6 +1182,9 @@ ru:
         cancel: Отмена
         proceed: Продолжить
       status:
+        undated: недатированный
+        upcoming: предстоящий
+        open: открыт
         closed: закрыт
     producer_properties:
       index:
@@ -1200,6 +1213,8 @@ ru:
       unitsize: РАЗМЕР ЕДИНИЦЫ
       total: ВСЕГО
       total_items: ИТОГО
+      total_by_customer: Итого По Клиентам
+      total_by_supplier: Всего По Поставщику
       supplier_totals: Итоговые данные Поставщика Цикла Заказа
       supplier_totals_by_distributor: Итоговые данные Поставщика Цикла Заказа по Дистрибьюторам
       totals_by_supplier: Итоговые данные Дистрибьютора за Цикл Заказов по Поставщикам
@@ -1215,6 +1230,7 @@ ru:
       tax_rates: Налоговые Ставки
       pack_by_customer: Выборка по Клиенту
       pack_by_supplier: Выборка по Поставщику
+      pack_by_product: Пакет По Продукту
       orders_and_distributors:
         name: Заказы и Дистрибьюторы
         description: Заказы с информацией о дистрибьюторе
@@ -1265,8 +1281,14 @@ ru:
           temp_controlled: "Контроль Температуры?"
           price: "Цена"
       rendering_options:
+        generate_report: "Создать отчет"
         on_screen: "На экране"
+        spreadsheet: "Электронная таблица (Excel, OpenOffice...)"
         display: Показать
+        summary_row: Сводная Cтрока
+        header_row: Строка Заголовка
+        raw_data: Необработанные Данные
+        formatted_data: Форматированные Данные
       packing:
         name: "Выборочные Отчёты"
     subscriptions:
@@ -1801,6 +1823,7 @@ ru:
   order_hub_info: Информация о Центре
   order_back_to_store: Назад В Магазин
   order_back_to_cart: Назад В Корзину
+  order_back_to_website: Вернуться На Сайт
   bom_tip: "Используйте эту страницу для изменения количества товара в нескольких заказах. Если необходимо, Товары могут быть полностью удалены из заказов."
   unsaved_changes_warning: "Есть несохраненные изменения, которые будут потеряны, если вы продолжите."
   unsaved_changes_error: "Поля с красными границами содержат ошибки."
@@ -2196,7 +2219,10 @@ ru:
         contact_field_placeholder: "Имя Контакта"
         contact_field_required: "Вам нужно указать основной контакт."
         phone_field: "Номер телефона"
+        whatsapp_phone_field: "WhatsApp номер"
+        whatsapp_phone_tooltip: "Этот номер будет отображаться в вашем общедоступном профиле, чтобы его можно было открыть как ссылку WhatsApp."
         phone_field_placeholder: "напр. +7(123)456-7891"
+        whatsapp_phone_field_placeholder: "например. +7 916 123 4567"
       type:
         title: "Тип"
         headline: "Последний шаг по добавлению %{enterprise}!"
@@ -2485,12 +2511,16 @@ ru:
   report_payment_totals: 'Итоги Платежей'
   report_all: 'все'
   report_order_cycle: "Цикл заказа"
+  report_hide_columns: Столбцы, которые нужно скрыть
   report_columns: Колонки
   report_enterprises: "Предприятия"
   report_enterprise_fee: "Названия Оплаты"
   report_users: "Пользователи"
   report_tax_rates: Налоговые Ставки
   report_tax_types: Типы Налогов
+  report_filters: Фильтры Отчетов
+  report_print: Распечатать Отчет
+  report_render_options: Параметры рендеринга
   report_header_order_cycle: Цикл Заказа
   report_header_user: Пользователь
   report_header_email: Электронная почта
@@ -2625,6 +2655,11 @@ ru:
   report_header_transaction_fee: Комиссия за Операцию (без налога)
   report_header_total_untaxable_admin: Всего необлагаемых налогом административных корректировок (без налогов)
   report_header_total_taxable_admin: Всего налогооблагаемых административных корректировок (включая налоги)
+  report_xero_configuration: Xero Конфигурация
+  initial_invoice_number: "Начальный номер счета"
+  invoice_date: "Дата Счёта"
+  due_date: "Срок Выполнения"
+  account_code: "Код счета"
   equals: "Равно"
   contains: "содержит"
   discount: "Скидка"
@@ -3637,7 +3672,10 @@ ru:
           results_found: "Найдено %{number} Результатов."
           viewing: "Просмотр с %{start} по %{end}."
           print_invoices: "Печать Счетов"
-          selected: выбраны
+          selected:
+            zero: "Заказ не выбран"
+            one: "1 заказ выбран"
+            other: "%{count} выбрано заказов"
         sortable_header:
           payment_state: "Статус оплаты"
           shipment_state: "Статус доставки"
@@ -3652,6 +3690,9 @@ ru:
           from: "От"
           to: "Плательщик"
           shipping: "Доставка"
+        note:
+          note_label: "Примечание:"
+          no_note_present: "Примечаний нет."
         form:
           distribution_fields:
             title: "Дистрибьюция"
@@ -3837,6 +3878,7 @@ ru:
           back_to_users_list: "Назад К Списку Пользователей"
           general_settings: "Основные Настройки"
         form:
+          disabled: "Выключен?"
           email: "Почта"
           roles: "Роли"
           enterprise_limit: "Ограничение Предприятий"

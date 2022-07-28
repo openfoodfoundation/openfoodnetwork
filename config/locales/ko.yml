@@ -3548,7 +3548,6 @@ ko:
           results_found: "%{number}개의 결과를 찾았습니다."
           viewing: "%{start}에서 %{end}까지 보기"
           print_invoices: "청구서 출력"
-          selected: 선택됨
         sortable_header:
           payment_state: "결제 상태"
           shipment_state: "배송 현황"

@@ -1857,7 +1857,7 @@ it:
   email_payment_paid: PAGATO
   email_payment_not_paid: NON PAGATO
   email_payment_description: Descrizione pagamento alla Conferma
-  email_payment_summary: Riepilogo di pagamento
+  email_payment_summary: Importo da pagare
   email_payment_method: "Metodo di Pagamento:"
   email_so_placement_intro_html: "Hai una nuova gentile richiesta di <strong>%{distributor}</strong>"
   email_so_placement_details_html: "Ecco i dettagli della gentile richiesta per <strong>%{distributor}</strong>:"
@@ -3642,7 +3642,6 @@ it:
           results_found: "%{number} Risultati trovati."
           viewing: "Guardando da %{start} a %{end}"
           print_invoices: "Stampa conferme d'ordine"
-          selected: selezionato
         sortable_header:
           payment_state: "Stato Pagamento"
           shipment_state: "Stato della spedizione"

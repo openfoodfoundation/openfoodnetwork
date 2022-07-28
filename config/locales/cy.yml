@@ -182,6 +182,7 @@ cy:
         signed_up_but_unconfirmed: "Anfonwyd neges gyda dolen gadarnhau i'ch cyfeiriad e-bost. Agorwch y ddolen i actifadu eich cyfrif."
         unknown_error: "Aeth rhywbeth o'i le wrth greu eich cyfrif. Gwiriwch eich cyfeiriad e-bost a rhoi cynnig arall arni."
     failure:
+      disabled: "Analluogwyd eich cyfrif. Anfonwch ebost at: support@openfoodnetwork.org.uk i ddatrys y broblem hon."
       invalid: |
           Ebost neu gyfrinair annilys.
           Wnaethoch chi archebu fel gwestai'r tro diwethaf?  Hwyrach bod angen ichi greu cyfrif, neu ailosod eich cyfrinair.
@@ -502,6 +503,7 @@ cy:
         enable_invoices?: "Galluogi Anfonebau?"
         invoice_style2?: "Defnyddiwch y model anfoneb amgen sy'n cynnwys dadansoddiad treth cyfan fesul cyfradd a gwybodaeth cyfradd dreth fesul eitem (ddim yn addas eto ar gyfer gwledydd sy'n arddangos prisiau ac eithrio treth)"
         enable_receipt_printing?: "Dangos opsiynau ar gyfer argraffu derbynebau gan ddefnyddio argraffwyr thermol yn nhrefn y cwymplen?"
+        enterprise_number_required_on_invoices?: "Angen rhif y cwmni i greu anfoneb?"
     stripe_connect_settings:
       edit:
         title: "Cyswllt Stripe"
@@ -778,6 +780,9 @@ cy:
         variants_without_unit_value: "RHYBUDD: Nid oes gwerth uned i rai amrywolion"
         all: "I gyd"
       select_variant: "Dewiswch amrywiolyn"
+      note:
+        note_label: "Noder:"
+        no_note_present: "Ni ddarparwyd nodyn."
     enterprise:
       select_outgoing_oc_products_from: Dewiswch gynnyrch OC sy'n mynd allan o
     enterprises:
@@ -826,7 +831,9 @@ cy:
           email_address_tip: "Dangosir y cyfeiriad e-bost hwn yn eich proffil cyhoeddus"
           phone: Ffôn
           phone_placeholder: e.e. 98 7654 3210
+          whatsapp_phone: Rhif ffôn WhatsApp
           whatsapp_phone_placeholder: eg. +44 7545 123123
+          whatsapp_phone_tip: "Caiff y rhif ei arddangos ar eich proffil cyhoeddus i’w agor fel dolen WhatsApp."
           website: Gwefan
           website_placeholder: ee. www.truffles.co.uk
         enterprise_fees:
@@ -1171,6 +1178,7 @@ cy:
         cancel: Canslo
         proceed: Ewch ymlaen
       status:
+        undated: dim dyddiad
         upcoming: i ddod
         open: agor
         closed: ar gau
@@ -1201,6 +1209,7 @@ cy:
       unitsize: MAINT UNEDAU
       total: CYFANSWM
       total_items: CYFANSWM EITEMAU
+      total_by_customer: Cyfanswm fesul Cwsmer
       total_by_supplier: Cyfanswm fesul Cyflenwr
       supplier_totals: Cyfanswm Cylch Archebu Cyflenwyr
       supplier_totals_by_distributor: Cyfanswm Cylch Archebu Cyflenwyr fesul Dosbarthwr
@@ -1809,6 +1818,7 @@ cy:
   order_hub_info: Gwybodaeth Hwb
   order_back_to_store: Yn ôl i'r siop
   order_back_to_cart: Yn ôl i'r basged
+  order_back_to_website: Yn ôl i’r Wefan
   bom_tip: "Defnyddiwch y dudalen hon i newid nifer cynnyrch ar draws sawl archeb. Gellir hefyd dileu cynnyrch o archebion yn gyfan gwbl, pe dymunir."
   unsaved_changes_warning: "Mae newidiadau heb eu cadw yn bodoli a byddant yn cael eu colli os byddwch yn parhau."
   unsaved_changes_error: "Mae'r meysydd â ffiniau coch yn cynnwys gwallau."
@@ -2204,6 +2214,8 @@ cy:
         contact_field_placeholder: "Enw Cyswllt"
         contact_field_required: "Mae angen i chi nodi prif gyswllt."
         phone_field: "Rhif ffôn"
+        whatsapp_phone_field: "Rhif ffôn WhatsApp"
+        whatsapp_phone_tooltip: "Caiff y rhif ei arddangos ar eich proffil cyhoeddus i’w agor fel dolen WhatsApp."
         phone_field_placeholder: "e.e. 07123123123"
         whatsapp_phone_field_placeholder: "eg. +44 7545 123123"
       type:
@@ -3652,7 +3664,6 @@ cy:
           results_found: "Cafwyd hyd i%{number} canlyniad."
           viewing: "Yn edrych ar %{start} i %{end}."
           print_invoices: "Argraffu anfonebau"
-          selected: dewiswyd
         sortable_header:
           payment_state: "Cyflwr Talu"
           shipment_state: "Sir anfon"
@@ -3667,6 +3678,9 @@ cy:
           from: "O"
           to: "Bil i"
           shipping: "Yn anfon"
+        note:
+          note_label: "Noder:"
+          no_note_present: "Ni ddarparwyd nodyn."
         form:
           distribution_fields:
             title: "Dosbarthiad"
@@ -3852,6 +3866,7 @@ cy:
           back_to_users_list: "Yn ôl i'r Rhestr Defnyddwyr"
           general_settings: "Gosodiadau Cyffredinol"
         form:
+          disabled: "Analluogwyd?"
           email: "E-bost"
           roles: "Rolau"
           enterprise_limit: "Uchafswm Mentrau"

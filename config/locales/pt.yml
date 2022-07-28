@@ -3099,7 +3099,6 @@ pt:
           results_found: "%{number} resultados encontrados."
           viewing: "A ver de %{start}a %{end}."
           print_invoices: "Imprimir Faturas"
-          selected: selecionado
         sortable_header:
           payment_state: "Estado do Pagamento"
           shipment_state: "Estado do envio"

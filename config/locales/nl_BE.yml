@@ -3121,7 +3121,6 @@ nl_BE:
           results_found: "1%{number} Resultaten gevonden"
           viewing: "Resultaten te zien 1%{start} tot 2%{end}."
           print_invoices: "De facturen afdrukken"
-          selected: Geselecteerd
         sortable_header:
           payment_state: "Status Betaling"
           shipment_state: "Status Verzending"

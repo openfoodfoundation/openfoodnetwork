@@ -494,6 +494,8 @@ de_DE:
         terms_of_service: "Nutzungsbedingungen"
         delete: "Löschen"
         confirm_delete: "Sind Sie sicher, dass Sie die derzeitigen Nutzungsbedingungen löschen möchten?"
+        attachment: "Datei hochladen"
+        create_terms_of_service: "Nutzungsbedingungen hochladen "
     number_localization:
       number_localization_settings: "Zahlenformateinstellungen"
       enable_localized_number: "Verwenden Sie die internationale Tausendertrennungslogik"
@@ -3623,7 +3625,10 @@ de_DE:
           results_found: "%{number} Ergebnisse gefunden."
           viewing: "Angezeigt wird %{start} bis %{end}."
           print_invoices: "Rechnungen drucken"
-          selected: ausgewählt
+          selected:
+            zero: "Keine Bestellung ausgewählt"
+            one: "1 Bestellung ausgewählt"
+            other: "%{count} Bestellungen ausgewählt"
         sortable_header:
           payment_state: "Zahlungsstatus"
           shipment_state: "Lieferstatus"
@@ -3763,7 +3768,7 @@ de_DE:
           paypal:
             no_payment_via_admin_backend: Paypal-Zahlungen können nicht im Backoffice erfasst werden.
       products:
-        image_upload_error: "Das Produktbild wurde nicht erkannt. Bitte laden Sie ein Bild im PNG- oder JPG-Format hoch."
+        image_upload_error: "Das Bild wurde nicht erkannt. Bitte laden Sie ein Bild im PNG-, JPG-, GIF- oder SVG-Format hoch."
         new:
           title: "Neues Produkt"
           new_product: "Neues Produkt"

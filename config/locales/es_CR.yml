@@ -3442,7 +3442,6 @@ es_CR:
           results_found: "%{number} Resultados encontrados."
           viewing: "Viendo de %{start}a %{end}."
           print_invoices: "Imprimir facturas"
-          selected: seleccionado
         sortable_header:
           payment_state: "Estado del pago"
           shipment_state: "Estado del envío"
