@@ -120,6 +120,31 @@ describe '
 
   it_behaves_like "Check display on each invoice: legacy and alternative", false
   it_behaves_like "Check display on each invoice: legacy and alternative", true
+
+  describe "an order with added taxes" do
+    let!(:order) do
+      create(:order_with_taxes, distributor: distributor, ship_address: create(:address),
+                                line_items_count: 0,
+                                product_price: 10, tax_rate_amount: 0.2,
+                                included_in_price: false,
+                                tax_rate_name: "Veggies").tap do |order|
+                                  order.create_tax_charge!
+                                  order.update_shipping_fees!
+                                  order.save
+                                end
+    end
+
+    context "legacy invoice" do
+      before do
+        allow(Spree::Config).to receive(:invoice_style2?).and_return(false)
+        login_as_admin_and_visit spree.print_admin_order_path(order)
+      end
+      it "displays the taxes correctly" do
+        convert_pdf_to_page
+        expect(page).to have_content "GST Total: $2.00"
+      end
+    end
+  end
 end
 
 def convert_pdf_to_page
