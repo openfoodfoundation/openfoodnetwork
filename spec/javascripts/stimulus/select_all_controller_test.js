@@ -79,4 +79,35 @@ describe("SelectAllController", () => {
       expect(checkboxB.checked).toBe(false);
     });
   });
+
+  describe("#connect", () => {
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <div data-controller="select-all">
+          <input
+            id="selectAllCheckbox"
+            type="checkbox"
+            data-action="change->select-all#toggleAll"
+            data-select-all-target="all">
+          <input
+            id="checkboxA"
+            type="checkbox"
+            data-action="change->select-all#toggleCheckbox"
+            data-select-all-target="checkbox"
+            checked="checked">
+          <input
+            id="checkboxB"
+            type="checkbox"
+            data-action="change->select-all#toggleCheckbox"
+            data-select-all-target="checkbox"
+            checked="checked">
+        </div>
+      `;
+    });
+
+    it("checks the select all checkbox on page load if all checkboxes are checked", () => {
+      const selectAllCheckbox = document.getElementById("selectAllCheckbox");
+      expect(selectAllCheckbox.checked).toBe(true);
+    });
+  });
 });
