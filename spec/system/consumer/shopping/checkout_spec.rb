@@ -21,7 +21,7 @@ describe "As a consumer I want to check out my cart", js: true do
   let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone: zone, included_in_price: true) }
   let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
   let(:product) {
-    create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1)
+    create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1, included_in_price: true)
   }
   let(:variant) { product.variants.first }
   let(:order) {

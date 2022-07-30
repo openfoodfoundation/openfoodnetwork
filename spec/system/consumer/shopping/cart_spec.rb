@@ -22,7 +22,7 @@ describe "full-page cart", js: true do
       create(:enterprise_fee, amount: 11.00, tax_category: product_with_tax.tax_category)
     }
     let(:product_with_tax) {
-      create(:taxed_product, supplier: supplier, zone: zone, price: 110.00, tax_rate_amount: 0.1)
+      create(:taxed_product, supplier: supplier, zone: zone, price: 110.00, tax_rate_amount: 0.1, included_in_price: true)
     }
     let(:product_with_fee) {
       create(:simple_product, supplier: supplier, price: 0.86, on_hand: 100)

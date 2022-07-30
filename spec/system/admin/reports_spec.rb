@@ -208,8 +208,13 @@ describe '
       create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first,
                      ship_address: address, bill_address: address)
     }
-    let(:product1) { create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0) }
-    let(:product2) { create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2) }
+    let(:product1) {
+      create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0, included_in_price: true)
+    }
+    let(:product2) {
+      create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2,
+                             included_in_price: true)
+    }
 
     let!(:line_item1) {
       create(:line_item, variant: product1.variants.first, price: 12.54, quantity: 1, order: order1)
