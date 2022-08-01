@@ -23,10 +23,10 @@ angular.module("admin.products").controller "variantUnitsCtrl", ($scope, Variant
 
   $scope.updateValue = ->
     unit_value_human = angular.element('#unit_value_human').val()
-    $scope.unit_value = PriceParser.parse(unit_value_human) * $scope.scale
+    $scope.unit_value = bigDecimal.multiply(PriceParser.parse(unit_value_human), $scope.scale, 2)
 
   variant_unit_value = angular.element('#variant_unit_value').val()
-  $scope.unit_value_human = variant_unit_value / $scope.scale
+  $scope.unit_value_human = parseFloat(bigDecimal.divide(variant_unit_value, $scope.scale, 2))
 
   $timeout -> $scope.processUnitPrice()
   $timeout -> $scope.updateValue()
