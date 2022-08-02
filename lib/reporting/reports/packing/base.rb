@@ -26,7 +26,7 @@ module Reporting
         end
 
         def columns_format
-          { price: :currency, quantity: :quantity }
+          { quantity: :quantity }
         end
 
         def custom_headers

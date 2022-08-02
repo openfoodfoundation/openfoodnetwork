@@ -24,10 +24,6 @@ module Reporting
           }
         end
 
-        def columns_format
-          { sum_total: :currency }
-        end
-
         def rules
           [
             {
