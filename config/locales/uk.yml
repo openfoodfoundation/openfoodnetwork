@@ -1,5 +1,5 @@
 uk:
-  language_name: "English"
+  language_name: "Українська"
   activerecord:
     models:
       spree/product: Продукт
