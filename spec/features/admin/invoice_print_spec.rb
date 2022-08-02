@@ -173,14 +173,20 @@ describe '
 
       before do
         order1.reload
-        break unless order1.next! until order1.delivery?
+        while !order1.delivery?
+          break if !order1.next!
+        end
         order1.select_shipping_method(shipping_method.id)
         order1.recreate_all_fees!
-        break unless order1.next! until order1.payment?
+        while !order1.payment?
+          break if !order1.next!
+        end
 
         create(:payment, state: "checkout", order: order1, amount: order1.reload.total,
                          payment_method: create(:payment_method, distributors: [distributor]))
-        break unless order1.next! until order1.complete?
+        while !order1.complete?
+          break if !order1.next!
+        end
       end
 
       context "legacy invoice" do
@@ -224,10 +230,10 @@ describe '
           expect(page).to have_content "Item Qty Unit price (Incl. tax)"
           expect(page).to have_content "Total price (Incl. taTax rate"
           # first line item, no tax
-          expect(page).to have_content "#{Spree::Product.first.name}"
+          expect(page).to have_content Spree::Product.first.name.to_s
           expect(page).to have_content "1 $12.54 $12.54 0.0% (1g)"
           # second line item, included tax
-          expect(page).to have_content "#{Spree::Product.second.name}"
+          expect(page).to have_content Spree::Product.second.name.to_s
           expect(page).to have_content "3 $500.15 $1,500.45 20.0% (1g)"
           # Enterprise fee
           expect(page).to have_content "Admin & Handling $120.00"
@@ -235,13 +241,13 @@ describe '
           expect(page).to have_content "Shipping $100.55 20.0%"
           # Order Totals
           expect(page).to have_content "Total (Incl. tax): $1,733.54"
-          expect(page).to have_content "Total tax (20.0%): $16.76"
+          expect(page).to have_content "Total tax (20.0%): $270.08"
           expect(page).to have_content "Total (Excl. tax): $1,446.70"
         end
       end
     end
 
-        context "added" do
+    context "added" do
       let(:shipping_tax_rate_added) {
         create(:tax_rate, amount: 0.20, included_in_price: false, zone: zone)
       }
@@ -285,14 +291,20 @@ describe '
 
       before do
         order2.reload
-        break unless order2.next! until order2.delivery?
+        while !order2.delivery?
+          break if !order2.next!
+        end
         order2.select_shipping_method(shipping_method.id)
         order2.recreate_all_fees!
-        break unless order2.next! until order2.payment?
+        while !order2.payment?
+          break if !order2.next!
+        end
 
         create(:payment, state: "checkout", order: order2, amount: order2.reload.total,
                          payment_method: create(:payment_method, distributors: [distributor]))
-        break unless order2.next! until order2.complete?
+        while !order2.complete?
+          break if !order2.next!
+        end
       end
 
       context "legacy invoice" do
@@ -340,7 +352,7 @@ describe '
           # first line item, no tax
           expect(page).to have_content "#{Spree::Product.first.name} 1 $12.54 $12.54 0.0% (1g)"
           # second line item, included tax
-          expect(page).to have_content "#{Spree::Product.second.name}"
+          expect(page).to have_content Spree::Product.second.name.to_s
           expect(page).to have_content "3 $500.15 $1,500.45 20.0% (1g)"
           # Enterprise fee
           expect(page).to have_content "Admin & Handling $120.00"
@@ -348,7 +360,7 @@ describe '
           expect(page).to have_content "Shipping $100.55 20.0%"
           # Order Totals
           expect(page).to have_content "Total (Incl. tax): $2,077.74"
-          expect(page).to have_content "Total tax (20.0%): $20.11"
+          expect(page).to have_content "Total tax (20.0%): $324.09"
           expect(page).to have_content "Total (Excl. tax): $1,733.54"
         end
       end
