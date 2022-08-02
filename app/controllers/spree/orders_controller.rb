@@ -4,6 +4,8 @@ module Spree
   class OrdersController < ::BaseController
     include OrderCyclesHelper
     include Rails.application.routes.url_helpers
+    include CablecarResponses
+
 
     layout 'darkswarm'
 
@@ -99,7 +101,8 @@ module Spree
       else
         flash[:error] = I18n.t(:orders_could_not_cancel)
       end
-      redirect_to request.referer || main_app.order_path(@order)
+      render status: :found,
+             operations: cable_car.redirect_to(url: request.referer || main_app.order_path(@order))
     end
 
     private

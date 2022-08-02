@@ -93,8 +93,8 @@ describe '
           visit '/account'
           expect(page).to have_content I18n.t('spree.users.orders.open_orders')
 
-          expect(page).to have_link d1o1.number, href: order_path(d1o1)
-          expect(page).to have_link d1o2.number, href: order_path(d1o2)
+          expect(page).to have_link 'Edit', href: order_path(d1o1)
+          expect(page).to have_link 'Edit', href: order_path(d1o2)
           expect(page).to have_link(distributor1.name,
                                     href: "#{distributor1.permalink}/shop", count: 2)
           expect(page).to have_link I18n.t('spree.users.open_orders.cancel'),
