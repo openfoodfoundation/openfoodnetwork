@@ -64,6 +64,12 @@ describe '
     expect(page).not_to have_selector '.flash.error'
     expect(page).not_to have_content "Line items can't be blank"
 
+    expect(page).to have_selector 'h1', text: 'Customer Details'
+    o = Spree::Order.last
+    expect(o.distributor).to eq(distributor)
+    expect(o.order_cycle).to eq(order_cycle)
+
+    click_link "Order Details"
     click_button "Update And Recalculate Fees"
     expect(page).to have_selector '.flash.error'
     expect(page).to have_content "Line items can't be blank"
@@ -77,11 +83,6 @@ describe '
     expect(page).to have_selector 'td', text: product.name
 
     click_button 'Update'
-
-    expect(page).to have_selector 'h1', text: 'Customer Details'
-    o = Spree::Order.last
-    expect(o.distributor).to eq(distributor)
-    expect(o.order_cycle).to eq(order_cycle)
   end
 
   it "can add a product to an existing order" do
@@ -276,32 +277,10 @@ describe '
 
       login_as user
       new_order_with_distribution(distributor, order_cycle)
-      expect(page).to have_content I18n.t('spree.add_product').upcase
+      expect(page).to have_selector 'h1', text: "Customer Details"
     end
 
     it "creates order and shipment successfully and allows proceeding to payment" do
-      select2_select product.name, from: 'add_variant_id', search: true
-
-      within("table.stock-levels") do
-        expect(page).to have_selector("#stock_item_quantity")
-        fill_in "stock_item_quantity", with: 50
-        find("button.add_variant").click
-      end
-
-      expect(page).to_not have_selector("table.stock-levels")
-      expect(page).to have_selector("table.stock-contents")
-
-      within("tr.stock-item") do
-        expect(page).to have_text("50")
-      end
-
-      order = Spree::Order.last
-      expect(order.line_items.first.quantity).to eq(50)
-      expect(order.shipments.count).to eq(1)
-
-      click_button "Update And Recalculate Fees"
-      expect(page).to have_selector 'h1', text: "Customer Details"
-
       fill_in "order_email", with: "test@test.com"
       
       expect(page).to have_selector('#order_ship_address_attributes_firstname')
@@ -325,19 +304,40 @@ describe '
       select "Victoria", from: "order_bill_address_attributes_state_id"
       fill_in "order_bill_address_attributes_phone", with: "111 1111 1111"
 
-      expect { click_button "Update" }.to change { Customer.count }.by(1)
+      click_button "Update"
+
+      expect(page).to have_content "Customer Details updated"
+      click_link "Order Details"
+
+      expect(page).to have_content I18n.t('spree.add_product').upcase
+      select2_select product.name, from: 'add_variant_id', search: true
+
+      within("table.stock-levels") do
+        expect(page).to have_selector("#stock_item_quantity")
+        fill_in "stock_item_quantity", with: 50
+        find("button.add_variant").click
+      end
+
+      expect(page).to_not have_selector("table.stock-levels")
+      expect(page).to have_selector("table.stock-contents")
+
+      within("tr.stock-item") do
+        expect(page).to have_text("50")
+      end
+
+      order = Spree::Order.last
+      expect(order.line_items.first.quantity).to eq(50)
+      expect(order.shipments.count).to eq(1)
 
       new_customer = Customer.last
-
       expect(new_customer.full_name).to eq('Clark Kent')
       expect(new_customer.bill_address.address1).to eq('Smallville')
       expect(new_customer.bill_address.city).to eq('Kansas')
       expect(new_customer.bill_address.zipcode).to eq('SP1 M11')
       expect(new_customer.bill_address.phone).to eq('111 1111 1111')
-
       expect(new_customer.bill_address).to eq(new_customer.ship_address)
 
-      expect(page).to have_content "Customer Details updated"
+      click_button "Update And Recalculate Fees"
 
       click_link "Payments"
 
@@ -372,12 +372,6 @@ describe '
     # When I create a new order
     login_as user
     new_order_with_distribution(distributor, order_cycle)
-    select2_select product.name, from: 'add_variant_id', search: true
-    find('button.add_variant').click
-    page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS
-    click_button 'Update'
-
-    expect(page).to have_selector 'h1.js-admin-page-title', text: "Customer Details"
 
     # The customer selection partial should be visible
     expect(page).to have_selector '#select-customer'
@@ -385,7 +379,6 @@ describe '
     # And I select that customer's email address and save the order
     tomselect_search_and_select customer.email, from: 'customer_search_override'
     click_button 'Update'
-    expect(page).to have_selector "h1.js-admin-page-title", text: "Customer Details"
 
     # Then their addresses should be associated with the order
     order = Spree::Order.last
@@ -395,6 +388,12 @@ describe '
     expect(order.bill_address.zipcode).to eq customer.bill_address.zipcode
     expect(order.ship_address.city).to eq customer.ship_address.city
     expect(order.bill_address.city).to eq customer.bill_address.city
+
+    click_link "Order Details"
+
+    select2_select product.name, from: 'add_variant_id', search: true
+    find('button.add_variant').click
+    page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS
   end
 
   context "as an enterprise manager" do
@@ -686,6 +685,8 @@ describe '
 
     it "creating an order with distributor and order cycle" do
       new_order_with_distribution(distributor1, order_cycle1)
+      expect(page).to have_selector 'h1', text: 'Customer Details'
+      click_link "Order Details"
 
       expect(page).to have_content 'ADD PRODUCT'
       select2_select product.name, from: 'add_variant_id', search: true
@@ -704,7 +705,6 @@ describe '
 
       click_button 'Update'
 
-      expect(page).to have_selector 'h1', text: 'Customer Details'
       o = Spree::Order.last
       expect(o.distributor).to eq distributor1
       expect(o.order_cycle).to eq order_cycle1

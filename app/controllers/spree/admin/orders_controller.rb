@@ -42,6 +42,10 @@ module Spree
           @order.update_order!
         end
 
+        if params[:set_distribution_step] && @order.update(order_params)
+          return redirect_to spree.admin_order_customer_path(@order)
+        end
+
         unless order_params.present? && @order.update(order_params) && @order.line_items.present?
           if @order.line_items.empty? && !params[:suppress_error_msg]
             @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
@@ -55,7 +59,7 @@ module Spree
           redirect_to spree.edit_admin_order_path(@order)
         else
           # Jump to next step if order is not complete
-          redirect_to spree.admin_order_customer_path(@order)
+          redirect_to spree.admin_order_payments_path(@order)
         end
       end
 

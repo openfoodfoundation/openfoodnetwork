@@ -239,12 +239,12 @@ describe Spree::Admin::OrdersController, type: :controller do
         end
 
         context "and no errors" do
-          it "updates distribution charges and redirects to customer details page" do
+          it "updates distribution charges and redirects to payments  page" do
             expect_any_instance_of(Spree::Order).to receive(:recreate_all_fees!)
 
             spree_put :update, params
 
-            expect(response).to redirect_to spree.admin_order_customer_path(order)
+            expect(response).to redirect_to spree.admin_order_payments_path(order)
           end
         end
 
