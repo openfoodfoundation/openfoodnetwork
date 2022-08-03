@@ -10,7 +10,7 @@
     %input.red{ type: "button", value: t(:update), ng: { click: "submit()", disabled: "!enterprise_form.$dirty" } }
     %input{ type: "button", ng: { value: "enterprise_form.$dirty ? '#{t(:cancel)}' : '#{t(:close)}'", click: "cancel('#{main_app.admin_enterprises_path}')" } }
 
-  .row
+  .row{ data: { controller: "side-menu" }}
     .sixteen.columns.alpha
       .four.columns.alpha
         = render 'admin/shared/side_menu'
