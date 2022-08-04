@@ -1290,6 +1290,9 @@ en:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      revenues_by_hub:
+        name: Revenues By Hub
+        description: Revenues by hub
       orders_and_distributors:
         name: Orders And Distributors
         description: Orders with distributor details
@@ -2673,6 +2676,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_hub_address: Hub Address
   report_header_to_hub: To Hub
   report_header_hub_code: Hub Code
+  report_header_hub_id: Hub ID
+  report_header_hub_owner_email: Hub Owner Email
   report_header_code: Code
   report_header_paid: Paid?
   report_header_delivery: Delivery?
@@ -2705,6 +2710,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
+  report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
+  report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
   report_header_enterprise: Enterprise
   report_header_customer: Customer
   report_header_customer_code: Customer Code
