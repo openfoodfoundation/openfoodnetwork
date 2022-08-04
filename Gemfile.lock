@@ -141,9 +141,10 @@ GEM
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     afm (0.2.2)
-    angular-rails-templates (1.1.0)
-      railties (>= 4.2, < 7)
+    angular-rails-templates (1.2.0)
+      railties (>= 5.0, < 7.1)
       sprockets (>= 3.0, < 5)
+      sprockets-rails
       tilt
     angular_rails_csrf (4.5.0)
       railties (>= 3, < 7)
@@ -259,7 +260,7 @@ GEM
       dotenv (= 2.8.1)
       railties (>= 3.2)
     dry-inflector (0.2.1)
-    erubi (1.10.0)
+    erubi (1.11.0)
     et-orbi (1.2.7)
       tzinfo
     excon (0.81.0)
@@ -628,7 +629,7 @@ GEM
       power_assert
     thor (1.2.1)
     thread-local (1.1.0)
-    tilt (2.0.10)
+    tilt (2.0.11)
     timecop (0.9.5)
     ttfunk (1.7.0)
     tzinfo (2.0.5)
