@@ -394,8 +394,6 @@ en_ZA:
         confirm_delete: "Sure to delete?"
         search_by_email: "Search by email/code..."
         guest_label: "Guest checkout"
-      destroy:
-        has_associated_orders: "Delete failed: customer has associated orders with this shop"
     contents:
       edit:
         title: Content
@@ -3134,7 +3132,6 @@ en_ZA:
             error_saving_payment: Error saving payment
             submitting_payment: Submitting payment...
       products:
-        image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
         new:
           title: "New Product"
           new_product: "New Product"
@@ -3362,7 +3359,8 @@ en_ZA:
         items: Items
         total: Total
         paid?: Paid?
-        view: View
+        status: Status
+        cancelled: Cancelled
       saved_cards:
         default?: Default?
         delete?: Delete?

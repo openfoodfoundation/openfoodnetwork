@@ -407,8 +407,6 @@ nl_BE:
         search_by_email: "Zoeken per e-mail/code..."
         guest_label: "Gasten afrekenen"
         credit_owed: "Krediet tegoed"
-      destroy:
-        has_associated_orders: "Verwijderen mislukt: klant heeft gerelateerde bestellingen met zijn winkel"
     contents:
       edit:
         title: Gelukkig
@@ -3246,7 +3244,6 @@ nl_BE:
           paypal:
             no_payment_via_admin_backend: Paypal betaling kan niet worden opgepakt in de Backoffice
       products:
-        image_upload_error: "Het productbeeld werd niet herkend. Upload een afbeelding in PNG- of JPG-indeling."
         new:
           title: "Nieuw product"
           new_product: "Nieuw product"
@@ -3502,7 +3499,8 @@ nl_BE:
         items: Artikelen
         total: Totaal
         paid?: Betaald?
-        view: Zicht
+        status: Status
+        cancelled: Geannuleerd
       saved_cards:
         default?: Kaart standaard gebruikt ?
         delete?: 'Schrappen? '

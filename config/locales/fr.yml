@@ -553,8 +553,6 @@ fr:
         guest_label: "Commande en mode invité"
         credit_owed: "Crédit dû"
         balance_due: "Solde dû"
-      destroy:
-        has_associated_orders: "Suppression impossible: des commandes sont associées à cet acheteur pour cette boutique"
     contents:
       edit:
         title: Contenu
@@ -1920,7 +1918,7 @@ fr:
   shopping_contact_web: "Contact"
   shopping_contact_social: "Suivre"
   shopping_groups_part_of: "fait partie de:"
-  shopping_producers_of_hub: "Les producteurs de %{hub}:"
+  shopping_producers_of_hub: "Les producteurs et lieux de ventes de %{hub}:"
   enterprises_next_closing: "Clôture des commandes"
   enterprises_currently_open: "Les commandes sont ouvertes"
   enterprises_ready_for: "Prêt pour"
@@ -3812,7 +3810,7 @@ fr:
           paypal:
             no_payment_via_admin_backend: 'Il n''est pas encore possible de payer avec Paypal via l''administration. '
       products:
-        image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez importer une image au format PNG ou JPG."
+        image_upload_error: "Veuillez utiliser une image au format JPG, PNG, GIF, SVG ou WEBP format."
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
@@ -4110,7 +4108,9 @@ fr:
         items: Produits
         total: Total
         paid?: Payé ?
-        view: Afficher
+        status: Statut
+        completed: Finalisé
+        cancelled: Annulée
       saved_cards:
         default?: Carte utilisée par défaut?
         delete?: Supprimer?

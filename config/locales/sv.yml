@@ -187,8 +187,6 @@ sv:
         update_address: "Uppdatera adress"
         confirm_delete: "Vill du verkligen radera?"
         search_by_email: "Sök via e-post/kod..."
-      destroy:
-        has_associated_orders: "Radering misslyckades: kunden har associerade order med sin butik"
     contents:
       edit:
         title: Innehåll
@@ -2239,3 +2237,6 @@ sv:
         cancel: Avbryt
         closed: Stängd
         until: Fram tills
+      past_orders:
+        status: Status
+        cancelled: Avbokad

@@ -182,6 +182,7 @@ es_CR:
         signed_up_but_unconfirmed: "Se ha enviado un mensaje con un enlace de confirmación a su dirección de correo electrónico. Abra el enlace para activar su cuenta."
         unknown_error: "Algo salió mal al crear su cuenta. Compruebe su dirección de correo electrónico y vuelva a intentarlo."
     failure:
+      disabled: "Su cuenta ha sido deshabilitada. Póngase en contacto con un administrador para resolver este problema."
       invalid: |
           Correo o contraseña inválidos.
           ¿Ha sido invitada? Tal vez necesite crear una cuenta nueva o recuperar su contraseña.
@@ -493,6 +494,8 @@ es_CR:
         terms_of_service: "Términos de servicio"
         delete: "Borrar archivo"
         confirm_delete: "¿Está seguro que quiere eliminar el archivo de Términos de servicio actual?"
+        attachment: "archivo adjunto"
+        create_terms_of_service: "Crear archivo de condiciones de servicio"
     number_localization:
       number_localization_settings: "Configuración de ubicación de número"
       enable_localized_number: "Usar la logica internacional separador miles/decimales"
@@ -502,6 +505,7 @@ es_CR:
         enable_invoices?: "Habilitar facturas?"
         invoice_style2?: "Utiliza el modelo de factura alternativo que incluye el desglose fiscal total por tipo de interés y tasa de impuestos por artículo (todavía no es adecuado para países que muestran los precios sin impuestos)"
         enable_receipt_printing?: "¿Mostrar opciones para imprimir recibos usando impresoras térmicas en el desplegable del pedido?"
+        enterprise_number_required_on_invoices?: "¿Requiere un ABN para generar una factura?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -549,8 +553,6 @@ es_CR:
         guest_label: "Retirar como invitado"
         credit_owed: "Crédito adeudado"
         balance_due: "Saldo adeudado"
-      destroy:
-        has_associated_orders: "Error al eliminar: el cliente tiene pedidos asociados a su tienda."
     contents:
       edit:
         title: Contenido
@@ -778,6 +780,9 @@ es_CR:
         variants_without_unit_value: "CUIDADO: Algunas variedades no tienen un valor unitario "
         all: "Todos"
       select_variant: "Seleccione una variante"
+      note:
+        note_label: "Nota:"
+        no_note_present: "No se proporcionó nota."
     enterprise:
       select_outgoing_oc_products_from: Selecciona los productos OC que salgan de
     enterprises:
@@ -826,6 +831,9 @@ es_CR:
           email_address_tip: "Esta dirección de correo electrónico se mostrará en su perfil público"
           phone: Teléfono
           phone_placeholder: ej. 98 7654 3210
+          whatsapp_phone: Número de teléfono de WhatsApp
+          whatsapp_phone_placeholder: ej. +61 4 9876 5432
+          whatsapp_phone_tip: "Este número se mostrará en su perfil público para abrirlo como un enlace de WhatsApp."
           website: Website
           website_placeholder: ej. www.truffles.com
         enterprise_fees:
@@ -1172,6 +1180,9 @@ es_CR:
         cancel: Cancelar
         proceed: Proceder
       status:
+        undated: Sin fecha
+        upcoming: Próxima
+        open: Abierto
         closed: cerrado
     producer_properties:
       index:
@@ -1752,13 +1763,26 @@ es_CR:
         stripe:
           use_saved_card: Utilizar tarjeta guardada
           use_new_card: Ingrese los identificadores de su tarjeta
+          save_card: Guardar tarjeta para uso futuro.
+          create_new_card: o ingrese los detalles de la nueva tarjeta a continuación
+      explaination: Puede revisar y confirmar su pedido en el siguiente paso que incluye los costos finales.
+      submit: Siguiente - Resumen del pedido
+      cancel: Volver a Tus datos
     step3:
       your_details:
         title: Sus detalles
+        edit: Edita tus datos
       billing_address:
         title: Dirección de cobro
+      shipping_address:
+        title: Dirección de envío
+      delivery_info:
+        title: Información de entrega
       payment_method:
         title: Método de pago
+        edit: Editar método de pago
+      order:
+        title: Orden total
       terms_and_conditions:
         message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor."
         link_text: "Términos y condiciones"
@@ -1767,8 +1791,17 @@ es_CR:
       all_terms_and_conditions:
         message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor y la plataforma %{tos_link}."
         terms_and_conditions: "Términos y condiciones"
+      agree: Al hacer clic en 'Completar pedido', acepta que se procese su pedido.
+      submit: Orden completa
+      cancel: Volver a Método de pago
     errors:
+      global: "Error al guardar, actualice los campos resaltados."
+      terms_not_accepted: Por favor acepte Términos y Condiciones
+      required: El campo no puede estar en blanco
+      invalid_number: "Por favor ingrese un número de teléfono válido"
       invalid_email: "Introduce un correo electrónico válido"
+      select_a_shipping_method: Seleccione un método de envío
+      select_a_payment_method: Seleccione un método de pago
   order_paid: PAGADO
   order_not_paid: NO PAGADO
   order_total: Pedido total
@@ -1787,6 +1820,7 @@ es_CR:
   order_hub_info: Información del centro de acopio
   order_back_to_store: Volver a la Tienda
   order_back_to_cart: Volver al Carrito
+  order_back_to_website: Volver al sitio web
   bom_tip: "Use esta página para alterar la cantidad del producto en varios pedidos a la vez. Los productos pueden ser eliminados de los pedidos si es necesario. "
   unsaved_changes_warning: "Hay cambios no guardados, se perderán si continúa."
   unsaved_changes_error: "Los campos con bordes rojos contienen errores."
@@ -1823,6 +1857,7 @@ es_CR:
   email_order_summary_includes_tax: "(incluye impuestos):"
   email_payment_paid: PAGADO
   email_payment_not_paid: NO PAGADO
+  email_payment_description: Descripción del pago al finalizar la compra
   email_payment_summary: Resumen de pago
   email_payment_method: "Pagando con:"
   email_so_placement_intro_html: "Tiene un nuevo pedido con <strong> %{distributor} </strong>"
@@ -1863,9 +1898,11 @@ es_CR:
     set_a_password: "Luego se le pedirá que establezca una contraseña antes de poder administrar la organización."
     mistakenly_sent: "¿No está seguro de por qué ha recibido este correo electrónico? Por favor, póngase en contacto con %{owner_email} para más información."
   producer_mail_greeting: "Estimada"
+  producer_mail_text_before: "A continuación encontrará una actualización sobre el ciclo de pedidos listo para:"
   producer_mail_order_text: "Se muestra un resumen de los pedidos de tus productos:"
   producer_mail_delivery_instructions: "Instrucciones de recogida/entrega de inventario:"
   producer_mail_signoff: "Gracias y hasta pronto"
+  producer_mail_order_customer_text: "Aquí hay un resumen de los pedidos agrupados por clientes"
   shopping_oc_closed: Los pedidos están cerrados
   shopping_oc_closed_description: "Por favor espere hasta que el próximo ciclo abra (o contactanos de forma directa para ver si podemos aceptar algunos pedidos tardíos)"
   shopping_oc_last_closed: "El último ciclo cerró hace %{distance_of_time}"
@@ -1883,6 +1920,7 @@ es_CR:
   shopping_groups_part_of: "es parte de:"
   shopping_producers_of_hub: "productores de %{hub}:"
   enterprises_next_closing: "Los pedidos se cerrarán"
+  enterprises_currently_open: "Los pedidos están actualmente abiertos"
   enterprises_ready_for: "Listo para"
   enterprises_choose: "Hay más de un ciclo abierto. Escoge en cuál quieres realizar el pedido:"
   maps_open: "Abierto"
@@ -1905,12 +1943,14 @@ es_CR:
   hubs_distance: Más cercano a
   hubs_distance_filter: "Muéstrame tiendas cerca de %{location}"
   shop_changeable_orders_alert_html:
+    one: Su pedido con <a href='%{path}' target='_blank'>%{shop}/%{order}</a> está abierto para revisión. Puede hacer cambios hasta %{oc_close}.
     few: 'Usted tiene <a href=''%{path}'' target=''_blank''> %{count} pedidos con %{shop} </a> actualmente abiertos para revisión. Puede realizar cambios hasta %{oc_close}. '
     many: 'Usted tiene <a href=''%{path}'' target=''_blank''> %{count} pedidos con %{shop} </a> actualmente abiertos para revisión. Puede realizar cambios hasta %{oc_close}. '
     other: 'Usted tiene <a href=''%{path}'' target=''_blank''> %{count} pedidos con %{shop} </a> actualmente abiertos para revisión. Puede realizar cambios hasta %{oc_close}. '
   orders_changeable_orders_alert_html: Este pedido ha sido confirmado, pero puede realizar cambios hasta <strong>%{oc_close}</strong>.
   products_clear: Limpiar
   products_showing: "Mostrando:"
+  products_results_for: "Resultados para"
   products_or: "o"
   products_and: "y"
   products_with: con
@@ -2162,6 +2202,8 @@ es_CR:
         contact_field_placeholder: "Nombre de contacto"
         contact_field_required: "Debes introducir un contacto principal."
         phone_field: "Número de teléfono"
+        whatsapp_phone_field: "Número de teléfono de WhatsApp"
+        whatsapp_phone_tooltip: "Este número se mostrará en su perfil público para abrirlo como un enlace de WhatsApp."
         phone_field_placeholder: "p.ej. 93 250 16 45"
       type:
         title: "Tipo"
@@ -3456,6 +3498,9 @@ es_CR:
           from: "De"
           to: "Facturar a"
           shipping: "Envío"
+        note:
+          note_label: "Nota:"
+          no_note_present: "No se proporcionó nota."
         form:
           distribution_fields:
             title: "Distribución"
@@ -3555,7 +3600,6 @@ es_CR:
             error_saving_payment: Error al guardar el pago
             submitting_payment: Enviando pago...
       products:
-        image_upload_error: "La imágen del producto no fue reconocida. Por favor, cargue una imágen en formato PNG o JPG."
         new:
           title: "Nuevo producto"
           new_product: "Nuevo producto"
@@ -3793,7 +3837,8 @@ es_CR:
         items: Artículos
         total: Total
         paid?: ¿Pagado?
-        view: Ver
+        status: Estado
+        cancelled: Cancelado
       saved_cards:
         default?: ¿Por defecto?
         delete?: ¿Borrar?

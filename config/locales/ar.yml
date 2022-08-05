@@ -528,8 +528,6 @@ ar:
         guest_label: "الخروج كضيف"
         credit_owed: "الائتمان مدين"
         balance_due: "الرصيد المستحق"
-      destroy:
-        has_associated_orders: "فشل الحذف: قام العميل بربط الطلبات مع متجره"
     contents:
       edit:
         title: المحتوى
@@ -3776,7 +3774,6 @@ ar:
           paypal:
             no_payment_via_admin_backend: لا يمكن التقاط مدفوعات Paypal في Backoffice
       products:
-        image_upload_error: "لم يتم التعرف على صورة المنتج. يرجى تحميل صورة بتنسيق PNG أو JPG."
         new:
           title: "منتج جديد"
           new_product: "منتج جديد"
@@ -4072,7 +4069,8 @@ ar:
         items: المواد
         total: المجموع
         paid?: دفع؟
-        view: عرض
+        status: الحالة
+        cancelled: ألغيت
       saved_cards:
         default?: الإفتراضي؟
         delete?: حذف؟

@@ -35,7 +35,7 @@ de_CH:
         verification_value: "Kartenprüfnummer (3-stellig)"
         year: "Jahr"
       order_cycle:
-        orders_close_at: Schließzeitpunkt
+        orders_close_at: Schliesszeitpunkt
       variant_override:
         count_on_hand: "Verfügbar"
     errors:
@@ -64,15 +64,15 @@ de_CH:
   errors:
     messages:
       content_type_invalid: "hat ein ungültiges Datenformat"
-      file_size_out_of_range: "Dateigröße %{file_size} liegt außerhalb des zulässigen Bereichs"
-      limit_out_of_range: "Gesamtzahl liegt außerhalb des zulässigen Bereichs"
+      file_size_out_of_range: "Dateigrösse %{file_size} liegt ausserhalb des zulässigen Bereichs"
+      limit_out_of_range: "Gesamtzahl liegt ausserhalb des zulässigen Bereichs"
       image_metadata_missing: "ist kein gültiges Bild"
-      dimension_min_inclusion: "muss größer oder gleich %{width} x %{height} Pixel sein"
+      dimension_min_inclusion: "muss grösser oder gleich %{width} x %{height} Pixel sein"
       dimension_max_inclusion: "muss kleiner oder gleich %{width} x %{height} Pixel sein"
       dimension_width_inclusion: "Breite liegt nicht zwischen %{min} und %{max} Pixel"
       dimension_height_inclusion: "Höhe liegt nicht zwischen %{min} und %{max} Pixel"
-      dimension_width_greater_than_or_equal_to: "Breite muss größer oder gleich %{length} Pixel sein"
-      dimension_height_greater_than_or_equal_to: "Höhe muss größer oder gleich %{length} Pixel sein"
+      dimension_width_greater_than_or_equal_to: "Breite muss grösser oder gleich %{length} Pixel sein"
+      dimension_height_greater_than_or_equal_to: "Höhe muss grösser oder gleich %{length} Pixel sein"
       dimension_width_less_than_or_equal_to: "Breite muss kleiner oder gleich %{length} Pixel sein"
       dimension_height_less_than_or_equal_to: "Höhe muss kleiner oder gleich %{length} Pixel sein"
       dimension_width_equal_to: "Breite muss %{length} Pixel sein"
@@ -108,7 +108,7 @@ de_CH:
       fraudulent: "Die Zahlung wurde abgelehnt, da Stripe sie als potenziell betrügerisch einstuft."
       generic_decline: "Die Karte wurde aus unbekanntem Grund abgelehnt."
       incorrect_pin: "Die eingegebene PIN ist falsch. Dieser Ablehnungscode gilt nur für Zahlungen mit einem Kartenlesegerät."
-      insufficient_funds: "Die Karte ist nicht ausreichend gedeckt, um den Kaufvorgang abzuschließen."
+      insufficient_funds: "Die Karte ist nicht ausreichend gedeckt, um den Kaufvorgang abzuschliessen."
       invalid_account: "Die Karte oder das dazugehörige Konto sind ungültig."
       invalid_amount: "Der Zahlungsbetrag ist ungültig oder überschreitet den zulässigen Betrag."
       invalid_pin: "Die eingegebene PIN ist falsch. Dieser Ablehnungscode gilt nur für Zahlungen mit einem Kartenlesegerät."
@@ -549,8 +549,6 @@ de_CH:
         guest_label: "Gasteinkauf"
         credit_owed: "Geschuldetes Guthaben"
         balance_due: "Offener Betrag"
-      destroy:
-        has_associated_orders: "Löschen fehlgeschlagen: Der Kunde hat Bestellungen bei diesem Laden."
     contents:
       edit:
         title: Inhalt
@@ -560,7 +558,7 @@ de_CH:
         hub_signup_page: Registrierung für Läden
         group_signup_page: Registrierung für Gruppen
         main_links: Hauptmenü-Links
-        footer_and_external_links: Fußzeile und externe Links
+        footer_and_external_links: Fusszeile und externe Links
         your_content: Ihr Inhalt
         user_guide: Benutzerhandbuch
         map: Karte
@@ -812,9 +810,9 @@ de_CH:
           disabled: Deaktiviert
         business_address:
           company_legal_name: Unternehmensname
-          company_placeholder: z. B. Charlies großartige Farm
-          address1: Straße + Hausnummer
-          address1_placeholder: z. B. Gartenstraße 123
+          company_placeholder: z. B. Charlies grossartige Farm
+          address1: Strasse + Hausnummer
+          address1_placeholder: z. B. Gartenstrasse 123
           address2: Adresszusatz (optional)
           legal_phone_number: Telefonnummer
           phone_placeholder: "z. B. +49 40 123 456"
@@ -909,7 +907,7 @@ de_CH:
           allow_order_changes_false: "Kunden können Bestellungen nicht ändern oder stornieren "
           allow_order_changes_true: "Kunden können Bestellungen ändern oder stornieren, solange der Bestellzyklus geöffnet ist"
           enable_subscriptions: "Abonnements"
-          enable_subscriptions_tip: "Aktivieren Sie Abonnements, um Kunden eine automatische, regelmäßige Bestellung Ihrer Produkte einzurichten. Dies kann z. B. das Abonnement einer wöchentlichen Gemüsekiste sein."
+          enable_subscriptions_tip: "Aktivieren Sie Abonnements, um Kunden eine automatische, regelmässige Bestellung Ihrer Produkte einzurichten. Dies kann z. B. das Abonnement einer wöchentlichen Gemüsekiste sein."
           enable_subscriptions_false: "deaktiviert"
           enable_subscriptions_true: "aktiviert"
           customer_names_in_reports: "Kundennamen in Berichten anzeigen"
@@ -918,7 +916,7 @@ de_CH:
           customer_names_true: "aktiviert"
           shopfront_message: "'Willkommen'-Nachricht im Laden"
           shopfront_message_placeholder: >
-              Eine optionale Nachricht, um Kunden willkommen zu heißen und zu erklären,
+              Eine optionale Nachricht, um Kunden willkommen zu heissen und zu erklären,
               wie sie bei Ihnen einkaufen können. Wenn hier Text eingegeben wird,
               wird dieser auf einer Startseite in Ihrem Laden angezeigt, wenn Kunden
               ihn zum ersten Mal besuchen.
@@ -933,7 +931,7 @@ de_CH:
           shopfront_category_ordering: "Sortierung der Produktkategorien im Laden"
           shopfront_category_ordering_note: "(von oben nach unten)"
           open_date: "Öffnungszeitpunkt"
-          close_date: "Schließzeitpunkt"
+          close_date: "Schliesszeitpunkt"
           display_ordering_in_shopfront: "Reihenfolge der Anzeige im Online-Shop:"
           shopfront_sort_by_category: "Nach Kategorie"
           shopfront_sort_by_producer: "Nach Produzent"
@@ -1113,7 +1111,7 @@ de_CH:
         add_distributor: 'Verteilstelle hinzufügen'
       advanced_settings:
         automatic_notifications: Automatische Benachrichtigungen
-        automatic_notifications_tip: Benachrichtigen Sie die Produzenten automatisch per E-Mail über in diesem Bestellzyklus erhaltene Bestellungen, wenn der Bestellzyklus schließt.
+        automatic_notifications_tip: Benachrichtigen Sie die Produzenten automatisch per E-Mail über in diesem Bestellzyklus erhaltene Bestellungen, wenn der Bestellzyklus schliesst.
         title: Erweiterte Einstellungen
         choose_product_tip: Sie können die eingehenden und ausgehenden Produkte auf den Katalog nur von %{inventory} beschränken.
         preferred_product_selection_from_coordinator_inventory_only_here: Nur vom Katalog des Koordinators
@@ -1144,12 +1142,12 @@ de_CH:
         schedule: Zeitplan
         schedules: Zeitpläne
         new_schedule: Neuer Zeitplan
-        new_schedule_tooltip: Regelmäßigkeit, mit der ein Abonnement ausgeführt wird (z. B. wöchentlich, monatlich).
+        new_schedule_tooltip: Regelmässigkeit, mit der ein Abonnement ausgeführt wird (z. B. wöchentlich, monatlich).
       name_and_timing_form:
         name: Name des Bestellzyklus
         orders_open: Bestellzyklus öffnet
         coordinator: Koordinator
-        orders_close: Bestellzyklus schließt
+        orders_close: Bestellzyklus schliesst
       row:
         suppliers: Lieferanten
         distributors: Verteilstellen
@@ -1163,7 +1161,7 @@ de_CH:
         fees: Gebühren
         tags: Stichwörter
       destroy_errors:
-        orders_present: Dieser Bestellzyklus wurde von einem Kunden ausgewählt und kann nicht gelöscht werden. Um weitere Verwendung zu verhindern, können Sie ihn stattdessen schließen.
+        orders_present: Dieser Bestellzyklus wurde von einem Kunden ausgewählt und kann nicht gelöscht werden. Um weitere Verwendung zu verhindern, können Sie ihn stattdessen schliessen.
         schedule_present: Dieser Bestellzyklus ist mit einem Zeitplan verknüpft und kann nicht gelöscht werden. Bitte heben Sie zuerst die Verknüpfung auf oder löschen Sie den Zeitplan.
       bulk_update:
         no_data: Hm, etwas ist schief gelaufen. Keine Bestellzyklusdaten gefunden.
@@ -1429,7 +1427,7 @@ de_CH:
         edit_cart: "Warenkorb bearbeiten"
         items_in_cart_singular: "%{num} Artikel in Ihrem Warenkorb"
         items_in_cart_plural: "%{num} Artikel in Ihrem Warenkorb"
-        close: "Schließen"
+        close: "Schliessen"
         cart_empty: "Ihr Warenkorb ist leer."
         take_me_shopping: "Jetzt einkaufen!"
       signed_in:
@@ -1533,7 +1531,7 @@ de_CH:
   phone: Telefonnummer
   next: Weiter
   address: Adresse
-  address_placeholder: z. B. Gartenstraße 123
+  address_placeholder: z. B. Gartenstrasse 123
   address2: Adresszusatz (optional)
   city: Ort
   city_placeholder: z. B. Nordwestheim
@@ -1629,7 +1627,7 @@ de_CH:
       statistics_cookies_matomo_optout: "Möchten Sie Matomo Analytics deaktivieren? Wir sammeln keine persönlichen Daten und Matomo hilft uns, unseren Service zu verbessern, aber wir respektieren Ihre Wahl. :-)"
       cookie_matomo_basics_desc: "Matomo First Party Cookies zum Sammeln von Statistiken."
       cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Aufnahme-Cookie."
-      cookie_matomo_ignore_desc: "Cookie, um Benutzer von der Verfolgung im Internet auszuschließen."
+      cookie_matomo_ignore_desc: "Cookie, um Benutzer von der Verfolgung im Internet auszuschliessen."
       disabling_cookies_header: "Warnung zum Deaktivieren von Cookies"
       disabling_cookies_desc: "Als Nutzer können Sie Cookies von Open Food Schweiz oder einer anderen Website immer zulassen, blockieren oder löschen, indem Sie die Einstellungen Ihres Browsers nutzen. Dies funktioniert in jedem Browser anders. Schauen Sie unter folgenden Links nach für genauere Beschreibungen:"
       disabling_cookies_firefox_link: "https://support.mozilla.org/de/kb/verbesserter-schutz-aktivitatenverfolgung-desktop"
@@ -1648,7 +1646,7 @@ de_CH:
   brandstory_headline: "Regionale Lebensmittel direkt online kaufen"
   brandstory_intro: "Produkte von Produzenten vor Ort finden, online bestellen und abholen oder liefern lassen.\nWerden Sie Teil einer Bewegung, die mit jedem Einkauf ein Zeichen setzt für hochwertige regionale Produkte, faire Preise, Nachhaltigkeit und Transparenz. Helfen Sie uns bei ..."
   brandstory_part1: "... einem Neuanfang. Nehmen Sie Anonymität und Ausbeutung von Mensch, Tier und Umwelt in der Lebensmittelindustrie nicht länger hin. Lesen Sie die Geschichten stolzer Landwirte, Gemüsegärtner und Züchter hinter den Produkten. Sehen Sie sich an, welche Aufschläge Händler berechnen um faire Preise zu erhalten und zu zahlen. Lernen Sie die Menschen kennen, die mit ihrer täglichen Arbeit Ihre regionalen und saisonalen Lebensmittel herstellen."
-  brandstory_part2: "Kaufen Sie ein in Hofläden, auf Bauernmärkten, in Food-Hubs oder schließen Sie sich zu Einkaufsgemeinschaften, Kooperativen, Genossenschaften oder einer solidarischen Landwirtschaft zusammen."
+  brandstory_part2: "Kaufen Sie ein in Hofläden, auf Bauernmärkten, in Food-Hubs oder schliessen Sie sich zu Einkaufsgemeinschaften, Kooperativen, Genossenschaften oder einer solidarischen Landwirtschaft zusammen."
   brandstory_part3: "Die Anbieter bilden gemeinsam ein regionales Netzwerk, in dem sich Käufer und Verkäufer wieder kennen und mit Vertrauen wertschätzend umgegangen wird."
   brandstory_part4: "Der Programmcode dieser Internet-Plattform ist öffentlich frei verfügbar (Open Source), sie gehört also auch Ihnen und ist unverkäuflich. Alle Einnahmen werden wieder in die Weiterentwicklung des Netzwerks investiert!"
   brandstory_part5_strong: "Das ist das Open Food Schweiz."
@@ -1657,7 +1655,7 @@ de_CH:
   system_step1: "1. Wo kann ich regionale und saisonale Produkte kaufen?"
   system_step1_text: "Auf der Seite \"Einkaufen\" finden Sie die Liste der Läden in Ihrer Nähe. Sie können nach einem Ort suchen oder die Liste nach Kategorien, Lieferoptionen oder Produkteigenschaften filtern. Klicken Sie auf den Namen eines Ladens, um dort einzukaufen.\nAlternativ verwenden Sie die Seite \"Karte\" und finden Sie Produzenten und Läden in Ihrer Region."
   system_step2: "2. Welche regionalen Lebensmittel kann ich online kaufen?"
-  system_step2_text: "Im Online-Shop des Ladens finden Sie ein großes Sortiment regionaler und saisonaler Produkte. Von Obst und Gemüse über Eier, Milch, Käse, Wurst und Fleisch bis hin zu Backwaren, Süßigkeiten und Fertiggerichten werden Sie fündig. Nutzen Sie die Suche oder die Filter nach Kategorien und Eigenschaften, wie bio, unverpackt oder fair gehandelt."
+  system_step2_text: "Im Online-Shop des Ladens finden Sie ein grosses Sortiment regionaler und saisonaler Produkte. Von Obst und Gemüse über Eier, Milch, Käse, Wurst und Fleisch bis hin zu Backwaren, Süssigkeiten und Fertiggerichten werden Sie fündig. Nutzen Sie die Suche oder die Filter nach Kategorien und Eigenschaften, wie bio, unverpackt oder fair gehandelt."
   system_step3: "3. Wie kommen regionale Lebensmittel zu mir nach Hause?"
   system_step3_text: "Jeder Laden kann seine Lieferoptionen selbst festlegen. Viele bieten einen Lieferservice an, oft ist auch die Abholung vor Ort oder an einer Abholstation möglich. Wählen Sie die gewünschte Option einfach beim Abschluss der Bestellung aus. Im Open Food Network kennt man sich - auch das Vereinbaren eines Ablageortes lässt sich sicher organisieren. "
   cta_headline: "Machen Sie die Welt mit Ihrem Einkauf ein kleines bisschen besser."
@@ -1717,8 +1715,8 @@ de_CH:
         title: Rechnungsadresse
       address:
         address1:
-          label: Straße + Hausnummer
-          placeholder: z. B. Gartenstraße 123
+          label: Strasse + Hausnummer
+          placeholder: z. B. Gartenstrasse 123
         address2:
           label: Adresszusatz (optional)
           placeholder: z. B. c/o Familie Müller
@@ -1827,13 +1825,13 @@ de_CH:
   email_confirmation_notice_unexpected: "Sie haben diese Nachricht erhalten, weil Sie sich im Open Food Network angemeldet haben oder von einer Person dazu eingeladen wurden. Wenn Sie nicht verstehen, warum Sie diese E-Mail erhalten, schreiben Sie bitte an %{contact}."
   email_social: "Verbinden Sie sich mit uns:"
   email_contact: "Schreiben Sie uns eine E-Mail:"
-  email_signoff: "Viele Grüße,"
+  email_signoff: "Viele Grüsse,"
   email_signature: "das Team des Open Food Network"
   email_confirm_customer_greeting: "Hallo %{name},"
   email_confirm_customer_intro_html: "vielen Dank für Ihren Einkauf bei <strong>%{distributor}</strong>!"
   email_confirm_customer_number_html: "<strong>Bestellbestätigung #%{number}</strong>"
   email_confirm_customer_details_html: "Nachfolgend finden Sie Ihre <strong>Bestelldaten</strong> bei <strong>%{distributor}</strong>:"
-  email_confirm_customer_signoff: "Viele Grüße,"
+  email_confirm_customer_signoff: "Viele Grüsse,"
   email_confirm_shop_greeting: "Hallo %{name},"
   email_confirm_shop_order_html: "gut gemacht! <strong>%{distributor}</strong> hat eine neue Bestellung erhalten!"
   email_confirm_shop_number_html: "<strong>Bestellbestätigung #%{number}</strong>"
@@ -1854,7 +1852,7 @@ de_CH:
   email_so_placement_changes: "Leider waren nicht alle von Ihnen bestellten Produkte verfügbar. Die von Ihnen gewünschten Originalmengen sind unten durchgestrichen."
   email_so_payment_success_intro_html: "Es wurde eine automatische Zahlung für Ihre Bestellung bei <strong>%{distributor}</strong> vorgenommen."
   email_so_placement_explainer_html: "Diese Bestellung wurde automatisch für Sie erstellt."
-  email_so_edit_true_html: "Sie können <a href='%{order_url}'>Änderungen vornehmen</a>, bis Bestellungen am %{orders_close_at} schließen."
+  email_so_edit_true_html: "Sie können <a href='%{order_url}'>Änderungen vornehmen</a>, bis Bestellungen am %{orders_close_at} schliessen."
   email_so_edit_false_html: "Sie können jederzeit <a href='%{order_url}'>Details zu dieser Bestellung anzeigen</a>."
   email_so_contact_distributor_html: "Wenn Sie Fragen haben, können Sie sich mit <strong>%{distributor}</strong> über %{email} in Verbindung setzen."
   email_so_contact_distributor_to_change_order_html: "Diese Bestellung wurde automatisch für Sie erstellt. Sie können Änderungen vornehmen, bis die Bestellungen am %{orders_close_at} geschlossen werden, indem Sie <strong>%{distributor}</strong> über %{email} kontaktieren."
@@ -1878,7 +1876,7 @@ de_CH:
   email_signup_welcome: "Willkommen im Open Food Network!"
   email_signup_confirmed_email: "Vielen Dank für die Bestätigung Ihrer E-Mail-Adresse."
   email_signup_shop_html: "Sie können sich jetzt unter %{link} einloggen."
-  email_signup_text: "Danke, dass Sie dem Netzwerk beigetreten sind. Wenn Sie ein Kunde sind, freuen wir uns, Ihnen viele fantastische Landwirte, wunderbare Läden und leckeres Essen vorzustellen! Wenn Sie ein Produzent oder ein Lebensmittelunternehmer sind, freuen wir uns, Sie als Teil des Netzwerks zu begrüßen."
+  email_signup_text: "Danke, dass Sie dem Netzwerk beigetreten sind. Wenn Sie ein Kunde sind, freuen wir uns, Ihnen viele fantastische Landwirte, wunderbare Läden und leckeres Essen vorzustellen! Wenn Sie ein Produzent oder ein Lebensmittelunternehmer sind, freuen wir uns, Sie als Teil des Netzwerks zu begrüssen."
   email_signup_help_html: "Wir freuen uns über Ihre Fragen und Rückmeldungen. Schreiben Sie uns gerne eine E-Mail an %{email}."
   invite_email:
     greeting: "Hallo!"
@@ -1890,7 +1888,7 @@ de_CH:
   producer_mail_text_before: "wir informieren über den Stand des Bestellzyklus, bereit am:"
   producer_mail_order_text: "Nachfolgend finden Sie eine Zusammenfassung der Bestellungen Ihrer Produkte:"
   producer_mail_delivery_instructions: "Informationen zur Abholung/Lieferung:"
-  producer_mail_signoff: "Viele Grüße,"
+  producer_mail_signoff: "Viele Grüsse,"
   producer_mail_order_customer_text: "Nachfolgend finden Sie eine Zusammenfassung der Bestellungen, gruppiert nach Kunden:"
   shopping_oc_closed: Bestellzyklen sind derzeit geschlossen!
   shopping_oc_closed_description: "Bitte warten Sie, bis der nächste Bestellzyklus öffnet (oder kontaktieren Sie uns direkt, um zu erfahren, ob wir verspätete Bestellungen annehmen können)."
@@ -1981,13 +1979,13 @@ de_CH:
   groups_contact_email: Schreiben Sie uns eine E-Mail
   groups_contact_website: Besuchen Sie unsere Homepage
   groups_contact_facebook: Folgen Sie uns auf Facebook
-  groups_signup_title: Schließen Sie sich mit anderen Produzenten und Läden zu einer Gruppe zusammen
+  groups_signup_title: Schliessen Sie sich mit anderen Produzenten und Läden zu einer Gruppe zusammen
   groups_signup_headline: Registrierung einer Gruppe
-  groups_signup_intro: "Wir sind eine großartige Plattform für kollaboratives Marketing - der einfachste Weg für die Mitglieder Ihrer Gruppe neue Märkte zu erreichen. Wir sind gemeinnützig, erschwinglich und transparent."
+  groups_signup_intro: "Wir sind eine grossartige Plattform für kollaboratives Marketing - der einfachste Weg für die Mitglieder Ihrer Gruppe neue Märkte zu erreichen. Wir sind gemeinnützig, erschwinglich und transparent."
   groups_signup_email: Schreiben Sie uns eine E-Mail
   groups_signup_motivation1: Wir verändern Lebensmittelsysteme fair.
   groups_signup_motivation2: Deshalb sind wir jeden Tag aufgestanden. Wir sind eine globale Non-Profit-Organisation, die auf Open-Source-Code basiert. Wir spielen fair. Sie können uns immer vertrauen.
-  groups_signup_motivation3: Wir wissen, dass Sie große Ideen haben und wir helfen wollen. Wir teilen unser Wissen, Netzwerke und Ressourcen. Wir wissen, dass Isolation keine Veränderung verursacht, also werden wir mit Ihnen zusammenarbeiten.
+  groups_signup_motivation3: Wir wissen, dass Sie grosse Ideen haben und wir helfen wollen. Wir teilen unser Wissen, Netzwerke und Ressourcen. Wir wissen, dass Isolation keine Veränderung verursacht, also werden wir mit Ihnen zusammenarbeiten.
   groups_signup_motivation4: Wir treffen Sie, wo Sie sind.
   groups_signup_motivation5: Sie könnten ein Zusammenschluss von Hubs, Produzenten oder Verteilstellen sein, eine Industrieorganisation oder eine Lokalbehörde.
   groups_signup_motivation6: Was auch immer Ihre Rolle in Ihrer lokalen Nahrungsmittelbewegung ist, wir sind bereit zu helfen. Wie auch immer Sie sich fragen, wie Open Food Schweiz in Ihrem Teil der Welt aussehen würde oder wird, lassen Sie uns das Gespräch beginnen.
@@ -2052,7 +2050,7 @@ de_CH:
   shops_signup_pricing: Unternehmenskonten
   shops_signup_stories: Geschichten unserer Hubs
   shops_signup_help: Wir sind bereit zu helfen.
-  shops_signup_help_text: Du brauchst eine bessere Rendite. Sie brauchen neue Käufer und Logistikpartner. Sie müssen Ihre Geschichte über den Großhandel, den Einzelhandel und den Küchentisch erzählen.
+  shops_signup_help_text: Du brauchst eine bessere Rendite. Sie brauchen neue Käufer und Logistikpartner. Sie müssen Ihre Geschichte über den Grosshandel, den Einzelhandel und den Küchentisch erzählen.
   shops_signup_detail: Weitere Details folgen.
   orders: "Bestellungen"
   orders_fees: "Gebühren ..."
@@ -2092,11 +2090,11 @@ de_CH:
   products_cart_distributor_choice: "Verteilstelle Ihrer Bestellung:"
   products_cart_distributor_change: "Die Verteilstelle für diese Bestellung wird in %{name} geändert, wenn Sie dieses Produkt zu Ihrem Warenkorb hinzufügen."
   products_cart_distributor_is: "Die Verteilstelle dieser Bestellung ist %{name}."
-  products_distributor_error: "Bitte schließen Sie Ihre Bestellung bei %{link} ab, bevor Sie bei einem anderen Laden einkaufen."
+  products_distributor_error: "Bitte schliessen Sie Ihre Bestellung bei %{link} ab, bevor Sie bei einem anderen Laden einkaufen."
   products_oc: "Bestellzyklus Ihrer Bestellung:"
   products_oc_change: "Der Bestellzyklus für diese Bestellung wird in %{name} geändert, wenn Sie dieses Produkt zu Ihrem Warenkorb hinzufügen."
   products_oc_is: "Der Bestellzyklus dieser Bestellung lautet %{name}."
-  products_oc_error: "Bitte schließen Sie Ihre Bestellung bei %{link} ab, bevor Sie in einem anderen Bestellzyklus einkaufen."
+  products_oc_error: "Bitte schliessen Sie Ihre Bestellung bei %{link} ab, bevor Sie in einem anderen Bestellzyklus einkaufen."
   products_oc_current: "Ihr aktueller Bestellzyklus"
   products_max_quantity: Max Menge
   products_distributor: Verteilstelle
@@ -2105,7 +2103,7 @@ de_CH:
   remember_me: Eingeloggt bleiben
   are_you_sure: "Sind Sie sicher?"
   orders_open: "Geöffnet"
-  closing: "Schließt"
+  closing: "Schliesst"
   going_back_to_home_page: "Weiterleitung zur Startseite"
   creating: Erstellung
   updating: Aktualisierung
@@ -2113,7 +2111,7 @@ de_CH:
   failed_to_create_enterprise_unknown: "Fehler beim Erstellen Ihres Unternehmens.\nBitte vergewissern Sie sich, dass alle Felder vollständig ausgefüllt sind."
   failed_to_update_enterprise_unknown: "Fehler beim Aktualisieren Ihres Unternehmens.\nBitte vergewissern Sie sich, dass alle Felder vollständig ausgefüllt sind."
   enterprise_confirm_delete_message: "Dadurch wird auch das von diesem Unternehmen bereitgestellte %{product} gelöscht. Sind Sie sicher, dass Sie das möchten?"
-  order_not_saved_yet: "Ihre Bestellung wurde noch nicht gespeichert. Geben Sie uns ein paar Sekunden, um dies abzuschließen!"
+  order_not_saved_yet: "Ihre Bestellung wurde noch nicht gespeichert. Geben Sie uns ein paar Sekunden, um dies abzuschliessen!"
   filter_by: "Filtern nach"
   hide_filters: "Filter ausblenden"
   one_filter_applied: "1 Filter angewendet"
@@ -2177,11 +2175,11 @@ de_CH:
         producer: "Nennen Sie uns zunächst bitte den Namen und die Adresse Ihres Betriebs."
         enterprise_name_field: "Unternehmensname:"
         producer_name_field: "Name des Betriebs:"
-        producer_name_field_placeholder: "z. B. Charlies großartige Farm"
+        producer_name_field_placeholder: "z. B. Charlies grossartige Farm"
         producer_name_field_error: "Bitte wählen Sie einen eindeutigen Namen für Ihr Unternehmen."
-        address1_field: "Straße + Hausnummer:"
-        address1_field_placeholder: "z. B. Gartenstraße 123"
-        address1_field_error: "Bitte geben Sie eine Straße und Hausnummer ein."
+        address1_field: "Strasse + Hausnummer:"
+        address1_field_placeholder: "z. B. Gartenstrasse 123"
+        address1_field_error: "Bitte geben Sie eine Strasse und Hausnummer ein."
         address2_field: "Adresszusatz (optional):"
         suburb_field: "Ort:"
         suburb_field_placeholder: "z. B. Nordwestheim"
@@ -2195,7 +2193,7 @@ de_CH:
         country_field_error: "Bitte wählen Sie das Land aus."
         map_location: "Position auf der Karte"
         locate_address: "Adresse auf der Karte zeigen"
-        drag_pin: "Falls nötig, korrigieren Sie die Position Ihres Unternehmens, indem Sie die Markierung an den richtigen Ort ziehen. Bestätigen Sie dies anschließend durch das Setzen des Häkchens unter der Karte und klicken Sie dann ganz unten auf \"Weiter\"."
+        drag_pin: "Falls nötig, korrigieren Sie die Position Ihres Unternehmens, indem Sie die Markierung an den richtigen Ort ziehen. Bestätigen Sie dies anschliessend durch das Setzen des Häkchens unter der Karte und klicken Sie dann ganz unten auf \"Weiter\"."
         confirm_address: "Ich bestätige, dass die auf der Karte angegebene Position des Unternehmens korrekt ist."
         drag_map_marker: "Die korrekte Position Ihres Unternehmens auf der Karte ist wichtig, damit Ihre Kunden Sie möglichst einfach finden können."
       contact:
@@ -2214,7 +2212,7 @@ de_CH:
         no_producer: "Nein, es ist kein Produzent."
         producer_field_error: "Bitte wählen Sie: Ist das Unternehmen ein Produzent?"
         yes_producer_help: "Produzenten stellen leckere Lebensmittel oder Getränke her. Sie sind ein Produzent, wenn Sie anbauen, brauen, backen, fermentieren, melken oder sonst wie Lebenmittel produzieren."
-        no_producer_help: "Wenn Sie kein Produzent sind, sind Sie wahrscheinlich jemand, der Lebensmittel verkauft und verteilt. Sie könnten ein Food Hub, eine Lebensmittelkooperative, eine Einkaufsgemeinschaft, ein Einzelhändler, Hofladen, Großhändler oder Vergleichbares sein."
+        no_producer_help: "Wenn Sie kein Produzent sind, sind Sie wahrscheinlich jemand, der Lebensmittel verkauft und verteilt. Sie könnten ein Food Hub, eine Lebensmittelkooperative, eine Einkaufsgemeinschaft, ein Einzelhändler, Hofladen, Grosshändler oder Vergleichbares sein."
         create_profile: "Profil erstellen"
       about:
         title: "Über uns"
@@ -2249,7 +2247,7 @@ de_CH:
         logo_placeholder: "Ihr Logo wird hier zur Überprüfung angezeigt, sobald es hochgeladen wurde."
       promo:
         select_promo_image: "Schritt 3: Laden Sie ein Hintergrundbild hoch (empfohlen)"
-        promo_image_tip: "Tipp: Die als Banner dargestellte bevorzugte Größe beträgt 1200 × 260 Pixel."
+        promo_image_tip: "Tipp: Die als Banner dargestellte bevorzugte Grösse beträgt 1200 × 260 Pixel."
         promo_image_label: "Bilddatei auswählen"
         promo_image_drag: "Ziehen Sie Ihr Bild hierher."
         review_promo_image: "Schritt 4: Überprüfen Sie Ihr Hintergrundbild"
@@ -2337,7 +2335,7 @@ de_CH:
   admin_enterprise_groups_data_powertip_promo_image: "Dieses Bild wird oben im Gruppenprofil angezeigt."
   admin_enterprise_groups_contact: "Kontakt"
   admin_enterprise_groups_contact_phone_placeholder: "z. B. +40 40 123456"
-  admin_enterprise_groups_contact_address1_placeholder: "z. B. Gartenstraße 123"
+  admin_enterprise_groups_contact_address1_placeholder: "z. B. Gartenstrasse 123"
   admin_enterprise_groups_contact_city: "Ort"
   admin_enterprise_groups_contact_city_placeholder: "z. B. Nordwestheim"
   admin_enterprise_groups_contact_zipcode: "Postleitzahl"
@@ -2349,7 +2347,7 @@ de_CH:
   admin_enterprise_groups_web_website_placeholder: "z. B. www.truffles.com"
   admin_order_cycles: "Bestellzyklen verwalten"
   open: "Öffnet"
-  close: "Schließen"
+  close: "Schliessen"
   create: "Neu"
   search: "Suche"
   supplier: "Lieferant"
@@ -2433,7 +2431,7 @@ de_CH:
   change_package: "Paket ändern"
   spree_admin_single_enterprise_hint: "Tipp: Damit andere Nutzer Sie finden können, aktivieren Sie Ihre Sichtbarkeit unter:"
   spree_admin_eg_pickup_from_school: "z. B. \"Abholung von der Grundschule\""
-  spree_admin_eg_collect_your_order: "z. B. 'Bitte holen Sie Ihre Bestellung in der Gartenstraße 123 in 30701 Nordwestheim ab.'"
+  spree_admin_eg_collect_your_order: "z. B. 'Bitte holen Sie Ihre Bestellung in der Gartenstrasse 123 in 30701 Nordwestheim ab.'"
   spree_classification_primary_taxon_error: "Kategorie %{taxon} ist die primäre Kategorie von %{product} und kann nicht gelöscht werden."
   spree_order_availability_error: "Verteilstelle oder Bestellzyklus kann die Produkte in Ihrem Warenkorb nicht liefern"
   spree_order_populator_error: "Diese Verteilstelle oder dieser Bestellzyklus kann nicht alle Produkte aus Ihrem Warenkorb liefern. Bitte ändern Sie Ihre Auswahl."
@@ -2526,15 +2524,15 @@ de_CH:
   report_header_shipping: Lieferung
   report_header_shipping_method: Lieferoption
   report_header_shipping_instructions: Informationen zur Lieferung
-  report_header_ship_street: Lieferstraße
+  report_header_ship_street: Lieferstrasse
   report_header_ship_street_2: Lieferadresszusatz
   report_header_ship_city: Lieferstadt
   report_header_ship_postcode: Lieferpostleitzahl
   report_header_ship_state: Lieferbundesland
-  report_header_billing_street: Rechnungsstraße
+  report_header_billing_street: Rechnungsstrasse
   report_header_billing_street_2: Rechnungsadresszusatz
-  report_header_billing_street_3: Rechnungsstraße 3
-  report_header_billing_street_4: Rechnungsstraße 4
+  report_header_billing_street_3: Rechnungsstrasse 3
+  report_header_billing_street_4: Rechnungsstrasse 4
   report_header_billing_city: Rechnungsstadt
   report_header_billing_postcode: Rechnungspostleitzahl
   report_header_billing_state: Rechnungsbundesland
@@ -2759,14 +2757,14 @@ de_CH:
     cart:
       add_to_cart_failed: >
           Beim Hinzufügen dieses Produkts zum Warenkorb ist ein Fehler aufgetreten.
-          Möglicherweise ist es nicht mehr verfügbar oder der Laden schließt gerade.
+          Möglicherweise ist es nicht mehr verfügbar oder der Laden schliesst gerade.
     admin:
-      unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgröße und -gewicht. Der im Online-Shop angezeigte Grundpreis kann ggf. aufgrund hinzukommender Gebühren abweichen."
+      unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgrösse und -gewicht. Der im Online-Shop angezeigte Grundpreis kann ggf. aufgrund hinzukommender Gebühren abweichen."
       enterprise_limit_reached: "Sie haben die maximale Anzahl der Unternehmen pro Konto erreicht. Schreiben Sie an %{contact_email}, wenn Sie das Limit erhöhen möchten."
       deleting_item_will_cancel_order: "Das Löschen dieses Produkts führt zu einer oder mehreren leeren Bestellungen, die daher automatisch storniert werden. Möchten Sie fortfahren?"
       modals:
         got_it: "Verstanden"
-        close: "Schließen"
+        close: "Schliessen"
         continue: "Weiter"
         invite: "Einladen"
         invite_title: "Geben Sie die E-Mail-Adresse eines nicht registrierten Benutzers ein, um dieses Unternehmen zu verwalten."
@@ -2779,7 +2777,7 @@ de_CH:
               Produkte und Bestellzyklen sein.
           by_default_rules: "'Standardregeln'"
           by_default_rules_text: >
-              Mit 'Standardregeln' können Sie Elemente verbergen, so dass sie standardmäßig
+              Mit 'Standardregeln' können Sie Elemente verbergen, so dass sie standardmässig
               nicht sichtbar sind. Durch die Verwendung von 'Regeln für Kunden mit
               Stichwort', können diese Elemente für bestimmte Kunden wieder angezeigt
               werden.
@@ -2790,7 +2788,7 @@ de_CH:
               überschreiben und Elemente für bestimmte Kunden wieder anzeigen.
         terms_and_conditions_info:
           title: "Allgemeine Geschäftsbedingungen hochladen"
-          message_1: "Allgemeine Geschäftsbedingungen sind der Vertrag zwischen Ihnen (dem Verkäufer) und dem Käufer. Wenn Sie hier eine Datei hochladen, müssen Käufer Ihren Allgemeinen Geschäftsbedingungen zustimmen, um die Kaufabwicklung abzuschließen. Für den Käufer wird dies als Kontrollkästchen an der Kasse angezeigt, das aktiviert werden muss, um mit der Bezahlung fortzufahren. Wir empfehlen Ihnen dringend, Allgemeine Geschäftsbedingungen in Übereinstimmung mit den nationalen Gesetzen hochzuladen."
+          message_1: "Allgemeine Geschäftsbedingungen sind der Vertrag zwischen Ihnen (dem Verkäufer) und dem Käufer. Wenn Sie hier eine Datei hochladen, müssen Käufer Ihren Allgemeinen Geschäftsbedingungen zustimmen, um die Kaufabwicklung abzuschliessen. Für den Käufer wird dies als Kontrollkästchen an der Kasse angezeigt, das aktiviert werden muss, um mit der Bezahlung fortzufahren. Wir empfehlen Ihnen dringend, Allgemeine Geschäftsbedingungen in Übereinstimmung mit den nationalen Gesetzen hochzuladen."
           message_2: "Käufer müssen den Allgemeinen Geschäftsbedingungen nur einmal zustimmen. Wenn Sie jedoch Ihre Allgemeinen Geschäftsbedingungen ändern, müssen Käufer diesen erneut zustimmen, bevor sie zur Kasse gehen können."
         terms_and_conditions_warning:
           title: "Allgemeine Geschäftsbedingungen hochladen"
@@ -2925,7 +2923,7 @@ de_CH:
           compiling_invoices: "Rechnungen werden erstellt ..."
           bulk_invoice_created: "Rechnungen wurden erstellt."
           bulk_invoice_failed: "Fehler beim Erstellen der Rechnungen."
-          please_wait: "Bitte warten Sie, bis die pdf-Datei fertig ist, bevor Sie dieses Fenster schließen."
+          please_wait: "Bitte warten Sie, bis die pdf-Datei fertig ist, bevor Sie dieses Fenster schliessen."
         order_state:
           address: "Adresse"
           adjustments: "Anpassungen"
@@ -3023,7 +3021,7 @@ de_CH:
         min_quantity: "Minimale Menge"
         max_quantity: "Maximale Menge"
       price_breakdown: "Preisaufschlüsselung"
-      unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgröße und -gewicht."
+      unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgrösse und -gewicht."
     variants:
       on_demand:
         'yes': "Unbegrenzt/auf Bestellung"
@@ -3078,9 +3076,9 @@ de_CH:
       select_shop: 'Bitte wählen Sie zuerst einen Laden aus.'
       could_not_create: 'Es tut uns leid! Konnte nicht erstellt werden:'
     subscriptions:
-      closes: schließt
+      closes: schliesst
       closed: geschlossen
-      close_date_not_set: Schließzeitpunkt nicht eingestellt
+      close_date_not_set: Schliesszeitpunkt nicht eingestellt
     spree:
       users:
         order: "Bestellung"
@@ -3099,7 +3097,7 @@ de_CH:
       other: "pro Stück"
     bunch:
       one: "Bündel"
-      other: "Sträuße"
+      other: "Sträusse"
     pack:
       one: "Pack"
       other: "Packungen"
@@ -3339,7 +3337,7 @@ de_CH:
     shipping_address: "Lieferadresse"
     first_name: "Vorname"
     last_name: "Nachname"
-    street_address: "Straße + Hausnummer"
+    street_address: "Strasse + Hausnummer"
     street_address_2: "Adresszusatz (optional)"
     city: "Ort"
     zip: "Postleitzahl"
@@ -3518,7 +3516,7 @@ de_CH:
         testmail:
           delivery_success: "Test-E-Mail wurde gesendet."
           error: "Beim Senden der Test-E-Mail ist ein Fehler aufgetreten."
-      unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgröße und -gewicht. Der im Online-Shop angezeigte Grundpreis kann ggf. aufgrund hinzukommender Gebühren abweichen."
+      unit_price_tooltip: "Grundpreis: Er ermöglicht einen einfachen Preisvergleich von Produkten, unabhängig von Packungsgrösse und -gewicht. Der im Online-Shop angezeigte Grundpreis kann ggf. aufgrund hinzukommender Gebühren abweichen."
       subscriptions:
         number: "Bestellnummer"
       tab:
@@ -3541,7 +3539,7 @@ de_CH:
         groups: "Gruppen"
       product_properties:
         index:
-          inherits_properties_checkbox_hint: "Übernahme der Eigenschaften von %{supplier} (außer oben überschrieben)?"
+          inherits_properties_checkbox_hint: "Übernahme der Eigenschaften von %{supplier} (ausser oben überschrieben)?"
           add_product_properties: "Produkteigenschaften hinzufügen"
       properties:
         index:
@@ -3591,7 +3589,7 @@ de_CH:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Artikel kann nicht zu stornierter Bestellung hinzugefügt werden"
-          include_out_of_stock_variants: "Produktvarianten ohne Lagerbestand mit einschließen"
+          include_out_of_stock_variants: "Produktvarianten ohne Lagerbestand mit einschliessen"
         index:
           listing_orders: "Bestellungen verwalten"
           new_order: "Neue Bestellung"
@@ -3745,7 +3743,6 @@ de_CH:
           paypal:
             no_payment_via_admin_backend: Paypal-Zahlungen können nicht im Backoffice erfasst werden.
       products:
-        image_upload_error: "Das Produktbild wurde nicht erkannt. Bitte laden Sie ein Bild im PNG- oder JPG-Format hoch."
         new:
           title: "Neues Produkt"
           new_product: "Neues Produkt"
@@ -3881,7 +3878,7 @@ de_CH:
       flatpickr_datetime_format: "d.m.Y H:i"
       today: "heute"
       now: "Jetzt"
-      close: "Schließen"
+      close: "Schliessen"
     orders:
       error_flash_for_unavailable_items: "Ein Artikel in Ihrem Warenkorb ist nicht mehr verfügbar. Bitte passen Sie die ausgewählten Mengen an."
       edit:
@@ -3989,7 +3986,7 @@ de_CH:
       paused: pausiert
       canceled: storniert
     paypal:
-      already_refunded: "Diese Zahlung wurde zurückerstattet und es können keine weiteren Maßnahmen ergriffen werden."
+      already_refunded: "Diese Zahlung wurde zurückerstattet und es können keine weiteren Massnahmen ergriffen werden."
       no_payment_via_admin_backend: "Sie können derzeit keine PayPal-Konten über das Administrationsmenü belasten."
       transaction: "PayPal-Transaktion"
       payer_id: "Zahler-ID"
@@ -4040,14 +4037,15 @@ de_CH:
         items: Artikel
         total: Gesamt
         paid?: Bezahlt?
-        view: Ansehen
+        status: Status
+        cancelled: Storniert
       saved_cards:
         default?: Standard?
         delete?: Löschen?
       cards:
         authorised_shops: Autorisierte Läden
-        authorised_shops_agreement: Dies ist die Liste der Läden, in denen Ihre Standardkreditkarte für eventuelle Abonnements (d. h. automatisch wiederholte Bestellungen) belastet werden darf. Ihre Kreditkartendaten werden sicher aufbewahrt und nicht an Ladenbesitzer weitergegeben. Sie werden immer benachrichtigt, wenn Ihre Kreditkarte belastet wird. Wenn Sie das Kontrollkästchen für einen Laden aktivieren, erlauben Sie diesem Laden Anweisungen an das Finanzinstitut, das Ihre Kreditkarte ausgestellt hat, zu senden, um Zahlungen gemäß der Bedingungen eines Abonnements, das Sie mit diesem Laden erstellen, entgegenzunehmen.
-        saved_cards_popover: Dies ist die Liste der Kreditkarten, die Sie für spätere Verwendung gespeichert haben. Ihr "Standard" wird automatisch beim Abschließen einer Bestellung ausgewählt und kann von allen Läden belastet werden, die Sie dazu berechtigt haben (siehe rechts).
+        authorised_shops_agreement: Dies ist die Liste der Läden, in denen Ihre Standardkreditkarte für eventuelle Abonnements (d. h. automatisch wiederholte Bestellungen) belastet werden darf. Ihre Kreditkartendaten werden sicher aufbewahrt und nicht an Ladenbesitzer weitergegeben. Sie werden immer benachrichtigt, wenn Ihre Kreditkarte belastet wird. Wenn Sie das Kontrollkästchen für einen Laden aktivieren, erlauben Sie diesem Laden Anweisungen an das Finanzinstitut, das Ihre Kreditkarte ausgestellt hat, zu senden, um Zahlungen gemäss der Bedingungen eines Abonnements, das Sie mit diesem Laden erstellen, entgegenzunehmen.
+        saved_cards_popover: Dies ist die Liste der Kreditkarten, die Sie für spätere Verwendung gespeichert haben. Ihr "Standard" wird automatisch beim Abschliessen einer Bestellung ausgewählt und kann von allen Läden belastet werden, die Sie dazu berechtigt haben (siehe rechts).
       authorised_shops:
         shop_name: "Ladenname"
         allow_charges?: "Abbuchungen für die Standardkreditkarte zulassen?"

@@ -414,8 +414,6 @@ en_AU:
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
-      destroy:
-        has_associated_orders: "Delete failed: customer has associated orders with his shop"
     contents:
       edit:
         title: Content
@@ -3382,7 +3380,6 @@ en_AU:
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
-        image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
         new:
           title: "New Product"
           new_product: "New Product"
@@ -3639,7 +3636,8 @@ en_AU:
         items: Items
         total: Total
         paid?: Paid?
-        view: View
+        status: Status
+        cancelled: Cancelled
       saved_cards:
         default?: Default?
         delete?: Delete?

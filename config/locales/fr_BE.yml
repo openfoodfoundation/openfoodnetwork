@@ -417,8 +417,6 @@ fr_BE:
         search_by_email: "Recherche par email/code..."
         guest_label: "Commande en mode invité"
         credit_owed: "Crédit redevable"
-      destroy:
-        has_associated_orders: "Suppression impossible: des commandes sont associées à cet acheteur pour ce comptoir"
     contents:
       edit:
         title: Contenu
@@ -3324,7 +3322,6 @@ fr_BE:
           paypal:
             no_payment_via_admin_backend: Les payement paypal ne savent pas etre prit dans le Backoffice
       products:
-        image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez télécharger une image au format PNG ou JPG."
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
@@ -3582,7 +3579,8 @@ fr_BE:
         items: Produits
         total: Total
         paid?: Payé ?
-        view: Afficher
+        status: Statut
+        cancelled: Annulée
       saved_cards:
         default?: Carte utilisée par défaut?
         delete?: Supprimer?

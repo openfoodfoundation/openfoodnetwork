@@ -549,8 +549,6 @@ nb:
         guest_label: "Gjesteutsjekk"
         credit_owed: "Kreditt skyldig"
         balance_due: "Til Forfall"
-      destroy:
-        has_associated_orders: "Sletting mislyktes: kunden har tilknyttede ordrer med sin butikk"
     contents:
       edit:
         title: Innhold
@@ -3732,7 +3730,6 @@ nb:
           paypal:
             no_payment_via_admin_backend: Paypal-betalinger kan ikke behandles i Backoffice
       products:
-        image_upload_error: "Produktbildet ble ikke gjenkjent. Last opp et bilde i PNG- eller JPG-format."
         new:
           title: "Nytt produkt"
           new_product: "Nytt produkt"
@@ -4028,7 +4025,8 @@ nb:
         items: Elementer
         total: Total
         paid?: Betalt?
-        view: Vis
+        status: Status
+        cancelled: Avbrutt
       saved_cards:
         default?: Standard?
         delete?: Slett?

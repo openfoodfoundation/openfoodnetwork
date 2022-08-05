@@ -461,8 +461,6 @@ pt_BR:
         guest_label: "Checkout de convidado"
         credit_owed: "Crédito Devido"
         balance_due: "Saldo Devedor"
-      destroy:
-        has_associated_orders: "Apagar falhou: o cliente tem pedidos associados à sua loja"
     contents:
       edit:
         title: Conteúdo
@@ -3539,7 +3537,6 @@ pt_BR:
           paypal:
             no_payment_via_admin_backend: Pagamentos por Paypal não podem ser completados na Área Administrativa
       products:
-        image_upload_error: "A imagem do produto não foi reconhecida. Faça o upload de uma imagem no formato PNG ou JPG."
         new:
           title: "Novo produto"
           new_product: "Novo produto"
@@ -3832,7 +3829,8 @@ pt_BR:
         items: Itens
         total: Total
         paid?: Pago?
-        view: Ver
+        status: Status
+        cancelled: Cancelado
       saved_cards:
         default?: Ausente?
         delete?: Excluir?

@@ -528,8 +528,6 @@ it_CH:
         guest_label: "Check-out ospite"
         credit_owed: "Credito dovuto"
         balance_due: "Da pagare"
-      destroy:
-        has_associated_orders: "Cancellazione fallita: l'utente ha ordini associati al negozio"
     contents:
       edit:
         title: Contenuto
@@ -3719,7 +3717,6 @@ it_CH:
           paypal:
             no_payment_via_admin_backend: I pagamenti con Paypal non possono comparire nel Pannello di Controllo
       products:
-        image_upload_error: "L'immagine del prodotto non è stata riconosciuta. Carica un'immagine in formato PNG o JPG."
         new:
           title: "Nuovo prodotto"
           new_product: "Nuovo prodotto"
@@ -4015,7 +4012,8 @@ it_CH:
         items: Prodotti
         total: Totale
         paid?: Pagato?
-        view: Dettagli
+        status: Stato
+        cancelled: Annullato
       saved_cards:
         default?: Predefinito?
         delete?: Elimina?

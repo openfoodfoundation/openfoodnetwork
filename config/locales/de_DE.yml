@@ -553,8 +553,6 @@ de_DE:
         guest_label: "Gasteinkauf"
         credit_owed: "Geschuldetes Guthaben"
         balance_due: "Offener Betrag"
-      destroy:
-        has_associated_orders: "Löschen fehlgeschlagen: Der Kunde hat Bestellungen bei diesem Laden."
     contents:
       edit:
         title: Inhalt
@@ -3768,7 +3766,7 @@ de_DE:
           paypal:
             no_payment_via_admin_backend: Paypal-Zahlungen können nicht im Backoffice erfasst werden.
       products:
-        image_upload_error: "Das Bild wurde nicht erkannt. Bitte laden Sie ein Bild im PNG-, JPG-, GIF- oder SVG-Format hoch."
+        image_upload_error: "Bitte laden Sie ein Bild im JPG-, PNG-, GIF-, SVG- oder WEBP-Format hoch."
         new:
           title: "Neues Produkt"
           new_product: "Neues Produkt"
@@ -4064,7 +4062,9 @@ de_DE:
         items: Artikel
         total: Gesamt
         paid?: Bezahlt?
-        view: Ansehen
+        status: Status
+        completed: Abgeschlossen
+        cancelled: Storniert
       saved_cards:
         default?: Standard?
         delete?: Löschen?

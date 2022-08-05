@@ -394,8 +394,6 @@ fil_PH:
         confirm_delete: "siguradong tatanggalin na?"
         search_by_email: "hanapin gamit ang email/code..."
         guest_label: "Guest checkout"
-      destroy:
-        has_associated_orders: "hindi tagumpay ang pagtanggal: ang customer ay may iniugnay na mga order sa kaniyang shop"
     contents:
       edit:
         title: nilalaman
@@ -3249,7 +3247,6 @@ fil_PH:
             error_saving_payment: error sa pag-save ng bayad
             submitting_payment: sinusumite ang bayad...
       products:
-        image_upload_error: "ang larawan ng produkto ay hindi makilala. mag-upload ng larawan sa format na PNG o JPG."
         new:
           title: "bagong produkto"
           new_product: "bagong produkto"
@@ -3485,7 +3482,8 @@ fil_PH:
         items: mga item
         total: kabuuan
         paid?: bayad na?
-        view: tignan
+        status: status
+        cancelled: kanselado
       saved_cards:
         default?: Default?
         delete?: tanggalin?

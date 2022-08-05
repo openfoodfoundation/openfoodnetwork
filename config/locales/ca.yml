@@ -508,8 +508,6 @@ ca:
         guest_label: "Fer comanda com a convidat"
         credit_owed: "Crèdit a deure"
         balance_due: "A pagar"
-      destroy:
-        has_associated_orders: "S'ha produït un error en suprimir: la consumidora té comandes associades amb la seva botiga"
     contents:
       edit:
         title: Contingut
@@ -3584,7 +3582,6 @@ ca:
           paypal:
             no_payment_via_admin_backend: Els pagaments amb Paypal no es poden marcar com pagats des de l'administració
       products:
-        image_upload_error: "No s'ha reconegut la imatge del producte. Carregueu una imatge en format PNG o JPG."
         new:
           title: "Nou producte"
           new_product: "Nou producte"
@@ -3879,7 +3876,8 @@ ca:
         items: Articles
         total: Total
         paid?: Pagat?
-        view: Veure
+        status: Estat
+        cancelled: Cancel·lada
       saved_cards:
         default?: Per defecte?
         delete?: Suprimeix?

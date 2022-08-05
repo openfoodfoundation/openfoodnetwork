@@ -421,8 +421,6 @@ es_CO:
         confirm_delete: "¿Confirmas que quieres borrar?"
         search_by_email: "Buscar por correo electrónico/código"
         guest_label: "Retirar como invitado"
-      destroy:
-        has_associated_orders: "Error al eliminar: el cliente tiene pedidos asociados a su tienda."
     contents:
       edit:
         title: Contenido
@@ -3358,7 +3356,6 @@ es_CO:
           paypal:
             no_payment_via_admin_backend: Los pagos de Paypal no se pueden capturar en el Backoffice
       products:
-        image_upload_error: "La imágen del producto no fue reconocida. Por favor, cargue una imágen en formato PNG o JPG."
         new:
           title: "Nuevo producto"
           new_product: "Nuevo producto"
@@ -3612,7 +3609,8 @@ es_CO:
         items: Artículos
         total: Total
         paid?: ¿Pagado?
-        view: Ver
+        status: Estado
+        cancelled: Cancelado
       saved_cards:
         default?: ¿Por defecto?
         delete?: ¿Borrar?

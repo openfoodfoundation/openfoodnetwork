@@ -550,8 +550,6 @@ ko:
         guest_label: "게스트 체크아웃"
         credit_owed: "외상값"
         balance_due: "잔액 만기"
-      destroy:
-        has_associated_orders: "삭제 실패: 고객님께서 자신의 상점과 주문을 연결했습니다."
     contents:
       edit:
         title: 콘텐트
@@ -3684,7 +3682,6 @@ ko:
           paypal:
             no_payment_via_admin_backend: 고객들을 직접 상대하지 않는 부서 전용에서 페이팔 결제를 캡처할 수 없습니다.
       products:
-        image_upload_error: "제품 이미지를 인식할 수 없습니다. PNG 또는 JPG 형식으로 이미지를 업로드하십시오."
         new:
           title: "새 상품"
           new_product: "새 상품"
@@ -3981,7 +3978,8 @@ ko:
         items: 항목
         total: 총합
         paid?: 유급 입니까?
-        view: 보기
+        status: 상태
+        cancelled: 취소됨
       saved_cards:
         default?: 기본값으로 설정하시겠습니까?
         delete?: 삭제하시겠습니까?

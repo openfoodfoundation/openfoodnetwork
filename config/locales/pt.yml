@@ -445,8 +445,6 @@ pt:
         guest_label: "Finalizar compra como convidado"
         credit_owed: "Crédito Devido"
         balance_due: "Saldo Pendente"
-      destroy:
-        has_associated_orders: "Não foi possível apagar: o/a consumidor/a tem encomendas associadas a esta loja."
     contents:
       edit:
         title: Conteúdo
@@ -3471,7 +3469,8 @@ pt:
         items: Itens
         total: Total
         paid?: Pago?
-        view: Ver
+        status: Estado
+        cancelled: Cancelada
       saved_cards:
         default?: Por defeito?
         delete?: Apagar?

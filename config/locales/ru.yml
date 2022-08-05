@@ -554,8 +554,6 @@ ru:
         guest_label: "Оформить как Гость"
         credit_owed: "Кредит"
         balance_due: "Задолжность"
-      destroy:
-        has_associated_orders: "Не удалось удалить: у клиента есть заказы в своём магазине"
     contents:
       edit:
         title: Содержание
@@ -3815,7 +3813,6 @@ ru:
           paypal:
             no_payment_via_admin_backend: Платежи Paypal не могут быть зарегистрированы в Бэк-офисе
       products:
-        image_upload_error: "Изображение товара не было распознано. Пожалуйста, загрузите изображение в формате PNG или JPG."
         new:
           title: "Новый Товар"
           new_product: "Новый Товар"
@@ -4113,7 +4110,8 @@ ru:
         items: Позиции
         total: Всего
         paid?: Оплачен?
-        view: Просмотр
+        status: Статус
+        cancelled: Отменён
       saved_cards:
         default?: По умолчанию?
         delete?: Удалить?

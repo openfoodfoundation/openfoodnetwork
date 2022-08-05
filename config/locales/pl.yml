@@ -410,8 +410,6 @@ pl:
         confirm_delete: "Na pewno chcesz usunąć?"
         search_by_email: "Szukaj według adresu e-mail / kodu ..."
         guest_label: "Kasa dla gości"
-      destroy:
-        has_associated_orders: "Usunięcie nie powiodło się: klient ma zamówienia w swoim sklepie"
     contents:
       edit:
         title: Zawartość
@@ -3299,7 +3297,6 @@ pl:
           paypal:
             no_payment_via_admin_backend: Płatności PayPal nie mogą być przechwytywane w Backoffice
       products:
-        image_upload_error: "Zdjęcie produktu nie zostało rozpoznane. Prześlij obraz w formacie PNG lub JPG."
         new:
           title: "Nowy produkt"
           new_product: "Nowy produkt"
@@ -3548,7 +3545,8 @@ pl:
         items: Sztuki
         total: Razem
         paid?: Opłacony?
-        view: Widok
+        status: Status
+        cancelled: Anulowane
       saved_cards:
         default?: Domyślna?
         delete?: Kasować?

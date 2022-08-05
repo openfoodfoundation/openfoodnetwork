@@ -528,8 +528,6 @@ es_US:
         guest_label: "Hacer pedido como invitado"
         credit_owed: "Crédito debido"
         balance_due: "Saldo adeudado"
-      destroy:
-        has_associated_orders: "Se ha producido un error en la eliminación: la consumidora tiene pedidos asociados en su tienda."
     contents:
       edit:
         title: Contenido
@@ -3610,7 +3608,6 @@ es_US:
           paypal:
             no_payment_via_admin_backend: Los pagos de PayPal no se pueden marcar como pagados desde la administración
       products:
-        image_upload_error: "La imagen del producto no fue reconocida. Por favor, cargue una imagen en formato PNG o JPG."
         new:
           title: "Nuevo producto"
           new_product: "Nuevo producto"
@@ -3903,7 +3900,8 @@ es_US:
         items: Artículos
         total: Total
         paid?: ¿Pagado?
-        view: Ver
+        status: Estado
+        cancelled: Cancelado
       saved_cards:
         default?: ¿Por defecto?
         delete?: ¿Borrar?

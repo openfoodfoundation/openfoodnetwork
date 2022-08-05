@@ -469,8 +469,6 @@ tr:
         guest_label: "Misafir Ödemesi"
         credit_owed: "Artı Bakiye"
         balance_due: "Ödenmesi Gereken Bakiye"
-      destroy:
-        has_associated_orders: "Silme başarısız oldu: müşterinin bağlantılı siparişleri var"
     contents:
       edit:
         title: İÇERİK
@@ -3570,7 +3568,6 @@ tr:
           paypal:
             no_payment_via_admin_backend: Paypal ödemeleri alınamıyor.
       products:
-        image_upload_error: "Ürün resmi tanınamadı. Lütfen PNG veya JPG biçiminde bir resim yükleyin."
         new:
           title: "Yeni Ürün"
           new_product: "Yeni Ürün"
@@ -3866,7 +3863,8 @@ tr:
         items: Ürünler
         total: Toplam
         paid?: Ödendi?
-        view: Göster
+        status: Durum
+        cancelled: İptal edildi
       saved_cards:
         default?: Varsayılan?
         delete?: Sil?

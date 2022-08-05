@@ -535,8 +535,6 @@ hu:
         guest_label: "Vendég kijelentkezés"
         credit_owed: "Hiteltartozás"
         balance_due: "Esedékes egyenleg"
-      destroy:
-        has_associated_orders: "A törlés nem sikerült: az ügyfél rendeléseket társított az üzletéhez"
     contents:
       edit:
         title: Tartalom
@@ -3747,7 +3745,6 @@ hu:
           paypal:
             no_payment_via_admin_backend: A Paypal fizetések nem rögzíthetők a Backoffice-ban
       products:
-        image_upload_error: "A termék képét nem ismerték fel. Kérjük, töltsön fel egy képet PNG vagy JPG formátumban."
         new:
           title: "Új termék"
           new_product: "Új termék"
@@ -4043,7 +4040,8 @@ hu:
         items: Tételek
         total: Teljes
         paid?: Fizetett?
-        view: Kilátás
+        status: Állapot
+        cancelled: Törölve
       saved_cards:
         default?: Alapértelmezett?
         delete?: Töröl?

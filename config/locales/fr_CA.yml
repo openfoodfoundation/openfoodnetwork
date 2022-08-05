@@ -550,8 +550,6 @@ fr_CA:
         guest_label: "Commande en mode invite"
         credit_owed: "Crédit dû"
         balance_due: "Solde dû"
-      destroy:
-        has_associated_orders: "Suppression impossible: des commandes sont associées à cette boutique"
     contents:
       edit:
         title: Contenu
@@ -3772,7 +3770,6 @@ fr_CA:
           paypal:
             no_payment_via_admin_backend: 'Il n''est pas encore possible de payer avec Paypal via l''administration. '
       products:
-        image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez importer une image au format PNG ou JPG."
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
@@ -4069,7 +4066,8 @@ fr_CA:
         items: Produits
         total: Total
         paid?: Payé ?
-        view: Afficher
+        status: Statut
+        cancelled: Annulée
       saved_cards:
         default?: Par default?
         delete?: Effacer?

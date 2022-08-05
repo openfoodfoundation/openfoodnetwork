@@ -551,8 +551,6 @@ cy:
         guest_label: "Talu fel gwestai"
         credit_owed: "Credyd yn ddyledus"
         balance_due: "Balans sy'n ddyledus"
-      destroy:
-        has_associated_orders: "Wedi methu ei ddileu: mae gan y cwsmer archebion cysylltiedig gyda'i siop"
     contents:
       edit:
         title: Cynnwys
@@ -3803,7 +3801,6 @@ cy:
           paypal:
             no_payment_via_admin_backend: Ni ellir cipio taliadau Paypal yn y Swyddfa Gefn
       products:
-        image_upload_error: "Nid oedd yn bosib adnabod delwedd y cynnyrch. Lanlwythwch ddelwedd mewn fformat PNG neu JPG."
         new:
           title: "Cynnyrch Newydd"
           new_product: "Cynnyrch Newydd"
@@ -4100,7 +4097,8 @@ cy:
         items: Eitemau
         total: Cyfanswm
         paid?: Talwyd?
-        view: Gweld
+        status: Statws
+        cancelled: Canslwyd
       saved_cards:
         default?: Yn ddiofyn?
         delete?: Dileu?
