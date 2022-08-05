@@ -23,7 +23,6 @@
 //= require lodash.underscore.js
 
 // datetimepicker  (fil, nb)
-//= require flatpickr/dist/flatpickr.min
 //= require flatpickr/dist/l10n/ar
 //= require flatpickr/dist/l10n/cat
 //= require flatpickr/dist/l10n/cy
