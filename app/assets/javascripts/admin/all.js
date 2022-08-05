@@ -22,10 +22,6 @@
 //= require angular-rails-templates
 //= require lodash.underscore.js
 
-// datetimepicker  (fil, nb)
-//= require shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr.min
-//= require flatpickr/dist/plugins/labelPlugin/labelPlugin
-
 // spree
 //= require admin/spree/spree
 //= require admin/spree/spree-select2

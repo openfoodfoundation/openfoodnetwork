@@ -13,6 +13,9 @@ import { ru } from "flatpickr/dist/l10n/ru";
 import { sv } from "flatpickr/dist/l10n/sv";
 import { tr } from "flatpickr/dist/l10n/tr";
 import { en } from "flatpickr/dist/l10n/default.js";
+import ShortcutButtonsPlugin from "shortcut-buttons-flatpickr";
+import labelPlugin from "flatpickr/dist/plugins/labelPlugin/labelPlugin";
+
 export default class extends Flatpickr {
   static values = { enableTime: Boolean };
   locales = {
