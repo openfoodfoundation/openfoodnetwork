@@ -158,6 +158,7 @@ group :test, :development do
   gem 'shoulda-matchers'
   gem 'timecop'
   gem 'webdrivers'
+  gem 'debug', '>= 1.0.0'
 end
 
 group :test do
