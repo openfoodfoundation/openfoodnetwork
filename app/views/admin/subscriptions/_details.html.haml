@@ -34,11 +34,11 @@
   .row
     .seven.columns.alpha.field
       %label{ for: 'begins_at'}= t('admin.begins_at')
-      %input.fullwidth#begins_at{ name: 'begins_at', type: 'text', placeholder: "#{t('.begins_at_placeholder')}", datepicker: 'subscription.begins_at', required: true, ng: { model: 'subscription.begins_at' } }
+      %input.fullwidth#begins_at{ name: 'begins_at', type: 'text', placeholder: "#{t('.begins_at_placeholder')}", data: { controller: "flatpickr" }, required: true, ng: { model: 'subscription.begins_at' } }
       .error{ ng: { show: 'subscription_form.$submitted && subscription_details_form.begins_at.$error.required' } }= t(:error_required)
       .error{ ng: { repeat: 'error in errors.begins_at', show: 'subscription_details_form.begins_at.$pristine' } } {{ error }}
     .two.columns &nbsp;
     .seven.columns.omega.field
       %label{ for: 'ends_at'}= t('admin.ends_at')
-      %input.fullwidth#ends_at{ name: 'ends_at', type: 'text', placeholder: "#{t('.ends_at_placeholder')}", datepicker: 'subscription.begins_at', ng: { model: 'subscription.ends_at' } }
+      %input.fullwidth#ends_at{ name: 'ends_at', type: 'text', placeholder: "#{t('.ends_at_placeholder')}",  data: { controller: "flatpickr" }, ng: { model: 'subscription.ends_at' } }
       .error{ ng: { repeat: 'error in errors.ends_at', show: 'subscription_details_form.ends_at.$pristine' } } {{ error }}
