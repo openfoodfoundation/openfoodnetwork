@@ -408,7 +408,8 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     orm_adapter (0.5.0)
-    pagy (5.1.2)
+    pagy (5.10.1)
+      activesupport
     paper_trail (12.1.0)
       activerecord (>= 5.2)
       request_store (~> 1.1)
