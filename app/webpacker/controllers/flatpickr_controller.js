@@ -1,8 +1,35 @@
 // import Flatpickr
 import Flatpickr from "stimulus-flatpickr";
-
+import { ar } from "flatpickr/dist/l10n/ar";
+import { cat } from "flatpickr/dist/l10n/cat";
+import { cy } from "flatpickr/dist/l10n/cy";
+import { de } from "flatpickr/dist/l10n/de";
+import { fr } from "flatpickr/dist/l10n/fr";
+import { it } from "flatpickr/dist/l10n/it";
+import { nl } from "flatpickr/dist/l10n/nl";
+import { pl } from "flatpickr/dist/l10n/pl";
+import { pt } from "flatpickr/dist/l10n/pt";
+import { ru } from "flatpickr/dist/l10n/ru";
+import { sv } from "flatpickr/dist/l10n/sv";
+import { tr } from "flatpickr/dist/l10n/tr";
+import { en } from "flatpickr/dist/l10n/default.js";
 export default class extends Flatpickr {
   static values = { enableTime: Boolean };
+  locales = {
+    ar: ar,
+    cat: cat,
+    cy: cy,
+    de: de,
+    fr: fr,
+    it: it,
+    nl: nl,
+    pl: pl,
+    pt: pt,
+    ru: ru,
+    sv: sv,
+    tr: tr,
+    en: en,
+  };
 
   initialize() {
     const datetimepicker = this.enableTimeValue == true;
