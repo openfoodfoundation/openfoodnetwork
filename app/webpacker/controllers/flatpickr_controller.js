@@ -66,6 +66,10 @@ export default class extends Flatpickr {
     };
   }
 
+  clear(e) {
+    this.fp.setDate(null);
+  }
+
   // private
 
   onClickButtons = (index, fp) => {
