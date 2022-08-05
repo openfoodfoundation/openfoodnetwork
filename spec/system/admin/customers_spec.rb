@@ -81,7 +81,7 @@ describe 'Customers' do
         expect(page).to have_no_content customer1.email
 
         # Deleting
-        create(:order, customer: customer1)
+        create(:subscription, customer: customer1)
         expect{
           within "tr#c_#{customer1.id}" do
             accept_alert do
@@ -89,7 +89,7 @@ describe 'Customers' do
             end
           end
           expect(page).to have_selector "#info-dialog .text",
-                                        text: I18n.t('admin.customers.destroy.has_associated_orders')
+                                        text: I18n.t('admin.customers.destroy.has_associated_subscriptions')
           click_button "OK"
         }.to_not change{ Customer.count }
 
