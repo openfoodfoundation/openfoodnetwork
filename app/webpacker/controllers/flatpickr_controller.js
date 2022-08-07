@@ -17,7 +17,8 @@ import ShortcutButtonsPlugin from "shortcut-buttons-flatpickr";
 import labelPlugin from "flatpickr/dist/plugins/labelPlugin/labelPlugin";
 
 export default class extends Flatpickr {
-  static values = { enableTime: Boolean };
+  static values = { enableTime: Boolean, mode: String };
+  static targets = ["start", "end"];
   locales = {
     ar: ar,
     cat: cat,
@@ -36,6 +37,7 @@ export default class extends Flatpickr {
 
   initialize() {
     const datetimepicker = this.enableTimeValue == true;
+    const mode = this.modeValue == "range" ? "range" : "single";
     // sets your language (you can also set some global setting for all time pickers)
     this.config = {
       altInput: true,
@@ -46,23 +48,8 @@ export default class extends Flatpickr {
       enableTime: datetimepicker,
       time_24hr: datetimepicker,
       locale: I18n.base_locale,
-      plugins: [
-        ShortcutButtonsPlugin({
-          button: [
-            {
-              label: datetimepicker
-                ? Spree.translations.now
-                : Spree.translations.today,
-            },
-            {
-              label: Spree.translations.close,
-            },
-          ],
-          label: "or",
-          onClick: this.onClickButtons,
-        }),
-        labelPlugin({}),
-      ],
+      plugins: this.plugins(mode, datetimepicker),
+      mode,
     };
   }
 
@@ -70,24 +57,54 @@ export default class extends Flatpickr {
     this.fp.setDate(null);
   }
 
+  change(selectedDates, dateStr, instance) {
+    if (this.hasStartTarget && this.hasEndTarget) {
+      this.startTarget.value = selectedDates[0]
+        ? this.fp.formatDate(selectedDates[0], this.config.dateFormat)
+        : "";
+      this.endTarget.value = selectedDates[1]
+        ? this.fp.formatDate(selectedDates[1], this.config.dateFormat)
+        : "";
+      // Also, send event to be sure that ng-model is well updated
+      this.startTarget.dispatchEvent(new Event("change"));
+      this.endTarget.dispatchEvent(new Event("change"));
+    }
+  }
+
   // private
 
+  plugins = (mode, datetimepicker) => {
+    const buttons = [{ label: Spree.translations.close }];
+    if (mode == "single") {
+      buttons.unshift({
+        label: datetimepicker
+          ? Spree.translations.now
+          : Spree.translations.today,
+      });
+    }
+    return [
+      ShortcutButtonsPlugin({
+        button: buttons,
+        label: mode != "range" && "or",
+        onClick: this.onClickButtons,
+      }),
+      labelPlugin({}),
+    ];
+  };
+
   onClickButtons = (index, fp) => {
-    let date;
-    // Memorize index used for the 'Close' button
-    // (currently it has index of 1)
-    const closeButtonIndex = 1;
+    // Memorize index used for the 'Close' and 'Today|Now' buttons
+    // it has index of 1 in case of single mode (ie. can set Today or Now date)
+    // it has index of 0 in case of range mode (no Today or Now button)
+    const closeButtonIndex = this.modeValue == "range" ? 0 : 1;
+    const todayButtonIndex = this.modeValue == "range" ? null : 0;
     switch (index) {
-      case 0:
-        date = new Date();
+      case todayButtonIndex:
+        fp.setDate(new Date(), true);
         break;
       case closeButtonIndex:
         fp.close();
         break;
-    }
-    // Set the date unless clicked button was the 'Close' one
-    if (index != closeButtonIndex) {
-      fp.setDate(date, true);
     }
   };
 }
