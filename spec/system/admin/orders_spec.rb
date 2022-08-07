@@ -90,10 +90,8 @@ describe '
     it "filter by complete date" do
       login_as_admin_and_visit 'admin/orders'
 
-      find('#q_completed_at_gteq').click
-      select_date_from_datepicker order3.completed_at.yesterday
-      find('#q_completed_at_lteq').click
-      select_date_from_datepicker order4.completed_at.tomorrow
+      find("input.datepicker").click
+      select_dates_from_daterangepicker(order3.completed_at.yesterday, order4.completed_at.tomorrow)
 
       page.find('.filter-actions .button.icon-search').click
 
@@ -218,7 +216,7 @@ describe '
     end
   end
 
-  context "save the filter params" do
+  context "save the filter params", js: true do
     let!(:shipping_method) { create(:shipping_method, name: "UPS Ground") }
     let!(:user) { create(:user, email: 'an@email.com') }
     let!(:order) do
@@ -246,10 +244,8 @@ describe '
       fill_in "Email", with: user.email
       fill_in "First name begins with", with: "J"
       fill_in "Last name begins with", with: "D"
-      find('#q_completed_at_gteq').click
-      select_date_from_datepicker Time.zone.at(1.week.ago)
-      find('#q_completed_at_lteq').click
-      select_date_from_datepicker Time.zone.now.tomorrow
+      find("input.datepicker").click
+      select_dates_from_daterangepicker(Time.zone.at(1.week.ago), Time.zone.now.tomorrow)
 
       page.find('a.icon-search').click
     end
@@ -267,8 +263,7 @@ describe '
       expect(find_field("Email").value).to eq user.email
       expect(find_field("First name begins with").value).to eq "J"
       expect(find_field("Last name begins with").value).to eq "D"
-      expect(find("#q_completed_at_gteq").value).to eq 1.week.ago.strftime("%Y-%m-%d")
-      expect(find("#q_completed_at_lteq").value).to eq Time.zone.now.tomorrow.strftime("%Y-%m-%d")
+      expect(find("input.datepicker").value).to eq "#{1.week.ago.strftime('%Y-%m-%d')} to #{Time.zone.now.tomorrow.strftime('%Y-%m-%d')}"
     end
 
     it "and clear filters" do
@@ -282,8 +277,7 @@ describe '
       expect(find_field("Email").value).to be_empty
       expect(find_field("First name begins with").value).to be_empty
       expect(find_field("Last name begins with").value).to be_empty
-      expect(find("#q_completed_at_gteq").value).to be_empty
-      expect(find("#q_completed_at_lteq").value).to be_empty
+      expect(find("input.datepicker").value).to be_empty
     end
   end
 end
