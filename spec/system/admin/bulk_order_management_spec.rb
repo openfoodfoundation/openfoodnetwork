@@ -548,6 +548,7 @@ describe '
       let!(:li2) { create(:line_item_with_shipment, order: o2, quantity: 2 ) }
       let!(:li3) { create(:line_item_with_shipment, order: o3, quantity: 3 ) }
       let!(:li4) { create(:line_item_with_shipment, order: o4, quantity: 4 ) }
+      let(:today) { Time.zone.today }
 
       before :each do
         visit_bulk_order_management
@@ -555,10 +556,8 @@ describe '
 
       it "displays date fields for filtering orders, with default values set" do
         # use Date.current since Date.today is without timezone
-        today = Time.zone.today
         one_week_ago = today.prev_day(7).strftime("%F")
-        expect(page).to have_field "start_date_filter", with: one_week_ago
-        expect(page).to have_field "end_date_filter", with: today.strftime("%F")
+        expect(find("input.datepicker").value).to eq "#{one_week_ago} to #{today.strftime('%F')}"
       end
 
       it "only loads line items whose orders meet the date restriction criteria" do
@@ -569,16 +568,19 @@ describe '
       end
 
       it "displays only line items whose orders meet the date restriction criteria, when changed" do
-        find('#start_date_filter').click
-        select_date_from_datepicker Time.zone.today - 8.days
+        from = today - 8.days
+        to = today + 1.day
+
+        find("input.datepicker").click
+        select_dates_from_daterangepicker(from, today)
 
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
         expect(page).to have_selector "tr#li_#{li3.id}"
         expect(page).to have_no_selector "tr#li_#{li4.id}"
 
-        find('#end_date_filter').click
-        select_date_from_datepicker Time.zone.today + 1.day
+        find("input.datepicker").click
+        select_dates_from_daterangepicker(from, to)
 
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
@@ -596,8 +598,8 @@ describe '
         it "shows a dialog and ignores changes when confirm dialog is accepted" do
           page.driver.accept_modal :confirm,
                                    text: "Unsaved changes exist and will be lost if you continue." do
-            find('#start_date_filter').click
-            select_date_from_datepicker Time.zone.today - 9.days
+            find("input.datepicker").click
+            select_dates_from_daterangepicker(today - 9.days, today)
           end
           expect(page).to have_no_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
@@ -608,8 +610,8 @@ describe '
         it "shows a dialog and keeps changes when confirm dialog is rejected" do
           page.driver.dismiss_modal :confirm,
                                     text: "Unsaved changes exist and will be lost if you continue." do
-            find('#start_date_filter').click
-            select_date_from_datepicker Time.zone.today - 9.days
+            find("input.datepicker").click
+            select_dates_from_daterangepicker(today - 9.days, today)
           end
           expect(page).to have_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
