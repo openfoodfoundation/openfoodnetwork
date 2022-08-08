@@ -155,7 +155,6 @@ GEM
     ast (2.4.2)
     awesome_nested_set (3.5.0)
       activerecord (>= 4.0.0, < 7.1)
-    awesome_print (1.9.2)
     aws-eventstream (1.2.0)
     aws-partitions (1.601.0)
     aws-sdk-core (3.131.2)
@@ -708,7 +707,6 @@ DEPENDENCIES
   angularjs-rails (= 1.8.0)
   arel-helpers (~> 2.12)
   awesome_nested_set
-  awesome_print
   aws-sdk-s3
   bigdecimal (= 3.0.2)
   bootsnap
