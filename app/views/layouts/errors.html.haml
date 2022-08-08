@@ -1,0 +1,28 @@
+%html
+%head
+  :css
+    body {
+      background-color: #fff;
+      color: #666;
+      font-family: arial, sans-serif;
+
+    }
+    div.dialog {
+      width: 600px;
+      margin: auto;
+    }
+    @media only screen
+      and (min-width: 320px)
+      and (max-width: 568px) {
+        div.dialog, div.dialog img {
+          width: 95%;
+        }
+    }
+    div.dialog h1 {
+      font-size: 1.8em;
+    }
+  %title
+    = yield(:title)
+
+%body
+  = yield
