@@ -142,6 +142,23 @@ describe "As a consumer, I want to checkout my order", js: true do
       expect_to_be_on_first_step
     end
 
+    context "when no shipping methods are available" do
+      before do
+        shipping_methods.each { |sm| sm.update(tag_list: "hidden") }
+      end
+
+      it "should display an error message" do
+        create(:filter_shipping_methods_tag_rule,
+               enterprise: distributor,
+               is_default: true,
+               preferred_shipping_method_tags: "hidden",
+               preferred_matched_shipping_methods_visibility: 'hidden')
+
+        visit checkout_path
+        expect(page).to have_content "Checkout is not possible due to absence of shipping options. Please contact the shop owner."
+      end
+    end
+
     it "should display error when fields are empty" do
       click_on "Checkout as guest"
       click_button "Next - Payment method"
