@@ -534,7 +534,7 @@ describe '
       }
       let!(:o2) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.today - 7.days)
+                                        completed_at: Time.zone.today - 6.days)
       }
       let!(:o3) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
@@ -542,7 +542,7 @@ describe '
       }
       let!(:o4) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now.end_of_day + 1.second)
+                                        completed_at: Time.zone.now.end_of_day + 1.day)
       }
       let!(:li1) { create(:line_item_with_shipment, order: o1, quantity: 1 ) }
       let!(:li2) { create(:line_item_with_shipment, order: o2, quantity: 2 ) }
