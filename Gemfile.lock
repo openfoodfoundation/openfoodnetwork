@@ -146,8 +146,8 @@ GEM
       sprockets (>= 3.0, < 5)
       sprockets-rails
       tilt
-    angular_rails_csrf (4.5.0)
-      railties (>= 3, < 7)
+    angular_rails_csrf (5.0.0)
+      railties (>= 3, < 8)
     angularjs-file-upload-rails (2.4.1)
     angularjs-rails (1.8.0)
     arel-helpers (2.14.0)
@@ -666,7 +666,7 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (~> 4.0)
-    webmock (3.15.0)
+    webmock (3.17.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
