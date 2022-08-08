@@ -1,22 +1,24 @@
-import { Controller } from "stimulus"
+import { Controller } from "stimulus";
 
 export default class extends Controller {
   static targets = ["checkout", "guest"];
   static values = {
     distributor: String,
-    session: { type: String, default: "guest-checkout" }
+    session: { type: String, default: "guest-checkout" },
   };
 
   connect() {
-    if(!this.hasGuestTarget) { return }
+    if (!this.hasGuestTarget) {
+      return;
+    }
 
-    if(this.usingGuestCheckout()) {
+    if (this.usingGuestCheckout()) {
       this.showCheckout();
     }
   }
 
   login() {
-    window.dispatchEvent(new Event("login:modal:open"))
+    window.dispatchEvent(new Event("login:modal:open"));
   }
 
   showCheckout() {
@@ -30,6 +32,6 @@ export default class extends Controller {
   }
 
   usingGuestCheckout() {
-    return sessionStorage.getItem(this.sessionValue) === this.distributorValue
+    return sessionStorage.getItem(this.sessionValue) === this.distributorValue;
   }
 }

@@ -3,7 +3,7 @@
 // or:
 // div{data: {controller: "example"}}
 
-import { Controller } from "stimulus"
+import { Controller } from "stimulus";
 
 export default class extends Controller {
   // connect() is a built-in lifecycle callback for Stimulus Controllers. It fires when the
@@ -11,7 +11,7 @@ export default class extends Controller {
   // injected into the DOM. This means initialization is not tied to the page load event, but
   // will also happen dynamically if and when new DOM elements are added or removed.
   connect() {
-    console.log("We're connected!")
+    console.log("We're connected!");
   }
 }
 

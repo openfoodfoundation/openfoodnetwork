@@ -27,7 +27,7 @@ export default class extends Controller {
     Array.from(
       document.getElementsByClassName("paymentmethod-container")
     ).forEach((container) => {
-      const enabled = container.id === paymentMethodContainerId
+      const enabled = container.id === paymentMethodContainerId;
 
       if (enabled) {
         container.style.display = "block";
