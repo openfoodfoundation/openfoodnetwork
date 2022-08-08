@@ -6,6 +6,13 @@ describe "Packing Reports" do
   include AuthenticationHelper
   include WebHelper
 
+  around do |example|
+    Timecop.freeze(Time.zone.now.strftime("%Y-%m-%d 00:00")) { example.run }
+  end
+
+  let!(:open_datetime) { (Time.zone.now - 1.month).strftime("%Y-%m-%d 00:00") }
+  let!(:close_datetime) { Time.zone.now.strftime("%Y-%m-%d 00:00") }
+
   describe "Packing reports" do
     before do
       login_as_admin
@@ -31,9 +38,6 @@ describe "Packing Reports" do
     let(:variant1) { create(:variant, product: product1, unit_description: "Big") }
     let(:variant2) { create(:variant, product: product1, unit_description: "Small") }
     let(:product2) { create(:simple_product, name: "Product 2", supplier: supplier) }
-
-    let(:open_datetime) { (Time.zone.now - 1.month).strftime("%Y-%m-%d 00:00") }
-    let(:close_datetime) { Time.zone.now.strftime("%Y-%m-%d 00:00") }
 
     before do
       order1.finalize!
@@ -114,9 +118,6 @@ describe "Packing Reports" do
     }
     let(:li1) { build(:line_item_with_shipment) }
     let(:li2) { build(:line_item_with_shipment) }
-
-    let(:open_datetime) { (Time.zone.now - 1.month).strftime("%Y-%m-%d 00:00") }
-    let(:close_datetime) { Time.zone.now.strftime("%Y-%m-%d 00:00") }
 
     before do
       order.line_items << li1
