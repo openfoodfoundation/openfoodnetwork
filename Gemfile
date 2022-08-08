@@ -140,7 +140,6 @@ group :production, :staging do
 end
 
 group :test, :development do
-  gem 'awesome_print'
   gem 'bullet'
   gem 'capybara'
   gem 'cuprite'
