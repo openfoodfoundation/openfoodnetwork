@@ -60,6 +60,9 @@ describe "As a consumer, I want to checkout my order", js: true do
   let(:shipping_backoffice_only) {
     create(:shipping_method, require_ship_address: true, name: "Shipping Backoffice Only", display_on: "back_end")
   }
+  let(:shipping_methods) {
+    [free_shipping_with_required_address, free_shipping, shipping_with_fee, free_shipping_without_required_address, tagged_shipping]
+  }
 
   before do
     allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
@@ -68,7 +71,7 @@ describe "As a consumer, I want to checkout my order", js: true do
     add_enterprise_fee enterprise_fee
     set_order order
 
-    distributor.shipping_methods.push(free_shipping_with_required_address, free_shipping, shipping_with_fee, free_shipping_without_required_address, tagged_shipping)
+    distributor.shipping_methods.push(shipping_methods)
   end
 
   context "guest checkout when distributor doesn't allow guest orders" do
