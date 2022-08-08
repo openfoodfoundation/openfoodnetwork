@@ -17,24 +17,12 @@ assignees: ''
 ## Testing
 
 - [ ] [Find build] of the release commit and copy it below.
-- [ ] Move this issue to Test Ready and notify testers.
-- [ ] Test: :warning: link to the build of the release commit https://semaphoreci.com/openfoodfoundation/openfoodnetwork-2/branches/master
+- [ ] Move this issue to Test Ready.
+- [ ] Notify testers.
+- [ ] Test build: <!-- paste build link here, e.g. https://semaphore...builds/1234 -->
 
 ## Finish on Tuesday
 
-- [ ] Update translations unless content has been removed from config/locales/en.yml between this release draft and current master.
-  <details><summary>Command line instructions</summary>
-  <pre>
-  git checkout master # same version as the release draft
-  git fetch upstream
-  git diff upstream/master -- config/locales/en.yml
-  tx pull --force # if no changes or only additions in the locale
-  git checkout --detach # if we need to commit new translations
-  git commit -a -m "Update translations"
-  git tag vx.y.z # put the release number in here
-  git push upstream vx.y.z
-  </pre>
-  </details>
 - [ ] Publish and notify [#global-community]:
   > The next release is ready: https://github.com/openfoodfoundation/openfoodnetwork/releases/latest
 - [ ] Deploy the new release to all managed instances.
