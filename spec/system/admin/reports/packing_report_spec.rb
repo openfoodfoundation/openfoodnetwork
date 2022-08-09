@@ -6,6 +6,13 @@ describe "Packing Reports" do
   include AuthenticationHelper
   include WebHelper
 
+  around do |example|
+    Timecop.freeze(Time.zone.now.strftime("%Y-%m-%d 00:00")) { example.run }
+  end
+
+  let!(:open_datetime) { (Time.zone.now - 1.month).strftime("%Y-%m-%d 00:00") }
+  let!(:close_datetime) { Time.zone.now.strftime("%Y-%m-%d 00:00") }
+
   describe "Packing reports" do
     before do
       login_as_admin
@@ -33,8 +40,8 @@ describe "Packing Reports" do
     let(:product2) { create(:simple_product, name: "Product 2", supplier: supplier) }
 
     before do
-      Timecop.travel(Time.zone.local(2022, 4, 25, 14, 0, 0)) { order1.finalize! }
-      Timecop.travel(Time.zone.local(2022, 4, 25, 15, 0, 0)) { order2.finalize! }
+      order1.finalize!
+      order2.finalize!
 
       create(:line_item_with_shipment, variant: variant1, quantity: 1, order: order1)
       create(:line_item_with_shipment, variant: variant2, quantity: 3, order: order1)
@@ -45,11 +52,8 @@ describe "Packing Reports" do
       it "displays the report" do
         click_link "Pack By Customer"
 
-        find('#q_order_completed_at_gt').click
-        select_date_from_datepicker Time.zone.at(order1.completed_at - 1.day)
-
-        find('#q_order_completed_at_lt').click
-        select_date_from_datepicker Time.zone.at(order1.completed_at + 1.day)
+        # pre-fills with dates
+        check_prefilled_dates
 
         click_button 'Go'
 
@@ -65,11 +69,9 @@ describe "Packing Reports" do
       it "sorts alphabetically" do
         click_link "Pack By Customer"
 
-        find('#q_order_completed_at_gt').click
-        select_date_from_datepicker Time.zone.at(order1.completed_at - 1.day)
+        # pre-fills with dates
+        check_prefilled_dates
 
-        find('#q_order_completed_at_lt').click
-        select_date_from_datepicker Time.zone.at(order1.completed_at + 1.day)
         click_button 'Go'
         rows = find("table.report__table").all("tr")
         table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[3] }
@@ -87,11 +89,9 @@ describe "Packing Reports" do
     describe "Pack By Supplier" do
       it "displays the report" do
         click_link "Pack By Supplier"
-        find('#q_order_completed_at_gt').click
-        select_date_from_datepicker Time.zone.at(order1.completed_at - 1.day)
 
-        find('#q_order_completed_at_lt').click
-        select_date_from_datepicker Time.zone.at(order1.completed_at + 1.day)
+        # pre-fills with dates
+        check_prefilled_dates
 
         find(:css, "#display_summary_row").set(false) # does not include summary rows
 
@@ -122,32 +122,36 @@ describe "Packing Reports" do
     before do
       order.line_items << li1
       order.line_items << li2
-      Timecop.travel(Time.zone.local(2022, 4, 25, 14, 0, 0)) { order.finalize! }
+      order.finalize!
       login_as_admin
     end
 
-    describe "viewing a report" do
+    describe "viewing the Pack by Product report" do
       context "when an associated variant has been soft-deleted" do
-        it "shows line items" do
+        before do
           li1.variant.delete
-
           visit admin_reports_path
+          click_link "Pack By Product"
+        end
 
-          click_on I18n.t("admin.reports.packing.name")
+        it "shows line items" do
           select oc.name, from: "q_order_cycle_id_in"
 
-          find('#q_order_completed_at_gt').click
-          select_date_from_datepicker Time.zone.at(order.completed_at - 1.day)
-
-          find('#q_order_completed_at_lt').click
-          select_date_from_datepicker Time.zone.at(order.completed_at + 1.day)
+          # pre-fills with dates
+          check_prefilled_dates
 
           find("button[type='submit']").click
-
           expect(page).to have_content li1.product.name
           expect(page).to have_content li2.product.name
         end
       end
     end
   end
+end
+
+private
+
+def check_prefilled_dates
+  expect(page).to have_input "q[order_completed_at_gt]", value: open_datetime, visible: false
+  expect(page).to have_input "q[order_completed_at_lt]", value: close_datetime, visible: false
 end
