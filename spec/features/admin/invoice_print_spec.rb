@@ -11,7 +11,10 @@ describe '
 
   let(:user) { create(:user) }
   let(:product) { create(:simple_product) }
-  let(:distributor) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
+  let(:distributor) {
+    create(:distributor_enterprise, owner: user, with_payment_and_shipping: true,
+                                    charges_sales_tax: true)
+  }
   let(:order_cycle) do
     create(:simple_order_cycle, name: 'One', distributors: [distributor],
                                 variants: [product.variants.first])
@@ -120,6 +123,261 @@ describe '
 
   it_behaves_like "Check display on each invoice: legacy and alternative", false
   it_behaves_like "Check display on each invoice: legacy and alternative", true
+
+  describe "an order with taxes" do
+    let(:user1) { create(:user, enterprises: [distributor]) }
+    let!(:zone) { create(:zone_with_member) }
+    let(:address) { create(:address) }
+
+    context "included" do
+      let(:shipping_tax_rate_included) {
+        create(:tax_rate, amount: 0.20, included_in_price: true, zone: zone)
+      }
+      let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate_included]) }
+      let!(:shipping_method) {
+        create(:shipping_method_with, :expensive_name, distributors: [distributor],
+                                                       tax_category: shipping_tax_category)
+      }
+      let(:enterprise_fee) {
+        create(:enterprise_fee, enterprise: user1.enterprises.first,
+                                tax_category: product2.tax_category,
+                                calculator: Calculator::FlatRate.new(preferred_amount: 120.0))
+      }
+      let(:order_cycle) {
+        create(:simple_order_cycle, coordinator: distributor,
+                                    coordinator_fees: [enterprise_fee], distributors: [distributor],
+                                    variants: [product1.variants.first, product2.variants.first])
+      }
+
+      let(:order1) {
+        create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first,
+                       ship_address: address, bill_address: address)
+      }
+      let(:product1) {
+        create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0,
+                               included_in_price: true)
+      }
+      let(:product2) {
+        create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2,
+                               included_in_price: true)
+      }
+
+      let!(:line_item1) {
+        create(:line_item, variant: product1.variants.first, price: 12.54, quantity: 1,
+                           order: order1)
+      }
+      let!(:line_item2) {
+        create(:line_item, variant: product2.variants.first, price: 500.15, quantity: 3,
+                           order: order1)
+      }
+
+      before do
+        order1.reload
+        while !order1.delivery?
+          break if !order1.next!
+        end
+        order1.select_shipping_method(shipping_method.id)
+        order1.recreate_all_fees!
+        while !order1.payment?
+          break if !order1.next!
+        end
+
+        create(:payment, state: "checkout", order: order1, amount: order1.reload.total,
+                         payment_method: create(:payment_method, distributors: [distributor]))
+        while !order1.complete?
+          break if !order1.next!
+        end
+      end
+
+      context "legacy invoice" do
+        before do
+          allow(Spree::Config).to receive(:invoice_style2?).and_return(false)
+          login_as_admin_and_visit spree.print_admin_order_path(order1)
+          convert_pdf_to_page
+        end
+
+        it "displays $0.0 when a line item has no tax" do
+          pending "i) for legend see picture on PR #9495"
+          # first line item, no tax
+          expect(page).to have_content "#{Spree::Product.first.name} (1g) 1 $0.0 $12.54"
+        end
+
+        it "displays GST for enterprise fees" do
+          pending "ii) for legend see picture on PR #9495"
+          # enterprise fee of $20.00
+          expect(page).to have_content "Admin & Handling 1 $20.00 $120.00"
+        end
+
+        it "displays the taxes correctly" do
+          # header
+          expect(page).to have_content "Item Qty GST Price"
+          # second line item, included tax
+          expect(page).to have_content "#{Spree::Product.second.name} (1g) 3 $250.08 $1,500.45"
+          # Enterprise fee
+          expect(page).to have_content "Admin & Handling 1 $120.00"
+          # Shipping
+          expect(page).to have_content "Shipping 1 $16.76 (included) $100.55"
+          # Order Totals
+          expect(page).to have_content "GST Total: $286.84"
+          expect(page).to have_content "Total (Excl. tax): $1,446.70"
+          expect(page).to have_content "Total (Incl. tax): $1,733.54"
+        end
+      end
+
+      context "alternative invoice" do
+        before do
+          allow(Spree::Config).to receive(:invoice_style2?).and_return(true)
+          login_as_admin_and_visit spree.print_admin_order_path(order1)
+          convert_pdf_to_page
+        end
+
+        it "displays the taxes correctly" do
+          # header
+          expect(page).to have_content "Item Qty Unit price (Incl. tax)"
+          expect(page).to have_content "Total price (Incl. taTax rate"
+          # first line item, no tax
+          expect(page).to have_content Spree::Product.first.name.to_s
+          expect(page).to have_content "1 $12.54 $12.54 0.0% (1g)"
+          # second line item, included tax
+          expect(page).to have_content Spree::Product.second.name.to_s
+          expect(page).to have_content "3 $500.15 $1,500.45 20.0% (1g)"
+          # Enterprise fee
+          expect(page).to have_content "Admin & Handling $120.00"
+          # Shipping
+          expect(page).to have_content "Shipping $100.55 20.0%"
+          # Order Totals
+          expect(page).to have_content "Total (Incl. tax): $1,733.54"
+          expect(page).to have_content "Total tax (20.0%): $270.08"
+          expect(page).to have_content "Total (Excl. tax): $1,446.70"
+        end
+      end
+    end
+
+    context "added" do
+      let(:shipping_tax_rate_added) {
+        create(:tax_rate, amount: 0.20, included_in_price: false, zone: zone)
+      }
+      let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate_added]) }
+      let!(:shipping_method) {
+        create(:shipping_method_with, :expensive_name, distributors: [distributor],
+                                                       tax_category: shipping_tax_category)
+      }
+      let(:enterprise_fee) {
+        create(:enterprise_fee, enterprise: user1.enterprises.first,
+                                tax_category: product4.tax_category,
+                                calculator: Calculator::FlatRate.new(preferred_amount: 120.0))
+      }
+      let(:order_cycle2) {
+        create(:simple_order_cycle, coordinator: distributor,
+                                    coordinator_fees: [enterprise_fee], distributors: [distributor],
+                                    variants: [product3.variants.first, product4.variants.first])
+      }
+
+      let(:order2) {
+        create(:order, order_cycle: order_cycle2, distributor: user1.enterprises.first,
+                       ship_address: address, bill_address: address)
+      }
+      let(:product3) {
+        create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0,
+                               included_in_price: false)
+      }
+      let(:product4) {
+        create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2,
+                               included_in_price: false)
+      }
+
+      let!(:line_item3) {
+        create(:line_item, variant: product3.variants.first, price: 12.54, quantity: 1,
+                           order: order2)
+      }
+      let!(:line_item4) {
+        create(:line_item, variant: product4.variants.first, price: 500.15, quantity: 3,
+                           order: order2)
+      }
+
+      before do
+        order2.reload
+        while !order2.delivery?
+          break if !order2.next!
+        end
+        order2.select_shipping_method(shipping_method.id)
+        order2.recreate_all_fees!
+        while !order2.payment?
+          break if !order2.next!
+        end
+
+        create(:payment, state: "checkout", order: order2, amount: order2.reload.total,
+                         payment_method: create(:payment_method, distributors: [distributor]))
+        while !order2.complete?
+          break if !order2.next!
+        end
+      end
+
+      context "legacy invoice" do
+        before do
+          allow(Spree::Config).to receive(:invoice_style2?).and_return(false)
+          login_as_admin_and_visit spree.print_admin_order_path(order2)
+          convert_pdf_to_page
+        end
+        it "displays $0.0 when a line item has no tax" do
+          pending "iii) for legend see picture on PR #9495"
+          # first line item, no tax - display $0.0
+          expect(page).to have_content "#{Spree::Product.first.name} (1g) 1 $0.0 $12.54"
+        end
+
+        it "displays the added tax on the GST colum" do
+          pending "closing #7983, iv) for legend see picture on PR #9495"
+          # second line item, added tax of $300.09
+          expect(page).to have_content "#{Spree::Product.second.name} (1g) 3 $300.09 $1,500.45"
+        end
+
+        it "displays GST for enterprise fees" do
+          pending "v) for legend see picture on PR #9495"
+          # enterprise fee of $24.00
+          expect(page).to have_content "Admin & Handling 1 $20.00 $120.00"
+        end
+
+        it "displays the taxes correctly" do
+          # header
+          expect(page).to have_content "Item Qty GST Price"
+          # Enterprise fee
+          expect(page).to have_content "Admin & Handling 1 $120.00"
+          # Shipping
+          expect(page).to have_content "Shipping 1 $20.11 $100.55"
+          # Order Totals
+          expect(page).to have_content "GST Total: $344.20"
+          expect(page).to have_content "Total (Excl. tax): $1,733.54"
+          expect(page).to have_content "Total (Incl. tax): $2,077.74"
+        end
+      end
+
+      context "alternative invoice" do
+        before do
+          allow(Spree::Config).to receive(:invoice_style2?).and_return(true)
+          login_as_admin_and_visit spree.print_admin_order_path(order2)
+          convert_pdf_to_page
+        end
+        it "displays the taxes correctly" do
+          # header
+          expect(page).to have_content "Item Qty Unit price (Incl. tax)"
+          expect(page).to have_content "Total price (Incl. taTax rate"
+          # first line item, no tax
+          expect(page).to have_content "#{Spree::Product.first.name} 1 $12.54 $12.54 0.0% (1g)"
+          # second line item, included tax
+          expect(page).to have_content Spree::Product.second.name.to_s
+          expect(page).to have_content "3 $500.15 $1,500.45 20.0% (1g)"
+          # Enterprise fee
+          expect(page).to have_content "Admin & Handling $120.00"
+          # Shipping
+          expect(page).to have_content "Shipping $100.55 20.0%"
+          # Order Totals
+          expect(page).to have_content "Total (Incl. tax): $2,077.74"
+          expect(page).to have_content "Total tax (20.0%): $324.09"
+          expect(page).to have_content "Total (Excl. tax): $1,733.54"
+        end
+      end
+    end
+  end
 end
 
 def convert_pdf_to_page

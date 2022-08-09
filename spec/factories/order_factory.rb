@@ -182,6 +182,7 @@ FactoryBot.define do
       product_price { 0 }
       tax_rate_amount { 0 }
       tax_rate_name { "" }
+      included_in_price { "" }
       zone { create(:zone_with_member) }
     end
 
@@ -193,7 +194,8 @@ FactoryBot.define do
       product = FactoryBot.create(:taxed_product, zone: proxy.zone,
                                                   price: proxy.product_price,
                                                   tax_rate_amount: proxy.tax_rate_amount,
-                                                  tax_rate_name: proxy.tax_rate_name)
+                                                  tax_rate_name: proxy.tax_rate_name,
+                                                  included_in_price: proxy.included_in_price)
       FactoryBot.create(:line_item, order: order, product: product, price: product.price)
       order.reload
     end
