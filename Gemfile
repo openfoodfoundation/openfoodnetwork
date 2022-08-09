@@ -160,7 +160,6 @@ group :test, :development do
 end
 
 group :test do
-  gem 'byebug'
   gem 'pdf-reader'
   gem 'rails-controller-testing'
   gem 'simplecov', require: false
@@ -175,7 +174,6 @@ group :development do
   gem 'foreman'
   gem 'listen'
   gem 'pry', '~> 0.13.0'
-  gem 'pry-byebug', '~> 3.9.0'
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'spring'

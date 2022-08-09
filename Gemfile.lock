@@ -185,7 +185,6 @@ GEM
     bullet (7.0.2)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
-    byebug (11.1.3)
     cable_ready (5.0.0.pre3)
       rails (>= 5.2)
       thread-local (>= 1.1.0)
@@ -432,9 +431,6 @@ GEM
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    pry-byebug (3.9.0)
-      byebug (~> 11.0)
-      pry (~> 0.13.0)
     public_suffix (4.0.7)
     puma (5.6.4)
       nio4r (~> 2.0)
@@ -712,7 +708,6 @@ DEPENDENCIES
   bootsnap
   bugsnag
   bullet
-  byebug
   cable_ready (= 5.0.0.pre3)
   cancancan (~> 1.15.0)
   capybara
@@ -773,7 +768,6 @@ DEPENDENCIES
   pdf-reader
   pg (~> 1.2.3)
   pry (~> 0.13.0)
-  pry-byebug (~> 3.9.0)
   puma
   rack-mini-profiler (< 3.0.0)
   rack-rewrite
