@@ -162,7 +162,7 @@ module StripeStubs
 
   def list_customers_response_mock(options)
     { status: options[:code] || 200,
-      body: JSON.generate(has_more: false, data: [{ id: "cus_A456" }]) }
+      body: JSON.generate(object: "list", has_more: false, data: [{ id: "cus_A456" }]) }
   end
 
   def get_customer_payment_methods_response_mock(options)
@@ -170,7 +170,7 @@ module StripeStubs
     fingerprint = options[:fingerprint] || "7890"
     { status: options[:code] || 200,
       body: JSON.generate(
-        has_more: false, data: [{ id: payment_method, card: { fingerprint: fingerprint } }]
+        object: "list", has_more: false, data: [{ id: payment_method, card: { fingerprint: fingerprint } }]
       ) }
   end
 
