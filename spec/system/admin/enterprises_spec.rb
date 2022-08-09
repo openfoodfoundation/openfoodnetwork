@@ -108,7 +108,7 @@ describe '
     description_input = page.find("text-angular#enterprise_long_description div[id^='taTextElement']")
     description_input.native.send_keys('This is an interesting long description')
 
-    # Check Angularjs switching of sidebar elements
+    # Check StimulusJs switching of sidebar elements
     accept_alert do
       click_link "Primary Details"
     end
@@ -485,7 +485,7 @@ describe '
           end
           
           choose "enterprise_preferred_shopfront_product_sorting_method_by_category"
-          find("#s2id_autogen7").click
+          find("#s2id_enterprise_preferred_shopfront_taxon_order").click
           find(".select2-result-label", text: "Tricky Taxon").click
           click_button 'Update'
           expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
@@ -506,7 +506,7 @@ describe '
           end
           
           choose "enterprise_preferred_shopfront_product_sorting_method_by_producer"
-          find("#s2id_autogen8").click
+          find("#s2id_enterprise_preferred_shopfront_producer_order").click
           find(".select2-result-label", text: "First Supplier").click
           click_button 'Update'
           expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')

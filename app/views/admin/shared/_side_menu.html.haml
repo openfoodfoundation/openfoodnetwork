@@ -1,8 +1,6 @@
-.side_menu{ ng: { controller: 'sideMenuCtrl' } }
-  %a.menu_item{ href: "", id: "{{ item.name.toLowerCase().replace(' ', '_') }}",
-    ng: { repeat: '(index,item) in menu.items | filter:{visible:true}',
-    click: 'select(index)',
-    show: '!showItem || showItem(item)',
-    class: '{ selected: item.selected }' } }
-    %i{ class: "{{item.icon_class}}" }
-    %span {{ item.label }}
+.side_menu
+  - enterprise_side_menu_items(@enterprise).each do |item|
+  - next unless item[:show]
+    %a.menu_item{ href: item[:href] || "##{item[:name]}_panel", id: item[:name], data: { action: "tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab", "tabs-and-panels-target": "tab" }, class: item[:selected] }
+      %i{ class: item[:icon_class] }
+      %span= t("#{item[:name] }")
