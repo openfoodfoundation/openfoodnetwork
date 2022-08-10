@@ -187,6 +187,7 @@ en:
   cardholder_name: "Cardholder name"
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
+  additional_information: "Additional Information"
   devise:
     passwords:
       spree_user:
