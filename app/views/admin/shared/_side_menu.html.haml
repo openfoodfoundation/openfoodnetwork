@@ -1,4 +1,4 @@
-.side_menu
+.side_menu#side_menu
   - enterprise_side_menu_items(@enterprise).each do |item|
   - next unless item[:show]
     %a.menu_item{ href: item[:href] || "##{item[:name]}_panel", id: item[:name], data: { action: "tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab", "tabs-and-panels-target": "tab" }, class: item[:selected] }

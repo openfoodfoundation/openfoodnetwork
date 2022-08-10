@@ -1,7 +1,7 @@
 - enterprise_side_menu_items(@enterprise).each do |item|
   - case item[:name]
   - when 'primary_details'
-    %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { "tabs-and-panels-target": "panel default"  }}
+    %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { controller: "primary-details", "primary-details-primary-producer-value": @enterprise.is_primary_producer.to_s, "primary-details-enterprise-sells-value": @enterprise.sells, "tabs-and-panels-target": "panel default" }}
       %legend= t("#{ item[:name] }")
       = render "admin/enterprises/form/#{ item[:form_name] || item[:name] }", f: f
 
