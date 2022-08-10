@@ -36,6 +36,7 @@
   "license": "AGPL-3.0",
   "dependencies": {
     "@babel/preset-env": "^7.18.2",
+    "@floating-ui/dom": "^1.0.1",
     "@hotwired/turbo": "^7.1.0",
     "@rails/webpacker": "5.4.3",
     "babel-loader": "^8.2.3",
