@@ -1,6 +1,13 @@
 .side_menu#side_menu
-  - enterprise_side_menu_items(@enterprise).each do |item|
-  - next unless item[:show]
-    %a.menu_item{ href: item[:href] || "##{item[:name]}_panel", id: item[:name], data: { action: "tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab", "tabs-and-panels-target": "tab" }, class: item[:selected] }
-      %i{ class: item[:icon_class] }
-      %span= t("#{item[:name] }")
+  - if @enterprise
+    - enterprise_side_menu_items(@enterprise).each do |item|
+    - next unless item[:show]
+      %a.menu_item{ href: item[:href] || "##{item[:name]}_panel", id: item[:name], data: { action: "tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab", "tabs-and-panels-target": "tab" }, class: item[:selected] }
+        %i{ class: item[:icon_class] }
+        %span= t("#{item[:name] }")
+  - else
+    - enterprise_group_side_menu_items.each do |item|
+      %a.menu_item{ href: "##{item[:name]}_panel", class: item[:selected], id: item[:name], data: { action: "tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab", "tabs-and-panels-target": "tab" } }
+        %i{ class: item[:icon_class] }
+        %span= t("#{item[:label] }")
+
