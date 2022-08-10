@@ -37,8 +37,8 @@ describe "As a consumer, I want to see adjustment breakdown" do
                                 coordinator: distributor, variants: [variant_with_tax])
   }
   let!(:free_shipping) {
-    create(:shipping_method, distributors: [distributor], require_ship_address: false,
-                             name: "Pick-up", description: "Payment without fee",
+    create(:shipping_method, distributors: [distributor], require_ship_address: true,
+                             name: "Delivery", description: "Payment without fee",
                              calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
   let!(:free_payment) {
@@ -125,36 +125,34 @@ describe "As a consumer, I want to see adjustment breakdown" do
         it "will be charged tax on the order" do
           visit checkout_step_path(:details)
 
-          choose "Pick-up"
+          choose "Delivery"
 
           click_button "Next - Payment method"
           click_on "Next - Order summary"
           click_on "Complete order"
 
+          # UI checks
+          expect(page).to have_content("Confirmed")
           expect(page).to have_selector('#order_total', text: with_currency(10.00))
           expect(page).to have_selector('#tax-row', text: with_currency(1.15))
-
-          # views confirmation page
-          expect(page).to have_content("Confirmed")
 
           # DB checks
           assert_db_tax
         end
+
+        after { logout }
       end
     end
 
     describe "for a customer with shipping address outside the tax zone" do
       context "on legacy checkout" do
         before do
-          order_within_zone.reload
-          order_within_zone.save
           set_order order_outside_zone
           login_as(user_outside_zone)
         end
 
         it "will not be charged tax on the order" do
-          pending("WIP")
-
+          pending("#7540")
           visit checkout_path
 
           find(:xpath, '//*[@id="shipping"]/ng-form/dd').click
@@ -187,24 +185,27 @@ describe "As a consumer, I want to see adjustment breakdown" do
         end
 
         it "will not be charged tax on the order" do
-          pending("WIP")
+          pending("#7540")
           visit checkout_step_path(:details)
 
-          choose "Pick-up"
+          choose "Delivery"
+          check "order_save_bill_address"
+          check "ship_address_same_as_billing"
 
           click_button "Next - Payment method"
           click_on "Next - Order summary"
           click_on "Complete order"
 
+          # UI checks
+          expect(page).to have_content("Confirmed")
           expect(page).to have_selector('#order_total', text: with_currency(10.00))
           expect(page).not_to have_content("includes tax")
-
-          # views confirmation page
-          expect(page).to have_content("Confirmed")
 
           # DB checks
           assert_db_no_tax
         end
+
+        after { logout }
       end
     end
   end
@@ -214,18 +215,12 @@ private
 
 def assert_db_tax
   order_within_zone.reload
-
-  if tax_rate.included_in_price?
-    expect(order_within_zone.included_tax_total).to eq(1.15)
-    expect(order_within_zone.additional_tax_total).to eq(0.0)
-  else
-    expect(order_within_zone.included_tax_total).to eq(0.0)
-  end
+  expect(order_within_zone.included_tax_total).to eq(1.15)
+  expect(order_within_zone.additional_tax_total).to eq(0.0)
 end
 
 def assert_db_no_tax
   order_outside_zone.reload
-
   expect(order_outside_zone.included_tax_total).to eq(0.0)
   expect(order_outside_zone.additional_tax_total).to eq(0.0)
 end
