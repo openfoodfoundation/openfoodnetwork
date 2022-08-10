@@ -107,13 +107,14 @@ describe "As a consumer, I want to see adjustment breakdown" do
           end
 
           click_on "Place order now"
+          
+          # DB checks
+          assert_db_tax
 
           # UI checks
           expect(page).to have_selector('#order_total', text: with_currency(11.30))
           expect(page).to have_selector('#tax-row', text: with_currency(1.30))
 
-          # DB checks
-          assert_db_tax
         end
 
         after { logout }
@@ -136,15 +137,15 @@ describe "As a consumer, I want to see adjustment breakdown" do
           click_button "Next - Payment method"
           click_on "Next - Order summary"
           click_on "Complete order"
+          
+          # DB checks
+          assert_db_tax
 
+          # UI checks
+          expect(page).to have_content("Confirmed")
           expect(page).to have_selector('#order_total', text: with_currency(11.30))
           expect(page).to have_selector('#tax-row', text: with_currency(1.30))
 
-          # views confirmation page
-          expect(page).to have_content("Confirmed")
-
-          # DB checks
-          assert_db_tax
         end
       end
     end
@@ -168,12 +169,13 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
           click_on "Place order now"
 
-          # UI checks
-          expect(page).to have_selector('#order_total', text: with_currency(10.00))
-          expect(page).not_to have_content("includes tax")
-
           # DB checks
           assert_db_no_tax
+
+          # UI checks
+          expect(page).to have_content("Confirmed")
+          expect(page).to have_selector('#order_total', text: with_currency(10.00))
+          expect(page).not_to have_content("includes tax")
         end
 
         after { logout }
@@ -197,31 +199,13 @@ describe "As a consumer, I want to see adjustment breakdown" do
           click_on "Next - Order summary"
           click_on "Complete order"
 
-          expect(page).to have_selector('#order_total', text: with_currency(10.00))
-          expect(page).not_to have_content("includes tax")
-
-          # views confirmation page
-          expect(page).to have_content("Confirmed")
-
           # DB checks
           assert_db_no_tax
-        end
-      end
 
-      context "reproducing issues #9131 and #9153" do
-        before do
-          allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
-          allow(Flipper).to receive(:enabled?).with(:split_checkout, anything).and_return(true)
-
-          set_order order_outside_zone
-          login_as(user_outside_zone)
-        end
-
-        # reproducing bug #9131
-        context "redirection to /summary page with no shipping method selected" do
-          it "fails to render the /summary page" do
-            visit checkout_step_path(:summary)
-          end
+          # UI checks
+          expect(page).to have_content("Confirmed")
+          expect(page).to have_selector('#order_total', text: with_currency(10.00))
+          expect(page).not_to have_content("includes tax")
         end
 
         # reproducing bug #9153
@@ -260,15 +244,13 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
             click_on "Complete order"
 
-            # Order confirmation page should reflect changes
+            # DB checks
+            assert_db_tax
+
+            # UI checks - Order confirmation page should reflect changes
+            expect(page).to have_content("Confirmed")
             expect(page).to have_selector('#order_total', text: with_currency(11.30))
             expect(page).to have_selector('#tax-row', text: with_currency(1.30))
-
-            # views confirmation page
-            expect(page).to have_content("Confirmed")
-
-            # DB checks
-            assert_db_no_tax
           end
         end
       end
