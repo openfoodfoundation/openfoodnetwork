@@ -25,6 +25,8 @@ require_relative '../lib/spree/core/environment'
 require_relative '../lib/spree/core/mail_interceptor'
 require_relative "../lib/session_cookie_upgrader"
 
+require "view_component/compiler"
+
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
   Bundler.require(*Rails.groups(:assets => %w(development test)))
