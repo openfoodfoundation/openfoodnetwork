@@ -107,7 +107,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
           expect(page).to have_selector('#tax-row', text: with_currency(1.15))
 
           # DB checks
-          assert_db_tax
+          assert_db_tax_incl
         end
 
         after { logout }
@@ -137,7 +137,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
           expect(page).to have_selector('#tax-row', text: with_currency(1.15))
 
           # DB checks
-          assert_db_tax
+          assert_db_tax_incl
         end
 
         after { logout }
@@ -169,7 +169,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
           expect(page).not_to have_content("includes tax")
 
           # DB checks
-          assert_db_no_tax
+          assert_db_no_tax_incl
         end
 
         after { logout }
@@ -202,7 +202,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
           expect(page).not_to have_content("includes tax")
 
           # DB checks
-          assert_db_no_tax
+          assert_db_no_tax_incl
         end
 
         after { logout }
@@ -213,13 +213,13 @@ end
 
 private
 
-def assert_db_tax
+def assert_db_tax_incl
   order_within_zone.reload
   expect(order_within_zone.included_tax_total).to eq(1.15)
   expect(order_within_zone.additional_tax_total).to eq(0.0)
 end
 
-def assert_db_no_tax
+def assert_db_no_tax_incl
   order_outside_zone.reload
   expect(order_outside_zone.included_tax_total).to eq(0.0)
   expect(order_outside_zone.additional_tax_total).to eq(0.0)
