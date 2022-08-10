@@ -37,8 +37,8 @@ describe "As a consumer, I want to see adjustment breakdown" do
                                 coordinator: distributor, variants: [variant_with_tax])
   }
   let!(:free_shipping) {
-    create(:shipping_method, distributors: [distributor], require_ship_address: false,
-                             name: "Pick-up", description: "Payment without fee",
+    create(:shipping_method, distributors: [distributor], require_ship_address: true,
+                             name: "Delivery", description: "Payment without fee",
                              calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
   let!(:free_payment) {
@@ -107,14 +107,13 @@ describe "As a consumer, I want to see adjustment breakdown" do
           end
 
           click_on "Place order now"
-          
+
           # DB checks
           assert_db_tax
 
           # UI checks
           expect(page).to have_selector('#order_total', text: with_currency(11.30))
           expect(page).to have_selector('#tax-row', text: with_currency(1.30))
-
         end
 
         after { logout }
@@ -132,12 +131,12 @@ describe "As a consumer, I want to see adjustment breakdown" do
         it "will be charged tax on the order" do
           visit checkout_step_path(:details)
 
-          choose "Pick-up"
+          choose "Delivery"
 
           click_button "Next - Payment method"
           click_on "Next - Order summary"
           click_on "Complete order"
-          
+
           # DB checks
           assert_db_tax
 
@@ -145,7 +144,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
           expect(page).to have_content("Confirmed")
           expect(page).to have_selector('#order_total', text: with_currency(11.30))
           expect(page).to have_selector('#tax-row', text: with_currency(1.30))
-
         end
       end
     end
@@ -193,7 +191,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
         it "will not be charged tax on the order" do
           visit checkout_step_path(:details)
 
-          choose "Pick-up"
+          choose "Delivery"
 
           click_button "Next - Payment method"
           click_on "Next - Order summary"
@@ -212,7 +210,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
         context "changing the address on the /details step" do
           before do
             visit checkout_step_path(:details)
-            choose "Pick-up"
+            choose "Delivery"
 
             click_button "Next - Payment method"
             click_on "Next - Order summary"
@@ -230,13 +228,12 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
             # it should not be necessary to save as new default bill address
             check "order_save_bill_address"
+            check "ship_address_same_as_billing"
 
-            choose "Pick-up"
+            choose "Delivery"
             click_button "Next - Payment method"
 
             click_on "Next - Order summary"
-
-            # bill address should have state Victoria
 
             # Summary step should reflect changes
             expect(page).to have_selector('#order_total', text: with_currency(11.30))
