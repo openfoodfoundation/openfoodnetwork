@@ -262,18 +262,12 @@ private
 
 def assert_db_tax
   order_within_zone.reload
-
-  if tax_rate.included_in_price?
-    expect(order_within_zone.additional_tax_total).to eq(0.0)
-  else
-    expect(order_within_zone.included_tax_total).to eq(0.0)
-    expect(order_within_zone.additional_tax_total).to eq(1.3)
-  end
+  expect(order_outside_zone.included_tax_total).to eq(0.0)
+  expect(order_within_zone.additional_tax_total).to eq(1.3)
 end
 
 def assert_db_no_tax
   order_outside_zone.reload
-
   expect(order_outside_zone.included_tax_total).to eq(0.0)
   expect(order_outside_zone.additional_tax_total).to eq(0.0)
 end
