@@ -4238,6 +4238,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       authorised_shops:
         shop_name: "Shop Name"
         allow_charges?: "Allow Charges to Default Card?"
+        no_default_saved_cards_tooltip: You need to mark one credit card as default to allow charges.
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
     api:
