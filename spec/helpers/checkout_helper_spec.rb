@@ -131,7 +131,7 @@ describe CheckoutHelper, type: :helper do
     let(:enterprise_fee) { create(:enterprise_fee, amount: 123) }
     let!(:fee_adjustment) {
       create(:adjustment, originator: enterprise_fee, adjustable: order,
-                          order: order)
+                          order: order, label: "Enterprise Fee")
     }
 
     before do
@@ -148,7 +148,7 @@ describe CheckoutHelper, type: :helper do
       expect(adjustments).to include shipping_adjustment
 
       admin_fee_summary = adjustments.reject { |a| a.id == shipping_adjustment.id }.first
-      expect(admin_fee_summary.label).to eq "Shipping"
+      expect(admin_fee_summary.label).to eq "Enterprise Fee"
       expect(admin_fee_summary.amount).to eq 123
     end
 
