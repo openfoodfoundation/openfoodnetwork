@@ -553,6 +553,8 @@ de_DE:
         guest_label: "Gasteinkauf"
         credit_owed: "Geschuldetes Guthaben"
         balance_due: "Offener Betrag"
+      destroy:
+        has_associated_subscriptions: "Löschen fehlgeschlagen: Dieser Kunde hat aktive Abonnements. Bitte kündigen Sie diese zuerst."
     contents:
       edit:
         title: Inhalt

@@ -553,6 +553,8 @@ en_FR:
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
+      destroy:
+        has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
     contents:
       edit:
         title: Content

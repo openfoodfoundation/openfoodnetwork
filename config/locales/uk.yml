@@ -553,8 +553,6 @@ uk:
         guest_label: "Реєстрація гостя"
         credit_owed: "Кредитна заборгованість"
         balance_due: "Баланс через"
-      destroy:
-        has_associated_orders: "Не вдалося видалити: клієнт пов’язав замовлення зі своїм магазином"
     contents:
       edit:
         title: Контент
@@ -4103,7 +4101,8 @@ uk:
         items: Одиниці
         total: Всього
         paid?: Заплачено?
-        view: Переглянути
+        status: Статус
+        cancelled: Скасовано
       saved_cards:
         default?: За замовчуванням?
         delete?: Видалити?

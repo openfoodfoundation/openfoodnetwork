@@ -553,6 +553,8 @@ fr:
         guest_label: "Commande en mode invité"
         credit_owed: "Crédit dû"
         balance_due: "Solde dû"
+      destroy:
+        has_associated_subscriptions: "La suppression a planté : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
     contents:
       edit:
         title: Contenu
@@ -885,10 +887,10 @@ fr:
           sells: Produits vendus
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
           visible_in_search: Apparaît sur la plateforme?
-          visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de CoopCircuits et la liste des boutiques. <br /> 2. Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
+          visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de CoopCircuits, la liste des boutiques et les profils boutiques et producteurs. <br /> 2. Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
           visible: Visible par tous
-          not_visible: Invisible
-          hidden: Masquer toutes les références
+          not_visible: Cachée
+          hidden: Invisible
           permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre boutique: %{link}ma-boutique/shop"
           link_to_front: Lien URL de la boutique
@@ -1108,9 +1110,9 @@ fr:
         incoming: "2. Produits entrants"
         outgoing: "3. Produits vendus (sortants)"
       exchange_form:
-        pickup_time_tip: Quand des commandes liées à ce cycle de vente seront prêtes à être soumises à l'acheteur
+        pickup_time_tip: 'Indiquez quand les commandes seront prêtes. Ce texte sera affiché sur votre boutique dans l''encart bleu "Prêt pour : _______"'
         pickup_instructions_placeholder: "Modalités de retrait/livraison"
-        pickup_instructions_tip: Ces instructions sont affichées aux acheteurs après passage d'une commande
+        pickup_instructions_tip: Ces instructions sont affichées aux acheteurs sur leur confirmation de commande
         pickup_time_placeholder: "Prêt pour (ex : jour + créneau horaire)"
         receival_instructions_placeholder: "Modalités de livraison"
         add_fee: 'Ajouter une commission'
@@ -1283,8 +1285,8 @@ fr:
         on_screen: "A l'écran"
         spreadsheet: "Tableur (Excel, LibreOffice,...)"
         display: Afficher
-        summary_row: Ligne TOTAL
-        header_row: Ligne titre
+        summary_row: Ligne total produits commandés
+        header_row: Ligne d'en-tête (nom client·e)
         raw_data: Données brutes
         formatted_data: Données formatées
       packing:
@@ -3056,7 +3058,7 @@ fr:
         min_quantity: "Quantité min"
         max_quantity: "Quantité max"
       price_breakdown: "Détail du prix"
-      unit_price_tooltip: "Il s'agit du prix unitaire de ce produit. Il permet à l'acheteur de comparer les prix quelque soit le conditionnement final du produit."
+      unit_price_tooltip: "Il s'agit du prix unitaire de ce produit. Il permet à l'acheteur de comparer les prix quel que soit le conditionnement final du produit."
     variants:
       on_demand:
         'yes': "A volonté"
