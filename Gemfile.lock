@@ -101,7 +101,7 @@ GEM
     activejob (6.1.6.1)
       activesupport (= 6.1.6.1)
       globalid (>= 0.3.6)
-    activemerchant (1.123.0)
+    activemerchant (1.126.0)
       activesupport (>= 4.2)
       builder (>= 2.1.2, < 4.0.0)
       i18n (>= 0.6.9)
