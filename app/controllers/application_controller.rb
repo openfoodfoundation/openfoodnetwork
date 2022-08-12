@@ -165,8 +165,9 @@ class ApplicationController < ActionController::Base
     return unless current_spree_user.disabled
 
     flash[:success] = nil
-    flash.now[:error] = I18n.t("devise.failure.disabled")
+    flash[:error] = I18n.t("devise.failure.disabled")
     sign_out current_spree_user
+    redirect_to main_app.root_path
   end
 end
 
