@@ -44,13 +44,6 @@ $(document).ready(function() {
   // Show the input field to edit the tracking info
   // And hide the input field when cancel is clicked
 
-  saveTrackingInfo = function(){
-    let shipmentNumber = $(this).data('shipment-number');
-    let tracking = document.getElementById('tracking').value
-
-    makeApiCall(trackingUrl(shipmentNumber), { shipment: { tracking: tracking } } )
-  }
-
   deleteTrackingInfo = function(){
     let shipmentNumber = $(this).data('shipment-number');
     let tracking = ''
@@ -62,7 +55,6 @@ $(document).ready(function() {
     return Spree.url( Spree.routes.orders_api + "/" + order_number + "/shipments/" + shipmentNumber + ".json");
   }
 
-  $('[data-hook=admin_order_edit_form] a.save-tracking').click(saveTrackingInfo);
   $('[data-hook=admin_order_edit_form] a.delete-tracking').click(deleteTrackingInfo);
 
   confirmDelete = function(url, params){

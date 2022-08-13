@@ -1,7 +1,7 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static values = { orderNumber: String };
+  static values = { orderNumber: String, shipmentNumber: String };
   static targets = ["editor", "editField", "resourceDisplayer"];
 
   showEditor() {
@@ -41,7 +41,11 @@ export default class extends Controller {
   }
 
   params(data) {
-    return { note: data };
+    if (this.shipmentNumberValue) {
+      return { shipment: { tracking: data } };
+    } else {
+      return { note: data };
+    }
   }
 
   confirmRemove(params) {
@@ -71,6 +75,17 @@ export default class extends Controller {
   }
 
   get url() {
-    return Spree.url(Spree.routes.orders_api + "/" + this.orderNumberValue);
+    if (this.shipmentNumberValue) {
+      return Spree.url(
+        Spree.routes.orders_api +
+          "/" +
+          this.orderNumberValue +
+          "/shipments/" +
+          this.shipmentNumberValue +
+          ".json"
+      );
+    } else {
+      return Spree.url(Spree.routes.orders_api + "/" + this.orderNumberValue);
+    }
   }
 }

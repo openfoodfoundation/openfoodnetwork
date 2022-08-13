@@ -10,7 +10,7 @@
         = "-"
         = link_to t(:ship), '#', :class => 'ship button icon-arrow-right', :data => { 'shipment-number' => shipment.number }
 
-  %table.stock-contents.index{ "data-hook" => "stock-contents", "data-controller": "order-info" }
+  %table.stock-contents.index{ "data-hook" => "stock-contents", "data-controller": "order-info", "data-order-info-order-number-value": order.number, "data-order-info-shipment-number-value": shipment.number }
     %colgroup
       %col{ :style => "width: 10%;" }
       %col{ :style => "width: 30%;" }
@@ -70,7 +70,7 @@
 
         %td.actions
           - if can?(:update, shipment) && !shipment.canceled?
-            = link_to '', '', :class => 'save-tracking icon_link icon-ok no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'save' }, :title => I18n.t('actions.save')
+            = link_to '', '', :class => 'save-tracking icon_link icon-ok no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'save order-info#save' }, :title => I18n.t('actions.save')
             = link_to '', '', :class => 'cancel-tracking icon_link icon-cancel no-text with-tip', :data => { :action => 'cancel order-info#hideEditor' }, :title => I18n.t('actions.cancel')
 
       %tr.show-tracking.total{ data: { "order-info-target": "resourceDisplayer" }}
