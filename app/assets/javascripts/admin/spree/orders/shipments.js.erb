@@ -69,11 +69,6 @@ $(document).ready(function() {
 
   // handle note edit/delete
 
-  saveNote = function(){
-    let note = document.getElementById('note').value
-    makeApiCall(getNoteUrl(), { note: note })
-  }
-
   deleteNote = function(){
     let note = ''
     confirmDelete(getNoteUrl(), { note: note })
@@ -91,7 +86,6 @@ $(document).ready(function() {
     }); 
   }
 
-  $('[data-hook=admin_order_edit_form] a.save-note').click(saveNote);
   $('[data-hook=admin_order_edit_form] a.delete-note').click(deleteNote);
 
   // Makes API call for notes/tracking info
