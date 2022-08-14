@@ -13,8 +13,6 @@ describe "enterpriseCtrl", ->
       sells: "none"
       owner:
         id: 98
-    PaymentMethods =
-      paymentMethods: "payment methods"
     receivesNotifications = 99
 
     inject ($rootScope, $controller, _Enterprises_, _StatusMessage_) ->
@@ -26,9 +24,6 @@ describe "enterpriseCtrl", ->
   describe "initialisation", ->
     it "stores enterprise", ->
       expect(scope.Enterprise).toEqual enterprise
-
-    it "stores payment methods", ->
-      expect(scope.PaymentMethods).toBe PaymentMethods.paymentMethods
 
   describe "removing logo", ->
     deferred = null
