@@ -1,7 +1,13 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static values = { orderNumber: String, shipmentNumber: String };
+  static values = {
+    orderNumber: String,
+    shipmentNumber: String,
+    message: String,
+    confirm: String,
+    cancel: String
+  };
   static targets = ["editor", "editField", "resourceDisplayer"];
 
   showEditor() {
@@ -58,6 +64,18 @@ export default class extends Controller {
 
   displayAlert(callback) {
     let alertBox = document.querySelector("#custom-confirm");
+
+    let btnContainer = alertBox.querySelector(".action-buttons");
+    btnContainer.innerHTML = "";
+    btnContainer.innerHTML = `<button class='cancel'> ${this.cancelValue} </button> <button class='confirm red'> ${this.confirmValue} </button>`;
+
+    let form = alertBox.querySelector(".message .form");
+    if (form) {
+      let message = alertBox.querySelector(".message");
+      form.innerHTML = "";
+      message.textContent = this.messageValue;
+    }
+
     let cancelBtn = alertBox.querySelector("button.cancel");
     let confirmBtn = alertBox.querySelector("button.confirm");
 

@@ -1,4 +1,4 @@
-%table.index.edit-note-table{ data: { controller: "order-info", "order-info-order-number-value": order.number  }}
+%table.index.edit-note-table{ data: { controller: "order-info", "order-info-order-number-value": order.number, "order-info-message-value": t('are_you_sure'), "order-info-confirm-value": t('confirm'), "order-info-cancel-value": t('cancel')  }}
   %tr.edit-note.hidden.total{ data: { controller: "toggle-class", "order-info-target": "editor", "toggle-class-target": "mark" }}
     %td{ colspan: "5", data: { controller: "input-char-count" }, style: "position: relative;" }
       %label

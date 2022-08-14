@@ -10,7 +10,7 @@
         = "-"
         = link_to t(:ship), '#', :class => 'ship button icon-arrow-right', :data => { 'shipment-number' => shipment.number }
 
-  %table.stock-contents.index{ "data-hook" => "stock-contents", "data-controller": "order-info", "data-order-info-order-number-value": order.number, "data-order-info-shipment-number-value": shipment.number }
+  %table.stock-contents.index{ "data-hook" => "stock-contents", "data-controller": "order-info", "data-order-info-order-number-value": order.number, "data-order-info-shipment-number-value": shipment.number, "data-order-info-message-value": t('are_you_sure'), "data-order-info-confirm-value": t('confirm'), "data-order-info-cancel-value": t('cancel') }
     %colgroup
       %col{ :style => "width: 10%;" }
       %col{ :style => "width: 30%;" }
