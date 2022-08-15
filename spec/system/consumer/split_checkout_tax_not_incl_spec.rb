@@ -247,18 +247,18 @@ describe "As a consumer, I want to see adjustment breakdown" do
       end
     end
   end
-end
 
-private
+  private
 
-def assert_db_tax_added
-  order_within_zone.reload
-  expect(order_outside_zone.included_tax_total).to eq(0.0)
-  expect(order_within_zone.additional_tax_total).to eq(1.3)
-end
+  def assert_db_tax_added
+    order_within_zone.reload
+    expect(order_outside_zone.included_tax_total).to eq(0.0)
+    expect(order_within_zone.additional_tax_total).to eq(1.3)
+  end
 
-def assert_db_no_tax_added
-  order_outside_zone.reload
-  expect(order_outside_zone.included_tax_total).to eq(0.0)
-  expect(order_outside_zone.additional_tax_total).to eq(0.0)
+  def assert_db_no_tax_added
+    order_outside_zone.reload
+    expect(order_outside_zone.included_tax_total).to eq(0.0)
+    expect(order_outside_zone.additional_tax_total).to eq(0.0)
+  end
 end
