@@ -79,8 +79,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
         visit "/admin/tax_rates/#{tax_rate.id}/edit"
         expect(page).to have_field('tax_rate_included_in_price', checked: true)
       end
-
-      after { logout }
     end
 
     describe "for a customer with shipping address within the tax zone" do
@@ -109,8 +107,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
           # DB checks
           assert_db_tax_incl
         end
-
-        after { logout }
       end
 
       context "on split-checkout" do
@@ -139,8 +135,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
           # DB checks
           assert_db_tax_incl
         end
-
-        after { logout }
       end
     end
 
@@ -171,8 +165,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
           # DB checks
           assert_db_no_tax_incl
         end
-
-        after { logout }
       end
 
       context "on split-checkout" do
@@ -204,8 +196,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
           # DB checks
           assert_db_no_tax_incl
         end
-
-        after { logout }
       end
     end
   end

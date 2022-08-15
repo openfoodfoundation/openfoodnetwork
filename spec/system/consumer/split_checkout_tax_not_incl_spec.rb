@@ -85,8 +85,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
         visit "/admin/tax_rates/#{tax_rate.id}/edit"
         expect(page).to have_field('tax_rate_included_in_price', checked: false)
       end
-
-      after { logout }
     end
 
     describe "for a customer with shipping address within the tax zone" do
@@ -115,8 +113,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
           expect(page).to have_selector('#order_total', text: with_currency(11.30))
           expect(page).to have_selector('#tax-row', text: with_currency(1.30))
         end
-
-        after { logout }
       end
 
       context "on split-checkout" do
@@ -145,8 +141,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
           expect(page).to have_selector('#order_total', text: with_currency(11.30))
           expect(page).to have_selector('#tax-row', text: with_currency(1.30))
         end
-
-        after { logout }
       end
     end
 
@@ -177,8 +171,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
           expect(page).to have_selector('#order_total', text: with_currency(10.00))
           expect(page).not_to have_content("includes tax")
         end
-
-        after { logout }
       end
 
       context "on split-checkout" do
@@ -251,8 +243,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
             expect(page).to have_selector('#order_total', text: with_currency(11.30))
             expect(page).to have_selector('#tax-row', text: with_currency(1.30))
           end
-
-          after { logout }
         end
       end
     end
