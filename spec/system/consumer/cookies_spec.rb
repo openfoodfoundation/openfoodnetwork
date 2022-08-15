@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'system_helper'
 
-feature "Cookies", js: true do
+describe "Cookies", js: true do
   describe "banner" do
     # keeps banner toggle config unchanged
     around do |example|
