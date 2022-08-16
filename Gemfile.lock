@@ -762,6 +762,7 @@ DEPENDENCIES
   rack-mini-profiler (< 3.0.0)
   rack-rewrite
   rack-ssl
+  rack-test (~> 2.0.2)
   rack-timeout
   rails (>= 6.1.4)
   rails-controller-testing

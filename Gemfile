@@ -163,6 +163,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'test-prof'
   gem 'webmock'
+  gem 'rack-test', '~> 2.0.2'
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'
 end
