@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
+require "rack/test"
 require "system_helper"
 
 describe '
     As an administrator
     I want to print a invoice as PDF
-', js: false do
+', type: :rack do
+  
   include WebHelper
   include AuthenticationHelper
+
 
   let(:user) { create(:user) }
   let(:product) { create(:simple_product) }

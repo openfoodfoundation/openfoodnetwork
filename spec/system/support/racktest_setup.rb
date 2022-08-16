@@ -15,9 +15,6 @@ Capybara.register_driver(:rack) do |app|
   )
 end
 
-# Configure Capybara to use :cuprite driver by default
-Capybara.default_driver = :rack
-
 RSpec.configure do |config|
   config.include Rack::Test::Methods
 end
