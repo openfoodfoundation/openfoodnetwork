@@ -7,19 +7,27 @@
       .omega.fourteen.columns
         = select_tag(:report_subtype, options_for_select(@report_subtypes, @report_subtype))  
 
+.row.rendering-options{ "data-controller": "csv-select" }
+  .alpha.two.columns
+    = label_tag :report_format, t(".generate_report")
+  .omega.fourteen.columns{ style: "margin-bottom: 1.5em;" }
+    = select_tag :report_format, grouped_options_for_select({ |
+      t('.formatted_data') => { t('.on_screen') => '', "PDF" => 'pdf', t('.spreadsheet') => 'xlsx' }, |
+      t('.raw_data') => { "CSV" => 'csv' }, |
+    }), { "data-csv-select-target": "reportType", "data-action": "csv-select#handleSelectChange" }
 
-- if @report.header_option? || @report.summary_row_option?
-  .row
-    .alpha.two.columns= label_tag nil, t(".display")
-    .omega.fourteen.columns
-      - if @report.header_option?
-        %span.inline-checkbox{ style: "margin-right: 1rem;" }
-          = check_box_tag :display_header_row, true, params[:display_header_row]
-          = label_tag :display_header_row, t(".header_row")
-      - if @report.summary_row_option?
-        %span.inline-checkbox
-          = check_box_tag :display_summary_row, true, params[:display_summary_row]
-          = label_tag :display_summary_row, t(".summary_row")
+  - if @report.header_option? || @report.summary_row_option?
+    .row
+      .alpha.two.columns= label_tag nil, t(".display")
+      .omega.fourteen.columns
+        - if @report.header_option?
+          %span.inline-checkbox{ style: "margin-right: 1rem;" }
+            = check_box_tag :display_header_row, true, params[:display_header_row]
+            = label_tag :display_header_row, t(".header_row")
+        - if @report.summary_row_option?
+          %span.inline-checkbox
+            = check_box_tag :display_summary_row, true, params[:display_summary_row], { "data-csv-select-target": "checkbox" }
+            = label_tag :display_summary_row, t(".summary_row"), { "data-csv-select-target": "label" }
 
 - if @report.available_headers.present?
   .row
@@ -33,14 +41,3 @@
       .omega.fourteen.columns
         = select_tag(:fields_to_hide, options_for_select(@report.available_headers, params[:fields_to_hide]),
                     class: "select2 fullwidth", multiple: true)
-
-.row.rendering-options
-  .alpha.two.columns
-    = label_tag :report_format, t(".generate_report")
-  .omega.fourteen.columns
-    = select_tag :report_format, grouped_options_for_select({ |
-      t('.formatted_data') => { t('.on_screen') => '', "PDF" => 'pdf', t('.spreadsheet') => 'xlsx' }, |
-      t('.raw_data') => { "CSV" => 'csv' }, |
-    })
-
-
