@@ -41,6 +41,7 @@ Metrics/BlockLength:
     "resources",
     "scenario",
     "shared_examples",
+    "xdescribe",
   ]
 
 Rails/SkipsModelValidations:

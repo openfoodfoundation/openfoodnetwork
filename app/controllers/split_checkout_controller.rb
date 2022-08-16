@@ -21,6 +21,7 @@ class SplitCheckoutController < ::BaseController
 
   def edit
     redirect_to_step_based_on_order unless params[:step]
+    check_step if params[:step]
   end
 
   def update
@@ -144,5 +145,14 @@ class SplitCheckoutController < ::BaseController
       return redirect_to checkout_step_path(:summary)
     end
     redirect_to_step_based_on_order
+  end
+
+  def check_step
+    case @order.state
+    when "cart", "address", "delivery"
+      redirect_to checkout_step_path(:details) unless params[:step] == "details"
+    when "payment"
+      redirect_to checkout_step_path(:payment) if params[:step] == "summary"
+    end
   end
 end

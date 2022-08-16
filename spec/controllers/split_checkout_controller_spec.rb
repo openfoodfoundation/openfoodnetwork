@@ -43,6 +43,34 @@ describe SplitCheckoutController, type: :controller do
         expect(response).to redirect_to cart_path
       end
     end
+
+    context "when the given `step` params is inconsistent with the current order state" do
+      context "when order state is `cart`" do
+        before do
+          order.update!(state: "cart")
+        end
+
+        it "redirects to the valid step if params is `payment`" do
+          get :edit, params: { step: "payment" }
+          expect(response).to redirect_to checkout_step_path(:details)
+        end
+        it "redirects to the valid step if params is `summary`" do
+          get :edit, params: { step: "summary" }
+          expect(response).to redirect_to checkout_step_path(:details)
+        end
+      end
+
+      context "when order state is `payment`" do
+        before do
+          order.update!(state: "payment")
+        end
+
+        it "redirects to the valid step if params is `summary`" do
+          get :edit, params: { step: "summary" }
+          expect(response).to redirect_to checkout_step_path(:payment)
+        end
+      end
+    end
   end
 
   describe "#update" do
