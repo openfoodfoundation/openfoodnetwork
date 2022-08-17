@@ -1,0 +1,26 @@
+:css
+  body {
+    text-align: center;
+  }
+  a { 
+    font-size: 100%; 
+    color: black; 
+    line-height: 1.5em; 
+    text-decoration: none;
+    border-bottom: 1px dotted black;
+    padding: 0 0.2rem;
+  }
+  a:hover, a:focus, a:active{
+    background: #8f301d;
+    color: white;
+    border-bottom: none;
+  }
+
+- content_for :title do
+  = I18n.t("errors.unprocessable_entity.title")
+.dialog
+  %a{href: "/", style: "border: none; background: none;"}
+    %img{src: "/422.jpg"}
+  %h1
+    = t("errors.unprocessable_entity.title")
+  = t("errors.unprocessable_entity.message_html")
