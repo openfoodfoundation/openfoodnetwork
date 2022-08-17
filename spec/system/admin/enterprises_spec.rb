@@ -137,6 +137,13 @@ describe '
 
     select2_select eg1.name, from: 'enterprise_group_ids'
 
+    within(".permalink") do
+      link_path = "#{main_app.root_url}#{@enterprise.permalink}/shop"
+      link = find_link(link)
+      expect(link[:href]).to eq link_path
+      expect(link[:target]).to eq '_blank'
+    end
+
     accept_alert do
       click_link "Payment Methods"
     end
@@ -186,7 +193,7 @@ describe '
     shop_message_input = page.find("text-angular#enterprise_preferred_shopfront_message div[id^='taTextElement']")
     shop_message_input.native.send_keys('This is my shopfront message.')
     expect(page).to have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_close_at"
-    #using "find" as fields outside of the screen and are not visible  
+    #using "find" as fields outside of the screen and are not visible
     find(:xpath, '//*[@id="enterprise_preferred_shopfront_order_cycle_order_orders_open_at"]').trigger("click")
     find(:xpath, '//*[@id="enterprise_enable_subscriptions_true"]').trigger("click")
 
@@ -483,7 +490,7 @@ describe '
           within(".side_menu") do
             click_link "Shop Preferences"
           end
-          
+
           choose "enterprise_preferred_shopfront_product_sorting_method_by_category"
           find("#s2id_enterprise_preferred_shopfront_taxon_order").click
           find(".select2-result-label", text: "Tricky Taxon").click
@@ -504,7 +511,7 @@ describe '
           within(".side_menu") do
             click_link "Shop Preferences"
           end
-          
+
           choose "enterprise_preferred_shopfront_product_sorting_method_by_producer"
           find("#s2id_enterprise_preferred_shopfront_producer_order").click
           find(".select2-result-label", text: "First Supplier").click
