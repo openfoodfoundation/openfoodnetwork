@@ -1,5 +1,5 @@
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='web'" } }
-  %legend {{menu.selected.label}}
+%fieldset.alpha.no-border-bottom#web_panel{ data: { "tabs-and-panels-target": "panel" } }
+  %legend= t('admin_enterprise_groups_web')
   .row
     .alpha.three.columns
       = f.label :website

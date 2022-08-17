@@ -12,14 +12,13 @@
         %a= t('admin.whats_this')
     .eight.columns.omega
       = f.collection_select :group_ids, @groups, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: t('.groups_placeholder')
-
 .row
   .three.columns.alpha
     %label= t('.primary_producer')
     %div{'ofn-with-tip' => t('.primary_producer_tip')}
       %a= t('admin.whats_this')
   .five.columns.omega
-    = f.check_box :is_primary_producer, 'ng-model' => 'Enterprise.is_primary_producer'
+    = f.check_box :is_primary_producer, data: { action: "change->primary-details#primaryProducerChanged" } 
     = f.label :is_primary_producer, t('.producer')
 - if spree_current_user.admin?
   .row
@@ -28,13 +27,13 @@
       %div{'ofn-with-tip' => t('.sells_tip')}
         %a= t('admin.whats_this')
     .two.columns
-      = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'
+      = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells', data: {action: "change->primary-details#enterpriseSellsChanged"} 
       = f.label :sells, t('.none'), value: "none"
     .two.columns
-      = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells'
+      = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells', data: {action: "change->primary-details#enterpriseSellsChanged"}
       = f.label :sells, t('.own'), value: "own"
     .four.columns.omega
-      = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells'
+      = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells', data: {action: "change->primary-details#enterpriseSellsChanged"}
       = f.label :sells, t('.any'), value: "any"
 .row
   .three.columns.alpha

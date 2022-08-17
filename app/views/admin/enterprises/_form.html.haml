@@ -1,63 +1,21 @@
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='primary_details'" } }
-  %legend {{menu.selected.label}}
-  = render 'admin/enterprises/form/primary_details', f: f
+- enterprise_side_menu_items(@enterprise).each do |item|
+  - case item[:name]
+  - when 'primary_details'
+    %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { controller: "primary-details", "primary-details-primary-producer-value": @enterprise.is_primary_producer.to_s, "primary-details-enterprise-sells-value": @enterprise.sells, "tabs-and-panels-target": "panel default" }}
+      %legend= t("#{ item[:name] }")
+      = render "admin/enterprises/form/#{ item[:form_name] || item[:name] }", f: f
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='users'" } }
-  %legend {{menu.selected.label}}
-  = render 'admin/enterprises/form/users', f: f
+  - when 'address'
+    = f.fields_for :address do |af|
+      %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { "tabs-and-panels-target": "panel" }}
+        %legend= t("#{ item[:name] }")
+        = render 'admin/enterprises/form/address', af: af
 
-= f.fields_for :address do |af|
-  %fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='address'" } }
-    %legend {{menu.selected.label}}
-    = render 'admin/enterprises/form/address', af: af
+  - when 'enterprise_permissions'
+    %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { "tabs-and-panels-target": "panel" }}
+      %legend= t("#{ item[:name] }")
 
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='contact'" } }
-  %legend {{menu.selected.label}}
-  = render 'admin/enterprises/form/contact', f: f
-
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='social'" } }
-  %legend {{menu.selected.label}}
-  = render 'admin/enterprises/form/social', f: f
-
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='business_details'" } }
-  %legend {{menu.selected.label}}
-  = render 'admin/enterprises/form/business_details', f: f
-
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='about'" } }
-  %legend {{menu.selected.label}}
-  = render 'admin/enterprises/form/about_us', f: f
-
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='images'" } }
-  %legend {{menu.selected.label}}
-  = render 'admin/enterprises/form/images', f: f
-
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='properties'" } }
-  %legend {{menu.selected.label}}
-  = render 'admin/enterprises/form/properties', f: f
-
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='shipping_methods'" } }
-  %legend {{menu.selected.label}}
-  = render 'admin/enterprises/form/shipping_methods', f: f
-
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='payment_methods'" } }
-  %legend {{menu.selected.label}}
-  = render 'admin/enterprises/form/payment_methods', f: f
-
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='enterprise_fees'" } }
-  %legend {{menu.selected.label}}
-  = render 'admin/enterprises/form/enterprise_fees', f: f
-
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='enterprise_permissions'" } }
-  %legend {{menu.selected.label}}
-
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='inventory_settings'" } }
-  %legend {{menu.selected.label}}
-  = render 'admin/enterprises/form/inventory_settings', f: f
-
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='shop_preferences'" } }
-  %legend {{menu.selected.label}}
-  = render 'admin/enterprises/form/shop_preferences', f: f
-
-%fieldset.alpha.no-border-bottom{ ng: { if: "menu.selected.name=='tag_rules'" } }
-  %legend {{menu.selected.label}}
-  = render 'admin/enterprises/form/tag_rules', f: f
+  - else
+    %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { "tabs-and-panels-target": "panel"  }}
+      %legend= t("#{ item[:name] }")
+      = render "admin/enterprises/form/#{ item[:form_name] || item[:name] }", f: f
