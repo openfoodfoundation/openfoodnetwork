@@ -36,7 +36,6 @@ jobs:
         specs:
           - "spec/controllers"
           - "spec/models"
-          - "spec/features/admin/[a-o0-9]*_spec.rb"
           - "spec/lib"
           - "spec/migrations"
           - "spec/serializers"
