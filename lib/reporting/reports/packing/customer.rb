@@ -7,7 +7,8 @@ module Reporting
         def columns
           # Reorder default columns
           super.slice(:hub, :customer_code, :first_name, :last_name, :phone,
-                      :supplier, :product, :variant, :quantity, :price, :temp_controlled)
+                      :supplier, :product, :variant, :weight, :height, :width, :depth, :quantity,
+                      :price, :temp_controlled)
         end
 
         def rules

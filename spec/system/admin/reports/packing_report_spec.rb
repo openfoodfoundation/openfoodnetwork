@@ -61,7 +61,8 @@ describe "Packing Reports" do
         table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
         expect(table).to eq([
                               ["Hub", "Customer Code", "First Name", "Last Name", "Supplier",
-                               "Product", "Variant", "Quantity", "TempControlled?"].map(&:upcase)
+                               "Product", "Variant", "Weight", "Height", "Width", "Depth",
+                               "Quantity", "TempControlled?"].map(&:upcase)
                             ])
         expect(page).to have_selector 'table.report__table tbody tr', count: 5 # Totals row per order
       end

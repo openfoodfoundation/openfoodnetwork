@@ -75,7 +75,7 @@ describe Api::V0::ReportsController, type: :controller do
       "price" => (line_item.quantity * line_item.price).to_s,
       "phone" => line_item.order.bill_address.phone,
       "temp_controlled" => line_item.product.shipping_category&.temperature_controlled
-    }
+    }.merge(dimensions(line_item))
   end
 
   def supplier_report_row(line_item)
@@ -91,6 +91,15 @@ describe Api::V0::ReportsController, type: :controller do
       "quantity" => line_item.quantity,
       "price" => (line_item.quantity * line_item.price).to_s,
       "temp_controlled" => line_item.product.shipping_category&.temperature_controlled
+    }.merge(dimensions(line_item))
+  end
+
+  def dimensions(line_item)
+    {
+      "weight" => line_item.weight.to_s,
+      "height" => line_item.height.to_s,
+      "width" => line_item.width.to_s,
+      "depth" => line_item.depth.to_s
     }
   end
 
