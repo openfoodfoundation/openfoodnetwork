@@ -28,6 +28,7 @@ module Spree
     before_validation :adjust_quantity
     before_validation :copy_price
     before_validation :copy_tax_category
+    before_validation :copy_dimensions
 
     validates :variant, presence: true
     validates :quantity, numericality: {
@@ -120,6 +121,15 @@ module Spree
       return unless variant
 
       self.tax_category = variant.product.tax_category
+    end
+
+    def copy_dimensions
+      return unless variant
+
+      self.weight = variant.weight if weight.nil?
+      self.height = variant.height if height.nil?
+      self.width = variant.width if width.nil?
+      self.depth = variant.depth if depth.nil?
     end
 
     def amount
