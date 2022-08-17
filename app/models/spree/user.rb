@@ -71,6 +71,10 @@ module Spree
       set_reset_password_token
     end
 
+    def generate_api_key
+      self.spree_api_key = SecureRandom.hex(24)
+    end
+
     def known_users
       if admin?
         Spree::User.where(nil)
@@ -130,16 +134,6 @@ module Spree
       else
         credit_cards.where(is_default: true).first
       end
-    end
-
-    def generate_spree_api_key!
-      self.spree_api_key = SecureRandom.hex(24)
-      save!
-    end
-
-    def clear_spree_api_key!
-      self.spree_api_key = nil
-      save!
     end
 
     def last_incomplete_spree_order
