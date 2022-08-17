@@ -5,7 +5,7 @@ require "system_helper"
 describe '
     As an administrator
     I want to print a invoice as PDF
-', type: :feature, js: false do
+', type: :feature do
   include WebHelper
   include AuthenticationHelper
 
@@ -27,7 +27,12 @@ describe '
   end
 
   before do
+    Capybara.current_driver = :rack_test
     stub_request(:get, ->(uri) { uri.to_s.include? "/css/mail" })
+  end
+
+  after do
+    Capybara.use_default_driver
   end
 
   describe "that contains right Payment Description at Checkout information" do
