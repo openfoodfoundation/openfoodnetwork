@@ -6,7 +6,6 @@ module Spree
     include Rails.application.routes.url_helpers
     include CablecarResponses
 
-
     layout 'darkswarm'
 
     rescue_from ActiveRecord::RecordNotFound, with: :render_404
