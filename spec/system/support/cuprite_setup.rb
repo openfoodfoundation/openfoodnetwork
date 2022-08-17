@@ -22,7 +22,7 @@ Capybara.register_driver(:cuprite) do |app|
 end
 
 # Configure Capybara to use :cuprite driver by default
-Capybara.default_driver = Capybara.javascript_driver = :cuprite
+Capybara.javascript_driver = :cuprite
 
 RSpec.configure do |config|
   config.include CupriteHelpers, type: :system

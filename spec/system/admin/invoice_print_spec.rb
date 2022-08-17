@@ -5,7 +5,7 @@ require "system_helper"
 describe '
     As an administrator
     I want to print a invoice as PDF
-', js: false do
+', type: :feature, js: false do
   include WebHelper
   include AuthenticationHelper
 
