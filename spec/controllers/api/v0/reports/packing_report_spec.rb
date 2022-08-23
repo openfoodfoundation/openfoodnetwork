@@ -62,7 +62,7 @@ describe Api::V0::ReportsController, type: :controller do
     results
   end
 
-  def distributor_report_row(line_item)
+  def distributor_report_row(line_item) # rubocop:disable Metrics/AbcSize
     {
       "hub" => line_item.order.distributor.name,
       "customer_code" => line_item.order.customer&.code,

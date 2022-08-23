@@ -126,10 +126,10 @@ module Spree
     def copy_dimensions
       return unless variant
 
-      self.weight = variant.weight if weight.nil?
-      self.height = variant.height if height.nil?
-      self.width = variant.width if width.nil?
-      self.depth = variant.depth if depth.nil?
+      self.weight ||= variant.weight
+      self.height ||= variant.height
+      self.width ||= variant.width
+      self.depth ||= variant.depth
     end
 
     def amount

@@ -45,7 +45,7 @@ module Reporting
 
         private
 
-        def select_fields
+        def select_fields # rubocop:disable Metrics/AbcSize
           lambda do
             {
               hub: distributor_alias[:name],
