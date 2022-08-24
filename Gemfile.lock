@@ -493,7 +493,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     redcarpet (3.5.1)
-    redis (4.7.1)
+    redis (4.8.0)
     regexp_parser (2.5.0)
     reline (0.3.1)
       io-console (~> 0.5)
@@ -622,7 +622,7 @@ GEM
     stringex (2.8.5)
     stripe (7.0.0)
     temple (0.8.2)
-    test-prof (1.0.9)
+    test-prof (1.0.10)
     test-unit (3.5.3)
       power_assert
     thor (1.2.1)
