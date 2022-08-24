@@ -182,7 +182,7 @@ GEM
     bugsnag (6.24.2)
       concurrent-ruby (~> 1.0)
     builder (3.2.4)
-    bullet (7.0.2)
+    bullet (7.0.3)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
     cable_ready (5.0.0.pre3)
