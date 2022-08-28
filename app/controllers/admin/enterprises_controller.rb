@@ -49,6 +49,7 @@ module Admin
         @enterprise.is_primary_producer = params[:is_primary_producer]
         @enterprise.sells = params[:enterprise_sells]
         render operations: cable_car.morph("#side_menu", partial("admin/shared/side_menu"))
+          .morph("#permalink", partial("admin/enterprises/form/permalink"))
       end
     end
 

@@ -1,0 +1,35 @@
+.permalink#permalink{ data: { controller: 'permalink', permalink: { 'initial-permalink-value': @enterprise.permalink, 'url-value': check_permalink_enterprises_url } }}
+  - unless @enterprise.sells == 'none'
+    .row
+      .three.columns.alpha
+        = label_tag :permalink, t('.permalink')
+        %div{'ofn-with-tip' => t('.permalink_tip', link: main_app.root_url)}
+          %a= t('admin.whats_this')
+      .eight.columns
+        = text_field_tag "enterprise[permalink]", @enterprise.permalink, data: { action: "input->permalink#validate", "permalink-target": "permalinkField" }
+      .two.columns.omega
+        %div{ style: "width: 30px; height: 30px;", class: "hidden", data: { "permalink-target": "spinner" } }
+          = render partial: "components/admin_spinner"
+        %span.available.hidden{data: { "permalink-target": "available" }}
+          = t('available')
+          %i.icon-ok-sign
+        %span.unavailable.hidden{data: { "permalink-target": "unavailable" }}
+          = t('js.unavailable')
+          %i.icon-remove-sign
+            
+  - unless @enterprise.sells == 'none'
+    .row
+      .three.columns.alpha
+        %label= t('.link_to_front')
+        %div{'ofn-with-tip' => t('.link_to_front_tip')}
+          %a= t('admin.whats_this')
+      .eight.columns.omega
+        - front_shop_path = "#{main_app.root_url}#{@enterprise.permalink}/shop"
+        = link_to front_shop_path, front_shop_path , target: "_blank"
+  .row
+    .three.columns.alpha
+      = label_tag :id, t('.ofn_uid')
+      %div{'ofn-with-tip' => t('.ofn_uid_tip')}
+        %a= t('admin.whats_this')
+    .six.columns
+      = @enterprise.id
