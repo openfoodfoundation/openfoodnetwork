@@ -8,6 +8,9 @@ export default class extends Controller {
     maxOptions: null,
     plugins: ["dropdown_input"],
     allowEmptyOption: true,
+    onItemAdd: function () {
+      this.setTextboxValue("");
+    },
   };
 
   connect(options = {}) {

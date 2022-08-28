@@ -11,7 +11,7 @@
       %div{'ofn-with-tip' => t('.groups_tip')}
         %a= t('admin.whats_this')
     .eight.columns.omega
-      = f.collection_select :group_ids, @groups, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: t('.groups_placeholder')
+      = f.collection_select :group_ids, @groups, :id, :name, {}, data: { controller: "tom-select", "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil } }, class: "full-width", multiple: true, placeholder: t('.groups_placeholder')
 .row
   .three.columns.alpha
     %label= t('.primary_producer')
