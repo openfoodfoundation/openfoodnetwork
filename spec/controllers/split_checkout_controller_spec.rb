@@ -129,7 +129,7 @@ describe SplitCheckoutController, type: :controller do
 
           it "don't updates default ship address on user" do
             expect {
-              put :update, params: params.merge({ order: { save_bill_address: "0" } })
+              put :update, params: params.merge({ order: { save_ship_address: "0" } })
             }.to_not change {
               order.user.reload.ship_address
             }
