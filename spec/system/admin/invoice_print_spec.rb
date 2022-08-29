@@ -136,33 +136,37 @@ describe '
 
     context "included" do
       let(:shipping_tax_rate_included) {
-        create(:tax_rate, amount: 0.20, included_in_price: true, zone: zone)
+        create(:tax_rate, amount: 0.1, included_in_price: true, zone: zone)
+      }
+      let(:enterprise_fee_rate_included) {
+        create(:tax_rate, amount: 0.15, included_in_price: true, zone: zone)
       }
       let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate_included]) }
+      let(:fee_tax_category) { create(:tax_category, tax_rates: [enterprise_fee_rate_included]) }
       let!(:shipping_method) {
         create(:shipping_method_with, :expensive_name, distributors: [distributor],
                                                        tax_category: shipping_tax_category)
       }
-      let(:enterprise_fee) {
+      let!(:enterprise_fee) {
         create(:enterprise_fee, enterprise: user1.enterprises.first,
-                                tax_category: product2.tax_category,
+                                tax_category: fee_tax_category,
                                 calculator: Calculator::FlatRate.new(preferred_amount: 120.0))
       }
-      let(:order_cycle) {
+      let!(:order_cycle) {
         create(:simple_order_cycle, coordinator: distributor,
                                     coordinator_fees: [enterprise_fee], distributors: [distributor],
                                     variants: [product1.variants.first, product2.variants.first])
       }
 
-      let(:order1) {
+      let!(:order1) {
         create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first,
                        ship_address: address, bill_address: address)
       }
-      let(:product1) {
+      let!(:product1) {
         create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0,
                                included_in_price: true)
       }
-      let(:product2) {
+      let!(:product2) {
         create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2,
                                included_in_price: true)
       }
@@ -221,10 +225,10 @@ describe '
           # Enterprise fee
           expect(page).to have_content "Admin & Handling 1 $120.00"
           # Shipping
-          expect(page).to have_content "Shipping 1 $16.76 (included) $100.55"
+          expect(page).to have_content "Shipping 1 $9.14 (included) $100.55"
           # Order Totals
-          expect(page).to have_content "GST Total: $286.84"
-          expect(page).to have_content "Total (Excl. tax): $1,446.70"
+          expect(page).to have_content "GST Total: $274.87"
+          expect(page).to have_content "Total (Excl. tax): $1,458.67"
           expect(page).to have_content "Total (Incl. tax): $1,733.54"
         end
       end
@@ -249,27 +253,33 @@ describe '
           # Enterprise fee
           expect(page).to have_content "Admin & Handling $120.00"
           # Shipping
-          expect(page).to have_content "Shipping $100.55 20.0%"
+          expect(page).to have_content "Shipping $100.55 10.0%"
           # Order Totals
           expect(page).to have_content "Total (Incl. tax): $1,733.54"
-          expect(page).to have_content "Total tax (20.0%): $270.08"
-          expect(page).to have_content "Total (Excl. tax): $1,446.70"
+          expect(page).to have_content "Total tax (15.0%): $15.65"
+          expect(page).to have_content "Total tax (10.0%): $9.14"
+          expect(page).to have_content "Total tax (20.0%): $250.08"
+          expect(page).to have_content "Total (Excl. tax): $1,458.67"
         end
       end
     end
 
     context "added" do
       let(:shipping_tax_rate_added) {
-        create(:tax_rate, amount: 0.20, included_in_price: false, zone: zone)
+        create(:tax_rate, amount: 0.10, included_in_price: false, zone: zone)
+      }
+      let(:enterprise_fee_rate_added) {
+        create(:tax_rate, amount: 0.15, included_in_price: false, zone: zone)
       }
       let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate_added]) }
+      let(:fee_tax_category) { create(:tax_category, tax_rates: [enterprise_fee_rate_added]) }
       let!(:shipping_method) {
         create(:shipping_method_with, :expensive_name, distributors: [distributor],
                                                        tax_category: shipping_tax_category)
       }
       let(:enterprise_fee) {
         create(:enterprise_fee, enterprise: user1.enterprises.first,
-                                tax_category: product4.tax_category,
+                                tax_category: fee_tax_category,
                                 calculator: Calculator::FlatRate.new(preferred_amount: 120.0))
       }
       let(:order_cycle2) {
@@ -348,11 +358,11 @@ describe '
           # Enterprise fee
           expect(page).to have_content "Admin & Handling 1 $120.00"
           # Shipping
-          expect(page).to have_content "Shipping 1 $20.11 $100.55"
+          expect(page).to have_content "Shipping 1 $10.06 $100.55"
           # Order Totals
-          expect(page).to have_content "GST Total: $344.20"
+          expect(page).to have_content "GST Total: $328.15"
           expect(page).to have_content "Total (Excl. tax): $1,733.54"
-          expect(page).to have_content "Total (Incl. tax): $2,077.74"
+          expect(page).to have_content "Total (Incl. tax): $2,061.69"
         end
       end
 
@@ -374,10 +384,12 @@ describe '
           # Enterprise fee
           expect(page).to have_content "Admin & Handling $120.00"
           # Shipping
-          expect(page).to have_content "Shipping $100.55 20.0%"
+          expect(page).to have_content "Shipping $100.55 10.0%"
           # Order Totals
-          expect(page).to have_content "Total (Incl. tax): $2,077.74"
-          expect(page).to have_content "Total tax (20.0%): $324.09"
+          expect(page).to have_content "Total (Incl. tax): $2,061.69"
+          expect(page).to have_content "Total tax (15.0%): $18"
+          expect(page).to have_content "Total tax (10.0%): $10.06"
+          expect(page).to have_content "Total tax (20.0%): $300.09"
           expect(page).to have_content "Total (Excl. tax): $1,733.54"
         end
       end
