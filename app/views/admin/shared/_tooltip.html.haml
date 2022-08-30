@@ -1,0 +1,7 @@
+%div{"data-controller": "tooltip"}
+  %a{"data-tooltip-target": "element", "data-action": "mouseenter->tooltip#showTooltip mouseleave->tooltip#hideTooltip"}= t('admin.whats_this')
+  .tooltip-container
+    .tooltip{"data-tooltip-target": "tooltip"}
+      = tooltip_text
+      .arrow{"data-tooltip-target": "arrow"}
+

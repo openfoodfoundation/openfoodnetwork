@@ -6,8 +6,8 @@
 .row
   .alpha.three.columns
     = f.label :email_address, t('.email_address')
-    %div{'ofn-with-tip' => t('.email_address_tip')}
-      %a= t('admin.whats_this')
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.email_address_tip')}
+
   .omega.eight.columns
     = f.text_field :email_address, { placeholder: t('.email_address_placeholder') }
 .row
@@ -18,8 +18,8 @@
 .row
   .alpha.three.columns
     = f.label :whatsapp_phone, t('.whatsapp_phone')
-    %div{'ofn-with-tip' => t('.whatsapp_phone_tip')}
-      %a= t('admin.whats_this')
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.whatsapp_phone_tip')}
+
   .omega.eight.columns
     = f.text_field :whatsapp_phone, { placeholder: t('.whatsapp_phone_placeholder') }
 .row
