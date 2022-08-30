@@ -24,6 +24,64 @@ describe CheckoutHelper, type: :helper do
     end
   end
 
+  describe "#display_checkout_taxes_hash" do
+    let(:order) { build(:order_with_totals) }
+    let(:tax_rate10) { build(:tax_rate, amount: 0.1) }
+    let(:tax_rate20) { build(:tax_rate, amount: 0.2) }
+    let(:other_tax_rate20) { build(:tax_rate, amount: 0.2) }
+    let(:adjustment1) {
+      build(:adjustment, amount: 1, label: "10% tax", originator: tax_rate10)
+    }
+    let(:adjustment2) {
+      build(:adjustment, amount: 2, label: "20% tax", originator: tax_rate20)
+    }
+    let(:other_adjustment2) {
+      build(:adjustment, amount: 2, label: "20% tax", originator: other_tax_rate20)
+    }
+
+    it "produces an empty hash without taxes" do
+      expect(helper.display_checkout_taxes_hash(order)).to eq({})
+    end
+
+    it "shows a single tax adjustment" do
+      order.all_adjustments << adjustment1
+      order.save!
+
+      expect(helper.display_checkout_taxes_hash(order)).to eq(
+        "10.0%" => Spree::Money.new(1, currency: order.currency)
+      )
+    end
+
+    it "shows multiple tax adjustments" do
+      order.all_adjustments << adjustment1
+      order.all_adjustments << adjustment2
+      order.save!
+
+      expect(helper.display_checkout_taxes_hash(order)).to eq(
+        "10.0%" => Spree::Money.new(1, currency: order.currency),
+        "20.0%" => Spree::Money.new(2, currency: order.currency),
+      )
+    end
+
+    it "shows multiple tax adjustments with same percentage" do
+      order.all_adjustments << adjustment2
+      order.all_adjustments << other_adjustment2
+      order.save!
+
+      # This passes because we override the hash entry exactly
+      # like the original code.
+      expect(helper.display_checkout_taxes_hash(order)).to eq(
+        "20.0%" => Spree::Money.new(2, currency: order.currency),
+        "20.0%" => Spree::Money.new(2, currency: order.currency),
+      )
+
+      pending "https://github.com/openfoodfoundation/openfoodnetwork/issues/9605"
+
+      # This fails. We got only one result when we should have two.
+      expect(helper.display_checkout_taxes_hash(order).size).to eq 2
+    end
+  end
+
   it "knows if guests can checkout" do
     distributor = create(:distributor_enterprise)
     order = create(:order, distributor: distributor)
