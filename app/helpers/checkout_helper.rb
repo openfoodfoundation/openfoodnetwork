@@ -72,7 +72,9 @@ module CheckoutHelper
 
     totals.each_with_object({}) do |(tax_rate, tax_amount), hash|
       hash[number_to_percentage(tax_rate.amount * 100, precision: 1)] =
-        Spree::Money.new tax_amount, currency: order.currency
+        {
+          amount: Spree::Money.new(tax_amount, currency: order.currency),
+        }
     end
   end
 

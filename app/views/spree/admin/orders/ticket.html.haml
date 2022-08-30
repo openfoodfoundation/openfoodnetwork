@@ -58,10 +58,10 @@
       j(@order.display_total.format(with_currency: false))]}",
       '\x1B' + '\x45' + '\x0A', // bold off
       '\x0A',
-      "#{display_checkout_taxes_hash(@order).map { |tax_rate, tax_value|
+      "#{display_checkout_taxes_hash(@order).map { |tax_rate, tax|
       '%31s%10s' %
       [j(t(:tax_total, rate: tax_rate)),
-      j(tax_value.format(with_currency: false))] +
+      j(tax[:amount].format(with_currency: false))] +
       '" + \'\x0A\' + "'}.join }",
       "#{'%31s%10s' %
       [j(t(:total_excl_tax)),

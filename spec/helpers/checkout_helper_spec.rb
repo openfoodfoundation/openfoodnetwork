@@ -48,7 +48,9 @@ describe CheckoutHelper, type: :helper do
       order.save!
 
       expect(helper.display_checkout_taxes_hash(order)).to eq(
-        "10.0%" => Spree::Money.new(1, currency: order.currency)
+        "10.0%" => {
+          amount: Spree::Money.new(1, currency: order.currency),
+        }
       )
     end
 
@@ -58,8 +60,8 @@ describe CheckoutHelper, type: :helper do
       order.save!
 
       expect(helper.display_checkout_taxes_hash(order)).to eq(
-        "10.0%" => Spree::Money.new(1, currency: order.currency),
-        "20.0%" => Spree::Money.new(2, currency: order.currency),
+        "10.0%" => { amount: Spree::Money.new(1, currency: order.currency) },
+        "20.0%" => { amount: Spree::Money.new(2, currency: order.currency) },
       )
     end
 
@@ -71,8 +73,8 @@ describe CheckoutHelper, type: :helper do
       # This passes because we override the hash entry exactly
       # like the original code.
       expect(helper.display_checkout_taxes_hash(order)).to eq(
-        "20.0%" => Spree::Money.new(2, currency: order.currency),
-        "20.0%" => Spree::Money.new(2, currency: order.currency),
+        "20.0%" => { amount: Spree::Money.new(2, currency: order.currency) },
+        "20.0%" => { amount: Spree::Money.new(2, currency: order.currency) },
       )
 
       pending "https://github.com/openfoodfoundation/openfoodnetwork/issues/9605"
