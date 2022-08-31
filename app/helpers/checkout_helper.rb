@@ -70,12 +70,11 @@ module CheckoutHelper
   def display_checkout_taxes_hash(order)
     totals = OrderTaxAdjustmentsFetcher.new(order).totals
 
-    totals.each_with_object({}) do |(tax_rate, tax_amount), hash|
-      hash[tax_rate] =
-        {
-          amount: Spree::Money.new(tax_amount, currency: order.currency),
-          percentage: number_to_percentage(tax_rate.amount * 100, precision: 1),
-        }
+    totals.map do |tax_rate, tax_amount|
+      {
+        amount: Spree::Money.new(tax_amount, currency: order.currency),
+        percentage: number_to_percentage(tax_rate.amount * 100, precision: 1),
+      }
     end
   end
 

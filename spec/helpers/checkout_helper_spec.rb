@@ -39,20 +39,20 @@ describe CheckoutHelper, type: :helper do
       build(:adjustment, amount: 2, label: "20% tax", originator: other_tax_rate20)
     }
 
-    it "produces an empty hash without taxes" do
-      expect(helper.display_checkout_taxes_hash(order)).to eq({})
+    it "produces an empty array without taxes" do
+      expect(helper.display_checkout_taxes_hash(order)).to eq([])
     end
 
     it "shows a single tax adjustment" do
       order.all_adjustments << adjustment1
       order.save!
 
-      expect(helper.display_checkout_taxes_hash(order)).to eq(
-        tax_rate10 => {
+      expect(helper.display_checkout_taxes_hash(order)).to eq [
+        {
           amount: Spree::Money.new(1, currency: order.currency),
           percentage: "10.0%",
         }
-      )
+      ]
     end
 
     it "shows multiple tax adjustments" do
@@ -60,16 +60,16 @@ describe CheckoutHelper, type: :helper do
       order.all_adjustments << adjustment2
       order.save!
 
-      expect(helper.display_checkout_taxes_hash(order)).to eq(
-        tax_rate10 => {
+      expect(helper.display_checkout_taxes_hash(order)).to match_array [
+        {
           amount: Spree::Money.new(1, currency: order.currency),
           percentage: "10.0%",
         },
-        tax_rate20 => {
+        {
           amount: Spree::Money.new(2, currency: order.currency),
           percentage: "20.0%",
         },
-      )
+      ]
     end
 
     it "shows multiple tax adjustments with same percentage" do
@@ -77,16 +77,16 @@ describe CheckoutHelper, type: :helper do
       order.all_adjustments << other_adjustment2
       order.save!
 
-      expect(helper.display_checkout_taxes_hash(order)).to eq(
-        tax_rate20 => {
+      expect(helper.display_checkout_taxes_hash(order)).to match_array [
+        {
           amount: Spree::Money.new(2, currency: order.currency),
           percentage: "20.0%",
         },
-        other_tax_rate20 => {
+        {
           amount: Spree::Money.new(2, currency: order.currency),
           percentage: "20.0%",
         },
-      )
+      ]
 
       expect(helper.display_checkout_taxes_hash(order).size).to eq 2
     end
