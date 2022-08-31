@@ -60,7 +60,7 @@
       '\x0A',
       "#{display_checkout_taxes_hash(@order).map { |tax_rate, tax|
       '%31s%10s' %
-      [j(t(:tax_total, rate: tax_rate)),
+      [j(t(:tax_total, rate: tax[:percentage])),
       j(tax[:amount].format(with_currency: false))] +
       '" + \'\x0A\' + "'}.join }",
       "#{'%31s%10s' %

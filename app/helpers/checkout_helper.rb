@@ -71,9 +71,10 @@ module CheckoutHelper
     totals = OrderTaxAdjustmentsFetcher.new(order).totals
 
     totals.each_with_object({}) do |(tax_rate, tax_amount), hash|
-      hash[number_to_percentage(tax_rate.amount * 100, precision: 1)] =
+      hash[tax_rate] =
         {
           amount: Spree::Money.new(tax_amount, currency: order.currency),
+          percentage: number_to_percentage(tax_rate.amount * 100, precision: 1),
         }
     end
   end

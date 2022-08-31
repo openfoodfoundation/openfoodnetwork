@@ -50,7 +50,7 @@
     - display_checkout_taxes_hash(@order).each do |tax_rate, tax|
       %tr
         %td{:align => "right", :colspan => "3"}
-          = t(:tax_total, rate: tax_rate)
+          = t(:tax_total, rate: tax[:percentage])
         %td{:align => "right", :colspan => "2"}
           = tax[:amount]
     %tr

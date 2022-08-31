@@ -48,8 +48,9 @@ describe CheckoutHelper, type: :helper do
       order.save!
 
       expect(helper.display_checkout_taxes_hash(order)).to eq(
-        "10.0%" => {
+        tax_rate10 => {
           amount: Spree::Money.new(1, currency: order.currency),
+          percentage: "10.0%",
         }
       )
     end
@@ -60,8 +61,14 @@ describe CheckoutHelper, type: :helper do
       order.save!
 
       expect(helper.display_checkout_taxes_hash(order)).to eq(
-        "10.0%" => { amount: Spree::Money.new(1, currency: order.currency) },
-        "20.0%" => { amount: Spree::Money.new(2, currency: order.currency) },
+        tax_rate10 => {
+          amount: Spree::Money.new(1, currency: order.currency),
+          percentage: "10.0%",
+        },
+        tax_rate20 => {
+          amount: Spree::Money.new(2, currency: order.currency),
+          percentage: "20.0%",
+        },
       )
     end
 
@@ -70,16 +77,17 @@ describe CheckoutHelper, type: :helper do
       order.all_adjustments << other_adjustment2
       order.save!
 
-      # This passes because we override the hash entry exactly
-      # like the original code.
       expect(helper.display_checkout_taxes_hash(order)).to eq(
-        "20.0%" => { amount: Spree::Money.new(2, currency: order.currency) },
-        "20.0%" => { amount: Spree::Money.new(2, currency: order.currency) },
+        tax_rate20 => {
+          amount: Spree::Money.new(2, currency: order.currency),
+          percentage: "20.0%",
+        },
+        other_tax_rate20 => {
+          amount: Spree::Money.new(2, currency: order.currency),
+          percentage: "20.0%",
+        },
       )
 
-      pending "https://github.com/openfoodfoundation/openfoodnetwork/issues/9605"
-
-      # This fails. We got only one result when we should have two.
       expect(helper.display_checkout_taxes_hash(order).size).to eq 2
     end
   end
