@@ -3,8 +3,7 @@
     .row
       .three.columns.alpha
         = label_tag :permalink, t('.permalink')
-        %div{'ofn-with-tip' => t('.permalink_tip', link: main_app.root_url)}
-          %a= t('admin.whats_this')
+        = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.permalink_tip', link: main_app.root_url)}
       .eight.columns
         = text_field_tag "enterprise[permalink]", @enterprise.permalink, data: { action: "input->permalink#validate", "permalink-target": "permalinkField" }
       .two.columns.omega
@@ -21,15 +20,13 @@
     .row
       .three.columns.alpha
         %label= t('.link_to_front')
-        %div{'ofn-with-tip' => t('.link_to_front_tip')}
-          %a= t('admin.whats_this')
+        = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.link_to_front_tip')}
       .eight.columns.omega
         - front_shop_path = "#{main_app.root_url}#{@enterprise.permalink}/shop"
         = link_to front_shop_path, front_shop_path , target: "_blank"
   .row
     .three.columns.alpha
       = label_tag :id, t('.ofn_uid')
-      %div{'ofn-with-tip' => t('.ofn_uid_tip')}
-        %a= t('admin.whats_this')
+      = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.ofn_uid_tip')}
     .six.columns
       = @enterprise.id
