@@ -61,27 +61,6 @@ ru:
             using_producer_stock_settings_but_count_on_hand_set: "должно быть пустым, потому что используются настройки склада производителя"
             on_demand_but_count_on_hand_set: "должен быть пустым, если по требованию'"
             limited_stock_but_no_count_on_hand: "необходимо указать, поскольку принудительный ограниченный запас"
-  errors:
-    messages:
-      content_type_invalid: "имеет неверный тип контента"
-      file_size_out_of_range: "размер %{file_size} не входит в требуемый диапазон"
-      limit_out_of_range: "общее количество вне диапазона"
-      image_metadata_missing: "недопустимое изображение"
-      dimension_min_inclusion: "должно быть больше или равно %{width} x %{height} пикселей."
-      dimension_max_inclusion: "должно быть меньше или равно %{width} x %{height} пикселей."
-      dimension_width_inclusion: "ширина не включена между %{min} и %{max} пикселей."
-      dimension_height_inclusion: "высота не включена между %{min} и %{max} пикселями."
-      dimension_width_greater_than_or_equal_to: "ширина должна быть больше или равна %{length} пикселя."
-      dimension_height_greater_than_or_equal_to: "высота должна быть больше или равна %{length} пикселя."
-      dimension_width_less_than_or_equal_to: "ширина должна быть меньше или равна %{length} пикселя."
-      dimension_height_less_than_or_equal_to: "высота должна быть меньше или равна %{length} пикселя."
-      dimension_width_equal_to: "ширина должна быть равна %{length} пикселю."
-      dimension_height_equal_to: "высота должна быть равна %{length} пикселю."
-      aspect_ratio_not_square: "должно быть квадратное изображение"
-      aspect_ratio_not_portrait: "должно быть портретное изображение"
-      aspect_ratio_not_landscape: "должно быть пейзажное изображение"
-      aspect_ratio_is_not: "должен иметь соотношение сторон %{aspect_ratio}"
-      aspect_ratio_unknown: "имеет неизвестное соотношение сторон"
   stripe:
     error_code:
       incorrect_number: "Номер карты неверный."
@@ -162,6 +141,7 @@ ru:
   cardholder_name: "Имя владельца карты"
   community_forum_url: "URL форума сообщества"
   customer_instructions: "Инструкции для Клиента"
+  additional_information: "Дополнительная информация"
   devise:
     passwords:
       spree_user:
@@ -554,6 +534,8 @@ ru:
         guest_label: "Оформить как Гость"
         credit_owed: "Кредит"
         balance_due: "Задолжность"
+      destroy:
+        has_associated_subscriptions: "Не удалось удалить: у этого клиента есть активные подписки. Сначала отмените их."
     contents:
       edit:
         title: Содержание
@@ -3525,6 +3507,7 @@ ru:
     email: Email
     account_updated: "Профиль обновлен!"
     email_updated: "Профиль будет обновлен после подтверждения нового адреса электронной почты..."
+    show_api_key_view_toggled: "Представление «Показать ключ API» изменено!"
     my_account: "Мой профиль"
     date: "Дата"
     time: "Время"
@@ -3813,6 +3796,7 @@ ru:
           paypal:
             no_payment_via_admin_backend: Платежи Paypal не могут быть зарегистрированы в Бэк-офисе
       products:
+        image_upload_error: "Загрузите изображение в формате JPG, PNG, GIF, SVG или WEBP."
         new:
           title: "Новый Товар"
           new_product: "Новый Товар"
@@ -4077,10 +4061,16 @@ ru:
         connection_failed: "Не удалось подключиться к PayPal."
         generic_error: "PayPal не удалось. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Пересоздать Ключ"
+        title: Ключ API
+      developer_settings:
+        title: Настройки Разработчика
       form:
         account_settings: Настройки Профиля
       show:
         tabs:
+          developer_settings: Настройки Разработчика
           orders: Заказы
           cards: Банковские карты
           transactions: Операции
@@ -4111,6 +4101,7 @@ ru:
         total: Всего
         paid?: Оплачен?
         status: Статус
+        completed: Завершён
         cancelled: Отменён
       saved_cards:
         default?: По умолчанию?
@@ -4122,6 +4113,7 @@ ru:
       authorised_shops:
         shop_name: "Имя Магазина"
         allow_charges?: "Разрешить Списания с Карты по Умолчанию?"
+        no_default_saved_cards_tooltip: Чтобы разрешить списание средств, Вам нужно отметить одну кредитную карту как карту по умолчанию,
     localized_number:
       invalid_format: имеет неверный формат. Пожалуйста, введите номер.
     api:
@@ -4140,6 +4132,7 @@ ru:
       shipment:
         cannot_ready: "Не может готовая отгрузка."
       invalid_taxonomy_id: "Неверный ID таксономии."
+      toggle_api_key_view: "Показать ключ API для пользователя"
     activerecord:
       models:
         spree/payment:
@@ -4212,3 +4205,13 @@ ru:
         few: "%{count} лет"
         many: "%{count} лет"
         other: "%{count} лет"
+  errors:
+    not_found:
+      title: "Страница не существует (404)"
+      message_html: "<b>Пожалуйста, попробуйте еще раз</b><p> Это может быть временной проблемой. Нажмите кнопку «Назад», чтобы вернуться к предыдущему экрану, или вернитесь на <a href='/'>Главную</a> страницу и повторите попытку.</p> <b>Свяжитесь с поддержкой</b><p> Если проблема сохраняется или срочная, пожалуйста, сообщите нам об этом. Найдите наши контактные данные на глобальной <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>странице Open Food Network Local</a> .</p><p> Нам очень поможет, если вы сможете дать как можно больше подробностей о том, о чем пропавшая страница.</p>"
+    internal_server_error:
+      title: "Сожалеем, но что-то пошло не так (500)"
+      message_html: "<b>Пожалуйста, попробуйте еще раз</b><p> Это может быть временной проблемой. Нажмите кнопку «Назад», чтобы вернуться к предыдущему экрану, или вернитесь на <a href='/''>главную</a> страницу и повторите попытку.</p> <b>Мы на этом</b><p> Если вы сталкивались с этой проблемой раньше, мы, вероятно, уже знаем о ней и работаем над исправлением. Мы фиксируем все возникающие ошибки.</p> <b>Свяжитесь с поддержкой</b><p> Если проблема сохраняется или срочная, пожалуйста, сообщите нам об этом. Найдите наши контактные данные на глобальной <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>странице Open Food Network Local</a> .</p><p> Нам очень поможет, если вы сможете предоставить как можно больше подробностей о том, что вы делали, когда возникла эта ошибка.</p>"
+    unprocessable_entity:
+      title: "Требуемое изменение было отклонено (422)"
+      message_html: "<p>Требуемое изменение было отклонено. Возможно, вы пытались изменить что-то, к чему у вас нет доступа.<br><h3> <a href='/' >Вернуться домой</a></h3></p>"

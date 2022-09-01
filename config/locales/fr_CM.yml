@@ -3943,6 +3943,8 @@ fr_CM:
         connection_failed: "Impossible de se connecter à PayPal."
         generic_error: "PayPal a échoué."
     users:
+      api_keys:
+        regenerate_key: "Regénérer la clé"
       form:
         account_settings: Paramètres du Compte
       show:

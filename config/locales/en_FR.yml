@@ -61,27 +61,6 @@ en_FR:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
-  errors:
-    messages:
-      content_type_invalid: "has an invalid content type"
-      file_size_out_of_range: "size %{file_size} is not between required range"
-      limit_out_of_range: "total number is out of range"
-      image_metadata_missing: "is not a valid image"
-      dimension_min_inclusion: "must be greater than or equal to %{width} x %{height} pixel."
-      dimension_max_inclusion: "must be less than or equal to %{width} x %{height} pixel."
-      dimension_width_inclusion: "width is not included between %{min} and %{max} pixel."
-      dimension_height_inclusion: "height is not included between %{min} and %{max} pixel."
-      dimension_width_greater_than_or_equal_to: "width must be greater than or equal to %{length} pixel."
-      dimension_height_greater_than_or_equal_to: "height must be greater than or equal to %{length} pixel."
-      dimension_width_less_than_or_equal_to: "width must be less than or equal to %{length} pixel."
-      dimension_height_less_than_or_equal_to: "height must be less than or equal to %{length} pixel."
-      dimension_width_equal_to: "width must be equal to %{length} pixel."
-      dimension_height_equal_to: "height must be equal to %{length} pixel."
-      aspect_ratio_not_square: "must be a square image"
-      aspect_ratio_not_portrait: "must be a portrait image"
-      aspect_ratio_not_landscape: "must be a landscape image"
-      aspect_ratio_is_not: "must have an aspect ratio of  %{aspect_ratio}"
-      aspect_ratio_unknown: "has an unknown aspect ratio"
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -162,6 +141,7 @@ en_FR:
   cardholder_name: "Cardholder name"
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
+  additional_information: "Additional Information"
   devise:
     passwords:
       spree_user:
@@ -3471,6 +3451,7 @@ en_FR:
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
+    show_api_key_view_toggled: "Show API key view has been changed!"
     my_account: "My account"
     date: "Date"
     time: "Time"
@@ -4023,10 +4004,16 @@ en_FR:
         connection_failed: "Could not connect to PayPal."
         generic_error: "PayPal failed. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Regenerate Key"
+        title: API key
+      developer_settings:
+        title: Developer Settings
       form:
         account_settings: Account Settings
       show:
         tabs:
+          developer_settings: Developer Settings
           orders: Orders
           cards: Credit Cards
           transactions: Transactions
@@ -4069,6 +4056,7 @@ en_FR:
       authorised_shops:
         shop_name: "Shop Name"
         allow_charges?: "Allow Charges to Default Card?"
+        no_default_saved_cards_tooltip: You need to mark one credit card as default to allow charges.
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
     api:
@@ -4087,6 +4075,7 @@ en_FR:
       shipment:
         cannot_ready: "Cannot ready shipment."
       invalid_taxonomy_id: "Invalid taxonomy id."
+      toggle_api_key_view: "Show API key view for user"
     activerecord:
       models:
         spree/payment:
@@ -4133,3 +4122,13 @@ en_FR:
       x_years:
         one: "1 year"
         other: "%{count} years"
+  errors:
+    not_found:
+      title: "The page you were looking for doesn't exist (404)"
+      message_html: "<b> Please try again </b> <p> This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/'> Home </a> and try again. </p> <b> Contact support </b> <p> f the problem persists or is urgent, please tell us about it. </p>"
+    internal_server_error:
+      title: "We're sorry, but something went wrong (500)"
+      message_html: "<b> Please try again </b> <p> This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/''> Home </a>and try again. </p> <b> We're on it </b> <p>If you have seen this problem before, we probably already know about it and are working on a fix. We record all the errors that come up. </p> <b> Contact support </b> <p> If the problem persists or is urgent, please tell us about it. </p>"
+    unprocessable_entity:
+      title: "The change you wanted was rejected (422)"
+      message_html: "<p> The change you wanted was rejected. Maybe you tried to change something you don't have access to. <br><h3><a href='/' > Return home </a></h3></p>"

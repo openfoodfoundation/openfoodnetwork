@@ -3468,6 +3468,8 @@ nl_BE:
     paypal:
       refund_amount: "Bedrag"
     users:
+      api_keys:
+        regenerate_key: "Regenereer Sleutel"
       form:
         account_settings: Rekeningsinstellingen
       show:

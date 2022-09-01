@@ -64,6 +64,16 @@ pt_BR:
   stripe:
     error_code:
       incorrect_number: "O número do cartão está incorreto."
+      invalid_number: "O número do cartão não é um número válido."
+      invalid_expiry_month: "O mês de validade do cartão é inválido. "
+      invalid_expiry_year: "O ano da validade do cartão é inválido. "
+      invalid_cvc: "O código de segurança do cartão é inválido. "
+      expired_card: "O cartão está vencido. "
+      incorrect_cvc: "O código de segurança do cartão está incorreto. "
+      incorrect_zip: "O código de área do cartão não permitiu a validação. "
+      card_declined: "O cartão foi recusado. "
+      missing: "Este cliente não possui um cartão para cobrança. "
+      processing_error: "Um erro ocorreu ao processar o cartão. "
   activemodel:
     errors:
       messages:
@@ -159,7 +169,7 @@ pt_BR:
       email_welcome: "Bem-vindo"
       email_registered: "é agora parte de"
       email_userguide_html: "O Guia do Usuário com suporte detalhado para gerenciar sua conta está aqui: %{link}"
-      userguide: "Guia do Usuario do Open Food Brasil"
+      userguide: "Guia do Usuario da Ajunta"
       email_admin_html: "Você pode gerenciar sua conta entrando no %{link} ou clicando na engrenagem no canto superior direito da página, e selecionando Administração."
       admin_panel: "Painel do Administrador"
       email_community_html: "Nós também temos um fórum online para discussão da comunidade sobre a plataforma e os desafios únicos de gerir organizações de alimentos. Você está convidado a participar. Estamos evoluindo constantemente e suas contribuições irão moldar o que acontece a seguir.  %{link}"
@@ -214,12 +224,12 @@ pt_BR:
       other:
         title: Outras Falhas(%{count} pedidos)
         explainer: O processamento automático desses pedidos falhou por um motivo desconhecido. Isso não deve ocorrer, entre em contato conosco se você está vendo isso.
-  home: "OFB"
-  title: "Open Food Brasil"
+  home: "Ajunta"
+  title: "Ajunta"
   welcome_to: "Bem vindo a"
   site_meta_description: "A nossa proposta é conectar agricultoras/es, produtoras/es e consumidoras/es que estão próximos entre si. Buscamos, assim, potencializar a circulação e a comercialização de produtos agroecológicos, orgânicos e artesanais em circuitos curtos, bem como criar novas formas de relação, orientadas pela troca, diálogo e confiança."
   search_by_name: Procurar por nome ou localidade
-  producers_join: Produtores nacionais estão convidados a se unirem à Open Food Brasil.
+  producers_join: Produtores nacionais estão convidados a se ajuntarem!
   charges_sales_tax: Cobra imposto sobre bens e serviços?
   enterprise_permissions: "Permissões da Iniciativa"
   print_invoice: "Imprimir fatura"
@@ -776,9 +786,9 @@ pt_BR:
           permalink: Permalink (sem espaços)
           permalink_tip: "Esse link é usado para criar a URL para a sua loja: %{link}nome-loja/loja"
           link_to_front: Link para a loja
-          link_to_front_tip: Um link direto para a sua loja virtual na Open Food Brasil.
+          link_to_front_tip: Um link direto para a sua loja virtual na Ajunta.
           ofn_uid: OFN UID
-          ofn_uid_tip: O ID exclusivo usado para identificar a iniciativa na Open Food Brasil.
+          ofn_uid_tip: O ID exclusivo usado para identificar a iniciativa na Ajunta.
         shipping_methods:
           name: "Nome"
           applies: "Ativo?"
@@ -835,14 +845,14 @@ pt_BR:
           linkedin_placeholder: "ex. www.linkedin.com/in/YourNameHere"
         stripe_connect:
           connect_with_stripe: "Conectar com Stripe"
-          stripe_connect_intro: "Para aceitar pagamentos usando cartão de crédito, você precisará conectar sua conta Stripe à Open Food Brasil. Use o botão à direita para começar."
+          stripe_connect_intro: "Para aceitar pagamentos usando cartão de crédito, você precisará conectar sua conta Stripe à Ajunta. Use o botão à direita para começar."
           stripe_account_connected: "Conta Stripe conectada"
           disconnect: "Desconectar conta"
           confirm_modal:
             title: Conectar com Stripe
-            part1: Stripe é um serviço de processamento de pagamento que permite às lojas da OFB aceitarem pagamentos com cartão de crédito dos compradores.
-            part2: Para usar esse recurso, você deve conectar sua conta Stripe à OFB. Ao clicar em "Concordo" abaixo, você será redirecionado para o site Stripe onde você pode conectar uma conta já existente ou criar uma nova, caso você ainda não tenha uma.
-            part3: Isso irá permitir que a Open Food Brasil aceite pagamentos com cartão de crédito em seu nome. Por favor, note que você deverá manter a sua própria conta Stripe, pagar as taxas e lidar com todos os estornos e serviço ao cliente.
+            part1: Stripe é um serviço de processamento de pagamento que permite às lojas da Ajunta aceitarem pagamentos com cartão de crédito dos compradores.
+            part2: Para usar esse recurso, você deve conectar sua conta Stripe à Ajunta. Ao clicar em "Concordo" abaixo, você será redirecionado para o site Stripe onde você pode conectar uma conta já existente ou criar uma nova, caso você ainda não tenha uma.
+            part3: Isso irá permitir que a Ajunta aceite pagamentos com cartão de crédito em seu nome. Por favor, note que você deverá manter a sua própria conta Stripe, pagar as taxas e lidar com todos os estornos e serviço ao cliente.
             i_agree: Eu concordo
             cancel: Cancelar
         tag_rules:
@@ -891,22 +901,22 @@ pt_BR:
         producer: Produtor
       change_type_form:
         producer_profile: Perfil Simples
-        connect_ofn: Conecte-se através da OFB
+        connect_ofn: Conecte-se através da Ajunta
         always_free: SEMPRE GRATUITO
-        producer_description_text: Adicione os seus produtos à Open Food Brasil, permitindo que as centrais os comercialize em suas lojas.
+        producer_description_text: Adicione os seus produtos à Ajunta, permitindo que as centrais os comercialize em suas lojas.
         producer_shop: Loja de Produtor
         sell_your_produce: 'Venda seus próprios produtos '
-        producer_shop_description_text: Venda seus produtos diretamente aos compradores através da sua própria loja virtual na Open Food Brasil.
+        producer_shop_description_text: Venda seus produtos diretamente aos compradores através da sua própria loja virtual na Ajunta.
         producer_shop_description_text2: Uma Loja de Produtor vende ou distribui apenas produtos próprios. Se você quiser vender produtos produzidos por outras pessoas ou iniciativas, selecione 'Central de Produtor'.
         producer_hub: Central de produtor
         producer_hub_text: Comercialize seus próprios produtos e de outros produtores
         producer_hub_description_text: Escolha este tipo de perfil se a sua iniciativa funciona como um intermediário, ou seja, ela vende / distribui produtos seus e de outros produtores também
         profile: Perfil Simples
         get_listing: Obter uma listagem
-        profile_description_text: As pessoas podem te encontrar e te contactar na Open Food Brasil. Sua iniciativa estará visível no mapa e poderá ser encontrada em buscas.
+        profile_description_text: As pessoas podem te encontrar e te contactar na Ajunta. Sua iniciativa estará visível no mapa e poderá ser encontrada em buscas.
         hub_shop: Loja da central
         hub_shop_text: Comercialize produtos de outros produtores
-        hub_shop_description_text: Sua iniciativa é a espinha dorsal do seu sistema de produção e consumo local. Você agrega produtos de outras iniciativas e produtores, e comercializa através da sua loja na Open Food Brasil.
+        hub_shop_description_text: Sua iniciativa é a espinha dorsal do seu sistema de produção e consumo local. Você agrega produtos de outras iniciativas e produtores, e comercializa através da sua loja na Ajunta.
         choose_option: Por favor escolha uma das opções acima.
         change_now: Mudar agora
       enterprise_user_index:
@@ -930,7 +940,7 @@ pt_BR:
         title: Nova iniciativa
         back_link: Voltar à lista de iniciativas
       welcome:
-        welcome_title: Bem-vindo à Open Food Brasil!
+        welcome_title: Bem-vindo à Ajunta!
         welcome_text: Você criou com sucesso uma
         next_step: Próximo passo
         choose_starting_point: 'Escolha o seu tipo de perfil:'
@@ -1277,7 +1287,7 @@ pt_BR:
   shared:
     mailers:
       powered_by:
-        open_food_network: "Open Food Brasil"
+        open_food_network: "Ajunta"
         powered_html: "Esta compra é possibilitada pela %{open_food_network}."
     menu:
       cart:
@@ -1295,20 +1305,20 @@ pt_BR:
       mobile_menu:
         cart: "Carrinho"
     register_call:
-      selling_on_ofn: "Quer fazer parte da Open Food Brasil?"
+      selling_on_ofn: "Quer fazer parte da Ajunta?"
       register: "Registre aqui a sua iniciativa"
     footer:
       footer_secure: "Seguro e confiável."
-      footer_secure_text: "A Open Food Brasil utiliza a criptografia SSL (2048 bit RSA) para manter suas informações em segurança. Nossos servidores não guardam os detalhes do seu cartão de crédito e os pagamentos são processados por serviços compatíveis com PCI."
+      footer_secure_text: "A Ajunta utiliza a criptografia SSL (2048 bit RSA) para manter suas informações em segurança. Nossos servidores não guardam os detalhes do seu cartão de crédito e os pagamentos são processados por serviços compatíveis com PCI."
       footer_contact_headline: "Mantenha contato"
       footer_contact_email: "Envie-nos um e-mail"
       footer_nav_headline: "Navegar"
       footer_join_headline: "Junte-se a nós"
-      footer_join_body: "Crie uma lista de ofertas, loja ou cooperativa na Open Food Brasil."
+      footer_join_body: "Crie uma lista de ofertas, loja ou cooperativa na Ajunta."
       footer_join_cta: "Quero saber mais!"
       footer_legal_call: "Leia nosso"
       footer_legal_visit: "Nos encontre em "
-      footer_legal_text_html: "A Open Food Brasil é uma plataforma grátis e open-source. Nosso conteúdo está sob licença de %{content_license} e nosso código de %{code_license}."
+      footer_legal_text_html: "A Ajunta é uma plataforma grátis e open-source. Nosso conteúdo está sob licença de %{content_license} e nosso código de %{code_license}."
       footer_data_text_with_privacy_policy_html: "Nós cuidamos bem dos seus dados. Veja nossos %{privacy_policy} e %{cookies_policy}"
       footer_data_text_without_privacy_policy_html: "Nós cuidamos bem dos seus dados. Veja nosso %{cookies_policy}"
       footer_data_privacy_policy: "política de Privacidade"
@@ -1460,11 +1470,11 @@ pt_BR:
   card_could_not_be_removed: Desculpe, o cartão não pode ser removido
   invalid_credit_card: "Cartão de crédito inválido"
   ie_warning_headline: "Seu navegador está desatualizado :("
-  ie_warning_text: "Para a melhor experiência na Open Food Brasil, recomendamos que você atualize seu navegador:"
+  ie_warning_text: "Para a melhor experiência na Ajunta, recomendamos que você atualize seu navegador:"
   ie_warning_chrome: Baixar Chrome
   ie_warning_firefox: Baixar Firefox
   ie_warning_ie: Atualizar Internet Explorer
-  ie_warning_other: "Não consegue atualizar o navegador? Tente acessar a Open Food Brasil pelo smartphone :)"
+  ie_warning_other: "Não consegue atualizar o navegador? Tente acessar a Ajunta pelo smartphone :)"
   legal:
     cookies_policy:
       header: "Como usamos cookies"
@@ -1488,12 +1498,12 @@ pt_BR:
       cookie_matomo_heatmap_desc: "Cookie Matomo Heatmap e gravação de sessão."
       cookie_matomo_ignore_desc: "Cookie usado para excluir o usuário de ser rastreado."
       disabling_cookies_header: "Aviso ao desativar cookies"
-      disabling_cookies_desc: "Como usuário, você sempre pode permitir, bloquear ou excluir os cookies da Open Food Brasil ou de qualquer outro site sempre que desejar através do controle de configuração do navegador. Cada navegador tem um agente diferente. Aqui estão os links:"
+      disabling_cookies_desc: "Como usuário, você sempre pode permitir, bloquear ou excluir os cookies da Ajunta ou de qualquer outro site sempre que desejar através do controle de configuração do navegador. Cada navegador tem um agente diferente. Aqui estão os links:"
       disabling_cookies_firefox_link: "https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
       disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
       disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
-      disabling_cookies_note: "Mas lembre-se de que, se você excluir ou modificar os cookies essenciais usados pelo Open Food Brasil, o site não funcionará, você não poderá adicionar nada ao carrinho nem fazer checkout, por exemplo."
+      disabling_cookies_note: "Mas lembre-se de que, se você excluir ou modificar os cookies essenciais usados pela Ajunta, o site não funcionará, você não poderá adicionar nada ao carrinho nem fazer checkout, por exemplo."
     cookies_banner:
       cookies_usage: "Este site usa cookies para tornar sua navegação segura e sem atritos, e para nos ajudar a entender como você a utiliza para melhorar os recursos que oferecemos."
       cookies_definition: "Cookies são arquivos de texto muito pequenos que são armazenados no seu computador quando você visita alguns sites."
@@ -1508,7 +1518,7 @@ pt_BR:
   brandstory_part2: "Para tornar essa ideia real, trouxemos a plataforma Open Food Network para o Brasil. Nosso código (a receita do site) é aberto e seu desenvolvimento é orientado globalmente pelas/os interessadas/os e baseado em uma cultura de autonomia e transparência."
   brandstory_part3: "Uma maneira de incentivar a colaboração entre quem produz, vende e compra. Uma maneira de contar histórias e lidar com a logística. Uma maneira de transformar seu consumo de alimentos em mudanças positivas para a sociedade."
   brandstory_part4: "Colabore com essa (des)construção!"
-  brandstory_part5_strong: "Open Food Brasil"
+  brandstory_part5_strong: "Ajunta"
   brandstory_part6: "–"
   system_headline: "Como comprar:"
   system_step1: "1. Busca"
@@ -1770,7 +1780,7 @@ pt_BR:
   products_no_results_html: "Desculpe, nenhuma busca encontrada para %{query}."
   products_clear_search: "Nova busca"
   search_no_results_html: "Sinto muito, nenhum resultado encontrado para %{query}. Que tal tentar outra busca?"
-  components_profiles_popover: "Perfis Simples não possuem uma loja virtual na Open Food Brasil, mas podem ter suas próprias lojas físicas ou online em outro endereço"
+  components_profiles_popover: "Perfis Simples não vendem seus produtos na Ajunta, mas podem ter suas próprias lojas físicas ou online em outro endereço"
   components_profiles_show: "Mostrar perfis"
   components_filters_nofilters: "Nenhum filtro"
   components_filters_clearfilters: "Limpar filtros"
@@ -1797,14 +1807,14 @@ pt_BR:
   groups_signup_motivation3: Nós sabemos que você tem grandes idéias e queremos ajudar. Compartilharemos nossos conhecimentos, redes e recursos. Sabemos que o isolamento não cria mudanças, então fazemos uma parceria com você.
   groups_signup_motivation4: Vamos até onde você está.
   groups_signup_motivation5: Você pode ser um coletivo de produtores, distribuidores, indústria ou governo local, organizados através de uma central.
-  groups_signup_motivation6: Seja qual for o seu papel no seu sistema de produção e consumo local, estamos prontos para ajudar. Se você se pergunta como a Open Food Brasil é ou como está fazendo sua parte no mundo, venha ter uma conversa.
+  groups_signup_motivation6: Seja qual for o seu papel no seu sistema de produção e consumo local, estamos prontos para ajudar. Se você se pergunta como a Ajunta é ou como está fazendo sua parte no mundo, venha ter uma conversa.
   groups_signup_motivation7: Fazemos movimentos de alimentos com mais sentido.
   groups_signup_motivation8: 'Se você precisa ativar suas redes de contatos, oferecemos uma plataforma para conversas e ações. Você precisa de engajamento real. Vamos ajudar a alcançar todos os jogadores, todas as partes interessadas, em todos os setores. '
   groups_signup_motivation9: 'Se você precisa de recursos, nós te conectamos a uma rede global de parceiros. '
   groups_signup_pricing: Conta de Grupos
   groups_signup_studies: Estudos de Caso
   groups_signup_contact: Pronto para conversar?
-  groups_signup_contact_text: "Entre em contato para descobrir o que a OFB pode fazer por você"
+  groups_signup_contact_text: "Entre em contato para descobrir o que a Ajunta pode fazer por você"
   groups_signup_detail: "Aqui está o detalhe. "
   login_invalid: "E-mail ou senha inválidos"
   producers_about: Sobre nós
@@ -1837,17 +1847,17 @@ pt_BR:
   name_or_sku: "NOME OU SKU"
   register_title: Registre-se
   sell_title: "Registrar"
-  sell_headline: "Faça parte da Open Food Brasil."
+  sell_headline: "Faça parte da Ajunta."
   sell_motivation: "Queremos conhecer seus produtos!"
   sell_producers: "Produtores"
   sell_hubs: "Centrais"
   sell_groups: "Grupos"
   sell_producers_detail: "Crie um perfil para a sua atividade em apenas alguns minutos. A qualquer momento você pode transformá-lo em uma loja online e vender seus produtos diretamente aos compradores."
-  sell_hubs_detail: "Crie um perfil para a sua iniciativa ou organização na Open Food Brasil e comece a distribuir os produtos dos seus fornecedores locais. "
+  sell_hubs_detail: "Crie um perfil para a sua iniciativa ou organização na Ajunta e comece a distribuir os produtos dos seus fornecedores locais. "
   sell_groups_detail: "Organize um lista personalizada de iniciativas (cultivos, cooperativas, feiras, grupos de compra, etc.) para sua região ou organização. "
   sell_user_guide: "Saiba mais acessando nosso guia. "
-  sell_listing_price: "A OFB está em sua versão beta. Por acreditarmos que a plataforma pode colaborar com a circulação e a comercialização de comida de verdade no período de quarentena imposto pela atual pandemia, sua utilização permanecerá gratuita nos próximos meses."
-  sell_embed: "Também podemos incorporar uma loja da Open Food Brasil em seu próprio site personalizado ou criar um site específico para a sua região. "
+  sell_listing_price: "Registre grátis a sua iniciativa na Ajunta. Você também pode abrir uma loja e começar a vender seus produtos, sem pagar nada, até R$ 1000 por mês em vendas. Se você vender mais do que isso, pedimos uma contribuição de R$ 50 mensais para nos ajudar a manter o projeto de pé!"
+  sell_embed: "Também podemos incorporar uma loja da Ajunta em seu próprio site personalizado ou criar um site específico para a sua região. "
   sell_ask_services: "Pergunte-nos sobre nossos serviços."
   shops_title: Lojas
   shops_headline: 'Compras, transformadas. '
@@ -1973,9 +1983,9 @@ pt_BR:
         registration_promo_image: "Imagem horizontal para seu perfil"
         registration_about_us: "'Sobre Nós'"
         registration_outcome_headline: "O que eu ganho?"
-        registration_outcome1_html: "Seu perfil ajuda as pessoas a te <strong>encontrarem</strong> e entrarem em <strong>contato</strong> com você na Open Food Brasil."
+        registration_outcome1_html: "Seu perfil ajuda as pessoas a te <strong>encontrarem</strong> e entrarem em <strong>contato</strong> com você na Ajunta."
         registration_outcome2: "Use esse espaço para contar a história da sua iniciativa e divulgar o seu trabalho."
-        registration_outcome3: "Esse é também o primeiro passo para começar a fornecer ou comercializar seus produtos na Open Food Brasil."
+        registration_outcome3: "Esse é também o primeiro passo para começar a fornecer ou comercializar seus produtos na Ajunta."
         registration_action: "Vamos começar!"
       details:
         title: "Detalhes"
@@ -2027,7 +2037,7 @@ pt_BR:
         title: "Sobre"
         headline: "Boa!"
         message: "Vamos inserir mais detalhes sobre"
-        success: "Sucesso! %{enterprise} adicionado à Open Food Brasil"
+        success: "Sucesso! %{enterprise} já faz parte da Ajunta."
         registration_exit_message: "Se você sair deste assistente em qualquer estágio, poderá continuar a criar seu perfil acessando a interface do administrador."
         enterprise_description: "Descrição Curta"
         enterprise_description_placeholder: "Uma pequena frase descrevendo a sua iniciativa"
@@ -2067,7 +2077,7 @@ pt_BR:
         enterprise_final_step: "Último passo!"
         enterprise_social_text: "Como as pessoas podem encontrar o/a %{enterprise} online?"
         website: "Website"
-        website_placeholder: "ex: openfoodbrasil.com.br"
+        website_placeholder: "ex: ajunta.com.br"
         facebook: "Facebook"
         facebook_placeholder: "ex: www.facebook.com/suapagina"
         linkedin: "LinkedIn"
@@ -2084,7 +2094,7 @@ pt_BR:
       finished:
         headline: "Pronto!"
         thanks: "Obrigado por preencher os detalhes para %{enterprise}."
-        login: "Você pode alterar ou atualizar suas informações a qualquer momento fazendo o login na Open Food Brasil e entrando na seção 'Admin'."
+        login: "Você pode alterar ou atualizar suas informações a qualquer momento fazendo o login na Ajunta e entrando na seção 'Admin'."
         action: "Vá para o Painel de Controle da Iniciativa"
   back: "Voltar"
   continue: "Continuar"
@@ -2593,16 +2603,16 @@ pt_BR:
           hub_profile: Perfil da central
           hub_profile_cost: "CUSTO: SEMPRE GRATUITO"
           hub_profile_text1: >
-              As pessoas podem encontrá-lo e contatá-lo na Open Food Brasil. Sua iniciativa
-              estará visível no mapa e poderá ser encontrada em listas.
+              As pessoas podem te ver e entrar em contato com você através da Ajunta.
+              Sua iniciativa estará visível no mapa e nas listas.
           hub_profile_text2: >
               Ter um perfil e fazer conexões dentro do seu sistema alimentar local
-              através da Open Food Brasil será sempre gratuito.
+              através da Ajunta será sempre gratuito.
           hub_shop: Loja da central
           hub_shop_text1: >
               Sua iniciativa é a espinha dorsal do seu sistema alimentar local. Você
               agrega produtos de outras iniciativas e pode vendê-lo através de sua
-              loja na Open Food Brasil.
+              loja na Ajunta.
           hub_shop_text2: >
               Centrais podem assumir várias formas, sejam eles uma cooperativa de
               alimentos, um grupo de consumo, varejista, atacadista ou uma mercearia
@@ -2625,31 +2635,30 @@ pt_BR:
           profile_only_text2: >
               Se você preferir se concentrar na produção de alimentos e quer deixar
               o trabalho de vendê-lo para outra pessoa, você não precisa de uma loja
-              na Open Food Brasil.
+              na Ajunta.
           profile_only_text3: >
-              Adicione seus produtos à Open Food Brasil, permitindo que as centrais
-              armazenem seus produtos em suas lojas.
+              Adicione seus produtos à Ajunta, permitindo que as centrais armazenem
+              seus produtos em suas lojas.
           producer_shop: Loja de Produtor
           producer_shop_text1: >
               Venda os seus produtos diretamente aos compradores através da sua própria
-              loja na Open Food Brasil.
+              loja na Ajunta.
           producer_shop_text2: >
               Uma Loja de Produtor comercializa ou distribui somente produções próprias.
               Se quiser movimentar bens produzidos por outras pessoas ou iniciativas,
               além dos seus próprios, por favor selecione 'Central de Produtor'.
           producer_hub: Central de produtor
           producer_hub_text1: >
-              A sua iniciativa é a espinha dorsal do seu sistema de produção e consumo
-              local. Através da sua loja virtual na Open Food Brasil você pode vender
-              os seus próprios produtos, assim como produtos agregados de outras iniciativas.
+              A sua iniciativa é essencial para nosso sistema alimentar. Na Ajunta
+              você pode vender os seus próprios produtos, bem como produtos  de outros
+              fornecedores.
           producer_hub_text2: >
               Central de produtor pode assumir várias formas, seja uma horta local
               comunitária, um CSA, cooperativa ou associação, formalizada ou não.
           producer_hub_text3: >
-              A Open Food Brasil pretende apoiar tantos modelos de centrais quanto
-              possível, por isso, não importa a sua situação, queremos fornecer as
-              ferramentas que você precisa para administrar sua organização ou iniciativas
-              locais de alimentos.
+              A Ajunta quer ajudar a todos os modelos de distribuição e comercialização.
+              Por isso, não importa o tamanho e como funciona a sua iniciativa, queremos
+              fornecer as ferramentas que você precisa para gerenciar o seu projeto.
           get_listing: Obter uma listagem
           always_free: SEMPRE GRATUITO
           sell_produce_others: Comercialize produtos de outros
@@ -2662,13 +2671,12 @@ pt_BR:
               e produzem alimentos e/ou produtos artesanais.
           producer_text2: >
               Os produtores também podem desempenhar outras funções, como agregar
-              alimentos de outras iniciativas e vendê-lo através de uma loja da Open
-              Food Brasil.
+              alimentos de outras iniciativas e vendê-lo através de uma loja da Ajunta.
           non_producer: Não produtor
           non_producer_text1: >
-              Os não produtores não produzem alimentos próprios, o que significa que
-              eles não podem criar seus próprios produtos para venda através da Open
-              Food Brasil.
+              Os 'não-produtores' são os usuários que não produzem alimentos, o que
+              significa que eles não podem criar ou vender produtos próprios na Ajunta,
+              somente os de outros fornecedores.
           non_producer_text2: >
               Em vez disso, os não produtores se especializam em ligar os produtores
               ao comedor final, quer seja agregando, classificando, embalando, vendendo
@@ -2863,7 +2871,7 @@ pt_BR:
       users:
         order: "Pedido"
     registration:
-      welcome_to_ofn: "Bem-vindo à Open Food Brasil!"
+      welcome_to_ofn: "Bem-vindo à Ajunta!"
       signup_or_login: "Faça seu cadastro ou login para começar"
       have_an_account: "Já possui um conta?"
       action_login: "Entrar agora"
@@ -3176,7 +3184,7 @@ pt_BR:
     display_currency: "Mostrar moeda"
     choose_currency: "Escolha a Moeda"
     mail_method_settings: "Configurações do método de email"
-    mail_settings_notice_html: "Algumas das seguintes configurações não podem ser editadas e estão listadas aqui para propósitos de 'debugging'. Alterações podem ser realizadas atualizando os 'secrets' e provisionando-os com o <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Entre contato com o global team para mais detalhes. "
+    mail_settings_notice_html: "Algumas das seguintes configurações não podem ser editadas e estão listadas aqui apenas para propósitos de 'debugging'. Alterações podem ser realizadas atualizando os 'secrets' e provisionando-os com o <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Entre contato com o global team para mais detalhes. "
     general: "Geral"
     enable_mail_delivery: "Ativar entrega de correio"
     send_mails_as: "Enviar correio como"
@@ -3425,7 +3433,7 @@ pt_BR:
           order_total: "total de pedidos"
       overview:
         enterprises_header:
-          ofn_with_tip: Iniciativas são produtores e/ou centrais e são a unidade básica de organização da Open Food Brasil
+          ofn_with_tip: Iniciativas podem ser produtores e/ou centrais (distribuidores) e são a unidade básica de organização na Ajunta.
         enterprise_row:
           has_no_enterprise_fees: "não possui taxas de iniciativa"
           has_no_payment_methods: "não possui métodos de pagamento"
@@ -3735,10 +3743,10 @@ pt_BR:
             Se continuar a ter problemas, por favor não hesite em contactar-nos.
         subject: "Instruções para redefinição de senha"
       confirmation_instructions:
-        subject: "Confirme sua conta na OFB"
+        subject: "Confirme sua conta na Ajunta"
     payment_mailer:
       authorize_payment:
-        subject: "Favor autorizar seu pagamento para %{distributor}na OFB"
+        subject: "Favor autorizar seu pagamento para %{distributor}na Ajunta"
         instructions: "Seu pagamento de %{amount}para %{distributor}necessita uma autenticação adicional. Favor visitar o seguinte endereço URL para autorizar o seu pagamento:"
       authorization_required:
         subject: "Um pagamento requer autorização do comprador"
@@ -3796,6 +3804,8 @@ pt_BR:
         connection_failed: "Não foi possível conectar ao PayPal."
         generic_error: "PayPal falhou. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Regenerar chave"
       form:
         account_settings: Configurações da conta
       show:

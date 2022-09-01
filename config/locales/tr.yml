@@ -3830,6 +3830,8 @@ tr:
         connection_failed: "PayPal'a bağlanılamadı."
         generic_error: "PayPal başarısız oldu. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Anahtarı Yeniden Oluştur"
       form:
         account_settings: Hesap Ayarları
       show:

@@ -61,27 +61,6 @@ de_CH:
             using_producer_stock_settings_but_count_on_hand_set: "muss leer sein, da die Einstellungen des Produzentenbestands verwendet werden"
             on_demand_but_count_on_hand_set: "muss leer sein, wenn unbegrenzt verfügbar oder die Produktion auf Bestellung erfolgt"
             limited_stock_but_no_count_on_hand: "muss angegeben werden, da nur begrenzte Lagerbestände verfügbar sind"
-  errors:
-    messages:
-      content_type_invalid: "hat ein ungültiges Datenformat"
-      file_size_out_of_range: "Dateigrösse %{file_size} liegt ausserhalb des zulässigen Bereichs"
-      limit_out_of_range: "Gesamtzahl liegt ausserhalb des zulässigen Bereichs"
-      image_metadata_missing: "ist kein gültiges Bild"
-      dimension_min_inclusion: "muss grösser oder gleich %{width} x %{height} Pixel sein"
-      dimension_max_inclusion: "muss kleiner oder gleich %{width} x %{height} Pixel sein"
-      dimension_width_inclusion: "Breite liegt nicht zwischen %{min} und %{max} Pixel"
-      dimension_height_inclusion: "Höhe liegt nicht zwischen %{min} und %{max} Pixel"
-      dimension_width_greater_than_or_equal_to: "Breite muss grösser oder gleich %{length} Pixel sein"
-      dimension_height_greater_than_or_equal_to: "Höhe muss grösser oder gleich %{length} Pixel sein"
-      dimension_width_less_than_or_equal_to: "Breite muss kleiner oder gleich %{length} Pixel sein"
-      dimension_height_less_than_or_equal_to: "Höhe muss kleiner oder gleich %{length} Pixel sein"
-      dimension_width_equal_to: "Breite muss %{length} Pixel sein"
-      dimension_height_equal_to: "Höhe muss %{length} Pixel sein"
-      aspect_ratio_not_square: "muss ein quadratisches Bild sein"
-      aspect_ratio_not_portrait: "muss ein Bild im Hochformat sein"
-      aspect_ratio_not_landscape: "muss ein Bild im Querformat sein"
-      aspect_ratio_is_not: "muss ein Seitenverhältnis von %{aspect_ratio} haben"
-      aspect_ratio_unknown: "hat ein unbekanntes Seitenverhältnis"
   stripe:
     error_code:
       incorrect_number: "Die Kreditkartennummer ist fehlerhaft."
@@ -4004,6 +3983,8 @@ de_CH:
         connection_failed: "Es konnte keine Verbindung zu PayPal hergestellt werden."
         generic_error: "PayPal ist fehlgeschlagen. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Schlüssel neu generieren"
       form:
         account_settings: E-Mail-Adresse und Passwort ändern
       show:

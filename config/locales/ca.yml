@@ -61,11 +61,6 @@ ca:
             using_producer_stock_settings_but_count_on_hand_set: "ha d'estar en blanc perquè s'utilitza la configuració d'estoc de la productora"
             on_demand_but_count_on_hand_set: "ha d'estar en blanc si és sota demanda"
             limited_stock_but_no_count_on_hand: "cal especificar-se perquè força existències limitades"
-  errors:
-    messages:
-      file_size_out_of_range: "la mida %{file_size} no és entre el rang necessari"
-      limit_out_of_range: "el total està fora del marge"
-      image_metadata_missing: "no és una imatge vàlida"
   stripe:
     error_code:
       incorrect_number: "El número de la targeta és incorrecte."
@@ -3843,6 +3838,8 @@ ca:
         connection_failed: "No s'ha pogut connectar a PayPal."
         generic_error: "PayPal ha fallat. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Regenerar la clau"
       form:
         account_settings: Configuració del compte
       show:

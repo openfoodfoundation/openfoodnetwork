@@ -3578,6 +3578,8 @@ es_CO:
     paypal:
       refund_amount: "Cantidad"
     users:
+      api_keys:
+        regenerate_key: "Regenerar llave"
       form:
         account_settings: Configuración de la cuenta
       show:

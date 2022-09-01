@@ -3941,6 +3941,8 @@ en_US:
         connection_failed: "Could not connect to PayPal."
         generic_error: "PayPal failed. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Regenerate Key"
       form:
         account_settings: Account Settings
       show:

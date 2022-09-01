@@ -61,13 +61,6 @@ hu:
             using_producer_stock_settings_but_count_on_hand_set: "üresnek kell lennie, mert a gyártói készlet beállításait használja"
             on_demand_but_count_on_hand_set: "Igény esetén üresnek kell lennie"
             limited_stock_but_no_count_on_hand: "meg kell adni, mert korlátozott a készlet"
-  errors:
-    messages:
-      file_size_out_of_range: "a 1%{file_size} mérete nem esik bele a kívánt tartományba"
-      limit_out_of_range: "az összmenyiség kívül esik a megengedett tartományon"
-      image_metadata_missing: "nem használható kép"
-      aspect_ratio_not_square: "négyzet alakú képnek kell lennie"
-      aspect_ratio_not_portrait: "portré képnek kell lennie"
   stripe:
     error_code:
       incorrect_number: "A kártyaszám hibás."
@@ -2421,7 +2414,7 @@ hu:
   edit_profile_details: "Profiladatok szerkesztése"
   edit_profile_details_etc: "Változtasd meg profilod leírását, képeidet stb."
   order_cycle: "Rendelési ciklus"
-  order_cycles: "Ciklusok rendelése"
+  order_cycles: "Rendelési ciklusok"
   enterprise_relationships: "Vállalati engedélyek"
   remove_tax: "Távolítsa el az adót"
   first_name_begins_with: "A keresztnév ezzel kezdődik"
@@ -3534,7 +3527,7 @@ hu:
         configuration: "Konfiguráció"
         users: "Felhasználók"
         roles: "Szerepek"
-        order_cycles: "Ciklusok rendelése"
+        order_cycles: "Rendelési ciklusok"
         enterprises: "Vállalkozások"
         enterprise_relationships: "Engedélyek"
         customers: "Ügyfelek"
@@ -3646,7 +3639,7 @@ hu:
             many: "%{count} aktív terméke van"
             other: "%{count} aktív terméke van"
         order_cycles:
-          order_cycles: "Ciklusok rendelése"
+          order_cycles: "Rendelési ciklusok"
           order_cycles_tip: "A rendelési ciklusok határozzák meg, hogy a termékei mikor és hol állnak az ügyfelek rendelkezésére."
           you_have_active:
             zero: "Nincsenek aktív rendelési ciklusai."
@@ -4007,6 +4000,8 @@ hu:
         connection_failed: "Nem sikerült csatlakozni a PayPalhoz."
         generic_error: "A PayPal nem sikerült. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Kulcs újragenerálása"
       form:
         account_settings: Fiók beállítások
       show:

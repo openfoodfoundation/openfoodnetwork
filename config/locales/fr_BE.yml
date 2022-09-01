@@ -60,9 +60,6 @@ fr_BE:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car les paramètres de stock du producteur sont utilisés"
             on_demand_but_count_on_hand_set: "doit être vide si à la demande"
             limited_stock_but_no_count_on_hand: "doit être spécifié car le stock limité est forcé"
-  errors:
-    messages:
-      image_metadata_missing: "n'est pas une image valide"
   stripe:
     error_code:
       incorrect_number: "Le numéro de carte est incorrect."
@@ -3548,6 +3545,8 @@ fr_BE:
     paypal:
       refund_amount: "Quantité"
     users:
+      api_keys:
+        regenerate_key: "Regénération de clé"
       form:
         account_settings: Paramètres du Compte
       show:

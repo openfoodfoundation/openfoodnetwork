@@ -61,27 +61,6 @@ en_GB:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
-  errors:
-    messages:
-      content_type_invalid: "has an invalid content type"
-      file_size_out_of_range: "size %{file_size} is not between required range"
-      limit_out_of_range: "total number is out of range"
-      image_metadata_missing: "is not a valid image"
-      dimension_min_inclusion: "must be greater than or equal to %{width} x %{height} pixel."
-      dimension_max_inclusion: "must be less than or equal to %{width} x %{height} pixel."
-      dimension_width_inclusion: "width is not included between %{min} and %{max} pixel."
-      dimension_height_inclusion: "height is not included between %{min} and %{max} pixel."
-      dimension_width_greater_than_or_equal_to: "width must be greater than or equal to %{length} pixel."
-      dimension_height_greater_than_or_equal_to: "height must be greater than or equal to %{length} pixel."
-      dimension_width_less_than_or_equal_to: "width must be less than or equal to %{length} pixel."
-      dimension_height_less_than_or_equal_to: "height must be less than or equal to %{length} pixel."
-      dimension_width_equal_to: "width must be equal to %{length} pixel."
-      dimension_height_equal_to: "height must be equal to %{length} pixel."
-      aspect_ratio_not_square: "must be a square image"
-      aspect_ratio_not_portrait: "must be a portrait image"
-      aspect_ratio_not_landscape: "must be a landscape image"
-      aspect_ratio_is_not: "must have an aspect ratio of %{aspect_ratio}"
-      aspect_ratio_unknown: "has an unknown aspect ratio"
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -494,6 +473,8 @@ en_GB:
         terms_of_service: "Terms of Service"
         delete: "Delete file"
         confirm_delete: "Are you sure you want to delete the current Terms of Service file?"
+        attachment: "Attachment"
+        create_terms_of_service: "Create Terms of service file"
     number_localization:
       number_localization_settings: "Number Localisation Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
@@ -551,6 +532,8 @@ en_GB:
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
+      destroy:
+        has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
     contents:
       edit:
         title: Content
@@ -3618,6 +3601,10 @@ en_GB:
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
+          selected:
+            zero: "No order selected"
+            one: "1 order selected"
+            other: " %{count}orders selected"
         sortable_header:
           payment_state: "Payment State"
           shipment_state: "Shipment State"
@@ -4020,6 +4007,8 @@ en_GB:
         connection_failed: "Could not connect to PayPal."
         generic_error: "PayPal failed. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Regenerate Key"
       form:
         account_settings: Account Settings
       show:
@@ -4054,6 +4043,7 @@ en_GB:
         total: Total
         paid?: Paid?
         status: Status
+        completed: Completed
         cancelled: Cancelled
       saved_cards:
         default?: Default?
@@ -4065,6 +4055,7 @@ en_GB:
       authorised_shops:
         shop_name: "Shop Name"
         allow_charges?: "Allow Charges to Default Card?"
+        no_default_saved_cards_tooltip: You need to mark one credit card as default to allow charges.
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
     api:

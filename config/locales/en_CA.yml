@@ -61,27 +61,6 @@ en_CA:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because you are using producer stock settings"
             on_demand_but_count_on_hand_set: "must be blank if 'on demand' is used"
             limited_stock_but_no_count_on_hand: "must be specified because you are forcing limited stock"
-  errors:
-    messages:
-      content_type_invalid: "has an invalid content type"
-      file_size_out_of_range: "size %{file_size} is not within required range"
-      limit_out_of_range: "total number is out of range"
-      image_metadata_missing: "is not a valid image"
-      dimension_min_inclusion: "must be greater than or equal to %{width} x %{height} pixels."
-      dimension_max_inclusion: "must be less than or equal to %{width} x %{height} pixels."
-      dimension_width_inclusion: "width is not between %{min} and %{max} pixels."
-      dimension_height_inclusion: "height is not between %{min} and %{max} pixels."
-      dimension_width_greater_than_or_equal_to: "width must be greater than or equal to %{length} pixels."
-      dimension_height_greater_than_or_equal_to: "height must be greater than or equal to %{length} pixels."
-      dimension_width_less_than_or_equal_to: "width must be less than or equal to %{length} pixels."
-      dimension_height_less_than_or_equal_to: "height must be less than or equal to %{length} pixels."
-      dimension_width_equal_to: "width must be equal to %{length} pixels."
-      dimension_height_equal_to: "height must be equal to %{length} pixels."
-      aspect_ratio_not_square: "must be a square image"
-      aspect_ratio_not_portrait: "must be a portrait image"
-      aspect_ratio_not_landscape: "must be a landscape image"
-      aspect_ratio_is_not: "must have an aspect ration of %{aspect_ratio}"
-      aspect_ratio_unknown: "has an unknown aspect ration"
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -3994,6 +3973,8 @@ en_CA:
         connection_failed: "Could not connect to PayPal."
         generic_error: "PayPal failed. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Regenerate Key"
       form:
         account_settings: Account Settings
       show:

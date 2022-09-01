@@ -61,27 +61,6 @@ es_CR:
             using_producer_stock_settings_but_count_on_hand_set: "debe estar en blanco porque está usando la configuración de inventario del productor"
             on_demand_but_count_on_hand_set: "debe estar en blanco si es bajo demanda"
             limited_stock_but_no_count_on_hand: "debe estar especificado porque se ha definido un inventario limitado"
-  errors:
-    messages:
-      content_type_invalid: "tiene un tipo de contenido no válido"
-      file_size_out_of_range: "el tamaño %{file_size} no está entre el rango requerido"
-      limit_out_of_range: "el número total está fuera de rango"
-      image_metadata_missing: "no es una imagen valida"
-      dimension_min_inclusion: "debe ser mayor o igual a %{width}x %{height} píxel."
-      dimension_max_inclusion: "debe ser menor o igual a %{width} x %{height} píxel."
-      dimension_width_inclusion: "el ancho no está incluido entre %{min} y %{max} píxel."
-      dimension_height_inclusion: "la altura no está incluida entre %{min} y %{max} píxel."
-      dimension_width_greater_than_or_equal_to: "el ancho debe ser mayor o igual al %{length} píxel."
-      dimension_height_greater_than_or_equal_to: "la altura debe ser mayor o igual al %{length} píxel."
-      dimension_width_less_than_or_equal_to: "el ancho debe ser menor o igual al %{length} píxel."
-      dimension_height_less_than_or_equal_to: "la altura debe ser menor o igual al %{length} píxel."
-      dimension_width_equal_to: "el ancho debe ser igual al %{length} píxel."
-      dimension_height_equal_to: "la altura debe ser igual al %{length} píxel."
-      aspect_ratio_not_square: "debe ser una imagen cuadrada"
-      aspect_ratio_not_portrait: "debe ser una imagen de retrato"
-      aspect_ratio_not_landscape: "debe ser una imagen de paisaje"
-      aspect_ratio_is_not: "debe tener una relación de aspecto de %{aspect_ratio}"
-      aspect_ratio_unknown: "tiene una relación de aspecto desconocida"
   stripe:
     error_code:
       incorrect_number: "El número de tarjeta es incorrecto."
@@ -3919,6 +3898,8 @@ es_CR:
     paypal:
       refund_amount: "Cantidad"
     users:
+      api_keys:
+        regenerate_key: "Regenerar llave"
       form:
         account_settings: Configuración de la cuenta
       show:

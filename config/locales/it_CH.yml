@@ -3979,6 +3979,8 @@ it_CH:
         connection_failed: "Non riesco a collegarmi a PayPal"
         generic_error: "PayPal fallito. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Rigenera chiave"
       form:
         account_settings: Impostazioni account
       show:

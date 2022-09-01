@@ -4036,6 +4036,8 @@ ar:
         connection_failed: "تعذر الاتصال بـ PayPal."
         generic_error: "فشل PayPal. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "انشاء مفتاح"
       form:
         account_settings: إعدادت الحساب
       show:

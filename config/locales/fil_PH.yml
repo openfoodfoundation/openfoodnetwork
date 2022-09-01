@@ -3451,6 +3451,8 @@ fil_PH:
     paypal:
       refund_amount: "Halaga"
     users:
+      api_keys:
+        regenerate_key: "gumawa muli ng key"
       form:
         account_settings: Setting ng Account
       show:

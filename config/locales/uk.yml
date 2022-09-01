@@ -61,27 +61,6 @@ uk:
             using_producer_stock_settings_but_count_on_hand_set: "має бути порожнім, оскільки використовуються налаштування запасів виробника"
             on_demand_but_count_on_hand_set: "має бути порожнім, якщо на вимогу"
             limited_stock_but_no_count_on_hand: "необхідно вказати, оскільки запаси обмежені"
-  errors:
-    messages:
-      content_type_invalid: "має невірний тип контенту"
-      file_size_out_of_range: "розмір %{file_size} не знаходиться в необхідному діапазоні"
-      limit_out_of_range: "загальна кількість виходить за межі діапазону"
-      image_metadata_missing: "не є дійсним зображенням"
-      dimension_min_inclusion: "має бути більшим або дорівнювати %{width} x %{height} пікселям."
-      dimension_max_inclusion: "має бути меншим або дорівнювати %{width} x %{height} пікселям."
-      dimension_width_inclusion: "ширина не включається між %{min} та %{max} пікселями."
-      dimension_height_inclusion: "висота не включається між %{min} та %{max} пікселями."
-      dimension_width_greater_than_or_equal_to: "ширина має бути більшою або дорівнювати %{length} пікселю."
-      dimension_height_greater_than_or_equal_to: "висота має бути більшою або дорівнювати %{length} пікселям."
-      dimension_width_less_than_or_equal_to: "ширина має бути меншою або дорівнювати %{length} пікселям."
-      dimension_height_less_than_or_equal_to: "висота має бути меншою або дорівнювати %{length} пікселю."
-      dimension_width_equal_to: "ширина має дорівнювати %{length} пікселям."
-      dimension_height_equal_to: "висота має дорівнювати %{length} пікселям."
-      aspect_ratio_not_square: "має бути квадратне зображення"
-      aspect_ratio_not_portrait: "має бути портретне зображення"
-      aspect_ratio_not_landscape: "має бути пейзажним зображенням"
-      aspect_ratio_is_not: "має мати співвідношення сторін %{aspect_ratio}"
-      aspect_ratio_unknown: "має невідоме співвідношення сторін"
   stripe:
     error_code:
       incorrect_number: "Номер картки неправильний."
@@ -4068,6 +4047,8 @@ uk:
         connection_failed: "Не вдалося підключитися до PayPal."
         generic_error: "Збій PayPal. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Регенерувати ключ"
       form:
         account_settings: Налаштування аккаунта
       show:

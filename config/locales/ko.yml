@@ -61,27 +61,6 @@ ko:
             using_producer_stock_settings_but_count_on_hand_set: "생산자 제고 관리를 위해 빈 칸으로 남겨야 합니다."
             on_demand_but_count_on_hand_set: "요구 사항이 있을 경우 빈 칸으로 남겨야 합니다."
             limited_stock_but_no_count_on_hand: "한정된 재고 사항에 따라 명시되어야 합니다."
-  errors:
-    messages:
-      content_type_invalid: "사용 불가한 컨텐츠 타입입니다."
-      file_size_out_of_range: "%{file_size}의 크기는 요구된 범위에 있지 않습니다."
-      limit_out_of_range: "총합이 범위를 넘어섭니다."
-      image_metadata_missing: "가능한 이미지 파일이 아닙니다."
-      dimension_min_inclusion: "%{width} x %{height} 픽셀보다 크거나 같아야 합니다."
-      dimension_max_inclusion: "%{width} x %{height} 픽셀보다 작거나 같아야 합니다."
-      dimension_width_inclusion: "가로의 길이가 %{min} 과 %{max} 픽셀 사이에 있지 않습니다."
-      dimension_height_inclusion: "세로이 길이가 %{min} 과%{max} 픽셀 사이에 있지 않습니다."
-      dimension_width_greater_than_or_equal_to: "가로의 길이는%{length} 픽셀보다 크거나 같아야 합니다."
-      dimension_height_greater_than_or_equal_to: "세로의 길이는 %{length} 픽셀보다 크거나 같아야 합니다."
-      dimension_width_less_than_or_equal_to: "가로의 길이는 %{length} 픽셀보다 작거나 같아야 합니다."
-      dimension_height_less_than_or_equal_to: "세로의 길이는 %{length} 픽셀보다 작거나 같아야 합니다."
-      dimension_width_equal_to: "가로의 길이는 %{length} 픽셀이어야 합니다."
-      dimension_height_equal_to: "세로의 길이는 %{length} 픽셀이어야 합니다."
-      aspect_ratio_not_square: "정사각형 형태의 사진이어야 합니다."
-      aspect_ratio_not_portrait: "세로로 찍은 사진이어야 합니다."
-      aspect_ratio_not_landscape: "가로로 찍은 사진이어야 합니다."
-      aspect_ratio_is_not: "화면 비율이 %{aspect_ratio} 이어야 합니다."
-      aspect_ratio_unknown: "알 수 없는 화면 비율 입니다."
   stripe:
     error_code:
       incorrect_number: "카드 숫자가 맞지 않습니다."
@@ -3945,6 +3924,8 @@ ko:
         connection_failed: "페이팔에 연결할 수 없습니다."
         generic_error: "페이팔을 사용할 수 없습니다. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "키 재생성"
       form:
         account_settings: 계정 설정
       show:

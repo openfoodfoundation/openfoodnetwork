@@ -61,27 +61,6 @@ cy:
             using_producer_stock_settings_but_count_on_hand_set: "rhaid bod yn wag oherwydd defnydd o osodiadau stoc cynhyrchwyr"
             on_demand_but_count_on_hand_set: "rhaid iddo fod yn wag os ar alw"
             limited_stock_but_no_count_on_hand: "rhaid nodi hyn oherwydd gorfodi stoc gyfyngedig"
-  errors:
-    messages:
-      content_type_invalid: "math o gynnwys annilys"
-      file_size_out_of_range: "nid yw'r maint %{file_size} rhwng yr ystod ofynnol"
-      limit_out_of_range: "mae'r cyfanswm rhif tu hwnt i'r ystod"
-      image_metadata_missing: "nid yw'n llun dilys"
-      dimension_min_inclusion: "mae'n gorfod bod yn fwy neu'r un faint â %{width} x %{height} picsel."
-      dimension_max_inclusion: "mae'n gorfod bod yn llai neu'r un faint â %{width} x %{height} picsel."
-      dimension_width_inclusion: "nid yw lled yn cael ei gynnwys rhwng %{min} ac %{max} picsel."
-      dimension_height_inclusion: "nid yw uchder yn cael ei gynnwys rhwng %{min} acd %{max} picsel."
-      dimension_width_greater_than_or_equal_to: "mae'r lled yn gorfod bod yn fwy neu'r un faint â %{length} picsel."
-      dimension_height_greater_than_or_equal_to: "mae'r uchder yn gorfod bod yn fwy neu'r un faint â %{length} picsel."
-      dimension_width_less_than_or_equal_to: "mae'r lled yn gorfod bod yn llai neu'r un faint â %{length} picsel."
-      dimension_height_less_than_or_equal_to: "mae'r uchder yn gorfod bod yn llai neu'r un faint â %{length} picsel."
-      dimension_width_equal_to: "mae'r lled yn gorfod bod yr un faint â %{length} picsel."
-      dimension_height_equal_to: "mae'r uchder yn gorfod bod yr un faint â %{length} picsel."
-      aspect_ratio_not_square: "mae'n gorfod bod yn llun sgwâr"
-      aspect_ratio_not_portrait: "mae'n gorfod bod yn llun siâp portread"
-      aspect_ratio_not_landscape: "mae'n gorfod bod yn llun siâp tirlun"
-      aspect_ratio_is_not: "mae'n rhaid cael cymhareb agwedd o %{aspect_ratio}"
-      aspect_ratio_unknown: "yn meddu ar gymhareb agwedd anhysbys"
   stripe:
     error_code:
       incorrect_number: "Mae rhif y cerdyn yn anghywir"
@@ -1837,13 +1816,13 @@ cy:
   email_signoff: "Hwyl,"
   email_signature: "Tîm %{sitename} "
   email_confirm_customer_greeting: "Helo %{name},"
-  email_confirm_customer_intro_html: "Diolch am siopa yn <strong>%{distributor}</strong> !"
-  email_confirm_customer_number_html: "Cadarnhad o archeb <strong># %{number}</strong>"
-  email_confirm_customer_details_html: "Dyma fanylion eich archeb o <strong>%{distributor}</strong> :"
+  email_confirm_customer_intro_html: "Diolch am siopa gyda ni <strong>%{distributor}</strong> !"
+  email_confirm_customer_number_html: "Cadarnhad archeb <strong># %{number}</strong>"
+  email_confirm_customer_details_html: "Dyma fanylion eich archeb gan<strong>%{distributor}</strong> :"
   email_confirm_customer_signoff: "Cofion cynnes,"
   email_confirm_shop_greeting: "Helo %{name},"
   email_confirm_shop_order_html: "Da iawn! Mae gennych archeb newydd ar gyfer <strong>%{distributor}</strong> !"
-  email_confirm_shop_number_html: "Cadarnhad o archeb <strong># %{number}</strong>"
+  email_confirm_shop_number_html: "Cadarnhad archeb <strong># %{number}</strong>"
   email_order_summary_item: "Eitem"
   email_order_summary_quantity: "NIfer"
   email_order_summary_sku: "Cod y Cynnyrch"
@@ -2079,7 +2058,7 @@ cy:
   orders_oc_expired_text_link: "neu gweler y cylchoedd archebu eraill sydd ar gael yn yr hwb yma"
   orders_oc_expired_email: "E-bost:"
   orders_oc_expired_phone: "Ffôn:"
-  orders_show_title: "Cadarnhau Archeb"
+  orders_show_title: "Cadarnhad Archeb"
   orders_show_time: "Archeb yn barod ar"
   orders_show_order_number: "Archeb # %{number}"
   orders_show_cancelled: "Canslwyd"
@@ -4064,6 +4043,8 @@ cy:
         connection_failed: "Methu cysylltu â PayPal."
         generic_error: "PayPal wedi methu %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Allwedd Adfer"
       form:
         account_settings: Gosodiadau Cyfrif
       show:

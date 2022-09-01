@@ -61,27 +61,6 @@ fr:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car utilise les informations de stock du producteur"
             on_demand_but_count_on_hand_set: "doit être vide si \"à volonté\""
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
-  errors:
-    messages:
-      content_type_invalid: "a un contenu invalide"
-      file_size_out_of_range: "la taille %{file_size} n'est pas dans la fourchette requise"
-      limit_out_of_range: "le nombre total est hors de la fourchette"
-      image_metadata_missing: "n'est pas une image valide"
-      dimension_min_inclusion: "doit être plus grand ou égal à %{width} x %{height} pixel."
-      dimension_max_inclusion: "doit être plus petit our égal à %{width} x %{height} pixel."
-      dimension_width_inclusion: "la largeur n'est pas comprise entre %{min} et %{max} pixel."
-      dimension_height_inclusion: "la hauteur n'est pas comprise entre %{min} et %{max} pixel."
-      dimension_width_greater_than_or_equal_to: "la largeur doit être supérieure ou égale à %{length} pixel."
-      dimension_height_greater_than_or_equal_to: "la hauteur doit être supérieure ou égale à %{length} pixel."
-      dimension_width_less_than_or_equal_to: "la largeur doit être inférieure ou égale à %{length} pixel."
-      dimension_height_less_than_or_equal_to: "la hauteur doit être inférieure ou égale à %{length} pixel."
-      dimension_width_equal_to: "la largeur doit être égale à %{length} pixel."
-      dimension_height_equal_to: "la hauteur doit être égale à %{length} pixel."
-      aspect_ratio_not_square: "doit être une image carrée"
-      aspect_ratio_not_portrait: "doit être une image en mode portrait"
-      aspect_ratio_not_landscape: "doit être une image en mode paysage"
-      aspect_ratio_is_not: "doit avoir un rapport d'aspect de %{aspect_ratio}"
-      aspect_ratio_unknown: "a un rapport d'aspect inconnu"
   stripe:
     error_code:
       incorrect_number: "Le numéro de carte bancaire est incorrect."
@@ -162,6 +141,7 @@ fr:
   cardholder_name: "Titulaire de la carte"
   community_forum_url: "Lien vers le forum"
   customer_instructions: "Précisions pour l'acheteur"
+  additional_information: "Information additionnelle"
   devise:
     passwords:
       spree_user:
@@ -363,7 +343,7 @@ fr:
   has_shopfront: gère une boutique
   weight: Poids
   volume: Volume
-  items: Pièces
+  items: À la pièce
   summary: Résumé
   detailed: Détaillé
   updated: Mis à jour
@@ -588,7 +568,7 @@ fr:
       enterprise_role:
         manages: gère
     products:
-      unit_name_placeholder: 'ex: botte'
+      unit_name_placeholder: 'ex: botte, sachet, boîte.. '
       index:
         unit: Unité
         display_as: Unité affichée
@@ -812,8 +792,8 @@ fr:
           remove_terms_and_conditions: "Supprimer le fichier"
           uploaded_on: "mis en ligne le"
           reset_form: "Vider les champs"
-          Invoice_item_sorting: Changement d'ordre d'affichage sur facture
-          sort_items_by_supplier?: Ranger par producteur ?
+          Invoice_item_sorting: Ordre d'affichage sur facture
+          sort_items_by_supplier?: Trier par producteur ?
           sort_items_by_supplier_tip: "Lorsque possible, les éléments seront rangés par producteur."
           enabled: Activer
           disabled: Désactiver
@@ -860,8 +840,8 @@ fr:
           text2: >
               Si vous utilisez l'outil "catalogue boutique", vous pouvez choisir si
               les nouveaux produits ajoutés par vos fournisseurs doivent être référencés
-              dans votre catalogue boutique avant qu'ils puissent mis en vente dans
-              votre boutique. Si vous n'utilisez pas cet outil, choisissez l'option
+              dans votre catalogue boutique avant qu'ils puissent être mis en vente
+              dans votre boutique. Si vous n'utilisez pas cet outil, choisissez l'option
               indiquant "recommandé" ci-dessous:
           preferred_product_selection_from_inventory_only_yes: Les nouveaux produits des producteurs peuvent être ajoutés à ma boutique en ligne (recommandé)
           preferred_product_selection_from_inventory_only_no: Les nouveaux produits des producteurs doivent être ajoutés à mon catalogue boutique avant de pouvoir être ajoutés à ma boutique en ligne
@@ -934,12 +914,11 @@ fr:
               Accueil n'apparaitra pas.
           shopfront_message_link_tooltip: "Insérer / modifier un lien"
           shopfront_message_link_prompt: "Veuillez entrer l'URL à insérer"
-          shopfront_closed_message: "Message d'accueil boutique fermée"
+          shopfront_closed_message: "Message d'accueil ventes terminées"
           shopfront_closed_message_placeholder: >
-              Vous pouvez ici expliquer à vos acheteurs pourquoi votre boutique est
-              fermée et/ou quand elle ouvrira. Ce texte s'affiche uniquement quand
-              il n'y a pas de cycle de vente en cours (donc quand votre boutique est
-              fermée).
+              Vous pouvez expliquer ici à vos acheteurs pourquoi vos ventes sont fermées
+              et/ou quand débuteront les prochaines commandes. Ce texte s'affiche
+              uniquement quand il n'y a pas de cycle de vente en cours.
           shopfront_category_ordering: "Ordre d'affichage des catégories"
           shopfront_category_ordering_note: "(de haut en bas)"
           open_date: "Date d'ouverture"
@@ -1426,8 +1405,8 @@ fr:
     order_not_loaded: "Aucune commande n'a été trouvée pour poursuivre le parcours d'achat."
   shops:
     hubs:
-      show_closed_shops: "Afficher les boutiques fermées"
-      hide_closed_shops: "Masquer les boutiques fermées"
+      show_closed_shops: "Afficher toutes les boutiques"
+      hide_closed_shops: "Afficher seulement les ventes ouvertes"
       show_on_map: "Tout afficher sur la carte"
   shared:
     mailers:
@@ -1905,7 +1884,7 @@ fr:
   producer_mail_delivery_instructions: "Modalités de livraison des produits:"
   producer_mail_signoff: "Merci et belle fin de journée!"
   producer_mail_order_customer_text: "Voici un résumé des commandes rangées par acheteurs"
-  shopping_oc_closed: La boutique est actuellement fermée
+  shopping_oc_closed: Les commandes sont terminées
   shopping_oc_closed_description: "Veuillez attendre l'ouverture du prochain cycle de vente (ou contactez-nous directement pour voir si nous pouvons accepter une commande tardive)"
   shopping_oc_last_closed: "Le dernier cycle de vente s'est terminé il y a %{distance_of_time}"
   shopping_oc_next_open: "Le prochain cycle de vente ouvrira dans %{distance_of_time}"
@@ -1920,7 +1899,7 @@ fr:
   shopping_contact_web: "Contact"
   shopping_contact_social: "Suivre"
   shopping_groups_part_of: "fait partie de:"
-  shopping_producers_of_hub: "Les producteurs et lieux de ventes de %{hub}:"
+  shopping_producers_of_hub: "Les producteurs et lieux de vente de %{hub}:"
   enterprises_next_closing: "Clôture des commandes"
   enterprises_currently_open: "Les commandes sont ouvertes"
   enterprises_ready_for: "Prêt pour"
@@ -1930,7 +1909,7 @@ fr:
   map_title: "Carte"
   hubs_buy: "Acheter:"
   hubs_shopping_here: "Achats en cours"
-  hubs_orders_closed: "Boutique fermée"
+  hubs_orders_closed: "Pas de vente en cours"
   hubs_profile_only: "Fiche profil"
   hubs_delivery_options: "Options de livraison"
   hubs_pickup: "Retrait"
@@ -2117,7 +2096,7 @@ fr:
   password: Mot de passe
   remember_me: Se souvenir de moi
   are_you_sure: "Confirmer?"
-  orders_open: "Boutique ouverte"
+  orders_open: "Ventes en cours"
   closing: "Fermeture"
   going_back_to_home_page: "Retour à la page d'accueil"
   creating: Création
@@ -2365,7 +2344,7 @@ fr:
   admin_enterprise_groups_web_website_placeholder: "ex: www.maferme.fr"
   admin_order_cycles: "Gérer les cycles de vente"
   open: "Ouvre"
-  close: "Fermer"
+  close: "Ferme"
   create: "Créer"
   search: "Rechercher"
   supplier: "Fournisseur"
@@ -2494,7 +2473,7 @@ fr:
   hub_sidebar_at_least: "Sélectionnez une/des boutiques"
   hub_sidebar_blue: "bleu"
   hub_sidebar_red: "rouge"
-  order_cycles_closed_for_hub: "La boutique sélectionnée a fermé temporairement ses commandes. Veuillez essayez à nouveau ultérieurement."
+  order_cycles_closed_for_hub: "Cette boutique n'a pas de ventes en cours. Veuillez essayez à nouveau ultérieurement."
   report_customers_distributor: "Distributeur"
   report_customers_supplier: "Fournisseur"
   report_customers_cycle: "Cycle de vente"
@@ -3524,6 +3503,7 @@ fr:
     email: Email
     account_updated: "Compte mis à jour!"
     email_updated: "Le compte sera mis à jour une fois la nouvelle adresse email confirmée."
+    show_api_key_view_toggled: "L'affichage de la clé API a été modifié"
     my_account: "Mon compte"
     date: "Date"
     time: "Heure"
@@ -4025,7 +4005,7 @@ fr:
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Acheteur,"
-        instructions: "Votre commande de %{distributor} a été envoyée"
+        instructions: "Votre commande de %{distributor} :\n- a été expédiée (dans le cas d'une livraison)\n- vous a été distribuée (dans le cas d'un retrait.)"
         shipment_summary: "Résumé de l'envoi"
         subject: "Notification d'expédition"
         thanks: "Merci pour votre commande."
@@ -4077,10 +4057,16 @@ fr:
         connection_failed: "Impossible de se connecter à PayPal."
         generic_error: "PayPal a échoué."
     users:
+      api_keys:
+        regenerate_key: "Regénérer la clé"
+        title: Clé API
+      developer_settings:
+        title: Paramètres développeurs
       form:
         account_settings: Paramètres du Compte
       show:
         tabs:
+          developer_settings: Paramètres développeurs
           orders: Commandes
           cards: Cartes bancaires
           transactions: Achats
@@ -4123,6 +4109,7 @@ fr:
       authorised_shops:
         shop_name: "Nom de la boutique"
         allow_charges?: "Souhaitez-vous autoriser les paiements sur la carte par défaut ?"
+        no_default_saved_cards_tooltip: Vous devez sélectionner une carte bancaire par défaut pour autoriser les paiements.
     localized_number:
       invalid_format: n'est pas un format valide. Veuillez entrer un nombre.
     api:
@@ -4141,6 +4128,7 @@ fr:
       shipment:
         cannot_ready: "La livraison ne peut pas être préparée."
       invalid_taxonomy_id: "L'identifiant de la catégorie n'est pas valide."
+      toggle_api_key_view: "Montrer la clé API pour cet utilisateur"
     activerecord:
       models:
         spree/payment:
@@ -4200,3 +4188,13 @@ fr:
         one: "1 an"
         many: "%{count} ans"
         other: "%{count} ans"
+  errors:
+    not_found:
+      title: "La page que vous recherchez n'existe pas (erreur 404)"
+      message_html: "<b> Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l'  <a href='/'> Accueil </a> et recommencez. </p> <b> Contacter notre support </b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter. </p>"
+    internal_server_error:
+      title: "Nous sommes navrés, mais quelque chose c'est mal passé (erreur 500)."
+      message_html: " <b> Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l' <a href='/''> Accueil </a> et recommencez. </p> <b> Contacter notre support</b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter. </p>"
+    unprocessable_entity:
+      title: "La modification réalisée a été rejetée (erreur 422)"
+      message_html: "<p> La modification souhaitée a été refusée. Peut-être avez-vous essayé de faire quelque chose sans avoir les droits d'accès suffisants ? <br> <h3> <a href='/' > Retourner à l'accueil </a> </h3> </p>"

@@ -3605,6 +3605,8 @@ en_AU:
     paypal:
       refund_amount: "Amount"
     users:
+      api_keys:
+        regenerate_key: "Regenerate Key"
       form:
         account_settings: Account Settings
       show:

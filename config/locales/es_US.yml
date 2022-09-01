@@ -3867,6 +3867,8 @@ es_US:
         connection_failed: "No se pudo conectar a PayPal."
         generic_error: "PayPal falló. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Regenerar llave"
       form:
         account_settings: Configuración de la cuenta
       show:
