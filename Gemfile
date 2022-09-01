@@ -178,7 +178,7 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'web-console'
 
-  gem "view_component_storybook", require: "view_component/storybook/engine"
+  gem "view_component_storybook"
 
   gem 'rack-mini-profiler', '< 3.0.0'
 end
