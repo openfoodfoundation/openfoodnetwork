@@ -23,7 +23,7 @@ Metrics:
   Enabled: true
 
 Metrics/BlockLength:
-  IgnoredMethods: [
+  AllowedMethods: [
     "class_eval",
     "collection",
     "context",
