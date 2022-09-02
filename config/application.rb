@@ -21,7 +21,7 @@ require "rails"
 end
 
 require "view_component"
-require "view_component/storybook"
+require "view_component/storybook" if Rails.env.development?
 
 require_relative "../lib/open_food_network/i18n_config"
 require_relative '../lib/spree/core/environment'
