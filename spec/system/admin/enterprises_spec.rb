@@ -56,7 +56,8 @@ describe '
     fill_in 'enterprise_address_attributes_latitude', with: '-37.4713077'
     fill_in 'enterprise_address_attributes_longitude', with: '144.7851531'
     # default country (Australia in this test) should be selected by default
-    select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
+    page.find("#enterprise_address_attributes_country_id-ts-control").click
+    page.find(".option", text: "Australia").click
 
     click_button 'Create'
     expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully created!')
@@ -355,8 +356,12 @@ describe '
         fill_in 'enterprise_address_attributes_address1', with: 'z'
         fill_in 'enterprise_address_attributes_city', with: 'z'
         fill_in 'enterprise_address_attributes_zipcode', with: 'z'
-        select2_select 'Australia', from: 'enterprise_address_attributes_country_id'
-        select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
+
+        page.find("#enterprise_address_attributes_country_id-ts-control").click
+        page.find(".option", text: "Australia").click
+
+        page.find("#enterprise_address_attributes_state_id-ts-control").click
+        page.find(".option", text: "Victoria").click
       end
 
       it "without violating rules" do

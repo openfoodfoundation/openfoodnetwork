@@ -87,16 +87,16 @@
       = af.text_field :city, { placeholder: t(:city_placeholder)}
     .five.columns.omega
       = af.text_field :zipcode, { placeholder: t(:postcode_placeholder)}
-  %div{ "ng-controller" => "countryCtrl" }
+  %div{"data-controller": "dependant-select", "data-dependant-select-options-value": countries_with_states }
     .row
       .three.columns.alpha
         = af.label :state_id, t(:state)
         \/
         = af.label :country_id, t(:country)
       .four.columns
-        %input.ofn-select2.fullwidth#enterprise_address_attributes_state_id{ name: 'enterprise[address_attributes][state_id]', type: 'number', data: 'countriesById[Enterprise.address.country_id].states', placeholder: t('admin.choose'), ng: { model: 'Enterprise.address.state_id' } }
+        = af.select :country_id, available_countries.map { |c| [c.name, c.id] }, {}, { "data-controller": "tom-select", "data-dependant-select-target": "source", "data-action": "dependant-select#handleSelectChange", class: "primary" }
       .five.columns.omega
-        %input.ofn-select2.fullwidth#enterprise_address_attributes_country_id{ name: 'enterprise[address_attributes][country_id]', type: 'number', data: 'countries', placeholder: t('admin.choose'), ng: { model: 'Enterprise.address.country_id' } }
+        = af.select :state_id, @enterprise.address.country.states.map { |s| [s.name, s.id] }, {}, { "data-controller": "tom-select", "data-dependant-select-target": "select", class: "primary" }
   .row
     .three.columns.alpha
       = af.label :latitude, t(:latitude)

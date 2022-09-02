@@ -29,12 +29,11 @@
     = bf.label :country_id, t(:country)
     \/
     = bf.label :state_id, t(:state)
-  %div{ "ng-controller": "countryCtrl", "ng-init": "address_type='business_address'" }
+  %div{"data-controller": "dependant-select", "data-dependant-select-options-value": countries_with_states }
     .four.columns
-      %input.ofn-select2.fullwidth#enterprise_business_address_attributes_country_id{ name: 'enterprise[business_address_attributes][country_id]', type: 'number', data: 'countries', placeholder: t('admin.choose'), ng: { model: 'Enterprise.business_address.country_id' } }
+      = bf.select :country_id, available_countries.map { |c| [c.name, c.id] }, {}, { "data-controller": "tom-select", "data-dependant-select-target": "source", "data-action": "dependant-select#handleSelectChange", class: "primary" }
     .four.columns.omega
-      %input.ofn-select2.fullwidth#enterprise_business_address_attributes_state_id{ name: 'enterprise[business_address_attributes][state_id]', type: 'number', data: 'countriesById[Enterprise.address.country_id].states', placeholder: t('admin.choose'), ng: { model: 'Enterprise.business_address.state_id' } }
-
+      = bf.select :state_id, @enterprise.address.country.states.map { |s| [s.name, s.id] }, {}, { "data-controller": "tom-select", "data-dependant-select-target": "select", class: "primary" }
 
 .row
   .three.columns.alpha

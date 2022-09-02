@@ -41,8 +41,7 @@
     \/
     = af.label :longitude, t(:longitude)
     %span.required *
-    %div{'ofn-with-tip' => t('latitude_longitude_tip')}
-      %a= t('admin.whats_this')
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('latitude_longitude_tip')}
   .four.columns
     = af.text_field :latitude, { placeholder: t(:latitude_placeholder) }
   .four.columns.omega
