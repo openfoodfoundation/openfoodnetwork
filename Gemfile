@@ -131,7 +131,7 @@ gem 'flipper'
 gem 'flipper-active_record'
 gem 'flipper-ui'
 
-gem "view_component", require: "view_component/engine"
+gem "view_component"
 
 group :production, :staging do
   gem 'ddtrace'

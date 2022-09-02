@@ -20,9 +20,6 @@ require "rails"
   end
 end
 
-require "view_component"
-require "view_component/storybook"
-
 require_relative "../lib/open_food_network/i18n_config"
 require_relative '../lib/spree/core/environment'
 require_relative '../lib/spree/core/mail_interceptor'
@@ -34,6 +31,8 @@ if defined?(Bundler)
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
+
+require "view_component/storybook" if Rails.env.development?
 
 module Openfoodnetwork
   class Application < Rails::Application
