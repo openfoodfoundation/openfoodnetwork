@@ -29,17 +29,17 @@
   %div{class: "field"}
     = f.label :zipcode, Spree.t(:zip) + ':'
     = f.text_field :zipcode, class: 'fullwidth'
-  %div{"data-controller": "dependant-select", "data-dependant-select-options-value": countries_with_states }
+  %div{"data-controller": "dependent-select", "data-dependent-select-options-value": countries_with_states }
     %div{class: "field"}
       = f.label :country_id, Spree.t(:country) + ':'
       %span{id: "#{s_or_b}country"}
         = f.select :country_id, countries, { selected: @order.send("#{address_type}_address").country_id },
-        { "data-controller": "tom-select", "data-dependant-select-target": "source", "data-action": "dependant-select#handleSelectChange", class: "primary" }
+        { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
     %div{class: "field"}
       = f.label :state_id, Spree.t(:state) + ':'
       %span{id: "#{s_or_b}state"}
         = f.select :state_id, states_for_country(@order.send("#{address_type}_address").country), { selected: @order.send("#{address_type}_address").state_id },
-        { "data-controller": "tom-select", "data-dependant-select-target": "select", class: "primary" }
+        { "data-controller": "tom-select", "data-dependent-select-target": "select", class: "primary" }
 
   %div{class: "field"}
     = f.label :phone, Spree.t(:phone) + ':'
