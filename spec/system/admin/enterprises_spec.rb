@@ -185,7 +185,8 @@ describe '
     fill_in 'enterprise_address_attributes_latitude', with: '-37.4713077'
     fill_in 'enterprise_address_attributes_longitude', with: '144.7851531'
     # default country (Australia in this test) should be selected by default
-    select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
+    page.find("#enterprise_address_attributes_state_id-ts-control").click
+    page.find(".option", text: "Victoria").click
 
     accept_alert do
       click_link "Shop Preferences"
