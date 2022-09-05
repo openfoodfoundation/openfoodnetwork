@@ -61,11 +61,10 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
+          bundle exec rake parallel:setup
 
       - name: Run tests
-        run: bundle exec rspec --profile -- ${{ matrix.specs }}
+        run: bundle exec parallel_rspec -- ${{ matrix.specs }}
 
       - name: Archive failed tests screenshots
         if: failure()
