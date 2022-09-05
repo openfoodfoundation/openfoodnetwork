@@ -13,7 +13,7 @@ development:
 
 test:
   <<: *defaults
-  database: open_food_network_test
+  database: open_food_network_test<%= ENV['TEST_ENV_NUMBER'] %>
 
 production:
   <<: *defaults

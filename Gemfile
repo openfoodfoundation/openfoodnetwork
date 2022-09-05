@@ -149,6 +149,7 @@ group :test, :development do
   gem 'json_spec', '~> 1.1.4'
   gem 'knapsack'
   gem 'letter_opener', '>= 1.4.1'
+  gem "parallel_tests"
   gem 'rspec-rails', ">= 3.5.2"
   gem 'rswag-specs'
   gem 'shoulda-matchers'
