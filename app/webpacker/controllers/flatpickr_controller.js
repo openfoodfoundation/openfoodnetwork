@@ -85,7 +85,6 @@ export default class extends Flatpickr {
     return [
       ShortcutButtonsPlugin({
         button: buttons,
-        label: mode != "range" && "or",
         onClick: this.onClickButtons,
       }),
       labelPlugin({}),
