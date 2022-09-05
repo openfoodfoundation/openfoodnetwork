@@ -223,7 +223,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
           end
 
           it "should re-calculate the tax accordingly" do
-            pending("#9153")
             select "Victoria", from: "order_bill_address_attributes_state_id"
 
             # it should not be necessary to save as new default bill address
