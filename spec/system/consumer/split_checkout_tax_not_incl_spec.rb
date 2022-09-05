@@ -12,11 +12,11 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
   let!(:address_within_zone) { create(:address, state: Spree::State.first) }
   let!(:address_outside_zone) { create(:address, state: Spree::State.second) }
-  let!(:user_within_zone) {
+  let(:user_within_zone) {
     create(:user, bill_address: address_within_zone,
                   ship_address: address_within_zone)
   }
-  let!(:user_outside_zone) {
+  let(:user_outside_zone) {
     create(:user, bill_address: address_outside_zone,
                   ship_address: address_outside_zone)
   }
@@ -28,11 +28,11 @@ describe "As a consumer, I want to see adjustment breakdown" do
   }
   let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:supplier) { create(:supplier_enterprise) }
-  let!(:product_with_tax) {
+  let(:product_with_tax) {
     create(:simple_product, supplier: supplier, price: 10, tax_category: tax_category)
   }
-  let!(:variant_with_tax) { product_with_tax.variants.first }
-  let!(:order_cycle) {
+  let(:variant_with_tax) { product_with_tax.variants.first }
+  let(:order_cycle) {
     create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor],
                                 coordinator: distributor, variants: [variant_with_tax])
   }
@@ -46,12 +46,12 @@ describe "As a consumer, I want to see adjustment breakdown" do
                             name: "Payment without Fee", description: "Payment without fee",
                             calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
-  let!(:order_within_zone) {
+  let(:order_within_zone) {
     create(:order, order_cycle: order_cycle, distributor: distributor, user: user_within_zone,
                    bill_address: address_within_zone, ship_address: address_within_zone,
                    state: "cart", line_items: [create(:line_item, variant: variant_with_tax)])
   }
-  let!(:order_outside_zone) {
+  let(:order_outside_zone) {
     create(:order, order_cycle: order_cycle, distributor: distributor, user: user_outside_zone,
                    bill_address: address_outside_zone, ship_address: address_outside_zone,
                    state: "cart", line_items: [create(:line_item, variant: variant_with_tax)])
@@ -118,6 +118,10 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
       context "on split-checkout" do
         before do
+          # WIP: Create order before split checkout is enabled.
+          # Otherwise the spec fails which may be a hint to issue 9153.
+          order_within_zone
+
           allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
           allow(Flipper).to receive(:enabled?).with(:split_checkout, anything).and_return(true)
 
