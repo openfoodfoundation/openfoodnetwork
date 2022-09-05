@@ -107,7 +107,8 @@ describe "As a consumer, I want to see adjustment breakdown" do
           click_on "Place order now"
 
           # DB checks
-          assert_db_tax_added
+          order_within_zone.reload
+          expect(order_within_zone.additional_tax_total).to eq(1.3)
 
           # UI checks
           expect(page).to have_selector('#order_total', text: with_currency(11.30))
@@ -134,7 +135,8 @@ describe "As a consumer, I want to see adjustment breakdown" do
           click_on "Complete order"
 
           # DB checks
-          assert_db_tax_added
+          order_within_zone.reload
+          expect(order_within_zone.additional_tax_total).to eq(1.3)
 
           # UI checks
           expect(page).to have_content("Confirmed")
@@ -164,7 +166,9 @@ describe "As a consumer, I want to see adjustment breakdown" do
           click_on "Place order now"
 
           # DB checks
-          assert_db_no_tax_added
+          order_outside_zone.reload
+          expect(order_outside_zone.included_tax_total).to eq(0.0)
+          expect(order_outside_zone.additional_tax_total).to eq(0.0)
 
           # UI checks
           expect(page).to have_content("Confirmed")
@@ -192,7 +196,9 @@ describe "As a consumer, I want to see adjustment breakdown" do
           click_on "Complete order"
 
           # DB checks
-          assert_db_no_tax_added
+          order_outside_zone.reload
+          expect(order_outside_zone.included_tax_total).to eq(0.0)
+          expect(order_outside_zone.additional_tax_total).to eq(0.0)
 
           # UI checks
           expect(page).to have_content("Confirmed")
@@ -236,7 +242,9 @@ describe "As a consumer, I want to see adjustment breakdown" do
             click_on "Complete order"
 
             # DB checks
-            assert_db_tax_added
+            order_outside_zone.reload
+            expect(order_outside_zone.included_tax_total).to eq(0.0)
+            expect(order_outside_zone.additional_tax_total).to eq(1.3)
 
             # UI checks - Order confirmation page should reflect changes
             expect(page).to have_content("Confirmed")
@@ -246,19 +254,5 @@ describe "As a consumer, I want to see adjustment breakdown" do
         end
       end
     end
-  end
-
-  private
-
-  def assert_db_tax_added
-    order_within_zone.reload
-    expect(order_outside_zone.included_tax_total).to eq(0.0)
-    expect(order_within_zone.additional_tax_total).to eq(1.3)
-  end
-
-  def assert_db_no_tax_added
-    order_outside_zone.reload
-    expect(order_outside_zone.included_tax_total).to eq(0.0)
-    expect(order_outside_zone.additional_tax_total).to eq(0.0)
   end
 end
