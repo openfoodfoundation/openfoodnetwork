@@ -10,26 +10,26 @@ describe "As a consumer, I want to see adjustment breakdown" do
   include AuthenticationHelper
   include WebHelper
 
-  let!(:address_within_zone) { create(:address, state_id: Spree::State.first.id) }
-  let!(:address_outside_zone) { create(:address, state_id: Spree::State.second.id) }
+  let!(:address_within_zone) { create(:address, state: Spree::State.first) }
+  let!(:address_outside_zone) { create(:address, state: Spree::State.second) }
   let!(:user_within_zone) {
-    create(:user, bill_address_id: address_within_zone.id,
-                  ship_address_id: address_within_zone.id)
+    create(:user, bill_address: address_within_zone,
+                  ship_address: address_within_zone)
   }
   let!(:user_outside_zone) {
-    create(:user, bill_address_id: address_outside_zone.id,
-                  ship_address_id: address_outside_zone.id)
+    create(:user, bill_address: address_outside_zone,
+                  ship_address: address_outside_zone)
   }
   let!(:zone) { create(:zone_with_state_member, name: 'Victoria', default_tax: false) }
   let!(:tax_category) { create(:tax_category, name: "Veggies", is_default: "f") }
   let!(:tax_rate) {
     create(:tax_rate, name: "Tax rate - included or not", amount: 0.13,
-                      zone_id: zone.id, tax_category_id: tax_category.id, included_in_price: false)
+                      zone: zone, tax_category: tax_category, included_in_price: false)
   }
   let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:supplier) { create(:supplier_enterprise) }
   let!(:product_with_tax) {
-    create(:simple_product, supplier: supplier, price: 10, tax_category_id: tax_category.id)
+    create(:simple_product, supplier: supplier, price: 10, tax_category: tax_category)
   }
   let!(:variant_with_tax) { product_with_tax.variants.first }
   let!(:order_cycle) {
