@@ -1726,9 +1726,9 @@
   resolved "https://registry.yarnpkg.com/@hotwired/stimulus-webpack-helpers/-/stimulus-webpack-helpers-1.0.1.tgz#4cd74487adeca576c9865ac2b9fe5cb20cef16dd"
   integrity sha512-wa/zupVG0eWxRYJjC1IiPBdt3Lruv0RqGN+/DTMmUWUyMAEB27KXmVY6a8YpUVTM7QwVuaLNGW4EqDgrS2upXQ==
 
-"@hotwired/stimulus@^3.1.0":
+"@hotwired/stimulus@>= 3.0", "@hotwired/stimulus@^3.1.0":
   version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@hotwired/stimulus/-/stimulus-3.1.0.tgz#20215251e5afe6e0a3787285181ba1bfc9097df0"
+  resolved "https://registry.npmjs.org/@hotwired/stimulus/-/stimulus-3.1.0.tgz#20215251e5afe6e0a3787285181ba1bfc9097df0"
   integrity sha512-iDMHUhiEJ1xFeicyHcZQQgBzhtk5mPR0QZO3L6wtqzMsJEk2TKECuCQTGKjm+KJTHVY0dKq1dOOAWvODjpd2Mg==
 
 "@hotwired/turbo@^7.1.0":
@@ -2132,6 +2132,11 @@
   version "0.9.2"
   resolved "https://registry.yarnpkg.com/@orchidjs/sifter/-/sifter-0.9.2.tgz#86c84589fe42c46bb1f5ec1ab8f747a4c928a83b"
   integrity sha512-8eR1aNWPhDt+cqOevGUajriiZbMzs6nGGdErUjSr99vMAxwMBRztnJu72OT8M7emyHTVjBB8BPjj4rJIoXQgKA==
+
+"@rails/actioncable@>= 6.0":
+  version "7.0.3"
+  resolved "https://registry.npmjs.org/@rails/actioncable/-/actioncable-7.0.3.tgz#71f08e958883af64f6a20489318b5e95d2c6dc5b"
+  integrity sha512-Iefl21FZD+ck1di6xSHMYzSzRiNJTHV4NrAzCfDfqc/wPz4xncrP8f2/fJ+2jzwKIaDn76UVMsALh7R5OzsF8Q==
 
 "@rails/webpacker@5.4.3":
   version "5.4.3"
@@ -4211,10 +4216,10 @@ bytes@3.1.0:
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.1.0.tgz#f6cf7933a360e0588fa9fde85651cdc7f805d1f6"
   integrity sha512-zauLjrfCG+xvoyaqLoV8bLVXXNGC4JqlxFCutSDWA6fJrTo2ZuvLYTqZ7aHBLZSMOopbzwv8f+wZcVzfVTI2Dg==
 
-cable_ready@5.0.0-pre3:
-  version "5.0.0-pre3"
-  resolved "https://registry.yarnpkg.com/cable_ready/-/cable_ready-5.0.0-pre3.tgz#d36bb9648aead748dfdf0f46dfb489799733f330"
-  integrity sha512-jFjTJ/K/AiVIgjKr63qXGzp9xZOt2/2UyjVpkMkSzFyDHlYILOwnK4WofGwBKS6tXwDZMfohbIzW/p+LKbrlgA==
+cable_ready@5.0.0-pre9, "cable_ready@>= 5.0.0-pre9":
+  version "5.0.0-pre9"
+  resolved "https://registry.npmjs.org/cable_ready/-/cable_ready-5.0.0-pre9.tgz#9c082b796f7b7add7965ce637a8d8717726be5ab"
+  integrity sha512-m7XggG+LRPFLsbH78G603F3AAYpkv+VfGCouN6RrP20Mgz9H0+xr7v2DN2F1CeJBBAliYPKcAt/48uTGjSrBaA==
   dependencies:
     morphdom "^2.6.1"
 
@@ -12675,6 +12680,15 @@ stimulus@^3.0.1:
   dependencies:
     "@hotwired/stimulus" "^3.1.0"
     "@hotwired/stimulus-webpack-helpers" "^1.0.0"
+
+stimulus_reflex@3.5.0-pre9:
+  version "3.5.0-pre9"
+  resolved "https://registry.npmjs.org/stimulus_reflex/-/stimulus_reflex-3.5.0-pre9.tgz#e99eaf11e9e7476df10cd8f5c557d368f54446b3"
+  integrity sha512-ZhGUuJaKaWhHU5eGnZQ3pgnv0/pJ4dtNABDtMZRAHNm3ngsHY5dpR/H801a1ozD6J5rpadONvhhBcPjPY/x6NQ==
+  dependencies:
+    "@hotwired/stimulus" ">= 3.0"
+    "@rails/actioncable" ">= 6.0"
+    cable_ready ">= 5.0.0-pre9"
 
 store2@^2.12.0:
   version "2.12.0"
