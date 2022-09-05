@@ -118,10 +118,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
       context "on split-checkout" do
         before do
-          # WIP: Create order before split checkout is enabled.
-          # Otherwise the spec fails which may be a hint to issue 9153.
-          order_within_zone
-
           allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
           allow(Flipper).to receive(:enabled?).with(:split_checkout, anything).and_return(true)
 
