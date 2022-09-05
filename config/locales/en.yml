@@ -936,6 +936,7 @@ en:
           legend: "Address"
         business_details:
           legend: "Business Details"
+          upload: 'upload'
           abn: ABN
           abn_placeholder: eg. 99 123 456 789
           acn: ACN

@@ -74,9 +74,6 @@ angular.module("admin.enterprises")
     $scope.removePromoImage = ->
       $scope.performEnterpriseAction("removePromoImage", "immediate_promo_image_removal_warning", "removed_promo_image_successfully")
 
-    $scope.removeTermsAndConditions = ->
-      $scope.performEnterpriseAction("removeTermsAndConditions", "immediate_terms_and_conditions_removal_warning", "removed_terms_and_conditions_successfully")
-
     $scope.performEnterpriseAction = (enterpriseActionName, warning_message_key, success_message_key) ->
       return unless confirm($scope.translation(warning_message_key))
 
