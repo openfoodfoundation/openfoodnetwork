@@ -135,7 +135,8 @@ describe '
     expect(page).to have_selector "#payment_methods"
     expect(page).to have_selector "#shipping_methods"
 
-    select2_select eg1.name, from: 'enterprise_group_ids'
+    page.find("#enterprise_group_ids-ts-control").set(eg1.name)
+    page.find("#enterprise_group_ids-ts-dropdown .option.active").click
 
     within(".permalink") do
       link_path = "#{main_app.root_url}#{@enterprise.permalink}/shop"

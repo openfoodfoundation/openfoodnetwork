@@ -8,15 +8,13 @@
   .row
     .three.columns.alpha
       = f.label :group_ids, t('.groups')
-      %div{'ofn-with-tip' => t('.groups_tip')}
-        %a= t('admin.whats_this')
+      = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.groups_tip')}
     .eight.columns.omega
-      = f.collection_select :group_ids, @groups, :id, :name, {}, class: "select2 fullwidth", multiple: true, placeholder: t('.groups_placeholder')
+      = f.collection_select :group_ids, @groups, :id, :name, {}, data: { controller: "tom-select", "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil } }, class: "full-width", multiple: true, placeholder: t('.groups_placeholder')
 .row
   .three.columns.alpha
     %label= t('.primary_producer')
-    %div{'ofn-with-tip' => t('.primary_producer_tip')}
-      %a= t('admin.whats_this')
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.primary_producer_tip')}
   .five.columns.omega
     = f.check_box :is_primary_producer, data: { action: "change->primary-details#primaryProducerChanged" } 
     = f.label :is_primary_producer, t('.producer')
@@ -24,8 +22,7 @@
   .row
     .three.columns.alpha
       = f.label :sells, t('.sells')
-      %div{'ofn-with-tip' => t('.sells_tip')}
-        %a= t('admin.whats_this')
+      = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.sells_tip')}
     .two.columns
       = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells', data: {action: "change->primary-details#enterpriseSellsChanged"} 
       = f.label :sells, t('.none'), value: "none"
@@ -38,8 +35,7 @@
 .row
   .three.columns.alpha
     %label= t('.visible_in_search')
-    %div{'ofn-with-tip' => t('.visible_in_search_tip')}
-      %a= t('admin.whats_this')
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.visible_in_search_tip')}
   .two.columns
     = f.radio_button :visible, "public", 'ng-model' => 'Enterprise.visible'
     = f.label :visible, t('.visible'), value: 'public'
@@ -49,32 +45,5 @@
   .four.columns.omega
     = f.radio_button :visible, "hidden", 'ng-model' => 'Enterprise.visible'
     = f.label :visible, t('.hidden'), value: 'hidden'
-.permalink{ ng: { controller: "permalinkCtrl" } }
-  .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
-    .three.columns.alpha
-      = f.label :permalink, t('.permalink')
-      %div{'ofn-with-tip' => t('.permalink_tip', link: main_app.root_url)}
-        %a= t('admin.whats_this')
-    .eight.columns
-      = f.text_field :permalink, { 'ng-model' => "Enterprise.permalink", placeholder: "eg. your-shop-name", 'ng-model-options' => "{ updateOn: 'default blur', debounce: {'default': 300, 'blur': 0} }" }
-    .two.columns.omega
-      %div{ng: {show: "checking", cloak: true}, style: "width: 30px; height: 30px;"}
-        = render partial: "components/admin_spinner"
-      %span{ ng: { class: 'availability.toLowerCase()', hide: "checking" } }
-        {{ availability }}
-        %i{ ng: { class: "{'icon-ok-sign': availability == 'Available', 'icon-remove-sign': availability == 'Unavailable'}" } }
-  .row{ ng: { show: "Enterprise.sells == 'own' || Enterprise.sells == 'any'" } }
-    .three.columns.alpha
-      %label= t('.link_to_front')
-      %div{'ofn-with-tip' => t('.link_to_front_tip')}
-        %a= t('admin.whats_this')
-    .eight.columns.omega
-      - front_shop_path = "#{main_app.root_url}#{@enterprise.permalink}/shop"
-      = link_to front_shop_path, front_shop_path , target: "_blank"
-  .row
-    .three.columns.alpha
-      = f.label :id, t('.ofn_uid')
-      %div{'ofn-with-tip' => t('.ofn_uid_tip')}
-        %a= t('admin.whats_this')
-    .six.columns
-      {{Enterprise.id}}
+
+= render partial: 'admin/enterprises/form/permalink'
