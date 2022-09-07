@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_13_195433) do
+ActiveRecord::Schema.define(version: 2022_09_07_055044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
