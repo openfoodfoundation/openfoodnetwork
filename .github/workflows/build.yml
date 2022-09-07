@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   rspec:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     services:
       postgres:
         image: postgres:10
@@ -77,7 +77,7 @@ jobs:
           if-no-files-found: ignore
 
   test-the-rest:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     services:
       postgres:
         image: postgres:10
