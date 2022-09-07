@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+# A customer record is created the first time a person orders from a shop.
+#
+# It's a relationship between a user and an enterprise but for guest orders it
+# can also be between an email address and an enterprise.
+#
+# The main purpose is tagging of customers to access private shops, receive
+# discounts et cetera. A customer record is also needed for subscriptions.
 class Customer < ApplicationRecord
   include SetUnusedAddressFields
 
