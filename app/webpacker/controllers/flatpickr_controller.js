@@ -66,8 +66,11 @@ export default class extends Flatpickr {
         ? this.fp.formatDate(selectedDates[1], this.config.dateFormat)
         : "";
       // Also, send event to be sure that ng-model is well updated
-      this.startTarget.dispatchEvent(new Event("change"));
-      this.endTarget.dispatchEvent(new Event("change"));
+      // Send event only if range il valid, ie. start and end are not empty
+      if (this.startTarget.value && this.endTarget.value) {
+        this.startTarget.dispatchEvent(new Event("change"));
+        this.endTarget.dispatchEvent(new Event("change"));
+      }
     }
   }
 
