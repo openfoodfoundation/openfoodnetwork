@@ -23,9 +23,38 @@ describe 'Shops', js: true do
     producer.set_producer_property 'Organic', 'NASAA 12345'
   end
 
-  it "searches by URL" do
-    visit shops_path(anchor: "/?query=xyzzy")
-    expect(page).to have_content "Sorry, no results found for xyzzy"
+  context "searching enterprises" do
+    context "which exist" do
+      it "by URL" do
+        visit shops_path(anchor: "/?query=Enterprise")
+        expect(page).to have_content "Did you mean? #{distributor.name}"
+      end
+
+      it "by typing in the search field" do
+        visit shops_path
+        find('input').set("Enterprise")
+        expect(current_url).to have_content("/shops#/?query=Enterprise")
+        expect(page).to have_content "Did you mean? #{distributor.name}"
+      end
+    end
+
+    context "which do not exist" do
+      it "by URL" do
+        pending("#9649")
+        visit shops_path(anchor: "/?query=xyzzy")
+        expect(page).not_to have_content distributor.name
+        expect(page).to have_content "Sorry, no results found for xyzzy. Try another search?"
+      end
+
+      it "by typing in the search field" do
+        pending("#5467")
+        visit shops_path
+        find('input').set("xyzzy")
+        expect(current_url).to have_content("/shops#/?query=xyzzy")
+        expect(page).not_to have_content distributor.name
+        expect(page).to have_content "Sorry, no results found for xyzzy. Try another search?"
+      end
+    end
   end
 
   describe "listing shops" do
