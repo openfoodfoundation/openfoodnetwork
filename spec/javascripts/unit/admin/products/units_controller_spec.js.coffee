@@ -17,7 +17,8 @@ describe "unitsCtrl", ->
     inject ($rootScope, $controller, VariantUnitManager) ->
       scope = $rootScope
       ctrl = $controller 'unitsCtrl', {$scope: scope, VariantUnitManager: VariantUnitManager}
-
+    window.bigDecimal = jasmine.createSpyObj "bigDecimal", ["multiply"]
+    window.bigDecimal.multiply.and.callFake (a, b, c) -> a * b
 
   describe "interpretting variant_unit_with_scale", ->
     it "splits string with one underscore and stores the two parts", ->
@@ -93,3 +94,11 @@ describe "unitsCtrl", ->
         scope.processUnitValueWithDescription()
         expect(scope.product.master.unit_value).toEqual 22.22
         expect(scope.product.master.unit_description).toEqual "things"
+
+      it "handles nice rounded division", ->
+        # this is a bit absurd, but it assure use that bigDecimal is called
+        window.bigDecimal.multiply.and.returnValue 0.7
+        scope.product.master.unit_value_with_description = "700"
+        scope.product.variant_unit_scale = 0.001
+        scope.processUnitValueWithDescription()
+        expect(scope.product.master.unit_value).toEqual 0.7

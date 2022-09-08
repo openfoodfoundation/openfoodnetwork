@@ -32,7 +32,7 @@ angular.module("admin.products")
         if match
           $scope.product.master.unit_value  = PriceParser.parse(match[1])
           $scope.product.master.unit_value  = null if isNaN($scope.product.master.unit_value)
-          $scope.product.master.unit_value *= $scope.product.variant_unit_scale if $scope.product.master.unit_value && $scope.product.variant_unit_scale
+          $scope.product.master.unit_value = window.bigDecimal.multiply($scope.product.master.unit_value, $scope.product.variant_unit_scale, 2) if $scope.product.master.unit_value && $scope.product.variant_unit_scale
           $scope.product.master.unit_description = match[3]
       else
         value = $scope.product.master.unit_value
