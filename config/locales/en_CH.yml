@@ -7,7 +7,7 @@ en_CH:
   admin:
     enterprises:
       form:
-        primary_details:
+        permalink:
           link_to_front_tip: A direct link to your shopfront on the Open Food Switzerland.
           ofn_uid_tip: The unique id used to identify the enterprise on Open Food Switzerland.
         stripe_connect:

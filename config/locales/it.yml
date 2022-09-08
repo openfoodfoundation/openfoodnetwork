@@ -141,6 +141,7 @@ it:
   cardholder_name: "Titolare carta"
   community_forum_url: "URL Forum Community"
   customer_instructions: "Istruzioni per i consumatori"
+  additional_information: "Informazioni aggiuntive"
   devise:
     passwords:
       spree_user:
@@ -473,6 +474,8 @@ it:
         terms_of_service: "Termini di Servizio"
         delete: "Cancella documento"
         confirm_delete: "Sei sicuro di voler cancellare l'attuale documento dei Termini di Servizio?"
+        attachment: "Allegato"
+        create_terms_of_service: "Crea il documento \"Termini di servizio\""
     number_localization:
       number_localization_settings: "Settaggi del Numero di Localizzazione"
       enable_localized_number: "Usa la logica internazionale di separazione migliaia/decimali"
@@ -530,6 +533,8 @@ it:
         guest_label: "Check-out ospite"
         credit_owed: "Credito dovuto"
         balance_due: "Da pagare"
+      destroy:
+        has_associated_subscriptions: "Cancellazione fallita: questo cliente ha abbonamenti attivi. Eliminali prima."
     contents:
       edit:
         title: Contenuto
@@ -866,6 +871,7 @@ it:
           visible: Pubblica
           not_visible: Nascosto
           hidden: Nascondi tutte le referenze
+        permalink:
           permalink: Permalink (nessuno spazio)
           permalink_tip: "Questo permalink serve a creare l'url al tuo negozio: %{link}nome-del-tuo-negozio/negozio"
           link_to_front: Link alla tua vetrina
@@ -3474,6 +3480,7 @@ it:
     email: Email
     account_updated: "Account aggiornato!"
     email_updated: "L'account sarà aggiornato una volta confermata la nuova email"
+    show_api_key_view_toggled: "Mostra che la chiave API è cambiata!"
     my_account: "Il mio account"
     date: "Data"
     time: "Ora"
@@ -3619,6 +3626,10 @@ it:
           results_found: "%{number} Risultati trovati."
           viewing: "Guardando da %{start} a %{end}"
           print_invoices: "Stampa conferme d'ordine"
+          selected:
+            zero: "Nessuna gentile richiesta selezionata"
+            one: "1 gentile richiesta selezionata"
+            other: "%{count} gentili richieste selezionate"
         sortable_header:
           payment_state: "Stato Pagamento"
           shipment_state: "Stato della spedizione"
@@ -3758,6 +3769,7 @@ it:
           paypal:
             no_payment_via_admin_backend: I pagamenti con Paypal non possono comparire nel Pannello di Controllo
       products:
+        image_upload_error: "Puoi caricare un'immagine nei formati JPG, PNG, GIF, SVG o WEBP."
         new:
           title: "Nuovo prodotto"
           new_product: "Nuovo prodotto"
@@ -4023,10 +4035,14 @@ it:
     users:
       api_keys:
         regenerate_key: "Rigenera chiave"
+        title: Chiave API
+      developer_settings:
+        title: Impostazioni sviluppatore
       form:
         account_settings: Impostazioni account
       show:
         tabs:
+          developer_settings: Impostazioni sviluppatore
           orders: Gentili richieste
           cards: Carte di credito
           transactions: Transazioni
@@ -4057,6 +4073,7 @@ it:
         total: Totale
         paid?: Pagato?
         status: Stato
+        completed: Completato
         cancelled: Annullato
       saved_cards:
         default?: Predefinito?
@@ -4068,6 +4085,7 @@ it:
       authorised_shops:
         shop_name: "Nome del negozio"
         allow_charges?: "Consenti addebiti sulla carta predefinita?"
+        no_default_saved_cards_tooltip: Per effettuare pagamenti devi selezionare una carta di credito come predefinita.
     localized_number:
       invalid_format: 'Formato non valido: inserire un numero.'
     api:
@@ -4086,6 +4104,7 @@ it:
       shipment:
         cannot_ready: "Impossibile spedizione immediata."
       invalid_taxonomy_id: "ID tassonomia non valido."
+      toggle_api_key_view: "Mostra la chiave API per l'utente"
     activerecord:
       models:
         spree/payment:
@@ -4145,3 +4164,13 @@ it:
         one: "1 anno"
         many: "%{count} anni"
         other: "%{count} anni"
+  errors:
+    not_found:
+      title: "La pagina che stai cercando non esiste (404)"
+      message_html: "<b>Per favore riprova</b> <p>Questo potrebbe essere un problema temporaneo. Per favore clicca il pulsante \"Indietro\" per tornare alla schermata precedente o alla <a href='/'>Home</a> e prova ancora.</p> <b>Contatta il supporto</b> <p>Se il problema persiste o è urgente, per favore segnalacelo. Trova i nostri dettagli di contatto su <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>pagina Open Food Network Locale</a>.</p> <p>Ci aiuterebbe molto se ci fornissi più dettagli possibili circa la pagina mancante.</p>"
+    internal_server_error:
+      title: "Ci dispiace, qualcosa è andato storto (500)"
+      message_html: "<b>Per favore riprova</b> <p>Questo potrebbe essere un problema temporaneo. Per favore clicca il pulsante \"Indietro\" per tornare alla schermata precedente o alla <a href='/''>Home</a> e prova ancora.</p> <b>Ci stiamo lavorando</b> <p>Se hai già incontrato questo problema altre volte, probabilmente lo conosciamo e stiamo lavorando per risolverlo. Registriamo tutti gli errori che avvengono.</p> <b>Contatta il supporto</b> <p>Se il problema persiste o è urgente, per favore segnalacelo. Trova i nostri dettagli di contatto su <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>pagina Open Food Network Locale</a>.</p> <p>Ci aiuterebbe molto se ci fornissi più dettagli possibili circa ciò che stavi facendo quando hai incontrato questo errore.</p>"
+    unprocessable_entity:
+      title: "La modifica che hai richiesto è stata rifiutata (422)"
+      message_html: "<p>La modifica che hai richiesto è stata rifiutata. Forse hai provato a modificare qualcosa a cui non hai accesso. <br><h3><a href='/' >Ritorna alla home</a></h3> </p>"

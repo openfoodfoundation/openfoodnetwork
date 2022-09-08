@@ -857,6 +857,7 @@ nb:
           visible: Offentlig
           not_visible: Skjult
           hidden: Skjul alle referanser
+        permalink:
           permalink: Permalink (ingen mellomrom)
           permalink_tip: "Denne permalinken brukes til å opprette url-en til din butikk: %{link}din-butikks-navn/shop"
           link_to_front: Lenke til butikkvindu

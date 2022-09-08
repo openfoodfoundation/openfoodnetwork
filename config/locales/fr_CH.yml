@@ -858,6 +858,7 @@ fr_CH:
           visible: Boutique publique (visible par tous)
           not_visible: Invisible
           hidden: Masquer toutes les références
+        permalink:
           permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre boutique: %{link}ma-boutique/shop"
           link_to_front: Lien URL de la boutique

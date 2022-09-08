@@ -805,6 +805,7 @@ fr_CM:
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
           visible_in_search: Apparaît sur la plateforme?
           visible: Boutique publique (visible par tous)
+        permalink:
           permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre boutique: %{link}ma-boutique/shop"
           link_to_front: Lien URL de la boutique

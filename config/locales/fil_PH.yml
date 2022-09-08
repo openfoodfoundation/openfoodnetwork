@@ -698,8 +698,8 @@ fil_PH:
           sells_tip: "Wala- ang enterprise ay hindi nagbebenta ng direkta sa mga customer<br />Sarili- ang enterprise ay nagbebenta ng sariling mga produkto sa mga customer<br />kahit ano- ang enterprise ay maaaring magbenta ng sariling produkto pati na rin ang mga produkto ng ibang mga enterprise.<br />"
           visible_in_search: makikita sa paghahanap?
           visible: publiko
+        permalink:
           permalink: Permalink (walang espasyo)
-          permalink_tip: "ang permalink na ito ay ginamit para gumawa ng url sa inyong shop: %{link}your-shop-name/shop"
           link_to_front: Link sa shop front
           link_to_front_tip: direktang link sa inyong shopfront sa Open Food Network.
           ofn_uid: UID sa OFN

@@ -783,11 +783,11 @@ pt_BR:
           sells_tip: "Nenhum - iniciativa não vende diretamente para compradores. <br /> Próprio - iniciativa vende produtos próprios para compradores. <br /> Qualquer - iniciativa vende produtos próprios ou de outras iniciativas. <br />"
           visible_in_search: Visível na busca?
           visible: Publico
+        permalink:
           permalink: Permalink (sem espaços)
           permalink_tip: "Esse link é usado para criar a URL para a sua loja: %{link}nome-loja/loja"
           link_to_front: Link para a loja
           link_to_front_tip: Um link direto para a sua loja virtual na Ajunta.
-          ofn_uid: OFN UID
           ofn_uid_tip: O ID exclusivo usado para identificar a iniciativa na Ajunta.
         shipping_methods:
           name: "Nome"

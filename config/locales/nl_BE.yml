@@ -714,6 +714,7 @@ nl_BE:
           sells_tip: "Geen enkele - onderneming verkoopt niet rechtstreeks tot de klant. <br />Eigen - Onderneming verkoopt eigen product aan de klant. <br />Om het even - Onderneming kan eigen producten verkopen of producten van andere ondernemingen. <br />"
           visible_in_search: Zichtbaar in zoekopdracht?
           visible: Openbaar
+        permalink:
           permalink: Permalink (geen spaties)
           permalink_tip: "Deze permalink wordt gebruikt om de url te gebruiken in jouw winkel: %{link} jouw-winkel-naam/winkel"
           link_to_front: Link naar je etalage

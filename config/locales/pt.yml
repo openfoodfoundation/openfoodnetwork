@@ -763,6 +763,7 @@ pt:
           sells_tip: "Nenhum - a organização não vende directamente aos consumidores. <br /> Próprio - a organização vende os seus próprios produtos aos consumidores. <br /> Qualquer - a organização vende os seus próprios produtos ou produtos de outras organizações. <br />"
           visible_in_search: Visível na pesquisa?
           visible: Público
+        permalink:
           permalink: Permalink (sem espaços)
           permalink_tip: "Este link é usado para criar o URL para a sua loja: %{link}nome-loja/loja"
           link_to_front: Link para a loja

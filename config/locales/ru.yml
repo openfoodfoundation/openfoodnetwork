@@ -872,6 +872,7 @@ ru:
           visible: Доступно всем
           not_visible: Скрытый
           hidden: Скрыть все ссылки
+        permalink:
           permalink: Постоянная ссылка (без пробелов)
           permalink_tip: "Эта постоянная ссылка используется для создания URL вашего магазина: %{link}your-shop-name/shop"
           link_to_front: Ссылка на витрину магазина

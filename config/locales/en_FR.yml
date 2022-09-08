@@ -870,6 +870,7 @@ en_FR:
           visible: Public
           not_visible: Hidden
           hidden: Hide all references
+        permalink:
           permalink: Permalink (no spaces)
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front

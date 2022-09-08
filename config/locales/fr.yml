@@ -141,7 +141,7 @@ fr:
   cardholder_name: "Titulaire de la carte"
   community_forum_url: "Lien vers le forum"
   customer_instructions: "Précisions pour l'acheteur"
-  additional_information: "Information additionnelle"
+  additional_information: "Informations additionnelles"
   devise:
     passwords:
       spree_user:
@@ -871,6 +871,7 @@ fr:
           visible: Visible par tous
           not_visible: Cachée
           hidden: Invisible
+        permalink:
           permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre boutique: %{link}ma-boutique/shop"
           link_to_front: Lien URL de la boutique

@@ -865,6 +865,7 @@ cy:
           visible: Cyhoeddus
           not_visible: Cudd
           hidden: Cuddio pob cyfeirnod
+        permalink:
           permalink: Permaddolen (dim bylchau)
           permalink_tip: "Defnyddir y permaddolen hon i greu'r url ar gyfer eich siop: %{link}enw-eich-siop / siop"
           link_to_front: Dolen i ffrynt y siop

@@ -870,6 +870,7 @@ es_CR:
           visible: Pública
           not_visible: Oculto
           hidden: Ocultar todas las referencias
+        permalink:
           permalink: Permalink (sin espacios)
           permalink_tip: "Se usa para crear la URL de tu tienda: %{link}nombre-de-tu-tienda/shop"
           link_to_front: Link a la tienda

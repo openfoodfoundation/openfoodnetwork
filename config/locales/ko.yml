@@ -856,6 +856,7 @@ ko:
           visible: 공용
           not_visible: 숨김
           hidden: 모든 참조 숨기기
+        permalink:
           permalink: 하이퍼링크 (공백 없음)
           permalink_tip: "이 하이퍼링크는 가게의 URL을 만드는 데 사용됩니다 :%{link}당신의 가게 이름/가게"
           link_to_front: 상점 앞 링크

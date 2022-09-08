@@ -858,6 +858,7 @@ de_CH:
           visible: öffentlich sichtbar
           not_visible: versteckt aber referenziert
           hidden: vollständig versteckt
+        permalink:
           permalink: Permalink (keine Leerzeichen)
           permalink_tip: "Dieser Permalink wird verwendet, um die URL zu Ihrem Laden zu erstellen: %{link}name-ihres-ladens/shop"
           link_to_front: Link zum Laden

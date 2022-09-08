@@ -868,6 +868,7 @@ uk:
           visible: Публічний
           not_visible: Прихований
           hidden: Приховати всі посилання
+        permalink:
           permalink: Постійне посилання (без пробілів)
           permalink_tip: "Це постійне посилання використовується для створення URL-адреси вашого магазину: %{link}your-shop-name/shop"
           link_to_front: Посилання на фронт магазину
