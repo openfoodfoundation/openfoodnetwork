@@ -92,10 +92,7 @@ describe '
       end
 
       def taxes_in_print_data
-        display_checkout_taxes_hash(order).map { |tax_rate, tax_value|
-          [tax_rate,
-           tax_value.format(with_currency: false)]
-        }
+        [["10.0%", "$11.00"]]
       end
     end
   end
