@@ -10,29 +10,29 @@ describe "As a consumer, I want to see adjustment breakdown" do
   include AuthenticationHelper
   include WebHelper
 
-  let!(:address_within_zone) { create(:address, state_id: Spree::State.first.id) }
-  let!(:address_outside_zone) { create(:address, state_id: Spree::State.second.id) }
-  let!(:user_within_zone) {
-    create(:user, bill_address_id: address_within_zone.id,
-                  ship_address_id: address_within_zone.id)
+  let!(:address_within_zone) { create(:address, state: Spree::State.first) }
+  let!(:address_outside_zone) { create(:address, state: Spree::State.second) }
+  let(:user_within_zone) {
+    create(:user, bill_address: address_within_zone,
+                  ship_address: address_within_zone)
   }
-  let!(:user_outside_zone) {
-    create(:user, bill_address_id: address_outside_zone.id,
-                  ship_address_id: address_outside_zone.id)
+  let(:user_outside_zone) {
+    create(:user, bill_address: address_outside_zone,
+                  ship_address: address_outside_zone)
   }
   let!(:zone) { create(:zone_with_state_member, name: 'Victoria', default_tax: false) }
   let!(:tax_category) { create(:tax_category, name: "Veggies", is_default: "f") }
   let!(:tax_rate) {
     create(:tax_rate, name: "Tax rate - included or not", amount: 0.13,
-                      zone_id: zone.id, tax_category_id: tax_category.id, included_in_price: false)
+                      zone: zone, tax_category: tax_category, included_in_price: false)
   }
   let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:supplier) { create(:supplier_enterprise) }
-  let!(:product_with_tax) {
-    create(:simple_product, supplier: supplier, price: 10, tax_category_id: tax_category.id)
+  let(:product_with_tax) {
+    create(:simple_product, supplier: supplier, price: 10, tax_category: tax_category)
   }
-  let!(:variant_with_tax) { product_with_tax.variants.first }
-  let!(:order_cycle) {
+  let(:variant_with_tax) { product_with_tax.variants.first }
+  let(:order_cycle) {
     create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor],
                                 coordinator: distributor, variants: [variant_with_tax])
   }
@@ -46,12 +46,12 @@ describe "As a consumer, I want to see adjustment breakdown" do
                             name: "Payment without Fee", description: "Payment without fee",
                             calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
-  let!(:order_within_zone) {
+  let(:order_within_zone) {
     create(:order, order_cycle: order_cycle, distributor: distributor, user: user_within_zone,
                    bill_address: address_within_zone, ship_address: address_within_zone,
                    state: "cart", line_items: [create(:line_item, variant: variant_with_tax)])
   }
-  let!(:order_outside_zone) {
+  let(:order_outside_zone) {
     create(:order, order_cycle: order_cycle, distributor: distributor, user: user_outside_zone,
                    bill_address: address_outside_zone, ship_address: address_outside_zone,
                    state: "cart", line_items: [create(:line_item, variant: variant_with_tax)])
@@ -107,7 +107,8 @@ describe "As a consumer, I want to see adjustment breakdown" do
           click_on "Place order now"
 
           # DB checks
-          assert_db_tax_added
+          order_within_zone.reload
+          expect(order_within_zone.additional_tax_total).to eq(1.3)
 
           # UI checks
           expect(page).to have_selector('#order_total', text: with_currency(11.30))
@@ -134,7 +135,8 @@ describe "As a consumer, I want to see adjustment breakdown" do
           click_on "Complete order"
 
           # DB checks
-          assert_db_tax_added
+          order_within_zone.reload
+          expect(order_within_zone.additional_tax_total).to eq(1.3)
 
           # UI checks
           expect(page).to have_content("Confirmed")
@@ -164,7 +166,9 @@ describe "As a consumer, I want to see adjustment breakdown" do
           click_on "Place order now"
 
           # DB checks
-          assert_db_no_tax_added
+          order_outside_zone.reload
+          expect(order_outside_zone.included_tax_total).to eq(0.0)
+          expect(order_outside_zone.additional_tax_total).to eq(0.0)
 
           # UI checks
           expect(page).to have_content("Confirmed")
@@ -192,7 +196,9 @@ describe "As a consumer, I want to see adjustment breakdown" do
           click_on "Complete order"
 
           # DB checks
-          assert_db_no_tax_added
+          order_outside_zone.reload
+          expect(order_outside_zone.included_tax_total).to eq(0.0)
+          expect(order_outside_zone.additional_tax_total).to eq(0.0)
 
           # UI checks
           expect(page).to have_content("Confirmed")
@@ -217,7 +223,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
           end
 
           it "should re-calculate the tax accordingly" do
-            pending("#9153")
             select "Victoria", from: "order_bill_address_attributes_state_id"
 
             # it should not be necessary to save as new default bill address
@@ -236,7 +241,9 @@ describe "As a consumer, I want to see adjustment breakdown" do
             click_on "Complete order"
 
             # DB checks
-            assert_db_tax_added
+            order_outside_zone.reload
+            expect(order_outside_zone.included_tax_total).to eq(0.0)
+            expect(order_outside_zone.additional_tax_total).to eq(1.3)
 
             # UI checks - Order confirmation page should reflect changes
             expect(page).to have_content("Confirmed")
@@ -246,19 +253,5 @@ describe "As a consumer, I want to see adjustment breakdown" do
         end
       end
     end
-  end
-
-  private
-
-  def assert_db_tax_added
-    order_within_zone.reload
-    expect(order_outside_zone.included_tax_total).to eq(0.0)
-    expect(order_within_zone.additional_tax_total).to eq(1.3)
-  end
-
-  def assert_db_no_tax_added
-    order_outside_zone.reload
-    expect(order_outside_zone.included_tax_total).to eq(0.0)
-    expect(order_outside_zone.additional_tax_total).to eq(0.0)
   end
 end

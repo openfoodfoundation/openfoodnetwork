@@ -22,6 +22,7 @@ class SplitCheckoutController < ::BaseController
   def edit
     redirect_to_step_based_on_order unless params[:step]
     check_step if params[:step]
+    recalculate_tax if params[:step] == "summary"
   end
 
   def update
@@ -154,5 +155,10 @@ class SplitCheckoutController < ::BaseController
     when "payment"
       redirect_to checkout_step_path(:payment) if params[:step] == "summary"
     end
+  end
+
+  def recalculate_tax
+    @order.create_tax_charge!
+    @order.update_order!
   end
 end
