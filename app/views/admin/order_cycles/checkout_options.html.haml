@@ -3,9 +3,6 @@
 - content_for :page_title do
   = t :edit_order_cycle
 
-- shared_payment_methods = order_cycle_shared_payment_methods(@order_cycle)
-- shared_shipping_methods = order_cycle_shared_shipping_methods(@order_cycle)
-
 = form_for [main_app, :admin, @order_cycle], html: { class: "order_cycle" } do |f|
 
   = render 'wizard_progress'
@@ -22,8 +19,8 @@
         %th= t('.shipping_methods')
         %th= t('.payment_methods')
       - @order_cycle.distributors.each do |distributor|
-        - payment_methods = @order_cycle.attachable_payment_methods.where("distributor_id = ?", distributor.id) -  shared_payment_methods
-        - shipping_methods = @order_cycle.attachable_shipping_methods.where("distributor_id = ?", distributor.id) - shared_shipping_methods
+        - payment_methods = @order_cycle.attachable_payment_methods.where("distributor_id = ?", distributor.id)
+        - shipping_methods = @order_cycle.attachable_shipping_methods.where("distributor_id = ?", distributor.id)
         %tr
           %td= distributor.name
           %td
@@ -50,31 +47,6 @@
             - else
               %p
                 = t('.no_payment_methods')
-      - if shared_payment_methods.any? || shared_shipping_methods.any?
-        %tr
-          %td= t('.shared')
-          %td
-            - shared_shipping_methods.each do |shared_shipping_method|
-              %p
-                %label
-                  = check_box_tag "order_cycle[selected_shipping_method_ids][]",
-                      shared_shipping_method.id, @order_cycle.shipping_methods.include?(shared_shipping_method),
-                      id: "order_cycle_selected_shipping_method_ids_#{shared_shipping_method.id}"
-                  = shared_shipping_method.name
-              %p
-                &mdash;
-                %em
-                  = shared_shipping_method.distributors.where(id: @order_cycle.distributor_ids).map(&:name).join(", ")
-          %td
-            - if shared_payment_methods.any?
-              %ul
-                - shared_payment_methods.each do |shared_payment_method|
-                  %li
-                    = shared_payment_method.name
-                    %p
-                      &mdash;
-                      %em
-                        = shared_payment_method.distributors.where(id: @order_cycle.distributor_ids).map(&:name).join(", ")
 
   %div#save-bar
     %div.container
