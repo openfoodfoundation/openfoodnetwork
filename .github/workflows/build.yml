@@ -34,15 +34,7 @@ jobs:
     strategy:
       matrix:
         specs:
-          - "spec/controllers"
-          - "spec/models"
-          - "spec/lib"
-          - "spec/migrations"
-          - "spec/serializers"
-          - "spec/system/admin/[a-o0-9]*_spec.rb"
-          - "spec/system/admin/[p-z]*_spec.rb"
-          - "spec/system/consumer"
-          - "engines/*/spec"
+          - "spec/system/release_test_automation_spec.rb"
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
