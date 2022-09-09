@@ -1166,6 +1166,7 @@ en:
         back_end: "Back office only"
         cancel: "Cancel"
         checkout_options: "Checkout options"
+        distributor: "Distributor"
         no_payment_methods: Each distributor on this order cycle requires at least one payment method.
         no_shipping_methods: Each distributor on this order cycle requires at least one shipping method.
         payment_methods: "Payment Methods"
