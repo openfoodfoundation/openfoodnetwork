@@ -408,18 +408,24 @@ describe OrderCycle do
              e.g. shipping method is backoffice only" do
       it "only attaches the valid ones to the clone" do
         distributor = create(:distributor_enterprise)
-        shipping_method_i = create(:shipping_method, distributors: [distributor])
-        shipping_method_ii = create(
+        distributor_shipping_method_i = create(
+          :shipping_method,
+          distributors: [distributor]
+        ).distributor_shipping_methods.first
+        distributor_shipping_method_ii = create(
           :shipping_method,
           distributors: [distributor],
           display_on: Spree::ShippingMethod::DISPLAY_ON_OPTIONS[:back_end]
-        )
+        ).distributor_shipping_methods.first
         order_cycle = create(:distributor_order_cycle, distributors: [distributor])
-        order_cycle.selected_shipping_methods = [shipping_method_i, shipping_method_ii]
+        order_cycle.selected_distributor_shipping_methods = [
+          distributor_shipping_method_i,
+          distributor_shipping_method_ii
+        ]
 
         cloned_order_cycle = order_cycle.clone!
 
-        expect(cloned_order_cycle.shipping_methods).to eq [shipping_method_i]
+        expect(cloned_order_cycle.distributor_shipping_methods).to eq [distributor_shipping_method_i]
       end
     end
   end
@@ -631,52 +637,65 @@ describe OrderCycle do
     end
   end
 
-  describe "#attachable_shipping_methods" do
-    it "includes shipping methods from the distributors on the order cycle" do
+  describe "#attachable_distributor_shipping_methods" do
+    it "includes distributor shipping methods from the distributors on the order cycle" do
       shipping_method = create(:shipping_method)
-      enterprise = create(:enterprise, shipping_methods: [shipping_method])
-      oc = create(:simple_order_cycle, distributors: [enterprise])
+      oc = create(:simple_order_cycle, distributors: [shipping_method.distributors.first])
+      distributor_shipping_method = shipping_method.distributor_shipping_methods.first
 
-      expect(oc.attachable_shipping_methods).to eq([shipping_method])
+      expect(oc.attachable_distributor_shipping_methods).to eq([distributor_shipping_method])
     end
 
-    it "does not include backoffice only shipping methods" do
+    it "does not include backoffice only distributor shipping methods" do
       shipping_method = create(:shipping_method, display_on: "back_end")
       enterprise = create(:enterprise, shipping_methods: [shipping_method])
       oc = create(:simple_order_cycle, distributors: [enterprise])
 
-      expect(oc.attachable_shipping_methods).to be_empty
+      expect(oc.attachable_distributor_shipping_methods).to be_empty
     end
   end
 
-  describe "#shipping_methods" do
+  describe "#distributor_shipping_methods" do
     let(:distributor) { create(:distributor_enterprise) }
 
-    it "returns all attachable shipping methods if the order cycle is simple" do
+    it "returns all attachable distributor shipping methods if the order cycle is simple" do
       oc = create(:sells_own_order_cycle, distributors: [distributor])
 
-      shipping_method = create(:shipping_method, distributors: [distributor])
+      distributor_shipping_method = create(
+        :shipping_method,
+        distributors: [distributor]
+      ).distributor_shipping_methods.first
 
-      expect(oc.shipping_methods).to eq [shipping_method]
+      expect(oc.distributor_shipping_methods).to eq [distributor_shipping_method]
     end
 
     context "distributor order cycle i.e. non-simple" do
       let(:oc) { create(:distributor_order_cycle, distributors: [distributor]) }
 
-      it "returns all attachable shipping methods if no preferred shipping methods have been chosen" do
-        shipping_method = create(:shipping_method, distributors: [distributor])
+      it "returns all attachable distributor shipping methods if no preferred shipping methods have
+          been chosen" do
+        distributor_shipping_method = create(
+          :shipping_method,
+          distributors: [distributor]
+        ).distributor_shipping_methods.first
 
-        expect(oc.selected_shipping_methods).to be_empty
-        expect(oc.shipping_methods).to eq [shipping_method]
+        expect(oc.selected_distributor_shipping_methods).to be_empty
+        expect(oc.distributor_shipping_methods).to eq [distributor_shipping_method]
       end
 
-      it "returns preferred shipping methods if they have been specified" do
-        shipping_method_i = create(:shipping_method, distributors: [distributor])
-        shipping_method_ii = create(:shipping_method, distributors: [distributor])
+      it "returns selected distributor shipping methods if they have been specified" do
+        distributor_shipping_method_i = create(
+          :shipping_method,
+          distributors: [distributor]
+        ).distributor_shipping_methods.first
+        distributor_shipping_method_ii = create(
+          :shipping_method,
+          distributors: [distributor]
+        ).distributor_shipping_methods.first
 
-        oc.selected_shipping_methods << shipping_method_ii
+        oc.selected_distributor_shipping_methods << distributor_shipping_method_ii
 
-        expect(oc.shipping_methods).to eq [shipping_method_ii]
+        expect(oc.distributor_shipping_methods).to eq [distributor_shipping_method_ii]
       end
     end
   end

@@ -10,7 +10,7 @@
   %fieldset.no-border-bottom
     %legend{ align: 'center'}= t('.checkout_options')
 
-  = hidden_field_tag "order_cycle[selected_shipping_method_ids][]", ""
+  = hidden_field_tag "order_cycle[selected_distributor_shipping_method_ids][]", ""
 
   .row
     .three.columns
@@ -21,18 +21,18 @@
           %tr
             %th{ colspan: 2 }= t('.shipping_methods')
           - @order_cycle.distributors.each do |distributor|
-            - shipping_methods = @order_cycle.attachable_shipping_methods.where("distributor_id = ?", distributor.id)
+            - distributor_shipping_methods = @order_cycle.attachable_distributor_shipping_methods.where("distributor_id = ?", distributor.id).includes(:shipping_method)
             %tr
               %td
               %td
                 %em= distributor.name
-                - shipping_methods.each do |shipping_method|
+                - distributor_shipping_methods.each do |distributor_shipping_method|
                   %p
-                    %label
-                      = check_box_tag "order_cycle[selected_shipping_method_ids][]",
-                          shipping_method.id, @order_cycle.shipping_methods.include?(shipping_method),
-                          id: "order_cycle_selected_shipping_method_ids_#{shipping_method.id}"
-                      = shipping_method.name
+                    %label{ class: ("disabled" unless distributor_shipping_method.shipping_method.frontend?) }
+                      = check_box_tag "order_cycle[selected_distributor_shipping_method_ids][]",
+                          distributor_shipping_method.id, @order_cycle.distributor_shipping_methods.include?(distributor_shipping_method),
+                          id: "order_cycle_selected_distributor_shipping_method_ids_#{distributor_shipping_method.id}"
+                      = distributor_shipping_method.shipping_method.name
                 - distributor.shipping_methods.backend.each do |shipping_method|
                   %label.disabled
                     = check_box_tag nil, nil, false, disabled: true

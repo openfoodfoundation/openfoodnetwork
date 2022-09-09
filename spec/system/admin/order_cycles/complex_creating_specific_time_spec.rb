@@ -66,7 +66,7 @@ describe '
     ## UPDATE
     add_supplier_with_fees
     add_distributor_with_fees
-    select_shipping_methods
+    select_distributor_shipping_methods
 
     expect_all_data_saved
   end
@@ -160,7 +160,7 @@ describe '
     click_button 'Save and Next'
   end
 
-  def select_shipping_methods
+  def select_distributor_shipping_methods
     expect(page).to have_checked_field "Select all"
 
     expect(page).to have_checked_field "Pickup - always available"

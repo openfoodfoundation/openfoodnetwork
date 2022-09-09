@@ -125,6 +125,7 @@ describe OrderCycleForm do
     let(:supplier) { create(:supplier_enterprise) }
     let(:user) { distributor.owner }
     let(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
+    let(:distributor_shipping_method) { shipping_method.distributor_shipping_methods.first }
     let(:variant) { create(:variant, product: create(:product, supplier: supplier)) }
     let(:params) { { name: 'Some new name' } }
     let(:form) { OrderCycleForm.new(order_cycle, params, user) }
@@ -159,7 +160,7 @@ describe OrderCycleForm do
             enterprise_fee_ids: []
           }],
           outgoing_exchanges: [outgoing_exchange_params],
-          selected_shipping_method_ids: [shipping_method.id]
+          selected_distributor_shipping_method_ids: [distributor_shipping_method.id]
         )
       end
 
@@ -168,27 +169,30 @@ describe OrderCycleForm do
         expect(order_cycle.name).to eq 'Some new name'
         expect(order_cycle.cached_incoming_exchanges.count).to eq 1
         expect(order_cycle.cached_outgoing_exchanges.count).to eq 1
-        expect(order_cycle.shipping_methods).to eq [shipping_method]
+        expect(order_cycle.distributor_shipping_methods).to eq [distributor_shipping_method]
       end
     end
 
     context "updating outgoing exchanges and shipping methods simultaneously but the shipping
              method doesn't belong to the new or any existing order cycle distributor" do
       let(:other_distributor_shipping_method) do
-        create(:shipping_method, distributors: [create(:distributor_enterprise)])
+        create(
+          :shipping_method,
+          distributors: [create(:distributor_enterprise)]
+        ).distributor_shipping_methods.first
       end
 
       before do
         params.merge!(
           outgoing_exchanges: [outgoing_exchange_params],
-          selected_shipping_method_ids: [other_distributor_shipping_method.id]
+          selected_distributor_shipping_method_ids: [other_distributor_shipping_method.id]
         )
       end
 
       it "saves the outgoing exchange but ignores the shipping method" do
         expect(form.save).to be true
         expect(order_cycle.distributors).to eq [distributor]
-        expect(order_cycle.shipping_methods).to be_empty
+        expect(order_cycle.distributor_shipping_methods).to be_empty
       end
     end
 
@@ -196,15 +200,20 @@ describe OrderCycleForm do
       context "and it's valid" do
         it "saves the changes" do
           distributor = create(:distributor_enterprise)
-          shipping_method = create(:shipping_method, distributors: [distributor])
+          distributor_shipping_method = create(
+            :shipping_method,
+            distributors: [distributor]
+          ).distributor_shipping_methods.first
           order_cycle = create(:distributor_order_cycle, distributors: [distributor])
 
-          form = OrderCycleForm.new(order_cycle,
-                                    { selected_shipping_method_ids: [shipping_method.id] },
-                                    order_cycle.coordinator)
+          form = OrderCycleForm.new(
+            order_cycle,
+            { selected_distributor_shipping_method_ids: [distributor_shipping_method.id] },
+            order_cycle.coordinator
+          )
 
           expect(form.save).to be true
-          expect(order_cycle.shipping_methods).to eq [shipping_method]
+          expect(order_cycle.distributor_shipping_methods).to eq [distributor_shipping_method]
         end
       end
 
@@ -212,17 +221,25 @@ describe OrderCycleForm do
         it "ignores it" do
           distributor_i = create(:distributor_enterprise)
           distributor_ii = create(:distributor_enterprise)
-          shipping_method_i = create(:shipping_method, distributors: [distributor_i])
-          shipping_method_ii = create(:shipping_method, distributors: [distributor_ii])
+          distributor_shipping_method_i = create(
+            :shipping_method,
+            distributors: [distributor_i]
+          ).distributor_shipping_methods.first
+          distributor_shipping_method_ii = create(
+            :shipping_method,
+            distributors: [distributor_ii]
+          ).distributor_shipping_methods.first
           order_cycle = create(:distributor_order_cycle,
                                distributors: [distributor_i])
 
-          form = OrderCycleForm.new(order_cycle,
-                                    { selected_shipping_method_ids: [shipping_method_ii.id] },
-                                    order_cycle.coordinator)
+          form = OrderCycleForm.new(
+            order_cycle,
+            { selected_distributor_shipping_method_ids: [distributor_shipping_method_ii.id] },
+            order_cycle.coordinator
+          )
 
           expect(form.save).to be true
-          expect(order_cycle.shipping_methods).to eq [shipping_method_i]
+          expect(order_cycle.distributor_shipping_methods).to eq [distributor_shipping_method_i]
         end
       end
     end

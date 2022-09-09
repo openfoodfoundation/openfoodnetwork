@@ -11,7 +11,9 @@ class OrderCycleForm
     @user = user
     @permissions = OpenFoodNetwork::Permissions.new(user)
     @schedule_ids = order_cycle_params.delete(:schedule_ids)
-    @selected_shipping_method_ids = order_cycle_params.delete(:selected_shipping_method_ids)
+    @selected_distributor_shipping_method_ids = order_cycle_params.delete(
+      :selected_distributor_shipping_method_ids
+    )
   end
 
   def save
@@ -24,7 +26,7 @@ class OrderCycleForm
       order_cycle.schedule_ids = schedule_ids
       order_cycle.save!
       apply_exchange_changes
-      attach_selected_shipping_methods
+      attach_selected_distributor_shipping_methods
       sync_subscriptions
       true
     end
@@ -48,16 +50,16 @@ class OrderCycleForm
     OpenFoodNetwork::OrderCycleFormApplicator.new(order_cycle, user).go!
   end
 
-  def attach_selected_shipping_methods
-    return if @selected_shipping_method_ids.nil?
+  def attach_selected_distributor_shipping_methods
+    return if @selected_distributor_shipping_method_ids.nil?
 
     order_cycle.reload # so outgoing exchanges are up-to-date for shipping method validations
-    order_cycle.selected_shipping_method_ids = selected_shipping_method_ids
+    order_cycle.selected_distributor_shipping_method_ids = selected_distributor_shipping_method_ids
     order_cycle.save!
   end
 
-  def attachable_shipping_method_ids
-    @attachable_shipping_method_ids ||= order_cycle.attachable_shipping_methods.map(&:id)
+  def attachable_distributor_shipping_method_ids
+    @attachable_distributor_shipping_method_ids ||= order_cycle.attachable_distributor_shipping_methods.map(&:id)
   end
 
   def exchanges_unchanged?
@@ -66,15 +68,17 @@ class OrderCycleForm
     end
   end
 
-  def selected_shipping_method_ids
-    @selected_shipping_method_ids = attachable_shipping_method_ids &
-                                    @selected_shipping_method_ids.reject(&:blank?).map(&:to_i)
+  def selected_distributor_shipping_method_ids
+    @selected_distributor_shipping_method_ids = (
+      attachable_distributor_shipping_method_ids &
+      @selected_distributor_shipping_method_ids.reject(&:blank?).map(&:to_i)
+    )
 
-    if attachable_shipping_method_ids.sort == @selected_shipping_method_ids.sort
-      @selected_shipping_method_ids = []
+    if attachable_distributor_shipping_method_ids.sort == @selected_distributor_shipping_method_ids.sort
+      @selected_distributor_shipping_method_ids = []
     end
 
-    @selected_shipping_method_ids
+    @selected_distributor_shipping_method_ids
   end
 
   def schedule_ids?

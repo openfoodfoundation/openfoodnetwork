@@ -24,9 +24,9 @@ class OrderCycle < ApplicationRecord
   has_many :distributors, -> { distinct }, source: :receiver, through: :cached_outgoing_exchanges
   has_many :order_cycle_schedules
   has_many :schedules, through: :order_cycle_schedules
-  has_and_belongs_to_many :selected_shipping_methods,
-                          class_name: 'Spree::ShippingMethod',
-                          join_table: 'order_cycles_shipping_methods'
+  has_and_belongs_to_many :selected_distributor_shipping_methods,
+                          class_name: 'DistributorShippingMethod',
+                          join_table: 'order_cycles_distributor_shipping_methods'
   has_paper_trail meta: { custom_data: proc { |order_cycle| order_cycle.schedule_ids.to_s } }
 
   attr_accessor :incoming_exchanges, :outgoing_exchanges
@@ -160,11 +160,10 @@ class OrderCycle < ApplicationRecord
       distinct
   end
 
-  def attachable_shipping_methods
-    Spree::ShippingMethod.frontend.
-      joins(:distributor_shipping_methods).
-      where("distributor_id IN (?)", distributor_ids).
-      distinct
+  def attachable_distributor_shipping_methods
+    DistributorShippingMethod.joins(:shipping_method).
+      merge(Spree::ShippingMethod.frontend).
+      where("distributor_id IN (?)", distributor_ids)
   end
 
   def clone!
@@ -178,8 +177,9 @@ class OrderCycle < ApplicationRecord
     oc.schedule_ids = schedule_ids
     oc.save!
     exchanges.each { |e| e.clone!(oc) }
-    oc.selected_shipping_method_ids = attachable_shipping_methods.map(&:id) &
-                                      selected_shipping_method_ids
+    oc.selected_distributor_shipping_method_ids = (
+      attachable_distributor_shipping_methods.map(&:id) & selected_distributor_shipping_method_ids
+    )
     sync_subscriptions
     oc.reload
   end
@@ -293,11 +293,11 @@ class OrderCycle < ApplicationRecord
     items.each { |li| scoper.scope(li.variant) }
   end
 
-  def shipping_methods
-    if simple? || selected_shipping_methods.none?
-      attachable_shipping_methods
+  def distributor_shipping_methods
+    if simple? || selected_distributor_shipping_methods.none?
+      attachable_distributor_shipping_methods
     else
-      selected_shipping_methods
+      selected_distributor_shipping_methods
     end
   end
 

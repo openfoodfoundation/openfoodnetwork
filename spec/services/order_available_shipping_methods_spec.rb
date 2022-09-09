@@ -47,15 +47,18 @@ describe OrderAvailableShippingMethods do
     context "distributor order cycle i.e. not simple" do
       it "only returns the shipping methods which are available on the order cycle
           and belong to the order distributor" do
-        distributor_i = create(:distributor_enterprise)
-        distributor_ii = create(:distributor_enterprise)
+        distributor_i = create(:distributor_enterprise, shipping_methods: [])
+        distributor_ii = create(:distributor_enterprise, shipping_methods: [])
         shipping_method_i = create(:shipping_method, distributors: [distributor_i])
         shipping_method_ii = create(:shipping_method, distributors: [distributor_i])
         shipping_method_iii = create(:shipping_method, distributors: [distributor_ii])
         shipping_method_iv = create(:shipping_method, distributors: [distributor_ii])
         order_cycle = create(:distributor_order_cycle,
                              distributors: [distributor_i, distributor_ii])
-        order_cycle.selected_shipping_methods << [shipping_method_i, shipping_method_iii]
+        order_cycle.selected_distributor_shipping_methods << [
+          distributor_i.distributor_shipping_methods.first,
+          distributor_ii.distributor_shipping_methods.first,
+        ]
         order = build(:order, distributor: distributor_i, order_cycle: order_cycle)
 
         available_shipping_methods = OrderAvailableShippingMethods.new(order).to_a

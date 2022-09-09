@@ -29,7 +29,9 @@ class OrderAvailableShippingMethods
     if order_cycle.nil? || order_cycle.simple?
       distributor.shipping_methods
     else
-      distributor.shipping_methods.where(id: order_cycle.shipping_methods.select(:id))
+      distributor.shipping_methods.where(
+        id: order_cycle.distributor_shipping_methods.select(:shipping_method_id)
+      )
     end.frontend.to_a
   end
 end
