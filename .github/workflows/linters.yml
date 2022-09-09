@@ -1,5 +1,5 @@
 name: Linters
-on: [push, pull_request]
+on: []
 jobs:
   rubocop:
     name: runner / rubocop

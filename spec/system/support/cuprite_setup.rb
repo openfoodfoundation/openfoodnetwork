@@ -13,10 +13,14 @@ Capybara.register_driver(:cuprite) do |app|
       process_timeout: 20,
       timeout: 20,
       # Don't load scripts from external sources, like google maps or stripe
-      url_whitelist: ["http://localhost", "http://0.0.0.0", "http://127.0.0.1"],
+      url_whitelist: [
+        "http://localhost", "http://0.0.0.0", "http://127.0.0.1",
+         "https://staging.coopcircuits.fr/", "https://hooks.stripe.com/",
+          "https://stripe.com/"],
       inspector: true,
-      headless: headless,
-      js_errors: true,
+      headless: true,
+      js_errors: false,
+      slowmo: 0.25,
     }
   )
 end
@@ -35,9 +39,10 @@ RSpec.configure do |config|
 
   # Make sure url helpers in mailers use the Capybara server host.
   config.around(:each, type: :system) do |example|
+    Capybara.always_include_port = false
     original_host = Rails.application.default_url_options[:host]
     Rails.application.default_url_options[:host] =
-      "#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}"
+      "#{Capybara.current_session.server.host}:#{Capybara.current_session.server}"
     example.run
     Rails.application.default_url_options[:host] = original_host
     remove_downloaded_files
