@@ -39,7 +39,7 @@ describe "visits", type: :system do
         sleep(1)
 
         # adds the first available item to the cart
-        click_on "Add"
+        click_on "Ajouter"
 
         #clicks cart
         find("#cart").click
@@ -47,13 +47,13 @@ describe "visits", type: :system do
         sleep(1)
 
         # proceeds to checkout
-        click_on "Checkout"
+        click_on "Etape suivante"
 
         # selects shipping method
         choose "Consigne automatique"
 
         # proceeds to payment step
-        click_on "Next - Payment method"
+        click_on "Etape suivante - Moyen de Paiement"
       end
 
       it "with Stripe" do
@@ -62,19 +62,19 @@ describe "visits", type: :system do
         choose "StripeSCA"
 
         # proceeds to Order summary
-        click_on "Next - Order summary"
+        click_on "Etape suivante - Récapitulatif de commande"
 
         # accepts terms and services
-        check "I agree to the platform Terms of service"
+        check "J'accepte les Conditions Générales d'Utilisation de CoopCircuits."
 
         # places the order
-        click_on "Complete order"
+        click_on "Valider ma commande"
 
         # redirects to Stripe for authentication
         click_on "Complete authentication"
 
         # displays the order confirmation banner
-        expect(page).to have_content "Your order has been processed successfully"
+        expect(page).to have_content "Votre commande a été traitée avec succès"
 
       end
 
@@ -84,16 +84,19 @@ describe "visits", type: :system do
         choose "cash"
 
         # proceeds to Order summary
-        click_on "Next - Order summary"
+        click_on "Etape suivante - Récapitulatif de commande"
 
         # accepts terms and services
-        check "I agree to the platform Terms of service"
+        check "J'accepte les Conditions Générales d'Utilisation de CoopCircuits."
 
         # places the order
-        click_on "Complete order"
+        click_on "Valider ma commande"
+
+        # redirects to Stripe for authentication
+        click_on "Complete authentication"
 
         # displays the order confirmation banner
-        expect(page).to have_content "Your order has been processed successfully"
+        expect(page).to have_content "Votre commande a été traitée avec succès"
       end
     end
   end
