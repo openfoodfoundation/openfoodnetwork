@@ -36,12 +36,15 @@ describe "visits", type: :system do
       before do
         #visits the shop
         visit "https://staging.coopcircuits.fr/baguette/shop"
+        sleep(1)
 
         # adds the first available item to the cart
         click_on "Add"
 
         #clicks cart
         find("#cart").click
+
+        sleep(1)
 
         # proceeds to checkout
         click_on "Checkout"
