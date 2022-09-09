@@ -672,8 +672,8 @@ describe OrderCycle do
     context "distributor order cycle i.e. non-simple" do
       let(:oc) { create(:distributor_order_cycle, distributors: [distributor]) }
 
-      it "returns all attachable distributor shipping methods if no preferred shipping methods have
-          been chosen" do
+      it "returns all attachable distributor shipping methods if no distributor shipping methods
+          have been selected specifically" do
         distributor_shipping_method = create(
           :shipping_method,
           distributors: [distributor]
@@ -696,6 +696,35 @@ describe OrderCycle do
         oc.selected_distributor_shipping_methods << distributor_shipping_method_ii
 
         expect(oc.distributor_shipping_methods).to eq [distributor_shipping_method_ii]
+      end
+
+      context "with multiple distributors" do
+        let(:other_distributor) { create(:distributor_enterprise) }
+        let(:oc) { create(:distributor_order_cycle, distributors: [distributor, other_distributor]) }
+
+        it "returns all attachable distributor shipping methods for a distributor if no distributor
+            shipping methods have been selected specifically for that distributor, even if
+            distributor shipping methods have been selected specifically for a different distributor
+            on the order cycle" do
+          distributor_shipping_method = create(
+            :shipping_method,
+            distributors: [distributor]
+          ).distributor_shipping_methods.first
+          other_distributor_shipping_method_i = create(
+            :shipping_method,
+            distributors: [other_distributor]
+          ).distributor_shipping_methods.first
+          other_distributor_shipping_method_ii = create(
+            :shipping_method,
+            distributors: [other_distributor]
+          ).distributor_shipping_methods.first
+          oc.selected_distributor_shipping_methods << other_distributor_shipping_method_i
+
+          expect(oc.distributor_shipping_methods).to eq [
+            distributor_shipping_method,
+            other_distributor_shipping_method_i
+          ]
+        end
       end
     end
   end

@@ -294,10 +294,15 @@ class OrderCycle < ApplicationRecord
   end
 
   def distributor_shipping_methods
-    if simple? || selected_distributor_shipping_methods.none?
+    if simple?
       attachable_distributor_shipping_methods
     else
-      selected_distributor_shipping_methods
+      attachable_distributor_shipping_methods.reject do |distributor_shipping_method|
+        selected_distributor_shipping_methods.
+          map(&:distributor_id).
+          include?(distributor_shipping_method.distributor_id) &&
+          !selected_distributor_shipping_methods.include?(distributor_shipping_method)
+      end
     end
   end
 
