@@ -12,41 +12,47 @@
 
   = hidden_field_tag "order_cycle[selected_shipping_method_ids][]", ""
 
-  %table.checkout-options
-    %thead
-      %tr
-        %th= t('.distributor')
-        %th= t('.shipping_methods')
-        %th= t('.payment_methods')
-      - @order_cycle.distributors.each do |distributor|
-        - payment_methods = @order_cycle.attachable_payment_methods.where("distributor_id = ?", distributor.id)
-        - shipping_methods = @order_cycle.attachable_shipping_methods.where("distributor_id = ?", distributor.id)
-        %tr
-          %td= distributor.name
-          %td
-            - shipping_methods.each do |shipping_method|
-              %p
-                %label
-                  = check_box_tag "order_cycle[selected_shipping_method_ids][]",
-                      shipping_method.id, @order_cycle.shipping_methods.include?(shipping_method),
-                      id: "order_cycle_selected_shipping_method_ids_#{shipping_method.id}"
-                  = shipping_method.name
-            - distributor.shipping_methods.backend.each do |shipping_method|
-              %label.disabled
-                = check_box_tag nil, nil, false, disabled: true
-                = shipping_method.name
-                = "(#{t('.back_end')})"
-            - if distributor.shipping_methods.frontend.none?
-              %p
-                = t('.no_shipping_methods')
-          %td
-            - if distributor.payment_methods.available(:both).any?
-              %ul
-                - payment_methods.each do |payment_method|
-                  %li= payment_method.name
-            - else
-              %p
-                = t('.no_payment_methods')
+  .row
+    .three.columns
+      &nbsp;
+    .ten.columns
+      %table.checkout-options
+        %thead
+          %tr
+            %th{ colspan: 2 }= t('.shipping_methods')
+          - @order_cycle.distributors.each do |distributor|
+            - shipping_methods = @order_cycle.attachable_shipping_methods.where("distributor_id = ?", distributor.id)
+            %tr
+              %td
+              %td
+                %em= distributor.name
+                - shipping_methods.each do |shipping_method|
+                  %p
+                    %label
+                      = check_box_tag "order_cycle[selected_shipping_method_ids][]",
+                          shipping_method.id, @order_cycle.shipping_methods.include?(shipping_method),
+                          id: "order_cycle_selected_shipping_method_ids_#{shipping_method.id}"
+                      = shipping_method.name
+                - distributor.shipping_methods.backend.each do |shipping_method|
+                  %label.disabled
+                    = check_box_tag nil, nil, false, disabled: true
+                    = shipping_method.name
+                    = "(#{t('.back_end')})"
+                - if distributor.shipping_methods.frontend.none?
+                  %p
+                    = t('.no_shipping_methods')
+          %tr
+            %th{ colspan: 2 }= t('.payment_methods')
+          %tr
+            %td
+            %td
+              - if @order_cycle.attachable_payment_methods.available(:both).any?
+                %ul
+                  - @order_cycle.attachable_payment_methods.available(:both).each do |payment_method|
+                    %li= payment_method.name
+              - else
+                %p
+                  = t('.no_payment_methods')
 
   %div#save-bar
     %div.container
