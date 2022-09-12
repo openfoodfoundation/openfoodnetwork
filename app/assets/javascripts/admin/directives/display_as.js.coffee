@@ -39,9 +39,9 @@ angular.module("ofn.admin").directive "ofnDisplayAs", (OptionValueNamer) ->
       # get relevant variant properties
       variant = scope.$eval(attrs.ofnDisplayAs) # Like this so we can switch between 'master' and 'variant'
       if variant.unit_value_with_description?
-        match = variant.unit_value_with_description.match(/^([\d\.]+(?= |$)|)( |)(.*)$/)
+        match = variant.unit_value_with_description.match(/^([\d\.\,]+(?= |$)|)( |)(.*)$/)
         if match
-          unit_value  = parseFloat(match[1])
+          unit_value  = parseFloat(match[1].replace(",", "."))
           unit_value  = null if isNaN(unit_value)
           unit_value *= variant_unit_scale if unit_value && variant_unit_scale
           unit_description = match[3]
