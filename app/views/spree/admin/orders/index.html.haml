@@ -33,6 +33,9 @@
             %div.menu_item
               %span.name.invoices-modal{'ng-controller' => 'bulkInvoiceCtrl', 'ng-click' => 'createBulkInvoice()' }
                 = t('.print_invoices')
+            %div.menu_item
+              %span.name{'ng-controller' => 'bulkCancelCtrl', 'ng-click' => 'cancelSelectedOrders()' }
+                = t('.cancel_orders')
 
     
     = render partial: 'per_page_controls', locals: { position: "right" }
@@ -43,7 +46,7 @@
   %thead
     %tr
       %th
-        %input{type: 'checkbox', 'ng-change' => 'toggleAll()', 'ng-model' => 'select_all'}
+        %input#selectAll{type: 'checkbox', 'ng-change' => 'toggleAll()', 'ng-model' => 'select_all'}
       %th
         = t(:products_distributor)
         %th
@@ -113,3 +116,5 @@
 
 .no-objects-found{'ng-show' => "!RequestMonitor.loading && orders.length == 0"}
   = t('.no_orders_found')
+
+= render 'spree/admin/shared/custom-confirm'
