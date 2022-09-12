@@ -23,7 +23,7 @@ export default class extends Controller {
   }
 
   populateNewOptions(sourceId) {
-    const options = this.dependantOptionsFor(sourceId);
+    const options = this.dependentOptionsFor(sourceId);
 
     options.forEach((item) => {
       this.addOption(item[0], item[1]);
@@ -40,7 +40,7 @@ export default class extends Controller {
     this.selectTarget.appendChild(newOption);
   }
 
-  dependantOptionsFor(sourceId) {
+  dependentOptionsFor(sourceId) {
     return this.optionsValue.find((option) => option[0] === sourceId)[1];
   }
 }
