@@ -60,6 +60,9 @@ describe "As a consumer, I want to checkout my order", js: true do
   let(:shipping_backoffice_only) {
     create(:shipping_method, require_ship_address: true, name: "Shipping Backoffice Only", display_on: "back_end")
   }
+  let(:shipping_methods) {
+    [free_shipping_with_required_address, free_shipping, shipping_with_fee, free_shipping_without_required_address, tagged_shipping]
+  }
 
   before do
     allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
@@ -68,7 +71,7 @@ describe "As a consumer, I want to checkout my order", js: true do
     add_enterprise_fee enterprise_fee
     set_order order
 
-    distributor.shipping_methods.push(free_shipping_with_required_address, free_shipping, shipping_with_fee, free_shipping_without_required_address, tagged_shipping)
+    distributor.shipping_methods.push(shipping_methods)
   end
 
   context "guest checkout when distributor doesn't allow guest orders" do
@@ -137,6 +140,23 @@ describe "As a consumer, I want to checkout my order", js: true do
       click_on "Checkout as guest"
       expect(page).to have_content distributor.name
       expect_to_be_on_first_step
+    end
+
+    context "when no shipping methods are available" do
+      before do
+        shipping_methods.each { |sm| sm.update(tag_list: "hidden") }
+      end
+
+      it "should display an error message" do
+        create(:filter_shipping_methods_tag_rule,
+               enterprise: distributor,
+               is_default: true,
+               preferred_shipping_method_tags: "hidden",
+               preferred_matched_shipping_methods_visibility: 'hidden')
+
+        visit checkout_path
+        expect(page).to have_content "Checkout is not possible due to absence of shipping options. Please contact the shop owner."
+      end
     end
 
     it "should display error when fields are empty" do
