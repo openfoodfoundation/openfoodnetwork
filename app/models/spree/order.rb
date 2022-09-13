@@ -704,9 +704,7 @@ module Spree
     end
 
     def require_customer?
-      return false if new_record? || state == 'cart'
-
-      true
+      persisted? && state != "cart"
     end
 
     def customer_is_valid?
