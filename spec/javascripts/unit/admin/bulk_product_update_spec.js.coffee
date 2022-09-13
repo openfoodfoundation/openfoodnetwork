@@ -667,6 +667,15 @@ describe "AdminProductEditCtrl", ->
           unit_description: ''
           unit_value_with_description: "12"
 
+      it "converts unit_value into a float when a comma separated number is provided", ->
+        testProduct = {id: 123, variant_unit_scale: 1.0}
+        testVariant = {unit_value_with_description: "250,5"}
+        $scope.packVariant(testProduct, testVariant)
+        expect(testVariant).toEqual
+          unit_value: 250.5
+          unit_description: ''
+          unit_value_with_description: "250,5"
+
 
     describe "filtering products", ->
       beforeEach ->
