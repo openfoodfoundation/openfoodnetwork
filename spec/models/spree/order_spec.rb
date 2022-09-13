@@ -893,45 +893,27 @@ describe Spree::Order do
     end
   end
 
-  describe "#require_customer?" do
-    context "when the record is new" do
-      let(:order) { build(:order, state: state) }
-
-      context "and the state is not cart" do
-        let(:state) { "complete" }
-
-        it "returns false" do
-          expect(order.send(:require_customer?)).to eq(false)
-        end
-      end
-
-      context "and the state is cart" do
-        let(:state) { "cart" }
-
-        it "returns false" do
-          expect(order.send(:require_customer?)).to eq(false)
-        end
-      end
+  describe "#customer" do
+    it "is not required for new records" do
+      is_expected.to_not validate_presence_of(:customer)
     end
 
-    context "when the record is not new" do
-      let(:order) { create(:order, state: state) }
+    it "is not required for new complete orders" do
+      order = Spree::Order.new(state: "complete")
 
-      context "and the state is not cart" do
-        let(:state) { "complete" }
+      expect(order).to_not validate_presence_of(:customer)
+    end
 
-        it "returns true" do
-          expect(order.send(:require_customer?)).to eq(true)
-        end
-      end
+    it "is not required for existing orders in cart state" do
+      order = create(:order)
 
-      context "and the state is cart" do
-        let(:state) { "cart" }
+      expect(order).to_not validate_presence_of(:customer)
+    end
 
-        it "returns false" do
-          expect(order.send(:require_customer?)).to eq(false)
-        end
-      end
+    it "is created for existing orders in complete state" do
+      order = create(:order, state: "complete")
+
+      expect { order.valid? }.to change { order.customer }.from(nil)
     end
   end
 
