@@ -718,7 +718,8 @@ module Spree
     end
 
     def find_customer
-      Customer.of(distributor).find_by(email: email_for_customer)
+      user&.customers&.of(distributor)&.first ||
+        Customer.of(distributor).find_by(email: email_for_customer)
     end
 
     def create_customer

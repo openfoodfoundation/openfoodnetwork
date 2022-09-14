@@ -21,10 +21,10 @@ describe Spree::Order do
 
   context "#save" do
     context "when associated with a registered user" do
-      let(:user) { double(:user, email: "test@example.com") }
+      let(:user) { Spree::User.new(email: "test@example.com") }
 
       before do
-        allow(order).to receive_messages user: user
+        order.user = user
       end
 
       it "should assign the email address of the user" do

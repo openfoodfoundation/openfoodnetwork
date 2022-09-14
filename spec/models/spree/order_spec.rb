@@ -975,8 +975,6 @@ describe Spree::Order do
       end
 
       it "recognises users with changed email address" do
-        pending "#9002"
-
         order.update!(state: "complete")
 
         # Change email instantly without confirmation via Devise:
