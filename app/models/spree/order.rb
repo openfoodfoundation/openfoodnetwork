@@ -718,8 +718,6 @@ module Spree
     end
 
     def find_customer
-      return customer if customer.present?
-
       Customer.of(distributor).find_by(email: email_for_customer)
     end
 
@@ -738,7 +736,7 @@ module Spree
     end
 
     def ensure_customer
-      self.customer = find_customer || create_customer
+      self.customer ||= find_customer || create_customer
     end
 
     def update_adjustment!(adjustment)
