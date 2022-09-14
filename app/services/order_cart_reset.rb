@@ -30,7 +30,6 @@ class OrderCartReset
     return unless current_user
 
     order.associate_user!(current_user) if order.user.blank? || order.email.blank?
-    order.__send__(:associate_customer) if order.customer.nil? # Only associates existing customers
   end
 
   def reset_order_cycle(current_customer)
