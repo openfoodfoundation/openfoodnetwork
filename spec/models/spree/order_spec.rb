@@ -973,6 +973,21 @@ describe Spree::Order do
 
         expect(order.customer).to be_present
       end
+
+      it "recognises users with changed email address" do
+        pending "#9002"
+
+        order.update!(state: "complete")
+
+        # Change email instantly without confirmation via Devise:
+        order.user.update_columns(email: "new@email.org")
+
+        other_order = create(:order, user: order.user, distributor: distributor)
+
+        expect {
+          other_order.update!(state: "complete")
+        }.to_not change { Customer.count }
+      end
     end
   end
 
