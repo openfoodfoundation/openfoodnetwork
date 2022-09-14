@@ -573,6 +573,7 @@ describe '
 
         find("input.datepicker").click
         select_dates_from_daterangepicker(from, today)
+        expect(page).to have_text 'Loading orders'
 
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
