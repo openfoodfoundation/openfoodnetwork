@@ -169,6 +169,7 @@ end
 
 group :development do
   gem 'debugger-linecache'
+  gem 'rails-erd'
   gem 'foreman'
   gem 'listen'
   gem 'pry', '~> 0.13.0'
