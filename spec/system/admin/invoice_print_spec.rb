@@ -208,7 +208,8 @@ describe '
         it "displays $0.0 when a line item has no tax" do
           pending "i) for legend see picture on PR #9495"
           # first line item, no tax
-          expect(page).to have_content "#{Spree::Product.first.name} (1g) 1 $0.0 $12.54"
+          expect(page).to have_content "#{Spree::Product.first.name} 1 $0.0 $12.54"
+          expect(page).to have_content "(1g)" # display as
         end
 
         it "displays GST for enterprise fees" do
@@ -221,7 +222,8 @@ describe '
           # header
           expect(page).to have_content "Item Qty GST Price"
           # second line item, included tax
-          expect(page).to have_content "#{Spree::Product.second.name} (1g) 3 $250.08 $1,500.45"
+          expect(page).to have_content "#{Spree::Product.second.name} 3 $250.08 $1,500.45"
+          expect(page).to have_content "(1g)" # display as
           # Enterprise fee
           expect(page).to have_content "Admin & Handling 1 $120.00"
           # Shipping
@@ -242,14 +244,18 @@ describe '
 
         it "displays the taxes correctly" do
           # header
-          expect(page).to have_content "Item Qty Unit price (Incl. tax)"
-          expect(page).to have_content "Total price (Incl. taTax rate"
+          expect(page).to have_content "Item Qty"
+          expect(page).to have_content "Unit price (Incl. tax)"
+          expect(page).to have_content "Total price (Incl. tax)"
+          expect(page).to have_content "Tax rate"
           # first line item, no tax
           expect(page).to have_content Spree::Product.first.name.to_s
-          expect(page).to have_content "1 $12.54 $12.54 0.0% (1g)"
+          expect(page).to have_content "(1g)" # display as
+          expect(page).to have_content "1 $12.54 $12.54 0.0%"
           # second line item, included tax
           expect(page).to have_content Spree::Product.second.name.to_s
-          expect(page).to have_content "3 $500.15 $1,500.45 20.0% (1g)"
+          expect(page).to have_content "(1g)" # display as
+          expect(page).to have_content "3 $500.15 $1,500.45 20.0%"
           # Enterprise fee
           expect(page).to have_content "Admin & Handling $120.00"
           # Shipping
@@ -337,13 +343,15 @@ describe '
         it "displays $0.0 when a line item has no tax" do
           pending "iii) for legend see picture on PR #9495"
           # first line item, no tax - display $0.0
-          expect(page).to have_content "#{Spree::Product.first.name} (1g) 1 $0.0 $12.54"
+          expect(page).to have_content "#{Spree::Product.first.name} 1 $0.0 $12.54"
+          expect(page).to have_content "(1g)" # display as
         end
 
         it "displays the added tax on the GST colum" do
           pending "closing #7983, iv) for legend see picture on PR #9495"
           # second line item, added tax of $300.09
-          expect(page).to have_content "#{Spree::Product.second.name} (1g) 3 $300.09 $1,500.45"
+          expect(page).to have_content "#{Spree::Product.second.name} 3 $300.09 $1,500.45"
+          expect(page).to have_content "(1g)" # display as
         end
 
         it "displays GST for enterprise fees" do
@@ -374,13 +382,18 @@ describe '
         end
         it "displays the taxes correctly" do
           # header
-          expect(page).to have_content "Item Qty Unit price (Incl. tax)"
-          expect(page).to have_content "Total price (Incl. taTax rate"
+          expect(page).to have_content "Item Qty"
+          expect(page).to have_content "Unit price (Incl. tax)"
+          expect(page).to have_content "Total price (Incl. tax)"
+          expect(page).to have_content "Tax rate"
           # first line item, no tax
-          expect(page).to have_content "#{Spree::Product.first.name} 1 $12.54 $12.54 0.0% (1g)"
+          expect(page).to have_content Spree::Product.first.name.to_s
+          expect(page).to have_content "(1g)" # display as
+          expect(page).to have_content "1 $12.54 $12.54 0.0%"
           # second line item, included tax
           expect(page).to have_content Spree::Product.second.name.to_s
-          expect(page).to have_content "3 $500.15 $1,500.45 20.0% (1g)"
+          expect(page).to have_content "(1g)" # display as
+          expect(page).to have_content "3 $500.15 $1,500.45 20.0%"
           # Enterprise fee
           expect(page).to have_content "Admin & Handling $120.00"
           # Shipping
