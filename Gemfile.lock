@@ -801,6 +801,7 @@ DEPENDENCIES
   digest
   dotenv-rails
   factory_bot_rails (= 6.2.0)
+  faraday
   ffaker
   flipper
   flipper-active_record
