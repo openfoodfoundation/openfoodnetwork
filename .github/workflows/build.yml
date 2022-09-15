@@ -41,7 +41,8 @@ jobs:
           - "spec/serializers"
           - "spec/system/admin/[a-o0-9]*"
           - "spec/system/admin/[p-z]*"
-          - "spec/system/consumer"
+          - "spec/system/consumer/[a-o0-9]*"
+          - "spec/system/consumer/[p-z]*"
           - "engines/*/spec"
       fail-fast: false
     steps:
