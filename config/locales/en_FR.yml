@@ -1210,6 +1210,9 @@ en_FR:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      revenues_by_hub:
+        name: Revenues By Hub
+        description: Revenues by hub
       orders_and_distributors:
         name: Orders And Distributors
         description: Orders with distributor details
@@ -1783,6 +1786,7 @@ en_FR:
       invalid_email: "Please enter a valid email address"
       select_a_shipping_method: Select a shipping method
       select_a_payment_method: Select a payment method
+      no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
@@ -2515,6 +2519,8 @@ en_FR:
   report_header_hub_address: Hub Address
   report_header_to_hub: To Hub
   report_header_hub_code: Code
+  report_header_hub_id: Hub ID
+  report_header_hub_owner_email: Hub Owner Email
   report_header_code: Code
   report_header_paid: Paid?
   report_header_delivery: Delivery?
@@ -2547,6 +2553,8 @@ en_FR:
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
+  report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
+  report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
   report_header_enterprise: Enterprise
   report_header_customer: Customer
   report_header_customer_code: Customer Code

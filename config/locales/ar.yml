@@ -2507,6 +2507,8 @@ ar:
   report_header_tax_on_delivery: "الضريبة على التسليم (%{currency_symbol})"
   report_header_tax_on_fees: "الضريبة على الرسوم (%{currency_symbol})"
   report_header_total_tax: "إجمالي الضريبة (%{currency_symbol})"
+  report_header_total_excl_tax: "المجموع باستثناء الضريبة (%{currency_symbol})"
+  report_header_total_incl_tax: "إجمالي مدفوع الضريبة (%{currency_symbol})"
   report_header_enterprise: الشركة
   report_header_customer: عميل
   report_header_customer_code: كود العميل

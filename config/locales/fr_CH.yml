@@ -2530,6 +2530,8 @@ fr_CH:
   report_header_tax_on_delivery: "TVA sur livraison (%{currency_symbol})"
   report_header_tax_on_fees: "TVA sur commission boutique (%{currency_symbol})"
   report_header_total_tax: "Total TVA (%{currency_symbol})"
+  report_header_total_excl_tax: "Total HT (%{currency_symbol})"
+  report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
   report_header_enterprise: Entreprise
   report_header_customer: Client
   report_header_customer_code: Code acheteur

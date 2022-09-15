@@ -2359,6 +2359,8 @@ pt_BR:
   report_header_tax_on_delivery: "Imposto sobre a entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Imposto sobre taxas (%{currency_symbol})"
   report_header_total_tax: "Imposto total (%{currency_symbol})"
+  report_header_total_excl_tax: "Total imposto excluído (%{currency_symbol})"
+  report_header_total_incl_tax: "Total imposto incluído (%{currency_symbol})"
   report_header_enterprise: Iniciativa
   report_header_customer: Consumidor
   report_header_customer_code: Código do Consumidor

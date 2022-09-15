@@ -1537,6 +1537,8 @@ sv:
   report_header_tax_on_delivery: "Leveransskatt (%{currency_symbol})"
   report_header_tax_on_fees: "Skatt på avgifter (%{currency_symbol})"
   report_header_total_tax: "Summa skatter (%{currency_symbol})"
+  report_header_total_excl_tax: "Summa exkl skatt (%{currency_symbol})"
+  report_header_total_incl_tax: "Summa inkl skatt (%{currency_symbol})"
   report_header_enterprise: Företag
   report_header_customer: Kund
   report_header_customer_code: Kundnummer

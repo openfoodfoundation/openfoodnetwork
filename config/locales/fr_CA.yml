@@ -141,6 +141,7 @@ fr_CA:
   cardholder_name: "Titulaire de la carte"
   community_forum_url: "Lien vers le forum"
   customer_instructions: "Précisions pour l'acheteur"
+  additional_information: "Informations additionnelles"
   devise:
     passwords:
       spree_user:
@@ -161,6 +162,7 @@ fr_CA:
         signed_up_but_unconfirmed: "Un message avec un lien de confirmation a été envoyé à l'adresse email indiquée. Veuillez cliquer sur ce lien pour activer votre compte."
         unknown_error: "Une erreur s'est glissée lors de la création de votre compte. Vérifiez votre addresse email et recommencez."
     failure:
+      disabled: "otre compte a été désactivé. Veuillez contacter support@openfoodnetwork.ca. "
       invalid: |
           Email / mot de passe incorrect.
           Étiez-vous invité la dernière fois?
@@ -473,6 +475,8 @@ fr_CA:
         terms_of_service: "Conditions Générales d'Utilisation"
         delete: "Supprimer le fichier"
         confirm_delete: "Etes-vous certain de vouloir supprimer les fichiers de conditions de service actuelles ?"
+        attachment: "Fichier joint"
+        create_terms_of_service: "Créer les CGU"
     number_localization:
       number_localization_settings: "Paramètres de localisation de numéro"
       enable_localized_number: "Utiliser le traitement international des séparateurs de milliers/centimes"
@@ -482,6 +486,7 @@ fr_CA:
         enable_invoices?: "Autoriser l'émission de factures ?"
         invoice_style2?: "Utiliser le modèle de facture alternatif qui détaille le montant de Taxe agrégé par taux et l'information du taux de taxe par produit (pas adapté pour les instances affichant les prix HT)"
         enable_receipt_printing?: "Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?"
+        enterprise_number_required_on_invoices?: "Le SIRET est obligatoire pour générer une facture ?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -529,6 +534,8 @@ fr_CA:
         guest_label: "Commande en mode invite"
         credit_owed: "Crédit dû"
         balance_due: "Solde dû"
+      destroy:
+        has_associated_subscriptions: "La suppression a planté : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
     contents:
       edit:
         title: Contenu
@@ -756,6 +763,9 @@ fr_CA:
         variants_without_unit_value: "ATTENTION: certaines variantes n'ont pas de nombre d'unités"
         all: "Tous"
       select_variant: "Choisir une variante"
+      note:
+        note_label: "Note :"
+        no_note_present: "Aucune note n'a été ajoutée."
     enterprise:
       select_outgoing_oc_products_from: Sélectionner les produits sortants pour le cycle de vente parmi
     enterprises:
@@ -804,6 +814,9 @@ fr_CA:
           email_address_tip: "Cette adresse email sera affichée sur votre profil public"
           phone: n° téléphone
           phone_placeholder: 'ex: 06 13 24 35 46'
+          whatsapp_phone: Numéro WhatsApp
+          whatsapp_phone_placeholder: eg. +614 9876 5432
+          whatsapp_phone_tip: "Ce numéro sera ajouté sur votre profil public pour être ouvert en tant que lien WhatsApp."
           website: Site internet
           website_placeholder: 'ex: www.maferme.fr'
         enterprise_fees:
@@ -1151,6 +1164,9 @@ fr_CA:
         cancel: Annuler
         proceed: Procéder
       status:
+        undated: sans date
+        upcoming: futur
+        open: ouvert
         closed: fermé
     producer_properties:
       index:
@@ -1197,6 +1213,9 @@ fr_CA:
       pack_by_customer: Préparation des commandes par Acheteur
       pack_by_supplier: Préparation des commandes par Producteur
       pack_by_product: Préparation des commandes par Produit
+      revenues_by_hub:
+        name: CA par boutique
+        description: CA par boutique
       orders_and_distributors:
         name: Commandes et Hubs Distributeurs
         description: Liste des Commandes avec les détails des Hubs Ditributeurs
@@ -1787,6 +1806,7 @@ fr_CA:
   order_hub_info: Hub Info
   order_back_to_store: Retour à la boutique
   order_back_to_cart: Retour au panier
+  order_back_to_website: Retour vers le site
   bom_tip: "Utilisez cette page pour modifier les quantités sur plusieurs commandes à la fois. Les produits peuvent aussi être supprimés des commandes si nécessaire."
   unsaved_changes_warning: "Des modifications n'ont pas été enregistrées et seront perdues si vous continuez."
   unsaved_changes_error: "Les champs entourés en rouge contiennent des erreurs."
@@ -2182,7 +2202,10 @@ fr_CA:
         contact_field_placeholder: "Nom du contact principal"
         contact_field_required: "Vous devez saisir une personne référente"
         phone_field: "Numéro de téléphone"
+        whatsapp_phone_field: "Numéro WhatsApp"
+        whatsapp_phone_tooltip: "Ce numéro sera ajouté sur votre profil public pour être ouvert en tant que lien WhatsApp."
         phone_field_placeholder: "ex : 06 24 53 26 53"
+        whatsapp_phone_field_placeholder: "eg. +614 1234 5678"
       type:
         title: "Catégorie"
         headline: "Dernière étape pour ajouter %{enterprise} !"
@@ -2497,6 +2520,8 @@ fr_CA:
   report_header_hub_address: Adresse du Hub
   report_header_to_hub: Distributeur
   report_header_hub_code: Code du Hub
+  report_header_hub_id: Hub ID
+  report_header_hub_owner_email: Email gestionnaire principal
   report_header_code: Code
   report_header_paid: Payé ?
   report_header_delivery: Livré ?
@@ -2529,6 +2554,8 @@ fr_CA:
   report_header_tax_on_delivery: "Taxe sur livraison (%{currency_symbol})"
   report_header_tax_on_fees: "Taxe sur commission hub (%{currency_symbol})"
   report_header_total_tax: "Total Taxe (%{currency_symbol})"
+  report_header_total_excl_tax: "Total HT (%{currency_symbol})"
+  report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
   report_header_enterprise: Entreprise
   report_header_customer: Acheteur
   report_header_customer_code: Code acheteur
@@ -3469,6 +3496,7 @@ fr_CA:
     email: Email
     account_updated: "Compte mis à jour!"
     email_updated: "Le compte sera mis à jour une fois la nouvelle adresse email confirmée."
+    show_api_key_view_toggled: "L'affichage de la clé API a été modifié"
     my_account: "Mon compte"
     date: "Date"
     time: "Heure"
@@ -3614,6 +3642,10 @@ fr_CA:
           results_found: " %{number} résultats trouvés"
           viewing: "Résultats %{start} à  %{end} affichés."
           print_invoices: "Imprimer les factures"
+          selected:
+            zero: "Aucune commande sélectionnée"
+            one: "1 commande sélectionnée"
+            other: "%{count} commandes sélectionnées"
         sortable_header:
           payment_state: "Statut du Paiement"
           shipment_state: "Statut de la livraison"
@@ -3628,6 +3660,9 @@ fr_CA:
           from: "De"
           to: "Facturer à"
           shipping: "Envoi"
+        note:
+          note_label: "Note :"
+          no_note_present: "Aucune note n'a été ajoutée."
         form:
           distribution_fields:
             title: "Distribution"
@@ -3750,6 +3785,7 @@ fr_CA:
           paypal:
             no_payment_via_admin_backend: 'Il n''est pas encore possible de payer avec Paypal via l''administration. '
       products:
+        image_upload_error: "Veuillez utiliser une image au format JPG, PNG, GIF, SVG ou WEBP format."
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
@@ -3812,6 +3848,7 @@ fr_CA:
           back_to_users_list: "Retour à la liste utilisateurs"
           general_settings: "Configurations générales"
         form:
+          disabled: "Désactivé?"
           email: "Email"
           roles: "Roles"
           enterprise_limit: "Nombre max d'entreprises"
@@ -4015,10 +4052,14 @@ fr_CA:
     users:
       api_keys:
         regenerate_key: "Regénérer la clé"
+        title: Clé API
+      developer_settings:
+        title: Paramètres développeurs
       form:
         account_settings: Paramètres du Compte
       show:
         tabs:
+          developer_settings: Paramètres développeurs
           orders: Commandes
           cards: Cartes bancaires
           transactions: Achats
@@ -4049,6 +4090,7 @@ fr_CA:
         total: Total
         paid?: Payé ?
         status: Statut
+        completed: effectué
         cancelled: Annulée
       saved_cards:
         default?: Par default?
@@ -4060,6 +4102,7 @@ fr_CA:
       authorised_shops:
         shop_name: "Nom de la boutique"
         allow_charges?: "Souhaitez-vous autoriser les paiements sur la carte par défaut ?"
+        no_default_saved_cards_tooltip: Vous devez sélectionner une carte bancaire par défaut pour autoriser les paiements.
     localized_number:
       invalid_format: n'est pas un format valide. Veuillez entrer un nombre.
     api:
@@ -4078,6 +4121,7 @@ fr_CA:
       shipment:
         cannot_ready: "La livraison ne peut pas être préparée."
       invalid_taxonomy_id: "L'identifiant de la catégorie n'est pas valide."
+      toggle_api_key_view: "Montrer la clé API pour cet utilisateur"
     activerecord:
       models:
         spree/payment:
@@ -4137,3 +4181,13 @@ fr_CA:
         one: "1 an"
         many: "%{count} ans"
         other: "%{count} ans"
+  errors:
+    not_found:
+      title: "La page que vous recherchez n'existe pas (erreur 404)"
+      message_html: "<b>Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l'<a href='/'> Accueil </a> et recommencez. <b> Contacter notre support  </b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter. </p>"
+    internal_server_error:
+      title: "Nous sommes navrés, mais quelque chose c'est mal passé (erreur 500)."
+      message_html: "<b> Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l' <a href='/''> Accueil </a> et recommencez. </p> <b> Contacter notre support</b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter.  </p>"
+    unprocessable_entity:
+      title: "La modification réalisée a été rejetée (erreur 422)"
+      message_html: "<p> La modification souhaitée a été refusée. Peut-être avez-vous essayé de faire quelque chose sans avoir les droits d'accès suffisants ? <br> <h3> <a href='/' > Retourner à l'accueil </a> </h3> </p> "

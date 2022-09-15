@@ -1212,6 +1212,9 @@ de_DE:
       pack_by_customer: Packliste nach Kunden
       pack_by_supplier: Packliste nach Lieferanten
       pack_by_product: Packliste nach Produkten
+      revenues_by_hub:
+        name: Umsätze
+        description: Umsätze nach Läden/Händlern/Hubs
       orders_and_distributors:
         name: Bestellungen und Verteilstellen
         description: Bestellungen mit Verteilstellendetails
@@ -1785,6 +1788,7 @@ de_DE:
       invalid_email: "Bitte geben Sie eine gültige E-Mail-Adresse ein."
       select_a_shipping_method: Bitte wählen Sie eine Lieferoption aus.
       select_a_payment_method: Bitte wählen Sie eine Zahlungsart aus.
+      no_shipping_methods_available: 'Ein Bestellabschluss ist aufgrund fehlender Lieferoptionen nicht möglich. Bitte wenden Sie sich an den Betreiber des Ladens. '
   order_paid: BEZAHLT
   order_not_paid: NICHT BEZAHLT
   order_total: 'Gesamtsumme:'
@@ -2517,6 +2521,8 @@ de_DE:
   report_header_hub_address: Hubadresse
   report_header_to_hub: An den Hub
   report_header_hub_code: Hub-Code
+  report_header_hub_id: Laden-ID
+  report_header_hub_owner_email: E-Mail-Adresse des Ladenbetreibers
   report_header_code: Code
   report_header_paid: Bezahlt?
   report_header_delivery: Lieferung?
@@ -2549,6 +2555,8 @@ de_DE:
   report_header_tax_on_delivery: "Steuer auf Lieferkosten (%{currency_symbol})"
   report_header_tax_on_fees: "Steuer auf Gebühren (%{currency_symbol})"
   report_header_total_tax: "Summe Steuern (%{currency_symbol})"
+  report_header_total_excl_tax: "Summe exkl. Steuern (%{currency_symbol})"
+  report_header_total_incl_tax: "Summe inkl. Steuern (%{currency_symbol})"
   report_header_enterprise: Unternehmen
   report_header_customer: Kunde
   report_header_customer_code: Kundennummer

@@ -2542,6 +2542,8 @@ cy:
   report_header_tax_on_delivery: "Treth ar Gyflenwi (%{currency_symbol})"
   report_header_tax_on_fees: "Treth ar Ffioedd (%{currency_symbol})"
   report_header_total_tax: "Cyfanswm Treth (%{currency_symbol})"
+  report_header_total_excl_tax: "Cyfanswm heb dreth (%{currency_symbol})"
+  report_header_total_incl_tax: "Cyfanswm gan gynnwys treth (%{currency_symbol})"
   report_header_enterprise: Menter
   report_header_customer: Cwsmer
   report_header_customer_code: Cod Cwsmer

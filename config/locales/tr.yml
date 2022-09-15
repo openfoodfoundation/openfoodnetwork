@@ -2400,6 +2400,8 @@ tr:
   report_header_tax_on_delivery: "Teslimat Vergisi (%{currency_symbol})"
   report_header_tax_on_fees: "Ücretler Vergisi (%{currency_symbol})"
   report_header_total_tax: "Toplam Vergi (%{currency_symbol})"
+  report_header_total_excl_tax: "Vergi Hariç Toplam (%{currency_symbol})"
+  report_header_total_incl_tax: "Vergi Dahil Toplam (%{currency_symbol})"
   report_header_enterprise: İşletme
   report_header_customer: Müşteri
   report_header_customer_code: Müşteri kodu

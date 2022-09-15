@@ -2527,6 +2527,8 @@ nb:
   report_header_tax_on_delivery: "Leveringsavgift (%{currency_symbol})"
   report_header_tax_on_fees: "Avgiftsavgift (%{currency_symbol})"
   report_header_total_tax: "Sum avgifter (%{currency_symbol})"
+  report_header_total_excl_tax: "Sum eks. avgift (%{currency_symbol})"
+  report_header_total_incl_tax: "Sum inkl. avgift (%{currency_symbol})"
   report_header_enterprise: Bedrift
   report_header_customer: Kunde
   report_header_customer_code: Kundekode

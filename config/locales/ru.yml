@@ -2550,6 +2550,8 @@ ru:
   report_header_tax_on_delivery: "Налог на доставку (%{currency_symbol})"
   report_header_tax_on_fees: "Налог на сборы (%{currency_symbol})"
   report_header_total_tax: "Общий налог (%{currency_symbol})"
+  report_header_total_excl_tax: "Итого искл. налог (%{currency_symbol})"
+  report_header_total_incl_tax: "Итого, вкл. налог (%{currency_symbol})"
   report_header_enterprise: Предприятие
   report_header_customer: Клиент
   report_header_customer_code: Код Клиента

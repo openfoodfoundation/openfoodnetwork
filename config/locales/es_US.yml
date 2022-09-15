@@ -2432,6 +2432,8 @@ es_US:
   report_header_tax_on_delivery: "Impuestos sobre la entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Impuesto sobre las comisiones (%{currency_symbol})"
   report_header_total_tax: "Total Impuestos (%{currency_symbol})"
+  report_header_total_excl_tax: "Total Impuestos excl. (%{currency_symbol})"
+  report_header_total_incl_tax: "Total Impuestos incl. (%{currency_symbol})"
   report_header_enterprise: Organización
   report_header_customer: Consumidora
   report_header_customer_code: Código de consumidora

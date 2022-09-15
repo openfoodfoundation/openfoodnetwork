@@ -2524,6 +2524,8 @@ ko:
   report_header_tax_on_delivery: "배달 세금 (%{currency_symbol})"
   report_header_tax_on_fees: "수수료 세금 (%{currency_symbol})"
   report_header_total_tax: "세금 총합 (%{currency_symbol})"
+  report_header_total_excl_tax: "세금 제외 합계 (%{currency_symbol})"
+  report_header_total_incl_tax: "세금 포함 합계 (%{currency_symbol})"
   report_header_enterprise: 회사
   report_header_customer: 고객
   report_header_customer_code: 소비자 코드

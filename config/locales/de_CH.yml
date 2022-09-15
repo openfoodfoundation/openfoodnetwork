@@ -2530,6 +2530,8 @@ de_CH:
   report_header_tax_on_delivery: "Steuer auf Lieferkosten (%{currency_symbol})"
   report_header_tax_on_fees: "Steuer auf Gebühren (%{currency_symbol})"
   report_header_total_tax: "Summe Steuern (%{currency_symbol})"
+  report_header_total_excl_tax: "Summe exkl. Steuern (%{currency_symbol})"
+  report_header_total_incl_tax: "Summe inkl. Steuern (%{currency_symbol})"
   report_header_enterprise: Unternehmen
   report_header_customer: Kunde
   report_header_customer_code: Kundennummer

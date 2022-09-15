@@ -1211,6 +1211,9 @@ fr:
       pack_by_customer: Préparation des commandes par Acheteur
       pack_by_supplier: Préparation des commandes par Producteur
       pack_by_product: Préparation des commandes par Produit
+      revenues_by_hub:
+        name: CA par boutique
+        description: CA par boutique
       orders_and_distributors:
         name: Commandes et Boutiques
         description: Liste des Commandes avec les détails par boutique
@@ -1784,6 +1787,7 @@ fr:
       invalid_email: "Veuillez entrer un email valide"
       select_a_shipping_method: Sélectionner une méthode de livraison
       select_a_payment_method: Sélectionner une méthode de paiement
+      no_shipping_methods_available: Il n'est pas possible de passer commande car il n'y a pas d'options de livraison / récupération de commande. Veuillez contacter le gestionnaire de la boutique.
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
@@ -2516,6 +2520,8 @@ fr:
   report_header_hub_address: Adresse de la boutique
   report_header_to_hub: Distributeur
   report_header_hub_code: Code
+  report_header_hub_id: Hub ID
+  report_header_hub_owner_email: Email gestionnaire principal
   report_header_code: Code
   report_header_paid: Payé ?
   report_header_delivery: Livré ?
@@ -2548,6 +2554,8 @@ fr:
   report_header_tax_on_delivery: "TVA sur livraison (%{currency_symbol})"
   report_header_tax_on_fees: "TVA sur commission boutique (%{currency_symbol})"
   report_header_total_tax: "Total TVA (%{currency_symbol})"
+  report_header_total_excl_tax: "Total HT (%{currency_symbol})"
+  report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
   report_header_enterprise: Entreprise
   report_header_customer: Client
   report_header_customer_code: Code acheteur
@@ -2972,7 +2980,7 @@ fr:
           pending: "en attente"
           requires_authorization: "authorisation requise"
           processing: "en traitement"
-          void: "faire un avoir"
+          void: "Annulé"
           invalid: "invalide"
         quantity_adjusted: "Le stock disponible est insuffisant. La quantité a été mise à jour en fonction du stock restant."
         quantity_unchanged: "La quantité n'a pas été modifiée."
@@ -3958,7 +3966,7 @@ fr:
       pending: en attente
       processing: en traitement
       requires_authorization: "authorisation requise"
-      void: faire un avoir
+      void: Annulé
       invalid: invalide
       authorise: autorise
     order_mailer:

@@ -2209,6 +2209,8 @@ fil_PH:
   report_header_tax_on_delivery: "tax sa pagdeliver (%{currency_symbol})"
   report_header_tax_on_fees: "Buwis sa Fees (%{currency_symbol})"
   report_header_total_tax: "kabuuang tax(%{currency_symbol})"
+  report_header_total_excl_tax: "Kabuuang tax na hindi kasama (%{currency_symbol})"
+  report_header_total_incl_tax: "Kabuuang tax na kasama (%{currency_symbol})"
   report_header_enterprise: Enterprise
   report_header_customer: customer
   report_header_customer_code: Code ng Customer

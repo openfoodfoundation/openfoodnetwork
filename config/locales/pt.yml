@@ -2265,6 +2265,8 @@ pt:
   report_header_tax_on_delivery: "Imposto sobre a Entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Imposto sobre honorários (%{currency_symbol})"
   report_header_total_tax: "Total de Impostos (%{currency_symbol})"
+  report_header_total_excl_tax: "Total excl. impostos (%{currency_symbol})"
+  report_header_total_incl_tax: "Total incl. impostos (%{currency_symbol})"
   report_header_enterprise: Organização
   report_header_customer: Consumidor
   report_header_customer_code: Código de Consumidor

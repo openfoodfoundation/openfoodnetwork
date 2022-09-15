@@ -2512,6 +2512,8 @@ it_CH:
   report_header_tax_on_delivery: "Oneri sulla consegna (%{currency_symbol})"
   report_header_tax_on_fees: "Oneri sulle provvigioni (%{currency_symbol})"
   report_header_total_tax: "Oneri totali (%{currency_symbol})"
+  report_header_total_excl_tax: "Totale imponibile (%{currency_symbol})"
+  report_header_total_incl_tax: "Totale IVA incl. (%{currency_symbol})"
   report_header_enterprise: Azienda
   report_header_customer: Cliente
   report_header_customer_code: Codice Cliente

@@ -2509,6 +2509,8 @@ hu:
   report_header_tax_on_delivery: "Szállítási adó (%{currency_symbol})"
   report_header_tax_on_fees: "Díjak adója (%{currency_symbol})"
   report_header_total_tax: "Teljes adó (%{currency_symbol})"
+  report_header_total_excl_tax: "Összesen, kivéve adó (%{currency_symbol})"
+  report_header_total_incl_tax: "Összesen, beleértve adó (%{currency_symbol})"
   report_header_enterprise: Vállalkozás
   report_header_customer: Vevő
   report_header_customer_code: Ügyfélkód

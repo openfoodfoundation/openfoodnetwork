@@ -2290,6 +2290,8 @@ en_AU:
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
+  report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
+  report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
   report_header_enterprise: Enterprise
   report_header_customer: Customer
   report_header_customer_code: Customer Code

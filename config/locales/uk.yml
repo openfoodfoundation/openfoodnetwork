@@ -2545,6 +2545,8 @@ uk:
   report_header_tax_on_delivery: "Податок на доставку (%{currency_symbol})"
   report_header_tax_on_fees: "Податок на збори (%{currency_symbol})"
   report_header_total_tax: "Всього податок (%{currency_symbol})"
+  report_header_total_excl_tax: "Всього без податків (%{currency_symbol})"
+  report_header_total_incl_tax: "Всього в т.ч. податок (%{currency_symbol})"
   report_header_enterprise: Підприємство
   report_header_customer: Замовник
   report_header_customer_code: Код клієнта

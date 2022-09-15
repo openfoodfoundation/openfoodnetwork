@@ -2405,6 +2405,8 @@ ca:
   report_header_tax_on_delivery: "Impost sobre el lliurament (%{currency_symbol})"
   report_header_tax_on_fees: "Impost sobre les comissions (%{currency_symbol})"
   report_header_total_tax: "Impost total (%{currency_symbol})"
+  report_header_total_excl_tax: "Total excl. impostos (%{currency_symbol})"
+  report_header_total_incl_tax: "Total incl. impostos (%{currency_symbol})"
   report_header_enterprise: Organització
   report_header_customer: Consumidora
   report_header_customer_code: Codi de la consumidora

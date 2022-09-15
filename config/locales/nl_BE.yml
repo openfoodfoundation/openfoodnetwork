@@ -2255,6 +2255,8 @@ nl_BE:
   report_header_tax_on_delivery: "Belastingspercentage op Levering (%{currency_symbol})"
   report_header_tax_on_fees: "Belasting op Kosten (%{currency_symbol})"
   report_header_total_tax: "Totaal Belasting (%{currency_symbol})"
+  report_header_total_excl_tax: "Totaal excl. belastingen (%{currency_symbol}) "
+  report_header_total_incl_tax: "Totaal incl. belastingen(%{currency_symbol}) "
   report_header_enterprise: Onderneming
   report_header_customer: Klant
   report_header_customer_code: Klantencode
