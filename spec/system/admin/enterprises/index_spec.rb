@@ -35,7 +35,7 @@ describe 'Enterprises Index' do
     end
 
     context "editing enterprises in bulk" do
-      let!(:s){ create(:supplier_enterprise) }
+      let!(:s){ create(:supplier_enterprise, visible: true) }
       let!(:d){ create(:distributor_enterprise, sells: 'none') }
       let!(:d_manager) { create(:user, enterprise_limit: 1) }
 
@@ -59,7 +59,7 @@ describe 'Enterprises Index' do
           click_button "Update"
           expect(flash_message).to eq('Enterprises updated successfully')
           distributor = Enterprise.find(d.id)
-          expect(distributor.visible).to eq false
+          expect(distributor.visible).to eq "hidden"
           expect(distributor.sells).to eq 'any'
           expect(distributor.owner).to eq d_manager
         end
