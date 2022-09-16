@@ -36,8 +36,44 @@ describe WebhookDeliveryJob do
     end
   end
 
-  # To be implemented in following commits
-  pending "can't access local secrets" # see https://medium.com/in-the-weeds/all-about-paperclips-cve-2017-0889-server-side-request-forgery-ssrf-vulnerability-8cb2b1c96fe8
+  # Ensure responses from a local network aren't allowed, to prevent a user
+  # seeing a private response or initiating an unauthorised action (SSRF).
+  # Currently, we're not doing anything with responses. When we do, we should
+  # update this to confirm the response isn't exposed.
+  describe "server side request forgery" do
+    describe "private addresses" do
+      private_addresses = [
+        "http://127.0.0.1/all_the_secrets",
+        "http://localhost/all_the_secrets",
+      ]
+
+      private_addresses.each do |url|
+        # Unfortunately this isn't allowed in CI, but it should work in your
+        # development environment.
+        xit "rejects private address #{url}" do
+          expect {
+            WebhookDeliveryJob.perform_now(url, event, data)
+          }.to raise_error(PrivateAddressCheck::PrivateConnectionAttemptedError)
+        end
+      end
+    end
+
+    describe "redirects" do
+      it "doesn't follow a redirect" do
+        other_url = 'http://localhost/all_the_secrets'
+
+        stub_request(:post, url).
+          to_return(status: 302, headers: { 'Location' => other_url })
+        stub_request(:any, other_url)
+
+        expect {
+          subject.perform_now
+        }.to raise_error(StandardError, "302")
+
+        expect(a_request(:any, other_url)).not_to have_been_made
+      end
+    end
+  end
 
   # Exceptions are considered a job failure, which the job runner
   # (Sidekiq) and/or ActiveJob will handle and retry later.

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "faraday"
+require "private_address_check"
+require "private_address_check/tcpsocket_ext"
 
 # Deliver a webhook payload
 # As a delayed job, it can run asynchronously and handle retries.
@@ -19,7 +21,16 @@ class WebhookDeliveryJob < ApplicationJob
       data: payload,
     }
 
-    notify_endpoint(url, body)
+    # Request user-submitted url, preventing any private connections being made
+    # (SSRF).
+    # This method may allow the socket to open, but is necessary in order to
+    # protect from TOC/TOU.
+    # Note that private_address_check provides some methods for pre-validating,
+    # but they're not as comprehensive and so unnecessary here. Simply
+    # momentarily opening sockets probably can't cause DoS or other damage.
+    PrivateAddressCheck.only_public_connections do
+      notify_endpoint(url, body)
+    end
   end
 
   def notify_endpoint(url, body)
