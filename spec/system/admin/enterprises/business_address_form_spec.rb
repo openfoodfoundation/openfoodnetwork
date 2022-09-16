@@ -33,8 +33,8 @@ describe "Business Address" do
         fill_in 'enterprise_business_address_attributes_address1', with: '35 Ballantyne St'
         fill_in 'enterprise_business_address_attributes_city', with: 'Thornbury'
         fill_in 'enterprise_business_address_attributes_zipcode', with: '3072'
-        select2_select 'Australia', from: 'enterprise_business_address_attributes_country_id'
-        select2_select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
+        select 'Australia', from: 'enterprise_business_address_attributes_country_id'
+        select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
         fill_in 'enterprise_business_address_attributes_phone', with: '0123456789'
 
         click_button "Update"
@@ -45,8 +45,8 @@ describe "Business Address" do
         fill_in 'enterprise_business_address_attributes_address1', with: '35 Ballantyne St'
         fill_in 'enterprise_business_address_attributes_city', with: 'Thornbury'
         fill_in 'enterprise_business_address_attributes_zipcode', with: '3072'
-        select2_select 'Australia', from: 'enterprise_business_address_attributes_country_id'
-        select2_select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
+        select 'Australia', from: 'enterprise_business_address_attributes_country_id'
+        select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
         fill_in 'enterprise_business_address_attributes_phone', with: '0123456789'
 
         click_button "Update"
@@ -57,8 +57,8 @@ describe "Business Address" do
         fill_in 'enterprise_business_address_attributes_company', with: 'Company'
         fill_in 'enterprise_business_address_attributes_city', with: 'Thornbury'
         fill_in 'enterprise_business_address_attributes_zipcode', with: '3072'
-        select2_select 'Australia', from: 'enterprise_business_address_attributes_country_id'
-        select2_select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
+        select 'Australia', from: 'enterprise_business_address_attributes_country_id'
+        select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
         fill_in 'enterprise_business_address_attributes_phone', with: '0123456789'
 
         click_button "Update"
@@ -69,8 +69,8 @@ describe "Business Address" do
         fill_in 'enterprise_business_address_attributes_company', with: 'Company'
         fill_in 'enterprise_business_address_attributes_address1', with: '35 Ballantyne St'
         fill_in 'enterprise_business_address_attributes_zipcode', with: '3072'
-        select2_select 'Australia', from: 'enterprise_business_address_attributes_country_id'
-        select2_select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
+        select 'Australia', from: 'enterprise_business_address_attributes_country_id'
+        select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
         fill_in 'enterprise_business_address_attributes_phone', with: '0123456789'
 
         click_button "Update"
@@ -81,8 +81,8 @@ describe "Business Address" do
         fill_in 'enterprise_business_address_attributes_company', with: 'Company'
         fill_in 'enterprise_business_address_attributes_address1', with: '35 Ballantyne St'
         fill_in 'enterprise_business_address_attributes_city', with: 'Thornbury'
-        select2_select 'Australia', from: 'enterprise_business_address_attributes_country_id'
-        select2_select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
+        select 'Australia', from: 'enterprise_business_address_attributes_country_id'
+        select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
         fill_in 'enterprise_business_address_attributes_phone', with: '0123456789'
 
         click_button "Update"
@@ -94,8 +94,8 @@ describe "Business Address" do
         fill_in 'enterprise_business_address_attributes_address1', with: '35 Ballantyne St'
         fill_in 'enterprise_business_address_attributes_city', with: 'Thornbury'
         fill_in 'enterprise_business_address_attributes_zipcode', with: '3072'
-        select2_select 'Australia', from: 'enterprise_business_address_attributes_country_id'
-        select2_select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
+        select 'Australia', from: 'enterprise_business_address_attributes_country_id'
+        select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
 
         click_button "Update"
         expect(page).to have_content("Business address phone can't be blank")
@@ -106,8 +106,8 @@ describe "Business Address" do
         fill_in 'enterprise_business_address_attributes_address1', with: '35 Ballantyne St'
         fill_in 'enterprise_business_address_attributes_city', with: 'Thornbury'
         fill_in 'enterprise_business_address_attributes_zipcode', with: '3072'
-        select2_select 'Australia', from: 'enterprise_business_address_attributes_country_id'
-        select2_select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
+        select 'Australia', from: 'enterprise_business_address_attributes_country_id'
+        select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
         fill_in 'enterprise_business_address_attributes_phone', with: '0123456789'
 
         click_button "Update"
@@ -123,8 +123,8 @@ describe "Business Address" do
         fill_in 'enterprise_business_address_attributes_address1', with: '35 Ballantyne St'
         fill_in 'enterprise_business_address_attributes_city', with: 'Thornbury'
         fill_in 'enterprise_business_address_attributes_zipcode', with: '3072'
-        select2_select 'Australia', from: 'enterprise_business_address_attributes_country_id'
-        select2_select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
+        select 'Australia', from: 'enterprise_business_address_attributes_country_id'
+        select 'Victoria', from: 'enterprise_business_address_attributes_state_id'
         fill_in 'enterprise_business_address_attributes_phone', with: '0123456789'
 
         click_button "Update"
