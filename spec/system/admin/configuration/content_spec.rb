@@ -40,7 +40,7 @@ describe "
     click_button "Update"
     expect(page).to have_content "Your content has been successfully updated!"
 
-    expect(ContentConfig.logo.to_s).to include "logo-white"
+    expect(ContentConfig.url_for(:logo)).to include "logo-white"
   end
 
   it "sets the user guide link" do
