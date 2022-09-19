@@ -639,7 +639,7 @@ GEM
     valid_email2 (4.0.4)
       activemodel (>= 3.2)
       mail (~> 2.5)
-    view_component (2.71.0)
+    view_component (2.72.0)
       activesupport (>= 5.0.0, < 8.0)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
