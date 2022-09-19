@@ -710,4 +710,54 @@ describe '
       expect(o.order_cycle).to eq order_cycle1
     end
   end
+  
+  describe "searching customers" do
+    def serching_for_customers
+      # opens the customer dropdown
+      find(".items-placeholder").click
+
+      # sets the query name
+      find(".dropdown-input").set("John")
+      within(".customer-details") do
+        expect(page).to have_content("John Doe")
+        expect(page).to have_content(customer.email.to_s)
+      end
+
+      # sets the query email
+      find(".dropdown-input").set("maura@smith.biz")
+      within(".customer-details") do
+        expect(page).to have_content("John Doe")
+        expect(page).to have_content(customer.email.to_s)
+      end
+    end
+
+    context "as the enterprise owner" do
+      before do  
+        product.variants.first.update(on_demand: false, on_hand: 0)
+
+        login_as user
+        new_order_with_distribution(distributor, order_cycle)
+        expect(page).to have_selector 'h1', text: "Customer Details"
+      end
+
+      it "finds a customer by name" do
+        serching_for_customers
+      end
+    end  
+
+    context "as superadmin" do
+      before do
+        product.variants.first.update(on_demand: false, on_hand: 0)
+
+        login_as_admin
+        new_order_with_distribution(distributor, order_cycle)
+        expect(page).to have_selector 'h1', text: "Customer Details"
+      end
+      
+      it "finds a customer by name" do
+        pending("issue #9684")
+        serching_for_customers
+      end
+    end
+  end
 end
