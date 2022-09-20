@@ -700,6 +700,7 @@ describe '
     datetime = Time.zone.at(Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0))
     input = find(".flatpickr-calendar.open .flatpickr-minute")
     input.send_keys datetime.strftime("%M").to_s.strip
+    input.send_keys :enter
     expect(page).to have_content "You have unsaved changes"
   end
 
