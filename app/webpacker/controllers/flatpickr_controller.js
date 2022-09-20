@@ -57,6 +57,10 @@ export default class extends Flatpickr {
     this.fp.setDate(null);
   }
 
+  open() {
+    this.fp.element.dispatchEvent(new Event("focus"));
+  }
+
   change(selectedDates, dateStr, instance) {
     if (this.hasStartTarget && this.hasEndTarget) {
       this.startTarget.value = selectedDates[0]
