@@ -39,9 +39,13 @@ describe WebhookDeliveryJob do
   # To be implemented in following commits
   pending "can't access local secrets" # see https://medium.com/in-the-weeds/all-about-paperclips-cve-2017-0889-server-side-request-forgery-ssrf-vulnerability-8cb2b1c96fe8
 
-  describe "retrying" do
-    pending "doesn't retry on internal failure"
-    pending "retries after external failure"
-    pending "stops retrying after a while"
+  # Exceptions are considered a job failure, which the job runner
+  # (Sidekiq) and/or ActiveJob will handle and retry later.
+  describe "failure" do
+    it "raises error on server error" do
+      stub_request(:post, url).to_return(status: [500, "Internal Server Error"])
+
+      expect{ subject.perform_now }.to raise_error(StandardError, "500")
+    end
   end
 end

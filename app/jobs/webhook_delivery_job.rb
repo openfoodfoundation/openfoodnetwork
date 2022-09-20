@@ -5,6 +5,10 @@ require "faraday"
 # Deliver a webhook payload
 # As a delayed job, it can run asynchronously and handle retries.
 class WebhookDeliveryJob < ApplicationJob
+  # General failed request error that we're going to use to signal
+  # the job runner to retry our webhook worker.
+  class FailedWebhookRequestError < StandardError; end
+
   queue_as :default
 
   def perform(url, event, payload)
@@ -26,6 +30,10 @@ class WebhookDeliveryJob < ApplicationJob
         'Content-Type' => 'application/json',
       }
     )
-    connection.post(url, body.to_json)
+    response = connection.post(url, body.to_json)
+
+    # Raise a failed request error and let job runner handle retrying.
+    # In theory, only 5xx errors should be retried, but who knows.
+    raise FailedWebhookRequestError, response.status.to_s unless response.success?
   end
 end
