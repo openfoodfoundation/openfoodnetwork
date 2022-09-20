@@ -25,6 +25,10 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.resetFilters()
     $scope.refreshData()
 
+  $scope.$watchCollection "[startDate, endDate]", (newValues, oldValues) ->
+    if newValues != oldValues
+      $scope.refreshData()
+      
   $scope.refreshData = ->
     unless !$scope.orderCycleFilter? || $scope.orderCycleFilter == ''
       $scope.setOrderCycleDateRange()
