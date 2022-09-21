@@ -8,6 +8,7 @@ class OrderCycleForm
   def initialize(order_cycle, order_cycle_params, user)
     @order_cycle = order_cycle
     @order_cycle_params = order_cycle_params
+    @specified_params = order_cycle_params.keys
     @user = user
     @permissions = OpenFoodNetwork::Permissions.new(user)
     @schedule_ids = order_cycle_params.delete(:schedule_ids)
@@ -23,7 +24,7 @@ class OrderCycleForm
 
     order_cycle.transaction do
       order_cycle.save!
-      order_cycle.schedule_ids = schedule_ids
+      order_cycle.schedule_ids = schedule_ids if parameter_specified?(:schedule_ids)
       order_cycle.save!
       apply_exchange_changes
       attach_selected_distributor_shipping_methods
@@ -81,12 +82,8 @@ class OrderCycleForm
     @selected_distributor_shipping_method_ids
   end
 
-  def schedule_ids?
-    @schedule_ids.present?
-  end
-
   def build_schedule_ids
-    return unless schedule_ids?
+    return unless parameter_specified?(:schedule_ids)
 
     result = existing_schedule_ids
     result |= (requested_schedule_ids & permitted_schedule_ids) # Add permitted and requested
@@ -95,7 +92,7 @@ class OrderCycleForm
   end
 
   def sync_subscriptions
-    return unless schedule_ids?
+    return unless parameter_specified?(:schedule_ids)
     return unless schedule_sync_required?
 
     OrderManagement::Subscriptions::ProxyOrderSyncer.new(subscriptions_to_sync).sync!
@@ -111,6 +108,10 @@ class OrderCycleForm
 
   def requested_schedule_ids
     @schedule_ids.map(&:to_i)
+  end
+
+  def parameter_specified?(key)
+    @specified_params.map(&:to_s).include?(key.to_s)
   end
 
   def permitted_schedule_ids

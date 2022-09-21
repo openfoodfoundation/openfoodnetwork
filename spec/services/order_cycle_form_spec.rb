@@ -55,6 +55,17 @@ describe OrderCycleForm do
           end.to_not change{ order_cycle.reload.name }
         end
       end
+
+      context "when schedules are present but updating something other than the :schedule_ids" do
+        let(:params) { { name: "New Order Cycle Name" } }
+        before { create(:schedule, order_cycles: [order_cycle]) }
+
+        it "doesn't delete the schedules" do
+          expect(order_cycle.schedules).to be_present
+          form.save
+          expect(order_cycle.schedules).to be_present
+        end
+      end
     end
   end
 
