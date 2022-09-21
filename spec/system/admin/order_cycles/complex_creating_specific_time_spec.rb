@@ -208,8 +208,8 @@ describe '
     expect_receival_instructions_saved
     expect_pickup_time_and_instructions_saved
 
-    # And the shipping method should be attached
-    expect(oc.shipping_methods.map(&:name)).to eq(["Pickup - always available"])
+    # And the distributor shipping method should be attached
+    expect(oc.distributor_shipping_methods).to eq(shipping_method_i.distributor_shipping_methods)
   end
 
   def expect_opening_and_closing_times_saved
