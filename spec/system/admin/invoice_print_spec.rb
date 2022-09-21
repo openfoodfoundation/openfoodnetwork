@@ -254,11 +254,11 @@ describe '
           expect(page).to have_content "Admin & Handling $120.00"
           # Shipping
           expect(page).to have_content "Shipping $100.55 10.0%"
+          # Tax totals
+          expect(page).to have_content "Total tax (10.0%): $9.14 " \
+                                       "Total tax (15.0%): $15.65 Total tax (20.0%): $250.08"
           # Order Totals
           expect(page).to have_content "Total (Incl. tax): $1,733.54"
-          expect(page).to have_content "Total tax (15.0%): $15.65"
-          expect(page).to have_content "Total tax (10.0%): $9.14"
-          expect(page).to have_content "Total tax (20.0%): $250.08"
           expect(page).to have_content "Total (Excl. tax): $1,458.67"
         end
       end
@@ -385,11 +385,11 @@ describe '
           expect(page).to have_content "Admin & Handling $120.00"
           # Shipping
           expect(page).to have_content "Shipping $100.55 10.0%"
+          # Tax totals
+          expect(page).to have_content "Total tax (10.0%): $10.06 " \
+                                       "Total tax (15.0%): $18.00 Total tax (20.0%): $300.09"
           # Order Totals
           expect(page).to have_content "Total (Incl. tax): $2,061.69"
-          expect(page).to have_content "Total tax (15.0%): $18"
-          expect(page).to have_content "Total tax (10.0%): $10.06"
-          expect(page).to have_content "Total tax (20.0%): $300.09"
           expect(page).to have_content "Total (Excl. tax): $1,733.54"
         end
       end
