@@ -24,6 +24,7 @@ describe '
   }
   let!(:shipping_method_i) { distributor.shipping_methods.first }
   let!(:shipping_method_ii) { create(:shipping_method, distributors: [distributor]) }
+  let(:oc) { OrderCycle.last }
 
   # And some enterprise fees
   let!(:supplier_fee) { create(:enterprise_fee, enterprise: supplier, name: 'Supplier fee') }
@@ -194,7 +195,6 @@ describe '
   end
 
   def expect_all_data_saved
-    oc = OrderCycle.last
     toggle_columns "Producers", "Shops"
 
     expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
