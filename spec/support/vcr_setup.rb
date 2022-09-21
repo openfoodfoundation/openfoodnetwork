@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-ENV["RAILS_ENV"] ||= 'test'
-
 require 'vcr'
 
 VCR.configure do |config|
@@ -9,4 +7,6 @@ VCR.configure do |config|
   config.hook_into :webmock
   config.ignore_localhost = true
   config.configure_rspec_metadata!
+  config.filter_sensitive_data('<HIDDEN_KEY>') { ENV['STRIPE_SECRET_TEST_API_KEY'] }
+  config.filter_sensitive_data('<HIDDEN_CUSTOMER>') { ENV['STRIPE_CUSTOMER'] }
 end
