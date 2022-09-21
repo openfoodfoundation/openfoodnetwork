@@ -207,9 +207,7 @@ describe '
     expect_variants_saved
     expect_receival_instructions_saved
     expect_pickup_time_and_instructions_saved
-
-    # And the distributor shipping method should be attached
-    expect(oc.distributor_shipping_methods).to eq(shipping_method_i.distributor_shipping_methods)
+    expect_distributor_shipping_methods_saved
   end
 
   def expect_opening_and_closing_times_saved
@@ -240,5 +238,9 @@ describe '
     expect(exchange.pickup_time).to eq('pickup time')
     expect(exchange.pickup_instructions).to eq('pickup instructions')
     expect(exchange.tag_list).to eq(['wholesale'])
+  end
+
+  def expect_distributor_shipping_methods_saved
+    expect(oc.distributor_shipping_methods).to eq(shipping_method_i.distributor_shipping_methods)
   end
 end
