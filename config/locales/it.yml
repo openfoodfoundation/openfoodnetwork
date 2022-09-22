@@ -1787,6 +1787,7 @@ it:
       invalid_email: "Per favore inserisci un indirizzo email valido"
       select_a_shipping_method: Seleziona un metodo di consegna
       select_a_payment_method: Seleziona un metodo di pagamento
+      no_shipping_methods_available: La conferma ordine non è possibile perchè mancano le opzioni di consegna. Per favore contatta il gestore del negozio.
   order_paid: PAGATO
   order_not_paid: NON PAGATO
   order_total: Importo totale
@@ -2519,6 +2520,8 @@ it:
   report_header_hub_address: Indirizzo hub
   report_header_to_hub: Al gruppo
   report_header_hub_code: Codice hub
+  report_header_hub_id: ID Hub
+  report_header_hub_owner_email: Email Gestore Hub
   report_header_code: Codice
   report_header_paid: Pagato?
   report_header_delivery: Consegna?
