@@ -602,7 +602,7 @@ GEM
       axlsx_styler (>= 1.0.0, < 2)
       caxlsx (>= 2.0.2, < 4)
       rodf (>= 1.0.0, < 2)
-    spring (4.0.0)
+    spring (4.1.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
     sprockets (3.7.2)
