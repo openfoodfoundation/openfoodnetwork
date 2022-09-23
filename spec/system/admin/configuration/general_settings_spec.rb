@@ -39,12 +39,21 @@ describe "General Settings" do
       within('.currency') do
         find("[for='currency_symbol_position_after']").click
       end
-
       click_button 'Update'
 
       expect(page).to have_content(Spree.t(:successfully_updated,
                                            resource: Spree.t(:general_settings)))
       expect(page).to have_checked_field('10.00 $')
+    end
+  end
+
+  context "editing number localization preferences" do
+    it "enables international thousand/decimal separator logic" do
+      find("#enable_localized_number_").set "true"
+      click_button 'Update'
+      expect(page).to have_content(Spree.t(:successfully_updated,
+                                           resource: Spree.t(:general_settings)))
+      expect(Spree::Config.preferred_enable_localized_number?).to eq(true)
     end
   end
 end
