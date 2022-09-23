@@ -45,6 +45,24 @@ describe "General Settings" do
                                            resource: Spree.t(:general_settings)))
       expect(page).to have_checked_field('10.00 $')
     end
+
+    it "changes the currency decimal separator" do
+      expect(Spree::Config.preferred_currency_decimal_mark).to eq('.')
+      fill_in "currency_decimal_mark", with: ','
+      click_button 'Update'
+      expect(page).to have_content(Spree.t(:successfully_updated,
+                                           resource: Spree.t(:general_settings)))
+      expect(Spree::Config.preferred_currency_decimal_mark).to eq(',')
+    end
+
+    it "changes the currency thousands separator" do
+      expect(Spree::Config.preferred_currency_thousands_separator).to eq(',')
+      fill_in "currency_thousands_separator", with: '.'
+      click_button 'Update'
+      expect(page).to have_content(Spree.t(:successfully_updated,
+                                           resource: Spree.t(:general_settings)))
+      expect(Spree::Config.preferred_currency_thousands_separator).to eq('.')
+    end
   end
 
   context "editing number localization preferences" do
