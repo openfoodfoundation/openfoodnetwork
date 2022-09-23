@@ -1,5 +1,7 @@
 name: Linters
 on: [push, pull_request]
+permissions:
+  contents: read # to fetch code (actions/checkout)
 jobs:
   rubocop:
     name: runner / rubocop
