@@ -22,12 +22,7 @@ describe "General Settings" do
   context "editing general settings (admin)" do
     it "should be able to update the site name" do
       fill_in "site_name", with: "OFN Demo Site99"
-      click_button "Update"
-
-      within("[class='flash success']") do
-        expect(page).to have_content(Spree.t(:successfully_updated,
-                                             resource: Spree.t(:general_settings)))
-      end
+      update_and_assert_message
       expect(find("#site_name").value).to eq("OFN Demo Site99")
     end
   end
@@ -39,28 +34,21 @@ describe "General Settings" do
       within('.currency') do
         find("[for='currency_symbol_position_after']").click
       end
-      click_button 'Update'
-
-      expect(page).to have_content(Spree.t(:successfully_updated,
-                                           resource: Spree.t(:general_settings)))
+      update_and_assert_message
       expect(page).to have_checked_field('10.00 $')
     end
 
     it "changes the currency decimal separator" do
       expect(Spree::Config.preferred_currency_decimal_mark).to eq('.')
       fill_in "currency_decimal_mark", with: ','
-      click_button 'Update'
-      expect(page).to have_content(Spree.t(:successfully_updated,
-                                           resource: Spree.t(:general_settings)))
+      update_and_assert_message
       expect(Spree::Config.preferred_currency_decimal_mark).to eq(',')
     end
 
     it "changes the currency thousands separator" do
       expect(Spree::Config.preferred_currency_thousands_separator).to eq(',')
       fill_in "currency_thousands_separator", with: '.'
-      click_button 'Update'
-      expect(page).to have_content(Spree.t(:successfully_updated,
-                                           resource: Spree.t(:general_settings)))
+      update_and_assert_message
       expect(Spree::Config.preferred_currency_thousands_separator).to eq('.')
     end
   end
@@ -68,10 +56,17 @@ describe "General Settings" do
   context "editing number localization preferences" do
     it "enables international thousand/decimal separator logic" do
       find("#enable_localized_number_").set "true"
-      click_button 'Update'
-      expect(page).to have_content(Spree.t(:successfully_updated,
-                                           resource: Spree.t(:general_settings)))
+      update_and_assert_message
       expect(Spree::Config.preferred_enable_localized_number?).to eq(true)
     end
+  end
+end
+
+private
+
+def update_and_assert_message
+  click_button 'Update'
+  within("[class='flash success']") do
+    expect(page).to have_content("General Settings has been successfully updated!")
   end
 end
