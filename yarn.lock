@@ -2123,10 +2123,17 @@
     node-gyp "^7.1.0"
     read-package-json-fast "^2.0.1"
 
-"@orchidjs/sifter@^0.9.2":
-  version "0.9.2"
-  resolved "https://registry.yarnpkg.com/@orchidjs/sifter/-/sifter-0.9.2.tgz#86c84589fe42c46bb1f5ec1ab8f747a4c928a83b"
-  integrity sha512-8eR1aNWPhDt+cqOevGUajriiZbMzs6nGGdErUjSr99vMAxwMBRztnJu72OT8M7emyHTVjBB8BPjj4rJIoXQgKA==
+"@orchidjs/sifter@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@orchidjs/sifter/-/sifter-1.0.1.tgz#9a401546d80e3592f78f0640290d51b82f89ca64"
+  integrity sha512-gciY+iuk2hBAyzsPBMCvGJa+JVrssWOit6Pveke4KqkY/6JTinvztAESmPDM0UJBPNmc1m1tC15VVKrZ3v8nrw==
+  dependencies:
+    "@orchidjs/unicode-variants" "^1.0.2"
+
+"@orchidjs/unicode-variants@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@orchidjs/unicode-variants/-/unicode-variants-1.0.2.tgz#3d4355fe9796ed00ca9709e6bd85caf4f6da8c53"
+  integrity sha512-Q0DDoAwywdCE3dOBl8PlMWci8OwEwZG22WxLB48xfLPpM1hC+gQRnUAKMEUBZqPN/Rk/FrdAcem4VQe8qfuPHQ==
 
 "@rails/webpacker@5.4.3":
   version "5.4.3"
@@ -13192,11 +13199,12 @@ toidentifier@1.0.0:
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
 
 tom-select@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/tom-select/-/tom-select-2.1.0.tgz#93316cf042a69d9462027b8d6380f18f2a002e9d"
-  integrity sha512-NtE8kACBlMv4QaDakYfnXtEAgM/AVmM7Hw5FNQmij0uwgRgyXC/2kpNJPD1AdT5q/l6mUNkTnInQpTmrwX/tWQ==
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/tom-select/-/tom-select-2.2.0.tgz#4896ddc41ed9a5f0a9f543afcd0487377cd453a9"
+  integrity sha512-MNB2DCITQ6HFYQIIKaRC78AO3PU9AO+gMEAQh6OLvTspeQJOKDb4Of9ddak/GErhzIs2Q9KZklt4WjVh1pr4yQ==
   dependencies:
-    "@orchidjs/sifter" "^0.9.2"
+    "@orchidjs/sifter" "^1.0.1"
+    "@orchidjs/unicode-variants" "^1.0.2"
 
 tough-cookie@^4.0.0:
   version "4.0.0"
