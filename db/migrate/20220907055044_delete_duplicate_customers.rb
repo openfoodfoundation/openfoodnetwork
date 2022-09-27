@@ -2,8 +2,28 @@
 
 class DeleteDuplicateCustomers < ActiveRecord::Migration[6.1]
   class Customer < ActiveRecord::Base
-    belongs_to :bill_address, class_name: "SpreeAddress", dependent: :destroy
-    belongs_to :ship_address, class_name: "SpreeAddress", dependent: :destroy
+    belongs_to :bill_address, class_name: "SpreeAddress"
+    belongs_to :ship_address, class_name: "SpreeAddress"
+
+    after_destroy do
+      destroy_unused_address(bill_address)
+      destroy_unused_address(ship_address)
+    end
+
+    def destroy_unused_address(record)
+      return unless record
+      return if in_use?(SpreeOrder, record)
+      return if in_use?(Customer, record)
+      return if in_use?(SpreeUser, record)
+
+      record.destroy
+    end
+
+    def in_use?(model, record)
+      model.where(bill_address_id: record).or(
+        model.where(ship_address_id: record)
+      ).present?
+    end
   end
 
   class SpreeAddress < ActiveRecord::Base
@@ -13,6 +33,12 @@ class DeleteDuplicateCustomers < ActiveRecord::Migration[6.1]
   end
 
   class Subscription < ActiveRecord::Base
+  end
+
+  class Customer < ActiveRecord::Base
+  end
+
+  class SpreeUser < ActiveRecord::Base
   end
 
   def up
