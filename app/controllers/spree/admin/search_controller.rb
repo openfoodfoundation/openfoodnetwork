@@ -19,12 +19,7 @@ module Spree
 
       def customers
         @customers = []
-        enterprise_ids = if spree_current_user.admin?
-                           Enterprise.pluck(:id)
-                         else
-                           spree_current_user.enterprises.pluck(:id)
-                         end
-        if enterprise_ids.include? search_params[:distributor_id].to_i
+        if enterprises.where(id: search_params[:distributor_id].to_i).present?
           @customers = Customer.
             ransack(m: 'or', email_start: search_params[:q], first_name_start: search_params[:q],
                     last_name_start: search_params[:q]).
@@ -49,6 +44,14 @@ module Spree
 
       def search_params
         params.permit(:q, :distributor_id).to_h.with_indifferent_access
+      end
+
+      def enterprises
+        if spree_current_user.admin?
+          Enterprise.all
+        else
+          spree_current_user.enterprises
+        end
       end
     end
   end
