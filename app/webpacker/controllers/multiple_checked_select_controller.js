@@ -1,7 +1,7 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["button", "caret", "options", "option", "inputs"];
+  static targets = ["button", "caret", "options", "option", "inputs", "filter"];
   static values = { inputName: String };
 
   connect() {
@@ -13,11 +13,25 @@ export default class extends Controller {
     });
     this.buildInputs();
     document.addEventListener("click", this.closeOptions);
+    this.filterTarget.addEventListener("input", this.filterOptions);
   }
 
   disconnect() {
     document.removeEventListener("click", this.closeOptions);
   }
+
+  // private methods
+
+  filterOptions = (e) => {
+    const filter = e.target.value.toLowerCase();
+    this.optionTargets.forEach((option) => {
+      if (option.dataset["label"].toLowerCase().includes(filter)) {
+        option.classList.remove("hidden");
+      } else {
+        option.classList.add("hidden");
+      }
+    });
+  };
 
   toggleOptions = () => {
     this.optionsTarget.classList.toggle("hidden");

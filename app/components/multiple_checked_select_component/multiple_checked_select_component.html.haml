@@ -4,9 +4,12 @@
       = "&nbsp; #{t('admin.columns')}".html_safe
     %span{ class: "icon-caret-down", "data-multiple-checked-select-target": "caret" }
   %div.menu{ class: "hidden", "data-multiple-checked-select-target": "options" }
+    %div.filter
+      %input{ type: "text", "data-multiple-checked-select-target": "filter", placeholder: @filter_placeholder }
+    %hr
     - @options.each do |option|
       - classes = @selected.include?(option[1]) ? "selected" : ""
-      %div.menu_item{ class: classes, "data-multiple-checked-select-target": "option", "data-value": option[1] }
+      %div.menu_item{ class: classes, "data-multiple-checked-select-target": "option", "data-value": option[1], "data-label": option[0] }
         %span.check
         %span.name{id: option[1]}
           = option[0]
