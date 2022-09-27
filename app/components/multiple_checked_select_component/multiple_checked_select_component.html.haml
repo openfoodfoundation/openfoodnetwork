@@ -1,0 +1,13 @@
+.ofn-drop-down{ data: { controller: "multiple-checked-select", "multiple-checked-select-input-name-value": @name } }
+  %div{ "data-multiple-checked-select-target": "button" }
+    %span{ class: 'icon-reorder' }
+      = "&nbsp; #{t('admin.columns')}".html_safe
+    %span{ class: "icon-caret-down", "data-multiple-checked-select-target": "caret" }
+  %div.menu{ class: "hidden", "data-multiple-checked-select-target": "options" }
+    - @options.each do |option|
+      - classes = @selected.include?(option[1]) ? "selected" : ""
+      %div.menu_item{ class: classes, "data-multiple-checked-select-target": "option", "data-value": option[1] }
+        %span.check
+        %span.name{id: option[1]}
+          = option[0]
+  %div{style: "display: none;", "data-multiple-checked-select-target": "inputs"}
