@@ -732,23 +732,7 @@ module Spree
       self.customer ||= find_customer
       self.customer ||= create_customer if require_customer?
 
-      synchronise_customer_email
-    end
-
-    # Update the customer record if the user changed their email address.
-    def synchronise_customer_email
-      if user && customer && user.email != customer.email
-        duplicate = Customer.find_by(email: user.email, enterprise: distributor)
-
-        if duplicate.present?
-          Spree::Order.where(customer_id: duplicate.id).update_all(customer_id: customer.id)
-          Subscription.where(customer_id: duplicate.id).update_all(customer_id: customer.id)
-
-          duplicate.destroy
-        end
-
-        customer.update(email: user.email)
-      end
+      CustomerSyncer.new(self).synchronise_customer_email
     end
 
     def update_adjustment!(adjustment)
