@@ -340,7 +340,6 @@ en:
   producers_join: Australian producers are now welcome to join the Open Food Network. #FIXME
   charges_sales_tax: Charges GST?
   business_address: "Business Address"
-  enterprise_permissions: "Enterprise Permissions"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -452,6 +451,8 @@ en:
     destroy: "Destroy"
     rename: "Rename"
 
+# Admin
+#
   admin:
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
@@ -858,7 +859,6 @@ en:
         no_note_present: "No note provided."
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
-
     enterprises:
       index:
         title: Enterprises
@@ -1306,6 +1306,23 @@ en:
         has_no_shipping_methods: "%{enterprise} has no shipping methods"
         has_no_enterprise_fees: "%{enterprise} has no enterprise fees"
       side_menu:
+        enterprise:
+          primary_details: "Primary Details"
+          address: "Address"
+          contact: "Contact"
+          social: "Social"
+          about: "About"
+          business_details: "Business Details"
+          images: "Images"
+          properties: "Properties"
+          shipping_methods: "Shipping Methods"
+          payment_methods: "Payment Methods"
+          enterprise_fees: "Enterprise Fees"
+          enterprise_permissions: "Enterprise Permissions"
+          inventory_settings: "Inventory Settings"
+          tag_rules: "Tag Rules"
+          shop_preferences: "Shop Preferences"
+          users: "Users"
         enterprise_group:
           primary_details: "Primary Details"
           users: "Users"
@@ -2879,8 +2896,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   primary_details: "Primary Details"
   contact: "Contact"
   social: "Social"
-  business_details: "Business Details"
-  properties: "Properties"
   shipping: "Shipping"
   shipping_methods: "Shipping Methods"
   payment_methods: "Payment Methods"
@@ -2890,9 +2905,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   payment_updated: "Payment Updated"
   cannot_perform_operation: "Could not update the payment"
   action_required: "Action required"
-  inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"
-  shop_preferences: "Shop Preferences"
   enterprise_fee_whole_order: Whole order
   enterprise_fee_by: "%{type} fee by %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^That relationship is already established."
