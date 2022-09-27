@@ -707,12 +707,6 @@ module Spree
       persisted? && state != "cart"
     end
 
-    def customer_is_valid?
-      return true unless require_customer?
-
-      customer.present? && customer.enterprise_id == distributor_id && customer.email == email_for_customer
-    end
-
     def email_for_customer
       (user&.email || email)&.downcase
     end
@@ -723,7 +717,7 @@ module Spree
     end
 
     def create_customer
-      return if customer_is_valid?
+      return unless require_customer?
 
       Customer.create(
         enterprise: distributor,
