@@ -1,7 +1,6 @@
-.ofn-drop-down{ data: { controller: "multiple-checked-select", "multiple-checked-select-input-name-value": @name } }
-  %div{ "data-multiple-checked-select-target": "button" }
-    %span{ class: 'icon-reorder' }
-      = "&nbsp; #{t('admin.columns')}".html_safe
+.ofn-drop-down.ofn-drop-down-v2{ data: { controller: "multiple-checked-select", "multiple-checked-select-input-name-value": @name } }
+  %div.ofn-drop-down-label{ "data-multiple-checked-select-target": "button" }
+    %span{class: "label"}= t('admin.columns')
     %span{ class: "icon-caret-down", "data-multiple-checked-select-target": "caret" }
   %div.menu{ class: "hidden", "data-multiple-checked-select-target": "options" }
     %div.filter

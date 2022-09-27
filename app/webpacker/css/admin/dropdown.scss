@@ -65,6 +65,41 @@
 
 .ofn-drop-down {
 	@include ofn-drop-down-style;
+
+	&.ofn-drop-down-v2 {
+		border: 1px solid $pale-blue;
+		background-color: white;
+		padding: 0px;
+		
+		&:hover {
+			border-color: $spree-blue;
+		}
+
+		.ofn-drop-down-label {
+			color: $color-3;
+			padding: 10px;
+			width: 235px;
+			display: flex;
+			justify-content: space-between;
+
+			&:hover {
+				color: $color-3;
+			}
+
+			.label {
+				padding-right: 10px;
+			}
+
+			.icon-caret-down, .icon-caret-up {
+				padding-right: 0px;
+			}
+		}
+
+		.menu {
+			width: 100%;
+		}
+	}
+
 	position: relative;
 	float: left;
 
