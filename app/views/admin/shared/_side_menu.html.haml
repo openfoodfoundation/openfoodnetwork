@@ -9,5 +9,5 @@
     - enterprise_group_side_menu_items.each do |item|
       %a.menu_item{ href: "##{item[:name]}_panel", class: item[:selected], id: item[:name], data: { action: "tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab", "tabs-and-panels-target": "tab" } }
         %i{ class: item[:icon_class] }
-        %span= t("#{item[:label] }")
+        %span= t(".enterprise_group.#{item[:name] }")
 
