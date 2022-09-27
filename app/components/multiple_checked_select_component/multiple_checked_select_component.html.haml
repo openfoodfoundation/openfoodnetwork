@@ -6,10 +6,11 @@
     %div.filter
       %input{ type: "text", "data-multiple-checked-select-target": "filter", placeholder: @filter_placeholder }
     %hr
-    - @options.each do |option|
-      - classes = @selected.include?(option[1]) ? "selected" : ""
-      %div.menu_item{ class: classes, "data-multiple-checked-select-target": "option", "data-value": option[1], "data-label": option[0] }
-        %span.check
-        %span.name{id: option[1]}
-          = option[0]
+    %div.menu_items
+      - @options.each do |option|
+        - classes = @selected.include?(option[1]) ? "selected" : ""
+        %div.menu_item{ class: classes, "data-multiple-checked-select-target": "option", "data-value": option[1], "data-label": option[0] }
+          %span.check
+          %span.name{id: option[1]}
+            = option[0]
   %div{style: "display: none;", "data-multiple-checked-select-target": "inputs"}

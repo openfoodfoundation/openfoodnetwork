@@ -98,6 +98,11 @@
 		.menu {
 			width: 100%;
 		}
+
+		.menu_items {
+			max-height: 200px;
+			overflow-y: scroll;
+		}
 	}
 
 	position: relative;
