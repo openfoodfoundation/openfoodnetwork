@@ -693,7 +693,7 @@ describe "Product Import", js: true do
       expect(page).to have_selector '.create-count', text: "1"
 
       expect(page.body).to have_content 'you do not have permission'
-      expect(page).to have_no_selector 'a.button.proceed', visible: true
+      expect(page).to have_no_selector 'a.button.proceed'
     end
   end
 
@@ -739,16 +739,16 @@ describe "Product Import", js: true do
   private
 
   def proceed_to_validation
-    expect(page).to have_selector 'a.button.proceed', visible: true
+    expect(page).to have_selector 'a.button.proceed'
     within("#content") { click_link I18n.t('admin.product_import.import.import') }
-    expect(page).to have_selector 'form.product-import', visible: true
+    expect(page).to have_selector 'form.product-import'
     expect(page).to have_content I18n.t('admin.product_import.import.validation_overview')
   end
 
   def save_data
-    expect(page).to have_selector 'a.button.proceed', visible: true
+    expect(page).to have_selector 'a.button.proceed'
     proceed_with_save
-    expect(page).to have_selector 'div.save-results', visible: true
+    expect(page).to have_selector 'div.save-results'
     expect_import_completed
   end
 

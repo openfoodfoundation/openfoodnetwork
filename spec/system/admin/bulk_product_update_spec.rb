@@ -21,8 +21,8 @@ describe '
 
       visit spree.admin_products_path
 
-      expect(page).to have_field "product_name", with: p1.name, visible: true
-      expect(page).to have_field "product_name", with: p2.name, visible: true
+      expect(page).to have_field "product_name", with: p1.name
+      expect(page).to have_field "product_name", with: p2.name
     end
 
     it "displays a message when number of products is zero" do
@@ -79,9 +79,9 @@ describe '
       expect(page).to have_selector "a.view-variants", count: 1
       find("a.view-variants").click
 
-      expect(page).to have_no_selector "span[name='on_hand']", text: "On demand", visible: true
+      expect(page).to have_no_selector "span[name='on_hand']", text: "On demand"
       expect(page).to have_field "variant_on_hand", with: "4"
-      expect(page).to have_no_field "variant_on_hand", with: "", visible: true
+      expect(page).to have_no_field "variant_on_hand", with: ""
       expect(page).to have_selector "span[name='variant_on_hand']", text: "On demand"
     end
 
@@ -240,8 +240,8 @@ describe '
 
     it "handle the default behaviour" do
       # When I add three variants
-      page.find('a.add-variant', visible: true).click
-      page.find('a.add-variant', visible: true).click
+      page.find('a.add-variant').click
+      page.find('a.add-variant').click
 
       # They should be added, and should not see edit buttons for new variants
       expect(page).to have_selector "tr.variant", count: 3
@@ -249,10 +249,10 @@ describe '
 
       # When I remove two, they should be removed
       accept_alert do
-        page.all('a.delete-variant', visible: true).first.click
+        page.all('a.delete-variant').first.click
       end
       expect(page).to have_selector "tr.variant", count: 2
-      page.all('a.delete-variant', visible: true).first.click
+      page.all('a.delete-variant').first.click
       expect(page).to have_selector "tr.variant", count: 1
 
       # When I fill out variant details and hit update
@@ -274,7 +274,7 @@ describe '
       expect(updated_variant.on_hand).to eq 10
 
       # Then I should see edit buttons for the new variant
-      expect(page).to have_selector "a.edit-variant", visible: true
+      expect(page).to have_selector "a.edit-variant"
     end
 
     context "handle the 'on_demand' variant case creation" do
@@ -912,10 +912,10 @@ describe '
         attach_file 'image-upload', Rails.root.join("public/500.jpg"), visible: false
 
         # Shows spinner whilst loading
-        expect(page).to have_css ".spinner", visible: true
+        expect(page).to have_css ".spinner"
       end
 
-      expect(page).to have_no_css ".spinner", visible: true
+      expect(page).to have_no_css ".spinner"
       expect(page).to have_no_selector "div.reveal-modal"
 
       within "table#listing_products tr#p_#{product.id}" do

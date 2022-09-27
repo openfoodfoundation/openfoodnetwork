@@ -110,7 +110,7 @@ describe "As a consumer I want to check out my cart", js: true do
           click_button 'Next'
         end
 
-        expect(page).to have_selector 'div.login-modal', visible: true
+        expect(page).to have_selector 'div.login-modal'
         expect(page).to have_content I18n.t('devise.failure.already_registered')
       end
     end

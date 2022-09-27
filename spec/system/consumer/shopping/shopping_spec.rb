@@ -89,7 +89,7 @@ describe "As a consumer I want to shop with a distributor", js: true do
           expect(page).to have_selector "option", text: 'frogs'
           expect(page).to have_selector "option", text: 'turtles'
           expect(page).to have_content "choose when you want your order"
-          expect(page).not_to have_selector("input.button.right", visible: true)
+          expect(page).not_to have_selector("input.button.right")
         end
 
         it "shows products after selecting an order cycle" do

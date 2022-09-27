@@ -128,11 +128,11 @@ describe "Cookies", js: true do
   end
 
   def expect_visible_cookies_banner
-    expect(page).to have_css("button", text: accept_cookies_button_text, visible: true)
+    expect(page).to have_css("button", text: accept_cookies_button_text)
   end
 
   def expect_not_visible_cookies_banner
-    expect(page).to have_no_css("button", text: accept_cookies_button_text, visible: true)
+    expect(page).to have_no_css("button", text: accept_cookies_button_text)
   end
 
   def accept_cookies_button_text
