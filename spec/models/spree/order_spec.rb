@@ -990,6 +990,33 @@ describe Spree::Order do
         expect(order.customer).to eq other_order.customer
         expect(order.reload.customer.email).to eq "new@email.org"
       end
+
+      it "resolves conflicts with duplicate customer entries" do
+        order.update!(state: "complete")
+
+        # The user may check out as guest first:
+        guest_order = create(:order, user: nil, email: "new@email.org", distributor: distributor)
+        guest_order.update!(state: "complete")
+
+        # Afterwards the user changes their email in their profile.
+        # Change email instantly without confirmation via Devise:
+        order.user.update_columns(email: "new@email.org")
+
+        other_order = nil
+
+        # The two customer entries are merged and one is deleted:
+        expect {
+          other_order = create(:order, user: order.user, distributor: distributor)
+        }.to change { Customer.count }.by(-1)
+
+        expect(other_order.customer.email).to eq "new@email.org"
+        expect(order.customer).to eq other_order.customer
+        expect(order.reload.customer.email).to eq "new@email.org"
+
+        expect(order.customer.orders).to match_array [
+          order, guest_order, other_order
+        ]
+      end
     end
   end
 
