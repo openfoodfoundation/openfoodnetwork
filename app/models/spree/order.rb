@@ -717,8 +717,6 @@ module Spree
     end
 
     def create_customer
-      return unless require_customer?
-
       Customer.create(
         enterprise: distributor,
         email: email_for_customer,
@@ -731,7 +729,8 @@ module Spree
     end
 
     def ensure_customer
-      self.customer ||= find_customer || create_customer
+      self.customer ||= find_customer
+      self.customer ||= create_customer if require_customer?
 
       synchronise_customer_email
     end
