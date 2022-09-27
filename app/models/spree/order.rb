@@ -716,21 +716,9 @@ module Spree
         Customer.of(distributor).find_by(email: email_for_customer)
     end
 
-    def create_customer
-      Customer.create(
-        enterprise: distributor,
-        email: email_for_customer,
-        user: user,
-        first_name: bill_address&.first_name.to_s,
-        last_name: bill_address&.last_name.to_s,
-        bill_address: bill_address&.clone,
-        ship_address: ship_address&.clone
-      )
-    end
-
     def ensure_customer
       self.customer ||= find_customer
-      self.customer ||= create_customer if require_customer?
+      self.customer ||= CustomerSyncer.create_customer(self) if require_customer?
 
       CustomerSyncer.new(self).synchronise_customer_email
     end
