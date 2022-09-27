@@ -18,18 +18,27 @@ module Spree
       end
 
       def customers
-        @customers = []
-        if enterprises.where(id: search_params[:distributor_id].to_i).present?
-          @customers = Customer.
-            ransack(m: 'or', email_start: search_params[:q], first_name_start: search_params[:q],
-                    last_name_start: search_params[:q]).
-            result.
-            where(enterprise_id: search_params[:distributor_id].to_i)
-        end
-        render json: @customers, each_serializer: ::Api::Admin::CustomerSerializer
+        render json: load_customers, each_serializer: ::Api::Admin::CustomerSerializer
       end
 
       private
+
+      def load_customers
+        return [] unless valid_enterprise_given?
+
+        Customer.ransack(
+          m: 'or', email_start: search_params[:q],
+          first_name_start: search_params[:q], last_name_start: search_params[:q]
+        ).result.where(enterprise_id: search_params[:distributor_id].to_i)
+      end
+
+      def valid_enterprise_given?
+        return true if spree_current_user.admin?
+
+        spree_current_user.enterprises.where(
+          id: search_params[:distributor_id].to_i
+        ).present?
+      end
 
       def ransack_hash
         {
@@ -44,14 +53,6 @@ module Spree
 
       def search_params
         params.permit(:q, :distributor_id).to_h.with_indifferent_access
-      end
-
-      def enterprises
-        if spree_current_user.admin?
-          Enterprise.all
-        else
-          spree_current_user.enterprises
-        end
       end
     end
   end
