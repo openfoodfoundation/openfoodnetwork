@@ -985,6 +985,10 @@ describe Spree::Order do
         expect {
           other_order.update!(state: "complete")
         }.to_not change { Customer.count }
+
+        expect(other_order.customer.email).to eq "new@email.org"
+        expect(order.customer).to eq other_order.customer
+        expect(order.reload.customer.email).to eq "new@email.org"
       end
     end
   end

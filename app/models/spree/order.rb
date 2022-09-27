@@ -738,6 +738,15 @@ module Spree
 
     def ensure_customer
       self.customer ||= find_customer || create_customer
+
+      synchronise_customer_email
+    end
+
+    # Update the customer record if the user changed their email address.
+    def synchronise_customer_email
+      if user && customer && user.email != customer.email
+        customer.update(email: user.email)
+      end
     end
 
     def update_adjustment!(adjustment)
