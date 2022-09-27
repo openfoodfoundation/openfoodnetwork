@@ -707,17 +707,8 @@ module Spree
       persisted? && state != "cart"
     end
 
-    def email_for_customer
-      (user&.email || email)&.downcase
-    end
-
-    def find_customer
-      user&.customers&.of(distributor)&.first ||
-        Customer.of(distributor).find_by(email: email_for_customer)
-    end
-
     def ensure_customer
-      self.customer ||= find_customer
+      self.customer ||= CustomerSyncer.find_customer(self)
       self.customer ||= CustomerSyncer.create_customer(self) if require_customer?
 
       CustomerSyncer.new(self).synchronise_customer_email

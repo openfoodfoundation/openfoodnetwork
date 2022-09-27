@@ -4,16 +4,25 @@
 #
 # P.S.: I almost couldn't resist to call this CustomerService.
 class CustomerSyncer
+  def self.find_customer(order)
+    order.user&.customers&.of(order.distributor)&.first ||
+      Customer.of(order.distributor).find_by(email: customer_email(order))
+  end
+
   def self.create_customer(order)
     Customer.create(
       enterprise: order.distributor,
-      email: (order.user&.email || order.email)&.downcase,
+      email: customer_email(order),
       user: order.user,
       first_name: order.bill_address&.first_name.to_s,
       last_name: order.bill_address&.last_name.to_s,
       bill_address: order.bill_address&.clone,
       ship_address: order.ship_address&.clone
     )
+  end
+
+  def self.customer_email(order)
+    (order.user&.email || order.email)&.downcase
   end
 
   attr_reader :customer, :distributor, :user
