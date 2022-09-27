@@ -14,17 +14,17 @@ class CustomerSyncer
 
   # Update the customer record if the user changed their email address.
   def synchronise_customer_email
-    if user && customer && user.email != customer.email
-      duplicate = Customer.find_by(email: user.email, enterprise: distributor)
+    return unless user && customer && user.email != customer.email
 
-      if duplicate.present?
-        Spree::Order.where(customer_id: duplicate.id).update_all(customer_id: customer.id)
-        Subscription.where(customer_id: duplicate.id).update_all(customer_id: customer.id)
+    duplicate = Customer.find_by(email: user.email, enterprise: distributor)
 
-        duplicate.destroy
-      end
+    if duplicate.present?
+      Spree::Order.where(customer_id: duplicate.id).update_all(customer_id: customer.id)
+      Subscription.where(customer_id: duplicate.id).update_all(customer_id: customer.id)
 
-      customer.update(email: user.email)
+      duplicate.destroy
     end
+
+    customer.update(email: user.email)
   end
 end
