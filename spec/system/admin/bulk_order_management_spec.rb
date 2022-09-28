@@ -75,43 +75,41 @@ describe '
       end
 
       it "displays a column for user's full name" do
-        expect(page).to have_selector "th.full_name", text: "NAME", visible: true
-        expect(page).to have_selector "td.full_name", text: o1.bill_address.full_name, visible: true
-        expect(page).to have_selector "td.full_name", text: "", visible: true
+        expect(page).to have_selector "th.full_name", text: "NAME"
+        expect(page).to have_selector "td.full_name", text: o1.bill_address.full_name
+        expect(page).to have_selector "td.full_name", text: ""
       end
 
       it "displays a column for order date" do
         expect(page).to have_selector "th.date",
-                                      text: I18n.t("admin.orders.bulk_management.order_date").upcase, visible: true
-        expect(page).to have_selector "td.date", text: o1.completed_at.strftime('%B %d, %Y'),
-                                                 visible: true
-        expect(page).to have_selector "td.date", text: o2.completed_at.strftime('%B %d, %Y'),
-                                                 visible: true
+                                      text: I18n.t("admin.orders.bulk_management.order_date").upcase
+        expect(page).to have_selector "td.date", text: o1.completed_at.strftime('%B %d, %Y')
+        expect(page).to have_selector "td.date", text: o2.completed_at.strftime('%B %d, %Y')
       end
 
       it "displays a column for producer" do
-        expect(page).to have_selector "th.producer", text: "PRODUCER", visible: true
-        expect(page).to have_selector "td.producer", text: li1.product.supplier.name, visible: true
-        expect(page).to have_selector "td.producer", text: li2.product.supplier.name, visible: true
+        expect(page).to have_selector "th.producer", text: "PRODUCER"
+        expect(page).to have_selector "td.producer", text: li1.product.supplier.name
+        expect(page).to have_selector "td.producer", text: li2.product.supplier.name
       end
 
       it "displays a column for variant description, which shows only product name when options text is blank" do
-        expect(page).to have_selector "th.variant", text: "PRODUCT: UNIT", visible: true
-        expect(page).to have_selector "td.variant", text: li1.product.name, visible: true
+        expect(page).to have_selector "th.variant", text: "PRODUCT: UNIT"
+        expect(page).to have_selector "td.variant", text: li1.product.name
         expect(page).to have_selector "td.variant",
-                                      text: "#{li2.product.name}: #{li2.variant.options_text}", visible: true
+                                      text: "#{li2.product.name}: #{li2.variant.options_text}"
       end
 
       it "displays a field for quantity" do
-        expect(page).to have_selector "th.quantity", text: "QUANTITY", visible: true
-        expect(page).to have_field "quantity", with: li1.quantity.to_s, visible: true
-        expect(page).to have_field "quantity", with: li2.quantity.to_s, visible: true
+        expect(page).to have_selector "th.quantity", text: "QUANTITY"
+        expect(page).to have_field "quantity", with: li1.quantity.to_s
+        expect(page).to have_field "quantity", with: li2.quantity.to_s
       end
 
       it "displays a column for max quantity" do
-        expect(page).to have_selector "th.max", text: "MAX", visible: true
-        expect(page).to have_selector "td.max", text: li1.max_quantity.to_s, visible: true
-        expect(page).to have_selector "td.max", text: li2.max_quantity.to_s, visible: true
+        expect(page).to have_selector "th.max", text: "MAX"
+        expect(page).to have_selector "td.max", text: li1.max_quantity.to_s
+        expect(page).to have_selector "td.max", text: li2.max_quantity.to_s
       end
     end
 
@@ -677,7 +675,7 @@ describe '
           expect(page).to have_content "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
 
           expect do
-            within(".modal", visible: true) do
+            within(".modal") do
               check("send_cancellation_email")
               click_on("OK")
             end
@@ -708,7 +706,7 @@ describe '
           find("div#bulk-actions-dropdown").click
           find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
 
-          within ".modal", visible: true do
+          within ".modal" do
             click_on("OK")
           end
 
@@ -801,7 +799,7 @@ describe '
           end
 
           it "the user can cancel : no line item is deleted" do
-            within(".modal", visible: true) do
+            within(".modal") do
               click_on("Cancel")
             end
             expect(o2.reload.line_items.length).to eq(1)
@@ -810,7 +808,7 @@ describe '
 
           it "the user can confirm : line item is then deleted and order is canceled" do
             expect do
-              within(".modal", visible: true) do
+              within(".modal") do
                 uncheck("send_cancellation_email")
                 click_on("OK")
               end
@@ -821,7 +819,7 @@ describe '
 
           it "the user can confirm + wants to send email confirmation : line item is then deleted, order is canceled and email is sent" do
             expect do
-              within(".modal", visible: true) do
+              within(".modal") do
                 check("send_cancellation_email")
                 click_on("OK")
               end
@@ -868,7 +866,7 @@ describe '
       end
 
       it "displays group buy calc box" do
-        expect(page).to have_selector "div#group_buy_calculation", visible: true
+        expect(page).to have_selector "div#group_buy_calculation"
 
         within "div#group_buy_calculation" do
           expect(page).to have_text "Group Buy Unit Size"
@@ -881,7 +879,7 @@ describe '
           expect(page).to have_text "0.8"
           expect(page).to have_text "Max Fulfilled Units"
           expect(page).to have_text "1.8"
-          expect(page).to have_selector "div.shared_resource", visible: true
+          expect(page).to have_selector "div.shared_resource"
           within "div.shared_resource" do
             expect(page).to have_selector "span", text: "Shared Resource?"
             expect(page).to have_selector "input#shared_resource"
@@ -890,10 +888,10 @@ describe '
       end
 
       it "all line items of the same variant" do
-        expect(page).to have_no_selector "tr#li_#{li1.id}", visible: true
-        expect(page).to have_no_selector "tr#li_#{li2.id}", visible: true
-        expect(page).to have_selector "tr#li_#{li3.id}", visible: true
-        expect(page).to have_selector "tr#li_#{li4.id}", visible: true
+        expect(page).to have_no_selector "tr#li_#{li1.id}"
+        expect(page).to have_no_selector "tr#li_#{li2.id}"
+        expect(page).to have_selector "tr#li_#{li3.id}"
+        expect(page).to have_selector "tr#li_#{li4.id}"
       end
 
       context "clicking 'Clear' in group buy box" do
@@ -902,11 +900,11 @@ describe '
         end
 
         it "shows all products and clears group buy box" do
-          expect(page).to have_no_selector "div#group_buy_calculation", visible: true
-          expect(page).to have_selector "tr#li_#{li1.id}", visible: true
-          expect(page).to have_selector "tr#li_#{li2.id}", visible: true
-          expect(page).to have_selector "tr#li_#{li3.id}", visible: true
-          expect(page).to have_selector "tr#li_#{li4.id}", visible: true
+          expect(page).to have_no_selector "div#group_buy_calculation"
+          expect(page).to have_selector "tr#li_#{li1.id}"
+          expect(page).to have_selector "tr#li_#{li2.id}"
+          expect(page).to have_selector "tr#li_#{li3.id}"
+          expect(page).to have_selector "tr#li_#{li4.id}"
         end
       end
     end
@@ -949,8 +947,8 @@ describe '
     it "shows only line item from orders that I distribute, and not those that I supply" do
       visit_bulk_order_management
 
-      expect(page).to have_selector "tr#li_#{line_item_distributed.id}", visible: true
-      expect(page).to have_no_selector "tr#li_#{line_item_not_distributed.id}", visible: true
+      expect(page).to have_selector "tr#li_#{line_item_distributed.id}"
+      expect(page).to have_no_selector "tr#li_#{line_item_not_distributed.id}"
     end
   end
 

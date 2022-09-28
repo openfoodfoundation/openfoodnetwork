@@ -513,8 +513,7 @@ describe "
         product = create(:simple_product, supplier: supplier)
         InventoryItem.create!(
           enterprise: supplier,
-          variant: product.variants.first,
-          visible: true
+          variant: product.variants.first
         )
       end
       first_variant = inventory_items.first.variant

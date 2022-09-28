@@ -139,7 +139,7 @@ describe '
       end
 
       it "show a modal 'Are you sure?' that the user can close and then nothing change" do
-        within(".modal", visible: true) do
+        within(".modal") do
           expect do
             click_on("Cancel")
             expect(page).not_to have_content "Are you sure?"
@@ -149,10 +149,10 @@ describe '
 
       it "show a modal 'Are you sure?' that the user confirm and then the item is deleted" do
         expect(order.line_items.length).to eq(2)
-        within(".modal", visible: true) do
+        within(".modal") do
           expect do
             click_on("OK")
-            expect(page).not_to have_css(".modal", visible: true)
+            expect(page).not_to have_css(".modal")
           end.to change { order.reload.line_items.length }.by(-1)
         end
       end
@@ -170,7 +170,7 @@ describe '
         it "that the user can close and then nothing change" do
           expect(page).to have_content "This will cancel the current order."
           expect(page).to have_checked_field "Send a cancellation email to the customer"
-          within(".modal", visible: true) do
+          within(".modal") do
             click_on("Cancel")
           end
           
@@ -181,7 +181,7 @@ describe '
         context "that the user can confirm" do
           it "and then the order is cancelled and no email is sent by default" do
             expect do
-              within(".modal", visible: true) do
+              within(".modal") do
                 uncheck("send_cancellation_email")
                 click_on("OK")
               end
@@ -193,7 +193,7 @@ describe '
 
           it "and check the checkbox to send an email to the customer about its order cancellation" do
             expect do
-              within(".modal", visible: true) do
+              within(".modal") do
                 click_on("OK")
               end
               expect(page).to have_content "Cannot add item to canceled order"
@@ -206,7 +206,7 @@ describe '
         context "that the user can choose to restock item" do
           let(:shipment) { order.shipments.first }
           it "uncheck the checkbox to not restock item" do
-            within(".modal", visible: true) do
+            within(".modal") do
               check("restock_items")
               click_on("OK")
             end
