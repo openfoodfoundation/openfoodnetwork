@@ -44,6 +44,11 @@ Metrics/BlockLength:
     "xdescribe",
   ]
 
+Rails/ApplicationRecord:
+  Exclude:
+    # Migrations should not contain application code:
+    - "db/migrate/*.rb"
+
 Rails/SkipsModelValidations:
   AllowedMethods:
     - "touch"

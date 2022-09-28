@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+# A customer record is created the first time a person orders from a shop.
+#
+# It's a relationship between a user and an enterprise but for guest orders it
+# can also be between an email address and an enterprise.
+#
+# The main purpose is tagging of customers to access private shops, receive
+# discounts et cetera. A customer record is also needed for subscriptions.
 class Customer < ApplicationRecord
   include SetUnusedAddressFields
 
@@ -7,7 +14,7 @@ class Customer < ApplicationRecord
 
   searchable_attributes :first_name, :last_name, :email, :code
 
-  belongs_to :enterprise
+  belongs_to :enterprise, optional: false
   belongs_to :user, class_name: "Spree::User"
   has_many :orders, class_name: "Spree::Order"
   before_destroy :update_orders_and_delete_canceled_subscriptions
@@ -26,7 +33,6 @@ class Customer < ApplicationRecord
   validates :code, uniqueness: { scope: :enterprise_id, allow_nil: true }
   validates :email, presence: true, 'valid_email_2/email': true,
                     uniqueness: { scope: :enterprise_id, message: I18n.t('validation_msg_is_associated_with_an_exising_customer') }
-  validates :enterprise, presence: true
 
   scope :of, ->(enterprise) { where(enterprise_id: enterprise) }
 
