@@ -869,11 +869,15 @@ en:
         manage: Manage
       form:
         about_us:
+          legend: "About"
           desc_short: Short Description
           desc_short_placeholder: Tell us about your enterprise in one or two sentences
           desc_long: About Us
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
+        address:
+          legend: "Address"
         business_details:
+          legend: "Business Details"
           abn: ABN
           abn_placeholder: eg. 99 123 456 789
           acn: ACN
@@ -884,7 +888,8 @@ en:
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
           reset_form: "Reset Form"
-          Invoice_item_sorting: Invoice item sorting
+          business_address_legend: "Business Address"
+          invoice_item_sorting_legend: "Invoice item sorting"
           sort_items_by_supplier?: Sort items by supplier?
           sort_items_by_supplier_tip: "When enabled, Items will be sorted by supplier name."
           enabled: Enable
@@ -898,6 +903,7 @@ en:
           legal_phone_number: Legal phone number
           phone_placeholder: "98 123 4565"
         contact:
+          legend: "Contact"
           name: Name
           name_placeholder: eg. Gustav Plum
           email_address: Public Email Address
@@ -911,14 +917,17 @@ en:
           website: Website
           website_placeholder: eg. www.truffles.com
         enterprise_fees:
+          legend: "Enterprise Fees"
           name: Name
           fee_type: Fee Type
           manage_fees: Manage Enterprise Fees
           no_fees_yet: You don't have any enterprise fees yet.
           create_button: Create One Now
         enterprise_permissions:
+          legend: "Enterprise Permissions"
           enterprise_relationships: Enterprise Relationships
         images:
+          legend: "Images"
           logo: Logo
           promo_image_placeholder: 'This image is displayed in "About Us"'
           promo_image_note1: 'PLEASE NOTE:'
@@ -927,6 +936,7 @@ en:
           remove_logo: "Remove Image"
           remove_promo_image: "Remove Image"
         inventory_settings:
+          legend: "Inventory Settings"
           text1: You may opt to manage stock levels and prices in via your
           inventory: inventory
           text2: >
@@ -937,6 +947,7 @@ en:
           preferred_product_selection_from_inventory_only_yes: New products can be put into my shopfront (recommended)
           preferred_product_selection_from_inventory_only_no: New products must be added to my inventory before they can be put into my shopfront
         payment_methods:
+          legend: "Payment Methods"
           name: Name
           applies: Applies?
           manage: Manage Payment Methods
@@ -944,6 +955,7 @@ en:
           create_button: Create New Payment Method
           create_one_button: Create One Now
         primary_details:
+          legend: "Primary Details"
           name: Name
           name_placeholder: eg. Professor Plum's Biodynamic Truffles
           groups: Groups
@@ -962,6 +974,8 @@ en:
           visible: Public
           not_visible: Hidden
           hidden: Hide all references
+        properties:
+          legend: "Properties"
         permalink:
           permalink: Permalink (no spaces)
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
@@ -970,6 +984,7 @@ en:
           ofn_uid: OFN UID
           ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
         shipping_methods:
+          legend: "Shipping Methods"
           name: "Name"
           applies: "Active?"
           manage: "Manage Shipping Methods"
@@ -977,6 +992,7 @@ en:
           create_one_button: "Create One Now"
           no_method_yet: "You don't have any shipping methods yet."
         shop_preferences:
+          legend: "Shop Preferences"
           shopfront_requires_login: "Publicly visible shopfront?"
           shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
           shopfront_requires_login_false: "Public"
@@ -1022,6 +1038,7 @@ en:
           enabled: "Enabled"
           disabled: "Disabled"
         social:
+          legend: "Social"
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. the_prof"
           facebook_placeholder: "eg. www.facebook.com/PageNameHere"
@@ -1039,6 +1056,7 @@ en:
             i_agree: I Agree
             cancel: Cancel
         tag_rules:
+          legend: "Tag Rules"
           default_rules:
             by_default: By Default
             no_rules_yet: No default rules apply yet
@@ -1049,6 +1067,7 @@ en:
           add_new_rule: '+ Add A New Rule'
           add_new_tag: '+ Add A New Tag'
         users:
+          legend: "Users"
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
           owner: 'Owner'

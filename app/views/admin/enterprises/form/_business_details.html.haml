@@ -51,7 +51,7 @@
 
 = f.fields_for :business_address, @enterprise.business_address || @enterprise.build_business_address do |bf|
   %fieldset.alpha.no-border-bottom
-    %legend= t('business_address')
+    %legend= t('.business_address_legend')
     = render 'admin/enterprises/form/business_address', bf: bf
 
   .row{"data-controller": "updateinput"}
@@ -60,7 +60,7 @@
 
 .row
   %fieldset.alpha.no-border-bottom
-    %legend= t('.Invoice_item_sorting')
+    %legend= t('.invoice_item_sorting_legend')
   .three.columns.alpha
     %label= t('.sort_items_by_supplier?')
     %div{'ofn-with-tip' => t('.sort_items_by_supplier_tip')}
