@@ -288,8 +288,14 @@ describe '
       expect(page).to have_css(".report__table thead th", text: "20.0% ($)")
       expect(page).to have_css(".report__table thead th", text: "0.0% ($)")
 
-      expect(page).to have_table_row [order1.number, "1446.7", "16.76", "0", "270.08", "286.84",
-                                      "1733.54"]
+      if inverse_columns_logic.eql?("false")
+        expect(page).to have_table_row [order1.number.to_s, "1446.7", "16.76", "0", "270.08",
+                                        "286.84", "1733.54"]
+      end
+      if inverse_columns_logic.eql?("true")
+        expect(page).to have_table_row [order1.number.to_s, "1446.7", "0", "16.76", "270.08",
+                                        "286.84", "1733.54"]
+      end
     end
   end
 
