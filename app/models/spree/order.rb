@@ -708,10 +708,8 @@ module Spree
     end
 
     def ensure_customer
-      self.customer ||= CustomerSyncer.find_customer(self)
+      self.customer ||= CustomerSyncer.find_and_update_customer(self)
       self.customer ||= CustomerSyncer.create_customer(self) if require_customer?
-
-      CustomerSyncer.new(self).synchronise_customer_email
     end
 
     def update_adjustment!(adjustment)
