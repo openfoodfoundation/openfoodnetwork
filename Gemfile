@@ -115,7 +115,6 @@ gem 'coffee-rails', '~> 5.0.0'
 
 gem 'mini_racer', '0.4.0'
 
-gem 'uglifier', '>= 1.0.3'
 
 gem 'angular_rails_csrf'
 

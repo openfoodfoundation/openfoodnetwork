@@ -640,8 +640,6 @@ GEM
     ttfunk (1.7.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     unicode-display_width (2.3.0)
     uniform_notifier (1.16.0)
     valid_email2 (4.0.4)
@@ -809,7 +807,6 @@ DEPENDENCIES
   test-prof
   test-unit (~> 3.5)
   timecop
-  uglifier (>= 1.0.3)
   valid_email2
   vcr
   view_component
