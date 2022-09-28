@@ -637,6 +637,18 @@ en:
     enterprise_groups:
       index:
         new_button: New Enterprise Group
+      form_primary_details:
+        primary_details: "Primary Details"
+      form_users:
+        users: "Users"
+      form_about:
+        about: "About"
+      form_images:
+        images: "Images"
+      form_address:
+        contact: "Contact"
+      form_web:
+        web: "Web Resources"
 
     enterprise_roles:
       form:
