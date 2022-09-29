@@ -31,7 +31,6 @@ describe "As a consumer I want to shop with a distributor", js: true do
     it "shows a distributor with images" do
       # Given the distributor has a logo
       distributor.update!(logo: white_logo_file)
-
       # Then we should see the distributor and its logo
       visit shop_path
       expect(page).to have_text distributor.name
@@ -239,15 +238,19 @@ describe "As a consumer I want to shop with a distributor", js: true do
         expect(page).to have_price with_currency(43.00)
       end
 
-      it "filters search results properly" do
+      it "filters search results properly and clears searches" do
         visit shop_path
         fill_in "search", with: "74576345634XXXXXX"
         expect(page).to have_content "Sorry, no results found"
         expect(page).not_to have_content product2.name
+        click_on "Clear search" # clears search by clicking text
+        expect(page).to have_content("Add", count: 4)
 
-        fill_in "search", with: "Meer"           # For product named "Meercats"
+        fill_in "search", with: "Meer" # For product named "Meercats"
         expect(page).to have_content product2.name
         expect(page).not_to have_content product.name
+        find("a.clear").click # clears search by clicking the X button
+        expect(page).to have_content("Add", count: 4)
       end
 
       context "when supplier uses property" do
@@ -276,7 +279,7 @@ describe "As a consumer I want to shop with a distributor", js: true do
 
       it "returns search results for products where the search term matches one of the product's variant names" do
         visit shop_path
-        fill_in "search", with: "Badg"           # For variant with display_name "Badgers"
+        fill_in "search", with: "Badg" # For variant with display_name "Badgers"
 
         within('div.pad-top') do
           expect(page).not_to have_content product2.name
