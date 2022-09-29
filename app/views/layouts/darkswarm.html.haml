@@ -33,6 +33,8 @@
     = csrf_meta_tags
     %meta{name: "turbo-cache-control", content: "no-cache"}
 
+    = action_cable_meta_tag
+
   %body{ class: body_classes, "body-scroll": "true", "data-turbo": "false" }
     / [if lte IE 8]
       = render partial: "shared/ie_warning"
