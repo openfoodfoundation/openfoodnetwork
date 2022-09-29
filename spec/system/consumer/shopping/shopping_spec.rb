@@ -166,28 +166,37 @@ describe "As a consumer I want to shop with a distributor", js: true do
           end
         end
 
-        describe "two order cycles and more than 20 products for each" do
+        describe "two order cycles" do
           before do
-            20.times do
-              product = create(:simple_product, supplier: supplier)
-              add_variant_to_order_cycle(exchange1, product.variants.first)
-              add_variant_to_order_cycle(exchange2, product.variants.first)
+            visit shop_path
+          end
+          context "one having 20 products" do
+            before do
+              20.times do
+                product = create(:simple_product, supplier: supplier)
+                add_variant_to_order_cycle(exchange1, product.variants.first)
+              end
+            end
+            it "displays 20 products, 10 per page" do
+              select "frogs", from: "order_cycle_id"
+              expect(page).to have_selector("product.animate-repeat", count: 10)
+              scroll_to(page.find(".product-listing"), align: :bottom)
+              expect(page).to have_selector("product.animate-repeat", count: 20)
             end
           end
 
-          it "show the whole products list for each OC" do
-            visit shop_path
-            select "turtles", from: "order_cycle_id"
-            select "frogs", from: "order_cycle_id"
-            expect(page).to have_selector("product.animate-repeat", count: 10)
-            scroll_to(page.find(".product-listing"), align: :bottom)
-            expect(page).to have_selector("product.animate-repeat", count: 20)
+          context "another having 5 products" do
+            before do
+              5.times do
+                product = create(:simple_product, supplier: supplier)
+                add_variant_to_order_cycle(exchange2, product.variants.first)
+              end
+            end
 
-            scroll_to(page.find("distributor"))
-            select "turtles", from: "order_cycle_id"
-            expect(page).to have_selector("product.animate-repeat", count: 10)
-            scroll_to(page.find(".product-listing"), align: :bottom)
-            expect(page).to have_selector("product.animate-repeat", count: 20)
+            it "displays 5 products, on one page" do
+              select "turtles", from: "order_cycle_id"
+              expect(page).to have_selector("product.animate-repeat", count: 5)
+            end
           end
         end
       end
