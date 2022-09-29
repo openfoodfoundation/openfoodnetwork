@@ -2907,7 +2907,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   action_required: "Action required"
   tag_rules: "Tag Rules"
   enterprise_fee_whole_order: Whole order
-  enterprise_fee_by: "%{name} fee by %{role} %{enterprise_name}"
+  enterprise_fee_by_name: "%{name} fee by %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
