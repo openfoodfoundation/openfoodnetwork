@@ -195,7 +195,7 @@ table#listing_enterprise_groups {
 }
 
 .fullwidth_inputs {
-  input[type=text], select {
+  #{$text-inputs}, select {
     width: 100%;
   }
 }

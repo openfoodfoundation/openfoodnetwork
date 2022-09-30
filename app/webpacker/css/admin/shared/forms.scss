@@ -1,12 +1,11 @@
-input[type="text"],
-input[type="password"],
-input[type="email"],
+$text-inputs:
+  "input[type=text], input[type=password], input[type=email], input[type=url], input[type=tel]";
+
+#{$text-inputs},
 input[type="date"],
 input[type="datetime"],
 input[type="time"],
-input[type="url"],
 input[type="number"],
-input[type="tel"],
 textarea, fieldset {
   @include border-radius($border-radius);
   padding: 7px 10px;
