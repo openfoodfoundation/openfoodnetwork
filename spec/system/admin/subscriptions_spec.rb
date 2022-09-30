@@ -231,8 +231,8 @@ describe 'Subscriptions' do
 
       before do
         visit admin_subscriptions_path
-        click_link "New Subscription"
-        select2_select shop.name, from: "new_subscription_shop_id"
+        page.find("#new-subscription").click
+        tomselect_search_and_select shop.name, from: "subscription[shop_id]"
         click_button "Continue"
       end
 
@@ -632,8 +632,8 @@ describe 'Subscriptions' do
 
       before do
         visit admin_subscriptions_path
-        click_link "New Subscription"
-        select2_select shop.name, from: "new_subscription_shop_id"
+        page.find("#new-subscription").click
+        tomselect_search_and_select shop.name, from: "subscription[shop_id]"
         click_button "Continue"
       end
 
