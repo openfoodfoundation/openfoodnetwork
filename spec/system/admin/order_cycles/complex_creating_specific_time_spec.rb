@@ -83,7 +83,7 @@ describe '
 
   def select_opening_and_closing_times
     select_time("#order_cycle_orders_open_at", order_cycle_opening_time)
-    select_time("#order_cycle_orders_close_at", order_cycle_opening_time)
+    select_time("#order_cycle_orders_close_at", order_cycle_closing_time)
   end
 
   def select_time(selector, time)
