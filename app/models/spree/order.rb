@@ -704,43 +704,12 @@ module Spree
     end
 
     def require_customer?
-      return false if new_record? || state == 'cart'
-
-      true
-    end
-
-    def customer_is_valid?
-      return true unless require_customer?
-
-      customer.present? && customer.enterprise_id == distributor_id && customer.email == email_for_customer
-    end
-
-    def email_for_customer
-      (user&.email || email)&.downcase
-    end
-
-    def associate_customer
-      return customer if customer.present?
-
-      Customer.of(distributor).find_by(email: email_for_customer)
-    end
-
-    def create_customer
-      return if customer_is_valid?
-
-      Customer.create(
-        enterprise: distributor,
-        email: email_for_customer,
-        user: user,
-        first_name: bill_address&.first_name.to_s,
-        last_name: bill_address&.last_name.to_s,
-        bill_address: bill_address&.clone,
-        ship_address: ship_address&.clone
-      )
+      persisted? && state != "cart"
     end
 
     def ensure_customer
-      self.customer = associate_customer || create_customer
+      self.customer ||= CustomerSyncer.find_and_update_customer(self)
+      self.customer ||= CustomerSyncer.create_customer(self) if require_customer?
     end
 
     def update_adjustment!(adjustment)
