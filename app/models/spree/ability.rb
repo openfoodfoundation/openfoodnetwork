@@ -243,7 +243,9 @@ module Spree
     end
 
     def add_order_cycle_management_abilities(user)
-      can [:admin, :index, :read, :edit, :update, :incoming, :outgoing], OrderCycle do |order_cycle|
+      can [
+        :admin, :index, :read, :edit, :update, :incoming, :outgoing, :checkout_options
+      ], OrderCycle do |order_cycle|
         OrderCycle.visible_by(user).include? order_cycle
       end
       can [:admin, :index, :create], Schedule

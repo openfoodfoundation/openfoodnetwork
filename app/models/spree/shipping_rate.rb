@@ -8,14 +8,7 @@ module Spree
     scope :frontend,
           -> {
             includes(:shipping_method).
-              where(ShippingMethod.on_frontend_query).
-              references(:shipping_method).
-              order("cost ASC")
-          }
-    scope :backend,
-          -> {
-            includes(:shipping_method).
-              where(ShippingMethod.on_backend_query).
+              merge(ShippingMethod.frontend).
               references(:shipping_method).
               order("cost ASC")
           }

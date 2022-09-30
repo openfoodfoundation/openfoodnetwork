@@ -16,12 +16,7 @@ class BaseController < ApplicationController
   private
 
   def set_order_cycles
-    unless @distributor.ready_for_checkout?
-      @order_cycles = OrderCycle.where('false')
-      return
-    end
-
-    @order_cycles = Shop::OrderCyclesList.new(@distributor, current_customer).call
+    @order_cycles = Shop::OrderCyclesList.ready_for_checkout_for(@distributor, current_customer)
 
     set_order_cycle
   end

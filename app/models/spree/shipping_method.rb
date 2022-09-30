@@ -3,7 +3,10 @@
 module Spree
   class ShippingMethod < ApplicationRecord
     include CalculatedAdjustments
-    DISPLAY = [:both, :front_end, :back_end].freeze
+    DISPLAY_ON_OPTIONS = {
+      both: "",
+      back_end: "back_end"
+    }.freeze
 
     acts_as_paranoid
     acts_as_taggable
@@ -27,6 +30,7 @@ module Spree
     validates :name, presence: true
     validate :distributor_validation
     validate :at_least_one_shipping_category
+    validates :display_on, inclusion: { in: DISPLAY_ON_OPTIONS.values }, allow_nil: true
 
     after_save :touch_distributors
 
@@ -51,9 +55,6 @@ module Spree
     }
 
     scope :by_name, -> { order('spree_shipping_methods.name ASC') }
-    scope :display_on_checkout, -> {
-      where("spree_shipping_methods.display_on is null OR spree_shipping_methods.display_on = ''")
-    }
 
     # Here we allow checkout with shipping methods without zones (see issue #3928 for details)
     #   and also checkout with addresses outside of the zones of the selected shipping method
@@ -101,15 +102,25 @@ module Spree
       ]
     end
 
-    def self.on_backend_query
-      "#{table_name}.display_on != 'front_end' OR #{table_name}.display_on IS NULL"
+    def self.backend
+      where(display_on: DISPLAY_ON_OPTIONS[:back_end])
     end
 
-    def self.on_frontend_query
-      "#{table_name}.display_on != 'back_end' OR #{table_name}.display_on IS NULL"
+    def self.frontend
+      where(display_on: [nil, ""])
     end
 
     private
+
+    def no_active_or_upcoming_order_cycle_distributors_with_only_one_shipping_method?
+      return true if new_record?
+
+      distributors.
+        with_order_cycles_as_distributor_outer.
+        merge(OrderCycle.active.or(OrderCycle.upcoming)).none? do |distributor|
+        distributor.shipping_method_ids.one?
+      end
+    end
 
     def at_least_one_shipping_category
       return unless shipping_categories.empty?
