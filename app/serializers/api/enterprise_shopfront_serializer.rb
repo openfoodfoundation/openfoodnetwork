@@ -63,7 +63,7 @@ module Api
 
     def hubs
       ActiveModel::ArraySerializer.new(
-        enterprise.distributors, each_serializer: Api::EnterpriseThinSerializer
+        enterprise.distributors.not_hidden, each_serializer: Api::EnterpriseThinSerializer
       )
     end
 
