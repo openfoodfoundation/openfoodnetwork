@@ -1,0 +1,22 @@
+%div#add_manager_modal
+  %form{ "data-reflex": "submit->InviteManager#invite", "data-reflex-serialize-form": true }
+    .margin-bottom-30.text-center
+      .text-big
+        = t('js.admin.modals.invite_title')
+
+    - if success
+      %p.alert-box.ok= t('user_invited', email: email)
+
+    - if error
+      %p.alert-box.error= error
+
+    = text_field_tag :email, nil, class: 'fullwidth margin-bottom-20'
+    = hidden_field_tag :enterprise_id, @enterprise&.id || enterprise.id
+
+    .modal-actions
+      - if success
+        %input{ class: "button icon-plus secondary", type: 'button', value: t('js.admin.modals.close'), "data-action": "click->help-modal#close" }
+      - else
+        %input{ class: "button icon-plus secondary", type: 'button', value: t('js.admin.modals.cancel'), "data-action": "click->help-modal#close" }
+        = submit_tag "#{t('js.admin.modals.invite')}"
+      
