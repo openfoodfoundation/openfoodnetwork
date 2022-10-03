@@ -219,38 +219,44 @@ describe "As a consumer I want to shop with a distributor", js: true do
         order.order_cycle = oc1
       end
 
-      it "uses the adjusted price" do
-        enterprise_fee1 = create(:enterprise_fee, amount: 20)
-        enterprise_fee2 = create(:enterprise_fee, amount: 3)
-        exchange.enterprise_fees = [enterprise_fee1, enterprise_fee2]
-        exchange.save
-        visit shop_path
+      context "adjusting the price" do
+        before do
+          enterprise_fee1 = create(:enterprise_fee, amount: 20)
+          enterprise_fee2 = create(:enterprise_fee, amount: 3)
+          exchange.enterprise_fees = [enterprise_fee1, enterprise_fee2]
+          exchange.save
+          visit shop_path
+        end
+        it "displays the correct price" do
+          # Page should not have product.price (with or without fee)
+          expect(page).not_to have_price with_currency(10.00)
+          expect(page).not_to have_price with_currency(33.00)
 
-        # Page should not have product.price (with or without fee)
-        expect(page).not_to have_price with_currency(10.00)
-        expect(page).not_to have_price with_currency(33.00)
+          # Page should have variant prices (with fee)
+          expect(page).to have_price with_currency(43.00)
+          expect(page).to have_price with_currency(53.00)
 
-        # Page should have variant prices (with fee)
-        expect(page).to have_price with_currency(43.00)
-        expect(page).to have_price with_currency(53.00)
-
-        # Product price should be listed as the lesser of these
-        expect(page).to have_price with_currency(43.00)
+          # Product price should be listed as the lesser of these
+          expect(page).to have_price with_currency(43.00)
+        end
       end
 
-      it "filters search results properly and clears searches" do
-        visit shop_path
-        fill_in "search", with: "74576345634XXXXXX"
-        expect(page).to have_content "Sorry, no results found"
-        expect(page).not_to have_content product2.name
-        click_on "Clear search" # clears search by clicking text
-        expect(page).to have_content("Add", count: 4)
-
-        fill_in "search", with: "Meer" # For product named "Meercats"
-        expect(page).to have_content product2.name
-        expect(page).not_to have_content product.name
-        find("a.clear").click # clears search by clicking the X button
-        expect(page).to have_content("Add", count: 4)
+      context "filtering search results" do
+        before { visit shop_path }
+        it "returns no results and clears searches by clicking the clear-link" do
+          fill_in "search", with: "74576345634XXXXXX"
+          expect(page).to have_content "Sorry, no results found"
+          expect(page).not_to have_content product2.name
+          click_on "Clear search" # clears search by clicking text
+          expect(page).to have_content("Add", count: 4)
+        end
+        it "returns results and clears searches by clicking the clear-button" do
+          fill_in "search", with: "Meer" # For product named "Meercats"
+          expect(page).to have_content product2.name
+          expect(page).not_to have_content product.name
+          find("a.clear").click # clears search by clicking the X button
+          expect(page).to have_content("Add", count: 4)
+        end
       end
 
       context "when supplier uses property" do
