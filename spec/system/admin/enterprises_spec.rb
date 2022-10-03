@@ -532,5 +532,57 @@ describe '
         end
       end
     end
+
+    describe "check users tab" do
+      before do
+        login_as_admin_and_visit edit_admin_enterprise_path(distributor1)
+        within ".side_menu" do
+          click_link 'Users'
+        end
+      end
+
+      context "invite user as manager" do
+        before do
+          expect(page).to have_selector('a', text: /Add an unregistered user/i)
+          page.find('a', text: /Add an unregistered user/i).click
+        end
+
+        it "shows an error message if the email is invalid" do
+          within ".reveal-modal" do
+            expect(page).to have_content "Invite an unregistered user"
+            fill_in "email", with: "invalid_email"
+
+            expect do
+              click_button "Invite"
+              expect(page).to have_content "Email is invalid"
+            end.to_not enqueue_job ActionMailer::MailDeliveryJob
+          end
+        end
+
+        it "shows an error message if the email is already linked to an existing user" do
+          within ".reveal-modal" do
+            expect(page).to have_content "Invite an unregistered user"
+            fill_in "email", with: distributor1.owner.email
+
+            expect do
+              click_button "Invite"
+              expect(page).to have_content "User already exists"
+            end.to_not enqueue_job ActionMailer::MailDeliveryJob
+          end
+        end
+
+        it "finally, can invite unregistered users" do
+          within ".reveal-modal" do
+            expect(page).to have_content "Invite an unregistered user"
+            fill_in "email", with: "email@email.com"
+
+            expect do
+              click_button "Invite"
+              expect(page).to have_content "email@email.com has been invited to manage this enterprise"
+            end.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+          end
+        end
+      end
+    end
   end
 end

@@ -72,22 +72,4 @@
 -# add to admin footer to avoid nesting invitation form inside enterprise form
 - content_for :admin_footer do
   = render HelpModalComponent.new(id: "invite-manager-modal", close_button: false) do
-    %div{ng: {app: 'admin.enterprises', controller: 'enterpriseCtrl'}}
-
-      .margin-bottom-30.text-center
-        .text-big
-          = t('js.admin.modals.invite_title')
-
-      %p.alert-box.ok{ng: {show: 'invite_success'}}
-        {{invite_success}}
-
-      %p.alert-box.error{ng: {show: 'invite_errors'}}
-        {{invite_errors}}
-
-      %input#invite_email.fullwidth.margin-bottom-20{ng: {model: 'newUser'}}
-
-      .margin-bottom-20.text-center
-        %button.text-center.margin-top-10{ng: {show: '!invite_success', click: 'inviteManager()'}}
-          = t('js.admin.modals.invite')
-        %button.text-center.margin-top-10{"data-action": "click->help-modal#close", ng: {show: 'invite_success', click: 'resetModal();'}}
-          = t('js.admin.modals.close')
+    = render partial: 'admin/enterprises/form/add_new_unregistered_manager', locals: { error: nil, success: nil }
