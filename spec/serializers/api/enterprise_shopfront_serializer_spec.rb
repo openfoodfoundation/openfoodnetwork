@@ -50,6 +50,15 @@ describe Api::EnterpriseShopfrontSerializer do
     expect(serializer.serializable_hash[:hubs].to_json).to match hub.name
   end
 
+  context 'when hub is marked as hidden' do
+    before { hub.update_column(:visible, 'hidden') }
+
+    it 'serializes an array of public hubs' do
+      expect(serializer.serializable_hash[:hubs]).to be_a ActiveModel::ArraySerializer
+      expect(serializer.serializable_hash[:hubs].to_json).not_to match hub.name
+    end
+  end
+
   it "serializes an array of producers that are public or linked by links" do
     expect(serializer.serializable_hash[:producers]).to be_a ActiveModel::ArraySerializer
     expect(serializer.serializable_hash[:producers].to_json).to match producer.name
