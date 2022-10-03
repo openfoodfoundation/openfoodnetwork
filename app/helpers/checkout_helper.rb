@@ -35,10 +35,6 @@ module CheckoutHelper
     adjustments
   end
 
-  def display_line_item_fees_total_for(order)
-    Spree::Money.new order.adjustments.enterprise_fee.sum(:amount), currency: order.currency
-  end
-
   def checkout_line_item_fees(order)
     order.line_item_adjustments.enterprise_fee
   end
