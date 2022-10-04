@@ -533,6 +533,7 @@ describe "As a consumer I want to shop with a distributor", js: true do
       context "when a variant is soft-deleted" do
         describe "adding the soft-deleted variant to the cart" do
           it "handles it as if the variant has gone out of stock" do
+            sleep(2)
             variant.delete
 
             click_add_to_cart variant
@@ -548,6 +549,7 @@ describe "As a consumer I want to shop with a distributor", js: true do
             }
 
             it "handles it as if the variant has gone out of stock" do
+              sleep(2)
               variant.delete
 
               click_add_to_cart variant
