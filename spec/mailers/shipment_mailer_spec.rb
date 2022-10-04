@@ -50,4 +50,9 @@ describe Spree::ShipmentMailer do
     picked_up_email = Spree::ShipmentMailer.shipped_email(shipment, delivery: false)
     expect(picked_up_email.body).to include(text)
   end
+
+  it "picked_up email has different subject" do
+    shipment_email = Spree::ShipmentMailer.shipped_email(shipment, delivery: false)
+    expect(shipment_email.subject).to include("#{distributor.name} Pick up Notification")
+  end
 end

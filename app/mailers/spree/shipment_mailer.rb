@@ -12,7 +12,8 @@ module Spree
     private
 
     def base_subject
-      "#{@shipment.order.distributor.name} #{default_i18n_subject} ##{@shipment.order.number}"
+      default_subject = !@delivery ? t('.picked_up_subject') : default_i18n_subject
+      "#{@shipment.order.distributor.name} #{default_subject} ##{@shipment.order.number}"
     end
   end
 end
