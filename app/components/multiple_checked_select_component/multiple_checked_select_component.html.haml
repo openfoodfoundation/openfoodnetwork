@@ -4,7 +4,7 @@
     %span{ class: "icon-caret-down", "data-multiple-checked-select-target": "caret" }
   %div.menu{ class: "hidden", "data-multiple-checked-select-target": "options" }
     %div.filter
-      %input{ type: "text", "data-multiple-checked-select-target": "filter", placeholder: @filter_placeholder }
+      %input{ type: "text", "data-multiple-checked-select-target": "filter", placeholder: I18n.t('components.multiple_checked_select.filter_placeholder') }
     %hr
     %div.menu_items
       - @options.each do |option|
