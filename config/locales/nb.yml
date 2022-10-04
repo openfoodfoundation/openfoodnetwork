@@ -23,6 +23,8 @@ nb:
         state: Tilstand
         source: Kilde
       spree/product:
+        name: "Produktnavn"
+        price: "Pris"
         primary_taxon: "Produktkategori"
         supplier: "Leverandør"
         shipping_category_id: "Leveringskategori"

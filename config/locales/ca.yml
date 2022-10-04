@@ -23,6 +23,8 @@ ca:
         state: Estat
         source: Source
       spree/product:
+        name: "Nom del producte"
+        price: "Preu"
         primary_taxon: "Categoria del producte"
         supplier: "Proveïdora"
         shipping_category_id: "Categoria d'enviament"

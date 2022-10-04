@@ -16,8 +16,14 @@ sv:
       spree/payment:
         state: Region
       spree/product:
+        name: "Produktnamn"
+        price: "Pris"
         supplier: "Leverantör"
         variant_unit: "Enhet för variant"
+        variant_unit_name: "Enhet för varianten"
+        primary_taxon: "Produktkategori"
+        shipping_category_id: "Transporttillstånd"
+
       variant_override:
         count_on_hand: "På lager"
     errors:

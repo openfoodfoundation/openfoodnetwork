@@ -1,5 +1,5 @@
 ko:
-  language_name: "English"
+  language_name: "한국인"
   activerecord:
     models:
       spree/product: 상품
@@ -23,6 +23,8 @@ ko:
         state: 상태
         source: 자원
       spree/product:
+        name: "상품명"
+        price: "가격"
         primary_taxon: "물품 목록"
         supplier: "공급업체"
         shipping_category_id: "전송물품 목록"

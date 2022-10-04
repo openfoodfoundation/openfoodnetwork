@@ -12,6 +12,8 @@ nl_BE:
       enterprise_fee:
         fee_type: Soort commissie
       spree/order:
+        name: "Naam van het product"
+        price: "Prijs"
         payment_state: Status Betaling
         shipment_state: Status Verzending
         completed_at: Voltooid op

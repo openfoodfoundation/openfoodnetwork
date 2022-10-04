@@ -23,6 +23,8 @@ es_CR:
         state: Provincia
         source: Fuente
       spree/product:
+        name: "Nombre del producto"
+        price: "Precio"
         primary_taxon: "Categoría del producto"
         supplier: "Proveedor"
         shipping_category_id: "Categoría de envío"

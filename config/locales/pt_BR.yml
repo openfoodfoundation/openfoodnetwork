@@ -23,6 +23,8 @@ pt_BR:
         state: Estado
         source: Origem
       spree/product:
+        name: "Nome do produto"
+        price: "Preço"
         primary_taxon: "Categoria de Produto"
         supplier: "Fornecedor"
         shipping_category_id: "Tipos de Frete"

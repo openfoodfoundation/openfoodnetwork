@@ -23,6 +23,8 @@ it_CH:
         state: Stato
         source: Fonte
       spree/product:
+        name: "Nome del prodotto"
+        price: "Prezzo"
         primary_taxon: "Categoria Prodotto"
         supplier: "Fornitore"
         shipping_category_id: "Categoria Spedizioni"

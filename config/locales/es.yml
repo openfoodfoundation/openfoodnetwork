@@ -23,6 +23,8 @@ es:
         state: Estado
         source: Fuente
       spree/product:
+        name: "Nombre del producto"
+        price: "Precio"
         primary_taxon: "categoría del producto"
         supplier: "Proveedora"
         shipping_category_id: "Categoría de envío"

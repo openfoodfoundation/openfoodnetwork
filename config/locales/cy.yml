@@ -23,6 +23,8 @@ cy:
         state: Sir
         source: Ffynhonnell
       spree/product:
+        name: "Enw Cynnyrch"
+        price: "Pris"
         primary_taxon: "Categori Cynnyrch"
         supplier: "Cyflenwr"
         shipping_category_id: "Categori dosbarthu."

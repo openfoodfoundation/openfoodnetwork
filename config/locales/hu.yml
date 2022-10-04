@@ -23,6 +23,8 @@ hu:
         state: Állapot
         source: Forrás
       spree/product:
+        name: "Termék név"
+        price: "Ár"
         primary_taxon: "Termékkategória"
         supplier: "Támogató"
         shipping_category_id: "Szállítási kategória"

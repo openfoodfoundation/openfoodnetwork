@@ -12,6 +12,8 @@ pl:
       enterprise_fee:
         fee_type: Typ opłaty
       spree/order:
+        name: "Nazwa produktu"
+        price: "Cena"
         payment_state: Status płatności
         shipment_state: Status dostawy
         completed_at: Zakończono o

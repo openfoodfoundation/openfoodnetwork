@@ -23,6 +23,8 @@ uk:
         state: Стан
         source: Джерело
       spree/product:
+        name: "назва продукту"
+        price: "ціна"
         primary_taxon: "Категорія товару"
         supplier: "Постачальник"
         shipping_category_id: "Категорія доставки"
