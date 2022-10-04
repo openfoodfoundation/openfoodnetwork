@@ -1,4 +1,4 @@
-.ofn-drop-down.ofn-drop-down-v2{ data: { controller: "multiple-checked-select", "multiple-checked-select-input-name-value": @name } }
+.ofn-drop-down.ofn-drop-down-v2{ data: { controller: "multiple-checked-select" } }
   %div.ofn-drop-down-label{ "data-multiple-checked-select-target": "button" }
     %span{class: "label"}= t('admin.columns')
     %span{ class: "icon-caret-down", "data-multiple-checked-select-target": "caret" }
@@ -8,9 +8,6 @@
     %hr
     %div.menu_items
       - @options.each do |option|
-        - classes = @selected.include?(option[1]) ? "selected" : ""
-        %div.menu_item{ class: classes, "data-multiple-checked-select-target": "option", "data-value": option[1], "data-label": option[0] }
-          %span.check
-          %span.name
-            = option[0]
-  %div{style: "display: none;", "data-multiple-checked-select-target": "inputs"}
+        %div.menu_item{ "data-multiple-checked-select-target": "option", "data-value": option[1], "data-label": option[0] }
+          %input{ type: "checkbox", checked: @selected.include?(option[1]), name: "#{@name}[]", value: option[1] }
+          %label= option[0]

@@ -1,17 +1,10 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["button", "caret", "options", "option", "inputs", "filter"];
-  static values = { inputName: String };
+  static targets = ["button", "caret", "options", "option", "filter"];
 
   connect() {
     this.buttonTarget.addEventListener("click", this.toggleOptions);
-    this.optionTargets.forEach((option) => {
-      option.addEventListener("click", (e) =>
-        this.selectOption(e, option.dataset.value)
-      );
-    });
-    this.buildInputs();
     document.addEventListener("click", this.closeOptions);
     this.filterTarget.addEventListener("input", this.filterOptions);
   }
@@ -45,25 +38,5 @@ export default class extends Controller {
       this.caretTarget.classList.remove("icon-caret-up");
       this.caretTarget.classList.add("icon-caret-down");
     }
-  };
-
-  selectOption = (event, value) => {
-    this.optionTargets
-      .find((option) => option.dataset.value === value)
-      .classList.toggle("selected");
-    this.buildInputs();
-  };
-
-  buildInputs = () => {
-    this.inputsTarget.innerHTML = "";
-    this.optionTargets
-      .filter((option) => option.classList.contains("selected"))
-      .forEach((option) => {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = this.inputNameValue + "[]";
-        input.value = option.dataset.value;
-        this.inputsTarget.appendChild(input);
-      });
   };
 }
