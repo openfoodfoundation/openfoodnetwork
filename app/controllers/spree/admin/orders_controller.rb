@@ -67,6 +67,18 @@ module Spree
         load_spree_api_key
       end
 
+      def bulk_cancel
+        order_ids = params[:order_ids].split(',')
+
+        Spree::Order.where(id: order_ids).find_each do |order|
+          order.send_cancellation_email = params[:send_cancellation_email] != "false"
+          order.restock_items = params.fetch(:restock_items, "true") == "true"
+          order.cancel
+        end
+
+        flash[:success] = Spree.t(:order_updated)
+      end
+
       def fire
         event = params[:e]
         @order.send_cancellation_email = params[:send_cancellation_email] != "false"

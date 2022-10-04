@@ -3810,6 +3810,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
+          cancel_orders: "Cancel Orders"
           selected:
             zero: "No order selected"
             one: "1 order selected"
