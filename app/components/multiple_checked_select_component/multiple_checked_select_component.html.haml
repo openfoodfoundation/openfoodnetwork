@@ -8,6 +8,6 @@
     %hr
     %div.menu_items
       - @options.each do |option|
-        %div.menu_item{ "data-multiple-checked-select-target": "option", "data-value": option[1], "data-label": option[0] }
+        %label.menu_item{ "data-multiple-checked-select-target": "option", "data-value": option[1], "data-label": option[0] }
           %input{ type: "checkbox", checked: @selected.include?(option[1]), name: "#{@name}[]", value: option[1] }
-          %label= option[0]
+          = option[0]
