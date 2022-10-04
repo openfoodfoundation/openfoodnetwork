@@ -244,7 +244,7 @@ describe "As a consumer I want to shop with a distributor", js: true do
       context "filtering search results" do
         it "returns no results and clears searches by clicking the clear-link" do
           visit shop_path
-          expect(page).to have_content product2.name
+          sleep(2)
           fill_in "search", with: "74576345634XXXXXX"
           expect(page).to have_content "Sorry, no results found"
           expect(page).not_to have_content product2.name
@@ -253,7 +253,7 @@ describe "As a consumer I want to shop with a distributor", js: true do
         end
         it "returns results and clears searches by clicking the clear-button" do
           visit shop_path
-          expect(page).to have_content product2.name
+          sleep(2)
           fill_in "search", with: "Meer" # For product named "Meercats"
           expect(page).to have_content product2.name
           expect(page).not_to have_content product.name
