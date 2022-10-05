@@ -97,7 +97,8 @@ gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
-gem "cable_ready", "5.0.0.pre3"
+gem "cable_ready", "5.0.0.pre9"
+gem "stimulus_reflex", "3.5.0.pre9"
 
 gem 'combine_pdf'
 gem 'wicked_pdf'
@@ -115,7 +116,6 @@ gem 'coffee-rails', '~> 5.0.0'
 
 gem 'mini_racer', '0.4.0'
 
-gem 'uglifier', '>= 1.0.3'
 
 gem 'angular_rails_csrf'
 

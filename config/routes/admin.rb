@@ -15,6 +15,7 @@ Openfoodnetwork::Application.routes.draw do
       post :bulk_update, on: :collection, as: :bulk_update
       get :incoming
       get :outgoing
+      get :checkout_options
 
       member do
         get :clone

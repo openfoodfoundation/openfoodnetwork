@@ -141,6 +141,7 @@ en_IE:
   cardholder_name: "Cardholder name"
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
+  additional_information: "Additional Information"
   devise:
     passwords:
       spree_user:
@@ -161,6 +162,7 @@ en_IE:
         signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
         unknown_error: "Something went wrong while creating your account. Check your email address and try again."
     failure:
+      disabled: "Your account has been disabled. Please contact an administrator to solve this issue."
       invalid: |
           Invalid email or password.
           Were you a guest last time?  Perhaps you need to create an account or reset your password.
@@ -472,6 +474,8 @@ en_IE:
         terms_of_service: "Terms of Service"
         delete: "Delete file"
         confirm_delete: "Are you sure you want to delete the current Terms of Service file?"
+        attachment: "Attachment"
+        create_terms_of_service: "Create Terms of service file"
     number_localization:
       number_localization_settings: "Number Localisation Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
@@ -481,6 +485,7 @@ en_IE:
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
         enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
+        enterprise_number_required_on_invoices?: "Require an ABN to generate an invoice?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -528,6 +533,8 @@ en_IE:
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
+      destroy:
+        has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
     contents:
       edit:
         title: Content
@@ -755,6 +762,9 @@ en_IE:
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
         all: "All"
       select_variant: "Select a variant"
+      note:
+        note_label: "Note:"
+        no_note_present: "No note provided."
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
     enterprises:
@@ -803,6 +813,9 @@ en_IE:
           email_address_tip: "This email address will be displayed in your public profile"
           phone: Phone
           phone_placeholder: eg. 98 7654 3210
+          whatsapp_phone: WhatsApp phone number
+          whatsapp_phone_placeholder: eg. +61 4 9876 5432
+          whatsapp_phone_tip: "This number will be displayed in your public profile to be opened as a WhatsApp link."
           website: Website
           website_placeholder: eg. www.truffles.ie
         enterprise_fees:
@@ -811,6 +824,8 @@ en_IE:
           manage_fees: Manage Enterprise Fees
           no_fees_yet: You don't have any enterprise fees yet.
           create_button: Create One Now
+        enterprise_permissions:
+          enterprise_relationships: Enterprise Relationships
         images:
           logo: Logo
           promo_image_placeholder: 'This image is displayed in "About Us"'
@@ -851,7 +866,10 @@ en_IE:
           sells: Sells
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
           visible_in_search: Visible in search?
+          visible_in_search_tip: "Shops can be <br />1. publicly visible, appearing on the OFN map and listings. <br />2. Hidden on maps and listings but referenced by other shops and linked in their profile. <br />3. Completely hidden."
           visible: Public
+          not_visible: Hidden
+          hidden: Hide all references
         permalink:
           permalink: Permalink (no spaces)
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
@@ -910,6 +928,8 @@ en_IE:
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
+          display_remaining_stock: "Display remaining stock in shopfront if low on-hand"
+          display_remaining_stock_tip: "Let shoppers know when there are only 3 or less items left."
           enabled: "Enabled"
           disabled: "Disabled"
         social:
@@ -1141,6 +1161,9 @@ en_IE:
         cancel: Cancel
         proceed: Proceed
       status:
+        undated: undated
+        upcoming: upcoming
+        open: open
         closed: closed
     producer_properties:
       index:
@@ -1169,6 +1192,8 @@ en_IE:
       unitsize: UNITSIZE
       total: TOTAL
       total_items: TOTAL ITEMS
+      total_by_customer: Total By Customer
+      total_by_supplier: Total By Supplier
       supplier_totals: Order Cycle Supplier Totals
       supplier_totals_by_distributor: Order Cycle Supplier Totals by Distributor
       totals_by_supplier: Order Cycle Distributor Totals by Supplier
@@ -1184,6 +1209,10 @@ en_IE:
       tax_rates: Tax Rates
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
+      pack_by_product: Pack By Product
+      revenues_by_hub:
+        name: Revenues By Hub
+        description: Revenues by hub
       orders_and_distributors:
         name: Orders And Distributors
         description: Orders with distributor details
@@ -1234,8 +1263,14 @@ en_IE:
           temp_controlled: "TempControlled?"
           price: "Price"
       rendering_options:
+        generate_report: "Generate report"
         on_screen: "On screen"
+        spreadsheet: "Spreadsheet (Excel, OpenOffice..)"
         display: Display
+        summary_row: Summary Row
+        header_row: Header Row
+        raw_data: Raw Data
+        formatted_data: Formatted Data
       packing:
         name: "Packing Reports"
     subscriptions:
@@ -1751,6 +1786,7 @@ en_IE:
       invalid_email: "Please enter a valid email address"
       select_a_shipping_method: Select a shipping method
       select_a_payment_method: Select a payment method
+      no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
@@ -1769,6 +1805,7 @@ en_IE:
   order_hub_info: Hub info
   order_back_to_store: Back To Store
   order_back_to_cart: Back To Cart
+  order_back_to_website: Back To Website
   bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
   unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
   unsaved_changes_error: "Fields with red borders contain errors."
@@ -2164,7 +2201,10 @@ en_IE:
         contact_field_placeholder: "Contact Name"
         contact_field_required: "Please enter a primary contact."
         phone_field: "Phone number"
+        whatsapp_phone_field: "WhatsApp phone number"
+        whatsapp_phone_tooltip: "This number will be displayed in your public profile to be opened as a WhatsApp link."
         phone_field_placeholder: "eg. 07123123123"
+        whatsapp_phone_field_placeholder: "eg. +61 4 1234 5678"
       type:
         title: "Type"
         headline: "Last step to add %{enterprise}!"
@@ -2453,12 +2493,16 @@ en_IE:
   report_payment_totals: 'Payment Totals'
   report_all: 'all'
   report_order_cycle: "Order Cycle"
+  report_hide_columns: Columns to Hide
   report_columns: Columns
   report_enterprises: "Enterprises"
   report_enterprise_fee: "Fees Names"
   report_users: "Users"
   report_tax_rates: Tax rates
   report_tax_types: Tax types
+  report_filters: Report Filters
+  report_print: Print Report
+  report_render_options: Rendering Options
   report_header_order_cycle: Order Cycle
   report_header_user: User
   report_header_email: Email
@@ -2475,6 +2519,8 @@ en_IE:
   report_header_hub_address: Hub Address
   report_header_to_hub: To Hub
   report_header_hub_code: Hub Code
+  report_header_hub_id: Hub ID
+  report_header_hub_owner_email: Hub Owner Email
   report_header_code: Code
   report_header_paid: Paid?
   report_header_delivery: Delivery?
@@ -2595,6 +2641,11 @@ en_IE:
   report_header_transaction_fee: Transaction Fee (no tax)
   report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
   report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
+  report_xero_configuration: Xero Configuration
+  initial_invoice_number: "Initial invoice number"
+  invoice_date: "Invoice date"
+  due_date: "Due date"
+  account_code: "Account code"
   equals: "Equals"
   contains: "contains"
   discount: "Discount"
@@ -2914,6 +2965,8 @@ en_IE:
         quantity_unchanged: "Quantity unchanged from previous amount."
         cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
+        restock_item: "Restock Items: return this item to stock"
+        restock_items: "Restock Items: return all items to stock"
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -2966,6 +3019,7 @@ en_IE:
         add_to_cart: "Add"
         in_cart: "in cart"
         quantity_in_cart: "%{quantity} in cart"
+        remaining_in_stock: "Only %{quantity} left"
       bulk_buy_modal:
         min_quantity: "Min quantity"
         max_quantity: "Max quantity"
@@ -3412,6 +3466,7 @@ en_IE:
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
+    show_api_key_view_toggled: "Show API key view has been changed!"
     my_account: "My account"
     date: "Date"
     time: "Time"
@@ -3557,6 +3612,10 @@ en_IE:
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
+          selected:
+            zero: "No order selected"
+            one: "1 order selected"
+            other: "%{count} orders selected"
         sortable_header:
           payment_state: "Payment County"
           shipment_state: "Shipment County"
@@ -3571,6 +3630,9 @@ en_IE:
           from: "From"
           to: "Bill to"
           shipping: "Shipping"
+        note:
+          note_label: "Note:"
+          no_note_present: "No note provided."
         form:
           distribution_fields:
             title: "Distribution"
@@ -3693,6 +3755,7 @@ en_IE:
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
+        image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
         new:
           title: "New Product"
           new_product: "New Product"
@@ -3755,6 +3818,7 @@ en_IE:
           back_to_users_list: "Back To Users List"
           general_settings: "General Settings"
         form:
+          disabled: "Disabled?"
           email: "Email"
           roles: "Roles"
           enterprise_limit: "Enterprise Limit"
@@ -3957,10 +4021,14 @@ en_IE:
     users:
       api_keys:
         regenerate_key: "Regenerate Key"
+        title: API key
+      developer_settings:
+        title: Developer Settings
       form:
         account_settings: Account Settings
       show:
         tabs:
+          developer_settings: Developer Settings
           orders: Orders
           cards: Credit Cards
           transactions: Transactions
@@ -3991,6 +4059,7 @@ en_IE:
         total: Total
         paid?: Paid?
         status: Status
+        completed: Completed
         cancelled: Cancelled
       saved_cards:
         default?: Default?
@@ -4002,6 +4071,7 @@ en_IE:
       authorised_shops:
         shop_name: "Shop Name"
         allow_charges?: "Allow Charges to Default Card?"
+        no_default_saved_cards_tooltip: You need to mark one credit card as default to allow charges.
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
     api:
@@ -4020,11 +4090,14 @@ en_IE:
       shipment:
         cannot_ready: "Cannot ready shipment."
       invalid_taxonomy_id: "Invalid taxonomy id."
+      toggle_api_key_view: "Show API key view for user"
     activerecord:
       models:
         spree/payment:
           one: Payment
           other: Payments
+    unit: unit
+    per_unit: per unit
   datetime:
     distance_in_words:
       about_x_hours:
@@ -4064,3 +4137,13 @@ en_IE:
       x_years:
         one: "1 year"
         other: "%{count} years"
+  errors:
+    not_found:
+      title: "The page you were looking for doesn't exist (404)"
+      message_html: "<b>Please try again</b> <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/'>Home</a> and try again.</p> <b>Contact support</b> <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p> <p>It really helps us if you can give as much detail as possible about what the missing page is about.</p>"
+    internal_server_error:
+      title: "We're sorry, but something went wrong (500)"
+      message_html: "<b>Please try again</b> <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/''>Home</a> and try again.</p> <b>We're on it</b> <p>If you have seen this problem before, we probably already know about it and are working on a fix. We record all the errors that come up.</p> <b>Contact support</b> <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p> <p>It really helps us if you can give as much detail as possible about what you were doing when this error occurred.</p>"
+    unprocessable_entity:
+      title: "The change you wanted was rejected (422)"
+      message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to. <br><h3><a href='/' >Return home</a></h3> </p>"

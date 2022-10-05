@@ -56,10 +56,6 @@ module OrderCyclesHelper
     @simple_index ||= !OpenFoodNetwork::Permissions.new(spree_current_user).can_manage_complex_order_cycles?
   end
 
-  def order_cycles_simple_form
-    @order_cycles_simple_form ||= @order_cycle.coordinator.sells == 'own'
-  end
-
   def pickup_time(order_cycle = current_order_cycle)
     order_cycle.exchanges.to_enterprises(current_distributor).outgoing.first.pickup_time
   end

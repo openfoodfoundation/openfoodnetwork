@@ -55,6 +55,17 @@ describe OrderCycleForm do
           end.to_not change{ order_cycle.reload.name }
         end
       end
+
+      context "when schedules are present but updating something other than the :schedule_ids" do
+        let(:params) { { name: "New Order Cycle Name" } }
+        before { create(:schedule, order_cycles: [order_cycle]) }
+
+        it "doesn't delete the schedules" do
+          expect(order_cycle.schedules).to be_present
+          form.save
+          expect(order_cycle.schedules).to be_present
+        end
+      end
     end
   end
 
@@ -119,34 +130,128 @@ describe OrderCycleForm do
     end
   end
 
-  describe "updating exchanges" do
-    let(:user) { instance_double(Spree::User) }
-    let(:order_cycle) { create(:simple_order_cycle) }
-    let(:form_applicator_mock) { instance_double(OpenFoodNetwork::OrderCycleFormApplicator) }
-    let(:form) { OrderCycleForm.new(order_cycle, params, user) }
+  context "distributor order cycle" do
+    let(:order_cycle) { create(:distributor_order_cycle) }
+    let(:distributor) { order_cycle.coordinator }
+    let(:supplier) { create(:supplier_enterprise) }
+    let(:user) { distributor.owner }
+    let(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
+    let(:distributor_shipping_method) { shipping_method.distributor_shipping_methods.first }
+    let(:variant) { create(:variant, product: create(:product, supplier: supplier)) }
     let(:params) { { name: 'Some new name' } }
-
-    before do
-      allow(OpenFoodNetwork::OrderCycleFormApplicator).to receive(:new) { form_applicator_mock }
-      allow(form_applicator_mock).to receive(:go!)
+    let(:form) { OrderCycleForm.new(order_cycle, params, user) }
+    let(:outgoing_exchange_params) do
+      {
+        enterprise_id: distributor.id,
+        incoming: false,
+        active: true,
+        variants: { variant.id => true },
+        pickup_time: "Saturday morning",
+        enterprise_fee_ids: []
+      }
     end
 
-    context "when exchange params are provided" do
-      let(:exchange_params) { { incoming_exchanges: [], outgoing_exchanges: [] } }
-      before { params.merge!(exchange_params) }
-
-      it "runs the OrderCycleFormApplicator, and saves other changes" do
+    context "basic update i.e. without exchanges or shipping methods" do
+      it do
         expect(form.save).to be true
-        expect(form_applicator_mock).to have_received(:go!)
         expect(order_cycle.name).to eq 'Some new name'
       end
     end
 
-    context "when no exchange params are provided" do
-      it "does not run the OrderCycleFormApplicator, but saves other changes" do
+    context "updating basics, incoming exchanges, outcoming exchanges
+             and shipping methods simultaneously" do
+      before do
+        params.merge!(
+          incoming_exchanges: [{
+            enterprise_id: supplier.id,
+            incoming: true,
+            active: true,
+            variants: { variant.id => true },
+            receival_instructions: "Friday evening",
+            enterprise_fee_ids: []
+          }],
+          outgoing_exchanges: [outgoing_exchange_params],
+          selected_distributor_shipping_method_ids: [distributor_shipping_method.id]
+        )
+      end
+
+      it "saves everything i.e. the basics, incoming and outgoing exchanges and shipping methods" do
         expect(form.save).to be true
-        expect(form_applicator_mock).to_not have_received(:go!)
         expect(order_cycle.name).to eq 'Some new name'
+        expect(order_cycle.cached_incoming_exchanges.count).to eq 1
+        expect(order_cycle.cached_outgoing_exchanges.count).to eq 1
+        expect(order_cycle.distributor_shipping_methods).to eq [distributor_shipping_method]
+      end
+    end
+
+    context "updating outgoing exchanges and shipping methods simultaneously but the shipping
+             method doesn't belong to the new or any existing order cycle distributor" do
+      let(:other_distributor_shipping_method) do
+        create(
+          :shipping_method,
+          distributors: [create(:distributor_enterprise)]
+        ).distributor_shipping_methods.first
+      end
+
+      before do
+        params.merge!(
+          outgoing_exchanges: [outgoing_exchange_params],
+          selected_distributor_shipping_method_ids: [other_distributor_shipping_method.id]
+        )
+      end
+
+      it "saves the outgoing exchange but ignores the shipping method" do
+        expect(form.save).to be true
+        expect(order_cycle.distributors).to eq [distributor]
+        expect(order_cycle.distributor_shipping_methods).to be_empty
+      end
+    end
+
+    context "updating shipping methods" do
+      context "and it's valid" do
+        it "saves the changes" do
+          distributor = create(:distributor_enterprise)
+          distributor_shipping_method = create(
+            :shipping_method,
+            distributors: [distributor]
+          ).distributor_shipping_methods.first
+          order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+
+          form = OrderCycleForm.new(
+            order_cycle,
+            { selected_distributor_shipping_method_ids: [distributor_shipping_method.id] },
+            order_cycle.coordinator
+          )
+
+          expect(form.save).to be true
+          expect(order_cycle.distributor_shipping_methods).to eq [distributor_shipping_method]
+        end
+      end
+
+      context "with a shipping method which doesn't belong to any distributor on the order cycle" do
+        it "ignores it" do
+          distributor_i = create(:distributor_enterprise)
+          distributor_ii = create(:distributor_enterprise)
+          distributor_shipping_method_i = create(
+            :shipping_method,
+            distributors: [distributor_i]
+          ).distributor_shipping_methods.first
+          distributor_shipping_method_ii = create(
+            :shipping_method,
+            distributors: [distributor_ii]
+          ).distributor_shipping_methods.first
+          order_cycle = create(:distributor_order_cycle,
+                               distributors: [distributor_i])
+
+          form = OrderCycleForm.new(
+            order_cycle,
+            { selected_distributor_shipping_method_ids: [distributor_shipping_method_ii.id] },
+            order_cycle.coordinator
+          )
+
+          expect(form.save).to be true
+          expect(order_cycle.distributor_shipping_methods).to eq [distributor_shipping_method_i]
+        end
       end
     end
   end

@@ -893,45 +893,27 @@ describe Spree::Order do
     end
   end
 
-  describe "#require_customer?" do
-    context "when the record is new" do
-      let(:order) { build(:order, state: state) }
-
-      context "and the state is not cart" do
-        let(:state) { "complete" }
-
-        it "returns false" do
-          expect(order.send(:require_customer?)).to eq(false)
-        end
-      end
-
-      context "and the state is cart" do
-        let(:state) { "cart" }
-
-        it "returns false" do
-          expect(order.send(:require_customer?)).to eq(false)
-        end
-      end
+  describe "#customer" do
+    it "is not required for new records" do
+      is_expected.to_not validate_presence_of(:customer)
     end
 
-    context "when the record is not new" do
-      let(:order) { create(:order, state: state) }
+    it "is not required for new complete orders" do
+      order = Spree::Order.new(state: "complete")
 
-      context "and the state is not cart" do
-        let(:state) { "complete" }
+      expect(order).to_not validate_presence_of(:customer)
+    end
 
-        it "returns true" do
-          expect(order.send(:require_customer?)).to eq(true)
-        end
-      end
+    it "is not required for existing orders in cart state" do
+      order = create(:order)
 
-      context "and the state is cart" do
-        let(:state) { "cart" }
+      expect(order).to_not validate_presence_of(:customer)
+    end
 
-        it "returns false" do
-          expect(order.send(:require_customer?)).to eq(false)
-        end
-      end
+    it "is created for existing orders in complete state" do
+      order = create(:order, state: "complete")
+
+      expect { order.valid? }.to change { order.customer }.from(nil)
     end
   end
 
@@ -990,6 +972,50 @@ describe Spree::Order do
         }.by(1)
 
         expect(order.customer).to be_present
+      end
+
+      it "recognises users with changed email address" do
+        order.update!(state: "complete")
+
+        # Change email instantly without confirmation via Devise:
+        order.user.update_columns(email: "new@email.org")
+
+        other_order = create(:order, user: order.user, distributor: distributor)
+
+        expect {
+          other_order.update!(state: "complete")
+        }.to_not change { Customer.count }
+
+        expect(other_order.customer.email).to eq "new@email.org"
+        expect(order.customer).to eq other_order.customer
+        expect(order.reload.customer.email).to eq "new@email.org"
+      end
+
+      it "resolves conflicts with duplicate customer entries" do
+        order.update!(state: "complete")
+
+        # The user may check out as guest first:
+        guest_order = create(:order, user: nil, email: "new@email.org", distributor: distributor)
+        guest_order.update!(state: "complete")
+
+        # Afterwards the user changes their email in their profile.
+        # Change email instantly without confirmation via Devise:
+        order.user.update_columns(email: "new@email.org")
+
+        other_order = nil
+
+        # The two customer entries are merged and one is deleted:
+        expect {
+          other_order = create(:order, user: order.user, distributor: distributor)
+        }.to change { Customer.count }.by(-1)
+
+        expect(other_order.customer.email).to eq "new@email.org"
+        expect(order.customer).to eq other_order.customer
+        expect(order.reload.customer.email).to eq "new@email.org"
+
+        expect(order.customer.orders).to match_array [
+          order, guest_order, other_order
+        ]
       end
     end
   end

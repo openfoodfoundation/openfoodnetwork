@@ -368,39 +368,66 @@ describe OrderCycle do
     end
   end
 
-  it "clones itself" do
-    coordinator = create(:enterprise);
-    oc = create(:simple_order_cycle,
-                coordinator_fees: [create(:enterprise_fee, enterprise: coordinator)],
-                preferred_product_selection_from_coordinator_inventory_only: true,
-                automatic_notifications: true, processed_at: Time.zone.now, mails_sent: true)
-    schedule = create(:schedule, order_cycles: [oc])
-    ex1 = create(:exchange, order_cycle: oc)
-    ex2 = create(:exchange, order_cycle: oc)
-    oc.clone!
+  describe "clone!" do
+    it "clones itself" do
+      coordinator = create(:enterprise);
+      oc = create(:simple_order_cycle,
+                  coordinator_fees: [create(:enterprise_fee, enterprise: coordinator)],
+                  preferred_product_selection_from_coordinator_inventory_only: true,
+                  automatic_notifications: true, processed_at: Time.zone.now, mails_sent: true)
+      schedule = create(:schedule, order_cycles: [oc])
+      ex1 = create(:exchange, order_cycle: oc)
+      ex2 = create(:exchange, order_cycle: oc)
+      oc.clone!
 
-    occ = OrderCycle.last
-    expect(occ.name).to eq("COPY OF #{oc.name}")
-    expect(occ.orders_open_at).to be_nil
-    expect(occ.orders_close_at).to be_nil
-    expect(occ.coordinator).not_to be_nil
-    expect(occ.preferred_product_selection_from_coordinator_inventory_only).to be true
-    expect(occ.automatic_notifications).to eq(oc.automatic_notifications)
-    expect(occ.processed_at).to eq(nil)
-    expect(occ.mails_sent).to eq(nil)
-    expect(occ.coordinator).to eq(oc.coordinator)
+      occ = OrderCycle.last
+      expect(occ.name).to eq("COPY OF #{oc.name}")
+      expect(occ.orders_open_at).to be_nil
+      expect(occ.orders_close_at).to be_nil
+      expect(occ.coordinator).not_to be_nil
+      expect(occ.preferred_product_selection_from_coordinator_inventory_only).to be true
+      expect(occ.automatic_notifications).to eq(oc.automatic_notifications)
+      expect(occ.processed_at).to eq(nil)
+      expect(occ.mails_sent).to eq(nil)
+      expect(occ.coordinator).to eq(oc.coordinator)
 
-    expect(occ.coordinator_fee_ids).not_to be_empty
-    expect(occ.coordinator_fee_ids).to eq(oc.coordinator_fee_ids)
-    expect(occ.preferred_product_selection_from_coordinator_inventory_only).to eq(oc.preferred_product_selection_from_coordinator_inventory_only)
-    expect(occ.schedule_ids).not_to be_empty
-    expect(occ.schedule_ids).to eq(oc.schedule_ids)
+      expect(occ.coordinator_fee_ids).not_to be_empty
+      expect(occ.coordinator_fee_ids).to eq(oc.coordinator_fee_ids)
+      expect(occ.preferred_product_selection_from_coordinator_inventory_only).to eq(oc.preferred_product_selection_from_coordinator_inventory_only)
+      expect(occ.schedule_ids).not_to be_empty
+      expect(occ.schedule_ids).to eq(oc.schedule_ids)
 
-    # Check that the exchanges have been cloned.
-    original_exchange_attributes = oc.exchanges.map { |ex| core_exchange_attributes(ex) }
-    cloned_exchange_attributes = occ.exchanges.map { |ex| core_exchange_attributes(ex) }
+      # Check that the exchanges have been cloned.
+      original_exchange_attributes = oc.exchanges.map { |ex| core_exchange_attributes(ex) }
+      cloned_exchange_attributes = occ.exchanges.map { |ex| core_exchange_attributes(ex) }
 
-    expect(cloned_exchange_attributes).to match_array original_exchange_attributes
+      expect(cloned_exchange_attributes).to match_array original_exchange_attributes
+    end
+
+    context "when it has preferred shipping methods which can longer be applied validly
+             e.g. shipping method is backoffice only" do
+      it "only attaches the valid ones to the clone" do
+        distributor = create(:distributor_enterprise)
+        distributor_shipping_method_i = create(
+          :shipping_method,
+          distributors: [distributor]
+        ).distributor_shipping_methods.first
+        distributor_shipping_method_ii = create(
+          :shipping_method,
+          distributors: [distributor],
+          display_on: Spree::ShippingMethod::DISPLAY_ON_OPTIONS[:back_end]
+        ).distributor_shipping_methods.first
+        order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+        order_cycle.selected_distributor_shipping_methods = [
+          distributor_shipping_method_i,
+          distributor_shipping_method_ii
+        ]
+
+        cloned_order_cycle = order_cycle.clone!
+
+        expect(cloned_order_cycle.distributor_shipping_methods).to eq [distributor_shipping_method_i]
+      end
+    end
   end
 
   describe "finding recently closed order cycles" do
@@ -607,6 +634,112 @@ describe OrderCycle do
       expect(oc.processed_at).to_not be_nil
       oc.update!(orders_open_at: 2.weeks.ago)
       expect(oc.processed_at).to_not be_nil
+    end
+  end
+
+  describe "#attachable_distributor_shipping_methods" do
+    it "includes distributor shipping methods from the distributors on the order cycle" do
+      shipping_method = create(:shipping_method)
+      oc = create(:simple_order_cycle, distributors: [shipping_method.distributors.first])
+      distributor_shipping_method = shipping_method.distributor_shipping_methods.first
+
+      expect(oc.attachable_distributor_shipping_methods).to eq([distributor_shipping_method])
+    end
+
+    it "does not include backoffice only distributor shipping methods" do
+      shipping_method = create(:shipping_method, display_on: "back_end")
+      enterprise = create(:enterprise, shipping_methods: [shipping_method])
+      oc = create(:simple_order_cycle, distributors: [enterprise])
+
+      expect(oc.attachable_distributor_shipping_methods).to be_empty
+    end
+  end
+
+  describe "#distributor_shipping_methods" do
+    let(:distributor) { create(:distributor_enterprise) }
+
+    it "returns all attachable distributor shipping methods if the order cycle is simple" do
+      oc = create(:sells_own_order_cycle, distributors: [distributor])
+
+      distributor_shipping_method = create(
+        :shipping_method,
+        distributors: [distributor]
+      ).distributor_shipping_methods.first
+
+      expect(oc.distributor_shipping_methods).to eq [distributor_shipping_method]
+    end
+
+    context "distributor order cycle i.e. non-simple" do
+      let(:oc) { create(:distributor_order_cycle, distributors: [distributor]) }
+
+      it "returns all attachable distributor shipping methods if no distributor shipping methods
+          have been selected specifically" do
+        distributor_shipping_method = create(
+          :shipping_method,
+          distributors: [distributor]
+        ).distributor_shipping_methods.first
+
+        expect(oc.selected_distributor_shipping_methods).to be_empty
+        expect(oc.distributor_shipping_methods).to eq [distributor_shipping_method]
+      end
+
+      it "returns selected distributor shipping methods if they have been specified" do
+        distributor_shipping_method_i = create(
+          :shipping_method,
+          distributors: [distributor]
+        ).distributor_shipping_methods.first
+        distributor_shipping_method_ii = create(
+          :shipping_method,
+          distributors: [distributor]
+        ).distributor_shipping_methods.first
+
+        oc.selected_distributor_shipping_methods << distributor_shipping_method_ii
+
+        expect(oc.distributor_shipping_methods).to eq [distributor_shipping_method_ii]
+      end
+
+      context "with multiple distributors" do
+        let(:other_distributor) { create(:distributor_enterprise) }
+        let(:oc) { create(:distributor_order_cycle, distributors: [distributor, other_distributor]) }
+
+        it "returns all attachable distributor shipping methods for a distributor if no distributor
+            shipping methods have been selected specifically for that distributor, even if
+            distributor shipping methods have been selected specifically for a different distributor
+            on the order cycle" do
+          distributor_shipping_method = create(
+            :shipping_method,
+            distributors: [distributor]
+          ).distributor_shipping_methods.first
+          other_distributor_shipping_method_i = create(
+            :shipping_method,
+            distributors: [other_distributor]
+          ).distributor_shipping_methods.first
+          other_distributor_shipping_method_ii = create(
+            :shipping_method,
+            distributors: [other_distributor]
+          ).distributor_shipping_methods.first
+          oc.selected_distributor_shipping_methods << other_distributor_shipping_method_i
+
+          expect(oc.distributor_shipping_methods).to eq [
+            distributor_shipping_method,
+            other_distributor_shipping_method_i
+          ]
+        end
+      end
+    end
+  end
+
+  describe "#simple?" do
+    it "returns true if the coordinator sells their own products i.e. shops" do
+      order_cycle = build(:simple_order_cycle, coordinator: build(:enterprise, sells: "own"))
+
+      expect(order_cycle).to be_simple
+    end
+
+    it "returns false if the coordinator can sell other people's products i.e. hubs" do
+      order_cycle = build(:simple_order_cycle, coordinator: build(:enterprise, sells: "any"))
+
+      expect(order_cycle).not_to be_simple
     end
   end
 

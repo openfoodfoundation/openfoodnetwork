@@ -22,9 +22,11 @@ class OrderCycle < ApplicationRecord
 
   has_many :suppliers, -> { distinct }, source: :sender, through: :cached_incoming_exchanges
   has_many :distributors, -> { distinct }, source: :receiver, through: :cached_outgoing_exchanges
-
   has_many :order_cycle_schedules
   has_many :schedules, through: :order_cycle_schedules
+  has_and_belongs_to_many :selected_distributor_shipping_methods,
+                          class_name: 'DistributorShippingMethod',
+                          join_table: 'order_cycles_distributor_shipping_methods'
   has_paper_trail meta: { custom_data: proc { |order_cycle| order_cycle.schedule_ids.to_s } }
 
   attr_accessor :incoming_exchanges, :outgoing_exchanges
@@ -150,6 +152,20 @@ class OrderCycle < ApplicationRecord
     ]
   end
 
+  def attachable_payment_methods
+    Spree::PaymentMethod.available(:both).
+      joins("INNER JOIN distributors_payment_methods
+             ON payment_method_id = spree_payment_methods.id").
+      where("distributor_id IN (?)", distributor_ids).
+      distinct
+  end
+
+  def attachable_distributor_shipping_methods
+    DistributorShippingMethod.joins(:shipping_method).
+      merge(Spree::ShippingMethod.frontend).
+      where("distributor_id IN (?)", distributor_ids)
+  end
+
   def clone!
     oc = dup
     oc.name = I18n.t("models.order_cycle.cloned_order_cycle_name", order_cycle: oc.name)
@@ -161,6 +177,9 @@ class OrderCycle < ApplicationRecord
     oc.schedule_ids = schedule_ids
     oc.save!
     exchanges.each { |e| e.clone!(oc) }
+    oc.selected_distributor_shipping_method_ids = (
+      attachable_distributor_shipping_methods.map(&:id) & selected_distributor_shipping_method_ids
+    )
     sync_subscriptions
     oc.reload
   end
@@ -272,6 +291,22 @@ class OrderCycle < ApplicationRecord
     scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
     items = Spree::LineItem.includes(:variant).joins(:order).merge(orders).to_a
     items.each { |li| scoper.scope(li.variant) }
+  end
+
+  def distributor_shipping_methods
+    if simple? || selected_distributor_shipping_methods.none?
+      attachable_distributor_shipping_methods
+    else
+      attachable_distributor_shipping_methods.where(
+        "distributors_shipping_methods.id IN (?) OR distributor_id NOT IN (?)",
+        selected_distributor_shipping_methods.map(&:id),
+        selected_distributor_shipping_methods.map(&:distributor_id)
+      )
+    end
+  end
+
+  def simple?
+    coordinator.sells == 'own'
   end
 
   private

@@ -755,7 +755,6 @@ describe '
       end
       
       it "finds a customer by name" do
-        pending("issue #9684")
         serching_for_customers
       end
     end

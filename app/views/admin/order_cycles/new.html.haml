@@ -1,18 +1,18 @@
 - content_for :page_title do
   =t('new_order_cycle')
 
-- ng_controller = order_cycles_simple_form ? 'AdminSimpleCreateOrderCycleCtrl' : 'AdminCreateOrderCycleCtrl'
+- ng_controller = @order_cycle.simple? ? 'AdminSimpleCreateOrderCycleCtrl' : 'AdminCreateOrderCycleCtrl'
 = admin_inject_order_cycle_instance
 
 = form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.orderCycles', 'ng-controller' => ng_controller, name: 'order_cycle_form'} do |f|
 
   %save-bar{ dirty: "order_cycle_form.$dirty", persist: "true" }
-    - if order_cycles_simple_form
+    - if @order_cycle.simple?
       - custom_redirect_path = main_app.admin_order_cycles_path
     %input.red{ type: "button", value: t('.create'), ng: { click: "submit($event, '#{custom_redirect_path}')", disabled: "!order_cycle_form.$dirty || order_cycle_form.$invalid" } }
     %input{ type: "button", ng: { value: "order_cycle_form.$dirty ? '#{t('.cancel')}' : '#{t('.back_to_list')}'", click: "cancel('#{main_app.admin_order_cycles_path}')" } }
 
-  - if order_cycles_simple_form
+  - if @order_cycle.simple?
     = render 'simple_form', f: f
   - else
     = render 'form', f: f

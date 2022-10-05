@@ -330,6 +330,14 @@ ActiveRecord::Schema.define(version: 2022_09_07_055044) do
     t.boolean "mails_sent", default: false
   end
 
+  create_table "order_cycles_distributor_shipping_methods", id: false, force: :cascade do |t|
+    t.bigint "order_cycle_id"
+    t.bigint "distributor_shipping_method_id"
+    t.index ["distributor_shipping_method_id"], name: "index_dsm_id_on_order_cycles_distributor_shipping_methods"
+    t.index ["order_cycle_id", "distributor_shipping_method_id"], name: "order_cycles_distributor_shipping_methods_join_index", unique: true
+    t.index ["order_cycle_id"], name: "index_oc_id_on_order_cycles_distributor_shipping_methods"
+  end
+
   create_table "producer_properties", id: :serial, force: :cascade do |t|
     t.string "value", limit: 255
     t.integer "producer_id"

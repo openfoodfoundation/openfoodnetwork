@@ -185,8 +185,13 @@ GEM
     bullet (7.0.3)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
-    cable_ready (5.0.0.pre3)
-      rails (>= 5.2)
+    cable_ready (5.0.0.pre9)
+      actioncable (>= 5.2)
+      actionpack (>= 5.2)
+      actionview (>= 5.2)
+      activerecord (>= 5.2)
+      activesupport (>= 5.2)
+      railties (>= 5.2)
       thread-local (>= 1.1.0)
     cancancan (1.15.0)
     capybara (3.37.1)
@@ -627,11 +632,21 @@ GEM
     state_machines-activerecord (0.8.0)
       activerecord (>= 5.1)
       state_machines-activemodel (>= 0.8.0)
+    stimulus_reflex (3.5.0.pre9)
+      actioncable (>= 5.2)
+      actionpack (>= 5.2)
+      actionview (>= 5.2)
+      activesupport (>= 5.2)
+      cable_ready (>= 5.0.0.pre9)
+      nokogiri
+      rack
+      railties (>= 5.2)
+      redis
     stringex (2.8.5)
     stripe (7.1.0)
     temple (0.8.2)
     test-prof (1.0.10)
-    test-unit (3.5.3)
+    test-unit (3.5.5)
       power_assert
     thor (1.2.1)
     thread-local (1.1.0)
@@ -640,8 +655,6 @@ GEM
     ttfunk (1.7.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     unicode-display_width (2.3.0)
     uniform_notifier (1.16.0)
     valid_email2 (4.0.4)
@@ -651,7 +664,7 @@ GEM
       activesupport (>= 5.0.0, < 8.0)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
-    view_component (2.73.0)
+    view_component (2.74.0)
       activesupport (>= 5.0.0, < 8.0)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
@@ -710,7 +723,7 @@ DEPENDENCIES
   bootsnap
   bugsnag
   bullet
-  cable_ready (= 5.0.0.pre3)
+  cable_ready (= 5.0.0.pre9)
   cancancan (~> 1.15.0)
   capybara
   catalog!
@@ -804,12 +817,12 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   state_machines-activerecord
+  stimulus_reflex (= 3.5.0.pre9)
   stringex (~> 2.8.5)
   stripe
   test-prof
   test-unit (~> 3.5)
   timecop
-  uglifier (>= 1.0.3)
   valid_email2
   vcr
   view_component

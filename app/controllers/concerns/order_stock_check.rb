@@ -26,7 +26,10 @@ module OrderStockCheck
     current_order.set_order_cycle! nil
 
     flash[:info] = I18n.t('order_cycle_closed')
-    redirect_to main_app.shop_path
+    respond_to do |format|
+      format.json { render json: { path: main_app.shop_path }, status: :see_other }
+      format.html { redirect_to main_app.shop_path, status: :see_other }
+    end
   end
 
   private

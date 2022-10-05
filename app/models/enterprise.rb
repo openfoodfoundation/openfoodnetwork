@@ -120,6 +120,7 @@ class Enterprise < ApplicationRecord
     joins(:shipping_methods).
       joins(:payment_methods).
       merge(Spree::PaymentMethod.available).
+      merge(Spree::ShippingMethod.frontend).
       select('DISTINCT enterprises.*')
   }
   scope :not_ready_for_checkout, lambda {
@@ -387,7 +388,7 @@ class Enterprise < ApplicationRecord
   end
 
   def ready_for_checkout?
-    shipping_methods.any? && payment_methods.available.any?
+    shipping_methods.frontend.any? && payment_methods.available.any?
   end
 
   def self.find_available_permalink(test_permalink)
