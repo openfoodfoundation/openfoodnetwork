@@ -699,12 +699,6 @@ Rails/ApplicationMailer:
   Exclude:
     - 'app/mailers/spree/base_mailer.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/ApplicationRecord:
-  Exclude:
-    - 'lib/tasks/data/remove_transient_data.rb'
-
 # Offense count: 5
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: NilOrEmpty, NotPresent, UnlessPresent.
