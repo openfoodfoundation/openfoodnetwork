@@ -31,7 +31,6 @@ describe "As a consumer I want to shop with a distributor", js: true do
     it "shows a distributor with images" do
       # Given the distributor has a logo
       distributor.update!(logo: white_logo_file)
-
       # Then we should see the distributor and its logo
       visit shop_path
       expect(page).to have_text distributor.name
@@ -166,28 +165,37 @@ describe "As a consumer I want to shop with a distributor", js: true do
           end
         end
 
-        describe "two order cycles and more than 20 products for each" do
+        describe "two order cycles" do
           before do
-            20.times do
-              product = create(:simple_product, supplier: supplier)
-              add_variant_to_order_cycle(exchange1, product.variants.first)
-              add_variant_to_order_cycle(exchange2, product.variants.first)
+            visit shop_path
+          end
+          context "one having 20 products" do
+            before do
+              20.times do
+                product = create(:simple_product, supplier: supplier)
+                add_variant_to_order_cycle(exchange1, product.variants.first)
+              end
+            end
+            it "displays 20 products, 10 per page" do
+              select "frogs", from: "order_cycle_id"
+              expect(page).to have_selector("product.animate-repeat", count: 10)
+              scroll_to(page.find(".product-listing"), align: :bottom)
+              expect(page).to have_selector("product.animate-repeat", count: 20)
             end
           end
 
-          it "show the whole products list for each OC" do
-            visit shop_path
-            select "turtles", from: "order_cycle_id"
-            select "frogs", from: "order_cycle_id"
-            expect(page).to have_selector("product.animate-repeat", count: 10)
-            scroll_to(page.find(".product-listing"), align: :bottom)
-            expect(page).to have_selector("product.animate-repeat", count: 20)
+          context "another having 5 products" do
+            before do
+              5.times do
+                product = create(:simple_product, supplier: supplier)
+                add_variant_to_order_cycle(exchange2, product.variants.first)
+              end
+            end
 
-            scroll_to(page.find("distributor"))
-            select "turtles", from: "order_cycle_id"
-            expect(page).to have_selector("product.animate-repeat", count: 10)
-            scroll_to(page.find(".product-listing"), align: :bottom)
-            expect(page).to have_selector("product.animate-repeat", count: 20)
+            it "displays 5 products, on one page" do
+              select "turtles", from: "order_cycle_id"
+              expect(page).to have_selector("product.animate-repeat", count: 5)
+            end
           end
         end
       end
@@ -211,34 +219,47 @@ describe "As a consumer I want to shop with a distributor", js: true do
         order.order_cycle = oc1
       end
 
-      it "uses the adjusted price" do
-        enterprise_fee1 = create(:enterprise_fee, amount: 20)
-        enterprise_fee2 = create(:enterprise_fee, amount: 3)
-        exchange.enterprise_fees = [enterprise_fee1, enterprise_fee2]
-        exchange.save
-        visit shop_path
+      context "adjusting the price" do
+        before do
+          enterprise_fee1 = create(:enterprise_fee, amount: 20)
+          enterprise_fee2 = create(:enterprise_fee, amount: 3)
+          exchange.enterprise_fees = [enterprise_fee1, enterprise_fee2]
+          exchange.save
+          visit shop_path
+        end
+        it "displays the correct price" do
+          # Page should not have product.price (with or without fee)
+          expect(page).not_to have_price with_currency(10.00)
+          expect(page).not_to have_price with_currency(33.00)
 
-        # Page should not have product.price (with or without fee)
-        expect(page).not_to have_price with_currency(10.00)
-        expect(page).not_to have_price with_currency(33.00)
+          # Page should have variant prices (with fee)
+          expect(page).to have_price with_currency(43.00)
+          expect(page).to have_price with_currency(53.00)
 
-        # Page should have variant prices (with fee)
-        expect(page).to have_price with_currency(43.00)
-        expect(page).to have_price with_currency(53.00)
-
-        # Product price should be listed as the lesser of these
-        expect(page).to have_price with_currency(43.00)
+          # Product price should be listed as the lesser of these
+          expect(page).to have_price with_currency(43.00)
+        end
       end
 
-      it "filters search results properly" do
-        visit shop_path
-        fill_in "search", with: "74576345634XXXXXX"
-        expect(page).to have_content "Sorry, no results found"
-        expect(page).not_to have_content product2.name
-
-        fill_in "search", with: "Meer"           # For product named "Meercats"
-        expect(page).to have_content product2.name
-        expect(page).not_to have_content product.name
+      context "filtering search results" do
+        it "returns no results and clears searches by clicking the clear-link" do
+          visit shop_path
+          sleep(2)
+          fill_in "search", with: "74576345634XXXXXX"
+          expect(page).to have_content "Sorry, no results found"
+          expect(page).not_to have_content product2.name
+          click_on "Clear search" # clears search by clicking text
+          expect(page).to have_content("Add", count: 4)
+        end
+        it "returns results and clears searches by clicking the clear-button" do
+          visit shop_path
+          sleep(2)
+          fill_in "search", with: "Meer" # For product named "Meercats"
+          expect(page).to have_content product2.name
+          expect(page).not_to have_content product.name
+          find("a.clear").click # clears search by clicking the X button
+          expect(page).to have_content("Add", count: 4)
+        end
       end
 
       context "when supplier uses property" do
@@ -267,7 +288,7 @@ describe "As a consumer I want to shop with a distributor", js: true do
 
       it "returns search results for products where the search term matches one of the product's variant names" do
         visit shop_path
-        fill_in "search", with: "Badg"           # For variant with display_name "Badgers"
+        fill_in "search", with: "Badg" # For variant with display_name "Badgers"
 
         within('div.pad-top') do
           expect(page).not_to have_content product2.name
@@ -512,6 +533,7 @@ describe "As a consumer I want to shop with a distributor", js: true do
       context "when a variant is soft-deleted" do
         describe "adding the soft-deleted variant to the cart" do
           it "handles it as if the variant has gone out of stock" do
+            sleep(2)
             variant.delete
 
             click_add_to_cart variant
@@ -527,6 +549,7 @@ describe "As a consumer I want to shop with a distributor", js: true do
             }
 
             it "handles it as if the variant has gone out of stock" do
+              sleep(2)
               variant.delete
 
               click_add_to_cart variant
