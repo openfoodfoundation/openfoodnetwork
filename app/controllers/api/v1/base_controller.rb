@@ -40,7 +40,7 @@ module Api
       end
 
       def restrict_feature
-        not_found unless Flipper.enabled?(:api_v1, @current_api_user)
+        not_found unless OpenFoodNetwork::FeatureToggle.enabled?(:api_v1, @current_api_user)
       end
 
       def current_ability

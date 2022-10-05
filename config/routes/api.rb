@@ -84,7 +84,7 @@ Openfoodnetwork::Application.routes.draw do
       end
 
       get '/reports/:report_type(/:report_subtype)', to: 'reports#show',
-          constraints: lambda { |_| Flipper.enabled?(:api_reports) }
+          constraints: lambda { |_| OpenFoodNetwork::FeatureToggle.enabled?(:api_reports) }
     end
 
     namespace :v1 do
