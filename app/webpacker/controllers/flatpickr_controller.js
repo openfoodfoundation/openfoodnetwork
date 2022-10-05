@@ -62,7 +62,7 @@ export default class extends Flatpickr {
   }
 
   change(selectedDates, dateStr, instance) {
-    if (this.hasStartTarget && this.hasEndTarget) {
+    if (this.hasStartTarget && this.hasEndTarget && this.modeValue == "range") {
       this.startTarget.value = selectedDates[0]
         ? this.fp.formatDate(selectedDates[0], this.config.dateFormat)
         : "";
@@ -76,6 +76,11 @@ export default class extends Flatpickr {
         this.endTarget.dispatchEvent(new Event("change"));
       }
     }
+  }
+
+  close() {
+    // Send a change event to the input element to trigger the ng-change
+    this.hasEndTarget && this.endTarget.dispatchEvent(new Event("change"));
   }
 
   // private
