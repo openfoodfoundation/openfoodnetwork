@@ -44,11 +44,14 @@ en:
         state: State
         source: Source
       spree/product:
+        name: "Product Name"
+        price: "Price"
         primary_taxon: "Product Category"
         supplier: "Supplier"
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+        unit_value: "Unit value"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
