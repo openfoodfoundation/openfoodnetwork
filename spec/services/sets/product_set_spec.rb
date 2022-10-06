@@ -75,17 +75,9 @@ describe Sets::ProductSet do
           end
         end
 
-        context 'when a different supplier is passed' do
-          let!(:producer) { create(:enterprise) }
-          let!(:product) { create(:simple_product) }
-          let(:collection_hash) do
-            {
-              0 => {
-                id: product.id,
-                supplier_id: producer.id
-              }
-            }
-          end
+        context "when the product is in an order cycle" do
+          let(:producer) { create(:enterprise) }
+          let(:product) { create(:simple_product) }
 
           let(:distributor) { create(:distributor_enterprise) }
           let!(:order_cycle) {
@@ -94,13 +86,36 @@ describe Sets::ProductSet do
                                         distributors: [distributor])
           }
 
-          it 'updates the product and removes the product from order cycles' do
-            product_set.save
+          context 'and only the name changes' do
+            let(:collection_hash) do
+              { 0 => { id: product.id, name: "New season product" } }
+            end
 
-            expect(product.reload.attributes).to include(
-              'supplier_id' => producer.id
-            )
-            expect(order_cycle.distributed_variants).to_not include product.variants.first
+            it 'updates the product and keeps it in order cycles' do
+              expect {
+                product_set.save
+                product.reload
+              }.to change { product.name }.to("New season product").
+                and change { order_cycle.distributed_variants.count }.by(0)
+
+              expect(order_cycle.distributed_variants).to include product.variants.first
+            end
+          end
+
+          context 'and a different supplier is passed' do
+            let(:collection_hash) do
+              { 0 => { id: product.id, supplier_id: producer.id } }
+            end
+
+            it 'updates the product and removes the product from order cycles' do
+              expect {
+                product_set.save
+                product.reload
+              }.to change { product.supplier }.to(producer).
+                and change { order_cycle.distributed_variants.count }.by(-1)
+
+              expect(order_cycle.distributed_variants).to_not include product.variants.first
+            end
           end
         end
 
