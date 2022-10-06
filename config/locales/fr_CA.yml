@@ -290,7 +290,6 @@ fr_CA:
   producers_join: Les producteurs et autres hubs basés au Québec sont invités à rejoindre Open Food Network Canada.
   charges_sales_tax: Soumis aux taxes?
   business_address: "Adresse du siège social"
-  enterprise_permissions: "Permissions Inter-entreprises"
   print_invoice: "Imprimer la facture"
   print_ticket: "Imprimer ticket de caisse"
   select_ticket_printer: "Choisir l'imprimante tickets"
@@ -563,6 +562,18 @@ fr_CA:
     enterprise_groups:
       index:
         new_button: Nouveau groupe d'entreprises
+      form_primary_details:
+        primary_details: "Informations de base"
+      form_users:
+        users: "Utilisateurs"
+      form_about:
+        about: "A propos"
+      form_images:
+        images: "Images"
+      form_address:
+        contact: "Contact"
+      form_web:
+        web: "Liens web"
     enterprise_roles:
       form:
         manages: gère
@@ -778,11 +789,15 @@ fr_CA:
         manage: Gérer
       form:
         about_us:
+          legend: "A propos"
           desc_short: Description courte
           desc_short_placeholder: Parlez de votre entreprise en une ou deux phrases
           desc_long: A propos
           desc_long_placeholder: Parlez de vous à vos acheteurs ! Ces informations seront visibles sur votre profil public.
+        address:
+          legend: "Adresse"
         business_details:
+          legend: "Informations juridiques"
           abn: SIRET
           abn_placeholder: 'ex: 404 833 048 00022'
           acn: n° TVA intracommunautaire
@@ -793,7 +808,8 @@ fr_CA:
           remove_terms_and_conditions: "Supprimer le fichier"
           uploaded_on: "mis en ligne le"
           reset_form: "Vider les champs"
-          Invoice_item_sorting: Changement d'ordre d'affichage sur facture
+          business_address_legend: "Adresse du siège social"
+          invoice_item_sorting_legend: "Changement d'ordre d'affichage sur facture"
           sort_items_by_supplier?: Ranger par producteur ?
           sort_items_by_supplier_tip: "Lorsque possible, les éléments seront rangés par producteur."
           enabled: Activer
@@ -807,6 +823,7 @@ fr_CA:
           legal_phone_number: Numéro de téléphone
           phone_placeholder: "98 123 4565"
         contact:
+          legend: "Contact"
           name: Nom
           name_placeholder: 'ex: Bernard Michelet'
           email_address: Adresse email publique
@@ -820,14 +837,17 @@ fr_CA:
           website: Site internet
           website_placeholder: 'ex: www.maferme.fr'
         enterprise_fees:
+          legend: "Marges et commissions"
           name: Nom
           fee_type: Type de commissions
           manage_fees: Gérer les marges et commissions
           no_fees_yet: Vous n'avez pas encore défini de commissions
           create_button: Créer une commission
         enterprise_permissions:
+          legend: "Permissions Inter-entreprises"
           enterprise_relationships: Relations inter-entreprises
         images:
+          legend: "Images"
           logo: Logo
           promo_image_placeholder: 'Cette image est affichée dans "A propos"'
           promo_image_note1: 'ATTENTION:'
@@ -836,6 +856,7 @@ fr_CA:
           remove_logo: "Supprimer l'image"
           remove_promo_image: "Supprimer l'image"
         inventory_settings:
+          legend: "Paramètres catalogue boutique"
           text1: Vous pouvez choisir de gérer vos stocks et prix via votre
           inventory: catalogue boutique
           text2: >
@@ -847,6 +868,7 @@ fr_CA:
           preferred_product_selection_from_inventory_only_yes: Les nouveaux produits des producteurs peuvent être ajoutés à ma boutique en ligne (recommandé)
           preferred_product_selection_from_inventory_only_no: Les nouveaux produits des producteurs doivent être ajoutés à mon catalogue boutique avant de pouvoir être ajoutés à ma boutique en ligne
         payment_methods:
+          legend: "Méthodes de paiement"
           name: Nom
           applies: S'applique?
           manage: Gérer les méthodes de paiement
@@ -854,6 +876,7 @@ fr_CA:
           create_button: Créer une nouvelle méthode de paiement
           create_one_button: En créer une maintenant
         primary_details:
+          legend: "Informations de base"
           name: Nom
           name_placeholder: 'ex: La ferme bio de Bernard'
           groups: Groupes
@@ -872,6 +895,8 @@ fr_CA:
           visible: Visible par tous
           not_visible: Invisible
           hidden: Masquer toutes les références
+        properties:
+          legend: "Labels / propriétés"
         permalink:
           permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre boutique: %{link}ma-boutique/shop"
@@ -880,6 +905,7 @@ fr_CA:
           ofn_uid: ID OFN
           ofn_uid_tip: L'identifiant unique pour les comptes entreprises sur Open Food Network.
         shipping_methods:
+          legend: "Méthodes de livraison"
           name: "Nom"
           applies: "Active ?"
           manage: "Gérer les méthodes de livraison"
@@ -887,6 +913,7 @@ fr_CA:
           create_one_button: "En créer une maintenant"
           no_method_yet: "Vous n'avez pas encore paramétré de méthode de livraison."
         shop_preferences:
+          legend: "Préférences boutique"
           shopfront_requires_login: "Boutique visible par tous?"
           shopfront_requires_login_tip: "Choisissez si les acheteurs doivent être logués pour voir la boutique ou si la boutique est visible par tout le monde."
           shopfront_requires_login_false: "Visible par tous"
@@ -936,6 +963,7 @@ fr_CA:
           enabled: "Activée"
           disabled: "Désactivée"
         social:
+          legend: "Réseaux sociaux"
           twitter_placeholder: "ex. @OpenFoodNet_fr"
           instagram_placeholder: "ex. @OpenFoodNet_fr"
           facebook_placeholder: "ex: www.facebook.com/NomDeLaPage"
@@ -953,6 +981,7 @@ fr_CA:
             i_agree: J'accepte
             cancel: Annuler
         tag_rules:
+          legend: "Règles de tag"
           default_rules:
             by_default: Règles à appliquer "par défaut"
             no_rules_yet: Aucune règle par défaut
@@ -963,6 +992,7 @@ fr_CA:
           add_new_rule: '+ Ajouter une nouvelle règle'
           add_new_tag: '+ Ajouter un nouveau tag'
         users:
+          legend: "Utilisateurs"
           email_confirmation_notice_html: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{email}."
           resend: Renvoyer
           owner: 'Manager principal'
@@ -1082,11 +1112,21 @@ fr_CA:
         tags: "Tags"
         delivery_details: "Détails de livraison"
         fees: "Commissions"
+        next: "Suivant"
         previous: "Précédent"
         save: "Enregistrer"
-        save_and_back_to_list: "Sauvegarder et suivant"
+        save_and_next: "Sauvegarder et suivant"
         cancel: "Annuler"
         back_to_list: "Retour à la liste"
+      checkout_options:
+        back_end: "Visible pour l'administration uniquement"
+        cancel: "Annuler"
+        distributor: "Hub-distributeur"
+        payment_methods: "Méthodes de paiement"
+        save: "Enregistrer"
+        save_and_back_to_list: "Sauvegarder et suivant"
+        select_all: "Tout sélectionner"
+        shipping_methods: "Méthodes de livraison"
       wizard_progress:
         edit: "1. Informations générales"
         incoming: "2. Produits entrants"
@@ -1183,6 +1223,31 @@ fr_CA:
         has_no_payment_methods: "%{enterprise} n'a pas défini de méthode de paiement"
         has_no_shipping_methods: "%{enterprise} n'a pas défini de méthode de livraison"
         has_no_enterprise_fees: "%{enterprise} n'a pas défini de marges et commissions"
+      side_menu:
+        enterprise:
+          primary_details: "Informations de base"
+          address: "Adresse"
+          contact: "Contact"
+          social: "Réseaux sociaux"
+          about: "A propos"
+          business_details: "Informations juridiques"
+          images: "Images"
+          properties: "Labels / propriétés"
+          shipping_methods: "Méthodes de livraison"
+          payment_methods: "Méthodes de paiement"
+          enterprise_fees: "Marges et commissions"
+          enterprise_permissions: "Permissions Inter-entreprises"
+          inventory_settings: "Paramètres catalogue boutique"
+          tag_rules: "Règles de tag"
+          shop_preferences: "Préférences boutique"
+          users: "Utilisateurs"
+        enterprise_group:
+          primary_details: "Informations de base"
+          users: "Utilisateurs"
+          about: "A propos"
+          images: "Images"
+          contact: "Contact"
+          web: "Liens web"
     enterprise_issues:
       create_new: Créer Nouveau
       resend_email: Renvoyer l'email
@@ -2335,7 +2400,6 @@ fr_CA:
   admin_enterprise_groups_data_powertip: "L'utilisateur principal en charge de ce groupe."
   admin_enterprise_groups_data_powertip_logo: "Il s'agit du logo du groupe"
   admin_enterprise_groups_data_powertip_promo_image: "Cette image est affichée en haut du profil Groupe."
-  admin_enterprise_groups_contact: "Contact"
   admin_enterprise_groups_contact_phone_placeholder: "ex: 98 7654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "ex: 24 rue de la croix verte"
   admin_enterprise_groups_contact_city: "Ville"
@@ -2344,7 +2408,6 @@ fr_CA:
   admin_enterprise_groups_contact_zipcode_placeholder: "ex: 44000"
   admin_enterprise_groups_contact_state_id: "Région:"
   admin_enterprise_groups_contact_country_id: "Pays"
-  admin_enterprise_groups_web: "Liens web"
   admin_enterprise_groups_web_twitter: "ex: @OpenFoodNet_fr"
   admin_enterprise_groups_web_website_placeholder: "ex: www.maferme.fr"
   admin_order_cycles: "Gérer les cycles de vente"
@@ -2668,11 +2731,8 @@ fr_CA:
   images: "Images"
   web: "Web"
   primary_details: "Informations de base"
-  adrdress: "Adresse"
   contact: "Contact"
   social: "Réseaux sociaux"
-  business_details: "Informations juridiques"
-  properties: "Propriétés / labels"
   shipping: "Expédition"
   shipping_methods: "Méthodes de livraison"
   payment_methods: "Méthodes de paiement"
@@ -2682,9 +2742,7 @@ fr_CA:
   payment_updated: "Paiement mis à jour"
   cannot_perform_operation: "Le paiement n'a pas pu être mis à jour."
   action_required: "Une action est requise"
-  inventory_settings: "Paramètres catalogue boutique"
   tag_rules: "Règles de tag"
-  shop_preferences: "Préférences boutique"
   enterprise_fee_whole_order: Commande totale
   enterprise_fee_by: "%{type} marges/frais par  %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Un lien est déjà établi."

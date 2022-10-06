@@ -228,7 +228,6 @@ tr:
   search_by_name: Üretici adına veya konuma göre arama yapın...
   producers_join: Bağımsız gıda üreticileri! Açık Gıda Ağı sizler için kullanıma açıldı.
   charges_sales_tax: KDV Uyguluyor mu?
-  enterprise_permissions: "İŞLETME İZİNLERİ"
   print_invoice: "Faturayı yazdır"
   print_ticket: "Etiketi Yazdır"
   select_ticket_printer: "Etiketler için yazıcı seçin"
@@ -496,6 +495,18 @@ tr:
     enterprise_groups:
       index:
         new_button: Yeni Girişim Grubu
+      form_primary_details:
+        primary_details: "TEMEL BİLGİLER"
+      form_users:
+        users: "Kullanıcılar"
+      form_about:
+        about: "HAKKINDA"
+      form_images:
+        images: "Görseller"
+      form_address:
+        contact: "İLETİŞİM"
+      form_web:
+        web: "Web Kaynakları"
     enterprise_roles:
       form:
         manages: yönetir
@@ -706,11 +717,15 @@ tr:
         manage: Yönet
       form:
         about_us:
+          legend: "HAKKINDA"
           desc_short: Kısa Açıklama
           desc_short_placeholder: Bir veya iki cümleyle bize işletmenizden bahsedin
           desc_long: HAKKIMIZDA
           desc_long_placeholder: Müşterilerinize kendinizden bahsedin. Bu bilgiler profilinizde görünür.
+        address:
+          legend: "Adres"
         business_details:
+          legend: "İşletme Detayları"
           abn: VKN/TCKN
           abn_placeholder: Örn. 12345678990
           acn: Mersis no.
@@ -723,6 +738,7 @@ tr:
         business_address:
           address2: Adres (devam)
         contact:
+          legend: "İLETİŞİM"
           name: Ad
           name_placeholder: Örn. Toprak Güneş
           email_address: E-posta Adresi
@@ -733,12 +749,16 @@ tr:
           website: İnternet sitesi
           website_placeholder: Örn. www.ciftlik.com
         enterprise_fees:
+          legend: "İşletme Ücretleri"
           name: Ad
           fee_type: Ücret Türü
           manage_fees: İŞLETME ÜCRETLERİNİ YÖNET
           no_fees_yet: Henüz herhangi bir işletme ücretiniz yok.
           create_button: Şimdi Oluştur
+        enterprise_permissions:
+          legend: "İŞLETME İZİNLERİ"
         images:
+          legend: "Görseller"
           logo: Logo
           promo_image_placeholder: 'Bu görsel ''Hakkımızda'' kısmında görüntülenir'
           promo_image_note1: 'DİKKAT:'
@@ -747,6 +767,7 @@ tr:
           remove_logo: "Resmi Kaldır"
           remove_promo_image: "Resmi Kaldır"
         inventory_settings:
+          legend: "Stok Ayarları"
           text1: 'Stok seviyelerini ve fiyatları şuradan yönetebilirsiniz:'
           inventory: Stok
           text2: >
@@ -757,6 +778,7 @@ tr:
           preferred_product_selection_from_inventory_only_yes: DÜKKANINIZA YENİ ÜRÜNLER EKLENEBİLİR (ÖNERİLİR)
           preferred_product_selection_from_inventory_only_no: Yeni ürünler dükkanınıza eklemeden önce Stok listesine girilmelidir
         payment_methods:
+          legend: "ÖDEME YÖNTEMLERİ"
           name: Ad
           applies: Uygulanma?
           manage: ÖDEME YÖNTEMLERİNİ YÖNET
@@ -764,6 +786,7 @@ tr:
           create_button: YENİ ÖDEME YÖNTEMİ OLUŞTUR
           create_one_button: Şimdi Oluştur
         primary_details:
+          legend: "TEMEL BİLGİLER"
           name: Ad
           name_placeholder: Örn. Ahmet Amca'nın Ekolojik Meyveleri
           groups: AĞLAR
@@ -779,6 +802,8 @@ tr:
           sells_tip: "Satış Yapmıyor - İşletme müşterilere doğrudan satış yapmaz. <br /> Kendi Ürünleri - İşletme müşterilerine kendi ürünlerini satar. <br /> Kendi ve/veya başkasının ürünleri - İşletme kendi ürünlerini ve/veya diğer işletmelerin ürünlerini satabilir. <br />"
           visible_in_search: ARAMADA GÖRÜNÜR MÜ?
           visible: Herkese açık
+        properties:
+          legend: "ÖZELLİKLER"
         permalink:
           permalink: Bağlantı Adı (boşluk yok)
           permalink_tip: "Bağlantı adı, mağazanızın bağlantı URL'sini oluşturmak için kullanılır: %{link}sectiginiz-ad/dükkan"
@@ -787,6 +812,7 @@ tr:
           ofn_uid: AGA KN
           ofn_uid_tip: Açık Gıda Ağı'na kayıtlı işletmenize özel tanımlanan kimlik numarası
         shipping_methods:
+          legend: "TESLİMAT YÖNTEMLERİ"
           name: "Ad"
           applies: "AKTİF?"
           manage: "Teslimat Yöntemlerini Yönet"
@@ -794,6 +820,7 @@ tr:
           create_one_button: "Şimdi Oluştur"
           no_method_yet: "Henüz herhangi bir teslimat yönteminiz yok."
         shop_preferences:
+          legend: "Dükkan Tercihleri"
           shopfront_requires_login: "DÜKKANINIZ HERKESE AÇIK MI?"
           shopfront_requires_login_tip: "Dükkanınızın yalnızca üyelerinize mi yoksa herkese mi açık olduğunu seçin."
           shopfront_requires_login_false: "Herkese açık"
@@ -840,6 +867,7 @@ tr:
           enabled: "Etkin"
           disabled: "Kapalı"
         social:
+          legend: "Sosyal"
           twitter_placeholder: "Örn.  @the_usta"
           instagram_placeholder: "Örn. ciftlik   (başına @ işareti koymayınız)"
           facebook_placeholder: "Örn: www.facebook.com/TurkiyeKoop"
@@ -857,6 +885,7 @@ tr:
             i_agree: Onaylıyorum
             cancel: İptal Et
         tag_rules:
+          legend: "ETİKET KURALLARI"
           default_rules:
             by_default: 'Varsayılan '
             no_rules_yet: Henüz varsayılan bir kural uygulanmadı
@@ -867,6 +896,7 @@ tr:
           add_new_rule: '+ Yeni Kural Ekle'
           add_new_tag: '+ Yeni Etiket Ekle'
         users:
+          legend: "Kullanıcılar"
           email_confirmation_notice_html: "E-posta onayı bekleniyor. %{email} adresine bir doğrulama e-postası gönderdik."
           resend: Yeniden gönder
           owner: 'Sahip'
@@ -984,11 +1014,21 @@ tr:
         tags: "ETİKETLER"
         delivery_details: "Teslimat Detayları"
         fees: "Ücretler"
+        next: "Sonrakİ"
         previous: "Önceki"
         save: "Kaydet"
-        save_and_back_to_list: "KAYDET VE LİSTEYE DÖN"
+        save_and_next: "Kaydet ve İlerle"
         cancel: "İptal et"
         back_to_list: "Listeye geri dön"
+      checkout_options:
+        back_end: "Sadece panel"
+        cancel: "İptal et"
+        distributor: "Dağıtımcı"
+        payment_methods: "ÖDEME YÖNTEMLERİ"
+        save: "Kaydet"
+        save_and_back_to_list: "KAYDET VE LİSTEYE DÖN"
+        select_all: "Hepsini seç"
+        shipping_methods: "TESLİMAT YÖNTEMLERİ"
       wizard_progress:
         edit: "1. Genel Ayarlar"
         incoming: "2. Gelen Ürünler"
@@ -1080,6 +1120,31 @@ tr:
         has_no_payment_methods: "%{enterprise} için bir ödeme yöntemi yok"
         has_no_shipping_methods: "%{enterprise} için bir teslimat yöntemi yok"
         has_no_enterprise_fees: "%{enterprise} için herhangi bir işletme ücreti yok"
+      side_menu:
+        enterprise:
+          primary_details: "TEMEL BİLGİLER"
+          address: "Adres"
+          contact: "İLETİŞİM"
+          social: "Sosyal"
+          about: "HAKKINDA"
+          business_details: "İşletme Detayları"
+          images: "Görseller"
+          properties: "ÖZELLİKLER"
+          shipping_methods: "TESLİMAT YÖNTEMLERİ"
+          payment_methods: "ÖDEME YÖNTEMLERİ"
+          enterprise_fees: "İşletme Ücretleri"
+          enterprise_permissions: "İŞLETME İZİNLERİ"
+          inventory_settings: "Stok Ayarları"
+          tag_rules: "ETİKET KURALLARI"
+          shop_preferences: "Dükkan Tercihleri"
+          users: "Kullanıcılar"
+        enterprise_group:
+          primary_details: "TEMEL BİLGİLER"
+          users: "Kullanıcılar"
+          about: "HAKKINDA"
+          images: "Görseller"
+          contact: "İLETİŞİM"
+          web: "Web Kaynakları"
     enterprise_issues:
       create_new: Yeni oluştur
       resend_email: E-postayı yeniden gönder
@@ -2188,7 +2253,6 @@ tr:
   admin_enterprise_groups_data_powertip: "Bu gruptan sorumlu birincil kullanıcı."
   admin_enterprise_groups_data_powertip_logo: "Grubun logosu"
   admin_enterprise_groups_data_powertip_promo_image: "Bu resim grup profilinin üstünde görüntülenir"
-  admin_enterprise_groups_contact: "İLETİŞİM"
   admin_enterprise_groups_contact_phone_placeholder: "Örn. 532 100 05 01"
   admin_enterprise_groups_contact_address1_placeholder: "Örn. 123 Cadde"
   admin_enterprise_groups_contact_city: "İlçe"
@@ -2197,7 +2261,6 @@ tr:
   admin_enterprise_groups_contact_zipcode_placeholder: "Örn. 34000"
   admin_enterprise_groups_contact_state_id: "Şehir"
   admin_enterprise_groups_contact_country_id: "Ülke"
-  admin_enterprise_groups_web: "Web Kaynakları"
   admin_enterprise_groups_web_twitter: "Örn. @the_ciftlik"
   admin_enterprise_groups_web_website_placeholder: "Örn. www.ciftlik.com"
   admin_order_cycles: "Yönetici Sipariş Dönemleri"
@@ -2509,11 +2572,8 @@ tr:
   images: "Görseller"
   web: "Web"
   primary_details: "TEMEL BİLGİLER"
-  adrdress: "Adres"
   contact: "İLETİŞİM"
   social: "Sosyal"
-  business_details: "İşletme Detayları"
-  properties: "ÖZELLİKLER"
   shipping: "Teslimat"
   shipping_methods: "TESLİMAT YÖNTEMLERİ"
   payment_methods: "ÖDEME YÖNTEMLERİ"
@@ -2523,9 +2583,7 @@ tr:
   payment_updated: "Ödeme Güncellendi"
   cannot_perform_operation: "Ödeme güncellenemedi"
   action_required: "İşlem gerekiyor"
-  inventory_settings: "Stok Ayarları"
   tag_rules: "ETİKET KURALLARI"
-  shop_preferences: "Dükkan Tercihleri"
   enterprise_fee_whole_order: Tüm sipariş
   enterprise_fee_by: "%{role}%{enterprise_name} tarafından%{type} ücreti"
   validation_msg_relationship_already_established: "^ Bu ilişki zaten kurulmuş."

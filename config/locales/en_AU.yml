@@ -192,7 +192,6 @@ en_AU:
   search_by_name: Search by name or suburb...
   producers_join: Australian producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges GST?
-  enterprise_permissions: "Enterprise Permissions"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -441,6 +440,18 @@ en_AU:
     enterprise_groups:
       index:
         new_button: New Enterprise Group
+      form_primary_details:
+        primary_details: "Primary Details"
+      form_users:
+        users: "Users"
+      form_about:
+        about: "About"
+      form_images:
+        images: "Logo"
+      form_address:
+        contact: "Contact"
+      form_web:
+        web: "Web Resources"
     enterprise_roles:
       form:
         manages: manages
@@ -651,11 +662,15 @@ en_AU:
         manage: Manage
       form:
         about_us:
+          legend: "About"
           desc_short: Short Description
           desc_short_placeholder: Tell us about your enterprise in one or two sentences
           desc_long: About Us
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
+        address:
+          legend: "Address"
         business_details:
+          legend: "Business Details"
           abn: ABN
           abn_placeholder: eg. 99 123 456 789
           acn: ACN
@@ -668,6 +683,7 @@ en_AU:
         business_address:
           address2: Address (contd.)
         contact:
+          legend: "Contact"
           name: Name
           name_placeholder: eg. Gustav Plum
           email_address: Public Email Address
@@ -678,12 +694,16 @@ en_AU:
           website: Website
           website_placeholder: eg. www.truffles.com
         enterprise_fees:
+          legend: "Enterprise Fees"
           name: Name
           fee_type: Fee Type
           manage_fees: Manage Enterprise Fees
           no_fees_yet: You don't have any enterprise fees yet.
           create_button: Create One Now
+        enterprise_permissions:
+          legend: "Enterprise Permissions"
         images:
+          legend: "Logo"
           logo: Logo
           promo_image_placeholder: 'This image is displayed in "About Us"'
           promo_image_note1: 'PLEASE NOTE:'
@@ -692,6 +712,7 @@ en_AU:
           remove_logo: "Remove Image"
           remove_promo_image: "Remove Image"
         inventory_settings:
+          legend: "Inventory Settings"
           text1: You may opt to manage stock levels and prices in via your
           inventory: inventory
           text2: >
@@ -702,6 +723,7 @@ en_AU:
           preferred_product_selection_from_inventory_only_yes: New products can be put into my shopfront (recommended)
           preferred_product_selection_from_inventory_only_no: New products must be added to my inventory before they can be put into my shopfront
         payment_methods:
+          legend: "Payment Methods"
           name: Name
           applies: Applies?
           manage: Manage Payment Methods
@@ -709,6 +731,7 @@ en_AU:
           create_button: Create New Payment Method
           create_one_button: Create One Now
         primary_details:
+          legend: "Primary Details"
           name: Name
           name_placeholder: eg. Professor Plum's Biodynamic Truffles
           groups: Groups
@@ -724,6 +747,8 @@ en_AU:
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
           visible_in_search: Visible in search?
           visible: Public
+        properties:
+          legend: "Properties"
         permalink:
           permalink: Permalink (no spaces)
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
@@ -732,6 +757,7 @@ en_AU:
           ofn_uid: OFN UID
           ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
         shipping_methods:
+          legend: "Shipping Methods"
           name: "Name"
           applies: "Active?"
           manage: "Manage Shipping Methods"
@@ -739,6 +765,7 @@ en_AU:
           create_one_button: "Create One Now"
           no_method_yet: "You don't have any shipping methods yet."
         shop_preferences:
+          legend: "Shop Preferences"
           shopfront_requires_login: "Publicly visible shopfront?"
           shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
           shopfront_requires_login_false: "Public"
@@ -785,6 +812,7 @@ en_AU:
           enabled: "Enabled"
           disabled: "Disabled"
         social:
+          legend: "Social"
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. the_prof"
           facebook_placeholder: "eg. www.facebook.com/PageNameHere"
@@ -802,6 +830,7 @@ en_AU:
             i_agree: I Agree
             cancel: Cancel
         tag_rules:
+          legend: "Tag Rules"
           default_rules:
             by_default: By Default
             no_rules_yet: No default rules apply yet
@@ -812,6 +841,7 @@ en_AU:
           add_new_rule: '+ Add A New Rule'
           add_new_tag: '+ Add A New Tag'
         users:
+          legend: "Users"
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
           owner: 'Owner'
@@ -936,11 +966,21 @@ en_AU:
         tags: "Tags"
         delivery_details: "Delivery Details"
         fees: "Fees"
+        next: "Next"
         previous: "Previous"
         save: "Save"
-        save_and_back_to_list: "Save and Back to List"
+        save_and_next: "Save and Next"
         cancel: "Cancel"
         back_to_list: "Back To List"
+      checkout_options:
+        back_end: "Back office only"
+        cancel: "Cancel"
+        distributor: "Distributor"
+        payment_methods: "Payment Methods"
+        save: "Save"
+        save_and_back_to_list: "Save and Back to List"
+        select_all: "Select all"
+        shipping_methods: "Shipping Methods"
       wizard_progress:
         edit: "1. General Settings"
         incoming: "2. Incoming Products"
@@ -1031,6 +1071,31 @@ en_AU:
         has_no_payment_methods: "%{enterprise} has no payment methods"
         has_no_shipping_methods: "%{enterprise} has no shipping methods"
         has_no_enterprise_fees: "%{enterprise} has no enterprise fees"
+      side_menu:
+        enterprise:
+          primary_details: "Primary Details"
+          address: "Address"
+          contact: "Contact"
+          social: "Social"
+          about: "About"
+          business_details: "Business Details"
+          images: "Logo"
+          properties: "Properties"
+          shipping_methods: "Shipping Methods"
+          payment_methods: "Payment Methods"
+          enterprise_fees: "Enterprise Fees"
+          enterprise_permissions: "Enterprise Permissions"
+          inventory_settings: "Inventory Settings"
+          tag_rules: "Tag Rules"
+          shop_preferences: "Shop Preferences"
+          users: "Users"
+        enterprise_group:
+          primary_details: "Primary Details"
+          users: "Users"
+          about: "About"
+          images: "Logo"
+          contact: "Contact"
+          web: "Web Resources"
     enterprise_issues:
       create_new: Create New
       resend_email: Resend Email
@@ -2080,7 +2145,6 @@ en_AU:
   admin_enterprise_groups_data_powertip: "The primary user responsible for this group."
   admin_enterprise_groups_data_powertip_logo: "This is the logo for the group"
   admin_enterprise_groups_data_powertip_promo_image: "This image is displayed at the top of the Group profile"
-  admin_enterprise_groups_contact: "Contact"
   admin_enterprise_groups_contact_phone_placeholder: "eg. 98 7654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "eg. 123 High Street"
   admin_enterprise_groups_contact_city: "Suburb"
@@ -2089,7 +2153,6 @@ en_AU:
   admin_enterprise_groups_contact_zipcode_placeholder: "eg. 3070"
   admin_enterprise_groups_contact_state_id: "State"
   admin_enterprise_groups_contact_country_id: "Country"
-  admin_enterprise_groups_web: "Web Resources"
   admin_enterprise_groups_web_twitter: "eg. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "eg. www.truffles.com"
   admin_order_cycles: "Admin Order Cycles"
@@ -2399,11 +2462,8 @@ en_AU:
   images: "Images"
   web: "Web"
   primary_details: "Primary Details"
-  adrdress: "Address"
   contact: "Contact"
   social: "Social"
-  business_details: "Business Details"
-  properties: "Properties"
   shipping: "Shipping"
   shipping_methods: "Shipping Methods"
   payment_methods: "Payment Methods"
@@ -2411,9 +2471,7 @@ en_AU:
   payment_processing_failed: "Payment could not be processed, please check the details you entered"
   payment_method_not_supported: "That payment method is unsupported. Please choose another one."
   payment_updated: "Payment Updated"
-  inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"
-  shop_preferences: "Shop Preferences"
   enterprise_fee_whole_order: Whole order
   enterprise_fee_by: "%{type} fee by %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^That relationship is already established."

@@ -141,6 +141,7 @@ nb:
   cardholder_name: "Kortholders navn"
   community_forum_url: "URL for diskusjonsforum"
   customer_instructions: "Kundeinstruksjoner"
+  additional_information: "Tilleggsinformasjon"
   devise:
     passwords:
       spree_user:
@@ -161,6 +162,7 @@ nb:
         signed_up_but_unconfirmed: "En melding med en bekreftelseslink er sendt til epostadressen din. Vennligst åpne lenken for å aktivere kontoen din."
         unknown_error: "Noe gikk galt da du opprettet kontoen din. Sjekk epostadressen din og prøv igjen."
     failure:
+      disabled: "Din konto har blitt deaktivert. Kontakt en administrator for å løse dette problemet."
       invalid: |
           Ugyldig epost eller passord.
           Var du gjest forrige gang? Kanskje du må opprette en konto eller nullstille passordet.
@@ -287,7 +289,6 @@ nb:
   producers_join: Norske produsenter er nå velkommen til å bli med i Open Food Network.
   charges_sales_tax: MVA-pliktig?
   business_address: "Forretningsadresse"
-  enterprise_permissions: "Bedriftsrettigheter"
   print_invoice: "Skriv ut Faktura"
   print_ticket: "Skriv ut kvittering"
   select_ticket_printer: "Velg skriver for kvitteringer"
@@ -472,6 +473,8 @@ nb:
         terms_of_service: "Vilkår for bruk"
         delete: "Slett fil"
         confirm_delete: "Er du sikker på at du vil slette gjeldende Vilkår for bruk?"
+        attachment: "Vedlegg"
+        create_terms_of_service: "Opprett fil med vilkår for bruk"
     number_localization:
       number_localization_settings: "Innstillinger for nummerlokalisering"
       enable_localized_number: "Bruk internasjonale tusen- og desimalskilletegn"
@@ -481,6 +484,7 @@ nb:
         enable_invoices?: "Aktivér Fakturaer?"
         invoice_style2?: "Bruk den alternative fakturamodellen som inkluderer total avgiftsoppdeling pr rate og avgiftsrateinfo pr vare (passer ikke for land som viser priser ekskludert avgift)"
         enable_receipt_printing?: "Vis valg for utskrift av kvitteringer ved bruk av kvitteringsprinter i nedtrekksmeny for bestillinger? "
+        enterprise_number_required_on_invoices?: "Krev et Org nr for å generere en faktura?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -528,6 +532,8 @@ nb:
         guest_label: "Gjesteutsjekk"
         credit_owed: "Kreditt skyldig"
         balance_due: "Til Forfall"
+      destroy:
+        has_associated_subscriptions: "Sletting mislyktes: Denne kunden har aktive abonnementer. Avbryt dem først."
     contents:
       edit:
         title: Innhold
@@ -555,6 +561,18 @@ nb:
     enterprise_groups:
       index:
         new_button: Ny Bedriftsgruppe
+      form_primary_details:
+        primary_details: "Primærdetaljer"
+      form_users:
+        users: "Brukere"
+      form_about:
+        about: "Om"
+      form_images:
+        images: "Bilder"
+      form_address:
+        contact: "Kontakt"
+      form_web:
+        web: "Nettressurser"
     enterprise_roles:
       form:
         manages: administrerer
@@ -755,6 +773,9 @@ nb:
         variants_without_unit_value: "ADVARSEL: Noen varianter mangler enhetsverdi"
         all: "Alle"
       select_variant: "Velg en variant"
+      note:
+        note_label: "Merk:"
+        no_note_present: "Ingen merknad gitt."
     enterprise:
       select_outgoing_oc_products_from: Velg utgående bestillingsrundeprodukter fra
     enterprises:
@@ -767,11 +788,15 @@ nb:
         manage: Administrer
       form:
         about_us:
+          legend: "Om"
           desc_short: Kort Beskrivelse
           desc_short_placeholder: Fortell oss om din bedrift med en eller to setninger
           desc_long: Om Oss
           desc_long_placeholder: Fortell kunder om deg selv. Denne informasjonen vises på din offentlige profil.
+        address:
+          legend: "Adresse"
         business_details:
+          legend: "Forretningsdetaljer"
           abn: Org. nr.
           abn_placeholder: f.eks. 999 000 123
           acn: MVA nr.
@@ -782,7 +807,8 @@ nb:
           remove_terms_and_conditions: "Fjern Fil"
           uploaded_on: "lastet opp den"
           reset_form: "Tilbakestill skjema"
-          Invoice_item_sorting: Sortering av fakturavare
+          business_address_legend: "Forretningsadresse"
+          invoice_item_sorting_legend: "Sortering av fakturavare"
           sort_items_by_supplier?: Sortere varer etter leverandør?
           sort_items_by_supplier_tip: "Når den er aktivert, vil varer sorteres etter leverandørnavn."
           enabled: Aktiver
@@ -796,6 +822,7 @@ nb:
           legal_phone_number: Juridisk telefonnummer
           phone_placeholder: "98 123 4565"
         contact:
+          legend: "Kontakt"
           name: Navn
           name_placeholder: f.eks. Gustav Plum
           email_address: Offentlig epostadresse
@@ -803,17 +830,23 @@ nb:
           email_address_tip: "Denne epostadressen vil bli vist i din offentlige profil"
           phone: Telefon
           phone_placeholder: f.eks. 987 123 654
+          whatsapp_phone: WhatsApp telefonnummer
+          whatsapp_phone_placeholder: f.eks. +61 4 9876 5432
+          whatsapp_phone_tip: "Dette nummeret vil vises i den offentlige profilen din for å åpnes som en WhatsApp-lenke."
           website: Hjemmeside
           website_placeholder: f.eks. www.truffles.com
         enterprise_fees:
+          legend: "Bedriftsavgift"
           name: Navn
           fee_type: Avfgiftstype
           manage_fees: Administrer Bedriftsavgifter
           no_fees_yet: Du har ingen bedriftsavgifter ennå.
           create_button: Opprett en nå
         enterprise_permissions:
+          legend: "Bedriftsrettigheter"
           enterprise_relationships: Bedriftsrelasjoner
         images:
+          legend: "Bilder"
           logo: Logo
           promo_image_placeholder: 'Dette bildet vises i "Om Oss"'
           promo_image_note1: 'VENNLIGST MERK:'
@@ -822,6 +855,7 @@ nb:
           remove_logo: "Fjern Bilde"
           remove_promo_image: "Fjern Bilde"
         inventory_settings:
+          legend: "Beholdningsinnstillinger"
           text1: Du kan velge å administrere lagernivå og priser inn via din
           inventory: varelager
           text2: >
@@ -832,6 +866,7 @@ nb:
           preferred_product_selection_from_inventory_only_yes: Nye produkter kan legges til mitt butikkvindu (anbefalt)
           preferred_product_selection_from_inventory_only_no: Nye produkter må legges til mitt varelager før de kan legges til mitt butikkvindu
         payment_methods:
+          legend: "Betalingsmetoder"
           name: Navn
           applies: Gjelder?
           manage: Administrer Betalingsmetoder
@@ -839,6 +874,7 @@ nb:
           create_button: Opprett Ny Betalingsmetode
           create_one_button: Opprett en nå
         primary_details:
+          legend: "Primærdetaljer"
           name: Navn
           name_placeholder: f.eks. Professor Plums Biodynamiske Trøfler
           groups: Grupper
@@ -857,6 +893,8 @@ nb:
           visible: Offentlig
           not_visible: Skjult
           hidden: Skjul alle referanser
+        properties:
+          legend: "Egenskaper"
         permalink:
           permalink: Permalink (ingen mellomrom)
           permalink_tip: "Denne permalinken brukes til å opprette url-en til din butikk: %{link}din-butikks-navn/shop"
@@ -865,6 +903,7 @@ nb:
           ofn_uid: OFN UID
           ofn_uid_tip: Den unike ID-en som brukes til å identifisere bedriften på Open Food Network.
         shipping_methods:
+          legend: "Leveringsmetoder"
           name: "Navn"
           applies: "Aktiv?"
           manage: "Administrer Leveringsmetoder"
@@ -872,6 +911,7 @@ nb:
           create_one_button: "Opprett en nå"
           no_method_yet: "Du har ingen leveringsmetoder ennå."
         shop_preferences:
+          legend: "Butikkvalg"
           shopfront_requires_login: "Offentlig synlig butikk?"
           shopfront_requires_login_tip: "Velg om kunder må logge inn for å se butikken eller om den er synlig for alle."
           shopfront_requires_login_false: "Offentlig"
@@ -920,6 +960,7 @@ nb:
           enabled: "Aktivert"
           disabled: "Deaktivert"
         social:
+          legend: "Sosial"
           twitter_placeholder: "f.eks. @the_prof"
           instagram_placeholder: "f.eks. the_prof"
           facebook_placeholder: "f.eks. www.facebook.com/FirmaNavnHer"
@@ -937,6 +978,7 @@ nb:
             i_agree: Jeg er enig
             cancel: Avbryt
         tag_rules:
+          legend: "Regler for Merkelapper"
           default_rules:
             by_default: Som Standard
             no_rules_yet: Ingen standard regler gjelder ennå
@@ -947,6 +989,7 @@ nb:
           add_new_rule: '+ Legg til En Ny Regel'
           add_new_tag: '+ Legg til ny Merkelapp'
         users:
+          legend: "Brukere"
           email_confirmation_notice_html: "Epostbekreftelse venter. Vi har sendt en bekreftelsesepost til %{email}."
           resend: Send på nytt
           owner: 'Eier'
@@ -1066,15 +1109,29 @@ nb:
         tags: "Merkelapper"
         delivery_details: "Leveringsdetaljer"
         fees: "Avgifter"
+        next: "Neste"
         previous: "Tidligere"
         save: "Lagre"
-        save_and_back_to_list: "Lagre og Tilbake til Listen"
+        save_and_next: "Lagre og Neste"
         cancel: "Avbryt"
         back_to_list: "Tilbake til Listen"
+      checkout_options:
+        back_end: "Kun backoffice"
+        cancel: "Avbryt"
+        checkout_options: "Alternativer for kassen"
+        distributor: "Distributør"
+        no_payment_methods: Hver distributør i denne bestillingsrudnen krever minst én betalingsmetode.
+        no_shipping_methods: Hver distributør i denne bestillingsrunden krever minst én leveringsmetode.
+        payment_methods: "Betalingsmetoder"
+        save: "Lagre"
+        save_and_back_to_list: "Lagre og Tilbake til Listen"
+        select_all: "Velg alle"
+        shipping_methods: "Leveringsmetoder"
       wizard_progress:
         edit: "1. Generelle Innstillinger"
         incoming: "2. Innkommende Produkter"
         outgoing: "3. Utgående Produkter"
+        checkout_options: "4. Kassealternativer"
       exchange_form:
         pickup_time_tip: Når bestillinger fra denne runden vil være klar for kunden
         pickup_instructions_placeholder: "Henteinstruksjoner"
@@ -1148,6 +1205,9 @@ nb:
         cancel: Avbryt
         proceed: Fortsett
       status:
+        undated: udatert
+        upcoming: kommende
+        open: åpen
         closed: stengt
     producer_properties:
       index:
@@ -1164,6 +1224,31 @@ nb:
         has_no_payment_methods: "%{enterprise} har ingen betalingsmetoder"
         has_no_shipping_methods: "%{enterprise} har ingen fraktmetoder"
         has_no_enterprise_fees: "%{enterprise} har ingen bedriftsavgifter"
+      side_menu:
+        enterprise:
+          primary_details: "Primærdetaljer"
+          address: "Adresse"
+          contact: "Kontakt"
+          social: "Sosial"
+          about: "Om"
+          business_details: "Forretningsdetaljer"
+          images: "Bilder"
+          properties: "Egenskaper"
+          shipping_methods: "Leveringsmetoder"
+          payment_methods: "Betalingsmetoder"
+          enterprise_fees: "Bedriftsavgift"
+          enterprise_permissions: "Bedriftsrettigheter"
+          inventory_settings: "Beholdningsinnstillinger"
+          tag_rules: "Regler for Merkelapper"
+          shop_preferences: "Butikkvalg"
+          users: "Brukere"
+        enterprise_group:
+          primary_details: "Primærdetaljer"
+          users: "Brukere"
+          about: "Om"
+          images: "Bilder"
+          contact: "Kontakt"
+          web: "Nettressurser"
     enterprise_issues:
       create_new: Opprett ny
       resend_email: Send e-post igjen
@@ -1194,6 +1279,9 @@ nb:
       pack_by_customer: Pakk etter Kunde
       pack_by_supplier: Pakk etter Leverandør
       pack_by_product: Pakke etter Produkt
+      revenues_by_hub:
+        name: Inntekter etter Hub
+        description: Inntekter etter Hun
       orders_and_distributors:
         name: Bestillinger og Distributører
         description: Bestillinger med distributørdetaljer
@@ -1767,6 +1855,7 @@ nb:
       invalid_email: "Vennligst oppgi en gyldig epostadresse"
       select_a_shipping_method: Velg en leveringsmetode
       select_a_payment_method: Velg en betalingsmetode
+      no_shipping_methods_available: Kasse er ikke mulig på grunn av manglende leveringsalternativer. Ta kontakt med butikkeieren.
   order_paid: BETALT
   order_not_paid: IKKE BETALT
   order_total: Sum bestilling
@@ -1785,6 +1874,7 @@ nb:
   order_hub_info: Hub info
   order_back_to_store: Tilbake til butikken
   order_back_to_cart: Tilbake til handlekurven
+  order_back_to_website: Tilbake til nettsiden
   bom_tip: "Bruk denne siden for å endre produktmengder på tvers av flere bestillinger. Produkter kan også fjernes fra bestillinger helt hvis påkrevd."
   unsaved_changes_warning: "Ulagrede endringer finnes og vil gå tapt hvis du fortsetter."
   unsaved_changes_error: "Felt med røde kanter inneholder feil."
@@ -2180,7 +2270,10 @@ nb:
         contact_field_placeholder: "Kontaktnavn"
         contact_field_required: "Du må legge inn en hovedkontakt."
         phone_field: "Telefonnummer"
+        whatsapp_phone_field: "WhatsApp telefonnummer"
+        whatsapp_phone_tooltip: "Dette nummeret vil vises i den offentlige profilen din for å åpnes som en WhatsApp-lenke."
         phone_field_placeholder: "f.eks. (03) 1234 5678"
+        whatsapp_phone_field_placeholder: "f.eks. +61 4 1234 5678"
       type:
         title: "Type"
         headline: "Siste skritt for å legge til %{enterprise}!"
@@ -2310,7 +2403,6 @@ nb:
   admin_enterprise_groups_data_powertip: "Hovedbrukeren ansvarlig for denne gruppen."
   admin_enterprise_groups_data_powertip_logo: "Dette er logoen for gruppen"
   admin_enterprise_groups_data_powertip_promo_image: "Dette bildet vises på toppen av Gruppens profil"
-  admin_enterprise_groups_contact: "Kontakt"
   admin_enterprise_groups_contact_phone_placeholder: "f.eks. 987 123 654"
   admin_enterprise_groups_contact_address1_placeholder: "f.eks. 123 High Street"
   admin_enterprise_groups_contact_city: "Område"
@@ -2319,7 +2411,6 @@ nb:
   admin_enterprise_groups_contact_zipcode_placeholder: "f.eks. 3070"
   admin_enterprise_groups_contact_state_id: "Tilstand"
   admin_enterprise_groups_contact_country_id: "Land"
-  admin_enterprise_groups_web: "Nettressurser"
   admin_enterprise_groups_web_twitter: "f.eks. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "f.eks. www.truffles.com"
   admin_order_cycles: "Administrasjon Bestillingsrunder"
@@ -2495,6 +2586,8 @@ nb:
   report_header_hub_address: Hubadresse
   report_header_to_hub: Til Hub
   report_header_hub_code: Hubkode
+  report_header_hub_id: Hub ID
+  report_header_hub_owner_email: Hub-eier epost
   report_header_code: Kode
   report_header_paid: Betalt?
   report_header_delivery: Levert?
@@ -2641,11 +2734,8 @@ nb:
   images: "Bilder"
   web: "Nett"
   primary_details: "Primærdetaljer"
-  adrdress: "Adresse"
   contact: "Kontakt"
   social: "Sosial"
-  business_details: "Forretningsdetaljer"
-  properties: "Egenskaper"
   shipping: "Levering"
   shipping_methods: "Leveringsmetoder"
   payment_methods: "Betalingsmetoder"
@@ -2655,9 +2745,7 @@ nb:
   payment_updated: "Betaling Oppdatert"
   cannot_perform_operation: "Kunne ikke oppdatere betalingen"
   action_required: "Handling kreves"
-  inventory_settings: "Beholdningsinnstillinger"
   tag_rules: "Regler merkelapper"
-  shop_preferences: "Butikkvalg"
   enterprise_fee_whole_order: Hele bestillingen
   enterprise_fee_by: "%{type} avgift ved %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Den relasjonen er allerede etablert."
@@ -3431,6 +3519,7 @@ nb:
     email: Epost
     account_updated: "Konto oppdatert!"
     email_updated: "Kontoen vil bli oppdatert når den nye epostadressen er bekreftet."
+    show_api_key_view_toggled: "Vis API-nøkkelvisning er endret!"
     my_account: "Min konto"
     date: "Dato"
     time: "Tid"
@@ -3576,6 +3665,10 @@ nb:
           results_found: "%{number} Resultater funnet."
           viewing: "Ser %{start} til %{end}."
           print_invoices: "Skriv ut fakturaer"
+          selected:
+            zero: "Ingen ordre valgt"
+            one: "1 ordre valgt"
+            other: "%{count} bestillinger valgt"
         sortable_header:
           payment_state: "Betalingsstatus"
           shipment_state: "Leveringsstatus"
@@ -3590,6 +3683,9 @@ nb:
           from: "Fra"
           to: "Fakturér til"
           shipping: "Levering"
+        note:
+          note_label: "Merk:"
+          no_note_present: "Ingen merknad oppgitt."
         form:
           distribution_fields:
             title: "Distribusjon"
@@ -3712,6 +3808,7 @@ nb:
           paypal:
             no_payment_via_admin_backend: Paypal-betalinger kan ikke behandles i Backoffice
       products:
+        image_upload_error: "Last opp bildet i JPG-, PNG-, GIF-, SVG- eller WEBP-format."
         new:
           title: "Nytt produkt"
           new_product: "Nytt produkt"
@@ -3774,6 +3871,7 @@ nb:
           back_to_users_list: "Tilbake til brukerlisten"
           general_settings: "Generelle innstillinger"
         form:
+          disabled: "Deaktivert?"
           email: "Epost"
           roles: "Roller"
           enterprise_limit: "Bedriftsgrense"
@@ -3976,10 +4074,14 @@ nb:
     users:
       api_keys:
         regenerate_key: "Regenerer Nøkkel"
+        title: API-nøkkel
+      developer_settings:
+        title: Utviklerinnstillinger
       form:
         account_settings: Kontoinnstillinger
       show:
         tabs:
+          developer_settings: Utviklerinnstillinger
           orders: Bestillinger
           cards: Kredittkort
           transactions: Transaksjoner
@@ -4010,6 +4112,7 @@ nb:
         total: Total
         paid?: Betalt?
         status: Status
+        completed: Fullført
         cancelled: Avbrutt
       saved_cards:
         default?: Standard?
@@ -4021,6 +4124,7 @@ nb:
       authorised_shops:
         shop_name: "Butikknavn"
         allow_charges?: "Tillate at standardkort blir belastet?"
+        no_default_saved_cards_tooltip: Du må merke ett kredittkort som standard for å tillate belastninger.
     localized_number:
       invalid_format: har et ugyldig format. Vennligst skriv inn et nummer.
     api:
@@ -4039,6 +4143,7 @@ nb:
       shipment:
         cannot_ready: "Kan ikke gjøre klar forsendelse."
       invalid_taxonomy_id: "Ugyldig kategori-id."
+      toggle_api_key_view: "Vis API-nøkkelvisning for bruker"
     activerecord:
       models:
         spree/payment:
@@ -4085,3 +4190,13 @@ nb:
       x_years:
         one: "1 år"
         other: "%{count} år"
+  errors:
+    not_found:
+      title: "Siden du lette etter eksisterer ikke (404)"
+      message_html: "<b>Vennligst prøv på nytt</b><p> Dette kan være et midlertidig problem. Klikk tilbake-knappen for å gå tilbake til forrige skjermbilde eller gå tilbake til <a href='/'>Hjem</a> og prøv igjen.</p> <b>Kontakt support</b><p> Hvis problemet vedvarer eller haster, vennligst fortell oss om det. Finn kontaktinformasjonen vår fra den globale <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local-siden</a> .</p><p> Det hjelper oss virkelig hvis du kan gi så mange detaljer som mulig om hva den manglende siden handler om.</p>"
+    internal_server_error:
+      title: "Vi beklager, men noe gikk galt (500)"
+      message_html: "<b>Vennligst prøv på nytt</b><p> Dette kan være et midlertidig problem. Klikk tilbake-knappen for å gå tilbake til forrige skjermbilde eller gå tilbake til <a href='/''>Hjem</a> og prøv igjen.</p> <b>Vi er på saken</b><p> Hvis du har sett dette problemet før, vet vi sannsynligvis allerede om det og jobber med en løsning. Vi registrerer alle feilene som dukker opp.</p> <b>Kontakt support</b><p> Hvis problemet vedvarer eller haster, vennligst fortell oss om det. Finn kontaktinformasjonen vår fra den globale <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local-siden</a> .</p><p> Det hjelper oss virkelig hvis du kan gi så mange detaljer som mulig om hva du gjorde da denne feilen oppstod.</p>"
+    unprocessable_entity:
+      title: "Endringen du ønsket ble avvist (422)"
+      message_html: "<p>Endringen du ønsket ble avvist. Kanskje du prøvde å endre noe du ikke har tilgang til.<br><h3> <a href='/' >Vend hjem</a></h3></p>"

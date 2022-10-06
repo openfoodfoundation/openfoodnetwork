@@ -262,7 +262,6 @@ ca:
   search_by_name: Cercar per nom o barri ...
   producers_join: Els productors australians son ara benvinguts a unir-se a Open Food Network.
   charges_sales_tax: Càrrecs d'IVA?
-  enterprise_permissions: "Permisos de l'organització"
   print_invoice: "Imprimir Factura"
   print_ticket: "Imprimir tiquet"
   select_ticket_printer: "Seleccionar la impressora de tiquets"
@@ -530,6 +529,18 @@ ca:
     enterprise_groups:
       index:
         new_button: Grup d'organització nou
+      form_primary_details:
+        primary_details: "Detalls principals"
+      form_users:
+        users: "Usuàries"
+      form_about:
+        about: "Sobre"
+      form_images:
+        images: "Imatges"
+      form_address:
+        contact: "Contacte"
+      form_web:
+        web: "Recursos web"
     enterprise_roles:
       form:
         manages: gestiona
@@ -740,11 +751,15 @@ ca:
         manage: Gestiona
       form:
         about_us:
+          legend: "Sobre"
           desc_short: Descripció breu
           desc_short_placeholder: Explica'ns sobre la teva organització en una o dues frases
           desc_long: Sobre nosaltres
           desc_long_placeholder: Explica coses sobre tu als clients. Aquesta informació apareixerà al teu perfil públic.
+        address:
+          legend: "Adreça"
         business_details:
+          legend: "Dades comercials"
           abn: NIF
           abn_placeholder: p. ex. F987654321
           acn: NIF
@@ -757,6 +772,7 @@ ca:
         business_address:
           address2: Adreça (continua)
         contact:
+          legend: "Contacte"
           name: Nom
           name_placeholder: 'p. ex: Josep Ribes'
           email_address: Adreça electrònica pública
@@ -767,12 +783,16 @@ ca:
           website: Lloc web
           website_placeholder: 'p. ex.: www.hortajosepribes.com'
         enterprise_fees:
+          legend: "Comissions de l'organització"
           name: Nom
           fee_type: Tipus de comissió
           manage_fees: Gestioneu les comissions de l'organització
           no_fees_yet: Encara no tens cap tipus de comissió de l'organització
           create_button: Crea'n una ara
+        enterprise_permissions:
+          legend: "Permisos de l'organització"
         images:
+          legend: "Imatges"
           logo: Logotip
           promo_image_placeholder: 'Aquesta imatge es mostra a "Sobre Nosaltres"'
           promo_image_note1: 'ATENCIÓ:'
@@ -781,6 +801,7 @@ ca:
           remove_logo: "Elimina la imatge "
           remove_promo_image: "Elimina la imatge "
         inventory_settings:
+          legend: "Configuració de l'inventari"
           text1: 'Pots optar per gestionar els nivells d''existències i els preus a través del teu '
           inventory: inventari
           text2: >
@@ -792,6 +813,7 @@ ca:
           preferred_product_selection_from_inventory_only_yes: Es poden introduir nous productes directament a la meva botiga (recomanat)
           preferred_product_selection_from_inventory_only_no: He d'afegir els nous productes a l'inventari abans de poder-los mostrar a la meva botiga.
         payment_methods:
+          legend: "Mètodes de Pagament"
           name: Nom
           applies: Aplicar?
           manage: Gestiona els mètodes de pagament
@@ -799,6 +821,7 @@ ca:
           create_button: Crea un nou mètode de pagament
           create_one_button: Crea'n un ara
         primary_details:
+          legend: "Detalls principals"
           name: Nom
           name_placeholder: p. ex. Horta Josep Ribes
           groups: Xarxes/Grups
@@ -814,6 +837,8 @@ ca:
           sells_tip: "Cap: l'organització no ven als clients directament. <br /> Propietari: l'organització ven productes propis als clients. <br /> Qualsevol: l'organització pot vendre productes propis o d'altres empreses. <br />"
           visible_in_search: Visible a la cerca?
           visible: Públic
+        properties:
+          legend: "Propietats"
         permalink:
           permalink: Permalink (sense espais)
           permalink_tip: "Aquest enllaç permanent s'utilitza per crear l'url a la vostra botiga: %{link} el-nom-de-la-vostra-botiga /botiga"
@@ -822,6 +847,7 @@ ca:
           ofn_uid: UID d'OFN
           ofn_uid_tip: L'identificador únic que s’utilitza per identificar l'organització a Open Food Network.
         shipping_methods:
+          legend: "Mètodes d'enviament"
           name: "Nom"
           applies: "Actiu?"
           manage: "Gestiona els mètodes d'enviament"
@@ -829,6 +855,7 @@ ca:
           create_one_button: "Crea'n un ara"
           no_method_yet: "Encara no teniu cap mètode d'enviament."
         shop_preferences:
+          legend: "Preferències de la botiga"
           shopfront_requires_login: "Botiga visible públicament?"
           shopfront_requires_login_tip: "Trieu si les consumidores han d'iniciar sessió per veure la botiga o si és visible per a tothom."
           shopfront_requires_login_false: "Públic"
@@ -877,6 +904,7 @@ ca:
           enabled: "Habilitat"
           disabled: "Deshabilitat"
         social:
+          legend: "Social"
           twitter_placeholder: "p. ex: @horta_josepribes"
           instagram_placeholder: "p. ex: horta_josepribes"
           facebook_placeholder: "p .ex: www.facebook.com/NomDeLaPàgina"
@@ -894,6 +922,7 @@ ca:
             i_agree: Accepto
             cancel: Cancel·lar
         tag_rules:
+          legend: "Regles d'etiqueta"
           default_rules:
             by_default: Per defecte
             no_rules_yet: Encara no s'aplica cap regla per defecte
@@ -904,6 +933,7 @@ ca:
           add_new_rule: '+ Afegeix una nova regla'
           add_new_tag: '+ Afegeix una nova etiqueta'
         users:
+          legend: "Usuàries"
           email_confirmation_notice_html: "La confirmació de correu electrònic està pendent. Hem enviat un correu electrònic de confirmació a %{email}."
           resend: Reenviar
           owner: 'Propietària'
@@ -1021,11 +1051,21 @@ ca:
         tags: "Etiquetes"
         delivery_details: "Detalls d'enviament"
         fees: "Comissions"
+        next: "Següent"
         previous: "Anterior"
         save: "Desa"
-        save_and_back_to_list: "Desa i torna a la llista"
+        save_and_next: "Desa i següent"
         cancel: "Cancel·lar"
         back_to_list: "Tornar a la llista"
+      checkout_options:
+        back_end: "Només pàgina administració (back office) "
+        cancel: "Cancel·lar"
+        distributor: "Distribuïdora"
+        payment_methods: "Mètodes de Pagament"
+        save: "Desa"
+        save_and_back_to_list: "Desa i torna a la llista"
+        select_all: "Seleccionar tot"
+        shipping_methods: "Mètodes d'enviament"
       wizard_progress:
         edit: "1. Configuració general"
         incoming: "2. Productes entrants"
@@ -1117,6 +1157,31 @@ ca:
         has_no_payment_methods: "%{enterprise} no té mètodes de pagament"
         has_no_shipping_methods: "%{enterprise} no té mètodes d'enviament"
         has_no_enterprise_fees: "%{enterprise} no té comissions de l'organització"
+      side_menu:
+        enterprise:
+          primary_details: "Detalls principals"
+          address: "Adreça"
+          contact: "Contacte"
+          social: "Social"
+          about: "Sobre"
+          business_details: "Dades comercials"
+          images: "Imatges"
+          properties: "Propietats"
+          shipping_methods: "Mètodes d'enviament"
+          payment_methods: "Mètodes de Pagament"
+          enterprise_fees: "Comissions de l'organització"
+          enterprise_permissions: "Permisos de l'organització"
+          inventory_settings: "Configuració de l'inventari"
+          tag_rules: "Regles d'etiqueta"
+          shop_preferences: "Preferències de la botiga"
+          users: "Usuàries"
+        enterprise_group:
+          primary_details: "Detalls principals"
+          users: "Usuàries"
+          about: "Sobre"
+          images: "Imatges"
+          contact: "Contacte"
+          web: "Recursos web"
     enterprise_issues:
       create_new: Crear nou
       resend_email: Reenvia el correu electrònic
@@ -2192,7 +2257,6 @@ ca:
   admin_enterprise_groups_data_powertip: "La usuària principal responsable d'aquest grup."
   admin_enterprise_groups_data_powertip_logo: "Això és el logotip del grup"
   admin_enterprise_groups_data_powertip_promo_image: "Aquesta imatge es mostra a la part superior del perfil del grup"
-  admin_enterprise_groups_contact: "Contacte"
   admin_enterprise_groups_contact_phone_placeholder: "p. ex.: 98 7654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "p. ex: Carrer Ample, 23"
   admin_enterprise_groups_contact_city: "Barri"
@@ -2201,7 +2265,6 @@ ca:
   admin_enterprise_groups_contact_zipcode_placeholder: "p. ex: 08870"
   admin_enterprise_groups_contact_state_id: "Estat"
   admin_enterprise_groups_contact_country_id: "País"
-  admin_enterprise_groups_web: "Recursos web"
   admin_enterprise_groups_web_twitter: "p. ex: @horta_josepribes"
   admin_enterprise_groups_web_website_placeholder: "p. ex.: www.hortajosepribes.coop"
   admin_order_cycles: "Cicles de comanda de l'Admin"
@@ -2515,11 +2578,8 @@ ca:
   images: "Imatges"
   web: "Web"
   primary_details: "Detalls principals"
-  adrdress: "Adreça"
   contact: "Contacte"
   social: "Social"
-  business_details: "Dades comercials"
-  properties: "Propietats"
   shipping: "Enviament"
   shipping_methods: "Mètodes d'enviament"
   payment_methods: "Mètodes de Pagament"
@@ -2529,9 +2589,7 @@ ca:
   payment_updated: "Pagament actualitzat"
   cannot_perform_operation: "No s'ha pogut actualitzar el pagament"
   action_required: "Acció requerida"
-  inventory_settings: "Configuració de l'inventari"
   tag_rules: "Regles d'etiqueta"
-  shop_preferences: "Preferències de la botiga"
   enterprise_fee_whole_order: Comanda sencera
   enterprise_fee_by: "Comissió %{type} per %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^ Aquesta relació ja està establerta."

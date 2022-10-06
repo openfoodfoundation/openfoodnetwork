@@ -287,7 +287,6 @@ ar:
   producers_join: المنتجون الأستراليون مدعوون الآن للانضمام إلى شبكة الغذاء المفتوح.
   charges_sales_tax: رسوم ضريبة السلع والخدمات؟
   business_address: "عنوان العمل"
-  enterprise_permissions: "أذونات المؤسسة"
   print_invoice: "طباعة الفاتورة"
   print_ticket: "طباعة التذكرة"
   select_ticket_printer: "حدد الطابعة للتذاكر"
@@ -555,6 +554,18 @@ ar:
     enterprise_groups:
       index:
         new_button: مجموعة الشركات الجديدة
+      form_primary_details:
+        primary_details: "التفاصيل الأساسية"
+      form_users:
+        users: "المستخدمين"
+      form_about:
+        about: "حول"
+      form_images:
+        images: "صور"
+      form_address:
+        contact: "اتصل"
+      form_web:
+        web: "موارد الويب"
     enterprise_roles:
       form:
         manages: يدير
@@ -767,11 +778,15 @@ ar:
         manage: يدير
       form:
         about_us:
+          legend: "حول"
           desc_short: وصف قصير
           desc_short_placeholder: أخبرنا عن شركتك في جملة أو جملتين
           desc_long: معلومات عنا
           desc_long_placeholder: أخبر العملاء عن نفسك. تظهر هذه المعلومات في ملفك الشخصي العام.
+        address:
+          legend: "عنوان"
         business_details:
+          legend: "تفاصيل العمل"
           abn: ABN
           abn_placeholder: على سبيل المثال. 99 123 456 789
           acn: ACN
@@ -782,7 +797,8 @@ ar:
           remove_terms_and_conditions: "إزالة الملف"
           uploaded_on: "تم الرفع في"
           reset_form: "إعادة تعيين النموذج"
-          Invoice_item_sorting: فرز بند الفاتورة
+          business_address_legend: "عنوان العمل"
+          invoice_item_sorting_legend: "فرز بند الفاتورة"
           sort_items_by_supplier?: فرز العناصر حسب المورد؟
           sort_items_by_supplier_tip: "عند التمكين ، سيتم فرز العناصر حسب اسم المورد."
           enabled: تمكين
@@ -796,6 +812,7 @@ ar:
           legal_phone_number: رقم الهاتف القانوني
           phone_placeholder: "98123 4565"
         contact:
+          legend: "اتصل"
           name: اسم
           name_placeholder: على سبيل المثال. برقوق غوستاف
           email_address: عنوان البريد الإلكتروني العام
@@ -806,12 +823,16 @@ ar:
           website: موقع الكتروني
           website_placeholder: على سبيل المثال. www.truffles.com
         enterprise_fees:
+          legend: "رسوم الشركة"
           name: اسم
           fee_type: نوع الرسوم
           manage_fees: إدارة رسوم الشركة
           no_fees_yet: ليس لديك أي رسوم شركة حتى الآن.
           create_button: إنشاء واحدة الآن
+        enterprise_permissions:
+          legend: "أذونات المؤسسة"
         images:
+          legend: "صور"
           logo: شعار
           promo_image_placeholder: 'يتم عرض هذه الصورة في &quot;من نحن&quot;'
           promo_image_note1: 'يرجى الملاحظة:'
@@ -820,6 +841,7 @@ ar:
           remove_logo: "إزالة الصورة"
           remove_promo_image: "إزالة الصورة"
         inventory_settings:
+          legend: "إعدادات المخزون"
           text1: يمكنك اختيار إدارة مستويات المخزون والأسعار عبر
           inventory: المخزون
           text2: >
@@ -837,6 +859,7 @@ ar:
           create_button: إنشاء طريقة دفع جديدة
           create_one_button: إنشاء واحدة الآن
         primary_details:
+          legend: "التفاصيل الأساسية"
           name: اسم
           name_placeholder: على سبيل المثال. البروفيسور برقوق الكمأ الحيوي
           groups: مجموعات
@@ -852,6 +875,8 @@ ar:
           sells_tip: "لا شيء - لا تبيع المؤسسات للعملاء مباشرة. <br /> الخاصة - تبيع المؤسسات المنتجات الخاصة بها للعملاء. <br /> أي - يمكن للمؤسسات بيع منتجات المؤسسات الخاصة أو غيرها. <br />"
           visible_in_search: مرئي في البحث؟
           visible: عام
+        properties:
+          legend: "الخصائص"
         permalink:
           permalink: الرابط الثابت (بدون مسافات)
           permalink_tip: "يستخدم الرابط الثابت لإنشاء رابط إلى متجرك: %{link}your-shop-name / shop"
@@ -860,6 +885,7 @@ ar:
           ofn_uid: شبكة الغذاء المفتوح UID
           ofn_uid_tip: المعرف الفريد المستخدم لتحديد الشركة على شبكة الغذاء المفتوح.
         shipping_methods:
+          legend: "طرق الشحن"
           name: "اسم"
           applies: "نشيط؟"
           manage: "إدارة طرق الشحن"
@@ -867,6 +893,7 @@ ar:
           create_one_button: "إنشاء واحدة الآن"
           no_method_yet: "ليس لديك أي طرق شحن حتى الآن."
         shop_preferences:
+          legend: "تفضيلات المتجر"
           shopfront_requires_login: "واجهة المتجر مرئية للعام؟"
           shopfront_requires_login_tip: "اختر ما إذا كان يجب على العملاء تسجيل الدخول لعرض واجهة المحل أو إذا كان مرئيًا للجميع."
           shopfront_requires_login_false: "عام"
@@ -914,6 +941,7 @@ ar:
           enabled: "تمكين"
           disabled: "تعليق"
         social:
+          legend: "اجتماعي"
           twitter_placeholder: "على سبيل المثال. the_prof"
           instagram_placeholder: "على سبيل المثال. the_prof"
           facebook_placeholder: "على سبيل المثال. www.facebook.com/PageNameHere"
@@ -931,6 +959,7 @@ ar:
             i_agree: أنا موافق
             cancel: إلغاء
         tag_rules:
+          legend: "قواعد الوسم"
           default_rules:
             by_default: بشكل افتراضي
             no_rules_yet: لا توجد قواعد افتراضية تطبق حتى الآن
@@ -941,6 +970,7 @@ ar:
           add_new_rule: '+ أضف قاعدة جديدة'
           add_new_tag: '+ أضف وسم جديدة'
         users:
+          legend: "المستخدمين"
           email_confirmation_notice_html: "تأكيد البريد الإلكتروني معلق. لقد أرسلنا رسالة تأكيد بالبريد الإلكتروني إلى %{email}."
           resend: إعادة إرسال
           owner: 'المالك'
@@ -1060,11 +1090,20 @@ ar:
         tags: "الاوسمة"
         delivery_details: "تفاصيل التسليم"
         fees: "رسوم"
+        next: "التالى"
         previous: "السابق"
         save: "حفظ"
-        save_and_back_to_list: "حفظ والعودة إلى القائمة"
+        save_and_next: "حفظ والتالي"
         cancel: "إلغاء"
         back_to_list: "العودة للقائمة"
+      checkout_options:
+        back_end: "المكتب الخلفي فقط"
+        cancel: "إلغاء"
+        distributor: "الموزع"
+        save: "حفظ"
+        save_and_back_to_list: "حفظ والعودة إلى القائمة"
+        select_all: "اختر الكل"
+        shipping_methods: "طرق الشحن"
       wizard_progress:
         edit: "1. الإعدادات العامة"
         incoming: "2. المنتجات الواردة"
@@ -1158,6 +1197,30 @@ ar:
         has_no_payment_methods: "%{enterprise} لا يوجد لديها طريقة دفع"
         has_no_shipping_methods: "%{enterprise} لا يوجد لديها طريقة شحن"
         has_no_enterprise_fees: "%{enterprise} لا يوجد لديها رسوم الشركة"
+      side_menu:
+        enterprise:
+          primary_details: "التفاصيل الأساسية"
+          address: "عنوان"
+          contact: "اتصل"
+          social: "اجتماعي"
+          about: "حول"
+          business_details: "تفاصيل العمل"
+          images: "صور"
+          properties: "الخصائص"
+          shipping_methods: "طرق الشحن"
+          enterprise_fees: "رسوم الشركة"
+          enterprise_permissions: "أذونات المؤسسة"
+          inventory_settings: "إعدادات المخزون"
+          tag_rules: "قواعد الوسم"
+          shop_preferences: "تفضيلات المتجر"
+          users: "المستخدمين"
+        enterprise_group:
+          primary_details: "التفاصيل الأساسية"
+          users: "المستخدمين"
+          about: "حول"
+          images: "صور"
+          contact: "اتصل"
+          web: "موارد الويب"
     enterprise_issues:
       create_new: 'انشاء جديد '
       resend_email: إعادة إرسال البريد الإلكتروني
@@ -2295,7 +2358,6 @@ ar:
   admin_enterprise_groups_data_powertip: "المستخدم الرئيسي المسؤول عن هذه المجموعة."
   admin_enterprise_groups_data_powertip_logo: "هذا هو شعار المجموعة"
   admin_enterprise_groups_data_powertip_promo_image: "يتم عرض هذه الصورة في أعلى ملف تعريف المجموعة"
-  admin_enterprise_groups_contact: "اتصل"
   admin_enterprise_groups_contact_phone_placeholder: "على سبيل المثال. 98 7654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "على سبيل المثال. 123 شارع العليا"
   admin_enterprise_groups_contact_city: "ضاحية"
@@ -2304,7 +2366,6 @@ ar:
   admin_enterprise_groups_contact_zipcode_placeholder: "على سبيل المثال. 3070"
   admin_enterprise_groups_contact_state_id: "ولاية"
   admin_enterprise_groups_contact_country_id: "بلد"
-  admin_enterprise_groups_web: "موارد الويب"
   admin_enterprise_groups_web_twitter: "على سبيل المثال. the_prof"
   admin_enterprise_groups_web_website_placeholder: "على سبيل المثال. www.truffles.com"
   admin_order_cycles: "دورات طلب المشرفين"
@@ -2616,11 +2677,8 @@ ar:
   images: "صور"
   web: "شبكة"
   primary_details: "التفاصيل الأساسية"
-  adrdress: "عنوان"
   contact: "اتصل"
   social: "اجتماعي"
-  business_details: "تفاصيل العمل"
-  properties: "الخصائص"
   shipping: "الشحن"
   shipping_methods: "طرق الشحن"
   payment_methods: "طرق الدفع"
@@ -2630,9 +2688,7 @@ ar:
   payment_updated: "تم تحديث الدفع"
   cannot_perform_operation: "تعذر تحديث الدفع"
   action_required: "الإجراء مطلوب"
-  inventory_settings: "إعدادات المخزون"
   tag_rules: "قواعد الوسم"
-  shop_preferences: "تفضيلات المتجر"
   enterprise_fee_whole_order: الطلب كله
   enterprise_fee_by: "%{type} رسوم بواسطة %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^ تم تأسيس هذه العلاقة بالفعل."

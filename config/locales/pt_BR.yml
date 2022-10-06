@@ -231,7 +231,6 @@ pt_BR:
   search_by_name: Procurar por nome ou localidade
   producers_join: Produtores nacionais estão convidados a se ajuntarem!
   charges_sales_tax: Cobra imposto sobre bens e serviços?
-  enterprise_permissions: "Permissões da Iniciativa"
   print_invoice: "Imprimir fatura"
   print_ticket: "Imprimir bilhetes"
   select_ticket_printer: "Selecione a impressora para bilhetes"
@@ -498,6 +497,18 @@ pt_BR:
     enterprise_groups:
       index:
         new_button: Novo grupo de iniciativas
+      form_primary_details:
+        primary_details: "Detalhes principais"
+      form_users:
+        users: "Usuários"
+      form_about:
+        about: "Sobre"
+      form_images:
+        images: "Imagens"
+      form_address:
+        contact: "Contato"
+      form_web:
+        web: "Recursos Web"
     enterprise_roles:
       form:
         manages: administra
@@ -708,11 +719,15 @@ pt_BR:
         manage: Administrar
       form:
         about_us:
+          legend: "Sobre"
           desc_short: Descrição curta
           desc_short_placeholder: Conte-nos sobre a sua iniciativa em uma ou duas frases
           desc_long: Sobre nós
           desc_long_placeholder: Conte mais sobre você aqui. Esta informação aparece no seu perfil público.
+        address:
+          legend: "Endereço"
         business_details:
+          legend: "Detalhes da iniciativa"
           abn: CNPJ
           abn_placeholder: 'ex: 11 987 654 321'
           acn: NIRE
@@ -725,6 +740,7 @@ pt_BR:
         business_address:
           address2: Complemento
         contact:
+          legend: "Contato"
           name: Nome
           name_placeholder: 'ex: Gustavo Pereira'
           email_address: Endereço de email público
@@ -735,14 +751,17 @@ pt_BR:
           website: Site
           website_placeholder: 'ex: www.trufas.com.br'
         enterprise_fees:
+          legend: "Taxas da iniciativa"
           name: Nome
           fee_type: Tipo de taxa
           manage_fees: Gerenciar taxas da iniciativa
           no_fees_yet: Você ainda não possui nenhuma taxa de iniciativa.
           create_button: Criar uma agora
         enterprise_permissions:
+          legend: "Permissões da Iniciativa"
           enterprise_relationships: Relações da iniciativa
         images:
+          legend: "Imagens"
           logo: Logo
           promo_image_placeholder: 'Essa imagem aparece em "Sobre nós"'
           promo_image_note1: 'POR FAVOR OBSERVE:'
@@ -751,6 +770,7 @@ pt_BR:
           remove_logo: "Remover imagem"
           remove_promo_image: "Remover imagem"
         inventory_settings:
+          legend: "Configurações de inventário"
           text1: Você pode optar por modificar preços e nível de estoque através de seu
           inventory: inventário
           text2: >
@@ -761,6 +781,7 @@ pt_BR:
           preferred_product_selection_from_inventory_only_yes: Todos os produtos dos meus fornecedores podem ser disponibilizados na minha loja virtual (recomendado)
           preferred_product_selection_from_inventory_only_no: Somente produtos que eu adicionar ao meu Inventário podem ser disponibilizados na minha loja virtual.
         payment_methods:
+          legend: "Métodos de pagamento"
           name: Nome
           applies: Aplica?
           manage: Gerenciar métodos de pagamento
@@ -768,6 +789,7 @@ pt_BR:
           create_button: Criar novo método de pagamento
           create_one_button: 'Criar um agora '
         primary_details:
+          legend: "Detalhes principais"
           name: 'Nome '
           name_placeholder: 'ex: Trufas Biodinâmicas do Pereira'
           groups: Grupos
@@ -783,6 +805,8 @@ pt_BR:
           sells_tip: "Nenhum - iniciativa não vende diretamente para compradores. <br /> Próprio - iniciativa vende produtos próprios para compradores. <br /> Qualquer - iniciativa vende produtos próprios ou de outras iniciativas. <br />"
           visible_in_search: Visível na busca?
           visible: Publico
+        properties:
+          legend: "Propriedades"
         permalink:
           permalink: Permalink (sem espaços)
           permalink_tip: "Esse link é usado para criar a URL para a sua loja: %{link}nome-loja/loja"
@@ -790,6 +814,7 @@ pt_BR:
           link_to_front_tip: Um link direto para a sua loja virtual na Ajunta.
           ofn_uid_tip: O ID exclusivo usado para identificar a iniciativa na Ajunta.
         shipping_methods:
+          legend: "Método de Envio"
           name: "Nome"
           applies: "Ativo?"
           manage: "Gerenciar métodos de envio"
@@ -797,6 +822,7 @@ pt_BR:
           create_one_button: "Criar um agora"
           no_method_yet: "Você ainda não tem nenhum método de envio."
         shop_preferences:
+          legend: "Preferências da loja"
           shopfront_requires_login: "Loja virtual visível ao público?"
           shopfront_requires_login_tip: "Escolha se os clientes precisarão fazer o login para ver os produtos da loja virtual, ou se eles estarão visíveis para todos."
           shopfront_requires_login_false: "Publico"
@@ -839,6 +865,7 @@ pt_BR:
           enabled: "Ativado"
           disabled: "Desativado"
         social:
+          legend: "Social"
           twitter_placeholder: "ex:  @o_prof"
           instagram_placeholder: "ex. the_prof"
           facebook_placeholder: "ex: www.facebook.com/suapagina"
@@ -856,6 +883,7 @@ pt_BR:
             i_agree: Eu concordo
             cancel: Cancelar
         tag_rules:
+          legend: "Regras de tag"
           default_rules:
             by_default: Por padrão
             no_rules_yet: Ainda não existe nenhuma regra padrão
@@ -866,6 +894,7 @@ pt_BR:
           add_new_rule: '+ Adicionar nova regra'
           add_new_tag: '+ Adicionar nova tag'
         users:
+          legend: "Usuários"
           email_confirmation_notice_html: "Confirmação de e-mail está pendente. Enviamos um e-mail de confirmação para %{email}."
           resend: Reenviar
           owner: 'Proprietário'
@@ -983,11 +1012,21 @@ pt_BR:
         tags: "Tag"
         delivery_details: "Sobre a Entrega"
         fees: "Taxas"
+        next: "Próximo"
         previous: "Anterior"
         save: "Salvar"
-        save_and_back_to_list: "Salvar e Voltar para a Lista"
+        save_and_next: "Salvar e Seguir"
         cancel: "Cancelar"
         back_to_list: "Voltar Para a Lista"
+      checkout_options:
+        back_end: "Somente Área Administrativa"
+        cancel: "Cancelar"
+        distributor: "Distribuidor"
+        payment_methods: "Métodos de pagamento"
+        save: "Salvar"
+        save_and_back_to_list: "Salvar e Voltar para a Lista"
+        select_all: "Selecionar tudo"
+        shipping_methods: "Método de Envio"
       wizard_progress:
         edit: "1. Configurações Gerais"
         incoming: "2. Entrada de Produtos"
@@ -1078,6 +1117,31 @@ pt_BR:
         has_no_payment_methods: "%{enterprise} não possui métodos de pagamento"
         has_no_shipping_methods: "%{enterprise} não possui métodos de envio"
         has_no_enterprise_fees: "%{enterprise} não possui taxas de iniciativa"
+      side_menu:
+        enterprise:
+          primary_details: "Detalhes principais"
+          address: "Endereço"
+          contact: "Contato"
+          social: "Social"
+          about: "Sobre"
+          business_details: "Detalhes da iniciativa"
+          images: "Imagens"
+          properties: "Propriedades"
+          shipping_methods: "Método de Envio"
+          payment_methods: "Métodos de pagamento"
+          enterprise_fees: "Taxas da iniciativa"
+          enterprise_permissions: "Permissões da Iniciativa"
+          inventory_settings: "Configurações de inventário"
+          tag_rules: "Regras de tag"
+          shop_preferences: "Preferências da loja"
+          users: "Usuários"
+        enterprise_group:
+          primary_details: "Detalhes principais"
+          users: "Usuários"
+          about: "Sobre"
+          images: "Imagens"
+          contact: "Contato"
+          web: "Recursos Web"
     enterprise_issues:
       create_new: Criar nova
       resend_email: Reenviar e-mail
@@ -2150,7 +2214,6 @@ pt_BR:
   admin_enterprise_groups_data_powertip: "Usuário responsável pelo grupo"
   admin_enterprise_groups_data_powertip_logo: "Esse é o logo do grupo"
   admin_enterprise_groups_data_powertip_promo_image: "Essa é a imagem que aparecerá no topo do perfil do Grupo"
-  admin_enterprise_groups_contact: "Contato"
   admin_enterprise_groups_contact_phone_placeholder: "ex: 987654321"
   admin_enterprise_groups_contact_address1_placeholder: "ex: Rua Alta, 123"
   admin_enterprise_groups_contact_city: "Cidade"
@@ -2159,7 +2222,6 @@ pt_BR:
   admin_enterprise_groups_contact_zipcode_placeholder: "ex: 02341-001"
   admin_enterprise_groups_contact_state_id: "Estado"
   admin_enterprise_groups_contact_country_id: "País"
-  admin_enterprise_groups_web: "Recursos Web"
   admin_enterprise_groups_web_twitter: "ex: @nome_perfil"
   admin_enterprise_groups_web_website_placeholder: "ex: www.cogumelos.com.br"
   admin_order_cycles: "Ciclo de Pedidos do Administrador"
@@ -2468,11 +2530,8 @@ pt_BR:
   images: "Imagens"
   web: "Web"
   primary_details: "Detalhes principais"
-  adrdress: "Endereço"
   contact: "Contato"
   social: "Social"
-  business_details: "Detalhes da iniciativa"
-  properties: "Propriedades"
   shipping: "Envio"
   shipping_methods: "Métodos de envio"
   payment_methods: "Métodos de pagamento"
@@ -2482,9 +2541,7 @@ pt_BR:
   payment_updated: "Pagamento atualizado"
   cannot_perform_operation: "Não foi possível atualizar o pagamento"
   action_required: "Ação necessária"
-  inventory_settings: "Configurações de inventário"
   tag_rules: "Regras de tag"
-  shop_preferences: "Preferências da loja"
   enterprise_fee_whole_order: Pedido inteiro
   enterprise_fee_by: "%{type} taxa por %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Esse relacionamento já foi estabelecido."

@@ -289,7 +289,6 @@ it:
   producers_join: I Produttori sono ora invitati ad unirsi ad Open Food Network
   charges_sales_tax: Vuoi calcolare gli importi IVA delle tue vendite?
   business_address: "Indirizzo azienda"
-  enterprise_permissions: "Permessi Azienda"
   print_invoice: "Stampa Conferma d'ordine"
   print_ticket: "Stampa Biglietto"
   select_ticket_printer: "Seleziona la stampante per i biglietti"
@@ -562,6 +561,18 @@ it:
     enterprise_groups:
       index:
         new_button: Nuova Rete di aziende
+      form_primary_details:
+        primary_details: "Dettagli principali"
+      form_users:
+        users: "Utenti"
+      form_about:
+        about: "Chi siamo"
+      form_images:
+        images: "Immagini"
+      form_address:
+        contact: "Contatti"
+      form_web:
+        web: "Risorse web"
     enterprise_roles:
       form:
         manages: gestisci
@@ -777,11 +788,15 @@ it:
         manage: Gestisci
       form:
         about_us:
+          legend: "Chi siamo"
           desc_short: Breve descrizione
           desc_short_placeholder: Raccontaci la tua attività in una o due frasi
           desc_long: Chi siamo
           desc_long_placeholder: Racconta di te ai tuoi clienti. Questa informazione comparirà nel tuo profilo pubblico.
+        address:
+          legend: "Indirizzo"
         business_details:
+          legend: "Dettagli fiscali"
           abn: P. IVA
           abn_placeholder: es. 99 123 456 789
           acn: C.F.
@@ -792,7 +807,8 @@ it:
           remove_terms_and_conditions: "Rimuovi File"
           uploaded_on: "caricato il"
           reset_form: "Cancella"
-          Invoice_item_sorting: Ordina per articoli nelle conferme d'ordine
+          business_address_legend: "Indirizzo azienda"
+          invoice_item_sorting_legend: "Ordina per articoli nelle conferme d'ordine"
           sort_items_by_supplier?: Ordina articoli per produttore?
           sort_items_by_supplier_tip: "Se selezionato, i prodotti saranno ordinati per nome del produttore"
           enabled: Attiva
@@ -806,6 +822,7 @@ it:
           legal_phone_number: Numero di telefono del rappresentante legale
           phone_placeholder: "333 123123"
         contact:
+          legend: "Contatti"
           name: Nome
           name_placeholder: es. Gustav Plum
           email_address: Email (pubblica)
@@ -819,14 +836,17 @@ it:
           website: Sito web
           website_placeholder: es. www.truffles.com
         enterprise_fees:
+          legend: "Tariffe dell'azienda"
           name: Nome
           fee_type: Tipo di tariffa
           manage_fees: Gestisci tariffe azienda
           no_fees_yet: Non hai ancora nessuna tariffa aziendale
           create_button: Creane una ora
         enterprise_permissions:
+          legend: "Permessi Azienda"
           enterprise_relationships: Relazioni dell'azienda
         images:
+          legend: "Immagini"
           logo: Logo
           promo_image_placeholder: 'Questa immagine sarà visibile in "Chi Siamo"'
           promo_image_note1: 'Per favore nota:'
@@ -835,6 +855,7 @@ it:
           remove_logo: "Rimuovi immagine"
           remove_promo_image: "Rimuovi immagine"
         inventory_settings:
+          legend: "Impostazioni Inventario"
           text1: Puoi optare per la gestione dei livelli di scorta e dei prezzi attraverso il tuo
           inventory: inventario
           text2: >
@@ -846,6 +867,7 @@ it:
           preferred_product_selection_from_inventory_only_yes: I nuovi prodotti possono essere inseriti nella mia vetrina (suggerita)
           preferred_product_selection_from_inventory_only_no: I nuovi prodotti devono essere aggiunti al mio inventario prima di poter essere inseriti nella mia vetrina
         payment_methods:
+          legend: "Metodi di Pagamento"
           name: Nome
           applies: Applica?
           manage: Gestisci metodi di pagamento
@@ -853,6 +875,7 @@ it:
           create_button: Crea un nuovo metodo di pagamento
           create_one_button: Crea uno ora
         primary_details:
+          legend: "Dettagli principali"
           name: Nome
           name_placeholder: es. Tartufi Biodinamici Alba
           groups: Reti
@@ -871,6 +894,8 @@ it:
           visible: Pubblica
           not_visible: Nascosto
           hidden: Nascondi tutte le referenze
+        properties:
+          legend: "Proprietà"
         permalink:
           permalink: Permalink (nessuno spazio)
           permalink_tip: "Questo permalink serve a creare l'url al tuo negozio: %{link}nome-del-tuo-negozio/negozio"
@@ -879,6 +904,7 @@ it:
           ofn_uid: OFN ID
           ofn_uid_tip: Il codice univoco utilizzato per identificare l'azienda su OFN
         shipping_methods:
+          legend: "Metodi di Spedizione"
           name: "Nome"
           applies: "Attivo?"
           manage: "Gestisci metodi di spedizione"
@@ -886,6 +912,7 @@ it:
           create_one_button: "Crea uno ora"
           no_method_yet: "Non hai ancora un metodo di consegna"
         shop_preferences:
+          legend: "Preferenze di acquisto"
           shopfront_requires_login: "Vetrina visibile pubblicamente?"
           shopfront_requires_login_tip: "Scegli se i clienti devono essere registrati per poter vedere la vetrina o se è visibile a tutti."
           shopfront_requires_login_false: "Pubblica"
@@ -934,6 +961,7 @@ it:
           enabled: "Abilitata"
           disabled: "Disabilitata"
         social:
+          legend: "Social"
           twitter_placeholder: "es. @the_prof"
           instagram_placeholder: "es. the_prof"
           facebook_placeholder: "p.es. www.facebook.com/PageNameHere"
@@ -951,6 +979,7 @@ it:
             i_agree: Sono d'accordo
             cancel: Annulla
         tag_rules:
+          legend: "Regole Etichette"
           default_rules:
             by_default: Predefinito
             no_rules_yet: Non è ancora stata fissata nessuna regola predefinita
@@ -961,6 +990,7 @@ it:
           add_new_rule: '+ Aggiungi una nuova regola'
           add_new_tag: '+ Aggiungi una nuova etichetta'
         users:
+          legend: "Utenti"
           email_confirmation_notice_html: "Email di conferma in sospeso. Abbiamo inviato una mail di conferma a %{email}."
           resend: Invia di nuovo
           owner: 'Proprietario'
@@ -1080,11 +1110,21 @@ it:
         tags: "Etichette"
         delivery_details: "Dettagli Spedizione"
         fees: "Tariffe"
+        next: "Prossimo"
         previous: "Precedente"
         save: "Salva"
-        save_and_back_to_list: "Salva e torna alla lista"
+        save_and_next: "Salva e continua"
         cancel: "Annulla"
         back_to_list: "Indietro alla lista"
+      checkout_options:
+        back_end: "Solo Back office"
+        cancel: "Annulla"
+        distributor: "Distributore"
+        payment_methods: "Metodi di Pagamento"
+        save: "Salva"
+        save_and_back_to_list: "Salva e torna alla lista"
+        select_all: "Seleziona tutto"
+        shipping_methods: "Metodi di Spedizione"
       wizard_progress:
         edit: "1. Impostazioni generali"
         incoming: "2. Prodotti in entrata"
@@ -1181,6 +1221,31 @@ it:
         has_no_payment_methods: "%{enterprise} non ha metodi di pagamento"
         has_no_shipping_methods: "%{enterprise} non ha metodi di spedizione"
         has_no_enterprise_fees: "%{enterprise} non ha tariffe aziendali"
+      side_menu:
+        enterprise:
+          primary_details: "Dettagli principali"
+          address: "Indirizzo"
+          contact: "Contatti"
+          social: "Social"
+          about: "Chi siamo"
+          business_details: "Dettagli fiscali"
+          images: "Immagini"
+          properties: "Proprietà"
+          shipping_methods: "Metodi di Spedizione"
+          payment_methods: "Metodi di Pagamento"
+          enterprise_fees: "Tariffe dell'azienda"
+          enterprise_permissions: "Permessi Azienda"
+          inventory_settings: "Impostazioni Inventario"
+          tag_rules: "Regole Etichette"
+          shop_preferences: "Preferenze di acquisto"
+          users: "Utenti"
+        enterprise_group:
+          primary_details: "Dettagli principali"
+          users: "Utenti"
+          about: "Chi siamo"
+          images: "Immagini"
+          contact: "Contatti"
+          web: "Risorse web"
     enterprise_issues:
       create_new: Crea Nuovo
       resend_email: Invia di nuovo Email
@@ -2335,7 +2400,6 @@ it:
   admin_enterprise_groups_data_powertip: "L'utente principale responsabile per questa rete."
   admin_enterprise_groups_data_powertip_logo: "Questo è il logo per la rete"
   admin_enterprise_groups_data_powertip_promo_image: "Questa immagine è mostrata in cima al profilo della Rete"
-  admin_enterprise_groups_contact: "Contatto"
   admin_enterprise_groups_contact_phone_placeholder: "p.es. 01 123 4567"
   admin_enterprise_groups_contact_address1_placeholder: "p.es. Viale Mazzini 1"
   admin_enterprise_groups_contact_city: "Località"
@@ -2344,7 +2408,6 @@ it:
   admin_enterprise_groups_contact_zipcode_placeholder: "p.es. 20100"
   admin_enterprise_groups_contact_state_id: "Provincia"
   admin_enterprise_groups_contact_country_id: "Stato"
-  admin_enterprise_groups_web: "Risorse web"
   admin_enterprise_groups_web_twitter: "p.es. @az_agr"
   admin_enterprise_groups_web_website_placeholder: "p.es. www.cascina.it"
   admin_order_cycles: "Amministrazione Cicli d'ordine"
@@ -2668,11 +2731,8 @@ it:
   images: "Immagini"
   web: "Web"
   primary_details: "Dettagli principali"
-  adrdress: "Indirizzo"
   contact: "Contatta"
   social: "Social"
-  business_details: "Dettagli fiscali"
-  properties: "Proprietà"
   shipping: "Spedizione"
   shipping_methods: "Metodi di Spedizione"
   payment_methods: "Metodi di pagamento"
@@ -2682,9 +2742,7 @@ it:
   payment_updated: "Pagamento aggiornato"
   cannot_perform_operation: "Non è possibile aggiornare il pagamento"
   action_required: "Azione richiesta"
-  inventory_settings: "Impostazioni Inventario"
   tag_rules: "Regole Etichette"
-  shop_preferences: "Preferenze di acquisto"
   enterprise_fee_whole_order: Ordine intero
   enterprise_fee_by: "%{type} tariffa da %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Questa relazione è già stabilita."

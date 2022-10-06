@@ -287,7 +287,6 @@ hu:
   producers_join: Az ausztrál termelők most már csatlakozhatnak az Open Food Networkhöz.
   charges_sales_tax: GST-t fizet?
   business_address: "Üzleti cím"
-  enterprise_permissions: "Vállalati engedélyek"
   print_invoice: "Számla nyomtatása"
   print_ticket: "Jegy nyomtatása"
   select_ticket_printer: "Válasszon nyomtatót a jegyekhez"
@@ -555,6 +554,18 @@ hu:
     enterprise_groups:
       index:
         new_button: Új vállalati csoport
+      form_primary_details:
+        primary_details: "Elsődleges részletek"
+      form_users:
+        users: "Felhasználók"
+      form_about:
+        about: "Rólunk"
+      form_images:
+        images: "Képek"
+      form_address:
+        contact: "Kapcsolatba lépni"
+      form_web:
+        web: "Webes források"
     enterprise_roles:
       form:
         manages: kezeli
@@ -767,11 +778,15 @@ hu:
         manage: 'Beállítások:'
       form:
         about_us:
+          legend: "Rólunk"
           desc_short: Rövid leírás
           desc_short_placeholder: Meséljen egy-két mondatban vállalkozásáról
           desc_long: Rólunk
           desc_long_placeholder: Mesélj magadról az ügyfeleknek. Ez az információ az Ön nyilvános profiljában jelenik meg.
+        address:
+          legend: "Cím"
         business_details:
+          legend: "Üzleti részletek"
           abn: LÉGI ÚTON SZÁLLÍTOTT
           abn_placeholder: például. 99 123 456 789
           acn: ACN
@@ -782,6 +797,7 @@ hu:
           remove_terms_and_conditions: "Fájl eltávolítása"
           uploaded_on: "feltöltve"
           reset_form: "Űrlap visszaállítása"
+          business_address_legend: "Üzleti cím"
         business_address:
           company_legal_name: A cég hivatalos neve
           company_placeholder: Példa Inc.
@@ -791,6 +807,7 @@ hu:
           legal_phone_number: Jogi telefonszám
           phone_placeholder: "98 123 4565"
         contact:
+          legend: "Kapcsolatba lépni"
           name: Név
           name_placeholder: például. Gustav Plum
           email_address: Nyilvános e-mail cím
@@ -801,12 +818,16 @@ hu:
           website: Weboldal
           website_placeholder: például. www.truffles.com
         enterprise_fees:
+          legend: "Vállalkozási díjak"
           name: Név
           fee_type: Díjtípus
           manage_fees: Vállalati díjak kezelése
           no_fees_yet: Még nincsenek vállalkozási díjai.
           create_button: Hozzon létre egyet most
+        enterprise_permissions:
+          legend: "Vállalati engedélyek"
         images:
+          legend: "Képek"
           logo: Logó
           promo_image_placeholder: 'Ez a kép a "Rólunk" részben látható.'
           promo_image_note1: 'FIGYELEM:'''
@@ -815,6 +836,7 @@ hu:
           remove_logo: "Kép eltávolítása"
           remove_promo_image: "Kép eltávolítása"
         inventory_settings:
+          legend: "Készletbeállítások"
           text1: Dönthet úgy, hogy a készletszinteket és az árakat a sajátján keresztül kezeli
           inventory: leltár
           text2: >
@@ -829,6 +851,7 @@ hu:
           preferred_product_selection_from_inventory_only_yes: Új termékek kerülhetnek a kirakatomba (ajánlott)
           preferred_product_selection_from_inventory_only_no: Új termékeket kell hozzáadnom a készletemhez, mielőtt a boltomba kerülhetnék
         payment_methods:
+          legend: "fizetési módok"
           name: Név
           applies: Érvényes?
           manage: Fizetési módok kezelése
@@ -836,6 +859,7 @@ hu:
           create_button: Új fizetési mód létrehozása
           create_one_button: Hozzon létre egyet most
         primary_details:
+          legend: "Elsődleges részletek"
           name: Név
           name_placeholder: például. Plum professzor biodinamikus szarvasgombája
           groups: Csoportok
@@ -851,6 +875,8 @@ hu:
           sells_tip: "Nincs - a vállalat nem értékesít közvetlenül a vevőknek.<br />Saját - Vállalat saját termékeket ad el az ügyfeleknek.<br />Bármelyik - Vállalat saját vagy más vállalkozás termékeit értékesítheti.<br />"
           visible_in_search: Látható a keresésben?
           visible: Nyilvános
+        properties:
+          legend: "Tulajdonságok"
         permalink:
           permalink: Permalink (szóközök nélkül)
           permalink_tip: "Ezt az állandó linket használják az üzlet URL-jének létrehozására: %{link}a bolt neve/üzlete"
@@ -859,6 +885,7 @@ hu:
           ofn_uid: OFN UID
           ofn_uid_tip: A vállalat azonosítására használt egyedi azonosító az Open Food Network hálózaton.
         shipping_methods:
+          legend: "Szállítási módok"
           name: "Név"
           applies: "Aktív?"
           manage: "Szállítási módok kezelése"
@@ -866,6 +893,7 @@ hu:
           create_one_button: "Hozzon létre egyet most"
           no_method_yet: "Még nincs szállítási módod."
         shop_preferences:
+          legend: "Bolti beállítások"
           shopfront_requires_login: "Nyilvánosan látható kirakat?"
           shopfront_requires_login_tip: "Válassza ki, hogy az ügyfeleknek be kell-e jelentkezniük a kirakat megtekintéséhez, vagy azt mindenki láthatja."
           shopfront_requires_login_false: "Nyilvános"
@@ -918,6 +946,7 @@ hu:
           enabled: "Engedélyezve"
           disabled: "Tiltva"
         social:
+          legend: "Társadalmi"
           twitter_placeholder: "például. @the_prof"
           instagram_placeholder: "például. the_prof"
           facebook_placeholder: "például. www.facebook.com/PageNameItt"
@@ -935,6 +964,7 @@ hu:
             i_agree: Egyetértek
             cancel: Megszünteti
         tag_rules:
+          legend: "Címkeszabályok"
           default_rules:
             by_default: Alapértelmezés szerint
             no_rules_yet: Még nem érvényesek az alapértelmezett szabályok
@@ -945,6 +975,7 @@ hu:
           add_new_rule: '+ Új szabály hozzáadása'
           add_new_tag: '+ Új címke hozzáadása'''
         users:
+          legend: "Felhasználók"
           email_confirmation_notice_html: "Az e-mail megerősítés függőben van. Megerősítő e-mailt küldtünk a következő címre: %{email}."
           resend: Újraküldés
           owner: 'Tulajdonos'''
@@ -1064,11 +1095,21 @@ hu:
         tags: "Címkék"
         delivery_details: "szállítás részletei"
         fees: "Díjak"
+        next: "Következő"
         previous: "Előző"
         save: "Megment"
-        save_and_back_to_list: "Mentés és Vissza a listához"
+        save_and_next: "Mentés és Tovább"
         cancel: "Megszünteti"
         back_to_list: "Vissza a listához"
+      checkout_options:
+        back_end: "Csak back office"
+        cancel: "Megszünteti"
+        distributor: "Elosztó"
+        payment_methods: "fizetési módok"
+        save: "Mentés"
+        save_and_back_to_list: "Mentés és Vissza a listához"
+        select_all: "Mindet kiválaszt"
+        shipping_methods: "Szállítási módok"
       wizard_progress:
         edit: "1. Általános beállítások"
         incoming: "2. Bejövő termékek"
@@ -1162,6 +1203,31 @@ hu:
         has_no_payment_methods: "%{enterprise} nem rendelkezik fizetési móddal"
         has_no_shipping_methods: "%{enterprise} nem rendelkezik szállítási móddal"
         has_no_enterprise_fees: "A %{enterprise}-nek nincsenek vállalati díjai"
+      side_menu:
+        enterprise:
+          primary_details: "Elsődleges részletek"
+          address: "Cím"
+          contact: "Kapcsolatba lépni"
+          social: "Társadalmi"
+          about: "Rólunk"
+          business_details: "Üzleti részletek"
+          images: "Képek"
+          properties: "Tulajdonságok"
+          shipping_methods: "Szállítási módok"
+          payment_methods: "fizetési módok"
+          enterprise_fees: "Vállalkozási díjak"
+          enterprise_permissions: "Vállalati engedélyek"
+          inventory_settings: "Készletbeállítások"
+          tag_rules: "Címkeszabályok"
+          shop_preferences: "Bolti beállítások"
+          users: "Felhasználók"
+        enterprise_group:
+          primary_details: "Elsődleges részletek"
+          users: "Felhasználók"
+          about: "Rólunk"
+          images: "Képek"
+          contact: "Kapcsolatba lépni"
+          web: "Webes források"
     enterprise_issues:
       create_new: Újat készíteni
       resend_email: E-mail újraküldése
@@ -2296,7 +2362,6 @@ hu:
   admin_enterprise_groups_data_powertip: "A csoportért felelős elsődleges felhasználó."
   admin_enterprise_groups_data_powertip_logo: "Ez a csoport logója"
   admin_enterprise_groups_data_powertip_promo_image: "Ez a kép a csoportprofil tetején jelenik meg"
-  admin_enterprise_groups_contact: "Kapcsolatba lépni"
   admin_enterprise_groups_contact_phone_placeholder: "például. 98 7654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "például. High Street 123"
   admin_enterprise_groups_contact_city: "Külváros"
@@ -2305,7 +2370,6 @@ hu:
   admin_enterprise_groups_contact_zipcode_placeholder: "például. 3070"
   admin_enterprise_groups_contact_state_id: "Állapot"
   admin_enterprise_groups_contact_country_id: "Ország"
-  admin_enterprise_groups_web: "Webes források"
   admin_enterprise_groups_web_twitter: "például. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "például. www.truffles.com"
   admin_order_cycles: "Admin rendelési ciklusok"
@@ -2618,11 +2682,8 @@ hu:
   images: "Képek"
   web: "Web"
   primary_details: "Elsődleges részletek"
-  adrdress: "Cím"
   contact: "Kapcsolatba lépni"
   social: "Társadalmi"
-  business_details: "Üzleti részletek"
-  properties: "Tulajdonságok"
   shipping: "Szállítás"
   shipping_methods: "Szállítási módok"
   payment_methods: "fizetési módok"
@@ -2632,9 +2693,7 @@ hu:
   payment_updated: "Fizetés frissítve"
   cannot_perform_operation: "Nem sikerült frissíteni a fizetést"
   action_required: "Cselekvést kíván"
-  inventory_settings: "Készletbeállítások"
   tag_rules: "Címkeszabályok"
-  shop_preferences: "Bolti beállítások"
   enterprise_fee_whole_order: Az egész rendelés
   enterprise_fee_by: "%{type} díj: %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Ez a kapcsolat már létrejött."

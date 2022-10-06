@@ -284,7 +284,6 @@ es:
   producers_join: Las productoras australianas ahora son bienvenidas a unirse a Open Food Network.
   charges_sales_tax: ¿Cargos de IVA?
   business_address: "Dirección de Negocios"
-  enterprise_permissions: "Permisos de la organización"
   print_invoice: "Imprimir factura"
   print_ticket: "Imprimir Ticket"
   select_ticket_printer: "Seleccionar impresora para los tickets"
@@ -552,6 +551,18 @@ es:
     enterprise_groups:
       index:
         new_button: Nuevo Grupo de Organizaciones
+      form_primary_details:
+        primary_details: "Detalles Principales"
+      form_users:
+        users: "Usuarias"
+      form_about:
+        about: "Acerca de"
+      form_images:
+        images: "Imágenes"
+      form_address:
+        contact: "Conacto"
+      form_web:
+        web: "Recursos Web"
     enterprise_roles:
       form:
         manages: Gestiona
@@ -763,11 +774,15 @@ es:
         manage: Gestionar
       form:
         about_us:
+          legend: "Acerca de"
           desc_short: Descripción corta
           desc_short_placeholder: Háblanos sobre tu organización en una o dos frases
           desc_long: Sobre nosotras
           desc_long_placeholder: Explica a las consumidoras quién eres. Esta información aparecerá en tu perfil público.
+        address:
+          legend: "Dirección"
         business_details:
+          legend: "Detalles de la Organización"
           abn: NIF
           abn_placeholder: ej. 99 123 456 789
           acn: ACN
@@ -778,6 +793,7 @@ es:
           remove_terms_and_conditions: "Eliminar archivo"
           uploaded_on: "Subido en"
           reset_form: "Reestablecer formulario"
+          business_address_legend: "Dirección de Negocios"
         business_address:
           company_legal_name: Razón social de la empresa
           company_placeholder: 'Ejemplo S.A. '
@@ -787,6 +803,7 @@ es:
           legal_phone_number: Número telefónico legal
           phone_placeholder: "98 123 4565"
         contact:
+          legend: "Conacto"
           name: Nombre
           name_placeholder: ej. Gustav Plum
           email_address: Dirección de correo electrónico público
@@ -797,14 +814,17 @@ es:
           website: Website
           website_placeholder: ej. www.truffles.com
         enterprise_fees:
+          legend: "Comisiones de la Organización"
           name: Nombre
           fee_type: Tipo de Comisión
           manage_fees: Gestiona las comisiones de la Organización
           no_fees_yet: No tienes comisiones para la organización.
           create_button: Crear una ahora
         enterprise_permissions:
+          legend: "Permisos de la organización"
           enterprise_relationships: Relaciones de la Organización
         images:
+          legend: "Imágenes"
           logo: Logo
           promo_image_placeholder: 'Esta imagen aparece en "Sobre nosotras"'
           promo_image_note1: 'ATENCIÓN:'
@@ -813,6 +833,7 @@ es:
           remove_logo: "Eliminar la imagen"
           remove_promo_image: "Eliminar la imagen"
         inventory_settings:
+          legend: "Configuración del Inventario"
           text1: Puedes optar por administrar los niveles de stock y los precios a través de tu
           inventory: inventario
           text2: >
@@ -824,6 +845,7 @@ es:
           preferred_product_selection_from_inventory_only_yes: Los nuevos productos se pueden publicar en la tienda (recomendado)
           preferred_product_selection_from_inventory_only_no: Los nuevos productos se deben agregar al inventario antes de que puedan ser puestos en la tienda
         payment_methods:
+          legend: "Métodos de Pago"
           name: Nombre
           applies: ¿Aplicar?
           manage: Gestionar los métodos de pago
@@ -831,6 +853,7 @@ es:
           create_button: Crear un nuevo método de pago
           create_one_button: Crear una ahora
         primary_details:
+          legend: "Detalles Principales"
           name: Nombre
           name_placeholder: ej. Professor Plum's Biodynamic Truffles
           groups: Redes
@@ -846,6 +869,8 @@ es:
           sells_tip: "Ninguno - La organización no vende directamente a los consumidores.<br />Popios - La organización vende sus propios productos a los consumidores.<br />Cualquiera -  La organización vende sus propios productos o de otros.<br />"
           visible_in_search: ¿Visible en la búsqueda?
           visible: Pública
+        properties:
+          legend: "Propiedades"
         permalink:
           permalink: Permalink (sin espacios)
           permalink_tip: "Se usa para crear la URL de tu tienda: %{link}nombre-de-tu-tienda/shop"
@@ -854,6 +879,7 @@ es:
           ofn_uid: UID de OFN
           ofn_uid_tip: La identificación única utilizada para identificar la organización en Open Food Network.
         shipping_methods:
+          legend: "Métodos de envío"
           name: "Nombre"
           applies: "¿Activo?"
           manage: "Gestionar métodos de envío"
@@ -861,6 +887,7 @@ es:
           create_one_button: "Crear una ahora"
           no_method_yet: "Todavía no tienes ningún método de envío."
         shop_preferences:
+          legend: "Configuración de la tienda"
           shopfront_requires_login: "¿Quieres que la tienda sea visible y pública?"
           shopfront_requires_login_tip: "Elije si los clientes deben iniciar sesión para ver la tienda o si es visible para todos."
           shopfront_requires_login_false: "Pública"
@@ -908,6 +935,7 @@ es:
           enabled: "Habilitado"
           disabled: "Deshabilitado"
         social:
+          legend: "Social"
           twitter_placeholder: "ej: the_prof"
           instagram_placeholder: "p.ej. @mi_huerta"
           facebook_placeholder: "eg. www.facebook.com/NombreDePáginaAquí"
@@ -925,6 +953,7 @@ es:
             i_agree: Estoy de acuerdo
             cancel: Cancelar
         tag_rules:
+          legend: "Reglas de las Etiquetas"
           default_rules:
             by_default: Por Defecto
             no_rules_yet: No hay reglas por defecto aplicadas
@@ -935,6 +964,7 @@ es:
           add_new_rule: '+ Añadir una nueva regla'
           add_new_tag: '+ Añadir una nueva etiqueta'
         users:
+          legend: "Usuarias"
           email_confirmation_notice_html: "Falta la confirmación del email. Te hemos enviado un correo de confirmación a %{email}."
           resend: Reenviar
           owner: 'Propietaria'
@@ -1054,11 +1084,21 @@ es:
         tags: "Tags"
         delivery_details: "Detalles de entrega"
         fees: "Comisiones"
+        next: "Siguiente"
         previous: "Anterior"
         save: "Guardar"
-        save_and_back_to_list: "Salvar y volver a lista"
+        save_and_next: "Salvar y continuar"
         cancel: "Cancelar"
         back_to_list: "Regresar a la lista"
+      checkout_options:
+        back_end: "Solo en Administración"
+        cancel: "Cancelar"
+        distributor: "Distribuidora"
+        payment_methods: "Métodos de Pago"
+        save: "Guardar"
+        save_and_back_to_list: "Salvar y volver a lista"
+        select_all: "Seleccionar todo"
+        shipping_methods: "Métodos de envío"
       wizard_progress:
         edit: "1. Configuración general"
         incoming: "2. Productos entrantes"
@@ -1152,6 +1192,31 @@ es:
         has_no_payment_methods: "%{enterprise} no tiene formas de pago"
         has_no_shipping_methods: "%{enterprise} no tiene ningún método de envío"
         has_no_enterprise_fees: "%{enterprise} no tiene comisiones de organización"
+      side_menu:
+        enterprise:
+          primary_details: "Detalles Principales"
+          address: "Dirección"
+          contact: "Conacto"
+          social: "Social"
+          about: "Acerca de"
+          business_details: "Detalles de la Organización"
+          images: "Imágenes"
+          properties: "Propiedades"
+          shipping_methods: "Métodos de envío"
+          payment_methods: "Métodos de Pago"
+          enterprise_fees: "Comisiones de la Organización"
+          enterprise_permissions: "Permisos de la organización"
+          inventory_settings: "Configuración del Inventario"
+          tag_rules: "Reglas de las Etiquetas"
+          shop_preferences: "Configuración de la tienda"
+          users: "Usuarias"
+        enterprise_group:
+          primary_details: "Detalles Principales"
+          users: "Usuarias"
+          about: "Acerca de"
+          images: "Imágenes"
+          contact: "Conacto"
+          web: "Recursos Web"
     enterprise_issues:
       create_new: Crear nuevo
       resend_email: Reenviar email
@@ -2284,7 +2349,6 @@ es:
   admin_enterprise_groups_data_powertip: "El principal usuario responsable de este grupo."
   admin_enterprise_groups_data_powertip_logo: "Este es el logo del grupo"
   admin_enterprise_groups_data_powertip_promo_image: "Esta imagen se mostrará en la cabecera del perfil del Grupo"
-  admin_enterprise_groups_contact: "Contacto"
   admin_enterprise_groups_contact_phone_placeholder: "ej. 98 7654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "ej. Carrer Torrent de l'Olla"
   admin_enterprise_groups_contact_city: "Barrio"
@@ -2293,7 +2357,6 @@ es:
   admin_enterprise_groups_contact_zipcode_placeholder: "ej. 08025"
   admin_enterprise_groups_contact_state_id: "Provincia"
   admin_enterprise_groups_contact_country_id: "País"
-  admin_enterprise_groups_web: "Recursos Web"
   admin_enterprise_groups_web_twitter: "ej: the_prof"
   admin_enterprise_groups_web_website_placeholder: "ej. www.truffles.com"
   admin_order_cycles: "Ciclos de Pedidos del Admin"
@@ -2606,11 +2669,8 @@ es:
   images: "Imagenes"
   web: "Web"
   primary_details: "Detalles Principales"
-  adrdress: "Dirección"
   contact: "Contacto"
   social: "Social"
-  business_details: "Detalles de la Organización"
-  properties: "Propiedades"
   shipping: "Envío"
   shipping_methods: "Métodos de envío"
   payment_methods: "Métodos de Pago"
@@ -2620,9 +2680,7 @@ es:
   payment_updated: "Pago actualizado"
   cannot_perform_operation: "No se pudo actualizar el pago"
   action_required: "Acción requerida"
-  inventory_settings: "Configuración del Inventario"
   tag_rules: "Reglas de las Etiquetas"
-  shop_preferences: "Configuración de la tienda"
   enterprise_fee_whole_order: Pedido completo
   enterprise_fee_by: "%{type} comisión por %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Esta relación ya existe."

@@ -192,7 +192,6 @@ nl_BE:
   search_by_name: Zoeken op naam of voorstad....
   producers_join: Belgische producenten zijn nu welkom om zich aan te sluiten bij het Open Food Network.
   charges_sales_tax: Kosten GST?
-  enterprise_permissions: "Bedrijfstoestemming"
   print_invoice: "Factuur afdrukken"
   print_ticket: "Ticket afdrukken"
   select_ticket_printer: "Selecteer printer voor tickets"
@@ -434,6 +433,18 @@ nl_BE:
     enterprise_groups:
       index:
         new_button: Nieuwe Ondernemingsgroep
+      form_primary_details:
+        primary_details: "Basisinformatie"
+      form_users:
+        users: "Gebruikers"
+      form_about:
+        about: "Over"
+      form_images:
+        images: "Afbeeldingen"
+      form_address:
+        contact: "Contact"
+      form_web:
+        web: "Webmiddelen"
     enterprise_roles:
       form:
         manages: beheert
@@ -641,11 +652,15 @@ nl_BE:
         manage: Beheer
       form:
         about_us:
+          legend: "Over"
           desc_short: Korte Omschrijving
           desc_short_placeholder: Vertel ons over jouw onderneming in één of twee zinnen
           desc_long: Over Ons
           desc_long_placeholder: Vertel klanten over jezelf. Deze informatie verschijnt in jouw publiek profiel.
+        address:
+          legend: "Adres"
         business_details:
+          legend: "Juridische informatie "
           abn: ABN
           abn_placeholder: bv. 99 123 456 789
           acn: ACN
@@ -655,6 +670,7 @@ nl_BE:
         business_address:
           address2: Adres (vervolg)
         contact:
+          legend: "Contact"
           name: Naam
           name_placeholder: bv. Jan Janssens
           email_address: Openbaar e-mailadres
@@ -665,12 +681,16 @@ nl_BE:
           website: Website
           website_placeholder: bv. www.paddenstoel.com
         enterprise_fees:
+          legend: "Ondernemingsvergoedingen"
           name: Naam
           fee_type: Sprookjesachtig type
           manage_fees: Beheer je ondernemingsvergoedingen
           no_fees_yet: Je hebt nog geen ondernemingsvergoedingen.
           create_button: Creëer er nu één
+        enterprise_permissions:
+          legend: "Bedrijfstoestemming"
         images:
+          legend: "Afbeeldingen"
           logo: Logo
           promo_image_placeholder: 'Deze afbeelding wordt afgebeeld in "Over Ons"'
           promo_image_note1: 'Hou er rekening mee dat:'
@@ -679,6 +699,7 @@ nl_BE:
           remove_logo: "Afbeelding Verwijderen"
           remove_promo_image: "Afbeelding Verwijderen"
         inventory_settings:
+          legend: "Catalogus winkel"
           text1: U kunt ervoor kiezen om de voorraadniveaus en prijzen te beheren via uw
           inventory: inventaris
           text2: >
@@ -692,6 +713,7 @@ nl_BE:
           preferred_product_selection_from_inventory_only_yes: Nieuwe producten kunnen geplaatst worden in mijn etalage (aanbevolen)
           preferred_product_selection_from_inventory_only_no: Nieuwe producten moeten toegevoegd worden in mijn inventaris voor ze kunnen geplaatst worden in mijn etalage
         payment_methods:
+          legend: "Betalingsmethode"
           name: Naam
           applies: Van toepassing?
           manage: Beheer betaalmogelijkheden
@@ -699,6 +721,7 @@ nl_BE:
           create_button: Creëer een nieuwe betaalmethode
           create_one_button: Creëer er nu één
         primary_details:
+          legend: "Basisinformatie"
           name: Naam
           name_placeholder: bv. Jan Jansens' biodynamische paddenstoelen
           groups: Groepen
@@ -714,6 +737,8 @@ nl_BE:
           sells_tip: "Geen enkele - onderneming verkoopt niet rechtstreeks tot de klant. <br />Eigen - Onderneming verkoopt eigen product aan de klant. <br />Om het even - Onderneming kan eigen producten verkopen of producten van andere ondernemingen. <br />"
           visible_in_search: Zichtbaar in zoekopdracht?
           visible: Openbaar
+        properties:
+          legend: "Eigenschappen"
         permalink:
           permalink: Permalink (geen spaties)
           permalink_tip: "Deze permalink wordt gebruikt om de url te gebruiken in jouw winkel: %{link} jouw-winkel-naam/winkel"
@@ -722,6 +747,7 @@ nl_BE:
           ofn_uid: OFN UID
           ofn_uid_tip: Het unieke ID dat wordt gebruikt om de onderneming in Open Food Network te identificeren.
         shipping_methods:
+          legend: "Methode Verzending"
           name: "Naam"
           applies: "Actief?"
           manage: "Beheer Verzendmethodes"
@@ -729,6 +755,7 @@ nl_BE:
           create_one_button: "Creëer er nu één"
           no_method_yet: "Je hebt nog geen verzendmethodes."
         shop_preferences:
+          legend: "Voorkeuren winkel"
           shopfront_requires_login: "Publiekelijk zichtbare etalage"
           shopfront_requires_login_tip: "Kies of je klanten ingelogd moeten zijn om je etalage te bekijken of kies om je etalage zichtbaar te maken voor iedereen."
           shopfront_requires_login_false: "Openbaar"
@@ -771,6 +798,7 @@ nl_BE:
           enabled: "Activeer"
           disabled: "Deactiveer"
         social:
+          legend: "Sociaal"
           twitter_placeholder: "bv. @de_prof"
           instagram_placeholder: "bv. de_prof"
           facebook_placeholder: "bv. www.facebook.com/WebpaginaNaamHier"
@@ -788,6 +816,7 @@ nl_BE:
             i_agree: Ik ga akkoord
             cancel: Annuleren
         tag_rules:
+          legend: "Tagregels"
           default_rules:
             by_default: Standaard
             no_rules_yet: Er zijn nog geen standaard regels zijn van toepassing.
@@ -798,6 +827,7 @@ nl_BE:
           add_new_rule: '+ Voeg een nieuwe regel toe'
           add_new_tag: '+Voeg een nieuw label toe'
         users:
+          legend: "Gebruikers"
           email_confirmation_notice_html: "E-mailbevestiging is lopende. We hebben een bevestigings-e-mail gestuurd naar %{email}."
           resend: Zend opnieuw
           owner: 'Eigenaar'
@@ -915,11 +945,21 @@ nl_BE:
         tags: "Tags"
         delivery_details: "Leveringsdetails"
         fees: "Vergoedingen"
+        next: "Volgende"
         previous: "Voorgaande"
         save: "Save"
-        save_and_back_to_list: "Opslaan en terug naar lijst"
+        save_and_next: "Opslaan en volgende"
         cancel: "Annuleren"
         back_to_list: "Terug naar lijst"
+      checkout_options:
+        back_end: "Aleen Back Office"
+        cancel: "Annuleren"
+        distributor: "Distributeur"
+        payment_methods: "Betalingsmethode"
+        save: "Save"
+        save_and_back_to_list: "Opslaan en terug naar lijst"
+        select_all: "Selecteer alle"
+        shipping_methods: "Methode Verzending"
       wizard_progress:
         edit: "1. Algemene Instellingen"
         incoming: "2. Binnenkomende Producten"
@@ -1010,6 +1050,31 @@ nl_BE:
         has_no_payment_methods: "1%(enterprise) heeft geen betaalmethode"
         has_no_shipping_methods: "%{enterprise} heeft geen verzendmethodes"
         has_no_enterprise_fees: "%{enterprise} geen bedrijfskosten heeft"
+      side_menu:
+        enterprise:
+          primary_details: "Basisinformatie"
+          address: "Adres"
+          contact: "Contact"
+          social: "Sociaal"
+          about: "Over"
+          business_details: "Juridische informatie "
+          images: "Afbeeldingen"
+          properties: "Eigenschappen"
+          shipping_methods: "Methode Verzending"
+          payment_methods: "Betalingsmethode"
+          enterprise_fees: "Ondernemingsvergoedingen"
+          enterprise_permissions: "Bedrijfstoestemming"
+          inventory_settings: "Catalogus winkel"
+          tag_rules: "Tagregels"
+          shop_preferences: "Voorkeuren winkel"
+          users: "Gebruikers"
+        enterprise_group:
+          primary_details: "Basisinformatie"
+          users: "Gebruikers"
+          about: "Over"
+          images: "Afbeeldingen"
+          contact: "Contact"
+          web: "Webmiddelen"
     enterprise_issues:
       create_new: Nieuw bericht
       resend_email: email opnieuw versturen
@@ -2046,7 +2111,6 @@ nl_BE:
   admin_enterprise_groups_data_powertip: "De hoofdgebruiker verantwoordelijk voor deze groep."
   admin_enterprise_groups_data_powertip_logo: "Dit is de logo voor de groep"
   admin_enterprise_groups_data_powertip_promo_image: "Deze afbeelding wordt afgebeeld bovenaan van het groepprofiel"
-  admin_enterprise_groups_contact: "Contact"
   admin_enterprise_groups_contact_phone_placeholder: "bv. 99 7654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "bv. 123 Stationsstraat"
   admin_enterprise_groups_contact_city: "Gemeente"
@@ -2055,7 +2119,6 @@ nl_BE:
   admin_enterprise_groups_contact_zipcode_placeholder: "bv. 9000"
   admin_enterprise_groups_contact_state_id: "Staat"
   admin_enterprise_groups_contact_country_id: "Land"
-  admin_enterprise_groups_web: "Webmiddelen"
   admin_enterprise_groups_web_twitter: "bv. @de_prof"
   admin_enterprise_groups_web_website_placeholder: "bv. www.paddenstoel.com"
   admin_order_cycles: "Beheer bestelcycli"
@@ -2364,11 +2427,8 @@ nl_BE:
   images: "Afbeeldingen"
   web: "Web"
   primary_details: "Basisinformatie"
-  adrdress: "Adres"
   contact: "Contact"
   social: "Sociaal"
-  business_details: "Juridische informatie "
-  properties: "Eigenschappen"
   shipping: "Verzending"
   shipping_methods: "Verzendmethodes"
   payment_methods: "Betaalmethodes"
@@ -2376,9 +2436,7 @@ nl_BE:
   payment_processing_failed: "De betaling is niet succesvol, gelieve de  ingevoerde gegevens na te kijken"
   payment_method_not_supported: "Die betaalmethode wordt niet ondersteund. Kies alstublieft een andere."
   payment_updated: "Betaling is bijgewerkt"
-  inventory_settings: "Catalogus winkel"
   tag_rules: "Tagregels"
-  shop_preferences: "Voorkeuren winkel"
   enterprise_fee_whole_order: Volledige bestelling
   enterprise_fee_by: "1%{type},marges/kosten 2%{role} 3%{enterprise_name}"
   validation_msg_relationship_already_established: "^Een link is reeds gemaakt met deze bedrijven."

@@ -289,7 +289,6 @@ fr:
   producers_join: Les producteurs et autres circuits courts basés en France sont invités à rejoindre CoopCircuits.
   charges_sales_tax: Soumis à la TVA?
   business_address: "Adresse du siège social"
-  enterprise_permissions: "Permissions Inter-entreprises"
   print_invoice: "Imprimer la facture"
   print_ticket: "Imprimer ticket de caisse"
   select_ticket_printer: "Choisir l'imprimante tickets"
@@ -434,7 +433,7 @@ fr:
     items: Pièce
     select_all: Tout sélectionner
     quick_search: Recherche rapide
-    clear_all: Vider
+    clear_all: Réinitialiser
     start_date: "Date de début"
     end_date: "Date de fin"
     form_invalid: "Le formulaire contient des champs manquants ou invalides"
@@ -562,6 +561,18 @@ fr:
     enterprise_groups:
       index:
         new_button: Nouveau groupe d'entreprises
+      form_primary_details:
+        primary_details: "Informations de base"
+      form_users:
+        users: "Gestionnaires"
+      form_about:
+        about: "Créer ma boutique"
+      form_images:
+        images: "Images"
+      form_address:
+        contact: "Contact"
+      form_web:
+        web: "Liens web"
     enterprise_roles:
       form:
         manages: gère
@@ -777,11 +788,15 @@ fr:
         manage: Gérer
       form:
         about_us:
+          legend: "Créer ma boutique"
           desc_short: Description (en bref)
           desc_short_placeholder: Parlez de votre entreprise en une ou deux phrases
           desc_long: A propos
           desc_long_placeholder: Parlez de vous à vos acheteurs ! Ces informations seront visibles sur votre profil public.
+        address:
+          legend: "Adresse"
         business_details:
+          legend: "Juridique"
           abn: SIRET
           abn_placeholder: 'ex: 404 833 048 00022'
           acn: n° TVA intracommunautaire
@@ -792,7 +807,8 @@ fr:
           remove_terms_and_conditions: "Supprimer le fichier"
           uploaded_on: "mis en ligne le"
           reset_form: "Vider les champs"
-          Invoice_item_sorting: Ordre d'affichage sur facture
+          business_address_legend: "Adresse du siège social"
+          invoice_item_sorting_legend: "Ordre d'affichage sur facture"
           sort_items_by_supplier?: Trier par producteur ?
           sort_items_by_supplier_tip: "Lorsque possible, les éléments seront rangés par producteur."
           enabled: Activer
@@ -806,6 +822,7 @@ fr:
           legal_phone_number: Numéro de téléphone
           phone_placeholder: "09 00 00 00 00"
         contact:
+          legend: "Contact"
           name: Nom
           name_placeholder: 'ex: Bernard Michelet'
           email_address: Adresse email publique
@@ -819,14 +836,17 @@ fr:
           website: Site internet
           website_placeholder: 'ex: www.maferme.fr'
         enterprise_fees:
+          legend: "Marges et Commissions"
           name: Nom
           fee_type: Type de marge
           manage_fees: Gérer les marges et commissions
           no_fees_yet: Vous n'avez pas encore défini de commissions
           create_button: Créer une commission
         enterprise_permissions:
+          legend: "Permissions Inter-entreprises"
           enterprise_relationships: Permissions inter-entreprises
         images:
+          legend: "Images"
           logo: Logo
           promo_image_placeholder: 'Cette image est affichée dans "A propos"'
           promo_image_note1: 'ATTENTION:'
@@ -835,6 +855,7 @@ fr:
           remove_logo: "Supprimer l'image"
           remove_promo_image: "Supprimer l'image"
         inventory_settings:
+          legend: "Catalogue boutique"
           text1: Vous pouvez choisir de gérer vos stocks et prix via votre
           inventory: catalogue boutique
           text2: >
@@ -846,6 +867,7 @@ fr:
           preferred_product_selection_from_inventory_only_yes: Les nouveaux produits des producteurs peuvent être ajoutés à ma boutique en ligne (recommandé)
           preferred_product_selection_from_inventory_only_no: Les nouveaux produits des producteurs doivent être ajoutés à mon catalogue boutique avant de pouvoir être ajoutés à ma boutique en ligne
         payment_methods:
+          legend: "Méthodes de paiement"
           name: Nom
           applies: Active?
           manage: Gérer les méthodes de paiement
@@ -853,6 +875,7 @@ fr:
           create_button: Créer une nouvelle méthode de paiement
           create_one_button: En créer une maintenant
         primary_details:
+          legend: "Informations de base"
           name: Nom
           name_placeholder: 'ex: La ferme bio de Bernard'
           groups: Groupes
@@ -871,6 +894,8 @@ fr:
           visible: Visible par tous
           not_visible: Cachée
           hidden: Invisible
+        properties:
+          legend: "Propriétés / labels"
         permalink:
           permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre boutique: %{link}ma-boutique/shop"
@@ -879,6 +904,7 @@ fr:
           ofn_uid: ID OFN
           ofn_uid_tip: L'identifiant unique pour les comptes entreprises sur Open Food Network.
         shipping_methods:
+          legend: "Méthodes de livraison"
           name: "Nom"
           applies: "Active ?"
           manage: "Gérer les méthodes de livraison"
@@ -886,6 +912,7 @@ fr:
           create_one_button: "En créer une maintenant"
           no_method_yet: "Vous n'avez pas encore paramétré de méthode de livraison."
         shop_preferences:
+          legend: "Préférences boutique"
           shopfront_requires_login: "Boutique privée ? (Restreindre les achats à la liste d'acheteurs de la boutique)"
           shopfront_requires_login_tip: "Choisissez de restreindre l'accès de la boutique à votre liste d'acheteurs (les personnes listées dans l'onglet \"Acheteurs\" du menu principal). Les personnes non-membres de cette liste pourront trouver votre boutique, mais ne pourront accéder à la page \"produits\" et ne pourront pas passer commande.\n\nSi vous souhaitez aussi rendre votre boutique invisible sur la carte, il faut cocher l'option \"invisible\" dans l'onglet \"Informations de base\" de votre entreprise. "
           shopfront_requires_login_false: "Non"
@@ -934,6 +961,7 @@ fr:
           enabled: "Activé"
           disabled: "Désactivé"
         social:
+          legend: "Réseaux sociaux"
           twitter_placeholder: "ex. @OpenFoodNet_fr"
           instagram_placeholder: "ex: OpenFoodNet_fr"
           facebook_placeholder: "ex: www.facebook.com/NomDeLaPage"
@@ -951,6 +979,7 @@ fr:
             i_agree: J'accepte
             cancel: Annuler
         tag_rules:
+          legend: "Règles de tag"
           default_rules:
             by_default: Règles à appliquer "par défaut"
             no_rules_yet: Aucune règle par défaut
@@ -961,6 +990,7 @@ fr:
           add_new_rule: '+ Ajouter une nouvelle règle'
           add_new_tag: '+ Ajouter une règle pour un autre tag'
         users:
+          legend: "Gestionnaires"
           email_confirmation_notice_html: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{email}."
           resend: Renvoyer
           owner: 'Gestionnaire principal'
@@ -1080,15 +1110,29 @@ fr:
         tags: "Tags"
         delivery_details: "Détails de livraison"
         fees: "Commissions"
+        next: "Suivant"
         previous: "Précédent"
         save: "Sauvegarder"
-        save_and_back_to_list: "Sauvegarder et revenir à la liste"
+        save_and_next: "Sauvegarder et suivant"
         cancel: "Annuler"
         back_to_list: "Retour à la liste"
+      checkout_options:
+        back_end: "Visible pour l'administration uniquement"
+        cancel: "Annuler"
+        checkout_options: "Options de commande"
+        distributor: "Boutique"
+        no_payment_methods: Chaque boutique de ce cycle de vente a besoin d'au moins une méthode de paiement.
+        no_shipping_methods: Chaque boutique de ce cycle de vente a besoin d'au moins une méthode de livraison.
+        payment_methods: "Méthodes de paiement"
+        save: "Sauvegarder"
+        save_and_back_to_list: "Sauvegarder et revenir à la liste"
+        select_all: "Tout sélectionner"
+        shipping_methods: "Méthodes de livraison"
       wizard_progress:
         edit: "1. Informations générales"
         incoming: "2. Produits entrants"
         outgoing: "3. Produits vendus (sortants)"
+        checkout_options: "Options de commande"
       exchange_form:
         pickup_time_tip: 'Indiquez quand les commandes seront prêtes. Ce texte sera affiché sur votre boutique dans l''encart bleu "Prêt pour : _______"'
         pickup_instructions_placeholder: "Modalités de retrait/livraison"
@@ -1181,6 +1225,31 @@ fr:
         has_no_payment_methods: "%{enterprise} n'a pas défini de méthode de paiement"
         has_no_shipping_methods: "%{enterprise} n'a pas défini de méthode de livraison"
         has_no_enterprise_fees: "%{enterprise} n'a pas défini de marges et commissions"
+      side_menu:
+        enterprise:
+          primary_details: "Informations de base"
+          address: "Adresse"
+          contact: "Contact"
+          social: "Réseaux sociaux"
+          about: "Créer ma boutique"
+          business_details: "Juridique"
+          images: "Images"
+          properties: "Propriétés / labels"
+          shipping_methods: "Méthodes de livraison"
+          payment_methods: "Méthodes de paiement"
+          enterprise_fees: "Marges et Commissions"
+          enterprise_permissions: "Permissions Inter-entreprises"
+          inventory_settings: "Catalogue boutique"
+          tag_rules: "Règles de tag"
+          shop_preferences: "Préférences boutique"
+          users: "Gestionnaires"
+        enterprise_group:
+          primary_details: "Informations de base"
+          users: "Gestionnaires"
+          about: "Créer ma boutique"
+          images: "Images"
+          contact: "Contact"
+          web: "Liens web"
     enterprise_issues:
       create_new: Créer Nouveau
       resend_email: Renvoyer l'email
@@ -1544,7 +1613,7 @@ fr:
   suburb: Ville
   state: Département
   country: Pays
-  unauthorized: Non authorisé
+  unauthorized: Non autorisé
   terms_of_service: "Conditions Générales d'Utilisation de CoopCircuits"
   on_demand: A volonté
   none: Aucun
@@ -2335,7 +2404,6 @@ fr:
   admin_enterprise_groups_data_powertip: "Le gestionnaire principal en charge de ce groupe."
   admin_enterprise_groups_data_powertip_logo: "Il s'agit du logo du groupe"
   admin_enterprise_groups_data_powertip_promo_image: "Cette image est affichée en haut du profil Groupe."
-  admin_enterprise_groups_contact: "Contact"
   admin_enterprise_groups_contact_phone_placeholder: "ex: 06 13 24 35 46"
   admin_enterprise_groups_contact_address1_placeholder: "ex: 24 rue de la croix verte"
   admin_enterprise_groups_contact_city: "Ville"
@@ -2344,12 +2412,11 @@ fr:
   admin_enterprise_groups_contact_zipcode_placeholder: "ex: 44000"
   admin_enterprise_groups_contact_state_id: "Département"
   admin_enterprise_groups_contact_country_id: "Pays"
-  admin_enterprise_groups_web: "Liens web"
   admin_enterprise_groups_web_twitter: "ex: @OpenFoodNet_fr"
   admin_enterprise_groups_web_website_placeholder: "ex: www.maferme.fr"
   admin_order_cycles: "Gérer les cycles de vente"
   open: "Ouvre"
-  close: "Ferme"
+  close: "Annuler"
   create: "Créer"
   search: "Rechercher"
   supplier: "Fournisseur"
@@ -2592,7 +2659,7 @@ fr:
   report_header_delivery_postcode: Code Postal Livraison
   report_header_bulk_unit_size: Quantité totale du lot
   report_header_weight: Poids
-  report_header_sum_total: Somme Totale
+  report_header_sum_total: Total déjà commandé
   report_header_date_of_order: Date de Commande
   report_header_amount_owing: Montant dû
   report_header_amount_paid: Montant payé
@@ -2668,11 +2735,8 @@ fr:
   images: "Images"
   web: "Web"
   primary_details: "Informations de base"
-  adrdress: "Adresse"
   contact: "Contact"
   social: "Réseaux sociaux"
-  business_details: "Juridique"
-  properties: "Propriétés / labels"
   shipping: "Expédition"
   shipping_methods: "Méthodes de livraison"
   payment_methods: "Méthodes de paiement"
@@ -2682,9 +2746,7 @@ fr:
   payment_updated: "Paiement mis à jour"
   cannot_perform_operation: "Le paiement n'a pas pu être mis à jour."
   action_required: "Une action est requise"
-  inventory_settings: "Catalogue boutique"
   tag_rules: "Règles de tag"
-  shop_preferences: "Préférences boutique"
   enterprise_fee_whole_order: Commande totale
   enterprise_fee_by: "%{type} marges/frais par %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Un lien est déjà établi entre ces entreprises."
@@ -3235,7 +3297,7 @@ fr:
           select_and_search: "Sélectionnez les filtres et cliquez sur \"générer le rapport\" pour accéder aux données."
       enterprise_fee_summary:
         date_end_before_start_error: "doit être après date début"
-        parameter_not_allowed_error: "Vous n'êtes pas authorisé.e à utiliser un ou plusieurs des filtres sélectionnés pour ce rapport."
+        parameter_not_allowed_error: "Vous n'êtes pas autorisé·e à utiliser un ou plusieurs des filtres sélectionnés pour ce rapport."
         fee_calculated_on_transfer_through_all: "Tous"
         fee_calculated_on_transfer_through_entire_orders: "Commandes complètes via %{distributor}"
         tax_category_various: "Multiples"
@@ -3658,6 +3720,7 @@ fr:
           results_found: "%{number} résultats trouvés"
           viewing: "Résultats %{start} à %{end} affichés."
           print_invoices: "Imprimer les factures"
+          cancel_orders: "Annuler les commandes"
           selected:
             zero: "Aucune commande sélectionnée"
             one: "1 commande sélectionnée"

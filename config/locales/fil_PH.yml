@@ -187,7 +187,6 @@ fil_PH:
   search_by_name: Hanapin gamit ang pangalan o lungsod...
   producers_join: Ang mga Pilipinong producers ay inaanyayahang naming sumali sa Open Food Network.
   charges_sales_tax: naniningil ng GST?
-  enterprise_permissions: "mga permiso ng enterprise"
   print_invoice: "i-print ang invoice"
   print_ticket: "i-print ang ticket"
   select_ticket_printer: "pumili ng printer para sa mga ticket"
@@ -421,6 +420,18 @@ fil_PH:
     enterprise_groups:
       index:
         new_button: bagong grupo ng enterprise
+      form_primary_details:
+        primary_details: "pangunahing detalye"
+      form_users:
+        users: "mga gumagamit"
+      form_about:
+        about: "Tungkol Sa OFN"
+      form_images:
+        images: "mga larawan"
+      form_address:
+        contact: "Makipag-usap"
+      form_web:
+        web: "mga pinagkukuhanan ng Web"
     enterprise_roles:
       form:
         manages: namamahala
@@ -627,11 +638,15 @@ fil_PH:
         manage: pamahalaan
       form:
         about_us:
+          legend: "Tungkol Sa OFN"
           desc_short: maikling paglalarawan
           desc_short_placeholder: magsalaysay ukol sa inyong enterprise gamit ang isa hanggang dalawang pangungusap.
           desc_long: tungkol sa amin
           desc_long_placeholder: ipakilala ang inyong sarili sa mga customer. Ang impormasyon na ito ay makikita at lalabas sa inyong profile.
+        address:
+          legend: "Address"
         business_details:
+          legend: "detalye ng negosyo"
           abn: 'TIN:'
           abn_placeholder: hal. 99 123 456 789
           acn: Branch TIN
@@ -641,6 +656,7 @@ fil_PH:
         business_address:
           address2: address (pinagpatuloy)
         contact:
+          legend: "Makipag-usap"
           name: pangalan
           name_placeholder: hal. Gustav Plum
           email_address: pampublikong email address
@@ -651,12 +667,16 @@ fil_PH:
           website: website
           website_placeholder: hal. www.truffles.com
         enterprise_fees:
+          legend: "fees para sa enterprise"
           name: pangalan
           fee_type: uri ng fee
           manage_fees: pamahalaan ang fees para sa enterprise
           no_fees_yet: wala ka pang kahit anong fees para sa enterprise
           create_button: gumawa ng isa ngayon
+        enterprise_permissions:
+          legend: "mga permiso ng enterprise"
         images:
+          legend: "mga larawan"
           logo: Logo
           promo_image_placeholder: 'ang larawan na ito ay makikita sa "tungkol sa amin"'
           promo_image_note1: 'TANDAAN:'
@@ -665,6 +685,7 @@ fil_PH:
           remove_logo: "alisin ang larawan"
           remove_promo_image: "alisin ang larawan"
         inventory_settings:
+          legend: "mga setting para sa imbentaryo"
           text1: maaari mong piliin na pamahalaan ang lebel ng mga stock at presyo sa iyong
           inventory: imbentaryo
           text2: >
@@ -676,6 +697,7 @@ fil_PH:
           preferred_product_selection_from_inventory_only_yes: ang mga bagong produkto ay maaaring ilagay sa aking shopfront (nirerekomenda)
           preferred_product_selection_from_inventory_only_no: ang mga bagong produkto ay dapat idagdag muna sa aking imbentaryo bago mailagay sa aking shopfront.
         payment_methods:
+          legend: "Mga Paraan ng Pagbabayad"
           name: pangalan
           applies: naaangkop?
           manage: pamahalaan ang mga paraan ng pagbabayad
@@ -683,6 +705,7 @@ fil_PH:
           create_button: gumawa ng bagong paraan ng pagbabayad
           create_one_button: gumawa ng isa ngayon
         primary_details:
+          legend: "pangunahing detalye"
           name: pangalan
           name_placeholder: hal. Professor Plum's Biodynamic Truffles
           groups: mga grupo
@@ -698,6 +721,8 @@ fil_PH:
           sells_tip: "Wala- ang enterprise ay hindi nagbebenta ng direkta sa mga customer<br />Sarili- ang enterprise ay nagbebenta ng sariling mga produkto sa mga customer<br />kahit ano- ang enterprise ay maaaring magbenta ng sariling produkto pati na rin ang mga produkto ng ibang mga enterprise.<br />"
           visible_in_search: makikita sa paghahanap?
           visible: publiko
+        properties:
+          legend: "mga katangian"
         permalink:
           permalink: Permalink (walang espasyo)
           link_to_front: Link sa shop front
@@ -705,12 +730,14 @@ fil_PH:
           ofn_uid: UID sa OFN
           ofn_uid_tip: ang natatanging id na ito ay ginagamit para matukoy ang enterprise sa Open Food Network.
         shipping_methods:
+          legend: "Mga Paraan ng Pagpapadala"
           name: "pangalan"
           manage: "pamahalaan ang mga paraan ng pagpapadala"
           create_button: "gumawa ng bagong paraan ng pagpapadala"
           create_one_button: "gumawa ng isa ngayon"
           no_method_yet: "wala ka pang inilagay na paraan ng pagpapadala."
         shop_preferences:
+          legend: "mga kagustuhan sa shop"
           shopfront_requires_login: "nakikita sa publiko ang shopfront?"
           shopfront_requires_login_tip: "pumili kung nais na maglog-in muna ang customer bago makita ang shopfront o nakikita ito ng lahat."
           shopfront_requires_login_false: "publiko"
@@ -752,6 +779,7 @@ fil_PH:
           enabled: "pinagana"
           disabled: "huwag paganahin"
         social:
+          legend: "Social"
           twitter_placeholder: "hal. @the_prof"
           instagram_placeholder: "hal. the_prof"
           facebook_placeholder: "hal. www.facebook.com/PageNameHere"
@@ -769,6 +797,7 @@ fil_PH:
             i_agree: pumapayag ako
             cancel: kanselahin
         tag_rules:
+          legend: "panuntunan sa pag-tag"
           default_rules:
             by_default: bilang default
             no_rules_yet: wala pang default na panuntunan na ginagamit
@@ -779,6 +808,7 @@ fil_PH:
           add_new_rule: '+ magdagdag ng bagong panuntunan'
           add_new_tag: '+ Magdagdag ng bagong tag'
         users:
+          legend: "mga gumagamit"
           email_confirmation_notice_html: "ang kumpirmasyon ng email ay nakabinbin pa. kami ay nagpadala ng kumpirmasyon ng email sa %{email}."
           resend: Ipadala muli
           owner: 'May-ari'
@@ -895,11 +925,20 @@ fil_PH:
         tags: "tags"
         delivery_details: "detalye ng pag-deliver"
         fees: "Fees"
+        next: "sunod"
         previous: "nauna"
         save: "i-save"
-        save_and_back_to_list: "i-save at bumalik sa listahan"
+        save_and_next: "i-save at sunod"
         cancel: "kanselahin"
         back_to_list: "bumalik sa listahan"
+      checkout_options:
+        cancel: "kanselahin"
+        distributor: "Distributor"
+        payment_methods: "Mga Paraan ng Pagbabayad"
+        save: "i-save"
+        save_and_back_to_list: "i-save at bumalik sa listahan"
+        select_all: "piliin ang lahat"
+        shipping_methods: "Mga Paraan ng Pagpapadala"
       wizard_progress:
         edit: "1. Pangkalahatang Setting"
         incoming: "2. Paparating na mga produkto"
@@ -990,6 +1029,31 @@ fil_PH:
         has_no_payment_methods: "%{enterprise}ay walang paraan ng pagbabayad"
         has_no_shipping_methods: "%{enterprise}ay walang paraan ng pagpapadala"
         has_no_enterprise_fees: "%{enterprise}ay walang fees para sa enterpise"
+      side_menu:
+        enterprise:
+          primary_details: "pangunahing detalye"
+          address: "Address"
+          contact: "Makipag-usap"
+          social: "Social"
+          about: "Tungkol Sa OFN"
+          business_details: "detalye ng negosyo"
+          images: "mga larawan"
+          properties: "mga katangian"
+          shipping_methods: "Mga Paraan ng Pagpapadala"
+          payment_methods: "Mga Paraan ng Pagbabayad"
+          enterprise_fees: "fees para sa enterprise"
+          enterprise_permissions: "mga permiso ng enterprise"
+          inventory_settings: "mga setting para sa imbentaryo"
+          tag_rules: "panuntunan sa pag-tag"
+          shop_preferences: "mga kagustuhan sa shop"
+          users: "mga gumagamit"
+        enterprise_group:
+          primary_details: "pangunahing detalye"
+          users: "mga gumagamit"
+          about: "Tungkol Sa OFN"
+          images: "mga larawan"
+          contact: "Makipag-usap"
+          web: "mga pinagkukuhanan ng Web"
     enterprise_issues:
       create_new: gumawa ng bago
       resend_email: ipadala muli ang email
@@ -2003,7 +2067,6 @@ fil_PH:
   admin_enterprise_groups_data_powertip: "ang pangunahing gumagamit na responsable sa grupo na ito"
   admin_enterprise_groups_data_powertip_logo: "ito ang logo para sa grupo"
   admin_enterprise_groups_data_powertip_promo_image: "ang larawan na ito ay makikita sa taas ng profile ng grupo"
-  admin_enterprise_groups_contact: "Makipag-ugnayan"
   admin_enterprise_groups_contact_phone_placeholder: "hal. 98 7654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "eg. 123 Kalayaan Street"
   admin_enterprise_groups_contact_city: "lungsod"
@@ -2012,7 +2075,6 @@ fil_PH:
   admin_enterprise_groups_contact_zipcode_placeholder: "hal. 3070"
   admin_enterprise_groups_contact_state_id: "Lalawigan"
   admin_enterprise_groups_contact_country_id: "Bansa"
-  admin_enterprise_groups_web: "mga pinagkukuhanan ng Web"
   admin_enterprise_groups_web_twitter: "hal. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "hal. www.truffles.com"
   admin_order_cycles: "mga order cycle ng Admin"
@@ -2318,11 +2380,8 @@ fil_PH:
   images: "larawan"
   web: "Web"
   primary_details: "pangunahing detalye"
-  adrdress: "tirahan"
   contact: "Makipag-ugnayan"
   social: "Social"
-  business_details: "detalye ng negosyo"
-  properties: "mga katangian"
   shipping: "pagpapadala"
   shipping_methods: "mga paraan ng pagpapadala"
   payment_methods: "Mga Paraan ng Pagbabayad"
@@ -2330,9 +2389,7 @@ fil_PH:
   payment_processing_failed: "hindi maproseso ang bayad, maaaring suriin ang mga detalyeng inilagay"
   payment_method_not_supported: "ang piniling paraan ng pagbabayad ay hindi suportado. pumili ng isa pa"
   payment_updated: "na-update na ang bayad"
-  inventory_settings: "mga setting para sa imbentaryo"
   tag_rules: "panuntunan sa pag-tag"
-  shop_preferences: "mga kagustuhan sa shop"
   enterprise_fee_whole_order: Buong order
   enterprise_fee_by: "%{type}na bayad ng%{role}%{enterprise_name}"
   validation_msg_relationship_already_established: "^ang relasyon na iyan ay naitatag na"

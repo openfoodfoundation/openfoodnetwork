@@ -289,7 +289,6 @@ de_DE:
   producers_join: 'Wir laden Produzenten ein, jetzt dem Open Food Network beizutreten. '
   charges_sales_tax: Berechnen Sie Steuern?
   business_address: "Unternehmensdaten"
-  enterprise_permissions: "Berechtigungen"
   print_invoice: "Rechnung drucken"
   print_ticket: "Beleg drucken"
   select_ticket_printer: "Wählen Sie einen Drucker für die Belege."
@@ -562,6 +561,18 @@ de_DE:
     enterprise_groups:
       index:
         new_button: Neue Unternehmensgruppe
+      form_primary_details:
+        primary_details: "Unternehmen"
+      form_users:
+        users: "Benutzer"
+      form_about:
+        about: "Verkaufen"
+      form_images:
+        images: "Bilder"
+      form_address:
+        contact: "Kontaktdaten"
+      form_web:
+        web: "Homepage"
     enterprise_roles:
       form:
         manages: verwaltet
@@ -777,11 +788,15 @@ de_DE:
         manage: Verwalten
       form:
         about_us:
+          legend: "Verkaufen"
           desc_short: Kurzbeschreibung
           desc_short_placeholder: Schreiben Sie etwas in ein oder zwei Sätzen über Ihr Unternehmen.
           desc_long: Über uns
           desc_long_placeholder: Schreiben Sie etwas über sich und Ihr Unternehmen. Diese Information wird in Ihrem öffentlichen Profil angezeigt.
+        address:
+          legend: "Adresse"
         business_details:
+          legend: "Geschäftsdetails"
           abn: USt-IdNr.
           abn_placeholder: z. B. DE999999999
           acn: St.-Nr.
@@ -792,7 +807,8 @@ de_DE:
           remove_terms_and_conditions: "Datei löschen"
           uploaded_on: "hochgeladen am"
           reset_form: "zurücksetzen"
-          Invoice_item_sorting: Rechnungseinstellungen
+          business_address_legend: "Unternehmensdaten"
+          invoice_item_sorting_legend: "Rechnungseinstellungen"
           sort_items_by_supplier?: Artikel nach Lieferanten gruppieren?
           sort_items_by_supplier_tip: "Wenn aktiviert, werden die Artikel nach Lieferanten gruppiert und dann alphabetisch sortiert. Wenn deaktiviert, werden die Artikel unabhängig vom Lieferanten alphabetisch sortiert."
           enabled: Aktiviert
@@ -806,6 +822,7 @@ de_DE:
           legal_phone_number: Telefonnummer
           phone_placeholder: "z. B. +49 40 123 456"
         contact:
+          legend: "Kontaktdaten"
           name: Name
           name_placeholder: z. B. Gustav Pflaume
           email_address: Öffentliche E-Mail-Adresse
@@ -819,14 +836,17 @@ de_DE:
           website: Homepage
           website_placeholder: z. B. www.truffles.com
         enterprise_fees:
+          legend: "Gebühren"
           name: Name der Gebühr
           fee_type: Art der Gebühr
           manage_fees: Unternehmensgebühren verwalten
           no_fees_yet: Sie erheben noch keine Unternehmensgebühren.
           create_button: Jetzt erstellen
         enterprise_permissions:
+          legend: "Berechtigungen"
           enterprise_relationships: Unternehmensbeziehungen
         images:
+          legend: "Bilder"
           logo: Logo
           promo_image_placeholder: 'Dieses Bild wird in "Über uns" angezeigt.'
           promo_image_note1: 'BITTE BEACHTEN SIE:'
@@ -835,6 +855,7 @@ de_DE:
           remove_logo: "Bild löschen"
           remove_promo_image: "Bild löschen"
         inventory_settings:
+          legend: "Katalog"
           text1: Sie verwalten optional Ihre Lagerbestände und Preise auch in Ihrem
           inventory: Katalog
           text2: >
@@ -846,6 +867,7 @@ de_DE:
           preferred_product_selection_from_inventory_only_yes: Neue Produkte können in meinem Laden angeboten werden (empfohlen)
           preferred_product_selection_from_inventory_only_no: Neue Produkte müssen zu meinem Katalog hinzugefügt werden, bevor sie in meinem Laden angeboten werden können
         payment_methods:
+          legend: "Zahlungsarten"
           name: Name der Zahlungsart
           applies: Aktiv?
           manage: Zahlungsarten verwalten
@@ -853,6 +875,7 @@ de_DE:
           create_button: Neue Zahlungsart
           create_one_button: Jetzt erstellen
         primary_details:
+          legend: "Unternehmen"
           name: Name
           name_placeholder: z. B. Professor Plums biodynamische Trüffel
           groups: Gruppen
@@ -871,6 +894,8 @@ de_DE:
           visible: öffentlich sichtbar
           not_visible: versteckt aber referenziert
           hidden: vollständig versteckt
+        properties:
+          legend: "Eigenschaften"
         permalink:
           permalink: Permalink (keine Leerzeichen)
           permalink_tip: "Dieser Permalink wird verwendet, um die URL zu Ihrem Laden zu erstellen: %{link}name-ihres-ladens/shop"
@@ -879,6 +904,7 @@ de_DE:
           ofn_uid: OFN UID
           ofn_uid_tip: Die eindeutige ID, mit der das Unternehmen im Open Food Network identifiziert wird.
         shipping_methods:
+          legend: "Lieferoptionen"
           name: "Name der Lieferoption"
           applies: "Aktiv?"
           manage: "Lieferoptionen verwalten"
@@ -886,6 +912,7 @@ de_DE:
           create_one_button: "Jetzt erstellen"
           no_method_yet: "Sie haben noch keine Lieferoption angelegt. Bitte erstellen Sie eine."
         shop_preferences:
+          legend: "Laden"
           shopfront_requires_login: "Geöffnet für alle Nutzer?"
           shopfront_requires_login_tip: "Wählen Sie aus, ob nur Kunden, die Sie Ihrer Kundenliste hinzugefügt haben, einkaufen können oder ob der Laden für alle Nutzer geöffnet ist."
           shopfront_requires_login_false: "Alle Nutzer"
@@ -935,6 +962,7 @@ de_DE:
           enabled: "aktiviert"
           disabled: "deaktiviert"
         social:
+          legend: "Soziale Medien"
           twitter_placeholder: "z. B. @the_prof"
           instagram_placeholder: "z. B. the_prof"
           facebook_placeholder: "z. B. www.facebook.com/IhreSeite"
@@ -952,6 +980,7 @@ de_DE:
             i_agree: Zustimmen
             cancel: Abbrechen
         tag_rules:
+          legend: "Stichwortregeln"
           default_rules:
             by_default: Standardregeln
             no_rules_yet: Es gelten noch keine Standardregeln.
@@ -962,6 +991,7 @@ de_DE:
           add_new_rule: '+ Neue Regel hinzufügen'
           add_new_tag: '+ Neues Stichwort hinzufügen'
         users:
+          legend: "Benutzer"
           email_confirmation_notice_html: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{email} gesendet."
           resend: Erneut senden
           owner: 'Inhaber'
@@ -1081,15 +1111,29 @@ de_DE:
         tags: "Stichwörter"
         delivery_details: "Lieferdetails"
         fees: "Gebühren"
+        next: "Nächste"
         previous: "Vorherige"
         save: "Speichern"
-        save_and_back_to_list: "Speichern und zurück zur Liste"
+        save_and_next: "Speichern und weiter"
         cancel: "Abbrechen"
         back_to_list: "Zurück zur Liste"
+      checkout_options:
+        back_end: "Nur im Backoffice"
+        cancel: "Stornieren"
+        checkout_options: "Zahlungsarten & Lieferoptionen"
+        distributor: "Verteilstelle"
+        no_payment_methods: Jede Verteilstelle dieses Bestellzyklus benötigt mindestens eine aktivierte Zahlungsart.
+        no_shipping_methods: Jede Verteilstelle dieses Bestellzyklus benötigt mindestens eine aktivierte Lieferoption.
+        payment_methods: "Zahlungsarten"
+        save: "Speichern"
+        save_and_back_to_list: "Speichern und zurück zur Liste"
+        select_all: "Alle auswählen"
+        shipping_methods: "Lieferoptionen"
       wizard_progress:
         edit: "1. Allgemeine Einstellungen"
         incoming: "2. Eingehende Produkte"
         outgoing: "3. Ausgehende Produkte"
+        checkout_options: "4. Zahlungsarten & Lieferoptionen"
       exchange_form:
         pickup_time_tip: Datum und Uhrzeit, ab wann Bestellungen dieses Bestellzylus für den Kunden bereit sind.
         pickup_instructions_placeholder: "Informationen zur Abholung"
@@ -1182,6 +1226,31 @@ de_DE:
         has_no_payment_methods: "%{enterprise} hat keine Zahlungsarten."
         has_no_shipping_methods: "%{enterprise} hat keine Lieferoptionen."
         has_no_enterprise_fees: "%{enterprise} erhebt keine Gebühren."
+      side_menu:
+        enterprise:
+          primary_details: "Unternehmen"
+          address: "Adresse"
+          contact: "Kontaktdaten"
+          social: "Soziale Medien"
+          about: "Verkaufen"
+          business_details: "Geschäftsdetails"
+          images: "Bilder"
+          properties: "Eigenschaften"
+          shipping_methods: "Lieferoptionen"
+          payment_methods: "Zahlungsarten"
+          enterprise_fees: "Gebühren"
+          enterprise_permissions: "Berechtigungen"
+          inventory_settings: "Katalog"
+          tag_rules: "Stichwortregeln"
+          shop_preferences: "Laden"
+          users: "Benutzer"
+        enterprise_group:
+          primary_details: "Unternehmen"
+          users: "Benutzer"
+          about: "Verkaufen"
+          images: "Bilder"
+          contact: "Kontaktdaten"
+          web: "Homepage"
     enterprise_issues:
       create_new: Erstellen
       resend_email: E-Mail erneut senden
@@ -2336,7 +2405,6 @@ de_DE:
   admin_enterprise_groups_data_powertip: "Der primäre Benutzer, der für diese Gruppe verantwortlich ist."
   admin_enterprise_groups_data_powertip_logo: "Dies ist das Logo für die Gruppe."
   admin_enterprise_groups_data_powertip_promo_image: "Dieses Bild wird oben im Gruppenprofil angezeigt."
-  admin_enterprise_groups_contact: "Kontakt"
   admin_enterprise_groups_contact_phone_placeholder: "z. B. +40 40 123456"
   admin_enterprise_groups_contact_address1_placeholder: "z. B. Gartenstraße 123"
   admin_enterprise_groups_contact_city: "Ort"
@@ -2345,7 +2413,6 @@ de_DE:
   admin_enterprise_groups_contact_zipcode_placeholder: "z. B. 30701"
   admin_enterprise_groups_contact_state_id: "Bundesland"
   admin_enterprise_groups_contact_country_id: "Land"
-  admin_enterprise_groups_web: "Homepage"
   admin_enterprise_groups_web_twitter: "z. B. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "z. B. www.truffles.com"
   admin_order_cycles: "Bestellzyklen verwalten"
@@ -2669,11 +2736,8 @@ de_DE:
   images: "Bilder"
   web: "Internet"
   primary_details: "Unternehmen"
-  adrdress: "Adresse"
   contact: "Kontakt"
   social: "Soziale Medien"
-  business_details: "Geschäftsdetails"
-  properties: "Eigenschaften"
   shipping: "Lieferung"
   shipping_methods: "Lieferoptionen"
   payment_methods: "Zahlungsarten"
@@ -2683,9 +2747,7 @@ de_DE:
   payment_updated: "Zahlung wurde aktualisiert."
   cannot_perform_operation: "Die Zahlung konnte nicht aktualisiert werden."
   action_required: "Handlung erforderlich"
-  inventory_settings: "Katalog"
   tag_rules: "Stichwortregeln"
-  shop_preferences: "Laden"
   enterprise_fee_whole_order: Gesamte Bestellung
   enterprise_fee_by: "%{type} Gebühr von %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^ Diese Beziehung besteht bereits."
@@ -3615,6 +3677,7 @@ de_DE:
           results_found: "%{number} Ergebnisse gefunden."
           viewing: "Angezeigt wird %{start} bis %{end}."
           print_invoices: "Rechnungen drucken"
+          cancel_orders: "Bestellungen stornieren"
           selected:
             zero: "Keine Bestellung ausgewählt"
             one: "1 Bestellung ausgewählt"

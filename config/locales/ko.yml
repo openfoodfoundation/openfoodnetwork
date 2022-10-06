@@ -288,7 +288,6 @@ ko:
   producers_join: 호주 생산자들은 Open Food Network에 가입하는 것을 환영하고 있습니다.
   charges_sales_tax: 부가가치세를 부과하실겁니까?
   business_address: "사업자 주소"
-  enterprise_permissions: "회사 권한"
   print_invoice: "청구서 출력"
   print_ticket: "티켓 출력"
   select_ticket_printer: "티켓을 출력할 프린터를 선택하세요"
@@ -556,6 +555,18 @@ ko:
     enterprise_groups:
       index:
         new_button: 새로운 회사 그룹
+      form_primary_details:
+        primary_details: "기본 세부 사항"
+      form_users:
+        users: "사용자"
+      form_about:
+        about: "무엇인지 알고 싶으시다면"
+      form_images:
+        images: "사진"
+      form_address:
+        contact: "연락처"
+      form_web:
+        web: "웹 자원"
     enterprise_roles:
       form:
         manages: 관리
@@ -768,11 +779,15 @@ ko:
         manage: 관리
       form:
         about_us:
+          legend: "무엇인지 알고 싶으시다면"
           desc_short: 간단한 설명
           desc_short_placeholder: 귀사에 대해 한두 문장으로 설명해 주십시오.
           desc_long: About Us
           desc_long_placeholder: 고객에게 당신에 대해 설명하세요. 이 정보는 공개 프로필에 나타납니다.
+        address:
+          legend: "주소"
         business_details:
+          legend: "사업 세부 사항"
           abn: ABN
           abn_placeholder: eg. 99 123 456 789
           acn: ACN
@@ -783,7 +798,8 @@ ko:
           remove_terms_and_conditions: "파일 삭제"
           uploaded_on: "이미 업로드 됨"
           reset_form: "양식 재설정"
-          Invoice_item_sorting: 청구서 품목 분류
+          business_address_legend: "사업자 주소"
+          invoice_item_sorting_legend: "청구서 품목 분류"
           sort_items_by_supplier?: 공급업체별로 항목을 정렬하시겠습니까?
           sort_items_by_supplier_tip: "이 옵션을 선택하면 공급업체 이름별로 항목이 정렬됩니다."
           enabled: 사용 가능함
@@ -797,6 +813,7 @@ ko:
           legal_phone_number: 법적 전화번호
           phone_placeholder: "98 123 4565"
         contact:
+          legend: "연락처"
           name: 이름
           name_placeholder: 예. Gustav Plum
           email_address: 공용 전자 메일 주소
@@ -807,14 +824,17 @@ ko:
           website: 웹사이트
           website_placeholder: 예시. www.truffles.com
         enterprise_fees:
+          legend: "회사 수수료"
           name: 이름
           fee_type: 지불 방식
           manage_fees: 회사 요금 관리
           no_fees_yet: 회사 비용이 아직 없습니다.
           create_button: 지금 만들기
         enterprise_permissions:
+          legend: "회사 권한"
           enterprise_relationships: 기업 관계
         images:
+          legend: "사진"
           logo: 로고
           promo_image_placeholder: '이 이미지는 "About Us"에 전시됩니다.'
           promo_image_note1: '참고 사항: '
@@ -823,6 +843,7 @@ ko:
           remove_logo: "사진 삭제"
           remove_promo_image: "사진 삭제"
         inventory_settings:
+          legend: "인벤토리 설정"
           text1: 다음을 통해 재고 수준 및 가격을 관리할 수 있습니다.
           inventory: 인벤토리
           text2: >
@@ -831,6 +852,7 @@ ko:
           preferred_product_selection_from_inventory_only_yes: 신상품을 당신의 매장 안에 넣을 수 있습니다. (권장 사항)
           preferred_product_selection_from_inventory_only_no: 새 제품을 내 상점에 넣기 전에 내 인벤토리에 추가해야 합니다.
         payment_methods:
+          legend: "결제 방법"
           name: 이름
           applies: 추가하시겠습니까?
           manage: 결제 방법 관리
@@ -838,6 +860,7 @@ ko:
           create_button: 새로운 결제 방법 생성
           create_one_button: 지금 만들기
         primary_details:
+          legend: "기본 세부 사항"
           name: 이름
           name_placeholder: 예시. Professor Plum's Biodynamic Truffles
           groups: 그룹
@@ -856,6 +879,8 @@ ko:
           visible: 공용
           not_visible: 숨김
           hidden: 모든 참조 숨기기
+        properties:
+          legend: "특성"
         permalink:
           permalink: 하이퍼링크 (공백 없음)
           permalink_tip: "이 하이퍼링크는 가게의 URL을 만드는 데 사용됩니다 :%{link}당신의 가게 이름/가게"
@@ -864,6 +889,7 @@ ko:
           ofn_uid: OFN UID
           ofn_uid_tip: Open Food Network내 기업을 식별하는 데 사용되는 고유 ID
         shipping_methods:
+          legend: "전송 방법"
           name: "이름"
           applies: "활성화 하시겠습니까?"
           manage: "배송 방법 관리"
@@ -871,6 +897,7 @@ ko:
           create_one_button: "지금 만들기"
           no_method_yet: "아직 배송 방법이 없습니다."
         shop_preferences:
+          legend: "상점 기본 설정"
           shopfront_requires_login: "눈에 보이는 상점으로 공개할까요?"
           shopfront_requires_login_tip: "고객이 상점을 보도록 로그인하거나 모든 사람이 볼 수 있도록 할 지 선택해야 합니다."
           shopfront_requires_login_false: "공용"
@@ -916,6 +943,7 @@ ko:
           enabled: "활성화"
           disabled: "비활성화"
         social:
+          legend: "사회성"
           twitter_placeholder: "예. @the_prof"
           instagram_placeholder: "예. 전문가"
           facebook_placeholder: "예. www.facebook.com/PageNameHere"
@@ -933,6 +961,7 @@ ko:
             i_agree: 동의합니다
             cancel: 취소
         tag_rules:
+          legend: "태그 규칙"
           default_rules:
             by_default: 기본값 설정
             no_rules_yet: 아직 적용되는 기본 규칙이 없습니다.
@@ -943,6 +972,7 @@ ko:
           add_new_rule: '+ 새 규칙 추가'
           add_new_tag: '+ 새 태그 추가'
         users:
+          legend: "사용자"
           email_confirmation_notice_html: "이메일 확인이 보류 중입니다. %{email}에게 확인 메일을 보냈습니다."
           resend: 재전송
           owner: '오너'
@@ -1062,11 +1092,21 @@ ko:
         tags: "태그"
         delivery_details: "배달 세부 사항"
         fees: "수수료"
+        next: "다음"
         previous: "이전으로"
         save: "저장"
-        save_and_back_to_list: "저장 후 목록으로 돌아가기"
+        save_and_next: "저장 후 다음"
         cancel: "취소"
         back_to_list: "리스트로 돌아가기"
+      checkout_options:
+        back_end: "고객들을 직접 상대하지 않는 부서 전용"
+        cancel: "취소"
+        distributor: "유통업체"
+        payment_methods: "결제 방법"
+        save: "저장"
+        save_and_back_to_list: "저장 후 목록으로 돌아가기"
+        select_all: "모두 선택"
+        shipping_methods: "전송 방법"
       wizard_progress:
         edit: "1. 일반 설정"
         incoming: "2. 들어오는 제품"
@@ -1160,6 +1200,31 @@ ko:
         has_no_payment_methods: "%{enterprise}는 지불 방법이 없습니다."
         has_no_shipping_methods: "%{enterprise}는 전송 방법이 없습니다."
         has_no_enterprise_fees: "%{enterprise}는 회사 수수료가 없습니다."
+      side_menu:
+        enterprise:
+          primary_details: "기본 세부 사항"
+          address: "주소"
+          contact: "연락처"
+          social: "사회성"
+          about: "무엇인지 알고 싶으시다면"
+          business_details: "사업 세부 사항"
+          images: "사진"
+          properties: "특성"
+          shipping_methods: "전송 방법"
+          payment_methods: "결제 방법"
+          enterprise_fees: "회사 수수료"
+          enterprise_permissions: "회사 권한"
+          inventory_settings: "인벤토리 설정"
+          tag_rules: "태그 규칙"
+          shop_preferences: "상점 기본 설정"
+          users: "사용자"
+        enterprise_group:
+          primary_details: "기본 세부 사항"
+          users: "사용자"
+          about: "무엇인지 알고 싶으시다면"
+          images: "사진"
+          contact: "연락처"
+          web: "웹 자원"
     enterprise_issues:
       create_new: 새로 생성하기
       resend_email: 이메일 재전송
@@ -2307,7 +2372,6 @@ ko:
   admin_enterprise_groups_data_powertip: "이 그룹을 담당하는 기본 사용자입니다."
   admin_enterprise_groups_data_powertip_logo: "이것은 그룹의 로고입니다."
   admin_enterprise_groups_data_powertip_promo_image: "이 이미지는 그룹 프로필 상단에 전시되어 있습니다"
-  admin_enterprise_groups_contact: "연락처"
   admin_enterprise_groups_contact_phone_placeholder: "예시. 98 7654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "예.  123 High Street"
   admin_enterprise_groups_contact_city: "교외"
@@ -2316,7 +2380,6 @@ ko:
   admin_enterprise_groups_contact_zipcode_placeholder: "예. 3070"
   admin_enterprise_groups_contact_state_id: "상태"
   admin_enterprise_groups_contact_country_id: "나라"
-  admin_enterprise_groups_web: "웹 자원"
   admin_enterprise_groups_web_twitter: "예. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "예시. www.truffles.com"
   admin_order_cycles: "관리자 주문 주기"
@@ -2638,11 +2701,8 @@ ko:
   images: "사진"
   web: "웹페이지"
   primary_details: "기본 세부 사항"
-  adrdress: "주소"
   contact: "연락처"
   social: "사회성"
-  business_details: "사업 세부 사항"
-  properties: "특성"
   shipping: "배송"
   shipping_methods: "전송 방법"
   payment_methods: "결제 방법"
@@ -2652,9 +2712,7 @@ ko:
   payment_updated: "결제가 업데이트됨"
   cannot_perform_operation: "결제를 업데이트를 할 수 없습니다."
   action_required: "필요한 작업"
-  inventory_settings: "인벤토리 설정"
   tag_rules: "태그 규칙"
-  shop_preferences: "상점 기본 설정"
   enterprise_fee_whole_order: 전체 주문
   enterprise_fee_by: "%{role}%{enterprise_name}의 %{type} 수수료"
   validation_msg_relationship_already_established: "그 관계는 이미 정해져 있습니다."

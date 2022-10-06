@@ -288,7 +288,6 @@ uk:
   producers_join: Тепер Українські виробники можуть приєднатися до Open Food Network.
   charges_sales_tax: Стягує податок на товари та послуги?
   business_address: "Бізнес адреса"
-  enterprise_permissions: "Корпоративні доступи"
   print_invoice: "Роздрукувати рахунок-фактуру"
   print_ticket: "Роздрукувати чек"
   select_ticket_printer: "Виберіть принтер для чеків"
@@ -559,6 +558,18 @@ uk:
     enterprise_groups:
       index:
         new_button: Нова група підприємств
+      form_primary_details:
+        primary_details: "Основні деталі"
+      form_users:
+        users: "Користувачі"
+      form_about:
+        about: "Про нас"
+      form_images:
+        images: "Зображення"
+      form_address:
+        contact: "Контакти"
+      form_web:
+        web: "Веб-ресурси"
     enterprise_roles:
       form:
         manages: керує
@@ -774,11 +785,15 @@ uk:
         manage: Керувати
       form:
         about_us:
+          legend: "Про нас"
           desc_short: Короткий опис
           desc_short_placeholder: Розкажіть про своє підприємство одним-двома реченнями
           desc_long: Про нас
           desc_long_placeholder: Розкажіть клієнтам про себе. Ця інформація відображається у вашому загальнодоступному профілі.
+        address:
+          legend: "Адреса"
         business_details:
+          legend: "Бізнес деталі"
           abn: ABN
           abn_placeholder: наприклад 99 123 456 789
           acn: ACN
@@ -789,7 +804,8 @@ uk:
           remove_terms_and_conditions: "Видалити файл"
           uploaded_on: "завантажено на"
           reset_form: "Форма скидання"
-          Invoice_item_sorting: Сортування позицій рахунків
+          business_address_legend: "Бізнес адреса"
+          invoice_item_sorting_legend: "Сортування позицій рахунків"
           sort_items_by_supplier?: Сортувати товари за постачальниками?
           sort_items_by_supplier_tip: "Якщо ввімкнено, товари сортуватимуться за назвою постачальника."
           enabled: Увімкнути
@@ -803,6 +819,7 @@ uk:
           legal_phone_number: Юридичний номер телефону
           phone_placeholder: "98 123 4565"
         contact:
+          legend: "Контакти"
           name: Ім&#39;я
           name_placeholder: наприклад Слива Густав
           email_address: Загальнодоступна електронна адреса
@@ -816,14 +833,17 @@ uk:
           website: Веб-сайт
           website_placeholder: наприклад www.truffles.com
         enterprise_fees:
+          legend: "Комісія підприємства"
           name: Ім&#39;я
           fee_type: Тип плати
           manage_fees: Керуйте зборами підприємства
           no_fees_yet: У вас ще немає комісій за підприємство.
           create_button: Створіть зараз
         enterprise_permissions:
+          legend: "Корпоративні доступи"
           enterprise_relationships: Взаємовідносини підприємства
         images:
+          legend: "Зображення"
           logo: Логотип
           promo_image_placeholder: 'Це зображення відображається в розділі "Про нас"'
           promo_image_note1: 'БУДЬ ЛАСКА, ЗАПИШІТЬ:'
@@ -832,6 +852,7 @@ uk:
           remove_logo: "Видалити зображення"
           remove_promo_image: "Видалити зображення"
         inventory_settings:
+          legend: "Налаштування інвентарю"
           text1: Ви можете керувати залишками і цінами через свій
           inventory: інвентаризація
           text2: >
@@ -843,6 +864,7 @@ uk:
           preferred_product_selection_from_inventory_only_yes: Нові продукти можна розміщувати в моїй вітрині (рекомендовано)
           preferred_product_selection_from_inventory_only_no: Нові продукти мають бути додані до мого асортименту, перш ніж їх можна буде виставити на мій магазин
         payment_methods:
+          legend: "Методи оплати"
           name: Ім'я
           applies: Застосувати?
           manage: Керувати методами оплати
@@ -850,6 +872,7 @@ uk:
           create_button: Створіть новий спосіб оплати
           create_one_button: Створіть зараз
         primary_details:
+          legend: "Основні деталі"
           name: Ім'я
           name_placeholder: напр. Біодинамічні трюфелі професора Плама
           groups: Групи
@@ -868,6 +891,8 @@ uk:
           visible: Публічний
           not_visible: Прихований
           hidden: Приховати всі посилання
+        properties:
+          legend: "Властивості"
         permalink:
           permalink: Постійне посилання (без пробілів)
           permalink_tip: "Це постійне посилання використовується для створення URL-адреси вашого магазину: %{link}your-shop-name/shop"
@@ -876,6 +901,7 @@ uk:
           ofn_uid: OFN UID
           ofn_uid_tip: Унікальний ідентифікатор, який використовується для ідентифікації підприємства в Open Food Network.
         shipping_methods:
+          legend: "Способи доставки"
           name: "Ім'я"
           applies: "Активний?"
           manage: "Керувати способами доставки"
@@ -883,6 +909,7 @@ uk:
           create_one_button: "Створіть зараз"
           no_method_yet: "У вас ще немає способів доставки."
         shop_preferences:
+          legend: "Налаштування магазину"
           shopfront_requires_login: "Загальнодоступна вітрина?"
           shopfront_requires_login_tip: "Виберіть, чи клієнти мають увійти, щоб переглянути вітрину, чи вона буде видимою для всіх."
           shopfront_requires_login_false: "Публічний"
@@ -931,6 +958,7 @@ uk:
           enabled: "Увімкнено"
           disabled: "Вимкнено"
         social:
+          legend: "Соціальний"
           twitter_placeholder: "напр. @the_prof"
           instagram_placeholder: "напр. the_prof"
           facebook_placeholder: "напр. www.facebook.com/PageNameHere"
@@ -948,6 +976,7 @@ uk:
             i_agree: Я згоден
             cancel: Скасувати
         tag_rules:
+          legend: "Правила тегів"
           default_rules:
             by_default: За замовчуванням
             no_rules_yet: Правила за умовчанням ще не застосовані
@@ -958,6 +987,7 @@ uk:
           add_new_rule: '+ Додати нове правило'
           add_new_tag: '+ Додати новий тег'
         users:
+          legend: "Користувачі"
           email_confirmation_notice_html: "Очікується підтвердження електронною поштою. Ми надіслали електронний лист із підтвердженням на адресу %{email}."
           resend: Надіслати повторно
           owner: 'Власник'
@@ -1077,11 +1107,21 @@ uk:
         tags: "Мітки"
         delivery_details: "Деталі доставки"
         fees: "Збори"
+        next: "Далі"
         previous: "Попередній"
         save: "Зберегти"
-        save_and_back_to_list: "Зберегти та повернутися до списку"
+        save_and_next: "Зберегти та Далі"
         cancel: "Скасувати"
         back_to_list: "Назад до списку"
+      checkout_options:
+        back_end: "Тільки бек-офіс"
+        cancel: "Скасувати"
+        distributor: "Дистрибютор"
+        payment_methods: "Методи оплати"
+        save: "Зберегти"
+        save_and_back_to_list: "Зберегти та повернутися до списку"
+        select_all: "Вибрати всі"
+        shipping_methods: "Способи доставки"
       wizard_progress:
         edit: "1. Загальні налаштування"
         incoming: "2. Вхідні продукти"
@@ -1178,6 +1218,31 @@ uk:
         has_no_payment_methods: "%{enterprise} не має способів оплати"
         has_no_shipping_methods: "%{enterprise} не має способів доставки"
         has_no_enterprise_fees: "%{enterprise} не має корпоративних зборів/податків"
+      side_menu:
+        enterprise:
+          primary_details: "Основні деталі"
+          address: "Адреса"
+          contact: "Контакти"
+          social: "Соціальний"
+          about: "Про нас"
+          business_details: "Бізнес деталі"
+          images: "Зображення"
+          properties: "Властивості"
+          shipping_methods: "Способи доставки"
+          payment_methods: "Методи оплати"
+          enterprise_fees: "Комісія підприємства"
+          enterprise_permissions: "Корпоративні доступи"
+          inventory_settings: "Налаштування інвентарю"
+          tag_rules: "Правила тегів"
+          shop_preferences: "Налаштування магазину"
+          users: "Користувачі"
+        enterprise_group:
+          primary_details: "Основні деталі"
+          users: "Користувачі"
+          about: "Про нас"
+          images: "Зображення"
+          contact: "Контакти"
+          web: "Веб-ресурси"
     enterprise_issues:
       create_new: Створити новий
       resend_email: Повторно надіслати email
@@ -2328,7 +2393,6 @@ uk:
   admin_enterprise_groups_data_powertip: "Основний користувач, відповідальний за цю групу."
   admin_enterprise_groups_data_powertip_logo: "Це логотип для групи"
   admin_enterprise_groups_data_powertip_promo_image: "Це зображення відображається у верхній частині профілю групи"
-  admin_enterprise_groups_contact: "Контакти"
   admin_enterprise_groups_contact_phone_placeholder: "наприклад 98 7654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "напр. 123 вул. Б.Хмельницького"
   admin_enterprise_groups_contact_city: "Передмістя"
@@ -2337,7 +2401,6 @@ uk:
   admin_enterprise_groups_contact_zipcode_placeholder: "напр. 3070"
   admin_enterprise_groups_contact_state_id: "Стан"
   admin_enterprise_groups_contact_country_id: "Країна"
-  admin_enterprise_groups_web: "Веб-ресурси"
   admin_enterprise_groups_web_twitter: "напр. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "наприклад www.truffles.com"
   admin_order_cycles: "Цикли замовлень адміністратора"
@@ -2659,11 +2722,8 @@ uk:
   images: "Зображення"
   web: "Web"
   primary_details: "Основні деталі"
-  adrdress: "Адреса"
   contact: "Контакти"
   social: "Соціальний"
-  business_details: "Бізнес деталі"
-  properties: "Властивості"
   shipping: "Доставка"
   shipping_methods: "Способи доставки"
   payment_methods: "методи оплати"
@@ -2673,9 +2733,7 @@ uk:
   payment_updated: "Платіж оновлено"
   cannot_perform_operation: "Не вдалося оновити платіж"
   action_required: "Потрібна дія"
-  inventory_settings: "Налаштування інвентарю"
   tag_rules: "Правила тегів"
-  shop_preferences: "Налаштування магазину"
   enterprise_fee_whole_order: Ціле замовлення
   enterprise_fee_by: "%{type} комісія від %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Цей зв'язок уже встановлений."

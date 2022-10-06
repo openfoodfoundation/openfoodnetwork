@@ -290,7 +290,6 @@ ru:
   producers_join: Производители теперь могут присоединиться к Открытой Сети Продуктов.
   charges_sales_tax: Сбор налога с продаж?
   business_address: "Юридический Адрес"
-  enterprise_permissions: "Разрешения Предприятия"
   print_invoice: "Счёт"
   print_ticket: "Печать счета"
   select_ticket_printer: "Выбрать принтер для счетов"
@@ -563,6 +562,18 @@ ru:
     enterprise_groups:
       index:
         new_button: Новая Группа Предприятий
+      form_primary_details:
+        primary_details: "Основная Информация"
+      form_users:
+        users: "Пользователи"
+      form_about:
+        about: "О нас"
+      form_images:
+        images: "Изображения"
+      form_address:
+        contact: "Контакт"
+      form_web:
+        web: "Веб ресурсы"
     enterprise_roles:
       form:
         manages: управляет
@@ -778,11 +789,15 @@ ru:
         manage: Управлять
       form:
         about_us:
+          legend: "О нас"
           desc_short: Короткое описание
           desc_short_placeholder: Расскажите нам о своем предприятии в одном или двух предложениях
           desc_long: О Нас
           desc_long_placeholder: Расскажите клиентам о себе. Эта информация появляется в вашем общедоступном профиле.
+        address:
+          legend: "Адрес"
         business_details:
+          legend: "Юридическая Информация"
           abn: ИНН
           abn_placeholder: напр. 0123456789
           acn: Полное юридическое наименование
@@ -793,7 +808,8 @@ ru:
           remove_terms_and_conditions: "Удалить Файл"
           uploaded_on: "загружено на"
           reset_form: "Отчистить Форму"
-          Invoice_item_sorting: Сортировка позиций счета
+          business_address_legend: "Юридический Адрес"
+          invoice_item_sorting_legend: "Сортировка позиций счета"
           sort_items_by_supplier?: Сортировать позиции по поставщику?
           sort_items_by_supplier_tip: "Если включено, элементы будут сортироваться по имени поставщика."
           enabled: Включить
@@ -807,6 +823,7 @@ ru:
           legal_phone_number: Официальный номер телефона
           phone_placeholder: "+7 123 456 7890"
         contact:
+          legend: "Контакт"
           name: Имя
           name_placeholder: напр. Иван Иванов
           email_address: Публичный Email Адрес
@@ -820,14 +837,17 @@ ru:
           website: Сайт
           website_placeholder: напр. www.example.ru
         enterprise_fees:
+          legend: "Сборы Предприятия"
           name: Имя
           fee_type: Тип Сбора
           manage_fees: Управление сборами Предприятия
           no_fees_yet: У Вас еще нет сборов предприятия.
           create_button: Создать сейчас
         enterprise_permissions:
+          legend: "Разрешения Предприятия"
           enterprise_relationships: Отношения с Предприятием
         images:
+          legend: "Изображения"
           logo: Логотип
           promo_image_placeholder: 'Это изображение будет отображаться в "О Нас"'
           promo_image_note1: 'ОБРАТИТЕ ВНИМАНИЕ:'
@@ -836,6 +856,7 @@ ru:
           remove_logo: "Удалить Изображение"
           remove_promo_image: "Удалить Изображение"
         inventory_settings:
+          legend: "Настройка товарной номенклатуры"
           text1: Вы можете управлять уровнем запасов и ценами через свой
           inventory: Товарная номенклатура
           text2: >
@@ -847,6 +868,7 @@ ru:
           preferred_product_selection_from_inventory_only_yes: Новые товары могут быть размещены в моей витрине (рекомендуется)
           preferred_product_selection_from_inventory_only_no: Новые товары должны быть добавлены в мою товарную номенклатуру, прежде чем они могут быть помещены в мою витрину
         payment_methods:
+          legend: "Способы Оплаты"
           name: Имя
           applies: Применяется?
           manage: Управление Способами Оплаты
@@ -854,6 +876,7 @@ ru:
           create_button: Создать Новый Способ Оплаты
           create_one_button: Создать Сейчас
         primary_details:
+          legend: "Основная Информация"
           name: Имя
           name_placeholder: напр. Ивановские Биодинамические Трюфеля
           groups: Группы
@@ -872,6 +895,8 @@ ru:
           visible: Доступно всем
           not_visible: Скрытый
           hidden: Скрыть все ссылки
+        properties:
+          legend: "Свойства"
         permalink:
           permalink: Постоянная ссылка (без пробелов)
           permalink_tip: "Эта постоянная ссылка используется для создания URL вашего магазина: %{link}your-shop-name/shop"
@@ -880,6 +905,7 @@ ru:
           ofn_uid: ОСП UID
           ofn_uid_tip: Уникальный номер, который определяет Предприятие в Открытой Сети Продуктов.
         shipping_methods:
+          legend: "Способы Доставки"
           name: "Имя"
           applies: "Применяется?"
           manage: "Управлять Способами Доставки"
@@ -887,6 +913,7 @@ ru:
           create_one_button: "Создать Сейчас"
           no_method_yet: "У Вас еще нет способов доставки."
         shop_preferences:
+          legend: "Параметры Магазина"
           shopfront_requires_login: "Публично видимая витрина?"
           shopfront_requires_login_tip: "Выберите, должны ли клиенты входить в систему для просмотра витрины магазина или она будет видна всем."
           shopfront_requires_login_false: "Доступно всем"
@@ -935,6 +962,7 @@ ru:
           enabled: "Включено"
           disabled: "Выключено"
         social:
+          legend: "Социальные сети"
           twitter_placeholder: "напр. @the_prof"
           instagram_placeholder: "напр. the_prof"
           facebook_placeholder: "напр. www.facebook.com/PageNameHere"
@@ -952,6 +980,7 @@ ru:
             i_agree: Согласен
             cancel: Выход
         tag_rules:
+          legend: "Правила Меток"
           default_rules:
             by_default: По умолчанию
             no_rules_yet: Правила по умолчанию еще не применяются
@@ -962,6 +991,7 @@ ru:
           add_new_rule: '+ Добавить Новое Правило'
           add_new_tag: '+ Добавить Новую Метку'
         users:
+          legend: "Пользователи"
           email_confirmation_notice_html: "Ожидается подтверждение по электронной почте. Мы отправили электронное письмо с подтверждением на %{email}."
           resend: Отправить заново
           owner: 'Владелец'
@@ -1081,11 +1111,21 @@ ru:
         tags: "Метки"
         delivery_details: "Подробности доставки"
         fees: "Сборы"
+        next: "Следующий"
         previous: "Предыдущий"
         save: "Сохранить"
-        save_and_back_to_list: "Сохранить и Назад к Списку"
+        save_and_next: "Сохранить и Далее"
         cancel: "Отмена"
         back_to_list: "Назад к Списку"
+      checkout_options:
+        back_end: "Интерфейс Администратора"
+        cancel: "Выход"
+        distributor: "Дистрибьютор"
+        payment_methods: "Способы Оплаты"
+        save: "Сохранить"
+        save_and_back_to_list: "Сохранить и Назад к Списку"
+        select_all: "Выделить Всё"
+        shipping_methods: "Способы Доставки"
       wizard_progress:
         edit: "1. Основные Настройки"
         incoming: "2. Входящие Товары"
@@ -1182,6 +1222,31 @@ ru:
         has_no_payment_methods: "%{enterprise} не имеет способов оплаты"
         has_no_shipping_methods: "%{enterprise} не имеет способов доставки"
         has_no_enterprise_fees: "%{enterprise} не имеет сборов предприятия"
+      side_menu:
+        enterprise:
+          primary_details: "Основная Информация"
+          address: "Адрес"
+          contact: "Контакт"
+          social: "Социальные сети"
+          about: "О нас"
+          business_details: "Юридическая Информация"
+          images: "Изображения"
+          properties: "Свойства"
+          shipping_methods: "Способы Доставки"
+          payment_methods: "Способы Оплаты"
+          enterprise_fees: "Сборы Предприятия"
+          enterprise_permissions: "Разрешения Предприятия"
+          inventory_settings: "Настройка товарной номенклатуры"
+          tag_rules: "Правила Меток"
+          shop_preferences: "Параметры Магазина"
+          users: "Пользователи"
+        enterprise_group:
+          primary_details: "Основная Информация"
+          users: "Пользователи"
+          about: "О нас"
+          images: "Изображения"
+          contact: "Контакт"
+          web: "Веб ресурсы"
     enterprise_issues:
       create_new: Создать новый
       resend_email: Снова Отправить Письмо
@@ -2333,7 +2398,6 @@ ru:
   admin_enterprise_groups_data_powertip: "Основной пользователь, ответственный за эту группу."
   admin_enterprise_groups_data_powertip_logo: "Логотип для группы"
   admin_enterprise_groups_data_powertip_promo_image: "Это изображение отображается в верхней части профиля группы"
-  admin_enterprise_groups_contact: "Контакты"
   admin_enterprise_groups_contact_phone_placeholder: "напр. (123)435-7891"
   admin_enterprise_groups_contact_address1_placeholder: "напр. Виноградная 123"
   admin_enterprise_groups_contact_city: "Город"
@@ -2342,7 +2406,6 @@ ru:
   admin_enterprise_groups_contact_zipcode_placeholder: "напр. 142000"
   admin_enterprise_groups_contact_state_id: "Область"
   admin_enterprise_groups_contact_country_id: "Страна"
-  admin_enterprise_groups_web: "Веб ресурсы"
   admin_enterprise_groups_web_twitter: "напр. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "напр. www.truffles.ru"
   admin_order_cycles: "Управление Циклами Заказа"
@@ -2664,11 +2727,8 @@ ru:
   images: "Изображения"
   web: "Веб"
   primary_details: "Основная Информация"
-  adrdress: "Адрес"
   contact: "Контакты"
   social: "Социальные сети"
-  business_details: "Юридическая Информация"
-  properties: "Свойства"
   shipping: "Доставка"
   shipping_methods: "Способы Доставки"
   payment_methods: "Способы Оплаты"
@@ -2678,9 +2738,7 @@ ru:
   payment_updated: "Платеж Обновлен"
   cannot_perform_operation: "Не удалось обновить платеж"
   action_required: "Требуются действия"
-  inventory_settings: "Настройка товарной номенклатуры"
   tag_rules: "Правила Меток"
-  shop_preferences: "Параметры Магазина"
   enterprise_fee_whole_order: Весь заказ
   enterprise_fee_by: "%{type} сбор за %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Эти отношения уже установлены."

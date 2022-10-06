@@ -223,7 +223,6 @@ pt:
   search_by_name: Procurar por nome ou localidade...
   producers_join: Produtores e produtoras de proximidade, estão convidados a juntarem-se à Open Food Network!
   charges_sales_tax: Cobra IVA?
-  enterprise_permissions: "Permissões das Organizações"
   print_invoice: "Imprimir factura"
   print_ticket: "Imprimir bilhete"
   select_ticket_printer: "Seleccionar impressora"
@@ -472,6 +471,18 @@ pt:
     enterprise_groups:
       index:
         new_button: Novo grupo de organizações
+      form_primary_details:
+        primary_details: "Detalhes Principais"
+      form_users:
+        users: "Utilizadores"
+      form_about:
+        about: "Sobre"
+      form_images:
+        images: "Imagens"
+      form_address:
+        contact: "Contacto"
+      form_web:
+        web: "Recursos Web"
     enterprise_roles:
       form:
         manages: gere
@@ -682,11 +693,15 @@ pt:
         manage: Gerir
       form:
         about_us:
+          legend: "Sobre"
           desc_short: Descrição Curta
           desc_short_placeholder: Conte-nos sobre a sua organização em uma ou duas frases
           desc_long: Sobre nós
           desc_long_placeholder: Conte um pouco de si aos consumidores. Esta informação aparece no seu perfil público.
+        address:
+          legend: "Morada"
         business_details:
+          legend: "Detalhes do Negócio"
           abn: NIPC
           abn_placeholder: 'ex: 99 123 456 789'
           acn: NIF
@@ -705,6 +720,7 @@ pt:
           legal_phone_number: Telefone legal
           phone_placeholder: "91 234 5678"
         contact:
+          legend: "Contacto"
           name: Nome
           name_placeholder: 'ex: Gustavo Pereira'
           email_address: Endereço de Email Público
@@ -715,14 +731,17 @@ pt:
           website: Website
           website_placeholder: 'ex: www.cogumelos.pt'
         enterprise_fees:
+          legend: "Taxas da Organização"
           name: Nome
           fee_type: Tipo de Taxa
           manage_fees: Gerir Taxas da Organização
           no_fees_yet: Ainda não tem nenhuma taxa de organização definida.
           create_button: Criar uma agora
         enterprise_permissions:
+          legend: "Permissões das Organizações"
           enterprise_relationships: Relações da Organização
         images:
+          legend: "Imagens"
           logo: Logo
           promo_image_placeholder: 'Esta imagem aparece em "Sobre nós"'
           promo_image_note1: 'POR FAVOR OBSERVE:'
@@ -731,6 +750,7 @@ pt:
           remove_logo: "Remover Imagem"
           remove_promo_image: "Remover Imagem"
         inventory_settings:
+          legend: "Configurações de Inventário"
           text1: Pode optar por gerir o seu nível de stock e preços através do seu
           inventory: inventário
           text2: >
@@ -741,6 +761,7 @@ pt:
           preferred_product_selection_from_inventory_only_yes: Novos produtos podem ser colocados na minha loja (recomendado)
           preferred_product_selection_from_inventory_only_no: Novos produtos têm de ser adicionados ao meu inventário antes de serem colocados na minha loja
         payment_methods:
+          legend: "Métodos de pagamento"
           name: Nome
           applies: Aplicável?
           manage: Gerir métodos de pagamento
@@ -748,6 +769,7 @@ pt:
           create_button: Criar Novo Método de Pagamento
           create_one_button: 'Criar um agora '
         primary_details:
+          legend: "Detalhes Principais"
           name: 'Nome '
           name_placeholder: 'ex: Trufas Biodinâmicas do Pereira'
           groups: Grupos
@@ -763,6 +785,8 @@ pt:
           sells_tip: "Nenhum - a organização não vende directamente aos consumidores. <br /> Próprio - a organização vende os seus próprios produtos aos consumidores. <br /> Qualquer - a organização vende os seus próprios produtos ou produtos de outras organizações. <br />"
           visible_in_search: Visível na pesquisa?
           visible: Público
+        properties:
+          legend: "Propriedades"
         permalink:
           permalink: Permalink (sem espaços)
           permalink_tip: "Este link é usado para criar o URL para a sua loja: %{link}nome-loja/loja"
@@ -771,6 +795,7 @@ pt:
           ofn_uid: ID na OpenFoodNetwork
           ofn_uid_tip: O número de identificação serve para identificar a organização na Open Food Network.
         shipping_methods:
+          legend: "Métodos de Envio"
           name: "Nome"
           applies: "Activo?"
           manage: "Gerir Métodos de Envio"
@@ -778,6 +803,7 @@ pt:
           create_one_button: "Criar um agora"
           no_method_yet: "Ainda não tem nenhuma forma de envio."
         shop_preferences:
+          legend: "Preferências da Loja"
           shopfront_requires_login: "Loja visível publicamente?"
           shopfront_requires_login_tip: "Escolha se os consumidores vão precisar de fazer login para ver a loja, ou se esta estará visível para toda a gente."
           shopfront_requires_login_false: "Público"
@@ -814,6 +840,7 @@ pt:
           enabled: "Activo"
           disabled: "Desactivado"
         social:
+          legend: "Social"
           twitter_placeholder: "ex:  @o_prof"
           instagram_placeholder: "ex. o_agricultor"
           facebook_placeholder: "ex. www.facebook.com/asuapagina"
@@ -831,6 +858,7 @@ pt:
             i_agree: Concordo
             cancel: Cancelar
         tag_rules:
+          legend: "Regras para Etiquetas"
           default_rules:
             by_default: Por defeito
             no_rules_yet: Ainda não existe nenhuma regra por defeito
@@ -841,6 +869,7 @@ pt:
           add_new_rule: '+ Adicionar nova regra'
           add_new_tag: '+ Adicionar nova etiqueta'
         users:
+          legend: "Utilizadores"
           email_confirmation_notice_html: "A confirmação do email está pendente. Enviamos um email de confirmação para %{email}."
           resend: Reenviar
           owner: 'Proprietário'
@@ -956,11 +985,21 @@ pt:
         products: "Produtos"
         tags: "Etiquetas"
         fees: "Taxas"
+        next: "Seguinte"
         previous: "Anterior"
         save: "Guardar"
-        save_and_back_to_list: "Guardar e Voltar à Lista"
+        save_and_next: "Guardar e Continuar"
         cancel: "Cancelar"
         back_to_list: "Voltar à Lista"
+      checkout_options:
+        back_end: "Só Administração"
+        cancel: "Cancelar"
+        distributor: "Distribuidor"
+        payment_methods: "Métodos de pagamento"
+        save: "Guardar"
+        save_and_back_to_list: "Guardar e Voltar à Lista"
+        select_all: "Seleccionar tudo"
+        shipping_methods: "Métodos de Envio"
       exchange_form:
         pickup_time_tip: Quando as encomendas deste ciclo ficam prontas para o consumidor
         pickup_instructions_placeholder: "Instruções para levantamento"
@@ -1046,6 +1085,31 @@ pt:
         has_no_payment_methods: "%{enterprise} não tem métodos de pagamento"
         has_no_shipping_methods: "%{enterprise}não tem métodos de envio"
         has_no_enterprise_fees: "%{enterprise} não tem taxas de organização"
+      side_menu:
+        enterprise:
+          primary_details: "Detalhes Principais"
+          address: "Morada"
+          contact: "Contacto"
+          social: "Social"
+          about: "Sobre"
+          business_details: "Detalhes do Negócio"
+          images: "Imagens"
+          properties: "Propriedades"
+          shipping_methods: "Métodos de Envio"
+          payment_methods: "Métodos de pagamento"
+          enterprise_fees: "Taxas da Organização"
+          enterprise_permissions: "Permissões das Organizações"
+          inventory_settings: "Configurações de Inventário"
+          tag_rules: "Regras para Etiquetas"
+          shop_preferences: "Preferências da Loja"
+          users: "Utilizadores"
+        enterprise_group:
+          primary_details: "Detalhes Principais"
+          users: "Utilizadores"
+          about: "Sobre"
+          images: "Imagens"
+          contact: "Contacto"
+          web: "Recursos Web"
     enterprise_issues:
       create_new: Criar Novo
       resend_email: Reenviar Email
@@ -2060,7 +2124,6 @@ pt:
   admin_enterprise_groups_data_powertip: "O utilizador responsável por este grupo."
   admin_enterprise_groups_data_powertip_logo: "Esse é o logo do grupo"
   admin_enterprise_groups_data_powertip_promo_image: "Esta imagem aparecerá no topo do perfil do Grupo"
-  admin_enterprise_groups_contact: "Contacto"
   admin_enterprise_groups_contact_phone_placeholder: "ex: 987654321"
   admin_enterprise_groups_contact_address1_placeholder: "ex: Rua Alta, 123"
   admin_enterprise_groups_contact_city: "Localidade"
@@ -2069,7 +2132,6 @@ pt:
   admin_enterprise_groups_contact_zipcode_placeholder: "ex: 4000-125"
   admin_enterprise_groups_contact_state_id: "Região"
   admin_enterprise_groups_contact_country_id: "País"
-  admin_enterprise_groups_web: "Recursos Web"
   admin_enterprise_groups_web_twitter: "ex:  @o_prof"
   admin_enterprise_groups_web_website_placeholder: "ex: www.cogumelos.pt"
   admin_order_cycles: "Ciclos de Encomendas do Administrador"
@@ -2374,20 +2436,15 @@ pt:
   images: "Imagens"
   web: "Web"
   primary_details: "Detalhes Principais"
-  adrdress: "Morada"
   contact: "Contacto"
   social: "Social"
-  business_details: "Detalhes do Negócio"
-  properties: "Propriedades"
   shipping: "Envio"
   shipping_methods: "Métodos de Envio"
   payment_methods: "Métodos de Pagamento"
   payment_method_fee: "Taxa de transação"
   payment_processing_failed: "O pagamento não pode ser processado, por favor verifique os detalhes que introduziu"
   payment_updated: "Pagamento atualizado"
-  inventory_settings: "Configurações de Inventário"
   tag_rules: "Regras para Etiquetas"
-  shop_preferences: "Preferências da Loja"
   enterprise_fee_whole_order: Encomenda completa
   enterprise_fee_by: "Taxa %{type} por %{role}%{enterprise_name}"
   validation_msg_relationship_already_established: "^Essa relação já foi estabelecida."

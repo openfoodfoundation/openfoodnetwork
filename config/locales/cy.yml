@@ -288,7 +288,6 @@ cy:
   producers_join: Bellach mae croeso i gynhyrchwyr y DU ymuno â'r Open Food Network.
   charges_sales_tax: Angen talu TAW?
   business_address: "Cyfeiriad Busnes"
-  enterprise_permissions: "Caniatâd y Fenter"
   print_invoice: "Argraffu Anfoneb"
   print_ticket: "Argraffu Tocyn"
   select_ticket_printer: "Dewiswch argraffydd ar gyfer tocynnau"
@@ -557,6 +556,18 @@ cy:
     enterprise_groups:
       index:
         new_button: Grŵp Menter Newydd
+      form_primary_details:
+        primary_details: "Manylion sylfaenol"
+      form_users:
+        users: "Defnyddwyr"
+      form_about:
+        about: "Agor fy siop"
+      form_images:
+        images: "Delweddau"
+      form_address:
+        contact: "Cysylltu"
+      form_web:
+        web: "Adnoddau ar y We"
     enterprise_roles:
       form:
         manages: yn rheoli
@@ -772,11 +783,15 @@ cy:
         manage: Rheoli
       form:
         about_us:
+          legend: "Agor fy siop"
           desc_short: Disgrifiad Byr
           desc_short_placeholder: 'Dywedwch wrthym am eich menter brawddeg neu ddwy '
           desc_long: Amdanom ni
           desc_long_placeholder: Dywedwch wrth gwsmeriaid amdanoch chi'ch hun. Mae'r wybodaeth hon yn ymddangos ar eich proffil cyhoeddus.
+        address:
+          legend: "Cyfeiriad"
         business_details:
+          legend: "Manylion Busnes"
           abn: Rhif y Cwmni
           abn_placeholder: e.e. 99 123 456 789
           acn: Rhif yr Elusen
@@ -787,7 +802,8 @@ cy:
           remove_terms_and_conditions: "Dileu Ffeil"
           uploaded_on: "lanlwythwyd ar"
           reset_form: "Ailosod Ffurflen "
-          Invoice_item_sorting: Didoli eitem anfoneb
+          business_address_legend: "Cyfeiriad Busnes"
+          invoice_item_sorting_legend: "Didoli eitem anfoneb"
           sort_items_by_supplier?: Didoli eitemau fesul cyflenwr?
           sort_items_by_supplier_tip: "Ar ôl ei alluogi, caiff eitemau eu didoli yn ôl enw cyflenwr."
           enabled: Galluogi
@@ -801,6 +817,7 @@ cy:
           legal_phone_number: Rhif ffôn cyfreithiol
           phone_placeholder: "01875 123 456"
         contact:
+          legend: "Cysylltu"
           name: Enw
           name_placeholder: e.e. Twm Taten
           email_address: Cyfeiriad E-bost Cyhoeddus
@@ -814,14 +831,17 @@ cy:
           website: Gwefan
           website_placeholder: ee. www.truffles.co.uk
         enterprise_fees:
+          legend: "Ffioedd Menter"
           name: Enw
           fee_type: Math o Ffi
           manage_fees: Rheoli Ffioedd Menter
           no_fees_yet: Nid oes gennych unrhyw ffioedd menter eto.
           create_button: Creu Un Nawr
         enterprise_permissions:
+          legend: "Caniatâd y Fenter"
           enterprise_relationships: Cysylltiadau Mentro
         images:
+          legend: "Delweddau"
           logo: Logo
           promo_image_placeholder: 'Mae''r ddelwedd hon i''w gweld yn ''Amdanom Ni'''
           promo_image_note1: 'NODER:'
@@ -830,6 +850,7 @@ cy:
           remove_logo: "Dileu Delwedd"
           remove_promo_image: "Dileu Delwedd"
         inventory_settings:
+          legend: "Gosodiadau stocrestr"
           text1: Efallai y byddwch yn dewis rheoli lefelau a phrisiau stoc trwy eich
           inventory: 'stocrestr '
           text2: >
@@ -840,6 +861,7 @@ cy:
           preferred_product_selection_from_inventory_only_yes: Gellir rhoi cynnyrch newydd yn fy ffrynt siop (argymhellir)
           preferred_product_selection_from_inventory_only_no: Rhaid ychwanegu cynnyrch newydd at fy stocrestr cyn y gellir eu rhoi yn fy ffrynt siop
         payment_methods:
+          legend: "Dulliau Talu"
           name: Enw
           applies: Yn berthnasol?
           manage: Rheoli Dulliau Talu
@@ -847,6 +869,7 @@ cy:
           create_button: Creu Dull Talu Newydd
           create_one_button: Creu Un Nawr
         primary_details:
+          legend: "Manylion sylfaenol"
           name: Enw
           name_placeholder: e.e. Bisgedi Bendigedig Magi Mwyar
           groups: Grwpiau
@@ -865,6 +888,8 @@ cy:
           visible: Cyhoeddus
           not_visible: Cudd
           hidden: Cuddio pob cyfeirnod
+        properties:
+          legend: "Manylion"
         permalink:
           permalink: Permaddolen (dim bylchau)
           permalink_tip: "Defnyddir y permaddolen hon i greu'r url ar gyfer eich siop: %{link}enw-eich-siop / siop"
@@ -873,6 +898,7 @@ cy:
           ofn_uid: Open Food Network UID
           ofn_uid_tip: Yr dull adnabod unigryw a ddefnyddir i nodi'r fenter ar  y Open Food Network.
         shipping_methods:
+          legend: "Dulliau Anfon"
           name: "Enw"
           applies: "Egnïol?"
           manage: "Rheoli Dulliau Anfon"
@@ -880,6 +906,7 @@ cy:
           create_one_button: "Creu Un Nawr"
           no_method_yet: "Nid oes gennych unrhyw ddulliau anfon eto."
         shop_preferences:
+          legend: "Dewisiadau Siop"
           shopfront_requires_login: "Ffrynt siop sydd i'w gweld yn gyhoeddus?"
           shopfront_requires_login_tip: "Dewiswch a oes rhaid i gwsmeriaid fewngofnodi i weld ffrynt y siop neu a yw'n weladwy i bawb."
           shopfront_requires_login_false: "Cyhoeddus"
@@ -928,6 +955,7 @@ cy:
           enabled: "Galluogwyd"
           disabled: "Analluogwyd"
         social:
+          legend: "Cymdeithasol"
           twitter_placeholder: "e.e. @the_prof"
           instagram_placeholder: "e.e. the_prof"
           facebook_placeholder: "e.e. www.facebook.com/PageNameHere"
@@ -945,6 +973,7 @@ cy:
             i_agree: Rwy'n cytuno
             cancel: Canslo
         tag_rules:
+          legend: "Rheolau Tag"
           default_rules:
             by_default: Yn ddiofyn
             no_rules_yet: Nid oes unrhyw reolau diofyn yn berthnasol eto
@@ -955,6 +984,7 @@ cy:
           add_new_rule: '+ Ychwanegu Rheol Newydd'
           add_new_tag: '+ Ychwanegu Tag Newydd'
         users:
+          legend: "Defnyddwyr"
           email_confirmation_notice_html: "Mae cadarnhad e-bost yn yr arfaeth. Anfonwyd cadarnhad e-bost at %{email}."
           resend: Ailanfon
           owner: 'Perchennog'
@@ -1074,11 +1104,21 @@ cy:
         tags: "Tagiau"
         delivery_details: "Manylion Dosbarthu"
         fees: "Ffioedd"
+        next: "Nesaf"
         previous: "Blaenorol"
         save: "Cadw"
-        save_and_back_to_list: "Cadw ac Yn ôl i'r Rhestr"
+        save_and_next: "Cadw ac ymlaen i'r Nesaf"
         cancel: "Canslo"
         back_to_list: "Yn ôl i'r Rhestr"
+      checkout_options:
+        back_end: "Swyddfa gefn yn unig"
+        cancel: "Canslo"
+        distributor: "Dosbarthwr"
+        payment_methods: "Dulliau Talu"
+        save: "Cadw"
+        save_and_back_to_list: "Cadw ac Yn ôl i'r Rhestr"
+        select_all: "Dewiswch bob un"
+        shipping_methods: "Dulliau Anfon"
       wizard_progress:
         edit: "1. Gosodiadau Cyffredinol"
         incoming: "2. Cynnyrch sy'n Dod i Mewn"
@@ -1175,6 +1215,31 @@ cy:
         has_no_payment_methods: "nid oes gan %{enterprise} unrhyw ddulliau talu"
         has_no_shipping_methods: "nid oes gan %{enterprise} unrhyw ddulliau anfon"
         has_no_enterprise_fees: "nid oes gan %{enterprise} unrhyw ffioedd menter"
+      side_menu:
+        enterprise:
+          primary_details: "Manylion sylfaenol"
+          address: "Cyfeiriad"
+          contact: "Cysylltu"
+          social: "Cymdeithasol"
+          about: "Agor fy siop"
+          business_details: "Manylion Busnes"
+          images: "Delweddau"
+          properties: "Manylion"
+          shipping_methods: "Dulliau Anfon"
+          payment_methods: "Dulliau Talu"
+          enterprise_fees: "Ffioedd Menter"
+          enterprise_permissions: "Caniatâd y Fenter"
+          inventory_settings: "Gosodiadau stocrestr"
+          tag_rules: "Rheolau Tag"
+          shop_preferences: "Dewisiadau Siop"
+          users: "Defnyddwyr"
+        enterprise_group:
+          primary_details: "Manylion sylfaenol"
+          users: "Defnyddwyr"
+          about: "Agor fy siop"
+          images: "Delweddau"
+          contact: "Cysylltu"
+          web: "Adnoddau ar y We"
     enterprise_issues:
       create_new: Creu un newydd
       resend_email: Ailanfon E-bost
@@ -2325,7 +2390,6 @@ cy:
   admin_enterprise_groups_data_powertip: "Y prif ddefnyddiwr sy'n gyfrifol am y grŵp hwn."
   admin_enterprise_groups_data_powertip_logo: "Dyma'r logo ar gyfer y grŵp"
   admin_enterprise_groups_data_powertip_promo_image: "Arddangosir y ddelwedd hon ar frig proffil y Grŵp"
-  admin_enterprise_groups_contact: "Cysylltu"
   admin_enterprise_groups_contact_phone_placeholder: "ee. 98 7654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "ee. 123 Stryd Fawr"
   admin_enterprise_groups_contact_city: "Maestref"
@@ -2334,7 +2398,6 @@ cy:
   admin_enterprise_groups_contact_zipcode_placeholder: "ee. 3070"
   admin_enterprise_groups_contact_state_id: "Sir"
   admin_enterprise_groups_contact_country_id: "Gwlad"
-  admin_enterprise_groups_web: "Adnoddau ar y We"
   admin_enterprise_groups_web_twitter: "ee. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "ee. www.truffles.co.uk"
   admin_order_cycles: "Cylchoedd Archebu Gweinyddol"
@@ -2656,11 +2719,8 @@ cy:
   images: "Delweddau"
   web: "Gwe"
   primary_details: "Manylion sylfaenol"
-  adrdress: "Cyfeiriad"
   contact: "Cysylltu"
   social: "Cymdeithasol"
-  business_details: "Manylion Busnes"
-  properties: "Manylion"
   shipping: "Anfon"
   shipping_methods: "Dulliau anfon"
   payment_methods: "Dulliau Talu"
@@ -2670,9 +2730,7 @@ cy:
   payment_updated: "Diweddarwyd y Taliad"
   cannot_perform_operation: "Nid oedd yn bosib diweddaru'r taliad."
   action_required: "Mae angen gewithredu"
-  inventory_settings: "Gosodiadau stocrestr"
   tag_rules: "Rheolau Tag"
-  shop_preferences: "Dewisiadau Siop"
   enterprise_fee_whole_order: Archeb cyfan
   enterprise_fee_by: "ffi %{type} erbyn %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^ Sefydlwyd y berthynas honno eisoes."
