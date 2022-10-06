@@ -110,6 +110,8 @@ module Sets
     end
 
     def create_variant(product, variant_attributes)
+      return if variant_attributes.blank?
+
       on_hand = variant_attributes.delete(:on_hand)
       on_demand = variant_attributes.delete(:on_demand)
 
