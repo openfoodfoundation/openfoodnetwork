@@ -47,10 +47,9 @@ module Sets
     end
 
     def update_product(product, attributes)
-      original_supplier = product.supplier_id
       return false unless update_product_only_attributes(product, attributes)
 
-      ExchangeVariantDeleter.new.delete(product) if original_supplier != product.supplier_id
+      ExchangeVariantDeleter.new.delete(product) if product.saved_change_to_supplier_id?
 
       update_product_variants(product, attributes) &&
         update_product_master(product, attributes)
