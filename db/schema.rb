@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_07_103614) do
+ActiveRecord::Schema.define(version: 2022_10_07_105052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -310,6 +310,14 @@ ActiveRecord::Schema.define(version: 2022_10_07_103614) do
     t.datetime "processed_at"
     t.boolean "automatic_notifications", default: false
     t.boolean "mails_sent", default: false
+  end
+
+  create_table "order_cycles_distributor_payment_methods", id: false, force: :cascade do |t|
+    t.bigint "order_cycle_id"
+    t.bigint "distributor_payment_method_id"
+    t.index ["distributor_payment_method_id"], name: "index_dpm_id_on_order_cycles_distributor_payment_methods"
+    t.index ["order_cycle_id", "distributor_payment_method_id"], name: "order_cycles_distributor_payment_methods_join_index", unique: true
+    t.index ["order_cycle_id"], name: "index_oc_id_on_order_cycles_distributor_payment_methods"
   end
 
   create_table "order_cycles_distributor_shipping_methods", id: false, force: :cascade do |t|
