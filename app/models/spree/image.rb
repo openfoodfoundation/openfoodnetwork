@@ -12,7 +12,9 @@ module Spree
     self.ignored_columns = %i(attachment_file_name
                               attachment_content_type
                               attachment_file_size
-                              attachment_updated_at)
+                              attachment_updated_at
+                              attachment_width
+                              attachment_height)
 
     has_one_attached :attachment
 
