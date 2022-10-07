@@ -420,8 +420,6 @@ ActiveRecord::Schema.define(version: 2022_10_04_165343) do
 
   create_table "spree_assets", id: :serial, force: :cascade do |t|
     t.integer "viewable_id"
-    t.integer "attachment_width"
-    t.integer "attachment_height"
     t.integer "position"
     t.string "viewable_type", limit: 50
     t.string "type", limit: 75
