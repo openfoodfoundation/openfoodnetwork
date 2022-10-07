@@ -23,13 +23,4 @@ require.context("../fonts", true);
 const images = require.context("../images", true);
 const imagePath = (name) => images(name, true);
 
-import StimulusReflex from "stimulus_reflex";
-import consumer from "../channels/consumer";
-import controller from "../controllers/application_controller";
-
-application.consumer = consumer;
-StimulusReflex.initialize(application, { controller, isolate: true });
-StimulusReflex.debug = process.env.RAILS_ENV === "development";
-CableReady.initialize({ consumer });
-
 import "controllers";
