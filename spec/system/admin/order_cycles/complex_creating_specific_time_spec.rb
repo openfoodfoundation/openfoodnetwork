@@ -22,6 +22,8 @@ describe '
   let!(:distributor) {
     create(:distributor_enterprise, name: 'My distributor', with_payment_and_shipping: true)
   }
+  let!(:payment_method_i) { distributor.payment_methods.first }
+  let!(:payment_method_ii) { create(:payment_method, distributors: [distributor]) }
   let!(:shipping_method_i) { distributor.shipping_methods.first }
   let!(:shipping_method_ii) { create(:shipping_method, distributors: [distributor]) }
   let(:oc) { OrderCycle.last }
@@ -44,6 +46,7 @@ describe '
 
     shipping_method_i.update!(name: "Pickup - always available")
     shipping_method_ii.update!(name: "Delivery - sometimes available")
+    payment_method_ii.update!(name: "Cash")
   end
 
   it "creating an order cycle with full interface", js: true do
@@ -68,6 +71,8 @@ describe '
     add_supplier_with_fees
     add_distributor_with_fees
     select_distributor_shipping_methods
+    select_distributor_payment_methods
+    click_button 'Save and Back to List'
 
     expect_all_data_saved
   end
@@ -161,22 +166,50 @@ describe '
     click_button 'Save and Next'
   end
 
+  def select_distributor_payment_methods
+    within("tr.distributor-#{distributor.id}-payment-methods") do
+      expect(page).to have_checked_field "Select all"
+
+      expect(page).to have_checked_field "Check"
+      expect(page).to have_checked_field "Cash"
+
+      uncheck "Cash"
+
+      expect(page).to have_unchecked_field "Select all"
+
+      expect_checking_select_all_payment_methods_works
+      expect_unchecking_select_all_payment_methods_works
+
+      # Our final selection:
+      check "Check"
+    end
+  end
+
   def select_distributor_shipping_methods
-    expect(page).to have_checked_field "Select all"
+    within("tr.distributor-#{distributor.id}-shipping-methods") do
+      expect(page).to have_checked_field "Select all"
 
-    expect(page).to have_checked_field "Pickup - always available"
-    expect(page).to have_checked_field "Delivery - sometimes available"
+      expect(page).to have_checked_field "Pickup - always available"
+      expect(page).to have_checked_field "Delivery - sometimes available"
 
-    uncheck "Delivery - sometimes available"
+      uncheck "Delivery - sometimes available"
 
-    expect(page).to have_unchecked_field "Select all"
+      expect(page).to have_unchecked_field "Select all"
 
-    expect_checking_select_all_shipping_methods_works
-    expect_unchecking_select_all_shipping_methods_works
+      expect_checking_select_all_shipping_methods_works
+      expect_unchecking_select_all_shipping_methods_works
 
-    # Our final selection:
-    check "Pickup - always available"
-    click_button 'Save and Back to List'
+      # Our final selection:
+      check "Pickup - always available"
+    end
+  end
+
+  def expect_checking_select_all_payment_methods_works
+    # Now test that the "Select all" input is doing what it's supposed to:
+    check "Select all"
+
+    expect(page).to have_checked_field "Check"
+    expect(page).to have_checked_field "Cash"
   end
 
   def expect_checking_select_all_shipping_methods_works
@@ -185,6 +218,13 @@ describe '
 
     expect(page).to have_checked_field "Pickup - always available"
     expect(page).to have_checked_field "Delivery - sometimes available"
+  end
+
+  def expect_unchecking_select_all_payment_methods_works
+    uncheck "Select all"
+
+    expect(page).to have_unchecked_field "Check"
+    expect(page).to have_unchecked_field "Cash"
   end
 
   def expect_unchecking_select_all_shipping_methods_works
@@ -208,6 +248,7 @@ describe '
     expect_receival_instructions_saved
     expect_pickup_time_and_instructions_saved
     expect_distributor_shipping_methods_saved
+    expect_distributor_payment_methods_saved
   end
 
   def expect_opening_and_closing_times_saved
@@ -238,6 +279,10 @@ describe '
     expect(exchange.pickup_time).to eq('pickup time')
     expect(exchange.pickup_instructions).to eq('pickup instructions')
     expect(exchange.tag_list).to eq(['wholesale'])
+  end
+
+  def expect_distributor_payment_methods_saved
+    expect(oc.distributor_payment_methods).to eq(payment_method_i.distributor_payment_methods)
   end
 
   def expect_distributor_shipping_methods_saved

@@ -12,6 +12,9 @@ class OrderCycleForm
     @user = user
     @permissions = OpenFoodNetwork::Permissions.new(user)
     @schedule_ids = order_cycle_params.delete(:schedule_ids)
+    @selected_distributor_payment_method_ids = order_cycle_params.delete(
+      :selected_distributor_payment_method_ids
+    )
     @selected_distributor_shipping_method_ids = order_cycle_params.delete(
       :selected_distributor_shipping_method_ids
     )
@@ -27,6 +30,7 @@ class OrderCycleForm
       order_cycle.schedule_ids = schedule_ids if parameter_specified?(:schedule_ids)
       order_cycle.save!
       apply_exchange_changes
+      attach_selected_distributor_payment_methods
       attach_selected_distributor_shipping_methods
       sync_subscriptions
       true
@@ -49,14 +53,27 @@ class OrderCycleForm
     return if exchanges_unchanged?
 
     OpenFoodNetwork::OrderCycleFormApplicator.new(order_cycle, user).go!
+
+    # reload so outgoing exchanges are up-to-date for shipping/payment method validations
+    order_cycle.reload
+  end
+
+  def attach_selected_distributor_payment_methods
+    return if @selected_distributor_payment_method_ids.nil?
+
+    order_cycle.selected_distributor_payment_method_ids = selected_distributor_payment_method_ids
+    order_cycle.save!
   end
 
   def attach_selected_distributor_shipping_methods
     return if @selected_distributor_shipping_method_ids.nil?
 
-    order_cycle.reload # so outgoing exchanges are up-to-date for shipping method validations
     order_cycle.selected_distributor_shipping_method_ids = selected_distributor_shipping_method_ids
     order_cycle.save!
+  end
+
+  def attachable_distributor_payment_method_ids
+    @attachable_distributor_payment_method_ids ||= order_cycle.attachable_distributor_payment_methods.map(&:id)
   end
 
   def attachable_distributor_shipping_method_ids
@@ -67,6 +84,19 @@ class OrderCycleForm
     [:incoming_exchanges, :outgoing_exchanges].all? do |direction|
       order_cycle_params[direction].nil?
     end
+  end
+
+  def selected_distributor_payment_method_ids
+    @selected_distributor_payment_method_ids = (
+      attachable_distributor_payment_method_ids &
+      @selected_distributor_payment_method_ids.reject(&:blank?).map(&:to_i)
+    )
+
+    if attachable_distributor_payment_method_ids.sort == @selected_distributor_payment_method_ids.sort
+      @selected_distributor_payment_method_ids = []
+    end
+
+    @selected_distributor_payment_method_ids
   end
 
   def selected_distributor_shipping_method_ids

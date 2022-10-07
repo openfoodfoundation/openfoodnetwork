@@ -82,11 +82,18 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
     }
   end
 
+  around do |example|
+    original_stripe_connect_enabled = Spree::Config[:stripe_connect_enabled]
+    example.run
+    Spree::Config.set(stripe_connect_enabled: original_stripe_connect_enabled)
+  end
+
   before do
     order_cycle_distributed_variants = double(:order_cycle_distributed_variants)
     allow(OrderCycleDistributedVariants).to receive(:new) { order_cycle_distributed_variants }
     allow(order_cycle_distributed_variants).to receive(:distributes_order_variants?) { true }
-
+    allow(Stripe).to receive(:publishable_key).and_return("some_token")
+    Spree::Config.set(stripe_connect_enabled: true)
     Stripe.api_key = "sk_test_12345"
     order.update(distributor_id: enterprise.id, order_cycle_id: order_cycle.id)
     order.reload.update_totals

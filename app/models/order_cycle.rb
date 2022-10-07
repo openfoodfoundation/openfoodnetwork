@@ -24,6 +24,9 @@ class OrderCycle < ApplicationRecord
   has_many :distributors, -> { distinct }, source: :receiver, through: :cached_outgoing_exchanges
   has_many :order_cycle_schedules
   has_many :schedules, through: :order_cycle_schedules
+  has_and_belongs_to_many :selected_distributor_payment_methods,
+                          class_name: 'DistributorPaymentMethod',
+                          join_table: 'order_cycles_distributor_payment_methods'
   has_and_belongs_to_many :selected_distributor_shipping_methods,
                           class_name: 'DistributorShippingMethod',
                           join_table: 'order_cycles_distributor_shipping_methods'
@@ -152,12 +155,10 @@ class OrderCycle < ApplicationRecord
     ]
   end
 
-  def attachable_payment_methods
-    Spree::PaymentMethod.available(:both).
-      joins("INNER JOIN distributors_payment_methods
-             ON payment_method_id = spree_payment_methods.id").
-      where("distributor_id IN (?)", distributor_ids).
-      distinct
+  def attachable_distributor_payment_methods
+    DistributorPaymentMethod.joins(:payment_method).
+      merge(Spree::PaymentMethod.available).
+      where("distributor_id IN (?)", distributor_ids)
   end
 
   def attachable_distributor_shipping_methods
@@ -177,6 +178,9 @@ class OrderCycle < ApplicationRecord
     oc.schedule_ids = schedule_ids
     oc.save!
     exchanges.each { |e| e.clone!(oc) }
+    oc.selected_distributor_payment_method_ids = (
+      attachable_distributor_payment_methods.map(&:id) & selected_distributor_payment_method_ids
+    )
     oc.selected_distributor_shipping_method_ids = (
       attachable_distributor_shipping_methods.map(&:id) & selected_distributor_shipping_method_ids
     )
@@ -291,6 +295,18 @@ class OrderCycle < ApplicationRecord
     scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
     items = Spree::LineItem.includes(:variant).joins(:order).merge(orders).to_a
     items.each { |li| scoper.scope(li.variant) }
+  end
+
+  def distributor_payment_methods
+    if simple? || selected_distributor_payment_methods.none?
+      attachable_distributor_payment_methods
+    else
+      attachable_distributor_payment_methods.where(
+        "distributors_payment_methods.id IN (?) OR distributor_id NOT IN (?)",
+        selected_distributor_payment_methods.map(&:id),
+        selected_distributor_payment_methods.map(&:distributor_id)
+      )
+    end
   end
 
   def distributor_shipping_methods

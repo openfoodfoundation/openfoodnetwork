@@ -276,7 +276,7 @@ describe Enterprise do
         expect(Enterprise.ready_for_checkout).not_to include e
       end
 
-      it "does not show enterprises wchich only have backend shipping methods" do
+      it "does not show enterprises which only have backend shipping methods" do
         create(:shipping_method, distributors: [e],
                                  display_on: Spree::ShippingMethod::DISPLAY_ON_OPTIONS[:back_end])
         create(:payment_method, distributors: [e])
@@ -353,6 +353,13 @@ describe Enterprise do
         create(:shipping_method, distributors: [e])
         create(:payment_method, distributors: [e])
         expect(e.reload).to be_ready_for_checkout
+      end
+
+      it "returns false for enterprises with payment methods that are available but not configured
+          correctly" do
+        create(:shipping_method, distributors: [e])
+        create(:stripe_sca_payment_method, distributors: [e])
+        expect(e.reload).not_to be_ready_for_checkout
       end
     end
 

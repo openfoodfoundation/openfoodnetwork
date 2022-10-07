@@ -20,6 +20,8 @@ module Spree
 
     after_initialize :init
 
+    scope :inactive_or_backend, -> { where("active = false OR display_on = 'back_end'") }
+
     scope :production, -> { where(environment: 'production') }
 
     scope :managed_by, lambda { |user|
@@ -57,6 +59,10 @@ module Spree
       Rails.application.config.spree.payment_methods
     end
 
+    def configured?
+      !stripe? || stripe_configured?
+    end
+
     def provider_class
       raise 'You must implement provider_class method for this gateway.'
     end
@@ -69,6 +75,10 @@ module Spree
     # Inheriting PaymentMethods can implement this method if needed
     def external_payment_url(_options)
       nil
+    end
+
+    def frontend?
+      active? && display_on != "back_end"
     end
 
     # The class that will process payments for this payment type, used for @payment.source
@@ -119,6 +129,18 @@ module Spree
 
     def distributor_validation
       validates_with DistributorsValidator
+    end
+
+    def stripe?
+      type.ends_with?("StripeSCA")
+    end
+
+    def stripe_configured?
+      Spree::Config.stripe_connect_enabled &&
+        Stripe.publishable_key &&
+        preferred_enterprise_id.present? &&
+        preferred_enterprise_id > 0 &&
+        stripe_account_id.present?
     end
   end
 end

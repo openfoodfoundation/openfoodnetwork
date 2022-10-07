@@ -399,7 +399,7 @@ class Enterprise < ApplicationRecord
   end
 
   def ready_for_checkout?
-    shipping_methods.frontend.any? && payment_methods.available.any?
+    shipping_methods.frontend.any? && payment_methods.available.any?(&:configured?)
   end
 
   def self.find_available_permalink(test_permalink)

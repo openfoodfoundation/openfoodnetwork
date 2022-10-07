@@ -404,7 +404,32 @@ describe OrderCycle do
       expect(cloned_exchange_attributes).to match_array original_exchange_attributes
     end
 
-    context "when it has preferred shipping methods which can longer be applied validly
+    context "when it has selected payment methods which can longer be applied validly
+             e.g. payment method is backoffice only" do
+      it "only attaches the valid ones to the clone" do
+        distributor = create(:distributor_enterprise)
+        distributor_payment_method_i = create(
+          :payment_method,
+          distributors: [distributor]
+        ).distributor_payment_methods.first
+        distributor_payment_method_ii = create(
+          :payment_method,
+          distributors: [distributor],
+          display_on: "back_end"
+        ).distributor_payment_methods.first
+        order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+        order_cycle.selected_distributor_payment_methods = [
+          distributor_payment_method_i,
+          distributor_payment_method_ii
+        ]
+
+        cloned_order_cycle = order_cycle.clone!
+
+        expect(cloned_order_cycle.distributor_payment_methods).to eq [distributor_payment_method_i]
+      end
+    end
+
+    context "when it has selected shipping methods which can longer be applied validly
              e.g. shipping method is backoffice only" do
       it "only attaches the valid ones to the clone" do
         distributor = create(:distributor_enterprise)
@@ -637,6 +662,32 @@ describe OrderCycle do
     end
   end
 
+  describe "#attachable_distributor_payment_methods" do
+    it "includes distributor payment methods from the distributors on the order cycle" do
+      payment_method = create(:payment_method)
+      oc = create(:simple_order_cycle, distributors: [payment_method.distributors.first])
+      distributor_payment_method = payment_method.distributor_payment_methods.first
+
+      expect(oc.attachable_distributor_payment_methods).to eq([distributor_payment_method])
+    end
+
+    it "does not include backoffice only distributor payment methods" do
+      payment_method = create(:payment_method, display_on: "back_end")
+      enterprise = create(:enterprise, payment_methods: [payment_method])
+      oc = create(:simple_order_cycle, distributors: [enterprise])
+
+      expect(oc.attachable_distributor_payment_methods).to be_empty
+    end
+
+    it "does not include inactive distributor payment methods" do
+      payment_method = create(:payment_method, active: false)
+      enterprise = create(:enterprise, payment_methods: [payment_method])
+      oc = create(:simple_order_cycle, distributors: [enterprise])
+
+      expect(oc.attachable_distributor_payment_methods).to be_empty
+    end
+  end
+
   describe "#attachable_distributor_shipping_methods" do
     it "includes distributor shipping methods from the distributors on the order cycle" do
       shipping_method = create(:shipping_method)
@@ -652,6 +703,80 @@ describe OrderCycle do
       oc = create(:simple_order_cycle, distributors: [enterprise])
 
       expect(oc.attachable_distributor_shipping_methods).to be_empty
+    end
+  end
+
+  describe "#distributor_payment_methods" do
+    let(:distributor) { create(:distributor_enterprise) }
+
+    it "returns all attachable distributor payment methods if the order cycle is simple" do
+      oc = create(:sells_own_order_cycle, distributors: [distributor])
+
+      distributor_payment_method = create(
+        :payment_method,
+        distributors: [distributor]
+      ).distributor_payment_methods.first
+
+      expect(oc.distributor_payment_methods).to eq [distributor_payment_method]
+    end
+
+    context "distributor order cycle i.e. non-simple" do
+      let(:oc) { create(:distributor_order_cycle, distributors: [distributor]) }
+
+      it "returns all attachable distributor payment methods if no distributor payment methods
+          have been selected specifically" do
+        distributor_payment_method = create(
+          :payment_method,
+          distributors: [distributor]
+        ).distributor_payment_methods.first
+
+        expect(oc.selected_distributor_payment_methods).to be_empty
+        expect(oc.distributor_payment_methods).to eq [distributor_payment_method]
+      end
+
+      it "returns selected distributor payment methods if they have been specified" do
+        distributor_payment_method_i = create(
+          :payment_method,
+          distributors: [distributor]
+        ).distributor_payment_methods.first
+        distributor_payment_method_ii = create(
+          :payment_method,
+          distributors: [distributor]
+        ).distributor_payment_methods.first
+
+        oc.selected_distributor_payment_methods << distributor_payment_method_ii
+
+        expect(oc.distributor_payment_methods).to eq [distributor_payment_method_ii]
+      end
+
+      context "with multiple distributors" do
+        let(:other_distributor) { create(:distributor_enterprise) }
+        let(:oc) { create(:distributor_order_cycle, distributors: [distributor, other_distributor]) }
+
+        it "returns all attachable distributor payment methods for a distributor if no distributor
+            payment methods have been selected specifically for that distributor, even if
+            distributor payment methods have been selected specifically for a different distributor
+            on the order cycle" do
+          distributor_payment_method = create(
+            :payment_method,
+            distributors: [distributor]
+          ).distributor_payment_methods.first
+          other_distributor_payment_method_i = create(
+            :payment_method,
+            distributors: [other_distributor]
+          ).distributor_payment_methods.first
+          other_distributor_payment_method_ii = create(
+            :payment_method,
+            distributors: [other_distributor]
+          ).distributor_payment_methods.first
+          oc.selected_distributor_payment_methods << other_distributor_payment_method_i
+
+          expect(oc.distributor_payment_methods).to eq [
+            distributor_payment_method,
+            other_distributor_payment_method_i
+          ]
+        end
+      end
     end
   end
 
