@@ -93,9 +93,9 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, $
       variant_ids
 
     participatingEnterpriseIds: ->
-      suppliers = (exchange.enterprise_id for exchange in this.order_cycle.incoming_exchanges)
-      distributors = (exchange.enterprise_id for exchange in this.order_cycle.outgoing_exchanges)
-      jQuery.unique(suppliers.concat(distributors)).sort()
+      suppliers = (parseInt(exchange.enterprise_id) for exchange in this.order_cycle.incoming_exchanges)
+      distributors = (parseInt(exchange.enterprise_id) for exchange in this.order_cycle.outgoing_exchanges)
+      Array.from(new Set([suppliers..., distributors...]))
 
     exchangesByDirection: (direction) ->
       if direction == 'incoming'
