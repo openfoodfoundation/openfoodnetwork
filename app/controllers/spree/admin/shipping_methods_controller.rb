@@ -95,11 +95,20 @@ module Spree
       end
 
       def check_shipping_fee_input
-        shipping_amount = permitted_resource_params.dig('calculator_attributes', 'preferred_amount')
+        shipping_fees = permitted_resource_params['calculator_attributes']&.slice(
+          :preferred_flat_percent, :preferred_amount,
+          :preferred_first_item, :preferred_additional_item,
+          :preferred_minimal_amount, :preferred_normal_amount,
+          :preferred_discount_amount, :preferred_per_unit
+        )
 
-        unless shipping_amount.nil? || Float(shipping_amount, exception: false) 
-          flash[:error] = I18n.t(:calculator_preferred_value_error) 
-          return redirect_to location_after_save      
+        return unless shipping_fees
+
+        shipping_fees.each do |_, shipping_amount|
+          unless shipping_amount.nil? || Float(shipping_amount, exception: false)
+            flash[:error] = I18n.t(:calculator_preferred_value_error)
+            return redirect_to location_after_save
+          end
         end
       end
     end
