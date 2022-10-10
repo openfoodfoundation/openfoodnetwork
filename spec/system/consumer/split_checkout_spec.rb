@@ -65,8 +65,8 @@ describe "As a consumer, I want to checkout my order", js: true do
   }
 
   before do
-    allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
-    allow(Flipper).to receive(:enabled?).with(:split_checkout, anything).and_return(true)
+    allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(:split_checkout).and_return(true)
+    allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(:split_checkout, anything).and_return(true)
 
     add_enterprise_fee enterprise_fee
     set_order order

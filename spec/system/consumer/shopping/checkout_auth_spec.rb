@@ -83,8 +83,8 @@ describe "As a consumer I want to check out my cart", js: true do
 
       context "split checkout" do
         before do
-          allow(Flipper).to receive(:enabled?).with(:split_checkout) { true }
-          allow(Flipper).to receive(:enabled?).with(:split_checkout, anything) { true }
+          allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(:split_checkout) { true }
+          allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(:split_checkout, anything) { true }
         end
         include_examples "with different checkout types", "split_checkout"
       end

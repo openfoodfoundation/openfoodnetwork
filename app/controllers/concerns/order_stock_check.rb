@@ -39,7 +39,7 @@ module OrderStockCheck
   end
 
   def reset_order_to_cart
-    return if Flipper.enabled? :split_checkout, spree_current_user
+    return if OpenFoodNetwork::FeatureToggle.enabled? :split_checkout, spree_current_user
 
     OrderCheckoutRestart.new(@order).call
   end

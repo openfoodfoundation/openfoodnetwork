@@ -33,6 +33,7 @@ describe '
 
   shared_examples "Can access Customers reports and generate report" do |inverse_columns_logic|
     before do
+      allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).and_call_original
       allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(
         :report_inverse_columns_logic, anything
       ).and_return(inverse_columns_logic)
@@ -225,6 +226,7 @@ describe '
     }
 
     before do
+      allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).and_call_original
       allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(
         :report_inverse_columns_logic, anything
       ).and_return(inverse_columns_logic)
