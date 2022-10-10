@@ -1,5 +1,5 @@
 import { Controller } from "stimulus";
-import TomSelect from "tom-select/dist/esm/tom-select";
+import TomSelect from "tom-select/dist/esm/tom-select.complete";
 
 export default class extends Controller {
   static values = { options: Object };
