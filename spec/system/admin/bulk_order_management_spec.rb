@@ -609,14 +609,9 @@ describe '
         end
 
         it "shows a dialog and keeps changes when confirm dialog is rejected" do
-          pending "https://github.com/openfoodfoundation/openfoodnetwork/issues/9757"
-
-          page.driver.dismiss_modal :confirm,
-                                    text: "Unsaved changes exist and will be lost if you continue." do
+          dismiss_confirm "Unsaved changes exist and will be lost if you continue." do
             find("input.datepicker").click
-            select_dates_from_daterangepicker(today - 9.days, today)
           end
-          sleep 2
           expect(page).to have_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
             expect(page).to have_selector "input[name=quantity].ng-dirty"
