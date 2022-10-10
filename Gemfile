@@ -150,7 +150,6 @@ group :test, :development do
   gem 'knapsack'
   gem 'letter_opener', '>= 1.4.1'
   gem 'rspec-rails', ">= 3.5.2"
-  gem 'rspec-retry'
   gem 'rswag-specs'
   gem 'shoulda-matchers'
   gem 'timecop'
