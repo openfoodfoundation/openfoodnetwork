@@ -47,8 +47,7 @@
 .row
   .three.columns.alpha
     %label= t '.shopfront_requires_login'
-    %div{'ofn-with-tip' => t('.shopfront_requires_login_tip')}
-      %a= t 'admin.whats_this'
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.shopfront_requires_login_tip')}
   .three.columns
     = f.radio_button :require_login, false, "ng-model" => "Enterprise.require_login", "ng-value" => "false"
     = f.label :require_login, t('.shopfront_requires_login_false'), value: :false
@@ -59,8 +58,7 @@
 .row{ng: {if: "!Enterprise.require_login"}}
   .three.columns.alpha
     %label= t '.allow_guest_orders'
-    %div{'ofn-with-tip' => t('.allow_guest_orders_tip')}
-      %a= t 'admin.whats_this'
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.allow_guest_orders_tip')}
   .three.columns
     = f.radio_button :allow_guest_orders, true, "ng-model" => "Enterprise.allow_guest_orders", "ng-value" => "true"
     = f.label :allow_guest_orders, t('.allow_guest_orders_true'), value: :true
@@ -75,8 +73,7 @@
 .row
   .three.columns.alpha
     %label= t '.display_remaining_stock'
-    %div{'ofn-with-tip' => t('.display_remaining_stock_tip')}
-      %a= t 'admin.whats_this'
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.display_remaining_stock_tip')}
   .three.columns
     = f.radio_button :preferred_product_low_stock_display, true, 'ng-model' => 'Enterprise.preferred_product_low_stock_display', 'ng-value' => 'true'
     = f.label :preferred_product_low_stock_display, t('.enabled'), value: :true
@@ -87,8 +84,7 @@
 .row
   .three.columns.alpha
     %label= t '.allow_order_changes'
-    %div{'ofn-with-tip' => t('.allow_order_changes_tip')}
-      %a= t 'admin.whats_this'
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.allow_order_changer_tip')}
   .three.columns
     = f.radio_button :allow_order_changes, false, "ng-model" => "Enterprise.allow_order_changes", "ng-value" => "false"
     = f.label :allow_order_changes, t('.allow_order_changes_false'), value: :false
@@ -99,8 +95,7 @@
 .row
   .three.columns.alpha
     %label= t '.enable_subscriptions'
-    %div{'ofn-with-tip' => t('.enable_subscriptions_tip')}
-      %a= t 'admin.whats_this'
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.enable_subscriptions_tip')}
   .three.columns
     = f.radio_button :enable_subscriptions, true
     = f.label :enable_subscriptions, t('.enable_subscriptions_true'), value: :true
@@ -111,8 +106,7 @@
 .row
   .three.columns.alpha
     %label= t '.customer_names_in_reports'
-    %div{'ofn-with-tip' => t('.customer_names_tip')}
-      %a= t 'admin.whats_this'
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.customer_names_tip')}
   .three.columns
     = f.radio_button :show_customer_names_to_suppliers, true
     = f.label :show_customer_names_to_suppliers_true, t('.customer_names_true')
