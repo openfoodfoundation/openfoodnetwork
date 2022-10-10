@@ -32,23 +32,7 @@ module CheckoutHelper
       }
     end
 
-    enterprise_fee_adjustments = adjustments.select { |a|
-      a.originator_type == 'EnterpriseFee' && a.adjustable_type != 'Spree::LineItem'
-    }
-    adjustments.reject! { |a|
-      a.originator_type == 'EnterpriseFee' && a.adjustable_type != 'Spree::LineItem'
-    }
-    unless exclude.include? :admin_and_handling
-      adjustments << Spree::Adjustment.new(
-        label: I18n.t(:orders_form_admin), amount: enterprise_fee_adjustments.sum(&:amount)
-      )
-    end
-
     adjustments
-  end
-
-  def display_line_item_fees_total_for(order)
-    Spree::Money.new order.adjustments.enterprise_fee.sum(:amount), currency: order.currency
   end
 
   def checkout_line_item_fees(order)
