@@ -47,10 +47,9 @@ module Sets
     end
 
     def update_product(product, attributes)
-      original_supplier = product.supplier_id
       return false unless update_product_only_attributes(product, attributes)
 
-      ExchangeVariantDeleter.new.delete(product) if original_supplier != product.supplier_id
+      ExchangeVariantDeleter.new.delete(product) if product.saved_change_to_supplier_id?
 
       update_product_variants(product, attributes) &&
         update_product_master(product, attributes)
@@ -110,6 +109,8 @@ module Sets
     end
 
     def create_variant(product, variant_attributes)
+      return if variant_attributes.blank?
+
       on_hand = variant_attributes.delete(:on_hand)
       on_demand = variant_attributes.delete(:on_demand)
 
