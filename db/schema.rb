@@ -310,6 +310,7 @@ ActiveRecord::Schema.define(version: 2023_02_13_160135) do
     t.datetime "processed_at"
     t.boolean "automatic_notifications", default: false
     t.boolean "mails_sent", default: false
+    t.datetime "opened_at"
   end
 
   create_table "order_cycles_distributor_payment_methods", id: false, force: :cascade do |t|

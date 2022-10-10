@@ -551,6 +551,30 @@ describe OrderCycle do
     end
   end
 
+  describe "opened_at " do
+    let!(:oc) {
+      create(:simple_order_cycle, orders_open_at: 2.days.ago, orders_close_at: 1.day.ago, opened_at: 1.week.ago)
+    }
+
+    it "reset opened_at if open date change in future" do
+      expect(oc.opened_at).to_not be_nil
+      oc.update!(orders_open_at: 1.week.from_now, orders_close_at: 2.weeks.from_now)
+      expect(oc.opened_at).to be_nil
+    end
+
+    it "it does not reset opened_at if open date is changed to be earlier" do
+      expect(oc.opened_at).to_not be_nil
+      oc.update!(orders_open_at: 3.days.ago)
+      expect(oc.opened_at).to_not be_nil
+    end
+
+    it "it does not reset opened_at if open date does not change" do
+      expect(oc.opened_at).to_not be_nil
+      oc.update!(orders_close_at: 1.day.from_now)
+      expect(oc.opened_at).to_not be_nil
+    end
+  end
+
   describe "processed_at " do
     let!(:oc) {
       create(:simple_order_cycle, orders_open_at: 1.week.ago, orders_close_at: 1.day.ago, processed_at: 1.hour.ago)
@@ -562,13 +586,13 @@ describe OrderCycle do
       expect(oc.processed_at).to be_nil
     end
 
-    it "it does not reset processed_at if close date change in the past" do
+    it "it does not reset processed_at if close date is changed to be earlier" do
       expect(oc.processed_at).to_not be_nil
       oc.update!(orders_close_at: 2.days.ago)
       expect(oc.processed_at).to_not be_nil
     end
 
-    it "it does not reset processed_at if close date do not change" do
+    it "it does not reset processed_at if close date does not change" do
       expect(oc.processed_at).to_not be_nil
       oc.update!(orders_open_at: 2.weeks.ago)
       expect(oc.processed_at).to_not be_nil
