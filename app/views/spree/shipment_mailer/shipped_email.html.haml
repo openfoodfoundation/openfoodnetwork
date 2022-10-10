@@ -1,7 +1,12 @@
 %h3
   = t('.dear_customer')
-%p.lead
-  = t('.instructions', distributor: @shipment.order.distributor.name)
+
+- if @delivery
+  %p.lead
+    = t('.instructions', distributor: @shipment.order.distributor.name)
+- else
+  %p.lead
+    = t('.picked_up_instructions', distributor: @shipment.order.distributor.name)
 
 %p
   %strong
