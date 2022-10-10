@@ -73,7 +73,7 @@
   .row
     .three.columns.alpha
       %label= t '.allow_order_changes'
-      = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.allow_order_changer_tip')}
+      = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.allow_order_changes_tip')}
     .three.columns
       = f.radio_button :allow_order_changes, false, 'data-action': 'change->guest-orders#toggleRow'
       = f.label :allow_order_changes, t('.allow_order_changes_false'), value: :false
