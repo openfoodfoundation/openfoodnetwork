@@ -91,7 +91,9 @@ describe '
     end
     expect(page).to have_checked_field "enterprise_require_login_false"
     expect(page).to have_checked_field "enterprise_allow_guest_orders_true"
-    find(:xpath, '//*[@id="enterprise_require_login_true"]').trigger("click")
+    accept_prompt do
+      find(:xpath, '//*[@id="enterprise_require_login_true"]').trigger("click")
+    end
     expect(page).to have_no_checked_field "enterprise_require_login_false"
     # expect(page).to have_checked_field "enterprise_enable_subscriptions_false"
 
