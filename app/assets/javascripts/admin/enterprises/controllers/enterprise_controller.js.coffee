@@ -1,8 +1,7 @@
 angular.module("admin.enterprises")
-  .controller "enterpriseCtrl", ($scope, $http, $window, NavigationCheck, enterprise, Enterprises, EnterprisePaymentMethods, SideMenu, StatusMessage, RequestMonitor) ->
+  .controller "enterpriseCtrl", ($scope, $http, $window, NavigationCheck, enterprise, Enterprises, SideMenu, StatusMessage, RequestMonitor) ->
     $scope.Enterprise = enterprise
     $scope.Enterprises = Enterprises
-    $scope.PaymentMethods = EnterprisePaymentMethods.paymentMethods
     $scope.navClear = NavigationCheck.clear
     $scope.menu = SideMenu
     $scope.newManager = { id: null, email: (t('add_manager')) }
