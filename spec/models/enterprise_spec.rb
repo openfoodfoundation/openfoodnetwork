@@ -695,8 +695,35 @@ describe Enterprise do
     end
   end
 
-  describe "#plus_relatives_and_oc_producers" do
-    it "does not find non-produders " do
+  describe "#parents_of_one_union_others" do
+    it "should return only parent producers" do
+      supplier = create(:supplier_enterprise)
+      distributor = create(:distributor_enterprise, is_primary_producer: false)
+      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      expect(Enterprise.parents_of_one_union_others(supplier, nil)).to include(distributor)
+    end
+
+    it "should return other enterprise if it is passed as a second argument" do
+      another_enterprise = create(:enterprise)
+      supplier = create(:supplier_enterprise)
+      distributor = create(:distributor_enterprise, is_primary_producer: false)
+      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      expect(Enterprise.parents_of_one_union_others(supplier, another_enterprise)).to include(another_enterprise)
+    end
+
+    it "does not find child in the relationship" do
+      supplier = create(:supplier_enterprise)
+      distributor = create(:distributor_enterprise, is_primary_producer: false)
+      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      expect(Enterprise.parents_of_one_union_others(distributor, nil)).not_to include(supplier)
+    end
+  end
+
+  describe "#plus_parents_and_order_cycle_producers" do
+    it "does not find non-producers" do
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
       product = create(:product)
@@ -706,7 +733,55 @@ describe Enterprise do
         distributors: [distributor],
         variants: [product.master]
       )
-      expect(distributor.plus_relatives_and_oc_producers(order_cycle)).to eq([supplier])
+      expect(distributor.plus_parents_and_order_cycle_producers(order_cycle)).to eq([supplier])
+    end
+
+    it "finds parent in the relationship" do
+      supplier = create(:supplier_enterprise)
+      distributor = create(:distributor_enterprise, is_primary_producer: false)
+      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      product = create(:product)
+      order_cycle = create(
+        :simple_order_cycle,
+        distributors: [distributor],
+        suppliers: [supplier],
+        variants: [product.master]
+      )
+      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      expect(distributor.plus_parents_and_order_cycle_producers(order_cycle)).to include(supplier)
+    end
+
+    it "does not find child in the relationship" do
+      supplier = create(:supplier_enterprise)
+      distributor = create(:distributor_enterprise, is_primary_producer: false)
+      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      product = create(:product)
+      order_cycle = create(
+        :simple_order_cycle,
+        suppliers: [supplier],
+        distributors: [distributor],
+        variants: [product.master]
+      )
+      expected = supplier.plus_parents_and_order_cycle_producers(order_cycle)
+      expect(expected).not_to include(distributor)
+    end
+
+    it "it finds sender enterprises for order cycles that are passed" do
+      supplier = create(:supplier_enterprise)
+      sender = create(:supplier_enterprise)
+      distributor = create(:distributor_enterprise, is_primary_producer: false)
+      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      product = create(:product)
+      order_cycle = create(
+        :simple_order_cycle,
+        suppliers: [sender],
+        distributors: [distributor],
+        variants: [product.master]
+      )
+      expected = supplier.plus_parents_and_order_cycle_producers(order_cycle)
+      expect(expected).to include(sender)
     end
   end
 end
