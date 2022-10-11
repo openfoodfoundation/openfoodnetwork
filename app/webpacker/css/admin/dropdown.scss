@@ -66,82 +66,6 @@
 .ofn-drop-down {
 	@include ofn-drop-down-style;
 
-	&.ofn-drop-down-v2 {
-		border: 1px solid $pale-blue;
-		background-color: white;
-		padding: 0px;
-		
-		&:hover {
-			border-color: $spree-blue;
-		}
-
-		.ofn-drop-down-label {
-			color: $color-3;
-			padding: 10px;
-			width: 235px;
-			display: flex;
-			justify-content: space-between;
-
-			&:hover {
-				color: $color-3;
-			}
-
-			.label {
-				padding-right: 10px;
-			}
-
-			.icon-caret-down, .icon-caret-up {
-				padding-right: 0px;
-			}
-		}
-
-		.menu {
-			width: 100%;
-		}
-
-		.menu_items {
-			max-height: 200px;
-			overflow-y: scroll;
-
-			label.menu_item {
-				margin-bottom: 5px;
-				color: #454545;
-				font-weight: 400;
-				cursor: pointer;
-				padding-top: 4px;
-				padding-bottom: 5px;
-
-				input {
-					position: relative;
-					top: 1px;
-					-moz-appearance:none;
-					-webkit-appearance:none;
-					-o-appearance:none;
-					outline: none;
-					content: none;
-					cursor: pointer;
-
-					&:before {
-						font-family: "FontAwesome";
-						content: "\f00c";
-						font-size: 15px;
-						color: transparent !important;
-						background: transparent !important;
-						display: block;
-						width: 15px;
-						height: 15px;
-						border: 1px solid #809cb1;
-						margin-right: 7px;
-					}
-
-					&:checked:before {
-						color: #5498DA !important;
-					}
-				}
-			}
-		}
-	}
-
 	position: relative;
 	float: left;
 
@@ -235,6 +159,54 @@
 
 		.menu_item:hover {
 			background-color: #ededed;
+		}
+	}
+}
+
+.ofn-drop-down-v2 {
+	border: 1px solid $pale-blue;
+	background-color: white;
+	padding: 0px;
+	
+	&:hover {
+		border-color: $spree-blue;
+	}
+
+	.ofn-drop-down-label {
+		color: $color-3;
+		padding: 10px;
+		width: 235px;
+		display: flex;
+		justify-content: space-between;
+
+		&:hover {
+			color: $color-3;
+		}
+
+		.label {
+			padding-right: 10px;
+		}
+
+		.icon-caret-down, .icon-caret-up {
+			padding-right: 0px;
+		}
+	}
+
+	.menu {
+		width: 100%;
+	}
+
+	.menu_items {
+		max-height: 200px;
+		overflow-y: scroll;
+
+		label.menu_item {
+			margin-bottom: 5px;
+			color: #454545;
+			font-weight: 400;
+			cursor: pointer;
+			padding-top: 4px;
+			padding-bottom: 5px;
 		}
 	}
 }
