@@ -7,7 +7,7 @@
 
 = form_for [:admin, @product, @image], url: admin_product_image_path(@product, @image, @url_filters), html: { multipart: true } do |f|
   %fieldset
-    %legend{align: "center"}= @image.attachment_file_name
+    %legend{align: "center"}= @image.attachment.filename
     .field.alpha.three.columns.align-center
       = f.label t('spree.thumbnail')
       %br/

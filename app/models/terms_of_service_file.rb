@@ -5,6 +5,11 @@ class TermsOfServiceFile < ApplicationRecord
 
   validates :attachment, attached: true
 
+  self.ignored_columns = %i(attachment_file_name
+                            attachment_content_type
+                            attachment_file_size
+                            attachment_updated_at)
+
   # The most recently uploaded file is the current one.
   def self.current
     order(:id).last

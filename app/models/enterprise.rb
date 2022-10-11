@@ -16,6 +16,19 @@ class Enterprise < ApplicationRecord
     large: { resize_to_fill: [1200, 260] },
   }.freeze
 
+  self.ignored_columns = %i(terms_and_conditions_file_name
+                            terms_and_conditions_content_type
+                            terms_and_conditions_file_size
+                            terms_and_conditions_updated_at
+                            logo_file_name
+                            logo_content_type
+                            logo_file_size
+                            logo_updated_at
+                            promo_image_file_name
+                            promo_image_content_type
+                            promo_image_file_size
+                            promo_image_updated_at)
+
   searchable_attributes :sells, :is_primary_producer
   searchable_associations :properties
   searchable_scopes :is_primary_producer, :is_distributor, :is_hub, :activated, :visible,
