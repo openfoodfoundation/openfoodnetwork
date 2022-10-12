@@ -19,10 +19,13 @@
     %br
     = t('.shopfront_category_ordering_note')
 
-%div{ "data-controller": "set-value" }
+%div{ "data-controller": "set-value dependent-enable" }
+  - sorting_method = @enterprise.preferred_shopfront_product_sorting_method
   .row
     .three.columns.alpha
-      = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_category 
+      = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_category,
+        "data-dependent-enable-target": "parent", "data-action": "change->dependent-enable#enableTomSelect",
+        "data-dependent-enable-dependent-identifier-param": "taxon_select"
       = label :enterprise, :preferred_shopfront_product_sorting_method_by_category, t('.shopfront_sort_by_category')
     .eight.columns.omega
       = collection_select nil, nil, Spree::Taxon.all, :id, :name,
@@ -32,13 +35,17 @@
         "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil },
         "action": 'change->set-value#setSelectValue',
         "set-value-receiver-identifier-param": "enterprise_preferred_shopfront_taxon_order",
-        "set-value-target": "valueProvider"},
-        id: 'taxon_select'
+        "set-value-target": "valueProvider",
+        "dependent-enable-target": "child"},
+        id: 'taxon_select',
+        disabled: (sorting_method == "by_producer")
       = f.hidden_field :preferred_shopfront_taxon_order, "data-set-value-target": 'valueReceiver'
 
   .row
     .three.columns.alpha
-      = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer
+      = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer,
+        "data-dependent-enable-target": "parent", "data-action": "change->dependent-enable#enableTomSelect",
+        "data-dependent-enable-dependent-identifier-param": "producer_select"
       = label :enterprise, :preferred_shopfront_product_sorting_method_by_producer, t('.shopfront_sort_by_producer')
     .eight.columns.omega
       = collection_select nil, nil, @enterprise.suppliers, :id, :name,
@@ -48,8 +55,10 @@
         "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil },
         "action": 'change->set-value#setSelectValue',
         "set-value-receiver-identifier-param": "enterprise_preferred_shopfront_producer_order",
-        "set-value-target": "valueProvider"},
-        id: 'producer_select'
+        "set-value-target": "valueProvider",
+        "dependent-enable-target": "child"},
+        id: 'producer_select',
+        disabled: (sorting_method == "by_category")
       = f.hidden_field :preferred_shopfront_producer_order, "data-set-value-target": 'valueReceiver'
 
 .row
