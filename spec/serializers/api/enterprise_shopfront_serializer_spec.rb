@@ -6,8 +6,8 @@ describe Api::EnterpriseShopfrontSerializer do
   let!(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let!(:producer) { create(:supplier_enterprise) }
   let!(:producer_hidden) { create(:supplier_enterprise_hidden) }
-  let!(:relationship) { create(:enterprise_relationship, parent: hub, child: producer) }
-  let!(:relationship2) { create(:enterprise_relationship, parent: hub, child: producer_hidden) }
+  let!(:relationship) { create(:enterprise_relationship, parent: producer, child: hub) }
+  let!(:relationship2) { create(:enterprise_relationship, parent: producer_hidden, child: hub) }
 
   let!(:taxon1) { create(:taxon, name: 'Meat') }
   let!(:taxon2) { create(:taxon, name: 'Veg') }

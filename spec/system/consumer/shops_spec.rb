@@ -17,7 +17,7 @@ describe 'Shops', js: true do
                                 coordinator: create(:distributor_enterprise))
   }
   let!(:producer) { create(:supplier_enterprise) }
-  let!(:er) { create(:enterprise_relationship, parent: distributor, child: producer) }
+  let!(:er) { create(:enterprise_relationship, parent: producer, child: distributor) }
 
   before do
     producer.set_producer_property 'Organic', 'NASAA 12345'
@@ -96,7 +96,7 @@ describe 'Shops', js: true do
     let!(:hub) { create(:distributor_enterprise, with_payment_and_shipping: false) }
     let!(:order_cycle) { create(:simple_order_cycle, distributors: [hub], coordinator: hub) }
     let!(:producer) { create(:supplier_enterprise) }
-    let!(:er) { create(:enterprise_relationship, parent: hub, child: producer) }
+    let!(:er) { create(:enterprise_relationship, parent: producer, child: hub) }
 
     it "does not show hubs that are not ready for checkout" do
       visit shops_path
