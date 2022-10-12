@@ -18,26 +18,29 @@
     = t('.display_ordering_in_shopfront')
     %br
     = t('.shopfront_category_ordering_note')
-.row
-  .three.columns.alpha
-    = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_category 
-    = label :enterprise, :preferred_shopfront_product_sorting_method_by_category, t('.shopfront_sort_by_category')
-  .eight.columns.omega
-    = collection_select nil, nil, Spree::Taxon.all, :id, :name,
-      {selected: @enterprise.preferred_shopfront_taxon_order.split(',')}, multiple: true, name: '',
-      placeholder: t('.shopfront_sort_by_category_placeholder'),
-      data: { controller: "tom-select", 
-      "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil }}
-.row
-  .three.columns.alpha
-    = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer
-    = label :enterprise, :preferred_shopfront_product_sorting_method_by_producer, t('.shopfront_sort_by_producer')
-  .eight.columns.omega
-    = collection_select nil, nil, @enterprise.suppliers, :id, :name,
-      {selected: @enterprise.preferred_shopfront_producer_order.split(',')}, multiple: true, name: '',
-      placeholder: t('.shopfront_sort_by_producer_placeholder'),
-      data: { controller: "tom-select", 
-      "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil }}
+
+%div
+  .row
+    .three.columns.alpha
+      = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_category 
+      = label :enterprise, :preferred_shopfront_product_sorting_method_by_category, t('.shopfront_sort_by_category')
+    .eight.columns.omega
+      = collection_select nil, nil, Spree::Taxon.all, :id, :name,
+        {selected: @enterprise.preferred_shopfront_taxon_order.split(',')}, multiple: true, name: '',
+        placeholder: t('.shopfront_sort_by_category_placeholder'),
+        data: { controller: "tom-select", 
+        "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil }}
+  .row
+    .three.columns.alpha
+      = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer
+      = label :enterprise, :preferred_shopfront_product_sorting_method_by_producer, t('.shopfront_sort_by_producer')
+    .eight.columns.omega
+      = collection_select nil, nil, @enterprise.suppliers, :id, :name,
+        {selected: @enterprise.preferred_shopfront_producer_order.split(',')}, multiple: true, name: '',
+        placeholder: t('.shopfront_sort_by_producer_placeholder'),
+        data: { controller: "tom-select", 
+        "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil }}
+
 
 .row
   .three.columns.alpha
