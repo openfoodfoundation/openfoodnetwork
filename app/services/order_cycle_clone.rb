@@ -12,9 +12,8 @@ class OrderCycleClone
     oc.name = I18n.t("models.order_cycle.cloned_order_cycle_name", order_cycle: oc.name)
     oc.orders_open_at = oc.orders_close_at = oc.mails_sent = oc.processed_at = nil
     oc.coordinator_fee_ids = @original_order_cycle.coordinator_fee_ids
-    # rubocop:disable Layout/LineLength
-    oc.preferred_product_selection_from_coordinator_inventory_only = @original_order_cycle.preferred_product_selection_from_coordinator_inventory_only
-    # rubocop:enable Layout/LineLength
+    oc.preferred_product_selection_from_coordinator_inventory_only =
+      @original_order_cycle.preferred_product_selection_from_coordinator_inventory_only
     oc.schedule_ids = @original_order_cycle.schedule_ids
     oc.save!
     @original_order_cycle.exchanges.each { |e| e.clone!(oc) }
