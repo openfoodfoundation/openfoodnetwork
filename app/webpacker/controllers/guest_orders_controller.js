@@ -15,14 +15,13 @@ export default class extends ApplicationController {
   }
 
   toggleRow(event) {
-    if (!location.hash == "") {
-      location.hash = "";
-    }
-
     let allowGuestOrders = this.hasAllowGuestOrdersTarget
       ? this.allowGuestOrdersTarget.checked
       : this.allowGuestOrdersValue;
 
+    if (!location.hash == "") {
+      location.hash = "";
+    }
     this.stimulate(
       "EnterpriseEdit#toggle_guest_order_row",
       event.target,
