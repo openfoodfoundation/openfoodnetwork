@@ -48,7 +48,8 @@
         "data-dependent-enable-dependent-identifier-param": "producer_select"
       = label :enterprise, :preferred_shopfront_product_sorting_method_by_producer, t('.shopfront_sort_by_producer')
     .eight.columns.omega
-      = collection_select nil, nil, @enterprise.suppliers, :id, :name,
+      - options = @enterprise.suppliers.any? ? @enterprise.suppliers : Enterprise.where(is_primary_producer: true)
+      = collection_select nil, nil, options, :id, :name,
         {selected: @enterprise.preferred_shopfront_producer_order.split(',')}, multiple: true, name: '',
         placeholder: t('.shopfront_sort_by_producer_placeholder'),
         data: { controller: "tom-select", 
