@@ -23,17 +23,21 @@
     = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_category 
     = label :enterprise, :preferred_shopfront_product_sorting_method_by_category, t('.shopfront_sort_by_category')
   .eight.columns.omega
-    %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_taxon_order', name: 'enterprise[preferred_shopfront_taxon_order]', rows: 6,
-      'ofn-taxon-autocomplete' => '', 'multiple-selection' => 'true', placeholder: t('.shopfront_sort_by_category_placeholder'),
-      ng: { model: 'Enterprise.preferred_shopfront_taxon_order', readonly: "Enterprise.preferred_shopfront_product_sorting_method != 'by_category'" }}
+    = collection_select nil, nil, Spree::Taxon.all, :id, :name,
+      {selected: @enterprise.preferred_shopfront_taxon_order.split(',')}, multiple: true, name: '',
+      placeholder: t('.shopfront_sort_by_category_placeholder'),
+      data: { controller: "tom-select", 
+      "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil }}
 .row
   .three.columns.alpha
     = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer
     = label :enterprise, :preferred_shopfront_product_sorting_method_by_producer, t('.shopfront_sort_by_producer')
   .eight.columns.omega
-    %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_producer_order', name: 'enterprise[preferred_shopfront_producer_order]', rows: 6,
-      'ofn-producer-autocomplete' => '', 'multiple-selection' => 'true', placeholder: t('.shopfront_sort_by_producer_placeholder'),
-      ng: { model: 'Enterprise.preferred_shopfront_producer_order', readonly: "Enterprise.preferred_shopfront_product_sorting_method != 'by_producer'" }}
+    = collection_select nil, nil, @enterprise.suppliers, :id, :name,
+      {selected: @enterprise.preferred_shopfront_producer_order.split(',')}, multiple: true, name: '',
+      placeholder: t('.shopfront_sort_by_producer_placeholder'),
+      data: { controller: "tom-select", 
+      "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil }}
 
 .row
   .three.columns.alpha
