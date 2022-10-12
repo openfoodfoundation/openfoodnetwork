@@ -42,6 +42,7 @@ describe 'Shops', js: true do
       it "by URL" do
         pending("#9649")
         visit shops_path(anchor: "/?query=xyzzy")
+        sleep 1
         expect(page).not_to have_content distributor.name
         expect(page).to have_content "Sorry, no results found for xyzzy. Try another search?"
       end
