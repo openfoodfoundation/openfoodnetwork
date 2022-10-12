@@ -4,7 +4,7 @@ require "spec_helper"
 
 describe "routing for Stripe return URLS", type: :routing do
   before do
-    allow_any_instance_of(SplitCheckoutConstraint).to receive(:current_user) { build(:user) }
+    allow_any_instance_of(FeatureToggleConstraint).to receive(:current_user) { build(:user) }
   end
 
   context "checkout return URLs" do
