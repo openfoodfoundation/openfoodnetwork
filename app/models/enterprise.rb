@@ -210,16 +210,6 @@ class Enterprise < ApplicationRecord
       joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
     end
   }
-  scope :relatives_of_one_union_others, lambda { |one, others|
-    where("
-      enterprises.id IN
-        (SELECT child_id FROM enterprise_relationships WHERE enterprise_relationships.parent_id=?)
-      OR enterprises.id IN
-        (SELECT parent_id FROM enterprise_relationships WHERE enterprise_relationships.child_id=?)
-      OR enterprises.id IN
-        (?)
-    ", one, one, others)
-  }
 
   scope :parents_of_one_union_others, lambda { |one, others|
     where("
