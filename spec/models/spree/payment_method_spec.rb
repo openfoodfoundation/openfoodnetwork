@@ -50,15 +50,9 @@ describe Spree::PaymentMethod do
     context "Stripe payment method" do
       let(:payment_method) { create(:stripe_sca_payment_method) }
 
-      around do |example|
-        original_stripe_connect_enabled = Spree::Config[:stripe_connect_enabled]
-        example.run
-        Spree::Config.set(stripe_connect_enabled: original_stripe_connect_enabled)
-      end
-
       before do
-        Spree::Config.set(stripe_connect_enabled: true)
-        Stripe.publishable_key = "some_key"
+        allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
+        allow(Stripe).to receive(:publishable_key) { "some_key" }
       end
 
       context "and Stripe Connect is enabled and a Stripe publishable key, account id, account
@@ -69,7 +63,7 @@ describe Spree::PaymentMethod do
       end
 
       context "and Stripe Connect is disabled" do
-        before { Spree::Config.set(stripe_connect_enabled: false) }
+        before { allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(false) }
 
         it "returns false" do
           expect(payment_method).not_to be_configured
@@ -77,7 +71,7 @@ describe Spree::PaymentMethod do
       end
 
       context "and a Stripe publishable key is not present" do
-        before { Spree::Config.set(stripe_connect_enabled: false) }
+        before { allow(Stripe).to receive(:publishable_key) { nil } }
 
         it "returns false" do
           expect(payment_method).not_to be_configured

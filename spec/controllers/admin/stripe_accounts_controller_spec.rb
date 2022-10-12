@@ -79,15 +79,9 @@ describe Admin::StripeAccountsController, type: :controller do
   describe "#status" do
     let(:params) { { format: :json, enterprise_id: enterprise.id } }
 
-    around do |example|
-      original_stripe_connect_enabled = Spree::Config[:stripe_connect_enabled]
-      example.run
-      Spree::Config.set(stripe_connect_enabled: original_stripe_connect_enabled)
-    end
-
     before do
       Stripe.api_key = "sk_test_12345"
-      Spree::Config.set(stripe_connect_enabled: false)
+      allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(false)
     end
 
     context "when I don't manage the specified enterprise" do
@@ -117,7 +111,7 @@ describe Admin::StripeAccountsController, type: :controller do
       end
 
       context "when Stripe is enabled" do
-        before { Spree::Config.set(stripe_connect_enabled: true) }
+        before { allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true) }
 
         context "when no stripe account is associated with the specified enterprise" do
           it "returns with a status of 'account_missing'" do
