@@ -223,8 +223,16 @@ describe '
 
         click_button 'Create'
 
-        expect(page).to have_select 'new_supplier_id'
-        expect(page).not_to have_select 'new_supplier_id', with_options: [supplier_unmanaged.name]
+        # Wait for API requests to finish:
+        sleep 2
+
+        expect(page).to have_select 'new_supplier_id', with_options: [
+          "Managed supplier",
+          "Permitted supplier",
+        ]
+        expect(page).not_to have_select 'new_supplier_id', with_options: [
+          "Unmanaged supplier",
+        ]
         select 'Managed supplier', from: 'new_supplier_id'
         click_button 'Add supplier'
         select 'Permitted supplier', from: 'new_supplier_id'
