@@ -19,7 +19,7 @@
     %br
     = t('.shopfront_category_ordering_note')
 
-%div
+%div{ "data-controller": "set-value" }
   .row
     .three.columns.alpha
       = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_category 
@@ -29,7 +29,13 @@
         {selected: @enterprise.preferred_shopfront_taxon_order.split(',')}, multiple: true, name: '',
         placeholder: t('.shopfront_sort_by_category_placeholder'),
         data: { controller: "tom-select", 
-        "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil }}
+        "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil },
+        "action": 'change->set-value#setSelectValue',
+        "set-value-receiver-identifier-param": "enterprise_preferred_shopfront_taxon_order",
+        "set-value-target": "valueProvider"},
+        id: 'taxon_select'
+      = f.hidden_field :preferred_shopfront_taxon_order, "data-set-value-target": 'valueReceiver'
+
   .row
     .three.columns.alpha
       = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer
@@ -39,8 +45,12 @@
         {selected: @enterprise.preferred_shopfront_producer_order.split(',')}, multiple: true, name: '',
         placeholder: t('.shopfront_sort_by_producer_placeholder'),
         data: { controller: "tom-select", 
-        "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil }}
-
+        "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil },
+        "action": 'change->set-value#setSelectValue',
+        "set-value-receiver-identifier-param": "enterprise_preferred_shopfront_producer_order",
+        "set-value-target": "valueProvider"},
+        id: 'producer_select'
+      = f.hidden_field :preferred_shopfront_producer_order, "data-set-value-target": 'valueReceiver'
 
 .row
   .three.columns.alpha
