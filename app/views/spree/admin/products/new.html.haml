@@ -10,7 +10,6 @@
         .eight.columns.alpha
           = f.field_container :supplier do
             = f.label :supplier_id, t(".supplier")
-            %span.required *
             = f.select :supplier_id, options_from_collection_for_select(@producers, :id, :name, @product.supplier_id), {}, { "data-controller": "tom-select", class: "primary" }
             = f.error_message_on :supplier
         .eight.columns.omega
