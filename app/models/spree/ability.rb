@@ -177,6 +177,8 @@ module Spree
       end
 
       can [:admin, :create], :manager_invitation
+
+      can [:admin, :index], :oidc_setting
     end
 
     def add_product_management_abilities(user)
