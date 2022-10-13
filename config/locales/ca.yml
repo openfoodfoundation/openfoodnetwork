@@ -1988,7 +1988,6 @@ ca:
   orders_form_empty_cart: "Cistella buida"
   orders_form_update_cart: "Actualitzar"
   orders_form_subtotal: "Subtotal"
-  orders_form_admin: "Administració i manipulació"
   orders_form_total: "Total"
   orders_oc_expired_headline: "S'han tancat les comandes per a aquest cicle de comanda"
   orders_oc_expired_text: "Ho sentim, les comandes d'aquest cicle de comanda es van tancar fa %{time} ! Posa't en contacte amb el teu grup directament per veure si poden acceptar comandes fora de temps."
@@ -2591,7 +2590,6 @@ ca:
   action_required: "Acció requerida"
   tag_rules: "Regles d'etiqueta"
   enterprise_fee_whole_order: Comanda sencera
-  enterprise_fee_by: "Comissió %{type} per %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^ Aquesta relació ja està establerta."
   validation_msg_at_least_one_hub: "^ Cal seleccionar com a mínim un grup"
   validation_msg_tax_category_cant_be_blank: "^ La categoria d'impostos no es pot deixar en blanc"

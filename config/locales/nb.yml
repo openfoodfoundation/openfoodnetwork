@@ -2129,7 +2129,6 @@ nb:
   orders_form_empty_cart: "Tøm handlekurv"
   orders_form_update_cart: "Oppdater"
   orders_form_subtotal: "Delsum varer"
-  orders_form_admin: "Admin & Håndtering"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Bestillinger stengt for denne runden"
   orders_oc_expired_text: "Beklager, bestillinger for denne runden stengte for %{time} siden! Kontakt din hub direkte for å høre om de tar i mot sene bestillinger."
@@ -2747,7 +2746,6 @@ nb:
   action_required: "Handling kreves"
   tag_rules: "Regler merkelapper"
   enterprise_fee_whole_order: Hele bestillingen
-  enterprise_fee_by: "%{type} avgift ved %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Den relasjonen er allerede etablert."
   validation_msg_at_least_one_hub: "^Minst én hub må være valgt"
   validation_msg_tax_category_cant_be_blank: "^Avgiftskategori kan ikke være blank"

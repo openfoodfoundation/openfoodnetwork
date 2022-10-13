@@ -1167,7 +1167,6 @@ sv:
   orders_form_empty_cart: "Tom varukorg"
   orders_form_update_cart: "Uppdatera"
   orders_form_subtotal: "Framställ delsumma"
-  orders_form_admin: "Administration och hantering"
   orders_form_total: "Summa "
   orders_oc_expired_headline: "Denna orderomgång är stängd för nya order"
   orders_oc_expired_text: "Tyvärr, order för denna orderomgång stängde  för %{time} sedan! Var vänlig kontakta ditt matcenter för att se om de kan ta emot en sen order. "
@@ -1709,7 +1708,6 @@ sv:
   payment_method_fee: "Transaktionsvgift"
   tag_rules: "Etikettregler"
   enterprise_fee_whole_order: Hela beställningen
-  enterprise_fee_by: "%{type} avgift vid %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Den förbindelsen är redan upprättad."
   validation_msg_at_least_one_hub: "^Åtminstone ett matställe måste väljas"
   validation_msg_tax_category_cant_be_blank: "^Skattekategori kan inte vara blank"

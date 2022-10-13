@@ -2119,7 +2119,6 @@ uk:
   orders_form_empty_cart: "Порожній кошик"
   orders_form_update_cart: "Оновити"
   orders_form_subtotal: "Вивести проміжний підсумок"
-  orders_form_admin: "Адміністратор і процесінг"
   orders_form_total: "Всього"
   orders_oc_expired_headline: "Замовлення закриті для цього циклу замовлень"
   orders_oc_expired_text: "На жаль, замовлення для цього циклу замовлень закрито %{time} тому! Будь ласка, зв’яжіться безпосередньо зі своїм хабом, щоб дізнатися, чи можуть вони приймати замовлення із запізненням."
@@ -2735,7 +2734,6 @@ uk:
   action_required: "Потрібна дія"
   tag_rules: "Правила тегів"
   enterprise_fee_whole_order: Ціле замовлення
-  enterprise_fee_by: "%{type} комісія від %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Цей зв'язок уже встановлений."
   validation_msg_at_least_one_hub: "^Потрібно вибрати принаймні один хаб"
   validation_msg_tax_category_cant_be_blank: "^Податкова категорія не може бути пустою"

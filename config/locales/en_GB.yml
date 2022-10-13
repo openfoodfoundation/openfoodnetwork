@@ -141,6 +141,7 @@ en_GB:
   cardholder_name: "Cardholder name"
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
+  additional_information: "Additional Information"
   devise:
     passwords:
       spree_user:
@@ -1117,7 +1118,10 @@ en_GB:
       checkout_options:
         back_end: "Back office only"
         cancel: "Cancel"
+        checkout_options: "Checkout options"
         distributor: "Distributor"
+        no_payment_methods: Each distributor on this order cycle requires at least one payment method.
+        no_shipping_methods: Each distributor on this order cycle requires at least one shipping method.
         payment_methods: "Payment Methods"
         save: "Save"
         save_and_back_to_list: "Save and Back to List"
@@ -1127,6 +1131,7 @@ en_GB:
         edit: "1. General Settings"
         incoming: "2. Incoming Products"
         outgoing: "3. Outgoing Products"
+        checkout_options: "4. Checkout Options"
       exchange_form:
         pickup_time_tip: When orders from this OC will be ready for the customer
         pickup_instructions_placeholder: "Pick-up instructions"
@@ -1274,6 +1279,9 @@ en_GB:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      revenues_by_hub:
+        name: Revenues By Hub
+        description: Revenues by hub
       orders_and_distributors:
         name: Orders And Distributors
         description: Orders with distributor details
@@ -1847,6 +1855,7 @@ en_GB:
       invalid_email: "Please enter a valid email address"
       select_a_shipping_method: Select a shipping method
       select_a_payment_method: Select a payment method
+      no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
@@ -2120,7 +2129,6 @@ en_GB:
   orders_form_empty_cart: "Empty cart"
   orders_form_update_cart: "Update"
   orders_form_subtotal: "Produce subtotal"
-  orders_form_admin: "Admin & Handling"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Orders have closed for this order cycle"
   orders_oc_expired_text: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders."
@@ -2577,6 +2585,8 @@ en_GB:
   report_header_hub_address: Hub Address
   report_header_to_hub: To Hub
   report_header_hub_code: Hub Code
+  report_header_hub_id: Hub ID
+  report_header_hub_owner_email: Hub Owner Email
   report_header_code: Code
   report_header_paid: Paid?
   report_header_delivery: Delivery?
@@ -2736,7 +2746,6 @@ en_GB:
   action_required: "Action required"
   tag_rules: "Tag Rules"
   enterprise_fee_whole_order: Whole order
-  enterprise_fee_by: "%{type} fee by %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
@@ -3517,6 +3526,7 @@ en_GB:
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
+    show_api_key_view_toggled: "Show API key view has been changed!"
     my_account: "My account"
     date: "Date"
     time: "Time"
@@ -3662,6 +3672,7 @@ en_GB:
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
+          cancel_orders: "Cancel Orders"
           selected:
             zero: "No order selected"
             one: "1 order selected"
@@ -3805,6 +3816,7 @@ en_GB:
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
+        image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
         new:
           title: "New Product"
           new_product: "New Product"
@@ -4070,10 +4082,14 @@ en_GB:
     users:
       api_keys:
         regenerate_key: "Regenerate Key"
+        title: API key
+      developer_settings:
+        title: Developer Settings
       form:
         account_settings: Account Settings
       show:
         tabs:
+          developer_settings: Developer Settings
           orders: Orders
           cards: Credit Cards
           transactions: Transactions
@@ -4135,6 +4151,7 @@ en_GB:
       shipment:
         cannot_ready: "Cannot ready shipment."
       invalid_taxonomy_id: "Invalid taxonomy id."
+      toggle_api_key_view: "Show API key view for user"
     activerecord:
       models:
         spree/payment:
@@ -4181,3 +4198,13 @@ en_GB:
       x_years:
         one: "1 year"
         other: "%{count} years"
+  errors:
+    not_found:
+      title: "The page you were looking for doesn't exist (404)"
+      message_html: "<b>Please try again</b> <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/'>Home</a> and try again.</p> <b>Contact support</b> <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p> <p>It really helps us if you can give as much detail as possible about what the missing page is about.</p>"
+    internal_server_error:
+      title: "We're sorry, but something went wrong (500)"
+      message_html: "<b>Please try again</b> <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/''>Home</a> and try again.</p> <b>We're on it</b> <p>If you have seen this problem before, we probably already know about it and are working on a fix. We record all the errors that come up.</p> <b>Contact support</b> <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p> <p>It really helps us if you can give as much detail as possible about what you were doing when this error occurred.</p>"
+    unprocessable_entity:
+      title: "The change you wanted was rejected (422)"
+      message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to. <br><h3><a href='/' >Return home</a></h3> </p>"

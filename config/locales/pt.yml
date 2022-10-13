@@ -1865,7 +1865,6 @@ pt:
   orders_form_empty_cart: "Carrinho vazio"
   orders_form_update_cart: "Atualizar"
   orders_form_subtotal: "Subtotal dos produtos"
-  orders_form_admin: "Administração & Logística"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Este ciclo de encomendas está fechado"
   orders_oc_expired_text: "Desculpe, este ciclo de encomendas fechou há %{time} atrás. Por favor entre em contacto directamente com a sua central para saber se podem aceitar encomendas tardias."
@@ -2446,7 +2445,6 @@ pt:
   payment_updated: "Pagamento atualizado"
   tag_rules: "Regras para Etiquetas"
   enterprise_fee_whole_order: Encomenda completa
-  enterprise_fee_by: "Taxa %{type} por %{role}%{enterprise_name}"
   validation_msg_relationship_already_established: "^Essa relação já foi estabelecida."
   validation_msg_at_least_one_hub: "^Pelo menos uma central deve ser selecionada"
   validation_msg_tax_category_cant_be_blank: "^A Categoria de Imposto deve ser preenchida"

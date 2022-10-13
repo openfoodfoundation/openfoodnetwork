@@ -359,7 +359,7 @@ hu:
   filter_results: Eredmények szűrése
   clear_filters: Tiszta szűrők
   quantity: Mennyiség
-  pick_up: Felvenni
+  pick_up: Átvétel
   copy: Másolat
   change_my_password: "Változtasd meg a jelszavamat"
   update_password: "Frissítse a jelszót"
@@ -1441,8 +1441,8 @@ hu:
     order_not_loaded: "Nem található érvényes rendelés a fizetés feldolgozásához"
   shops:
     hubs:
-      show_closed_shops: "Bezárt üzletek megjelenítése"
-      hide_closed_shops: "A bezárt üzletek elrejtése"
+      show_closed_shops: "Inaktív üzletek megjelenítése"
+      hide_closed_shops: "Inaktív üzletek elrejtése"
       show_on_map: "Az összes megjelenítése a térképen"
   shared:
     mailers:
@@ -1475,7 +1475,7 @@ hu:
       footer_nav_headline: "Navigáció"
       footer_join_headline: "Csatlakozz hozzánk"
       footer_join_body: "Hozzon létre egy listát, üzletet vagy csoportkönyvtárat az Open Food Networkön."
-      footer_join_cta: "Mondj többet!"
+      footer_join_cta: "Tovább olvasok!"
       footer_legal_call: "Olvassa el a mi"
       footer_legal_visit: "Elérhetőségünk"
       footer_legal_text_html: "Az Open Food Network egy ingyenes és nyílt forráskódú szoftverplatform. Tartalmunk licence a %{content_license}, kódunk pedig %{code_license}."
@@ -1683,11 +1683,11 @@ hu:
   brandstory_part6: "Mindannyian szeretjük az ételt. Most már az élelmezési rendszerünket is szerethetjük."
   system_headline: "Vásárlás – így működik."
   system_step1: "1. Keresés"
-  system_step1_text: "Keressen a különféle gazdáknál és helyi kosarakban szezonális helyi terményeket és termékeket. Keresés környék és élelmiszerkategória szerint, illetve, hogy a kiszállítást vagy az átvételt részesíti előnyben."
+  system_step1_text: "Böngészhetsz közvetlenül a gazdák kínálatában, de bevásárlóközösségek kínálatában és más helyi élelem csoportokban is. Kereshetsz élelmiszerkategóriák szerint, illetve hogy kiszállítást vagy személyes átvételt részesítesz előnyben."
   system_step2: "2. Bolt"
-  system_step2_text: "Pakolja meg bevásárlókosarát megfizethető helyi élelmiszerekkel, amelyek különböző termelőktől származnak. Ismerje meg az ételei mögött meghúzódó történeteket és az azt készítő embereket!"
+  system_step2_text: "Pakold meg a bevásárlókosarad helyből származó élelemmel, amelyek akár különböző termelőktől érkeznek. Ismerd meg az ételek mögött lévő történeteket, az azt készítő embereket. Vásárolj olyan élelmet, amelynek tudod az eredetét, és hogy hogyan állították elő."
   system_step3: "3. Átvétel / kiszállítás"
-  system_step3_text: "Éljen a kiszállítás lehetőségével, vagy keresse fel a termelőt, illetve az átvételi ponotot, hogy személyesen is megismerkedjen a termék eredetével. Élelmiszervásárlás változatosan és természetesen."
+  system_step3_text: "Keresd fel a termelőt, vagy a megjelölt átvételi pontot, bevásárlóközösséget, hogy személyesen is megismerd a termelőt, a szervezőket és az élelmet, amit megeszel. Ahol van rá lehetőség, élhetsz a kiszállítás lehetőségével is."
   cta_headline: "Vásárlás, amely jobb hellyé teszi a világot."
   cta_label: "Tovább a termelőkhöz, átvételi pontokhoz."
   stats_headline: "Új élelmezési rendszert hozunk létre."
@@ -1947,10 +1947,10 @@ hu:
   hubs_orders_closed: "A rendelések lezárva"
   hubs_profile_only: "Csak profil"
   hubs_delivery_options: "Szállítási lehetőségek"
-  hubs_pickup: "Felvenni"
+  hubs_pickup: "Átvétel"
   hubs_delivery: "Szállítás"
   hubs_producers: "Termelőink"
-  hubs_filter_by: "Szűrés vlami alapján"
+  hubs_filter_by: "Szűrés"
   hubs_filter_type: "típus"
   hubs_filter_delivery: "Szállítás"
   hubs_filter_property: "Ingatlan"
@@ -2071,7 +2071,7 @@ hu:
   sell_ask_services: "Kérdezzen minket az OFN szolgáltatásairól."
   shops_title: Üzletek
   shops_headline: Bevásárlás, másképpen.
-  shops_text: A növénytermesztés és állattenyésztés ciklusokban történik. A gazdák éréskor aratnak, ezért a legmegfelelőbb pillanatban rendelünk ételt. Ha lezárt rendelési ciklust talál, látogasson vissza hamarosan.
+  shops_text: A növénytermesztés, az állattenyésztés, az élelem előállítása, de még az áruátadás is ciklusokban történik. A növények hétről hétre és eltérő ütemben fejlődnek. Ha lezárt rendelési ciklust találsz valahol, nézd meg, ki van-e írva a rendelési ciklus nyitásának időpontja. Ha nem, látogass vissza később az adott termelőhöz, közösséghez.
   shops_signup_title: Regisztráljon hubként
   shops_signup_headline: Élelmiszer-központok, korlátlan.
   shops_signup_motivation: Bármi legyen is a modelled, támogatunk téged. Azonban változol, veled vagyunk. Mi non-profit, független," és nyílt forráskódú. Mi vagyunk azok a szoftverpartnerek, akikről álmodott.
@@ -2091,7 +2091,6 @@ hu:
   orders_form_empty_cart: "Üres Kosár"
   orders_form_update_cart: "Frissítés"
   orders_form_subtotal: "Részösszeg létrehozása"
-  orders_form_admin: "Adminisztráció és kezelés"
   orders_form_total: "Teljes"
   orders_oc_expired_headline: "A rendelések erre a rendelési ciklusra lezárultak"
   orders_oc_expired_text: "Sajnáljuk, a rendelések erre a rendelési ciklusra %{time} ezelőtt lezárultak! Kérjük, forduljon közvetlenül a központhoz, hogy megtudja, képesek-e elfogadni a késői rendeléseket."
@@ -2695,7 +2694,6 @@ hu:
   action_required: "Cselekvést kíván"
   tag_rules: "Címkeszabályok"
   enterprise_fee_whole_order: Az egész rendelés
-  enterprise_fee_by: "%{type} díj: %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Ez a kapcsolat már létrejött."
   validation_msg_at_least_one_hub: "^Legalább egy hubot ki kell választani"
   validation_msg_tax_category_cant_be_blank: "^Az adókategória mező nem lehet üres"

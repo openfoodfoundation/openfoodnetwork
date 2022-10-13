@@ -1982,7 +1982,6 @@ tr:
   orders_form_empty_cart: "Sepeti Boşalt"
   orders_form_update_cart: "Güncelle"
   orders_form_subtotal: "Ürün Ara Toplamı"
-  orders_form_admin: "Yönetim & Operasyon"
   orders_form_total: "Toplam"
   orders_oc_expired_headline: "Bu sipariş dönemi için siparişler kapatıldı"
   orders_oc_expired_text: "Üzgünüz, bu sipariş dönemi siparişleri %{time} önce kapandı! Geç siparişleri kabul edip edemeyeceklerini görmek için lütfen doğrudan pazarınızla iletişime geçin."
@@ -2585,7 +2584,6 @@ tr:
   action_required: "İşlem gerekiyor"
   tag_rules: "ETİKET KURALLARI"
   enterprise_fee_whole_order: Tüm sipariş
-  enterprise_fee_by: "%{role}%{enterprise_name} tarafından%{type} ücreti"
   validation_msg_relationship_already_established: "^ Bu ilişki zaten kurulmuş."
   validation_msg_at_least_one_hub: "^ En az bir pazar seçilmelidir"
   validation_msg_tax_category_cant_be_blank: "^ Vergi Kategorisi boş bırakılamaz"

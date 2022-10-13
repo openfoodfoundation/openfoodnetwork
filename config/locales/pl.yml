@@ -1760,7 +1760,6 @@ pl:
   orders_form_empty_cart: "Pusty koszyk"
   orders_form_update_cart: "Aktualizuj"
   orders_form_subtotal: "Podaj sumę częściową"
-  orders_form_admin: "Administracja i obsługa"
   orders_form_total: "Razem"
   orders_oc_expired_headline: "Ten cykl zamówień został zamknięty"
   orders_oc_expired_text: "Przepraszamy, zamówienia dla tego cyklu zamówień zostały zakończone %{time} temu! Skontaktuj się bezpośrednio z hubem, aby sprawdzić, czy może przyjmować spóźnione zamówienia."
@@ -2343,7 +2342,6 @@ pl:
   payment_updated: "Zaktualizowano płatność"
   tag_rules: "Reguły tagów"
   enterprise_fee_whole_order: Całe zamówienie
-  enterprise_fee_by: "%{type} opłata przez %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^ Ten związek jest już ustanowiony."
   validation_msg_at_least_one_hub: "^ Należy wybrać co najmniej jeden hub"
   validation_msg_tax_category_cant_be_blank: "^ Kategoria podatku nie może być pusta"

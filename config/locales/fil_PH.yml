@@ -1806,7 +1806,6 @@ fil_PH:
   orders_form_empty_cart: "alisin ang laman ng cart"
   orders_form_update_cart: "i-update"
   orders_form_subtotal: "bahagyang kabuuan ng mga produkto"
-  orders_form_admin: "Admin & Handling"
   orders_form_total: "kabuuan"
   orders_oc_expired_headline: "ang mga order ay nagsara na para sa order cycle na ito."
   orders_oc_expired_text: "Paumanhin ngunit ang mga order para sa order cycle na ito ay sarado na mula noong%{time}! Direktang makipag-ugnayan sa inyong Hub upang malaman kung maaari pa silang tumanggap ng mga order."
@@ -2391,7 +2390,6 @@ fil_PH:
   payment_updated: "na-update na ang bayad"
   tag_rules: "panuntunan sa pag-tag"
   enterprise_fee_whole_order: Buong order
-  enterprise_fee_by: "%{type}na bayad ng%{role}%{enterprise_name}"
   validation_msg_relationship_already_established: "^ang relasyon na iyan ay naitatag na"
   validation_msg_at_least_one_hub: "^kailangang kahit isang Hub ay piliin"
   validation_msg_tax_category_cant_be_blank: "^ang kategorya ng tax ay hindi maaaring walang sagot"

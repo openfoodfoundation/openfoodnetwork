@@ -141,6 +141,7 @@ ar:
   cardholder_name: "إسم صاحب البطاقة"
   community_forum_url: "عنوان منتدى المجتمع"
   customer_instructions: "تعليمات العملاء"
+  additional_information: "معلومات إضافية"
   devise:
     passwords:
       spree_user:
@@ -161,6 +162,7 @@ ar:
         signed_up_but_unconfirmed: "تم إرسال رسالة مع رابط التأكيد إلى عنوان بريدك الإلكتروني. يرجى فتح الرابط لتفعيل حسابك."
         unknown_error: "حدث خطأ ما أثناء إنشاء حسابك. تحقق من عنوان بريدك الإلكتروني وحاول مرة أخرى."
     failure:
+      disabled: "تم تعطيل حسابك. يرجى الاتصال بالمسؤول لحل هذه المشكلة."
       invalid: |
           البريد الإلكتروني أو كلمة السر خاطئة.
           هل كنت ضيف ؟ ربما تحتاج إلى إنشاء حساب أو إعادة تعيين كلمة المرور الخاصة بك.
@@ -471,6 +473,8 @@ ar:
         terms_of_service: "شروط الخدمة"
         delete: "حذف ملف"
         confirm_delete: "هل أنت متأكد أنك تريد حذف ملف شروط الخدمة الحالي؟"
+        attachment: "المرفقات"
+        create_terms_of_service: "أنشئ ملف شروط الخدمة"
     number_localization:
       number_localization_settings: "إعدادات تعريب الأرقام"
       enable_localized_number: "استخدم المنطق الفاصل الدولي الف / العشري"
@@ -480,6 +484,7 @@ ar:
         enable_invoices?: "تمكين الفواتير؟"
         invoice_style2?: "استخدم نموذج الفاتورة البديل الذي يتضمن إجمالي تفاصيل الضرائب لكل سعر ومعلومات معدل الضريبة لكل عنصر (غير مناسب حتى الآن للدول التي تعرض الأسعار باستثناء الضريبة)"
         enable_receipt_printing?: "إظهار خيارات لإيصالات الطباعة باستخدام الطابعات الحرارية من أجل ترتيب القائمة المنسدلة؟"
+        enterprise_number_required_on_invoices?: "هل تتطلب ABN لإنشاء فاتورة؟"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -527,6 +532,8 @@ ar:
         guest_label: "الخروج كضيف"
         credit_owed: "الائتمان مدين"
         balance_due: "الرصيد المستحق"
+      destroy:
+        has_associated_subscriptions: "فشل الحذف: هذا العميل لديه اشتراكات نشطة. قم بإلغائها أولاً."
     contents:
       edit:
         title: المحتوى
@@ -766,6 +773,9 @@ ar:
         variants_without_unit_value: "تحذير: بعض الانواع لا تحتوي على قيمة وحدة"
         all: "الكل"
       select_variant: "اختيار النوع"
+      note:
+        note_label: "ملحوظة:"
+        no_note_present: "لم يتم تقديم أي ملاحظة."
     enterprise:
       select_outgoing_oc_products_from: حدد منتجات OC الصادرة من
     enterprises:
@@ -820,6 +830,9 @@ ar:
           email_address_tip: "سيتم عرض عنوان البريد الإلكتروني هذا في ملفك الشخصي العام"
           phone: هاتف
           phone_placeholder: على سبيل المثال. 98 7654 3210
+          whatsapp_phone: رقم هاتف WhatsApp
+          whatsapp_phone_placeholder: على سبيل المثال +61 4 9876 5432
+          whatsapp_phone_tip: "سيتم عرض هذا الرقم في ملفك الشخصي العام ليتم فتحه كرابط WhatsApp."
           website: موقع الكتروني
           website_placeholder: على سبيل المثال. www.truffles.com
         enterprise_fees:
@@ -831,6 +844,7 @@ ar:
           create_button: إنشاء واحدة الآن
         enterprise_permissions:
           legend: "أذونات المؤسسة"
+          enterprise_relationships: علاقات المؤسسة
         images:
           legend: "صور"
           logo: شعار
@@ -852,6 +866,7 @@ ar:
           preferred_product_selection_from_inventory_only_yes: يمكن وضع منتجات جديدة في واجهة المتجر الخاصة بي (مستحسن)
           preferred_product_selection_from_inventory_only_no: يجب إضافة منتجات جديدة إلى المخزون الخاص بي قبل وضعها في واجهة المتجر
         payment_methods:
+          legend: "طرق الدفع"
           name: اسم
           applies: ينطبق؟
           manage: إدارة طرق الدفع
@@ -874,7 +889,10 @@ ar:
           sells: يبيع
           sells_tip: "لا شيء - لا تبيع المؤسسات للعملاء مباشرة. <br /> الخاصة - تبيع المؤسسات المنتجات الخاصة بها للعملاء. <br /> أي - يمكن للمؤسسات بيع منتجات المؤسسات الخاصة أو غيرها. <br />"
           visible_in_search: مرئي في البحث؟
+          visible_in_search_tip: "يمكن أن تكون المتاجر<br /> 1. مرئية للعامة ، وتظهر على خريطة OFN والقوائم.<br /> 2. مخفية على الخرائط والقوائم ولكن يتم الإشارة إليها من قبل المحلات التجارية الأخرى وربطها في ملفها الشخصي.<br /> 3. مخفية تماما."
           visible: عام
+          not_visible: إخفاء
+          hidden: إخفاء كل المراجع
         properties:
           legend: "الخصائص"
         permalink:
@@ -1099,7 +1117,11 @@ ar:
       checkout_options:
         back_end: "المكتب الخلفي فقط"
         cancel: "إلغاء"
+        checkout_options: "خيارات الخروج"
         distributor: "الموزع"
+        no_payment_methods: يتطلب من الموزع في دورة الطلب الواحدة اختيار طريقة دفع واحدة على الأقل.
+        no_shipping_methods: يتطلب من الموزع في دورة الطلب الواحدة اختيار طريقة شحن واحدة على الأقل.
+        payment_methods: "طرق الدفع"
         save: "حفظ"
         save_and_back_to_list: "حفظ والعودة إلى القائمة"
         select_all: "اختر الكل"
@@ -1108,6 +1130,7 @@ ar:
         edit: "1. الإعدادات العامة"
         incoming: "2. المنتجات الواردة"
         outgoing: "3. المنتجات الصادرة"
+        checkout_options: "4. خيارات الخروج"
       exchange_form:
         pickup_time_tip: عندما تكون الطلبات من OC جاهزة للعميل
         pickup_instructions_placeholder: "تعليمات التحميل"
@@ -1181,6 +1204,9 @@ ar:
         cancel: إلغاء
         proceed: تقدم
       status:
+        undated: غير مؤرخ
+        upcoming: القادم
+        open: افتح
         closed: مغلق
     producer_properties:
       index:
@@ -1208,6 +1234,7 @@ ar:
           images: "صور"
           properties: "الخصائص"
           shipping_methods: "طرق الشحن"
+          payment_methods: "طرق الدفع"
           enterprise_fees: "رسوم الشركة"
           enterprise_permissions: "أذونات المؤسسة"
           inventory_settings: "إعدادات المخزون"
@@ -1233,6 +1260,8 @@ ar:
       unitsize: حجم الوحدة
       total: مجموع
       total_items: البنود الكلية
+      total_by_customer: الإجمالي حسب العميل
+      total_by_supplier: الإجمالي حسب المورد
       supplier_totals: اجمالي دورة الطلب الموردين
       supplier_totals_by_distributor: اجمالي دورة الطلب الموردين حسب الموزع
       totals_by_supplier: اجمالي دورة الطلب الموزعين من قبل المورد
@@ -1248,6 +1277,10 @@ ar:
       tax_rates: معدلات الضريبة
       pack_by_customer: تم التعبئة من العملاء
       pack_by_supplier: تم التعبئة من  المورد
+      pack_by_product: عبوة حسب المنتج
+      revenues_by_hub:
+        name: الإيرادات حسب المحل
+        description: الإيرادات حسب المحل
       orders_and_distributors:
         name: الطلبات والموزعون
         description: الطلبات مع تفاصيل الموزع
@@ -1298,8 +1331,14 @@ ar:
           temp_controlled: "التحكم المؤقت؟"
           price: "السعر"
       rendering_options:
+        generate_report: "انشاء تقرير"
         on_screen: "على الشاشة"
+        spreadsheet: "جدول بيانات (Excel ، OpenOffice ..)"
         display: عرض
+        summary_row: صف الملخص
+        header_row: 'صف المقدمة '
+        raw_data: مسودة بيانات
+        formatted_data: البيانات المنسقة
       packing:
         name: "تقارير التعبئة"
     subscriptions:
@@ -1815,6 +1854,7 @@ ar:
       invalid_email: "من فضلك أدخل بريد أليكترونى صحيح"
       select_a_shipping_method: حدد طريقة الشحن
       select_a_payment_method: اختر طريقة الدفع
+      no_shipping_methods_available: الخروج غير ممكن بسبب عدم وجود خيارات الشحن. يرجى الاتصال بصاحب المحل.
   order_paid: دفع
   order_not_paid: لم يتم الدفع
   order_total: اجمالي الطلب
@@ -1833,6 +1873,7 @@ ar:
   order_hub_info: معلومات مركز البيع
   order_back_to_store: عودة للمخزن
   order_back_to_cart: العودة إلى السلة
+  order_back_to_website: العودة إلى الصفحة الرئيسية
   bom_tip: "استخدم هذه الصفحة لتغيير كميات المنتج عبر طلبات متعددة. يمكن أيضًا إزالة المنتجات من الطلبات تمامًا ، إذا لزم الأمر."
   unsaved_changes_warning: "التغييرات غير المحفوظة موجودة وستفقد في حالة المتابعة."
   unsaved_changes_error: "تحتوي الحقول ذات الحدود الحمراء على أخطاء."
@@ -2087,7 +2128,6 @@ ar:
   orders_form_empty_cart: "السلة فارغة"
   orders_form_update_cart: "تحديث"
   orders_form_subtotal: "إنتاج المجموع الفرعي"
-  orders_form_admin: "الادارة و المعالجة"
   orders_form_total: "مجموع"
   orders_oc_expired_headline: "تم إغلاق الطلبات لدورة الطلب هذه"
   orders_oc_expired_text: "عفوًا ، تم إغلاق أوامر دورة الطلب هذه منذ %{time}! يرجى الاتصال بالمركز مباشرة لمعرفة ما إذا كان يمكنهم قبول الطلبات المتأخرة أم لا."
@@ -2228,7 +2268,10 @@ ar:
         contact_field_placeholder: "اسم جهة الاتصال"
         contact_field_required: "تحتاج إلى إدخال جهة الاتصال الأساسية."
         phone_field: "رقم الهاتف"
+        whatsapp_phone_field: "رقم هاتف WhatsApp"
+        whatsapp_phone_tooltip: "سيتم عرض هذا الرقم في ملفك الشخصي العام ليتم فتحه كرابط WhatsApp."
         phone_field_placeholder: "على سبيل المثال. (03) 1234 5678"
+        whatsapp_phone_field_placeholder: "على سبيل المثال +61 4 1234 5678"
       type:
         title: "نوع"
         headline: "الخطوة الأخيرة لإضافة %{enterprise}!"
@@ -2508,18 +2551,23 @@ ar:
   report_producers: "المنتجين"
   report_type: "نوع التقرير"
   report_hubs: "مراكز بيع"
+  report_payment: "طرق الدفع"
   report_distributor: "الموزع"
   report_payment_by: 'المدفوعات حسب النوع'
   report_itemised_payment: 'مجاميع الدفع المفصلة حسب المادة'
   report_payment_totals: 'مجاميع الدفع'
   report_all: 'الكل'
   report_order_cycle: "ترتيب الدورة"
+  report_hide_columns: 'إخفاء الأعمدة '
   report_columns: أعمدة
   report_enterprises: "المؤسسات"
   report_enterprise_fee: "أسماء الرسوم"
   report_users: "المستخدمين"
   report_tax_rates: معدلات الضريبة
   report_tax_types: أنواع الضرائب
+  report_filters: مرشحات التقرير
+  report_print: طباعة التقرير
+  report_render_options: خيارات التقديم
   report_header_order_cycle: ترتيب الدورة
   report_header_user: المستعمل
   report_header_email: البريد الإلكتروني
@@ -2536,6 +2584,8 @@ ar:
   report_header_hub_address: عنوان مركز البيع
   report_header_to_hub: 'إلى مركز البيع '
   report_header_hub_code: رمز مركز البيع
+  report_header_hub_id: معرف المحل
+  report_header_hub_owner_email: البريد الإلكتروني لمالك المحل
   report_header_code: الشفرة
   report_header_paid: دفع؟
   report_header_delivery: توصيل؟
@@ -2656,6 +2706,11 @@ ar:
   report_header_transaction_fee: رسوم المعاملة (بدون ضريبة)
   report_header_total_untaxable_admin: إجمالي تعديلات المشرف غير القابلة للضريبة (بدون ضريبة)
   report_header_total_taxable_admin: إجمالي تعديلات المشرف الخاضع للضريبة (شاملة الضريبة)
+  report_xero_configuration: اعدادات Xero
+  initial_invoice_number: "رقم الفاتورة المبدئي"
+  invoice_date: "تاريخ الفاتورة"
+  due_date: "تاريخ الاستحقاق"
+  account_code: "رمز الحساب"
   equals: "يساوي"
   contains: "يحتوي على"
   discount: "خصم"
@@ -2690,7 +2745,7 @@ ar:
   action_required: "الإجراء مطلوب"
   tag_rules: "قواعد الوسم"
   enterprise_fee_whole_order: الطلب كله
-  enterprise_fee_by: "%{type} رسوم بواسطة %{role} %{enterprise_name}"
+  enterprise_fee_by_name: "رسوم %{name} بواسطة %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^ تم تأسيس هذه العلاقة بالفعل."
   validation_msg_at_least_one_hub: "^ يجب تحديد مركز واحد على الأقل"
   validation_msg_tax_category_cant_be_blank: "^ فئة الضرائب لا يمكن أن تكون فارغة"
@@ -2957,6 +3012,8 @@ ar:
         quantity_unchanged: "الكمية لم تتغير عن المبلغ السابق."
         cancel_the_order_html: "سيؤدي هذا إلى إلغاء الطلب الحالي.<br /> هل انت متأكد انك تريد المتابعة؟"
         cancel_the_order_send_cancelation_email: "إرسال بريد إلكتروني للإلغاء إلى العميل"
+        restock_item: "إعادة تخزين المواد: إعادة هذه المادة إلى المخزون"
+        restock_items: "إعادة تخزين المواد : إعادة جميع المواد إلى المخزون"
       resend_user_email_confirmation:
         resend: "إعادة إرسال"
         sending: "إعادة إرسال..."
@@ -3552,6 +3609,7 @@ ar:
     email: البريد الإلكتروني
     account_updated: "تم تحديث الحساب!"
     email_updated: "سيتم تحديث الحساب بمجرد تأكيد البريد الإلكتروني الجديد."
+    show_api_key_view_toggled: "إظهار عرض مفتاح API قد تغير!"
     my_account: "حسابي"
     date: "تاريخ"
     time: "الوقت"
@@ -3697,6 +3755,11 @@ ar:
           results_found: "تم العثور على النتائج %{number}."
           viewing: "عرض %{start} إلى %{end}."
           print_invoices: "طباعة الفواتير"
+          cancel_orders: "إلغاء الطلبات"
+          selected:
+            zero: "لم يتم اختيار أي طلب"
+            one: "طلب واحد تم اختياره"
+            other: "تم تحديد الطلبات %{count}"
         sortable_header:
           payment_state: "حالة الدفعة"
           shipment_state: "حالة الشحن"
@@ -3711,6 +3774,9 @@ ar:
           from: "من "
           to: "فاتورة الى"
           shipping: "الشحن"
+        note:
+          note_label: "ملحوظة:"
+          no_note_present: "لم يتم تقديم أي ملاحظة."
         form:
           distribution_fields:
             title: "توزيع"
@@ -3833,6 +3899,7 @@ ar:
           paypal:
             no_payment_via_admin_backend: لا يمكن التقاط مدفوعات Paypal في Backoffice
       products:
+        image_upload_error: "يرجى تحميل الصورة بتنسيق JPG أو PNG أو GIF أو SVG أو WEBP."
         new:
           title: "منتج جديد"
           new_product: "منتج جديد"
@@ -3895,6 +3962,7 @@ ar:
           back_to_users_list: "العودة إلى قائمة المستخدمين"
           general_settings: "الاعدادات العامة"
         form:
+          disabled: "تعطيل؟"
           email: "البريد الإلكتروني"
           roles: "الأدوار"
           enterprise_limit: "حد المؤسسة"
@@ -4049,6 +4117,8 @@ ar:
         thanks: "شكرا لك على اعمالك."
         track_information: "معلومات التتبع : %{tracking}"
         track_link: "رابط التتبع: %{url}"
+        picked_up_instructions: "تم استلام طلبك من %{distributor}"
+        picked_up_subject: "اشعار استلام البضاعة"
     test_mailer:
       test_email:
         greeting: "تهانينا!"
@@ -4097,10 +4167,14 @@ ar:
     users:
       api_keys:
         regenerate_key: "انشاء مفتاح"
+        title: مفتاح API
+      developer_settings:
+        title: إعدادات المطور
       form:
         account_settings: إعدادت الحساب
       show:
         tabs:
+          developer_settings: إعدادات المطور
           orders: الطلبات
           cards: بطاقات الائتمان
           transactions: المعاملات
@@ -4131,6 +4205,7 @@ ar:
         total: المجموع
         paid?: دفع؟
         status: الحالة
+        completed: مكتمل
         cancelled: ألغيت
       saved_cards:
         default?: الإفتراضي؟
@@ -4142,6 +4217,7 @@ ar:
       authorised_shops:
         shop_name: "اسم المتجر"
         allow_charges?: "السماح بالسحب من البطاقة الافتراضية؟"
+        no_default_saved_cards_tooltip: تحتاج إلى تحديد بطاقة ائتمان واحدة كبطاقة افتراضية للسماح بالرسوم.
     localized_number:
       invalid_format: لديه تنسيق غير صالح. الرجاء إدخال رقم.
     api:
@@ -4160,6 +4236,7 @@ ar:
       shipment:
         cannot_ready: "لا يمكن تجهيز الشحنة"
       invalid_taxonomy_id: "معرف التصنيف غير صالح."
+      toggle_api_key_view: "إظهار عرض مفتاح API للمستخدم"
     activerecord:
       models:
         spree/payment:
@@ -4169,6 +4246,8 @@ ar:
           few: المدفوعات
           many: المدفوعات
           other: الدفعات
+    unit: وحدة
+    per_unit: لكل وحدة
   datetime:
     distance_in_words:
       about_x_hours:
@@ -4256,3 +4335,13 @@ ar:
         few: "%{count} سنة"
         many: "%{count} سنة"
         other: "%{count} سنوات"
+  errors:
+    not_found:
+      title: "الصفحة التي تبحث عنها غير موجودة (404)"
+      message_html: "<b>حاول مرة اخرى</b><p style=\";text-align:right;direction:rtl\"> قد تكون هذه مشكلة مؤقتة. الرجاء النقر فوق زر الرجوع للعودة إلى الشاشة السابقة أو العودة إلى <a href='/'>الصفحة الرئيسية</a> والمحاولة مرة أخرى.</p> <b>اتصل بالدعم</b><p style=\";text-align:right;direction:rtl\"> إذا استمرت المشكلة أو كانت عاجلة ، فيرجى إخبارنا بها. ابحث عن تفاصيل الاتصال الخاصة بنا من <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>الصفحة المحلية العالمية لشبكة الغذاء المفتوحة</a> .</p><p style=\";text-align:right;direction:rtl\"> إنه يساعدنا حقًا إذا كان بإمكانك تقديم أكبر قدر ممكن من التفاصيل حول موضوع الصفحة المفقودة.</p>"
+    internal_server_error:
+      title: "نحن آسفون ، ولكن حدث خطأ ما (500)"
+      message_html: "<b>حاول مرة اخرى</b><p style=\";text-align:right;direction:rtl\"> قد تكون هذه مشكلة مؤقتة. الرجاء النقر فوق زر الرجوع للعودة إلى الشاشة السابقة أو العودة إلى <a href='/''>الصفحة الرئيسية</a> والمحاولة مرة أخرى.</p> <b>نحن عليه</b><p style=\";text-align:right;direction:rtl\"> إذا كنت قد رأيت هذه المشكلة من قبل ، فمن المحتمل أننا نعرفها بالفعل ونعمل على إصلاحها. نسجل جميع الأخطاء التي تظهر.</p> <b>اتصل بالدعم</b><p style=\";text-align:right;direction:rtl\"> إذا استمرت المشكلة أو كانت عاجلة ، فيرجى إخبارنا بها. ابحث عن تفاصيل الاتصال الخاصة بنا من <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>الصفحة المحلية العالمية لشبكة الغذاء المفتوحة</a> .</p><p style=\";text-align:right;direction:rtl\"> إنه يساعدنا حقًا إذا كان بإمكانك تقديم أكبر قدر ممكن من التفاصيل حول ما كنت تفعله عند حدوث هذا الخطأ.</p>"
+    unprocessable_entity:
+      title: "تم رفض التغيير الذي أردته (422)"
+      message_html: "<p style=\";text-align:right;direction:rtl\">تم رفض التغيير الذي تريده. ربما حاولت تغيير شيء لا يمكنك الوصول إليه.<br><h3 style=\";text-align:right;direction:rtl\"> <a href='/' >العودة للصفحة الرئيسية</a></h3></p>"

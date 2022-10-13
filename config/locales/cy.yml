@@ -2116,7 +2116,6 @@ cy:
   orders_form_empty_cart: "Gwagio'r basged"
   orders_form_update_cart: "Diweddaru"
   orders_form_subtotal: "Is-gyfanswm cynnyrch"
-  orders_form_admin: "Gweinyddu a Thrin"
   orders_form_total: "Cyfanswm"
   orders_oc_expired_headline: "Mae archebion ar gyfer y cylch archebu hwn wedi cau."
   orders_oc_expired_text: "Mae'n ddrwg gennym, caeodd archebion ar gyfer y cylch archebu hwn %{time} yn ôl! Cysylltwch â'ch hwb yn uniongyrchol i weld a yw'n bosib derbyn archebion hwyr."
@@ -2732,7 +2731,6 @@ cy:
   action_required: "Mae angen gewithredu"
   tag_rules: "Rheolau Tag"
   enterprise_fee_whole_order: Archeb cyfan
-  enterprise_fee_by: "ffi %{type} erbyn %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^ Sefydlwyd y berthynas honno eisoes."
   validation_msg_at_least_one_hub: "^ Rhaid dewis o leiaf un hwb"
   validation_msg_tax_category_cant_be_blank: "^ Ni chaniateir gadael y Categori Trethi yn wag"

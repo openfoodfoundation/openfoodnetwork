@@ -2038,7 +2038,6 @@ fr_CM:
   orders_form_empty_cart: "Vider le panier"
   orders_form_update_cart: "Mettre à jour"
   orders_form_subtotal: "Sous-total"
-  orders_form_admin: "Admin & traitements"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Les commandes ne sont plus possibles pour ce cycle de vente."
   orders_oc_expired_text: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}!"
@@ -2642,7 +2641,6 @@ fr_CM:
   action_required: "Une action est requise"
   tag_rules: "Règles de tag"
   enterprise_fee_whole_order: Commande totale
-  enterprise_fee_by: "%{type}marges/frais par %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Un lien est déjà établi entre ces entreprises."
   validation_msg_at_least_one_hub: "^Sélectionnez au moins une boutique"
   validation_msg_tax_category_cant_be_blank: "^Veuillez sélectionner la TVA applicable"

@@ -2126,7 +2126,6 @@ it:
   orders_form_empty_cart: "Svuota carrello"
   orders_form_update_cart: "Aggiorna"
   orders_form_subtotal: "Calcola il subtotale"
-  orders_form_admin: "Costi di gestione"
   orders_form_total: "Totale"
   orders_oc_expired_headline: "Gli ordini sono chiusi per questo ciclo di ordini"
   orders_oc_expired_text: "Spiacenti, gli ordini per questo ciclo son chiusi %{time} da! Per favore contatta direttamente il tuo hub per sapere se accettano ordini tardivi."
@@ -2744,7 +2743,6 @@ it:
   action_required: "Azione richiesta"
   tag_rules: "Regole Etichette"
   enterprise_fee_whole_order: Ordine intero
-  enterprise_fee_by: "%{type} tariffa da %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Questa relazione è già stabilita."
   validation_msg_at_least_one_hub: "^Almeno un hub deve essere selezionato"
   validation_msg_tax_category_cant_be_blank: "^Categoria di tassa non può essere vuoto"

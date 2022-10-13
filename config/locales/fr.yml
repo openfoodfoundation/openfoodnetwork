@@ -241,7 +241,7 @@ fr:
     shipped_email:
       dear_customer: "Cher Acheteur,"
       instructions: "Votre commande a été expédiée"
-      shipment_summary: "Résumé de l'envoi"
+      shipment_summary: "Résumé de la commande"
       subject: "Notification d'expédition"
       thanks: "Merci pour votre commande."
       track_information: "Informations de suivi : %{tracking}"
@@ -322,7 +322,7 @@ fr:
   edit: Modifier
   clone: Dupliquer
   distributors: Distributeurs
-  bulk_order_management: Gestion des commandes par lot
+  bulk_order_management: Gestion des commandes
   enterprises: Entreprises
   enterprise_groups: Groupes
   reports: Rapports
@@ -566,7 +566,7 @@ fr:
       form_users:
         users: "Gestionnaires"
       form_about:
-        about: "Créer ma boutique"
+        about: "À propos"
       form_images:
         images: "Images"
       form_address:
@@ -788,7 +788,7 @@ fr:
         manage: Gérer
       form:
         about_us:
-          legend: "Créer ma boutique"
+          legend: "À propos"
           desc_short: Description (en bref)
           desc_short_placeholder: Parlez de votre entreprise en une ou deux phrases
           desc_long: A propos
@@ -995,14 +995,14 @@ fr:
           resend: Renvoyer
           owner: 'Gestionnaire principal'
           contact: "Contact"
-          contact_tip: "Le gestionnaire qui recevra les emails de confirmation de commande et autres notifications de l'entreprise. Il doit avoir confirmé son adresse email pour pouvoir être sélectionné."
+          contact_tip: "Le gestionnaire qui recevra les emails de confirmation de commande et autres notifications de l'entreprise. \nIl faut d'abord l'ajouter comme \"gestionnaire\" dans le champ suivant. Il recevra un email pour confirmer son adresse mail. Vous pourrez ensuite le sélectionner dans \"Notifications\" !"
           owner_tip: Gestionnaire principal de cette entreprise.
           notifications: Notifications
           notifications_tip: Une notification de commande sera envoyée à cette adresse email pour chaque commande passée dans votre boutique.
           notifications_placeholder: 'ex: bernard@maferme.fr'
           notifications_note: 'A noter: si vous saisissez une nouvelle adresse, un email de confirmation sera envoyé à cette adresse avec un lien de validation à cliquer.'
           managers: Gestionnaires
-          managers_tip: Sélectionner ici les utilisateurs ayant la permission de gérer cette entreprise. Ils doivent avoir un compte sur CoopCircuits pour être sélectionnés.
+          managers_tip: Sélectionner ici les utilisateurs ayant la permission de gérer cette entreprise. Ils doivent avoir un compte sur CoopCircuits pour être sélectionnés. Si ce n'est pas le cas, cliquez sur le bouton "Ajouter un nouvel utilisateur" ci-dessous.
           invite_manager: "Inviter un gestionnaire"
           invite_manager_tip: "Inviter un nouvel utilisateur à créer son compte et le nommer comme gestionnaire de cette entreprise."
           add_unregistered_user: "Ajouter un nouvel utilisateur"
@@ -1231,7 +1231,7 @@ fr:
           address: "Adresse"
           contact: "Contact"
           social: "Réseaux sociaux"
-          about: "Créer ma boutique"
+          about: "À propos"
           business_details: "Juridique"
           images: "Images"
           properties: "Propriétés / labels"
@@ -1246,7 +1246,7 @@ fr:
         enterprise_group:
           primary_details: "Informations de base"
           users: "Gestionnaires"
-          about: "Créer ma boutique"
+          about: "À propos"
           images: "Images"
           contact: "Contact"
           web: "Liens web"
@@ -1973,7 +1973,7 @@ fr:
   shopping_contact_web: "Contact"
   shopping_contact_social: "Suivre"
   shopping_groups_part_of: "fait partie de:"
-  shopping_producers_of_hub: "Les producteurs et lieux de vente de %{hub}:"
+  shopping_producers_of_hub: "Les producteurs de %{hub}:"
   enterprises_next_closing: "Clôture des commandes"
   enterprises_currently_open: "Les commandes sont ouvertes"
   enterprises_ready_for: "Prêt pour"
@@ -2130,7 +2130,6 @@ fr:
   orders_form_empty_cart: "Vider le panier"
   orders_form_update_cart: "Mettre à jour"
   orders_form_subtotal: "Sous-total"
-  orders_form_admin: "Admin & traitements"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Les commandes ne sont plus possibles pour ce cycle de vente."
   orders_oc_expired_text: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}!"
@@ -2748,7 +2747,7 @@ fr:
   action_required: "Une action est requise"
   tag_rules: "Règles de tag"
   enterprise_fee_whole_order: Commande totale
-  enterprise_fee_by: "%{type} marges/frais par %{role} %{enterprise_name}"
+  enterprise_fee_by_name: "%{name} marge par %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Un lien est déjà établi entre ces entreprises."
   validation_msg_at_least_one_hub: "^Sélectionnez au moins une boutique"
   validation_msg_tax_category_cant_be_blank: "^Veuillez sélectionner la TVA applicable"
@@ -4078,11 +4077,13 @@ fr:
       shipped_email:
         dear_customer: "Cher Acheteur,"
         instructions: "Votre commande de %{distributor} :\n- a été expédiée (dans le cas d'une livraison)\n- vous a été distribuée (dans le cas d'un retrait.)"
-        shipment_summary: "Résumé de l'envoi"
+        shipment_summary: "Résumé de la commande"
         subject: "Notification d'expédition"
         thanks: "Merci pour votre commande."
         track_information: "Informations de suivi : %{tracking}"
         track_link: "Lien de suivi : %{url}"
+        picked_up_instructions: "Votre commande de %{distributor} a bien été réceptionnée"
+        picked_up_subject: "Notification de réception"
     test_mailer:
       test_email:
         greeting: "Félicitations !"

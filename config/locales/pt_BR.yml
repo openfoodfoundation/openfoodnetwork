@@ -1945,7 +1945,6 @@ pt_BR:
   orders_form_empty_cart: "Carrinho vazio"
   orders_form_update_cart: "Atualizar"
   orders_form_subtotal: "Subtotal dos produtos"
-  orders_form_admin: "Administração e manejo"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Este ciclo de pedidos está fechado para pedidos"
   orders_oc_expired_text: "Desculpe, este ciclo de pedidos fechou há %{time} atrás. Por favor entre em contato diretamente com sua central para saber se podem aceitar pedidos atrasados."
@@ -2543,7 +2542,6 @@ pt_BR:
   action_required: "Ação necessária"
   tag_rules: "Regras de tag"
   enterprise_fee_whole_order: Pedido inteiro
-  enterprise_fee_by: "%{type} taxa por %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Esse relacionamento já foi estabelecido."
   validation_msg_at_least_one_hub: "^Pelo menos uma central deve ser selecionado"
   validation_msg_tax_category_cant_be_blank: "^ Categoria de imposto não pode estar em branco"

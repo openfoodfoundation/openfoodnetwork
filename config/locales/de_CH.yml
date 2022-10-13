@@ -2107,7 +2107,6 @@ de_CH:
   orders_form_empty_cart: "Warenkorb leeren"
   orders_form_update_cart: "Aktualisieren"
   orders_form_subtotal: "Zwischensumme"
-  orders_form_admin: "Bearbeitung"
   orders_form_total: "Summe"
   orders_oc_expired_headline: "Bestellannahme für diesen Bestellzyklus bereits geschlossen!"
   orders_oc_expired_text: "Der Bestellzyklus wurde vor %{time} geschlossen! Bitte kontaktieren Sie den Laden direkt, um zu erfahren, ob er verspätete Bestellungen annehmen kann."
@@ -2720,7 +2719,6 @@ de_CH:
   action_required: "Handlung erforderlich"
   tag_rules: "Stichwortregeln"
   enterprise_fee_whole_order: Gesamte Bestellung
-  enterprise_fee_by: "%{type} Gebühr von %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^ Diese Beziehung besteht bereits."
   validation_msg_at_least_one_hub: "^ Mindestens ein Hub muss ausgewählt sein."
   validation_msg_tax_category_cant_be_blank: "^ Steuerkategorie darf nicht leer sein."

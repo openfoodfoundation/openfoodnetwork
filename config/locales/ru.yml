@@ -1120,7 +1120,10 @@ ru:
       checkout_options:
         back_end: "Интерфейс Администратора"
         cancel: "Выход"
+        checkout_options: "Варианты оформления заказа"
         distributor: "Дистрибьютор"
+        no_payment_methods: Каждому дистрибьютору в этом цикле заказа требуется как минимум один способ оплаты.
+        no_shipping_methods: Каждому дистрибьютору в этом цикле заказа требуется как минимум один способ доставки.
         payment_methods: "Способы Оплаты"
         save: "Сохранить"
         save_and_back_to_list: "Сохранить и Назад к Списку"
@@ -1130,6 +1133,7 @@ ru:
         edit: "1. Основные Настройки"
         incoming: "2. Входящие Товары"
         outgoing: "3. Исходящие Товары"
+        checkout_options: "4. Варианты оформления заказа"
       exchange_form:
         pickup_time_tip: Когда заказы с этого Цикла Заказа будут готовы для клиента
         pickup_instructions_placeholder: "Информация по Самовывозу"
@@ -1277,6 +1281,9 @@ ru:
       pack_by_customer: Выборка по Клиенту
       pack_by_supplier: Выборка по Поставщику
       pack_by_product: Пакет По Продукту
+      revenues_by_hub:
+        name: Доходы По Центрам
+        description: Доходы по центрам
       orders_and_distributors:
         name: Заказы и Дистрибьюторы
         description: Заказы с информацией о дистрибьюторе
@@ -1851,6 +1858,7 @@ ru:
       invalid_email: "Пожалуйста, введите действительный адрес электронной почты"
       select_a_shipping_method: Выберите способ доставки
       select_a_payment_method: Выберите способ оплаты
+      no_shipping_methods_available: Оформить заказ невозможно из-за отсутствия возможности доставки. Пожалуйста, свяжитесь с владельцем магазина.
   order_paid: ОПЛАЧЕН
   order_not_paid: НЕ ОПЛАЧЕН
   order_total: Весь заказ
@@ -2124,7 +2132,6 @@ ru:
   orders_form_empty_cart: "Очистить корзину"
   orders_form_update_cart: "Обновить"
   orders_form_subtotal: "Итого"
-  orders_form_admin: "Администрирование и Управление"
   orders_form_total: "Всего"
   orders_oc_expired_headline: "Оформление Заказов для этого Цикла Заказа закрыто"
   orders_oc_expired_text: "Извините, оформление заказов для этого цикла заказов закрыты %{time} назад! Пожалуйста, свяжитесь с вашим центром напрямую, чтобы узнать, могут ли они принимать поздние заказы."
@@ -2581,6 +2588,8 @@ ru:
   report_header_hub_address: Адрес Центра
   report_header_to_hub: В Центр
   report_header_hub_code: Код Центра
+  report_header_hub_id: Идентификатор Центра
+  report_header_hub_owner_email: Электронная почта Владельца Центра
   report_header_code: Код
   report_header_paid: Оплачен?
   report_header_delivery: Доставка?
@@ -2740,7 +2749,6 @@ ru:
   action_required: "Требуются действия"
   tag_rules: "Правила Меток"
   enterprise_fee_whole_order: Весь заказ
-  enterprise_fee_by: "%{type} сбор за %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Эти отношения уже установлены."
   validation_msg_at_least_one_hub: "^Должен быть выбран хотя бы один Центр"
   validation_msg_tax_category_cant_be_blank: "^Налоговая Категория не может быть пустой"
@@ -3714,6 +3722,7 @@ ru:
           results_found: "Найдено %{number} Результатов."
           viewing: "Просмотр с %{start} по %{end}."
           print_invoices: "Печать Счетов"
+          cancel_orders: "Отменить Заказы"
           selected:
             zero: "Заказ не выбран"
             one: "1 заказ выбран"

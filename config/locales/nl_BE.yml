@@ -1848,7 +1848,6 @@ nl_BE:
   orders_form_empty_cart: "Maak je winkelwagentje leeg"
   orders_form_update_cart: "Update"
   orders_form_subtotal: "subtotaal Producten"
-  orders_form_admin: "Beheer & Behandeling"
   orders_form_total: "Totaal"
   orders_oc_expired_headline: "Bestellingen zijn gesloten voor deze bestellingscyclus"
   orders_oc_expired_text: "Sorry, bestellingen voor deze bestellingscyclus zijn %{time} geleden gesloten! Contacteer alsjeblief rechtstreeks een hub om te zien indien ze of ze laattijdige bestellingen kunnen accepteren."
@@ -2438,7 +2437,6 @@ nl_BE:
   payment_updated: "Betaling is bijgewerkt"
   tag_rules: "Tagregels"
   enterprise_fee_whole_order: Volledige bestelling
-  enterprise_fee_by: "1%{type},marges/kosten 2%{role} 3%{enterprise_name}"
   validation_msg_relationship_already_established: "^Een link is reeds gemaakt met deze bedrijven."
   validation_msg_at_least_one_hub: "^Selecteer minstens één winkel"
   validation_msg_tax_category_cant_be_blank: "^Gelieve de toepaste BTW te selecteren"

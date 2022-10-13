@@ -241,7 +241,7 @@ de_DE:
     shipped_email:
       dear_customer: "Liebe Kundin, lieber Kunde,"
       instructions: "Ihre Bestellung wurde versandt!"
-      shipment_summary: "Übersicht"
+      shipment_summary: "Bestellübersicht"
       subject: "Versandbenachrichtigung"
       thanks: "Danke für Ihren Einkauf!"
       track_information: "Sendungsinformationen: %{tracking}"
@@ -2131,7 +2131,6 @@ de_DE:
   orders_form_empty_cart: "Warenkorb leeren"
   orders_form_update_cart: "Aktualisieren"
   orders_form_subtotal: "Zwischensumme"
-  orders_form_admin: "Bearbeitung"
   orders_form_total: "Summe"
   orders_oc_expired_headline: "Bestellannahme für diesen Bestellzyklus bereits geschlossen!"
   orders_oc_expired_text: "Der Bestellzyklus wurde vor %{time} geschlossen! Bitte kontaktieren Sie den Laden direkt, um zu erfahren, ob er verspätete Bestellungen annehmen kann."
@@ -2749,7 +2748,7 @@ de_DE:
   action_required: "Handlung erforderlich"
   tag_rules: "Stichwortregeln"
   enterprise_fee_whole_order: Gesamte Bestellung
-  enterprise_fee_by: "%{type} Gebühr von %{role} %{enterprise_name}"
+  enterprise_fee_by_name: "%{name} (%{enterprise_name})"
   validation_msg_relationship_already_established: "^ Diese Beziehung besteht bereits."
   validation_msg_at_least_one_hub: "^ Mindestens ein Hub muss ausgewählt sein."
   validation_msg_tax_category_cant_be_blank: "^ Steuerkategorie darf nicht leer sein."
@@ -3014,7 +3013,7 @@ de_DE:
           pending: "ausstehend"
           ready: "bereit"
           shipped: "versandt"
-          canceled: "abgebrochen"
+          canceled: "storniert"
         payment_states:
           balance_due: "Offener Betrag"
           completed: "abgeschlossen"
@@ -3653,12 +3652,12 @@ de_DE:
           reason: "Grund"
           stock_location: "Lagerort"
         states:
-          authorized: "Autorisiert"
-          received: "Empfangen"
-          canceled: "abgebrochen"
+          authorized: "autorisiert"
+          received: "empfangen"
+          canceled: "storniert"
       orders:
         add_product:
-          cannot_add_item_to_canceled_order: "Artikel kann nicht zu stornierter Bestellung hinzugefügt werden"
+          cannot_add_item_to_canceled_order: "Einer stornierten Bestellung können keine Produkte hinzugefügt werden. "
           include_out_of_stock_variants: "Produktvarianten ohne Lagerbestand mit einschließen"
         index:
           listing_orders: "Bestellungen verwalten"
@@ -3975,7 +3974,7 @@ de_DE:
       pending: wartet auf Bestätigung
       ready: bereit
       shipped: versandt
-      canceled: abgebrochen
+      canceled: storniert
     payment_states:
       balance_due: Offener Betrag
       completed: abgeschlossen
@@ -4032,12 +4031,14 @@ de_DE:
     shipment_mailer:
       shipped_email:
         dear_customer: "Liebe Kundin, lieber Kunde,"
-        instructions: "Ihre Bestellung bei %{distributor} wurde versandt"
-        shipment_summary: "Übersicht"
+        instructions: "Ihre Bestellung bei %{distributor} wurde versandt!"
+        shipment_summary: "Bestellübersicht"
         subject: "Versandbenachrichtigung"
         thanks: "Danke für Ihren Einkauf!"
         track_information: "Sendungsinformationen: %{tracking}"
         track_link: "Link zur Sendung: %{url}"
+        picked_up_instructions: "Ihre Bestellung bei %{distributor} wurde abgeholt"
+        picked_up_subject: "Abholbenachrichtigung"
     test_mailer:
       test_email:
         greeting: "Herzlichen Glückwünsch!"

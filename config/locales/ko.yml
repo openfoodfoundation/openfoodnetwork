@@ -2101,7 +2101,6 @@ ko:
   orders_form_empty_cart: "카트가 비어있습니다"
   orders_form_update_cart: "업데이트"
   orders_form_subtotal: "소계 생산"
-  orders_form_admin: "관리 및 처리"
   orders_form_total: "총합"
   orders_oc_expired_headline: "이 주문 주기에 대한 주문이 마감되었습니다."
   orders_oc_expired_text: "죄송하지만 이 주문 주기의 주문은 %{time} 전에 마감되었습니다! 허브에 직접 연락하여 지연된 주문을 받을 수 있는지 확인해보세요."
@@ -2714,7 +2713,6 @@ ko:
   action_required: "필요한 작업"
   tag_rules: "태그 규칙"
   enterprise_fee_whole_order: 전체 주문
-  enterprise_fee_by: "%{role}%{enterprise_name}의 %{type} 수수료"
   validation_msg_relationship_already_established: "그 관계는 이미 정해져 있습니다."
   validation_msg_at_least_one_hub: "적어도 하나 이상의 허브를 선택해야 합니다."
   validation_msg_tax_category_cant_be_blank: "세금 카테고리는 비워 둘 수 없습니다."

@@ -2129,7 +2129,6 @@ en_FR:
   orders_form_empty_cart: "Empty cart"
   orders_form_update_cart: "Update"
   orders_form_subtotal: "Produce subtotal"
-  orders_form_admin: "Admin & Handling"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Orders have closed for this order cycle"
   orders_oc_expired_text: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders."
@@ -2747,7 +2746,7 @@ en_FR:
   action_required: "Action required"
   tag_rules: "Tag Rules"
   enterprise_fee_whole_order: Whole order
-  enterprise_fee_by: "%{type} fee by %{role} %{enterprise_name}"
+  enterprise_fee_by_name: "%{name} fee by%{role}%{enterprise_name}"
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
@@ -4030,6 +4029,8 @@ en_FR:
         thanks: "Thank you for your business."
         track_information: "Tracking Information: %{tracking}"
         track_link: "Tracking Link: %{url}"
+        picked_up_instructions: "Your order from %{distributor} has been picked-up"
+        picked_up_subject: "Pick up Notification"
     test_mailer:
       test_email:
         greeting: "Congratulations!"

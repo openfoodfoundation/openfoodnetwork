@@ -1860,7 +1860,6 @@ es_CO:
   orders_form_empty_cart: "Vaciar carrito"
   orders_form_update_cart: "Actualizar"
   orders_form_subtotal: "Subtotal de productos"
-  orders_form_admin: "Administrar y Gestionar"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Los pedidos están cerrados para este ciclo"
   orders_oc_expired_text: "Lo sentimos, ¡los pedidos para este ciclo cerraron hace %{time}! Contacta con tu nodo directamente para ver si pueden aceptar pedidos tardíos."
@@ -2449,7 +2448,6 @@ es_CO:
   payment_updated: "Pago actualizado"
   tag_rules: "Reglas de las Etiquetas"
   enterprise_fee_whole_order: Pedido completo
-  enterprise_fee_by: "%{type} comisión por %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Esta relación ya existe."
   validation_msg_at_least_one_hub: "^Al menos se debe seleccionar un nodo"
   validation_msg_tax_category_cant_be_blank: "^La Categoría del Impuesto no puede estar vacía"
