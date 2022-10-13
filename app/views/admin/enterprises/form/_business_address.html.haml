@@ -33,7 +33,8 @@
   .four.columns
     = bf.select :country_id, options_for_select(available_countries.map { |c| [c.name, c.id] }, @enterprise.business_address.country_id), {}, { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
   .four.columns.omega
-    = bf.select :state_id, @enterprise.address.country.states.map { |s| [s.name, s.id] }, {}, { "data-controller": "tom-select", "data-dependent-select-target": "select", class: "primary" }
+    - states = @enterprise.business_address.country.present? ? @enterprise.business_address.country&.states&.map { |s| [s.name, s.id] } : []
+    = bf.select :state_id, states, {}, { "data-controller": "tom-select", "data-dependent-select-target": "select", class: "primary" }
 
 .row
   .three.columns.alpha
