@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# If you suspect that a spec becomes flaky on slow machines:
+#
+#     ./script/rspec-slow-repeat 10 spec/system/some_flaky_spec.rb
+#
+# You can use the resulting pass rate to asses if your code changes fixed it
+# or not. In the end I would run a spec 100 times to be sure it's stable.
+
+if [ "$#" -lt 1 ]; then
+  echo "Usage:   $0 <n> [rspec params]"
+  echo "Example: $0 30 spec/system/admin/order_cycles/simple_spec.rb:202"
+  exit 1
+fi
+
+n="$1"
+passed=0
+processors="`cat /proc/cpuinfo | grep -c processor`"
+
+for i in `seq $processors`; do
+  yes > /dev/null &
+done
+
+export RUBY_DEBUG_ENABLE=0
+export SPRING_QUIET=true
+
+for i in `seq "$n"`; do
+  if ./bin/rspec "${@:2}" >> tmp/rspec.log; then
+    echo "Pass."
+    (( passed++ ))
+  else
+    echo "    !!! Fail !!!"
+  fi
+done
+
+killall yes
+
+pass_rate="$(( passed * 100 / n))"
+echo "$passed of $n passed ($pass_rate%)"
