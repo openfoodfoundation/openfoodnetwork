@@ -29,11 +29,11 @@
     = bf.label :country_id, t(:country)
     \/
     = bf.label :state_id, t(:state)
-  %div{"data-controller": "dependant-select", "data-dependant-select-options-value": countries_with_states }
+  %div{"data-controller": "dependent-select", "data-dependent-select-options-value": countries_with_states }
     .four.columns
-      = bf.select :country_id, available_countries.map { |c| [c.name, c.id] }, {}, { "data-controller": "tom-select", "data-dependant-select-target": "source", "data-action": "dependant-select#handleSelectChange", class: "primary" }
+      = bf.select :country_id, available_countries.map { |c| [c.name, c.id] }, {selected: @enterprise.address.country.id}, { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
     .four.columns.omega
-      = bf.select :state_id, @enterprise.address.country.states.map { |s| [s.name, s.id] }, {}, { "data-controller": "tom-select", "data-dependant-select-target": "select", class: "primary" }
+      = bf.select :state_id, @enterprise.address.country.states.map { |s| [s.name, s.id] }, {}, { "data-controller": "tom-select", "data-dependent-select-target": "select", class: "primary" }
 
 .row
   .three.columns.alpha
