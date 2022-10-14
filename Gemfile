@@ -6,7 +6,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'dotenv-rails', require: 'dotenv/rails-now' # Load ENV vars before other gems
 
-gem 'rails', '>= 6.1.4'
+gem 'rails', '>= 7.0.4'
 
 # Active Storage
 gem "active_storage_validations"
@@ -27,7 +27,7 @@ gem 'rails-i18n'
 gem 'rails_safe_tasks', '~> 1.0'
 
 gem "activerecord-import"
-gem "db2fog", github: "openfoodfoundation/db2fog", branch: "rails-6"
+gem "db2fog", github: "openfoodfoundation/db2fog", branch: "rails-7"
 gem "fog-aws", "~> 2.0" # db2fog does not support v3
 gem "mime-types" # required by fog
 
@@ -79,7 +79,7 @@ gem 'actionpack-action_caching'
 #   AMS is deprecated, we will introduce an alternative at some point
 gem "active_model_serializers", "0.8.4"
 gem 'activerecord-session_store'
-gem 'acts-as-taggable-on', '~> 8.1'
+gem 'acts-as-taggable-on', '~> 9.0'
 gem 'angularjs-file-upload-rails', '~> 2.4.1'
 gem 'bigdecimal', '3.0.2'
 gem 'bootsnap', require: false
