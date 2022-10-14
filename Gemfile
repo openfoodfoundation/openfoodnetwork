@@ -17,7 +17,7 @@ gem 'activemerchant', '>= 1.78.0'
 gem 'rexml'
 gem 'angular-rails-templates', '>= 0.3.0'
 gem 'awesome_nested_set'
-gem 'ransack', '2.4.2'
+gem 'ransack', '2.5.0'
 gem 'responders'
 gem 'webpacker', '~> 5'
 
@@ -93,7 +93,7 @@ gem 'roadie-rails'
 
 gem 'hiredis'
 gem 'puma'
-gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
+gem 'redis', '>= 4.0'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
