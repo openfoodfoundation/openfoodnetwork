@@ -68,6 +68,30 @@ Just change the entry in ~/.docker/config.json like this (credStore instead of c
 }
 ```
 
+### Troubleshooting for M1 Apple Silicon users
+
+1. Current Dockerfile is not architecture-agnostic, so you get an error like
+```
+#0 3.023 E: Failed to fetch http://security.ubuntu.com/ubuntu/dists/bionic-security/main/binary-arm64/Packages  404  Not Found [IP: 185.125.190.36 80]
+#0 3.023 E: Some index files failed to download. They have been ignored, or old ones used instead.
+------
+failed to solve: executor failed running [/bin/sh -c apt-get update && apt-get install -y   curl   git   build-essential   software-properties-common   wget   zlib1g-dev   libreadline-dev   libyaml-dev   libffi-dev   libxml2-dev   libxslt1-dev   wait-for-it   imagemagick   unzip   libjemalloc-dev   libssl-dev   ca-certificates   gnupg]: exit code: 100
+```
+To solve this, we need to hack Dockerfile a bit.
+
+Steps to follow:
+- Comment out line 7 `RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main" >> /etc/apt/sources.list`
+- Comment out line 33 (`ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so`) and remove `RUBY_CONFIGURE_OPTS=--with-jemalloc` from the start of line 42
+
+You may also need to comment out stuff related to Chromedriver and Chrome. Chrome setup may work with `[arch=amd64]` removed.
+
+See [#8421](https://github.com/openfoodfoundation/openfoodnetwork/issues/8421) for more info
+
+2. `stack smashing detected ***: terminated`
+To fix this error on server startup, you need to bump `mini-racer` gem from `0.4.0` to `0.5.0`
+
+Based on [spree/spree_starter #984](https://github.com/spree/spree_starter/issues/984)
+
 ## Script Summary
 * docker/build: This script builds the Docker containers specified for this app, seeds the database, and logs the screen output for these operations. After you use "git clone" to download this repository, run the docker/build script to start the setup process.
 * docker/server: Use this script to run this app in the Rails server. This script executes the "docker-compose up" command and logs the results. If all goes well, you will be able to view this app on your local browser at http://localhost:3000/.
