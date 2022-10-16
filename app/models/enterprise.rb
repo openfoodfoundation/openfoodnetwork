@@ -210,15 +210,14 @@ class Enterprise < ApplicationRecord
       joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
     end
   }
-  scope :relatives_of_one_union_others, lambda { |one, others|
+
+  scope :parents_of_one_union_others, lambda { |one, others|
     where("
       enterprises.id IN
-        (SELECT child_id FROM enterprise_relationships WHERE enterprise_relationships.parent_id=?)
-      OR enterprises.id IN
         (SELECT parent_id FROM enterprise_relationships WHERE enterprise_relationships.child_id=?)
       OR enterprises.id IN
         (?)
-    ", one, one, others)
+      ", one, others)
   }
 
   def business_address_empty?(attributes)
@@ -273,9 +272,9 @@ class Enterprise < ApplicationRecord
     ", id, id)
   end
 
-  def plus_relatives_and_oc_producers(order_cycles)
+  def plus_parents_and_order_cycle_producers(order_cycles)
     oc_producer_ids = Exchange.in_order_cycle(order_cycles).incoming.pluck :sender_id
-    Enterprise.not_hidden.is_primary_producer.relatives_of_one_union_others(id, oc_producer_ids | [id])
+    Enterprise.not_hidden.is_primary_producer.parents_of_one_union_others(id, oc_producer_ids | [id])
   end
 
   def relatives_including_self
