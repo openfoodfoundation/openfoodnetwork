@@ -1,13 +1,24 @@
 # frozen_string_literal: true
 
 require 'open_food_network/error_logger'
+require "spree/core/controller_helpers/auth"
+require "spree/core/controller_helpers/common"
+require "spree/core/controller_helpers/order"
 
-class UserRegistrationsController < Spree::UserRegistrationsController
+class UserRegistrationsController < Devise::RegistrationsController
   I18N_SCOPE = 'devise.user_registrations.spree_user'
 
-  before_action :set_checkout_redirect, only: :create
+  helper 'spree/base'
 
+  include Spree::Core::ControllerHelpers::Auth
+  include Spree::Core::ControllerHelpers::Common
+  include Spree::Core::ControllerHelpers::Order
   include I18nHelper
+
+  before_action :check_permissions, only: [:edit, :update]
+  skip_before_action :require_no_authentication
+
+  before_action :set_checkout_redirect, only: :create
   before_action :set_locale
 
   # POST /resource/sign_up
@@ -29,6 +40,12 @@ class UserRegistrationsController < Spree::UserRegistrationsController
   rescue StandardError => e
     OpenFoodNetwork::ErrorLogger.notify(e)
     render_error(message: I18n.t('unknown_error', scope: I18N_SCOPE))
+  end
+
+  protected
+
+  def check_permissions
+    authorize!(:create, resource)
   end
 
   private
