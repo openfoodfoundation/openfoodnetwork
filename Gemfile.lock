@@ -193,7 +193,7 @@ GEM
       activesupport (>= 5.2)
       railties (>= 5.2)
       thread-local (>= 1.1.0)
-    cancancan (1.15.0)
+    cancancan (3.4.0)
     capybara (3.37.1)
       addressable
       matrix
