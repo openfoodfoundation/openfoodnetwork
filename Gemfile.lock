@@ -432,7 +432,7 @@ GEM
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
-    pg (1.2.3)
+    pg (1.4.4)
     power_assert (2.0.1)
     pry (0.13.1)
       coderay (~> 1.1)
