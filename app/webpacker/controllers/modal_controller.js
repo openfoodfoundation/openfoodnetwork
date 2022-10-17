@@ -6,5 +6,10 @@ export default class extends Controller {
 
   connect() {
     useOpenAndCloseAsAModal(this);
+    window.addEventListener("modal:close", this.close.bind(this));
+  }
+
+  disconnect() {
+    window.removeEventListener("modal:close", this.close);
   }
 }
