@@ -3036,8 +3036,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       deleting_item_will_cancel_order: "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
       modals:
         got_it: "Got it"
+        confirm: "Confirm"
         close: "Close"
         continue: "Continue"
+        cancel: "Cancel"
         invite: "Invite"
         invite_title: "Invite an unregistered user"
         tag_rule_help:
