@@ -8162,7 +8162,7 @@ karma-coffee-preprocessor@~1.0.1:
 karma-jasmine@~0.3.8:
   version "0.3.8"
   resolved "https://registry.yarnpkg.com/karma-jasmine/-/karma-jasmine-0.3.8.tgz#5b6457791ad9b89aa173f079e3ebe1b8c805236c"
-  integrity sha1-W2RXeRrZuJqhc/B54+vhuMgFI2w=
+  integrity sha512-EDNIM4f9FV17XXoF+Rzfw+6uPajd7tOAfEFwe7PIyNVQrM3l1V5OJj2167JDY9KmLDIK/MQZX7tKkK1jVYlfmw==
 
 karma@~6.3.11:
   version "6.3.20"
