@@ -3912,6 +3912,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
           cancel_orders: "Cancel Orders"
+          resend_confirmation: "Resend Confirmation"
+          resend_confirmation_confirm_html: "This will resend the confirmation email to the customer.<br />Are you sure you want to proceed?"
           selected:
             zero: "No order selected"
             one: "1 order selected"
