@@ -1566,6 +1566,10 @@ en:
       stripe_connect_settings:
         resource: Stripe Connect configuration
 
+    resend_confirmation_emails_feedback:
+      one: "Confirmation email sent for 1 order."
+      other: "Confirmation emails sent for %{count} orders."
+
 # API
 #
   api:
