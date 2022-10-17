@@ -7549,7 +7549,7 @@ iterate-value@^1.0.2:
 jasmine-core@~2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.4.1.tgz#6f83ab3a0f16951722ce07d206c773d57cc838be"
-  integrity sha1-b4OrOg8WlRcizgfSBsdz1XzIOL4=
+  integrity sha512-je45tHvlelm8hbkQ+7CYTZx5pVxe5gQP0xUNagQ36jZOYJyVpQaoJPs3Fs45vswj+6TC0LgE0D1mZ2XGcHqJFw==
 
 jest-changed-files@^27.5.1:
   version "27.5.1"
