@@ -15,7 +15,6 @@ class UserRegistrationsController < Devise::RegistrationsController
   include Spree::Core::ControllerHelpers::Order
   include I18nHelper
 
-  before_action :check_permissions, only: [:edit, :update]
   skip_before_action :require_no_authentication
 
   before_action :set_checkout_redirect, only: :create
@@ -40,12 +39,6 @@ class UserRegistrationsController < Devise::RegistrationsController
   rescue StandardError => e
     OpenFoodNetwork::ErrorLogger.notify(e)
     render_error(message: I18n.t('unknown_error', scope: I18N_SCOPE))
-  end
-
-  protected
-
-  def check_permissions
-    authorize!(:create, resource)
   end
 
   private
