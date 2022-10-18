@@ -381,7 +381,8 @@ describe '
           expect(page).to have_no_selector "tr#li_#{li2.id}"
         end
 
-        it "displays all line items when 'All' is selected from distributor filter" do
+        xit "displays all line items when 'All' is selected from distributor filter" do
+          pending "#9809"
           expect(page).to have_selector "tr#li_#{li2.id}"
           select2_select d1.name, from: "distributor_filter"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
@@ -457,7 +458,8 @@ describe '
           visit_bulk_order_management
         end
 
-        it "allows filters to be used in combination" do
+        xit "allows filters to be used in combination" do
+          pending "#9811"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           select2_select oc1.name, from: "order_cycle_filter"
@@ -476,7 +478,8 @@ describe '
           expect(page).to have_selector "tr#li_#{li2.id}"
         end
 
-        it "displays a 'Clear All' button which sets all select filters to 'All'" do
+        xit "displays a 'Clear All' button which sets all select filters to 'All'" do
+          pending "#9810"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           select2_select oc1.name, from: "order_cycle_filter"
