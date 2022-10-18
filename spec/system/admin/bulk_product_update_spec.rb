@@ -527,9 +527,8 @@ describe '
     s2 = create(:supplier_enterprise)
     p1 = FactoryBot.create(:simple_product, name: "product1", supplier: s1)
     p2 = FactoryBot.create(:simple_product, name: "product2", supplier: s2)
-    login_as_admin
 
-    visit spree.admin_products_path
+    login_as_admin_and_visit spree.admin_products_path
 
     select2_select s1.name, from: "producer_filter"
     apply_filters
