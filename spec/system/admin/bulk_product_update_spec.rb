@@ -533,6 +533,8 @@ describe '
     select2_select s1.name, from: "producer_filter"
     apply_filters
 
+    sleep 2 # wait for page to initialise
+
     expect(page).to have_no_field "product_name", with: p2.name
     fill_in "product_name", with: "new product1"
 
