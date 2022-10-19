@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: true
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: docker/build
     - run: docker-compose up --detach
     - run: until curl -f -s http://localhost:3000; do echo "waiting for api server"; sleep 1; done

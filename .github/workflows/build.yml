@@ -45,7 +45,7 @@ jobs:
           - "engines/*/spec"
       fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -92,7 +92,7 @@ jobs:
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
