@@ -16,4 +16,11 @@ class ApplicationReflex < StimulusReflex::Reflex
   #
   # For code examples, considerations and caveats, see:
   # https://docs.stimulusreflex.com/rtfm/patterns#internationalization
+  include CanCan::ControllerAdditions
+
+  delegate :current_user, to: :connection
+
+  def current_ability
+    Spree::Ability.new(current_user)
+  end
 end
