@@ -370,23 +370,25 @@ describe '
         it "displays a select box for distributors, which filters line items by the selected distributor" do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
-          open_select2 "#s2id_distributor_filter"
+          find("#s2id_distributor_filter").click
           expect(page).to have_selector "div.select2-drop-active ul.select2-results li", text: "All"
           Enterprise.is_distributor.map(&:name).each do |dn|
             expect(page).to have_selector "div.select2-drop-active ul.select2-results li", text: dn
           end
-          close_select2
-          select2_select d1.name, from: "distributor_filter"
+          find(".select2-result-label", text: d1.name.to_s).click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
         end
 
-        xit "displays all line items when 'All' is selected from distributor filter" do
-          pending "#9809"
+        it "displays all line items when 'All' is selected from distributor filter" do
+          # displays orders from one enterprise only
           expect(page).to have_selector "tr#li_#{li2.id}"
-          select2_select d1.name, from: "distributor_filter"
+          find("#s2id_distributor_filter").click
+          find(".select2-result-label", text: d1.name.to_s).click
           expect(page).to have_no_selector "tr#li_#{li2.id}"
-          select2_select "All", from: "distributor_filter"
+          # displays orders from all enterprises
+          find("#s2id_distributor_filter").click
+          find(".select2-result-label", text: "All").click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
         end
