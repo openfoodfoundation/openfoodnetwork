@@ -681,7 +681,7 @@ describe "AdminProductEditCtrl", ->
         testVariant = {unit_value_with_description: "1234.5"}
         $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
-          unit_value: 34998.075
+          unit_value: 1234.5
           unit_description: ''
           unit_value_with_description: "1234.5"
 
