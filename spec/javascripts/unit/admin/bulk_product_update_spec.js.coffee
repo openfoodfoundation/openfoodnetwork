@@ -676,6 +676,15 @@ describe "AdminProductEditCtrl", ->
           unit_description: ''
           unit_value_with_description: "250,5"
 
+      it "rounds off the unit_value upto 8 decimal places and removes the trailing zeroes", ->
+        testProduct = {id: 123, variant_unit_scale: 28.35}
+        testVariant = {unit_value_with_description: "1234.5"}
+        $scope.packVariant(testProduct, testVariant)
+        expect(testVariant).toEqual
+          unit_value: 34998.075
+          unit_description: ''
+          unit_value_with_description: "1234.5"
+
 
     describe "filtering products", ->
       beforeEach ->
