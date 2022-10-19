@@ -28,12 +28,19 @@ module Spree
           new_product.updated_at = nil
           new_product.product_properties = reset_properties
           new_product.master = duplicate_master
+          new_product.variants = duplicate_variants
         end
       end
 
       def duplicate_master
         master = product.master
         duplicate_variant(master)
+      end
+
+      def duplicate_variants
+        product.variants.map do |variant|
+          duplicate_variant(variant)
+        end
       end
 
       def duplicate_variant(variant)
