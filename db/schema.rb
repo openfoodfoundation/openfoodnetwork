@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_07_055044) do
+ActiveRecord::Schema.define(version: 2022_10_04_165343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -140,16 +140,8 @@ ActiveRecord::Schema.define(version: 2022_09_07_055044) do
     t.string "name", limit: 255
     t.boolean "on_front_page"
     t.integer "position"
-    t.string "promo_image_file_name", limit: 255
-    t.string "promo_image_content_type", limit: 255
-    t.integer "promo_image_file_size"
-    t.datetime "promo_image_updated_at"
     t.text "description"
     t.text "long_description"
-    t.string "logo_file_name", limit: 255
-    t.string "logo_content_type", limit: 255
-    t.integer "logo_file_size"
-    t.datetime "logo_updated_at"
     t.integer "address_id"
     t.string "email", limit: 255, default: "", null: false
     t.string "website", limit: 255, default: "", null: false
@@ -212,14 +204,6 @@ ActiveRecord::Schema.define(version: 2022_09_07_055044) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "distributor_info"
-    t.string "logo_file_name", limit: 255
-    t.string "logo_content_type", limit: 255
-    t.integer "logo_file_size"
-    t.datetime "logo_updated_at"
-    t.string "promo_image_file_name", limit: 255
-    t.string "promo_image_content_type", limit: 255
-    t.integer "promo_image_file_size"
-    t.datetime "promo_image_updated_at"
     t.string "facebook", limit: 255
     t.string "instagram", limit: 255
     t.string "linkedin", limit: 255
@@ -235,10 +219,6 @@ ActiveRecord::Schema.define(version: 2022_09_07_055044) do
     t.boolean "display_invoice_logo", default: false
     t.boolean "allow_order_changes", default: false, null: false
     t.boolean "enable_subscriptions", default: false, null: false
-    t.string "terms_and_conditions_file_name", limit: 255
-    t.string "terms_and_conditions_content_type", limit: 255
-    t.integer "terms_and_conditions_file_size"
-    t.datetime "terms_and_conditions_updated_at"
     t.integer "business_address_id"
     t.boolean "show_customer_names_to_suppliers", default: false, null: false
     t.string "visible", limit: 255, default: "public", null: false
@@ -440,15 +420,9 @@ ActiveRecord::Schema.define(version: 2022_09_07_055044) do
 
   create_table "spree_assets", id: :serial, force: :cascade do |t|
     t.integer "viewable_id"
-    t.integer "attachment_width"
-    t.integer "attachment_height"
-    t.integer "attachment_file_size"
     t.integer "position"
     t.string "viewable_type", limit: 50
-    t.string "attachment_content_type", limit: 255
-    t.string "attachment_file_name", limit: 255
     t.string "type", limit: 75
-    t.datetime "attachment_updated_at"
     t.text "alt"
     t.index ["viewable_id"], name: "index_assets_on_viewable_id"
     t.index ["viewable_type", "type"], name: "index_assets_on_viewable_type_and_type"
@@ -1194,10 +1168,6 @@ ActiveRecord::Schema.define(version: 2022_09_07_055044) do
   create_table "terms_of_service_files", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "attachment_file_name"
-    t.string "attachment_content_type"
-    t.integer "attachment_file_size"
-    t.datetime "attachment_updated_at"
   end
 
   create_table "variant_overrides", id: :serial, force: :cascade do |t|
