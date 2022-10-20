@@ -43,6 +43,11 @@ module Admin
       @report_type = report_type
       @report_subtypes = report_subtypes
       @report_subtype = report_subtype
+      @report_title = if report_subtype
+                        report_subtype_title
+                      else
+                        I18n.t(:name, scope: [:admin, :reports, @report_type])
+                      end
 
       # Initialize data
       params[:display_summary_row] = true if request.get?

@@ -1,3 +1,6 @@
+- content_for :page_title do
+  = @report_title
+
 = form_for @report.search, :url => url_for(only_path: false) do |f|
   %fieldset.no-border-bottom.print-hidden
     %legend{ align: 'center'}= t(:report_filters)

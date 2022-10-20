@@ -39,6 +39,10 @@ module ReportsActions
     params[:report_subtype] || report_subtypes_codes.first
   end
 
+  def report_subtype_title
+    report_subtypes.select { |_name, key| key.to_sym == report_subtype.to_sym }.first[0]
+  end
+
   def ransack_params
     raw_params[:q]
   end
