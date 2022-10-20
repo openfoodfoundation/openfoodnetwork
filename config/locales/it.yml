@@ -1119,7 +1119,10 @@ it:
       checkout_options:
         back_end: "Solo Back office"
         cancel: "Annulla"
+        checkout_options: "Opzioni di conferma"
         distributor: "Distributore"
+        no_payment_methods: Ciascun distributore in questo ciclo di richieste necessita di almeno un metodo di pagamento
+        no_shipping_methods: Ciascun distributore in questo ciclo di richieste necessita di almeno un metodo di consegna
         payment_methods: "Metodi di Pagamento"
         save: "Salva"
         save_and_back_to_list: "Salva e torna alla lista"
@@ -1129,6 +1132,7 @@ it:
         edit: "1. Impostazioni generali"
         incoming: "2. Prodotti in entrata"
         outgoing: "3. Prodotti in uscita"
+        checkout_options: "4. Opzioni di conferma"
       exchange_form:
         pickup_time_tip: Quando gli ordini di questo ciclo saranno pronti per il cliente
         pickup_instructions_placeholder: "Istruzioni per la consegna"
@@ -2743,6 +2747,7 @@ it:
   action_required: "Azione richiesta"
   tag_rules: "Regole Etichette"
   enterprise_fee_whole_order: Ordine intero
+  enterprise_fee_by_name: "%{name} fee by %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Questa relazione è già stabilita."
   validation_msg_at_least_one_hub: "^Almeno un hub deve essere selezionato"
   validation_msg_tax_category_cant_be_blank: "^Categoria di tassa non può essere vuoto"
@@ -3690,6 +3695,7 @@ it:
           results_found: "%{number} Risultati trovati."
           viewing: "Guardando da %{start} a %{end}"
           print_invoices: "Stampa conferme d'ordine"
+          cancel_orders: "Elimina Gentili Richieste"
           selected:
             zero: "Nessuna gentile richiesta selezionata"
             one: "1 gentile richiesta selezionata"
@@ -4051,6 +4057,8 @@ it:
         thanks: "Grazie per il tuo lavoro."
         track_information: "Informazioni Tracking: %{tracking}"
         track_link: "Tracking Link: %{url}"
+        picked_up_instructions: "La tua gentile richiesta da %{distributor} è stata ritirata"
+        picked_up_subject: "Notifica di ritiro"
     test_mailer:
       test_email:
         greeting: "Congratulazioni!"
@@ -4238,3 +4246,6 @@ it:
     unprocessable_entity:
       title: "La modifica che hai richiesto è stata rifiutata (422)"
       message_html: "<p>La modifica che hai richiesto è stata rifiutata. Forse hai provato a modificare qualcosa a cui non hai accesso. <br><h3><a href='/' >Ritorna alla home</a></h3> </p>"
+  components:
+    multiple_checked_select:
+      filter_placeholder: "Opzioni filtri"

@@ -4076,7 +4076,7 @@ fr:
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Acheteur,"
-        instructions: "Votre commande de %{distributor} :\n- a été expédiée (dans le cas d'une livraison)\n- vous a été distribuée (dans le cas d'un retrait.)"
+        instructions: "Votre commande de %{distributor} : a bien été expédiée."
         shipment_summary: "Résumé de la commande"
         subject: "Notification d'expédition"
         thanks: "Merci pour votre commande."
@@ -4271,3 +4271,6 @@ fr:
     unprocessable_entity:
       title: "La modification réalisée a été rejetée (erreur 422)"
       message_html: "<p> La modification souhaitée a été refusée. Peut-être avez-vous essayé de faire quelque chose sans avoir les droits d'accès suffisants ? <br> <h3> <a href='/' > Retourner à l'accueil </a> </h3> </p>"
+  components:
+    multiple_checked_select:
+      filter_placeholder: "Filtres"

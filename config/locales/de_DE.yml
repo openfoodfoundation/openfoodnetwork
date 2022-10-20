@@ -4037,7 +4037,7 @@ de_DE:
         thanks: "Danke für Ihren Einkauf!"
         track_information: "Sendungsinformationen: %{tracking}"
         track_link: "Link zur Sendung: %{url}"
-        picked_up_instructions: "Ihre Bestellung bei %{distributor} wurde abgeholt"
+        picked_up_instructions: "Ihre Bestellung bei %{distributor} wurde abgeholt. "
         picked_up_subject: "Abholbenachrichtigung"
     test_mailer:
       test_email:
@@ -4213,3 +4213,6 @@ de_DE:
     unprocessable_entity:
       title: "Die gewünschte Änderung wurde abgelehnt (422). "
       message_html: "<p>Die gewünschte Änderung wurde abgelehnt. Vielleicht haben Sie versucht, etwas zu ändern, auf das Sie keinen Zugriff haben.<br><h3> <a href='/' >Zur Startseite zurückkehren</a></h3></p>"
+  components:
+    multiple_checked_select:
+      filter_placeholder: "Suche"

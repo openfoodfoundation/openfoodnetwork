@@ -2749,6 +2749,7 @@ ru:
   action_required: "Требуются действия"
   tag_rules: "Правила Меток"
   enterprise_fee_whole_order: Весь заказ
+  enterprise_fee_by_name: "Оплата %{name} от %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Эти отношения уже установлены."
   validation_msg_at_least_one_hub: "^Должен быть выбран хотя бы один Центр"
   validation_msg_tax_category_cant_be_blank: "^Налоговая Категория не может быть пустой"
@@ -3804,7 +3805,7 @@ ru:
           deactivation_warning: "Отключение способа доставки может привести к тому, что способ доставки исчезнет из вашего списка. Как альтернатива, вы можете скрыть способ доставки со страницы оформления заказа, установив для параметра 'Отображать' значение 'Интерфейс Администратора'."
       payment_methods:
         index:
-          payment_methods: "Способы Опланы"
+          payment_methods: "Способы Оплаты"
           new_payment_method: "Новый Способ Оплаты"
           name: "Имя"
           products_distributor: "Дистрибьютор"
@@ -4085,6 +4086,8 @@ ru:
         thanks: "Спасибо за покупки."
         track_information: "Отслеживание Информации: %{tracking}"
         track_link: "Ссылка для отслеживания: %{url}"
+        picked_up_instructions: "Ваш заказ от %{distributor} принят"
+        picked_up_subject: "Уведомление о получении"
     test_mailer:
       test_email:
         greeting: "Поздравляю!"
@@ -4285,3 +4288,6 @@ ru:
     unprocessable_entity:
       title: "Требуемое изменение было отклонено (422)"
       message_html: "<p>Требуемое изменение было отклонено. Возможно, вы пытались изменить что-то, к чему у вас нет доступа.<br><h3> <a href='/' >Вернуться домой</a></h3></p>"
+  components:
+    multiple_checked_select:
+      filter_placeholder: "Параметры фильтра"

@@ -141,6 +141,7 @@ cy:
   cardholder_name: "Enw deiliad y cerdyn."
   community_forum_url: "URL Fforwm Cymunedol."
   customer_instructions: "Cyfarwyddiadau cwsmeriaid"
+  additional_information: "Gwybodaeth ychwanegol"
   devise:
     passwords:
       spree_user:
@@ -472,6 +473,8 @@ cy:
         terms_of_service: "Telerau Gwasanaeth"
         delete: "Dileu ffeil"
         confirm_delete: "Ydych chi'n siwr eich bod am ddileu'r ffeil Telerau Gwasanaeth cyfredol?"
+        attachment: "Atodiad"
+        create_terms_of_service: "Creu ffeil Telerau gwasanaeth"
     number_localization:
       number_localization_settings: "Gosodiadau Rhif Lleoleiddio"
       enable_localized_number: "Defnyddiwch resymeg gwahanydd mil / degol rhyngwladol"
@@ -529,6 +532,8 @@ cy:
         guest_label: "Talu fel gwestai"
         credit_owed: "Credyd yn ddyledus"
         balance_due: "Balans sy'n ddyledus"
+      destroy:
+        has_associated_subscriptions: "Wedi methu dileu: Mae gan y cwsmer hwn danysgrifiadau gweithredol. Mae angen eu canslo'n gyntaf."
     contents:
       edit:
         title: Cynnwys
@@ -1113,7 +1118,10 @@ cy:
       checkout_options:
         back_end: "Swyddfa gefn yn unig"
         cancel: "Canslo"
+        checkout_options: "Opsiynau talu"
         distributor: "Dosbarthwr"
+        no_payment_methods: Mae angen o leiaf un dull talu ar gyfer bob dosbarthwr ar y cylch archebu hwn.
+        no_shipping_methods: Mae angen o leiaf un dull cludo ar gyfer pob dosbarthwr ar y cylch archebu hwn.
         payment_methods: "Dulliau Talu"
         save: "Cadw"
         save_and_back_to_list: "Cadw ac Yn ôl i'r Rhestr"
@@ -1123,6 +1131,7 @@ cy:
         edit: "1. Gosodiadau Cyffredinol"
         incoming: "2. Cynnyrch sy'n Dod i Mewn"
         outgoing: "3. Cynnyrch sy'n mynd allan"
+        checkout_options: "4. Opsiynau talu"
       exchange_form:
         pickup_time_tip: Pan fydd archebion gan yr OC hwn yn barod ar gyfer y cwsmer
         pickup_instructions_placeholder: "Cyfarwyddiadau casglu"
@@ -1270,6 +1279,9 @@ cy:
       pack_by_customer: Pecyn fesul Cwsmer
       pack_by_supplier: Pecyn fesul Cyflenwr
       pack_by_product: Pecynnu yn ôl Cynnyrch
+      revenues_by_hub:
+        name: Refeniw fesul Hyb
+        description: Refeniw fesul hyb
       orders_and_distributors:
         name: Archebion a Dosbarthwyr
         description: Archebion gyda manylion dosbarthwr
@@ -1843,6 +1855,7 @@ cy:
       invalid_email: "Rhowch gyfeiriad e-bost dilys"
       select_a_shipping_method: Dewiswch ddull cludo
       select_a_payment_method: Dewiswch ddull talu
+      no_shipping_methods_available: Nid yw'n bosibl talu oherwydd diffyg opsiynau cludo. Cysylltwch â pherchennog y siop.
   order_paid: TALWYD
   order_not_paid: HEB EI DALU
   order_total: Cyfanswm archeb
@@ -2572,6 +2585,8 @@ cy:
   report_header_hub_address: Cyfeiriad Hwb
   report_header_to_hub: I Hwb
   report_header_hub_code: Cod Hwb
+  report_header_hub_id: Dull Adnabod Hyb
+  report_header_hub_owner_email: Ebost Perchennog yr Hyb
   report_header_code: Côd
   report_header_paid: Wedi talu?
   report_header_delivery: Dosbarthu?
@@ -2731,6 +2746,7 @@ cy:
   action_required: "Mae angen gewithredu"
   tag_rules: "Rheolau Tag"
   enterprise_fee_whole_order: Archeb cyfan
+  enterprise_fee_by_name: "%{name} fee by %{role}%{enterprise_name}"
   validation_msg_relationship_already_established: "^ Sefydlwyd y berthynas honno eisoes."
   validation_msg_at_least_one_hub: "^ Rhaid dewis o leiaf un hwb"
   validation_msg_tax_category_cant_be_blank: "^ Ni chaniateir gadael y Categori Trethi yn wag"
@@ -3555,6 +3571,7 @@ cy:
     email: E-bost
     account_updated: "Diweddarwyd y cyfrif!"
     email_updated: "Bydd y cyfrif yn cael ei ddiweddaru ar ôl cadarnhau'r cyfeiriad e-bost newydd."
+    show_api_key_view_toggled: "Dangos y newidiwyd gwedd yr allwedd API!"
     my_account: "Fy nghyfrif"
     date: "Dyddiad"
     time: "Amser"
@@ -3700,6 +3717,11 @@ cy:
           results_found: "Cafwyd hyd i%{number} canlyniad."
           viewing: "Yn edrych ar %{start} i %{end}."
           print_invoices: "Argraffu anfonebau"
+          cancel_orders: "Canslo Archebion"
+          selected:
+            zero: "Ni ddewiswyd archeb."
+            one: "Dewiswyd 1 archeb"
+            other: "Dewiswyd %{count} archeb"
         sortable_header:
           payment_state: "Cyflwr Talu"
           shipment_state: "Sir anfon"
@@ -3839,6 +3861,7 @@ cy:
           paypal:
             no_payment_via_admin_backend: Ni ellir cipio taliadau Paypal yn y Swyddfa Gefn
       products:
+        image_upload_error: "Dylid defnyddio fformat JPG, ONG, GIF, SVG neu WEBP i lanlwytho'r llun."
         new:
           title: "Cynnyrch Newydd"
           new_product: "Cynnyrch Newydd"
@@ -4104,10 +4127,14 @@ cy:
     users:
       api_keys:
         regenerate_key: "Allwedd Adfer"
+        title: Allwedd API
+      developer_settings:
+        title: Gosodiadau'r Datblygwr
       form:
         account_settings: Gosodiadau Cyfrif
       show:
         tabs:
+          developer_settings: Gosodiadau'r Datblygwr
           orders: Archebion
           cards: Cardiau Credyd
           transactions: Trafodion
@@ -4138,6 +4165,7 @@ cy:
         total: Cyfanswm
         paid?: Talwyd?
         status: Statws
+        completed: Cwblhawyd
         cancelled: Canslwyd
       saved_cards:
         default?: Yn ddiofyn?
@@ -4149,6 +4177,7 @@ cy:
       authorised_shops:
         shop_name: "Enw'r Siop"
         allow_charges?: "Caniatau defnyddio'r Cerdyn Diofyn i dalu?"
+        no_default_saved_cards_tooltip: Mae angen ichi nodi un cerdyn credyd fel cerdyn diofyn i ganiatau ffioedd.
     localized_number:
       invalid_format: fformat annilys. Noder rhif.
     api:
@@ -4167,6 +4196,7 @@ cy:
       shipment:
         cannot_ready: "Methu â pharatoi'r llwyth."
       invalid_taxonomy_id: "Tacsonomeg id. annilys"
+      toggle_api_key_view: "Dangos gwedd yr allwedd API ar gyfer y defnyddiwr."
     activerecord:
       models:
         spree/payment:
@@ -4239,3 +4269,10 @@ cy:
         two: "%{count} mlynedd"
         many: "%{count} mlynedd"
         other: "%{count} blwyddyn"
+  errors:
+    not_found:
+      title: "Nid yw'r dudalen rydych yn chwilio amdani'n bodoli (404)"
+    internal_server_error:
+      title: "Mae'n ddrwg gennym, aeth rhywbeth o'i le (500)"
+    unprocessable_entity:
+      title: "Gwrthodwyd y newid roeddech chi am ei wneud (422)"

@@ -4205,3 +4205,6 @@ en_FR:
     unprocessable_entity:
       title: "The change you wanted was rejected (422)"
       message_html: "<p> The change you wanted was rejected. Maybe you tried to change something you don't have access to. <br><h3><a href='/' > Return home </a></h3></p>"
+  components:
+    multiple_checked_select:
+      filter_placeholder: "Filter options"

@@ -73,6 +73,7 @@ pt:
       incorrect_zip: "O código postal do cartão falhou na validação."
       card_declined: "O cartão foi recusado."
       processing_error: "Ocorreu um erro ao processar o cartão."
+      approve_with_id: "O pagamento não foi autorizado."
   activemodel:
     errors:
       messages:
