@@ -84,7 +84,7 @@ Openfoodnetwork::Application.routes.draw do
     get "/stripe/authorize/:order_number", to: "stripe#authorize", as: :authorize_stripe
   end
 
-  constraints SplitCheckoutConstraint.new do
+  constraints FeatureToggleConstraint.new(:split_checkout) do
     get '/checkout', to: 'split_checkout#edit'
 
     constraints step: /(details|payment|summary)/ do
