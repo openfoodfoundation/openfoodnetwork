@@ -132,11 +132,11 @@ module Sets
 
     def notify_bugsnag(error, product, variant, variant_attributes)
       Bugsnag.notify(error) do |report|
-        report.add_tab(:product, product.attributes)
-        report.add_tab(:product_error, product.errors.first) unless product.valid?
-        report.add_tab(:variant_attributes, variant_attributes)
-        report.add_tab(:variant, variant.attributes)
-        report.add_tab(:variant_error, variant.errors.first) unless variant.valid?
+        report.add_metadata(:product, product.attributes)
+        report.add_metadata(:product_error, product.errors.first) unless product.valid?
+        report.add_metadata(:variant_attributes, variant_attributes)
+        report.add_metadata(:variant, variant.attributes)
+        report.add_metadata(:variant_error, variant.errors.first) unless variant.valid?
       end
     end
 

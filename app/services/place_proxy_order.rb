@@ -24,7 +24,9 @@ class PlaceProxyOrder
     send_placement_email
   rescue StandardError => e
     summarizer.record_and_log_error(:processing, order, e.message)
-    Bugsnag.notify(e, order: order)
+    Bugsnag.notify(e) do |payload|
+      payload.add_metadata :order, order
+    end
   end
 
   private
@@ -54,7 +56,10 @@ class PlaceProxyOrder
 
     true
   rescue StandardError => e
-    Bugsnag.notify(e, subscription: subscription, proxy_order: proxy_order)
+    Bugsnag.notify(e) do |payload|
+      payload.add_metadata :subscription, subscription
+      payload.add_metadata :proxy_order, proxy_order
+    end
     false
   end
 

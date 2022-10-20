@@ -540,9 +540,9 @@ module Spree
       # And the shipping fee is already up-to-date when this error occurs.
       # https://github.com/openfoodfoundation/openfoodnetwork/issues/3924
       Bugsnag.notify(e) do |report|
-        report.add_tab(:order, attributes)
-        report.add_tab(:shipment, shipment.attributes)
-        report.add_tab(:shipment_in_db, Spree::Shipment.find_by(id: shipment.id).attributes)
+        report.add_metadata(:order, attributes)
+        report.add_metadata(:shipment, shipment.attributes)
+        report.add_metadata(:shipment_in_db, Spree::Shipment.find_by(id: shipment.id).attributes)
       end
     end
 
