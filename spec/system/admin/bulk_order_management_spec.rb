@@ -14,10 +14,13 @@ describe '
     before :each do
       login_as_admin
     end
-
-    it "displays a message when number of line items is zero" do
-      visit_bulk_order_management
-      expect(page).to have_text 'No orders found.'
+    context "when no orders exist" do
+      before :each do
+        visit_bulk_order_management
+      end
+      it "displays a message when number of line items is zero" do
+        expect(page).to have_text 'No orders found.'
+      end
     end
 
     context "displaying the list of line items" do
@@ -125,7 +128,7 @@ describe '
       let!(:li1) { create(:line_item_with_shipment, order: o1) }
       let!(:li2) { create(:line_item_with_shipment, order: o2) }
 
-      before do
+      before :each do
         visit_bulk_order_management
       end
 
@@ -236,12 +239,16 @@ describe '
                                        price: 10.00 )
     }
 
-    before { v1.update_attribute(:on_hand, 100) }
+    before :each do
+      v1.update_attribute(:on_hand, 100)
+      visit_bulk_order_management
+    end
 
     context "modifying the weight/volume of a line item" do
-      it "price is altered" do
-        visit_bulk_order_management
+      before do
         toggle_columns "Weight/Volume", "Price"
+      end
+      it "price is altered" do
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: "50.00"
           fill_in "final_weight_volume", with: 2000
@@ -256,9 +263,10 @@ describe '
     end
 
     context "modifying the quantity of a line item" do
-      it "price is altered" do
-        visit_bulk_order_management
+      before do
         toggle_columns "Price"
+      end
+      it "price is altered" do
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "price", with: format('%.2f', li1.price * 5).to_s
           fill_in "quantity", with: 6
@@ -268,9 +276,10 @@ describe '
     end
 
     context "modifying the quantity of a line item" do
-      it "weight/volume is altered" do
-        visit_bulk_order_management
+      before do
         toggle_columns "Weight/Volume"
+      end
+      it "weight/volume is altered" do
         within "tr#li_#{li1.id}" do
           expect(page).to have_field "final_weight_volume", with: li1.final_weight_volume.round.to_s
           fill_in "quantity", with: 6
@@ -281,9 +290,7 @@ describe '
     end
 
     context "using column display toggle" do
-      it "shows a column display toggle button, which shows a list of columns when clicked" do
-        visit_bulk_order_management
-
+      it "displays the default selected columns" do
         expect(page).to have_selector "th", text: "NAME"
         expect(page).to have_selector "th",
                                       text: I18n.t("admin.orders.bulk_management.order_date").upcase
@@ -291,16 +298,22 @@ describe '
         expect(page).to have_selector "th", text: "PRODUCT: UNIT"
         expect(page).to have_selector "th", text: "QUANTITY"
         expect(page).to have_selector "th", text: "MAX"
+      end
 
-        toggle_columns "Producer"
+      context "hiding a column, by de-selecting it from the drop-down" do
+        before do
+          toggle_columns "Producer"
+        end
 
-        expect(page).to have_no_selector "th", text: "PRODUCER"
-        expect(page).to have_selector "th", text: "NAME"
-        expect(page).to have_selector "th",
-                                      text: I18n.t("admin.orders.bulk_management.order_date").upcase
-        expect(page).to have_selector "th", text: "PRODUCT: UNIT"
-        expect(page).to have_selector "th", text: "QUANTITY"
-        expect(page).to have_selector "th", text: "MAX"
+        it "shows all default columns, except the de-selected column" do
+          expect(page).to have_no_selector "th", text: "PRODUCER"
+          expect(page).to have_selector "th", text: "NAME"
+          expect(page).to have_selector "th",
+                                        text: I18n.t("admin.orders.bulk_management.order_date").upcase
+          expect(page).to have_selector "th", text: "PRODUCT: UNIT"
+          expect(page).to have_selector "th", text: "QUANTITY"
+          expect(page).to have_selector "th", text: "MAX"
+        end
       end
     end
 
