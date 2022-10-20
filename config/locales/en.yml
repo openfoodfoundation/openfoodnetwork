@@ -943,6 +943,8 @@ en:
           promo_image_note3: The promo image is displayed at the top of an enterprise's profile page and pop-ups.
           remove_logo: "Remove Image"
           remove_promo_image: "Remove Image"
+          immediate_logo_removal_warning: "The logo will be removed immediately after you confirm."
+          immediate_promo_image_removal_warning: "The promo image will be removed immediately after you confirm."
         inventory_settings:
           legend: "Inventory Settings"
           text1: You may opt to manage stock levels and prices in via your
