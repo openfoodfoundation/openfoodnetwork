@@ -931,6 +931,10 @@ en:
           legend: "Enterprise Permissions"
           enterprise_relationships: Enterprise Relationships
         images:
+          removed_logo_successfully: "Logo removed successfully"
+          immediate_logo_removal_warning: "The logo will be removed immediately after you confirm."
+          removed_promo_image_successfully: "Promo image removed successfully"
+          immediate_promo_image_removal_warning: "The promo image will be removed immediately after you confirm."
           legend: "Images"
           logo: Logo
           promo_image_placeholder: 'This image is displayed in "About Us"'
@@ -3233,10 +3237,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       enterprises:
         form:
           images:
-            removed_logo_successfully: "Logo removed successfully"
-            immediate_logo_removal_warning: "The logo will be removed immediately after you confirm."
-            removed_promo_image_successfully: "Promo image removed successfully"
-            immediate_promo_image_removal_warning: "The promo image will be removed immediately after you confirm."
             immediate_terms_and_conditions_removal_warning: "The Terms and Conditions file will be removed immediately after you confirm."
             removed_terms_and_conditions_successfully: "Terms and Conditions file removed successfully"
     insufficient_stock: "Insufficient stock available, only %{on_hand} remaining"
