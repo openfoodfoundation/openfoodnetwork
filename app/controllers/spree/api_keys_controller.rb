@@ -32,7 +32,7 @@ module Spree
     def load_object
       @user ||= find_user
       if @user
-        authorize! params[:action].to_sym, @user
+        authorize! :update, @user
       else
         redirect_to main_app.login_path
       end
