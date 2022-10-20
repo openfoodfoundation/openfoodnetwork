@@ -15,8 +15,6 @@
             - url = main_app.admin_report_url(report_type: report_type)
             = link_to name, url
           %td
-            - begin
+            - if report_subtypes.empty?
               = I18n.t!(:description, scope: [:admin, :reports, report_type])
-              = render partial: "report_subtype", locals: { report_subtypes: report_subtypes, report_type: report_type }
-            - rescue I18n::MissingTranslationData
-              = render partial: "report_subtype", locals: { report_subtypes: report_subtypes, report_type: report_type }
+            = render partial: "report_subtype", locals: { report_subtypes: report_subtypes, report_type: report_type }
