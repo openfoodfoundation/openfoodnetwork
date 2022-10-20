@@ -11,10 +11,10 @@
       - @reports.each do |report_type, report_subtypes|
         %tr
           %td
-            - name = I18n.t(:name, scope: [:admin, :reports, report_type])
-            - url = main_app.admin_report_url(report_type: report_type)
-            = link_to name, url
+            = I18n.t(:name, scope: [:admin, :reports, report_type])
           %td
             - if report_subtypes.empty?
-              = I18n.t!(:description, scope: [:admin, :reports, report_type])
+              - name = I18n.t(:name, scope: [:admin, :reports, report_type])
+              - url = main_app.admin_report_url(report_type: report_type)
+              = link_to name, url
             = render partial: "report_subtype", locals: { report_subtypes: report_subtypes, report_type: report_type }

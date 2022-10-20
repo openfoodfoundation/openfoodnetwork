@@ -135,7 +135,7 @@ describe '
     end
 
     it "generates the payments reports" do
-      click_link 'Payment Reports'
+      click_link 'Payments By Type'
       click_button 'Go'
 
       rows = find("table.report__table").all("thead tr")
@@ -298,7 +298,7 @@ describe '
 
       expect(page).to have_content "All products"
       expect(page).to have_content "Inventory (on hand)"
-      click_link 'Products & Inventory'
+      click_link 'All products'
       click_button "Go"
       expect(page).to have_content "Supplier"
       expect(page).to have_table_row ["Supplier", "Producer Suburb", "Product",
