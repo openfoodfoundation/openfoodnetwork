@@ -473,33 +473,40 @@ describe '
           visit_bulk_order_management
         end
 
-        xit "allows filters to be used in combination" do
-          pending "#9811"
+        it "allows filters to be used in combination" do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
-          select2_select oc1.name, from: "order_cycle_filter"
+          find("#s2id_order_cycle_filter").click
+          find(".select2-result-label", text: oc1.name.to_s).click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
-          select2_select d1.name, from: "distributor_filter"
-          select2_select s1.name, from: "supplier_filter"
+          find("#s2id_distributor_filter").click
+          find(".select2-result-label", text: d1.name.to_s).click
+          find("#s2id_supplier_filter").click
+          find(".select2-result-label", text: s1.name.to_s).click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
-          select2_select d2.name, from: "distributor_filter"
-          select2_select s2.name, from: "supplier_filter"
+          find("#s2id_distributor_filter").click
+          find(".select2-result-label", text: d2.name.to_s).click
+          find("#s2id_supplier_filter").click
+          find(".select2-result-label", text: s2.name.to_s).click
           expect(page).to have_no_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
-          select2_select oc2.name, from: "order_cycle_filter"
+          find("#s2id_order_cycle_filter").click
+          find(".select2-result-label", text: oc2.name.to_s).click
           expect(page).to have_no_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
         end
 
-        xit "displays a 'Clear All' button which sets all select filters to 'All'" do
-          pending "#9810"
+        it "displays a 'Clear All' button which sets all select filters to 'All'" do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
-          select2_select oc1.name, from: "order_cycle_filter"
-          select2_select d1.name, from: "distributor_filter"
-          select2_select s1.name, from: "supplier_filter"
+          find("#s2id_order_cycle_filter").click
+          find(".select2-result-label", text: oc1.name.to_s).click
+          find("#s2id_distributor_filter").click
+          find(".select2-result-label", text: d1.name.to_s).click
+          find("#s2id_supplier_filter").click
+          find(".select2-result-label", text: s1.name.to_s).click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           expect(page).to have_button "Clear All"
