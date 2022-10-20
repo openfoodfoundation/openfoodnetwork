@@ -1,0 +1,17 @@
+.row#guest_orders_row
+  - unless enterprise.require_login
+    .three.columns.alpha
+      %label= t '.allow_guest_orders'
+      = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.allow_guest_orders_tip')}
+    .three.columns
+      = radio_button_tag 'enterprise[allow_guest_orders]', true, enterprise.allow_guest_orders, 'data-guest-orders-target': 'allowGuestOrders', 'data-action': 'change->guest-orders#toggleRow'
+      = label_tag :enterprise_allow_guest_orders_true, t('.allow_guest_orders_true')
+    .five.columns.omega
+      = radio_button_tag 'enterprise[allow_guest_orders]', false, !enterprise.allow_guest_orders, 'data-action': 'change->guest-orders#toggleRow'
+      = label_tag :enterprise_allow_guest_orders_false, t('.allow_guest_orders_false')
+
+    - if enterprise.allow_guest_orders && enterprise.allow_order_changes
+      .row.warning
+        .eight.columns.alpha.omega
+          %i.icon-warning-sign
+          = t('.recommend_require_login')
