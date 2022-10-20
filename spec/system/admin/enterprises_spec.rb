@@ -499,8 +499,8 @@ describe '
           end
 
           choose "enterprise_preferred_shopfront_product_sorting_method_by_category"
-          find("#s2id_enterprise_preferred_shopfront_taxon_order").click
-          find(".select2-result-label", text: "Tricky Taxon").click
+          find("#taxon_select-ts-control").click
+          find("#taxon_select-ts-dropdown").find('div', text: "Tricky Taxon").click
           click_button 'Update'
           expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
         end
@@ -520,8 +520,8 @@ describe '
           end
 
           choose "enterprise_preferred_shopfront_product_sorting_method_by_producer"
-          find("#s2id_enterprise_preferred_shopfront_producer_order").click
-          find(".select2-result-label", text: "First Supplier").click
+          find("#producer_select-ts-control").click
+          find("#producer_select-ts-dropdown").find('div', text: "First Supplier").click
           click_button 'Update'
           expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
         end

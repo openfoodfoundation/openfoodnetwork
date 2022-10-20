@@ -18,89 +18,114 @@
     = t('.display_ordering_in_shopfront')
     %br
     = t('.shopfront_category_ordering_note')
-.row
-  .three.columns.alpha
-    = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_category, { 'ng-model' => 'Enterprise.preferred_shopfront_product_sorting_method' }
-    = label :enterprise, :preferred_shopfront_product_sorting_method_by_category, t('.shopfront_sort_by_category')
-  .eight.columns.omega
-    %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_taxon_order', name: 'enterprise[preferred_shopfront_taxon_order]', rows: 6,
-      'ofn-taxon-autocomplete' => '', 'multiple-selection' => 'true', placeholder: t('.shopfront_sort_by_category_placeholder'),
-      ng: { model: 'Enterprise.preferred_shopfront_taxon_order', readonly: "Enterprise.preferred_shopfront_product_sorting_method != 'by_category'" }}
-.row
-  .three.columns.alpha
-    = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer, { 'ng-model' => 'Enterprise.preferred_shopfront_product_sorting_method' }
-    = label :enterprise, :preferred_shopfront_product_sorting_method_by_producer, t('.shopfront_sort_by_producer')
-  .eight.columns.omega
-    %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_producer_order', name: 'enterprise[preferred_shopfront_producer_order]', rows: 6,
-      'ofn-producer-autocomplete' => '', 'multiple-selection' => 'true', placeholder: t('.shopfront_sort_by_producer_placeholder'),
-      ng: { model: 'Enterprise.preferred_shopfront_producer_order', readonly: "Enterprise.preferred_shopfront_product_sorting_method != 'by_producer'" }}
+
+%div{ "data-controller": "set-value dependent-enable" }
+  - sorting_method = @enterprise.preferred_shopfront_product_sorting_method
+  .row
+    .three.columns.alpha
+      = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_category,
+        "data-dependent-enable-target": "parent", "data-action": "change->dependent-enable#enableTomSelect",
+        "data-dependent-enable-dependent-identifier-param": "taxon_select"
+      = label :enterprise, :preferred_shopfront_product_sorting_method_by_category, t('.shopfront_sort_by_category')
+    .eight.columns.omega
+      = collection_select nil, nil, Spree::Taxon.all, :id, :name,
+        {selected: @enterprise.preferred_shopfront_taxon_order.split(',')}, multiple: true, name: '',
+        placeholder: t('.shopfront_sort_by_category_placeholder'),
+        data: { controller: "tom-select", 
+        "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil },
+        "action": 'change->set-value#setSelectValue',
+        "set-value-receiver-identifier-param": "enterprise_preferred_shopfront_taxon_order",
+        "set-value-target": "valueProvider",
+        "dependent-enable-target": "child"},
+        id: 'taxon_select',
+        disabled: (sorting_method == "by_producer")
+      = f.hidden_field :preferred_shopfront_taxon_order, "data-set-value-target": 'valueReceiver'
+
+  .row
+    .three.columns.alpha
+      = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer,
+        "data-dependent-enable-target": "parent", "data-action": "change->dependent-enable#enableTomSelect",
+        "data-dependent-enable-dependent-identifier-param": "producer_select"
+      = label :enterprise, :preferred_shopfront_product_sorting_method_by_producer, t('.shopfront_sort_by_producer')
+    .eight.columns.omega
+      - options = @enterprise.suppliers.any? ? @enterprise.suppliers : Enterprise.where(is_primary_producer: true)
+      = collection_select nil, nil, options, :id, :name,
+        {selected: @enterprise.preferred_shopfront_producer_order.split(',')}, multiple: true, name: '',
+        placeholder: t('.shopfront_sort_by_producer_placeholder'),
+        data: { controller: "tom-select", 
+        "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil },
+        "action": 'change->set-value#setSelectValue',
+        "set-value-receiver-identifier-param": "enterprise_preferred_shopfront_producer_order",
+        "set-value-target": "valueProvider",
+        "dependent-enable-target": "child"},
+        id: 'producer_select',
+        disabled: (sorting_method == "by_category")
+      = f.hidden_field :preferred_shopfront_producer_order, "data-set-value-target": 'valueReceiver'
 
 .row
   .three.columns.alpha
     = f.label "enterprise_preferred_shopfront_order_cycle_order", t(:sort_order_cycles_on_shopfront_by)
   .three.columns
-    = radio_button :enterprise, :preferred_shopfront_order_cycle_order, :orders_open_at, { 'ng-model' => 'Enterprise.preferred_shopfront_order_cycle_order' }
+    = radio_button :enterprise, :preferred_shopfront_order_cycle_order, :orders_open_at
     = label :enterprise, :preferred_shopfront_order_cycle_order_orders_open_at, t('.open_date')
   .five.columns.omega
-    = radio_button :enterprise, :preferred_shopfront_order_cycle_order, :orders_close_at, { 'ng-model' => 'Enterprise.preferred_shopfront_order_cycle_order' }
+    = radio_button :enterprise, :preferred_shopfront_order_cycle_order, :orders_close_at
     = label :enterprise, :preferred_shopfront_order_cycle_order_orders_close_at, t('.close_date')
-.row
+
+.row{ data: { controller: "reveal", "reveal-selector-value": "#guest_orders_row" }}
   .three.columns.alpha
     %label= t '.shopfront_requires_login'
-    %div{'ofn-with-tip' => t('.shopfront_requires_login_tip')}
-      %a= t 'admin.whats_this'
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.shopfront_requires_login_tip')}
   .three.columns
-    = f.radio_button :require_login, false, "ng-model" => "Enterprise.require_login", "ng-value" => "false"
+    = f.radio_button :require_login, false, "data-action": "change->reveal#toggle"
     = f.label :require_login, t('.shopfront_requires_login_false'), value: :false
   .five.columns.omega
-    = f.radio_button :require_login, true, "ng-model" => "Enterprise.require_login", "ng-value" => "true"
+    = f.radio_button :require_login, true, "data-action": "change->reveal#toggle"
     = f.label :require_login, t('.shopfront_requires_login_true'), value: :true
 
-.row{ng: {if: "!Enterprise.require_login"}}
+.row#guest_orders_row{ class: "#{'hidden' if @enterprise.require_login}", "data-controller": "reveal" }
   .three.columns.alpha
     %label= t '.allow_guest_orders'
-    %div{'ofn-with-tip' => t('.allow_guest_orders_tip')}
-      %a= t 'admin.whats_this'
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.allow_guest_orders_tip')}
   .three.columns
-    = f.radio_button :allow_guest_orders, true, "ng-model" => "Enterprise.allow_guest_orders", "ng-value" => "true"
-    = f.label :allow_guest_orders, t('.allow_guest_orders_true'), value: :true
+    = radio_button_tag 'enterprise[allow_guest_orders]', true, @enterprise.allow_guest_orders, "data-action": "change->reveal#toggle"
+    = label_tag :enterprise_allow_guest_orders_true, t('.allow_guest_orders_true')
   .five.columns.omega
-    = f.radio_button :allow_guest_orders, false, "ng-model" => "Enterprise.allow_guest_orders", "ng-value" => "false"
-    = f.label :allow_guest_orders, t('.allow_guest_orders_false'), value: :false
-  .row.warning{ng: {show: 'Enterprise.allow_guest_orders && Enterprise.allow_order_changes'}}
+    = radio_button_tag 'enterprise[allow_guest_orders]', false, !@enterprise.allow_guest_orders, "data-action": "change->reveal#toggle"
+    = label_tag :enterprise_allow_guest_orders_false, t('.allow_guest_orders_false')
+  .row.warning{ class: "#{'hidden' unless @enterprise.allow_guest_orders} #{'concealed' unless @enterprise.allow_order_changes}",
+  "data-reveal-target": "item" }
     .eight.columns.alpha.omega
       %i.icon-warning-sign
-      = t '.recommend_require_login'
+      = t('.recommend_require_login')
 
 .row
   .three.columns.alpha
     %label= t '.display_remaining_stock'
-    %div{'ofn-with-tip' => t('.display_remaining_stock_tip')}
-      %a= t 'admin.whats_this'
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.display_remaining_stock_tip')}
   .three.columns
-    = f.radio_button :preferred_product_low_stock_display, true, 'ng-model' => 'Enterprise.preferred_product_low_stock_display', 'ng-value' => 'true'
+    = f.radio_button :preferred_product_low_stock_display, true
     = f.label :preferred_product_low_stock_display, t('.enabled'), value: :true
   .five.columns.omega
-    = f.radio_button :preferred_product_low_stock_display, false, 'ng-model' => 'Enterprise.preferred_product_low_stock_display', 'ng-value' => 'false' 
+    = f.radio_button :preferred_product_low_stock_display, false
     = f.label :preferred_product_low_stock_display, t('.disabled'), value: :false
 
-.row
+.row{ data: { controller: "reveal", "reveal-hidden-class": "concealed", "reveal-selector-value": "#guest_orders_row .warning" }}
   .three.columns.alpha
     %label= t '.allow_order_changes'
-    %div{'ofn-with-tip' => t('.allow_order_changes_tip')}
-      %a= t 'admin.whats_this'
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.allow_order_changes_tip')}
   .three.columns
-    = f.radio_button :allow_order_changes, false, "ng-model" => "Enterprise.allow_order_changes", "ng-value" => "false"
+    = f.radio_button :allow_order_changes, false, "data-action": "change->reveal#toggle"
     = f.label :allow_order_changes, t('.allow_order_changes_false'), value: :false
   .five.columns.omega
-    = f.radio_button :allow_order_changes, true, "ng-model" => "Enterprise.allow_order_changes", "ng-value" => "true"
+    = f.radio_button :allow_order_changes, true, "data-action": "change->reveal#toggle"
     = f.label :allow_order_changes, t('.allow_order_changes_true'), value: :true
+
 
 .row
   .three.columns.alpha
     %label= t '.enable_subscriptions'
-    %div{'ofn-with-tip' => t('.enable_subscriptions_tip')}
-      %a= t 'admin.whats_this'
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.enable_subscriptions_tip')}
   .three.columns
     = f.radio_button :enable_subscriptions, true
     = f.label :enable_subscriptions, t('.enable_subscriptions_true'), value: :true
@@ -111,11 +136,10 @@
 .row
   .three.columns.alpha
     %label= t '.customer_names_in_reports'
-    %div{'ofn-with-tip' => t('.customer_names_tip')}
-      %a= t 'admin.whats_this'
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.customer_names_tip')}
   .three.columns
-    = radio_button :enterprise, :show_customer_names_to_suppliers, true
-    = label :enterprise_show_customer_names_to_suppliers, t('.customer_names_true'), value: :true
+    = f.radio_button :show_customer_names_to_suppliers, true
+    = f.label :show_customer_names_to_suppliers_true, t('.customer_names_true')
   .five.columns.omega
-    = radio_button :enterprise, :show_customer_names_to_suppliers, false
-    = label :enterprise_show_customer_names_to_suppliers, t('.customer_names_false'), value: :false
+    = f.radio_button :show_customer_names_to_suppliers, false
+    = f.label :show_customer_names_to_suppliers_false, t('.customer_names_false')
