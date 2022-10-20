@@ -10,7 +10,6 @@
         .eight.columns.alpha
           = f.field_container :supplier do
             = f.label :supplier_id, t(".supplier")
-            %span.required *
             = f.select :supplier_id, options_from_collection_for_select(@producers, :id, :name, @product.supplier_id), {}, { "data-controller": "tom-select", class: "primary" }
             = f.error_message_on :supplier
         .eight.columns.omega
@@ -22,13 +21,14 @@
             = f.error_message_on :name
       .sixteen.columns.alpha
         .eight.columns.alpha
-          = f.field_container :units do
+          = f.field_container :variant_unit do
             = f.label :variant_unit_with_scale, t(".units")
             %span.required *
-            %select{id: 'product_variant_unit_with_scale', 'ng-model' => 'product.variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options',"data-controller": "tom-select", class: "primary"}
+            %select{id: 'product_variant_unit_with_scale', 'ng-model' => 'product.variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options', "data-controller": "tom-select","data-tom-select-options-value": '{"allowEmptyOption":false}', class: "primary"}
               %option{'value' => '', 'ng-hide' => "hasUnit(product)"}
             %input{ type: 'hidden', 'ng-value': 'product.variant_unit', "ng-init": "product.variant_unit='#{@product.variant_unit}'", name: 'product[variant_unit]' }
             %input{ type: 'hidden', 'ng-value': 'product.variant_unit_scale', "ng-init": "product.variant_unit_scale='#{@product.variant_unit_scale}'", name: 'product[variant_unit_scale]' }
+            = f.error_message_on :variant_unit
         .two.columns
           = f.field_container :unit_value do
             = f.label :unit_value_with_description, t(".value"), 'ng-disabled' => "!hasUnit(product)"
@@ -36,6 +36,7 @@
             %input.fullwidth{ id: 'product_unit_value_with_description', 'ng-model' => 'product.master.unit_value_with_description', :type => 'text', placeholder: "eg. 2", 'ng-disabled' => "!hasUnit(product)" }
             %input{ type: 'hidden', 'ng-value': 'product.master.unit_value', "ng-init": "product.master.unit_value='#{@product.master.unit_value}'", name: 'product[unit_value]' }
             %input{ type: 'hidden', 'ng-value': 'product.master.unit_description', "ng-init": "product.master.unit_description='#{@product.master.unit_description}'", name: 'product[unit_description]' }
+            = f.error_message_on :unit_value
         = render 'display_as', f: f
         .six.columns.omega{ 'ng-show' => "product.variant_unit_with_scale == 'items'" }
           = f.field_container :unit_name do

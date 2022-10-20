@@ -59,7 +59,7 @@ describe '
       expect(page).to have_field 'product_on_demand', checked: true
       expect(page).to have_field 'product_tax_category_id', with: tax_category.id
       expect(page.find("div[id^='taTextElement']")).to have_content 'A description...'
-      expect(page.find("#product_units_field")).to have_content 'Weight (kg)'
+      expect(page.find("#product_variant_unit_field")).to have_content 'Weight (kg)'
 
       expect(page).to have_content "Name can't be blank"
     end
