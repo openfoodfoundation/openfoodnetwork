@@ -3,16 +3,22 @@
     = f.label :logo
     %br
     100 x 100 pixels
-  .omega.eight.columns
-    %img{ class: 'image-field-group__preview-image', ng: { src: '{{ Enterprise.logo.thumb }}', if: 'Enterprise.logo' } }
-    %br
+  .omega.eight.columns#enterprise_logo{ "data-reflex-root": "#enterprise_logo" }
+    - if @enterprise.logo.attached?
+      = image_tag @enterprise.logo.variant(resize_to_limit: [100, 100]), class: "image-field-group__preview-image"
     = f.file_field :logo
-    %a.button.red{ href: '', ng: {click: 'removeLogo()', if: 'Enterprise.logo'} }
-      = t('.remove_logo')
+
+    =# remove button
+    - if @enterprise.logo.attached?
+      %a.button.red{ href: '', "data-controller": "enterprise-purge", 
+      "data-enterprise-purge-confirm-message-value": t('.immediate_logo_removal_warning'), 
+      "data-action": "click->enterprise-purge#logo", "data-enterprise-id": @enterprise.id }= t('.remove_logo')
 
 .row.page-admin-enterprises-form__promo-image-field-group.image-field-group
   .alpha.three.columns
-    = f.label :promo_image, 'ofn-with-tip' => t('.promo_image_placeholder')
+    = f.label :promo_image
+    %br
+    = t('.promo_image_placeholder')
     %br/
     %span{ style: 'font-weight:bold' }= t('.promo_image_note1')
     %br
@@ -20,8 +26,11 @@
     %br
     = t('.promo_image_note3')
 
-  .omega.eight.columns
-    %img{ class: 'image-field-group__preview-image', ng: { src: '{{ Enterprise.promo_image.large }}', if: 'Enterprise.promo_image' } }
+  .omega.eight.columns#enterprise_promo_image{ "data-reflex-root": "#enterprise_promo_image" }
+    - if @enterprise.promo_image.attached?
+      = image_tag @enterprise.promo_image.variant(resize_to_limit: [1200, 260]), class: "image-field-group__preview-image"
     = f.file_field :promo_image
-    %a.button.red{ href: '', ng: {click: 'removePromoImage()', if: 'Enterprise.promo_image'} }
-      = t('.remove_promo_image')
+    - if @enterprise.promo_image.attached?
+      %a.button.red{ href: '', "data-controller": "enterprise-purge",
+      "data-enterprise-purge-confirm-message-value": t('.immediate_promo_image_removal_warning'), 
+      "data-action": "click->enterprise-purge#promoImage", "data-enterprise-id": @enterprise.id }= t('.remove_promo_image')
