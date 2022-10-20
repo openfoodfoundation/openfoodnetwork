@@ -101,28 +101,7 @@ module Reporting
         check_report
       end
 
-      describe "fields_to_hide" do
-        before do
-          allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(
-            :report_inverse_columns_logic, anything
-          ).and_return(false)
-        end
-
-        let(:params) { { fields_to_hide: [:product] } }
-
-        it "works" do
-          @expected_headers = ['Hub', 'Price']
-          check_report
-        end
-      end
-
       describe "fields_to_show" do
-        before do
-          allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(
-            :report_inverse_columns_logic, anything
-          ).and_return(true)
-        end
-
         let(:params) { { fields_to_show: [:hub, :price] } }
 
         it "works" do

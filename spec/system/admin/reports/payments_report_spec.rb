@@ -31,12 +31,12 @@ describe "Payments Reports" do
     create(:line_item_with_shipment, order: other_order, product: product)
 
     login_as_admin
-    visit main_app.admin_report_path(report_type: 'payments')
+    visit admin_reports_path
   end
 
   context "when choosing itemised payments report type" do
     it "shows orders with payment state, their balance and totals" do
-      select I18n.t(:report_itemised_payment), from: "report_subtype"
+      click_link "Itemised Payment Totals"
       find("[type='submit']").click
 
       expect(page.find("table.report__table thead tr").text).to have_content([
@@ -71,7 +71,7 @@ describe "Payments Reports" do
     }
 
     it 'shows orders with payment state, their balance and and payment totals' do
-      select I18n.t(:report_payment_totals), from: "report_subtype"
+      click_link "Payment Totals"
       find("[type='submit']").click
 
       expect(page.find("table.report__table thead tr").text).to have_content([
