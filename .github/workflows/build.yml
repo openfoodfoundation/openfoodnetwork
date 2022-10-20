@@ -54,7 +54,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '14.15.5'
+          node-version: 16
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
@@ -101,7 +101,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '14.15.5'
+          node-version: 16
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
