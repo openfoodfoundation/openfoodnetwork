@@ -152,10 +152,10 @@ describe "BulkProducts service", ->
       variant = {unit_value: 5}
       expect(BulkProducts.variantUnitValue(product, variant)).toEqual 5000
 
-    it "returns the scaled value rounded off upto 8 decimal points removing the trailing zeroes", ->
+    it "returns the scaled value rounded off upto 2 decimal points", ->
       product = {variant_unit_scale: 28.35}
       variant = {unit_value: 1234.5}
-      expect(BulkProducts.variantUnitValue(product, variant)).toEqual 43.54497354
+      expect(BulkProducts.variantUnitValue(product, variant)).toEqual 43.54
 
     it "returns the unscaled value when the product has no scale", ->
       product = {}

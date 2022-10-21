@@ -262,8 +262,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         variant.unit_value  = parseFloat(match[1].replace(",", "."))
         variant.unit_value  = null if isNaN(variant.unit_value)
         if variant.unit_value && product.variant_unit_scale
-          variant_unit_value = variant.unit_value * product.variant_unit_scale
-          variant.unit_value = parseFloat(variant_unit_value.toFixed(8))
+          variant.unit_value = parseFloat(bigDecimal.multiply(variant.unit_value, product.variant_unit_scale, 2))
         variant.unit_description = match[3]
 
   $scope.incrementLimit = ->
