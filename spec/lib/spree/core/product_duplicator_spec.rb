@@ -9,6 +9,7 @@ describe Spree::Core::ProductDuplicator do
            taxons: [],
            product_properties: [property],
            master: master_variant,
+           variants: [variant],
            option_types: []
   end
 
@@ -33,9 +34,22 @@ describe Spree::Core::ProductDuplicator do
            images: [image]
   end
 
+  let(:variant) do
+    double 'Variant 1',
+           sku: "67890",
+           price: 19.50,
+           currency: "AUD",
+           images: [image_variant]
+  end
+
   let(:new_master_variant) do
     double 'New Variant',
            sku: "12345"
+  end
+
+  let(:new_variant) do
+    double 'New Variant 1',
+           sku: "67890"
   end
 
   let(:image) do
@@ -45,6 +59,16 @@ describe Spree::Core::ProductDuplicator do
 
   let(:new_image) do
     double 'New Image'
+  end
+
+  let(:image_variant) do
+    double 'Image Variant',
+           attachment: double('Attachment')
+  end
+
+  let(:new_image_variant) do
+    double 'New Image Variant',
+           attachment: double('Attachment')
   end
 
   before do
