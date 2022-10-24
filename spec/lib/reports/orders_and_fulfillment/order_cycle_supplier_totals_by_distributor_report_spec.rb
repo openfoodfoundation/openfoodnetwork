@@ -31,6 +31,14 @@ module Reporting
           expect(report.rows.first.producer).to eq supplier.name
           expect(report.rows.first.hub).to eq distributor.name
         end
+
+        it "lists products sorted by name" do
+          order.line_items[0].variant.product.update(name: "Cucumber")
+          order.line_items[1].variant.product.update(name: "Apple")
+          order.line_items[2].variant.product.update(name: "Banane")
+          product_names = report.rows.map(&:product).filter(&:present?)
+          expect(product_names).to eq(["Apple", "Banane", "Cucumber"])
+        end
       end
     end
   end
