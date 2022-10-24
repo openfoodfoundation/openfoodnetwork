@@ -14,7 +14,9 @@
             = I18n.t(:name, scope: [:admin, :reports, report_type])
           %td
             - if report_subtypes.empty?
-              - name = I18n.t(:name, scope: [:admin, :reports, report_type])
-              - url = main_app.admin_report_url(report_type: report_type)
-              = link_to name, url
+              %ul{style: "margin-left: 12pt"}
+                %li
+                  - name = I18n.t(:name, scope: [:admin, :reports, report_type])
+                  - url = main_app.admin_report_url(report_type: report_type)
+                  = link_to name, url
             = render partial: "report_subtype", locals: { report_subtypes: report_subtypes, report_type: report_type }
