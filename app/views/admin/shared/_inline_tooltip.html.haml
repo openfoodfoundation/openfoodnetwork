@@ -1,0 +1,6 @@
+%div{"data-controller": "tooltip", style: 'display: inline'}
+  %i{ class: icon_class, "data-tooltip-target": "element", "data-action": "mouseenter->tooltip#showTooltip mouseleave->tooltip#hideTooltip"}
+  .tooltip-container{ style: 'display: inline'}
+    .tooltip{"data-tooltip-target": "tooltip"}
+      = sanitize tooltip_text
+      .arrow{"data-tooltip-target": "arrow"}

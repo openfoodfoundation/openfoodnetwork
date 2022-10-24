@@ -1,60 +1,54 @@
 - owner_email = @enterprise&.owner&.email || ""
 - full_permissions = (spree_current_user.admin? || spree_current_user == @enterprise&.owner)
 
-.row
-  .three.columns.alpha
-    =f.label :owner_id, t('.owner')
-    - if full_permissions
-      %span.required *
-    %div{'ofn-with-tip' => t('.owner_tip')}
-      %a= t('admin.whats_this')
-  .eight.columns.omega
-    - if full_permissions
-      = f.hidden_field :owner_id, class: "select2 fullwidth", 'user-select' => 'Enterprise.owner', 'ng-model' => 'Enterprise.owner'
-    - else
-      = owner_email
-
-.row
-  .three.columns.alpha
-    =f.label :user_ids, t('.notifications')
-    - if full_permissions
-      %span.required *
-    %div{'ofn-with-tip' => t('.contact_tip')}
-      %a= t('admin.whats_this')
-  .eight.columns.omega
-    - if full_permissions
-      %select.select2.fullwidth{id: 'receives_notifications_dropdown', name: 'receives_notifications', ng: {model: 'receivesNotifications', init: "receivesNotifications = '#{@enterprise.contact.id}'"}}
-        %option{ng: {repeat: 'user in Enterprise.users', selected: "user.id == #{@enterprise.contact.id}", hide: '!user.confirmed'}, value: '{{user.id}}'}
-          {{user.email}}
-    - else
-      = @enterprise.contact.email
+%div{ data: { controller: "enterprise-manager" }}
+  .row
+    .three.columns.alpha
+      =f.label :owner_id, t('.owner')
+      - if full_permissions
+        %span.required *
+      = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.owner_tip')}
+    .eight.columns.omega
+      - if full_permissions
+        = f.select :owner_id, @enterprise.users.collect { |u| [u.email, u.id] }, { selected: @enterprise.owner.id }, class: 'primary',
+          data: {controller: 'tom-select', action: "change->enterprise-manager#update", "enterprise-manager-target": "owner"}
+      - else
+        = owner_email
+  
+  .row
+    .three.columns.alpha
+      =f.label :user_ids, t('.notifications')
+      - if full_permissions
+        %span.required *
+      = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.contact_tip')}
+    .eight.columns.omega
+      - if full_permissions
+        = f.select "receives_notifications",
+          @enterprise.users.filter { |user| user.confirmed? }.collect { |u| [u.email, u.id] }, { selected: @enterprise.contact.id  },
+          class: 'primary',
+          data: {controller: 'tom-select', action: "change->enterprise-manager#update", "enterprise-manager-target": "contact"},
+          name: "receives_notifications"
+      - else
+        = @enterprise.contact.email
 
 .row
   .three.columns.alpha
     =f.label :user_ids, t('.managers')
     - if full_permissions
       %span.required *
-    %div{'ofn-with-tip' => t('.managers_tip')}
-      %a= t('admin.whats_this')
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.managers_tip')}
   .eight.columns.omega
     - if full_permissions
       %table.managers
         %tr
           %td
             - # Ignore this input in the submit
-            = hidden_field_tag :ignored, nil, class: "select2 fullwidth", 'user-select' => 'newManager', 'ng-model' => 'newManager'
-          %td.actions
-        %tr.animate-repeat{ id: "manager-{{manager.id}}", ng: { repeat: 'manager in Enterprise.users' }}
-          %td
-            = hidden_field_tag "enterprise[user_ids][]", nil, multiple: true, 'ng-value' => 'manager.id'
-            {{ manager.email }}
-            %i.confirmation.confirmed.fa.fa-check-circle{ 'ofn-with-tip' => t('.email_confirmed'), ng: {show: 'manager.confirmed'} }
-            %i.confirmation.unconfirmed.fa.fa-exclamation-triangle{ 'ofn-with-tip' => t('.email_not_confirmed'), ng: {show: '!manager.confirmed'} }
-            %i.role.contact.fa.fa-envelope-o{ 'ofn-with-tip' => t('.contact'), ng: {show: 'manager.id == receivesNotifications'} }
-            %i.role.owner.fa.fa-star{ 'ofn-with-tip' => t('.owner'), ng: {show: 'manager.id == Enterprise.owner.id'} }
-          %td.actions
-            %a{ ng: {click: 'removeManager(manager)', class: "{disabled: manager.id == Enterprise.owner.id || manager.id == receivesNotifications}"}, :class => "icon-trash no-text" }
-
+            = collection_select '', '', [], nil, nil, {}, data: { controller: "remote-tom-select enterprise-manager",
+              "remote-tom-select-url-value": "/admin/search/known_users?q=",
+              "action": "change->enterprise-manager#createRegisteredManager" },
+              class: "primary", placeholder: "Add an existing user"
+        %tbody#managers{ data: { "manager-ids": JSON.generate(@enterprise.users.ids) }}
+          = render partial: 'admin/enterprises/form/manager', collection: @enterprise.users, locals: { owner: @enterprise.owner, contact_person: @enterprise.contact }
     - else
       - @enterprise.users.each do |manager|
         = manager.email
@@ -66,8 +60,7 @@
       .three.columns.alpha
         %label
           = t('.invite_manager')
-        %div{'ofn-with-tip' => t('.invite_manager_tip')}
-          %a= t('admin.whats_this')
+        = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.invite_manager_tip')}
       .eight.columns.omega
         .row
           %a.button{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "invite-manager-modal" }
@@ -76,22 +69,19 @@
 -# add to admin footer to avoid nesting invitation form inside enterprise form
 - content_for :admin_footer do
   = render HelpModalComponent.new(id: "invite-manager-modal", close_button: false) do
-    %div{ng: {app: 'admin.enterprises', controller: 'enterpriseCtrl'}}
+    = form_with url: "/admin/manager_invitations", method: "POST",
+      data: { controller: "enterprise-manager", "remote": true, type: "json",
+      action: "ajax:response:error->enterprise-manager#displayError ajax:success->enterprise-manager#createUnregisteredManager",
+      "dirty-form-type-param": "unverified" } do
 
       .margin-bottom-30.text-center
         .text-big
           = t('js.admin.modals.invite_title')
 
-      %p.alert-box.ok{ng: {show: 'invite_success'}}
-        {{invite_success}}
+      %p.alert-box{ style: "display: none", data: { "enterprise-manager-target": "alert" }}
 
-      %p.alert-box.error{ng: {show: 'invite_errors'}}
-        {{invite_errors}}
-
-      %input#invite_email.fullwidth.margin-bottom-20{ng: {model: 'newUser'}}
+      = email_field_tag 'email', nil, class: 'fullwidth margin-bottom-20'
+      = hidden_field_tag 'enterprise_id', @enterprise.id
 
       .margin-bottom-20.text-center
-        %button.text-center.margin-top-10{ng: {show: '!invite_success', click: 'inviteManager()'}}
-          = t('js.admin.modals.invite')
-        %button.text-center.margin-top-10{"data-action": "click->help-modal#close", ng: {show: 'invite_success', click: 'resetModal();'}}
-          = t('js.admin.modals.close')
+        = submit_tag t('js.admin.modals.invite'), "data-disable-with": "Submitting..."

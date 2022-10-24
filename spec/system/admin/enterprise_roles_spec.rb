@@ -111,7 +111,7 @@ create(:enterprise)
           expect(page).to have_content user1.email
           expect(page).to have_content user2.email
 
-          within "tr#manager-#{user1.id}" do
+          within "tr#manager_user_#{user1.id}" do
             # user1 is both the enterprise owner and contact, and has email confirmed
             expect(page).to have_css 'i.owner'
             expect(page).to have_css 'i.contact'
