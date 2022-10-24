@@ -8,11 +8,13 @@
           %h5
             = t('.by_default')
           %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "tag_rule_help_modal" }
-  .no_rules{ ng: { show: "defaultTagGroup.rules.length == 0" } }
-    = t('.no_rules_yet')
-  .tag_rule{ ng: { repeat: "rule in defaultTagGroup.rules" } }
+  - unless default_tag_group.rules.any?
+    .no_rules
+      = t('.no_rules_yet')
+  = render partial: "admin/enterprises/form/tag_rules/tag_rule", collection: default_tag_group.rules, as: :rule, locals: { position: 0 }
   .add_rule.text-center
-    %input.button.icon-plus{ type: 'button', value: t('.add_new_button'), "add-new-rule-to" => "addNewRuleTo", "tag-group" => "defaultTagGroup", "new-tag-rule-dialog" => true, "data-action": "click->dirty-form#makeDirty" }
+    -# %input.button.icon-plus{ type: 'button', value: t('.add_new_button'), "add-new-rule-to" => "addNewRuleTo", "tag-group" => "defaultTagGroup", "new-tag-rule-dialog" => true }
+    %input.button.icon-plus{ type: 'button', value: t('.add_new_button'), data: { reflex: "click->TagRulesReflex#add_new_rule_to", default: true, enterprise: enterprise.id }, "new-tag_rule-dialog" => true }
 
 = render HelpModalComponent.new(id: "tag_rule_help_modal") do
   #tag-rule-help

@@ -219,6 +219,9 @@ class Enterprise < ApplicationRecord
       ", one, others)
   }
 
+  include TagGrouping
+  include ::DirtyModel
+
   def business_address_empty?(attributes)
     attributes_exists = attributes['id'].present?
     attributes_empty = attributes.slice(:company, :address1, :city, :phone,

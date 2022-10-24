@@ -24,6 +24,7 @@ require_relative "../lib/open_food_network/i18n_config"
 require_relative '../lib/spree/core/environment'
 require_relative '../lib/spree/core/mail_interceptor'
 require_relative "../lib/session_cookie_upgrader"
+require_relative "../lib/dirty_model"
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line

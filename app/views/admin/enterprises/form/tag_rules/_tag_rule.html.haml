@@ -1,0 +1,52 @@
+%div{ id: "tr_#{position}" }
+  %table
+    %colgroup
+      %col.text{ width: "35%" }
+      %col.inputs{ width: "55%" }
+      %col.actions{ width: "10%" }
+    %tr
+      %td
+        %input{ type: "hidden",
+          id: "enterprise_tag_rules_attributes_#{position}_id",
+          name: "enterprise[tag_rules_attributes][#{position}][id]",
+          value: "#{rule.id}" }
+
+        %input{ type: "hidden",
+          id: "enterprise_tag_rules_attributes_#{position}_type",
+          name: "enterprise[tag_rules_attributes][#{position}][type]",
+          value: "#{rule.type}" }
+
+        %input{ type: "hidden",
+          id: "enterprise_tag_rules_attributes_#{position}_priority",
+          name: "enterprise[tag_rules_attributes][#{position}][priority]",
+          value: "#{position}" }
+
+        %input{ type: "hidden",
+          id: "enterprise_tag_rules_attributes_#{position}_is_default",
+          name: "enterprise[tag_rules_attributes][#{position}][is_default]",
+          value: "#{rule.is_default}" }
+
+        %input{ type: "hidden",
+          id: "enterprise_tag_rules_attributes_#{position}_preferred_customer_tags",
+          name: "enterprise[tag_rules_attributes][#{position}][preferred_customer_tags]",
+          value: "#{rule.preferred_customer_tags}" }
+
+        %input{ type: "hidden",
+          id: "enterprise_tag_rules_attributes_#{position}_preferred_#{TAG_RULE_OPTIONS[rule.type][:taggable]}_tags",
+          name: "enterprise[tag_rules_attributes][#{position}][preferred_#{TAG_RULE_OPTIONS[rule.type][:taggable]}_tags]",
+          value: "#{tag_list_for(rule)}" }
+
+      %span.text-normal
+        = TAG_RULE_OPTIONS[rule.type][:text_top]
+      %td
+        %tags-with-translation{ object: "rule", max: 1, "tags-attr" => "{TAG_RULE_OPTIONS[rule.type].tags_attribute}", "tag-list-attr" => "{{tag_rule_options[rule.type].tag_list_attribute}}" }
+      %td.actions{ rowspan: 2 }
+        %a{ data: { reflex: "click->TagRules#delete_tag_rule", tag_rule_id: rule.id }, :class => "delete-tag-rule icon-trash no-text" }
+    %tr
+      %td
+        %span.text-normal
+          = TAG_RULE_OPTIONS[rule.type][:text_bottom]
+      %td
+        %div
+          = render partial: "#{TAG_RULE_OPTIONS[rule.type][:input_template]}", locals: { rule: rule }
+  %hr

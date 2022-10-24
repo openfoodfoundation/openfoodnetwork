@@ -43,6 +43,7 @@ module Admin
     end
 
     def edit
+      clear_dirty_enterprise_cache(@object.id)
       @object = Enterprise.where(permalink: params[:id]).
         includes(users: [:ship_address, :bill_address]).first
       if params[:stimulus]
@@ -64,6 +65,7 @@ module Admin
 
       if @object.update(enterprise_params)
         flash[:success] = flash_message_for(@object, :successfully_updated)
+        clear_dirty_enterprise_cache(@object.id)
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
           format.js   { render layout: false }
@@ -352,6 +354,10 @@ module Admin
     # Used in Admin::ResourceController#create
     def permitted_resource_params
       enterprise_params
+    end
+
+    def clear_dirty_enterprise_cache(id)
+      Enterprise.clear_dirty(id, cache_namespace: session.id)
     end
   end
 end

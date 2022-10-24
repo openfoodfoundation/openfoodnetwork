@@ -1,0 +1,10 @@
+#new-tag-rule-dialog
+  .text-normal.margin-bottom-30.text-center
+    {{ 'js.admin.new_tag_rule_dialog.select_rule_type' | t }}
+
+  .text-center.margin-bottom-30
+    -# %select.fullwidth{ 'select2-min-search' => 5, 'ng-model' => 'newRuleType', 'ng-options' => 'ruleType.id as ruleType.name for ruleType in availableRuleTypes' }
+    %input.ofn-select2.fullwidth{ :id => 'rule_type_selector', ng: { model: "ruleType" }, data: "ruleTypes", 'min-search' => "5" }
+
+  .text-center
+    %input.button.red.icon-plus{ type: 'button', value: "{{ 'js.admin.new_tag_rule_dialog.add_rule' | t }}", ng: { click: 'addRule(tagGroup, ruleType)' } }

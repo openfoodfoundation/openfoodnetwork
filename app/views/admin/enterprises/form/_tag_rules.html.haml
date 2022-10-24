@@ -1,27 +1,58 @@
-.row{ ng: { controller: "TagRulesCtrl" } }
+-# .row{ ng: { controller: "TagRulesCtrl" } }
+-#   .eleven.columns.alpha.omega
+-#     %ofn-sortable{ axis: "y", handle: ".header", items: '.customer_tag', position: "tagGroup.position", after: { sort: "updateRuleCounts()" } }
+-#       .no_tags{ ng: { show: "tagGroups.length == 0" } }
+-#         = t('.no_tags_yet')
+-#       = render 'admin/enterprises/form/tag_rules/default_rules'
+-#       -# = render 'customer_tags'
+-#       .customer_tag{ id: "tg_{{tagGroup.position}}", ng: { repeat: "tagGroup in tagGroups" } }
+-#         .header
+-#           %table
+-#             %colgroup
+-#               %col{width: '35%'}
+-#               %col{width: '65%'}
+-#             %tr
+-#               %td
+-#                 %h5
+-#                   = t('.for_customers_tagged')
+-#               %td
+-#                 %tags-with-translation{ object: "tagGroup", max: 1, on: { tag: { added: "updateTagsRulesFor(tagGroup)", removed: "updateTagsRulesFor(tagGroup)" } } }
+-#
+-#         .no_rules{ ng: { show: "tagGroup.rules.length == 0" } }
+-#           = t('.no_rules_yet')
+-#         .tag_rule{ ng: { repeat: "rule in tagGroup.rules" } }
+-#         .add_rule.text-center
+-#           %input.button.icon-plus{ type: 'button', value: t('.add_new_rule'), "add-new-rule-to" => "addNewRuleTo", "tag-group" => "tagGroup", "new-tag-rule-dialog" => true }
+-#       .add_tag
+-#         %input.button.red.icon-plus{ type: 'button', value: t('.add_new_tag'), ng: { click: 'addNewTag()' } }
+
+.row{ data: { controller: "tag-rules" } }
   .eleven.columns.alpha.omega
     %ofn-sortable{ axis: "y", handle: ".header", items: '.customer_tag', position: "tagGroup.position", after: { sort: "updateRuleCounts()" } }
-      .no_tags{ ng: { show: "tagGroups.length == 0" } }
-        = t('.no_tags_yet')
-      = render 'admin/enterprises/form/tag_rules/default_rules'
+      - unless enterprise.tag_groups.any?
+        .no_tags
+          = t('.no_tags_yet')
+      = render "admin/enterprises/form/tag_rules/default_rules", default_tag_group: enterprise.default_tag_group, enterprise: enterprise
       -# = render 'customer_tags'
-      .customer_tag{ id: "tg_{{tagGroup.position}}", ng: { repeat: "tagGroup in tagGroups" } }
-        .header
-          %table
-            %colgroup
-              %col{width: '35%'}
-              %col{width: '65%'}
-            %tr
-              %td
-                %h5
-                  = t('.for_customers_tagged')
+      - enterprise.tag_groups.each do |tag_group|
+        .customer_tag{ id: "tg_#{tag_group.position}" }
+          .header
+            %table
+              %colgroup
+                %col{width: '35%'}
+                  %col{width: '65%'}
+                    %tr
+                      %td
+                        %h5
+                          = t('.for_customers_tagged')
               %td
                 %tags-with-translation{ object: "tagGroup", max: 1, on: { tag: { added: "updateTagsRulesFor(tagGroup)", removed: "updateTagsRulesFor(tagGroup)" } } }
 
-        .no_rules{ ng: { show: "tagGroup.rules.length == 0" } }
-          = t('.no_rules_yet')
-        .tag_rule{ ng: { repeat: "rule in tagGroup.rules" } }
-        .add_rule.text-center
-          %input.button.icon-plus{ type: 'button', value: t('.add_new_rule'), "add-new-rule-to" => "addNewRuleTo", "tag-group" => "tagGroup", "new-tag-rule-dialog" => true, "data-action": "click->dirty-form#makeDirty" }
+          - unless tag_group.rules.any?
+            .no_rules
+              = t('.no_rules_yet')
+          = render partial: "admin/enterprises/form/tag_rules/tag_rule", collection: tag_group.rules, as: :rule, locals: { position: tag_group.position, enterprise_id: enterprise.id }
+          .add_rule.text-center
+            %input.button.icon-plus{ type: 'button', value: t('.add_new_rule'), data: { reflex: "click->TagRules#add_new_rule_to", tag_group_position: tag_group.position, enterprise_id: enterprise.id } }
       .add_tag
-        %input.button.red.icon-plus{ type: 'button', value: t('.add_new_tag'), ng: { click: 'addNewTag()' }, "data-action": "click->dirty-form#makeDirty" }
+        %input.button.red.icon-plus{ type: 'button', value: t('.add_new_tag'), data: { reflex: "click->TagRules#add_new_tag", enterprise_id: enterprise.id } }
