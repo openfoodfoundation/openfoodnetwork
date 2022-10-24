@@ -9,6 +9,7 @@ describe Spree::ApiKeysController, type: :controller, performance: true do
   include ControllerRequestsHelper
 
   let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
   let(:redirect_path) { "#{spree.account_path}#/developer_settings" }
 
   before do
@@ -19,6 +20,15 @@ describe Spree::ApiKeysController, type: :controller, performance: true do
     it "creates a new api key" do
       expect { spree_post :create }.to change { user.reload.spree_api_key }
       expect(user.spree_api_key).to be_present
+    end
+
+    it "denies creating a new api key for other user" do
+      expect {
+        spree_post :create, id: other_user.id
+        other_user.reload
+      }.to_not change {
+        other_user.spree_api_key
+      }
     end
 
     it "redirects to the api keys tab on account page " do
