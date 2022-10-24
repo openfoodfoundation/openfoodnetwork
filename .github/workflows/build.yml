@@ -64,7 +64,7 @@ jobs:
           bundle exec rake parallel:setup
 
       - name: Run tests
-        run: bundle exec parallel_rspec -- ${{ matrix.specs }}
+        run: RAILS_ENV=test bundle exec parallel_rspec -- ${{ matrix.specs }}
 
       - name: Archive failed tests screenshots
         if: failure()
