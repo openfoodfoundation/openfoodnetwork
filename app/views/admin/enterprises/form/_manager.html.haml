@@ -1,0 +1,19 @@
+- traslation_path = "admin.enterprises.form.users"
+%tr.animate-repeat{ id: dom_id(manager, :manager) }
+  %td
+    = hidden_field_tag "enterprise[user_ids][]", nil, multiple: true, value: manager.id
+    = manager.email
+    - if manager.confirmed?
+      = render partial: 'admin/shared/inline_tooltip', locals: {tooltip_text: t('admin.enterprises.form.users.email_confirmed'), icon_class: 'confirmation confirmed fa fa-check-circle'}
+    - else
+      = render partial: 'admin/shared/inline_tooltip', locals: {tooltip_text: t('admin.enterprises.form.users.email_not_confirmed'), icon_class: 'confirmation unconfirmed fa fa-exclamation-triangle'}
+
+    - if owner == manager
+      = render partial: 'admin/shared/inline_tooltip', locals: {tooltip_text: t('admin.enterprises.form.users.owner'), icon_class: 'role owner fa fa-star'}
+
+    - if contact_person == manager
+      = render partial: 'admin/shared/inline_tooltip', locals: {tooltip_text: t('admin.enterprises.form.users.contact'), icon_class: 'role contact fa fa-envelope-o'}
+
+  %td.actions
+    %a{ :class => "icon-trash no-text #{ 'disabled' if manager == owner || manager == contact_person}",
+    data: { controller: "enterprise-manager", "manager-id": manager.id, action: "click->enterprise-manager#remove click->dirty-form#makeDirty"} }

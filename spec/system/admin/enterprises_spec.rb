@@ -72,6 +72,7 @@ describe '
     shipping_method = create(:shipping_method, distributors: [e2])
     enterprise_fee = create(:enterprise_fee, enterprise: @enterprise )
     user = create(:user)
+    @enterprise.users << user
 
     admin = login_as_admin
 
@@ -98,8 +99,8 @@ describe '
     accept_alert do
       within(".side_menu") { click_link "Users" }
     end
-    select2_select user.email, from: 'enterprise_owner_id'
-    expect(page).to have_no_selector '.select2-drop-mask' # Ensure select2 has finished
+    page.find(id: 'enterprise_owner_id-ts-control').click
+    page.find('#enterprise_owner_id-ts-dropdown .option', text: user.email).click
 
     accept_alert do
       click_link "About"
@@ -399,9 +400,6 @@ describe '
 
       fill_in 'enterprise_name', with: 'Eaterprises'
 
-      # Because poltergist does not support form onchange event
-      # We need trigger the change manually
-      page.evaluate_script("angular.element(enterprise_form).scope().setFormDirty()")
       click_button 'Update'
 
       expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully updated!')
@@ -415,9 +413,6 @@ describe '
 
         fill_in 'enterprise_name', with: 'Eaterprises'
 
-        # Because poltergist does not support form onchange event
-        # We need trigger the change manually
-        page.evaluate_script("angular.element(enterprise_form).scope().setFormDirty()")
         click_button 'Update'
 
         expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully updated!')
