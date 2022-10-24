@@ -517,6 +517,10 @@ describe "AdminProductEditCtrl", ->
 
   describe "submitting products to be updated", ->
     describe "packing products", ->
+      beforeEach ->
+        window.bigDecimal = jasmine.createSpyObj "bigDecimal", ["multiply"]
+        window.bigDecimal.multiply.and.callFake (a, b, c) -> (a * b).toFixed(c)
+
       it "extracts variant_unit_with_scale into variant_unit and variant_unit_scale", ->
         testProduct =
           id: 1
@@ -589,6 +593,8 @@ describe "AdminProductEditCtrl", ->
 
       beforeEach ->
         BulkProducts.products = [testProduct]
+        window.bigDecimal = jasmine.createSpyObj "bigDecimal", ["multiply"]
+        window.bigDecimal.multiply.and.callFake (a, b, c) -> (a * b).toFixed(c)
 
       it "extracts unit_value and unit_description from unit_value_with_description", ->
         testProduct = {id: 123, variant_unit_scale: 1.0}

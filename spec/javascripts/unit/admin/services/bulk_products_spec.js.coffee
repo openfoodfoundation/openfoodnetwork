@@ -3,6 +3,8 @@ describe "BulkProducts service", ->
 
   beforeEach ->
     module "ofn.admin"
+    window.bigDecimal = jasmine.createSpyObj "bigDecimal", ["round"]
+    window.bigDecimal.round.and.callFake (a, b) -> a.toFixed(b)
 
   beforeEach inject (_BulkProducts_, _$httpBackend_) ->
     BulkProducts = _BulkProducts_

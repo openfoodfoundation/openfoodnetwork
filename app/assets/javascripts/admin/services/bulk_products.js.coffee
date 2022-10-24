@@ -66,7 +66,7 @@ angular.module("ofn.admin").factory "BulkProducts", (ProductResource, dataFetche
       if variant.unit_value?
         if product.variant_unit_scale
           variant_unit_value = @divideAsInteger variant.unit_value, product.variant_unit_scale
-          parseFloat(bigDecimal.round(variant_unit_value, 2))
+          parseFloat(window.bigDecimal.round(variant_unit_value, 2))
         else
           variant.unit_value
       else
