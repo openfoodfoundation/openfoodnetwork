@@ -205,34 +205,19 @@ describe "Orders And Fulfillment" do
               rows = find("table.report__table").all("tbody tr")
               table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
 
-              expect(table[0]).to eq([
-                                       "Supplier Name",
-                                       "Baked Beans",
-                                       "1g Big, S",
-                                       "3",
-                                       "0.003",
-                                       "10.0",
-                                       "30.0"
-                                     ])
+              expect(table).to include [
+                "Supplier Name", "Baked Beans", "1g Big, S",
+                "3", "0.003", "10.0", "30.0"
+              ]
 
-              expect(table[1]).to eq([
-                                       "Supplier Name",
-                                       "Baked Beans",
-                                       "1g Small, S",
-                                       "7",
-                                       "0.007",
-                                       "10.0",
-                                       "70.0"
-                                     ])
-              expect(table[2]).to eq([
-                                       "",
-                                       "",
-                                       "TOTAL",
-                                       "10",
-                                       "0.01",
-                                       "",
-                                       "100.0"
-                                     ])
+              expect(table).to include [
+                "Supplier Name", "Baked Beans", "1g Small, S",
+                "7", "0.007", "10.0", "70.0"
+              ]
+              expect(table[2]).to eq [
+                "", "", "TOTAL",
+                "10", "0.01", "", "100.0"
+              ]
             end
           end
 
