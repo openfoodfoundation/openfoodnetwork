@@ -190,10 +190,13 @@ describe '
         expect(page).not_to have_selector "#p_#{order.variants.first.product_id}"
       end
 
-      it 'keeps the line item on the order (admin)' do
-        visit spree.admin_orders_path
-        find(".icon-edit").click
-        expect(page).to have_content(line_item.product.name.to_s)
+      context "a deleted line item from a shipped order" do
+        before do
+          login_as_admin_and_visit spree.edit_admin_order_path(order)
+        end
+        it 'keeps the line item on the order (admin)' do
+          expect(page).to have_content(line_item.product.name.to_s)
+        end
       end
     end
   end

@@ -26,11 +26,11 @@ describe '
   before do
     order.finalize!
     create(:check_payment, order: order, amount: order.total)
+    login_as_admin_and_visit spree.admin_orders_path
   end
 
   it "adding taxed adjustments to an order" do
     # When I go to the adjustments page for the order
-    login_as_admin_and_visit spree.admin_orders_path
     page.find('td.actions a.icon-edit').click
     click_link 'Adjustments'
 
@@ -53,7 +53,6 @@ describe '
                                      amount: 110, tax_category: tax_category, order: order)
 
     # When I go to the adjustments page for the order
-    login_as_admin_and_visit spree.admin_orders_path
     page.find('td.actions a.icon-edit').click
     click_link 'Adjustments'
     page.find('tr', text: 'Extra Adjustment').find('a.icon-edit').click
@@ -75,7 +74,6 @@ describe '
                                      amount: 110, tax_category: nil, order: order)
 
     # When I go to the adjustments page for the order
-    login_as_admin_and_visit spree.admin_orders_path
     page.find('td.actions a.icon-edit').click
     click_link 'Adjustments'
     page.find('tr', text: 'Extra Adjustment').find('a.icon-edit').click
@@ -91,17 +89,22 @@ describe '
     expect(page).to have_selector 'td.tax', text: '10.00'
   end
 
-  it "viewing adjustments on a canceled order" do
+  context "on a canceled order" do
     # Given a taxed adjustment
-    adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order,
-                                     amount: 110, tax_category: tax_category, order: order)
-    order.cancel!
+    let!(:adjustment) {
+      create(:adjustment, label: "Extra Adjustment", adjustable: order,
+                          amount: 110, tax_category: tax_category, order: order)
+    }
+    before do
+      order.cancel!
+      login_as_admin_and_visit spree.edit_admin_order_path(order)
+    end
 
-    login_as_admin_and_visit spree.edit_admin_order_path(order)
+    it "displays adjustments" do
+      click_link 'Adjustments'
 
-    click_link 'Adjustments'
-
-    expect(page).to_not have_selector('tr a.icon-edit')
-    expect(page).to_not have_selector('a.icon-plus'), text: I18n.t(:new_adjustment)
+      expect(page).to_not have_selector('tr a.icon-edit')
+      expect(page).to_not have_selector('a.icon-plus'), text: I18n.t(:new_adjustment)
+    end
   end
 end
