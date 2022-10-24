@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: true
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: docker/build
     - run: docker-compose up --detach
     - run: until curl -f -s http://localhost:3000; do echo "waiting for api server"; sleep 1; done
@@ -46,6 +46,6 @@ jobs:
 
     # Upload SARIF file (only available on public repos or github enterprise)
     - name: Upload SARIF file
-      uses: github/codeql-action/upload-sarif@v1
+      uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: mapi.sarif

@@ -45,16 +45,16 @@ jobs:
           - "engines/*/spec"
       fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: '14.15.5'
+          node-version: 16
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
@@ -92,16 +92,16 @@ jobs:
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: '14.15.5'
+          node-version: 16
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
