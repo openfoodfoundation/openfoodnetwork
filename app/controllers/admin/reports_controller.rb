@@ -43,17 +43,19 @@ module Admin
       @report_type = report_type
       @report_subtypes = report_subtypes
       @report_subtype = report_subtype
+      @report_title = if report_subtype
+                        report_subtype_title
+                      else
+                        I18n.t(:name, scope: [:admin, :reports, @report_type])
+                      end
 
       # Initialize data
       params[:display_summary_row] = true if request.get?
-      if OpenFoodNetwork::FeatureToggle.enabled?(:report_inverse_columns_logic,
-                                                 spree_current_user)
-        @params_fields_to_show = if request.get?
-                                   @report.columns.keys
-                                 else
-                                   params[:fields_to_show]
-                                 end
-      end
+      @params_fields_to_show = if request.get?
+                                 @report.columns.keys - @report.fields_to_hide
+                               else
+                                 params[:fields_to_show]
+                               end
 
       @data = Reporting::FrontendData.new(spree_current_user)
     end

@@ -31,54 +31,34 @@ describe '
     end
   end
 
-  shared_examples "Can access Customers reports and generate report" do |inverse_columns_logic|
+  describe "Can access Customers reports and generate customers report" do
     before do
-      allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).and_call_original
-      allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(
-        :report_inverse_columns_logic, anything
-      ).and_return(inverse_columns_logic)
+      login_as_admin_and_visit admin_reports_path
     end
 
-    describe "Customers report" do
-      before do
-        login_as_admin_and_visit admin_reports_path
-      end
+    it "customers report" do
+      click_link "Mailing List"
+      click_button "Go"
 
-      it "customers report" do
-        click_link "Mailing List"
-        unless inverse_columns_logic
-          expect(page).to have_select('report_subtype',
-                                      selected: 'Mailing List')
-        end
-        click_button "Go"
+      rows = find("table.report__table").all("thead tr")
+      table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+      expect(table.sort).to eq([
+        ["Email", "First Name", "Last Name", "Suburb"].map(&:upcase)
+      ].sort)
+    end
 
-        rows = find("table.report__table").all("thead tr")
-        table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-        expect(table.sort).to eq([
-          ["Email", "First Name", "Last Name", "Suburb"].map(&:upcase)
-        ].sort)
-      end
+    it "customers report" do
+      click_link "Addresses"
+      click_button "Go"
 
-      it "customers report" do
-        click_link "Addresses"
-        unless inverse_columns_logic
-          expect(page).to have_select('report_subtype',
-                                      selected: 'Addresses')
-        end
-
-        click_button "Go"
-        rows = find("table.report__table").all("thead tr")
-        table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-        expect(table.sort).to eq([
-          ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address",
-           "Shipping Method"].map(&:upcase)
-        ].sort)
-      end
+      rows = find("table.report__table").all("thead tr")
+      table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+      expect(table.sort).to eq([
+        ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address",
+         "Shipping Method"].map(&:upcase)
+      ].sort)
     end
   end
-
-  it_behaves_like "Can access Customers reports and generate report", true
-  it_behaves_like "Can access Customers reports and generate report", false
 
   describe "Order cycle management report" do
     before do
@@ -155,7 +135,7 @@ describe '
     end
 
     it "generates the payments reports" do
-      click_link 'Payment Reports'
+      click_link 'Payments By Type'
       click_button 'Go'
 
       rows = find("table.report__table").all("thead tr")
@@ -177,7 +157,7 @@ describe '
     end
   end
 
-  shared_examples "sales tax report" do |inverse_columns_logic|
+  context "sales tax report" do
     let(:distributor1) {
       create(:distributor_enterprise, with_payment_and_shipping: true, charges_sales_tax: true)
     }
@@ -226,10 +206,6 @@ describe '
     }
 
     before do
-      allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).and_call_original
-      allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).with(
-        :report_inverse_columns_logic, anything
-      ).and_return(inverse_columns_logic)
       order1.reload
       break unless order1.next! until order1.delivery?
 
@@ -245,12 +221,9 @@ describe '
     end
 
     it "generate Tax Types reports" do
-      if inverse_columns_logic
-        click_link "Tax Types"
-      else
-        click_link "Sales Tax"
-        select("Tax Types", from: "report_subtype")
-      end
+      click_link "Tax Types"
+      click_button "Go"
+
       # Then it should give me access only to managed enterprises
       expect(page).to     have_select 'q_distributor_id_eq',
                                       with_options: [user1.enterprises.first.name]
@@ -279,30 +252,15 @@ describe '
     end
 
     it "generate Tax Rates report" do
-      if inverse_columns_logic
-        click_link "Tax Rates"
-      else
-        click_link "Sales Tax"
-        select("Tax Rates", from: "report_subtype")
-      end
+      click_link "Tax Rates"
+      click_button "Go"
 
-      click_button 'Go'
       expect(page).to have_css(".report__table thead th", text: "20.0% ($)")
       expect(page).to have_css(".report__table thead th", text: "0.0% ($)")
-
-      if inverse_columns_logic.eql?("false")
-        expect(page).to have_table_row [order1.number.to_s, "1446.7", "16.76", "0", "270.08",
-                                        "286.84", "1733.54"]
-      end
-      if inverse_columns_logic.eql?("true")
-        expect(page).to have_table_row [order1.number.to_s, "1446.7", "0", "16.76", "270.08",
-                                        "286.84", "1733.54"]
-      end
+      expect(page).to have_table_row [order1.number.to_s, "1446.7", "16.76", "0", "270.08",
+                                      "286.84", "1733.54"]
     end
   end
-
-  it_behaves_like "sales tax report", false
-  it_behaves_like "sales tax report", true
 
   describe "products and inventory report", js: true do
     let(:supplier) { create(:supplier_enterprise, name: 'Supplier Name') }
@@ -340,7 +298,7 @@ describe '
 
       expect(page).to have_content "All products"
       expect(page).to have_content "Inventory (on hand)"
-      click_link 'Products & Inventory'
+      click_link 'All products'
       click_button "Go"
       expect(page).to have_content "Supplier"
       expect(page).to have_table_row ["Supplier", "Producer Suburb", "Product",
@@ -426,12 +384,11 @@ describe '
   describe 'bulk coop report' do
     before do
       login_as_admin_and_visit admin_reports_path
-      click_link 'Bulk Co-Op'
     end
 
     it "generating Bulk Co-op Supplier Report" do
-      select "Bulk Co-op Supplier Report", from: "report_subtype"
-      click_button 'Go'
+      click_link "Bulk Co-op Supplier Report"
+      click_button "Go"
 
       expect(page).to have_table_row [
         "Supplier",
@@ -449,8 +406,8 @@ describe '
     end
 
     it "generating Bulk Co-op Allocation report" do
-      select "Bulk Co-op Allocation", from: "report_subtype"
-      click_button 'Go'
+      click_link "Bulk Co-op Allocation"
+      click_button "Go"
 
       expect(page).to have_table_row [
         "Customer",
@@ -468,8 +425,8 @@ describe '
     end
 
     it "generating Bulk Co-op Packing Sheets report" do
-      select "Bulk Co-op Packing Sheets", from: "report_subtype"
-      click_button 'Go'
+      click_link "Bulk Co-op Packing Sheets"
+      click_button "Go"
 
       expect(page).to have_table_row [
         "Customer",
@@ -480,8 +437,8 @@ describe '
     end
 
     it "generating Bulk Co-op Customer Payments report" do
-      select "Bulk Co-op Customer Payments", from: "report_subtype"
-      click_button 'Go'
+      click_link "Bulk Co-op Customer Payments"
+      click_button "Go"
 
       expect(page).to have_table_row [
         "Customer",
@@ -581,9 +538,6 @@ describe '
         Timecop.travel(Time.zone.local(2021, 4, 25, 14, 0, 0)) { order1.finalize! }
         order1.reload
         order1.create_tax_charge!
-
-        login_as_admin_and_visit admin_reports_path
-        click_link 'Xero Invoices'
       end
 
       around do |example|
@@ -592,76 +546,93 @@ describe '
         end
       end
 
-      it "shows Xero invoices report" do
-        click_button "Go"
-        expect(xero_invoice_table).to match_table [
-          xero_invoice_header,
-          xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,
-                                   'GST Free Income'),
-          xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45,
-                                   'GST on Income'),
-          xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,
-                                   'GST Free Income'),
-          xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0, 'GST on Income'),
-          xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,
-                                   'GST on Income'),
-          xero_invoice_summary_row('Total untaxable admin adjustments (no tax)',      30.0,
-                                   'GST Free Income'),
-          xero_invoice_summary_row('Total taxable admin adjustments (tax inclusive)', 40.0,
-                                   'GST on Income')
-        ]
+      context "summary report" do
+        before do
+          login_as_admin_and_visit admin_reports_path
+          click_link "Summary"
+          click_button 'Go'
+        end
+
+        it "shows Xero invoices report" do
+          expect(xero_invoice_table).to match_table [
+            xero_invoice_header,
+            xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,
+                                     'GST Free Income'),
+            xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45,
+                                     'GST on Income'),
+            xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,
+                                     'GST Free Income'),
+            xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,
+                                     'GST on Income'),
+            xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,
+                                     'GST on Income'),
+            xero_invoice_summary_row('Total untaxable admin adjustments (no tax)',      30.0,
+                                     'GST Free Income'),
+            xero_invoice_summary_row('Total taxable admin adjustments (tax inclusive)', 40.0,
+                                     'GST on Income')
+          ]
+        end
+
+        it "can customise a number of fields" do
+          fill_in 'initial_invoice_number', with: '5'
+
+          pick_datetime '#invoice_date', Date.new(2021, 2, 12)
+          pick_datetime '#due_date', Date.new(2021, 3, 12)
+
+          fill_in 'account_code', with: 'abc123'
+          click_button 'Go'
+
+          opts = { invoice_number: '5', invoice_date: '2021-02-12',
+                   due_date: '2021-03-12', account_code: 'abc123' }
+
+          expect(xero_invoice_table).to match_table [
+            xero_invoice_header,
+            xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,
+                                     'GST Free Income', opts),
+            xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45,
+                                     'GST on Income',   opts),
+            xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,
+                                     'GST Free Income', opts),
+            xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,
+                                     'GST on Income',   opts),
+            xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,
+                                     'GST on Income',   opts),
+            xero_invoice_summary_row('Total untaxable admin adjustments (no tax)',      30.0,
+                                     'GST Free Income', opts),
+            xero_invoice_summary_row('Total taxable admin adjustments (tax inclusive)', 40.0,
+                                     'GST on Income',   opts)
+          ]
+        end
       end
 
-      it "can customise a number of fields" do
-        fill_in 'initial_invoice_number', with: '5'
+      context "detailed report" do
+        before do
+          login_as_admin_and_visit admin_reports_path
+          click_link "Detailed"
+          click_button 'Go'
+        end
 
-        pick_datetime '#invoice_date', Date.new(2021, 2, 12)
-        pick_datetime '#due_date', Date.new(2021, 3, 12)
+        it "generates a detailed report" do
+          login_as_admin_and_visit admin_reports_path
+          click_link "Detailed"
+          click_button 'Go'
 
-        fill_in 'account_code', with: 'abc123'
-        click_button 'Go'
+          opts = {}
 
-        opts = { invoice_number: '5', invoice_date: '2021-02-12',
-                 due_date: '2021-03-12', account_code: 'abc123' }
-
-        expect(xero_invoice_table).to match_table [
-          xero_invoice_header,
-          xero_invoice_summary_row('Total untaxable produce (no tax)',       12.54,
-                                   'GST Free Income', opts),
-          xero_invoice_summary_row('Total taxable produce (tax inclusive)',  1500.45,
-                                   'GST on Income',   opts),
-          xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,
-                                   'GST Free Income', opts),
-          xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,
-                                   'GST on Income',   opts),
-          xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,
-                                   'GST on Income',   opts),
-          xero_invoice_summary_row('Total untaxable admin adjustments (no tax)',      30.0,
-                                   'GST Free Income', opts),
-          xero_invoice_summary_row('Total taxable admin adjustments (tax inclusive)', 40.0,
-                                   'GST on Income',   opts)
-        ]
-      end
-
-      it "generates a detailed report" do
-        select 'Detailed', from: 'report_subtype'
-        click_button 'Go'
-
-        opts = {}
-
-        expect(xero_invoice_table).to match_table [
-          xero_invoice_header,
-          xero_invoice_li_row(line_item1),
-          xero_invoice_li_row(line_item2),
-          xero_invoice_adjustment_row(adj_admin1),
-          xero_invoice_adjustment_row(adj_admin2),
-          xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,
-                                   'GST Free Income', opts),
-          xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,
-                                   'GST on Income',   opts),
-          xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,
-                                   'GST on Income',   opts)
-        ]
+          expect(xero_invoice_table).to match_table [
+            xero_invoice_header,
+            xero_invoice_li_row(line_item1),
+            xero_invoice_li_row(line_item2),
+            xero_invoice_adjustment_row(adj_admin1),
+            xero_invoice_adjustment_row(adj_admin2),
+            xero_invoice_summary_row('Total untaxable fees (no tax)',          10.0,
+                                     'GST Free Income', opts),
+            xero_invoice_summary_row('Total taxable fees (tax inclusive)',     20.0,
+                                     'GST on Income',   opts),
+            xero_invoice_summary_row('Delivery Shipping Cost (tax inclusive)', 100.55,
+                                     'GST on Income',   opts)
+          ]
+        end
       end
     end
 
