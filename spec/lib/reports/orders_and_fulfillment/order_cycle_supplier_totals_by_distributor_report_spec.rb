@@ -23,7 +23,7 @@ module Reporting
         end
 
         it "generates the report" do
-          expect(report_table.length).to eq(2)
+          expect(report_table.length).to eq(6)
         end
 
         it "has a variant row under the distributor" do
