@@ -127,6 +127,11 @@ module WebHelper
     page.find(:css, 'body').click
   end
 
+  def click_on_select2(value, options)
+    find("#s2id_#{options[:from]}").click
+    find(:css, ".select2-result-label", text: options[:select_text] || value).click
+  end
+
   def tomselect_search_and_select(value, options)
     tomselect_wrapper = page.find("[name='#{options[:from]}']").sibling(".ts-wrapper")
     tomselect_wrapper.find(".ts-control").click

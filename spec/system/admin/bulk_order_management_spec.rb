@@ -476,24 +476,18 @@ describe '
         it "allows filters to be used in combination" do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
-          find("#s2id_order_cycle_filter").click
-          find(".select2-result-label", text: oc1.name.to_s).click
+          click_on_select2 oc1.name, from: "order_cycle_filter"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
-          find("#s2id_distributor_filter").click
-          find(".select2-result-label", text: d1.name.to_s).click
-          find("#s2id_supplier_filter").click
-          find(".select2-result-label", text: s1.name.to_s).click
+          click_on_select2 d1.name, from: "distributor_filter"
+          click_on_select2 s1.name, from: "supplier_filter"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
-          find("#s2id_distributor_filter").click
-          find(".select2-result-label", text: d2.name.to_s).click
-          find("#s2id_supplier_filter").click
-          find(".select2-result-label", text: s2.name.to_s).click
+          click_on_select2 d2.name, from: "distributor_filter"
+          click_on_select2 s2.name, from: "supplier_filter"
           expect(page).to have_no_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
-          find("#s2id_order_cycle_filter").click
-          find(".select2-result-label", text: oc2.name.to_s).click
+          click_on_select2 oc2.name, from: "order_cycle_filter"
           expect(page).to have_no_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
         end
@@ -501,12 +495,9 @@ describe '
         it "displays a 'Clear All' button which sets all select filters to 'All'" do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
-          find("#s2id_order_cycle_filter").click
-          find(".select2-result-label", text: oc1.name.to_s).click
-          find("#s2id_distributor_filter").click
-          find(".select2-result-label", text: d1.name.to_s).click
-          find("#s2id_supplier_filter").click
-          find(".select2-result-label", text: s1.name.to_s).click
+          click_on_select2 oc1.name, from: "order_cycle_filter"
+          click_on_select2 d1.name, from: "distributor_filter"
+          click_on_select2 s1.name, from: "supplier_filter"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           expect(page).to have_button "Clear All"
