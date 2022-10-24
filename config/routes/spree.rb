@@ -9,12 +9,14 @@ end
 # Overriding Devise routes to use our own controller
 Spree::Core::Engine.routes.draw do
   devise_for :spree_user,
+             :router_name => "spree",
              :class_name => 'Spree::User',
              :controllers => { :sessions => 'spree/user_sessions',
                                :registrations => 'user_registrations',
                                :passwords => 'user_passwords',
-                               :confirmations => 'user_confirmations'},
-             :skip => [:unlocks, :omniauth_callbacks],
+                               :confirmations => 'user_confirmations',
+                               :omniauth_callbacks => "omniauth_callbacks" },
+             :skip => [:unlocks],
              :path_names => { :sign_out => 'logout' },
              :path_prefix => :user
 

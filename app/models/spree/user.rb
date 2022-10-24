@@ -7,8 +7,10 @@ module Spree
     searchable_attributes :email
 
     devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable,
-           :rememberable, :trackable, :validatable,
-           :encryptable, :confirmable, encryptor: 'authlogic_sha512', reconfirmable: true
+           :rememberable, :trackable, :validatable, :omniauthable,
+           :encryptable, :confirmable,
+           encryptor: 'authlogic_sha512', reconfirmable: true,
+           omniauth_providers: [:openid_connect]
 
     has_many :orders
     belongs_to :ship_address, class_name: 'Spree::Address'
@@ -44,11 +46,17 @@ module Spree
     after_create :associate_customers, :associate_orders
 
     validate :limit_owned_enterprises
+    validates :uid, uniqueness: true, if: lambda { uid.present? }
+    validates_email :uid, if: lambda { uid.present? }
 
     class DestroyWithOrdersError < StandardError; end
 
     def self.admin_created?
       User.admin.count > 0
+    end
+
+    def link_from_omniauth(auth)
+      update!(provider: auth.provider, uid: auth.uid)
     end
 
     # Whether a user has a role or not.
