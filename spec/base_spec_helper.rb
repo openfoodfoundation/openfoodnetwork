@@ -11,6 +11,7 @@ require 'view_component/test_helpers'
 
 require_relative "../config/environment"
 require 'rspec/rails'
+require 'rspec/retry'
 require 'capybara'
 require 'paper_trail/frameworks/rspec'
 require "factory_bot_rails"
@@ -57,6 +58,9 @@ RSpec.configure do |config|
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
+
+  # Show retries in test output
+  config.verbose_retry = true
 
   # Force colored output, whether or not the output is a TTY
   config.color_mode = :on
