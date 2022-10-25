@@ -461,7 +461,7 @@ en:
     products_page:
       title: Products
       filters:
-        categories: 
+        categories:
           title: Categories
           selected_categories: "%{count} categories selected"
         producers:
