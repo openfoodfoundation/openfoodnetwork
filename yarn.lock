@@ -1722,9 +1722,9 @@
   integrity sha512-iDMHUhiEJ1xFeicyHcZQQgBzhtk5mPR0QZO3L6wtqzMsJEk2TKECuCQTGKjm+KJTHVY0dKq1dOOAWvODjpd2Mg==
 
 "@hotwired/turbo@^7.1.0":
-  version "7.2.2"
-  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-7.2.2.tgz#69e1f4be7f468690fa31791099e2a837e88c9518"
-  integrity sha512-YfTHwnur3tDFS/D5JYstU+09Z3bvCF6euqqXajHAks2lTSIDbLc8gMp8yLomD+cAC337h1wnv0oWduK6+6pUDw==
+  version "7.2.4"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-7.2.4.tgz#0d35541be32cfae3b4f78c6ab9138f5b21f28a21"
+  integrity sha512-c3xlOroHp/cCZHDOuLp6uzQYEbvXBUVaal0puXoGJ9M8L/KHwZ3hQozD4dVeSN9msHWLxxtmPT1TlCN7gFhj4w==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
