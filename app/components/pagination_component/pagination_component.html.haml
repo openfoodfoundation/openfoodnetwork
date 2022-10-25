@@ -2,7 +2,7 @@
   %nav{"aria-label": "pagination"}
     .pagination
       .pagination-prev{data: @prev.nil? ? nil : @data, "data-page": @prev, class: "#{'inactive' if @prev.nil?}"}
-        Previous
+        = I18n.t "components.pagination.previous"
       .pagination-pages
         - @series.each do |page|
           - if page == :gap
@@ -12,5 +12,5 @@
             .pagination-page{data: @data, "data-page": page, class: "#{'active' if page.to_i == @page}"}
               = page
       .pagination-next{data: @next.nil? ? nil : @data, "data-page": @next, class: "#{'inactive' if @next.nil?}"}
-        Next
+        = I18n.t "components.pagination.next"
 

@@ -4466,3 +4466,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     selector_with_filter:
       selected_items: "%{count} selected"
       search_placeholder: Search
+    pagination:
+      next: Next
+      previous: Previous
