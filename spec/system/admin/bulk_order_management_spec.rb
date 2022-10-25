@@ -473,7 +473,7 @@ describe '
           visit_bulk_order_management
         end
 
-        it "allows filters to be used in combination" do
+        it "allows filters to be used in combination", retry: 2 do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           click_on_select2 oc1.name, from: "order_cycle_filter"
@@ -492,7 +492,7 @@ describe '
           expect(page).to have_selector "tr#li_#{li2.id}"
         end
 
-        it "displays a 'Clear All' button which sets all select filters to 'All'" do
+        it "displays a 'Clear All' button which sets all select filters to 'All'", retry: 2 do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           click_on_select2 oc1.name, from: "order_cycle_filter"
