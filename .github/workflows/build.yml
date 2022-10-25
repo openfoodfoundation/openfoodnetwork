@@ -47,6 +47,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Setup redis
+        uses: supercharge/redis-github-action@1.4.0
+        with: 
+          redis-version: 6
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -93,6 +98,11 @@ jobs:
           POSTGRES_PASSWORD: f00d
     steps:
       - uses: actions/checkout@v3
+
+      - name: Setup redis
+        uses: supercharge/redis-github-action@1.4.0
+        with: 
+          redis-version: 6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
