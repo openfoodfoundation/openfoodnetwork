@@ -36,7 +36,7 @@ angular.module("admin.products")
           $scope.product.master.unit_description = match[3]
       else
         value = $scope.product.master.unit_value
-        value /= $scope.product.variant_unit_scale if $scope.product.master.unit_value && $scope.product.variant_unit_scale
+        value = window.bigDecimal.divide(value, $scope.product.variant_unit_scale, 2) if $scope.product.master.unit_value && $scope.product.variant_unit_scale
         $scope.product.master.unit_value_with_description = value + " " + $scope.product.master.unit_description
 
     $scope.processUnitPrice = ->
