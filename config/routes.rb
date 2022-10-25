@@ -117,7 +117,7 @@ Openfoodnetwork::Application.routes.draw do
 
   get 'sitemap.xml', to: 'sitemap#index', defaults: { format: 'xml' }
 
-  unless Rails.env.production?
+  constraints FeatureToggleConstraint.new(:dfc_provider) do
     # Mount DFC API endpoints
     mount DfcProvider::Engine, at: '/'
   end
