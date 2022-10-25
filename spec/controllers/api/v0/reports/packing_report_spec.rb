@@ -62,20 +62,19 @@ describe Api::V0::ReportsController, type: :controller do
     results
   end
 
-  def distributor_report_row(line_item) # rubocop:disable Metrics/AbcSize
+  def distributor_report_row(line_item)
     {
       "hub" => line_item.order.distributor.name,
       "customer_code" => line_item.order.customer&.code,
-      "first_name" => line_item.order.bill_address.firstname,
-      "last_name" => line_item.order.bill_address.lastname,
       "supplier" => line_item.product.supplier.name,
       "product" => line_item.product.name,
       "variant" => line_item.full_name,
       "quantity" => line_item.quantity,
       "price" => (line_item.quantity * line_item.price).to_s,
-      "phone" => line_item.order.bill_address.phone,
       "temp_controlled" => line_item.product.shipping_category&.temperature_controlled
-    }.merge(dimensions(line_item))
+    }.
+      merge(dimensions(line_item)).
+      merge(contacts(line_item.order.bill_address))
   end
 
   def supplier_report_row(line_item)
@@ -100,6 +99,14 @@ describe Api::V0::ReportsController, type: :controller do
       "height" => line_item.height.to_s,
       "width" => line_item.width.to_s,
       "depth" => line_item.depth.to_s
+    }
+  end
+
+  def contacts(bill_address)
+    {
+      "first_name" => bill_address.firstname,
+      "last_name" => bill_address.lastname,
+      "phone" => bill_address.phone,
     }
   end
 
