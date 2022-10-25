@@ -128,11 +128,10 @@ describe 'shipping methods' do
       within(".tags .tag-list") do
         expect(page).to have_css '.tag-item', text: "local"
       end
+      click_button "Create"
 
-      click_button I18n.t("actions.create")
-
-      expect(page).to have_content I18n.t('spree.admin.shipping_methods.edit.editing_shipping_method')
-      expect(flash_message).to include "Teleport", "successfully created!"
+      expect(page).to have_content 'Shipping Method "Teleport" has been successfully created!'
+      expect(page).to have_content "Editing Shipping Method"
 
       expect(first('tags-input .tag-list ti-tag-item')).to have_content "local"
 
