@@ -473,33 +473,31 @@ describe '
           visit_bulk_order_management
         end
 
-        xit "allows filters to be used in combination" do
-          pending "#9811"
+        it "allows filters to be used in combination", retry: 2 do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
-          select2_select oc1.name, from: "order_cycle_filter"
+          click_on_select2 oc1.name, from: "order_cycle_filter"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
-          select2_select d1.name, from: "distributor_filter"
-          select2_select s1.name, from: "supplier_filter"
+          click_on_select2 d1.name, from: "distributor_filter"
+          click_on_select2 s1.name, from: "supplier_filter"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
-          select2_select d2.name, from: "distributor_filter"
-          select2_select s2.name, from: "supplier_filter"
+          click_on_select2 d2.name, from: "distributor_filter"
+          click_on_select2 s2.name, from: "supplier_filter"
           expect(page).to have_no_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
-          select2_select oc2.name, from: "order_cycle_filter"
+          click_on_select2 oc2.name, from: "order_cycle_filter"
           expect(page).to have_no_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
         end
 
-        xit "displays a 'Clear All' button which sets all select filters to 'All'" do
-          pending "#9810"
+        it "displays a 'Clear All' button which sets all select filters to 'All'", retry: 2 do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
-          select2_select oc1.name, from: "order_cycle_filter"
-          select2_select d1.name, from: "distributor_filter"
-          select2_select s1.name, from: "supplier_filter"
+          click_on_select2 oc1.name, from: "order_cycle_filter"
+          click_on_select2 d1.name, from: "distributor_filter"
+          click_on_select2 s1.name, from: "supplier_filter"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           expect(page).to have_button "Clear All"
