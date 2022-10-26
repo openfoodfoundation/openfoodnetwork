@@ -160,7 +160,6 @@ describe '
             # Revoke permission for the current user on that specific order by changing its owners
             order.update_attribute(:created_by, create(:user))
             order.update_attribute(:distributor, create(:distributor_enterprise))
-            order.reload
 
             page.find("span.icon-reorder", text: "ACTIONS").click
             within ".ofn-drop-down-with-prepend .menu" do
