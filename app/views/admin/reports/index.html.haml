@@ -15,6 +15,5 @@
           %td
             - if report_subtypes.empty?
               - name = I18n.t(:name, scope: [:admin, :reports, report_type])
-              - url = main_app.admin_report_url(report_type: report_type)
-              - report_subtypes = [[name, url]]
+              - report_subtypes = [[name, nil]]
             = render partial: "report_subtype", locals: { report_subtypes: report_subtypes, report_type: report_type }
