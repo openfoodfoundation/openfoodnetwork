@@ -37,8 +37,9 @@ angular.module('admin.orderCycles')
 
     $scope.setPickupTimeFieldDirty = (index) ->
       $timeout ->
-        pickup_time_field_name = "order_cycle_outgoing_exchange_" + index + "_pickup_time"
-        $scope.order_cycle_form[pickup_time_field_name].$setDirty()
+        if $scope.order_cycle_form?.$dirty
+          pickup_time_field_name = "order_cycle_outgoing_exchange_" + index + "_pickup_time"
+          $scope.order_cycle_form[pickup_time_field_name].$setDirty()
 
     $scope.removeDistributionOfVariant = (variant_id) ->
       OrderCycle.removeDistributionOfVariant(variant_id)
