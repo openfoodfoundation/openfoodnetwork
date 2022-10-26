@@ -272,6 +272,8 @@ describe '
 
         expect_shipping_methods_to_be_checked_for(distributor_managed)
         expect_shipping_methods_to_be_checked_for(distributor_permitted)
+        expect_payment_methods_to_be_checked_for(distributor_managed)
+        expect_payment_methods_to_be_checked_for(distributor_permitted)
 
         click_button 'Save and Back to List'
         order_cycle = OrderCycle.find_by(name: 'My order cycle')
@@ -285,6 +287,9 @@ describe '
         expect(exchange.tag_list).to eq(["wholesale"])
         expect(order_cycle.distributor_shipping_methods).to match_array(
           order_cycle.attachable_distributor_shipping_methods
+        )
+        expect(order_cycle.distributor_payment_methods).to match_array(
+          order_cycle.attachable_distributor_payment_methods
         )
       end
 
@@ -723,6 +728,14 @@ describe '
   end
 
   private
+
+  def expect_payment_methods_to_be_checked_for(distributor)
+    distributor.distributor_payment_method_ids.each do |distributor_payment_method_id|
+      expect(page).to have_checked_field(
+        "order_cycle_selected_distributor_payment_method_ids_#{distributor_payment_method_id}"
+      )
+    end
+  end
 
   def expect_shipping_methods_to_be_checked_for(distributor)
     distributor.distributor_shipping_method_ids.each do |distributor_shipping_method_id|

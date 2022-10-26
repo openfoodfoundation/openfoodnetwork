@@ -135,7 +135,9 @@ describe OrderCycleForm do
     let(:distributor) { order_cycle.coordinator }
     let(:supplier) { create(:supplier_enterprise) }
     let(:user) { distributor.owner }
+    let(:payment_method) { create(:payment_method, distributors: [distributor]) }
     let(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
+    let(:distributor_payment_method) { payment_method.distributor_payment_methods.first }
     let(:distributor_shipping_method) { shipping_method.distributor_shipping_methods.first }
     let(:variant) { create(:variant, product: create(:product, supplier: supplier)) }
     let(:params) { { name: 'Some new name' } }
@@ -151,14 +153,14 @@ describe OrderCycleForm do
       }
     end
 
-    context "basic update i.e. without exchanges or shipping methods" do
+    context "basic update i.e. without exchanges or payment/shipping methods" do
       it do
         expect(form.save).to be true
         expect(order_cycle.name).to eq 'Some new name'
       end
     end
 
-    context "updating basics, incoming exchanges, outcoming exchanges
+    context "updating basics, incoming exchanges, outcoming exchanges, payment_methods
              and shipping methods simultaneously" do
       before do
         params.merge!(
@@ -171,21 +173,31 @@ describe OrderCycleForm do
             enterprise_fee_ids: []
           }],
           outgoing_exchanges: [outgoing_exchange_params],
+          selected_distributor_payment_method_ids: [distributor_payment_method.id],
           selected_distributor_shipping_method_ids: [distributor_shipping_method.id]
         )
       end
 
-      it "saves everything i.e. the basics, incoming and outgoing exchanges and shipping methods" do
+      it "saves everything i.e. the basics, incoming and outgoing exchanges, payment methods and
+          shipping methods" do
         expect(form.save).to be true
         expect(order_cycle.name).to eq 'Some new name'
         expect(order_cycle.cached_incoming_exchanges.count).to eq 1
         expect(order_cycle.cached_outgoing_exchanges.count).to eq 1
+        expect(order_cycle.distributor_payment_methods).to eq [distributor_payment_method]
         expect(order_cycle.distributor_shipping_methods).to eq [distributor_shipping_method]
       end
     end
 
-    context "updating outgoing exchanges and shipping methods simultaneously but the shipping
-             method doesn't belong to the new or any existing order cycle distributor" do
+    context "updating outgoing exchanges and shipping methods simultaneously but the payment
+             and shipping methods don't belong to the new or any existing order cycle
+             distributor" do
+      let(:other_distributor_payment_method) do
+        create(
+          :payment_method,
+          distributors: [create(:distributor_enterprise)]
+        ).distributor_payment_methods.first
+      end
       let(:other_distributor_shipping_method) do
         create(
           :shipping_method,
@@ -196,6 +208,7 @@ describe OrderCycleForm do
       before do
         params.merge!(
           outgoing_exchanges: [outgoing_exchange_params],
+          selected_distributor_payment_method_ids: [other_distributor_payment_method.id],
           selected_distributor_shipping_method_ids: [other_distributor_shipping_method.id]
         )
       end
@@ -203,7 +216,56 @@ describe OrderCycleForm do
       it "saves the outgoing exchange but ignores the shipping method" do
         expect(form.save).to be true
         expect(order_cycle.distributors).to eq [distributor]
+        expect(order_cycle.distributor_payment_methods).to be_empty
         expect(order_cycle.distributor_shipping_methods).to be_empty
+      end
+    end
+
+    context "updating payment methods" do
+      context "and it's valid" do
+        it "saves the changes" do
+          distributor = create(:distributor_enterprise)
+          distributor_payment_method = create(
+            :payment_method,
+            distributors: [distributor]
+          ).distributor_payment_methods.first
+          order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+
+          form = OrderCycleForm.new(
+            order_cycle,
+            { selected_distributor_payment_method_ids: [distributor_payment_method.id] },
+            order_cycle.coordinator
+          )
+
+          expect(form.save).to be true
+          expect(order_cycle.distributor_payment_methods).to eq [distributor_payment_method]
+        end
+      end
+
+      context "with a payment method which doesn't belong to any distributor on the order cycle" do
+        it "ignores it" do
+          distributor_i = create(:distributor_enterprise)
+          distributor_ii = create(:distributor_enterprise)
+          distributor_payment_method_i = create(
+            :payment_method,
+            distributors: [distributor_i]
+          ).distributor_payment_methods.first
+          distributor_payment_method_ii = create(
+            :payment_method,
+            distributors: [distributor_ii]
+          ).distributor_payment_methods.first
+          order_cycle = create(:distributor_order_cycle,
+                               distributors: [distributor_i])
+
+          form = OrderCycleForm.new(
+            order_cycle,
+            { selected_distributor_payment_method_ids: [distributor_payment_method_ii.id] },
+            order_cycle.coordinator
+          )
+
+          expect(form.save).to be true
+          expect(order_cycle.distributor_payment_methods).to eq [distributor_payment_method_i]
+        end
       end
     end
 

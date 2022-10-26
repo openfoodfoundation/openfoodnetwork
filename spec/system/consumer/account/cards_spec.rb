@@ -18,19 +18,13 @@ describe "Credit Cards", js: true do
       create(:stored_credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_FDTG')
     }
 
-    around do |example|
-      original_stripe_connect_enabled = Spree::Config[:stripe_connect_enabled]
-      example.run
-      Spree::Config.set(stripe_connect_enabled: original_stripe_connect_enabled)
-    end
-
     before do
       login_as user
 
       allow(Stripe).to receive(:api_key).and_return("sk_test_12345")
       allow(Stripe.config).to receive(:api_key).and_return("sk_test_12345")
       allow(Stripe).to receive(:publishable_key).and_return("some_token")
-      Spree::Config.set(stripe_connect_enabled: true)
+      allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
 
       stub_request(:get, "https://api.stripe.com/v1/customers/cus_AZNMJ").
         to_return(status: 200, body: JSON.generate(id: "cus_AZNMJ"))

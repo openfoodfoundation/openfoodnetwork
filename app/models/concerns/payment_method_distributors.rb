@@ -9,9 +9,9 @@ module PaymentMethodDistributors
   extend ActiveSupport::Concern
 
   included do
-    has_and_belongs_to_many :distributors, join_table: 'distributors_payment_methods',
-                                           class_name: 'Enterprise',
-                                           foreign_key: 'payment_method_id',
-                                           association_foreign_key: 'distributor_id'
+    has_many :distributor_payment_methods, dependent: :destroy
+    has_many :distributors, through: :distributor_payment_methods,
+                            class_name: 'Enterprise',
+                            foreign_key: 'distributor_id'
   end
 end

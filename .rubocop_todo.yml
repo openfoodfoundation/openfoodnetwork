@@ -478,6 +478,7 @@ Metrics/ClassLength:
     - 'app/serializers/api/enterprise_shopfront_serializer.rb'
     - 'app/services/cart_service.rb'
     - 'app/services/order_syncer.rb'
+    - 'app/services/order_cycle_form.rb'
     - 'engines/order_management/app/services/order_management/order/updater.rb'
     - 'lib/open_food_network/enterprise_fee_calculator.rb'
     - 'lib/open_food_network/order_cycle_form_applicator.rb'

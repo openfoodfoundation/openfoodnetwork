@@ -86,7 +86,8 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
     order_cycle_distributed_variants = double(:order_cycle_distributed_variants)
     allow(OrderCycleDistributedVariants).to receive(:new) { order_cycle_distributed_variants }
     allow(order_cycle_distributed_variants).to receive(:distributes_order_variants?) { true }
-
+    allow(Stripe).to receive(:publishable_key).and_return("some_token")
+    allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
     Stripe.api_key = "sk_test_12345"
     order.update(distributor_id: enterprise.id, order_cycle_id: order_cycle.id)
     order.reload.update_totals

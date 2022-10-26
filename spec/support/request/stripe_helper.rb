@@ -31,6 +31,6 @@ module StripeHelper
   def setup_stripe
     Stripe.api_key = "sk_test_12345"
     Stripe.publishable_key = "pk_test_12345"
-    Spree::Config.set(stripe_connect_enabled: true)
+    allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
   end
 end

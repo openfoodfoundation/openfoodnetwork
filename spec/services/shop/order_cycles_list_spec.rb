@@ -41,15 +41,93 @@ describe Shop::OrderCyclesList do
     let(:customer) { nil }
 
     context "when the order cycle is open and belongs to the distributor" do
-      context "and the distributor is ready for checkout" do
+      context "and the distributor has some payment and shipping methods" do
         let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
 
-        it "returns the order cycle" do
-          open_order_cycle = create(:open_order_cycle, distributors: [distributor])
+        context "and there are some payment and shipping methods available to the customer" do
+          it "returns the order cycle" do
+            open_order_cycle = create(:open_order_cycle, distributors: [distributor])
 
-          expect(Shop::OrderCyclesList.ready_for_checkout_for(distributor, customer)).to eq [
-            open_order_cycle
-          ]
+            expect(Shop::OrderCyclesList.ready_for_checkout_for(distributor, customer)).to eq [
+              open_order_cycle
+            ]
+          end
+        end
+
+        context "when payment method tag rules are present" do
+          let!(:open_order_cycle) { create(:open_order_cycle, distributors: [distributor]) }
+
+          before do
+            create(:filter_payment_methods_tag_rule,
+                   enterprise: distributor,
+                   is_default: true,
+                   preferred_payment_method_tags: "local-delivery",
+                   preferred_matched_payment_methods_visibility: "hidden")
+            create(:filter_payment_methods_tag_rule,
+                   enterprise: distributor,
+                   preferred_customer_tags: "local",
+                   preferred_payment_method_tags: "local-delivery",
+                   preferred_matched_payment_methods_visibility: "visible")
+            distributor.payment_methods.first.update_attribute(:tag_list, "local-delivery")
+          end
+
+          context "and some payment methods are available to the customer due to the tag rule" do
+            it "returns the order cycle" do
+              customer = create(:customer, tag_list: "local")
+
+              expect(Shop::OrderCyclesList.ready_for_checkout_for(distributor, customer)).to eq [
+                open_order_cycle
+              ]
+            end
+          end
+
+          context "but no payment methods are available to the customer due to the tag rule" do
+            it "doesn't return the order cycle" do
+              customer = create(:customer, tag_list: "not-local")
+
+              expect(
+                Shop::OrderCyclesList.ready_for_checkout_for(distributor, customer)
+              ).to be_empty
+            end
+          end
+        end
+
+        context "when shipping method tag rules are present" do
+          let!(:open_order_cycle) { create(:open_order_cycle, distributors: [distributor]) }
+
+          before do
+            create(:filter_shipping_methods_tag_rule,
+                   enterprise: distributor,
+                   is_default: true,
+                   preferred_shipping_method_tags: "local-delivery",
+                   preferred_matched_shipping_methods_visibility: "hidden")
+            create(:filter_shipping_methods_tag_rule,
+                   enterprise: distributor,
+                   preferred_customer_tags: "local",
+                   preferred_shipping_method_tags: "local-delivery",
+                   preferred_matched_shipping_methods_visibility: "visible")
+            distributor.shipping_methods.first.update_attribute(:tag_list, "local-delivery")
+          end
+
+          context "and some shipping methods are available to the customer due to the tag rule" do
+            it "returns the order cycle" do
+              customer = create(:customer, tag_list: "local")
+
+              expect(Shop::OrderCyclesList.ready_for_checkout_for(distributor, customer)).to eq [
+                open_order_cycle
+              ]
+            end
+          end
+
+          context "but no shipping methods are available to the customer due to the tag rule" do
+            it "doesn't return the order cycle" do
+              customer = create(:customer, tag_list: "not-local")
+
+              expect(
+                Shop::OrderCyclesList.ready_for_checkout_for(distributor, customer)
+              ).to be_empty
+            end
+          end
         end
       end
 

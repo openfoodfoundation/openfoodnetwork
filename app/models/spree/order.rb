@@ -376,10 +376,6 @@ module Spree
       payment_state == 'paid' || payment_state == 'credit_owed'
     end
 
-    def available_payment_methods
-      @available_payment_methods ||= PaymentMethod.available(:both)
-    end
-
     # "Checkout" is the initial state and, for card payments, "pending" is the state after auth
     # These are both valid states to process the payment
     def pending_payments

@@ -53,14 +53,8 @@ describe '
         { id: "acc_connected123", business_name: "My Org", charges_enabled: true }
       }
 
-      around do |example|
-        original_stripe_connect_enabled = Spree::Config[:stripe_connect_enabled]
-        example.run
-        Spree::Config.set(stripe_connect_enabled: original_stripe_connect_enabled)
-      end
-
       before do
-        Spree::Config.set(stripe_connect_enabled: true)
+        allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
         Stripe.api_key = "sk_test_12345"
         stub_request(:get,
                      "https://api.stripe.com/v1/accounts/acc_connected123").to_return(body: JSON.generate(stripe_account_mock))
