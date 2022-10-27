@@ -12,7 +12,7 @@
     = t('.no_rules_yet')
   .tag_rule{ ng: { repeat: "rule in defaultTagGroup.rules" } }
   .add_rule.text-center
-    %input.button.icon-plus{ type: 'button', value: t('.add_new_button'), "add-new-rule-to" => "addNewRuleTo", "tag-group" => "defaultTagGroup", "new-tag-rule-dialog" => true }
+    %input.button.icon-plus{ type: 'button', value: t('.add_new_button'), "add-new-rule-to" => "addNewRuleTo", "tag-group" => "defaultTagGroup", "new-tag-rule-dialog" => true, "data-action": "click->dirty-form#makeDirty" }
 
 = render HelpModalComponent.new(id: "tag_rule_help_modal") do
   #tag-rule-help

@@ -22,6 +22,6 @@
           = t('.no_rules_yet')
         .tag_rule{ ng: { repeat: "rule in tagGroup.rules" } }
         .add_rule.text-center
-          %input.button.icon-plus{ type: 'button', value: t('.add_new_rule'), "add-new-rule-to" => "addNewRuleTo", "tag-group" => "tagGroup", "new-tag-rule-dialog" => true }
+          %input.button.icon-plus{ type: 'button', value: t('.add_new_rule'), "add-new-rule-to" => "addNewRuleTo", "tag-group" => "tagGroup", "new-tag-rule-dialog" => true, "data-action": "click->dirty-form#makeDirty" }
       .add_tag
-        %input.button.red.icon-plus{ type: 'button', value: t('.add_new_tag'), ng: { click: 'addNewTag()' } }
+        %input.button.red.icon-plus{ type: 'button', value: t('.add_new_tag'), ng: { click: 'addNewTag()' }, "data-action": "click->dirty-form#makeDirty" }
