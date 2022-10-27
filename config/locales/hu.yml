@@ -23,6 +23,8 @@ hu:
         state: Állapot
         source: Forrás
       spree/product:
+        name: "termék név"
+        price: "Ár"
         primary_taxon: "Termékkategória"
         supplier: "Támogató"
         shipping_category_id: "Szállítási kategória"
@@ -554,8 +556,8 @@ hu:
         fee_type: "Díjtípus"
         name: "Név"
         tax_category: "Adókategória"
-        calculator: "Számológép"
-        calculator_values: "Számológép értékek"
+        calculator: "Kiszámítási mód"
+        calculator_values: "Kiszámítási mód"
         search: "Keresés"
         name_placeholder: "pl csomagolási díj"
     enterprise_groups:
@@ -570,7 +572,7 @@ hu:
       form_images:
         images: "Képek"
       form_address:
-        contact: "Kapcsolatba lépni"
+        contact: "Kapcsolat"
       form_web:
         web: "Webes források"
     enterprise_roles:
@@ -822,7 +824,7 @@ hu:
           legal_phone_number: Jogi telefonszám
           phone_placeholder: "98 123 4565"
         contact:
-          legend: "Kapcsolatba lépni"
+          legend: "Kapcsolat"
           name: Név
           name_placeholder: például. Gustav Plum
           email_address: Nyilvános e-mail cím
@@ -1003,7 +1005,7 @@ hu:
           email_confirmation_notice_html: "Az e-mail megerősítés függőben van. Megerősítő e-mailt küldtünk a következő címre: %{email}."
           resend: Újraküldés
           owner: 'Tulajdonos'''
-          contact: "Kapcsolatba lépni"
+          contact: "Kapcsolat"
           contact_tip: "A menedzser, aki vállalati e-maileket kap a rendelésekről és értesítésekről. Megerősített e-mail címmel kell rendelkeznie."
           owner_tip: A vállalkozásért felelős elsődleges felhasználó.
           notifications: Értesítések
@@ -1238,7 +1240,7 @@ hu:
         enterprise:
           primary_details: "Elsődleges részletek"
           address: "Cím"
-          contact: "Kapcsolatba lépni"
+          contact: "Kapcsolat"
           social: "Közösségi média"
           about: "Rólunk"
           business_details: "Üzleti részletek"
@@ -1257,7 +1259,7 @@ hu:
           users: "Felhasználók"
           about: "Rólunk"
           images: "Képek"
-          contact: "Kapcsolatba lépni"
+          contact: "Kapcsolat"
           web: "Webes források"
     enterprise_issues:
       create_new: Újat készíteni
@@ -1976,10 +1978,10 @@ hu:
   shopping_tabs_shop: "Üzlet"
   shopping_tabs_about: "Rólunk"
   shopping_tabs_producers: "Termelők"
-  shopping_tabs_contact: "Kapcsolatba lépni"
+  shopping_tabs_contact: "Kapcsolat"
   shopping_tabs_groups: "Csoportok"
   shopping_contact_address: "Cím"
-  shopping_contact_web: "Kapcsolatba lépni"
+  shopping_contact_web: "Kapcsolat"
   shopping_contact_social: "Kövesse"
   shopping_groups_part_of: "része:"
   shopping_producers_of_hub: "%{átvételi pont} termelőei:"
@@ -2049,7 +2051,7 @@ hu:
   groups_about: "Rólunk"
   groups_producers: "Termelőink"
   groups_hubs: "A mi központjaink"
-  groups_contact_web: Kapcsolatba lépni
+  groups_contact_web: Kapcsolat
   groups_contact_social: Kövesse
   groups_contact_address: Cím
   groups_contact_email: Küldj egy emailt nekünk
@@ -2076,7 +2078,7 @@ hu:
   login_invalid: "Rossz email cím vagy jelszó"
   producers_about: Rólunk
   producers_buy: Vásárolni valakinek
-  producers_contact: Kapcsolatba lépni
+  producers_contact: Kapcsolat
   producers_contact_phone: Hívás
   producers_contact_social: Kövesse
   producers_buy_at_html: "Vásároljon %{enterprise} termékeket a következő címen:"
@@ -2272,7 +2274,7 @@ hu:
         confirm_address: "Megerősítem, hogy a vállalkozásnak a térképen feltüntetett pozíciója helyes."
         drag_map_marker: "Sok vidéki termelőnek köszönhetően a térképek pontossága folyamatosan javul. Segítsen nekünk jobban megérteni, hol tartózkodik: használja a fenti térképet, és mozgassa a gombostűt úgy, hogy rákattint vagy koppintson a gombostű tartásához, majd húzza azt a helyre, amely ismeretei alapján pontosabb."
       contact:
-        title: "Kapcsolatba lépni"
+        title: "Kapcsolat"
         who_is_managing_enterprise: "Ki a felelős a %{enterprise} kezeléséért?"
         contact_field: "Elsődleges kapcsolattartó"
         contact_field_placeholder: "Kapcsolattartó neve"
@@ -2443,9 +2445,9 @@ hu:
   description: "Leírás"
   display: "Kijelző"
   tags: "Címkék"
-  calculator: "Számológép"
-  calculator_values: "Számológép értékek"
-  calculator_settings_warning: "Ha módosítja a számológép típusát, először mentenie kell a számológép beállításait"
+  calculator: "Kiszámítási mód"
+  calculator_values: "Kiszámítás értékek"
+  calculator_settings_warning: "Ha módosítja a kiszámítás típusát, először mentenie kell a kiszámítás beállításait"
   calculator_preferred_unit_error: "kg-nak vagy lb-nak kell lennie"
   calculator_preferred_value_error: "Hibás bemenet. Kérjük, csak számokat használjon. Például: 10, 5,5, -20"
   flat_percent_per_item: "Egységes százalék (tételenként)"
@@ -2742,7 +2744,7 @@ hu:
   images: "Képek"
   web: "Web"
   primary_details: "Elsődleges részletek"
-  contact: "Kapcsolatba lépni"
+  contact: "Kapcsolat"
   social: "Közösségi média"
   shipping: "Szállítás"
   shipping_methods: "Szállítási módok"
@@ -3551,7 +3553,7 @@ hu:
     description: "Leírás"
     type: "típus"
     default: "alapértelmezett"
-    calculator: "Számológép"
+    calculator: "Kiszámítási mód"
     zone: "Zóna"
     display: "Kijelző"
     environment: "Környezet"
@@ -3780,7 +3782,7 @@ hu:
           name: "Név"
           products_distributor: "Elosztó"
           zone: "Zóna"
-          calculator: "Számológép"
+          calculator: "Kiszámítási mód"
           display: "Kijelző"
           both: "Mind a Checkout, mind a Back office"
           back_end: "Csak back office"

@@ -23,11 +23,14 @@ de_DE:
         state: Status
         source: Zahlungsart
       spree/product:
+        name: "Produktname"
+        price: "Preis"
         primary_taxon: "Produktkategorie"
         supplier: "Lieferant"
         shipping_category_id: "Lieferkategorie"
         variant_unit: "Varianteneinheit"
         variant_unit_name: "Name der Varianteneinheit"
+        unit_value: "Menge"
       spree/credit_card:
         base: "Kreditkarte"
         number: "Kreditkartennummer"
@@ -178,6 +181,8 @@ de_DE:
         updated_not_active: "Ihr Passwort wurde zurückgesetzt, aber ihre E-Mail-Adresse muss noch bestätigt werden."
         updated: "Ihr Kennwort wurde erfolgreich geändert. Sie sind jetzt angemeldet."
         send_instructions: "Sie erhalten in Kürze eine E-Mail mit Anweisungen zur Bestätigung Ihres Kontos."
+    oidc:
+      failure: "Einloggen nicht möglich: %{error}"
   home_page_alert_html: "Startseite Banner HTML"
   hub_signup_case_studies_html: "Registrierung für Läden - Beispiele HTML"
   hub_signup_detail_html: "Registrierung für Läden - Details HTML"
@@ -770,7 +775,7 @@ de_DE:
         current_fulfilled_units: "Aktuell erfüllte Einheiten"
         max_fulfilled_units: "Max erfüllte Einheiten"
         order_error: "Bevor Sie Bestellungen aktualisieren können, müssen Fehler behoben werden.\nFelder mit roten Rahmen enthalten Fehler."
-        variants_without_unit_value: "WARNUNG: Manche Produktvarianten haben keine Einheit"
+        variants_without_unit_value: "ACHTUNG: Für manche Produktvarianten ist keine Einheit festgelegt!"
         all: "Alle"
       select_variant: "Wählen Sie eine Produktvariante"
       note:
@@ -968,12 +973,12 @@ de_DE:
           facebook_placeholder: "z. B. www.facebook.com/IhreSeite"
           linkedin_placeholder: "z. B. www.linkedin.com/in/IhrName"
         stripe_connect:
-          connect_with_stripe: "Stripe integrieren"
+          connect_with_stripe: "Mit Stripe verbinden"
           stripe_connect_intro: "Um Zahlungen mit Kreditkarte zu akzeptieren, müssen Sie Ihr Stripe-Konto mit dem Open Food Network verbinden. Verwenden Sie die Schaltfläche rechts, um loszulegen."
           stripe_account_connected: "Stripe-Konto verbunden."
           disconnect: "Stripe-Konto trennen"
           confirm_modal:
-            title: Stripe integrieren
+            title: Mit Stripe verbinden
             part1: Stripe ist ein Zahlungsdienst, der es Läden im Open Food Network ermöglicht, Kreditkartenzahlungen von Kunden entgegenzunehmen.
             part2: Um diese Funktion zu verwenden, müssen Sie Ihr Stripe-Konto mit dem Open Food Network verbinden. Klicken Sie "Zustimmen", um auf die Stripe-Website weitergeleitet zu werden, wo Sie ein bestehendes Stripe-Konto verbinden oder ein neues erstellen können.
             part3: Dadurch kann das Open Food Network Kreditkartenzahlungen von Kunden in Ihrem Namen akzeptieren. Bitte beachten Sie, dass Sie ein eigenes Stripe-Konto benötigen, die entstehenden Stripe-Gebühren bezahlen und etwaige Rückbuchungen und Kundenservices selbst vornehmen müssen.
@@ -1344,6 +1349,15 @@ de_DE:
         formatted_data: Formatierte Daten
       packing:
         name: "Packlisten"
+    oidc_settings:
+      index:
+        title: "OIDC-Einstellungen"
+        connect: "Verbinden Sie Ihr Benutzerkonto"
+        already_connected: "Ihr Benutzerkonto ist bereits mit diesem DFC-Autorisierungskonto verbunden:"
+        les_communs_link: "Les Communs Open ID-Server"
+        link_your_account: "Sie müssen Ihr Benutzerkonto zunächst mit dem von DFC (Les Communs Open ID Connect) verwendeten Autorisierungsanbieter verbinden."
+        link_account_button: "Verbinden Sie Ihr Les Communs OIDC-Konto"
+        view_account: "Ihr Benutzerkonto anzeigen:"
     subscriptions:
       index:
         title: "Abonnements"
@@ -2489,7 +2503,7 @@ de_DE:
   spree_admin_single_enterprise_alert_mail_sent: "Wir haben eine E-Mail gesendet an "
   spree_admin_overview_action_required: "Handlung erforderlich"
   spree_admin_overview_check_your_inbox: "Bitte überprüfen Sie Ihren Posteingang für weitere Anweisungen. Vielen Dank!"
-  spree_admin_unit_value: Einheitswert
+  spree_admin_unit_value: Menge
   spree_admin_unit_description: Einheit Beschreibung
   spree_admin_variant_unit: Varianteneinheit
   spree_admin_variant_unit_scale: Einheit der Produktvariante
@@ -2588,7 +2602,17 @@ de_DE:
   report_header_to_hub: An den Hub
   report_header_hub_code: Hub-Code
   report_header_hub_id: Laden-ID
+  report_header_hub_business_number: "USt-IdNr."
+  report_header_hub_legal_name: "Unternehmensname"
+  report_header_hub_contact_name: "Kontaktname"
+  report_header_hub_email: "Öffentliche E-Mail-Adresse"
   report_header_hub_owner_email: E-Mail-Adresse des Ladenbetreibers
+  report_header_hub_phone: "Telefonnummer"
+  report_header_hub_address_line1: "Straße + Hausnummer"
+  report_header_hub_address_line2: "Adresszusatz"
+  report_header_hub_address_city: "Ort"
+  report_header_hub_address_zipcode: "Postleitzahl"
+  report_header_hub_address_state_name: "Bundesland"
   report_header_code: Code
   report_header_paid: Bezahlt?
   report_header_delivery: Lieferung?
@@ -2623,6 +2647,7 @@ de_DE:
   report_header_total_tax: "Summe Steuern (%{currency_symbol})"
   report_header_total_excl_tax: "Summe exkl. Steuern (%{currency_symbol})"
   report_header_total_incl_tax: "Summe inkl. Steuern (%{currency_symbol})"
+  report_header_total_orders: "Anzahl der Bestellungen"
   report_header_enterprise: Unternehmen
   report_header_customer: Kunde
   report_header_customer_code: Kundennummer

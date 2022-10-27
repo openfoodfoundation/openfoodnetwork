@@ -23,6 +23,8 @@ ar:
         state: محافظة
         source: المصدر
       spree/product:
+        name: "اسم المنتج"
+        price: "السعر"
         primary_taxon: "نوع المنتج "
         supplier: "المورد"
         shipping_category_id: "نوع الشحن"

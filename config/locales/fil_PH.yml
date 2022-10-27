@@ -21,6 +21,8 @@ fil_PH:
         amount: Halaga
         state: province
       spree/product:
+        name: "pangalan ng produkto"
+        price: "Presyo"
         primary_taxon: "Kategorya ng Produkto"
         supplier: "Supplier"
         shipping_category_id: "Kategorya ng Pagpapadala"

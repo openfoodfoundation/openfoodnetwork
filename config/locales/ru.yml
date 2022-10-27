@@ -23,6 +23,8 @@ ru:
         state: Состояние
         source: Источник
       spree/product:
+        name: "Имя Товара"
+        price: "Цена"
         primary_taxon: "Категория Продукта"
         supplier: "Поставщик"
         shipping_category_id: "Категория Доставки"

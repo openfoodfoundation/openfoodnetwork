@@ -23,11 +23,14 @@ fr:
         state: Statut
         source: Source
       spree/product:
+        name: "Nom du Produit"
+        price: "Prix"
         primary_taxon: "Catégorie Produit"
         supplier: "Fournisseur"
         shipping_category_id: "Condition de transport"
         variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"
+        unit_value: "Nb unités"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
@@ -178,6 +181,8 @@ fr:
         updated_not_active: "Votre mot de passe a bien été réinitialisé, mais votre email n'a pas encore été confirmé."
         updated: "Votre mot de passer a été changé avec succès. Vous êtes maintenant connecté(e)."
         send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
+    oidc:
+      failure: "La connexion n'a pas fonctionné : %{error}"
   home_page_alert_html: "Bannière d'alerte sur la page d'acceuil en HTML"
   hub_signup_case_studies_html: "HTML page cas d'études hub"
   hub_signup_detail_html: "HTML page inscription hub"
@@ -984,11 +989,11 @@ fr:
             by_default: Règles à appliquer "par défaut"
             no_rules_yet: Aucune règle par défaut
             add_new_button: '+ Ajouter une règle par défaut'
-          no_tags_yet: Aucun tag défini par cette entreprise pour le moment
+          no_tags_yet: Aucun tag défini par cette entreprise pour le moment. Cliquez sur le bouton bleu pour ajouter une règle par défaut, puis sur le bouton rouge pour ajouter une règle conditionnelle.
           no_rules_yet: Aucune règle ne concerne ce tag pour le moment
           for_customers_tagged: 'Pour les acheteurs avec le tag:'
           add_new_rule: '+ Ajouter une nouvelle règle'
-          add_new_tag: '+ Ajouter une règle pour un autre tag'
+          add_new_tag: '+ Ajouter une règle conditionnelle'
         users:
           legend: "Gestionnaires"
           email_confirmation_notice_html: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{email}."
@@ -1343,6 +1348,15 @@ fr:
         formatted_data: Données formatées
       packing:
         name: "Rapports de préparation des paniers"
+    oidc_settings:
+      index:
+        title: "OIDC"
+        connect: "Connecter votre compte"
+        already_connected: "Votre compte est déjà relié avec cette autorisation :"
+        les_communs_link: "Serveur OIDC Les Communs"
+        link_your_account: "Vous devez d'abord vous connecter avec le serveur des Communs."
+        link_account_button: "Relier votre compte OIDC Les Communs"
+        view_account: "Pour voir votre compte, consultez :"
     subscriptions:
       index:
         title: "Abonnements"
@@ -2587,7 +2601,17 @@ fr:
   report_header_to_hub: Distributeur
   report_header_hub_code: Code
   report_header_hub_id: Hub ID
+  report_header_hub_business_number: "SIRET"
+  report_header_hub_legal_name: "Raison sociale"
+  report_header_hub_contact_name: "Nom du contact"
+  report_header_hub_email: "Email public"
   report_header_hub_owner_email: Email gestionnaire principal
+  report_header_hub_phone: "Numéro de téléphone"
+  report_header_hub_address_line1: "Adresse ligne 1"
+  report_header_hub_address_line2: "Adresse ligne 2"
+  report_header_hub_address_city: "Ville"
+  report_header_hub_address_zipcode: "Code postal"
+  report_header_hub_address_state_name: "Département"
   report_header_code: Code
   report_header_paid: Payé ?
   report_header_delivery: Livré ?
@@ -2622,6 +2646,7 @@ fr:
   report_header_total_tax: "Total TVA (%{currency_symbol})"
   report_header_total_excl_tax: "Total HT (%{currency_symbol})"
   report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
+  report_header_total_orders: "Nombre de commandes"
   report_header_enterprise: Entreprise
   report_header_customer: Client
   report_header_customer_code: Code acheteur

@@ -23,6 +23,8 @@ fr_BE:
         state: Statut de la commande
         source: Source
       spree/product:
+        name: "Nom du Produit"
+        price: "Prix"
         primary_taxon: "Catégorie de Produit"
         supplier: "Fournisseur"
         shipping_category_id: "Catégorie de livraison"

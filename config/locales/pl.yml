@@ -23,6 +23,7 @@ pl:
         state: Status
         source: Źródło
       spree/product:
+        price: "Cena"
         primary_taxon: "Kategoria produktu"
         supplier: "Dostawca"
         shipping_category_id: "Kategoria dostawy"

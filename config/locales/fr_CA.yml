@@ -23,6 +23,8 @@ fr_CA:
         state: Département
         source: Source
       spree/product:
+        name: "Nom du Produit"
+        price: "Prix"
         primary_taxon: "Catégorie Produit"
         supplier: "Fournisseur"
         shipping_category_id: "Condition de transport"
@@ -179,6 +181,8 @@ fr_CA:
         updated_not_active: "Votre mot de passe a été mis à jour, mais votre email n'a pas encore été confirmé."
         updated: "Votre mot de passer a été changé avec succès. Vous êtes maintenant connecté(e)."
         send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
+    oidc:
+      failure: "La connexion n'a pas fonctionné: %{error}"
   home_page_alert_html: "Bannière d'alerte sur la page d'acceuil en HTML"
   hub_signup_case_studies_html: "HTML page cas d'études hub"
   hub_signup_detail_html: "HTML page inscription hub"
@@ -1121,7 +1125,10 @@ fr_CA:
       checkout_options:
         back_end: "Visible pour l'administration uniquement"
         cancel: "Annuler"
+        checkout_options: "Options de commande"
         distributor: "Hub-distributeur"
+        no_payment_methods: Chaque boutique de ce cycle de vente a besoin d'au moins une méthode de paiement.
+        no_shipping_methods: Chaque boutique de ce cycle de vente a besoin d'au moins une méthode de livraison.
         payment_methods: "Méthodes de paiement"
         save: "Enregistrer"
         save_and_back_to_list: "Sauvegarder et suivant"
@@ -1131,6 +1138,7 @@ fr_CA:
         edit: "1. Informations générales"
         incoming: "2. Produits entrants"
         outgoing: "3. Produits vendus (sortants)"
+        checkout_options: "4. Options de commande"
       exchange_form:
         pickup_time_tip: Quand des commandes liées à ce cycle de vente seront prêtes à être soumises à l'acheteur
         pickup_instructions_placeholder: "Modalités de retrait/livraison"
@@ -1341,6 +1349,15 @@ fr_CA:
         formatted_data: Données formatées
       packing:
         name: "Rapports de préparation des paniers"
+    oidc_settings:
+      index:
+        title: "OIDC"
+        connect: "Connecter votre compte"
+        already_connected: "Votre compte est déjà relié avec cette autorisation :"
+        les_communs_link: "Serveur OIDC Les Communs"
+        link_your_account: "Vous devez d'abord vous connecter avec le serveur des Communs."
+        link_account_button: "Relier votre compte OIDC Les Communs"
+        view_account: "Pour voir votre compte, consultez :"
     subscriptions:
       index:
         title: "Abonnements"
@@ -1853,6 +1870,7 @@ fr_CA:
       invalid_email: "Veuillez entrer un email valide"
       select_a_shipping_method: Sélectionner une méthode de livraison
       select_a_payment_method: Sélectionner une méthode de paiement
+      no_shipping_methods_available: Il n'est pas possible de passer commande car il n'y a pas d'options de livraison / récupération de commande. Veuillez contacter le gestionnaire de la boutique.
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
@@ -2583,7 +2601,17 @@ fr_CA:
   report_header_to_hub: Distributeur
   report_header_hub_code: Code du Hub
   report_header_hub_id: Hub ID
+  report_header_hub_business_number: "Hub Business Number"
+  report_header_hub_legal_name: "Raison sociale"
+  report_header_hub_contact_name: "Nom du contact"
+  report_header_hub_email: "Email public"
   report_header_hub_owner_email: Email gestionnaire principal
+  report_header_hub_phone: "Numéro de téléphone"
+  report_header_hub_address_line1: "Adresse ligne 1"
+  report_header_hub_address_line2: "Adresse ligne 2"
+  report_header_hub_address_city: "Ville"
+  report_header_hub_address_zipcode: "Code postal"
+  report_header_hub_address_state_name: "Province"
   report_header_code: Code
   report_header_paid: Payé ?
   report_header_delivery: Livré ?
@@ -2618,6 +2646,7 @@ fr_CA:
   report_header_total_tax: "Total Taxe (%{currency_symbol})"
   report_header_total_excl_tax: "Total HT (%{currency_symbol})"
   report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
+  report_header_total_orders: "Nombre de commandes"
   report_header_enterprise: Entreprise
   report_header_customer: Acheteur
   report_header_customer_code: Code acheteur
@@ -2743,6 +2772,7 @@ fr_CA:
   action_required: "Une action est requise"
   tag_rules: "Règles de tag"
   enterprise_fee_whole_order: Commande totale
+  enterprise_fee_by_name: "%{name} marge par %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Un lien est déjà établi."
   validation_msg_at_least_one_hub: "^Sélectionnez au moins  un hub"
   validation_msg_tax_category_cant_be_blank: "^Veuillez sélectionner le type de taxe"
@@ -3698,6 +3728,7 @@ fr_CA:
           results_found: " %{number} résultats trouvés"
           viewing: "Résultats %{start} à  %{end} affichés."
           print_invoices: "Imprimer les factures"
+          cancel_orders: "Annuler les commandes"
           selected:
             zero: "Aucune commande sélectionnée"
             one: "1 commande sélectionnée"
@@ -4060,6 +4091,8 @@ fr_CA:
         thanks: "Merci pour votre commande."
         track_information: "Informations de suivi :%{tracking}"
         track_link: "Lien de suivi :%{url}"
+        picked_up_instructions: "Votre commande de %{distributor} a bien été réceptionnée"
+        picked_up_subject: "a bien été réceptionnée"
     test_mailer:
       test_email:
         greeting: "Félicitations !"
@@ -4247,3 +4280,6 @@ fr_CA:
     unprocessable_entity:
       title: "La modification réalisée a été rejetée (erreur 422)"
       message_html: "<p> La modification souhaitée a été refusée. Peut-être avez-vous essayé de faire quelque chose sans avoir les droits d'accès suffisants ? <br> <h3> <a href='/' > Retourner à l'accueil </a> </h3> </p> "
+  components:
+    multiple_checked_select:
+      filter_placeholder: "Filtres"

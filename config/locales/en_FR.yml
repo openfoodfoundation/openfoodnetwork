@@ -23,11 +23,14 @@ en_FR:
         state: State
         source: Source
       spree/product:
+        name: "Product Name"
+        price: "Price"
         primary_taxon: "Product Category"
         supplier: "Supplier"
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+        unit_value: "Unit value"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -178,6 +181,8 @@ en_FR:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
         updated: "Your password was changed successfully. You are now signed in."
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+    oidc:
+      failure: "Could not sign in: %{error}"
   home_page_alert_html: "Home page alert HTML"
   hub_signup_case_studies_html: "Hub signup case studies HTML"
   hub_signup_detail_html: "Hub signup detail HTML"
@@ -1342,6 +1347,15 @@ en_FR:
         formatted_data: Formatted Data
       packing:
         name: "Packing Reports"
+    oidc_settings:
+      index:
+        title: "OIDC Settings"
+        connect: "Connect Your Account"
+        already_connected: "Your account is already linked to this authorization account:"
+        les_communs_link: "Les Communs Open ID server"
+        link_your_account: "You need first to link your account with the authorization provider used by Les Communs Open ID Connect."
+        link_account_button: "Link your Les Communs OIDC Account"
+        view_account: "To view your account, see:"
     subscriptions:
       index:
         title: "Subscriptions"
@@ -2586,7 +2600,17 @@ en_FR:
   report_header_to_hub: To Hub
   report_header_hub_code: Code
   report_header_hub_id: Hub ID
+  report_header_hub_business_number: "Hub Business Number"
+  report_header_hub_legal_name: "Hub Legal Name"
+  report_header_hub_contact_name: "Hub Contact Name"
+  report_header_hub_email: "Hub Public Email"
   report_header_hub_owner_email: Hub Owner Email
+  report_header_hub_phone: "Hub Phone Number"
+  report_header_hub_address_line1: "Hub Address Line 1"
+  report_header_hub_address_line2: "Hub Address Line 2"
+  report_header_hub_address_city: "Hub Suburb"
+  report_header_hub_address_zipcode: "Hub Postcode"
+  report_header_hub_address_state_name: "Hub State"
   report_header_code: Code
   report_header_paid: Paid?
   report_header_delivery: Delivery?
@@ -2621,6 +2645,7 @@ en_FR:
   report_header_total_tax: "Total Tax (%{currency_symbol})"
   report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
   report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
+  report_header_total_orders: "Total Number of Orders"
   report_header_enterprise: Enterprise
   report_header_customer: Customer
   report_header_customer_code: Customer Code
@@ -2746,7 +2771,7 @@ en_FR:
   action_required: "Action required"
   tag_rules: "Tag Rules"
   enterprise_fee_whole_order: Whole order
-  enterprise_fee_by_name: "%{name} fee by%{role}%{enterprise_name}"
+  enterprise_fee_by_name: "%{name} fee by %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"

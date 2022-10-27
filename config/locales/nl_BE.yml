@@ -23,6 +23,8 @@ nl_BE:
         state: Staat
         source: Bron
       spree/product:
+        name: "Naam produkt"
+        price: "Prijs"
         primary_taxon: "Product categorie"
         supplier: "Leverancier"
         shipping_category_id: "Verzendcategorie"

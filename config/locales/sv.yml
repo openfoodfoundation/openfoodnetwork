@@ -16,6 +16,7 @@ sv:
       spree/payment:
         state: Region
       spree/product:
+        price: "Pris"
         supplier: "Leverantör"
         variant_unit: "Enhet för variant"
       variant_override:

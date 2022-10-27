@@ -23,6 +23,8 @@ tr:
         state: Durum
         source: Kaynak
       spree/product:
+        name: "ÜRÜN ADI"
+        price: "Fiyat"
         primary_taxon: "ÜRÜN KATEGORİSİ"
         supplier: "TEDARİKÇİ"
         shipping_category_id: "TESLİMAT KATEGORİSİ"

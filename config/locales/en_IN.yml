@@ -21,6 +21,8 @@ en_IN:
         amount: Amount
         state: State
       spree/product:
+        name: "Product Name"
+        price: "Price"
         primary_taxon: "Product Category"
         supplier: "Supplier"
         shipping_category_id: "Shipping Category"

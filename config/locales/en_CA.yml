@@ -23,6 +23,8 @@ en_CA:
         state: State
         source: Source
       spree/product:
+        name: "Product Name"
+        price: "Price"
         primary_taxon: "Product Category"
         supplier: "Supplier"
         shipping_category_id: "Shipping Category"
@@ -178,6 +180,8 @@ en_CA:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
         updated: "Your password was changed successfully. You are now signed in."
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+    oidc:
+      failure: "Could not sign in: %{error}"
   home_page_alert_html: "Home page alert HTML"
   hub_signup_case_studies_html: "Hub signup case studies HTML"
   hub_signup_detail_html: "Hub signup detail HTML"
@@ -240,8 +244,8 @@ en_CA:
   shipment_mailer:
     shipped_email:
       dear_customer: "Dear Customer, "
-      instructions: "Your order has been shipped or picked up."
-      shipment_summary: "Shipment/Pick Up Summary"
+      instructions: "Your order has been shipped."
+      shipment_summary: "Order Summary"
       subject: "Shipment/Pick Up Notification"
       thanks: "Thank you for your business."
       track_information: "Tracking Information: %{tracking}"
@@ -836,6 +840,7 @@ en_CA:
           website: Website
           website_placeholder: eg. www.truffles.com
         enterprise_fees:
+          legend: "Enterprise Fees"
           name: Name
           fee_type: Fee Type
           manage_fees: Manage Enterprise Fees
@@ -1117,7 +1122,10 @@ en_CA:
       checkout_options:
         back_end: "Back office only"
         cancel: "Cancel"
+        checkout_options: "Checkout options"
         distributor: "Distributor"
+        no_payment_methods: Each distributor on this order cycle requires at least one payment method.
+        no_shipping_methods: Each distributor on this order cycle requires at least one shipping method.
         payment_methods: "Payment Methods"
         save: "Save"
         save_and_back_to_list: "Save and Back to List"
@@ -1127,6 +1135,7 @@ en_CA:
         edit: "1. General Settings"
         incoming: "2. Incoming Products"
         outgoing: "3. Outgoing Products"
+        checkout_options: "4. Checkout Options"
       exchange_form:
         pickup_time_tip: 'This phrase will help buyers select their shop from multiple shops. It will be preceded by the phrase "Orders for". So enter a pick-up date,  or buyer group... '
         pickup_instructions_placeholder: "Pick-up instructions"
@@ -1231,6 +1240,7 @@ en_CA:
           properties: "Properties"
           shipping_methods: "Shipping/Pick Up Methods"
           payment_methods: "Payment Methods"
+          enterprise_fees: "Enterprise Fees"
           enterprise_permissions: "Enterprise Permissions"
           inventory_settings: "Inventory Settings"
           tag_rules: "Tag Rules"
@@ -1336,6 +1346,15 @@ en_CA:
         formatted_data: Formatted Data
       packing:
         name: "Packing Reports"
+    oidc_settings:
+      index:
+        title: "OIDC Settings"
+        connect: "Connect Your Account"
+        already_connected: "Your account is already linked to this DFC authorization account:"
+        les_communs_link: "Les Communs Open ID server"
+        link_your_account: "First you need to link your account with the authorization provider used by DFC (Les Communs Open ID Connect)."
+        link_account_button: "Link your Les Communs OIDC Account"
+        view_account: "To view your account, see:"
     subscriptions:
       index:
         title: "Subscriptions"
@@ -1849,6 +1868,7 @@ en_CA:
       invalid_email: "Please enter a valid email address"
       select_a_shipping_method: Select a shipping method
       select_a_payment_method: Select a payment method
+      no_shipping_methods_available: Checkout is not possible because no shipping/pick-up options are available. Please contact the shop owner.
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
@@ -2579,7 +2599,17 @@ en_CA:
   report_header_to_hub: To Hub
   report_header_hub_code: Customer Code
   report_header_hub_id: Hub ID
+  report_header_hub_business_number: "Hub Business Number"
+  report_header_hub_legal_name: "Hub Legal Name"
+  report_header_hub_contact_name: "Hub Contact Name"
+  report_header_hub_email: "Hub Public Email"
   report_header_hub_owner_email: Hub Owner Email
+  report_header_hub_phone: "Hub Phone Number"
+  report_header_hub_address_line1: "Hub Address Line 1"
+  report_header_hub_address_line2: "Hub Address Line 2"
+  report_header_hub_address_city: "Hub Region"
+  report_header_hub_address_zipcode: "Hub Postal Code"
+  report_header_hub_address_state_name: "Hub Province"
   report_header_code: Code
   report_header_paid: Paid?
   report_header_delivery: Delivery?
@@ -2614,6 +2644,7 @@ en_CA:
   report_header_total_tax: "Total Tax (%{currency_symbol})"
   report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
   report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
+  report_header_total_orders: "Total Number of Orders"
   report_header_enterprise: Enterprise
   report_header_customer: Customer
   report_header_customer_code: Customer Code
@@ -2739,6 +2770,7 @@ en_CA:
   action_required: "Action required"
   tag_rules: "Tag Rules"
   enterprise_fee_whole_order: Whole order
+  enterprise_fee_by_name: "%{name} fee by %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
@@ -3658,6 +3690,7 @@ en_CA:
           results_found: " %{number}  Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
+          cancel_orders: "Cancel Orders"
           selected:
             zero: "No order selected"
             one: "1 order selected"
@@ -4014,11 +4047,13 @@ en_CA:
       shipped_email:
         dear_customer: "Dear Customer, "
         instructions: "Your order from %{distributor} has been shipped."
-        shipment_summary: "Shipment/Pick Up Summary"
+        shipment_summary: "Order Summary"
         subject: "Shipment/Pick Up Notification"
         thanks: "Thank you for your business."
         track_information: "Tracking Information: %{tracking}"
         track_link: "Tracking Link: %{url}"
+        picked_up_instructions: "Your order from %{distributor} has been picked-up"
+        picked_up_subject: "Pick up Notification"
     test_mailer:
       test_email:
         greeting: "Congratulations!"
@@ -4193,3 +4228,6 @@ en_CA:
     unprocessable_entity:
       title: "The change you wanted was rejected (422)"
       message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to.<br><h3><a href='/' >Return home</a></h3></p>"
+  components:
+    multiple_checked_select:
+      filter_placeholder: "Filter options"

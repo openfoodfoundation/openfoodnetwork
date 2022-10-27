@@ -23,6 +23,8 @@ fr_CM:
         state: Statut
         source: Source
       spree/product:
+        name: "Nom du Produit"
+        price: "Prix"
         primary_taxon: "Catégorie Produit"
         supplier: "Fournisseur"
         shipping_category_id: "Condition de transport"

@@ -23,6 +23,8 @@ de_CH:
         state: Status
         source: Zahlungsart
       spree/product:
+        name: "Produktname"
+        price: "Preis"
         primary_taxon: "Produktkategorie"
         supplier: "Lieferant"
         shipping_category_id: "Lieferkategorie"
