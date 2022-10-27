@@ -6,7 +6,7 @@ on:
   pull_request:
 
 env:
-  DISABLE_KNAPSACK: true
+  DISABLE_KNAPSACK: false
   TIMEZONE: UTC
   COVERAGE: true
   RAILS_ENV: test
@@ -15,7 +15,7 @@ permissions:
   contents: read
 
 jobs:
-  controllers-models:
+  knapsack_run:
     runs-on: ubuntu-20.04
     services:
       postgres:
@@ -33,13 +33,7 @@ jobs:
     strategy:
       matrix:
         specs:
-          - "spec/controllers"
-          - "spec/models/[a-r]*"
-          - "spec/models/[s]*"
-          - "spec/models/[t-z]*"
-          - "spec/lib"
-          - "spec/migrations"
-          - "spec/serializers"
+          - "spec/*"
       fail-fast: false
     steps:
       - uses: actions/checkout@v3
@@ -67,7 +61,8 @@ jobs:
           bundle exec rake db:schema:load
 
       - name: Run tests
-        run: bundle exec rspec --profile -- ${{ matrix.specs }}
+        run: |
+          KNAPSACK_GENERATE_REPORT=true bundle exec rake "knapsack:rspec[--tag ~performance --format progress -p]"
 
       - name: Archive failed tests screenshots
         if: failure()
@@ -77,171 +72,3 @@ jobs:
           path: tmp/capybara/screenshots/*.png
           retention-days: 7
           if-no-files-found: ignore
-
-  system-admin:
-    runs-on: ubuntu-20.04
-    services:
-      postgres:
-        image: postgres:10
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_DB: open_food_network_test
-          POSTGRES_USER: ofn
-          POSTGRES_PASSWORD: f00d
-    strategy:
-      matrix:
-        specs:
-          - "spec/system/admin/[a-e0-9]*"
-          - "spec/system/admin/[i-o]*"
-          - "spec/system/admin/[p-z]*"
-      fail-fast: false
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.4.0
-        with: 
-          redis-version: 6
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Set up database
-        run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
-
-      - name: Run tests
-        run: bundle exec rspec --profile -- ${{ matrix.specs }}
-
-      - name: Archive failed tests screenshots
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: failed-tests-screenshots
-          path: tmp/capybara/screenshots/*.png
-          retention-days: 7
-          if-no-files-found: ignore
-
-  system-consumer:
-    runs-on: ubuntu-20.04
-    services:
-      postgres:
-        image: postgres:10
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_DB: open_food_network_test
-          POSTGRES_USER: ofn
-          POSTGRES_PASSWORD: f00d
-    strategy:
-      matrix:
-        specs:
-          - "spec/system/consumer/[a-e0-9]*"
-          - "spec/system/consumer/[i-r]*"
-          - "spec/system/consumer/[s-z]*"
-          - "engines/*/spec"
-      fail-fast: false
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.4.0
-        with: 
-          redis-version: 6
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Set up database
-        run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
-
-      - name: Run tests
-        run: bundle exec rspec --profile -- ${{ matrix.specs }}
-
-      - name: Archive failed tests screenshots
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: failed-tests-screenshots
-          path: tmp/capybara/screenshots/*.png
-          retention-days: 7
-          if-no-files-found: ignore
-
-  test-the-rest:
-    runs-on: ubuntu-20.04
-    services:
-      postgres:
-        image: postgres:10
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_DB: open_food_network_test
-          POSTGRES_USER: ofn
-          POSTGRES_PASSWORD: f00d
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.4.0
-        with: 
-          redis-version: 6
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Set up database
-        run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
-
-      - name: Run JS tests
-        run: bundle exec rake karma:run
-
-      - name: Run jest tests
-        run: yarn jest
-
-      - name: Run all other tests
-        run: bundle exec rake ofn:specs:run:excluding_folders["models,controllers,serializers,features,lib,migrations,system"]
