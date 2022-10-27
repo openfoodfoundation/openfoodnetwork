@@ -377,6 +377,8 @@ GEM
     jwt (2.5.0)
     knapsack (4.0.0)
       rake
+    knapsack_pro (3.4.1)
+      rake
     launchy (2.5.0)
       addressable (~> 2.7)
     letter_opener (1.8.1)
@@ -819,6 +821,7 @@ DEPENDENCIES
   jsonapi-serializer
   jwt (~> 2.3)
   knapsack
+  knapsack_pro
   letter_opener (>= 1.4.1)
   listen
   mime-types

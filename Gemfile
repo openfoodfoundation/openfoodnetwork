@@ -153,6 +153,7 @@ group :test, :development do
   gem 'fuubar', '~> 2.5.1'
   gem 'json_spec', '~> 1.1.4'
   gem 'knapsack', require: false
+  gem 'knapsack_pro', require: false
   gem 'letter_opener', '>= 1.4.1'
   gem 'rspec-rails', ">= 3.5.2"
   gem 'rspec-retry', require: false
@@ -168,6 +169,9 @@ group :test do
   gem 'simplecov', require: false
   gem 'test-prof', require: false
   gem 'vcr', require: false
+  gem 'test-prof'
+  gem 'vcr'
+>>>>>>> 7f0d4cc24 (Adds knapsack_pro to the stack; updates configs)
   gem 'webmock', require: false
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'
