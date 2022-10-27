@@ -3,9 +3,9 @@ name: Build
 on:
   workflow_dispatch:
   push:
-  pull_request:
     branches-ignore:    
-      - 'dependabot/*'
+      - 'dependabot/**'
+  pull_request:
 
 env:
   DISABLE_KNAPSACK: true
