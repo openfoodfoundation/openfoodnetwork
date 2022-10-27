@@ -87,16 +87,16 @@
       = af.text_field :city, { placeholder: t(:city_placeholder)}
     .five.columns.omega
       = af.text_field :zipcode, { placeholder: t(:postcode_placeholder)}
-  %div{"data-controller": "dependant-select", "data-dependant-select-options-value": countries_with_states }
+  %div{"data-controller": "dependent-select", "data-dependent-select-options-value": countries_with_states }
     .row
       .three.columns.alpha
         = af.label :state_id, t(:state)
         \/
         = af.label :country_id, t(:country)
       .four.columns
-        = af.select :country_id, available_countries.map { |c| [c.name, c.id] }, {}, { "data-controller": "tom-select", "data-dependant-select-target": "source", "data-action": "dependant-select#handleSelectChange", class: "primary" }
+        = af.select :country_id, available_countries.map { |c| [c.name, c.id] }, {}, { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
       .five.columns.omega
-        = af.select :state_id, @enterprise.address.country.states.map { |s| [s.name, s.id] }, {}, { "data-controller": "tom-select", "data-dependant-select-target": "select", class: "primary" }
+        = af.select :state_id, @enterprise.address.country.states.map { |s| [s.name, s.id] }, {}, { "data-controller": "tom-select", "data-dependent-select-target": "select", class: "primary" }
   .row
     .three.columns.alpha
       = af.label :latitude, t(:latitude)

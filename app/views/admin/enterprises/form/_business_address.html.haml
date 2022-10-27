@@ -9,6 +9,7 @@
   .three.columns.alpha
     = bf.label :address1, t('.address1')
     %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "business_address_info_modal" }
+  .eight.columns.omega
     = bf.text_field :address1, { placeholder: t(".address1_placeholder") }
 .row
   .alpha.three.columns
@@ -24,16 +25,16 @@
     = bf.text_field :city, { placeholder: t(:city_placeholder) }
   .four.columns.omega
     = bf.text_field :zipcode, { placeholder: t(:postcode_placeholder) }
-.row
+.row{"data-controller": "dependent-select", "data-dependent-select-options-value": countries_with_states }
   .three.columns.alpha
     = bf.label :country_id, t(:country)
     \/
     = bf.label :state_id, t(:state)
-  %div{"data-controller": "dependant-select", "data-dependant-select-options-value": countries_with_states }
-    .four.columns
-      = bf.select :country_id, available_countries.map { |c| [c.name, c.id] }, {}, { "data-controller": "tom-select", "data-dependant-select-target": "source", "data-action": "dependant-select#handleSelectChange", class: "primary" }
-    .four.columns.omega
-      = bf.select :state_id, @enterprise.address.country.states.map { |s| [s.name, s.id] }, {}, { "data-controller": "tom-select", "data-dependant-select-target": "select", class: "primary" }
+  .four.columns
+    = bf.select :country_id, options_for_select(available_countries.map { |c| [c.name, c.id] }, @enterprise.business_address.country_id), {}, { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
+  .four.columns.omega
+    - states = @enterprise.business_address.country.present? ? @enterprise.business_address.country&.states&.map { |s| [s.name, s.id] } : []
+    = bf.select :state_id, states, {}, { "data-controller": "tom-select", "data-dependent-select-target": "select", class: "primary" }
 
 .row
   .three.columns.alpha
