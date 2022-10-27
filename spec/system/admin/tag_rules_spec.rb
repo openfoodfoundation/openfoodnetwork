@@ -248,13 +248,6 @@ describe 'Tag Rules', js: true do
         end
         expect(page).to have_no_selector "#tr_0"
       end.to change{ TagRule.count }.by(-2)
-
-      # After deleting tags, the form is dirty and we need to confirm leaving
-      # the page. If we don't do it here, Capybara may timeout waiting for the
-      # confirmation while resetting the session.
-      accept_confirm do
-        visit("about:blank")
-      end
     end
   end
 
