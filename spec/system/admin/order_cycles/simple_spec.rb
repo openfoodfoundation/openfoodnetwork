@@ -714,7 +714,9 @@ describe '
     input = find(".flatpickr-calendar.open .flatpickr-minute")
     input.send_keys datetime.strftime("%M").to_s.strip
     input.send_keys :enter
-    expect(page).to have_content "You have unsaved changes"
+    within "#save-bar" do
+      expect(page).to have_content "You have unsaved changes"
+    end
   end
 
   it "deleting an order cycle" do
