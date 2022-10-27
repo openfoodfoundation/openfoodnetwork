@@ -380,10 +380,10 @@ describe '
           visit_bulk_order_management
         end
 
-        it "displays a select box for distributors, which filters line items by the selected distributor" do
+        it "displays a select box for distributors, which filters line items by the selected distributor", retry: 2 do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
-          find("#s2id_distributor_filter").click
+          find("#s2id_distributor_filter .select2-chosen").click
           expect(page).to have_selector "div.select2-drop-active ul.select2-results li", text: "All"
           Enterprise.is_distributor.map(&:name).each do |dn|
             expect(page).to have_selector "div.select2-drop-active ul.select2-results li", text: dn
@@ -393,14 +393,14 @@ describe '
           expect(page).to have_no_selector "tr#li_#{li2.id}"
         end
 
-        it "displays all line items when 'All' is selected from distributor filter" do
+        it "displays all line items when 'All' is selected from distributor filter", retry: 2 do
           # displays orders from one enterprise only
           expect(page).to have_selector "tr#li_#{li2.id}"
-          find("#s2id_distributor_filter").click
+          find("#s2id_distributor_filter .select2-chosen").click
           find(".select2-result-label", text: d1.name.to_s).click
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           # displays orders from all enterprises
-          find("#s2id_distributor_filter").click
+          find("#s2id_distributor_filter .select2-chosen").click
           find(".select2-result-label", text: "All").click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
