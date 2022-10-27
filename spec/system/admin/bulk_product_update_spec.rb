@@ -319,7 +319,7 @@ describe '
 
       it "creating a variant with unit value is: '120g' and 'on_demand' checked" do
         within "tr#v_#{Spree::Variant.second.id}" do
-          page.find(".add-variant").click
+          page.find(".add-variant").trigger("click")
         end
 
         within "tr#v_-1" do
