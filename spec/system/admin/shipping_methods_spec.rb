@@ -103,7 +103,7 @@ describe 'shipping methods' do
       login_as enterprise_user
     end
 
-    it "creating a shipping method" do
+    it "creating a shipping method", retry: 2 do
       visit admin_enterprises_path
       within("#e_#{distributor1.id}") { click_link 'Settings' }
       within(".side_menu") do
@@ -130,7 +130,9 @@ describe 'shipping methods' do
       end
       click_button "Create"
 
-      expect(page).to have_content 'Shipping Method "Teleport" has been successfully created!'
+      within ".flash-container" do
+        expect(page).to have_content 'Shipping Method "Teleport" has been successfully created!'
+      end
       expect(page).to have_content "Editing Shipping Method"
 
       expect(first('tags-input .tag-list ti-tag-item')).to have_content "local"
