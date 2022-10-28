@@ -28,17 +28,28 @@ module Spree
           new_product.updated_at = nil
           new_product.product_properties = reset_properties
           new_product.master = duplicate_master
+          new_product.variants = duplicate_variants
         end
       end
 
       def duplicate_master
         master = product.master
-        master.dup.tap do |new_master|
-          new_master.sku = ""
-          new_master.deleted_at = nil
-          new_master.images = master.images.map { |image| duplicate_image image }
-          new_master.price = master.price
-          new_master.currency = master.currency
+        duplicate_variant(master)
+      end
+
+      def duplicate_variants
+        product.variants.map do |variant|
+          duplicate_variant(variant)
+        end
+      end
+
+      def duplicate_variant(variant)
+        variant.dup.tap do |new_variant|
+          new_variant.sku = ""
+          new_variant.deleted_at = nil
+          new_variant.images = variant.images.map { |image| duplicate_image image }
+          new_variant.price = variant.price
+          new_variant.currency = variant.currency
         end
       end
 
