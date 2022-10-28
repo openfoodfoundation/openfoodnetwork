@@ -13,3 +13,7 @@ application.consumer = consumer;
 StimulusReflex.initialize(application, { controller, isolate: true });
 StimulusReflex.debug = process.env.RAILS_ENV === "development";
 CableReady.initialize({ consumer });
+
+import mrujs from "mrujs";
+
+mrujs.start();
