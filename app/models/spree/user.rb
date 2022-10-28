@@ -38,6 +38,8 @@ module Spree
     has_many :customers
     has_many :credit_cards
     has_many :report_rendering_options, class_name: "::ReportRenderingOptions", dependent: :destroy
+    has_many :webhook_endpoints, dependent: :destroy
+
     accepts_nested_attributes_for :enterprise_roles, allow_destroy: true
 
     accepts_nested_attributes_for :bill_address
