@@ -706,7 +706,7 @@ describe '
     end
   end
 
-  it "modify the minute of a order cycle with the keyboard, check that the modifications are taken into account" do
+  it "modify the minute of a order cycle with the keyboard, check that the modifications are taken into account", retry: 2 do
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
     login_as_admin_and_visit admin_order_cycles_path
     find("#oc#{order_cycle.id}_orders_close_at").click
