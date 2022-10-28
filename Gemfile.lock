@@ -695,7 +695,7 @@ GEM
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
     temple (0.8.2)
-    test-prof (1.0.10)
+    test-prof (1.0.11)
     test-unit (3.5.5)
       power_assert
     thor (1.2.1)
