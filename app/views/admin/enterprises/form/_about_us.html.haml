@@ -14,4 +14,4 @@
     -# 	['html', 'insertImage', 'insertLink', 'insertVideo']
     %text-angular{'ng-model' => 'Enterprise.long_description', 'id' => 'enterprise_long_description', 'name' => 'enterprise[long_description]', 'class' => 'text-angular', "textangular-links-target-blank" => true,
       'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]",
-      'placeholder' => t('.desc_long_placeholder')}
+      'placeholder' => t('.desc_long_placeholder'), "data-action": "click->dirty-form#makeDirty"}
