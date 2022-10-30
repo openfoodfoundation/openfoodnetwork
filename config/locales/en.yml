@@ -706,6 +706,7 @@ en:
         conditional_blank: can't be blank if unit_type is blank
         no_product: did not match any products in the database
         not_found: not found in database
+        category_not_found: doesn't match allowed categories. See the correct categories to choose from on the product import page, or check that there's no mispelling.
         not_updatable: cannot be updated on existing products via product import
         blank: can't be blank
         products_no_permission: you do not have permission to manage products for this enterprise
