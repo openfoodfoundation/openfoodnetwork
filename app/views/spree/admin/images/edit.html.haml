@@ -14,6 +14,10 @@
       - # A Rails bug makes it necessary to call `main_app.url_for` here.
       - # https://github.com/rails/rails/issues/31325
       = link_to image_tag(main_app.url_for(@image.variant(:small))), main_app.url_for(@image.variant(:product))
+    .field.alpha.three.columns.align-center
+      = f.label t('spree.cdn_thumbnail')
+      %br/
+      = link_to image_tag(@image.cdn_url(:small)), @image.cdn_url(:small)
     .nine.columns.omega
       = render partial: 'form', locals: { f: f }
     .clear

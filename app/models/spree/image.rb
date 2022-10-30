@@ -35,6 +35,12 @@ module Spree
       Rails.application.routes.url_helpers.url_for(variant(size))
     end
 
+    def cdn_url(size)
+      return url(size) if ENV["S3_BUCKET"].nil?
+
+      variant(size).service_url
+    end
+
     # if there are errors from the plugin, then add a more meaningful message
     def no_attachment_errors
       return if errors[:attachment].empty?

@@ -13,11 +13,11 @@ module Api
       has_one :master, serializer: Api::Admin::VariantSerializer
 
       def image_url
-        object.images.first&.url(:product) || "/noimage/product.png"
+        object.images.first&.cdn_url(:product) || "/noimage/product.png"
       end
 
       def thumb_url
-        object.images.first&.url(:mini) || "/noimage/mini.png"
+        object.images.first&.cdn_url(:mini) || "/noimage/mini.png"
       end
 
       def on_hand
