@@ -166,7 +166,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'test-prof'
   gem 'vcr'
-  gem 'webmock'
+  gem 'webmock', require: false
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'
 end
