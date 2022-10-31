@@ -25,6 +25,9 @@ fi
 
 echo "Running $n times with $processors cores"
 
+# The purpose here is to occupy the CPU (yes command is not multi-threaded and it occupies only one core)
+# Start one process for each core, and then simulating a very busy CI environment with a 100% CPU load
+# increasing the chance of race conditions when executing specs.
 for i in `seq $processors`; do
   yes > /dev/null &
 done
