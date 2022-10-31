@@ -13,12 +13,6 @@ unless ENV['DISABLE_KNAPSACK']
   Knapsack::Adapters::RSpecAdapter.bind
 end
 
-# Configures knapsack_pro if not set otherwise on .github/workflows/build.yml
-unless ENV['DISABLE_KNAPSACK_PRO']
-  require 'knapsack_pro'
-  KnapsackPro::Adapters::RSpecAdapter.bind
-end
-
 Capybara.javascript_driver = :chrome
 Capybara.default_max_wait_time = 30
 Capybara.disable_animation = true
