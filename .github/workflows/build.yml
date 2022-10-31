@@ -1,4 +1,4 @@
-name: Build
+name: Build test-the-rest
 
 on:
   workflow_dispatch:
@@ -9,7 +9,6 @@ on:
 
 env:
   DISABLE_KNAPSACK: true
-  DISABLE_KNAPSACK_PRO: false
   TIMEZONE: UTC
   COVERAGE: true
   RAILS_ENV: test
@@ -34,17 +33,14 @@ jobs:
           POSTGRES_USER: ofn
           POSTGRES_PASSWORD: f00d
     strategy:
-      fail-fast: false
       matrix:
-        # [n] - where the n is a number of parallel jobs you want to run your tests on.
-        # Use a higher number if you have slow tests to split them between more parallel jobs.
-        # Remember to update the value of the `ci_node_index` below to (0..n-1).
-        ci_node_total: [50]
-        # Indexes for parallel jobs (starting from zero).
-        # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
-        ci_node_index: [1, 2, 3, 4, 5, 6, 7,  8,  9,  10, 11, 12, 13, 14, 15,  16,  17,  18,  19,
-          20,  21,  22,  23,  24,  25,  26,  27,  28,  29,  30,  31,  32,  33,  34,  35,  36,  37,
-           38,  39,  40,  41,  42,  43,  44,  45,  46,  47,  48,  49]
+        specs:
+          - "spec/models"
+          - "spec/lib"
+          - "spec/migrations"
+          - "spec/serializers"
+          - "engines/*/spec"
+      fail-fast: false
     steps:
       - uses: actions/checkout@v3
 
@@ -69,22 +65,8 @@ jobs:
         run: |
           bundle exec rake db:create
           bundle exec rake db:schema:load
-
       - name: Run tests
-        env:
-          KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: ${{ secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC }}
-          KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
-          KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
-          KNAPSACK_PRO_LOG_LEVEL: info
-          # if you use Knapsack Pro Queue Mode you must set below env variable
-          # to be able to retry CI build and run previously recorded tests
-          # https://github.com/KnapsackPro/knapsack_pro-ruby#knapsack_pro_fixed_queue_split-remember-queue-split-on-retry-ci-node
-          KNAPSACK_PRO_FIXED_QUEUE_SPLIT: true
-          # RSpec split test files by test examples feature - it's optional
-          # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
-          # KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
-        run: |
-          bin/knapsack_pro_rspec
+        run: bundle exec rspec --profile -- ${{ matrix.specs }}
 
       - name: Archive failed tests screenshots
         if: failure()
@@ -134,7 +116,6 @@ jobs:
         run: |
           bundle exec rake db:create
           bundle exec rake db:schema:load
-
       - name: Run JS tests
         run: bundle exec rake karma:run
 
