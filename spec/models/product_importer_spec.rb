@@ -286,7 +286,7 @@ describe ProductImport::ProductImporter do
     it "raises an error" do
       importer.validate_entries
       entries = JSON.parse(importer.entries_json)
-      error = entries['2']['errors']['shipping_category'] 
+      error = entries['2']['errors']['shipping_category']
 
       expect(error).to include "Shipping_category doesn't match allowed categories"
     end
