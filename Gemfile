@@ -150,10 +150,10 @@ group :test, :development do
   gem "factory_bot_rails", '6.2.0', require: false
   gem 'fuubar', '~> 2.5.1'
   gem 'json_spec', '~> 1.1.4'
-  gem 'knapsack'
+  gem 'knapsack', require: false
   gem 'letter_opener', '>= 1.4.1'
   gem 'rspec-rails', ">= 3.5.2"
-  gem 'rspec-retry'
+  gem 'rspec-retry', require: false
   gem 'rswag-specs'
   gem 'shoulda-matchers'
   gem 'timecop'
@@ -164,8 +164,8 @@ group :test do
   gem 'pdf-reader'
   gem 'rails-controller-testing'
   gem 'simplecov', require: false
-  gem 'test-prof'
-  gem 'vcr'
+  gem 'test-prof', require: false
+  gem 'vcr', require: false
   gem 'webmock', require: false
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'
