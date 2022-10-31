@@ -9,7 +9,7 @@
 
 function finish() {
   echo "Exiting..."
-  killall yes
+  pkill -P $$
   if [ "$pass_rate" -lt 100 ]; then
     echo "Check tmp/rspec.log for details."
     exit 1
