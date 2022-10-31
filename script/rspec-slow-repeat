@@ -19,13 +19,11 @@ passed=0
 # Check via uname the environment we are running in to get the number of cores
 if [[ "`uname`" == "Darwin" ]]; then
   processors="`sysctl -n hw.ncpu.`"
-  env="mac"
 else
   processors="`cat /proc/cpuinfo | grep -c processor`"
-  env="linux"
 fi
 
-echo "Running $n times on a $env with $processors cores"
+echo "Running $n times with $processors cores"
 
 for i in `seq $processors`; do
   yes > /dev/null &
