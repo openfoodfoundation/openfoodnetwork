@@ -24,13 +24,13 @@
       = f.label :sells, t('.sells')
       = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.sells_tip')}
     .two.columns
-      = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells', data: {action: "change->primary-details#enterpriseSellsChanged"} 
+      = f.radio_button :sells, "none", data: {action: "change->primary-details#enterpriseSellsChanged"} 
       = f.label :sells, t('.none'), value: "none"
     .two.columns
-      = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells', data: {action: "change->primary-details#enterpriseSellsChanged"}
+      = f.radio_button :sells, "own", data: {action: "change->primary-details#enterpriseSellsChanged"}
       = f.label :sells, t('.own'), value: "own"
     .four.columns.omega
-      = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells', data: {action: "change->primary-details#enterpriseSellsChanged"}
+      = f.radio_button :sells, "any", data: {action: "change->primary-details#enterpriseSellsChanged"}
       = f.label :sells, t('.any'), value: "any"
       %span{ style: "width: 30px; height: 30px;", class: "hidden", data: { "primary-details-target": "spinner" } }
         = render partial: "components/admin_spinner"
@@ -39,13 +39,13 @@
     %label= t('.visible_in_search')
     = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.visible_in_search_tip')}
   .two.columns
-    = f.radio_button :visible, "public", 'ng-model' => 'Enterprise.visible'
+    = f.radio_button :visible, "public"
     = f.label :visible, t('.visible'), value: 'public'
   .two.columns
-    = f.radio_button :visible, "only_through_links", 'ng-model' => 'Enterprise.visible'
+    = f.radio_button :visible, "only_through_links"
     = f.label :visible, t('.not_visible'), value: 'only_through_links'
   .four.columns.omega
-    = f.radio_button :visible, "hidden", 'ng-model' => 'Enterprise.visible'
+    = f.radio_button :visible, "hidden"
     = f.label :visible, t('.hidden'), value: 'hidden'
 
 = render partial: 'admin/enterprises/form/permalink'
