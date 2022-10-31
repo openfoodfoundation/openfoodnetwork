@@ -7,6 +7,14 @@
 # You can use the resulting pass rate to asses if your code changes fixed it
 # or not. In the end I would run a spec 100 times to be sure it's stable.
 
+function finish() {
+  echo "Exiting..."
+  killall yes
+  exit 0
+}
+
+trap finish SIGINT
+
 if [ "$#" -lt 1 ]; then
   echo "Usage:   $0 <n> [rspec params]"
   echo "Example: $0 30 spec/system/admin/order_cycles/simple_spec.rb:202"
@@ -44,7 +52,7 @@ for i in `seq "$n"`; do
   fi
 done
 
-killall yes
-
 pass_rate="$(( passed * 100 / n))"
 echo "$passed of $n passed ($pass_rate%)"
+
+finish
