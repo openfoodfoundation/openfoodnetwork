@@ -36,9 +36,11 @@ module Spree
     end
 
     def cdn_url(size)
-      return url(size) if ENV["S3_BUCKET"].nil?
+      return url(size) unless cdn_activated?
 
-      variant(size).service_url
+      return unless attachment.attached?
+
+      variant(size).blob.url
     end
 
     # if there are errors from the plugin, then add a more meaningful message
@@ -51,6 +53,10 @@ module Spree
       end
 
       false
+    end
+
+    def cdn_activated?
+      Rails.application.config.active_storage.service != :local
     end
   end
 end
