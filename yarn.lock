@@ -1716,10 +1716,10 @@
   resolved "https://registry.yarnpkg.com/@hotwired/stimulus-webpack-helpers/-/stimulus-webpack-helpers-1.0.1.tgz#4cd74487adeca576c9865ac2b9fe5cb20cef16dd"
   integrity sha512-wa/zupVG0eWxRYJjC1IiPBdt3Lruv0RqGN+/DTMmUWUyMAEB27KXmVY6a8YpUVTM7QwVuaLNGW4EqDgrS2upXQ==
 
-"@hotwired/stimulus@>= 3.0", "@hotwired/stimulus@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/@hotwired/stimulus/-/stimulus-3.1.0.tgz#20215251e5afe6e0a3787285181ba1bfc9097df0"
-  integrity sha512-iDMHUhiEJ1xFeicyHcZQQgBzhtk5mPR0QZO3L6wtqzMsJEk2TKECuCQTGKjm+KJTHVY0dKq1dOOAWvODjpd2Mg==
+"@hotwired/stimulus@>= 3.0", "@hotwired/stimulus@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@hotwired/stimulus/-/stimulus-3.1.1.tgz#652f08a8e1d5edcb407340e58818fcff463b5848"
+  integrity sha512-e0JpzIaYLsRRXevRDVs0yevabiCvieIWWCwh7VqVXjXM5AOHdjb7AjaKIj34zYFmY1N6HIRRfk915WVMYlHnDA==
 
 "@hotwired/turbo@^7.1.0":
   version "7.2.4"
@@ -11618,11 +11618,11 @@ stimulus-flatpickr@^1.4.0:
   integrity sha512-rcC/c9+E+f5W2kOjaaLShtf3i+p95ACqt+oGzSAgeuZh2YeIN8gW4EWO7h0STBLzSVPl6BjIfPWP7upMPavIVQ==
 
 stimulus@^3.0.1:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/stimulus/-/stimulus-3.1.0.tgz#225298f1936f96b0eafa883b8b304266427912c3"
-  integrity sha512-ln+BtLkhemwJozr5N3I5q0kGlSv6fmcPi3JtDjBo7gnnz2tAYhK2WBhyY/EN/4+CWIwqp3qPm3Pc+i9CjIXrtg==
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/stimulus/-/stimulus-3.1.1.tgz#ef37aafce32c24d91b8fe496855436d096c6cb44"
+  integrity sha512-eFOPFB6tJXJ6wFpUVjpi0/tYSiY4LPwdZa/1S6bzhhEt5cSIfmtndrHpaUo76uElpWnfmEEOB4ezMXtGnG9HBQ==
   dependencies:
-    "@hotwired/stimulus" "^3.1.0"
+    "@hotwired/stimulus" "^3.1.1"
     "@hotwired/stimulus-webpack-helpers" "^1.0.0"
 
 stimulus_reflex@3.5.0-pre9:
