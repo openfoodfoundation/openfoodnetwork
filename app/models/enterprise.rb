@@ -15,6 +15,7 @@ class Enterprise < ApplicationRecord
     medium: { resize_to_fill: [720, 156] },
     large: { resize_to_fill: [1200, 260] },
   }.freeze
+  VALID_INSTAGRAM_REGEX = %r{\A[a-zA-Z0-9._]{1,30}([^/-]*)\z}
 
   searchable_attributes :sells, :is_primary_producer
   searchable_associations :properties
@@ -99,6 +100,7 @@ class Enterprise < ApplicationRecord
   validate :shopfront_taxons
   validate :shopfront_producers
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
+  validates :instagram, format: { with: VALID_INSTAGRAM_REGEX, message: Spree.t('errors.messages.invalid_instagram_url') }, allow_blank: true
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :set_unused_address_fields
@@ -456,7 +458,7 @@ class Enterprise < ApplicationRecord
   end
 
   def correct_instagram_url(url)
-    url && strip_url(url).sub(%r{www.instagram.com/}, '').delete("@")
+    url && strip_url(url.downcase).sub(%r{www.instagram.com/}, '').sub(%r{instagram.com/}, '').delete("@")
   end
 
   def correct_twitter_url(url)

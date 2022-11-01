@@ -136,7 +136,7 @@ describe "Registration", js: true do
       expect(e.facebook).to eq "FaCeBoOk"
       expect(e.linkedin).to eq "LiNkEdIn"
       expect(e.twitter).to eq "TwItTeR"
-      expect(e.instagram).to eq "InStAgRaM"
+      expect(e.instagram).to eq "instagram"
 
       click_link "Go to Enterprise Dashboard"
       expect(page).to have_content "CHOOSE YOUR PACKAGE"
