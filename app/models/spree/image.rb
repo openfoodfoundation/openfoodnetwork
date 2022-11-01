@@ -40,7 +40,7 @@ module Spree
 
       return unless attachment.attached?
 
-      variant(size).blob.url
+      variant(size).blob.processed.url
     end
 
     # if there are errors from the plugin, then add a more meaningful message
