@@ -681,7 +681,7 @@ Rails/ActiveRecordOverride:
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/ApplicationController:
   Exclude:
-    - 'engines/dfc_provider/app/controllers/dfc_provider/api/base_controller.rb'
+    - 'engines/dfc_provider/app/controllers/dfc_provider/base_controller.rb'
 
 # Offense count: 6
 # This cop supports unsafe autocorrection (--autocorrect-all).

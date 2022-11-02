@@ -117,11 +117,6 @@ Openfoodnetwork::Application.routes.draw do
 
   get 'sitemap.xml', to: 'sitemap#index', defaults: { format: 'xml' }
 
-  constraints FeatureToggleConstraint.new(:dfc_provider) do
-    # Mount DFC API endpoints
-    mount DfcProvider::Engine, at: '/'
-  end
-
   # Mount Spree's routes
   mount Spree::Core::Engine, :at => '/'
 
