@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe DfcProvider::Api::CatalogItemsController, type: :controller do
+describe DfcProvider::CatalogItemsController, type: :controller do
   render_views
 
   let!(:user) { create(:user) }
