@@ -38,6 +38,8 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
     return unless moment($scope.formattedStartDate).isValid() and moment($scope.formattedEndDate).isValid()
 
+    return unless $scope.confirmRefresh()
+
     $scope.loadOrders()
     $scope.loadLineItems()
 
