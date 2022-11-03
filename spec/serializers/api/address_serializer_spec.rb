@@ -29,10 +29,10 @@ describe Api::AddressSerializer do
       }
     end
 
-    it "updates even when database wasn't changed" do
+    it "uses stored result when database wasn't changed" do
       expect {
         address.first_name = "Nick"
-      }.to change {
+      }.to_not change {
         serializer.to_json
       }
     end
