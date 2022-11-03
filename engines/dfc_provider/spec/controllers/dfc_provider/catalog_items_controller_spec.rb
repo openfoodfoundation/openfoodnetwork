@@ -19,7 +19,7 @@ describe DfcProvider::CatalogItemsController, type: :controller do
       context 'with an authenticated user' do
         before do
           allow_any_instance_of(DfcProvider::AuthorizationControl)
-            .to receive(:process)
+            .to receive(:user)
             .and_return(user)
         end
 
@@ -83,7 +83,7 @@ describe DfcProvider::CatalogItemsController, type: :controller do
       context 'without an authenticated user' do
         it 'returns unauthorized head' do
           allow_any_instance_of(DfcProvider::AuthorizationControl)
-            .to receive(:process)
+            .to receive(:user)
             .and_return(nil)
 
           api_get :index, enterprise_id: 'default'
@@ -117,7 +117,7 @@ describe DfcProvider::CatalogItemsController, type: :controller do
       context 'with an authenticated user' do
         before do
           allow_any_instance_of(DfcProvider::AuthorizationControl)
-            .to receive(:process)
+            .to receive(:user)
             .and_return(user)
         end
 

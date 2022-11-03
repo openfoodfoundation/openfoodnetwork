@@ -8,17 +8,14 @@ module DfcProvider
       @request = request
     end
 
-    def process
+    def user
       oidc_user || ofn_user
     end
 
     private
 
     def oidc_user
-      return unless access_token
-
-      decode_token
-      find_ofn_user
+      find_ofn_user(decode_token) if access_token
     end
 
     def ofn_user
@@ -26,22 +23,15 @@ module DfcProvider
     end
 
     def decode_token
-      data = JWT.decode(
-        access_token,
-        nil,
-        false
-      )
-
-      @header = data.last
-      @payload = data.first
+      JWT.decode(access_token, nil, false).first
     end
 
     def access_token
       @request.headers['Authorization'].to_s.split(' ').last
     end
 
-    def find_ofn_user
-      Spree::User.where(email: @payload['email']).first
+    def find_ofn_user(payload)
+      Spree::User.find_by(email: payload["email"])
     end
   end
 end
