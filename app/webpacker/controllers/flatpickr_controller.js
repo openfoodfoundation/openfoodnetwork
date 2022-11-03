@@ -51,6 +51,7 @@ export default class extends Flatpickr {
       plugins: this.plugins(mode, datetimepicker),
       mode,
     };
+    window.addEventListener("flatpickr:change", this.onChangeEvent.bind(this));
   }
 
   clear(e) {
@@ -59,6 +60,23 @@ export default class extends Flatpickr {
 
   open() {
     this.fp.element.dispatchEvent(new Event("focus"));
+  }
+  onChangeEvent(e) {
+    if (
+      this.modeValue == "range" &&
+      this.hasStartTarget &&
+      this.hasEndTarget &&
+      e.detail.startDate &&
+      e.detail.endDate
+    ) {
+      // date range mode
+      this.startTarget.value = e.detail.startDate;
+      this.endTarget.value = e.detail.endDate;
+      this.fp.setDate([e.detail.startDate, e.detail.endDate]);
+    } else if (e.detail.date) {
+      // single date mode
+      this.fp.setDate(e.detail.date);
+    }
   }
 
   change(selectedDates, dateStr, instance) {
