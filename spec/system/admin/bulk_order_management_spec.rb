@@ -616,6 +616,8 @@ describe '
             find("input.datepicker").click
             select_dates_from_daterangepicker(today - 9.days, today)
           end
+          # daterange picker should have changed
+          expect(find("input.datepicker").value).to eq "#{today.prev_day(9).strftime('%F')} to #{today.strftime('%F')}"
           expect(page).to have_no_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
             expect(page).to have_no_selector "input[name=quantity].ng-dirty"
@@ -623,10 +625,13 @@ describe '
         end
 
         it "shows a dialog and keeps changes when confirm dialog is rejected" do
+          previousdaterangestring = find("input.datepicker").value
           dismiss_confirm "Unsaved changes exist and will be lost if you continue." do
             find("input.datepicker").click
             select_dates_from_daterangepicker(today - 9.days, today)
           end
+          # daterange picker shouldn't have changed
+          expect(find("input.datepicker").value).to eq previousdaterangestring
           expect(page).to have_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
             expect(page).to have_selector "input[name=quantity].ng-dirty"
