@@ -93,9 +93,9 @@ describe DfcProvider::CatalogItemsController, type: :controller do
     end
 
     context 'without an authorization token' do
-      it 'returns unprocessable_entity head' do
+      it 'returns unauthorized head' do
         api_get :index, enterprise_id: enterprise.id
-        expect(response).to be_unprocessable
+        expect(response).to be_unauthorized
       end
     end
   end

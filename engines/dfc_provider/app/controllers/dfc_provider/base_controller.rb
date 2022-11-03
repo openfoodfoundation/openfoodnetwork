@@ -5,23 +5,14 @@ module DfcProvider
   class BaseController < ActionController::Base
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-    before_action :check_authorization,
-                  :check_user
+    before_action :check_authorization
 
     respond_to :json
 
     private
 
     def check_authorization
-      return if access_token.present?
-
-      head :unprocessable_entity
-    end
-
-    def check_user
-      return if current_user.present?
-
-      head :unauthorized
+      head :unauthorized if current_user.nil?
     end
 
     def check_enterprise
