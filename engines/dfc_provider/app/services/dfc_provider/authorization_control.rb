@@ -9,6 +9,8 @@ module DfcProvider
     end
 
     def process
+      return unless @access_token
+
       decode_token
       find_ofn_user
     end
