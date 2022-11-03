@@ -565,6 +565,7 @@ describe '
       let!(:li3) { create(:line_item_with_shipment, order: o3, quantity: 3 ) }
       let!(:li4) { create(:line_item_with_shipment, order: o4, quantity: 4 ) }
       let(:today) { Time.zone.today }
+      let(:today_system) { Date.today }
 
       before :each do
         visit_bulk_order_management
@@ -572,15 +573,25 @@ describe '
 
       it "displays date fields for filtering orders, with default values set" do
         # use Date.current since Date.today is without timezone
-        one_week_ago = today.prev_day(7).strftime("%F")
-        expect(find("input.datepicker").value).to eq "#{one_week_ago} to #{today.strftime('%F')}"
+        one_week_ago = today_system.prev_day(7).strftime("%F")
+        expect(find("input.datepicker").value).to eq "#{one_week_ago} to #{today_system.strftime('%F')}"
       end
 
-      it "only loads line items whose orders meet the date restriction criteria" do
-        expect(page).to have_no_selector "tr#li_#{li1.id}"
-        expect(page).to have_selector "tr#li_#{li2.id}"
-        expect(page).to have_selector "tr#li_#{li3.id}"
-        expect(page).to have_no_selector "tr#li_#{li4.id}"
+      context "without changing the form" do
+        # by default, the datepicker selects dates having the system time as a reference
+        it "only loads line items whose orders meet the date restriction criteria", if: Time.zone.today == Date.today do
+          expect(page).to have_no_selector "tr#li_#{li1.id}"
+          expect(page).to have_selector "tr#li_#{li2.id}"
+          expect(page).to have_selector "tr#li_#{li3.id}"
+          expect(page).to have_no_selector "tr#li_#{li4.id}"
+        end
+
+        it "only loads line items whose orders meet the date restriction criteria", if: Time.zone.today != Date.today do
+          expect(page).to have_selector "tr#li_#{li1.id}"
+          expect(page).to have_selector "tr#li_#{li2.id}"
+          expect(page).to have_no_selector "tr#li_#{li3.id}"
+          expect(page).to have_no_selector "tr#li_#{li4.id}"
+        end
       end
 
       it "displays only line items whose orders meet the date restriction criteria, when changed" do
