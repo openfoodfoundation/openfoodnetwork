@@ -163,6 +163,7 @@ en_US:
         signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
         unknown_error: "Oops! Something went wrong while creating your account. Please check your email address and try again."
     failure:
+      disabled: "Your account has been disabled. Please contact an administrator to resolve this issue."
       invalid: |
           Invalid email or password.
           Were you a guest last time?  Perhaps you need to create an account or reset your password.
@@ -482,6 +483,7 @@ en_US:
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
         enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
+        enterprise_number_required_on_invoices?: "Require an Business ID to generate an invoice?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"

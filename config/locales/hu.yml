@@ -245,7 +245,7 @@ hu:
       instructions: "Megrendelését kiszállították"
       shipment_summary: "Szállítási összefoglaló"
       subject: "Szállítási értesítés"
-      thanks: "Köszönjük üzletét."
+      thanks: "Köszönjük csatlakozását."
       track_information: "Nyomon követési információ: %{tracking}"
       track_link: "Nyomon követési link: %{url}"
   subscription_mailer:
@@ -290,7 +290,7 @@ hu:
   search_by_name: Keresés név vagy település szerint...
   producers_join: Az ausztrál termelők most már csatlakozhatnak az Open Food Networkhöz.
   charges_sales_tax: GST-t fizet?
-  business_address: "Üzleti cím"
+  business_address: "Vállalkozás címe"
   print_invoice: "Számla nyomtatása"
   print_ticket: "Jegy nyomtatása"
   select_ticket_printer: "Válasszon nyomtatót a jegyekhez"
@@ -353,7 +353,7 @@ hu:
   y: 'Y'''
   n: 'N'''
   powered_by: Powered by
-  blocked_cookies_alert: "Előfordulhat, hogy az Ön böngészője blokkolja az üzlet használatához szükséges cookie-kat. Kattintson az alábbi gombra a cookie-k engedélyezéséhez és az oldal újratöltéséhez."
+  blocked_cookies_alert: "Előfordulhat, hogy az Ön böngészője blokkolja az oldal használatához szükséges cookie-kat. Kattintson az alábbi gombra a cookie-k engedélyezéséhez és az oldal újratöltéséhez."
   allow_cookies: "Cookie-k engedélyezése"
   notes: Megjegyzések
   error: Hiba
@@ -425,7 +425,7 @@ hu:
     schedule: Menetrend
     shipping: Szállítás
     shipping_method: Szállítási Mód
-    shop: Üzlet
+    shop: Átadási pont
     sku: SKU
     status_state: Állapot
     tags: Címkék
@@ -594,7 +594,7 @@ hu:
         upload_an_image: Tölts fel egy képet
       seo:
         product_search_keywords: "Termékkeresési kulcsszavak"
-        product_search_tip: "Írjon be olyan szavakat, amelyek megkönnyítik a termékek keresését az üzletekben. Használjon szóközt az egyes kulcsszavak elválasztásához."
+        product_search_tip: "Írjon be olyan szavakat, amelyek megkönnyítik a termékek keresését az oldalon. Használjon szóközt az egyes kulcsszavak elválasztásához."
         SEO_keywords: "SEO kulcsszavak"
         seo_tip: "Írjon be olyan szavakat, amelyek megkönnyítik termékei keresését az interneten. Használjon szóközt az egyes kulcsszavak elválasztásához."
       search: "Keresés"
@@ -744,7 +744,7 @@ hu:
         no_new_products: Nincsenek új termékek, amelyeket hozzáadhatnának ehhez a készlethez
         no_matching_new_products: Egyetlen új termék sem felel meg a keresési feltételeknek
         inventory_powertip: Ez az Ön termékkészlete. Termékek hozzáadásához a készlethez, a Megtekintés legördülő menüből válassza az „Új termékek” lehetőséget.
-        hidden_powertip: Ezeket a termékeket elrejtette a készletéből, és nem lesz elérhető az üzletben. A "Hozzáadás" gombra kattintva hozzáadhat egy terméket a készletéhez.
+        hidden_powertip: Ezeket a termékeket elrejtette a készletéből, és nem lesz elérhető az oldalon. A "Hozzáadás" gombra kattintva hozzáadhat egy terméket a készletéhez.
         new_powertip: Ezeket a termékeket felveheti a készletébe. Kattintson a "Hozzáadás" gombra egy termék hozzáadásához a készlethez", vagy az „Elrejtés” lehetőséget választva elrejtheti a látás elől. Később bármikor meggondolhatod magad!
       controls:
         back_to_my_inventory: Vissza a leltárhoz
@@ -798,7 +798,7 @@ hu:
         address:
           legend: "Cím"
         business_details:
-          legend: "Üzleti részletek"
+          legend: "Vállalkozás adatai"
           abn: LÉGI ÚTON SZÁLLÍTOTT
           abn_placeholder: például. 99 123 456 789
           acn: ACN
@@ -809,7 +809,7 @@ hu:
           remove_terms_and_conditions: "Fájl eltávolítása"
           uploaded_on: "feltöltve"
           reset_form: "Űrlap visszaállítása"
-          business_address_legend: "Üzleti cím"
+          business_address_legend: "Vállalkozás címe"
           invoice_item_sorting_legend: "Számlatételek rendezése"
           sort_items_by_supplier?: Rendezze a tételeket termelő szerint?
           sort_items_by_supplier_tip: "Ha engedélyezi, a tételek termelő szerint lesznek rendezve."
@@ -903,9 +903,9 @@ hu:
           legend: "Tulajdonságok"
         permalink:
           permalink: Permalink (szóközök nélkül)
-          permalink_tip: "Ezt az állandó linket használják az üzlet URL-jének létrehozására: %{link}a bolt neve/üzlete"
+          permalink_tip: "Ezt az állandó linket használják az átadási pont URL-jének létrehozására: %{link}az átadási pont neve"
           link_to_front: Link a bolt elején
-          link_to_front_tip: Közvetlen link az Ön üzletére az Open Food Network-ben.
+          link_to_front_tip: Közvetlen link az Ön oldalára az Open Food Network-ben.
           ofn_uid: OFN UID
           ofn_uid_tip: A vállalat azonosítására használt egyedi azonosító az Open Food Network hálózaton.
         shipping_methods:
@@ -941,23 +941,16 @@ hu:
           customer_names_true: "Engedélyezve"
           shopfront_message: "Kirakatüzenet"
           shopfront_message_placeholder: >
-              An optional message to welcome customers and explain how to árusítóhely
-              with you. If text is entered here it will be displayed in a home tab
-              when customers first arrive at your árusítóhelyfront.: Opcionális üzenet,
-              amely üdvözli az ügyfeleket, és elmagyarázza, hogyan vásárolhat Önnél.
-              Ha itt szöveget ír be, az megjelenik a kezdőlapon, amikor az ügyfelek
-              először érkeznek az üzletbe.
+              Opcionális üzenet, amely üdvözli az ügyfeleket, és elmagyarázza, hogyan
+              vásárolhatnak Önnél. Ha itt szöveget ír be, az megjelenik a kezdőlapon,
+              amikor az ügyfelek először érkeznek az áruító oldalára.
           shopfront_message_link_tooltip: "Hivatkozás beszúrása/szerkesztése"
           shopfront_message_link_prompt: "Kérjük, adjon meg egy URL-t a beszúráshoz"
           shopfront_closed_message: "Kirakat zárt üzenet"
           shopfront_closed_message_placeholder: >
-              A message which provides a more detailed explanation about why your
-              árusítóhely is: Üzenet, amely részletesebb magyarázatot ad arra vonatkozóan,
-              hogy miért az Ön üzlete closed and/or when customers can expect it to
-              open again. This is displayed: zárva és/vagy amikor az ügyfelek várhatóan
-              újra kinyitják. Ez megjelenik on your árusítóhely only when you have
-              no active order cycles (ie. árusítóhely is closed).: üzletében csak
-              akkor, ha nincs aktív rendelési ciklusa (azaz az üzlet zárva van).
+              Üzenet a vásárlóknak az árusító oldalán, ha nincs aktív rendelési ciklusa
+              (azaz az üzlet zárva van). Írja le mikor várható a következő rendelési
+              ciklus.
           shopfront_category_ordering: "Kirakati kategória rendelése"
           shopfront_category_ordering_note: "(fentről lefelé)"
           open_date: "Megnyitás dátuma"
@@ -984,7 +977,7 @@ hu:
           disconnect: "Fiók leválasztása"
           confirm_modal:
             title: Csatlakozzon a Stripe-hoz
-            part1: A Stripe egy fizetésfeldolgozó szolgáltatás, amely lehetővé teszi az OFN üzletei számára, hogy elfogadják az ügyfelek hitelkártyás fizetését.
+            part1: A Stripe egy fizetésfeldolgozó szolgáltatás, amely lehetővé teszi az OFN oldalai számára, hogy elfogadják az ügyfelek hitelkártyás fizetését.
             part2: Ennek a funkciónak a használatához," csatlakoztatnia kell a Stripe-fiókját az OFN-hez. Az alábbi „Elfogadom” gombra kattintva átirányítja Önt a Stripe webhelyére, ahol meglévő Stripe fiókot csatlakoztathat","vagy hozzon létre egy újat, ha még nem rendelkezik ilyennel.
             part3: Ez lehetővé teszi, hogy az Open Food Network elfogadja az ügyfelek hitelkártyás fizetését az Ön nevében. Felhívjuk figyelmét, hogy saját Stripe-fiókot kell fenntartania"," fizesse ki a Stripe által felszámított díjakat, és maga kezelje a visszaterheléseket és az ügyfélszolgálatot.
             i_agree: Egyetértek
@@ -1039,14 +1032,14 @@ hu:
         producer_profile: Termelői profil
         connect_ofn: Csatlakozás OFN-en keresztül
         always_free: MINDIG SZABAD
-        producer_description_text: Adja hozzá termékeit az Open Food Networkhöz," lehetővé téve a központok számára, hogy az Ön termékeit tárolják üzleteikben.
+        producer_description_text: Adja hozzá termékeit az Open Food Networkhöz," lehetővé téve az átadási pontok számára, hogy az Ön termékeit értékesítsék.
         producer_shop: Termelői Bolt
         sell_your_produce: Adja el saját termékeit
-        producer_shop_description_text: Adja el termékeit közvetlenül az ügyfeleknek a saját Open Food Network üzletén keresztül.
+        producer_shop_description_text: Adja el termékeit közvetlenül a vásáróknak a saját Open Food Network oldalán keresztül.
         producer_shop_description_text2: A Termelő árusítóhely kizárólag az Ön termékeinek tárolására szolgál, ha telephelyen kívül termesztett/termelt terméket szeretne eladni, válassza a „Termelő Átvételi pont” lehetőséget.
         producer_hub: Termelő Átvételi pont
         producer_hub_text: Saját és mások termékeinek értékesítése
-        producer_hub_description_text: Az Ön vállalkozása a helyi élelmezési rendszer gerince. Eladhatja saját termékeit, valamint más vállalkozásoktól aggregált termékeket az Open Food Network üzletében.
+        producer_hub_description_text: Az Ön vállalkozása a helyi élelmezési rendszer fontos eleme. Eladhatja saját termékeit, valamint más vállalkozásoktól átvett termékeket is az Open Food Network oldalán.
         profile: Csak profil
         get_listing: Szerezzen listát
         profile_description_text: Az emberek megtalálhatják és kapcsolatba léphetnek Önnel az Open Food Network-en. Vállalkozása látható lesz a térképen, és kereshető lesz a listákban.
@@ -1243,7 +1236,7 @@ hu:
           contact: "Kapcsolat"
           social: "Közösségi média"
           about: "Rólunk"
-          business_details: "Üzleti részletek"
+          business_details: "Vállalkozás adatai"
           images: "Képek"
           properties: "Tulajdonságok"
           shipping_methods: "Szállítási módok"
@@ -1276,8 +1269,8 @@ hu:
       total_by_customer: Vásárlónkénti összeg
       total_by_supplier: Szállítónkénti összeg
       supplier_totals: Rendelési ciklus Szállítói végösszegek
-      supplier_totals_by_distributor: Rendelje meg a ciklus beszállítói végösszegét forgalmazónként
-      totals_by_supplier: Rendelje meg a Ciklus Elosztó Összesítését Szállító szerint
+      supplier_totals_by_distributor: A ciklus beszállítói végösszegei forgalmazónként
+      totals_by_supplier: A Ciklus összesítése szállítók szerint
       customer_totals: Rendelési ciklus Ügyfélösszegek
       all_products: Minden termék
       inventory: Készlet (kéznél)
@@ -1373,9 +1366,9 @@ hu:
       setup_explanation:
         title: "Előfizetések"
         just_a_few_more_steps: 'Még néhány lépés, mielőtt elkezdhetné:'''
-        enable_subscriptions: "Engedélyezze az előfizetéseket legalább egy üzletében"
-        enable_subscriptions_step_1_html: 1. Nyissa meg a %{enterprises_link} oldalt, keresse meg üzletét," és kattintson a "Kezelés" gombra
-        enable_subscriptions_step_2: 2. Az "Üzletbeállítások" alatt", engedélyezze az Előfizetések opciót
+        enable_subscriptions: "Engedélyezze a feliratkozásokat legalább egy oldalán"
+        enable_subscriptions_step_1_html: 1. Nyissa meg a %{enterprises_link} oldalt, keresse meg az oldalát, és kattintson a "Kezelés" gombra
+        enable_subscriptions_step_2: 2. Az "Oldalbeállítások" alatt", engedélyezze az Előfizetések opciót
         set_up_shipping_and_payment_methods_html: Állítson be %{shipping_link} és %{payment_link} metódust
         set_up_shipping_and_payment_methods_note_html: Ne feledje, hogy előfizetésekhez csak készpénzes és csíkos fizetési módok<br />használhatók
         ensure_at_least_one_customer_html: Győződjön meg arról, hogy legalább egy %{customer_link} létezik
@@ -2648,7 +2641,7 @@ hu:
   report_header_taxons: Taxonok
   report_header_supplier: Támogató
   report_header_producer: Termelő
-  report_header_producer_suburb: Termelő külváros
+  report_header_producer_suburb: Termelő település
   report_header_unit: Mértékegység
   report_header_group_buy_unit_quantity: Csoportos vásárlási egység mennyisége
   report_header_cost: Költség
@@ -3367,9 +3360,9 @@ hu:
   date_range: "Időintervallum"
   status: "állapot"
   new: "Új"
-  start: "Rajt"
+  start: "Kezdete"
   end: "Vége"
-  stop: "Álljon meg"
+  stop: "Vége"
   first: "Első"
   previous: "Előző"
   last: "Utolsó"

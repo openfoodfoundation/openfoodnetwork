@@ -1139,7 +1139,7 @@ fr:
         outgoing: "3. Produits vendus (sortants)"
         checkout_options: "Options de commande"
       exchange_form:
-        pickup_time_tip: 'Indiquez quand les commandes seront prêtes. Ce texte sera affiché sur votre boutique dans l''encart bleu "Prêt pour : _______"'
+        pickup_time_tip: 'Indiquez la date à laquelle les commandes seront prêtes (date de distribution ou date d''expédition). Ce texte sera affiché sur votre boutique dans l''encart bleu "Prêt pour : _______"'
         pickup_instructions_placeholder: "Modalités de retrait/livraison"
         pickup_instructions_tip: Ces instructions sont affichées aux acheteurs sur leur confirmation de commande
         pickup_time_placeholder: "Prêt pour (ex : jour + créneau horaire)"
