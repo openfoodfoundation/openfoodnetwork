@@ -98,6 +98,14 @@ describe DfcProvider::CatalogItemsController, type: :controller do
         expect(response).to be_unauthorized
       end
     end
+
+    context "when logged in as app user" do
+      it "is successful" do
+        sign_in user
+        api_get :index, enterprise_id: enterprise.id
+        expect(response).to be_successful
+      end
+    end
   end
 
   describe '.show' do

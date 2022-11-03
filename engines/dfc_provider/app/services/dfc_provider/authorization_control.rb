@@ -4,26 +4,40 @@
 # It controls an OICD Access token and an enterprise.
 module DfcProvider
   class AuthorizationControl
-    def initialize(access_token)
-      @access_token = access_token
+    def initialize(request)
+      @request = request
     end
 
     def process
-      return unless @access_token
+      oidc_user || ofn_user
+    end
+
+    private
+
+    def oidc_user
+      return unless access_token
 
       decode_token
       find_ofn_user
     end
 
+    def ofn_user
+      @request.env['warden'].user
+    end
+
     def decode_token
       data = JWT.decode(
-        @access_token,
+        access_token,
         nil,
         false
       )
 
       @header = data.last
       @payload = data.first
+    end
+
+    def access_token
+      @request.headers['Authorization'].to_s.split(' ').last
     end
 
     def find_ofn_user
