@@ -50,7 +50,7 @@ module DfcProvider
     def claim; end
 
     def image
-      object.images.first.try(:attachment, :url)
+      object.images.first&.url(:product)
     end
 
     def life_time; end
