@@ -39,12 +39,8 @@ module DfcProvider
       @current_user ||= authorization_control.process
     end
 
-    def access_token
-      request.headers['Authorization'].to_s.split(' ').last
-    end
-
     def authorization_control
-      DfcProvider::AuthorizationControl.new(access_token)
+      DfcProvider::AuthorizationControl.new(request)
     end
 
     def not_found
