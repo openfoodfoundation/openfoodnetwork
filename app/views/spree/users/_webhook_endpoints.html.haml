@@ -1,0 +1,33 @@
+%section{ id: "webhook_endpoints" }
+  %hr
+  %h3= t('.title')
+  %p= t('.description')
+
+  %table{width: "100%"}
+    %thead
+      %tr
+        %th= t('.event_type.header')
+        %th= t('.url.header')
+        %th.actions
+    %tbody
+      -# Existing endpoints
+      - @user.webhook_endpoints.each do |webhook_endpoint|
+        %tr
+          %td= t('.event_types.order_cycle_opened') # For now, we only support one type.
+          %td= webhook_endpoint.url
+          %td.actions
+            - if webhook_endpoint.persisted?
+              = button_to account_webhook_endpoint_path(webhook_endpoint), method: :delete,
+                class: "tiny alert no-margin",
+                data: { confirm: I18n.t(:are_you_sure)} do
+                = I18n.t(:delete)
+
+      -# Create new
+      - if @user.webhook_endpoints.empty? # Only one allowed for now.
+        %tr
+          %td= t('.event_types.order_cycle_opened') # For now, we only support one type.
+          %td
+            = form_for(@user.webhook_endpoints.build, url: account_webhook_endpoints_path, id: 'new_webhook_endpoint') do |f|
+              = f.url_field :url, placeholder: t('.url.create_placeholder'), required: true, size: 64
+          %td.actions
+            = button_tag t(:create), class: 'button primary tiny no-margin', form: 'new_webhook_endpoint'

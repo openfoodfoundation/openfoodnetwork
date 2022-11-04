@@ -3562,6 +3562,14 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   previous: "Previous"
   last: "Last"
 
+  webhook_endpoints:
+    create:
+      success: Webhook endpoint successfully created
+      error: Webhook endpoint failed to create
+    destroy:
+      success: Webhook endpoint successfully deleted
+      error: Webhook endpoint failed to delete
+
   spree:
     order_updated: "Order Updated"
     add_country: "Add country"
@@ -4357,6 +4365,16 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       api_keys:
         regenerate_key: "Regenerate Key"
         title: API key
+      webhook_endpoints:
+        title: Webhook Endpoints
+        description: Events in the system may trigger webhooks to external systems.
+        event_types:
+          order_cycle_opened: Order Cycle Opened
+        event_type:
+          header: Event type
+        url:
+          header: Endpoint URL
+          create_placeholder: Enter the URL of the remote webhook endpoint
       developer_settings:
         title: Developer Settings
       form:

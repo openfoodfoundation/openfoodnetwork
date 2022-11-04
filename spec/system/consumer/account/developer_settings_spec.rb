@@ -35,6 +35,22 @@ describe "Developer Settings" do
           expect(page).to have_content "Key generated"
           expect(page).to have_input "api_key", with: user.reload.spree_api_key
         end
+
+        describe "Webhook Endpoints" do
+          it "creates a new webhook endpoint and deletes it" do
+            within "#webhook_endpoints" do
+              fill_in "webhook_endpoint_url", with: "https://url"
+
+              click_button I18n.t(:create)
+              expect(page.document).to have_content I18n.t('webhook_endpoints.create.success')
+              expect(page).to have_content "https://url"
+
+              click_button I18n.t(:delete)
+              expect(page.document).to have_content I18n.t('webhook_endpoints.destroy.success')
+              expect(page).to_not have_content "https://url"
+            end
+          end
+        end
       end
     end
 
