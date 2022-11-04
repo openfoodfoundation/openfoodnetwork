@@ -4,7 +4,8 @@ $(document).ready(function() {
 
   initAlert()
   initConfirm()
-  initCancelOrder()
+  initButtonCancel()
+  initLinkCancel()
 
   if ($('#variant_autocomplete_template').length > 0) {
     window.variantTemplate = Handlebars.compile($('#variant_autocomplete_template').text());
@@ -276,17 +277,23 @@ ofnConfirm = function(callback) {
   $('#custom-confirm').show();
 }
 
-initCancelOrder = function() {
-    $('#cancel_order_form').submit(function(e){
-        ofnCancelOrderAlert((confirm, sendEmailCancellation, restock_items) => {
-            if (confirm) {
-                var redirectTo = new URL(Spree.routes.cancel_order.toString());
-                redirectTo.searchParams.append("send_cancellation_email", sendEmailCancellation);
-                redirectTo.searchParams.append("restock_items", restock_items);
-                window.location.href = redirectTo.toString();
-            }
-        });
-        e.preventDefault();
-        return false;
+initCancelAction = function(e){
+  ofnCancelOrderAlert((confirm, sendEmailCancellation, restock_items) => {
+      if (confirm) {
+          var redirectTo = new URL(Spree.routes.cancel_order.toString());
+          redirectTo.searchParams.append("send_cancellation_email", sendEmailCancellation);
+          redirectTo.searchParams.append("restock_items", restock_items);
+          window.location.href = redirectTo.toString();
+      }
     });
+  e.preventDefault();
+  return false;
+};
+
+initButtonCancel = function() {
+  $('#cancel_order_form').submit(initCancelAction)
+}
+
+initLinkCancel = function() {
+  $('#links-dropdown a[href$="cancel"]').click(initCancelAction);
 }
