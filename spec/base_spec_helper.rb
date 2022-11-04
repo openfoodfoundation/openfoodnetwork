@@ -24,11 +24,8 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-# Configures knapsack_pro if not set otherwise on .github/workflows/build.yml
-unless ENV['DISABLE_KNAPSACK_PRO']
-  require 'knapsack_pro'
-  KnapsackPro::Adapters::RSpecAdapter.bind
-end
+require 'knapsack_pro'
+KnapsackPro::Adapters::RSpecAdapter.bind
 
 # Allow connections to selenium whilst raising errors when connecting to external sites
 require 'webmock/rspec'

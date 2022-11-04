@@ -42,7 +42,7 @@ jobs:
         ci_node_total: [10]
         # Indexes for parallel jobs (starting from zero).
         # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
-        ci_node_index: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     steps:
       - uses: actions/checkout@v3
 
@@ -82,7 +82,8 @@ jobs:
           # RSpec split test files by test examples feature - it's optional
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
+          KNAPSACK_PRO_TEST_FILE_PATTERN: "spec/controllers/**/*_spec.rb" 
         
         run: |
-          KNAPSACK_PRO_TEST_FILE_PATTERN="spec/controllers/**/*_spec.rb" bundle exec rake knapsack_pro:rspec
+          bundle exec rake knapsack_pro:rspec
 
