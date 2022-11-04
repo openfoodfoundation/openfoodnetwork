@@ -35,11 +35,11 @@ jobs:
     strategy:
       matrix:
         specs:
-          - "spec/models"
-          - "spec/lib"
+          #- "spec/models"
+          #- "spec/lib"
           - "spec/migrations"
-          - "spec/serializers"
-          - "engines/*/spec"
+          #- "spec/serializers"
+          #- "engines/*/spec"
       fail-fast: false
     steps:
       - uses: actions/checkout@v3
