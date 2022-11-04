@@ -330,7 +330,7 @@ module Admin
       if refered_from_producer_properties
         main_app.admin_enterprise_producer_properties_path(@enterprise)
       else
-        main_app.edit_admin_enterprise_path(@enterprise)
+        main_app.edit_admin_enterprise_path(@enterprise, anchor: params[:enterprise][:panel_identifier])
       end
     end
 
