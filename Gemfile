@@ -169,9 +169,6 @@ group :test do
   gem 'simplecov', require: false
   gem 'test-prof', require: false
   gem 'vcr', require: false
-  gem 'test-prof'
-  gem 'vcr'
->>>>>>> 7f0d4cc24 (Adds knapsack_pro to the stack; updates configs)
   gem 'webmock', require: false
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'

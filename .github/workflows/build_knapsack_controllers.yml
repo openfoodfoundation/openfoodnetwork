@@ -71,7 +71,7 @@ jobs:
       - name: Run tests
 
         env:
-          KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC:  ${{ secrets.KNAPSACK_PRO_CONTROLLERS_TOKEN_RSPEC }}
+          KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: 864ef557d85ea8e603e086c0387d5154
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
           KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
           KNAPSACK_PRO_LOG_LEVEL: info
@@ -84,5 +84,5 @@ jobs:
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
         
         run: |
-          KNAPSACK_PRO_TEST_FILE_PATTERN="{spec/controllers/**{,/*/**}/*_spec.rb,spec/controllers/**{,/*/**}/*_spec.rb}" bundle exec rake knapsack_pro:rspec
+          KNAPSACK_PRO_TEST_FILE_PATTERN="spec/controllers/**/*_spec.rb" bundle exec rake knapsack_pro:rspec
 
