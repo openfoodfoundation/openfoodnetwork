@@ -68,6 +68,8 @@ To login as the default user, use:
 
     email: ofn@example.com
     password: ofn123
+    
+Seee [Locale and sample data] about loading data.
 
 ### Testing
 
@@ -129,3 +131,4 @@ If these commands succeed, you should be able to [continue the setup process](#g
 [rubocop]: https://rubocop.readthedocs.io/en/latest/
 [karma]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Karma
 [slack-dev]: https://openfoodnetwork.slack.com/messages/C2GQ45KNU
+[Locale and sample data]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Locale-and-sample-data
