@@ -203,19 +203,23 @@ describe "full-page cart", js: true do
           variant2.update!(on_hand: 3, on_demand: false)
           visit main_app.cart_path
 
-          accept_alert 'Insufficient stock available, only 2 remaining' do
-            within "tr.variant-#{variant.id}" do
-              fill_in "order_line_items_attributes_0_quantity", with: '4'
-            end
+          within "tr.variant-#{variant.id}" do
+            fill_in "order_line_items_attributes_0_quantity", with: '4'
           end
           expect(page).to have_field "order_line_items_attributes_0_quantity", with: '2'
 
-          accept_alert 'Insufficient stock available, only 3 remaining' do
-            within "tr.variant-#{variant2.id}" do
-              fill_in "order_line_items_attributes_1_quantity", with: '4'
-            end
+          within "tr.variant-#{variant2.id}" do
+            fill_in "order_line_items_attributes_1_quantity", with: '4'
           end
           expect(page).to have_field "order_line_items_attributes_1_quantity", with: '3'
+
+          within "tr.variant-#{variant2.id}" do
+              fill_in "order_line_items_attributes_1_quantity", with: '3'
+              # check for message when user clicks up to add an invalid quantity
+              find("#order_line_items_attributes_1_quantity").send_keys :up
+          end
+          html = page.evaluate_script("document.getElementsByClassName('out-of-stock')[0].innerHTML")
+          expect(html).to include('Insufficient stock available, only 3 remaining')
         end
 
         it "shows the quantities saved, not those submitted" do
@@ -225,13 +229,13 @@ describe "full-page cart", js: true do
           visit main_app.cart_path
           variant.update! on_hand: 2
 
-          accept_alert do
-            fill_in "order_line_items_attributes_0_quantity", with: '4'
-          end
-          click_button 'Update'
+          fill_in "order_line_items_attributes_0_quantity", with: '4'
+          expect(page).to have_field "order_line_items_attributes_0_quantity", with: '3'
 
-          expect(page).to have_content "Insufficient stock available, only 2 remaining"
-          expect(page).to have_field "order_line_items_attributes_0_quantity", with: '1'
+          fill_in "order_line_items_attributes_0_quantity", with: '2'
+          click_button 'Update'
+          expect(page).to have_field "order_line_items_attributes_0_quantity", with: '2'
+
         end
 
         describe "full UX for correcting selected quantities with insufficient stock" do

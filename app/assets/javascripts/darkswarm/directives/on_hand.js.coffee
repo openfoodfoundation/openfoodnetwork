@@ -16,7 +16,6 @@ angular.module('Darkswarm').directive "ofnOnHand", (StockQuantity) ->
     ngModel.$parsers.push (viewValue) ->
       available_quantity = scope.available_quantity()
       if parseInt(viewValue) > available_quantity
-        alert t("js.insufficient_stock", {on_hand: available_quantity})
         viewValue = available_quantity
         ngModel.$setViewValue viewValue
         ngModel.$render()
@@ -25,3 +24,5 @@ angular.module('Darkswarm').directive "ofnOnHand", (StockQuantity) ->
 
     scope.available_quantity = ->
       StockQuantity.available_quantity(attr.ofnOnHand, attr.finalizedquantity)
+
+
