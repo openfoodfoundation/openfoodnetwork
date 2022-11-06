@@ -35,7 +35,6 @@ jobs:
     strategy:
       matrix:
         specs:
-          - "spec/models"
           - "spec/lib"
           - "spec/migrations"
           - "spec/serializers"

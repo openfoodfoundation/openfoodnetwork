@@ -1,0 +1,89 @@
+name: Build KnapSack Models
+
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore:    
+      - 'dependabot/**'
+  pull_request:
+
+env:
+  DISABLE_KNAPSACK: true
+  DISABLE_KNAPSACK_PRO: false
+  TIMEZONE: UTC
+  COVERAGE: true
+  RAILS_ENV: test
+
+permissions:
+  contents: read
+
+jobs:
+  rspec:
+    runs-on: ubuntu-20.04
+    services:
+      postgres:
+        image: postgres:10
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_DB: open_food_network_test
+          POSTGRES_USER: ofn
+          POSTGRES_PASSWORD: f00d
+    strategy:
+      fail-fast: false
+      matrix:
+        # [n] - where the n is a number of parallel jobs you want to run your tests on.
+        # Use a higher number if you have slow tests to split them between more parallel jobs.
+        # Remember to update the value of the `ci_node_index` below to (0..n-1).
+        ci_node_total: [10]
+        # Indexes for parallel jobs (starting from zero).
+        # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
+        ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup redis
+        uses: supercharge/redis-github-action@1.4.0
+        with: 
+          redis-version: 6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Set up database
+        run: |
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
+
+      - name: Run tests
+
+        env:
+          KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: 864ef557d85ea8e603e086c0387d5154
+          KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
+          KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
+          KNAPSACK_PRO_LOG_LEVEL: info
+          # if you use Knapsack Pro Queue Mode you must set below env variable
+          # to be able to retry CI build and run previously recorded tests
+          # https://github.com/KnapsackPro/knapsack_pro-ruby#knapsack_pro_fixed_queue_split-remember-queue-split-on-retry-ci-node
+          KNAPSACK_PRO_FIXED_QUEUE_SPLIT: true
+          # RSpec split test files by test examples feature - it's optional
+          # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
+          #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
+          KNAPSACK_PRO_TEST_FILE_PATTERN: "spec/models/**/*_spec.rb" 
+        
+        run: |
+          bundle exec rake knapsack_pro:rspec
+
