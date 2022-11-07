@@ -1,4 +1,4 @@
-name: Build Knapsack System
+name: Build Knapsack test-the-rest
 
 on:
   workflow_dispatch:
@@ -39,10 +39,10 @@ jobs:
         # [n] - where the n is a number of parallel jobs you want to run your tests on.
         # Use a higher number if you have slow tests to split them between more parallel jobs.
         # Remember to update the value of the `ci_node_index` below to (0..n-1).
-        ci_node_total: [20]
+        ci_node_total: [5]
         # Indexes for parallel jobs (starting from zero).
         # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
-        ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] 
+        ci_node_index: [0, 1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v3
 
@@ -71,7 +71,7 @@ jobs:
       - name: Run tests
 
         env:
-          KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: ff2456e64c9f2aa5157eb0daf711d3c3
+          KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: 09476e2ce491c12083df62768667c674
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
           KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
           KNAPSACK_PRO_LOG_LEVEL: info
@@ -82,16 +82,8 @@ jobs:
           # RSpec split test files by test examples feature - it's optional
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
-          KNAPSACK_PRO_TEST_FILE_PATTERN: "spec/system/**/*_spec.rb" 
-
+          KNAPSACK_PRO_TEST_EXCLUDE_PATTERN: "{engines/**{,/*/**}/*_spec.rb,spec/models/**{,/*/**}/*_spec.rb,spec/controllers/**{,/*/**}/*_spec.rb,spec/serializers/**{,/*/**}/*_spec.rb,spec/lib/**{,/*/**}/*_spec.rb,spec/migrations/**{,/*/**}/*_spec.rb,spec/system/**{,/*/**}/*_spec.rb}"
+        
         run: |
           bundle exec rake knapsack_pro:rspec
 
-      - name: Archive failed tests screenshots
-        if: failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: failed-tests-screenshots
-          path: tmp/capybara/screenshots/*.png
-          retention-days: 7
-          if-no-files-found: ignore
