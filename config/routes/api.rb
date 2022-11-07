@@ -8,7 +8,7 @@ Openfoodnetwork::Application.routes.draw do
 
     constraints FeatureToggleConstraint.new(:dfc_provider) do
       # Mount DFC API endpoints
-      mount DfcProvider::Engine, at: '/'
+      mount DfcProvider::Engine, at: '/dfc-v1.6/'
     end
 
     namespace :v0 do
