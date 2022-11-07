@@ -39,10 +39,10 @@ jobs:
         # [n] - where the n is a number of parallel jobs you want to run your tests on.
         # Use a higher number if you have slow tests to split them between more parallel jobs.
         # Remember to update the value of the `ci_node_index` below to (0..n-1).
-        ci_node_total: [15]
+        ci_node_total: [20]
         # Indexes for parallel jobs (starting from zero).
         # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
-        ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] 
+        ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] 
     steps:
       - uses: actions/checkout@v3
 
@@ -78,7 +78,7 @@ jobs:
           # if you use Knapsack Pro Queue Mode you must set below env variable
           # to be able to retry CI build and run previously recorded tests
           # https://github.com/KnapsackPro/knapsack_pro-ruby#knapsack_pro_fixed_queue_split-remember-queue-split-on-retry-ci-node
-          KNAPSACK_PRO_FIXED_QUEUE_SPLIT: true
+          # KNAPSACK_PRO_FIXED_QUEUE_SPLIT: false
           # RSpec split test files by test examples feature - it's optional
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
