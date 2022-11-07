@@ -1,4 +1,4 @@
-name: test-the-rest (non-Knapsack)
+name: jest and karma (non-Knapsack)
 
 on:
   workflow_dispatch:
