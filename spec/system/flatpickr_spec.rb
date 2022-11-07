@@ -9,7 +9,7 @@ describe "Test Flatpickr" do
   context "orders" do
     it "opens the datepicker and closes it using the 'CLOSE' button" do
       login_as_admin_and_visit 'admin/orders'
-      open_datepicker('#q_completed_at_gteq')       
+      open_datepicker('.datepicker')
       # Looks for the close button and click it
       within(".flatpickr-calendar.open") do
         expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
@@ -19,16 +19,9 @@ describe "Test Flatpickr" do
       expect(page).not_to have_selector '.flatpickr-calendar.open'
     end
     
-    it "opens the datepicker and sets date to today" do
-      login_as_admin_and_visit 'admin/orders'
-      open_datepicker('#q_completed_at_gteq')
-      choose_today_from_datepicker
-      check_fielddate('#q_completed_at_gteq', Date.today())       
-    end
-    
     it "opens the datepicker and closes it by clicking outside" do
       login_as_admin_and_visit 'admin/orders'
-      open_datepicker('#q_completed_at_gteq')
+      open_datepicker('.datepicker')
       find("#admin-menu").click       
       # Should no more have opened flatpickr
       expect(page).not_to have_selector '.flatpickr-calendar.open'
