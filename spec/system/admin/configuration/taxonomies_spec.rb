@@ -43,10 +43,6 @@ describe "Taxonomies" do
   end
 
   context "edit" do
-    before do
-      Capybara.raise_server_errors = false
-    end
-
     it "should allow an admin to update an existing taxonomy" do
       create(:taxonomy)
       click_link "Taxonomies"
