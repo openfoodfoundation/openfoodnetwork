@@ -15,7 +15,7 @@ module Reporting
     end
 
     def html_render?
-      @report.params[:report_format].in?(['', 'pdf'])
+      @report.params[:report_format].in?([nil, '', 'pdf'])
     end
 
     def display_header_row?
