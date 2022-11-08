@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require DfcProvider::Engine.root.join("spec/spec_helper")
 
 describe DfcProvider::CatalogItemsController, type: :controller do
+  include AuthorizationHelper
+
   render_views
 
   let!(:user) { create(:user) }
@@ -12,17 +14,9 @@ describe DfcProvider::CatalogItemsController, type: :controller do
 
   describe '.index' do
     context 'with authorization token' do
-      before do
-        request.headers['Authorization'] = 'Bearer 123456.abcdef.123456'
-      end
+      before { authorise user.email }
 
       context 'with an authenticated user' do
-        before do
-          allow_any_instance_of(DfcProvider::AuthorizationControl)
-            .to receive(:user)
-            .and_return(user)
-        end
-
         context 'with an enterprise' do
           context 'given with an id' do
             context 'related to the user' do
@@ -81,10 +75,10 @@ describe DfcProvider::CatalogItemsController, type: :controller do
       end
 
       context 'without an authenticated user' do
+        before { authorise "other@user.net" }
+
         it 'returns unauthorized head' do
-          allow_any_instance_of(DfcProvider::AuthorizationControl)
-            .to receive(:user)
-            .and_return(nil)
+          authorise "other@user.net"
 
           api_get :index, enterprise_id: 'default'
           expect(response.response_code).to eq(401)
@@ -110,17 +104,9 @@ describe DfcProvider::CatalogItemsController, type: :controller do
 
   describe '.show' do
     context 'with authorization token' do
-      before do
-        request.headers['Authorization'] = 'Bearer 123456.abcdef.123456'
-      end
+      before { authorise user.email }
 
       context 'with an authenticated user' do
-        before do
-          allow_any_instance_of(DfcProvider::AuthorizationControl)
-            .to receive(:user)
-            .and_return(user)
-        end
-
         context 'with an enterprise' do
           context 'given with an id' do
             before do
