@@ -6,9 +6,9 @@ class Enterprise < ApplicationRecord
   # The next Rails version will have named variants but we need to store them
   # ourselves for now.
   LOGO_SIZES = {
-    thumb: { resize_to_limit: [100, 100] },
-    small: { resize_to_limit: [180, 180] },
-    medium: { resize_to_limit: [300, 300] },
+    thumb: { gravity: "Center", resize: "100x100^", crop: '100x100+0+0' },
+    small: { gravity: "Center", resize: "180x180^", crop: '180x180+0+0' },
+    medium: { gravity: "Center", resize: "300x300^", crop: '300x300+0+0' },
   }.freeze
   PROMO_IMAGE_SIZES = {
     thumb: { resize_to_limit: [100, 100] },
