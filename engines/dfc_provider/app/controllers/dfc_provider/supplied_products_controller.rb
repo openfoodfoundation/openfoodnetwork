@@ -10,6 +10,13 @@ module DfcProvider
       render json: variant, serializer: DfcProvider::SuppliedProductSerializer
     end
 
+    def update
+      dfc_request = JSON.parse(request.body.read)
+      return unless dfc_request.key?("dfc-b:description")
+
+      variant.product.update!(name: dfc_request["dfc-b:description"])
+    end
+
     private
 
     def variant
