@@ -20,8 +20,7 @@ module DfcProvider
 
     def offers_to
       {
-        '@type' => '@id',
-        '@id' => nil
+        '@type' => '@id'
       }
     end
 
