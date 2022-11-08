@@ -28,9 +28,20 @@ module StripeHelper
     fill_in "cvc", with: "678"
   end
 
-  def setup_stripe
-    Stripe.api_key = "sk_test_12345"
-    Stripe.publishable_key = "pk_test_12345"
-    allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
+  def stripe_enable
+    RSpec::Mocks.with_temporary_scope do
+      allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
+    end
+  end
+
+  def with_stripe_setup(api_key = "sk_test_12345", publishable_key = "pk_test_12345")
+    original_keys = [Stripe.api_key, Stripe.publishable_key]
+
+    Stripe.api_key = api_key
+    Stripe.publishable_key = publishable_key
+
+    yield
+
+    Stripe.api_key, Stripe.publishable_key = original_keys
   end
 end
