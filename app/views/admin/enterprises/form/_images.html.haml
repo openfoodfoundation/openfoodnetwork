@@ -5,6 +5,7 @@
     100 x 100 pixels
   .omega.eight.columns
     %img{ class: 'image-field-group__preview-image', ng: { src: '{{ Enterprise.logo.thumb }}', if: 'Enterprise.logo' } }
+    %br
     = f.file_field :logo
     %a.button.red{ href: '', ng: {click: 'removeLogo()', if: 'Enterprise.logo'} }
       = t('.remove_logo')
