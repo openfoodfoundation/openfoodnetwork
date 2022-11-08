@@ -20,7 +20,7 @@ module DfcProvider
     # but AMS doesn't not supported `meta` and `meta_key` with `root` to nil...
     def context
       {
-        'dfc' => 'http://datafoodconsortium.org/ontologies/DFC_FullModel.owl#',
+        "dfc" => "http://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#",
         '@base' => "#{root_url}api/dfc_provider"
       }
     end
