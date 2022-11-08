@@ -23,7 +23,7 @@ describe DfcProvider::CatalogItemsController, type: :controller do
               before { api_get :index, enterprise_id: 'default' }
 
               it 'is successful' do
-                expect(response).to be_successful
+                expect(response).to have_http_status :success
               end
 
               it 'renders the required content' do
@@ -41,7 +41,7 @@ describe DfcProvider::CatalogItemsController, type: :controller do
 
               it 'returns not_found head' do
                 api_get :index, enterprise_id: enterprise.id
-                expect(response).to be_not_found
+                expect(response).to have_http_status :not_found
               end
             end
           end
@@ -69,7 +69,7 @@ describe DfcProvider::CatalogItemsController, type: :controller do
 
           it 'is not found' do
             api_get :index, enterprise_id: 'default'
-            expect(response).to be_not_found
+            expect(response).to have_http_status :not_found
           end
         end
       end
@@ -89,7 +89,7 @@ describe DfcProvider::CatalogItemsController, type: :controller do
     context 'without an authorization token' do
       it 'returns unauthorized head' do
         api_get :index, enterprise_id: enterprise.id
-        expect(response).to be_unauthorized
+        expect(response).to have_http_status :unauthorized
       end
     end
 
@@ -97,7 +97,7 @@ describe DfcProvider::CatalogItemsController, type: :controller do
       it "is successful" do
         sign_in user
         api_get :index, enterprise_id: enterprise.id
-        expect(response).to be_successful
+        expect(response).to have_http_status :success
       end
     end
   end
@@ -114,7 +114,7 @@ describe DfcProvider::CatalogItemsController, type: :controller do
             end
 
             it 'is successful' do
-              expect(response).to be_successful
+              expect(response).to have_http_status :success
             end
 
             it 'renders the required content' do
@@ -131,7 +131,7 @@ describe DfcProvider::CatalogItemsController, type: :controller do
             end
 
             it 'is not found' do
-              expect(response).to be_not_found
+              expect(response).to have_http_status :not_found
             end
           end
         end
