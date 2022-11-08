@@ -197,7 +197,7 @@ GEM
       railties (>= 5.2)
       thread-local (>= 1.1.0)
     cancancan (1.15.0)
-    capybara (3.37.1)
+    capybara (3.38.0)
       addressable
       matrix
       mini_mime (>= 0.1.3)
