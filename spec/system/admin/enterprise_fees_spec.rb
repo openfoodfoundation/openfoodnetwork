@@ -254,14 +254,13 @@ describe '
     expect(page).to have_content "Your enterprise fees have been updated."
     expect(page).to have_content "MAX ITEMS:"
     expect(page).to have_selector "#sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_max_items"
-    #expect(page).to have_field "input[value='0']"
-    
-    #Fill in the calculator fields and click update
+
+    # Fill in the calculator fields and click update
     fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_first_item',
             with: "22.00"
     fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_additional_item',
             with: "25.00"
-    fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_max_items', 
+    fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_max_items',
             with: "10"
     fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_currency',
             with: "AUD"
@@ -272,11 +271,11 @@ describe '
 
     # Update the max input field with invalid input
     expect(page).to have_selector "#sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_max_items"
-    fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_max_items', 
+    fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_max_items',
             with: "invalid input"
     click_button 'Update'
 
-    #Should return a flas error message and updated information should be kept
+    # Should return a flas error message and updated information should be kept
     expect(flash_message).to eq('Invalid input. Please use only numbers. For example: 10, 5.5, -20')
     expect(page).to have_selector 'input[value="10"]'
   end
