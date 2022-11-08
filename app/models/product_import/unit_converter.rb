@@ -54,7 +54,7 @@ module ProductImport
     end
 
     def assign_weight_or_volume_attributes
-      units = @attrs['units'].to_f
+      units = @attrs['units'].to_d
       unit_type = @attrs['unit_type'].to_s.downcase
 
       return unless valid_unit_type? unit_type
