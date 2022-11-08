@@ -644,8 +644,12 @@ describe "As a consumer, I want to checkout my order", js: true do
           end
 
           context "for Stripe SCA", if: pay_method.eql?("Stripe SCA") do
+            around do |example|
+              with_stripe_setup { example.run }
+            end
+
             before do
-              setup_stripe
+              stripe_enable
               visit checkout_step_path(:payment)
             end
 

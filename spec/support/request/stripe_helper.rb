@@ -29,9 +29,7 @@ module StripeHelper
   end
 
   def stripe_enable
-    RSpec::Mocks.with_temporary_scope do
-      allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
-    end
+    allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
   end
 
   def with_stripe_setup(api_key = "sk_test_12345", publishable_key = "pk_test_12345")
