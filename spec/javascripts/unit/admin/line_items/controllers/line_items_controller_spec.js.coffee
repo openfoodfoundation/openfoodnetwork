@@ -47,6 +47,7 @@ describe "LineItemsCtrl", ->
       delete: (lineItem, callback=null) ->
         callback() if callback
         return Promise.resolve()
+      allSaved: jasmine.createSpy('allSaved').and.returnValue(true)
 
     httpBackend.expectGET("/api/v0/orders.json?q%5Bcompleted_at_gteq%5D=SomeDate&q%5Bcompleted_at_lt%5D=SomeDate&q%5Bcompleted_at_not_null%5D=true&q%5Bdistributor_id_eq%5D=&q%5Border_cycle_id_eq%5D=&q%5Bshipment_state_not_eq%5D=shipped&q%5Bstate_not_eq%5D=canceled").respond {orders: [order], pagination: {page: 1, pages: 1, results: 1}}
     httpBackend.expectGET("/admin/enterprises/visible.json?ams_prefix=basic&q%5Bsells_in%5D%5B%5D=own&q%5Bsells_in%5D%5B%5D=any").respond [distributor]

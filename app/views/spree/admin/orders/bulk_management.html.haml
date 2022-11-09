@@ -23,8 +23,8 @@
       %br
         %div{ data: { controller: "flatpickr", "flatpickr-mode-value": "range", "flatpickr-default-date": "{{ [startDate, endDate] }}" } }
           %input.datepicker.fullwidth{ class: "datepicker", data: { "flatpickr-target": "instance" } }
-          %input{ type: "text", id: 'start_date_filter', 'ng-model': "startDate", data: { "flatpickr-target": "start" }, style: "display: none;", "confirm-change": "confirmRefresh()" }
-          %input{ type: "text", id: 'end_date_filter', 'ng-model': "endDate", data: { "flatpickr-target": "end" }, style: "display: none;", "confirm-change": "confirmRefresh()"}
+          %input{ type: "text", id: 'start_date_filter', 'ng-model': "startDate", data: { "flatpickr-target": "start" }, style: "display: none;" }
+          %input{ type: "text", id: 'end_date_filter', 'ng-model': "endDate", data: { "flatpickr-target": "end" }, style: "display: none;" }
     .one.column &nbsp;
     .filter_select{ :class => "three columns" }
       %label{ :for => 'supplier_filter' }
