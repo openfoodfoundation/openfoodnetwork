@@ -13,7 +13,7 @@ module DfcProvider
             key: 'dfc:hasAddress',
             serializer: DfcProvider::AddressSerializer
     has_many :affiliates,
-             key: 'dfc:affiliates',
+             key: 'dfc-b:affiliates',
              serializer: DfcProvider::EnterpriseSerializer
 
     # Context should be provided inside the controller,
@@ -21,6 +21,7 @@ module DfcProvider
     def context
       {
         "dfc" => "http://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#",
+        "dfc-b" => "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#",
         "rdfs" => "http://www.w3.org/2000/01/rdf-schema#",
         '@base' => "#{root_url}api/dfc_provider"
       }
@@ -34,7 +35,7 @@ module DfcProvider
     end
 
     def type
-      'dfc:Person'
+      'dfc-b:Person'
     end
 
     def family_name; end

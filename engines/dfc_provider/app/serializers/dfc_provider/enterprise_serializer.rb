@@ -9,10 +9,10 @@ module DfcProvider
     attribute :vat_number, key: 'dfc:VATnumber'
     has_many :defines, key: 'dfc:defines'
     has_many :supplies,
-             key: 'dfc:supplies',
+             key: 'dfc-b:supplies',
              serializer: DfcProvider::SuppliedProductSerializer
     has_many :manages,
-             key: 'dfc:manages',
+             key: 'dfc-b:manages',
              serializer: DfcProvider::CatalogItemSerializer
 
     def id
