@@ -83,7 +83,7 @@ Then the main application tests can be run with:
 
 The tests of all custom engines can be run with:
 
-    bundle exec rake ofn:specs:engines:rspec
+    bundle exec rspec ./engines
 
 Note: If your OS is not explicitly supported in the setup guides then not all tests may pass. However, you may still be able to develop.
 
