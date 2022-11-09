@@ -103,7 +103,7 @@ describe 'shipping methods' do
       login_as enterprise_user
     end
 
-    it "creating a shipping method", retry: 2 do
+    it "creating a shipping method", retry: 3 do
       visit admin_enterprises_path
       within("#e_#{distributor1.id}") { click_link 'Settings' }
       within(".side_menu") do
