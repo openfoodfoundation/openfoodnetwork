@@ -6,15 +6,15 @@ module DfcProvider
   class SuppliedProductSerializer < BaseSerializer
     attribute :id, key: '@id'
     attribute :type, key: '@type'
-    attribute :unit, key: 'dfc:hasUnit'
-    attribute :quantity, key: 'dfc:quantity'
-    attribute :description, key: 'dfc:description'
-    attribute :total_theoritical_stock, key: 'dfc:totalTheoriticalStock'
-    attribute :brand, key: 'dfc:brand'
-    attribute :claim, key: 'dfc:claim'
-    attribute :image, key: 'dfc:image'
+    attribute :unit, key: 'dfc-b:hasUnit'
+    attribute :quantity, key: 'dfc-b:quantity'
+    attribute :description, key: 'dfc-b:description'
+    attribute :total_theoritical_stock, key: 'dfc-b:totalTheoriticalStock'
+    attribute :brand, key: 'dfc-b:brand'
+    attribute :claim, key: 'dfc-b:claim'
+    attribute :image, key: 'dfc-b:image'
     attribute :life_time, key: 'lifeTime'
-    has_many :physical_characteristics, key: 'dfc:physicalCharacterisctics'
+    has_many :physical_characteristics, key: 'dfc-b:physicalCharacterisctics'
 
     def id
       dfc_provider_routes.enterprise_supplied_product_url(
