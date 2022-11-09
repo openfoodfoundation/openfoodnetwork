@@ -21,6 +21,7 @@ module DfcProvider
     def context
       {
         "dfc" => "http://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#",
+        "rdfs" => "http://www.w3.org/2000/01/rdf-schema#",
         '@base' => "#{root_url}api/dfc_provider"
       }
     end
