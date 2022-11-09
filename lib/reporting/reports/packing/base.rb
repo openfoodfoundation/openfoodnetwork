@@ -29,13 +29,6 @@ module Reporting
           { quantity: :quantity }
         end
 
-        def custom_headers
-          return {} if html_render?
-
-          # Use non translated headers to avoid breaking changes
-          @custom_headers ||= report_data.columns.index_by(&:itself).symbolize_keys
-        end
-
         def default_params
           # Prevent breaking change in this report by hidding new columns by default
           { fields_to_hide: ["phone", "price"],
