@@ -426,7 +426,7 @@ describe '
           visit_bulk_order_management
         end
 
-        it "displays a select box for order cycles, which filters line items by the selected order cycle" do
+        it "displays a select box for order cycles, which filters line items by the selected order cycle", retry: 3 do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           expect(page).to have_select2 'order_cycle_filter',
@@ -437,7 +437,7 @@ describe '
           expect(page).to have_no_selector "tr#li_#{li2.id}"
         end
 
-        it "displays all line items when 'All' is selected from order_cycle filter" do
+        it "displays all line items when 'All' is selected from order_cycle filter", retry: 3 do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           select2_select oc1.name, from: "order_cycle_filter"
@@ -576,14 +576,14 @@ describe '
         expect(find("input.datepicker").value).to eq "#{one_week_ago} to #{today.strftime('%F')}"
       end
 
-      it "only loads line items whose orders meet the date restriction criteria" do
+      it "only loads line items whose orders meet the date restriction criteria", retry: 3 do
         expect(page).to have_no_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
         expect(page).to have_selector "tr#li_#{li3.id}"
         expect(page).to have_no_selector "tr#li_#{li4.id}"
       end
 
-      it "displays only line items whose orders meet the date restriction criteria, when changed" do
+      it "displays only line items whose orders meet the date restriction criteria, when changed", retry: 3 do
         from = today - 8.days
         to = today + 1.day
 
