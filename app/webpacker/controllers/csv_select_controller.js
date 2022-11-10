@@ -10,14 +10,22 @@ export default class extends Controller {
   }
 
   disableField() {
-    this.checkboxTarget.checked = false;
-    this.checkboxTarget.disabled = true;
-    this.labelTarget.classList.add("disabled");
+    if (this.hasCheckboxTarget) {
+      this.checkboxTarget.checked = false;
+      this.checkboxTarget.disabled = true;
+    }
+    if (this.hasLabelTarget) {
+      this.labelTarget.classList.add("disabled");
+    }
   }
 
   enableField() {
-    this.checkboxTarget.checked = true;
-    this.checkboxTarget.disabled = false;
-    this.labelTarget.classList.remove("disabled");
+    if (this.hasCheckboxTarget) {
+      this.checkboxTarget.checked = true;
+      this.checkboxTarget.disabled = false;
+    }
+    if (this.hasLabelTarget) {
+      this.labelTarget.classList.remove("disabled");
+    }
   }
 }
