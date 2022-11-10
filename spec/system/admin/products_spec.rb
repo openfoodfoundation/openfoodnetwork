@@ -37,7 +37,7 @@ describe '
 
       select @supplier.name, from: 'product_supplier_id'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
-      fill_in 'product_unit_value_with_description', with: "5 g"
+      fill_in 'product_unit_value_with_description', with: "5.00 g"
       assert_selector(:field, placeholder: "5kg g")
       fill_in 'product_display_as', with: "Big Box of Chocolates"
       select taxon.name, from: "product_primary_taxon_id"
@@ -51,7 +51,7 @@ describe '
 
       expect(page).to have_content "Name can't be blank"
       expect(page).to have_field 'product_supplier_id', with: @supplier.id
-      expect(page).to have_field 'product_unit_value_with_description', with: "5 g"
+      expect(page).to have_field 'product_unit_value_with_description', with: "5.00 g"
       expect(page).to have_field 'product_display_as', with: "Big Box of Chocolates"
       expect(page).to have_field 'product_primary_taxon_id', with: taxon.id
       expect(page).to have_field 'product_price', with: '19.99'
