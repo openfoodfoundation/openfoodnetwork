@@ -2626,6 +2626,9 @@ ko:
   report_header_delivery_postcode: 배달 우편번호
   report_header_bulk_unit_size: 대량 단위 크기
   report_header_weight: 무게
+  report_header_height: 높이
+  report_header_width: 너비
+  report_header_depth: 깊이
   report_header_sum_total: 총합
   report_header_date_of_order: 주문 날짜
   report_header_amount_owing: 미지급액

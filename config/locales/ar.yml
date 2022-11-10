@@ -2658,6 +2658,9 @@ ar:
   report_header_delivery_postcode: تسليم الرمز البريدي
   report_header_bulk_unit_size: حجم الوحدة بالجملة
   report_header_weight: وزن
+  report_header_height: الارتفاع
+  report_header_width: العرض
+  report_header_depth: العمق
   report_header_sum_total: اجمالي
   report_header_date_of_order: تاريخ الطلب
   report_header_amount_owing: المبلغ المستحق

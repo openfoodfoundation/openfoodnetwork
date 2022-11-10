@@ -2367,6 +2367,9 @@ pt:
   report_header_delivery_postcode: Código Postal da Entrega
   report_header_bulk_unit_size: Tamanho Unitário em Massa
   report_header_weight: Peso
+  report_header_height: Altura
+  report_header_width: Largura
+  report_header_depth: Profundidade
   report_header_sum_total: Soma Total
   report_header_date_of_order: Data da encomenda
   report_header_amount_owing: Quantia em dívida

@@ -2261,6 +2261,9 @@ pl:
   report_header_delivery_postcode: Kod pocztowy dostawy
   report_header_bulk_unit_size: Rozmiar jednostki zbiorczej
   report_header_weight: Waga
+  report_header_height: Wysokość
+  report_header_width: Szerokość
+  report_header_depth: Głębokość
   report_header_sum_total: Całkowita suma
   report_header_date_of_order: Data zamówienia
   report_header_amount_owing: Kwota należna

@@ -2659,6 +2659,9 @@ cy:
   report_header_delivery_postcode: Cod Post Cyflenwi
   report_header_bulk_unit_size: Maint Uned Swmp
   report_header_weight: Pwysau
+  report_header_height: Uchder
+  report_header_width: Lled
+  report_header_depth: Dyfnder
   report_header_sum_total: 'Cyfanswm '
   report_header_date_of_order: Dyddiad archebu
   report_header_amount_owing: Swm sy'n ddyledus

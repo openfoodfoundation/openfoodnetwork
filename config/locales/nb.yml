@@ -2659,6 +2659,9 @@ nb:
   report_header_delivery_postcode: Postnummer Levering
   report_header_bulk_unit_size: Bulk Enhetsstørrelse
   report_header_weight: Vekt
+  report_header_height: Høyde
+  report_header_width: Bredde
+  report_header_depth: Dybde
   report_header_sum_total: Totalsum
   report_header_date_of_order: Bestillingsdato
   report_header_amount_owing: Skyldig Beløp

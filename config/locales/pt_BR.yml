@@ -2460,6 +2460,9 @@ pt_BR:
   report_header_delivery_postcode: CEP para entrega
   report_header_bulk_unit_size: Quantidade Mínima para Compra em Atacado
   report_header_weight: Peso
+  report_header_height: Altura
+  report_header_width: Largura
+  report_header_depth: Profundidade
   report_header_sum_total: Soma total
   report_header_date_of_order: Data do pedido
   report_header_amount_owing: Quantidade devedora

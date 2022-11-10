@@ -30,6 +30,7 @@ ca:
         shipping_category_id: "Categoria d'enviament"
         variant_unit: "Unitat de la variant"
         variant_unit_name: "Nom de la unitat de la variant"
+        unit_value: "Valor de la unitat"
       spree/credit_card:
         base: "Targeta de crèdit"
         number: "Número"
@@ -88,12 +89,30 @@ ca:
       duplicate_transaction: "Fa molt poc que s'ha enviat una transacció amb la mateixa quantitat i informació de la mateixa targeta de crèdit."
       fraudulent: "El pagament s'ha rebutjat perquè Stripe sospita que és fraudulent."
       generic_decline: "La targeta s'ha rebutjat per un motiu desconegut."
+      incorrect_pin: "El PIN introduït no és correcte. Aquest codi de rebuig només s'aplica els pagaments fets amb lector de targetes"
+      insufficient_funds: "La targeta no disposa de prou saldo per completar la compra"
+      invalid_account: "La targeta, o el compte vinculat a la targeta, no és vàlida."
+      invalid_amount: "L'import del pagament no és vàlid o supera l'import permès."
+      invalid_pin: "El PIN introduït no és correcte. Aquest codi de rebuig només s'aplica els pagaments fets amb lector de targetes"
+      issuer_not_available: "No s'ha pogut contactar amb l'entitat emissora de la targeta, de forma que no s'ha pogut autoritzar el pagament."
+      lost_card: "El pagament ha estat denegat perquè la targeta ha estat anul·lada per pèrdua."
+      merchant_blacklist: "El pagament ha estat rebutjat perquè coincideix amb un valor de la llista de bloqueig de l'usuari de Stripe."
+      new_account_information_available: "La targeta, o el compte vinculat a la targeta, no és vàlida."
       no_action_taken: "La targeta s'ha rebutjat per un motiu desconegut."
+      not_permitted: "No es permet el pagament."
+      offline_pin_required: "S'ha rebutjat la targeta perquè requereix un PIN."
+      online_or_offline_pin_required: "La targeta s'ha rebutjat perquè requereix un PIN."
+      pickup_card: "La targeta no es pot utilitzar per fer aquest pagament (és possible que s'hagi bloquejat per pèrdua o robatori)."
+      pin_try_exceeded: "S'ha superat el nombre permès d'intents d'escriure el PIN."
+      reenter_transaction: "L'emissor no ha pogut processar el pagament per un motiu desconegut."
+      restricted_card: "Doncs pot utilitzar la targeta per fer aquest pagament (és possible que s'hagi bloquejat per pèrdua o robatori)."
       revocation_of_all_authorizations: "La targeta s'ha rebutjat per un motiu desconegut."
       revocation_of_authorization: "La targeta s'ha rebutjat per un motiu desconegut."
       security_violation: "La targeta s'ha rebutjat per un motiu desconegut."
       service_not_allowed: "La targeta s'ha rebutjat per un motiu desconegut."
+      stolen_card: "El pagament s'ha denegat perquè la targeta està bloquejada per robatori."
       stop_payment_order: "La targeta s'ha rebutjat per un motiu desconegut."
+      testmode_decline: "S'ha utilitzat un número de targeta de prova de Stripe."
       transaction_not_allowed: "La targeta s'ha rebutjat per un motiu desconegut."
       try_again_later: "La targeta s'ha rebutjat per un motiu desconegut."
       withdrawal_count_limit_exceeded: "El consumidor ha superat el saldo o el límit de crèdit disponible a la seva targeta."
@@ -125,7 +144,11 @@ ca:
   cardholder_name: "Nom del titular de la targeta"
   community_forum_url: "URL del fòrum de la comunitat"
   customer_instructions: "Instruccions de la consumidora"
+  additional_information: "Informació adicional"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "La contrasenya d'usuari no pot estar en blanc. Introduïu una contrasenya."
     confirmations:
       send_instructions: "Rebreu un correu electrònic amb instruccions sobre com confirmar el vostre compte en pocs minuts."
       failed_to_send: "S'ha produït un error en enviar el correu electrònic de confirmació."
@@ -142,6 +165,7 @@ ca:
         signed_up_but_unconfirmed: "S'ha enviat un missatge amb un enllaç de confirmació a la teva adreça de correu electrònic. Obre l'enllaç per activar el teu compte."
         unknown_error: "S'ha produït un error en crear el teu compte. Comprova la teva adreça de correu electrònic i torna-ho a provar."
     failure:
+      disabled: "S'ha desactivat el teu compte. Poseu-vos en contacte amb un administrador per resoldre aquest problema."
       invalid: |
           Correu electrònic o contrasenya no vàlids.
           Va ser un convidat l'última vegada? Potser vostè necessita crear un compte o restablir la contrasenya.
@@ -149,11 +173,16 @@ ca:
       already_registered: "Aquesta adreça electrònica ja està registrada. Inicieu sessió per continuar o torneu endarrere per utilitzar una altra adreça de correu electrònic."
     success:
       logged_in_succesfully: "Sessió iniciada correctament"
+    sessions:
+      signed_out: "La sessió s'ha tancat correctament."
+      already_signed_out: "La sessió s'ha tancat  correctament."
     user_passwords:
       spree_user:
         updated_not_active: "La vostra contrasenya s'ha restablert, però el vostre correu electrònic encara no s'ha confirmat."
         updated: "La vostra contrasenya s'ha canviat correctament. Ja teniu la sessió iniciada."
         send_instructions: "Rebreu un correu electrònic amb instruccions sobre com confirmar el vostre compte en pocs minuts."
+    oidc:
+      failure: "No s'ha pogut iniciar la sessió: %{error}"
   home_page_alert_html: "HTML banner d'alerta de la pàgina d'inici"
   hub_signup_case_studies_html: "HTML casos d'estudi de hub"
   hub_signup_detail_html: "HTML detall del registre de hub"
@@ -264,6 +293,7 @@ ca:
   search_by_name: Cercar per nom o barri ...
   producers_join: Els productors australians son ara benvinguts a unir-se a Open Food Network.
   charges_sales_tax: Càrrecs d'IVA?
+  business_address: "Adreça fiscal"
   print_invoice: "Imprimir Factura"
   print_ticket: "Imprimir tiquet"
   select_ticket_printer: "Seleccionar la impressora de tiquets"
@@ -448,6 +478,8 @@ ca:
         terms_of_service: "Termes del servei"
         delete: "Eliminar arxiu"
         confirm_delete: "Esteu segur que voleu suprimir el fitxer de condicions del servei actual?"
+        attachment: "Adjunt"
+        create_terms_of_service: "Crear fitxer de condicions del servei"
     number_localization:
       number_localization_settings: "Configuració de localització numèrica"
       enable_localized_number: "Utilitzeu l'estàndard internacional per separar milers/decimals"
@@ -457,6 +489,7 @@ ca:
         enable_invoices?: "Activar factures?"
         invoice_style2?: "Utilitzeu el model de factura alternatiu que inclou el desglossament dels càrregs totals per tarifa i la informació sobre la taxa impositiva per article (encara no està disponible per als països sense recàrregs en concpte d'impostos)"
         enable_receipt_printing?: "Mostra les opcions per imprimir rebuts amb impressores tèrmiques en el menú desplegable de la comanda?"
+        enterprise_number_required_on_invoices?: "Vols fer el NIF obligatori per generar una factura?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -504,6 +537,8 @@ ca:
         guest_label: "Fer comanda com a convidat"
         credit_owed: "Crèdit a deure"
         balance_due: "A pagar"
+      destroy:
+        has_associated_subscriptions: "No es pot esborrar: aquest client té subscripcions actives. Cancel·leu-les primer."
     contents:
       edit:
         title: Contingut
@@ -682,6 +717,8 @@ ca:
         display_name: Nom de visualització
         category: Categoria
         description: Descripció
+        units: Unitats
+        unit_type: Tipus d'unitat
         variant_unit_name: Nom de la unitat de la variant
         price: Preu
         on_hand: Disponibles
@@ -741,6 +778,9 @@ ca:
         variants_without_unit_value: "Atenció: algunes variants no tenen cap unitat assignada."
         all: "Tots"
       select_variant: "Selecciona un paràmetre"
+      note:
+        note_label: "Nota:"
+        no_note_present: "Cap nota proporcionada"
     enterprise:
       select_outgoing_oc_products_from: Selecciona els productes sortints del Cicle de Comandes
     enterprises:
@@ -771,8 +811,21 @@ ca:
           terms_and_conditions: "Termes i condicions"
           remove_terms_and_conditions: "Elimina el fitxer"
           uploaded_on: "carregat el"
+          reset_form: "Reiniciar el formulari"
+          business_address_legend: "Adreça fiscal"
+          invoice_item_sorting_legend: "Ordre de productes a la factura"
+          sort_items_by_supplier?: Ordenar els articles per proveïdor?
+          sort_items_by_supplier_tip: "Quan està activat, els articles s'ordenaran pel nom del proveïdor."
+          enabled: Habilitat
+          disabled: Deshabilitat
         business_address:
+          company_legal_name: Nom fiscal de l'organització o empresa
+          company_placeholder: La meva cooperativa SCCL
+          address1: Adreça fiscal
+          address1_placeholder: Carrer de dalt 123
           address2: Adreça (continua)
+          legal_phone_number: 'Telèfon administratiu '
+          phone_placeholder: "912 345 678"
         contact:
           legend: "Contacte"
           name: Nom
@@ -782,6 +835,8 @@ ca:
           email_address_tip: "Aquesta adreça de correu electrònic es mostrarà al vostre perfil públic"
           phone: Telèfon
           phone_placeholder: p. ex. 98 765 43 21
+          whatsapp_phone: Número de telèfon de WhatsApp
+          whatsapp_phone_tip: "Aquest número es mostrarà al vostre perfil públic i s'enllaçarà amb el vostre WhatsApp."
           website: Lloc web
           website_placeholder: 'p. ex.: www.hortajosepribes.com'
         enterprise_fees:
@@ -836,9 +891,12 @@ ca:
           none: Cap
           own: Propis
           sells: Ven
-          sells_tip: "Cap: l'organització no ven als clients directament. <br /> Propietari: l'organització ven productes propis als clients. <br /> Qualsevol: l'organització pot vendre productes propis o d'altres empreses. <br />"
+          sells_tip: "Cap: l'organització no disposa de botiga pròpia per vendre a clients finals directament. <br /> Propis: l'organització disposa d'una botiga pròpia per vendre NOMÉS els seus productes. <br /> Qualsevol: l'organització pot vendre productes propis o d'altres empreses que li proporcionin aquest permís. <br />"
           visible_in_search: Visible a la cerca?
+          visible_in_search_tip: "Les organitzacions poden ser<br /> 1. Visibles públicament, apareixen al mapa i als llistats de Katuma-OFN.<br /> 2. Oculta. No visible en mapes i llistats però referenciats per altres botigues amb enllaç al seu perfil.<br /> 3. Totalment oculta. No visible en mapes i llistats ni és possible referencia-les."
           visible: Públic
+          not_visible: Oculta
+          hidden: Totalment oculta
         properties:
           legend: "Propietats"
         permalink:
@@ -903,6 +961,8 @@ ca:
           shopfront_sort_by_producer: "Per productora"
           shopfront_sort_by_category_placeholder: "Categoria"
           shopfront_sort_by_producer_placeholder: "Productora"
+          display_remaining_stock: "Mostra l'estoc restant a la botiga si és baix (3 unitats)"
+          display_remaining_stock_tip: "Avisa els compradors quan només quedin 3 unitats o menys d'un producte."
           enabled: "Habilitat"
           disabled: "Deshabilitat"
         social:
@@ -1035,6 +1095,7 @@ ca:
         back_to_list: "Tornar a la llista"
         save_and_back_to_list: "Desa i torna a la llista"
         choose_products_from: "Trieu Productes des de:"
+        notify_producers_tip: Això enviarà un correu electrònic a cada productor amb la llista dels seus productes demanats a les comandes.
       incoming:
         incoming: "Entrant"
         supplier: "Proveïdora"
@@ -1062,7 +1123,9 @@ ca:
       checkout_options:
         back_end: "Només pàgina administració (back office) "
         cancel: "Cancel·lar"
+        checkout_options: "Opcions del Checkout"
         distributor: "Distribuïdora"
+        no_shipping_methods: Cada distribuïdor d'aquest cicle de comanda ha de tenir almenys un mètode d'enviament.
         payment_methods: "Mètodes de Pagament"
         save: "Desa"
         save_and_back_to_list: "Desa i torna a la llista"
@@ -1072,6 +1135,7 @@ ca:
         edit: "1. Configuració general"
         incoming: "2. Productes entrants"
         outgoing: "3. Productes sortints"
+        checkout_options: "4. Opcions de Checkout"
       exchange_form:
         pickup_time_tip: Quan les comandes d'aquest cicle de comandes estiguin llestes per a les consumidores
         pickup_instructions_placeholder: "Instruccions de recollida"
@@ -1085,6 +1149,8 @@ ca:
         add_supplier: 'Afegeix proveïdora'
         add_distributor: 'Afegeix distribuïdora'
       advanced_settings:
+        automatic_notifications: Notificacions automàtiques
+        automatic_notifications_tip: Notifiqueu automàticament per correu electrònic als productors les comandes que els hi feu així que es tanquin els cicles de comanda.
         title: Configuració avançada
         choose_product_tip: Podeu restringir els productes entrants i sortints a només l’inventari d’%{inventory}.
         preferred_product_selection_from_coordinator_inventory_only_here: Només inventari del coordinador
@@ -1196,6 +1262,8 @@ ca:
       unitsize: UNITAT DE MESURA
       total: TOTAL
       total_items: ARTICLES TOTALS
+      total_by_customer: Total per client
+      total_by_supplier: Total per proveïdor
       supplier_totals: Total de de proveïdores del Cicle de Comanda
       supplier_totals_by_distributor: Total de proveïdores del Cicle de Comanda - per distribuïdora
       totals_by_supplier: Totals de la distribuïdora del Cicle de Comanda - per proveïdora
@@ -1209,8 +1277,12 @@ ca:
       delivery: Informe de lliurament
       tax_types: Tipus d'impostos
       tax_rates: Tarifes fiscals
-      pack_by_customer: Paquets per consumidora
-      pack_by_supplier: Paquets per proveïdora
+      pack_by_customer: Repartiment per consumidora
+      pack_by_supplier: Repartiment per proveïdora
+      pack_by_product: Repartiment per producte
+      revenues_by_hub:
+        name: Ingressos per grup/empresa
+        description: Ingressos per grup/empresa
       orders_and_distributors:
         name: Comandes i distribuïdores
         description: Comandes amb detalls de la distribuïdora
@@ -1256,9 +1328,11 @@ ca:
           temp_controlled: "Control de temperatura?"
           price: "Preu"
       rendering_options:
+        generate_report: "Generació d'informe"
+        on_screen: "A la pantalla"
         display: Mostra
       packing:
-        name: "Informes d'embalatge"
+        name: "Informes de repartiment"
     subscriptions:
       index:
         title: "Subscripcions"
@@ -2130,6 +2204,8 @@ ca:
         contact_field_placeholder: "Nom de contacte"
         contact_field_required: "Has d'introduir un contacte principal."
         phone_field: "Número de telèfon "
+        whatsapp_phone_field: "Número de telèfon de WhatsApp"
+        whatsapp_phone_tooltip: "Aquest número es mostrarà al vostre perfil públic i s'enllaçarà amb el vostre WhatsApp."
         phone_field_placeholder: "p. ex. 012 345 678 "
       type:
         title: "Tipus"
@@ -2507,6 +2583,9 @@ ca:
   report_header_delivery_postcode: Codi postal de lliurament
   report_header_bulk_unit_size: Mida de la unitat a granel
   report_header_weight: Pes
+  report_header_height: Alçada
+  report_header_width: Amplada
+  report_header_depth: Profunditat
   report_header_sum_total: Suma total
   report_header_date_of_order: Data de la comanda
   report_header_amount_owing: Import adeutat
@@ -2704,6 +2783,8 @@ ca:
           title: "S'estan penjant els termes i condicions"
           message_1: "Tots els compradors hauran d’acceptar-los al fer la comanda. Si actualitzeu el fitxer, tots els compradors hauran d’acceptar-los de nou a la finalització de la compra."
           message_2: "Per als compradors que tinguin subscripcions, heu d’enviar-los per correu electrònic els Termes i condicions (o els canvis que s’hi apliquen) per ara, res els notificarà sobre aquests nous Termes i condicions."
+        business_address_info:
+          message: "El Nom legal de l'empresa, l'Adreça fiscal i el telèfon administratiu s'utilitzen per a les empreses/organitzacions que facturen des d'una entitat jurídica registrada amb dades diferents de la seva informació comercial pública. Aquestes dades NOMÉS s'usaran a les factures. Si aquestes dades estan en blanc, el vostre nom públic, adreça i número de telèfon es faran servir a les factures."
       panels:
         save: DESA
         saved: DESAT
@@ -3516,6 +3597,9 @@ ca:
           from: "De"
           to: "Facturar a"
           shipping: "Enviament"
+        note:
+          note_label: "Nota:"
+          no_note_present: "Cap nota proporcionada"
         form:
           distribution_fields:
             title: "Distribució"
@@ -4010,3 +4094,6 @@ ca:
       x_years:
         one: "1 any"
         other: "%{count} anys"
+  errors:
+    not_found:
+      message_html: "<b>Si us plau torna-ho a provar</b> Això podria ser un problema temporal. Feu clic al botó Enrere per tornar a la pantalla anterior o torneu a <a href='/'>Inici</a> i torneu-ho a provar. <b>Contacteu amb suport</b><p> Si el problema persisteix o és urgent, si us plau, digueu-nos-ho. Esn pots enviar un correua a <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>suport<p>katuma.org </a>.</p><p> Ens ajuda molt si pots donar tants detalls com sigui possible sobre de què estaves fent quan va aparèixer l'error.</p>"

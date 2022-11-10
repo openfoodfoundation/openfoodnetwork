@@ -2655,6 +2655,9 @@ en_IE:
   report_header_delivery_postcode: Delivery Eircode
   report_header_bulk_unit_size: Bulk Unit Size
   report_header_weight: Weight
+  report_header_height: Height
+  report_header_width: Width
+  report_header_depth: Depth
   report_header_sum_total: Sum Total
   report_header_date_of_order: Date of Order
   report_header_amount_owing: Amount Owing

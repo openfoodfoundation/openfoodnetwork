@@ -2632,6 +2632,9 @@ de_CH:
   report_header_delivery_postcode: Lieferpostleitzahl
   report_header_bulk_unit_size: Gruppenkauf-Einheit
   report_header_weight: Gewicht
+  report_header_height: Höhe
+  report_header_width: Breite
+  report_header_depth: Tiefe
   report_header_sum_total: Gesamtsumme
   report_header_date_of_order: Bestelldatum
   report_header_amount_owing: Offener Betrag

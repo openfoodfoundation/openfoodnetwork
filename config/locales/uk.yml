@@ -2647,6 +2647,9 @@ uk:
   report_header_delivery_postcode: Поштовий індекс доставки
   report_header_bulk_unit_size: Масовий розмір одиниці
   report_header_weight: Вага
+  report_header_height: Висота
+  report_header_width: Ширина
+  report_header_depth: Глибина
   report_header_sum_total: Сума Загальна
   report_header_date_of_order: Дата замовлення
   report_header_amount_owing: Сума заборгованості

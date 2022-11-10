@@ -2683,6 +2683,9 @@ fr:
   report_header_delivery_postcode: Code Postal Livraison
   report_header_bulk_unit_size: Quantité totale du lot
   report_header_weight: Poids
+  report_header_height: Hauteur
+  report_header_width: Largeur
+  report_header_depth: Profondeur
   report_header_sum_total: Total déjà commandé
   report_header_date_of_order: Date de Commande
   report_header_amount_owing: Montant dû
@@ -4291,7 +4294,7 @@ fr:
       title: "La page que vous recherchez n'existe pas (erreur 404)"
       message_html: "<b> Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l'  <a href='/'> Accueil </a> et recommencez. </p> <b> Contacter notre support </b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter. </p>"
     internal_server_error:
-      title: "Nous sommes navrés, mais quelque chose c'est mal passé (erreur 500)."
+      title: "Nous sommes navré·e·s, mais quelque chose s'est mal passé (erreur 500)."
       message_html: " <b> Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l' <a href='/''> Accueil </a> et recommencez. </p> <b> Contacter notre support</b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter. </p>"
     unprocessable_entity:
       title: "La modification réalisée a été rejetée (erreur 422)"

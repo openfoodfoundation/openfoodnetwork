@@ -2683,6 +2683,9 @@ fr_CA:
   report_header_delivery_postcode: Code Postal Livraison
   report_header_bulk_unit_size: Quantité totale du lot
   report_header_weight: Poids
+  report_header_height: Hauteur
+  report_header_width: Largeur
+  report_header_depth: Profondeur
   report_header_sum_total: Somme Totale
   report_header_date_of_order: Date de Commande
   report_header_amount_owing: Montant dû

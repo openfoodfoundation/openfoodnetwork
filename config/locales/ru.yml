@@ -30,6 +30,7 @@ ru:
         shipping_category_id: "Категория Доставки"
         variant_unit: "Единица Варианта"
         variant_unit_name: "Название Единицы Варианта"
+        unit_value: "Значение товара"
       spree/credit_card:
         base: "Кредитная Карта"
         number: "Номер"
@@ -181,6 +182,8 @@ ru:
         updated_not_active: "Ваш пароль был сброшен, но ваш адрес электронной почты еще не подтвержден."
         updated: "Ваш пароль был успешно изменен. Вы вошли в систему."
         send_instructions: "Вы получите электронное письмо с инструкциями о том, как подтвердить свою учетную запись в течение нескольких минут."
+    oidc:
+      failure: "Не удалось войти: %{error}"
   home_page_alert_html: "HTML оповещения на главной странице"
   hub_signup_case_studies_html: "Примеры использования подписки на хаб HTML"
   hub_signup_detail_html: "Подробности о регистрации в хабе HTML"
@@ -1346,6 +1349,15 @@ ru:
         formatted_data: Форматированные Данные
       packing:
         name: "Выборочные Отчёты"
+    oidc_settings:
+      index:
+        title: "Настройки OIDC"
+        connect: "Подключить свою учетную запись"
+        already_connected: "Ваша учетная запись уже связана с этой учетной записью DFC:"
+        les_communs_link: "Les Communs Open ID сервер"
+        link_your_account: "Сначала вам необходимо связать свою учетную запись с поставщиком авторизации, используемым DFC (Les Communs Open ID Connect)."
+        link_account_button: "Свяжите свою учетную запись Les Communs OIDC"
+        view_account: "Чтобы просмотреть свою учетную запись, см.:"
     subscriptions:
       index:
         title: "Подписки"
@@ -2591,7 +2603,17 @@ ru:
   report_header_to_hub: В Центр
   report_header_hub_code: Код Центра
   report_header_hub_id: Идентификатор Центра
+  report_header_hub_business_number: "Бизнес-номер Центра"
+  report_header_hub_legal_name: "Юридическое Название Центра"
+  report_header_hub_contact_name: "Контактное Лицо Центра"
+  report_header_hub_email: "Публичный email Центра"
   report_header_hub_owner_email: Электронная почта Владельца Центра
+  report_header_hub_phone: "Номер Телефона Центра"
+  report_header_hub_address_line1: "Адрес Центра строка 1"
+  report_header_hub_address_line2: "Адрес Центра строка 2"
+  report_header_hub_address_city: "Город Центра"
+  report_header_hub_address_zipcode: "Почтовый индекс Центра"
+  report_header_hub_address_state_name: "Область Центра"
   report_header_code: Код
   report_header_paid: Оплачен?
   report_header_delivery: Доставка?
@@ -2626,6 +2648,7 @@ ru:
   report_header_total_tax: "Общий налог (%{currency_symbol})"
   report_header_total_excl_tax: "Итого искл. налог (%{currency_symbol})"
   report_header_total_incl_tax: "Итого, вкл. налог (%{currency_symbol})"
+  report_header_total_orders: "Общее Количество Заказов"
   report_header_enterprise: Предприятие
   report_header_customer: Клиент
   report_header_customer_code: Код Клиента
@@ -2662,6 +2685,9 @@ ru:
   report_header_delivery_postcode: Почтовый индекс Доставки
   report_header_bulk_unit_size: Размер оптовой единицы
   report_header_weight: Вес
+  report_header_height: Высота
+  report_header_width: Ширина
+  report_header_depth: Глубина
   report_header_sum_total: Итого
   report_header_date_of_order: Дата Заказа
   report_header_amount_owing: Сумма Задолженности

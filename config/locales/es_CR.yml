@@ -2649,6 +2649,9 @@ es_CR:
   report_header_delivery_postcode: Código postal de entrega
   report_header_bulk_unit_size: Tamaño de la unidad a granel
   report_header_weight: Peso
+  report_header_height: Altura
+  report_header_width: Ancho
+  report_header_depth: Profundidad
   report_header_sum_total: Suma Total
   report_header_date_of_order: Fecha de pedido
   report_header_amount_owing: Cantidad adeudada

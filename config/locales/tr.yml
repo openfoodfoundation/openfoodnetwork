@@ -2502,6 +2502,9 @@ tr:
   report_header_delivery_postcode: Teslimat Adresi Posta Kodu
   report_header_bulk_unit_size: Toplu Alım Miktarı
   report_header_weight: Ağırlık
+  report_header_height: Boy
+  report_header_width: En
+  report_header_depth: Boy
   report_header_sum_total: Toplamı
   report_header_date_of_order: Sipariş Tarihi
   report_header_amount_owing: Borç Tutarı

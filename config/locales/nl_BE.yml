@@ -2357,6 +2357,9 @@ nl_BE:
   report_header_delivery_postcode: Postcode levering
   report_header_bulk_unit_size: Totale hoeveelheid van de partij
   report_header_weight: Gewicht
+  report_header_height: lengte
+  report_header_width: breedte
+  report_header_depth: diepte
   report_header_sum_total: Totaal bedrag
   report_header_date_of_order: Bestellingsdatum
   report_header_amount_owing: Openstaand bedrag

@@ -2660,6 +2660,9 @@ it:
   report_header_delivery_postcode: CAP consegna
   report_header_bulk_unit_size: Quantità minima per Acquisto di Gruppo
   report_header_weight: Peso
+  report_header_height: Altezza
+  report_header_width: Larghezza
+  report_header_depth: Profondità
   report_header_sum_total: Somma Tolale
   report_header_date_of_order: Data Richiesta
   report_header_amount_owing: Quantità disponibile
