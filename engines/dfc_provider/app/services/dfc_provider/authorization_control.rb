@@ -4,12 +4,25 @@
 # It controls an OICD Access token and an enterprise.
 module DfcProvider
   class AuthorizationControl
+    # Copied from: https://login.lescommuns.org/auth/realms/data-food-consortium/
+    LES_COMMUNES_PUBLIC_KEY = <<~KEY
+      -----BEGIN PUBLIC KEY-----
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl68JGqAILFzoi/1+6siXXp2vylu+7mPjYKjKelTtHFYXWVkbmVptCsamHlY3jRhqSQYe6M1SKfw8D+uXrrWsWficYvpdlV44Vm7uETZOr1/XBOjpWOi1vLmBVtX6jFeqN1BxfE1PxLROAiGn+MeMg90AJKShD2c5RoNv26e20dgPhshRVFPUGru+0T1RoKyIa64z/qcTcTVD2V7KX+ANMweRODdoPAzQFGGjTnL1uUqIdUwSfHSpXYnKxXOsnPC3Mowkv8UIGWWDxS/yzhWc7sOk1NmC7pb+Cg7G8NKj+Pp9qQZnXF39Dg95ZsxJrl6fyPFvTo3zf9CPG/fUM1CkkwIDAQAB
+      -----END PUBLIC KEY-----
+    KEY
+
+    def self.public_key
+      OpenSSL::PKey::RSA.new(LES_COMMUNES_PUBLIC_KEY)
+    end
+
     def initialize(request)
       @request = request
     end
 
     def user
       oidc_user || ofn_user
+    rescue JWT::ExpiredSignature
+      nil
     end
 
     private
@@ -23,7 +36,11 @@ module DfcProvider
     end
 
     def decode_token
-      JWT.decode(access_token, nil, false).first
+      JWT.decode(
+        access_token,
+        self.class.public_key,
+        true, { algorithm: "RS256" }
+      ).first
     end
 
     def access_token
