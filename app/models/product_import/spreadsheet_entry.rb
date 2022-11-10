@@ -68,7 +68,7 @@ module ProductImport
 
     def invalid_attributes
       invalid_attrs = {}
-      errors = @product_validations ? self.errors.messages.merge(@product_validations.messages) : self.errors.messages
+      errors = @product_validations ? @product_validations.messages.merge(self.errors.messages) : self.errors.messages
       errors.each do |attr, message|
         invalid_attrs[attr.to_s] = "#{attr.to_s.capitalize} #{message.first}"
       end

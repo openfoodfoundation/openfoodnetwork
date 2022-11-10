@@ -299,7 +299,7 @@ module ProductImport
         entry.public_send("#{type}_category_id=", index[category])
       else
         mark_as_invalid(entry, attribute: "#{type}_category",
-                               error: I18n.t('admin.product_import.model.not_found'))
+                               error: I18n.t('admin.product_import.model.category_not_found'))
       end
     end
 
