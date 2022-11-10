@@ -523,6 +523,10 @@ ActiveRecord::Schema.define(version: 2022_10_07_105052) do
     t.decimal "distribution_fee", precision: 10, scale: 2
     t.decimal "final_weight_volume", precision: 10, scale: 2
     t.integer "tax_category_id"
+    t.decimal "weight", precision: 8, scale: 2
+    t.decimal "height", precision: 8, scale: 2
+    t.decimal "width", precision: 8, scale: 2
+    t.decimal "depth", precision: 8, scale: 2
     t.index ["order_id"], name: "index_line_items_on_order_id"
     t.index ["variant_id"], name: "index_line_items_on_variant_id"
   end

@@ -38,7 +38,7 @@ module Reporting
 
         private
 
-        def select_fields
+        def select_fields # rubocop:disable Metrics/AbcSize
           lambda do
             {
               hub: distributor_alias[:name],
@@ -49,6 +49,10 @@ module Reporting
               supplier: supplier_alias[:name],
               product: product_table[:name],
               variant: variant_full_name,
+              weight: line_item_table[:weight],
+              height: line_item_table[:height],
+              width: line_item_table[:width],
+              depth: line_item_table[:depth],
               quantity: line_item_table[:quantity],
               price: (line_item_table[:quantity] * line_item_table[:price]),
               temp_controlled: shipping_category_table[:temperature_controlled],
