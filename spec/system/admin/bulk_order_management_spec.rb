@@ -380,7 +380,7 @@ describe '
           visit_bulk_order_management
         end
 
-        it "displays a select box for distributors, which filters line items by the selected distributor", retry: 2 do
+        it "displays a select box for distributors, which filters line items by the selected distributor", retry: 3 do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           find("#s2id_distributor_filter .select2-chosen").click
@@ -393,7 +393,7 @@ describe '
           expect(page).to have_no_selector "tr#li_#{li2.id}"
         end
 
-        it "displays all line items when 'All' is selected from distributor filter", retry: 2 do
+        it "displays all line items when 'All' is selected from distributor filter", retry: 3 do
           # displays orders from one enterprise only
           expect(page).to have_selector "tr#li_#{li2.id}"
           find("#s2id_distributor_filter .select2-chosen").click
