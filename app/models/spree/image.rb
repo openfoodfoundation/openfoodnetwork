@@ -9,13 +9,6 @@ module Spree
       large: { resize_to_limit: [600, 600] },
     }.freeze
 
-    self.ignored_columns = %i(attachment_file_name
-                              attachment_content_type
-                              attachment_file_size
-                              attachment_updated_at
-                              attachment_width
-                              attachment_height)
-
     has_one_attached :attachment
 
     validates :attachment, attached: true, content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
