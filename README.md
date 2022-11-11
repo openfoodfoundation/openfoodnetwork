@@ -35,7 +35,13 @@ We also have a [Super Admin Guide][super-admin-guide] to help with configuration
 
 If you'd like to help out with testing, please introduce yourself on the #testing channel on [Slack][slack-invite] and download the [ZenHub browser extension][zenhub] to view the development pipeline. Also, do have a look in our [Welcome New QAs board](https://github.com/orgs/openfoodfoundation/projects/1) for some good first issues, both on manual and automated testing (RSpec/Capybara).
 
-We use [BrowserStack](https://www.browserstack.com/) as a manual testing tool. BrowserStack provides open source projects with unlimited and free of charge accounts. A big thanks to them! 
+We use [BrowserStack](https://www.browserstack.com/) as a manual testing tool. BrowserStack provides open source projects with unlimited and free of charge accounts. A big thanks to them!
+
+
+We use [KnapsackPro](https://knapsackpro.com/) for optimal parallelisation of our automated tests. KnapsackPro offers unlimited plans for non-commercial open source projects, like ours - a big thanks to them!
+
+![image](https://user-images.githubusercontent.com/49817236/201330047-e64147a7-d91c-4c10-bd4d-ca519d8fe945.png)
+
 
 ## Licence
 
