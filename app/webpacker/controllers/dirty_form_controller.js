@@ -12,7 +12,29 @@ export default class extends ApplicationController {
     // find all anchor tags that link locally
     // and ask confirmation when they are clicked
     this.localLinks = document.querySelectorAll("a[href^='#']");
-    this.localLinks.forEach((el) => {
+    this.addListeners(this.localLinks);
+    // listen when new local links are added
+    this.registerNewLocalLinks();
+  }
+
+  registerNewLocalLinks() {
+    const body = document.querySelector("body");
+    const config = { childList: true, subtree: true };
+    const callback = (mutationList, observer) => {
+      for (const mutation of mutationList) {
+        let nodes = Array.from(mutation.addedNodes);
+        nodes = nodes.filter((node) => node.href?.match(/#/));
+        this.addListeners(nodes);
+      }
+    };
+    let boundCallback = callback.bind(this);
+
+    this.observer = new MutationObserver(boundCallback);
+    this.observer.observe(body, config);
+  }
+
+  addListeners(nodes) {
+    nodes.forEach((el) => {
       let boundFunc = this.leavingPage.bind(this);
       el.addEventListener("click", boundFunc);
     });
@@ -61,5 +83,6 @@ export default class extends ApplicationController {
     this.localLinks.forEach((el) =>
       el.removeEventListener("click", this.leavingPage)
     );
+    this.observer.disconnect();
   }
 }
