@@ -5,12 +5,6 @@
       %legend= t(".#{ item[:name] }.legend")
       = render "admin/enterprises/form/#{ item[:form_name] || item[:name] }", f: f
 
-  - when 'address'
-    = f.fields_for :address do |af|
-      %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { "tabs-and-panels-target": "panel" }}
-        %legend= t(".#{ item[:name] }.legend")
-        = render 'admin/enterprises/form/address', af: af
-
   - when 'enterprise_permissions'
     %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { "tabs-and-panels-target": "panel" }}
       %legend= t(".#{ item[:name] }.legend")

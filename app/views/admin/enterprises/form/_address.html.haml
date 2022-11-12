@@ -1,54 +1,55 @@
 -# redo denoting required fields in the whole project
-.row
-  = t(:required_fields)
-  (
-  %span.required *
-  )
-.row
-  .three.columns.alpha
-    = af.label :address1, t(:address)
+= f.fields_for :address do |af|
+  .row
+    = t(:required_fields)
+    (
     %span.required *
-  .eight.columns.omega
-    = af.text_field :address1, { placeholder: t(:address_placeholder) }
-.row
-  .alpha.three.columns
-    = af.label :address2, t(:address2)
-  .eight.columns.omega
-    = af.text_field :address2
-.row
-  .three.columns.alpha
-    = af.label :city, t(:city)
-    \/
-    = af.label :zipcode, t(:postcode)
-    %span.required *
-  .four.columns
-    = af.text_field :city, { placeholder: t(:city_placeholder) }
-  .four.columns.omega
-    = af.text_field :zipcode, { placeholder: t(:postcode_placeholder) }
-.row{"data-controller": "dependent-select", "data-dependent-select-options-value": countries_with_states }
-  .three.columns.alpha
-    = af.label :state_id, t(:state)
-    \/
-    = af.label :country_id, t(:country)
-    %span.required *
-  .four.columns
-    = af.select :state_id, @enterprise.address.country.states.map { |s| [s.name, s.id] }, {}, { "data-controller": "tom-select", "data-dependent-select-target": "select", class: "primary" }
-  .four.columns.omega{ data: { controller: "primary-details" }}
-    = af.select :country_id, available_countries.map { |c| [c.name, c.id] }, {}, { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
-.row
-  .three.columns.alpha
-    = af.label :latitude, t(:latitude)
-    \/
-    = af.label :longitude, t(:longitude)
-    %span.required *
-    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('latitude_longitude_tip')}
-  .four.columns
-    = af.text_field :latitude, { placeholder: t(:latitude_placeholder) }
-  .four.columns.omega
-    = af.text_field :longitude, { placeholder: t(:longitude_placeholder) }
-.row
-  .three.columns.alpha
-    = "&nbsp;".html_safe
-  .five.columns.omega
-    = check_box_tag "use_geocoder"
-    = label_tag "use_geocoder", t('use_geocoder')
+    )
+  .row
+    .three.columns.alpha
+      = af.label :address1, t(:address)
+      %span.required *
+    .eight.columns.omega
+      = af.text_field :address1, { placeholder: t(:address_placeholder) }
+  .row
+    .alpha.three.columns
+      = af.label :address2, t(:address2)
+    .eight.columns.omega
+      = af.text_field :address2
+  .row
+    .three.columns.alpha
+      = af.label :city, t(:city)
+      \/
+      = af.label :zipcode, t(:postcode)
+      %span.required *
+    .four.columns
+      = af.text_field :city, { placeholder: t(:city_placeholder) }
+    .four.columns.omega
+      = af.text_field :zipcode, { placeholder: t(:postcode_placeholder) }
+  .row{"data-controller": "dependent-select", "data-dependent-select-options-value": countries_with_states }
+    .three.columns.alpha
+      = af.label :state_id, t(:state)
+      \/
+      = af.label :country_id, t(:country)
+      %span.required *
+    .four.columns
+      = af.select :state_id, @enterprise.address.country.states.map { |s| [s.name, s.id] }, {}, { "data-controller": "tom-select", "data-dependent-select-target": "select", class: "primary" }
+    .four.columns.omega{ data: { controller: "primary-details" }}
+      = af.select :country_id, available_countries.map { |c| [c.name, c.id] }, {}, { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
+  .row
+    .three.columns.alpha
+      = af.label :latitude, t(:latitude)
+      \/
+      = af.label :longitude, t(:longitude)
+      %span.required *
+      = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('latitude_longitude_tip')}
+    .four.columns
+      = af.text_field :latitude, { placeholder: t(:latitude_placeholder) }
+    .four.columns.omega
+      = af.text_field :longitude, { placeholder: t(:longitude_placeholder) }
+  .row
+    .three.columns.alpha
+      = "&nbsp;".html_safe
+    .five.columns.omega
+      = check_box_tag "use_geocoder"
+      = label_tag "use_geocoder", t('use_geocoder')
