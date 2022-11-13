@@ -3,6 +3,7 @@ import CableReady from "cable_ready";
 
 export default class extends Controller {
   static values = { primaryProducer: String, enterpriseSells: String };
+  static targets = ["spinner"];
 
   primaryProducerChanged(event) {
     this.primaryProducerValue = event.currentTarget.checked;
@@ -12,6 +13,7 @@ export default class extends Controller {
   enterpriseSellsChanged(event) {
     if (event.currentTarget.checked) {
       this.enterpriseSellsValue = event.currentTarget.value;
+      this.spinnerTarget.classList.remove("hidden");
       this.makeRequest();
     }
   }
@@ -25,6 +27,9 @@ export default class extends Controller {
       }
     )
       .then((data) => data.json())
-      .then(CableReady.perform);
+      .then((operation) => {
+        CableReady.perform(operation);
+        this.spinnerTarget.classList.add("hidden");
+      });
   }
 }
