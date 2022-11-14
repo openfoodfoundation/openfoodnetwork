@@ -48,6 +48,9 @@ Openfoodnetwork::Application.configure do
     reconnect_attempts: 1
   }
 
+  config.action_cable.url = "#{ENV['OFN_URL']}/cable"
+  config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/]
+
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
 
