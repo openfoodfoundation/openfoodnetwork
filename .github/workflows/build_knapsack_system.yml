@@ -85,7 +85,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "spec/system/**/*_spec.rb" 
 
         run: |
-          bundle exec rake knapsack_pro:rspec
+          bundle exec rake knapsack_pro:queue:rspec
 
       - name: Archive failed tests screenshots
         if: failure()
