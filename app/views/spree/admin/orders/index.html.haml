@@ -31,15 +31,14 @@
           %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
           %div.menu{ 'ng-show' => "expanded" }
             %div.menu_item
+              %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "resend_confirmation" }
+                = t('.resend_confirmation')
+            %div.menu_item
               %span.name.invoices-modal{'ng-controller' => 'bulkInvoiceCtrl', 'ng-click' => 'createBulkInvoice()' }
                 = t('.print_invoices')
             %div.menu_item
               %span.name{'ng-controller' => 'bulkCancelCtrl', 'ng-click' => 'cancelSelectedOrders()' }
                 = t('.cancel_orders')
-            %div.menu_item
-              %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "resend_confirmation" }
-                = t('.resend_confirmation')
-
     
     = render partial: 'per_page_controls', locals: { position: "right" }
 
