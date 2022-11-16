@@ -823,6 +823,7 @@ DEPENDENCIES
   listen
   mime-types
   mimemagic (> 0.3.5)
+  mini_portile2 (~> 2.8)
   mini_racer (= 0.4.0)
   monetize (~> 1.11)
   oauth2 (~> 1.4.7)
