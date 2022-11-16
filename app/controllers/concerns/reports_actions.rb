@@ -63,8 +63,8 @@ module ReportsActions
     'admin.reports'
   end
 
-  def render_options
-    @render_options ||= ReportRenderingOptions.where(
+  def rendering_options
+    @rendering_options ||= ReportRenderingOptions.where(
       user: spree_current_user,
       report_type: report_type,
       report_subtype: report_subtype
@@ -78,11 +78,11 @@ module ReportsActions
       params[:display_header_row] = params[:display_header_row].present?
     end
     if params[:fields_to_show].present?
-      @render_options.options[:fields_to_show] = params[:fields_to_show]
+      @rendering_options.options[:fields_to_show] = params[:fields_to_show]
     end
-    @render_options.options[:display_summary_row] = params[:display_summary_row].present?
-    @render_options.options[:display_header_row] = params[:display_header_row].present?
-    @render_options.save
-    @render_options
+    @rendering_options.options[:display_summary_row] = params[:display_summary_row].present?
+    @rendering_options.options[:display_header_row] = params[:display_header_row].present?
+    @rendering_options.save
+    @rendering_options
   end
 end

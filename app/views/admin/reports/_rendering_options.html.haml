@@ -16,16 +16,16 @@
       .omega.fourteen.columns
         - if @report.header_option?
           %span.inline-checkbox{ style: "margin-right: 1rem;" }
-            = check_box_tag :display_header_row, true, params[:display_header_row]
+            = check_box_tag :display_header_row, true, @render_options.options[:display_header_row]
             = label_tag :display_header_row, t(".header_row")
         - if @report.summary_row_option?
           %span.inline-checkbox
-            = check_box_tag :display_summary_row, true, params[:display_summary_row], { "data-csv-select-target": "checkbox" }
+            = check_box_tag :display_summary_row, true, @render_options.options[:display_summary_row], { "data-csv-select-target": "checkbox" }
             = label_tag :display_summary_row, t(".summary_row"), { "data-csv-select-target": "label" }
 
 - if @report.available_headers.present?
   .row
     .alpha.two.columns= label_tag nil, t(:report_columns)
     .omega.fourteen.columns
-      = render MultipleCheckedSelectComponent.new(name: "fields_to_show", options: @report.available_headers, selected: @params_fields_to_show)
+      = render MultipleCheckedSelectComponent.new(name: "fields_to_show", options: @report.available_headers, selected: @render_options.options[:fields_to_show])
   

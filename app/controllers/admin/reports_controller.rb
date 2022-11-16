@@ -48,10 +48,7 @@ module Admin
                       else
                         I18n.t(:name, scope: [:admin, :reports, @report_type])
                       end
-
-      # Initialize data
-      @params_fields_to_show = render_options.options[:fields_to_show]
-
+      @rendering_options = rendering_options
       @data = Reporting::FrontendData.new(spree_current_user)
     end
   end
