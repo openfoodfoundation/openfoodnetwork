@@ -51,11 +51,7 @@ module Admin
 
       # Initialize data
       params[:display_summary_row] = true if request.get?
-      @params_fields_to_show = if request.get?
-                                 @report.columns.keys - @report.fields_to_hide
-                               else
-                                 params[:fields_to_show]
-                               end
+      @params_fields_to_show = render_options.options[:fields_to_show]
 
       @data = Reporting::FrontendData.new(spree_current_user)
     end

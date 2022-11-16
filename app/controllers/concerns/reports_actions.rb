@@ -62,4 +62,23 @@ module ReportsActions
   def i18n_scope
     'admin.reports'
   end
+
+  def render_options
+    @render_options ||= ReportRenderingOptions.where(
+      user: spree_current_user,
+      report_type: report_type,
+      report_subtype: report_subtype
+    ).first_or_create do |new_instance|
+      new_instance.options[:fields_to_show] = if @report.present?
+                                                @report.columns.keys - @report.fields_to_hide
+                                              else
+                                                []
+                                              end
+    end
+    if params[:fields_to_show].present?
+      @render_options.options[:fields_to_show] = params[:fields_to_show]
+      @render_options.save
+    end
+    @render_options
+  end
 end
