@@ -16,10 +16,7 @@ describe SplitCheckoutController, type: :controller do
   let(:shipping_method) { distributor.shipping_methods.first }
 
   before do
-    allow(OpenFoodNetwork::FeatureToggle).
-      to receive(:enabled?).with(:split_checkout) { true }
-    allow(OpenFoodNetwork::FeatureToggle).
-      to receive(:enabled?).with(:split_checkout, anything) { true }
+    Flipper.enable(:split_checkout)
 
     exchange.variants << order.line_items.first.variant
     allow(controller).to receive(:current_order) { order }

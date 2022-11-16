@@ -111,10 +111,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
       context "on split-checkout" do
         before do
-          allow(OpenFoodNetwork::FeatureToggle).
-            to receive(:enabled?).with(:split_checkout).and_return(true)
-          allow(OpenFoodNetwork::FeatureToggle).
-            to receive(:enabled?).with(:split_checkout, anything).and_return(true)
+          Flipper.enable(:split_checkout)
 
           set_order order_within_zone
           login_as(user_within_zone)
@@ -171,10 +168,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
       context "on split-checkout" do
         before do
-          allow(OpenFoodNetwork::FeatureToggle).
-            to receive(:enabled?).with(:split_checkout).and_return(true)
-          allow(OpenFoodNetwork::FeatureToggle).
-            to receive(:enabled?).with(:split_checkout, anything).and_return(true)
+          Flipper.enable(:split_checkout)
 
           set_order order_outside_zone
           login_as(user_outside_zone)

@@ -129,7 +129,6 @@ RSpec.configure do |config|
   config.include Spree::UrlHelpers
   config.include Spree::MoneyHelper
   config.include PreferencesHelper
-  config.include OpenFoodNetwork::FeatureToggleHelper
   config.include OpenFoodNetwork::FiltersHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
   config.include OpenFoodNetwork::ProductsHelper
