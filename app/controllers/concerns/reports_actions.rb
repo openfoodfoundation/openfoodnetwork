@@ -74,12 +74,14 @@ module ReportsActions
                                               else
                                                 []
                                               end
-      new_instance.options[:display_summary_row] = request.get? || params[:display_summary_row].present? 
+      new_instance.options[:display_summary_row] = request.get? || params[:display_summary_row].present?
+      params[:display_header_row] = params[:display_header_row].present?
     end
     if params[:fields_to_show].present?
       @render_options.options[:fields_to_show] = params[:fields_to_show]
     end
     @render_options.options[:display_summary_row] = params[:display_summary_row].present?
+    @render_options.options[:display_header_row] = params[:display_header_row].present?
     @render_options.save
     @render_options
   end
