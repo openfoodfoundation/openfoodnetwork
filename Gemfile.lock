@@ -452,7 +452,7 @@ GEM
       activerecord (>= 5.2)
       request_store (~> 1.1)
     parallel (1.22.1)
-    paranoia (2.6.0)
+    paranoia (2.6.1)
       activerecord (>= 5.1, < 7.1)
     parser (3.1.2.1)
       ast (~> 2.4.1)
@@ -748,7 +748,7 @@ GEM
     xml-simple (1.1.8)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.4)
+    zeitwerk (2.6.6)
 
 PLATFORMS
   ruby
