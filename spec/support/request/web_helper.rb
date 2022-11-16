@@ -154,7 +154,7 @@ module WebHelper
 
   def fill_in_tag(tag_name, selector = "tags-input .tags input")
     expect(page).to have_selector selector
-    find(:css, selector).send_keys ""
+    find(:css, selector).click
     find(:css, selector).set "#{tag_name}\n"
     expect(page).to have_selector ".tag-list .tag-item span", text: tag_name
   end
