@@ -136,6 +136,8 @@ gem 'flipper-ui'
 
 gem "view_component"
 
+gem 'mini_portile2', '~> 2.8'
+
 group :production, :staging do
   gem 'ddtrace'
   gem 'rack-timeout'
