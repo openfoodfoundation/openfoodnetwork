@@ -4110,7 +4110,7 @@ fr:
         thanks: "Merci pour votre commande."
         track_information: "Informations de suivi : %{tracking}"
         track_link: "Lien de suivi : %{url}"
-        picked_up_instructions: "Votre commande de %{distributor} a bien été réceptionnée"
+        picked_up_instructions: "Votre commande auprès de %{distributor} vous a bien été délivrée :)"
         picked_up_subject: "Notification de réception"
     test_mailer:
       test_email:
