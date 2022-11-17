@@ -30,8 +30,13 @@ class OrderAvailablePaymentMethods
       distributor.payment_methods
     else
       distributor.payment_methods.where(
-        id: order_cycle.distributor_payment_methods.select(:payment_method_id)
+        id: available_distributor_payment_methods_ids
       )
     end.available.select(&:configured?)
+  end
+
+  def available_distributor_payment_methods_ids
+    order_cycle.distributor_payment_methods.where(distributor_id: distributor.id)
+      .select(:payment_method_id)
   end
 end
