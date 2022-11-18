@@ -13,7 +13,7 @@ describe BatchTaggableTagsQuery do
     )
     expect(tags).to eq(
       {
-        customer_i.id => ["volunteer", "member"],
+        customer_i.id => ["member", "volunteer"],
         customer_ii.id => ["member"],
       }
     )
