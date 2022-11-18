@@ -1,0 +1,69 @@
+#header {
+  #login-nav {
+    li {
+      color: $v2-medium-dark-grey;
+
+      &:hover {
+        a, i {
+          color: $v2-orange;
+        }
+      }
+
+      a {
+        color: $v2-medium-dark-grey;
+      }
+    }
+  }
+}
+
+#admin-menu {
+  background-color: $v2-orange;
+
+  li a span.text {
+    font-weight: 700;
+  }
+
+  li.tab-with-icon a:before {
+    display: none;
+  }
+
+  li a:hover, li.selected a {
+    background-color: $v2-orange-light;
+
+    span {
+      text-shadow: 1px 1px 9px $v2-orange;
+    }
+
+    &:after {
+      display: none;
+    }
+  }
+}
+
+
+#sub-menu {
+  background-color: $v2-orange-light;
+
+  li a {
+    font-size: 100%;
+  }
+
+  li a:hover, li.selected a {
+    text-shadow: 1px 1px 9px $v2-orange;
+    background-color: $v2-orange-lighter;
+    
+    &:after {
+      display: none;
+    }
+  }
+}
+
+.admin__section-header {
+  background-color: transparent;
+  border-bottom: none;
+
+  h1.js-admin-page-title {
+    color: $v2-medium-dark-grey;
+  }
+}
+
