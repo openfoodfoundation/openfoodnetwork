@@ -2,7 +2,7 @@
 
 class BatchTaggableTagsQuery
   def self.call(taggables)
-    tags = ::ActsAsTaggableOn::Tag.
+    ::ActsAsTaggableOn::Tag.
       joins(:taggings).
       includes(:taggings).
       where(taggings:
@@ -10,9 +10,7 @@ class BatchTaggableTagsQuery
           taggable_type: taggables.model.to_s,
           taggable_id: taggables,
           context: 'tags'
-        })
-
-    tags.each_with_object({}) do |tag, indexed_hash|
+        }).order("tags.name").each_with_object({}) do |tag, indexed_hash|
       tag.taggings.each do |tagging|
         indexed_hash[tagging.taggable_id] ||= []
         indexed_hash[tagging.taggable_id] << tag.name
