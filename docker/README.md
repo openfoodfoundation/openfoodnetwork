@@ -34,6 +34,15 @@ $ git clone https://github.com/YOUR_GITHUB_USERNAME_HERE/openfoodnetwork
 * Otherwise, if you just want to get things running, clone from the OFN main repo:
 ```sh
 $ git clone git@github.com:openfoodfoundation/openfoodnetwork.git
+
+##### Windows specific steps to be able to run the bash setup scripts.
+* Install WSL ubuntu distribution by running `wsl --install Ubuntu` on Windows PowerShell or Command Prompt.
+* Install Windows Terminal from Microsoft Store or website.
+* Spin up Ubuntu WSL on Windows terminal and finish the basic setup. For more details see [this](https://learn.microsoft.com/en-us/windows/wsl/install).
+* Open Windows Terminal settings, change the working directory of Ubuntu WSL to that of the repo. 
+* Go to docker settings and enable WSL and Ubuntu. Details [here](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers).
+* Spin up Ubuntu on Windows Terminal. - This will be your CLI for the project
+
 ```
 * Go at the root of the app:
 ```sh
