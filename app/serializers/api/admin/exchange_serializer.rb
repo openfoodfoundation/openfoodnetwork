@@ -49,7 +49,7 @@ module Api
       end
 
       def tag_list
-        preloaded_tag_list.join(",(pre)")
+        preloaded_tag_list.join(",")
       end
 
       def tags
