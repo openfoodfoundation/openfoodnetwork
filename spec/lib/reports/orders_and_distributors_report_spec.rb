@@ -25,6 +25,7 @@ module Reporting
           context 'with completed order' do
             let(:bill_address) { create(:address) }
             let(:distributor) { create(:distributor_enterprise) }
+            let(:distributor1) { create(:distributor_enterprise) }
             let(:product) { create(:product) }
             let(:shipping_method) { create(:shipping_method) }
             let(:shipping_instructions) { 'pick up on thursday please!' }
@@ -81,6 +82,26 @@ module Reporting
 
               table = subject.table_rows
               expect(table.size).to eq 2
+            end
+
+            context "filtering by distributor" do
+              it do
+                create(:line_item_with_shipment, order: order)
+
+                report1 = Base.new(create(:admin_user), {})
+                table = report1.table_rows
+                expect(table.size).to eq 2
+
+                report2 = Base.new(create(:admin_user),
+                                   { q: { distributor_id_in: [distributor.id] } })
+                table2 = report2.table_rows
+                expect(table2.size).to eq 2
+
+                report3 = Base.new(create(:admin_user),
+                                   { q: { distributor_id_in: [distributor1.id] } })
+                table3 = report3.table_rows
+                expect(table3.size).to eq 0
+              end
             end
           end
         end
