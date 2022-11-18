@@ -10,6 +10,7 @@ module Reporting
 
         def default_params
           {
+            fields_to_hide: [:producer_charges_sales_tax?, :product_tax_category],
             q: {
               completed_at_gt: 1.month.ago.beginning_of_day,
               completed_at_lt: 1.day.from_now.beginning_of_day
@@ -51,8 +52,16 @@ module Reporting
           proc { |line_items| line_items.first.variant.product.supplier.name }
         end
 
+        def supplier_charges_sales_tax?
+          proc { |line_items| line_items.first.variant.product.supplier.charges_sales_tax }
+        end
+
         def product_name
           proc { |line_items| line_items.first.variant.product.name }
+        end
+
+        def product_tax_category
+          proc { |line_items| line_items.first.variant.product.tax_category&.name }
         end
 
         def hub_name
