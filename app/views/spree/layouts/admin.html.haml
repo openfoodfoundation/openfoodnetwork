@@ -3,7 +3,7 @@
   %head{"data-hook" => "admin_inside_head"}
     = render :partial => 'spree/admin/shared/head'
 
-  %body.admin
+  %body.admin{ "class": ("admin-v2" if feature?(:admin_style_v2, spree_current_user)) }
     - if content_for?(:main_ng_app_name)
       - if content_for?(:main_ng_ctrl_name)
         %div{ "ng-app" => yield(:main_ng_app_name).strip.html_safe, "ng-controller" => yield(:main_ng_ctrl_name).strip.html_safe }
