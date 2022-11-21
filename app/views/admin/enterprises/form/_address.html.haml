@@ -41,7 +41,6 @@
       = af.label :latitude, t(:latitude)
       \/
       = af.label :longitude, t(:longitude)
-      %span.required *
       = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('latitude_longitude_tip')}
     .four.columns
       = af.text_field :latitude, { placeholder: t(:latitude_placeholder) }
