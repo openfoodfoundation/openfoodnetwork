@@ -29,6 +29,10 @@ module Reporting
             {
               group_by: :supplier,
               header: true,
+            },
+            {
+              group_by: :product,
+              header: true,
               summary_row: proc do |_key, items, rows|
                 line_items = items.flatten
                 {
