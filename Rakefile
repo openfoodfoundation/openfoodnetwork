@@ -8,6 +8,3 @@ require_relative 'config/application'
 
 Openfoodnetwork::Application.load_tasks
 
-if !ENV['DISABLE_KNAPSACK'] && defined?(Knapsack)
-  Knapsack.load_tasks
-end
