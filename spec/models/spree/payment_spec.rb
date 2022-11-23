@@ -88,8 +88,8 @@ describe Spree::Payment do
       before do
         allow(payment).to receive(:record_response)
         allow(card).to receive(:has_payment_profile?).and_return(true)
-        payment.stub(:update_order)
-        payment.stub(:create_payment_profile)
+        allow(payment).to receive(:update_order).and_return(true)
+        allow(payment).to receive(:create_payment_profile).and_return(true)
       end
 
       context "#process!" do
