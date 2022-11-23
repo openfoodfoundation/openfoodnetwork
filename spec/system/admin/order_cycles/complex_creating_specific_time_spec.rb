@@ -5,7 +5,7 @@ require 'system_helper'
 describe '
     As an administrator
     I want to create/update complex order cycles with a specific time
-', js: true do
+' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper
@@ -49,7 +49,7 @@ describe '
     payment_method_ii.update!(name: "Cash")
   end
 
-  it "creating an order cycle with full interface", js: true do
+  it "creating an order cycle with full interface", retry: 3 do
     ## CREATE
     login_as_admin_and_visit admin_order_cycles_path
     click_link 'New Order Cycle'
