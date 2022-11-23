@@ -155,15 +155,17 @@ module Openfoodnetwork
 
     initializer "ofn.reports" do |app|
       module ::Reporting; end
-      loader = Zeitwerk::Loader.new
-      loader.push_dir("#{Rails.root}/lib/reporting", namespace: ::Reporting)
-      loader.enable_reloading
-      loader.setup
-      loader.eager_load
+      Rails.application.reloader.to_prepare do
+        loader = Zeitwerk::Loader.new
+        loader.push_dir("#{Rails.root}/lib/reporting", namespace: ::Reporting)
+        loader.enable_reloading
+        loader.setup
+        loader.eager_load
 
-      if Rails.env.development?
-        require 'listen'
-        Listen.to("lib/reporting") { loader.reload }.start
+        if Rails.env.development?
+          require 'listen'
+          Listen.to("lib/reporting") { loader.reload }.start
+        end
       end
     end
 
@@ -247,5 +249,7 @@ module Openfoodnetwork
     config.active_storage.variable_content_types += ["image/svg+xml"]
 
     config.exceptions_app = self.routes
+
+    config.autoloader = :zeitwerk
   end
 end
