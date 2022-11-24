@@ -627,6 +627,7 @@ fr:
         conditional_blank: ne peut pas être vide si unit_type est vide
         no_product: n'a pu être associé à aucun produit existant dans la base de données
         not_found: non trouvé dans le base de données
+        category_not_found: n'est pas conforme aux catégories utilisées. Merci de modifier les catégories en utilisant celles listées sur la page d'import ou vérifier qu'il n'y ait pas de faute de frappe ou d'espace à fin du mot.
         not_updatable: ne peut pas être mis à jour pour des produits existants via la fonctionnalité d'import de fichier produits
         blank: Champ obligatoire
         products_no_permission: vous n'avez pas l'autorisation de gérer les produits de cette entreprise
