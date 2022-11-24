@@ -50,7 +50,7 @@
 
   li a:hover, li.selected a {
     text-shadow: 1px 1px 9px $v2-orange;
-    background-color: $v2-orange-lighter;
+    background-color: lighten($v2-orange-light, 7%);
     
     &:after {
       display: none;
