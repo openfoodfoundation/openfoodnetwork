@@ -4,7 +4,8 @@
       color: $v2-medium-dark-grey;
 
       &:hover {
-        a, i {
+        a,
+        i {
           color: $v2-orange;
         }
       }
@@ -27,7 +28,8 @@
     display: none;
   }
 
-  li a:hover, li.selected a {
+  li a:hover,
+  li.selected a {
     background-color: $v2-orange-light;
 
     span {
@@ -40,7 +42,6 @@
   }
 }
 
-
 #sub-menu {
   background-color: $v2-orange-light;
 
@@ -48,10 +49,10 @@
     font-size: 100%;
   }
 
-  li a:hover, li.selected a {
+  li a:hover,
+  li.selected a {
     text-shadow: 1px 1px 9px $v2-orange;
     background-color: lighten($v2-orange-light, 7%);
-    
     &:after {
       display: none;
     }
@@ -66,4 +67,3 @@
     color: $v2-medium-dark-grey;
   }
 }
-
