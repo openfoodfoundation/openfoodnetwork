@@ -191,6 +191,48 @@ module Reporting
           end
         end
       end
+
+      describe SupplierReport do
+        let(:d1) { create(:distributor_enterprise) }
+        let(:oc1) { create(:simple_order_cycle) }
+        let(:o1) { create(:order, completed_at: 1.day.ago, order_cycle: oc1, distributor: d1) }
+        let(:li1) { build(:line_item_with_shipment) }
+        let(:li2) { li1.dup }
+        let(:li3) { build(:line_item_with_shipment) }
+        let(:params) { { display_summary_row: true } }
+        let(:user) { create(:admin_user) }
+        let(:report){ SupplierReport.new user, params }
+        let(:product1){ li1.product }
+        let(:variant1){ product1.variants.first }
+        let(:variant2) {
+          new_variant = variant1.dup
+          new_variant.save!
+          new_variant
+        }
+        before {
+          variant2.stock_items.first.update(count_on_hand: 10)
+          product1.variants << variant2
+          li2.variant = variant2
+          li2.save!
+          o1.line_items << li1
+          o1.line_items << li2
+          o1.line_items << li3
+          o1.save!
+        }
+
+        it "includes a summary row for every product" do
+          product1_summary_row = report.rows.third
+          product2_summary_row = report.rows.fifth
+          product1_sum_total = report.rows.first.sum_total + report.rows.second.sum_total
+          product2_sum_total = report.rows.fourth.sum_total
+
+          expect(product1_summary_row.weight).to eq "TOTAL"
+          expect(product2_summary_row.weight).to eq "TOTAL"
+
+          expect(product1_summary_row.sum_total).to eq product1_sum_total
+          expect(product2_summary_row.sum_total).to eq product2_sum_total
+        end
+      end
     end
   end
 end
