@@ -30,6 +30,7 @@ fr_CA:
         shipping_category_id: "Condition de transport"
         variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"
+        unit_value: "Nb unités"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
@@ -627,6 +628,7 @@ fr_CA:
         conditional_blank: Champ obligatoire si le type d'unité est vide
         no_product: 'aucun produit trouvé '
         not_found: n'a pas été trouvé dans la base de donnée
+        category_not_found: n'est pas conforme aux catégories utilisées. Merci de modifier les catégories en utilisant celles listées sur la page d'import ou vérifier qu'il n'y ait pas de faute de frappe ou d'espace à fin du mot.
         not_updatable: ne peut pas être mis à jour pour des produits existants via la fonctionnalité d'import de fichier produits
         blank: Champ obligatoire
         products_no_permission: vous n'avez pas les droits requis pour gérer les produits de cette entreprise
