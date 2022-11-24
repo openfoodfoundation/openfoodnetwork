@@ -1,0 +1,44 @@
+/* Overide buttons.scss app/webpacker/css/admin/components/buttons.scss */
+
+input[type="submit"],
+select[type="submit"],
+.select2-container-multi [type="submit"].select2-choices,
+input[type="button"],
+select[type="button"],
+.select2-container-multi [type="button"].select2-choices,
+button,
+.button,
+.actions a,
+.admin__section-header .ofn-drop-down // Same behavior as the button
+{
+  &:not(.disabled):not([disabled]) {
+    // Change the color of the button only if it's not disabled
+    background-color: $v2-blue-light;
+
+    &:hover {
+      background-color: $v2-blue;
+      box-shadow: $v2-box-shadow;
+    }
+  }
+
+  &.active {
+    background-color: $v2-blue;
+  }
+}
+
+#table-filter .actions {
+  /* used to draw a line on the right and left of the actions buttons 
+  We can then remove the dropshadow on the buttons */
+  &:before,
+  &:after {
+    background-color: $v2-light-grey; // same color as the border of the fieldset. see forms.scss
+    height: 1px;
+    content: attr(data-initials);
+    flex-grow: 1; // make the line as long as it can
+  }
+}
+
+#table-filter fieldset:has(.actions) {
+  // do not apply border to filter actions as it's drawn by the #table-filter .actions before and after pseudo elements
+  border-bottom: 0;
+}
