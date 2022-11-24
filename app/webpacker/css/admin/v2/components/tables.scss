@@ -1,0 +1,79 @@
+/* Overide tables.scss app/webpacker/css/admin/components/tables.scss */
+
+table thead th {
+  background-color: $v2-medium-light-grey;
+  border: none;
+  color: $v2-blue;
+  text-transform: capitalize;
+  font-size: 13px;
+
+  a {
+    border: none;
+    color: $v2-blue;
+  }
+}
+
+table tbody tr {
+  &:first-child th,
+  &:first-child td {
+    border-top: none; // Don't show the top border of the first row
+  }
+  td:not(:first-child) {
+    border-left: none; // Only show left border on the first cells, as it indicates the order state by its color
+  }
+
+  td {
+    border-bottom: none; // By default, do not show the border of the cells
+    border-right: none;
+    border-top: none;
+
+    border-bottom: 2px solid $v2-medium-light-grey;
+    &.actions {
+      border-bottom: 2px solid $v2-medium-light-grey !important; // needs to be important because of already defined with important
+      display: flex;
+      column-gap: 10px;
+    }
+  }
+  &.even,
+  &.odd {
+    td {
+      background-color: transparent; // Do not use odd and even colors for background
+    }
+  }
+}
+
+table th a,
+table td a {
+  // This should probably be a default rule for all links at a general level
+  color: $v2-blue-light;
+  &:hover {
+    color: $v2-blue;
+  }
+}
+
+table th.actions,
+table td.actions {
+  // Special for icons in the actions column
+  [class*="icon-"].no-text {
+    border-color: $v2-blue-light;
+    background-color: $v2-blue-lightest;
+
+    &:hover {
+      border-color: $v2-blue;
+      background-color: $v2-blue-light;
+
+      &:before {
+        color: white;
+      }
+    }
+  }
+}
+
+table#listing_orders td {
+  // When the table is the listing of orders, we need to increase the height of the cells
+  padding: 20px 0;
+
+  &.actions {
+    padding-left: 20px;
+  }
+}
