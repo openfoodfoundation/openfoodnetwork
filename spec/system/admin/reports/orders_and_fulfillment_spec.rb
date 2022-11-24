@@ -7,8 +7,10 @@ describe "Orders And Fulfillment" do
   include WebHelper
 
   describe "reports" do
+    let(:current_user) { create(:admin_user) }
+
     before do
-      login_as_admin
+      login_to_admin_as(current_user)
       visit admin_reports_path
     end
 
@@ -434,6 +436,122 @@ describe "Orders And Fulfillment" do
             within "td.header-row" do
               expect(page).to have_content("Hub #{distributor.name}")
             end
+          end
+        end
+      end
+    end
+
+    describe "Saving report rendering options" do
+      let(:report_title) { "Order Cycle Supplier Totals" }
+
+      let(:second_report_title) { "Order Cycle Supplier Totals by Distributor" }
+
+      let(:columns_dropdown_selector) { 'div[data-multiple-checked-select-target="button"]' }
+
+      context "Switching between reports" do
+        context "Display options" do
+          it "should store display options for every report separately" do
+            # Step 1: Update report rendering options on two reports
+            click_link report_title
+            expect(page).to have_unchecked_field('Header Row')
+            expect(page).to have_checked_field('Summary Row')
+            check 'Header Row'
+            uncheck 'Summary Row'
+
+            click_button 'Go'
+
+            click_link "Report"
+            click_link second_report_title
+            expect(page).to have_unchecked_field('Header Row')
+            expect(page).to have_checked_field('Summary Row')
+            check 'Header Row'
+            click_button 'Go'
+
+            # Step 2: check if report rendering options are saved properly
+            click_link "Report"
+            click_link report_title
+            expect(page).to have_checked_field('Header Row')
+            expect(page).to have_unchecked_field('Summary Row')
+
+            click_link "Report"
+            click_link second_report_title
+            expect(page).to have_checked_field('Header Row')
+            expect(page).to have_checked_field('Summary Row')
+          end
+        end
+        context "Columns to show" do
+          it "should store columns to show for every report separately" do
+            # Step 1: Update report rendering options on two reports
+            click_link report_title
+            find(columns_dropdown_selector).click
+            expect(page).to have_checked_field('Producer')
+            expect(page).to have_checked_field('Product')
+            uncheck('Producer')
+            uncheck('Product')
+            click_button 'Go'
+
+            click_link "Report"
+            click_link second_report_title
+            find(columns_dropdown_selector).click
+            expect(page).to have_checked_field('Producer')
+            expect(page).to have_checked_field('Product')
+            uncheck('Product')
+            click_button 'Go'
+
+            # Step 2: check if report rendering options are saved properly
+            click_link "Report"
+            click_link report_title
+            find(columns_dropdown_selector).click
+            expect(page).to have_unchecked_field('Producer')
+            expect(page).to have_unchecked_field('Product')
+
+            click_link "Report"
+            click_link second_report_title
+            find(columns_dropdown_selector).click
+            expect(page).to have_checked_field('Producer')
+            expect(page).to have_unchecked_field('Product')
+          end
+        end
+      end
+      context "Revisiting a report after logout" do
+        context "Display options" do
+          it "should store display options" do
+            click_link report_title
+            expect(page).to have_unchecked_field('Header Row')
+            expect(page).to have_checked_field('Summary Row')
+            check 'Header Row'
+            uncheck 'Summary Row'
+            click_button 'Go'
+
+            logout
+            login_to_admin_as(current_user)
+            visit admin_reports_path
+
+            click_link report_title
+            expect(page).to have_checked_field('Header Row')
+            expect(page).to have_unchecked_field('Summary Row')
+          end
+        end
+
+        context "Columns to show" do
+          it "should store columns after logout" do
+            click_link report_title
+            find(columns_dropdown_selector).click
+            expect(page).to have_checked_field('Producer')
+            expect(page).to have_checked_field('Product')
+            uncheck('Producer')
+            uncheck('Product')
+            click_button 'Go'
+
+            logout
+            login_to_admin_as(current_user)
+            visit admin_reports_path
+
+            click_link "Report"
+            click_link report_title
+            find(columns_dropdown_selector).click
+            expect(page).to have_unchecked_field('Producer')
+            expect(page).to have_unchecked_field('Product')
           end
         end
       end
