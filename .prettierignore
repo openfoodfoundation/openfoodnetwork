@@ -1,6 +1,8 @@
 # Basically, ignore everythings expect app/webpacker/controllers/*.js and app/webpacker/packs/*.js
 *.css
 *.scss
+# Except v2
+!/app/webpacker/css/admin/v2/**/*.scss
 *.md
 *.yml
 *.yaml
