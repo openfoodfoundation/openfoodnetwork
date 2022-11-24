@@ -24,12 +24,15 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+require 'knapsack_pro'
+KnapsackPro::Adapters::RSpecAdapter.bind
+
 # Allow connections to selenium whilst raising errors when connecting to external sites
 require 'webmock/rspec'
 WebMock.enable!
 WebMock.disable_net_connect!(
   allow_localhost: true,
-  allow: 'chromedriver.storage.googleapis.com'
+  allow: ['chromedriver.storage.googleapis.com', 'api.knapsackpro.com']
 )
 
 # Requires supporting ruby files with custom matchers and macros, etc,
