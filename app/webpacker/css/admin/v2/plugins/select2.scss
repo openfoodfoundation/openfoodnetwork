@@ -4,6 +4,11 @@
   .select2-choice {
     background-color: transparent;
     border: 1px solid $v2-light-grey !important;
+    color: $v2-medium-grey !important;
+    padding-left: 5px;
+    font-size: 13px;
+    padding-top: 3px;
+
     .select2-arrow {
       color: $v2-medium-grey;
     }
