@@ -1,5 +1,10 @@
 /* Overide buttons.scss app/webpacker/css/admin/components/buttons.scss */
 
+@mixin backgroundAndBorder($color) {
+  background-color: $color;
+  border: 2px solid $color;
+}
+
 input[type="submit"],
 select[type="submit"],
 .select2-container-multi [type="submit"].select2-choices,
@@ -13,16 +18,28 @@ button,
 {
   &:not(.disabled):not([disabled]) {
     // Change the color of the button only if it's not disabled
-    background-color: $v2-blue-light;
+    @include backgroundAndBorder($v2-blue-light);
 
     &:hover {
-      background-color: $v2-blue;
+      @include backgroundAndBorder($v2-blue);
+      box-shadow: $v2-box-shadow;
+    }
+  }
+
+  &.secondary {
+    background-color: $white;
+    border: 2px solid $v2-blue-light;
+    color: $v2-blue-light;
+
+    &:hover {
+      background-color: $v2-blue-lightest;
+      color: $v2-blue;
       box-shadow: $v2-box-shadow;
     }
   }
 
   &.active {
-    background-color: $v2-blue;
+    @include backgroundAndBorder($v2-blue);
   }
 }
 
