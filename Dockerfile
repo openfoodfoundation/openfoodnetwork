@@ -35,7 +35,10 @@ ENV BUNDLE_PATH /bundles
 ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so
 
 WORKDIR /usr/src/app
-COPY .ruby-version .
+
+# trim spaces and line return from .ruby-version file
+COPY .ruby-version .ruby-version.raw
+RUN cat .ruby-version.raw | tr -d '\r\t ' > .ruby-version
 
 # Install Rbenv & Ruby
 RUN git clone --depth 1 https://github.com/rbenv/rbenv.git ${RBENV_ROOT} && \
