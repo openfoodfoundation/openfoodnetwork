@@ -16,7 +16,12 @@ button,
 .actions a:not([class*="icon-"]),
 .admin__section-header .ofn-drop-down // Same behavior as the button
 {
-  &:not(.disabled):not([disabled]) {
+  &.disabled,
+  &[disabled] {
+    @include backgroundAndBorder($v2-light-grey);
+  }
+
+  &:not(.disabled):not([disabled]):not(.secondary) {
     // Change the color of the button only if it's not disabled
     @include backgroundAndBorder($v2-blue-light);
 
