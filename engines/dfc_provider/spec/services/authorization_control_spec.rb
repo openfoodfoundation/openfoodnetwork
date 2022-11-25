@@ -5,13 +5,29 @@ require DfcProvider::Engine.root.join("spec/spec_helper")
 describe DfcProvider::AuthorizationControl do
   include AuthorizationHelper
 
-  let(:user) { create(:user) }
+  let(:user) { create(:oidc_user) }
 
   describe "with OIDC token" do
-    it "finds a user" do
+    it "finds the right user" do
+      create(:oidc_user) # another user
       token = allow_token_for(email: user.email)
 
       expect(auth(token).user).to eq user
+    end
+
+    it "ignores blank email" do
+      create(:user, uid: nil)
+      create(:user, uid: "")
+      token = allow_token_for(email: nil)
+
+      expect(auth(token).user).to eq nil
+    end
+
+    it "ignores non-existent user" do
+      user
+      token = allow_token_for(email: generate(:random_email))
+
+      expect(auth(token).user).to eq nil
     end
 
     it "ignores expired signatures" do
@@ -24,7 +40,8 @@ describe DfcProvider::AuthorizationControl do
   def auth(token)
     described_class.new(
       double(:request,
-             headers: { "Authorization" => "Bearer #{token}" })
+             headers: { "Authorization" => "Bearer #{token}" },
+             env: { 'warden' => nil })
     )
   end
 end

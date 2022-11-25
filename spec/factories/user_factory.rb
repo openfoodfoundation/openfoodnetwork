@@ -46,5 +46,11 @@ FactoryBot.define do
         user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
       end
     end
+
+    factory :oidc_user do
+      after(:create) do |user|
+        user.update uid: user.email
+      end
+    end
   end
 end
