@@ -41,6 +41,9 @@
   &.select2-dropdown-open {
     .select2-choices {
       border-color: $v2-medium-grey !important;
+      .select2-search-choice {
+        background-color: $v2-blue-light;
+      }
     }
   }
 }
