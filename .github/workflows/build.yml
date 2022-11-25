@@ -81,7 +81,7 @@ jobs:
           # RSpec split test files by test examples feature - it's optional
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
-          KNAPSACK_PRO_TEST_FILE_PATTERN: "spec/controllers/**/*_spec.rb" 
+          KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/controllers/**{,/*/**}/*_spec.rb}" 
         
         run: |
           bundle exec rake knapsack_pro:rspec
@@ -150,7 +150,7 @@ jobs:
           # RSpec split test files by test examples feature - it's optional
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
-          KNAPSACK_PRO_TEST_FILE_PATTERN: "spec/models/**/*_spec.rb" 
+          KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/models/**{,/*/**}/*_spec.rb}" 
         
         run: |
           bundle exec rake knapsack_pro:rspec
@@ -219,7 +219,7 @@ jobs:
           # RSpec split test files by test examples feature - it's optional
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
-          KNAPSACK_PRO_TEST_FILE_PATTERN: "spec/system/**/*_spec.rb" 
+          KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/system/**{,/*/**}/*_spec.rb}" 
 
         run: |
           bundle exec rake knapsack_pro:queue:rspec
@@ -286,7 +286,7 @@ jobs:
       - name: Run tests
 
         env:
-          KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: 09476e2ce491c12083df62768667c674
+          KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: d6ea7ceb766404ccd016c19aa2c81b1c
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
           KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
           KNAPSACK_PRO_LOG_LEVEL: info
@@ -297,7 +297,7 @@ jobs:
           # RSpec split test files by test examples feature - it's optional
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
-          KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/lib/**/*_spec.rb, spec/migrations/**/*_spec.rb, spec/serializers/**/*_spec.rb, engines/**/*_spec.rb}"
+          KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/lib/**{,/*/**}/*_spec.rb,spec/migrations/**{,/*/**}/*_spec.rb,spec/serializers/**{,/*/**}/*_spec.rb,engines/**{,/*/**}/*_spec.rb}"
 
         run: |
           bundle exec rake knapsack_pro:rspec
