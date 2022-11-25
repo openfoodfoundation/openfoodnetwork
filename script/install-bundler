@@ -16,10 +16,10 @@ set -e
 
 # `grep`:      find the occurrences of "BUNDLED WITH" (-m is unnecessary and behaves different on macOS)
 # `-A`:        print the next line after "BUNDLED WITH" as well
-# `-x -F`:     find exactly that string without interpreting regex
+# `-F`:        find exactly that string
 # `tail -n 1`: take the last line, the version line
 # `tr -d`:     delete all spaces, the indent before the version
-version="$(grep -A 1 -x -F "BUNDLED WITH" Gemfile.lock | tail -n 1  | tr -d '[:space:]')"
+version="$(grep -A 1 -F "BUNDLED WITH" Gemfile.lock | tail -n 1  | tr -d '[:space:]')"
 
 # if the length of $version is zero
 if [ -z "$version" ]; then
