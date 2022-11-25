@@ -8,7 +8,7 @@ select[type="button"],
 .select2-container-multi [type="button"].select2-choices,
 button,
 .button,
-.actions a,
+.actions a:not([class*="icon-"]),
 .admin__section-header .ofn-drop-down // Same behavior as the button
 {
   &:not(.disabled):not([disabled]) {

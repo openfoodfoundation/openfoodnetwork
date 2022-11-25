@@ -55,7 +55,7 @@ table th.actions,
 table td.actions {
   // Special for icons in the actions column
   [class*="icon-"].no-text {
-    border-color: $v2-blue-light;
+    border: 2px solid $v2-blue-light;
     background-color: $v2-blue-lightest;
 
     &:hover {
