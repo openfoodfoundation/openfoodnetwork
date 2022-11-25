@@ -48,7 +48,9 @@ module DfcProvider
     end
 
     def find_ofn_user(payload)
-      Spree::User.find_by(email: payload["email"])
+      return if payload["email"].blank?
+
+      Spree::User.find_by(uid: payload["email"])
     end
   end
 end

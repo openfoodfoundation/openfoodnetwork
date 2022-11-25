@@ -7,7 +7,7 @@ describe DfcProvider::SuppliedProductsController, type: :controller do
 
   render_views
 
-  let!(:user) { create(:user) }
+  let!(:user) { create(:oidc_user) }
   let!(:enterprise) { create(:distributor_enterprise, owner: user) }
   let!(:product) { create(:simple_product, supplier: enterprise ) }
   let!(:variant) { product.variants.first }
