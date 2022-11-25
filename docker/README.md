@@ -25,6 +25,7 @@ $ sudo apt install docker-compose
 * You may have to deselect the option to use Docker Compose V2 in Docker settings to make our scripts work.
 
 ## Getting Started
+### Linux
 * Open a terminal with a shell.
 * Clone the repository. If you're planning on contributing code to the project (which we [LOVE](CONTRIBUTING.md)), begin by forking this repo with the Fork button in the top-right corner of this screen.
 * Use git clone to copy your fork onto your local machine.
@@ -51,6 +52,35 @@ $ docker/server
 * View the app in the browser at `http://localhost:3000`.
 * You will then get the trace of the containers in the terminal. You can stop the containers using Ctrl-C in the terminal.
 * You can find some useful tips and commands [here](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Docker:-useful-tips-and-commands).
+
+### Windows and Mac (untested)
+* Open a terminal with a shell command.
+* Clone the repository. If you're planning on contributing code to the project (which we [LOVE](CONTRIBUTING.md)), begin by forking this repo with the Fork button in the top-right corner of this screen.
+* Use git clone to copy your fork onto your local machine.
+```command
+$ git clone https://github.com/YOUR_GITHUB_USERNAME_HERE/openfoodnetwork
+```
+* Otherwise, if you just want to get things running, clone from the OFN main repo:
+```command
+$ git clone git@github.com:openfoodfoundation/openfoodnetwork.git
+```
+* Go at the root of the app:
+```command
+$ cd openfoodnetwork
+```
+* Download the Docker images, build the Docker containers, seed the database with sample data, AND log the screen output from these tasks:
+```command
+$ docker/build.bat
+```
+* Run the Rails server and its required Docker containers:
+```command
+$ docker/server.bat
+```
+* The default admin user is 'ofn@example.com' with the password 'ofn123'.
+* View the app in the browser at `http://localhost:3000`.
+* You will then get the trace of the containers in the terminal. You can stop the containers using Ctrl-C in the terminal.
+* You can find some useful tips and commands [here](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Docker:-useful-tips-and-commands).
+
 
 ### Troubleshooting
 * If you are using Windows and having issues related to the ruby-build not finding a definition for the ruby version, you may need to follow these commands [here](https://stackoverflow.com/questions/2517190/how-do-i-force-git-to-use-lf-instead-of-crlf-under-windows/33424884#33424884) to fix your local git config related to line breaks.
@@ -93,8 +123,8 @@ To fix this error on server startup, you need to bump `mini-racer` gem from `0.4
 Based on [spree/spree_starter #984](https://github.com/spree/spree_starter/issues/984)
 
 ## Script Summary
-* docker/build: This script builds the Docker containers specified for this app, seeds the database, and logs the screen output for these operations. After you use "git clone" to download this repository, run the docker/build script to start the setup process.
-* docker/server: Use this script to run this app in the Rails server. This script executes the "docker-compose up" command and logs the results. If all goes well, you will be able to view this app on your local browser at http://localhost:3000/.
+* docker/build(.bat): This script builds the Docker containers specified for this app, seeds the database, and logs the screen output for these operations. After you use "git clone" to download this repository, run the docker/build script to start the setup process.
+* docker/server(.bat): Use this script to run this app in the Rails server. This script executes the "docker-compose up" command and logs the results. If all goes well, you will be able to view this app on your local browser at http://localhost:3000/.
 * docker/test: Use this script to run the entire test suite.
 * docker/qtest: Use this script to run the entire test suite in quiet mode. The deprecation warnings are removed to make the test results easier to read.
 * docker/run: Use this script to run commands within the Docker container. If you want shell access, enter "docker/run bash". To execute "ls -l" within the Docker container, enter "docker/run ls -l".
