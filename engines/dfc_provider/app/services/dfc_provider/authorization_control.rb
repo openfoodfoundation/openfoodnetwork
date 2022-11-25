@@ -32,7 +32,7 @@ module DfcProvider
     end
 
     def ofn_user
-      @request.env['warden'].user
+      @request.env['warden']&.user
     end
 
     def decode_token
