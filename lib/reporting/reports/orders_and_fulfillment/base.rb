@@ -43,6 +43,10 @@ module Reporting
           proc { |line_items| line_items.first.variant.full_name }
         end
 
+        def variant_sku
+          proc { |line_items| line_items.first.variant.sku }
+        end
+
         def supplier_name
           proc { |line_items| line_items.first.variant.product.supplier.name }
         end

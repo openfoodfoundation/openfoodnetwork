@@ -18,6 +18,10 @@ module Reporting
           OrderCycleSupplierTotals.new(current_user, params)
         end
 
+        let(:table_headers) do
+          report.table_headers
+        end
+
         let(:report_table) do
           report.table_rows
         end
@@ -30,6 +34,15 @@ module Reporting
           supplier = order.line_items.first.variant.product.supplier
           supplier_name_field = report_table.first[0]
           expect(supplier_name_field).to eq supplier.name
+        end
+
+        it "includes sku column" do
+          variant_sku = order.line_items.first.variant.sku
+          last_column_title = table_headers.last
+          first_row_last_column_value = report_table.first.last
+
+          expect(last_column_title).to eq "SKU"
+          expect(first_row_last_column_value).to eq variant_sku
         end
       end
     end
