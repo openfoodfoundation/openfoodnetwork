@@ -30,6 +30,8 @@ table tbody tr {
     border-bottom: 2px solid $v2-medium-light-grey;
     &.actions {
       border-bottom: 2px solid $v2-medium-light-grey !important; // needs to be important because of already defined with important
+    }
+    > .flex {
       display: flex;
       column-gap: 10px;
     }
