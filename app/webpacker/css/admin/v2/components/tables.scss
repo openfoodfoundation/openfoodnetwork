@@ -61,6 +61,7 @@ table td.actions {
     &:hover {
       border-color: $v2-blue;
       background-color: $v2-blue-light;
+      box-shadow: $v2-box-shadow;
 
       &:before {
         color: white;
