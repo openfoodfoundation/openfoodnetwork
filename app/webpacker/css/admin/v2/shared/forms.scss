@@ -17,7 +17,7 @@ textarea,
 fieldset {
   // Change the color of all inputs
   color: $v2-medium-grey;
-  border-color: $v2-light-grey;
+  border-color: $v2-light-grey !important;
 
   &:focus {
     border-color: $v2-medium-grey;
