@@ -44,17 +44,6 @@ table tbody tr {
   }
 }
 
-table th a,
-table td a {
-  // This should probably be a default rule for all links at a general level
-  color: $v2-blue;
-  border-color: $v2-blue;
-  &:hover {
-    color: $v2-blue-dark;
-    border-color: $v2-blue-dark;
-  }
-}
-
 table th.actions,
 table td.actions {
   // Special for icons in the actions column
