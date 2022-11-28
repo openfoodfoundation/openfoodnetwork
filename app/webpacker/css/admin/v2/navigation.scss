@@ -3,15 +3,8 @@
     li {
       color: $v2-medium-dark-grey;
 
-      &:hover {
-        a,
-        i {
-          color: $v2-orange;
-        }
-      }
-
-      a {
-        color: $v2-medium-dark-grey;
+      i {
+        @include v2-link-color();
       }
     }
   }
