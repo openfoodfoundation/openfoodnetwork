@@ -176,10 +176,10 @@ jobs:
         # [n] - where the n is a number of parallel jobs you want to run your tests on.
         # Use a higher number if you have slow tests to split them between more parallel jobs.
         # Remember to update the value of the `ci_node_index` below to (0..n-1).
-        ci_node_total: [30]
+        ci_node_total: [10]
         # Indexes for parallel jobs (starting from zero).
         # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
-        ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 24, 25, 26, 27, 28, 29] 
+        ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] 
     steps:
       - uses: actions/checkout@v3
 
