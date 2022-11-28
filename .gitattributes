@@ -1,0 +1,3 @@
+# Set line endings to LF, even on Windows. Otherwise, execution within Docker fails.
+# See https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings#per-repository-settings
+*.sh text eol=lf
