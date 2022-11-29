@@ -32,5 +32,6 @@ module AuthenticationHelper
   def expect_logged_in
     # Ensure page has been reloaded after submitting login form
     expect(page).to_not have_selector ".menu #login-link"
+    expect(page).to_not have_content "Login"
   end
 end
