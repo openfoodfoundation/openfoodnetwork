@@ -3,14 +3,8 @@
     li {
       color: $v2-medium-dark-grey;
 
-      &:hover {
-        a, i {
-          color: $v2-orange;
-        }
-      }
-
-      a {
-        color: $v2-medium-dark-grey;
+      i {
+        @include v2-link-color();
       }
     }
   }
@@ -27,7 +21,8 @@
     display: none;
   }
 
-  li a:hover, li.selected a {
+  li a:hover,
+  li.selected a {
     background-color: $v2-orange-light;
 
     span {
@@ -40,7 +35,6 @@
   }
 }
 
-
 #sub-menu {
   background-color: $v2-orange-light;
 
@@ -48,10 +42,10 @@
     font-size: 100%;
   }
 
-  li a:hover, li.selected a {
+  li a:hover,
+  li.selected a {
     text-shadow: 1px 1px 9px $v2-orange;
-    background-color: $v2-orange-lighter;
-    
+    background-color: lighten($v2-orange-light, 7%);
     &:after {
       display: none;
     }
@@ -66,4 +60,3 @@
     color: $v2-medium-dark-grey;
   }
 }
-

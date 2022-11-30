@@ -1,0 +1,55 @@
+/* Overide forms.scss app/webpacker/css/admin/shared/forms.scss */
+
+input[type="text"],
+.select2-container-multi .select2-choices,
+.select2-search input,
+.select2-search select,
+select,
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="date"],
+input[type="datetime"],
+input[type="time"],
+input[type="number"],
+textarea,
+fieldset {
+  // Change the color of all inputs
+  color: $v2-medium-grey;
+  border-color: $v2-light-grey !important;
+
+  &:focus {
+    border-color: $v2-medium-grey;
+  }
+}
+
+fieldset label {
+  color: $v2-medium-grey;
+}
+
+fieldset legend {
+  color: $v2-blue;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: $v2-blue;
+}
+
+fieldset .filter-actions {
+  button,
+  .button,
+  input[type="submit"] {
+    box-shadow: none;
+    width: 200px; // adjust at the same size in order to center them. Not ideal but works for now.
+
+    &:first-of-type {
+      margin-right: 0; // don't see any reason to have a margin right on the first button as it's managed by the flexbox
+    }
+
+    &:hover {
+      box-shadow: $v2-box-shadow;
+    }
+  }
+}
