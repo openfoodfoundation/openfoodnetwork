@@ -30,8 +30,14 @@ class OrderAvailableShippingMethods
       distributor.shipping_methods
     else
       distributor.shipping_methods.where(
-        id: order_cycle.distributor_shipping_methods.select(:shipping_method_id)
+        id: available_distributor_shipping_methods_ids
       )
     end.frontend.to_a
+  end
+
+  def available_distributor_shipping_methods_ids
+    order_cycle.distributor_shipping_methods
+      .where(distributor_id: distributor.id)
+      .select(:shipping_method_id)
   end
 end
