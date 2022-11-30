@@ -190,4 +190,28 @@ describe OrderAvailableShippingMethods do
       end
     end
   end
+
+  context "when two distributors implement the same shipping methods" do
+    context "only one distributor supports the two shipping methods in the order cycle" do
+      let(:oc){ create(:order_cycle) }
+      let(:shipping_method){ create(:shipping_method) }
+      let(:shipping_method2){ create(:shipping_method) }
+      let(:d1){ oc.distributors.first }
+      let(:d2){ oc.distributors.second }
+      before {
+        d1.shipping_methods << shipping_method
+        d1.shipping_methods << shipping_method2
+        d2.shipping_methods << shipping_method
+        d2.shipping_methods << shipping_method2
+        oc.selected_distributor_shipping_methods << d1.distributor_shipping_methods.first
+        oc.selected_distributor_shipping_methods << d1.distributor_shipping_methods.second
+        oc.selected_distributor_shipping_methods << d2.distributor_shipping_methods.first
+      }
+      it do
+        order = build(:order, distributor: d2, order_cycle: oc)
+        order_available_shipping_methods = OrderAvailableShippingMethods.new(order).to_a
+        expect(order_available_shipping_methods).to eq([d2.shipping_methods.first])
+      end
+    end
+  end
 end
