@@ -47,17 +47,20 @@ table tbody tr {
 table th.actions,
 table td.actions {
   // Special for icons in the actions column
-  [class*="icon-"].no-text {
-    border: 2px solid $v2-blue-light;
-    background-color: $v2-blue-lightest;
+  [class*="icon-"] {
+    color: $v2-blue;
+    &.no-text {
+      border: 2px solid $v2-blue-light;
+      background-color: $v2-blue-lightest;
 
-    &:hover {
-      border-color: $v2-blue;
-      background-color: $v2-blue-light;
-      box-shadow: $v2-box-shadow;
+      &:hover {
+        border-color: $v2-blue;
+        background-color: $v2-blue-light;
+        box-shadow: $v2-box-shadow;
 
-      &:before {
-        color: white;
+        &:before {
+          color: white;
+        }
       }
     }
   }
