@@ -1,0 +1,47 @@
+/* Override app/webpacker/css/admin/components/tom_select.scss */
+
+.ts-wrapper.primary.focus .ts-control,
+.ts-wrapper.primary .ts-control {
+  background-color: transparent;
+  border: 1px solid $v2-light-grey;
+  color: $v2-medium-grey;
+
+  &:after {
+    border-color: $v2-medium-grey transparent transparent transparent;
+  }
+}
+
+.ts-wrapper.dropdown-active.primary .ts-control {
+  background-color: transparent;
+  border-color: $v2-light-grey;
+  color: $v2-medium-grey;
+
+  &:after {
+    border-color: transparent transparent $v2-medium-grey transparent;
+  }
+}
+
+.ts-wrapper.dropdown-active.focus .ts-control {
+  border-color: $v2-medium-grey;
+}
+
+.dropdown-input-wrap {
+  .dropdown-input {
+    border: 1px solid $v2-light-grey;
+  }
+}
+
+.ts-dropdown .create:hover,
+.ts-dropdown #admin-menu li.selected a.create,
+#admin-menu li.selected .ts-dropdown a.create,
+.ts-dropdown .option:hover,
+.ts-dropdown #admin-menu li.selected a.option,
+#admin-menu li.selected .ts-dropdown a.option,
+.ts-dropdown .active {
+  background-color: $v2-blue;
+  color: $white;
+}
+
+.ts-dropdown.single {
+  border-color: $v2-medium-grey;
+}
