@@ -21,7 +21,7 @@ button,
     @include backgroundAndBorder($v2-light-grey);
   }
 
-  &:not(.disabled):not([disabled]):not(.secondary) {
+  &:not(.disabled):not([disabled]):not(.secondary):not(.cancel) {
     // Change the color of the button only if it's not disabled
     @include backgroundAndBorder($v2-blue-light);
 
@@ -31,7 +31,8 @@ button,
     }
   }
 
-  &.secondary {
+  &.secondary,
+  &.cancel {
     background-color: $white;
     border: 2px solid $v2-blue-light;
     color: $v2-blue-light;
