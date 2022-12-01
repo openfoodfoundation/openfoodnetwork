@@ -70,8 +70,9 @@
 
         %td.actions
           - if can?(:update, shipment) && !shipment.canceled?
-            = link_to '', '', :class => 'save-tracking icon_link icon-ok no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'save' }, :title => I18n.t('actions.save')
-            = link_to '', '', :class => 'cancel-tracking icon_link icon-cancel no-text with-tip', :data => { :action => 'cancel' }, :title => I18n.t('actions.cancel')
+            .flex
+              = link_to '', '', :class => 'save-tracking icon_link icon-ok no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'save' }, :title => I18n.t('actions.save')
+              = link_to '', '', :class => 'cancel-tracking icon_link icon-cancel no-text with-tip', :data => { :action => 'cancel' }, :title => I18n.t('actions.cancel')
 
       %tr.show-tracking.total
         %td{ :colspan => "5" }
