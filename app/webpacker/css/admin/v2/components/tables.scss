@@ -60,11 +60,9 @@ table td.actions {
 
     &.no-text {
       border: 2px solid $v2-blue-light;
-      background-color: $v2-blue-lightest;
 
       &:hover {
         border-color: $v2-blue;
-        background-color: $v2-blue-light;
         box-shadow: $v2-box-shadow;
 
         &:before {
