@@ -17,7 +17,10 @@ import ShortcutButtonsPlugin from "shortcut-buttons-flatpickr";
 import labelPlugin from "flatpickr/dist/plugins/labelPlugin/labelPlugin";
 
 export default class extends Flatpickr {
-  static values = { enableTime: Boolean, mode: String };
+  /*
+   * defaultDate (optional): "startOfDay" | "endOfDay"
+   */
+  static values = { enableTime: Boolean, mode: String, defaultDate: String };
   static targets = ["start", "end"];
   locales = {
     ar: ar,
@@ -60,6 +63,9 @@ export default class extends Flatpickr {
 
   open() {
     this.fp.element.dispatchEvent(new Event("focus"));
+    if (!this.fp.selectedDates.length) {
+      this.setDefaultDateValue();
+    }
   }
   onChangeEvent(e) {
     if (
@@ -136,4 +142,16 @@ export default class extends Flatpickr {
         break;
     }
   };
+
+  setDefaultDateValue() {
+    if (this.defaultDateValue === "startOfDay") {
+      this.fp.setDate(moment().startOf("day").format());
+    } else if (this.defaultDateValue === "endOfDay") {
+      /*
+       * We use "startOf('day')" of tomorrow in order to not lose
+       * the records between [23:59:00 ~ 23:59:59] of today
+       */
+      this.fp.setDate(moment().add(1, "days").startOf("day").format());
+    }
+  }
 }
