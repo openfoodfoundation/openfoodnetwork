@@ -60,3 +60,14 @@
     color: $v2-medium-dark-grey;
   }
 }
+
+nav.menu ul li a,
+nav.menu ul #admin-menu li.selected a,
+#admin-menu nav.menu ul li.selected a {
+  &:hover {
+    border-bottom-color: $v2-green;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-left-color: transparent;
+  }
+}

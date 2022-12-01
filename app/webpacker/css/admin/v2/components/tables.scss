@@ -1,6 +1,8 @@
 /* Overide tables.scss app/webpacker/css/admin/components/tables.scss */
 
-table thead th {
+table thead th,
+table thead th.actions,
+table thead td.actions {
   background-color: $v2-medium-light-grey;
   border: none;
   color: $v2-blue;
@@ -47,7 +49,8 @@ table tbody tr {
 table th.actions,
 table td.actions {
   // Special for icons in the actions column
-  [class*="icon-"] {
+  [class*="icon-"],
+  button[class*="icon-"]:not(.disabled):not([disabled]):not(.secondary):not(.cancel) {
     color: $v2-blue;
     display: flex;
     justify-content: center;
