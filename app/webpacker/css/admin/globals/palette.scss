@@ -1,0 +1,16 @@
+// Basic color palette for admin
+$color-1:                        #FFFFFF !default;    // White
+$color-2:                        #9FC820 !default;    // Green
+$color-3:                        #5498DA !default;    // Light Blue
+$color-4:                        #6788A2 !default;    // Dark Blue
+$color-5:                        #C60F13 !default;    // Red
+$color-6:                        #FF9300 !default;    // Yellow
+
+@mixin basicColorPalette($color1, $color2, $color3, $color4, $color5, $color6) {
+  $color-1: $color1 !global;
+  $color-2: $color2 !global;
+  $color-3: $color3 !global;
+  $color-4: $color4 !global;
+  $color-5: $color5 !global;
+  $color-6: $color6 !global;
+}
