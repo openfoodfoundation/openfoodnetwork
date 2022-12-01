@@ -627,6 +627,7 @@ de_DE:
         conditional_blank: Darf nicht leer sein, wenn das Feld 'unit_type' leer ist.
         no_product: Es konnten keine passenden Produkte in der Datenbank gefunden werden.
         not_found: Konnte nicht in der Datenbank gefunden werden.
+        category_not_found: stimmt nicht mit den verfügbaren Kategorien überein. Diese finden Sie auf der Seite zum Produktimport. Überprüfen Sie zusätzlich Ihre Angaben auf Tippfehler.
         not_updatable: Kann über den Produktimport nicht auf bestehende Produkte aktualisiert werden.
         blank: darf nicht leer sein
         products_no_permission: Sie sind nicht berechtigt, Produkte dieses Unternehmens zu verwalten.

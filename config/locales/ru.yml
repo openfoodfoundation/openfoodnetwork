@@ -628,6 +628,7 @@ ru:
         conditional_blank: не может быть пустым, если unit_type пуст
         no_product: не найдено ни одного товара в базе данных
         not_found: не найден в базе данных
+        category_not_found: не соответствует разрешенным категориям. Посмотрите, какие категории выбрать на странице импорта продуктов, или проверьте, нет ли орфографических ошибок.
         not_updatable: невозможно обновить существующие товары с помощью импорта товаров
         blank: не может быть пустым
         products_no_permission: у Вас нет разрешения на управление товарами этого предприятия
@@ -1990,7 +1991,7 @@ ru:
   shopping_contact_social: "Следовать"
   shopping_groups_part_of: "часть:"
   shopping_producers_of_hub: "%{hub} производители:"
-  enterprises_next_closing: "Закрытие заказа через"
+  enterprises_next_closing: "Закрытие заказа"
   enterprises_currently_open: "Заказы открыты"
   enterprises_ready_for: "Готов к"
   enterprises_choose: "Выберите, когда вы хотите свой заказ:"

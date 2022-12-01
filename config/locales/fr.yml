@@ -1806,7 +1806,7 @@ fr:
           label: Ville
           placeholder: ex. Metz
         state_id:
-          label: Statut
+          label: Département
         zipcode:
           label: Code postal
           placeholder: ex. 57000
@@ -3027,7 +3027,7 @@ fr:
         inventory_tagged_bottom: "sont:"
       new_tag_rule_dialog:
         select_rule_type: "Choisir le type de règle:"
-        add_rule: "Ajouter une règle"
+        add_rule: "Valider"
       enterprise_fees:
         inherit_from_product: "Hériter du produit"
       orders:
