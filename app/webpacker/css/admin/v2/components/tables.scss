@@ -71,6 +71,13 @@ table td.actions {
       }
     }
   }
+  .icon-edit:hover,
+  .icon-capture:hover,
+  .icon-ok:hover,
+  .icon-plus:hover {
+    background-color: $v2-blue;
+    color: $color-1;
+  }
 }
 
 table#listing_orders {
