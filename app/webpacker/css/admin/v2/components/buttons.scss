@@ -16,19 +16,17 @@ button:not(.no-text),
 .actions a:not(.no-text),
 .admin__section-header .ofn-drop-down // Same behavior as the button
 {
+  @include backgroundAndBorder($v2-blue-light);
+
+  &:hover {
+    @include backgroundAndBorder($v2-blue);
+    box-shadow: $v2-box-shadow;
+  }
+
   &.disabled,
   &[disabled] {
     @include backgroundAndBorder($v2-light-grey);
-  }
-
-  &:not(.disabled):not([disabled]):not(.secondary):not(.cancel) {
-    // Change the color of the button only if it's not disabled
-    @include backgroundAndBorder($v2-blue-light);
-
-    &:hover {
-      @include backgroundAndBorder($v2-blue);
-      box-shadow: $v2-box-shadow;
-    }
+    box-shadow: none;
   }
 
   &.secondary,
