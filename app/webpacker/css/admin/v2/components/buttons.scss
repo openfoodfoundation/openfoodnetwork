@@ -30,7 +30,8 @@ button:not(.no-text),
   }
 
   &.secondary,
-  &.cancel {
+  &.cancel,
+  &.icon-remove {
     background-color: $white;
     border: 2px solid $v2-blue-light;
     color: $v2-blue-light;
