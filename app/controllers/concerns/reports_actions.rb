@@ -62,4 +62,37 @@ module ReportsActions
   def i18n_scope
     'admin.reports'
   end
+
+  def rendering_options
+    @rendering_options ||= ReportRenderingOptions.where(
+      user: spree_current_user,
+      report_type: report_type,
+      report_subtype: report_subtype
+    ).first_or_create do |report_rendering_options|
+      report_rendering_options.options = {
+        fields_to_show: if request.get?
+                          @report.columns.keys -
+                            @report.fields_to_hide
+                        else
+                          params[:fields_to_show]
+                        end,
+        display_summary_row: request.get?,
+        display_header_row: false
+      }
+    end
+    update_rendering_options
+    @rendering_options
+  end
+
+  def update_rendering_options
+    return unless request.post?
+
+    @rendering_options.update(
+      options: {
+        fields_to_show: params[:fields_to_show],
+        display_summary_row: params[:display_summary_row].present?,
+        display_header_row: params[:display_header_row].present?
+      }
+    )
+  end
 end

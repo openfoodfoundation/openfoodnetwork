@@ -37,7 +37,7 @@ module Spree
                             foreign_key: :owner_id, inverse_of: :owner
     has_many :customers
     has_many :credit_cards
-
+    has_many :report_rendering_options, class_name: "::ReportRenderingOptions", dependent: :destroy
     accepts_nested_attributes_for :enterprise_roles, allow_destroy: true
 
     accepts_nested_attributes_for :bill_address

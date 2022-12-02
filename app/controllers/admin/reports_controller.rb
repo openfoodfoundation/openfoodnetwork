@@ -48,15 +48,7 @@ module Admin
                       else
                         I18n.t(:name, scope: [:admin, :reports, @report_type])
                       end
-
-      # Initialize data
-      params[:display_summary_row] = true if request.get?
-      @params_fields_to_show = if request.get?
-                                 @report.columns.keys - @report.fields_to_hide
-                               else
-                                 params[:fields_to_show]
-                               end
-
+      @rendering_options = rendering_options
       @data = Reporting::FrontendData.new(spree_current_user)
     end
   end
