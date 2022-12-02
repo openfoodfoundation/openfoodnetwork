@@ -14,6 +14,8 @@ select[type="button"],
 button:not(.no-text),
 .button,
 .actions a:not(.no-text),
+fieldset .filter-actions button, // Be more specific to be sure to override the form button style (with a white border)
+fieldset .filter-actions .button:hover,
 .admin__section-header .ofn-drop-down // Same behavior as the button
 {
   @include backgroundAndBorder($v2-blue-light);
