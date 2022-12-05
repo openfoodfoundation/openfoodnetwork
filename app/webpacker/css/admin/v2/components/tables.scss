@@ -4,6 +4,14 @@ table {
   background-color: white;
 }
 
+table thead tr:first-child th:first-child {
+  border-top-left-radius: 3px;
+}
+
+table thead tr:first-child th:last-child,
+table thead th.force-rounded-right {
+  border-top-right-radius: 3px;
+}
 table thead th {
   background-color: $v2-medium-light-grey;
   border: none;
