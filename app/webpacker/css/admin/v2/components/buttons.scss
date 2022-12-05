@@ -62,7 +62,6 @@ fieldset .filter-actions .button:hover,
   }
 }
 
-#table-filter fieldset:has(.actions) {
-  // do not apply border to filter actions as it's drawn by the #table-filter .actions before and after pseudo elements
+#table-filter fieldset {
   border-bottom: 0;
 }
