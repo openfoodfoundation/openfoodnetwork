@@ -37,6 +37,12 @@
 }
 
 .select2-container-multi {
+  &.select2-dropdown-open,
+  &.select2-container-active {
+    .select2-choices {
+      border-color: $v2-medium-grey !important;
+    }
+  }
   .select2-choices {
     border-color: $v2-medium-grey !important;
     .select2-search-choice {
