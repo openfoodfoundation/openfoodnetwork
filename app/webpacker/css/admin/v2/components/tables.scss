@@ -1,5 +1,9 @@
 /* Overide tables.scss app/webpacker/css/admin/components/tables.scss */
 
+table {
+  background-color: white;
+}
+
 table thead th {
   background-color: $v2-medium-light-grey;
   border: none;
@@ -43,8 +47,9 @@ table tbody tr {
   }
 }
 
-table th.actions,
-table td.actions {
+table thead tr th.actions,
+table tbody tr td.actions {
+  background-color: $v2-body-bg !important;
   // Special for icons in the actions column
   [class*="icon-"],
   button[class*="icon-"]:not(.disabled):not([disabled]):not(.secondary):not(.cancel) {
@@ -83,7 +88,10 @@ table td.actions {
 table#listing_orders {
   thead th.actions,
   thead td.actions {
-    background-color: $v2-medium-light-grey;
+    background-color: $v2-medium-light-grey !important;
+  }
+  tbody tr td.actions {
+    background-color: white !important;
   }
   td {
     // When the table is the listing of orders, we need to increase the height of the cells

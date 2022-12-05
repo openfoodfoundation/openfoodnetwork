@@ -11,3 +11,7 @@
 @import "components/progress.scss";
 @import "components/sidebar.scss";
 @import "components/tom_select.scss";
+
+body {
+  background-color: $v2-body-bg;
+}
