@@ -57,8 +57,8 @@
             %span
               = shipment.fee_adjustment.display_amount
 
-        - if shipment.fee_adjustment.present? && shipment.can_modify?
-          %td.actions
+        %td.actions
+          - if shipment.fee_adjustment.present? && shipment.can_modify?
             - if can? :update, shipment
               = link_to '', '', :class => 'edit-method icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')
 
