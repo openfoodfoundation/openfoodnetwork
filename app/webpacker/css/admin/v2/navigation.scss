@@ -61,13 +61,24 @@
   }
 }
 
-nav.menu ul li a,
-nav.menu ul #admin-menu li.selected a,
-#admin-menu nav.menu ul li.selected a {
-  &:hover {
-    border-bottom-color: $v2-green;
-    border-top-color: transparent;
-    border-right-color: transparent;
-    border-left-color: transparent;
+nav.menu ul li,
+nav.menu ul #admin-menu li,
+#admin-menu nav.menu ul li {
+  &.active {
+    a {
+      color: $v2-blue-dark;
+      border-bottom-color: $v2-blue-dark;
+    }
+  }
+
+  &.selected a,
+  a {
+    &:hover {
+      color: $v2-blue-dark;
+      border-bottom-color: $v2-blue-dark;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-left-color: transparent;
+    }
   }
 }
