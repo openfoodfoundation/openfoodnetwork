@@ -1,0 +1,9 @@
+/* Override app/webpacker/css/admin/dropdown.scss */
+
+.ofn-drop-down,
+.ofn-drop-down-with-prepend .ofn-drop-down-prepend {
+  background-color: white;
+  &.disabled {
+    opacity: 0.9;
+  }
+}
