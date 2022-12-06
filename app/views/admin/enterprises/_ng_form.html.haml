@@ -3,10 +3,14 @@
 -# So we use onchange and have to get the scope to access the ng controller
 = form_for [main_app, :admin, @enterprise], html: { name: "enterprise_form", data: { controller: "dirty-form", "dirty-form-dirty-value": false, "action": "submit->dirty-form#allowFormSubmission beforeunload@window->dirty-form#leavingPage" } } do |f|
 
-  %save-bar{ dirty: "enterprise_form.$dirty", persist: "true" }
-    %input.red{ type: "submit", value: t(:update), "data-dirty-form-target": "submitBtn", disabled: true }
-    %a{ href: "#{main_app.admin_enterprises_path}"}
-      %input{ type: "button", value: "#{t(:cancel)}" }
+  #enterprise_save_bar.animate-show
+    .container
+      .seven.columns.alpha
+        Text
+      .nine.columns.omega.text-right
+        %input.red{ type: "submit", value: t(:update), "data-dirty-form-target": "submitBtn", disabled: true }
+        %a{ href: "#{main_app.admin_enterprises_path}"}
+          %input{ type: "button", value: "#{t(:cancel)}" }
 
   .row{ data: { 
     controller: "tabs-and-panels", "tabs-and-panels-class-name-value": "selected" }}
