@@ -71,7 +71,7 @@ module Reporting
 
           let(:permissions) do
             Permissions.new(nil).tap do |instance|
-              instance.stub(allowed_order_cycles: [order_cycle])
+              allow(instance).to receive(:allowed_order_cycles) { [order_cycle] }
             end
           end
 
