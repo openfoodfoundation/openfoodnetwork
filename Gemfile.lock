@@ -688,7 +688,6 @@ GEM
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
     temple (0.8.2)
-    test-prof (1.0.11)
     test-unit (3.5.5)
       power_assert
     thor (1.2.1)
@@ -875,7 +874,6 @@ DEPENDENCIES
   stimulus_reflex (= 3.5.0.pre9)
   stringex (~> 2.8.5)
   stripe
-  test-prof
   test-unit (~> 3.5)
   timecop
   valid_email2
