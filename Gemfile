@@ -166,7 +166,6 @@ group :test do
   gem 'pdf-reader'
   gem 'rails-controller-testing'
   gem 'simplecov', require: false
-  gem 'test-prof', require: false
   gem 'vcr', require: false
   gem 'webmock', require: false
   # See spec/spec_helper.rb for instructions
