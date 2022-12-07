@@ -19,7 +19,6 @@
     ]
   },
   "dependencies": {
-    "@babel/preset-env": "^7.18.2",
     "@floating-ui/dom": "^1.0.1",
     "@hotwired/turbo": "^7.1.0",
     "@rails/webpacker": "5.4.3",
@@ -42,6 +41,8 @@
     "webpack-cli": "~3"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
     "husky": "^8.0.0",
     "jasmine-core": "~2.4.1",
     "jest": "^27.4.7",
