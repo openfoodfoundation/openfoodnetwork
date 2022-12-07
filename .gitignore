@@ -50,7 +50,6 @@ vendor/bundle/
 coverage
 /reports/
 !/reports/README.md
-/spec/components/stories/**/*.stories.json
 
 /public/packs
 /public/packs-test

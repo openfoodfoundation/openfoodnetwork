@@ -12,7 +12,6 @@
 babel.config.js
 postcss.config.js
 
-.storybook/
 /app/assets/
 /config/
 /coverage/
