@@ -12,39 +12,41 @@
 = admin_inject_column_preferences module: 'admin.lineItems'
 = admin_inject_available_units
 
-%div{ ng: { controller: 'LineItemsCtrl' } }
-  %save-bar{ dirty: "bulk_order_form.$dirty", persist: "false" }
-    %input.red{ type: "button", value: "Save Changes", ng: { click: "submit()", disabled: "!bulk_order_form.$dirty" } }
-
-  .filters{ :class => "sixteen columns alpha" }
-    .date_filter{class: "four columns"}
-      %label
-        = t("date_range")
-      %br
-        %div{ data: { controller: "flatpickr", "flatpickr-mode-value": "range", "flatpickr-default-date": "{{ [startDate, endDate] }}" } }
-          %input.datepicker.fullwidth{ class: "datepicker", data: { "flatpickr-target": "instance" } }
-          %input{ type: "text", id: 'start_date_filter', 'ng-model': "startDate", data: { "flatpickr-target": "start" }, style: "display: none;" }
-          %input{ type: "text", id: 'end_date_filter', 'ng-model': "endDate", data: { "flatpickr-target": "end" }, style: "display: none;" }
-    .one.column &nbsp;
-    .filter_select{ :class => "three columns" }
-      %label{ :for => 'supplier_filter' }
-        = t("admin.producer")
-      %br
-      %input#supplier_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'suppliers', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", on: { selecting: "confirmRefresh" }, ng: { model: 'supplierFilter', change: 'refreshData()' } }
-    .filter_select{ :class => "three columns" }
-      %label{ :for => 'distributor_filter' }
-        = t("admin.shop")
-      %br
-      %input#distributor_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'distributors', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", on: { selecting: "confirmRefresh" }, ng: { model: 'distributorFilter', change: 'refreshData()' } }
-    .filter_select{ :class => "three columns" }
-      %label{ :for => 'order_cycle_filter' }
-        = t("admin.order_cycle")
-      %br
-      %input#order_cycle_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'orderCycles', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", on: { selecting: "confirmRefresh" }, ng: { model: 'orderCycleFilter', change: 'refreshData()' } }
-    .filter_clear{ :class => "two columns omega" }
-      %label{ :for => 'clear_all_filters' }
-      %br
-      %input.red.fullwidth{ :type => 'button', :id => 'clear_all_filters', :value => t('admin.clear_all'), 'ng-click' => "resetSelectFilters()" }
+%div{ ng: { controller: 'LineItemsCtrl' }, id: "table-filter" }
+  %fieldset
+    %save-bar{ dirty: "bulk_order_form.$dirty", persist: "false" }
+      %input.red{ type: "button", value: "Save Changes", ng: { click: "submit()", disabled: "!bulk_order_form.$dirty" } }
+    %legend{ align: 'center'}= t("admin.orders.bulk_management.filter_orders")
+    .filters{ :class => "sixteen columns alpha" }
+      .date_filter{class: "four columns"}
+        %label
+          = t("date_range")
+        %br
+          %div{ data: { controller: "flatpickr", "flatpickr-mode-value": "range", "flatpickr-default-date": "{{ [startDate, endDate] }}" } }
+            %input.datepicker.fullwidth{ class: "datepicker", data: { "flatpickr-target": "instance" } }
+            %input{ type: "text", id: 'start_date_filter', 'ng-model': "startDate", data: { "flatpickr-target": "start" }, style: "display: none;" }
+            %input{ type: "text", id: 'end_date_filter', 'ng-model': "endDate", data: { "flatpickr-target": "end" }, style: "display: none;" }
+      .filter_select{ :class => "four columns" }
+        %label{ :for => 'supplier_filter' }
+          = t("admin.producer")
+        %br
+        %input#supplier_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'suppliers', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", on: { selecting: "confirmRefresh" }, ng: { model: 'supplierFilter' } }
+      .filter_select{ :class => "four columns" }
+        %label{ :for => 'distributor_filter' }
+          = t("admin.shop")
+        %br
+        %input#distributor_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'distributors', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", on: { selecting: "confirmRefresh" }, ng: { model: 'distributorFilter' } }
+      .filter_select{ :class => "four columns" }
+        %label{ :for => 'order_cycle_filter' }
+          = t("admin.order_cycle")
+        %br
+        %input#order_cycle_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'orderCycles', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", on: { selecting: "confirmRefresh" }, ng: { model: 'orderCycleFilter' } }
+      .clearfix
+      .actions.filter-actions
+        %a.button.icon-search{'ng-click' => 'refreshData()'}
+          = t(:filter_results)
+        %a.button{'ng-click' => 'resetSelectFilters()', "id": "clear_filters_button", "class": ("secondary" if feature?(:admin_style_v2, spree_current_user)) }
+          =  t(:clear_filters)
 
   %hr.divider.sixteen.columns.alpha.omega{ ng: { show: 'unitsVariantSelected()' } }
 
