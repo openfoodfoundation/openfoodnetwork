@@ -1,0 +1,13 @@
+ul.wizard-progress li {
+  a {
+    color: white;
+  }
+
+  &.current {
+    background-color: $v2-blue-light;
+    &:before,
+    &:after {
+      background-color: $v2-blue-light;
+    }
+  }
+}
