@@ -7,7 +7,7 @@
     color: $v2-medium-grey !important;
     padding-left: 5px;
     font-size: 13px;
-    padding-top: 3px;
+    height: 35px;
 
     .select2-arrow {
       color: $v2-medium-grey;
@@ -45,6 +45,7 @@
   }
   .select2-choices {
     border-color: $v2-medium-grey !important;
+    min-height: 35px;
     .select2-search-choice {
       background-color: $v2-blue-light;
     }
