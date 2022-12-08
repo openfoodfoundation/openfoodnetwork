@@ -33,7 +33,8 @@ fieldset .filter-actions .button:hover,
 
   &.secondary,
   &.cancel,
-  &.icon-remove {
+  &.icon-remove,
+  &#clear_all_filters {
     background-color: $white;
     border: 2px solid $v2-blue-light;
     color: $v2-blue-light;
