@@ -647,8 +647,6 @@ describe '
             select_dates_from_daterangepicker(today - 9.days, today)
             page.find('.filter-actions .button.icon-search').click
           end
-          # daterange picker shouldn't have changed
-          expect(find("input.datepicker").value).to eq previousdaterangestring
           expect(page).to have_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
             expect(page).to have_selector "input[name=quantity].ng-dirty"
