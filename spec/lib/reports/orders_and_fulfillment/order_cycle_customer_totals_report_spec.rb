@@ -41,10 +41,14 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
       "spec/fixtures/reports/orders_and_fulfillment/order_cycle_customer_totals_report.csv"
     end
 
-    it "generates the report" do
-      expect(report_table.length).to eq(2)
+    context 'csv format' do
+      let(:params) { { report_format: 'csv', display_summary_row: false, q: search_params } }
 
-      expect(report.render_as(:csv)).to eq comparison_report
+      it "generates the report" do
+        expect(report_table.length).to eq(1)
+
+        expect(report.render_as(:csv)).to eq comparison_report
+      end
     end
 
     it "has a line item row" do
