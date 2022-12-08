@@ -27,7 +27,7 @@ fieldset .filter-actions .button:hover,
 
   &.disabled,
   &[disabled] {
-    @include backgroundAndBorder($v2-light-grey);
+    @include backgroundAndBorder($v2-dark-light-grey);
     box-shadow: none;
     cursor: default;
   }
