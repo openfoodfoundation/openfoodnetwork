@@ -1,5 +1,5 @@
 es:
-  language_name: "Inglés"
+  language_name: "Español"
   activerecord:
     models:
       spree/product: Producto

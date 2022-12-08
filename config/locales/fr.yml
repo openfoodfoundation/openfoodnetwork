@@ -1344,7 +1344,7 @@ fr:
         spreadsheet: "Tableur (Excel, LibreOffice,...)"
         display: Afficher
         summary_row: Ligne total produits commandés
-        header_row: Ligne d'en-tête (nom client·e)
+        header_row: Ligne d'en-tête
         raw_data: Données brutes
         formatted_data: Données formatées
       packing:
@@ -2430,7 +2430,7 @@ fr:
   admin_enterprise_groups_web_website_placeholder: "ex: www.maferme.fr"
   admin_order_cycles: "Gérer les cycles de vente"
   open: "Ouvre"
-  close: "Annuler"
+  close: "Ferme"
   create: "Créer"
   search: "Rechercher"
   supplier: "Fournisseur"
@@ -2862,7 +2862,7 @@ fr:
       deleting_item_will_cancel_order: "Cette opération va rendre une ou plusieurs commandes vides, sans aucun produit. Elles vont ainsi être annulées. Souhaitez-vous continuer ?"
       modals:
         got_it: "J'ai compris"
-        close: "Fermer"
+        close: "Valider"
         continue: "Suivant"
         invite: "Inviter"
         invite_title: "Inviter un nouvel utilisateur"
