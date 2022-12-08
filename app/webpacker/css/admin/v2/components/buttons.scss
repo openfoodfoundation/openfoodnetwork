@@ -29,6 +29,7 @@ fieldset .filter-actions .button:hover,
   &[disabled] {
     @include backgroundAndBorder($v2-light-grey);
     box-shadow: none;
+    cursor: default;
   }
 
   &.secondary,
