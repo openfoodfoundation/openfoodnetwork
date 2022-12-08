@@ -50,6 +50,14 @@
       background-color: $v2-blue-light;
     }
   }
+  &.select2-drop-above {
+    .select2-choices {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+  }
 }
 
 .select2-drop {
