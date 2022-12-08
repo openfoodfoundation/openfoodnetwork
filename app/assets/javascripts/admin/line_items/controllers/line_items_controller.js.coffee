@@ -3,8 +3,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.RequestMonitor = RequestMonitor
   $scope.line_items = LineItems.all
   $scope.confirmDelete = true
-  $scope.startDate = moment().startOf('day').subtract(7, 'days').format('YYYY-MM-DD')
-  $scope.endDate = moment().startOf('day').format('YYYY-MM-DD')
   $scope.previousDates = { startDate: $scope.startDate, endDate: $scope.endDate }
   $scope.datesChangedOnCancelEvent = false
   $scope.bulkActions = [ { name: t("admin.orders.bulk_management.actions_delete"), callback: 'deleteLineItems' } ]
@@ -16,6 +14,10 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.confirmRefresh = ->
     LineItems.allSaved() || confirm(t("unsaved_changes_warning"))
+
+  $scope.initStartAndEnDate = ->
+    $scope.startDate = moment().startOf('day').subtract(7, 'days').format('YYYY-MM-DD')
+    $scope.endDate = moment().startOf('day').format('YYYY-MM-DD')
 
   $scope.resetFilters = ->
     $scope.distributorFilter = ''
@@ -39,6 +41,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.startDate = $scope.previousDates.startDate
     $scope.endDate = $scope.previousDates.endDate
     # throw a flatpickr:change event to change the date back in the datepicker
+    $scope.initStartAndEnDate()
     event = new CustomEvent('flatpickr:change', {
       detail: { 
         startDate: $scope.previousDates.startDate,
@@ -277,5 +280,4 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       lineItem.final_weight_volume = LineItems.pristineByID[lineItem.id].final_weight_volume * lineItem.quantity / LineItems.pristineByID[lineItem.id].quantity
       $scope.weightAdjustedPrice(lineItem)
 
-  $scope.resetFilters()
-  $scope.refreshData()
+  $scope.resetSelectFilters()
