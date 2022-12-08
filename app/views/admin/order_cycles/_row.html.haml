@@ -33,7 +33,9 @@
 
   %td.actions
     %a.edit-order-cycle.icon-edit.no-text{ ng: { href: '{{orderCycle.edit_path}}'}, 'ofn-with-tip' => t(:edit) }
-  %td.actions{ ng: { if: 'orderCycle.viewing_as_coordinator' } }
-    %a.clone-order-cycle.icon-copy.no-text{ ng: { href: '{{orderCycle.clone_path}}'}, 'ofn-with-tip' => t(:clone) }
-  %td.actions{ ng: { if: 'orderCycle.deletable && orderCycle.viewing_as_coordinator' }}
-    %a.delete-order-cycle.icon-trash.no-text{ ng: { href: '{{orderCycle.delete_path}}'}, data: { method: 'delete', confirm: t(:are_you_sure) }, 'ofn-with-tip' => t(:remove) }
+  %td.actions
+    %div{ ng: { if: 'orderCycle.viewing_as_coordinator' } }
+      %a.clone-order-cycle.icon-copy.no-text{ ng: { href: '{{orderCycle.clone_path}}'}, 'ofn-with-tip' => t(:clone) }
+  %td.actions
+    %div{ ng: { if: 'orderCycle.deletable && orderCycle.viewing_as_coordinator' }}
+      %a.delete-order-cycle.icon-trash.no-text{ ng: { href: '{{orderCycle.delete_path}}'}, data: { method: 'delete', confirm: t(:are_you_sure) }, 'ofn-with-tip' => t(:remove) }
