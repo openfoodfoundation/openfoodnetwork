@@ -3,6 +3,12 @@ ul.wizard-progress li {
     color: white;
   }
 
+  background-color: $v2-dark-light-grey;
+  &:before,
+  &:after {
+    background-color: $v2-dark-light-grey;
+  }
+
   &.current {
     background-color: $v2-blue-light;
     &:before,
