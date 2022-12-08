@@ -1673,17 +1673,17 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.3.tgz#90420f9f9c6d3987f176a19a7d8e764271a2f55d"
   integrity sha512-Fxt+AfXgjMoin2maPIYzFZnQjAXjAL0PHscM5pRTtatFqB+vZxAM9tLp2Optnuw3QOQC40jTNeGYFOMvyf7v9g==
 
-"@floating-ui/core@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.0.3.tgz#eab273554bdd883fa2cb48d5218fedda3afbbc1f"
-  integrity sha512-27FDAEVHrAEQI1UV+7FIjZrFK862gBoAG0USoPMU7RoBCmaTDt6bnKVW/J2uPnOPI6TWqiWGtS7RFN+tN/k+vQ==
+"@floating-ui/core@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.0.4.tgz#03066eaea8e9b2a2cd3f5aaa60f1e0f580ebe88e"
+  integrity sha512-FPFLbg2b06MIw1dqk2SOEMAMX3xlrreGjcui5OTxfBDtaKTmh0kioOVjT8gcfl58juawL/yF+S+gnq8aUYQx/Q==
 
 "@floating-ui/dom@^1.0.1":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-1.0.8.tgz#207c6fdaf21a73166c877e99cc49c69f2e816c2d"
-  integrity sha512-uUm1xYQ0xdmFLhtetKgjK9AtF4INwDVwuJZvpK19ENHg1wYn7T0w9phYyCL5+HEpgJtX4ZYG6HJkDbtd2yP6cg==
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-1.0.9.tgz#3ae1d3e776bc90b9d33b1922f9498fb6f80f3b12"
+  integrity sha512-nF9P6/BoARdt+h+CdUW3td4EUVngeDONCGuzRgnZveRZiJETx63cxhinE0JaPPC2tbcdTY9IGZocS5/7ag3xRg==
   dependencies:
-    "@floating-ui/core" "^1.0.3"
+    "@floating-ui/core" "^1.0.4"
 
 "@hotwired/stimulus-webpack-helpers@^1.0.0":
   version "1.0.1"
