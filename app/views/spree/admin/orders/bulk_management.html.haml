@@ -16,8 +16,8 @@
   %fieldset
     %save-bar{ dirty: "bulk_order_form.$dirty", persist: "false" }
       %input.red{ type: "button", value: "Save Changes", ng: { click: "submit()", disabled: "!bulk_order_form.$dirty" } }
-    %legend{ align: 'center'}= t("admin.orders.bulk_management.filter_orders")
-    .filters{ :class => "sixteen columns alpha" }
+    %legend{ align: 'center'}= t(:search)
+    %div{ :class => "sixteen columns alpha" }
       .date_filter{class: "four columns"}
         %label
           = t("date_range")
