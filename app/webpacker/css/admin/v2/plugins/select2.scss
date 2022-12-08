@@ -62,6 +62,9 @@
 
 .select2-drop {
   border-color: $v2-medium-grey;
+  &.select2-drop-above.select2-drop-active {
+    border-color: $v2-medium-grey;
+  }
 }
 
 .select2-search {
