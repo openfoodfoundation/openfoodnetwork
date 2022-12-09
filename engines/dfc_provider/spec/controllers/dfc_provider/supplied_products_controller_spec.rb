@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require DfcProvider::Engine.root.join("spec/spec_helper")
 
-describe DfcProvider::Api::SuppliedProductsController, type: :controller do
+describe DfcProvider::SuppliedProductsController, type: :controller do
+  include AuthorizationHelper
+
   render_views
 
-  let!(:user) { create(:user) }
+  let!(:user) { create(:oidc_user) }
   let!(:enterprise) { create(:distributor_enterprise, owner: user) }
   let!(:product) { create(:simple_product, supplier: enterprise ) }
   let!(:variant) { product.variants.first }
@@ -19,7 +21,7 @@ describe DfcProvider::Api::SuppliedProductsController, type: :controller do
       context 'with an authenticated user' do
         before do
           allow_any_instance_of(DfcProvider::AuthorizationControl)
-            .to receive(:process)
+            .to receive(:user)
             .and_return(user)
         end
 
@@ -46,6 +48,32 @@ describe DfcProvider::Api::SuppliedProductsController, type: :controller do
             end
           end
         end
+      end
+    end
+  end
+
+  describe "#update" do
+    routes { DfcProvider::Engine.routes }
+
+    it "requires authorisation" do
+      api_put :update, enterprise_id: "default", id: "0"
+      expect(response).to have_http_status :unauthorized
+    end
+
+    describe "with authorisation" do
+      before { authorise user.email }
+
+      it "updates the variant's name" do
+        params = { enterprise_id: enterprise.id, id: variant.id }
+        request_body = File.read(File.join(__dir__, "../../support/patch_product.json"))
+
+        expect {
+          put(:update, params: params, body: request_body)
+          expect(response).to have_http_status :success
+          variant.reload
+        }.to change {
+          variant.name
+        }
       end
     end
   end

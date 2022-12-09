@@ -7,8 +7,8 @@ module DfcProvider
     attribute :id, key: '@id'
     attribute :type, key: '@type'
     attribute :offers_to, key: 'dfc:offers_to'
-    attribute :price, key: 'dfc:price'
-    attribute :stock_limitation, key: 'dfc:stockLimitation'
+    attribute :price, key: 'dfc-b:price'
+    attribute :stock_limitation, key: 'dfc-b:stockLimitation'
 
     def id
       "/offers/#{object.id}"
@@ -20,8 +20,7 @@ module DfcProvider
 
     def offers_to
       {
-        '@type' => '@id',
-        '@id' => nil
+        '@type' => '@id'
       }
     end
 

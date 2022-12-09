@@ -1,35 +1,29 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require DfcProvider::Engine.root.join("spec/spec_helper")
 
-describe DfcProvider::Api::CatalogItemsController, type: :controller do
+describe DfcProvider::CatalogItemsController, type: :controller do
+  include AuthorizationHelper
+
   render_views
 
-  let!(:user) { create(:user) }
+  let!(:user) { create(:oidc_user) }
   let!(:enterprise) { create(:distributor_enterprise, owner: user) }
   let!(:product) { create(:simple_product, supplier: enterprise ) }
   let!(:variant) { product.variants.first }
 
   describe '.index' do
     context 'with authorization token' do
-      before do
-        request.headers['Authorization'] = 'Bearer 123456.abcdef.123456'
-      end
+      before { authorise user.email }
 
       context 'with an authenticated user' do
-        before do
-          allow_any_instance_of(DfcProvider::AuthorizationControl)
-            .to receive(:process)
-            .and_return(user)
-        end
-
         context 'with an enterprise' do
           context 'given with an id' do
             context 'related to the user' do
               before { api_get :index, enterprise_id: 'default' }
 
               it 'is successful' do
-                expect(response).to be_successful
+                expect(response).to have_http_status :success
               end
 
               it 'renders the required content' do
@@ -47,7 +41,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
 
               it 'returns not_found head' do
                 api_get :index, enterprise_id: enterprise.id
-                expect(response).to be_not_found
+                expect(response).to have_http_status :not_found
               end
             end
           end
@@ -75,16 +69,16 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
 
           it 'is not found' do
             api_get :index, enterprise_id: 'default'
-            expect(response).to be_not_found
+            expect(response).to have_http_status :not_found
           end
         end
       end
 
       context 'without an authenticated user' do
+        before { authorise "other@user.net" }
+
         it 'returns unauthorized head' do
-          allow_any_instance_of(DfcProvider::AuthorizationControl)
-            .to receive(:process)
-            .and_return(nil)
+          authorise "other@user.net"
 
           api_get :index, enterprise_id: 'default'
           expect(response.response_code).to eq(401)
@@ -93,26 +87,26 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
     end
 
     context 'without an authorization token' do
-      it 'returns unprocessable_entity head' do
+      it 'returns unauthorized head' do
         api_get :index, enterprise_id: enterprise.id
-        expect(response).to be_unprocessable
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+
+    context "when logged in as app user" do
+      it "is successful" do
+        sign_in user
+        api_get :index, enterprise_id: enterprise.id
+        expect(response).to have_http_status :success
       end
     end
   end
 
   describe '.show' do
     context 'with authorization token' do
-      before do
-        request.headers['Authorization'] = 'Bearer 123456.abcdef.123456'
-      end
+      before { authorise user.email }
 
       context 'with an authenticated user' do
-        before do
-          allow_any_instance_of(DfcProvider::AuthorizationControl)
-            .to receive(:process)
-            .and_return(user)
-        end
-
         context 'with an enterprise' do
           context 'given with an id' do
             before do
@@ -120,11 +114,11 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
             end
 
             it 'is successful' do
-              expect(response).to be_successful
+              expect(response).to have_http_status :success
             end
 
             it 'renders the required content' do
-              expect(response.body).to include('dfc:CatalogItem')
+              expect(response.body).to include('dfc-b:CatalogItem')
               expect(response.body).to include("offers/#{variant.id}")
             end
           end
@@ -137,7 +131,7 @@ describe DfcProvider::Api::CatalogItemsController, type: :controller do
             end
 
             it 'is not found' do
-              expect(response).to be_not_found
+              expect(response).to have_http_status :not_found
             end
           end
         end

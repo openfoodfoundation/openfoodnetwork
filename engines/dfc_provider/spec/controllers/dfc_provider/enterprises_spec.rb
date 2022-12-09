@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe DfcProvider::Api::EnterprisesController, type: :controller do
+describe DfcProvider::EnterprisesController, type: :controller do
   render_views
 
   let!(:user) { create(:user) }
@@ -18,7 +18,7 @@ describe DfcProvider::Api::EnterprisesController, type: :controller do
       context 'with an authenticated user' do
         before do
           allow_any_instance_of(DfcProvider::AuthorizationControl)
-            .to receive(:process)
+            .to receive(:user)
             .and_return(user)
         end
 

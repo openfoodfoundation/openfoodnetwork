@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe DfcProvider::Api::PersonsController, type: :controller do
+describe DfcProvider::PersonsController, type: :controller do
   render_views
 
   let!(:user) { create(:user) }
@@ -16,7 +16,7 @@ describe DfcProvider::Api::PersonsController, type: :controller do
       context 'with an authenticated user' do
         before do
           allow_any_instance_of(DfcProvider::AuthorizationControl)
-            .to receive(:process)
+            .to receive(:user)
             .and_return(user)
         end
 
@@ -28,7 +28,7 @@ describe DfcProvider::Api::PersonsController, type: :controller do
           end
 
           it 'renders the required content' do
-            expect(response.body).to include('dfc:Person')
+            expect(response.body).to include('dfc-b:Person')
           end
         end
 
