@@ -11,3 +11,6 @@
         %label.menu_item{ "data-multiple-checked-select-target": "option", "data-value": option[1], "data-label": option[0] }
           %input.redesigned-input{ type: "checkbox", checked: @selected.include?(option[1]), name: "#{@name}[]", value: option[1] }
           = option[0]
+    - if bottom_content?
+      %div.ofn-drop-down-bottom
+        = bottom_content

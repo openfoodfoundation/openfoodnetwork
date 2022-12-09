@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class MultipleCheckedSelectComponent < ViewComponent::Base
+  renders_one :bottom_content
+
   def initialize(name:, options:, selected:)
     @name = name
     @options = options.map { |option| [option[0], identifier(option[1])] }
