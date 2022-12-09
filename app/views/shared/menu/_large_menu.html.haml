@@ -1,15 +1,15 @@
 %nav.top-bar.show-for-large-up
   %section.top-bar-section
     %ul.nav-logo
-      %li.ofn-logo
-        %a{href: main_app.root_path}
-          %img{src: ContentConfig.url_for(:logo)}
-      %li.powered-by
-        %img{src: '/favicon.ico'}
-        %span
-          = t 'powered_by'
-          %a{href: '/'}
-            = t 'title'
+      -# %li.ofn-logo
+      -#   %a{href: main_app.root_path}
+      -#     %img{src: ContentConfig.url_for(:logo)}
+      -# %li.powered-by
+      -#   %img{src: '/favicon.ico'}
+      -#   %span
+      -#     = t 'powered_by'
+      -#     %a{href: '/'}
+      -#       = t 'title'
     %ul.nav-main-menu
       - [*1..7].each do |menu_number|
         - menu_name = "menu_#{menu_number}"
