@@ -1,0 +1,4 @@
+%div{ data: { controller: "columns-selector" } }
+  =# render_parent should work here, but it doesn't
+  =# so let's render the component manually
+  = render MultipleCheckedSelectComponent.new(name: "columns", options: @options, selected: @selected)
