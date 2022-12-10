@@ -36,7 +36,8 @@ class OrderAvailablePaymentMethods
   end
 
   def available_distributor_payment_methods_ids
-    order_cycle.distributor_payment_methods.where(distributor_id: distributor.id)
+    order_cycle.distributor_payment_methods
+      .where(distributor_id: distributor.id)
       .select(:payment_method_id)
   end
 end
