@@ -7,6 +7,7 @@ class ColumnsSelectorReflex < ApplicationReflex
 
     if @cp_set.save
       flash[:success] = I18n.t("admin.reflexes.columns_selector.save.sucess" )
+      morph "#listing_order_cycles", render(partial: "admin/order_cycles/listing_order_cycles_table")
     elsif @cp_set.errors.present?
       flash[:error] = I18n.t("admin.reflexes.columns_selector.save.fail" )
     end

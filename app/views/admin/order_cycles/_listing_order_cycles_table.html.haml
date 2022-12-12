@@ -1,0 +1,4 @@
+%table.index#listing_order_cycles{ ng: { show: 'orderCycles.length > 0' } }
+  = render 'admin/order_cycles/header' #, simple_index: simple_index
+  %tbody
+    = render 'admin/order_cycles/row' #, simple_index: simple_index
