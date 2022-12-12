@@ -382,27 +382,61 @@ describe '
   end
 
   describe 'bulk coop report' do
+    let(:columns_dropdown_selector) { 'div[data-multiple-checked-select-target="button"]' }
+
     before do
       login_as_admin_and_visit admin_reports_path
     end
 
-    it "generating Bulk Co-op Supplier Report" do
-      click_link "Bulk Co-op Supplier Report"
-      click_button "Go"
+    context "generating Bulk Co-op Supplier Report" do
+      context 'without hidden by default columns' do
+        it do
+          click_link "Bulk Co-op Supplier Report"
+          click_button "Go"
 
-      expect(page).to have_table_row [
-        "Supplier",
-        "Product",
-        "Bulk Unit Size",
-        "Variant",
-        "Variant Value",
-        "Variant Unit",
-        "Weight",
-        "Sum Total",
-        "Units Required",
-        "Unallocated",
-        "Max Quantity Excess"
-      ].map(&:upcase)
+          expect(page).to have_table_row [
+            "Producer",
+            "Product",
+            "Bulk Unit Size",
+            "Variant",
+            "Weight",
+            "Sum Total",
+            "Units Required",
+            "Unallocated",
+            "Max Quantity Excess"
+          ].map(&:upcase)
+        end
+      end
+
+      context 'with hidden by default columns' do
+        it do
+          click_link "Bulk Co-op Supplier Report"
+          find(columns_dropdown_selector).click
+          expect(page).to have_unchecked_field("Producer ID")
+          expect(page).to have_unchecked_field("Variant Value")
+          expect(page).to have_unchecked_field("Variant Unit")
+          check("Producer ID")
+          check("Variant Value")
+          check("Variant Unit")
+
+          click_button "Go"
+
+          expect(page).to have_table_row [
+            "Producer",
+            "Producer Id",
+            "Product",
+            "Bulk Unit Size",
+            "Variant",
+            "Variant Value",
+            "Variant Unit",
+            "Weight",
+            "Sum Total",
+            "Units Required",
+            "Unallocated",
+            "Max Quantity Excess"
+          ].map(&:upcase)
+        end
+      end
     end
 
     it "generating Bulk Co-op Allocation report" do
