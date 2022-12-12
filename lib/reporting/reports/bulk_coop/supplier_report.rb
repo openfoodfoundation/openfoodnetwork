@@ -10,7 +10,8 @@ module Reporting
 
         def columns
           {
-            supplier: :variant_product_supplier_name,
+            producer: :variant_product_producer_name,
+            producer_id: :variant_product_producer_id,
             product: :variant_product_name,
             bulk_unit_size: :variant_product_group_buy_unit_size_f,
             variant: :full_name,
@@ -42,10 +43,20 @@ module Reporting
           ]
         end
 
+        def default_params
+          {
+            fields_to_hide: [:producer_id, :variant_value, :variant_unit]
+          }
+        end
+
         private
 
-        def variant_product_supplier_name(line_items)
+        def variant_product_producer_name(line_items)
           line_items.first.variant.product.supplier.name
+        end
+
+        def variant_product_producer_id(line_items)
+          line_items.first.variant.product.supplier.id
         end
       end
     end
