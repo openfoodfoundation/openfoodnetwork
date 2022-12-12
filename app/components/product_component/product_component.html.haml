@@ -1,11 +1,6 @@
 %tr
   - @columns.each do |column|
-    - if column[:id] == "name"
-      %td.products_column.title
-        - if @image
-          .image
-          = image_tag @image.url(:mini)
-        = @name
-    - else
-      %td.products_column{class: column[:id]}
-        = column[:value]
+    %td.products_column{class: column[:id]}
+      - if column[:id] == "name" && @image
+        = image_tag @image.url(:mini)
+      = column[:value]

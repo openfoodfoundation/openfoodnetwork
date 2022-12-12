@@ -5,7 +5,6 @@ class ProductComponent < ViewComponentReflex::Component
     super
     @product = product
     @image = @product.images[0] if product.images.any?
-    @name = @product.name
     @columns = columns.map { |c|
       {
         id: c[:value],
@@ -16,6 +15,8 @@ class ProductComponent < ViewComponentReflex::Component
 
   def column_value(column)
     case column
+    when 'name'
+      @product.name
     when 'price'
       @product.price
     when 'unit'
