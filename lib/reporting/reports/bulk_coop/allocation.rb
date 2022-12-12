@@ -11,6 +11,7 @@ module Reporting
         def columns
           {
             customer: :order_billing_address_name,
+            customer_id: :customer_id,
             product: :product_name,
             bulk_unit_size: :product_group_buy_unit_size,
             variant: :full_name,
@@ -40,6 +41,18 @@ module Reporting
               end
             }
           ]
+        end
+
+        def default_params
+          {
+            fields_to_hide: [:customer_id, :variant_value, :variant_unit]
+          }
+        end
+
+        private
+
+        def customer_id(line_items)
+          line_items.first.order.customer_id
         end
       end
     end
