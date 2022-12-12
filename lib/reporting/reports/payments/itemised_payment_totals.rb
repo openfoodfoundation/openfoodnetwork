@@ -6,7 +6,7 @@ module Reporting
       class ItemisedPaymentTotals < Base
         def columns
           {
-            payment_state: proc { |orders| orders.first.payment_state },
+            payment_state: proc { |orders| i18n_translate(orders.first.payment_state) },
             distributor: proc { |orders| orders.first.distributor.name },
             product_total_price: proc { |orders| orders.to_a.sum(&:item_total) },
             shipping_total_price: proc { |orders| orders.sum(&:ship_total) },

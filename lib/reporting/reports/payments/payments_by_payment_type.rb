@@ -15,7 +15,7 @@ module Reporting
 
         def columns
           {
-            payment_state: proc { |payments| payments.first.order.payment_state },
+            payment_state: proc { |payments| i18n_translate(payments.first.order.payment_state) },
             distributor: proc { |payments| payments.first.order.distributor.name },
             payment_type: proc { |payments| payments.first.payment_method.name },
             total_price: proc { |payments| payments.sum(&:amount) }
