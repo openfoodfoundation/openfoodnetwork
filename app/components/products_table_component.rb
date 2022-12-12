@@ -16,8 +16,8 @@ class ProductsTableComponent < ViewComponentReflex::Component
   }.freeze
   PER_PAGE_VALUE = [10, 25, 50, 100].freeze
   PER_PAGE = PER_PAGE_VALUE.map { |value| { label: value, value: value } }
-  ALL_COLUMN = { label: I18n.t("admin.products_page.columns.name"), value: "name",
-                 sortable: true }.freeze
+  NAME_COLUMN = { label: I18n.t("admin.products_page.columns.name"), value: "name",
+                  sortable: true }.freeze
 
   def initialize(user:)
     super
@@ -90,7 +90,7 @@ class ProductsTableComponent < ViewComponentReflex::Component
       { label: I18n.t("admin.products_page.columns.#{column}"), value: column,
         sortable: SORTABLE_COLUMNS.include?(column) }
     }.sort! { |a, b| a[:label] <=> b[:label] }
-    @columns.unshift(ALL_COLUMN)
+    @columns.unshift(NAME_COLUMN)
   end
 
   def toggle_selector_with_filter(clicked, selected)
