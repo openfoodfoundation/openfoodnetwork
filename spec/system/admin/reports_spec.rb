@@ -405,23 +405,55 @@ describe '
       ].map(&:upcase)
     end
 
-    it "generating Bulk Co-op Allocation report" do
-      click_link "Bulk Co-op Allocation"
-      click_button "Go"
+    describe "generating Bulk Co-op Allocation report" do
+      context 'without hidden by default columns' do
+        it do
+          click_link "Bulk Co-op Allocation"
+          click_button "Go"
 
-      expect(page).to have_table_row [
-        "Customer",
-        "Product",
-        "Bulk Unit Size",
-        "Variant",
-        "Variant Value",
-        "Variant Unit",
-        "Weight",
-        "Sum Total",
-        "Total available",
-        "Unallocated",
-        "Max Quantity Excess"
-      ].map(&:upcase)
+          expect(page).to have_table_row [
+            "Customer",
+            "Product",
+            "Bulk Unit Size",
+            "Variant",
+            "Weight",
+            "Sum Total",
+            "Total available",
+            "Unallocated",
+            "Max Quantity Excess"
+          ].map(&:upcase)
+        end
+      end
+
+      context 'with hidden by default columns' do
+        let(:columns_dropdown_selector) { 'div[data-multiple-checked-select-target="button"]' }
+        it do
+          click_link "Bulk Co-op Allocation"
+          find(columns_dropdown_selector).click
+          expect(page).to have_unchecked_field("Customer Id")
+          expect(page).to have_unchecked_field("Variant Value")
+          expect(page).to have_unchecked_field("Variant Unit")
+          check("Customer Id")
+          check("Variant Value")
+          check("Variant Unit")
+          click_button "Go"
+
+          expect(page).to have_table_row [
+            "Customer",
+            "Customer Id",
+            "Product",
+            "Bulk Unit Size",
+            "Variant",
+            "Variant Value",
+            "Variant Unit",
+            "Weight",
+            "Sum Total",
+            "Total available",
+            "Unallocated",
+            "Max Quantity Excess"
+          ].map(&:upcase)
+        end
+      end
     end
 
     it "generating Bulk Co-op Packing Sheets report" do
