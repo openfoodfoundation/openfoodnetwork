@@ -23,7 +23,7 @@
       .sixteen.columns.alpha
         .eight.columns.alpha
           = f.field_container :variant_unit do
-            = f.label :variant_unit_with_scale, t(".units")
+            = f.label :variant_unit, t(".units")
             %span.required *
             %select{id: 'product_variant_unit_with_scale', 'ng-model' => 'product.variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options', "data-controller": "tom-select","data-tom-select-options-value": '{"allowEmptyOption":false}', class: "primary"}
               %option{'value' => '', 'ng-hide' => "hasUnit(product)"}
