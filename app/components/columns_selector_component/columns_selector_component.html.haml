@@ -1,4 +1,6 @@
 %div{ data: { controller: "columns-selector" } }
   =# render_parent should work here, but it doesn't
   =# so let's render the component manually
-  = render MultipleCheckedSelectComponent.new(name: "columns", options: @options, selected: @selected)
+  = render MultipleCheckedSelectComponent.new(name: "columns", options: @options, selected: @selected, form_attributes: { "data-reflex": "submit->ColumnsSelector#save", "data-reflex-serialize-form": "true", "data-action-name": @action_name }) do |component|
+    = component.with_bottom_content do
+      %input{ type: "submit", "class": "button", value: I18n.t('components.columns_selector.save') }

@@ -5,5 +5,6 @@ class ColumnsSelectorComponent < MultipleCheckedSelectComponent
     super(name: I18n.t('components.columns_selector.title'),
           options: columns.map { |c| [c.name, c.id] },
           selected: columns.select(&:visible).map(&:id))
+    @action_name = columns.first.action_name
   end
 end

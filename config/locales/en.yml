@@ -1570,6 +1570,13 @@ en:
       one: "Confirmation email sent for 1 order."
       other: "Confirmation emails sent for %{count} orders."
 
+    # Admin reflexes
+    reflexes:
+      columns_selector:
+        save:
+          sucess: "Default columns saved successfully"
+          fail: "Failed to save default columns"
+
 # API
 #
   api:
@@ -4478,3 +4485,4 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       previous: Previous
     columns_selector:
       title: "Columns"
+      save: "Save"
