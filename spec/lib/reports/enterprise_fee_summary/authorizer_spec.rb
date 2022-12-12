@@ -170,7 +170,7 @@ module Reporting
 
         def stub_model(model, params)
           model.new.tap do |instance|
-            instance.stub(params)
+            allow(instance).to receive_messages(params)
           end
         end
       end
