@@ -4,13 +4,13 @@ class ContentConfiguration < Spree::Preferences::Configuration
   include FilePreferences
 
   # Header
-  file_preference :logo, default_url: "/default_images/ofn-logo.png"
+  file_preference :logo, default_url: "/default_images/matria-logo.png"
   file_preference :logo_mobile
-  file_preference :logo_mobile_svg, default_url: "/default_images/ofn-logo-mobile.svg"
+  file_preference :logo_mobile_svg, default_url: "/default_images/matria-logo.png"
 
   # Home page
   preference :home_page_alert_html, :text
-  file_preference :home_hero, default_url: "/default_images/home.jpg"
+  file_preference :home_hero, default_url: "/default_images/matria-home.jpg"
   preference :home_show_stats, :boolean, default: true
 
   # Map
