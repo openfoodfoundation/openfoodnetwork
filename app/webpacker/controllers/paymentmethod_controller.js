@@ -16,7 +16,9 @@ export default class extends Controller {
     const stripeCardSelector =
       this.application.getControllerForElementAndIdentifier(
         document
-          .getElementById(event.target.dataset.paymentmethodId)
+          .querySelector(
+            `[data-paymentmethod-id="${event.target.dataset.paymentmethodId}"]`
+          )
           .querySelector('[data-controller="stripe-cards"]'),
         "stripe-cards"
       );
@@ -27,7 +29,8 @@ export default class extends Controller {
     Array.from(
       document.getElementsByClassName("paymentmethod-container")
     ).forEach((container) => {
-      const enabled = container.id === paymentMethodContainerId;
+      const enabled =
+        container.dataset.paymentmethodId === paymentMethodContainerId;
 
       if (enabled) {
         container.style.display = "block";
