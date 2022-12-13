@@ -78,33 +78,31 @@
 
     - selected_shipping_method ||= @shipping_methods[0].id if @shipping_methods.length == 1
     - @shipping_methods.each do |shipping_method|
+      - ship_method_is_selected = shipping_method.id == selected_shipping_method.to_i
       %div.checkout-input.checkout-input-radio
         = fields_for shipping_method do |shipping_method_form|
           = shipping_method_form.radio_button :name, shipping_method.id,
             id: "shipping_method_#{shipping_method.id}",
-            checked: (shipping_method.id == selected_shipping_method.to_i),
+            checked: ship_method_is_selected,
             name: "shipping_method_id",
-            "data-description": shipping_method.description,
             "data-requireAddress": shipping_method.require_ship_address,
             "data-action": "toggle#toggle shippingmethod#selectShippingMethod",
             "data-toggle-show": shipping_method.require_ship_address
           = shipping_method_form.label shipping_method.id, shipping_method.name, {for: "shipping_method_" + shipping_method.id.to_s }
           %em.light
             = payment_or_shipping_price(shipping_method, @order)
-          - display_ship_address = display_ship_address || (shipping_method.id == selected_shipping_method.to_i && shipping_method.require_ship_address)
-          - if shipping_method.id == selected_shipping_method.to_i
-            - ship_method_description = shipping_method.description
-
+          - display_ship_address = display_ship_address || (ship_method_is_selected && shipping_method.require_ship_address)
+      %div.checkout-input{"data-shippingmethod-target": "shippingMethodDescription", "data-shippingmethodid": shipping_method.id , style: "display: #{ship_method_is_selected ? 'block' : 'none'}" }
+        #distributor_address.panel
+          - if shipping_method.description.present?
+            %span #{shipping_method.description}
+            %br/
+            %br/
+          - if @order.order_cycle.pickup_time_for(@order.distributor)
+            = t :checkout_ready_for
+          = @order.order_cycle.pickup_time_for(@order.distributor)
+      
     = f.error_message_on :shipping_method, standalone: true
-
-    %div.checkout-input{"data-shippingmethod-target": "shippingMethodDescription", style: "display: #{ship_method_description == nil ? 'none' : 'block'}" }
-      #distributor_address.panel
-        %span{"data-shippingmethod-target": "shippingMethodDescriptionContent"} #{ship_method_description}
-        %br/
-        %br/
-        - if @order.order_cycle.pickup_time_for(@order.distributor)
-          = t :checkout_ready_for
-        = @order.order_cycle.pickup_time_for(@order.distributor)
     
     %div.checkout-input{ "data-toggle-target": "content", style: "display: #{display_ship_address ? 'block' : 'none'}" }
       = f.check_box :ship_address_same_as_billing, { id: "ship_address_same_as_billing", name: "ship_address_same_as_billing", "data-action": "shippingmethod#showHideShippingAddress", "data-shippingmethod-target": "shippingAddressCheckbox", checked: shipping_and_billing_match?(@order) }, 1, nil
