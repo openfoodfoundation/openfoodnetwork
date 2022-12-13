@@ -238,8 +238,10 @@
       }
 
       &.cancel {
-        background-color: $grey-100;
-        color: $black;
+        background-color: $white;
+        border: 1px solid $orange-500;
+        color: $orange-500;
+        
       }
     }
 
