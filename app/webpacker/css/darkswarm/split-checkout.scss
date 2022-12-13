@@ -34,7 +34,6 @@
 
     span, span > a {
       color: $white;
-      text-decoration: underline;
     }
   }
 
@@ -98,7 +97,6 @@
     font-size: 1.06rem;
     @include headingFont;
     font-weight: $font-weight-bold;
-    text-decoration: underline;
     color: $darker-grey;
     margin-bottom: 1.5rem;
   }
