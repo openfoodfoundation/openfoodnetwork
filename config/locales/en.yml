@@ -1919,33 +1919,25 @@ en:
         title: Contact information
         email:
           label: Email
-          placeholder: e.g. Janedoe@email.com
         phone:
           label: Phone number
-          placeholder: e.g. 07987654321
       billing_address:
         title: Billing address
         first_name:
           label: First Name
-          placeholder: e.g. Jane
         last_name:
           label: Last Name
-          placeholder: e.g. Doe
       address:
         address1:
           label: Address (Street + House Number)
-          placeholder: e.g. Flat 1 Elm apartments
         address2:
           label: Additional address info (optional)
-          placeholder: e.g. Cavalier avenur
         city:
           label: City
-          placeholder: e.g. London
         state_id:
           label: State
         zipcode:
           label: Postcode
-          placeholder: e.g. SW11 3QN
         country_id:
           label: Country
       shipping_info:

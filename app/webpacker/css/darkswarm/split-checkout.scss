@@ -331,3 +331,35 @@
     }
   }
 }
+
+// Shows label as a placeholder, inside the input and when the input is focused shows the label above the input
+.checkout-input.with-floating-label {
+  position: relative;
+
+  label {
+    display: none; // Display none by default, and shown by floating_label_controller
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 0.875rem;
+    padding: 8px;
+    padding-left: 9px;
+    color: $min-accessible-grey;
+    pointer-events: none;
+    transform: translateY(0);
+    transform-origin: top left;
+    &.with-transition {
+      transition: all 0.2s ease-in-out;
+    }
+  }
+  &.active {
+      label {
+        transform: translateY(-9px) translateX(10px) scale(0.9);
+        background-color: white;
+        padding-left: 3px;
+        padding-right: 3px;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }  
+}
