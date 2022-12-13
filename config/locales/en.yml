@@ -1915,14 +1915,8 @@ en:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     step1:
-      your_details:
-        title: Your details
-        first_name:
-          label: First Name
-          placeholder: e.g. Jane
-        last_name:
-          label: Last Name
-          placeholder: e.g. Doe
+      contact_information:
+        title: Contact information
         email:
           label: Email
           placeholder: e.g. Janedoe@email.com
@@ -1931,6 +1925,12 @@ en:
           placeholder: e.g. 07987654321
       billing_address:
         title: Billing address
+        first_name:
+          label: First Name
+          placeholder: e.g. Jane
+        last_name:
+          label: Last Name
+          placeholder: e.g. Doe
       address:
         address1:
           label: Address (Street + House Number)
