@@ -156,6 +156,18 @@
 
       label {
         margin-top: 0.3rem;
+        & + em {
+          margin-left: -0.5rem;
+          font-size: 14px; // same as label
+          font-weight: bold;
+          // Add opening and closing parentheses
+          &:before {
+            content: "(";
+          }
+          &:after {
+            content: ")";
+          }
+        }
       }
     }
   }
