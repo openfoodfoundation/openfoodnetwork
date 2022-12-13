@@ -49,7 +49,7 @@ describe "Payments Reports" do
       ].join(" ").upcase)
 
       expect(page.find("table.report__table tbody tr").text).to have_content([
-        order.payment_state,
+        i18n_translate(order.payment_state),
         order.distributor.name,
         order.item_total.to_f + other_order.item_total.to_f,
         order.ship_total.to_f + other_order.ship_total.to_f,
@@ -86,7 +86,7 @@ describe "Payments Reports" do
       ].join(" ").upcase)
 
       expect(page.find("table.report__table tbody tr").text).to have_content([
-        order.payment_state,
+        i18n_translate(order.payment_state),
         order.distributor.name,
         order.item_total.to_f + other_order.item_total.to_f,
         order.ship_total.to_f + other_order.ship_total.to_f,
@@ -96,5 +96,8 @@ describe "Payments Reports" do
         order.outstanding_balance + other_order.outstanding_balance,
       ].join(" "))
     end
+  end
+  def i18n_translate(translation_key, options = {})
+    I18n.t("js.admin.orders.payment_states.#{translation_key}", **options)
   end
 end
