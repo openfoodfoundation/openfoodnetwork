@@ -5,30 +5,32 @@
       %div.checkout-title
         = t("split_checkout.step1.contact_information.title")
 
-      %div.checkout-input
-        = f.label :email, t("split_checkout.step1.contact_information.email.label")
-        = f.text_field :email, { placeholder: t("split_checkout.step1.contact_information.email.placeholder") }
-        = f.error_message_on :email
+      .two-columns-inputs
+        %div.checkout-input
+          = f.label :email, t("split_checkout.step1.contact_information.email.label")
+          = f.text_field :email, { placeholder: t("split_checkout.step1.contact_information.email.placeholder") }
+          = f.error_message_on :email
 
-      %div.checkout-input
-        = bill_address.label :phone, t("split_checkout.step1.contact_information.phone.label")
-        = bill_address.text_field :phone, { placeholder: t("split_checkout.step1.contact_information.phone.placeholder") }
-        = f.error_message_on "bill_address.phone"
+        %div.checkout-input
+          = bill_address.label :phone, t("split_checkout.step1.contact_information.phone.label")
+          = bill_address.text_field :phone, { placeholder: t("split_checkout.step1.contact_information.phone.placeholder") }
+          = f.error_message_on "bill_address.phone"
 
     %div.checkout-substep
       -# BILLING ADDRESS
       %div.checkout-title
         = t("split_checkout.step1.billing_address.title")
 
-      %div.checkout-input
-        = bill_address.label :firstname, t("split_checkout.step1.billing_address.first_name.label")
-        = bill_address.text_field :firstname, { placeholder: t("split_checkout.step1.billing_address.first_name.placeholder") }
-        = f.error_message_on "bill_address.firstname"
+      .two-columns-inputs
+        %div.checkout-input
+          = bill_address.label :firstname, t("split_checkout.step1.billing_address.first_name.label")
+          = bill_address.text_field :firstname, { placeholder: t("split_checkout.step1.billing_address.first_name.placeholder") }
+          = f.error_message_on "bill_address.firstname"
 
-      %div.checkout-input
-        = bill_address.label :lastname, t("split_checkout.step1.billing_address.last_name.label")
-        = bill_address.text_field :lastname, { placeholder: t("split_checkout.step1.billing_address.last_name.placeholder") }
-        = f.error_message_on "bill_address.lastname"
+        %div.checkout-input
+          = bill_address.label :lastname, t("split_checkout.step1.billing_address.last_name.label")
+          = bill_address.text_field :lastname, { placeholder: t("split_checkout.step1.billing_address.last_name.placeholder") }
+          = f.error_message_on "bill_address.lastname"
 
       %div.checkout-input
         = bill_address.label :address1, t("split_checkout.step1.address.address1.label")

@@ -309,3 +309,25 @@
   display: block;
   overflow-x: auto;
 }
+
+.two-columns-inputs {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+
+  > .checkout-input {
+    flex: 1;
+  }
+
+  &:last-child > .checkout-input {
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 700px) {
+    flex-direction: column;
+    gap: 0;
+    &:last-child > .checkout-input {
+      margin-bottom: 1.5rem;
+    }
+  }
+}
