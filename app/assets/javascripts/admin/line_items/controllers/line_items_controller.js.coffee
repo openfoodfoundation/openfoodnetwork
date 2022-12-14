@@ -36,9 +36,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.refreshData()
 
   $scope.refreshData = ->
-    unless !$scope.orderCycleFilter? || $scope.orderCycleFilter == ''
-      $scope.setOrderCycleDateRange()
-
     $scope.formattedStartDate = moment($scope.startDate).format()
     $scope.formattedEndDate = moment($scope.endDate).add(1,'day').format()
 
