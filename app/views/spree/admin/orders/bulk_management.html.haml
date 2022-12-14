@@ -18,14 +18,6 @@
       %input.red{ type: "button", value: "Save Changes", ng: { click: "submit()", disabled: "!bulk_order_form.$dirty" } }
     %legend{ align: 'center'}= t(:search)
     %div{ :class => "sixteen columns alpha" }
-      .date_filter{class: "four columns"}
-        %label
-          = t("date_range")
-        %br
-          %div{ data: { controller: "flatpickr", "flatpickr-mode-value": "range", "flatpickr-default-date": "{{ [startDate, endDate] }}" } }
-            %input.datepicker.fullwidth{ class: "datepicker", data: { "flatpickr-target": "instance" } }
-            %input{ type: "text", id: 'start_date_filter', 'ng-model': "startDate", data: { "flatpickr-target": "start" }, style: "display: none;" }
-            %input{ type: "text", id: 'end_date_filter', 'ng-model': "endDate", data: { "flatpickr-target": "end" }, style: "display: none;" }
       .filter_select{ :class => "four columns" }
         %label{ :for => 'supplier_filter' }
           = t("admin.producer")
@@ -41,6 +33,15 @@
           = t("admin.order_cycle")
         %br
         %input#order_cycle_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'orderCycles', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", on: { selecting: "confirmRefresh" }, ng: { model: 'orderCycleFilter', change: "setOrderCycleDateRange()" } }
+      .date_filter{class: "four columns"}
+        %label
+          = t("date_range")
+        %br
+          %div{ data: { controller: "flatpickr", "flatpickr-mode-value": "range", "flatpickr-default-date": "{{ [startDate, endDate] }}" } }
+            %input.datepicker.fullwidth{ class: "datepicker", data: { "flatpickr-target": "instance" } }
+            %input{ type: "text", id: 'start_date_filter', 'ng-model': "startDate", data: { "flatpickr-target": "start" }, style: "display: none;" }
+            %input{ type: "text", id: 'end_date_filter', 'ng-model': "endDate", data: { "flatpickr-target": "end" }, style: "display: none;" }
+      
       .clearfix
       .actions.filter-actions
         %a.button.icon-search{'ng-click' => 'refreshData()'}
