@@ -74,7 +74,7 @@ module Reporting
 
     # rubocop:disable Metrics/CyclomaticComplexity
     def format_cell(value, column = nil)
-      return "" if value.nil?
+      return "none" if value.nil?
 
       # Currency
       if report.columns_format[column] == :currency
