@@ -9,6 +9,7 @@ describe 'AdminOrderCycleBasicCtrl', ->
 
   beforeEach ->
     scope =
+      order_cycle_form: jasmine.createSpyObj('order_cycle_form', ['$dirty', '$setPristine'])
       $watch: jasmine.createSpy('$watch')
     event =
       preventDefault: jasmine.createSpy('preventDefault')
