@@ -60,6 +60,14 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     format = "YYYY-MM-DD HH:mm:ss Z"
     $scope.startDate = moment(start_date, format).format('YYYY-MM-DD')
     $scope.endDate = moment(end_date, format).startOf('day').format('YYYY-MM-DD')
+     # throw a flatpickr:change event to change the date back in the datepicker
+    event = new CustomEvent('flatpickr:change', {
+      detail: { 
+        startDate: $scope.startDate,
+        endDate: $scope.endDate
+      }
+    })
+    window.dispatchEvent(event)
 
   $scope.loadOrders = ->
     RequestMonitor.load $scope.orders = Orders.index(
