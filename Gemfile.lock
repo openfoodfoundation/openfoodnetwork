@@ -467,7 +467,7 @@ GEM
       ruby-rc4
       ttfunk
     pg (1.2.3)
-    power_assert (2.0.1)
+    power_assert (2.0.2)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -688,7 +688,7 @@ GEM
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
     temple (0.8.2)
-    test-unit (3.5.5)
+    test-unit (3.5.7)
       power_assert
     thor (1.2.1)
     thread-local (1.1.0)
