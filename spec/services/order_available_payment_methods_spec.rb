@@ -214,4 +214,28 @@ describe OrderAvailablePaymentMethods do
       end
     end
   end
+
+  context "when two distributors implement the same payment methods" do
+    context "only one distributor supports the two payment methods in the order cycle" do
+      let(:oc){ create(:order_cycle) }
+      let(:payment_method){ create(:payment_method) }
+      let(:payment_method2){ create(:payment_method) }
+      let(:d1){ oc.distributors.first }
+      let(:d2){ oc.distributors.second }
+      before {
+        d1.payment_methods << payment_method
+        d1.payment_methods << payment_method2
+        d2.payment_methods << payment_method
+        d2.payment_methods << payment_method2
+        oc.selected_distributor_payment_methods << d1.distributor_payment_methods.first
+        oc.selected_distributor_payment_methods << d1.distributor_payment_methods.second
+        oc.selected_distributor_payment_methods << d2.distributor_payment_methods.first
+      }
+      it do
+        order = build(:order, distributor: d2, order_cycle: oc)
+        order_available_payment_methods = OrderAvailablePaymentMethods.new(order).to_a
+        expect(order_available_payment_methods).to eq([d2.payment_methods.first])
+      end
+    end
+  end
 end
