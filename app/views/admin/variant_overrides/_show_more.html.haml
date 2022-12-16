@@ -1,4 +1,3 @@
--# %show-more.text-center{ data: "filteredProducts", limit: "productLimit", increment: "10" }
 .text-center{ ng: { show: "filteredProducts.length > productLimit" } }
   %input{ type: 'button', value: t(:show_more), ng: { click: 'productLimit = productLimit + 10' } }
 
