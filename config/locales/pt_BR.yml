@@ -337,6 +337,23 @@ pt_BR:
     destroy: "Destruir"
     rename: "Renomear"
   admin:
+    products_page:
+      title: Produtos
+      filters:
+        producers:
+          title: Produtores
+        colums: Colunas
+      columns:
+        name: Nome
+        unit: Unidade
+        price: Preço
+        producer: Produtor
+        category: Categoria
+      columns_selector:
+        unit: Unidade
+        price: Preço
+        producer: Produtor
+        category: Categoria
     adjustments:
       skipped_changing_canceled_order: "Não é possível modificar um pedido cancelado"
     begins_at: Começa em
@@ -3988,3 +4005,11 @@ pt_BR:
         one: "1 ano"
         many: "%{count}anos"
         other: "%{count}anos"
+  components:
+    search_input:
+      placeholder: Buscar
+    selector_with_filter:
+      search_placeholder: Buscar
+    pagination:
+      next: Próximo
+      previous: Anterior

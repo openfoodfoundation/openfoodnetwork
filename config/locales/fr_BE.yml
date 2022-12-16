@@ -298,6 +298,25 @@ fr_BE:
     delete: "Supprimer"
     add: "Ajouter"
   admin:
+    products_page:
+      title: Produits
+      filters:
+        categories:
+          title: Les catégories
+        producers:
+          title: Producteur·trice·s
+        colums: Colonnes
+      columns:
+        name: Nom
+        unit: Unité
+        price: Prix
+        producer: Producteur·trice
+        category: Catégorie
+      columns_selector:
+        unit: Unité
+        price: Prix
+        producer: Producteur·trice
+        category: Catégorie
     begins_at: Commence
     begins_on: Commence le
     customer: Acheteur
@@ -3671,3 +3690,11 @@ fr_BE:
       shipment:
         cannot_ready: "Impossible de préparer l'expédition."
       invalid_taxonomy_id: "Id taxonomique invalide."
+  components:
+    search_input:
+      placeholder: Rechercher
+    selector_with_filter:
+      search_placeholder: Rechercher
+    pagination:
+      next: Suivant
+      previous: Précédent

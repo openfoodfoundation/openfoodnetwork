@@ -396,6 +396,25 @@ hu:
     destroy: "Megszüntet"
     rename: "Átnevezés"
   admin:
+    products_page:
+      title: Termékek
+      filters:
+        categories:
+          title: Kategóriák
+        producers:
+          title: Termelők
+        colums: Oszlopok
+      columns:
+        name: Név
+        unit: Mértékegység
+        price: Ár
+        producer: Termelő
+        category: Kategória
+      columns_selector:
+        unit: Mértékegység
+        price: Ár
+        producer: Termelő
+        category: Kategória
     adjustments:
       skipped_changing_canceled_order: "A törölt rendelést nem módosíthatja."
     begins_at: 'Kezdete:'
@@ -4231,3 +4250,11 @@ hu:
       x_years:
         one: "1 év"
         other: "%{count} év"
+  components:
+    search_input:
+      placeholder: Keresés
+    selector_with_filter:
+      search_placeholder: Keresés
+    pagination:
+      next: Következő
+      previous: Előző

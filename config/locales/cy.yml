@@ -396,6 +396,25 @@ cy:
     destroy: "Dinistrio"
     rename: "Ail-enwi"
   admin:
+    products_page:
+      title: Cynnyrch
+      filters:
+        categories:
+          title: Categorïau
+        producers:
+          title: Prynu bwyd
+        colums: Colofnau
+      columns:
+        name: Enw
+        unit: Uned
+        price: Pris
+        producer: Cynhyrchydd
+        category: Categori
+      columns_selector:
+        unit: Uned
+        price: Pris
+        producer: Cynhyrchydd
+        category: Categori
     adjustments:
       skipped_changing_canceled_order: "Nid yw'n bosib newid archeb a ganslwyd"
     begins_at: Yn dechrau am
@@ -4281,3 +4300,11 @@ cy:
       title: "Mae'n ddrwg gennym, aeth rhywbeth o'i le (500)"
     unprocessable_entity:
       title: "Gwrthodwyd y newid roeddech chi am ei wneud (422)"
+  components:
+    search_input:
+      placeholder: Chwilio
+    selector_with_filter:
+      search_placeholder: Chwilio
+    pagination:
+      next: Nesaf
+      previous: Blaenorol

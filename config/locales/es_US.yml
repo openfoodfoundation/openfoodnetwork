@@ -394,6 +394,25 @@ es_US:
     destroy: "Eliminar"
     rename: "Renombrar"
   admin:
+    products_page:
+      title: Productos
+      filters:
+        categories:
+          title: Categorías
+        producers:
+          title: Productoras
+        colums: Columnas
+      columns:
+        name: Nombre
+        unit: Unidad
+        price: Precio
+        producer: Productora
+        category: Categoría
+      columns_selector:
+        unit: Unidad
+        price: Precio
+        producer: Productora
+        category: Categoría
     adjustments:
       skipped_changing_canceled_order: "No puede modificar un pedido cancelado."
     begins_at: Empieza en
@@ -4006,3 +4025,11 @@ es_US:
   datetime:
     distance_in_words:
       half_a_minute: medio minuto
+  components:
+    search_input:
+      placeholder: Buscar
+    selector_with_filter:
+      search_placeholder: Buscar
+    pagination:
+      next: Siguiente
+      previous: Anterior

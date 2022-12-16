@@ -399,6 +399,25 @@ de_DE:
     destroy: "Löschen"
     rename: "Umbenennen"
   admin:
+    products_page:
+      title: Produkte
+      filters:
+        categories:
+          title: Lieferkategorien
+        producers:
+          title: Unsere Produzenten
+        colums: Spalten
+      columns:
+        name: Name
+        unit: Einheit
+        price: Preis
+        producer: Produzent
+        category: Kategorie
+      columns_selector:
+        unit: Einheit
+        price: Preis
+        producer: Produzent
+        category: Kategorie
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
     begins_at: Beginnt
@@ -4245,3 +4264,10 @@ de_DE:
   components:
     multiple_checked_select:
       filter_placeholder: "Suche"
+    search_input:
+      placeholder: Suche
+    selector_with_filter:
+      search_placeholder: Suche
+    pagination:
+      next: Nächste
+      previous: Vorherige

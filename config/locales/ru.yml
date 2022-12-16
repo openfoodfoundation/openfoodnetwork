@@ -400,6 +400,25 @@ ru:
     destroy: "Уничтожить"
     rename: "Переименовать"
   admin:
+    products_page:
+      title: Товары
+      filters:
+        categories:
+          title: Категории
+        producers:
+          title: Производители
+        colums: Колонки
+      columns:
+        name: Название
+        unit: Единица измерения
+        price: Цена
+        producer: Производитель
+        category: Категория
+      columns_selector:
+        unit: Единица измерения
+        price: Цена
+        producer: Производитель
+        category: Категория
     adjustments:
       skipped_changing_canceled_order: "Вы не можете изменить отмененный заказ."
     begins_at: Начинается С
@@ -4320,3 +4339,10 @@ ru:
   components:
     multiple_checked_select:
       filter_placeholder: "Параметры фильтра"
+    search_input:
+      placeholder: Поиск
+    selector_with_filter:
+      search_placeholder: Поиск
+    pagination:
+      next: Следующий
+      previous: Предыдущий

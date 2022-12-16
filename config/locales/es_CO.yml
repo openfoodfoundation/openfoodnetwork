@@ -305,6 +305,25 @@ es_CO:
     delete: "Borrar"
     add: "Añadir"
   admin:
+    products_page:
+      title: Productos
+      filters:
+        categories:
+          title: Categorías
+        producers:
+          title: Productoras
+        colums: Columnas
+      columns:
+        name: Nombre
+        unit: Unidad
+        price: Precio
+        producer: Productor
+        category: Categoría
+      columns_selector:
+        unit: Unidad
+        price: Precio
+        producer: Productor
+        category: Categoría
     begins_at: Empieza en
     begins_on: Comienza en
     customer: Cliente
@@ -3705,3 +3724,11 @@ es_CO:
           one: Pago
           many: Pagos
           other: Pagos
+  components:
+    search_input:
+      placeholder: Buscar
+    selector_with_filter:
+      search_placeholder: Buscar
+    pagination:
+      next: Siguiente
+      previous: Anterior

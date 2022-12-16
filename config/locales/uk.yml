@@ -395,6 +395,25 @@ uk:
     destroy: "Видалити"
     rename: "Перейменувати"
   admin:
+    products_page:
+      title: Продукти
+      filters:
+        categories:
+          title: Категорії
+        producers:
+          title: Виробники
+        colums: Колонки
+      columns:
+        name: Ім'я
+        unit: Одиниця
+        price: Ціна
+        producer: Виробник
+        category: Категорія
+      columns_selector:
+        unit: Одиниця
+        price: Ціна
+        producer: Виробник
+        category: Категорія
     adjustments:
       skipped_changing_canceled_order: "Ви не можете змінити скасоване замовлення."
     begins_at: Починається о
@@ -4248,3 +4267,11 @@ uk:
         few: "%{count} років"
         many: "%{count} років"
         other: "%{count} років"
+  components:
+    search_input:
+      placeholder: Пошук
+    selector_with_filter:
+      search_placeholder: Пошук
+    pagination:
+      next: Далі
+      previous: Попередній

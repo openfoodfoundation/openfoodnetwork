@@ -395,6 +395,25 @@ en_NZ:
     destroy: "Destroy"
     rename: "Rename"
   admin:
+    products_page:
+      title: Products
+      filters:
+        categories:
+          title: Categories
+        producers:
+          title: Producers
+        colums: Columns
+      columns:
+        name: Name
+        unit: Unit
+        price: Price
+        producer: Producer
+        category: Category
+      columns_selector:
+        unit: Unit
+        price: Price
+        producer: Producer
+        category: Category
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -4032,3 +4051,11 @@ en_NZ:
         spree/payment:
           one: Payment
           other: Payments
+  components:
+    search_input:
+      placeholder: Search
+    selector_with_filter:
+      search_placeholder: Search
+    pagination:
+      next: Next
+      previous: Previous

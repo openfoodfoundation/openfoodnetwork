@@ -119,6 +119,23 @@ sv:
     update: "Uppdatera"
     add: "Tillägga"
   admin:
+    products_page:
+      title: Produkter
+      filters:
+        producers:
+          title: 'Producenter '
+        colums: Kolumner
+      columns:
+        name: Namn
+        unit: Enhet
+        price: Pris
+        producer: Producent
+        category: Kategori
+      columns_selector:
+        unit: Enhet
+        price: Pris
+        producer: Producent
+        category: Kategori
     date: Datum
     email: epost
     name: Namn
@@ -2295,3 +2312,10 @@ sv:
       past_orders:
         status: Status
         cancelled: Avbokad
+  components:
+    search_input:
+      placeholder: Sök
+    selector_with_filter:
+      search_placeholder: Sök
+    pagination:
+      next: Näst

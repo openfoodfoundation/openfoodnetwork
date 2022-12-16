@@ -399,6 +399,25 @@ fr:
     destroy: "Détruire"
     rename: "Renommer"
   admin:
+    products_page:
+      title: Produits
+      filters:
+        categories:
+          title: Conditions de transport
+        producers:
+          title: Producteurs
+        colums: Colonnes
+      columns:
+        name: Nom
+        unit: Unité
+        price: Prix
+        producer: Producteur
+        category: Catégorie
+      columns_selector:
+        unit: Unité
+        price: Prix
+        producer: Producteur
+        category: Catégorie
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -4303,3 +4322,10 @@ fr:
   components:
     multiple_checked_select:
       filter_placeholder: "Filtres"
+    search_input:
+      placeholder: Rechercher
+    selector_with_filter:
+      search_placeholder: Rechercher
+    pagination:
+      next: Suivant
+      previous: Précédent

@@ -396,6 +396,25 @@ ar:
     destroy: "الغاء"
     rename: "إعادة تسمية"
   admin:
+    products_page:
+      title: منتجات
+      filters:
+        categories:
+          title: التصنيفات
+        producers:
+          title: المنتجين
+        colums: أعمدة
+      columns:
+        name: الاسم
+        unit: وحدة
+        price: السعر
+        producer: المنتج
+        category: الفئة
+      columns_selector:
+        unit: وحدة
+        price: السعر
+        producer: المنتج
+        category: الفئة
     adjustments:
       skipped_changing_canceled_order: "لا يمكنك تغيير الطلب الذي تم إلغاؤه."
     begins_at: يبدأ عند
@@ -4350,3 +4369,11 @@ ar:
     unprocessable_entity:
       title: "تم رفض التغيير الذي أردته (422)"
       message_html: "<p style=\";text-align:right;direction:rtl\">تم رفض التغيير الذي تريده. ربما حاولت تغيير شيء لا يمكنك الوصول إليه.<br><h3 style=\";text-align:right;direction:rtl\"> <a href='/' >العودة للصفحة الرئيسية</a></h3></p>"
+  components:
+    search_input:
+      placeholder: بحث
+    selector_with_filter:
+      search_placeholder: بحث
+    pagination:
+      next: التالى
+      previous: السابق

@@ -296,6 +296,22 @@ pl:
     delete: "Usuń"
     add: "Dodaj"
   admin:
+    products_page:
+      filters:
+        producers:
+          title: Producenci
+        colums: Kulumny
+      columns:
+        name: Nazwa
+        unit: Jednostka
+        price: Cena
+        producer: Producent
+        category: Kategoria
+      columns_selector:
+        unit: Jednostka
+        price: Cena
+        producer: Producent
+        category: Kategoria
     begins_at: Początek o
     begins_on: Początek się w dniu
     customer: Klient
@@ -3603,3 +3619,8 @@ pl:
           few: Płatności
           many: Płatności
           other: Płatności
+  components:
+    search_input:
+      placeholder: Szukaj
+    selector_with_filter:
+      search_placeholder: Szukaj

@@ -399,6 +399,25 @@ ca:
     destroy: "Eliminar"
     rename: "Reanomenar"
   admin:
+    products_page:
+      title: 'Productes '
+      filters:
+        categories:
+          title: Categories
+        producers:
+          title: Productors
+        colums: Columnes
+      columns:
+        name: Nom
+        unit: Unitat
+        price: Preu
+        producer: Productora
+        category: Categoria
+      columns_selector:
+        unit: Unitat
+        price: Preu
+        producer: Productora
+        category: Categoria
     adjustments:
       skipped_changing_canceled_order: "No podeu canviar una comanda cancel·lada."
     begins_at: Comença a
@@ -4097,3 +4116,11 @@ ca:
   errors:
     not_found:
       message_html: "<b>Si us plau torna-ho a provar</b> Això podria ser un problema temporal. Feu clic al botó Enrere per tornar a la pantalla anterior o torneu a <a href='/'>Inici</a> i torneu-ho a provar. <b>Contacteu amb suport</b><p> Si el problema persisteix o és urgent, si us plau, digueu-nos-ho. Esn pots enviar un correua a <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>suport<p>katuma.org </a>.</p><p> Ens ajuda molt si pots donar tants detalls com sigui possible sobre de què estaves fent quan va aparèixer l'error.</p>"
+  components:
+    search_input:
+      placeholder: Cerca
+    selector_with_filter:
+      search_placeholder: Cerca
+    pagination:
+      next: Següent
+      previous: Anterior

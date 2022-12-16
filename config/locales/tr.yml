@@ -335,6 +335,25 @@ tr:
     destroy: "İmha Et"
     rename: "Yeniden Adlandır"
   admin:
+    products_page:
+      title: Ürünler
+      filters:
+        categories:
+          title: Kategoriler
+        producers:
+          title: ÜRETİCİLER
+        colums: Sütunlar
+      columns:
+        name: Ad
+        unit: Birim
+        price: Fiyat
+        producer: ÜRETİCİ
+        category: Kategori
+      columns_selector:
+        unit: Birim
+        price: Fiyat
+        producer: ÜRETİCİ
+        category: Kategori
     adjustments:
       skipped_changing_canceled_order: "İptal edilmiş bir siparişi değiştiremezsiniz."
     begins_at: Başlangıç
@@ -4003,3 +4022,11 @@ tr:
       x_years:
         one: "1 yıl"
         other: "%{count} yıl"
+  components:
+    search_input:
+      placeholder: Ara
+    selector_with_filter:
+      search_placeholder: Ara
+    pagination:
+      next: Sonrakİ
+      previous: Önceki

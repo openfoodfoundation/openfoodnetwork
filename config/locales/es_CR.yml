@@ -395,6 +395,25 @@ es_CR:
     destroy: "Destruir"
     rename: "Nombrar de nuevo"
   admin:
+    products_page:
+      title: Productos
+      filters:
+        categories:
+          title: Categorías
+        producers:
+          title: Productores
+        colums: Columnas
+      columns:
+        name: Nombre
+        unit: Unidad
+        price: Precio
+        producer: Productor
+        category: Categoría
+      columns_selector:
+        unit: Unidad
+        price: Precio
+        producer: Productor
+        category: Categoría
     adjustments:
       skipped_changing_canceled_order: "No se puede cambiar una orden cancelada"
     begins_at: Empieza en
@@ -4022,3 +4041,11 @@ es_CR:
       shipment:
         cannot_ready: "No se puede completar envío"
       invalid_taxonomy_id: "El identificador de taxonomía es inválido."
+  components:
+    search_input:
+      placeholder: Buscar
+    selector_with_filter:
+      search_placeholder: Buscar
+    pagination:
+      next: Siguiente
+      previous: Anterior

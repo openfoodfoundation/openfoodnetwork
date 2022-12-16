@@ -281,6 +281,25 @@ fil_PH:
     delete: "Tanggalin"
     add: "idagdag"
   admin:
+    products_page:
+      title: mga produkto
+      filters:
+        categories:
+          title: mga kategorya
+        producers:
+          title: Mga Producer
+        colums: hanay
+      columns:
+        name: Pangalan
+        unit: yunit
+        price: Presyo
+        producer: Producer
+        category: kategorya
+      columns_selector:
+        unit: yunit
+        price: Presyo
+        producer: Producer
+        category: kategorya
     begins_at: nagsimula sa
     begins_on: nagsisimula sa
     customer: Customer
@@ -3571,3 +3590,11 @@ fil_PH:
       shipment:
         cannot_ready: "hindi maihanda ang kargamento"
       invalid_taxonomy_id: "hindi valid na taxonomy id."
+  components:
+    search_input:
+      placeholder: hanapin
+    selector_with_filter:
+      search_placeholder: hanapin
+    pagination:
+      next: sunod
+      previous: nauna

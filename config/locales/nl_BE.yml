@@ -290,6 +290,25 @@ nl_BE:
     delete: "Uitwissen "
     add: "Voeg toe"
   admin:
+    products_page:
+      title: Producten
+      filters:
+        categories:
+          title: Categorieën
+        producers:
+          title: Producenten
+        colums: Kolommen
+      columns:
+        name: Naam
+        unit: Unit
+        price: Prijs
+        producer: Producent
+        category: Categorie
+      columns_selector:
+        unit: Unit
+        price: Prijs
+        producer: Producent
+        category: Categorie
     begins_at: Begint Bij
     begins_on: Begint Op
     customer: Klant
@@ -3593,3 +3612,11 @@ nl_BE:
       shipment:
         cannot_ready: "Kan levering niet klaarmaken"
       invalid_taxonomy_id: "Onjuiste taxonomie id."
+  components:
+    search_input:
+      placeholder: Zoeken
+    selector_with_filter:
+      search_placeholder: Zoeken
+    pagination:
+      next: Volgende
+      previous: Voorgaande

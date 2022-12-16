@@ -396,6 +396,25 @@ nb:
     destroy: "Fjern"
     rename: "Gi nytt navn"
   admin:
+    products_page:
+      title: Produkter
+      filters:
+        categories:
+          title: Kategorier
+        producers:
+          title: Produsenter
+        colums: Kolonner
+      columns:
+        name: Navn
+        unit: Enhet
+        price: Pris
+        producer: Produsent
+        category: Kategori
+      columns_selector:
+        unit: Enhet
+        price: Pris
+        producer: Produsent
+        category: Kategori
     adjustments:
       skipped_changing_canceled_order: "Du kan ikke endre en avbrutt bestilling."
     begins_at: Begynner på
@@ -4203,3 +4222,11 @@ nb:
     unprocessable_entity:
       title: "Endringen du ønsket ble avvist (422)"
       message_html: "<p>Endringen du ønsket ble avvist. Kanskje du prøvde å endre noe du ikke har tilgang til.<br><h3> <a href='/' >Vend hjem</a></h3></p>"
+  components:
+    search_input:
+      placeholder: Søk
+    selector_with_filter:
+      search_placeholder: Søk
+    pagination:
+      next: Neste
+      previous: Tidligere

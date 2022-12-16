@@ -394,6 +394,25 @@ it_CH:
     destroy: "Eliminare"
     rename: "Rinomina"
   admin:
+    products_page:
+      title: Prodotti
+      filters:
+        categories:
+          title: categorie
+        producers:
+          title: Produttori
+        colums: Colonne
+      columns:
+        name: Nome
+        unit: Unità
+        price: Prezzo
+        producer: Produttore
+        category: Categoria
+      columns_selector:
+        unit: Unità
+        price: Prezzo
+        producer: Produttore
+        category: Categoria
     adjustments:
       skipped_changing_canceled_order: "Non puoi modificare una richiesta annullata"
     begins_at: Inizia a
@@ -4167,3 +4186,11 @@ it_CH:
         one: "1 anno"
         many: "%{count} anni"
         other: "%{count} anni"
+  components:
+    search_input:
+      placeholder: Cerca
+    selector_with_filter:
+      search_placeholder: Cerca
+    pagination:
+      next: Prossimo
+      previous: Precedente

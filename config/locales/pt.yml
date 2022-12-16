@@ -327,6 +327,25 @@ pt:
     destroy: "Destruir"
     rename: "Mudar de nome"
   admin:
+    products_page:
+      title: Produtos
+      filters:
+        categories:
+          title: Categorias
+        producers:
+          title: Produtores
+        colums: Colunas
+      columns:
+        name: Nome
+        unit: Unidade
+        price: Preço
+        producer: Produtor/a
+        category: Categoria
+      columns_selector:
+        unit: Unidade
+        price: Preço
+        producer: Produtor/a
+        category: Categoria
     begins_at: Começa às
     begins_on: Começa em
     customer: Consumidor/a
@@ -3552,3 +3571,11 @@ pt:
           many: Pagamentos
           other: Pagamentos
     unit: unidade
+  components:
+    search_input:
+      placeholder: Procurar
+    selector_with_filter:
+      search_placeholder: Procurar
+    pagination:
+      next: Seguinte
+      previous: Anterior
