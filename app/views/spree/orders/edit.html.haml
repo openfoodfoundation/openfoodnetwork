@@ -25,7 +25,7 @@
   .sub-header.show-for-medium-down
     = render partial: "shopping_shared/order_cycles"
 
-  %fieldset.footer-pad
+  #cart-container
     - if @order.line_items.empty?
       %div.row{"data-hook" => "empty_cart"}
         %p= t(:your_cart_is_empty)
