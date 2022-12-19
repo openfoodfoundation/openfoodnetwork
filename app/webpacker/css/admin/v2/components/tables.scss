@@ -73,6 +73,8 @@ table tbody tr td.actions {
 
     &.no-text {
       border: 2px solid $v2-blue-light;
+      display: flex; // Be sure that display: flex; is applied
+      padding-top: 0;
 
       &:hover {
         border-color: $v2-blue;
