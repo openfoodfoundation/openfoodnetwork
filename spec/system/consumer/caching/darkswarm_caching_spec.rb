@@ -47,7 +47,7 @@ describe "Darkswarm data caching", js: true, caching: true do
 
       toggle_filters
 
-      within "#hubs .filter-row" do
+      within "#hubs .filter-box" do
         expect(page).to have_content taxon.name
         expect(page).to have_content property.presentation
       end
@@ -64,7 +64,7 @@ describe "Darkswarm data caching", js: true, caching: true do
       visit shops_path
 
       # Wait for /shops page to load properly before checking for new timestamps
-      expect(page).to_not have_selector ".row.filter-row"
+      expect(page).to_not have_selector ".row.filter-box"
 
       taxon_timestamp2 = CacheService.latest_timestamp_by_class(Spree::Taxon)
       expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons[0]}"
@@ -77,7 +77,7 @@ describe "Darkswarm data caching", js: true, caching: true do
 
       toggle_filters
 
-      within "#hubs .filter-row" do
+      within "#hubs .filter-box" do
         expect(page).to have_content "Changed Taxon"
         expect(page).to have_content "Changed Property"
       end
