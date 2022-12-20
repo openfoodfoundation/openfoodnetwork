@@ -91,11 +91,17 @@ Openfoodnetwork::Application.routes.draw do
       get '/checkout/:step', to: 'split_checkout#edit', as: :checkout_step
       put '/checkout/:step', to: 'split_checkout#update', as: :checkout_update
     end
+
+    # Redirects to the new checkout for any other 'step' (ie. /checkout/cart from the legacy checkout)
+    get '/checkout/:other', to: redirect('/checkout')
   end
 
-  get '/checkout', to: 'checkout#edit'
-  put '/checkout', to: 'checkout#update', as: :update_checkout
-  get '/checkout/:state', to: 'checkout#edit', as: :checkout_state
+   # When the split_checkout feature is disabled for the current user, use the legacy checkout
+  constraints ->(request) { OpenFoodNetwork::FeatureToggle.disabled? :split_checkout, request.env['warden']&.user } do
+    get '/checkout', to: 'checkout#edit'
+    put '/checkout', to: 'checkout#update', as: :update_checkout
+    get '/checkout/:state', to: 'checkout#edit', as: :checkout_state
+  end
 
   get 'embedded_shopfront/shopfront_session', to: 'application#shopfront_session'
   post 'embedded_shopfront/enable', to: 'application#enable_embedded_styles'
