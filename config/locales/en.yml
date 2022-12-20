@@ -1383,6 +1383,7 @@ en:
       addresses: Addresses
       payment_methods: Payment Methods Report
       delivery: Delivery Report
+      sales_tax_totals_by_producer: Sales Tax Totals By Producer
       tax_types: Tax Types
       tax_rates: Tax Rates
       pack_by_customer: Pack By Customer
@@ -2740,6 +2741,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"
   report_customers_csv: "Download as csv"
+  report_customers: Customer
   report_producers: "Producers"
   report_type: "Report Type"
   report_hubs: "Hubs"
@@ -2818,8 +2820,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_taxable_items_total: "Taxable Items Total (%{currency_symbol})"
   report_header_sales_tax: "Sales Tax (%{currency_symbol})"
   report_header_delivery_charge: "Delivery Charge (%{currency_symbol})"
+  report_header_tax: "Tax"
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
+  report_header_tax_category: "Tax Category"
+  report_header_tax_rate_name: "Tax Rate Name"
+  report_header_tax_rate: "Tax Rate"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
   report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
   report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
@@ -2842,6 +2848,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_supplier: Supplier
   report_header_producer: Producer
   report_header_producer_suburb: Producer Suburb
+  report_header_producer_tax_status: Producer Tax Status  
   report_header_producer_charges_sales_tax?: GST/VAT Registered
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity
@@ -2858,6 +2865,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_distributor_address: Distributor address
   report_header_distributor_city: Distributor city
   report_header_distributor_postcode: Distributor postcode
+  report_header_distributor_tax_status: Distributor Tax Status  
   report_header_delivery_address: Delivery Address
   report_header_delivery_postcode: Delivery Postcode
   report_header_bulk_unit_size: Bulk Unit Size
