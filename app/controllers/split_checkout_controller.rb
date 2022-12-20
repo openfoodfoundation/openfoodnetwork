@@ -31,6 +31,7 @@ class SplitCheckoutController < ::BaseController
     if confirm_order || update_order
       return if performed?
 
+      check_payments_adjustments
       clear_invalid_payments
       advance_order_state
       redirect_to_step
@@ -53,6 +54,10 @@ class SplitCheckoutController < ::BaseController
     flash[:error] = I18n.t('split_checkout.errors.no_shipping_methods_available')
   end
 
+  def check_payments_adjustments
+    @order.payments.each(&:ensure_correct_adjustment)
+  end
+
   def clear_invalid_payments
     @order.payments.with_state(:invalid).delete_all
   end
@@ -65,6 +70,7 @@ class SplitCheckoutController < ::BaseController
 
     return true if redirect_to_payment_gateway
 
+    @order.process_payments!
     @order.confirm!
     order_completion_reset @order
   end
