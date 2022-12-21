@@ -36,7 +36,7 @@ module Reporting
                           else
                             []
                           end
-      params_fields_to_show - fields_in_headers
+      params_fields_to_show - fields_in_headers - fields_to_hide
     end
 
     private
