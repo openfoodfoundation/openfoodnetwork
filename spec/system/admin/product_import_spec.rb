@@ -136,6 +136,29 @@ describe "Product Import", js: true do
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
     end
 
+    it "displays info about inconsistent variant unit names, within the same product" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name",
+                "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "50", "3.20", "250", "", "Bag", shipping_category_id_str]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "50", "6.40", "500", "", "Big-Bag", shipping_category_id_str]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+
+      expect(page).to have_content "Select a spreadsheet to upload"
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      proceed_to_validation
+      find('div.header-description', text: 'Items contain errors').click
+      expect(page).to have_content "Variant_unit_name cannot be updated on existing products via product import"
+      expect(page).to have_content "Imported file contains invalid entries"
+
+      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+    end
+
     it "handles saving of named tax and shipping categories" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
