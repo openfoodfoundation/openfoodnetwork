@@ -156,6 +156,7 @@ module Openfoodnetwork
     initializer "ofn.reports" do |app|
       module ::Reporting; end
       Rails.application.reloader.to_prepare do
+        next if defined?(::Reporting) && defined?(::Reporting::Errors)
         loader = Zeitwerk::Loader.new
         loader.push_dir("#{Rails.root}/lib/reporting", namespace: ::Reporting)
         loader.enable_reloading
