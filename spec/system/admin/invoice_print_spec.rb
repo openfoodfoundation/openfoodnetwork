@@ -223,8 +223,9 @@ describe '
           # header
           expect(page).to have_content "Item Qty GST Price"
           # second line item, included tax
-          expect(page).to have_content "#{Spree::Product.second.name} 3 $250.08 $1,500.45"
+          expect(page).to have_content Spree::Product.second.name.to_s
           expect(page).to have_content "(1g)" # display as
+          expect(page).to have_content "3 $250.08 $1,500.45"
           # Enterprise fee
           expect(page).to have_content "Whole order - #{enterprise_fee.name} fee by coordinator " \
                                        "#{user1.enterprises.first.name} 1 $15.65 (included) $120.00"
@@ -346,15 +347,17 @@ describe '
         it "displays $0.0 when a line item has no tax" do
           pending "iii) for legend see picture on PR #9495"
           # first line item, no tax - display $0.0
-          expect(page).to have_content "#{Spree::Product.first.name} 1 $0.0 $12.54"
+          expect(page).to have_content Spree::Product.first.name.to_s
           expect(page).to have_content "(1g)" # display as
+          expect(page).to have_content "1 $0.0 $12.54"
         end
 
         it "displays the added tax on the GST colum" do
           pending "closing #7983, iv) for legend see picture on PR #9495"
           # second line item, added tax of $300.09
-          expect(page).to have_content "#{Spree::Product.second.name} 3 $300.09 $1,500.45"
+          expect(page).to have_content Spree::Product.second.name.to_s
           expect(page).to have_content "(1g)" # display as
+          expect(page).to have_content "3 $300.09 $1,500.45"
         end
 
         it "displays GST for enterprise fees" do
