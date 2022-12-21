@@ -15,7 +15,7 @@ module Reporting
           order.line_items.first.variant.product.supplier
         end
         let(:current_user) { distributor.owner }
-        let(:params) { { display_summary_row: false } }
+        let(:params) { { display_summary_row: false, fields_to_hide: [] } }
         let(:report) do
           OrderCycleSupplierTotals.new(current_user, params)
         end
