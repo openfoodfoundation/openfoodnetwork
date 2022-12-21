@@ -49,8 +49,7 @@ describe '
     payment_method_ii.update!(name: "Cash")
   end
 
-  xit "creating an order cycle with full interface", retry: 3 do
-    # pending issue #10042, see below
+  it "creating an order cycle with full interface" do
     ## CREATE
     login_as_admin_and_visit admin_order_cycles_path
     click_link 'New Order Cycle'
@@ -67,6 +66,9 @@ describe '
 
     click_button 'Create'
     expect(page).to have_content 'Your order cycle has been created.'
+
+    # wait for the page to load
+    expect(page).to have_no_content "Loading..."
 
     ## UPDATE
     add_supplier_with_fees # pending issue #10042
