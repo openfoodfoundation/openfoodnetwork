@@ -153,7 +153,7 @@ describe "Product Import", js: true do
 
       proceed_to_validation
       find('div.header-description', text: 'Items contain errors').click
-      expect(page).to have_content "Variant_unit_name cannot be updated on existing products via product import"
+      expect(page).to have_content "Variant_unit_name must be the same for products with the same name"
       expect(page).to have_content "Imported file contains invalid entries"
 
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
@@ -458,7 +458,7 @@ describe "Product Import", js: true do
         proceed_to_validation
 
         find('div.header-description', text: 'Items contain errors').click
-        expect(page).to have_content "Variant_unit_name cannot be updated on existing products via product import"
+        expect(page).to have_content "Variant_unit_name must be the same for products with the same name"
         expect(page).to have_content "Imported file contains invalid entries"
         expect(page).to have_no_selector 'input[type=submit][value="Save"]'
 
