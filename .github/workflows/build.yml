@@ -84,7 +84,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/controllers/**/*_spec.rb}" 
         
         run: |
-          bundle exec rake knapsack_pro:rspec
+          bundle exec rake "knapsack_pro:rspec[--format progress]"
 
   knapsack_rspec_models:
     runs-on: ubuntu-20.04
@@ -153,7 +153,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/models/**/*_spec.rb}" 
         
         run: |
-          bundle exec rake knapsack_pro:rspec
+          bundle exec rake "knapsack_pro:rspec[--format progress]"
 
   knapsack_rspec_system_admin:
     runs-on: ubuntu-20.04
@@ -222,7 +222,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/system/admin/**/*_spec.rb}" 
 
         run: |
-          bundle exec rake knapsack_pro:queue:rspec
+          bundle exec rake "knapsack_pro:queue:rspec[--format progress]"
 
       - name: Archive failed tests screenshots
         if: failure()
@@ -300,7 +300,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/system/consumer/**/*_spec.rb}" 
 
         run: |
-          bundle exec rake knapsack_pro:queue:rspec
+          bundle exec rake "knapsack_pro:queue:rspec[--format progress]"
 
       - name: Archive failed tests screenshots
         if: failure()
@@ -378,7 +378,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/lib/**/*_spec.rb,spec/migrations/**/*_spec.rb,spec/serializers/**/*_spec.rb,engines/**/*_spec.rb}"
 
         run: |
-          bundle exec rake knapsack_pro:rspec
+          bundle exec rake "knapsack_pro:rspec[--format progress]"
 
       - name: Archive failed tests screenshots
         if: failure()
@@ -457,7 +457,7 @@ jobs:
                                             
         
         run: |
-          bundle exec rake knapsack_pro:rspec
+          bundle exec rake "knapsack_pro:rspec[--format progress]"
 
   non_knapsack_jest_karma:
     runs-on: ubuntu-20.04
