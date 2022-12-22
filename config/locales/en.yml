@@ -4061,6 +4061,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           title: "New Product"
           new_product: "New Product"
           supplier: "Supplier"
+          supplier_select_placeholder: "Select a supplier"
           product_name: "Product Name"
           units: "Unit Size"
           value: "Value"
