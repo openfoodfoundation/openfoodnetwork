@@ -2,6 +2,7 @@ angular.module('Darkswarm').factory "EnterpriseModal", ($modal, $rootScope, $htt
   # Build a modal popup for an enterprise.
   new class EnterpriseModal
     open: (enterprise)->
+      return if enterprise.visible == 'hidden'
       scope = $rootScope.$new(true) # Spawn an isolate to contain the enterprise
       scope.embedded_layout = window.location.search.indexOf("embedded_shopfront=true") != -1
 

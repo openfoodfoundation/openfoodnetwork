@@ -231,6 +231,24 @@ describe 'Shops' do
         expect(page).to have_content "Shop for #{producer.name} products at:".upcase
       end
     end
+
+    context "when visibility is `hidden`" do
+      before do
+        producer.visible = "hidden"
+        producer.save
+        visit shops_path
+        expand_active_table_node distributor.name
+      end
+
+      it "shows the producer name" do
+        expect(page).to have_content producer.name
+      end
+
+      it "does not show the producer modal" do
+        open_enterprise_modal producer
+        expect(page).to_not have_selector(".reveal-modal")
+      end
+    end
   end
 
   describe "viewing closed shops by URL" do
