@@ -9,7 +9,7 @@ Capybara.register_driver(:cuprite) do |app|
     app,
     **{
       window_size: [1200, 800],
-      browser_options: {},
+      browser_options: { "allow-download": true },
       process_timeout: 20,
       timeout: 20,
       # Don't load scripts from external sources, like google maps or stripe
