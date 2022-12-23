@@ -1,3 +1,8 @@
+#cart-container {
+  padding: 25px;
+  padding-bottom: 100px;
+}
+
 #update-cart {
   #errorExplanation {
     display: none;
@@ -6,6 +11,8 @@
 
 #cart-detail {
   width: 100%;
+  display: block;
+  overflow-x: auto;
 
   .cart-item-delete,
   .bought-item-delete {
