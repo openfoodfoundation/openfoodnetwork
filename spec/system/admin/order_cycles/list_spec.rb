@@ -121,7 +121,9 @@ describe '
   end
 
   describe 'listing order cycles with other locales' do
-    let!(:oc_pt) { create(:simple_order_cycle, name: 'oc', orders_open_at: '2012-01-01 00:00') }
+    oc_open_at = Time.zone.now - 2.weeks
+    oc_close_at = Time.zone.now + 2.weeks
+    let!(:oc_pt) { create(:simple_order_cycle, name: 'oc', orders_open_at: oc_open_at, orders_close_at: oc_close_at) }
 
     around(:each) do |spec|
       I18n.locale = :pt
@@ -134,23 +136,24 @@ describe '
         login_as_admin_and_visit admin_order_cycles_path
 
         within("tr.order-cycle-#{oc_pt.id}") do
-          expect(find('input.datetimepicker', match: :first).value).to start_with '2012-01-01 00:00'
+          expect(find('input.datetimepicker', match: :first).value).to start_with oc_open_at.strftime("%Y-%m-%d %H:%M")
           find('input.datetimepicker', match: :first).click
         end
 
         within(".flatpickr-calendar.open") do
-          expect(page).to have_selector '.flatpickr-day.selected', text: '1'
-          find('.dayContainer .flatpickr-day', text: "30").click
+          date_picker_selection = oc_open_at.strftime("%d").to_i.to_s # we need to strip leading zeros, ex.: 09 -> 9
+          expect(page).to have_selector '.flatpickr-day.selected', text: date_picker_selection
+          find('.dayContainer .flatpickr-day', text: "13").click
         end
 
         within("tr.order-cycle-#{oc_pt.id}") do
-          expect(find('input.datetimepicker', match: :first).value).to eq '2012-01-30 00:00'
+          expect(find('input.datetimepicker', match: :first).value).to eq oc_open_at.strftime("%Y-%m-13 %H:%M")
         end
       end
 
       it "correctly opens the datetimepicker and closes it using the last button (the 'Close' one)" do
         login_as_admin_and_visit admin_order_cycles_path
-        test_value = Time.parse("2022-12-22 00:00")
+        test_value = Time.zone.now
 
         # Opens a datetimepicker
         within("tr.order-cycle-#{oc_pt.id}") do
