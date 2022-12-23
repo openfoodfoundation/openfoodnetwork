@@ -148,7 +148,7 @@ describe '
         end
       end
 
-      it "correctly opens the datetimepicker and closes it using the last button (the 'Close' one)" do
+      xit "correctly opens the datetimepicker and closes it using the last button (the 'Close' one)" do
         login_as_admin_and_visit admin_order_cycles_path
         test_value = Time.parse("2022-12-22 00:00")
 
