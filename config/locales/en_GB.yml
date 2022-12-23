@@ -30,6 +30,7 @@ en_GB:
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+        unit_value: "Unit value"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -180,6 +181,8 @@ en_GB:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
         updated: "Your password was changed successfully. You are now signed in."
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+    oidc:
+      failure: "Could not sign in: %{error}"
   home_page_alert_html: "Home page alert HTML"
   hub_signup_case_studies_html: "Hub signup case studies HTML"
   hub_signup_detail_html: "Hub signup detail HTML"
@@ -401,8 +404,11 @@ en_GB:
       filters:
         categories:
           title: Categories
+          selected_categories: "%{count} categories selected"
         producers:
           title: Producers
+          selected_producers: "%{count} producers selected"
+        per_page: "%{count} items per page"
         colums: Columns
       columns:
         name: Name
@@ -643,6 +649,7 @@ en_GB:
         conditional_blank: can't be blank if unit_type is blank
         no_product: did not match any products in the database
         not_found: not found in database
+        category_not_found: doesn't match allowed categories. See the correct categories to choose from on the product import page, or check that there's no misspelling.
         not_updatable: cannot be updated on existing products via product import
         blank: can't be blank
         products_no_permission: you do not have permission to manage products for this enterprise
@@ -1363,6 +1370,15 @@ en_GB:
         formatted_data: Formatted Data
       packing:
         name: "Packing Reports"
+    oidc_settings:
+      index:
+        title: "OIDC Settings"
+        connect: "Connect Your Account"
+        already_connected: "Your account is already linked to this DFC authorisation account:"
+        les_communs_link: "Les Communs Open ID server"
+        link_your_account: "You need first to link your account with the authorisation provider used by DFC (Les Communs Open ID Connect)."
+        link_account_button: "Link your Les Communs OIDC Account"
+        view_account: "To view your account, see:"
     subscriptions:
       index:
         title: "Subscriptions"
@@ -2607,7 +2623,17 @@ en_GB:
   report_header_to_hub: To Hub
   report_header_hub_code: Hub Code
   report_header_hub_id: Hub ID
+  report_header_hub_business_number: "Hub Business Number"
+  report_header_hub_legal_name: "Hub Legal Name"
+  report_header_hub_contact_name: "Hub Contact Name"
+  report_header_hub_email: "Hub Public Email"
   report_header_hub_owner_email: Hub Owner Email
+  report_header_hub_phone: "Hub Phone Number"
+  report_header_hub_address_line1: "Hub Address Line 1"
+  report_header_hub_address_line2: "Hub Address Line 2"
+  report_header_hub_address_city: "Hub Town"
+  report_header_hub_address_zipcode: "Hub Postcode"
+  report_header_hub_address_state_name: "Hub County"
   report_header_code: Code
   report_header_paid: Paid?
   report_header_delivery: Delivery?
@@ -2642,11 +2668,13 @@ en_GB:
   report_header_total_tax: "Total Tax (%{currency_symbol})"
   report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
   report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
+  report_header_total_orders: "Total Number of Orders"
   report_header_enterprise: Enterprise
   report_header_customer: Customer
   report_header_customer_code: Customer Code
   report_header_product: Product
   report_header_product_properties: Product Properties
+  report_header_product_tax_category: Product Tax Category
   report_header_quantity: Quantity
   report_header_max_quantity: Max Quantity
   report_header_variant: Variant
@@ -2659,6 +2687,7 @@ en_GB:
   report_header_supplier: Supplier
   report_header_producer: Producer
   report_header_producer_suburb: Producer Suburb
+  report_header_producer_charges_sales_tax?: GST/VAT Registered
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity
   report_header_cost: Cost
@@ -2770,6 +2799,7 @@ en_GB:
   action_required: "Action required"
   tag_rules: "Tag Rules"
   enterprise_fee_whole_order: Whole order
+  enterprise_fee_by_name: "%{name} fee by %{role}%{enterprise_name}"
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
@@ -3592,6 +3622,7 @@ en_GB:
       messages:
         included_price_validation: "cannot be selected unless you have set a Default Tax Zone"
         blank: "can't be blank"
+        invalid_instagram_url: "Must be user name only eg. the_prof"
     layouts:
       admin:
         login_nav:
@@ -3890,6 +3921,9 @@ en_GB:
           select_and_search: "Select filters and click on %{option} to access your data."
         customer_names_message:
           customer_names_tip: "If customer names are hidden for orders you have supplied, you can contact the distributor and ask if they can update their shop preferences to allow their suppliers to view customer names."
+        products_and_inventory:
+          all_products:
+            message: "Note that stock levels reported are from supplier product lists only. If you are using Inventory to manage your stock quantities these values will be ignored in this report."
       users:
         index:
           listing_users: "Listing Users"
@@ -4058,6 +4092,8 @@ en_GB:
         thanks: "Thank you for your order with us."
         track_information: "Tracking Information: %{tracking}"
         track_link: "Tracking Link: %{url}"
+        picked_up_instructions: "Your order from %{distributor} has been picked up"
+        picked_up_subject: "Pick up Notification"
     test_mailer:
       test_email:
         greeting: "Congratulations!"
@@ -4233,9 +4269,12 @@ en_GB:
       title: "The change you wanted was rejected (422)"
       message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to. <br><h3><a href='/' >Return home</a></h3> </p>"
   components:
+    multiple_checked_select:
+      filter_placeholder: "Filter options"
     search_input:
       placeholder: Search
     selector_with_filter:
+      selected_items: "%{count} selected"
       search_placeholder: Search
     pagination:
       next: Next

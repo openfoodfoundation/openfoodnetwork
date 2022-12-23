@@ -1363,6 +1363,13 @@ cy:
         formatted_data: Data wedi’i Fformatio
       packing:
         name: "Adroddiadau Pacio"
+    oidc_settings:
+      index:
+        title: "OIDC Settings"
+        already_connected: "Your account is already linked to this DFC authorization account:"
+        les_communs_link: "Les Communs Open ID server"
+        link_your_account: "You need first to link your account with the authorization provider used by DFC (Les Communs Open ID Connect)."
+        link_account_button: "Link your Les Communs OIDC Account"
     subscriptions:
       index:
         title: "Tanysgrifiadau"
