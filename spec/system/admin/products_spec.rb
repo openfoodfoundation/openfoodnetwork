@@ -64,6 +64,19 @@ describe '
       expect(page).to have_content "Name can't be blank"
     end
 
+    it "preserves 'Items' 'Unit Size' selection when submitting with error" do
+      login_to_admin_section
+
+      click_link 'Products'
+      click_link 'New Product'
+
+      select "Items", from: 'product_variant_unit_with_scale'
+
+      click_button 'Create'
+
+      expect(page.find("#product_variant_unit_field")).to have_content 'Items'
+    end
+
     it "assigning important attributes", js: true do
       login_to_admin_section
 
