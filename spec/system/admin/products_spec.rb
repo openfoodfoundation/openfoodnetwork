@@ -37,7 +37,7 @@ describe '
 
       select @supplier.name, from: 'product_supplier_id'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
-      fill_in 'product_unit_value_with_description', with: "5.00 g"
+      fill_in 'product_unit_value', with: "5.00 g"
       assert_selector(:field, placeholder: "5kg g")
       fill_in 'product_display_as', with: "Big Box of Chocolates"
       select taxon.name, from: "product_primary_taxon_id"
@@ -51,7 +51,7 @@ describe '
 
       expect(page).to have_content "Name can't be blank"
       expect(page).to have_field 'product_supplier_id', with: @supplier.id
-      expect(page).to have_field 'product_unit_value_with_description', with: "5.00 g"
+      expect(page).to have_field 'product_unit_value', with: "5.00 g"
       expect(page).to have_field 'product_display_as', with: "Big Box of Chocolates"
       expect(page).to have_field 'product_primary_taxon_id', with: taxon.id
       expect(page).to have_field 'product_price', with: '19.99'
@@ -75,7 +75,7 @@ describe '
       select 'New supplier', from: 'product_supplier_id'
       fill_in 'product_name', with: 'A new product !!!'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
-      fill_in 'product_unit_value_with_description', with: 5
+      fill_in 'product_unit_value', with: 5
       select taxon.name, from: "product_primary_taxon_id"
       fill_in 'product_price', with: '19.99'
       fill_in 'product_on_hand', with: 5
@@ -112,7 +112,7 @@ describe '
       fill_in 'product_name', with: 'Hot Cakes'
       select 'New supplier', from: 'product_supplier_id'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
-      fill_in 'product_unit_value_with_description', with: 1
+      fill_in 'product_unit_value', with: 1
       select taxon.name, from: "product_primary_taxon_id"
       fill_in 'product_price', with: '1.99'
       fill_in 'product_on_hand', with: 0
@@ -137,7 +137,7 @@ describe '
       fill_in 'product_name', with: 'Hot Cakes'
       select 'New supplier', from: 'product_supplier_id'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
-      fill_in "product_unit_value_with_description", with: ""
+      fill_in "product_unit_value", with: ""
       select taxon.name, from: "product_primary_taxon_id"
       fill_in 'product_price', with: '1.99'
       fill_in 'product_on_hand', with: 0
@@ -251,7 +251,7 @@ describe '
           expect(page).to have_selector('#product_supplier_id')
           select 'Another Supplier', from: 'product_supplier_id'
           select 'Weight (g)', from: 'product_variant_unit_with_scale'
-          fill_in 'product_unit_value_with_description', with: '500'
+          fill_in 'product_unit_value', with: '500'
           select taxon.name, from: "product_primary_taxon_id"
           select 'None', from: "product_tax_category_id"
 
