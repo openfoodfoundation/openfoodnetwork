@@ -29,7 +29,7 @@ module Reporting
         end
 
         def order_permissions
-          @order_permissions ||= ::Permissions::Order.new(@user)
+          @order_permissions ||= ::Permissions::Order.new(@user, @params)
         end
 
         def report_line_items
