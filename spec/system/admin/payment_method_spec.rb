@@ -251,6 +251,14 @@ describe '
     let!(:payment_method) { create(:payment_method, calculator: calculator) }
     before { login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method }
 
+    it "handle the 'None' calculator" do
+      select2_select "None", from: 'calc_type'
+      click_button 'Update'
+      expect(page).to have_content("Payment Method has been successfully updated!")
+      expect(payment_method.reload.calculator_type).to eq "Calculator::None"
+      expect(page).to have_select "calc_type", selected: "None"
+    end
+
     context "using Flat Percent calculator" do
       before { select2_select "Flat Percent", from: 'calc_type' }
 
