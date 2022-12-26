@@ -14,7 +14,7 @@ module OpenFoodNetwork
         supplier_id = 456
 
         incoming_exchange = { enterprise_id: supplier_id, incoming: true,
-                              variants: { '1' => true, '2' => false, '3' => true }, enterprise_fee_ids: [1, 2], receival_instructions: 'receival instructions' }
+                              variants: { '1' => true, '2' => false, '3' => true }, enterprise_fee_ids: [1, 2], receival_instructions: 'receival instructions', tag_list: 'wholesale' }
 
         oc = double(:order_cycle, coordinator_id: coordinator_id, exchanges: [],
                                   incoming_exchanges: [incoming_exchange], outgoing_exchanges: [])
@@ -27,7 +27,7 @@ module OpenFoodNetwork
         expect(applicator).to receive(:exchange_exists?).with(supplier_id, coordinator_id,
                                                               true).and_return(false)
         expect(applicator).to receive(:add_exchange).with(supplier_id, coordinator_id, true,
-                                                          variant_ids: [1, 3], enterprise_fee_ids: [1, 2], receival_instructions: 'receival instructions')
+                                                          variant_ids: [1, 3], enterprise_fee_ids: [1, 2], receival_instructions: 'receival instructions', tag_list: 'wholesale')
         expect(applicator).to receive(:destroy_untouched_exchanges)
 
         applicator.go!
@@ -62,7 +62,7 @@ module OpenFoodNetwork
         supplier_id = 456
 
         incoming_exchange = { enterprise_id: supplier_id, incoming: true,
-                              variants: { '1' => true, '2' => false, '3' => true }, enterprise_fee_ids: [1, 2], receival_instructions: 'receival instructions' }
+                              variants: { '1' => true, '2' => false, '3' => true }, enterprise_fee_ids: [1, 2], receival_instructions: 'receival instructions', tag_list: 'wholesale' }
 
         oc = double(:order_cycle,
                     coordinator_id: coordinator_id,
@@ -79,7 +79,7 @@ module OpenFoodNetwork
         expect(applicator).to receive(:exchange_exists?).with(supplier_id, coordinator_id,
                                                               true).and_return(true)
         expect(applicator).to receive(:update_exchange).with(supplier_id, coordinator_id, true,
-                                                             variant_ids: [1, 3], enterprise_fee_ids: [1, 2], receival_instructions: 'receival instructions')
+                                                             variant_ids: [1, 3], enterprise_fee_ids: [1, 2], receival_instructions: 'receival instructions', tag_list: "wholesale")
         expect(applicator).to receive(:destroy_untouched_exchanges)
 
         applicator.go!

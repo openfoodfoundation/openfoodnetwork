@@ -242,6 +242,11 @@ describe '
         select_incoming_variant supplier_managed, 0, variant_managed
         select_incoming_variant supplier_permitted, 1, variant_permitted
 
+        page.find("table.exchanges tr.supplier-#{supplier_managed.id} td.tags").click
+        within ".exchange-tags" do
+          find(:css, "tags-input .tags input").set "supplier\n"
+        end
+
         click_button 'Save and Next'
         expect(page).to have_content 'Your order cycle has been updated.'
         expect(page).to_not have_content "Loading..."
@@ -291,6 +296,8 @@ describe '
         expect(order_cycle.distributor_payment_methods).to match_array(
           order_cycle.attachable_distributor_payment_methods
         )
+        incoming_exchange = order_cycle.exchanges.incoming.from_enterprise(supplier_managed).first
+        expect(incoming_exchange.tag_list).to eq(["supplier"])
       end
 
       context "editing an order cycle" do

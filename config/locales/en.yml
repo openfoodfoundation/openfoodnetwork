@@ -1201,6 +1201,7 @@ en:
         incoming: "Incoming"
         supplier: "Supplier"
         products: "Products"
+        tags: "Tags"
         receival_details: "Receival Details"
         fees: "Fees"
         save: "Save"
