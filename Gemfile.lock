@@ -401,7 +401,7 @@ GEM
       rake
     mini_magick (4.11.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.0)
+    mini_portile2 (2.8.1)
     mini_racer (0.4.0)
       libv8-node (~> 15.14.0.0)
     minitest (5.16.3)
