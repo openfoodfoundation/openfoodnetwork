@@ -28,8 +28,12 @@ class EnterpriseGroup < ApplicationRecord
   has_one_attached :logo
   has_one_attached :promo_image
 
-  validates :logo, content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
-  validates :promo_image, content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
+  validates :logo,
+            processable_image: true,
+            content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
+  validates :promo_image,
+            processable_image: true,
+            content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
 
   scope :by_position, -> { order('position ASC') }
   scope :on_front_page, -> { where(on_front_page: true) }
