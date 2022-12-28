@@ -577,7 +577,7 @@ describe "As a consumer, I want to checkout my order", js: true do
           expect(page).to have_checked_field "payment_method_#{payment_with_fee.id}"
         end
         it "displays the transaction fee" do
-          expect(page).to have_content("#{payment_with_fee.name} " + "(#{with_currency(1.23)})")
+          expect(page).to have_content("#{payment_with_fee.name} " + with_currency(1.23).to_s)
         end
       end
 

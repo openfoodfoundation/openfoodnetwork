@@ -2,27 +2,24 @@ import { Controller } from "stimulus";
 export default class extends Controller {
   static targets = [
     "shippingMethodDescription",
-    "shippingMethodDescriptionContent",
     "shippingMethodAddress",
     "shippingAddressCheckbox",
   ];
-  connect() {
-    // Hide shippingMethodDescription by default
-  }
+  connect() {}
 
   selectShippingMethod(event) {
     const input = event.target;
     if (input.tagName === "INPUT") {
-      // Shipping method description
-      if (input.dataset.description.length > 0) {
-        this.shippingMethodDescriptionTarget.style.display = "block";
-        this.shippingMethodDescriptionContentTarget.innerText =
-          input.dataset.description;
-      } else {
-        this.shippingMethodDescriptionTarget.style.display = "none";
-        this.shippingMethodDescriptionContentTarget.innerText = null;
-      }
-      // Require a ship address
+      // -- Shipping method description
+      // Hide all shipping method descriptions
+      this.shippingMethodDescriptionTargets.forEach((t) => {
+        t.style.display = "none";
+      });
+      // but not the one we want ie. the one that matches the shipping method id
+      this.shippingMethodDescriptionTargets.find(
+        (e) => e.dataset["shippingmethodid"] == input.value
+      ).style.display = "block";
+      // -- Require a ship address
       if (
         input.dataset.requireaddress === "true" &&
         !this.shippingAddressCheckboxTarget.checked

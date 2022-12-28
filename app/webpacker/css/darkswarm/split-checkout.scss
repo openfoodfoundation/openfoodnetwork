@@ -34,12 +34,15 @@
 
     span, span > a {
       color: $white;
-      text-decoration: underline;
     }
   }
 
   &.success {
     border-bottom: 5px solid $clr-turquoise-bright;
+
+    span {
+      text-decoration: underline;
+    }
 
     span.checkout-tab-label {
       &:after {
@@ -98,7 +101,6 @@
     font-size: 1.06rem;
     @include headingFont;
     font-weight: $font-weight-bold;
-    text-decoration: underline;
     color: $darker-grey;
     margin-bottom: 1.5rem;
   }
@@ -158,6 +160,18 @@
 
       label {
         margin-top: 0.3rem;
+        & + em {
+          margin-left: -0.5rem;
+          font-size: 14px; // same as label
+          font-weight: bold;
+          // Add opening and closing parentheses
+          &:before {
+            content: "(";
+          }
+          &:after {
+            content: ")";
+          }
+        }
       }
     }
   }
@@ -240,8 +254,10 @@
       }
 
       &.cancel {
-        background-color: $grey-100;
-        color: $black;
+        background-color: $white;
+        border: 1px solid $orange-500;
+        color: $orange-500;
+        
       }
     }
 
@@ -310,4 +326,58 @@
 #line-items {
   display: block;
   overflow-x: auto;
+}
+
+.two-columns-inputs {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+
+  > .checkout-input {
+    flex: 1;
+  }
+
+  &:last-child > .checkout-input {
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 700px) {
+    flex-direction: column;
+    gap: 0;
+    &:last-child > .checkout-input {
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+// Shows label as a placeholder, inside the input and when the input is focused shows the label above the input
+.checkout-input.with-floating-label {
+  position: relative;
+
+  label {
+    display: none; // Display none by default, and shown by floating_label_controller
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 0.875rem;
+    padding: 8px;
+    padding-left: 9px;
+    color: $min-accessible-grey;
+    pointer-events: none;
+    transform: translateY(0);
+    transform-origin: top left;
+    &.with-transition {
+      transition: all 0.2s ease-in-out;
+    }
+  }
+  &.active {
+      label {
+        transform: translateY(-9px) translateX(10px) scale(0.9);
+        background-color: white;
+        padding-left: 3px;
+        padding-right: 3px;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }  
 }
