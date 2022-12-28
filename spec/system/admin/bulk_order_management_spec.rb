@@ -346,6 +346,7 @@ describe '
           end
           close_select2
           select2_select s1.name, from: "supplier_filter"
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
         end
@@ -354,9 +355,11 @@ describe '
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           select2_select s1.name, from: "supplier_filter"
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           select2_select "All", from: "supplier_filter"
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
         end
@@ -389,6 +392,7 @@ describe '
             expect(page).to have_selector "div.select2-drop-active ul.select2-results li", text: dn
           end
           find(".select2-result-label", text: d1.name.to_s).click
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
         end
@@ -398,10 +402,12 @@ describe '
           expect(page).to have_selector "tr#li_#{li2.id}"
           find("#s2id_distributor_filter .select2-chosen").click
           find(".select2-result-label", text: d1.name.to_s).click
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           # displays orders from all enterprises
           find("#s2id_distributor_filter .select2-chosen").click
           find(".select2-result-label", text: "All").click
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
         end
@@ -432,6 +438,7 @@ describe '
           expect(page).to have_select2 'order_cycle_filter',
                                        with_options: OrderCycle.pluck(:name).unshift("All")
           select2_select oc1.name, from: "order_cycle_filter"
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_no_selector "#loading i"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
@@ -441,9 +448,11 @@ describe '
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           select2_select oc1.name, from: "order_cycle_filter"
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           select2_select "All", from: "order_cycle_filter"
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
         end
@@ -477,17 +486,21 @@ describe '
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           click_on_select2 oc1.name, from: "order_cycle_filter"
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           click_on_select2 d1.name, from: "distributor_filter"
           click_on_select2 s1.name, from: "supplier_filter"
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           click_on_select2 d2.name, from: "distributor_filter"
           click_on_select2 s2.name, from: "supplier_filter"
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_no_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           click_on_select2 oc2.name, from: "order_cycle_filter"
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_no_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
         end
@@ -498,10 +511,10 @@ describe '
           click_on_select2 oc1.name, from: "order_cycle_filter"
           click_on_select2 d1.name, from: "distributor_filter"
           click_on_select2 s1.name, from: "supplier_filter"
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
-          expect(page).to have_button "Clear All"
-          click_button "Clear All"
+          page.find('.filter-actions #clear_filters_button').click
           expect(page).to have_selector "div#s2id_order_cycle_filter a.select2-choice", text: "All"
           expect(page).to have_selector "div#s2id_supplier_filter a.select2-choice", text: "All"
           expect(page).to have_selector "div#s2id_distributor_filter a.select2-choice", text: "All"
@@ -589,6 +602,7 @@ describe '
 
         find("input.datepicker").click
         select_dates_from_daterangepicker(from, today)
+        page.find('.filter-actions .button.icon-search').click
 
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
@@ -597,6 +611,7 @@ describe '
 
         find("input.datepicker").click
         select_dates_from_daterangepicker(from, to)
+        page.find('.filter-actions .button.icon-search').click
 
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
@@ -615,6 +630,7 @@ describe '
           accept_confirm "Unsaved changes exist and will be lost if you continue." do
             find("input.datepicker").click
             select_dates_from_daterangepicker(today - 9.days, today)
+            page.find('.filter-actions .button.icon-search').click
           end
           # daterange picker should have changed
           expect(find("input.datepicker").value).to eq "#{today.prev_day(9).strftime('%F')} to #{today.strftime('%F')}"
@@ -629,9 +645,8 @@ describe '
           dismiss_confirm "Unsaved changes exist and will be lost if you continue." do
             find("input.datepicker").click
             select_dates_from_daterangepicker(today - 9.days, today)
+            page.find('.filter-actions .button.icon-search').click
           end
-          # daterange picker shouldn't have changed
-          expect(find("input.datepicker").value).to eq previousdaterangestring
           expect(page).to have_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
             expect(page).to have_selector "input[name=quantity].ng-dirty"

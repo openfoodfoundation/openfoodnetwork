@@ -3,10 +3,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.RequestMonitor = RequestMonitor
   $scope.line_items = LineItems.all
   $scope.confirmDelete = true
-  $scope.startDate = moment().startOf('day').subtract(7, 'days').format('YYYY-MM-DD')
-  $scope.endDate = moment().startOf('day').format('YYYY-MM-DD')
-  $scope.previousDates = { startDate: $scope.startDate, endDate: $scope.endDate }
-  $scope.datesChangedOnCancelEvent = false
   $scope.bulkActions = [ { name: t("admin.orders.bulk_management.actions_delete"), callback: 'deleteLineItems' } ]
   $scope.selectedUnitsProduct = {}
   $scope.selectedUnitsVariant = {}
@@ -17,42 +13,29 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.confirmRefresh = ->
     LineItems.allSaved() || confirm(t("unsaved_changes_warning"))
 
+  $scope.initStartAndEnDate = ->
+    $scope.startDate = moment().startOf('day').subtract(7, 'days').format('YYYY-MM-DD')
+    $scope.endDate = moment().startOf('day').format('YYYY-MM-DD')
+
   $scope.resetFilters = ->
     $scope.distributorFilter = ''
     $scope.supplierFilter = ''
     $scope.orderCycleFilter = ''
     $scope.quickSearch = ''
+    $scope.initStartAndEnDate()
+    event = new CustomEvent('flatpickr:change', {
+      detail: { 
+        startDate: $scope.startDate,
+        endDate: $scope.endDate
+      }
+    })
+    window.dispatchEvent(event)
 
   $scope.resetSelectFilters = ->
     $scope.resetFilters()
     $scope.refreshData()
 
-  $scope.$watchCollection "[startDate, endDate]", (newValues, oldValues) ->
-    if newValues != oldValues && !$scope.datesChangedOnCancelEvent
-        state = $scope.refreshData()
-        if (state == "cancel")
-          $scope.datesChangedOnCancelEvent = true
-          $scope.cancelDateChange()
-  
-  $scope.cancelDateChange = ->
-    # Reset the date filters to the previous values
-    $scope.startDate = $scope.previousDates.startDate
-    $scope.endDate = $scope.previousDates.endDate
-    # throw a flatpickr:change event to change the date back in the datepicker
-    event = new CustomEvent('flatpickr:change', {
-      detail: { 
-        startDate: $scope.previousDates.startDate,
-        endDate: $scope.previousDates.endDate
-      }
-    })
-    window.dispatchEvent(event)
-    $timeout ->
-      $scope.datesChangedOnCancelEvent = false
- 
   $scope.refreshData = ->
-    unless !$scope.orderCycleFilter? || $scope.orderCycleFilter == ''
-      $scope.setOrderCycleDateRange()
-
     $scope.formattedStartDate = moment($scope.startDate).format()
     $scope.formattedEndDate = moment($scope.endDate).add(1,'day').format()
 
@@ -67,11 +50,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       $scope.loadAssociatedData()
 
     $scope.dereferenceLoadedData()
-    
-    $timeout ->
-      # update the previous dates with the current ones since loading was successful
-      $scope.previousDates.startDate = $scope.startDate
-      $scope.previousDates.endDate = $scope.endDate
 
   $scope.setOrderCycleDateRange = ->
     start_date = OrderCycles.byID[$scope.orderCycleFilter].orders_open_at
@@ -79,6 +57,14 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     format = "YYYY-MM-DD HH:mm:ss Z"
     $scope.startDate = moment(start_date, format).format('YYYY-MM-DD')
     $scope.endDate = moment(end_date, format).startOf('day').format('YYYY-MM-DD')
+     # throw a flatpickr:change event to change the date back in the datepicker
+    event = new CustomEvent('flatpickr:change', {
+      detail: { 
+        startDate: $scope.startDate,
+        endDate: $scope.endDate
+      }
+    })
+    window.dispatchEvent(event)
 
   $scope.loadOrders = ->
     RequestMonitor.load $scope.orders = Orders.index(
@@ -277,5 +263,4 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       lineItem.final_weight_volume = LineItems.pristineByID[lineItem.id].final_weight_volume * lineItem.quantity / LineItems.pristineByID[lineItem.id].quantity
       $scope.weightAdjustedPrice(lineItem)
 
-  $scope.resetFilters()
-  $scope.refreshData()
+  $scope.resetSelectFilters()
