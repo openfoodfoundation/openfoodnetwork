@@ -21,14 +21,11 @@
         - if payment_method.description && !payment_method.description.empty?
           .paymentmethod-description.panel
             #{payment_method.description}
-
-    = f.error_message_on :payment_method, standalone: true
-
-    - available_payment_methods.each do |payment_method|
-      .paymentmethod-container{"data-paymentmethod-id": "paymentmethod#{payment_method.id}", style: "display: #{payment_method.id == selected_payment_method ? "block" : "none"}"}
         .paymentmethod-form
           = render partial: "split_checkout/payment/#{payment_method.method_type}", locals: { payment_method: payment_method, f: f }
-          
+
+    = f.error_message_on :payment_method, standalone: true
+      
   %div.checkout-substep
     = t("split_checkout.step2.explaination")
 
