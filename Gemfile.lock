@@ -718,8 +718,6 @@ GEM
       rails (>= 5.2, < 8.0)
       stimulus_reflex (>= 3.5.0.pre2)
       view_component (>= 2.28.0)
-    view_component_storybook (0.11.1)
-      view_component (>= 2.36)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.0)
@@ -884,7 +882,6 @@ DEPENDENCIES
   vcr
   view_component
   view_component_reflex (= 3.1.14.pre9)
-  view_component_storybook
   web!
   web-console
   webmock

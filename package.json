@@ -7,7 +7,6 @@
   },
   "license": "AGPL-3.0",
   "scripts": {
-    "storybook": "start-storybook",
     "prepare": "husky install",
     "pretty-quick": "pretty-quick"
   },
@@ -43,9 +42,6 @@
     "webpack-cli": "~3"
   },
   "devDependencies": {
-    "@storybook/addon-controls": "^6.4.13",
-    "@storybook/addon-docs": "^6.4.13",
-    "@storybook/server": "^6.4.13",
     "husky": "^8.0.0",
     "jasmine-core": "~2.4.1",
     "jest": "^27.4.7",

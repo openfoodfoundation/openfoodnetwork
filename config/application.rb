@@ -32,8 +32,6 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-require "view_component/storybook" if Rails.env.development?
-
 module Openfoodnetwork
   class Application < Rails::Application
     config.middleware.insert_before(
