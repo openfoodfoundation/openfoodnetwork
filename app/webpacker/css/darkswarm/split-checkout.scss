@@ -40,6 +40,10 @@
   &.success {
     border-bottom: 5px solid $clr-turquoise-bright;
 
+    span {
+      text-decoration: underline;
+    }
+
     span.checkout-tab-label {
       &:after {
         content: '✓';
