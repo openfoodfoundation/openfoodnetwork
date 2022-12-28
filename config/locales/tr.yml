@@ -1656,32 +1656,24 @@ tr:
       cart: "sepet"
       message_html: "Bu sipariş dönemi için zaten bir siparişiniz var. Daha önce sipariş ettiğiniz ürünleri görmek için %{cart} adresini kontrol edin. Sipariş dönemi açık olduğu sürece siparişlerinizde değişiklik yapabilirsiniz."
     step1:
-      your_details:
-        title: Bilgilerin
-        first_name:
-          label: Ad
-          placeholder: örn. Leyla
-        last_name:
-          label: Soyad
-          placeholder: örn. Durak
+      contact_information:
         email:
           label: E-posta
-          placeholder: örn. leyla@email.com
         phone:
           label: Tel. no
-          placeholder: örn. 05321100708
       billing_address:
         title: Fatura Adresi
+        first_name:
+          label: Ad
+        last_name:
+          label: Soyad
       address:
         address1:
           label: Adres (Sokak + Ev Numarası)
-          placeholder: örn. Küme Sk. No:7 Uğur Apt.
         address2:
           label: Ek adres bilgisi (isteğe bağlı)
-          placeholder: örn. şairler parkı yanı
         city:
           label: ŞEHİR
-          placeholder: örn. İstanbul
         state_id:
           label: Durum
         zipcode:

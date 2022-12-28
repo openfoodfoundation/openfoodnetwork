@@ -1797,37 +1797,28 @@ en_FR:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     step1:
-      your_details:
-        title: Your details
-        first_name:
-          label: First Name
-          placeholder: e.g. Jane
-        last_name:
-          label: Last Name
-          placeholder: e.g. Doe
+      contact_information:
         email:
           label: Email
-          placeholder: e.g. Janedoe@email.com
         phone:
           label: Phone number
-          placeholder: e.g. 0798765432
       billing_address:
         title: Billing address
+        first_name:
+          label: First Name
+        last_name:
+          label: Last Name
       address:
         address1:
           label: Address (Street + House Number)
-          placeholder: e.g. 17 rue de la chèvre
         address2:
           label: Additional address info (optional)
-          placeholder: e.g. Flat number 3
         city:
           label: City
-          placeholder: e.g. Metz
         state_id:
           label: State
         zipcode:
           label: Postcode
-          placeholder: e.g. 57000
         country_id:
           label: Country
       shipping_info:

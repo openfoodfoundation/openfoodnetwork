@@ -1791,37 +1791,28 @@ cy:
       cart: "basged"
       message_html: "Mae gennych chi archeb ar gyfer y cylch archebu hwn eisoes. Gwiriwch y %{cart} i weld yr eitemau a archebwyd o'r blaen. Gallwch hefyd ganslo eitemau cyn belled â bod y cylch archebu ar agor."
     step1:
-      your_details:
-        title: Eich manylion
-        first_name:
-          label: Enw cyntaf
-          placeholder: e.e. Sian
-        last_name:
-          label: Enw olaf
-          placeholder: e.e. Davies
+      contact_information:
         email:
           label: E-bost
-          placeholder: e.e. siandavies@email.com
         phone:
           label: Rhif ffôn
-          placeholder: e.e. 07987654321
       billing_address:
         title: Cyfeiriad bilio
+        first_name:
+          label: Enw cyntaf
+        last_name:
+          label: Enw olaf
       address:
         address1:
           label: Cyfeiriad (Stryd a Rhif y Ty)
-          placeholder: e.e. Fflat 1 Adeilad y Môr
         address2:
           label: Manylion ychwanegol y Cyfeiriad (dewisol)
-          placeholder: Fflat Rhif 3
         city:
           label: Dinas
-          placeholder: e.e. Caerdydd
         state_id:
           label: Sir
         zipcode:
           label: Cod post
-          placeholder: e.e. CF1 0AA
         country_id:
           label: Gwlad
       shipping_info:

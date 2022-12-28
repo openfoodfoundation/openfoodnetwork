@@ -1763,37 +1763,28 @@ de_CH:
       cart: "im Warenkorb"
       message_html: "Sie haben bereits eine Bestellung für diesen Bestellzyklus. Überprüfen Sie den %{cart}, um die Artikel zu sehen, die Sie zuvor bestellt haben. Sie können Artikel auch stornieren, solange der Bestellzyklus geöffnet ist."
     step1:
-      your_details:
-        title: Ihre Daten
-        first_name:
-          label: Vorname
-          placeholder: z. B. Max
-        last_name:
-          label: Nachname
-          placeholder: z. B. Mustermann
+      contact_information:
         email:
           label: E-Mail-Adresse
-          placeholder: z. B. Max.Mustermann@beispiel.com
         phone:
-          label: Telefonnummer
-          placeholder: z. B. +49 40 123 456
+          label: Telefonnummer (optional)
       billing_address:
         title: Rechnungsadresse
+        first_name:
+          label: Vorname
+        last_name:
+          label: Nachname
       address:
         address1:
           label: Strasse + Hausnummer
-          placeholder: z. B. Gartenstrasse 123
         address2:
           label: Adresszusatz (optional)
-          placeholder: z. B. c/o Familie Müller
         city:
           label: Ort
-          placeholder: z. B. Nordwestheim
         state_id:
           label: Bundesland
         zipcode:
           label: Postleitzahl
-          placeholder: z. B. 30701
         country_id:
           label: Land
       shipping_info:

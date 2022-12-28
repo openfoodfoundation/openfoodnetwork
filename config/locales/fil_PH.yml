@@ -1537,18 +1537,17 @@ fil_PH:
       cart: "cart"
       message_html: "mayroon ka ng order para sa order cycle na ito. tingnan ang%{cart}para makita ang mga item na dating inorder. maaari  mo ring kanselahin ang mga item habang ang order cycle ay bukas pa."
     step1:
-      your_details:
-        title: ang inyong detalye
-        first_name:
-          label: Pangalan
-        last_name:
-          label: Apelyido
+      contact_information:
         email:
           label: Email
         phone:
           label: telepono
       billing_address:
         title: Billing address
+        first_name:
+          label: Pangalan
+        last_name:
+          label: Apelyido
       address:
         city:
           label: Lungsod

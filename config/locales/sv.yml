@@ -930,18 +930,17 @@ sv:
       cart: "vagn"
       message_html: "Du har redan en beställning för denna beställningsomgång. Kontrollera %{cart} för att se föremålen du beställde tidigare. Du kan också ta bort varor/artiklar så länge som beställningsomgången är öppen."
     step1:
-      your_details:
-        title: Dina detaljer
-        first_name:
-          label: Förnamn
-        last_name:
-          label: Efternamn
+      contact_information:
         email:
           label: E-post
         phone:
           label: Telefonnummer
       billing_address:
         title: 'Faktureringsadress '
+        first_name:
+          label: Förnamn
+        last_name:
+          label: Efternamn
       address:
         city:
           label: Ort

@@ -1757,37 +1757,28 @@ ko:
       cart: "카트"
       message_html: "이 주문 사이클에 대한 주문이 이미 있습니다. 이전에 주문하신 상품은 %{cart}에서 확인하시기 바랍니다. 주문 사이클가 열려 있는 한 항목을 취소할 수도 있습니다."
     step1:
-      your_details:
-        title: 세부 사항
-        first_name:
-          label: 이름
-          placeholder: 예. Jane
-        last_name:
-          label: 성
-          placeholder: 예. Doe
+      contact_information:
         email:
           label: 이메일
-          placeholder: 예. Janedoe@email.com
         phone:
           label: 전화번호
-          placeholder: 예. 07987654321
       billing_address:
         title: '청구서 발송지 :'
+        first_name:
+          label: 이름
+        last_name:
+          label: 성
       address:
         address1:
           label: 주소 (도로명 + 집 번혼)
-          placeholder: 예. Flat 1 Elm apartments
         address2:
           label: 추가 주소 정보(선택 사항)
-          placeholder: 예. Cavalier avenur
         city:
           label: 시
-          placeholder: 예. London
         state_id:
           label: 상태
         zipcode:
           label: 우편번호
-          placeholder: 예. SW11 3QN
         country_id:
           label: 나라
       shipping_info:

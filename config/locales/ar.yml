@@ -1783,37 +1783,28 @@ ar:
       cart: "سلة التسوق"
       message_html: "لديك طلب لدورة الطلب هذه بالفعل. تحقق من %{cart} لرؤية العناصر التي طلبتها من قبل. يمكنك أيضًا إلغاء العناصر طالما كانت دورة الطلب مفتوحة."
     step1:
-      your_details:
-        title: تفاصيلك
-        first_name:
-          label: الاسم الاول
-          placeholder: على سبيل المثال ، جين
-        last_name:
-          label: الكنية
-          placeholder: على سبيل المثال ، الفلاح
+      contact_information:
         email:
           label: البريد الإلكتروني
-          placeholder: على سبيل المثال Janedoe@email.com
         phone:
           label: رقم الهاتف
-          placeholder: مثال  07987654321
       billing_address:
         title: عنوان وصول الفواتير
+        first_name:
+          label: الاسم الاول
+        last_name:
+          label: الكنية
       address:
         address1:
           label: العنوان (الشارع + رقم المنزل)
-          placeholder: على سبيل المثال شقق Flat 1 Elm
         address2:
           label: معلومات عنوان إضافية (اختياري)
-          placeholder: على سبيل المثال كافاليير أفينور
         city:
           label: مدينة
-          placeholder: على سبيل المثال لندن
         state_id:
           label: محافظة
         zipcode:
           label: الرمز البريدي
-          placeholder: على سبيل المثال SW11 3QN
         country_id:
           label: بلد
       shipping_info:

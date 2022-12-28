@@ -1800,37 +1800,28 @@ ru:
       cart: "корзина"
       message_html: "У вас уже есть заказ для этого цикла заказов. Проверьте %{cart}, чтобы увидеть товары, которые вы заказали ранее. Вы также можете отменять позиции, пока открыт цикл заказа."
     step1:
-      your_details:
-        title: Информация о Вас
-        first_name:
-          label: Имя
-          placeholder: например, Иван
-        last_name:
-          label: Фамилия
-          placeholder: например, Иванов
+      contact_information:
         email:
           label: Email
-          placeholder: например, ivanov@email.com
         phone:
           label: Номер телефона
-          placeholder: например, 71234567890
       billing_address:
         title: Платежный Адрес
+        first_name:
+          label: Имя
+        last_name:
+          label: Фамилия
       address:
         address1:
           label: Адрес (Улица + Номер Дома)
-          placeholder: напр., ул. Ленина 1, кв. 12
         address2:
           label: Дополнительная адресная информация (необязательно)
-          placeholder: например, ул. Комсомольская
         city:
           label: Город
-          placeholder: например, Воронеж
         state_id:
           label: Статус
         zipcode:
           label: Почтовый индекс
-          placeholder: например, 123456
         country_id:
           label: Страна
       shipping_info:

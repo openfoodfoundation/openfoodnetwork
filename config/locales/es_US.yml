@@ -1728,18 +1728,17 @@ es_US:
       cart: "carrito"
       message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
     step1:
-      your_details:
-        title: Sus detalles
-        first_name:
-          label: Nombre
-        last_name:
-          label: Apellido
+      contact_information:
         email:
           label: Email
         phone:
           label: Número de teléfono
       billing_address:
         title: Dirección de cobro
+        first_name:
+          label: Nombre
+        last_name:
+          label: Apellido
       address:
         city:
           label: Ciudad

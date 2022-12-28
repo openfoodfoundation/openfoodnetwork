@@ -1586,18 +1586,17 @@ pt:
       cart: "carrinho"
       message_html: "Já tem uma encomenda para este ciclo de encomendas. Verifique o %{cart} para ver os itens já encomendados. Também pode cancelar itens enquanto o ciclo estiver aberto."
     step1:
-      your_details:
-        title: Os seus detalhes
-        first_name:
-          label: Primeiro Nome
-        last_name:
-          label: Último Nome
+      contact_information:
         email:
           label: Email
         phone:
           label: Número de telefone
       billing_address:
         title: Morada de faturação
+        first_name:
+          label: Primeiro Nome
+        last_name:
+          label: Último Nome
       address:
         city:
           label: Cidade

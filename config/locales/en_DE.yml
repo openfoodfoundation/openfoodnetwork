@@ -1498,18 +1498,17 @@ en_DE:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     step1:
-      your_details:
-        title: Your details
-        first_name:
-          label: First Name
-        last_name:
-          label: Last Name
+      contact_information:
         email:
           label: Email
         phone:
           label: Phone number
       billing_address:
         title: Billing address
+        first_name:
+          label: First Name
+        last_name:
+          label: Last Name
       address:
         city:
           label: City

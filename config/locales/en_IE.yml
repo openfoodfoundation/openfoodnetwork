@@ -1780,37 +1780,28 @@ en_IE:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     step1:
-      your_details:
-        title: Your details
-        first_name:
-          label: First Name
-          placeholder: Jo
-        last_name:
-          label: Last Name
-          placeholder: Bloggs
+      contact_information:
         email:
           label: Email
-          placeholder: jo.bloggs@email.com
         phone:
           label: Phone number
-          placeholder: e.g. 08X XXX XXXX
       billing_address:
         title: Billing address
+        first_name:
+          label: First Name
+        last_name:
+          label: Last Name
       address:
         address1:
           label: Address (Street + House Number)
-          placeholder: e.g. 123 Main Street
         address2:
           label: Additional address info (optional)
-          placeholder: ' '
         city:
           label: City
-          placeholder: e.g. Dublin
         state_id:
           label: County
         zipcode:
           label: Postcode
-          placeholder: e.g. D01 XXXX
         country_id:
           label: Country
       shipping_info:

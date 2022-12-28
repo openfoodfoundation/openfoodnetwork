@@ -1785,37 +1785,28 @@ it:
       cart: "carrello"
       message_html: "Hai già un ordine per questo ciclo d'ordine. Controlla%{cart} per vedere gli articoli ordinati in precedenza. Puoi anche cancellare gli articoli finché il ciclo dell'ordine è aperto."
     step1:
-      your_details:
-        title: I tuoi dettagli
-        first_name:
-          label: Nome
-          placeholder: es. Anna
-        last_name:
-          label: Cognome
-          placeholder: es. Rossi
+      contact_information:
         email:
           label: Email
-          placeholder: es. annarossi@email.com
         phone:
           label: Numero di telefono
-          placeholder: es. 328 987654
       billing_address:
         title: Indirizzo di fatturazione
+        first_name:
+          label: Nome
+        last_name:
+          label: Cognome
       address:
         address1:
           label: Indirizzo (Via/Piazza/Contrada + numero civico)
-          placeholder: es. Scala 1
         address2:
           label: Indirizzo, informazioni aggiuntive (facoltativo)
-          placeholder: es. via Roma
         city:
           label: Comune
-          placeholder: es. Catania
         state_id:
           label: Provincia
         zipcode:
           label: CAP
-          placeholder: e.g. SW11 3QN
         country_id:
           label: Stato
       shipping_info:

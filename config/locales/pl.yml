@@ -1502,7 +1502,7 @@ pl:
     already_ordered:
       cart: "koszyk"
     step1:
-      your_details:
+      contact_information:
         email:
           label: E-mail
       address:

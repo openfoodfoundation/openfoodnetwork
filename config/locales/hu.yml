@@ -460,7 +460,7 @@ hu:
     form_invalid: "Az űrlap hiányzó vagy érvénytelen mezőket tartalmaz"
     clear_filters: Szűrők törlése
     clear: Egyértelmű
-    save: Megment
+    save: Mentés
     cancel: Vissza
     back: Vissza
     show_more: Mutass többet
@@ -673,7 +673,7 @@ hu:
       import:
         review: Felülvizsgálat
         import: Importálás
-        save: Megment
+        save: Mentés
         results: Eredmények
         save_imported: Mentse el az importált termékeket
         no_valid_entries: Nem található érvényes bejegyzés
@@ -911,7 +911,7 @@ hu:
           any: Bármi
           none: Egyik sem
           own: Saját
-          sells: Eladja
+          sells: Értékesít
           sells_tip: "Nincs - a vállalat nem értékesít közvetlenül a vevőknek.<br />Saját - Vállalat saját termékeket ad el az ügyfeleknek.<br />Bármelyik - Vállalat saját vagy más vállalkozás termékeit értékesítheti.<br />"
           visible_in_search: Látható a keresésben?
           visible_in_search_tip: "Az árusítóhelyek lehetnek 1. nyilvánosak, amik megjelennek az OFN térképen és listákban, 2. vagy rejtve a térképen és listákban, de más árusítóhelyek által elérhető módon, vagy 3. teljesen elrejtve és nem mutatva sehol."
@@ -1043,7 +1043,7 @@ hu:
       admin_index:
         name: Név
         role: Szerep
-        sells: Eladja
+        sells: Értékesít
         visible: Látható?
         owner: Tulajdonos
         producer: Termelő
@@ -1121,7 +1121,7 @@ hu:
         products: "Termékek"
         receival_details: "Átvételi részletek"
         fees: "Díjak"
-        save: "Megment"
+        save: "Mentés"
         save_and_next: "Mentés és Tovább"
         next: "Következő"
         cancel: "Vissza"
@@ -1135,7 +1135,7 @@ hu:
         fees: "Díjak"
         next: "Következő"
         previous: "Előző"
-        save: "Megment"
+        save: "Mentés"
         save_and_next: "Mentés és Tovább"
         cancel: "Vissza"
         back_to_list: "Vissza a listához"
@@ -1431,7 +1431,7 @@ hu:
         products: Termékek
         no_open_or_upcoming_order_cycle: "Nincs közelgő rendelési ciklus"
       products_panel:
-        save: "MEGMENT"
+        save: "MENTÉS"
         saving: "MEGTAKARÍTÁS"
         saved: "MENTETT"
       product_already_in_order: Ez a termék már felkerült a rendelésre. Kérjük, módosítsa közvetlenül a mennyiséget.
@@ -1787,37 +1787,28 @@ hu:
       cart: "szekér"
       message_html: "Már van rendelése ehhez a rendelési ciklushoz. Tekintse meg a %{kosarat}, hogy megtekinthesse a korábban megrendelt tételeket. A tételeket törölheti is, amíg a rendelési ciklus nyitva van."
     step1:
-      your_details:
-        title: Az adataid
-        first_name:
-          label: Keresztnév
-          placeholder: pl Jane
-        last_name:
-          label: Vezetéknév
-          placeholder: pl Doe
+      contact_information:
         email:
           label: Email
-          placeholder: pl. Janedoe@email.com
         phone:
           label: Telefonszám
-          placeholder: pl 07987654321
       billing_address:
         title: Számlázási cím
+        first_name:
+          label: Keresztnév
+        last_name:
+          label: Vezetéknév
       address:
         address1:
           label: Cím (utca + házszám)
-          placeholder: pl. 1. lakás Elm apartmanok
         address2:
           label: További címadatok (nem kötelező)
-          placeholder: pl. Cavalier avenur
         city:
           label: Város
-          placeholder: pl London
         state_id:
           label: Ország
         zipcode:
           label: Irányítószám
-          placeholder: pl. SW11 3QN
         country_id:
           label: Ország
       shipping_info:
@@ -1986,7 +1977,7 @@ hu:
   shopping_oc_last_closed: "Az utolsó ciklus %{distance_of_time} előtt zárult"
   shopping_oc_next_open: "A következő ciklus %{distance_of_time} múlva kezdődik"
   shopping_oc_select: "Válassz..."
-  shopping_tabs_home: "itthon"
+  shopping_tabs_home: "Nyitólap"
   shopping_tabs_shop: "Üzlet"
   shopping_tabs_about: "Rólunk"
   shopping_tabs_producers: "Termelők"
@@ -1996,7 +1987,7 @@ hu:
   shopping_contact_web: "Kapcsolat"
   shopping_contact_social: "Kövesse"
   shopping_groups_part_of: "része:"
-  shopping_producers_of_hub: "%{átvételi pont} termelőei:"
+  shopping_producers_of_hub: "%{hub}termelői:"
   enterprises_next_closing: "A következő rendelés lezárása"
   enterprises_currently_open: "A rendelések jelenleg nyitva vannak"
   enterprises_ready_for: "Elkészül ekkorra"
@@ -2034,7 +2025,7 @@ hu:
   products_filters_in: "ban ben"
   products_with: val vel
   products_search: "Keresés..."
-  products_filter_by: "Szűrés vlami alapján"
+  products_filter_by: "Szűrés"
   products_filter_selected: "kiválasztott"
   products_filter_heading: "Szűrők"
   products_filter_clear: "Egyértelmű"
@@ -2094,7 +2085,7 @@ hu:
   producers_contact_phone: Hívás
   producers_contact_social: Kövesse
   producers_buy_at_html: "Vásároljon %{enterprise} termékeket a következő címen:"
-  producers_filter: Szűrés vlami alapján
+  producers_filter: Szűrés
   producers_filter_type: típus
   producers_filter_property: Tulajdonság
   producers_title: Termelők
@@ -2201,7 +2192,7 @@ hu:
   failed_to_update_enterprise_unknown: "Nem sikerült frissíteni a vállalkozást.nGyőződjön meg arról, hogy minden mezőt teljesen kitöltött."
   enterprise_confirm_delete_message: "Ezzel a vállalat által szállított %{product} is törlődik. Biztos, hogy akarod folytatni?"
   order_not_saved_yet: "Megrendelését még nem mentette el. Adjon nekünk néhány másodpercet, hogy befejezzük!"
-  filter_by: "Szűrés vlami alapján"
+  filter_by: "Szűrés"
   hide_filters: "Szűrők elrejtése"
   one_filter_applied: "1 szűrő alkalmazva"
   x_filters_applied: "alkalmazott szűrők"
@@ -2413,10 +2404,9 @@ hu:
   outstanding_balance: "Kiemelkedő egyensúly"
   admin_enterprise_relationships: "Vállalati engedélyek"
   admin_enterprise_relationships_everything: "Minden"
-  admin_enterprise_relationships_permits: "engedélyeket"
+  admin_enterprise_relationships_permits: "engedélyezi"
   admin_enterprise_relationships_seach_placeholder: "Keresés"
   admin_enterprise_relationships_button_create: "Létrehoz"
-  admin_enterprise_relationships_to: "nak nek"
   admin_enterprise_groups: "Vállalati csoportok"
   admin_enterprise_groups_name: "Név"
   admin_enterprise_groups_owner: "Tulajdonos"
@@ -2668,7 +2658,7 @@ hu:
   report_header_curr_cost_per_unit: Curr. Egységenkénti költség
   report_header_total_shipping_cost: Teljes szállítási költség
   report_header_payment_method: Fizetési mód
-  report_header_sells: Eladja
+  report_header_sells: Értékesít
   report_header_visible: Látható
   report_header_price: Ár
   report_header_unit_size: Egység mérete
@@ -2871,27 +2861,20 @@ hu:
           title: Címkeszabályok
           overview: Áttekintés
           overview_text: >
-              Tag rules provide a way to describe which items are visible or otherwise:
-              A címkeszabályok módot adnak annak leírására, hogy mely elemek láthatók
-              vagy nem to which customers. Items can be Shipping Methods, Payment
-              Methods,: amelyhez az ügyfelek. A tételek lehetnek szállítási módok,
-              fizetési módok Products and Order Cycles.: Termékek és rendelési ciklusok.
+              A címkeszabályok módot adnak annak leírására, hogy mely elemek láthatók,
+              illetve elrejtettek. A tételek lehetnek szállítási módok, fizetési módok,
+              termékek és rendelési ciklusok.
           by_default_rules: "Alapértelmezés szerint...' Szabályok"
           by_default_rules_text: >
-              Default rules allow you to hide items so that they are not visible by
-              default.: Az alapértelmezett szabályok lehetővé teszik az elemek elrejtését,
-              hogy azok alapértelmezés szerint ne legyenek láthatók. This behaviour
-              can then be overriden by non-default rules for customers with: Ezt a
-              viselkedést azután felülírhatják a nem alapértelmezett szabályok az
-              ügyfelek számára particular tags.: adott címkék.
+              Az alapértelmezett szabályok lehetővé teszik elemek elrejtését, hogy
+              azok alapértelmezés szerint ne legyenek láthatók:ó. Ezt a viselkedést
+              azután felülírhatják a nem alapértelmezett szabályok az ügyfelek számára
+              adott címkékkel.
           customer_tagged_rules: "Megcímkézett ügyfelek...' Szabályok"
           customer_tagged_rules_text: >
-              By creating rules related to a specific customer tag, you can override
-              the default: Egy adott vásárlói címkéhez kapcsolódó szabályok létrehozásával,
-              felülbírálhatja az alapértelmezettet behaviour (whether it be to show
-              or to hide items) for customers with the specified tag.: viselkedése
-              (legyen az elemek megjelenítése vagy elrejtése) a megadott címkével
-              rendelkező ügyfelek számára.
+              Egy adott vásárlói címkéhez kapcsolódó szabályok létrehozásával, felülbírálhatja
+              az alapértelmezett viselkedést (legyen az elemek megjelenítése vagy
+              elrejtése) a megadott címkével rendelkező ügyfelek számára.
         terms_and_conditions_info:
           title: "Feltöltési feltételek"
           message_1: "Az Általános Szerződési Feltételek az Ön, az eladó és a vásárló közötti szerződés. Ha feltölt egy fájlt ide, a vásárlóknak el kell fogadniuk az Általános Szerződési Feltételeket a fizetés befejezéséhez. A vásárló számára ez egy jelölőnégyzetként jelenik meg a pénztárnál, amelyet be kell jelölnie a fizetés folytatásához. Javasoljuk, hogy a nemzeti jogszabályokkal összhangban töltse fel az Általános Szerződési Feltételeket."
@@ -2903,7 +2886,7 @@ hu:
         business_address_info:
           message: "cég hivatalos neve, jogi címe és telefonszáma olyan vállalkozásoknál használatos, amelyek nyilvános kereskedési adataikhoz eltérő adatokkal bejegyzett jogi személytől számláznak. Ezeket az adatokat CSAK számlákon használjuk fel. Ha ezek az adatok üresek, az Ön nyilvános neve, címe és telefonszáma kerül felhasználásra a számlákon."
       panels:
-        save: MEGMENT
+        save: MENTÉS
         saved: MENTETT
         saving: MEGTAKARÍTÁS
         enterprise_package:
@@ -3184,10 +3167,10 @@ hu:
       not_visible: NEM LÁTHATÓ
     services:
       unsaved_changes_message: Jelenleg nem mentett módosítások léteznek, menteni most vagy figyelmen kívül hagyni?
-      save: MEGMENT
+      save: MENTÉS
       ignore: FIGYELMEN KÍVÜL HAGYNI
-      add_to_order_cycle: "add hozzá a rendelési ciklushoz"
-      manage_products: "kezelni a termékeket"
+      add_to_order_cycle: "rendelési ciklushoz adás"
+      manage_products: "termékek kezelése"
       edit_profile: "profil szerkesztése"
       add_products_to_inventory: "termékek hozzáadása a készlethez"
     resources:

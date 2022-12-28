@@ -1777,37 +1777,28 @@ es_CR:
       cart: "carrito"
       message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
     step1:
-      your_details:
-        title: Sus detalles
-        first_name:
-          label: Nombre
-          placeholder: ej. Jane
-        last_name:
-          label: Apellidos
-          placeholder: ej. Doe
+      contact_information:
         email:
           label: Correo electrónico
-          placeholder: ej. janedoe@email.com
         phone:
           label: Número de teléfono
-          placeholder: ej. 07987654321
       billing_address:
         title: Dirección de cobro
+        first_name:
+          label: Nombre
+        last_name:
+          label: Apellidos
       address:
         address1:
           label: Dirección (Calle + Número de Casa)
-          placeholder: ej. Apartamentos Flat 1 Elm
         address2:
           label: Información de dirección adicional (opcional)
-          placeholder: ej. caballero aventurero
         city:
           label: Ciudad
-          placeholder: ej. Londres
         state_id:
           label: Provincia
         zipcode:
           label: Código postal
-          placeholder: ej. SW11 3QN
         country_id:
           label: País
       shipping_info:

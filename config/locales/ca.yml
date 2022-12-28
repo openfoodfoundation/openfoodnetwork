@@ -1766,18 +1766,17 @@ ca:
       cart: "cistella"
       message_html: "Ja teniu una comanda per a aquest cicle de comanda. Consulteu %{cart} per veure els articles que heu demanat anteriorment. També podeu cancel·lar articles sempre que el cicle de comanda estigui obert."
     step1:
-      your_details:
-        title: Els teus detalls
-        first_name:
-          label: Nom
-        last_name:
-          label: Cognoms
+      contact_information:
         email:
           label: Correu electrònic
         phone:
           label: 'Número de telèfon '
       billing_address:
         title: Adreça de facturació
+        first_name:
+          label: Nom
+        last_name:
+          label: Cognoms
       address:
         city:
           label: Municipi

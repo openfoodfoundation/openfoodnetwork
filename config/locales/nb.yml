@@ -1784,37 +1784,28 @@ nb:
       cart: "handlekurv"
       message_html: "Du har allerede en bestilling for denne bestillingsrunden. Sjekk %{cart}en for å se varene du bestilte før. Du kan også avbryte varer så lenge bestillingsrunden er åpen."
     step1:
-      your_details:
-        title: Dine detaljer
-        first_name:
-          label: Fornavn
-          placeholder: f.eks. Jane
-        last_name:
-          label: Etternavn
-          placeholder: f.eks. Doe
+      contact_information:
         email:
           label: Epost
-          placeholder: f.eks. janedoe@email.com
         phone:
           label: Telefonnummer
-          placeholder: f.eks. 07987654321
       billing_address:
         title: Fakturaadresse
+        first_name:
+          label: Fornavn
+        last_name:
+          label: Etternavn
       address:
         address1:
           label: Adresse (gate + husnummer)
-          placeholder: f.eks. Flat 1 Elm leiligheter
         address2:
           label: Tilleggsinfo adresse (valgfritt)
-          placeholder: f.eks. Cavalier avenur
         city:
           label: By
-          placeholder: f.eks London
         state_id:
           label: Tilstand
         zipcode:
           label: Postnummer
-          placeholder: f.eks. SW11 3QN
         country_id:
           label: Land
       shipping_info:

@@ -1775,37 +1775,28 @@ uk:
       cart: "корзина"
       message_html: "У вас уже є замовлення для цього циклу замовлень. Перевірте %{cart}, щоб побачити товари, які ви замовляли раніше. Ви також можете скасувати товари, доки цикл замовлення відкритий."
     step1:
-      your_details:
-        title: Ваші дані
-        first_name:
-          label: Ім'я
-          placeholder: напр. Джейн
-        last_name:
-          label: Прізвище
-          placeholder: напр. Хмельницький
+      contact_information:
         email:
           label: Email
-          placeholder: напр. Janedoe@email.com
         phone:
           label: Телефонний номер
-          placeholder: напр. 07987654321
       billing_address:
         title: Платіжна адреса
+        first_name:
+          label: Ім'я
+        last_name:
+          label: Прізвище
       address:
         address1:
           label: Адреса (вулиця + номер будинку)
-          placeholder: напр. Квартира 1 Будинок 4
         address2:
           label: Додаткова інформація про адресу (необов'язково)
-          placeholder: напр. Cavalier avenur
         city:
           label: Місто
-          placeholder: напр. Київ
         state_id:
           label: Регіон
         zipcode:
           label: Поштовий індекс
-          placeholder: наприклад, SW11 3QN
         country_id:
           label: Країна
       shipping_info:
