@@ -97,7 +97,7 @@ Openfoodnetwork::Application.routes.draw do
   end
 
    # When the split_checkout feature is disabled for the current user, use the legacy checkout
-  constraints ->(request) { OpenFoodNetwork::FeatureToggle.disabled? :split_checkout, request.env['warden']&.user } do
+  constraints FeatureToggleConstraint.new(:split_checkout, negate: true) do
     get '/checkout', to: 'checkout#edit'
     put '/checkout', to: 'checkout#update', as: :update_checkout
     get '/checkout/:state', to: 'checkout#edit', as: :checkout_state
