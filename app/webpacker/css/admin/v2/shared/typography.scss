@@ -9,10 +9,6 @@
   }
 }
 
-body.admin.admin-v2 {
-  color: $v2-body-grey;
-
-  a:not(.button) {
-    @include v2-link-color();
-  }
+a:not(.button) {
+  @include v2-link-color();
 }

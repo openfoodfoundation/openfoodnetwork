@@ -11,27 +11,29 @@ select[type="submit"],
 input[type="button"],
 select[type="button"],
 .select2-container-multi [type="button"].select2-choices,
-button,
+button:not(.no-text),
 .button,
-.actions a:not([class*="icon-"]),
+.actions a:not(.no-text),
+fieldset .filter-actions button, // Be more specific to be sure to override the form button style (with a white border)
+fieldset .filter-actions .button:hover,
 .admin__section-header .ofn-drop-down // Same behavior as the button
 {
+  @include backgroundAndBorder($v2-blue-light);
+
+  &:hover {
+    @include backgroundAndBorder($v2-blue);
+    box-shadow: $v2-box-shadow;
+  }
+
   &.disabled,
   &[disabled] {
     @include backgroundAndBorder($v2-light-grey);
+    box-shadow: none;
   }
 
-  &:not(.disabled):not([disabled]):not(.secondary) {
-    // Change the color of the button only if it's not disabled
-    @include backgroundAndBorder($v2-blue-light);
-
-    &:hover {
-      @include backgroundAndBorder($v2-blue);
-      box-shadow: $v2-box-shadow;
-    }
-  }
-
-  &.secondary {
+  &.secondary,
+  &.cancel,
+  &.icon-remove {
     background-color: $white;
     border: 2px solid $v2-blue-light;
     color: $v2-blue-light;
@@ -60,7 +62,6 @@ button,
   }
 }
 
-#table-filter fieldset:has(.actions) {
-  // do not apply border to filter actions as it's drawn by the #table-filter .actions before and after pseudo elements
+#table-filter fieldset {
   border-bottom: 0;
 }

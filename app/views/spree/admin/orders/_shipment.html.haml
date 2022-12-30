@@ -26,7 +26,7 @@
         = Spree.t(:price)
       %th
         = Spree.t(:quantity)
-      %th
+      %th.force-rounded-right
         = Spree.t(:total)
       %th.orders-actions.actions{ "data-hook" => "admin_order_form_line_items_header_actions" }
 
@@ -57,8 +57,8 @@
             %span
               = shipment.fee_adjustment.display_amount
 
-        - if shipment.fee_adjustment.present? && shipment.can_modify?
-          %td.actions
+        %td.actions
+          - if shipment.fee_adjustment.present? && shipment.can_modify?
             - if can? :update, shipment
               = link_to '', '', :class => 'edit-method icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')
 
@@ -70,8 +70,9 @@
 
         %td.actions
           - if can?(:update, shipment) && !shipment.canceled?
-            = link_to '', '', :class => 'save-tracking icon_link icon-ok no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'save' }, :title => I18n.t('actions.save')
-            = link_to '', '', :class => 'cancel-tracking icon_link icon-cancel no-text with-tip', :data => { :action => 'cancel' }, :title => I18n.t('actions.cancel')
+            .flex
+              = link_to '', '', :class => 'save-tracking icon_link icon-ok no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'save' }, :title => I18n.t('actions.save')
+              = link_to '', '', :class => 'cancel-tracking icon_link icon-cancel no-text with-tip', :data => { :action => 'cancel' }, :title => I18n.t('actions.cancel')
 
       %tr.show-tracking.total
         %td{ :colspan => "5" }
@@ -84,6 +85,7 @@
 
         %td.actions
           - if can?(:update, shipment) && shipment.can_modify?
-            = link_to '', '', :class => 'edit-tracking icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')
-            - if shipment.tracking.present?
-              = link_to '', '', :class => 'delete-tracking icon_link icon-trash no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'remove' }, :title => Spree.t('delete')
+            .flex
+              = link_to '', '', :class => 'edit-tracking icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')
+              - if shipment.tracking.present?
+                = link_to '', '', :class => 'delete-tracking icon_link icon-trash no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'remove' }, :title => Spree.t('delete')
