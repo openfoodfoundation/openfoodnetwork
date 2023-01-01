@@ -161,13 +161,6 @@
   }
 }
 
-// singleLineSelectors directive provides a drop-down that can overlap
-// content. Ensure that the dropdown appears above the content.
-.filter-row {
-  position: relative;
-  z-index: 90;
-}
-
 .sticky-shop-filters-container {
   position: sticky;
   top: $topbar-height;
