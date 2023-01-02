@@ -17,10 +17,6 @@
         %span.out-of-stock
           = t(".unavailable_item")
           %br/
-      - if @unavailable_order_variants&.include? line_item.variant
-        %span.out-of-stock
-          = t(".unavailable_item")
-          %br/
 
     %td.text-right.cart-item-price{"data-hook" => "cart_item_price"}
       = line_item.single_display_amount_with_adjustments.to_html

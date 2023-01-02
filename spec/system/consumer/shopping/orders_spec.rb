@@ -163,7 +163,6 @@ describe "Order Management", js: true do
 
         # Changing the quantity of an item
         within "tr.variant-#{item1.variant.id}" do
-          pp item1.variant.on_hand
           expect(page).to have_content item1.product.name
           expect(page).to have_field 'order_line_items_attributes_0_quantity'
           # The original item quantity is 1, there are 3 more items available in stock
