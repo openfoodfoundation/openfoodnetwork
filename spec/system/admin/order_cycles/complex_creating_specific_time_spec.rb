@@ -49,7 +49,8 @@ describe '
     payment_method_ii.update!(name: "Cash")
   end
 
-  it "creating an order cycle with full interface", retry: 3 do
+  xit "creating an order cycle with full interface", retry: 3 do
+    # pending issue #10042, see below
     ## CREATE
     login_as_admin_and_visit admin_order_cycles_path
     click_link 'New Order Cycle'
@@ -68,8 +69,8 @@ describe '
     expect(page).to have_content 'Your order cycle has been created.'
 
     ## UPDATE
-    add_supplier_with_fees
-    add_distributor_with_fees
+    add_supplier_with_fees # pending issue #10042
+    add_distributor_with_fees # pending issue #10042
     select_distributor_shipping_methods
     select_distributor_payment_methods
     click_button 'Save and Back to List'
