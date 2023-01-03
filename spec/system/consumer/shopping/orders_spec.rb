@@ -156,6 +156,7 @@ describe "Order Management", js: true do
       end
 
       it "allows quantity to be changed, items to be removed and the order to be cancelled" do
+        item1.variant.update!(on_hand: 5, on_demand: false)
         visit order_path(order)
 
         expect(page).to have_button I18n.t(:order_saved), disabled: true
