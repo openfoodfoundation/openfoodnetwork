@@ -417,6 +417,7 @@ describe '
         let!(:distributor) { create(:distributor_enterprise) }
         let!(:oc1) { create(:simple_order_cycle, distributors: [distributor]) }
         let!(:oc2) { create(:simple_order_cycle, distributors: [distributor]) }
+        let!(:oc3) { create(:simple_order_cycle, distributors: [distributor]) }
         let!(:o1) {
           create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
                                           order_cycle: oc1 )
@@ -425,16 +426,27 @@ describe '
           create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
                                           order_cycle: oc2 )
         }
+        let!(:o3) {
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now + 1.week,
+                                          order_cycle: oc3 )
+        }
+        let!(:o4) {
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now + 2.weeks,
+                                          order_cycle: oc3 )
+        }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
         let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
+        let!(:li3) { create(:line_item_with_shipment, order: o3 ) }
+        let!(:li4) { create(:line_item_with_shipment, order: o4 ) }
 
         before do
+          oc3.update!(orders_close_at: Time.zone.now + 2.weeks)
+          oc3.update!(orders_open_at: Time.zone.now + 1.week)
           visit_bulk_order_management
         end
 
         it "displays a select box for order cycles, which filters line items by the selected order cycle", retry: 3 do
-          expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to have_selector "tr#li_#{li2.id}"
+          displays_default_orders
           expect(page).to have_select2 'order_cycle_filter',
                                        with_options: OrderCycle.pluck(:name).unshift("All")
           select2_select oc1.name, from: "order_cycle_filter"
@@ -445,16 +457,45 @@ describe '
         end
 
         it "displays all line items when 'All' is selected from order_cycle filter", retry: 3 do
-          expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to have_selector "tr#li_#{li2.id}"
+          displays_default_orders
           select2_select oc1.name, from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           select2_select "All", from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
+          displays_default_orders
+        end
+
+        it "selecting an OC pre-selects the date range from that OC" do
+          displays_default_orders
+          click_on_select2 oc3.name, from: "order_cycle_filter"
+          expect(find("input.datepicker").value).to eq "#{oc3.orders_open_at.strftime('%F')} to #{oc3.orders_close_at.strftime('%F')}"
+          displays_default_orders
+          click_on_select2 oc1.name, from: "order_cycle_filter"
+          displays_default_orders
+          expect(find("input.datepicker").value).to eq "#{oc1.orders_open_at.strftime('%F')} to #{oc1.orders_close_at.strftime('%F')}"
+          # only filters results after clicking the 'Filter Results' button
+          displays_default_orders
+          page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to have_selector "tr#li_#{li2.id}"
+          expect(page).to_not have_selector "tr#li_#{li2.id}"
+          # only filters results after clicking the 'Clear Filters' button resets to display the default results
+          page.find("#clear_filters_button").click
+          displays_default_orders
+        end
+
+        it "allows combining the order cycle and the pre-selected date with a custom date" do
+          click_on_select2 oc3.name, from: "order_cycle_filter"
+          expect(find("input.datepicker").value).to eq "#{oc3.orders_open_at.strftime('%F')} to #{oc3.orders_close_at.strftime('%F')}"
+          page.find('.filter-actions .button.icon-search').click
+          expect(page).to have_selector "tr#li_#{li3.id}"
+          expect(page).to have_selector "tr#li_#{li4.id}"
+          find("input.datepicker").click # selecting a date range, within oc3
+          select_dates_from_daterangepicker(o4.completed_at - 1.day, o4.completed_at + 1.day)
+          page.find('.filter-actions .button.icon-search').click
+          expect(page).to have_selector "tr#li_#{li4.id}"
+          expect(page).to_not have_selector "tr#li_#{li3.id}"
         end
       end
 
@@ -991,5 +1032,10 @@ describe '
   def visit_bulk_order_management
     visit spree.admin_bulk_order_management_path
     expect(page).to have_no_text 'Loading orders'
+  end
+
+  def displays_default_orders
+    expect(page).to have_selector "tr#li_#{li1.id}"
+    expect(page).to have_selector "tr#li_#{li2.id}"
   end
 end
