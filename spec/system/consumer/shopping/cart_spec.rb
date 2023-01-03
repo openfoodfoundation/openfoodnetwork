@@ -196,26 +196,38 @@ describe "full-page cart", js: true do
       end
 
       describe "with insufficient stock available" do
-        it "prevents user from entering invalid values" do
-          order.contents.add(product_with_fee.variants.first)
+        describe "checks out of stock warning message and prevents user from entering invalid values" do
+          before do
+            order.contents.add(product_with_fee.variants.first)
 
-          variant.update!(on_hand: 2, on_demand: false)
-          variant2.update!(on_hand: 3, on_demand: false)
-          visit main_app.cart_path
+            variant.update!(on_hand: 2, on_demand: false)
+            variant2.update!(on_hand: 3, on_demand: false)
+            visit main_app.cart_path
+          end
 
-          accept_alert 'Insufficient stock available, only 2 remaining' do
+          it "prevents user from entering invalid values" do
             within "tr.variant-#{variant.id}" do
               fill_in "order_line_items_attributes_0_quantity", with: '4'
+              expect(page).to have_field "order_line_items_attributes_0_quantity", with: '2'
             end
           end
-          expect(page).to have_field "order_line_items_attributes_0_quantity", with: '2'
 
-          accept_alert 'Insufficient stock available, only 3 remaining' do
-            within "tr.variant-#{variant2.id}" do
-              fill_in "order_line_items_attributes_1_quantity", with: '4'
+          describe "show/hide out of stock warning message regarding the user changes" do
+            it "hide the out of stock warning message once the quantity is corrected" do
+              within "tr.variant-#{variant.id}" do
+                fill_in "order_line_items_attributes_0_quantity", with: '1'
+                expect(page).to have_field "order_line_items_attributes_0_quantity", with: '1'
+                expect(page).to have_no_content "Insufficient stock available, only 2 remaining"
+              end
+            end
+
+            it "show the out of stock warning message once the quantity is increased" do
+              within "tr.variant-#{variant.id}" do
+                fill_in "order_line_items_attributes_0_quantity", with: '3'
+                expect(page).to have_field "order_line_items_attributes_0_quantity", with: '2'
+              end
             end
           end
-          expect(page).to have_field "order_line_items_attributes_1_quantity", with: '3'
         end
 
         it "shows the quantities saved, not those submitted" do
@@ -225,9 +237,7 @@ describe "full-page cart", js: true do
           visit main_app.cart_path
           variant.update! on_hand: 2
 
-          accept_alert do
-            fill_in "order_line_items_attributes_0_quantity", with: '4'
-          end
+          fill_in "order_line_items_attributes_0_quantity", with: '4'
           click_button 'Update'
 
           expect(page).to have_content "Insufficient stock available, only 2 remaining"
@@ -255,10 +265,14 @@ describe "full-page cart", js: true do
             expect(page).to have_selector "#order_line_items_attributes_0_quantity.ng-invalid-stock"
             expect(page).to_not have_selector "#update-button.alert"
 
+            # shows a out of stock warning message
+            expect(page).to have_content "Insufficient stock available, only 4 remaining"
+
             fill_in "order_line_items_attributes_0_quantity", with: 4
 
             # Quantity field not marked as invalid and "Update" button is highlighted after correction
             expect(page).to_not have_selector "#order_line_items_attributes_0_quantity.ng-invalid-stock"
+            expect(page).to_not have_content "Insufficient stock available, only 4 remaining"
             expect(page).to have_selector "#update-button.alert"
 
             click_button I18n.t("update")

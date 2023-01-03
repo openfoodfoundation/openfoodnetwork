@@ -34,7 +34,7 @@
     - else
       %div{"data-hook" => "outside_cart_form"}
         = form_for @order, :url => main_app.update_cart_path,
-          :html => {id: 'update-cart', name: "form", "ng-controller"=> 'CartFormCtrl'} do |order_form|
+          :html => {id: 'update-cart', name: "form", "ng-controller"=> 'CartFormCtrl', "data-controller": "cart"} do |order_form|
           %div{"data-hook" => "inside_cart_form"}
             %div{"data-hook" => "cart_items"}
               .row
