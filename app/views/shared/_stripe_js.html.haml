@@ -3,3 +3,13 @@
     = raw render file: "spec/support/fixtures/stripejs-mock.js"
 - else
   %script{src: "https://js.stripe.com/v3/", type: "text/javascript"}
+  :javascript
+    // persist initial stripe iFrame DOM Object across turbo AJAX page requests
+    let stripeIFrameQuery = 'iframe[src^="https://js.stripe.com"]';
+    document.addEventListener('turbo:before-render', function (event) {
+      const stripeIFrame = document.querySelector(stripeIFrameQuery);
+      const newStripeIFrame = event.detail.newBody.querySelector(stripeIFrameQuery);
+      if (stripeIFrame && !newStripeIFrame){
+        event.detail.newBody.appendChild(stripeIFrame)
+      }
+    });
