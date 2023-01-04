@@ -685,14 +685,6 @@ ActiveRecord::Schema.define(version: 2023_01_05_000312) do
     t.index ["variant_id"], name: "index_spree_prices_on_variant_id"
   end
 
-  create_table "spree_product_groups", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
-    t.string "permalink", limit: 255
-    t.string "order", limit: 255
-    t.index ["name"], name: "index_product_groups_on_name"
-    t.index ["permalink"], name: "index_product_groups_on_permalink"
-  end
-
   create_table "spree_product_option_types", id: :serial, force: :cascade do |t|
     t.integer "position"
     t.integer "product_id"
