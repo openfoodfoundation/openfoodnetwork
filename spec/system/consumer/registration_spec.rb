@@ -125,6 +125,13 @@ describe "Registration" do
       click_button "Continue"
       expect(page).to have_content 'How can people find My Awesome Enterprise online?'
 
+      # Filling in social with invalid value for instagram
+      fill_in "enterprise_instagram", with: "www.instagram.com/coopcircuits/ "
+      click_button "Continue"
+      accept_alert "Failed to update your enterprise." do
+        expect(page).to have_content "Must be user name only eg. the_prof"
+      end
+
       # Filling in social
       fill_in 'enterprise_website', with: 'www.shop.com'
       fill_in 'enterprise_facebook', with: 'FaCeBoOk'

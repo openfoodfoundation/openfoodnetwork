@@ -37,6 +37,7 @@
               .field
                 %label{ for: 'enterprise_instagram' }= t(".instagram")+":"
                 %input.chunky{ id: 'enterprise_instagram', placeholder: "{{'registration.steps.social.instagram_placeholder' | t}}", ng: { model: 'enterprise.instagram' } }
+                %span.error.small-12.columns#instagram-error{ style: "display: none" }
 
       .row.buttons
         .small-12.columns
