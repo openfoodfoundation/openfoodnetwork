@@ -693,11 +693,6 @@ ActiveRecord::Schema.define(version: 2023_01_05_000312) do
     t.index ["permalink"], name: "index_product_groups_on_permalink"
   end
 
-  create_table "spree_product_groups_products", id: false, force: :cascade do |t|
-    t.integer "product_id"
-    t.integer "product_group_id"
-  end
-
   create_table "spree_product_option_types", id: :serial, force: :cascade do |t|
     t.integer "position"
     t.integer "product_id"
