@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_08_150521) do
+ActiveRecord::Schema.define(version: 2023_01_05_000312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -888,17 +888,6 @@ ActiveRecord::Schema.define(version: 2022_12_08_150521) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["shipment_id", "shipping_method_id"], name: "spree_shipping_rates_join_index", unique: true
-  end
-
-  create_table "spree_skrill_transactions", id: :serial, force: :cascade do |t|
-    t.string "email", limit: 255
-    t.float "amount"
-    t.string "currency", limit: 255
-    t.integer "transaction_id"
-    t.integer "customer_id"
-    t.string "payment_type", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "spree_state_changes", id: :serial, force: :cascade do |t|
