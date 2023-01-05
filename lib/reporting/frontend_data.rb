@@ -44,12 +44,20 @@ module Reporting
         order('order_cycles.orders_close_at DESC')
     end
 
+    def order_customers
+      Customer.where(id: visible_order_customer_ids).select("customers.id, customers.email")
+    end
+
     private
 
     attr_reader :current_user
 
     def permissions
       @permissions ||= OpenFoodNetwork::Permissions.new(current_user)
+    end
+
+    def visible_order_customer_ids
+      Permissions::Order.new(current_user).visible_orders.pluck(:customer_id)
     end
   end
 end
