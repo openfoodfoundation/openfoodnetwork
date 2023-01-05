@@ -36,11 +36,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.refreshData()
 
   $scope.refreshData = ->
-    $scope.formattedStartDate = moment($scope.startDate).format()
-    $scope.formattedEndDate = moment($scope.endDate).add(1,'day').format()
-
-    return unless moment($scope.formattedStartDate).isValid() and moment($scope.formattedEndDate).isValid()
-
     return "cancel" unless $scope.confirmRefresh()
 
     $scope.loadOrders()
@@ -67,17 +62,21 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     window.dispatchEvent(event)
 
   $scope.loadOrders = ->
+    [formattedStartDate, formattedEndDate] = $scope.formatDates($scope.startDate, $scope.endDate)
+
     RequestMonitor.load $scope.orders = Orders.index(
       "q[state_not_eq]": "canceled",
       "q[shipment_state_not_eq]": "shipped",
       "q[completed_at_not_null]": "true",
       "q[distributor_id_eq]": $scope.distributorFilter,
       "q[order_cycle_id_eq]": $scope.orderCycleFilter,
-      "q[completed_at_gteq]": $scope.formattedStartDate,
-      "q[completed_at_lt]": $scope.formattedEndDate
+      "q[completed_at_gteq]": if formattedStartDate then formattedStartDate else undefined,
+      "q[completed_at_lt]": if formattedEndDate then formattedEndDate else undefined
     )
 
   $scope.loadLineItems = ->
+    [formattedStartDate, formattedEndDate] = $scope.formatDates($scope.startDate, $scope.endDate)
+
     RequestMonitor.load LineItems.index(
       "q[order_state_not_eq]": "canceled",
       "q[order_shipment_state_not_eq]": "shipped",
@@ -85,9 +84,14 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       "q[order_distributor_id_eq]": $scope.distributorFilter,
       "q[variant_product_supplier_id_eq]": $scope.supplierFilter,
       "q[order_order_cycle_id_eq]": $scope.orderCycleFilter,
-      "q[order_completed_at_gteq]": $scope.formattedStartDate,
-      "q[order_completed_at_lt]": $scope.formattedEndDate
+      "q[order_completed_at_gteq]": if formattedStartDate then formattedStartDate else undefined,
+      "q[order_completed_at_lt]": if formattedEndDate then formattedEndDate else undefined
     )
+
+  $scope.formatDates = (startDate, endDate) ->
+    formattedStartDate = moment(startDate).format('YYYY-MM-DD') if startDate
+    formattedEndDate = moment(endDate).add(1,'day').format('YYYY-MM-DD') if endDate
+    return [formattedStartDate, formattedEndDate]
 
   $scope.loadAssociatedData = ->
     RequestMonitor.load $scope.distributors = Enterprises.index(action: "visible", ams_prefix: "basic", "q[sells_in][]": ["own", "any"])
