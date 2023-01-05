@@ -404,8 +404,11 @@ fr:
       filters:
         categories:
           title: Conditions de transport
+          selected_categories: "%{count} catégories sélectionnées"
         producers:
           title: Producteurs
+          selected_producers: "%{count} producteurs sélectionnés"
+        per_page: "%{count} éléments par page"
         colums: Colonnes
       columns:
         name: Nom
@@ -648,6 +651,7 @@ fr:
         not_found: non trouvé dans le base de données
         category_not_found: n'est pas conforme aux catégories utilisées. Merci de modifier les catégories en utilisant celles listées sur la page d'import ou vérifier qu'il n'y ait pas de faute de frappe ou d'espace à fin du mot.
         not_updatable: ne peut pas être mis à jour pour des produits existants via la fonctionnalité d'import de fichier produits
+        values_must_be_same: doit être identique pour les produits avec un nom identique
         blank: Champ obligatoire
         products_no_permission: vous n'avez pas l'autorisation de gérer les produits de cette entreprise
         inventory_no_permission: vous n'avez pas l'autorisation d'ajouter les produits de ce producteur à votre catalogue boutique
@@ -1799,6 +1803,7 @@ fr:
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
     step1:
       contact_information:
+        title: Contact
         email:
           label: Email
         phone:
@@ -2663,6 +2668,7 @@ fr:
   report_header_customer_code: Code acheteur
   report_header_product: Produit
   report_header_product_properties: Propriétés / labels Produits
+  report_header_product_tax_category: TVA applicable
   report_header_quantity: Quantité
   report_header_max_quantity: Quantité Max
   report_header_variant: Variante
@@ -2675,6 +2681,7 @@ fr:
   report_header_supplier: Fournisseur
   report_header_producer: Producteur
   report_header_producer_suburb: Ville Producteur
+  report_header_producer_charges_sales_tax?: Soumis à la TVA
   report_header_unit: Unité
   report_header_group_buy_unit_quantity: Nb d'unités achetées (vente par lots)
   report_header_cost: Coût
@@ -2694,6 +2701,7 @@ fr:
   report_header_delivery_postcode: Code Postal Livraison
   report_header_bulk_unit_size: Quantité totale du lot
   report_header_weight: Poids
+  report_header_final_weight_volume: Poids ou volume livré
   report_header_height: Hauteur
   report_header_width: Largeur
   report_header_depth: Profondeur
@@ -3654,6 +3662,7 @@ fr:
       messages:
         included_price_validation: "ne peut pas être sélectionné à moins d'avoir une zone par défaut"
         blank: "Champ obligatoire"
+        invalid_instagram_url: "Uniquement le nom d'utilisateur / identifiant par ex. le_prof"
     layouts:
       admin:
         login_nav:
@@ -3907,6 +3916,7 @@ fr:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
           supplier: "Fournisseur"
+          supplier_select_placeholder: "Sélectionner un producteur"
           product_name: "Nom du Produit"
           units: "Unité de mesure"
           value: "Quantité"
@@ -3952,6 +3962,9 @@ fr:
           select_and_search: "Sélectionner les filtres et cliquer sur %{option} pour accéder aux données."
         customer_names_message:
           customer_names_tip: "Si les noms des acheteurs sont masqués, vous pouvez contacter le gestionnaire de la boutique. Il pourra vous donner accès à cette information."
+        products_and_inventory:
+          all_products:
+            message: "Attention les stocks correspondent aux stocks producteurs et non au stock du catalogue boutique."
       users:
         index:
           listing_users: "Liste des utilisateurs"
@@ -4316,6 +4329,7 @@ fr:
     search_input:
       placeholder: Rechercher
     selector_with_filter:
+      selected_items: "%{count} sélectionné"
       search_placeholder: Rechercher
     pagination:
       next: Suivant

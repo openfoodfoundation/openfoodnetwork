@@ -404,8 +404,11 @@ en_FR:
       filters:
         categories:
           title: Categories
+          selected_categories: "%{count} categories selected"
         producers:
           title: Producers
+          selected_producers: "%{count} producers selected"
+        per_page: "%{count} items per page"
         colums: Columns
       columns:
         name: Name
@@ -648,6 +651,7 @@ en_FR:
         not_found: not found in database
         category_not_found: doesn't match allowed categories. See the correct categories to choose from on the product import page, or check that there's no misspelling.
         not_updatable: cannot be updated on existing products via product import
+        values_must_be_same: must be the same for products with the same name
         blank: can't be blank
         products_no_permission: you do not have permission to manage products for this enterprise
         inventory_no_permission: you do not have permission to create inventory for this producer
@@ -1798,6 +1802,7 @@ en_FR:
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     step1:
       contact_information:
+        title: Contact information
         email:
           label: Email
         phone:
@@ -2662,6 +2667,7 @@ en_FR:
   report_header_customer_code: Customer Code
   report_header_product: Product
   report_header_product_properties: Product Properties
+  report_header_product_tax_category: Product Tax Category
   report_header_quantity: Quantity
   report_header_max_quantity: Max Quantity
   report_header_variant: Variant
@@ -2674,6 +2680,7 @@ en_FR:
   report_header_supplier: Supplier
   report_header_producer: Producer
   report_header_producer_suburb: Producer Suburb
+  report_header_producer_charges_sales_tax?: GST/VAT Registered
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity
   report_header_cost: Cost
@@ -2693,6 +2700,7 @@ en_FR:
   report_header_delivery_postcode: Delivery Postcode
   report_header_bulk_unit_size: Bulk Unit Size
   report_header_weight: Weight
+  report_header_final_weight_volume: Final (Weight/Volume)
   report_header_height: Height
   report_header_width: Width
   report_header_depth: Depth
@@ -3602,6 +3610,7 @@ en_FR:
       messages:
         included_price_validation: "cannot be selected unless you have set a Default Tax Zone"
         blank: "can't be blank"
+        invalid_instagram_url: "Must be user name only eg. the_prof"
     layouts:
       admin:
         login_nav:
@@ -3855,6 +3864,7 @@ en_FR:
           title: "New Product"
           new_product: "New Product"
           supplier: "Supplier"
+          supplier_select_placeholder: "Select a supplier"
           product_name: "Product Name"
           units: "Unit Size"
           value: "Value"
@@ -3900,6 +3910,9 @@ en_FR:
           select_and_search: "Select filters and click on %{option} to access your data."
         customer_names_message:
           customer_names_tip: "If customer names are hidden for orders you have supplied, you can contact the distributor and ask if they can update their shop preferences to allow their suppliers to view customer names."
+        products_and_inventory:
+          all_products:
+            message: "Note that stock levels reported are from supplier product lists only. If you are using Inventory to manage your stock quantities these values will be ignored in this report."
       users:
         index:
           listing_users: "Listing Users"
@@ -4250,6 +4263,7 @@ en_FR:
     search_input:
       placeholder: Search
     selector_with_filter:
+      selected_items: "%{count} selected"
       search_placeholder: Search
     pagination:
       next: Next

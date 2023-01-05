@@ -30,6 +30,7 @@ it:
         shipping_category_id: "Categoria Spedizioni"
         variant_unit: "Unità Variante"
         variant_unit_name: "Nome Unità Variante"
+        unit_value: "Valore unità"
       spree/credit_card:
         base: "Carta di Credito"
         number: "Numero"
@@ -180,6 +181,8 @@ it:
         updated_not_active: "La tua password è stata resettata, ma la tua email non è ancora stata confermata."
         updated: "La tua password è stata modificata con successo.\nOra sei collegato."
         send_instructions: "A breve riceverai una email con le istruzioni per la conferma del tuo account."
+    oidc:
+      failure: "Non è possibile accedere: %{error}"
   home_page_alert_html: "HTML alert Home page"
   hub_signup_case_studies_html: "HTML iscrizione hub casi studio"
   hub_signup_detail_html: "HTML dettagli iscrizione hub"
@@ -230,7 +233,7 @@ it:
       email_userguide_html: "La Guida Utente con supporto dettagliato per l'impostazione del tuo Produttore o Distributore è qui: %{link}"
       userguide: "Guida Utente di Open Food Network"
       email_admin_html: "Puoi gestire il tuo profilo facendo il log in al link %{link} o cliccando sull'ingranaggio in alto a destra della homepage, e selezionando Amministrazione"
-      admin_panel: "Panello Amministrativo"
+      admin_panel: "Panello di Controllo"
       email_community_html: "Abbiamo anche un forum per le discussioni comunitarie legate al software di OFN e le sfide uniche legate all'avere un'impresa alimentare. Ti incoraggiamo a farne parte. Siamo in continua evoluzione e il tuo contributo al forum delineerà quello che succederà in futuro. %{link}"
       join_community: "Unisciti alla community"
     invite_manager:
@@ -401,8 +404,11 @@ it:
       filters:
         categories:
           title: categorie
+          selected_categories: "%{count} categorie selezionate"
         producers:
           title: Produttori
+          selected_producers: "%{count} produttori selezionati"
+        per_page: "%{count} articoli per pagina"
         colums: Colonne
       columns:
         name: Nome
@@ -643,7 +649,9 @@ it:
         conditional_blank: non può essere vuoto se unit_type è vuoto
         no_product: Non corrisponde a nessun prodotto nel database
         not_found: non trovato nel database
+        category_not_found: Non corrisponde alle categorie ammesse. Controlla le categorie tra cui scegliere alla pagina di importazione prodotti, o controlla che non ci siano errori di battitura.
         not_updatable: non può essere aggiornato sui prodotti esistenti tramite l'importazione dei prodotti
+        values_must_be_same: deve essere lo stesso per prodotti con lo stesso nome
         blank: non può essere lasciato vuoto
         products_no_permission: non sei abilitato a gestire i prodotti per questa azienda
         inventory_no_permission: non sei abilitato a creare l'inventario per questo produttore
@@ -1364,6 +1372,12 @@ it:
         formatted_data: Dati Formattati
       packing:
         name: "Resoconti smistamento/imballaggio"
+    oidc_settings:
+      index:
+        title: "Impoostazioni"
+        connect: "Collega il tuo profilo"
+        already_connected: "Il tuo profilo è già collegato a questo profilo di autorizzazione DFC"
+        view_account: "Per vedere il tuo profilo, vedi:"
     subscriptions:
       index:
         title: "Abbonamenti"
@@ -1786,6 +1800,7 @@ it:
       message_html: "Hai già un ordine per questo ciclo d'ordine. Controlla%{cart} per vedere gli articoli ordinati in precedenza. Puoi anche cancellare gli articoli finché il ciclo dell'ordine è aperto."
     step1:
       contact_information:
+        title: Informazioni contatto
         email:
           label: Email
         phone:
@@ -2599,7 +2614,17 @@ it:
   report_header_to_hub: Al gruppo
   report_header_hub_code: Codice hub
   report_header_hub_id: ID Hub
+  report_header_hub_business_number: "Partita IVA o Codice Fiscale dell'Hub"
+  report_header_hub_legal_name: "Ragione sociale dell'Hub"
+  report_header_hub_contact_name: "Nome di contatto dell'Hub"
+  report_header_hub_email: "Email pubblica"
   report_header_hub_owner_email: Email Gestore Hub
+  report_header_hub_phone: "Numero di Telefono"
+  report_header_hub_address_line1: "Indirizzo Riga 1"
+  report_header_hub_address_line2: "Indirizzo Riga 2"
+  report_header_hub_address_city: "Comune"
+  report_header_hub_address_zipcode: "CAP"
+  report_header_hub_address_state_name: "Stato"
   report_header_code: Codice
   report_header_paid: Pagato?
   report_header_delivery: Consegna?
@@ -2634,11 +2659,13 @@ it:
   report_header_total_tax: "Oneri totali (%{currency_symbol})"
   report_header_total_excl_tax: "Totale imponibile (%{currency_symbol})"
   report_header_total_incl_tax: "Totale IVA incl. (%{currency_symbol})"
+  report_header_total_orders: "Numero totale ordini"
   report_header_enterprise: Azienda
   report_header_customer: Cliente
   report_header_customer_code: Codice Cliente
   report_header_product: Prodotto
   report_header_product_properties: Proprietà prodotto
+  report_header_product_tax_category: Categoria d'imposta del prodotto
   report_header_quantity: Quantità
   report_header_max_quantity: Quantità massima
   report_header_variant: Variante
@@ -2651,6 +2678,7 @@ it:
   report_header_supplier: Fornitore
   report_header_producer: Produttore
   report_header_producer_suburb: Comune produttore
+  report_header_producer_charges_sales_tax?: Partita IVA / Codice fiscale
   report_header_unit: Unità
   report_header_group_buy_unit_quantity: Raggruppare per quantità di unità
   report_header_cost: Costo
@@ -2670,6 +2698,7 @@ it:
   report_header_delivery_postcode: CAP consegna
   report_header_bulk_unit_size: Quantità minima per Acquisto di Gruppo
   report_header_weight: Peso
+  report_header_final_weight_volume: Peso/Volume
   report_header_height: Altezza
   report_header_width: Larghezza
   report_header_depth: Profondità
@@ -3606,6 +3635,7 @@ it:
       messages:
         included_price_validation: "Non può essere selezionato se non hai impostato una Zona Fiscale Predefinita "
         blank: "non può essere lasciato vuoto"
+        invalid_instagram_url: "Deve essere solo il nome utente"
     layouts:
       admin:
         login_nav:
@@ -3859,6 +3889,7 @@ it:
           title: "Nuovo prodotto"
           new_product: "Nuovo prodotto"
           supplier: "Fornitore"
+          supplier_select_placeholder: "Seleziona un fornitore"
           product_name: "Nome Prodotto"
           units: "Unità di misura"
           value: "Valore"
@@ -3904,6 +3935,9 @@ it:
           select_and_search: "Seleziona filtri e clicca su %{option} per accedere al tuo dato"
         customer_names_message:
           customer_names_tip: "Se i nomi dei clienti sono nascosti nelle gentili richieste che hai evaso, puoi contattare il distributore e chiedergli di aggiornare le sue impostazioni per permettere ai suoi fornitori di visualizzare i nomi dei clienti."
+        products_and_inventory:
+          all_products:
+            message: "Considera che le quantità disponibili riguardano solo il listino del fornitore. Se stai usando l'Inventario per gestire le tue quantità disponibili, questi valori saranno ignorati in questo report."
       users:
         index:
           listing_users: "Elenco Utenti"
@@ -4267,6 +4301,7 @@ it:
     search_input:
       placeholder: Cerca
     selector_with_filter:
+      selected_items: "%{count} selezionato"
       search_placeholder: Cerca
     pagination:
       next: Prossimo
