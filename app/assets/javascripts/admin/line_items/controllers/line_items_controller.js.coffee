@@ -9,6 +9,15 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.sharedResource = false
   $scope.columns = Columns.columns
   $scope.sorting = SortOptions
+  $scope.pagination = Orders.pagination
+  $scope.per_page_options = [
+    {id: 15, name: t('js.admin.orders.index.per_page', results: 15)},
+    {id: 50, name: t('js.admin.orders.index.per_page', results: 50)},
+    {id: 100, name: t('js.admin.orders.index.per_page', results: 100)}
+  ]
+  $scope.page = 1
+  $scope.per_page = $scope.per_page_options[0].id
+  
 
   $scope.confirmRefresh = ->
     LineItems.allSaved() || confirm(t("unsaved_changes_warning"))
@@ -25,6 +34,11 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.resetSelectFilters = ->
     $scope.resetFilters()
+    $scope.refreshData()
+
+  $scope.fetchResults = ->
+    # creates indirection in order to factorize the code between orders and bulk orders
+    # used in app/views/admin/shared/_angular_per_page_controls.html.haml
     $scope.refreshData()
 
   $scope.refreshData = ->
@@ -48,7 +62,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       "q[distributor_id_eq]": $scope.distributorFilter,
       "q[order_cycle_id_eq]": $scope.orderCycleFilter,
       "q[completed_at_gteq]": if formattedStartDate then formattedStartDate else undefined,
-      "q[completed_at_lt]": if formattedEndDate then formattedEndDate else undefined
+      "q[completed_at_lt]": if formattedEndDate then formattedEndDate else undefined,
+      "page": $scope.page,
+      "per_page": $scope.per_page
     )
 
   $scope.loadLineItems = ->
@@ -62,7 +78,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       "q[variant_product_supplier_id_eq]": $scope.supplierFilter,
       "q[order_order_cycle_id_eq]": $scope.orderCycleFilter,
       "q[order_completed_at_gteq]": if formattedStartDate then formattedStartDate else undefined,
-      "q[order_completed_at_lt]": if formattedEndDate then formattedEndDate else undefined
+      "q[order_completed_at_lt]": if formattedEndDate then formattedEndDate else undefined,
+      "page": $scope.page,
+      "per_page": $scope.per_page
     )
 
   $scope.formatDates = (startDate, endDate) ->
@@ -243,5 +261,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     if lineItem.quantity > 0
       lineItem.final_weight_volume = LineItems.pristineByID[lineItem.id].final_weight_volume * lineItem.quantity / LineItems.pristineByID[lineItem.id].quantity
       $scope.weightAdjustedPrice(lineItem)
+
+  $scope.changePage = (newPage) ->
+    $scope.page = newPage
+    $scope.refreshData()
 
   $scope.resetSelectFilters()
