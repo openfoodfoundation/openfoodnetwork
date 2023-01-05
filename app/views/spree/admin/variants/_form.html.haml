@@ -66,12 +66,12 @@
     .field
       = f.label 'weight', t(:weight)+' (kg)'
       - value = number_with_precision(@variant.weight, precision: 2)
-      = f.text_field 'weight', value: value, class: 'fullwidth'
+      = f.number_field 'weight', value: value, class: 'fullwidth', step: 0.01
 
   - [:height, :width, :depth].each do |field|
     .field
       = f.label field, t(field)
       - value = number_with_precision(@variant.send(field), precision: 2)
-      = f.text_field field, value: value, class: 'fullwidth'
+      = f.number_field field, value: value, class: 'fullwidth', step: 0.01
 
 .clear
