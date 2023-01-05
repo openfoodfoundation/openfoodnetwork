@@ -466,38 +466,6 @@ describe '
           page.find('.filter-actions .button.icon-search').click
           displays_default_orders
         end
-
-        it "selecting an OC pre-selects the date range from that OC" do
-          displays_default_orders
-          click_on_select2 oc3.name, from: "order_cycle_filter"
-          expect(find("input.datepicker").value).to eq "#{oc3.orders_open_at.strftime('%F')} to #{oc3.orders_close_at.strftime('%F')}"
-          displays_default_orders
-          click_on_select2 oc1.name, from: "order_cycle_filter"
-          displays_default_orders
-          expect(find("input.datepicker").value).to eq "#{oc1.orders_open_at.strftime('%F')} to #{oc1.orders_close_at.strftime('%F')}"
-          # only filters results after clicking the 'Filter Results' button
-          displays_default_orders
-          page.find('.filter-actions .button.icon-search').click
-          expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to_not have_selector "tr#li_#{li2.id}"
-          # only filters results after clicking the 'Clear Filters' button resets to display the default results
-          page.find("#clear_filters_button").click
-          displays_default_orders
-        end
-
-        xit "allows combining the order cycle and the pre-selected date with a custom date" do
-          # pending (#10192)
-          click_on_select2 oc3.name, from: "order_cycle_filter"
-          expect(find("input.datepicker").value).to eq "#{oc3.orders_open_at.strftime('%F')} to #{oc3.orders_close_at.strftime('%F')}"
-          page.find('.filter-actions .button.icon-search').click
-          expect(page).to have_selector "tr#li_#{li3.id}"
-          expect(page).to have_selector "tr#li_#{li4.id}"
-          find("input.datepicker").click # selecting a date range, within oc3
-          select_dates_from_daterangepicker(o4.completed_at - 1.day, o4.completed_at + 1.day)
-          page.find('.filter-actions .button.icon-search').click
-          expect(page).to have_selector "tr#li_#{li4.id}"
-          expect(page).to_not have_selector "tr#li_#{li3.id}"
-        end
       end
 
       context "combination of filters" do

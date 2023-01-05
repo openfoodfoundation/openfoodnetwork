@@ -32,7 +32,7 @@
         %label{ :for => 'order_cycle_filter' }
           = t("admin.order_cycle")
         %br
-        %input#order_cycle_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'orderCycles', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", on: { selecting: "confirmRefresh" }, ng: { model: 'orderCycleFilter', change: "setOrderCycleDateRange()" } }
+        %input#order_cycle_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'orderCycles', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", on: { selecting: "confirmRefresh" }, ng: { model: 'orderCycleFilter' } }
       .date_filter{class: "four columns"}
         %label
           = t("date_range")
