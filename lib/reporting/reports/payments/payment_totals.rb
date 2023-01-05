@@ -6,7 +6,9 @@ module Reporting
       class PaymentTotals < Base
         def columns
           {
-            payment_state: proc { |orders| orders.first.payment_state },
+            payment_state: proc { |orders|
+              I18n.t("spree.admin.payment_states.#{orders.first.payment_state}")
+            },
             distributor: proc { |orders| orders.first.distributor.name },
             product_total_price: proc { |orders| orders.to_a.sum(&:item_total) },
             shipping_total_price: proc { |orders| orders.sum(&:ship_total) },
