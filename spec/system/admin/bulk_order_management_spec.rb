@@ -625,17 +625,11 @@ describe '
         visit_bulk_order_management
       end
 
-      it "displays date fields for filtering orders, with default values set" do
-        # use Date.current since Date.today is without timezone
-        one_week_ago = today.prev_day(7).strftime("%F")
-        expect(find("input.datepicker").value).to eq "#{one_week_ago} to #{today.strftime('%F')}"
-      end
-
-      it "only loads line items whose orders meet the date restriction criteria", retry: 3 do
-        expect(page).to have_no_selector "tr#li_#{li1.id}"
+      it "loads all line items because no date restriction on first load" do
+        expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
         expect(page).to have_selector "tr#li_#{li3.id}"
-        expect(page).to have_no_selector "tr#li_#{li4.id}"
+        expect(page).to have_selector "tr#li_#{li4.id}"
       end
 
       it "displays only line items whose orders meet the date restriction criteria, when changed", retry: 3 do

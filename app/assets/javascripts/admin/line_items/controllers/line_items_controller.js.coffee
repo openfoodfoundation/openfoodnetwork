@@ -13,22 +13,14 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.confirmRefresh = ->
     LineItems.allSaved() || confirm(t("unsaved_changes_warning"))
 
-  $scope.initStartAndEnDate = ->
-    $scope.startDate = moment().startOf('day').subtract(7, 'days').format('YYYY-MM-DD')
-    $scope.endDate = moment().startOf('day').format('YYYY-MM-DD')
-
   $scope.resetFilters = ->
     $scope.distributorFilter = ''
     $scope.supplierFilter = ''
     $scope.orderCycleFilter = ''
     $scope.quickSearch = ''
-    $scope.initStartAndEnDate()
-    event = new CustomEvent('flatpickr:change', {
-      detail: { 
-        startDate: $scope.startDate,
-        endDate: $scope.endDate
-      }
-    })
+    $scope.startDate = undefined
+    $scope.endDate = undefined
+    event = new CustomEvent('flatpickr:clear')
     window.dispatchEvent(event)
 
   $scope.resetSelectFilters = ->

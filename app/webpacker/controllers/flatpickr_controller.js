@@ -55,6 +55,7 @@ export default class extends Flatpickr {
       mode,
     };
     window.addEventListener("flatpickr:change", this.onChangeEvent.bind(this));
+    window.addEventListener("flatpickr:clear", this.clear.bind(this));
   }
 
   clear(e) {
