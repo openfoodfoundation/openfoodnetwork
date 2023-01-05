@@ -10,7 +10,7 @@
             %span{ ng: { class: "{brick: !enterprise.is_primary_producer, turquoise: enterprise.is_primary_producer}" } }
               {{ enterprise.name }}
 
-    %form{ name: 'about', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('images',about)" } }
+    %form{ name: 'about', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "selectIfValid('images', about)" } }
       .row
         .small-12.columns
           .alert-box.info{ "ofn-inline-alert" => true, ng: { show: "visible" } }

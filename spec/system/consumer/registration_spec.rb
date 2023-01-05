@@ -98,13 +98,6 @@ describe "Registration" do
       click_button "Continue"
       expect(page).to have_content 'Step 1. Select Logo Image'
 
-      # Enterprise should be updated
-      e.reload
-      expect(e.description).to eq "Short description"
-      expect(e.long_description).to eq "Long description"
-      expect(e.abn).to eq '12345'
-      expect(e.acn).to eq '54321'
-      expect(e.charges_sales_tax).to be true
 
       # Images
       # Upload logo image
@@ -142,7 +135,15 @@ describe "Registration" do
       expect(page).to have_content 'Finished!'
 
       # Done
+      # Check values set in about tab
       e.reload
+      expect(e.description).to eq "Short description"
+      expect(e.long_description).to eq "Long description"
+      expect(e.abn).to eq '12345'
+      expect(e.acn).to eq '54321'
+      expect(e.charges_sales_tax).to be true
+
+      # Check values set in social tab
       expect(e.website).to eq "www.shop.com"
       expect(e.facebook).to eq "FaCeBoOk"
       expect(e.linkedin).to eq "LiNkEdIn"
