@@ -348,6 +348,19 @@ describe "LineItemsCtrl", ->
           spyOn(VariantUnitManager, "getUnitName").and.returnValue "lb"
           expect(scope.formattedValueWithUnitName(2, unitsProduct, unitsVariant)).toEqual "2 lb"
 
+      describe "get group by size formatted value with unit name", ->
+        beforeEach ->
+          spyOn(VariantUnitManager, "getUnitName").and.returnValue "kg"
+        
+        unitsProduct = { variant_unit: "weight", variant_unit_scale: 1000 }
+         
+        it "returns the formatted value with unit name", ->
+          expect(scope.getGroupBySizeFormattedValueWithUnitName(1000, unitsProduct)).toEqual "1 kg"
+
+        it "handle the case when the value is actually null or empty", ->
+          expect(scope.getGroupBySizeFormattedValueWithUnitName(null, unitsProduct)).toEqual ""
+          expect(scope.getGroupBySizeFormattedValueWithUnitName("", unitsProduct)).toEqual ""
+
 
       describe "updating the price upon updating the weight of a line item", ->
         beforeEach ->
