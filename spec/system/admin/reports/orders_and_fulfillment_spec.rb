@@ -14,8 +14,8 @@ describe "Orders And Fulfillment" do
       visit admin_reports_path
     end
 
-    let(:bill_address1) { create(:address, lastname: "ABRA") }
-    let(:bill_address2) { create(:address, lastname: "KADABRA") }
+    let(:bill_address1) { create(:address, firstname: "Dont", lastname: " Worry") }
+    let(:bill_address2) { create(:address, firstname: "Chamois", lastname: "xaxa") }
     let(:distributor_address) {
       create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234")
     }
@@ -31,7 +31,7 @@ describe "Orders And Fulfillment" do
     }
     let(:order2) {
       create(:completed_order_with_totals, line_items_count: 0, distributor: distributor,
-                                           bill_address: bill_address1,
+                                           bill_address: bill_address2,
                                            order_cycle_id: order_cycle.id)
     }
     let(:supplier) { create(:supplier_enterprise, name: "Supplier Name") }
@@ -145,6 +145,35 @@ describe "Orders And Fulfillment" do
           expect(all('table.report__table tbody tr').count).to eq(5)
           # 2 rows for order1 + 1 summary row
           # 1 row for order2 + 1 summary row
+        end
+      end
+
+      context "with different customers name" do
+        let(:bill_address3) { create(:address, firstname: "bou", lastname: "yaka") }
+        let(:bill_address4) { create(:address, firstname: "Ave", lastname: "Zebu") }
+        let(:order3) {
+          create(:completed_order_with_totals, line_items_count: 0,
+                                               distributor: distributor,
+                                               bill_address: bill_address3)
+        }
+        let(:order4) {
+          create(:completed_order_with_totals, line_items_count: 0,
+                                               distributor: distributor,
+                                               bill_address: bill_address4)
+        }
+
+        before do
+          create(:line_item_with_shipment, variant: variant2, quantity: 1, order: order3)
+          create(:line_item_with_shipment, variant: variant2, quantity: 1, order: order4)
+        end
+
+        it "orders the report by customer name, case insensitive" do
+          click_button 'Go'
+          rows = find("table.report__table tbody").all("tr.summary-row")
+          expect(rows[0]).to have_content "Dont Worry"
+          expect(rows[1]).to have_content "Chamois xaxa"
+          expect(rows[2]).to have_content "bou yaka"
+          expect(rows[3]).to have_content "Ave Zebu"
         end
       end
     end
