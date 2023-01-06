@@ -1416,6 +1416,7 @@ en:
       payment_methods: Payment Methods Report
       delivery: Delivery Report
       sales_tax_totals_by_producer: Sales Tax Totals By Producer
+      sales_tax_totals_by_order: Sales Tax Totals By Order
       tax_types: Tax Types
       tax_rates: Tax Rates
       pack_by_customer: Pack By Customer
