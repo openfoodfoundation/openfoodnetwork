@@ -57,7 +57,6 @@ table tbody tr {
 
 table thead tr th.actions,
 table tbody tr td.actions {
-  background-color: $v2-body-bg !important;
   // Special for icons in the actions column
   [class*="icon-"],
   button[class*="icon-"]:not(.disabled):not([disabled]):not(.secondary):not(.cancel) {
@@ -96,7 +95,7 @@ table tbody tr td.actions {
   }
 }
 
-table#listing_orders {
+table {
   thead th.actions,
   thead td.actions {
     background-color: $v2-medium-light-grey !important;
@@ -105,13 +104,17 @@ table#listing_orders {
     background-color: white !important;
   }
   td {
-    // When the table is the listing of orders, we need to increase the height of the cells
-    padding: 20px 0;
-
     &.actions {
       padding-left: 20px;
       border-bottom: 2px solid $v2-medium-light-grey !important; // needs to be important because of already defined with important
     }
+  }
+}
+
+table#listing_orders {
+  td {
+    // When the table is the listing of orders, we need to increase the height of the cells
+    padding: 20px 0;
 
     &:not(:first-child) {
       border-left: none; // Only show left border on the first cells, as it indicates the order state by its color
