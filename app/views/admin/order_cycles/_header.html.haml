@@ -1,16 +1,16 @@
 %colgroup
   %col{ ng: { show: 'columns.name.visible' } }
   %col{ ng: { show: 'columns.schedules.visible' } }
-  %col{ ng: { show: 'columns.open.visible' }, style: 'width: 20%;' }
-  %col{ ng: { show: 'columns.close.visible' }, style: 'width: 20%;' }
+  %col{ ng: { show: 'columns.open.visible' } }
+  %col{ ng: { show: 'columns.close.visible' } }
   - unless simple_index
     %col{ ng: { show: 'columns.producers.visible' } }
     %col{ ng: { show: 'columns.coordinator.visible' } }
     %col{ ng: { show: 'columns.shops.visible' } }
   %col{ ng: { show: 'columns.products.visible' } }
-  %col{ style: 'width: 5%;' }
-  %col{ style: 'width: 5%;' }
-  %col{ style: 'width: 5%;' }
+  %col
+  %col
+  %col
 
 %thead
   %tr
