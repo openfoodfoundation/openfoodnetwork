@@ -115,6 +115,10 @@ table {
   }
 }
 
+table tbody tr:hover > td {
+  background-color: #e9f3fc !important; // needs to be important because of already defined with important
+}
+
 table#listing_orders {
   td {
     // When the table is the listing of orders, we need to increase the height of the cells
@@ -124,4 +128,14 @@ table#listing_orders {
       border-left: none; // Only show left border on the first cells, as it indicates the order state by its color
     }
   }
+}
+
+table#listing_order_cycles tr.open td {
+  background-color: #d9fccb !important; // needs to be important because of already defined with important
+}
+table#listing_order_cycles tr.closed td {
+  background-color: #eee !important; // needs to be important because of already defined with important
+}
+table#listing_order_cycles tr.upcoming td {
+  background-color: #fbfccb !important; // needs to be important because of already defined with important
 }
