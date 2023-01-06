@@ -26,10 +26,20 @@ fieldset .filter-actions .button:hover,
   }
 
   &.disabled,
-  &[disabled] {
+  &[disabled],
+  &.disabled.secondary,
+  &[disabled].secondary {
     @include backgroundAndBorder($v2-dark-light-grey);
     box-shadow: none;
     cursor: default;
+    color: white;
+
+    &:hover {
+      @include backgroundAndBorder($v2-dark-light-grey);
+      box-shadow: none;
+      cursor: default;
+      color: white;
+    }
   }
 
   &.secondary,
