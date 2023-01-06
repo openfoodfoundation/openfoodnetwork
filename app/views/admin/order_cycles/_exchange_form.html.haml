@@ -26,7 +26,8 @@
 
     = f.submit t('.add_fee'), 'ng-click' => 'addExchangeFee($event, exchange)', 'ng-hide' => '!enterprises[exchange.enterprise_id].managed && !order_cycle.viewing_as_coordinator'
   %td.actions
-    %a{'ng-click' => 'removeExchange($event, exchange)', :class => "icon-trash no-text remove-exchange"}
+    .flex
+      %a{'ng-click' => 'removeExchange($event, exchange)', :class => "icon-trash no-text remove-exchange"}
 
 - if type == 'supplier'
   %tr.panel-row{ object: "exchange",
