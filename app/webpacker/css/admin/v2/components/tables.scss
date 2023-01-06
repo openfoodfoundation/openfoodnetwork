@@ -46,6 +46,10 @@ table tbody tr {
       display: flex;
       column-gap: 10px;
     }
+
+    &.actions > .flex {
+      justify-content: flex-end;
+    }
   }
   &.even,
   &.odd {
