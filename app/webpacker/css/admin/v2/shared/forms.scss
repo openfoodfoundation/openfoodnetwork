@@ -18,9 +18,10 @@ fieldset {
   // Change the color of all inputs
   color: $v2-medium-grey;
   border-color: $v2-light-grey !important;
+  font-size: 13px;
 
   &:focus {
-    border-color: $v2-medium-grey;
+    border-color: $v2-medium-grey !important;
   }
 }
 

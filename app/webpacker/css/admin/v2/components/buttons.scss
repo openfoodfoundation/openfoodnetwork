@@ -26,14 +26,26 @@ fieldset .filter-actions .button:hover,
   }
 
   &.disabled,
-  &[disabled] {
-    @include backgroundAndBorder($v2-light-grey);
+  &[disabled],
+  &.disabled.secondary,
+  &[disabled].secondary {
+    @include backgroundAndBorder($v2-dark-light-grey);
     box-shadow: none;
+    cursor: default;
+    color: white;
+
+    &:hover {
+      @include backgroundAndBorder($v2-dark-light-grey);
+      box-shadow: none;
+      cursor: default;
+      color: white;
+    }
   }
 
   &.secondary,
   &.cancel,
-  &.icon-remove {
+  &.icon-remove,
+  &#clear_all_filters {
     background-color: $white;
     border: 2px solid $v2-blue-light;
     color: $v2-blue-light;

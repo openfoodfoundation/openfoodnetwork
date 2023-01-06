@@ -1,0 +1,10 @@
+tags-input .tags li.tag-item {
+  background-color: $v2-blue-light;
+}
+
+tags-input .tags {
+  box-shadow: none;
+  &.focused {
+    box-shadow: none;
+  }
+}

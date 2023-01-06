@@ -12,3 +12,7 @@
 a:not(.button) {
   @include v2-link-color();
 }
+
+h4 {
+  color: $v2-medium-dark-grey;
+}
