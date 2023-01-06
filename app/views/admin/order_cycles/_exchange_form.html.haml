@@ -33,9 +33,9 @@
   %tr.panel-row{ object: "exchange",
     panels: "{products: 'exchange_products_supplied'}",
     locals: "$index,exchangeTotalVariants,order_cycle,exchange,enterprises,setExchangeVariants,selectAllVariants,suppliedVariants,removeDistributionOfVariant,initializeExchangeProductsPanel,loadMoreExchangeProducts,loadAllExchangeProducts,productsLoading",
-    colspan: 4 }
+    colspan: if feature?(:admin_style_v2, spree_current_user) then 5 else 4 end }
 - if type == 'distributor'
   %tr.panel-row{ object: "exchange",
     panels: "{products: 'exchange_products_distributed', tags: 'exchange_tags'}",
     locals: "$index,exchangeTotalVariants,order_cycle,exchange,enterprises,setExchangeVariants,incomingExchangeVariantsFor,variantSuppliedToOrderCycle,initializeExchangeProductsPanel,loadMoreExchangeProducts,loadAllExchangeProducts,productsLoading",
-    colspan: 5 }
+    colspan: if feature?(:admin_style_v2, spree_current_user) then 6 else 5 end }
