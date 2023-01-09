@@ -19,7 +19,4 @@
   - if request.post?
     %button.btn-print.icon-print{ onclick: "window.print()"}= t(:report_print)
 
-/ We don't want to render data unless search params are supplied.
-/ Compiling data can take a long time.
-- if request.post?
-  = render "table"
+= @table

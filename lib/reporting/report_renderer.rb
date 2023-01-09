@@ -46,6 +46,14 @@ module Reporting
       public_send("to_#{target_format}")
     end
 
+    def to_html(layout: nil)
+      ApplicationController.render(
+        template: "admin/reports/_table",
+        layout: layout,
+        locals: { report: @report }
+      )
+    end
+
     def to_csv
       SpreadsheetArchitect.to_csv(headers: table_headers, data: table_rows)
     end
@@ -55,11 +63,7 @@ module Reporting
     end
 
     def to_pdf
-      html = ApplicationController.render(
-        template: "admin/reports/_table",
-        layout: "pdf",
-        locals: { report: @report }
-      )
+      html = to_html(layout: "pdf")
       WickedPdf.new.pdf_from_string(html)
     end
 

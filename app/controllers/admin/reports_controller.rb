@@ -49,6 +49,7 @@ module Admin
                         I18n.t(:name, scope: [:admin, :reports, @report_type])
                       end
       @rendering_options = rendering_options
+      @table = @report.to_html if request.post?
       @data = Reporting::FrontendData.new(spree_current_user)
     end
   end
