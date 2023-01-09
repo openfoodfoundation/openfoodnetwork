@@ -142,9 +142,7 @@ describe '
   end
 
   def add_distributor_with_fees
-    # And I add a distributor with the same products
-    select 'My distributor', from: 'new_distributor_id'
-    click_button 'Add distributor'
+    add_distributor
 
     expect(page).to have_field "order_cycle_outgoing_exchange_0_pickup_time"
     fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
@@ -167,6 +165,17 @@ describe '
            from: 'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id'
 
     click_button 'Save and Next'
+  end
+
+  def add_distributor
+    # select '#new_distributor_id' should contains 'My distributor' option
+    expect(page).to have_select 'new_distributor_id', with_options: ['My distributor']
+    # And I add a distributor with the same products
+    select 'My distributor', from: 'new_distributor_id'
+
+    # button with text "Add distributor" should then not be disabled
+    expect(page).to have_no_button "Add distributor", disabled: true
+    click_button 'Add distributor'
   end
 
   def select_distributor_payment_methods
