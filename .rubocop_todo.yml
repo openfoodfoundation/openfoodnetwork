@@ -692,6 +692,7 @@ Rails/ApplicationJob:
     - 'app/jobs/heartbeat_job.rb'
     - 'app/jobs/order_cycle_closing_job.rb'
     - 'app/jobs/order_cycle_notification_job.rb'
+    - 'app/jobs/report_job.rb'
     - 'app/jobs/subscription_confirm_job.rb'
     - 'app/jobs/subscription_placement_job.rb'
 

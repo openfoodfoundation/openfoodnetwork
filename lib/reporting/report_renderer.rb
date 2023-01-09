@@ -4,7 +4,7 @@ require 'spreadsheet_architect'
 
 module Reporting
   class ReportRenderer
-    REPORT_FORMATS = [:csv, :json, :xlsx, :pdf].freeze
+    REPORT_FORMATS = [:csv, :json, :html, :xlsx, :pdf].freeze
 
     def initialize(report)
       @report = report
