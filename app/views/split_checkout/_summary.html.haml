@@ -61,7 +61,7 @@
     %div.checkout-title
       = t("split_checkout.step3.order.title")
     
-    = render 'spree/orders/summary', order: @order
+    = render 'spree/orders/summary', order: @order, display_footer: false
 
 
 .summary-right
