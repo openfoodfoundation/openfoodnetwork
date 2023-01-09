@@ -263,6 +263,10 @@
   .checkout-substep {
     font-size: 0.875rem;
     margin-top: 1rem;
+
+    &:first-child {
+      margin-top: 20px;
+    }
    
     .two-columns {
       display: grid;
@@ -328,7 +332,49 @@
       border-right: 1px solid #DDD;
     }
   }
+}
 
+.summary-right {
+  padding-top: 40px;
+
+  .checkout-submit {
+    margin-top: 40px;
+
+    .button.primary {
+      background-color: $clr-turquoise;
+      &:hover {
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+.summary-right-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  .summary-right-line-label {
+    font-size: 0.875rem;
+  }
+
+  .summary-right-line-value {
+    font-size: 0.875rem;
+    text-align: right;
+  }
+
+  &.total {
+    margin-bottom: 20px;
+    @include headingFont;
+
+    .summary-right-line-label {
+      font-weight: bold;
+      font-size: 1.06rem;
+    }
+    .summary-right-line-value {
+      font-size: 1.06rem;
+    }
+  }
 }
 
 #line-items {

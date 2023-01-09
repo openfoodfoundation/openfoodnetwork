@@ -216,8 +216,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
             expect(page).to have_selector('#order_total', text: with_currency(10.00))
 
             # customer goes back from Summary to Details step, to change Delivery
-            click_on "Back to Payment method"
-            click_on "Back to Your details"
+            click_on "Your details"
           end
 
           it "should re-calculate the tax accordingly" do

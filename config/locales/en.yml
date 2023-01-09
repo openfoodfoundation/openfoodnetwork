@@ -1984,6 +1984,7 @@ en:
         instructions: Instructions
       order:
         title: Order details
+        edit: Edit
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"

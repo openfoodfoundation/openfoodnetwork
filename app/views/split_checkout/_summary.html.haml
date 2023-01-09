@@ -60,14 +60,32 @@
   %div.checkout-substep
     %div.checkout-title
       = t("split_checkout.step3.order.title")
+      %a.summary-edit{href: main_app.cart_path}
+        = t("split_checkout.step3.order.edit")
     
     = render 'spree/orders/summary', order: @order, display_footer: false
 
 
 .summary-right
-  - if any_terms_required?(@order.distributor)
-    = render partial: "terms_and_conditions", locals: { f: f }
+  .summary-right-line.total
+    .summary-right-line-label= t :order_total_price
+    .summary-right-line-value#order_total= @order.display_total.to_html
+  
+  .summary-right-line
+    .summary-right-line-label= t :order_produce
+    .summary-right-line-value= display_checkout_subtotal(@order)
+
+  - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+    .summary-right-line
+      .summary-right-line-label= adjustment.label
+      .summary-right-line-value= adjustment.display_amount.to_html
+
+  - if @order.total_tax > 0
+    .summary-right-line
+      .summary-right-line-label= t :order_includes_tax
+      .summary-right-line-value#tax-row= display_checkout_tax_total(@order)
+  
   .checkout-submit
+    - if any_terms_required?(@order.distributor)
+      = render partial: "terms_and_conditions", locals: { f: f }
     = f.submit t("split_checkout.step3.submit"), name: "confirm_order", class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
-    %a.button.cancel{href: main_app.checkout_step_path(:payment)}
-      = t("split_checkout.step3.cancel")
