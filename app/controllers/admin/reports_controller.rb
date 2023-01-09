@@ -43,11 +43,7 @@ module Admin
       @report_type = report_type
       @report_subtypes = report_subtypes
       @report_subtype = report_subtype
-      @report_title = if report_subtype
-                        report_subtype_title
-                      else
-                        I18n.t(:name, scope: [:admin, :reports, @report_type])
-                      end
+      @report_title = report_title
       @rendering_options = rendering_options
       @table = @report.to_html if request.post?
       @data = Reporting::FrontendData.new(spree_current_user)
