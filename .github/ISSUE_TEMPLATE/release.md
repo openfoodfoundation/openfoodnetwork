@@ -23,8 +23,7 @@ assignees: ''
 
 ## Finish on Tuesday
 
-- [ ] Publish and notify [#global-community]:
-  > The next release is ready: https://github.com/openfoodfoundation/openfoodnetwork/releases/latest
+- [ ] Publish and notify [#global-community] (this is automatically posted with a plugin)
 - [ ] Deploy the new release to all managed instances.
   <details><summary>Command line instructions</summary>
   <pre>
