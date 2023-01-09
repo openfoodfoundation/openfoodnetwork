@@ -62,8 +62,9 @@
 }
 
 .already-ordered {
+  margin-left: 20px;
+
   .panel {
-    margin-top: 3rem;
     background-color: $grey-250;
     border: 1px solid $tiny-blue;
     color: $grey-700;
@@ -203,42 +204,7 @@
     @include force-wrap;
   }
 
-  .checkout-step3 {
-    padding-left: 15px;
-    padding-right: 15px;
-    .checkout-submit {
-      margin-top: 0;
-      margin-bottom: 0;
-      padding-top: 2rem;
 
-      .button {
-        margin-bottom: 1rem;
-      }
-    }
-
-    &.sticked {
-      background-color: $white;
-      box-shadow: 0 -6px 12px -6px rgba(0, 0, 0, 0.33);
-      border-left: 1px solid $light-grey;
-      border-right: 1px solid $light-grey;
-      border-top: 1px solid $light-grey;
-    }
-
-    @media screen and (max-width: 700px) {
-      &.sticked {
-        width: auto;
-        margin-left: -15px;
-        margin-right: -15px;
-        box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.33);
-                
-        .checkout-submit {
-          width: 100%;
-          padding-left: 15px;
-          padding-right: 15px;
-        }
-      }
-    }
-  }
 
   .checkout-submit {
     margin-top: 5rem;
@@ -291,24 +257,40 @@
   }
 }
 
-.summary {
-  margin-bottom: 2px;
-  font-size: 0.875rem;
+.checkout-summary {
+  margin-top: 0;
 
-  .summary-label {
-    font-weight: bold;
-  }
-
-  .summary-description {
-    @include force-wrap;
-    color: $min-accessible-grey;
+  .checkout-substep {
+    font-size: 0.875rem;
+    margin-top: 1rem;
+   
+    .two-columns {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: 1fr;
+      grid-column-gap: 10px;
+      grid-row-gap: 0px;
+    }  
   }
 
   .summary-edit {
     color: $teal-400;
     text-decoration: underline;
-    display: block;
-    margin-top: 5px;
+    display: inline-block;
+    margin-left: 15px;
+    font-size: 0.875rem;
+    font-weight: normal;
+    font-family: $body-font;
+  
+    &:hover {
+      color: $teal-500;
+      text-decoration: underline;
+  
+      &:after {
+        color: $teal-500;
+      }
+    }
+    
     &:after {
       background-image: url("../images/edit-with-pen.svg");
       content: " ";
@@ -321,6 +303,32 @@
       top: 2px;
     }
   }
+
+  .summary-subtitle {
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+}
+
+.checkout-summary {
+  form {
+    display: flex;
+    justify-content: space-between;
+
+    .summary-main {
+      width: 66.66%;
+      border-right: 1px solid #DDD;
+      padding-right: 20px;
+      padding-top: 20px;
+    }
+    .summary-right {
+      width: calc(33.33% - 20px);
+      padding-left: 20px;
+      padding-right: 20px;
+      border-right: 1px solid #DDD;
+    }
+  }
+
 }
 
 #line-items {

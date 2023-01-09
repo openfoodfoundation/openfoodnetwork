@@ -1973,18 +1973,15 @@ en:
       submit: Next - Order summary
       cancel: Back to Your details
     step3:
-      your_details:
-        title: Your details
-        edit: Edit your details
-      billing_address:
-        title: Billing address
-      shipping_address:
-        title: Shipping address
-      delivery_info:
-        title: Delivery info
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+        instructions: Instructions
       payment_method:
         title: Payment method
-        edit: Edit payment method
+        edit: Edit
+        instructions: Instructions
       order:
         title: Order total
       terms_and_conditions:

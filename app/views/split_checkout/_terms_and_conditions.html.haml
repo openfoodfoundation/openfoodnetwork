@@ -1,4 +1,4 @@
-%div.checkout-substep.medium-6
+%div.checkout-substep
   %div.checkout-input
     - if platform_terms_required? && distributor_terms_required?
       = f.check_box :accept_terms, { name: "accept_terms", checked: all_terms_and_conditions_already_accepted? }, 1, nil
