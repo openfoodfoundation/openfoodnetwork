@@ -19,7 +19,7 @@ module Admin
     end
 
     def show
-      @report = report_class.new(spree_current_user, params, request)
+      @report = report_class.new(spree_current_user, params, render: render_data?)
 
       if report_format.present?
         export_report
@@ -45,8 +45,12 @@ module Admin
       @report_subtype = report_subtype
       @report_title = report_title
       @rendering_options = rendering_options
-      @table = @report.to_html if request.post?
+      @table = @report.to_html if render_data?
       @data = Reporting::FrontendData.new(spree_current_user)
+    end
+
+    def render_data?
+      request.post?
     end
   end
 end

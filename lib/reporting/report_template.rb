@@ -14,8 +14,8 @@ module Reporting
 
     delegate :formatted_rules, :header_option?, :summary_row_option?, to: :ruler
 
-    def initialize(user, params = {}, request = nil)
-      if request.nil? || request.get?
+    def initialize(user, params = {}, render: false)
+      unless render
         params.reverse_merge!(default_params)
         params[:q] ||= {}
         params[:q].reverse_merge!(default_params[:q]) if default_params[:q].present?
