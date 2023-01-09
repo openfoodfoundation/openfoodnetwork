@@ -14,6 +14,3 @@
         = t('split_checkout.step3.terms_and_conditions.message_html', terms_and_conditions_link: link_to( t("split_checkout.step3.terms_and_conditions.link_text"), @order.distributor.terms_and_conditions, target: '_blank'))
 
   = f.error_message_on :terms_and_conditions, standalone: true
-
-  %div.checkout-input
-  = t("split_checkout.step3.agree")
