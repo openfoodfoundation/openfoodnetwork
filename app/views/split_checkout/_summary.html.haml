@@ -8,6 +8,7 @@
 
     .summary-subtitle
       = @order.shipping_method.name
+      %em.fees= payment_or_shipping_price(@order.shipping_method, @order)
     .two-columns
       %div
         .summary-subtitle
@@ -49,7 +50,9 @@
         = t("split_checkout.step3.payment_method.edit")
     .two-columns
       %div
-        = last_payment_method(@order)&.name
+        - payment_method = last_payment_method(@order)
+        = payment_method&.name
+        %em.fees=payment_or_shipping_price(payment_method, @order)
       %div
         .summary-subtitle
           = t("split_checkout.step3.payment_method.instructions")

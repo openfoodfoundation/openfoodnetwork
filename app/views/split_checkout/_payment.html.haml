@@ -15,7 +15,7 @@
           "data-paymentmethod-id": "paymentmethod#{payment_method.id}",
           "data-paymentmethod-target": "input"
         = f.label :payment_method_id, "#{payment_method.name}", for: "payment_method_#{payment_method.id}"
-        %em=payment_or_shipping_price(payment_method, @order)
+        %em.fees=payment_or_shipping_price(payment_method, @order)
 
       .paymentmethod-container{"data-paymentmethod-id": "paymentmethod#{payment_method.id}", style: "display: #{payment_method.id == selected_payment_method ? "block" : "none"}"}
         - if payment_method.description && !payment_method.description.empty?
