@@ -69,7 +69,7 @@
     = render 'spree/orders/summary', order: @order, display_footer: false
 
 
-.summary-right
+.summary-right{ "data-controller": "sticky", "data-sticky-target": "container" }
   .summary-right-line.total
     .summary-right-line-label= t :order_total_price
     .summary-right-line-value#order_total= @order.display_total.to_html

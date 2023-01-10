@@ -437,3 +437,58 @@
       }
     }  
 }
+
+// Handle the mobile view for the summary step
+@media screen and (max-width: 800px) {
+  .checkout-summary form {
+    display: block;
+  }
+
+  .checkout-summary form .summary-right {
+    width: calc(100% + 30px);
+    margin-left: -15px;
+    background-color: white;
+    border-right: none;
+    border-top: 1px solid #DDD;
+    
+    padding-top: 20px;
+
+    &.sticked {
+      box-shadow: 0 -4px 10px #DDD;
+    }
+
+    .summary-right-line.total {
+      margin-bottom: 10px;
+    }
+
+    .checkout-submit {
+      margin-top: 10px;
+
+      .checkout-input {
+        margin-bottom: 10px;
+      }
+
+      .button {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .checkout-summary form .summary-main {
+    width: 100%;
+    border-right: none;
+  }
+
+  .checkout-summary .checkout-substep .two-columns {
+    // only one column actually
+    grid-template-columns: 1fr;
+
+    > :nth-child(2) {
+      margin-top: 20px;
+    }
+  }
+
+  .checkout-summary .summary-subtitle {
+    margin-bottom: 10px;
+  }
+}
