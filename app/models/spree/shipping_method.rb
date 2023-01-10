@@ -69,10 +69,6 @@ module Spree
       tracking_url.gsub(/:tracking/, tracking) unless tracking.blank? || tracking_url.blank?
     end
 
-    def self.calculators
-      spree_calculators.__send__ model_name_without_spree_namespace
-    end
-
     # Some shipping methods are only meant to be set via backend
     def frontend?
       display_on != "back_end"
