@@ -31,12 +31,14 @@
           %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
           %div.menu{ 'ng-show' => "expanded" }
             %div.menu_item
+              %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "resend_confirmation" }
+                = t('.resend_confirmation')
+            %div.menu_item
               %span.name.invoices-modal{'ng-controller' => 'bulkInvoiceCtrl', 'ng-click' => 'createBulkInvoice()' }
                 = t('.print_invoices')
             %div.menu_item
               %span.name{'ng-controller' => 'bulkCancelCtrl', 'ng-click' => 'cancelSelectedOrders()' }
                 = t('.cancel_orders')
-
     
     = render partial: 'per_page_controls', locals: { position: "right" }
 
@@ -63,7 +65,7 @@
   %tbody
     %tr{ng: {repeat: 'order in orders track by order.id', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "{'state-{{order.state}}': true, 'row-loading': rowStatus[order.id] == 'loading'}"}
       %td.align-center
-        %input{type: 'checkbox', 'ng-model' => 'checkboxes[order.id]', 'ng-change' => 'toggleSelection(order.id)'}
+        %input{type: 'checkbox', 'ng-model' => 'checkboxes[order.id]', 'ng-change' => 'toggleSelection(order.id)', value: '{{order.id}}', name: 'order_ids[]'}
       %td.align-center
         {{order.distributor_name}}
       %td.align-center
@@ -118,3 +120,7 @@
   = t('.no_orders_found')
 
 = render 'spree/admin/shared/custom-confirm'
+
+= render ConfirmModalComponent.new(id: "resend_confirmation", confirm_actions: "click->resend-confirmation-email#confirm", controllers: "resend-confirmation-email") do
+  .margin-bottom-30
+    = t('.resend_confirmation_confirm_html')
