@@ -32,6 +32,8 @@ module Spree
     validate :at_least_one_shipping_category
     validates :display_on, inclusion: { in: DISPLAY_ON_OPTIONS.values }, allow_nil: true
 
+    after_initialize :init
+
     after_save :touch_distributors
 
     scope :managed_by, lambda { |user|
@@ -108,6 +110,10 @@ module Spree
 
     def self.frontend
       where(display_on: [nil, ""])
+    end
+
+    def init
+      self.calculator ||= ::Calculator::None.new
     end
 
     private
