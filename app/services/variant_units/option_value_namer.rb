@@ -56,7 +56,7 @@ module VariantUnits
     def option_value_value_unit_scaled
       unit_scale, unit_name = scale_for_unit_value
 
-      value = BigDecimal(@variant.unit_value / unit_scale, 6)
+      value = BigDecimal(@variant.unit_value / unit_scale, 6).truncate(2)
 
       [value, unit_name]
     end

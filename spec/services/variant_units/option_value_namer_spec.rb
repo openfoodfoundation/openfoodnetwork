@@ -145,6 +145,15 @@ module VariantUnits
         allow(v).to receive(:unit_value) { nil }
         expect(subject.send(:option_value_value_unit)).to eq [nil, nil]
       end
+
+      it "truncates value to 2 decimals maximum" do
+        oz_scale = 28.35
+        p = double(:product, variant_unit: 'weight', variant_unit_scale: oz_scale)
+        allow(v).to receive(:product) { p }
+        # The unit_value is stored rounded to 2 decimals
+        allow(v).to receive(:unit_value) { (12.5 * oz_scale).round(2) }
+        expect(subject.send(:option_value_value_unit)).to eq [BigDecimal(12.5, 6), 'oz']
+      end
     end
   end
 end
