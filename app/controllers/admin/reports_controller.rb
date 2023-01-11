@@ -55,10 +55,11 @@ module Admin
 
     def render_report_as(format)
       if OpenFoodNetwork::FeatureToggle.enabled?(:background_reports, spree_current_user)
-        job = ReportJob.perform_later(
+        job = ReportJob.new
+        JobProcessor.perform_forked(
+          job,
           report_class, spree_current_user, params, format
         )
-        sleep 1 until job.done?
 
         # This result has been rendered by Rails in safe mode already.
         job.result.html_safe # rubocop:disable Rails/OutputSafety
