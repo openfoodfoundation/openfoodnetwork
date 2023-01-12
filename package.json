@@ -41,6 +41,7 @@
     "webpack-cli": "~3"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
     "husky": "^8.0.0",
     "jasmine-core": "~2.4.1",
