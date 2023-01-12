@@ -12,5 +12,9 @@ module OpenFoodNetwork
       feature.add unless feature.exist?
       feature.enabled?(user)
     end
+
+    def self.disabled?(feature_name, user = nil)
+      !enabled?(feature_name, user)
+    end
   end
 end
