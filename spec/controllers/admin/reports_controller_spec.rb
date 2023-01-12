@@ -352,4 +352,28 @@ describe Admin::ReportsController, type: :controller do
       end
     end
   end
+
+  context "Sales Tax Reports By Order" do
+    let!(:present_objects) { [orderA1, orderA2, orderB1, orderB2] }
+    let(:report_type) { :sales_tax_totals_by_order }
+    context "as an admin" do
+      before do
+        controller_login_as_admin
+      end
+      it "generates the report" do
+        spree_get :show, report_type: :sales_tax, report_subtype: report_type
+        expect(response).to have_http_status(:ok)
+        expect(resulting_orders_prelim).to include(orderA1, orderA2, orderB1, orderB2)
+      end
+    end
+    context "as distributor1" do
+      before { controller_login_as_enterprise_user [distributor1] }
+      it "generates the report" do
+        spree_get :show, report_type: :sales_tax, report_subtype: report_type
+        expect(response).to have_http_status(:ok)
+        expect(resulting_orders_prelim).to include(orderA1, orderB1)
+        expect(resulting_orders_prelim).to_not include(orderA2, orderB2)
+      end
+    end
+  end
 end
