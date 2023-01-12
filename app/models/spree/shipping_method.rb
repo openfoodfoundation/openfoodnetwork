@@ -109,7 +109,7 @@ module Spree
     end
 
     def init
-      self.calculator ||= ::Calculator::None.new
+      self.calculator ||= ::Calculator::None.new if new_record?
     end
 
     private
