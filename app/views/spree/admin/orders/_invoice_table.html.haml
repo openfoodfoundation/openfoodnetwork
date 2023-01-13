@@ -24,7 +24,7 @@
         %td{:align => "right"}
           = item.display_amount_with_adjustments
       
-    - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+    - checkout_adjustments_for(@order, exclude: [:line_item]).reverse_each do |adjustment|
       - taxable = adjustment.adjustable_type == "Spree::Shipment" ? adjustment.adjustable : adjustment
       %tr
         %td

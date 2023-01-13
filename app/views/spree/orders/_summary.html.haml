@@ -39,7 +39,7 @@
             %span= display_checkout_subtotal(order)
 
       #order-charges{"data-hook" => "order_details_adjustments"}
-        - checkout_adjustments_for(order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+        - checkout_adjustments_for(order, exclude: [:line_item]).reverse_each do |adjustment|
           %tr.total
             %td.text-right{:colspan => "3"}
               %strong

@@ -78,7 +78,7 @@
     .summary-right-line-label= t :order_produce
     .summary-right-line-value= display_checkout_subtotal(@order)
 
-  - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+  - checkout_adjustments_for(@order, exclude: [:line_item]).reverse_each do |adjustment|
     .summary-right-line
       .summary-right-line-label= adjustment.label
       .summary-right-line-value= adjustment.display_amount.to_html
