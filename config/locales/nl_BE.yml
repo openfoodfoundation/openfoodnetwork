@@ -2540,6 +2540,7 @@ nl_BE:
         got_it: "Ik heb begrepen"
         close: "Sluit"
         continue: "Ga verder"
+        cancel: "Annuleren"
         invite: "Uitnodigen "
         invite_title: "Een nieuwe gebruiker uitnodigen"
         tag_rule_help:
@@ -2700,7 +2701,6 @@ nl_BE:
           pending: "in afwachting"
           resumed: "herbegonnen"
           returned: "teruggekeerd"
-          skrill: "cash"
         shipment_states:
           backorder: "aanvulling"
           partial: "gedeeltelijk"
@@ -3201,6 +3201,7 @@ nl_BE:
           results_found: "1%{number} Resultaten gevonden"
           viewing: "Resultaten te zien 1%{start} tot 2%{end}."
           print_invoices: "De facturen afdrukken"
+          resend_confirmation: "Bevestiging opnieuw verzenden"
         sortable_header:
           payment_state: "Status Betaling"
           shipment_state: "Status Verzending"
@@ -3540,7 +3541,6 @@ nl_BE:
       pending: in afwachting
       resumed: herbegonnen
       returned: teruggekeerd
-      skrill: cash
     subscription_state:
       active: aktief
       pending: in afwachting

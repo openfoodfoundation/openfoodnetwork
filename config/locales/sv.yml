@@ -1785,6 +1785,7 @@ sv:
       modals:
         got_it: "Förstått"
         continue: "Fortsätt"
+        cancel: "Avbryt"
         tag_rule_help:
           title: Regler för etiketter
           overview: Översikt
@@ -1906,7 +1907,6 @@ sv:
           pending: "oavslutad"
           resumed: "återupptagen"
           returned: "returnerad"
-          skrill: "skrill"
         shipment_states:
           backorder: "restorder"
           partial: "delvis"
@@ -2133,6 +2133,7 @@ sv:
           ship: "Frakta"
           edit: "Redigera"
           next: "Näst"
+          resend_confirmation: "Skicka om bekräftelse"
         sortable_header:
           payment_state: "Betalningsstatus"
           shipment_state: "Leveransstatus"
@@ -2294,7 +2295,6 @@ sv:
       payment: betalning
       resumed: återupptagen
       returned: returnerad
-      skrill: skrill
     paypal:
       refund_amount: "Belopp"
     users:

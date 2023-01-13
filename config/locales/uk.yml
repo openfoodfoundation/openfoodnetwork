@@ -2834,6 +2834,7 @@ uk:
         got_it: "Зрозуміло"
         close: "Закрити"
         continue: "Продовжити"
+        cancel: "Скасувати"
         invite: "Запросити"
         invite_title: "Запросити незареєстрованого користувача"
         tag_rule_help:
@@ -2999,7 +3000,6 @@ uk:
           pending: "в очікуванні"
           resumed: "відновлено"
           returned: "повернуто"
-          skrill: "skrill"
         shipment_states:
           backorder: "незавершене замовлення"
           partial: "частковий"
@@ -3714,6 +3714,7 @@ uk:
           results_found: "%{number} Результати знайдено."
           viewing: "Перегляд %{start} до %{end}."
           print_invoices: "Друк рахунків-фактур"
+          resend_confirmation: "Повторно надіслати підтвердження"
           selected:
             zero: "Замовлень не вибрано"
             one: "Вибрано 1 замовлення"
@@ -4095,7 +4096,6 @@ uk:
       pending: в очікуванні
       resumed: відновлено
       returned: повернувся
-      skrill: skrill
     subscription_state:
       active: активний
       pending: в очікуванні

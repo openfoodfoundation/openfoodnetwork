@@ -2683,6 +2683,7 @@ tr:
         got_it: "Anladım"
         close: "Kapat"
         continue: "Devam et"
+        cancel: "İptal et"
         invite: "Davet et"
         invite_title: "Kayıtlı olmayan bir kullanıcıyı davet et"
         tag_rule_help:
@@ -2847,7 +2848,6 @@ tr:
           pending: "Bekliyor"
           resumed: "devam ettirildi"
           returned: "iade"
-          skrill: "skrill"
         shipment_states:
           backorder: "bekleyen sipariş"
           partial: "kısmi"
@@ -3507,6 +3507,7 @@ tr:
           results_found: "%{number} Sonuç bulundu."
           viewing: "%{start} - %{end} görüntüleniyor."
           print_invoices: "Faturaları Yazdır"
+          resend_confirmation: "Onayı Tekrar Gönderin"
         sortable_header:
           payment_state: "Ödeme Durumu"
           shipment_state: "Teslimat Durumu"
@@ -3879,7 +3880,6 @@ tr:
       pending: bekliyor
       resumed: devam edildi
       returned: iade edildi
-      skrill: skrill
     subscription_state:
       active: AKTİF
       pending: bekliyor

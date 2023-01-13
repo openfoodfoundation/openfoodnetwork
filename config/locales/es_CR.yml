@@ -2836,6 +2836,7 @@ es_CR:
         got_it: "Lo entiendo"
         close: "Cerrar"
         continue: "Continuar"
+        cancel: "Cancelar"
         invite: "Invitar"
         invite_title: "Invitar a un usuario no registrado"
         tag_rule_help:
@@ -3004,7 +3005,6 @@ es_CR:
           pending: "pendiente"
           resumed: "resumido"
           returned: "devuelto"
-          skrill: "skrill"
         shipment_states:
           backorder: "orden pendiente"
           partial: "parcial"
@@ -3648,6 +3648,7 @@ es_CR:
           results_found: "%{number} Resultados encontrados."
           viewing: "Viendo de %{start}a %{end}."
           print_invoices: "Imprimir facturas"
+          resend_confirmation: "Reenviar confirmación"
         sortable_header:
           payment_state: "Estado del pago"
           shipment_state: "Estado del envío"
@@ -3961,7 +3962,6 @@ es_CR:
       pending: pendiente
       resumed: resumido
       returned: devuelto
-      skrill: skrill
     subscription_state:
       active: activo
       pending: pendiente

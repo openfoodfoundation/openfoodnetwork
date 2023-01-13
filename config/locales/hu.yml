@@ -2855,6 +2855,7 @@ hu:
         got_it: "Megvan"
         close: "Bezárás"
         continue: "Tovább"
+        cancel: "Vissza"
         invite: "Meghívás"
         invite_title: "Nem regisztrált felhasználó meghívása"
         tag_rule_help:
@@ -3052,7 +3053,6 @@ hu:
           pending: "függőben levő"
           resumed: "folytatta"
           returned: "visszatért"
-          skrill: "skrill"
         shipment_states:
           backorder: "utólagos rendelés"
           partial: "részleges"
@@ -3724,6 +3724,7 @@ hu:
           results_found: "%{number} találat."
           viewing: "%{start} – %{end} megtekintése."
           print_invoices: "Számlák nyomtatása"
+          resend_confirmation: "Visszaigazolás újraküldése"
         sortable_header:
           payment_state: "Fizetési állapot"
           shipment_state: "Szállítási állapot"
@@ -4098,7 +4099,6 @@ hu:
       pending: függőben levő
       resumed: folytatta
       returned: visszatért
-      skrill: skrill
     subscription_state:
       active: aktív
       pending: függőben levő

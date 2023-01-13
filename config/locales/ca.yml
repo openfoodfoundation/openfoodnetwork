@@ -2772,6 +2772,7 @@ ca:
         got_it: "Ho tinc"
         close: "Tanca"
         continue: "Continua"
+        cancel: "Cancel·lar"
         invite: "Convida"
         invite_title: "Convida un usuari no registrat"
         tag_rule_help:
@@ -2939,7 +2940,6 @@ ca:
           pending: "pendents"
           resumed: "reprès"
           returned: "retornat"
-          skrill: "habilitat"
         shipment_states:
           backorder: "per tornar"
           partial: "parcial"
@@ -3601,6 +3601,7 @@ ca:
           results_found: "%{number} Resultats trobats."
           viewing: "Veient %{start} a %{end}."
           print_invoices: "Imprimir factures"
+          resend_confirmation: "Reenviar Confirmació"
         sortable_header:
           payment_state: "Estat del pagament"
           shipment_state: "Estat de la Tramesa"
@@ -3975,7 +3976,6 @@ ca:
       pending: pendents
       resumed: reprès
       returned: retornat
-      skrill: habilitat
     subscription_state:
       active: actiu
       pending: pendents

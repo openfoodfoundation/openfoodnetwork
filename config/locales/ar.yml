@@ -30,6 +30,7 @@ ar:
         shipping_category_id: "نوع الشحن"
         variant_unit: "وحدة النوع"
         variant_unit_name: "اسم وحدة النوع"
+        unit_value: "قيمةالوحدة"
       spree/credit_card:
         base: "بطاقة ائتمان"
         number: "رقم "
@@ -180,6 +181,8 @@ ar:
         updated_not_active: "تمت إعادة تعيين كلمة المرور الخاصة بك ، ولكن لم يتم تأكيد بريدك الإلكتروني بعد."
         updated: "تم تغيير كلمة المرور الخاصة بك بنجاح. انت الآن مسجل دخولك."
         send_instructions: "ستتلقى رسالة بريد إلكتروني تحتوي على إرشادات حول كيفية تأكيد حسابك في بضع دقائق."
+    oidc:
+      failure: "تعذر تسجيل الدخول: %{error}"
   home_page_alert_html: "الصفحة الرئيسية تنبيه HTML"
   hub_signup_case_studies_html: "Hub signup case studies HTML"
   hub_signup_detail_html: "Hub signup detail HTML"
@@ -401,8 +404,11 @@ ar:
       filters:
         categories:
           title: التصنيفات
+          selected_categories: "تم تحديد الفئات %{count}"
         producers:
           title: المنتجين
+          selected_producers: "تم اختيار المنتجين %{count}"
+        per_page: "%{count} عنصر في كل صفحة"
         colums: أعمدة
       columns:
         name: الاسم
@@ -643,7 +649,9 @@ ar:
         conditional_blank: لا يمكن أن تكون فارغة إذا كانت نوع الوحدة فارغة
         no_product: لم يطابق أي منتجات في قاعدة البيانات
         not_found: غير موجود في قاعدة البيانات
+        category_not_found: لا يتطابق مع الفئات المسموح بها. راجع الفئات الصحيحة للاختيار من بينها في صفحة استيراد المنتج ، أو تحقق من عدم وجود أخطاء إملائية.
         not_updatable: لا يمكن تحديثه على المنتجات الحالية عبر استيراد المنتج
+        values_must_be_same: يجب أن تكون هي نفسها بالنسبة للمنتجات التي تحمل الاسم نفسه
         blank: لا يمكن أن تكون فارغة
         products_no_permission: ليس لديك إذن لإدارة المنتجات لهذه المؤسسة
         inventory_no_permission: ليس لديك إذن لإنشاء مخزون لهذا المنتج
@@ -1362,6 +1370,15 @@ ar:
         formatted_data: البيانات المنسقة
       packing:
         name: "تقارير التعبئة"
+    oidc_settings:
+      index:
+        title: "إعدادات OIDC"
+        connect: "اربط حسابك"
+        already_connected: "حسابك مرتبط بالفعل بحساب تفويض DFC هذا:"
+        les_communs_link: "خادم معرف Les Communs"
+        link_your_account: "تحتاج أولاً إلى ربط حسابك بموفر التفويض الذي تستخدمه DFC (Les Communs Open ID Connect)."
+        link_account_button: "اربط حسابك في Les Communs OIDC"
+        view_account: "لعرض حسابك ، راجع:"
     subscriptions:
       index:
         title: "الاشتراكات"
@@ -1784,6 +1801,7 @@ ar:
       message_html: "لديك طلب لدورة الطلب هذه بالفعل. تحقق من %{cart} لرؤية العناصر التي طلبتها من قبل. يمكنك أيضًا إلغاء العناصر طالما كانت دورة الطلب مفتوحة."
     step1:
       contact_information:
+        title: معلومات للتواصل
         email:
           label: البريد الإلكتروني
         phone:
@@ -2597,7 +2615,17 @@ ar:
   report_header_to_hub: 'إلى مركز البيع '
   report_header_hub_code: رمز مركز البيع
   report_header_hub_id: معرف المحل
+  report_header_hub_business_number: "رقم العمل لمركز البيع "
+  report_header_hub_legal_name: "الاسم القانوني لمركز البيع "
+  report_header_hub_contact_name: "اسم جهة اتصال مركز البيع "
+  report_header_hub_email: "الايميل العام لمركز البيع "
   report_header_hub_owner_email: البريد الإلكتروني لمالك المحل
+  report_header_hub_phone: "رقم هاتف مركز البيع "
+  report_header_hub_address_line1: "عنوان مركز البيع 1"
+  report_header_hub_address_line2: "عنوان مركز البيع 2"
+  report_header_hub_address_city: "ضاحية مركز البيع "
+  report_header_hub_address_zipcode: "الرمز البريدي لمركز البيع "
+  report_header_hub_address_state_name: "دولة مركز البيع "
   report_header_code: الشفرة
   report_header_paid: دفع؟
   report_header_delivery: توصيل؟
@@ -2632,11 +2660,13 @@ ar:
   report_header_total_tax: "إجمالي الضريبة (%{currency_symbol})"
   report_header_total_excl_tax: "المجموع باستثناء الضريبة (%{currency_symbol})"
   report_header_total_incl_tax: "إجمالي مدفوع الضريبة (%{currency_symbol})"
+  report_header_total_orders: "إجمالي عدد الطلبات"
   report_header_enterprise: الشركة
   report_header_customer: عميل
   report_header_customer_code: كود العميل
   report_header_product: المنتج
   report_header_product_properties: خصائص المنتج
+  report_header_product_tax_category: فئة ضريبة المنتج
   report_header_quantity: الكمية
   report_header_max_quantity: اعلى كمية
   report_header_variant: النوع
@@ -2649,6 +2679,7 @@ ar:
   report_header_supplier: المورد
   report_header_producer: المنتج
   report_header_producer_suburb: منتج الضاحية
+  report_header_producer_charges_sales_tax?: مسجل في ضريبة السلع والخدمات / ضريبة القيمة المضافة
   report_header_unit: وحدة
   report_header_group_buy_unit_quantity: مجموعة شراء وحدة الكمية
   report_header_cost: كلفة
@@ -2668,6 +2699,7 @@ ar:
   report_header_delivery_postcode: تسليم الرمز البريدي
   report_header_bulk_unit_size: حجم الوحدة بالجملة
   report_header_weight: وزن
+  report_header_final_weight_volume: النهائي (الوزن / الحجم)
   report_header_height: الارتفاع
   report_header_width: العرض
   report_header_depth: العمق
@@ -2844,6 +2876,7 @@ ar:
         got_it: "فهمتك"
         close: "إغلاق"
         continue: "تابع"
+        cancel: "إلغاء"
         invite: "ادعو"
         invite_title: "دعوة مستخدم غير مسجل"
         tag_rule_help:
@@ -3003,7 +3036,6 @@ ar:
           pending: "قيد الانتظار"
           resumed: "متابعة"
           returned: "العودة"
-          skrill: "طريقة دفع سكريل"
         shipment_states:
           backorder: "المؤجل"
           partial: "جزئي"
@@ -3666,6 +3698,7 @@ ar:
       messages:
         included_price_validation: "لا يمكن تحديده إلا إذا قمت بتعيين منطقة ضريبية افتراضية"
         blank: "لا يمكن أن تكون فارغة"
+        invalid_instagram_url: "يجب أن يكون اسم المستخدم فقط على سبيل المثال. the_prof"
     layouts:
       admin:
         login_nav:
@@ -3771,6 +3804,7 @@ ar:
           viewing: "عرض %{start} إلى %{end}."
           print_invoices: "طباعة الفواتير"
           cancel_orders: "إلغاء الطلبات"
+          resend_confirmation: "أعد إرسال التأكيد"
           selected:
             zero: "لم يتم اختيار أي طلب"
             one: "طلب واحد تم اختياره"
@@ -3919,6 +3953,7 @@ ar:
           title: "منتج جديد"
           new_product: "منتج جديد"
           supplier: "المورد"
+          supplier_select_placeholder: "حدد المورد"
           product_name: "اسم المنتج"
           units: "حجم الوحدة"
           value: "القيمة"
@@ -3964,6 +3999,9 @@ ar:
           select_and_search: "حدد المرشحات وانقر على %{option} للوصول إلى البيانات الخاصة بك."
         customer_names_message:
           customer_names_tip: "إذا كانت أسماء العملاء مخفية للطلبات التي قدمتها ، فيمكنك الاتصال بالموزع والسؤال عما إذا كان بإمكانهم تحديث تفضيلات متجرهم للسماح لمورديهم بمشاهدة أسماء العملاء."
+        products_and_inventory:
+          all_products:
+            message: "لاحظ أن مستويات المخزون المبلغ عنها هي من قوائم منتجات الموردين فقط. إذا كنت تستخدم المخزون لإدارة كميات مخزونك ، فسيتم تجاهل هذه القيم في هذا التقرير."
       users:
         index:
           listing_users: "قائمة المستخدمين"
@@ -4154,7 +4192,6 @@ ar:
       pending: قيد الانتظار
       resumed: استأنف
       returned: العودة
-      skrill: طريقة دفع سكريل
     subscription_state:
       active: نشيط
       pending: قيد الانتظار
@@ -4361,9 +4398,12 @@ ar:
       title: "تم رفض التغيير الذي أردته (422)"
       message_html: "<p style=\";text-align:right;direction:rtl\">تم رفض التغيير الذي تريده. ربما حاولت تغيير شيء لا يمكنك الوصول إليه.<br><h3 style=\";text-align:right;direction:rtl\"> <a href='/' >العودة للصفحة الرئيسية</a></h3></p>"
   components:
+    multiple_checked_select:
+      filter_placeholder: "خيارات التصفية"
     search_input:
       placeholder: بحث
     selector_with_filter:
+      selected_items: "%{count} تم تحديد"
       search_placeholder: بحث
     pagination:
       next: التالى

@@ -2742,6 +2742,7 @@ fr_CM:
         got_it: "J'ai compris"
         close: "Fermer"
         continue: "Suivant"
+        cancel: "Annuler"
         invite: "Inviter"
         invite_title: "Inviter un nouvel utilisateur"
         tag_rule_help:
@@ -2930,7 +2931,6 @@ fr_CM:
           pending: "en attente"
           resumed: "recommencé"
           returned: "retourné"
-          skrill: "cash"
         shipment_states:
           backorder: "réapprovisionnement"
           partial: "partiel"
@@ -3619,6 +3619,7 @@ fr_CM:
           results_found: "%{number} résultats trouvés"
           viewing: "Résultats %{start} à %{end} affichés."
           print_invoices: "Imprimer les factures"
+          resend_confirmation: "Renvoyer la confirmation"
         sortable_header:
           payment_state: "Statut du Paiement"
           shipment_state: "Statut livraison"
@@ -3992,7 +3993,6 @@ fr_CM:
       pending: en attente
       resumed: recommencé
       returned: retourné
-      skrill: cash
     subscription_state:
       active: actif
       pending: en attente

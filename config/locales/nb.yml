@@ -2846,6 +2846,7 @@ nb:
         got_it: "Jeg forstår"
         close: "Lukk"
         continue: "Fortsett"
+        cancel: "Avbryt"
         invite: "Inviter"
         invite_title: "Inviter en uregistrert bruker"
         tag_rule_help:
@@ -3010,7 +3011,6 @@ nb:
           pending: "i påvente av"
           resumed: "gjenopptatt"
           returned: "returnert"
-          skrill: "skrill"
         shipment_states:
           backorder: "restordre"
           partial: "delvis"
@@ -3678,6 +3678,7 @@ nb:
           results_found: "%{number} Resultater funnet."
           viewing: "Ser %{start} til %{end}."
           print_invoices: "Skriv ut fakturaer"
+          resend_confirmation: "Send Bekreftelse på nytt"
           selected:
             zero: "Ingen ordre valgt"
             one: "1 ordre valgt"
@@ -4059,7 +4060,6 @@ nb:
       pending: i påvente av
       resumed: gjenopptatt
       returned: returnert
-      skrill: skrill
     subscription_state:
       active: aktiv
       pending: i påvente av

@@ -2810,6 +2810,7 @@ ko:
         got_it: "알겠습니다."
         close: "휴무"
         continue: "계속하기"
+        cancel: "취소"
         invite: "초대하기"
         invite_title: "등록되지 않은 사용자 초대"
         tag_rule_help:
@@ -2955,7 +2956,6 @@ ko:
           pending: "보류"
           resumed: "재개됨"
           returned: "반송됨"
-          skrill: "skrill"
         shipment_states:
           backorder: "일시 품절"
           partial: "불완전힘"
@@ -3599,6 +3599,7 @@ ko:
           results_found: "%{number}개의 결과를 찾았습니다."
           viewing: "%{start}에서 %{end}까지 보기"
           print_invoices: "청구서 출력"
+          resend_confirmation: "확인서 재전송"
         sortable_header:
           payment_state: "결제 상태"
           shipment_state: "배송 현황"
@@ -3972,7 +3973,6 @@ ko:
       pending: 보류
       resumed: 재개됨
       returned: 반송됨
-      skrill: skrill
     subscription_state:
       active: 활성화
       pending: 보류

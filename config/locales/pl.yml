@@ -2441,6 +2441,7 @@ pl:
       modals:
         got_it: "Rozumiem"
         close: "Zamknij"
+        cancel: "Anuluj"
         invite: "Zapraszam"
         invite_title: "Zaproś niezarejestrowanego użytkownika"
         tag_rule_help:
@@ -2598,7 +2599,6 @@ pl:
           pending: "w oczekiwaniu"
           resumed: "wznowione"
           returned: "zwrócone"
-          skrill: "skrill"
         shipment_states:
           backorder: "zaległe zamówienie"
           partial: "częściowy"
@@ -3215,6 +3215,7 @@ pl:
           results_found: "%{number} Znalezione wyniki."
           viewing: "Wyświetlam %{start} do %{end}."
           print_invoices: "Wydrukuj faktury"
+          resend_confirmation: "Ponownie wyślij potwierdzenie"
         sortable_header:
           payment_state: "Status Płatności"
           shipment_state: "Status dostawy"
@@ -3543,7 +3544,6 @@ pl:
       pending: w oczekiwaniu
       resumed: wznowione
       returned: zwrócone
-      skrill: skrill
     subscription_state:
       active: aktywny
       pending: w oczekiwaniu

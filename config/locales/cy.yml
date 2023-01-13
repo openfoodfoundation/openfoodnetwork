@@ -2854,6 +2854,7 @@ cy:
         got_it: "Yn deall"
         close: "Cau"
         continue: "Parhau"
+        cancel: "Canslo"
         invite: "Gwahodd"
         invite_title: "Gwahodd defnyddiwr anghofrestredig"
         tag_rule_help:
@@ -3020,7 +3021,6 @@ cy:
           pending: "yn yr arfaeth"
           resumed: "ailddechrau"
           returned: "wedi ei ddychwelyd"
-          skrill: "skrill"
         shipment_states:
           backorder: "ôl-archeb"
           partial: "rhannol"
@@ -3740,6 +3740,7 @@ cy:
           viewing: "Yn edrych ar %{start} i %{end}."
           print_invoices: "Argraffu anfonebau"
           cancel_orders: "Canslo Archebion"
+          resend_confirmation: "Ailanfon Cadarnhad "
           selected:
             zero: "Ni ddewiswyd archeb."
             one: "Dewiswyd 1 archeb"
@@ -4121,7 +4122,6 @@ cy:
       pending: yn yr arfaeth
       resumed: wedi ailddechrau
       returned: wedi dychwelyd
-      skrill: skrill
     subscription_state:
       active: gweithredol
       pending: yn yr arfaeth

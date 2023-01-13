@@ -2487,6 +2487,7 @@ fil_PH:
         got_it: "nakuha na"
         close: "isara"
         continue: "Magpatuloy"
+        cancel: "kanselahin"
         invite: "mag-imbita"
         invite_title: "mag-imbita ng hindi rehistradong user"
         tag_rule_help:
@@ -2648,7 +2649,6 @@ fil_PH:
           pending: "nakabinbin"
           resumed: "nagpatuloy"
           returned: "binalik"
-          skrill: "Skrill"
         shipment_states:
           backorder: "backorder"
           partial: "bahagi"
@@ -3211,6 +3211,7 @@ fil_PH:
           results_found: "%{number}Natagpuang resulta."
           viewing: "makikita ang%{start} hanggang%{end}."
           print_invoices: "i-print ang mga invoice"
+          resend_confirmation: "ipadala muli ang kumpirmasyon"
         sortable_header:
           payment_state: "status ng pagbabayad"
           shipment_state: "status ng kargamento"
@@ -3518,7 +3519,6 @@ fil_PH:
       pending: nakabinbin
       resumed: nagpatuloy
       returned: binalik
-      skrill: Skrill
     subscription_state:
       active: aktibo
       pending: nakabinbin

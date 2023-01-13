@@ -2842,6 +2842,7 @@ en_IE:
         got_it: "Got it"
         close: "Close"
         continue: "Continue"
+        cancel: "Cancel"
         invite: "Invite"
         invite_title: "Invite an unregistered user"
         tag_rule_help:
@@ -3012,7 +3013,6 @@ en_IE:
           pending: "pending"
           resumed: "resumed"
           returned: "returned"
-          skrill: "skrill"
         shipment_states:
           backorder: "backorder"
           partial: "partial"
@@ -3683,6 +3683,7 @@ en_IE:
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
+          resend_confirmation: "Resend Confirmation"
           selected:
             zero: "No order selected"
             one: "1 order selected"
@@ -4064,7 +4065,6 @@ en_IE:
       pending: pending
       resumed: resumed
       returned: returned
-      skrill: skrill
     subscription_state:
       active: active
       pending: pending

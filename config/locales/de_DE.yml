@@ -2873,6 +2873,7 @@ de_DE:
         got_it: "Verstanden"
         close: "Schließen"
         continue: "Weiter"
+        cancel: "Stornieren"
         invite: "Einladen"
         invite_title: "Geben Sie die E-Mail-Adresse eines nicht registrierten Benutzers ein, um dieses Unternehmen zu verwalten."
         tag_rule_help:
@@ -3045,7 +3046,6 @@ de_DE:
           pending: "ausstehend"
           resumed: "wiederaufgenommen"
           returned: "zurückgegeben"
-          skrill: "Skrill"
         shipment_states:
           backorder: "Lieferrückstand"
           partial: "Teillieferung"
@@ -3716,6 +3716,7 @@ de_DE:
           viewing: "Angezeigt wird %{start} bis %{end}."
           print_invoices: "Rechnungen drucken"
           cancel_orders: "Bestellungen stornieren"
+          resend_confirmation: "Bestätigung erneut senden"
           selected:
             zero: "Keine Bestellung ausgewählt"
             one: "1 Bestellung ausgewählt"
@@ -4098,7 +4099,6 @@ de_DE:
       pending: ausstehend
       resumed: wiederaufgenommen
       returned: retourniert
-      skrill: Skrill
     subscription_state:
       active: aktiv
       pending: ausstehend

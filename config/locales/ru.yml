@@ -2874,6 +2874,7 @@ ru:
         got_it: "Понятно"
         close: "Закрыть"
         continue: "Продолжить"
+        cancel: "Выход"
         invite: "Пригласить"
         invite_title: "Пригласить не зарегистрированного пользователя"
         tag_rule_help:
@@ -3043,7 +3044,6 @@ ru:
           pending: "в ожидании"
           resumed: "возобновлён"
           returned: "возвращён"
-          skrill: "skrill"
         shipment_states:
           backorder: "отложен"
           partial: "частично"
@@ -3763,6 +3763,7 @@ ru:
           viewing: "Просмотр с %{start} по %{end}."
           print_invoices: "Печать Счетов"
           cancel_orders: "Отменить Заказы"
+          resend_confirmation: "Подтверждение Заказа"
           selected:
             zero: "Заказ не выбран"
             one: "1 заказ выбран"
@@ -4147,7 +4148,6 @@ ru:
       pending: в ожидании
       resumed: возобновлен
       returned: возвращен
-      skrill: skrill
     subscription_state:
       active: активный
       pending: в ожидании

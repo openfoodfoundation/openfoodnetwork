@@ -2796,6 +2796,7 @@ it_CH:
         got_it: "Capito"
         close: "Ok"
         continue: "Continua"
+        cancel: "Annulla"
         invite: "Invita"
         invite_title: "Invita un utente non registrato"
         tag_rule_help:
@@ -2963,7 +2964,6 @@ it_CH:
           pending: "in sospeso"
           resumed: "ripreso"
           returned: "restituito"
-          skrill: "skrill"
         shipment_states:
           backorder: "ordine arretrato"
           partial: "parziale"
@@ -3655,6 +3655,7 @@ it_CH:
           results_found: "%{number} Risultati trovati."
           viewing: "Guardando da %{start} a %{end}"
           print_invoices: "Stampa conferme d'ordine"
+          resend_confirmation: "Rimanda Conferma"
         sortable_header:
           payment_state: "Stato Pagamento"
           shipment_state: "Stato della spedizione"
@@ -4027,7 +4028,6 @@ it_CH:
       pending: in sospeso
       resumed: ripreso
       returned: restituito
-      skrill: skrill
     subscription_state:
       active: attivo
       pending: in sospeso
