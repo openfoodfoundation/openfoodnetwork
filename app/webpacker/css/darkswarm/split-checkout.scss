@@ -382,6 +382,10 @@
 #line-items {
   display: block;
   overflow-x: auto;
+
+  h5 {
+    background-color: transparent;
+  }
 }
 
 .two-columns-inputs {

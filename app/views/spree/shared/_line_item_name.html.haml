@@ -1,4 +1,4 @@
-%h5.inline-header{ style: "background-color: transparent" }
+%h5.inline-header
   = "#{raw(line_item.product.name)}"
   - unless line_item.product.name.include? line_item.name_to_display
     %span= "- #{raw(line_item.name_to_display)}"
