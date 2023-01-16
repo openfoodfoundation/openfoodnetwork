@@ -167,6 +167,14 @@ describe '
             visit spree.admin_orders_path
           end
 
+          it "displays the orders for the respective distributor" do
+            expect(page).not_to have_content order.number # does not display incomplete orders by default
+            expect(page).to have_content order2.number
+            expect(page).to have_content order3.number
+            expect(page).to have_content order4.number
+            expect(page).not_to have_content order5.number # does not display orders from other distributors
+          end
+
           it "cannot send emails to orders if permission have been revoked in the meantime" do
             page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
 
