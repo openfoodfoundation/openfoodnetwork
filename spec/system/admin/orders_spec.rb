@@ -9,12 +9,19 @@ describe '
   include AuthenticationHelper
   include WebHelper
 
-  let(:user) { create(:user) }
+  let(:owner) { create(:user) }
+  let(:owner2) { create(:user) }
+  let(:customer) { create(:user) }
+  let(:customer2) { create(:user) }
+  let(:customer3) { create(:user) }
+  let(:customer4) { create(:user) }
+  let(:customer5) { create(:user) }
   let(:product) { create(:simple_product) }
-  let(:distributor) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
-  let(:distributor2) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
-  let(:distributor3) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
-  let(:distributor4) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
+  let(:distributor) { create(:distributor_enterprise, owner: owner, charges_sales_tax: true) }
+  let(:distributor2) { create(:distributor_enterprise, owner: owner, charges_sales_tax: true) }
+  let(:distributor3) { create(:distributor_enterprise, owner: owner, charges_sales_tax: true) }
+  let(:distributor4) { create(:distributor_enterprise, owner: owner, charges_sales_tax: true) }
+  let(:distributor5) { create(:distributor_enterprise, owner: owner2, charges_sales_tax: true) }
   let(:order_cycle) do
     create(:simple_order_cycle, name: 'One', distributors: [distributor, distributor2, distributor3, distributor4],
                                 variants: [product.variants.first])
@@ -22,7 +29,7 @@ describe '
 
   context "with a complete order" do
     let(:order) do
-      create(:order_with_totals_and_distribution, user: user, distributor: distributor,
+      create(:order_with_totals_and_distribution, user: customer, distributor: distributor,
                                                   order_cycle: order_cycle,
                                                   state: 'complete', payment_state: 'balance_due')
     end
@@ -36,18 +43,26 @@ describe '
     let!(:order_cycle4) {
       create(:simple_order_cycle, name: 'Four', orders_close_at: 4.weeks.from_now)
     }
+    let!(:order_cycle5) do
+      create(:simple_order_cycle, name: 'Five', distributors: [distributor5],
+                                  variants: [product.variants.first])
+    end
 
     let!(:order2) {
-      create(:order_with_credit_payment, user: user, distributor: distributor2,
+      create(:order_with_credit_payment, user: customer2, distributor: distributor2,
                                          order_cycle: order_cycle2, completed_at: 2.days.ago)
     }
     let!(:order3) {
-      create(:order_with_credit_payment, user: user, distributor: distributor3,
+      create(:order_with_credit_payment, user: customer3, distributor: distributor3,
                                          order_cycle: order_cycle3)
     }
     let!(:order4) {
-      create(:order_with_credit_payment, user: user, distributor: distributor4,
+      create(:order_with_credit_payment, user: customer4, distributor: distributor4,
                                          order_cycle: order_cycle4)
+    }
+    let!(:order5) {
+      create(:order_with_credit_payment, user: customer5, distributor: distributor5,
+                                         order_cycle: order_cycle5)
     }
 
     it "order cycles appear in descending order by close date on orders page" do
@@ -56,7 +71,7 @@ describe '
       open_select2('#s2id_q_order_cycle_id_in')
 
       expect(find('#q_order_cycle_id_in',
-                  visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two/m)
+                  visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two.*Five/m)
     end
 
     it "filter by multiple order cycles" do
@@ -148,11 +163,11 @@ describe '
 
         context "for a hub manager" do
           before do
-            login_to_admin_as user
+            login_to_admin_as owner
             visit spree.admin_orders_path
           end
 
-          it "cannnot send emails to orders if permission have been revoked in the meantime" do
+          it "cannot send emails to orders if permission have been revoked in the meantime" do
             page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
 
             # Find the clicked order
@@ -237,7 +252,7 @@ describe '
         :order_with_line_items,
         distributor: distributor,
         order_cycle: order_cycle,
-        user: user,
+        user: customer,
         state: 'complete',
         payment_state: 'balance_due',
         completed_at: 1.day.ago,
@@ -248,7 +263,7 @@ describe '
         :order_with_line_items,
         distributor: distributor,
         order_cycle: order_cycle,
-        user: user,
+        user: customer,
         state: 'complete',
         payment_state: 'balance_due',
         completed_at: 1.day.ago,
@@ -272,7 +287,7 @@ describe '
     end
   end
 
-  context "save the filter params", js: true do
+  context "save the filter params" do
     let!(:shipping_method) { create(:shipping_method, name: "UPS Ground") }
     let!(:user) { create(:user, email: 'an@email.com') }
     let!(:order) do
