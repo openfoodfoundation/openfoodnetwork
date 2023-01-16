@@ -65,60 +65,69 @@ describe '
                                          order_cycle: order_cycle5)
     }
 
-    it "order cycles appear in descending order by close date on orders page" do
-      login_as_admin_and_visit 'admin/orders'
+    context "logging as superadmin and visiting the orders page" do
+      before do
+        login_as_admin_and_visit 'admin/orders'
+      end
 
-      open_select2('#s2id_q_order_cycle_id_in')
+      it "order cycles appear in descending order by close date on orders page" do
+        open_select2('#s2id_q_order_cycle_id_in')
 
-      expect(find('#q_order_cycle_id_in',
-                  visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two.*Five/m)
-    end
+        expect(find('#q_order_cycle_id_in',
+                    visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two.*Five/m)
+      end
 
-    it "filter by multiple order cycles" do
-      login_as_admin_and_visit 'admin/orders'
+      it "filter by multiple order cycles" do
+        select2_select 'Two', from: 'q_order_cycle_id_in'
+        select2_select 'Three', from: 'q_order_cycle_id_in'
 
-      select2_select 'Two', from: 'q_order_cycle_id_in'
-      select2_select 'Three', from: 'q_order_cycle_id_in'
+        page.find('.filter-actions .button.icon-search').click
 
-      page.find('.filter-actions .button.icon-search').click
+        # Order 2 and 3 should show, but not 4
+        expect(page).to have_content order2.number
+        expect(page).to have_content order3.number
+        expect(page).to_not have_content order4.number
+      end
 
-      # Order 2 and 3 should show, but not 4
-      expect(page).to have_content order2.number
-      expect(page).to have_content order3.number
-      expect(page).to_not have_content order4.number
-    end
+      it "filter by distributors" do
+        select2_select distributor2.name.to_s, from: 'q_distributor_id_in'
+        select2_select distributor4.name.to_s, from: 'q_distributor_id_in'
 
-    it "filter by distributors" do
-      login_as_admin_and_visit 'admin/orders'
+        page.find('.filter-actions .button.icon-search').click
 
-      select2_select distributor2.name.to_s, from: 'q_distributor_id_in'
-      select2_select distributor4.name.to_s, from: 'q_distributor_id_in'
+        # Order 2 and 4 should show, but not 3
+        expect(page).to have_content order2.number
+        expect(page).to_not have_content order3.number
+        expect(page).to have_content order4.number
+      end
 
-      page.find('.filter-actions .button.icon-search').click
+      it "filter by complete date" do
+        find("input.datepicker").click
+        select_dates_from_daterangepicker(order3.completed_at.yesterday, order4.completed_at.tomorrow)
 
-      # Order 2 and 4 should show, but not 3
-      expect(page).to have_content order2.number
-      expect(page).to_not have_content order3.number
-      expect(page).to have_content order4.number
-    end
+        page.find('.filter-actions .button.icon-search').click
 
-    it "filter by complete date" do
-      login_as_admin_and_visit 'admin/orders'
+        # Order 3 and 4 should show, but not 2
+        expect(page).to_not have_content order2.number
+        expect(page).to have_content order3.number
+        expect(page).to have_content order4.number
+      end
 
-      find("input.datepicker").click
-      select_dates_from_daterangepicker(order3.completed_at.yesterday, order4.completed_at.tomorrow)
+      it "filter by email" do
+        fill_in "Email", with: customer3.email
 
-      page.find('.filter-actions .button.icon-search').click
+        page.find('.filter-actions .button.icon-search').click
 
-      # Order 3 and 4 should show, but not 2
-      expect(page).to_not have_content order2.number
-      expect(page).to have_content order3.number
-      expect(page).to have_content order4.number
+        # Order 3 should show, but not 2 and 4
+        expect(page).to_not have_content order2.number
+        expect(page).to have_content order3.number
+        expect(page).to_not have_content order4.number
+      end
     end
 
     context "select/unselect all orders" do
       before do
-        login_as_admin_and_visit spree.admin_orders_path
+        login_as_admin_and_visit 'admin/orders'
       end
 
       it "by clicking on the checkbox in the table header" do
