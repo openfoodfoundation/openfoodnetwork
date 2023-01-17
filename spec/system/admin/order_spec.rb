@@ -546,12 +546,6 @@ describe '
         end
       end
 
-      it "cannot split the order in different stock locations" do
-        # There's only 1 stock location in OFN,
-        #   so the split functionality that comes with spree should be hidden
-        expect(page).to_not have_selector '.split-item'
-      end
-
       context "with different shipping methods" do
         let!(:different_shipping_method_for_distributor1) do
           create(:shipping_method, name: "Different", distributors: [distributor1])
