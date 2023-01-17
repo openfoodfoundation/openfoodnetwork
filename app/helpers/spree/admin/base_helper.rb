@@ -110,10 +110,16 @@ module Spree
 
       # maps each preference to a hash containing the label and field html.
       # E.g. { :label => "<label>...", :field => "<select>..." }
-      def preference_fields(object, form)
+      # options[:reject_currency] - if true, the currency preference will not be included.
+      #                             Defaults to false.
+      def preference_fields(object, form, options = {})
         return unless object.respond_to?(:preferences)
 
-        object.preferences.keys.map { |key|
+        preferences_key = object.preferences.keys
+        if options.fetch(:reject_currency, false)
+          preferences_key = preferences_key.reject { |key| key == :currency }
+        end
+        preferences_key.map { |key|
           preference_label = form.label("preferred_#{key}",
                                         Spree.t(key.to_s.gsub("_from_list", "")) + ": ").html_safe
           preference_field = preference_field_for(

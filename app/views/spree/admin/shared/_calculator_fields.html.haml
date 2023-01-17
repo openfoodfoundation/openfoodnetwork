@@ -10,7 +10,7 @@
       .row
         .calculator-settings
           = f.fields_for :calculator do |calculator_form|
-            - preference_fields(@object.calculator, calculator_form).each do |field|
+            - preference_fields(@object.calculator, calculator_form, { reject_currency: true }).each do |field|
               .alpha.four.columns
                 = field[:label]
               .field.twelve.eight.columns
