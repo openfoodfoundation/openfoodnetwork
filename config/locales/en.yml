@@ -1373,6 +1373,7 @@ en:
       total_by_customer: Total By Customer
       total_by_supplier: Total By Supplier
       supplier_totals: Order Cycle Supplier Totals
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Order Cycle Supplier Totals by Distributor
       totals_by_supplier: Order Cycle Distributor Totals by Supplier
       customer_totals: Order Cycle Customer Totals

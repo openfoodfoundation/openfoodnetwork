@@ -51,6 +51,12 @@ module Reporting
           }
         end
 
+        def columns_format
+          {
+            tax_rate: :percentage
+          }
+        end
+
         def rules
           [
             {
@@ -108,10 +114,7 @@ module Reporting
         end
 
         def tax_rate_amount(query_result_row)
-          amount = tax_rate(query_result_row)&.amount
-          return if amount.nil?
-
-          "#{amount * 100} %"
+          tax_rate(query_result_row)&.amount
         end
 
         def total_excl_tax(query_result_row)
