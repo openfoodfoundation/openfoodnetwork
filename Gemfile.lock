@@ -381,7 +381,7 @@ GEM
       addressable (~> 2.7)
     letter_opener (1.8.1)
       launchy (>= 2.2, < 3)
-    libv8-node (15.14.0.1)
+    libv8-node (16.10.0.0)
     listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -402,8 +402,8 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.1.2)
     mini_portile2 (2.8.1)
-    mini_racer (0.4.0)
-      libv8-node (~> 15.14.0.0)
+    mini_racer (0.6.3)
+      libv8-node (~> 16.10.0.0)
     minitest (5.17.0)
     monetize (1.12.0)
       money (~> 6.12)
@@ -825,7 +825,7 @@ DEPENDENCIES
   mime-types
   mimemagic (> 0.3.5)
   mini_portile2 (~> 2.8)
-  mini_racer (= 0.4.0)
+  mini_racer
   monetize (~> 1.11)
   oauth2 (~> 1.4.7)
   ofn-qz!
@@ -894,4 +894,4 @@ RUBY VERSION
    ruby 3.0.3p157
 
 BUNDLED WITH
-   2.1.4
+   2.4.3
