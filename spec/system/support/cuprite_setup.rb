@@ -21,6 +21,8 @@ Capybara.register_driver(:cuprite) do |app|
   )
 end
 
+ENV["TZ"] = "Australia/Sydney"
+
 # Configure Capybara to use :cuprite driver by default
 Capybara.default_driver = Capybara.javascript_driver = :cuprite
 
