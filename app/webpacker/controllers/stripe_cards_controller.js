@@ -7,6 +7,11 @@ export default class extends Controller {
 
   connect() {
     this.initSelectedCard();
+    document.addEventListener("stripecards:initSelectedCard", (e) => {
+      if (e.detail == `paymentmethod${this.element.dataset.paymentid}`) {
+        this.initSelectedCard();
+      }
+    });
   }
 
   initSelectedCard() {
