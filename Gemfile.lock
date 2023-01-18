@@ -234,6 +234,8 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
+    datafoodconsortium-connector (1.0.0.pre.alpha.6)
+      virtual_assembly-semantizer (~> 1.0, >= 1.0.4)
     date (3.3.3)
     ddtrace (1.11.1)
       debase-ruby_core_source (>= 0.10.16, <= 3.2.0)
@@ -359,12 +361,20 @@ GEM
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
     json (2.6.3)
+    json-canonicalization (0.3.1)
     json-jwt (1.16.3)
       activesupport (>= 4.2)
       aes_key_wrap
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
+    json-ld (3.2.3)
+      htmlentities (~> 4.3)
+      json-canonicalization (~> 0.3)
+      link_header (~> 0.0, >= 0.0.8)
+      multi_json (~> 1.15)
+      rack (~> 2.2)
+      rdf (~> 3.2, >= 3.2.9)
     json-schema (3.0.0)
       addressable (>= 2.8)
     json_spec (1.1.5)
@@ -383,6 +393,7 @@ GEM
     libddwaf (1.8.2.0.0)
       ffi (~> 1.0)
     libv8-node (16.10.0.0)
+    link_header (0.0.8)
     listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -557,6 +568,8 @@ GEM
     rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    rdf (3.2.9)
+      link_header (~> 0.0, >= 0.0.8)
     redcarpet (3.6.0)
     redis (4.8.1)
     redis-client (0.14.1)
@@ -737,6 +750,8 @@ GEM
       rails (>= 5.2, < 8.0)
       stimulus_reflex (>= 3.5.0.pre2)
       view_component (>= 2.28.0)
+    virtual_assembly-semantizer (1.0.4)
+      json-ld (~> 3.2, >= 3.2.3)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.0)
@@ -802,6 +817,7 @@ DEPENDENCIES
   combine_pdf
   cuprite
   database_cleaner
+  datafoodconsortium-connector
   db2fog!
   ddtrace
   debug (>= 1.0.0)
