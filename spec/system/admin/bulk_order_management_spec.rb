@@ -485,7 +485,8 @@ describe '
           displays_default_orders
         end
 
-        it "allows combining the order cycle and the pre-selected date with a custom date" do
+        xit "allows combining the order cycle and the pre-selected date with a custom date" do
+          # pending (#10192)
           click_on_select2 oc3.name, from: "order_cycle_filter"
           expect(find("input.datepicker").value).to eq "#{oc3.orders_open_at.strftime('%F')} to #{oc3.orders_close_at.strftime('%F')}"
           page.find('.filter-actions .button.icon-search').click
