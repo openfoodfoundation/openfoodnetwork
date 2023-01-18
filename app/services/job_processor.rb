@@ -19,6 +19,7 @@ class JobProcessor
       exit # rubocop:disable Rails/Exit
     end
 
+    # Wait for all forked child processes to exit
     Process.waitall
   ensure
     # If this Puma thread is interrupted then we need to detach the child
