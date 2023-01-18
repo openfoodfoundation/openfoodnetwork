@@ -8,7 +8,7 @@ MiniRacer::Platform.set_flags!(:single_threaded)
 
 require 'spec_helper'
 
-class TestJob < ActiveJob::Base
+class TestJob < ApplicationJob
   def initialize
     @file = Tempfile.new("test-job-result")
     super
