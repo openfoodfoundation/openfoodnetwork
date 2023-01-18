@@ -5,7 +5,7 @@ module Reporting
     include ReportsHelper
     attr_accessor :user, :params, :ransack_params
 
-    delegate :render_as, :as_json, :to_csv, :to_xlsx, :to_pdf, :to_json, to: :renderer
+    delegate :render_as, :as_json, :to_html, :to_csv, :to_xlsx, :to_pdf, :to_json, to: :renderer
     delegate :raw_render?, :html_render?, :display_header_row?, :display_summary_row?, to: :renderer
 
     delegate :rows, :table_rows, :grouped_data, to: :rows_builder
@@ -14,8 +14,8 @@ module Reporting
 
     delegate :formatted_rules, :header_option?, :summary_row_option?, to: :ruler
 
-    def initialize(user, params = {}, request = nil)
-      if request.nil? || request.get?
+    def initialize(user, params = {}, render: false)
+      unless render
         params.reverse_merge!(default_params)
         params[:q] ||= {}
         params[:q].reverse_merge!(default_params[:q]) if default_params[:q].present?
