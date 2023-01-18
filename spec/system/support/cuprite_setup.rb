@@ -21,7 +21,7 @@ Capybara.register_driver(:cuprite) do |app|
   )
 end
 
-ENV["TZ"] = "Europe/Lisbon"
+ENV["TIMEZONE"] = Time.zone.tzinfo.name
 
 # Configure Capybara to use :cuprite driver by default
 Capybara.default_driver = Capybara.javascript_driver = :cuprite
