@@ -212,13 +212,6 @@ describe '
           expect(page).to have_content "(1g)" # display as
         end
 
-        it "displays GST for enterprise fees" do
-          pending "ii) for legend see picture on PR #9495"
-          # enterprise fee of $20.00
-          expect(page).to have_content "Whole order - #{enterprise_fee.name} fee by coordinator " \
-                                       "#{user1.enterprises.first.name} 1 $20.00 (included) $120.00"
-        end
-
         it "displays the taxes correctly" do
           # header
           expect(page).to have_content "Item Qty GST Price"
@@ -358,13 +351,6 @@ describe '
           expect(page).to have_content Spree::Product.second.name.to_s
           expect(page).to have_content "(1g)" # display as
           expect(page).to have_content "3 $300.09 $1,500.45"
-        end
-
-        it "displays GST for enterprise fees" do
-          pending "v) for legend see picture on PR #9495"
-          # enterprise fee of $24.00
-          expect(page).to have_content "Whole order - #{enterprise_fee.name} fee by coordinator " \
-                                       "#{user1.enterprises.first.name} 1 $20.00 $120.00"
         end
 
         it "displays the taxes correctly" do
