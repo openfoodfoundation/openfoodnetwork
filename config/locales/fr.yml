@@ -1483,6 +1483,10 @@ fr:
         stripe_connect_fail: Désolé, la connexion de votre compte Stripe a échoué :-(
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
+    resend_confirmation_emails_feedback:
+      one: "Emails envoyés pour 1 commande."
+      many: "Emails envoyés pour %{count} commandes."
+      other: "Emails envoyés pour %{count} commandes."
   api:
     unknown_error: "Quelque chose n'a pas fonctionné. Notre équipe a été notifiée."
     invalid_api_key: "La clé API (%{key}) n'est pas valide."
@@ -2880,6 +2884,7 @@ fr:
       deleting_item_will_cancel_order: "Cette opération va rendre une ou plusieurs commandes vides, sans aucun produit. Elles vont ainsi être annulées. Souhaitez-vous continuer ?"
       modals:
         got_it: "J'ai compris"
+        confirm: "Valider"
         close: "Valider"
         continue: "Suivant"
         cancel: "Annuler"
@@ -3769,6 +3774,7 @@ fr:
           print_invoices: "Imprimer les factures"
           cancel_orders: "Annuler les commandes"
           resend_confirmation: "Renvoyer la confirmation"
+          resend_confirmation_confirm_html: "Cette action va renvoyer l'email de confirmation de commande. Etes-vous sûr de vouloir continuer ?"
           selected:
             zero: "Aucune commande sélectionnée"
             one: "1 commande sélectionnée"

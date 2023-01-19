@@ -1482,6 +1482,9 @@ en_FR:
         stripe_connect_fail: Sorry, the connection of your Stripe account failed
       stripe_connect_settings:
         resource: Stripe Connect configuration
+    resend_confirmation_emails_feedback:
+      one: "Confirmation email sent for 1 order."
+      other: "Confirmation emails sent for %{count} orders."
   api:
     unknown_error: "Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
@@ -2877,6 +2880,7 @@ en_FR:
       deleting_item_will_cancel_order: "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
       modals:
         got_it: "Got it"
+        confirm: "Confirm"
         close: "Close"
         continue: "Continue"
         cancel: "Cancel"
@@ -3717,6 +3721,7 @@ en_FR:
           print_invoices: "Print Invoices"
           cancel_orders: "Cancel Orders"
           resend_confirmation: "Resend Confirmation"
+          resend_confirmation_confirm_html: "This will resend the confirmation email to the customer. <br /> Are you sure you want to proceed?"
           selected:
             zero: "No order selected"
             one: "1 order selected"

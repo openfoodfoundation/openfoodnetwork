@@ -30,6 +30,7 @@ cy:
         shipping_category_id: "Categori dosbarthu."
         variant_unit: "Uned Amrywiol"
         variant_unit_name: "Enw Uned Amrywiol"
+        unit_value: "Gwerth yr uned"
       spree/credit_card:
         base: "Cerdyn credyd"
         number: "Rhif"
@@ -180,6 +181,8 @@ cy:
         updated_not_active: "Ailosodwyd eich cyfrinair, ond ni chadarnhawyd eich e-bost eto."
         updated: "Newidiwyd eich cyfrinair yn llwyddiannus. Rydych chi bellach wedi mewngofnodi."
         send_instructions: "Byddwch yn derbyn e-bost gyda chyfarwyddiadau ar sut i gadarnhau eich cyfrif mewn ychydig o funudau."
+    oidc:
+      failure: "Wedi methu mewngofnodi: %{error}"
   home_page_alert_html: "HTML rhybudd tudalen hafan."
   hub_signup_case_studies_html: "HTML astudiaethau achos mewngofnodi i'r hwb."
   hub_signup_detail_html: "HTML manylion mewngofnodi i'r hwb."
@@ -401,8 +404,11 @@ cy:
       filters:
         categories:
           title: Categorïau
+          selected_categories: "%{count} categorïau a ddewiswyd"
         producers:
           title: Prynu bwyd
+          selected_producers: "%{count} cynhyrchwyr a ddewiswyd"
+        per_page: "%{count} eitemau fesul tudalen"
         colums: Colofnau
       columns:
         name: Enw
@@ -643,7 +649,9 @@ cy:
         conditional_blank: ni chaniateir gadael yn wag os yw math yr uned yn wag
         no_product: nid yw'n cyfateb i unrhyw gynnyrch yn y bas data
         not_found: ni chafwyd hyd i hwn yn y bas data
+        category_not_found: ddim yn cyfateb i’r categorïau a ganiateir. Gweler y categorïau cywir er mwyn dewis o’r dudalen mewnforio cynnyrch, neu gwiriwch na chamsillafwyd rhywbeth.
         not_updatable: nid yw'n bosib ei ddiweddaru ar y rhestr cynnyrch bresennol trwy fewnforio cynnyrch
+        values_must_be_same: mae’n rhaid bod yr un peth ar gyfer cynnyrch gyda’r un enw
         blank: ni chanateir gadael yn wag
         products_no_permission: nid oes gennych ganiatâd i reoli cynnyrch ar gyfer y fenter hon
         inventory_no_permission: nid oes gennych ganiatâd i greu stocrestr ar gyfer y cynhyrchydd hwn
@@ -1366,10 +1374,12 @@ cy:
     oidc_settings:
       index:
         title: "OIDC Settings"
+        connect: "Cysylltu eich Cyfrif"
         already_connected: "Your account is already linked to this DFC authorization account:"
         les_communs_link: "Les Communs Open ID server"
         link_your_account: "You need first to link your account with the authorization provider used by DFC (Les Communs Open ID Connect)."
         link_account_button: "Link your Les Communs OIDC Account"
+        view_account: "I weld eich cyfrif, gweler"
     subscriptions:
       index:
         title: "Tanysgrifiadau"
@@ -2605,7 +2615,14 @@ cy:
   report_header_to_hub: I Hwb
   report_header_hub_code: Cod Hwb
   report_header_hub_id: Dull Adnabod Hyb
+  report_header_hub_business_number: "Rhif Busnes yr Hyb"
+  report_header_hub_legal_name: "Enw Cyfreithiol yr Hyb"
+  report_header_hub_contact_name: "Enw Cyswllt yr Hyb"
+  report_header_hub_email: "Ebost Cyhoeddus yr Hyb"
   report_header_hub_owner_email: Ebost Perchennog yr Hyb
+  report_header_hub_phone: "Rhif Ffôn yr Hyb"
+  report_header_hub_address_line1: "Llinell 1af Cyfeiriad yr Hyb"
+  report_header_hub_address_line2: "2ail Linell Cyfeiriad yr Hyb"
   report_header_code: Côd
   report_header_paid: Wedi talu?
   report_header_delivery: Dosbarthu?
