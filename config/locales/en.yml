@@ -3577,6 +3577,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     server_error: "Server error"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Pick-up at the farm"
+      delivery: "Signed, sealed, delivered"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     taxonomy_edit: "Taxonomy edit"
