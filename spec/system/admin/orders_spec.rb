@@ -11,6 +11,11 @@ describe '
 
   let(:owner) { create(:user) }
   let(:owner2) { create(:user) }
+  let(:billing_address) { create(:address, :randomized) }
+  let(:billing_address2) { create(:address, :randomized) }
+  let(:billing_address3) { create(:address, :randomized) }
+  let(:billing_address4) { create(:address, :randomized) }
+  let(:billing_address5) { create(:address, :randomized) }
   let(:customer) { create(:user) }
   let(:customer2) { create(:user) }
   let(:customer3) { create(:user) }
@@ -31,7 +36,9 @@ describe '
     let(:order) do
       create(:order_with_totals_and_distribution, user: customer, distributor: distributor,
                                                   order_cycle: order_cycle,
-                                                  state: 'complete', payment_state: 'balance_due')
+                                                  state: 'complete', payment_state: 'balance_due',
+                                                  bill_address_id: billing_address.id
+                                                  )
     end
 
     let!(:order_cycle2) {
@@ -50,19 +57,23 @@ describe '
 
     let!(:order2) {
       create(:order_with_credit_payment, user: customer2, distributor: distributor2,
-                                         order_cycle: order_cycle2, completed_at: 2.days.ago)
+                                         order_cycle: order_cycle2, completed_at: 2.days.ago,
+                                         bill_address_id: billing_address2.id)
     }
     let!(:order3) {
       create(:order_with_credit_payment, user: customer3, distributor: distributor3,
-                                         order_cycle: order_cycle3)
+                                         order_cycle: order_cycle3,
+                                         bill_address_id: billing_address3.id)
     }
     let!(:order4) {
       create(:order_with_credit_payment, user: customer4, distributor: distributor4,
-                                         order_cycle: order_cycle4)
+                                         order_cycle: order_cycle4,
+                                         bill_address_id: billing_address4.id)
     }
     let!(:order5) {
       create(:order_with_credit_payment, user: customer5, distributor: distributor5,
-                                         order_cycle: order_cycle5)
+                                         order_cycle: order_cycle5,
+                                         bill_address_id: billing_address5.id)
     }
 
     context "logging as superadmin and visiting the orders page" do
@@ -122,6 +133,27 @@ describe '
         expect(page).to_not have_content order2.number
         expect(page).to have_content order3.number
         expect(page).to_not have_content order4.number
+      end
+
+      it "filter by customer first and last names" do
+        # NOTE: this field refers to the name given in billing addresses and not to customer name
+        # filtering by first name
+        fill_in "First name begins with", with: billing_address2.firstname
+        page.find('.filter-actions .button.icon-search').click
+        # Order 3 should show, but not 2 and 4
+        expect(page).to have_content order2.number
+        expect(page).to_not have_content order3.number
+        expect(page).to_not have_content order4.number
+
+        find("a#clear_filters_button").click
+        # filtering by last name
+
+        fill_in "Last name begins with", with: billing_address4.lastname
+        page.find('.filter-actions .button.icon-search').click
+        # Order 3 should show, but not 2 and 4
+        expect(page).to_not have_content order2.number
+        expect(page).to_not have_content order3.number
+        expect(page).to have_content order4.number
       end
     end
 
