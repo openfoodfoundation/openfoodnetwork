@@ -33,5 +33,26 @@ describe Spree::Admin::MailMethodsController do
       #FIXME: "translation missing: en.admin.mail_methods.testmail.delivery_success"
       expect(flash[:success]).to eq I18n.t('admin.mail_methods.testmail.delivery_success')
     end
+
+    pending "shows error message when error is raised" do
+      request.env["HTTP_REFERER"] = "/"
+      user = double('User', email: 'invalid email adderess',
+                            spree_api_key: 'fake',
+                            id: nil,
+                            owned_groups: nil)
+      allow(user).to receive_messages(enterprises: [create(:enterprise)],
+                                      has_spree_role?: true,
+                                      locale: nil)
+      allow(controller).to receive_messages(spree_current_user: user)
+      ActionMailer::Base.perform_deliveries = true
+
+      ## Try to make it raise an error, but it doesn't
+      allow(Spree::TestMailer).to receive(:mail).and_raise(Net::SMTPAuthenticationError)
+
+      expect {
+        spree_post :testmail
+      }.to_not change { ActionMailer::Base.deliveries.size }
+      expect(flash[:error]).to eq I18n.t('admin.mail_methods.testmail.delivery_error')
+    end
   end
 end

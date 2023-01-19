@@ -20,6 +20,7 @@ module Spree
         if TestMailer.test_email(spree_current_user).deliver_now
           flash[:success] = Spree.t('admin.mail_methods.testmail.delivery_success')
         else
+          # It seems this never occurs, we don't even have a translation for this string`
           flash[:error] = Spree.t('admin.mail_methods.testmail.delivery_error')
         end
       rescue StandardError => e
