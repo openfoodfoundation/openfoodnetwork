@@ -379,6 +379,17 @@
   }
 }
 
+.summary-right {
+  .checkout-input:has(input[type=checkbox]) {
+    display: flex;
+    align-items: baseline;
+
+    input[type=checkbox] + label {
+      margin-left: 1rem;
+    }
+  }  
+}
+
 #line-items {
   display: block;
   overflow-x: auto;
