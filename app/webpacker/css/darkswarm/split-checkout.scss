@@ -380,7 +380,7 @@
 }
 
 .summary-right {
-  .checkout-input:has(input[type=checkbox]) {
+  .checkout-input {
     display: flex;
     align-items: baseline;
 
