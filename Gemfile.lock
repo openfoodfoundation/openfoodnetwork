@@ -324,7 +324,7 @@ GEM
       addressable (~> 2.7)
       omniauth (>= 1.9, < 3)
       openid_connect (~> 1.2)
-    globalid (1.0.0)
+    globalid (1.0.1)
       activesupport (>= 5.0)
     gmaps4rails (2.1.2)
     good_migrations (0.2.1)
