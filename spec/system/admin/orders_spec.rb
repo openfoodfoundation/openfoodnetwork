@@ -176,6 +176,17 @@ describe '
         expect(page).to_not have_content order3.number
         expect(page).to have_content order4.number
       end
+
+      it "filter by invoice number" do
+        fill_in "Invoice number:", with: order2.number
+
+        page.find('.filter-actions .button.icon-search').click
+
+        # Order 2 should show, but not 3 and 4
+        expect(page).to have_content order2.number
+        expect(page).to_not have_content order3.number
+        expect(page).to_not have_content order4.number
+      end
     end
 
     context "select/unselect all orders" do
