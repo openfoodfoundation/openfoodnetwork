@@ -61,5 +61,7 @@ FactoryBot.define do
   factory :distributor_enterprise_with_tax, parent: :distributor_enterprise do
     charges_sales_tax { true }
     allow_order_changes { true }
+    abn { "222333444" }
+    acn { "555666777" }
   end
 end

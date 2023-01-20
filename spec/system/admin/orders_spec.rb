@@ -23,7 +23,7 @@ describe '
   let(:billing_address5) { create(:address, :randomized) }
   let(:product) { create(:simple_product) }
   let(:distributor) { create(:distributor_enterprise, owner: owner, with_payment_and_shipping: true, charges_sales_tax: true) }
-  let(:distributor2) { create(:distributor_enterprise, owner: owner, with_payment_and_shipping: true, charges_sales_tax: true) }
+  let(:distributor2) { create(:distributor_enterprise_with_tax, owner: owner) }
   let(:distributor3) { create(:distributor_enterprise, owner: owner, with_payment_and_shipping: true, charges_sales_tax: true) }
   let(:distributor4) { create(:distributor_enterprise, owner: owner, with_payment_and_shipping: true, charges_sales_tax: true) }
   let(:distributor5) { create(:distributor_enterprise, owner: owner2, charges_sales_tax: true) }
@@ -57,9 +57,9 @@ describe '
     end
 
     let!(:order2) {
-      create(:order_with_credit_payment, user: customer2, distributor: distributor2,
-                                         order_cycle: order_cycle2, completed_at: 2.days.ago,
-                                         bill_address_id: billing_address2.id)
+      create(:order_ready_to_ship, user: customer2, distributor: distributor2,
+                                   order_cycle: order_cycle2, completed_at: 2.days.ago,
+                                   bill_address_id: billing_address2.id)
     }
     let!(:order3) {
       create(:order_with_credit_payment, user: customer3, distributor: distributor3,
@@ -72,8 +72,8 @@ describe '
                                          bill_address_id: billing_address4.id)
     }
     let!(:order5) {
-      create(:order_with_credit_payment, user: customer5, distributor: distributor5,
-                                         order_cycle: order_cycle5,)
+      create(:order_ready_to_ship, user: customer5, distributor: distributor5,
+                                   order_cycle: order_cycle5,)
     }
 
     context "logging as superadmin and visiting the orders page" do
@@ -255,6 +255,56 @@ describe '
           end
 
           expect(page).to have_content "Confirmation emails sent for 2 orders."
+        end
+
+        it "can bulk print invoices from 2 orders" do
+          login_as_admin_and_visit spree.admin_orders_path
+
+          page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click
+
+          page.find("span.icon-reorder", text: "ACTIONS").click
+          within ".ofn-drop-down-with-prepend .menu" do
+            page.find("span", text: "Print Invoices").click
+          end
+
+          expect(page).to have_content "Compiling Invoices"
+          expect(page).to have_content "Please wait until the PDF is ready before closing this modal."
+          # an error 422 is generated in the console
+        end
+
+        it "can bulk cancel 2 orders" do
+          login_as_admin_and_visit spree.admin_orders_path
+
+          page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click
+
+          page.find("span.icon-reorder", text: "ACTIONS").click
+          within ".ofn-drop-down-with-prepend .menu" do
+            page.find("span", text: "Cancel Orders").click
+          end
+
+          expect(page).to have_content "Are you sure you want to proceed?"
+          expect(page).to have_content "This will cancel the current order."
+
+          within "#custom-confirm.modal" do
+            expect {
+              find_button("Cancel").click # Cancels the cancel action
+            }.to_not enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+          end
+
+          page.find("span.icon-reorder", text: "ACTIONS").click
+          within ".ofn-drop-down-with-prepend .menu" do
+            page.find("span", text: "Cancel Orders").click
+          end
+
+          within "#custom-confirm.modal" do
+            expect {
+              find_button("OK").click # Confirms the cancel action
+            }.to_not enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+          end
+
+          expect(page).to have_content("CANCELLED", count: 2)
         end
 
         context "for a hub manager" do
