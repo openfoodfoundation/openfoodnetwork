@@ -20,6 +20,10 @@ class ApplicationReflex < StimulusReflex::Reflex
 
   delegate :current_user, to: :connection
 
+  before_reflex do
+    I18n.locale = current_user ? current_user.locale : I18n.default_locale
+  end
+
   def current_ability
     Spree::Ability.new(current_user)
   end
