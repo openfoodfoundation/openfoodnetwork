@@ -36,7 +36,7 @@ describe '
 
   context "with a complete order" do
     let(:order) do
-      create(:order_with_totals_and_distribution, user: owner, user: customer, distributor: distributor,
+      create(:order_with_totals_and_distribution, user: customer, distributor: distributor,
                                                   order_cycle: order_cycle,
                                                   state: 'complete', payment_state: 'balance_due',
                                                   bill_address_id: billing_address.id)
@@ -57,7 +57,7 @@ describe '
     end
 
     let!(:order2) {
-      create(:order_with_credit_payment, user: customer2,distributor: distributor2,
+      create(:order_with_credit_payment, user: customer2, distributor: distributor2,
                                          order_cycle: order_cycle2, completed_at: 2.days.ago,
                                          bill_address_id: billing_address2.id)
     }
@@ -67,14 +67,13 @@ describe '
                                          bill_address_id: billing_address3.id)
     }
     let!(:order4) {
-      create(:order_with_credit_payment, user: customer4,distributor: distributor4,
+      create(:order_with_credit_payment, user: customer4, distributor: distributor4,
                                          order_cycle: order_cycle4,
                                          bill_address_id: billing_address4.id)
     }
     let!(:order5) {
-      create(:order_with_credit_payment, user: customer5,distributor: distributor5,
-                                         order_cycle: order_cycle5,
-                                         )
+      create(:order_with_credit_payment, user: customer5, distributor: distributor5,
+                                         order_cycle: order_cycle5,)
     }
 
     context "logging as superadmin and visiting the orders page" do
@@ -187,6 +186,30 @@ describe '
         expect(page).to_not have_content order3.number
         expect(page).to_not have_content order4.number
       end
+
+      it "filter by order state" do
+        order.update(state: "payment")
+
+        uncheck 'Only show complete orders'
+        page.find('.filter-actions .button.icon-search').click
+
+        expect(page).to have_content order.number
+        expect(page).to have_content order2.number
+        expect(page).to have_content order3.number
+        expect(page).to have_content order4.number
+        expect(page).to have_content order5.number
+
+        select2_select "payment", from: 'q_state_eq'
+
+        page.find('.filter-actions .button.icon-search').click
+
+        # Order 2 should show, but not 3 and 4
+        expect(page).to have_content order.number
+        expect(page).to_not have_content order2.number
+        expect(page).to_not have_content order3.number
+        expect(page).to_not have_content order4.number
+        expect(page).to_not have_content order5.number
+      end
     end
 
     context "select/unselect all orders" do
@@ -233,7 +256,7 @@ describe '
 
           expect(page).to have_content "Confirmation emails sent for 2 orders."
         end
-        
+
         context "for a hub manager" do
           before do
             login_to_admin_as owner2
