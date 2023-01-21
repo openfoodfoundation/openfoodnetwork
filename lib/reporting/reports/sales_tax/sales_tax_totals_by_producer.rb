@@ -23,15 +23,22 @@ module Reporting
           # The objective is to group the line items by
           # [tax_rate, supplier_id, distributor_id and order_cycle_id]
           report_line_items.list
-            .left_joins(product: { tax_category: :tax_rates })
-            .select('spree_tax_rates.id as spree_tax_rate_id', 'spree_line_items.*')
-            .group_by do |line_item|
+            .flat_map do |line_item|
+              line_item.tax_rates.map do |tax_rate|
+                {
+                  tax_rate_id: tax_rate.id,
+                  line_item: line_item
+                }
+              end
+            end.group_by do |hash|
             [
-              line_item.spree_tax_rate_id,
-              line_item.supplier_id,
-              line_item.order.distributor_id,
-              line_item.order.order_cycle_id
+              hash[:tax_rate_id],
+              hash[:line_item].supplier_id,
+              hash[:line_item].order.distributor_id,
+              hash[:line_item].order.order_cycle_id
             ]
+          end.each do |_, v|
+            v.map!{ |item| item[:line_item] }
           end
         end
 
