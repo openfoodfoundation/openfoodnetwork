@@ -53,8 +53,8 @@ module SampleData
         environment: Rails.env,
         distributor_ids: [enterprise.id]
       )
-      calculator.calculable = payment_method
-      calculator.save!
+      payment_method.calculator = calculator
+      payment_method.save!
     end
   end
 end
