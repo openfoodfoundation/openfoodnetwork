@@ -104,6 +104,58 @@ describe '
     expect(order.line_items.reload.map(&:product)).to include product
   end
 
+  shared_examples_for "Cancelling the order" do
+    it "shows a modal about order cancellation" do
+      expect(page).to have_content "This will cancel the current order."
+      expect(page).to have_checked_field "Send a cancellation email to the customer"
+      expect(page).to have_checked_field "Restock Items: return all items to stock"
+    end
+
+    it "that the user can close and then nothing changes" do
+      within(".modal") do
+        expect do
+          click_on("Cancel")
+        end.not_to change { order.reload.state }
+      end
+    end
+
+    context "that the user can confirm" do
+      let(:shipment) { order.shipments.first }
+
+      it "and by default an Email is sent and the items are restocked" do
+        expect do
+          within(".modal") do
+            click_on("OK")
+          end
+          expect(page).to have_content "Cannot add item to canceled order"
+          expect(order.reload.state).to eq("canceled")
+        end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+      end
+
+      it "and then the order is cancelled and email is not sent when unchecked" do
+        expect do
+          within(".modal") do 
+            uncheck("send_cancellation_email")
+            click_on("OK")
+          end
+          expect(page).to have_content "Cannot add item to canceled order"
+          expect(order.reload.state).to eq("canceled")
+        end.to_not have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+      end
+
+      it "and the items are not restocked when the user uncheck the checkbox to restock items" do
+        expect do
+          within(".modal") do
+            uncheck("restock_items")
+            click_on("OK")
+          end
+          expect(page).to have_content "Cannot add item to canceled order"
+          expect(order.reload.state).to eq("canceled")
+        end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+      end
+    end
+  end
+
   it "displays error when incorrect distribution for products is chosen" do
     d = create(:distributor_enterprise)
     oc = create(:simple_order_cycle, distributors: [d])
@@ -178,55 +230,7 @@ describe '
         find("a.delete-item").click 
       end
 
-      context "it shows a modal about last item deletion and therefore about order cancellation" do
-        it "that the user can close and then nothing change" do
-          expect(page).to have_content "This will cancel the current order."
-          expect(page).to have_checked_field "Send a cancellation email to the customer"
-          within(".modal") do
-            click_on("Cancel")
-          end
-          
-          expect(order.reload.line_items.length).to eq(1)
-          expect(page).to have_selector('tr.stock-item', count: 1)
-        end
-
-        context "that the user can confirm" do
-          it "and then the order is cancelled and no email is sent by default" do
-            expect do
-              within(".modal") do
-                uncheck("send_cancellation_email")
-                click_on("OK")
-              end
-              expect(page).to have_content "Cannot add item to canceled order"
-              expect(order.reload.line_items.length).to eq(0)
-              expect(order.reload.state).to eq("canceled")
-            end.to_not have_enqueued_mail(Spree::OrderMailer, :cancel_email)
-          end
-
-          it "and check the checkbox to send an email to the customer "\
-             "about its order cancellation" do
-            expect do
-              within(".modal") do
-                click_on("OK")
-              end
-              expect(page).to have_content "Cannot add item to canceled order"
-              expect(order.reload.line_items.length).to eq(0)
-              expect(order.reload.state).to eq("canceled")
-            end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
-          end
-        end
-
-        context "that the user can choose to restock item" do
-          let(:shipment) { order.shipments.first }
-          it "uncheck the checkbox to not restock item" do
-            within(".modal") do
-              check("restock_items")
-              click_on("OK")
-            end
-            expect(shipment.stock_location).not_to receive(:restock)
-          end
-        end
-      end
+      it_should_behave_like "Cancelling the order"
     end
   end
 
