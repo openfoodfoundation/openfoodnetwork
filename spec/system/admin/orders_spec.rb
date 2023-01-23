@@ -80,7 +80,7 @@ describe '
       before do
         order2.select_shipping_method(shipping_method.id)
         order4.select_shipping_method(shipping_method2.id)
-        login_as_admin_and_visit 'admin/orders'
+        login_as_admin_and_visit spree.admin_orders_path
       end
 
       it "order cycles appear in descending order by close date on orders page" do
@@ -214,7 +214,7 @@ describe '
 
     context "select/unselect all orders" do
       before do
-        login_as_admin_and_visit 'admin/orders'
+        login_as_admin_and_visit spree.admin_orders_path
       end
 
       it "by clicking on the checkbox in the table header" do
