@@ -2936,6 +2936,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
   report_header_total_orders: "Total Number of Orders"
   report_header_enterprise: Enterprise
+  report_header_enterprise_fee_name: Name
+  report_header_enterprise_fee_type: Type
+  report_header_enterprise_fee_owner: Owner
   report_header_customer: Customer
   report_header_customer_code: Customer Code
   report_header_product: Product
@@ -2953,7 +2956,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_supplier: Supplier
   report_header_producer: Producer
   report_header_producer_suburb: Producer Suburb
-  report_header_producer_tax_status: Producer Tax Status  
+  report_header_producer_tax_status: Producer Tax Status
   report_header_producer_charges_sales_tax?: GST/VAT Registered
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity

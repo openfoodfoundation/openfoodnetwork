@@ -16,7 +16,7 @@ module Reporting
           customers: customers_report_types,
           products_and_inventory: products_and_inventory_report_types,
           users_and_enterprises: [],
-          enterprise_fee_summary: [],
+          enterprise_fee_summary: enterprise_fee_summary,
           order_cycle_management: order_cycle_management_report_types,
           sales_tax: sales_tax_report_types,
           xero_invoices: xero_report_types,
@@ -57,6 +57,12 @@ module Reporting
         [
           [i18n_translate("mailing_list"), :mailing_list],
           [i18n_translate("addresses"), :addresses]
+        ]
+      end
+
+      def enterprise_fee_summary
+        [
+          [i18n_translate('enterprise_fee_summary.name'), :fee_summary],
         ]
       end
 
