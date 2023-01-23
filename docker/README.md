@@ -20,7 +20,7 @@ $ sudo apt install docker-compose
 ```
 * To run Docker commands as a regular user instead of as root (with sudo), follow the instructions at https://docs.docker.com/engine/install/linux-postinstall/.
 
-#### Windows and Mac (untested)
+#### Windows
 * Docker installation instructions are at https://docs.docker.com/get-docker/.
 * You may have to deselect the option to use Docker Compose V2 in Docker settings to make our scripts work.
 
@@ -53,7 +53,8 @@ $ docker/server
 * You will then get the trace of the containers in the terminal. You can stop the containers using Ctrl-C in the terminal.
 * You can find some useful tips and commands [here](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Docker:-useful-tips-and-commands).
 
-### Windows and Mac (untested)
+### Windows
+* Prerequisite : don't forget to activate the execution of powershell scripts following the instruction on [this page chosing "Using RemoteSigned Execution Policy"](https://shellgeek.com/powershell-fix-running-scripts-is-disabled-on-this-system/)
 * Open a terminal with a shell command.
 * Clone the repository. If you're planning on contributing code to the project (which we [LOVE](CONTRIBUTING.md)), begin by forking this repo with the Fork button in the top-right corner of this screen.
 * Use git clone to copy your fork onto your local machine.
@@ -70,12 +71,13 @@ $ cd openfoodnetwork
 ```
 * Download the Docker images, build the Docker containers, seed the database with sample data, AND log the screen output from these tasks:
 ```command
-$ docker/build.bat
+$ docker/build.ps1
 ```
 * Run the Rails server and its required Docker containers:
 ```command
-$ docker/server.bat
+$ docker/server.ps1
 ```
+You may need to wait several minutes before getting the server up and running properly.
 * The default admin user is 'ofn@example.com' with the password 'ofn123'.
 * View the app in the browser at `http://localhost:3000`.
 * You will then get the trace of the containers in the terminal. You can stop the containers using Ctrl-C in the terminal.
@@ -83,6 +85,7 @@ $ docker/server.bat
 
 
 ### Troubleshooting
+* If you get a PowerShell error saying that "execution of scripts is disabled on this system.", you may need to [activate the powershell script execution](https://shellgeek.com/powershell-fix-running-scripts-is-disabled-on-this-system/) on your Windows machine.
 * If you are using Windows and having issues related to the ruby-build not finding a definition for the ruby version, you may need to follow these commands [here](https://stackoverflow.com/questions/2517190/how-do-i-force-git-to-use-lf-instead-of-crlf-under-windows/33424884#33424884) to fix your local git config related to line breaks.
 * If you’re getting the following error:
 ```sh
@@ -123,14 +126,14 @@ To fix this error on server startup, you need to bump `mini-racer` gem from `0.4
 Based on [spree/spree_starter #984](https://github.com/spree/spree_starter/issues/984)
 
 ## Script Summary
-* docker/build(.bat): This script builds the Docker containers specified for this app, seeds the database, and logs the screen output for these operations. After you use "git clone" to download this repository, run the docker/build script to start the setup process.
-* docker/server(.bat): Use this script to run this app in the Rails server. This script executes the "docker-compose up" command and logs the results. If all goes well, you will be able to view this app on your local browser at http://localhost:3000/.
-* docker/test: Use this script to run the entire test suite.
+* docker/build(.ps1): This script builds the Docker containers specified for this app, seeds the database, and logs the screen output for these operations. After you use "git clone" to download this repository, run the docker/build script to start the setup process.
+* docker/server(.ps1): Use this script to run this app in the Rails server. This script executes the "docker-compose up" command and logs the results. If all goes well, you will be able to view this app on your local browser at http://localhost:3000/.
+* docker/test(.ps1): Use this script to run the entire test suite.
 * docker/qtest: Use this script to run the entire test suite in quiet mode. The deprecation warnings are removed to make the test results easier to read.
 * docker/run: Use this script to run commands within the Docker container. If you want shell access, enter "docker/run bash". To execute "ls -l" within the Docker container, enter "docker/run ls -l".
-* docker/seed: Use this script to seed the database. Please note that this process is not compatible with simultaneously running the Rails server or tests.
+* docker/seed(.ps1): Use this script to seed the database. Please note that this process is not compatible with simultaneously running the Rails server or tests.
 * docker/nuke: Use this script to delete all Docker images and containers. This fully resets your Docker setup and is useful for making sure that the setup procedure specified for this app is complete.
-* docker/cop: This script runs RuboCop.
+* docker/cop(.ps1): This script runs RuboCop.
 
 
 
