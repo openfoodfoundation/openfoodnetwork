@@ -455,9 +455,8 @@ describe "As a consumer, I want to checkout my order", js: true do
 
               shared_examples "displays the shipping fee" do |checkout_page|
                 it "on the #{checkout_page} page" do
-                  within "#line-items" do
-                    expect(page).to have_content("Shipping #{with_currency(4.56)}")
-                  end
+                  expect(page).to have_content("Shipping #{with_currency(4.56)}")
+
                   if checkout_page.eql?("order confirmation")
                     expect(page).to have_content "Your order has been processed successfully"
                   end
@@ -588,9 +587,8 @@ describe "As a consumer, I want to checkout my order", js: true do
 
         shared_examples "displays the transaction fee" do |checkout_page|
           it "on the #{checkout_page} page" do
-            within "#line-items" do
-              expect(page).to have_content("Transaction fee #{with_currency(1.23)}")
-            end
+            expect(page).to have_content("Transaction fee #{with_currency(1.23)}")
+
             if checkout_page.eql?("order confirmation")
               expect(page).to have_content "Your order has been processed successfully"
             end
@@ -760,10 +758,10 @@ describe "As a consumer, I want to checkout my order", js: true do
       end
 
       describe "navigation available" do
-        it "redirect to Payment method step by clicking on 'Back to payment method' button" do
+        it "redirect to Payment method step by clicking on 'Payment method' link" do
           visit checkout_step_path(:summary)
 
-          click_on "Back to Payment method"
+          click_link "Payment method"
 
           expect(page).to have_content "You can review and confirm your order in the next step which includes the final costs."
         end

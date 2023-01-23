@@ -1973,20 +1973,18 @@ en:
       submit: Next - Order summary
       cancel: Back to Your details
     step3:
-      your_details:
-        title: Your details
-        edit: Edit your details
-      billing_address:
-        title: Billing address
-      shipping_address:
-        title: Shipping address
-      delivery_info:
-        title: Delivery info
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+        instructions: Instructions
       payment_method:
         title: Payment method
-        edit: Edit payment method
+        edit: Edit
+        instructions: Instructions
       order:
-        title: Order total
+        title: Order details
+        edit: Edit
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
@@ -1995,7 +1993,6 @@ en:
       all_terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
         terms_and_conditions: "Terms and Conditions"
-      agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
     errors:

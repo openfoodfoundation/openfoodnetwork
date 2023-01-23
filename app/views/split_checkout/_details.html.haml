@@ -89,7 +89,7 @@
             "data-action": "toggle#toggle shippingmethod#selectShippingMethod",
             "data-toggle-show": shipping_method.require_ship_address
           = shipping_method_form.label shipping_method.id, shipping_method.name, {for: "shipping_method_" + shipping_method.id.to_s }
-          %em= payment_or_shipping_price(shipping_method, @order)
+          %em.fees= payment_or_shipping_price(shipping_method, @order)
           - display_ship_address = display_ship_address || (ship_method_is_selected && shipping_method.require_ship_address)
       %div.checkout-input{"data-shippingmethod-target": "shippingMethodDescription", "data-shippingmethodid": shipping_method.id , style: "display: #{ship_method_is_selected ? 'block' : 'none'}" }
         #distributor_address.panel

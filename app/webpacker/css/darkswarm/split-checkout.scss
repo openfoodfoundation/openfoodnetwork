@@ -62,8 +62,9 @@
 }
 
 .already-ordered {
+  margin-left: 20px;
+
   .panel {
-    margin-top: 3rem;
     background-color: $grey-250;
     border: 1px solid $tiny-blue;
     color: $grey-700;
@@ -160,19 +161,21 @@
 
       label {
         margin-top: 0.3rem;
-        & + em {
-          margin-left: -0.5rem;
-          font-size: 14px; // same as label
-          font-weight: bold;
-          // Add opening and closing parentheses
-          &:before {
-            content: "(";
-          }
-          &:after {
-            content: ")";
-          }
-        }
       }
+    }
+  }
+
+  em.fees {
+    margin-left: -0.5rem;
+    font-size: 14px; // same as label
+    font-weight: bold;
+    margin-left: 10px;
+    // Add opening and closing parentheses
+    &:before {
+      content: "(";
+    }
+    &:after {
+      content: ")";
     }
   }
 
@@ -203,42 +206,7 @@
     @include force-wrap;
   }
 
-  .checkout-step3 {
-    padding-left: 15px;
-    padding-right: 15px;
-    .checkout-submit {
-      margin-top: 0;
-      margin-bottom: 0;
-      padding-top: 2rem;
 
-      .button {
-        margin-bottom: 1rem;
-      }
-    }
-
-    &.sticked {
-      background-color: $white;
-      box-shadow: 0 -6px 12px -6px rgba(0, 0, 0, 0.33);
-      border-left: 1px solid $light-grey;
-      border-right: 1px solid $light-grey;
-      border-top: 1px solid $light-grey;
-    }
-
-    @media screen and (max-width: 700px) {
-      &.sticked {
-        width: auto;
-        margin-left: -15px;
-        margin-right: -15px;
-        box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.33);
-                
-        .checkout-submit {
-          width: 100%;
-          padding-left: 15px;
-          padding-right: 15px;
-        }
-      }
-    }
-  }
 
   .checkout-submit {
     margin-top: 5rem;
@@ -291,24 +259,44 @@
   }
 }
 
-.summary {
-  margin-bottom: 2px;
-  font-size: 0.875rem;
+.checkout-summary {
+  margin-top: 0;
 
-  .summary-label {
-    font-weight: bold;
-  }
+  .checkout-substep {
+    font-size: 0.875rem;
+    margin-top: 1rem;
 
-  .summary-description {
-    @include force-wrap;
-    color: $min-accessible-grey;
+    &:first-child {
+      margin-top: 20px;
+    }
+   
+    .two-columns {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: 1fr;
+      grid-column-gap: 10px;
+      grid-row-gap: 0px;
+    }  
   }
 
   .summary-edit {
     color: $teal-400;
     text-decoration: underline;
-    display: block;
-    margin-top: 5px;
+    display: inline-block;
+    margin-left: 15px;
+    font-size: 0.875rem;
+    font-weight: normal;
+    font-family: $body-font;
+  
+    &:hover {
+      color: $teal-500;
+      text-decoration: underline;
+  
+      &:after {
+        color: $teal-500;
+      }
+    }
+    
     &:after {
       background-image: url("../images/edit-with-pen.svg");
       content: " ";
@@ -321,11 +309,94 @@
       top: 2px;
     }
   }
+
+  .summary-subtitle {
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+}
+
+.checkout-summary {
+  form {
+    display: flex;
+    justify-content: space-between;
+
+    .summary-main {
+      width: 66.66%;
+      border-right: 1px solid #DDD;
+      padding-right: 20px;
+      padding-top: 20px;
+    }
+    .summary-right {
+      width: calc(33.33% - 20px);
+      padding-left: 20px;
+      padding-right: 20px;
+      border-right: 1px solid #DDD;
+    }
+  }
+}
+
+.summary-right {
+  padding-top: 40px;
+
+  .checkout-submit {
+    margin-top: 40px;
+
+    .button.primary {
+      background-color: $clr-turquoise;
+      &:hover {
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+.summary-right-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  .summary-right-line-label {
+    font-size: 0.875rem;
+  }
+
+  .summary-right-line-value {
+    font-size: 0.875rem;
+    text-align: right;
+  }
+
+  &.total {
+    margin-bottom: 20px;
+    @include headingFont;
+
+    .summary-right-line-label {
+      font-weight: bold;
+      font-size: 1.06rem;
+    }
+    .summary-right-line-value {
+      font-size: 1.06rem;
+    }
+  }
+}
+
+.summary-right {
+  .checkout-input {
+    display: flex;
+    align-items: baseline;
+
+    input[type=checkbox] + label {
+      margin-left: 1rem;
+    }
+  }  
 }
 
 #line-items {
   display: block;
   overflow-x: auto;
+
+  h5 {
+    background-color: transparent;
+  }
 }
 
 .two-columns-inputs {
@@ -380,4 +451,59 @@
         padding-bottom: 0;
       }
     }  
+}
+
+// Handle the mobile view for the summary step
+@media screen and (max-width: 800px) {
+  .checkout-summary form {
+    display: block;
+  }
+
+  .checkout-summary form .summary-right {
+    width: calc(100% + 30px);
+    margin-left: -15px;
+    background-color: white;
+    border-right: none;
+    border-top: 1px solid #DDD;
+    
+    padding-top: 20px;
+
+    &.sticked {
+      box-shadow: 0 -4px 10px #DDD;
+    }
+
+    .summary-right-line.total {
+      margin-bottom: 10px;
+    }
+
+    .checkout-submit {
+      margin-top: 10px;
+
+      .checkout-input {
+        margin-bottom: 10px;
+      }
+
+      .button {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .checkout-summary form .summary-main {
+    width: 100%;
+    border-right: none;
+  }
+
+  .checkout-summary .checkout-substep .two-columns {
+    // only one column actually
+    grid-template-columns: 1fr;
+
+    > :nth-child(2) {
+      margin-top: 20px;
+    }
+  }
+
+  .checkout-summary .summary-subtitle {
+    margin-bottom: 10px;
+  }
 }

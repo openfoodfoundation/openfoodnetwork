@@ -15,7 +15,7 @@ export default class extends Controller {
     this.containerTarget.style.bottom = "-1px";
     const observer = new IntersectionObserver(
       ([e]) => {
-        e.target.classList.toggle("sticked", e.intersectionRatio <= 1);
+        e.target.classList.toggle("sticked", e.intersectionRatio < 1);
       },
       { threshold: [1] }
     );
