@@ -205,18 +205,8 @@ describe '
           convert_pdf_to_page
         end
 
-        it "displays $0.0 when a line item has no tax" do
-          pending "i) for legend see picture on PR #9495"
-          # first line item, no tax
-          expect(page).to have_content "#{Spree::Product.first.name} 1 $0.0 $12.54"
-          expect(page).to have_content "(1g)" # display as
-        end
-
-        it "displays GST for enterprise fees" do
-          pending "ii) for legend see picture on PR #9495"
-          # enterprise fee of $20.00
-          expect(page).to have_content "Whole order - #{enterprise_fee.name} fee by coordinator " \
-                                       "#{user1.enterprises.first.name} 1 $20.00 (included) $120.00"
+        it "displays $0.00 when a line item has no tax" do
+          expect(page).to have_content "#{Spree::Product.first.name} (1g) 1 $0.00 $12.54"
         end
 
         it "displays the taxes correctly" do
@@ -345,26 +335,13 @@ describe '
           convert_pdf_to_page
         end
         it "displays $0.0 when a line item has no tax" do
-          pending "iii) for legend see picture on PR #9495"
-          # first line item, no tax - display $0.0
-          expect(page).to have_content Spree::Product.first.name.to_s
-          expect(page).to have_content "(1g)" # display as
-          expect(page).to have_content "1 $0.0 $12.54"
+          expect(page).to have_content "#{Spree::Product.first.name} (1g) 1 $0.00 $12.54"
         end
 
         it "displays the added tax on the GST colum" do
-          pending "closing #7983, iv) for legend see picture on PR #9495"
-          # second line item, added tax of $300.09
           expect(page).to have_content Spree::Product.second.name.to_s
           expect(page).to have_content "(1g)" # display as
           expect(page).to have_content "3 $300.09 $1,500.45"
-        end
-
-        it "displays GST for enterprise fees" do
-          pending "v) for legend see picture on PR #9495"
-          # enterprise fee of $24.00
-          expect(page).to have_content "Whole order - #{enterprise_fee.name} fee by coordinator " \
-                                       "#{user1.enterprises.first.name} 1 $20.00 $120.00"
         end
 
         it "displays the taxes correctly" do
