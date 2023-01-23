@@ -28,7 +28,7 @@ For those new to Rails, the following tutorial will help get you up to speed wit
 
 So you have set up your local environment according to the requirements listed above. If you're planning on contributing code to the project (which we [LOVE](CONTRIBUTING.md)), it is a good idea to begin by forking this repo using the `Fork` button in the top-right corner of this screen. You should then be able to use `git clone` to copy your fork onto your local machine:
 
-    git clone https://github.com/YOUR_GITHUB_USERNAME_HERE/openfoodnetwork
+    git clone git@github.com:YOUR_GITHUB_USERNAME_HERE/openfoodnetwork.git
 
 Jump into your new local copy of the Open Food Network:
 
@@ -36,7 +36,7 @@ Jump into your new local copy of the Open Food Network:
 
 And then add an `upstream` remote that points to the main repo:
 
-    git remote add upstream https://github.com/openfoodfoundation/openfoodnetwork
+    git remote add upstream git@github.com:openfoodfoundation/openfoodnetwork.git
 
 Fetch the latest version of `master` from `upstream` (ie. the main repo):
 
