@@ -66,7 +66,11 @@ module Reporting
           [
             i18n_translate('enterprise_fees_with_tax_report_by_order'),
             :enterprise_fees_with_tax_report_by_order
-          ]
+          ],
+          [
+            i18n_translate('enterprise_fees_with_tax_report_by_producer'),
+            :enterprise_fees_with_tax_report_by_producer
+          ],
         ]
       end
 
