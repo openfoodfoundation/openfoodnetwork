@@ -322,7 +322,7 @@ GEM
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
     geocoder (1.8.1)
-    gitlab-omniauth-openid-connect (0.10.0)
+    gitlab-omniauth-openid-connect (0.10.1)
       addressable (~> 2.7)
       omniauth (>= 1.9, < 3)
       openid_connect (~> 1.2)
