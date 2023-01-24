@@ -18,8 +18,11 @@ describe Api::Admin::OrderCycleSerializer do
   end
 
   it "serializes the order cycle with editable_variants_for_incoming_exchanges" do
-    expect(from_json(serializer.editable_variants_for_incoming_exchanges).values.sum).to include order_cycle.variants.first.id
-    expect(from_json(serializer.editable_variants_for_incoming_exchanges).keys).to_not include order_cycle.distributors.first.id.to_s
+    distributor_ids = from_json(serializer.editable_variants_for_incoming_exchanges).keys
+    variant_ids = from_json(serializer.editable_variants_for_incoming_exchanges).values.sum
+
+    expect(variant_ids).to include order_cycle.variants.first.id
+    expect(distributor_ids).to_not include order_cycle.distributors.first.id.to_s
   end
 
   it "serializes the order cycle with editable_variants_for_outgoing_exchanges" do
