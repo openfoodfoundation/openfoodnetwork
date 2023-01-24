@@ -80,6 +80,8 @@ en:
       variant_override:
         count_on_hand: "On Hand"
     errors:
+      messages:
+        calculator_preferred_value_error: "Invalid input. Please use only numbers. For example: 10, 5.5, -20"
       models:
         spree/user:
           attributes:
