@@ -10,6 +10,9 @@ module Calculator
 
     localize_number :preferred_amount
 
+    validates :preferred_amount,
+              numericality: { message: :calculator_preferred_value_error }
+
     def self.description
       I18n.t(:flat_rate_per_order)
     end
