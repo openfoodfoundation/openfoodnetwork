@@ -6,6 +6,7 @@ module Spree
   class PaymentMethod < ApplicationRecord
     include CalculatedAdjustments
     include PaymentMethodDistributors
+    include NestedCalculatorValidation
 
     acts_as_taggable
     acts_as_paranoid
