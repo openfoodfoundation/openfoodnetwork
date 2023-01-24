@@ -19,7 +19,7 @@ describe Api::Admin::OrderCycleSerializer do
 
   it "serializes the order cycle with editable_variants_for_incoming_exchanges" do
     distributor_ids = from_json(serializer.editable_variants_for_incoming_exchanges).keys
-    variant_ids = from_json(serializer.editable_variants_for_incoming_exchanges).values.sum
+    variant_ids = from_json(serializer.editable_variants_for_incoming_exchanges).values.flatten
 
     expect(variant_ids).to include order_cycle.variants.first.id
     expect(distributor_ids).to_not include order_cycle.distributors.first.id.to_s
