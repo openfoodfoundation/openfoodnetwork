@@ -13,6 +13,10 @@ module Calculator
     localize_number :preferred_first_item,
                     :preferred_additional_item
 
+    validates :preferred_first_item,
+              :preferred_additional_item,
+              numericality: { message: :calculator_preferred_value_error }
+
     def self.description
       I18n.t(:flexible_rate)
     end
