@@ -14,6 +14,11 @@ module Calculator
                     :preferred_normal_amount,
                     :preferred_discount_amount
 
+    validates :preferred_minimal_amount,
+              :preferred_normal_amount,
+              :preferred_discount_amount,
+              numericality: { message: :calculator_preferred_value_error }
+
     def self.description
       I18n.t(:price_sack)
     end
