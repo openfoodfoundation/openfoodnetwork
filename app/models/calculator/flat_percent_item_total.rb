@@ -10,6 +10,9 @@ module Calculator
 
     localize_number :preferred_flat_percent
 
+    validates :preferred_flat_percent,
+              numericality: { message: :calculator_preferred_value_error }
+
     def self.description
       Spree.t(:flat_percent)
     end
