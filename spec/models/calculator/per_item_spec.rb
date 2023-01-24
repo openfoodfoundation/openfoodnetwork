@@ -7,6 +7,11 @@ describe Calculator::PerItem do
   let(:shipping_calculable) { double(:calculable) }
   let(:line_item) { build_stubbed(:line_item, quantity: 5) }
 
+  it do
+    should validate_numericality_of(:preferred_amount).
+      with_message("Invalid input. Please use only numbers. For example: 10, 5.5, -20")
+  end
+
   it "correctly calculates on a single line item object" do
     allow(calculator).to receive_messages(calculable: shipping_calculable)
     expect(calculator.compute(line_item).to_f).to eq(50) # 5 x 10
