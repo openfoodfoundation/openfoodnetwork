@@ -322,10 +322,6 @@ GEM
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
     geocoder (1.8.1)
-    gitlab-omniauth-openid-connect (0.10.1)
-      addressable (~> 2.7)
-      omniauth (>= 1.9, < 3)
-      openid_connect (~> 1.2)
     globalid (1.0.1)
       activesupport (>= 5.0)
     gmaps4rails (2.1.2)
@@ -438,6 +434,9 @@ GEM
     omniauth-rails_csrf_protection (1.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
+    omniauth_openid_connect (0.6.0)
+      omniauth (>= 1.9, < 3)
+      openid_connect (~> 1.1)
     openid_connect (1.4.2)
       activemodel
       attr_required (>= 1.0.0)
@@ -805,7 +804,6 @@ DEPENDENCIES
   foreman
   fuubar (~> 2.5.1)
   geocoder
-  gitlab-omniauth-openid-connect
   gmaps4rails
   good_migrations
   haml
@@ -832,6 +830,7 @@ DEPENDENCIES
   oauth2 (~> 1.4.7)
   ofn-qz!
   omniauth-rails_csrf_protection
+  omniauth_openid_connect
   openid_connect (~> 1.3)
   order_management!
   pagy (~> 5.1)
