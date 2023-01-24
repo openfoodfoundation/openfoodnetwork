@@ -58,6 +58,15 @@ describe Spree::Preference do
       expect(pref.value_type).to eq value_type.to_s
     end
 
+    it "incovertible :decimal" do
+      value_type = :decimal
+      value = "invalid"
+      key = "decimal_key"
+      pref = round_trip_preference(key, value, value_type)
+      expect(pref.value).to eq value
+      expect(pref.value_type).to eq value_type.to_s
+    end
+
     it ":string" do
       value_type = :string
       value = "This is a string"

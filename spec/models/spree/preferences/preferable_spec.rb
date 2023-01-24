@@ -165,6 +165,13 @@ describe Spree::Preferences::Preferable do
         @a.set_preference(:if_decimal, '')
         expect(@a.preferences[:if_decimal]).to eq 0.0
       end
+
+      context "when the value cannot be converted to BigDecimal" do
+        it "returns the original value" do
+          @a.set_preference(:if_decimal, "invalid")
+          expect(@a.preferences[:if_decimal]).to eq "invalid"
+        end
+      end
     end
 
     context "converts boolean preferences to boolean values" do
