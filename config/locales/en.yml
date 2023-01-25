@@ -1997,6 +1997,7 @@ en:
       cancel: Back to Payment method
     errors:
       global: "Saving failed, please update the highlighted fields."
+      saving_failed: "Saving failed, please update the highlighted fields. %{messages}"
       terms_not_accepted: Please accept Terms and Conditions
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"

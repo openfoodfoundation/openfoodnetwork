@@ -36,7 +36,10 @@ class SplitCheckoutController < ::BaseController
       advance_order_state
       redirect_to_step
     else
-      flash.now[:error] ||= I18n.t('split_checkout.errors.global')
+      flash.now[:error] ||= I18n.t(
+        'split_checkout.errors.saving_failed',
+        messages: @order.errors.full_messages.to_sentence
+      )
 
       render status: :unprocessable_entity, operations: cable_car.
         replace("#checkout", partial("split_checkout/checkout")).
