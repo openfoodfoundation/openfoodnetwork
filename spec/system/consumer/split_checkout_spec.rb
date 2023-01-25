@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "As a consumer, I want to checkout my order", js: true do
+describe "As a consumer, I want to checkout my order" do
   include ShopWorkflow
   include SplitCheckoutHelper
   include FileHelper
@@ -294,6 +294,7 @@ describe "As a consumer, I want to checkout my order", js: true do
           click_button "Next - Payment method"
 
           expect(page).to have_content "Saving failed, please update the highlighted fields."
+          expect(page).to have_content "Shipping address line 1 can't be blank"
           expect(page).to have_content "Shipping address same as billing address?"
           expect(page).to have_content "Save as default shipping address"
           expect(page).to have_checked_field "Shipping address same as billing address?"
