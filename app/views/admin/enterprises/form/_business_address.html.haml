@@ -1,6 +1,12 @@
 .row
+  = t(:required_fields)
+  (
+  %span.required *
+  )
+.row
   .three.columns.alpha
     = bf.label :company, t(".company_legal_name")
+    %span.required *
     %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "business_address_info_modal" }
   .eight.columns.omega
     = bf.text_field :company, { placeholder: t(".company_placeholder") }
@@ -8,6 +14,7 @@
 .row
   .three.columns.alpha
     = bf.label :address1, t('.address1')
+    %span.required *
     %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "business_address_info_modal" }
   .eight.columns.omega
     = bf.text_field :address1, { placeholder: t(".address1_placeholder") }
@@ -19,8 +26,10 @@
 .row
   .three.columns.alpha
     = bf.label :city, t(:city)
+    %span.required *
     \/
     = bf.label :zipcode, t(:postcode)
+    %span.required *
   .four.columns
     = bf.text_field :city, { placeholder: t(:city_placeholder) }
   .four.columns.omega
@@ -28,8 +37,10 @@
 .row{"data-controller": "dependent-select", "data-dependent-select-options-value": countries_with_states }
   .three.columns.alpha
     = bf.label :country_id, t(:country)
+    %span.required *
     \/
     = bf.label :state_id, t(:state)
+    %span.required *
   .four.columns
     = bf.select :country_id, options_for_select(available_countries.map { |c| [c.name, c.id] }, @enterprise.business_address.country_id), {}, { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
   .four.columns.omega
@@ -39,6 +50,7 @@
 .row
   .three.columns.alpha
     = bf.label :phone, t(".legal_phone_number")
+    %span.required *
     %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "business_address_info_modal" }
   .eight.columns.omega
     = bf.text_field :phone, { placeholder: t(".phone_placeholder") }
