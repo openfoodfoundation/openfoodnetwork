@@ -345,4 +345,57 @@ describe '
       end
     end
   end
+
+  context "when updating a payment method with invalid data" do
+    let(:payment_method) { create(:payment_method, :flat_rate, amount: 10) }
+
+    before do
+      login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method
+      fill_in "payment_method_name", with: ""
+      fill_in "payment_method_description", with: "Edited description"
+      uncheck "payment_method_distributor_ids_#{@distributors[0].id}"
+      fill_in "Amount", with: 'invalid'
+      click_button 'Update'
+    end
+
+    it "displays the number of errors" do
+      expect(page).to have_content("3 errors")
+    end
+
+    it "displays error messages" do
+      expect(page).to have_content("Name can't be blank")
+      expect(page).to have_content("At least one hub must be selected")
+      expect(page).to have_content("Amount: Invalid input. Please use only numbers.")
+    end
+
+    it "highlights invalid fields" do
+      within '.calculator-settings .field .field_with_errors' do
+        expect(page).to have_field "Amount"
+      end
+
+      within '.field_with_errors:has(#payment_method_name)' do
+        expect(page).to have_field "payment_method_name"
+      end
+
+      within '#hubs' do
+        expect(page).to have_selector(".red")
+      end
+    end
+
+    it "keeps information that was just edited, even after multiple unsuccessful updates" do
+      expect(page).to have_field "Amount", with: "invalid"
+      expect(page).to have_field "payment_method_name", with: ''
+      expect(page).to have_field "payment_method_description", with: "Edited description"
+      expect(page).to have_unchecked_field "payment_method_distributor_ids_#{@distributors[0].id}"
+
+      fill_in "payment_method_name", with: "Test name"
+      fill_in "Amount", with: 'invalid string'
+      click_button 'Update'
+
+      expect(page).to have_field "payment_method_name", with: 'Test name'
+      expect(page).to have_field "Amount", with: "invalid string"
+      expect(page).to have_field "payment_method_description", with: "Edited description"
+      expect(page).to have_unchecked_field "payment_method_distributor_ids_#{@distributors[0].id}"
+    end
+  end
 end
