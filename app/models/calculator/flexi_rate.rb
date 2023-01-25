@@ -9,7 +9,6 @@ module Calculator
     preference :first_item,      :decimal, default: 0.0
     preference :additional_item, :decimal, default: 0.0
     preference :max_items,       :integer, default: 0
-    preference :currency,        :string,  default: Spree::Config[:currency]
 
     localize_number :preferred_first_item,
                     :preferred_additional_item

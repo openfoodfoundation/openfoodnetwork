@@ -7,7 +7,6 @@ module Calculator
     extend Spree::LocalizedNumber
 
     preference :amount, :decimal, default: 0
-    preference :currency, :string, default: Spree::Config[:currency]
 
     localize_number :preferred_amount
 
