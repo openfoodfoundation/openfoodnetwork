@@ -35,7 +35,11 @@ angular.module('admin.orderCycles')
       OrderCycle.removeExchangeFee(exchange, index)
       $scope.order_cycle_form.$dirty = true
 
-    $scope.setPickupTimeFieldDirty = (index) ->
+    $scope.setPickupTimeFieldDirty = (index, pickup_time) ->
+      # if the pickup_time is already set we are in edit mode, so no need to set pickup_time field as dirty
+      # to show it is required (it has a red border when set to dirty)
+      return if pickup_time
+
       $timeout ->
         pickup_time_field_name = "order_cycle_outgoing_exchange_" + index + "_pickup_time"
         $scope.order_cycle_form[pickup_time_field_name].$setDirty()
