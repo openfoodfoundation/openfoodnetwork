@@ -218,7 +218,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.getGroupBySizeFormattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
     scale = $scope.getScale(unitsProduct, unitsVariant)
-    if scale
+    if scale && value
       value = value / scale if scale != 28.35 && scale != 1 && scale != 453.6 # divide by scale if not smallest unit
       $scope.getFormattedValueWithUnitName(value, unitsProduct, unitsVariant, scale)
     else
