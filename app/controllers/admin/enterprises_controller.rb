@@ -8,12 +8,13 @@ module Admin
   class EnterprisesController < Admin::ResourceController
     include GeocodeEnterpriseAddress
     include CablecarResponses
+    include Pagy::Backend
 
     # These need to run before #load_resource so that @object is initialised with sanitised values
     prepend_before_action :override_owner, only: :create
     prepend_before_action :override_sells, only: :create
 
-    before_action :load_enterprise_set, only: :index
+    before_action :load_enterprise_set_on_index, only: :index
     before_action :load_countries, except: [:index, :register, :check_permalink]
     before_action :load_methods_and_fees, only: [:edit, :update]
     before_action :load_groups, only: [:new, :edit, :update, :create]
@@ -100,7 +101,8 @@ module Admin
     end
 
     def bulk_update
-      @enterprise_set = Sets::EnterpriseSet.new(collection, bulk_params)
+      load_enterprise_set_with_params(bulk_params)
+
       if @enterprise_set.save
         flash[:success] = I18n.t(:enterprise_bulk_update_success_notice)
 
@@ -148,8 +150,15 @@ module Admin
 
     private
 
-    def load_enterprise_set
-      @enterprise_set = Sets::EnterpriseSet.new(collection) if spree_current_user.admin?
+    def load_enterprise_set_on_index
+      return unless spree_current_user.admin?
+
+      load_enterprise_set_with_params
+    end
+
+    def load_enterprise_set_with_params(params = {})
+      @pagy, @paginated_collection = pagy(@collection)
+      @enterprise_set = Sets::EnterpriseSet.new(@paginated_collection, params)
     end
 
     def load_countries
