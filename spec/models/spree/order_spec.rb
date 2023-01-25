@@ -8,6 +8,14 @@ describe Spree::Order do
   let(:user) { build(:user, email: "spree@example.com") }
   let(:order) { build(:order, user: user) }
 
+  describe "#errors" do
+    it "provides friendly error messages" do
+      order.ship_address = Spree::Address.new
+      order.save
+      expect(order.errors.full_messages).to include "Shipping address line 1 can't be blank"
+    end
+  end
+
   context "#products" do
     let(:order) { create(:order_with_line_items) }
 

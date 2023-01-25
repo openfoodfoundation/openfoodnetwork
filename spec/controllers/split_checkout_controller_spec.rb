@@ -86,7 +86,7 @@ describe SplitCheckoutController, type: :controller do
           put :update, params: params
 
           expect(response.status).to eq 422
-          expect(flash[:error]).to eq "Saving failed, please update the highlighted fields."
+          expect(flash[:error]).to match "Saving failed, please update the highlighted fields."
           expect(order.reload.state).to eq "cart"
         end
       end
@@ -161,7 +161,7 @@ describe SplitCheckoutController, type: :controller do
           put :update, params: params
 
           expect(response.status).to eq 422
-          expect(flash[:error]).to eq "Saving failed, please update the highlighted fields."
+          expect(flash[:error]).to match "Saving failed, please update the highlighted fields."
           expect(order.reload.state).to eq "payment"
         end
       end
@@ -271,7 +271,7 @@ describe SplitCheckoutController, type: :controller do
             put :update, params: params
 
             expect(response.status).to eq 422
-            expect(flash[:error]).to eq "Saving failed, please update the highlighted fields."
+            expect(flash[:error]).to match "Saving failed, please update the highlighted fields."
             expect(order.reload.state).to eq "confirmation"
           end
         end
