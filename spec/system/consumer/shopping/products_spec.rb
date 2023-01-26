@@ -42,7 +42,7 @@ describe "As a consumer I want to view products", js: true do
       end
 
       it "shows HTML product description" do
-        product.description = '<p><b>Formatted</b> product description.</p> Link to an <a href="http://google.fr" target="_blank">external site</a>'
+        product.description = '<p><b>Formatted</b> product description.</p> Link to an <a href="http://google.fr" target="_blank">external site</a><img src="https://www.openfoodnetwork.org/wp-content/uploads/2019/05/logo-ofn-global-web@2x.png" alt="open food network logo" />'
         product.save!
 
         visit shop_path
