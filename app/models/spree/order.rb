@@ -544,8 +544,11 @@ module Spree
       shipment_adjustments.reload.tax.sum(:amount)
     end
 
-    def enterprise_fee_tax
-      all_adjustments.tax.where(adjustable: all_adjustments.enterprise_fee).sum(:amount)
+    def enterprise_fee_tax(included: false,added: false)
+      query = all_adjustments.tax
+      query = query.inclusive  if included == true
+      query = query.additional  if added == true
+      query.where(adjustable: all_adjustments.enterprise_fee).sum(:amount)
     end
 
     def total_tax
