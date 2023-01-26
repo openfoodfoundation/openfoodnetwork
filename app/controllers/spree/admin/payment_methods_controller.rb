@@ -182,6 +182,11 @@ module Spree
             end
           end
 
+          # Ensure the calculator to be updated is the correct type
+          if params_for_update["calculator_type"] && params_for_update["calculator_attributes"]
+            add_type_to_calculator_attributes(params_for_update)
+          end
+
           params_for_update
         end
       end
@@ -190,6 +195,10 @@ module Spree
         @payment_method.calculator.preferences.each_key do |key|
           Rails.cache.delete(@payment_method.calculator.preference_cache_key(key))
         end
+      end
+
+      def add_type_to_calculator_attributes(hash)
+        hash["calculator_attributes"]["type"] = hash["calculator_type"]
       end
     end
   end
