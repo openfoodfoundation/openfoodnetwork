@@ -485,11 +485,16 @@ describe "As a consumer, I want to checkout my order" do
 
             it "displays error messages when submitting incomplete billing address" do
               click_button "Next - Payment method"
-              expect(page).to have_content "Saving failed, please update the highlighted fields."
-              expect(page).to have_field("Address", with: "")
-              expect(page).to have_field("City", with: "")
-              expect(page).to have_field("Postcode", with: "")
-              expect(page).to have_content("can't be blank", count: 3)
+              within "checkout" do
+                expect(page).to have_field("Address", with: "")
+                expect(page).to have_field("City", with: "")
+                expect(page).to have_field("Postcode", with: "")
+                expect(page).to have_content("can't be blank", count: 3)
+              end
+              within ".flash[type='error']" do
+                expect(page).to have_content "Saving failed, please update the highlighted fields."
+                expect(page).to have_content("can't be blank", count: 3)
+              end
             end
 
             it "fills in shipping details and redirects the user to the Payment Method step,
@@ -532,17 +537,23 @@ describe "As a consumer, I want to checkout my order" do
         end
         it "should display error when fields are empty" do
           click_button "Next - Payment method"
-          expect(page).to have_content("Saving failed, please update the highlighted fields")
-          expect(page).to have_field("First Name", with: "")
-          expect(page).to have_field("Last Name", with: "")
-          expect(page).to have_field("Email", with: "")
-          expect(page).to have_content("is invalid")
-          expect(page).to have_field("Phone number", with: "")
-          expect(page).to have_field("Address", with: "")
-          expect(page).to have_field("City", with: "")
-          expect(page).to have_field("Postcode", with: "")
-          expect(page).to have_content("can't be blank", count: 7)
-          expect(page).to have_content("Select a shipping method")
+          within "checkout" do
+            expect(page).to have_field("First Name", with: "")
+            expect(page).to have_field("Last Name", with: "")
+            expect(page).to have_field("Email", with: "")
+            expect(page).to have_content("is invalid")
+            expect(page).to have_field("Phone number", with: "")
+            expect(page).to have_field("Address", with: "")
+            expect(page).to have_field("City", with: "")
+            expect(page).to have_field("Postcode", with: "")
+            expect(page).to have_content("can't be blank", count: 7)
+            expect(page).to have_content("Select a shipping method")
+          end
+          within ".flash[type='error']" do
+            expect(page).to have_content("Saving failed, please update the highlighted fields")
+            expect(page).to have_content("can't be blank", count: 13)
+            expect(page).to have_content("is invalid", count: 1)
+          end
         end
       end
 
