@@ -489,7 +489,12 @@ describe "As a consumer, I want to checkout my order" do
               expect(page).to have_field("Address", with: "")
               expect(page).to have_field("City", with: "")
               expect(page).to have_field("Postcode", with: "")
-              expect(page).to have_content("can't be blank", count: 3)
+              within "checkout" do
+                expect(page).to have_content("can't be blank", count: 3)
+              end
+              within ".flash[type='error']" do
+                expect(page).to have_content("can't be blank", count: 3)
+              end
             end
 
             it "fills in shipping details and redirects the user to the Payment Method step,
@@ -541,7 +546,13 @@ describe "As a consumer, I want to checkout my order" do
           expect(page).to have_field("Address", with: "")
           expect(page).to have_field("City", with: "")
           expect(page).to have_field("Postcode", with: "")
-          expect(page).to have_content("can't be blank", count: 7)
+          within "checkout" do
+            expect(page).to have_content("can't be blank", count: 7)
+          end
+          within ".flash[type='error']" do
+            expect(page).to have_content("can't be blank", count: 13)
+            expect(page).to have_content("is invalid", count: 1)
+          end
           expect(page).to have_content("Select a shipping method")
         end
       end
