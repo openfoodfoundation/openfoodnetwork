@@ -5,8 +5,8 @@
 class ContentSanitizer
   include ActionView::Helpers::SanitizeHelper
 
-  ALLOWED_TAGS = ["p", "b", "strong", "em", "i", "a", "u"].freeze
-  ALLOWED_ATTRIBUTES = ["href", "target"].freeze
+  ALLOWED_TAGS = ["p", "b", "strong", "em", "i", "a", "u", "img"].freeze
+  ALLOWED_ATTRIBUTES = ["href", "target", "src", "alt"].freeze
   FILTERED_CHARACTERS = {
     "&amp;amp;" => "&",
     "&amp;" => "&",
