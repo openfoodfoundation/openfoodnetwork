@@ -646,12 +646,12 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
 
     describe "for specified payment methods" do
       let!(:payment_method_a) do
-        method = create(:payment_method, name: "Payment A", distributors: [distributor])
+        method = create(:payment_method, :flat_rate, name: "Payment A", distributors: [distributor])
         method.calculator.update_attribute(:preferred_amount, 1)
         method
       end
       let!(:payment_method_b) do
-        method = create(:payment_method, name: "Payment B", distributors: [distributor])
+        method = create(:payment_method, :flat_rate, name: "Payment B", distributors: [distributor])
         method.calculator.update_attribute(:preferred_amount, 1)
         method
       end

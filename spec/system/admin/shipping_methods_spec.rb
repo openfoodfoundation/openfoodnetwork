@@ -83,6 +83,15 @@ describe 'shipping methods' do
 
       expect(@shipping_method.reload.calculator_type).to eq("Calculator::PerItem")
     end
+
+    it "handle when updating calculator type to 'None'" do
+      visit spree.edit_admin_shipping_method_path(@shipping_method)
+
+      select2_select 'None', from: 'calc_type'
+      click_button 'Update'
+      
+      expect(@shipping_method.reload.calculator_type).to eq "Calculator::None"
+    end
   end
 
   context "as an enterprise user", js: true do

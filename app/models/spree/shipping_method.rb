@@ -32,6 +32,8 @@ module Spree
     validate :at_least_one_shipping_category
     validates :display_on, inclusion: { in: DISPLAY_ON_OPTIONS.values }, allow_nil: true
 
+    after_initialize :init
+
     after_save :touch_distributors
 
     scope :managed_by, lambda { |user|
@@ -65,10 +67,6 @@ module Spree
 
     def build_tracking_url(tracking)
       tracking_url.gsub(/:tracking/, tracking) unless tracking.blank? || tracking_url.blank?
-    end
-
-    def self.calculators
-      spree_calculators.__send__ model_name_without_spree_namespace
     end
 
     # Some shipping methods are only meant to be set via backend
@@ -108,6 +106,10 @@ module Spree
 
     def self.frontend
       where(display_on: [nil, ""])
+    end
+
+    def init
+      self.calculator ||= ::Calculator::None.new if new_record?
     end
 
     private
