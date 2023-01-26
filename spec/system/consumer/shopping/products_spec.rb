@@ -47,16 +47,8 @@ describe "As a consumer I want to view products", js: true do
 
         visit shop_path
         expect(page).to have_content product.name
-        click_link product.name
 
-        expect(page).to have_selector '.reveal-modal'
-        modal_should_be_open_for product
-
-        within(".reveal-modal") do
-          expect(html).to include('<p><b>Formatted</b> product description.</p> Link to an <a href="http://google.fr" target="_blank">external site</a>')
-        end
-
-
+        expect_product_description_html_to_be_displayed(product, product.description)
       end
 
       it "does not show unsecure HTML" do
@@ -65,15 +57,8 @@ describe "As a consumer I want to view products", js: true do
 
         visit shop_path
         expect(page).to have_content product.name
-        click_link product.name
 
-        expect(page).to have_selector '.reveal-modal'
-        modal_should_be_open_for product
-
-        within(".reveal-modal") do
-          expect(html).to include("<p>Safe</p>")
-          expect(html).not_to include("<script>alert('Dangerous!');</script>")
-        end
+        expect_product_description_html_to_be_displayed(product, "<p>Safe</p>", "<script>alert('Dangerous!');</script>")
       end
     end
 
@@ -117,6 +102,23 @@ describe "As a consumer I want to view products", js: true do
           expect(page).not_to have_content variant2.name.to_s
         end
       end
+    end
+  end
+
+  def expect_product_description_html_to_be_displayed(product, html, not_include = nil)
+    # check inside list of products
+    within "#product-#{product.id} .product-description" do
+      expect(html).to include(html)
+      expect(html).not_to include(not_include) if not_include
+    end
+
+    # check in product description modal
+    click_link product.name
+    expect(page).to have_selector '.reveal-modal'
+    modal_should_be_open_for product
+    within(".reveal-modal") do
+      expect(html).to include(html)
+      expect(html).not_to include(not_include) if not_include
     end
   end
 end
