@@ -43,6 +43,7 @@ module Spree
           redirect_to spree.edit_admin_payment_method_path(@payment_method)
         else
           respond_with(@payment_method)
+          clear_preference_cache
         end
       end
 
@@ -182,6 +183,12 @@ module Spree
           end
 
           params_for_update
+        end
+      end
+
+      def clear_preference_cache
+        @payment_method.calculator.preferences.each_key do |key|
+          Rails.cache.delete(@payment_method.calculator.preference_cache_key(key))
         end
       end
     end

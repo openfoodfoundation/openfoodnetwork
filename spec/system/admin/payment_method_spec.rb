@@ -349,13 +349,20 @@ describe '
   context "when updating a payment method with invalid data" do
     let(:payment_method) { create(:payment_method, :flat_rate, amount: 10) }
 
+    # Persist preferences to test that when preferred values are not found in the cache,
+    # they are fetched from the database and displayed correctly
     before do
+      Spree::Preferences::Store.instance.persistence = true
       login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method
       fill_in "payment_method_name", with: ""
       fill_in "payment_method_description", with: "Edited description"
       uncheck "payment_method_distributor_ids_#{@distributors[0].id}"
       fill_in "Amount", with: 'invalid'
       click_button 'Update'
+    end
+
+    after do
+      Spree::Preferences::Store.instance.persistence = false
     end
 
     it "displays the number of errors" do
@@ -396,6 +403,16 @@ describe '
       expect(page).to have_field "Amount", with: "invalid string"
       expect(page).to have_field "payment_method_description", with: "Edited description"
       expect(page).to have_unchecked_field "payment_method_distributor_ids_#{@distributors[0].id}"
+    end
+
+    it 'displays data fetched from the database after navigating away from the page' do
+      click_link 'Back To Payment Methods List'
+      click_link href: /#{spree.edit_admin_payment_method_path(payment_method)}/
+
+      expect(page).to have_field 'Amount', with: '10.0'
+      expect(page).not_to have_field 'payment_method_name', with: ''
+      expect(page).not_to have_field 'payment_method_description', with: 'Edited description'
+      expect(page).not_to have_unchecked_field "payment_method_distributor_ids_#{@distributors[0].id}"
     end
   end
 end
