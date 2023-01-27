@@ -19,10 +19,6 @@
     = csrf_meta_tags
 
   %body.off-canvas{ style: "background-image: url(#{image_pack_path('tile-wide.png')})", "data-turbo": "false" }
-    / [if lte IE 8]
-      = render partial: "shared/ie_warning"
-      = javascript_include_tag "iehack"
-
     .off-canvas-wrap{offcanvas: true}
       .inner-wrap
 

@@ -36,10 +36,6 @@
     = action_cable_meta_tag
 
   %body{ class: body_classes, "body-scroll": "true", "data-turbo": "false" }
-    / [if lte IE 8]
-      = render partial: "shared/ie_warning"
-      = javascript_include_tag "iehack"
-
     .off-canvas-wrap{ offcanvas: true }
       .fixed.off-canvas-fixed
         = render "shared/menu/menu" unless @hide_menu
