@@ -5,6 +5,10 @@ nb:
       spree/product: Produkt
       spree/shipping_method: Leveringsmetode
     attributes:
+      spree/order/ship_address:
+        phone: "Telefonnummer"
+        firstname: "Fornavn"
+        lastname: "Etternavn"
       spree/user:
         password: "Passord"
         password_confirmation: "Passord-bekreftelse"
@@ -1834,20 +1838,15 @@ nb:
       submit: Neste - Bestillingssammendrag
       cancel: Tilbake til dine detaljer
     step3:
-      your_details:
-        title: Dine detaljer
-        edit: Rediger detaljene dine
-      billing_address:
-        title: Fakturaadresse
-      shipping_address:
-        title: Leveringsadresse
-      delivery_info:
-        title: Leveringsinformasjon
+      delivery_details:
+        title: Leveringsdetaljer
+        edit: Rediger
+        address: Leveringsadresse
       payment_method:
         title: Betalingsmetode
-        edit: Rediger betalingsmåte
+        edit: Rediger
       order:
-        title: Totalt for bestillingen
+        edit: Rediger
       terms_and_conditions:
         message_html: "Jeg godtar selgers %{terms_and_conditions_link}."
         link_text: "Vilkår og Betingelser"
@@ -1856,11 +1855,9 @@ nb:
       all_terms_and_conditions:
         message_html: "Jeg godtar selgerens %{terms_and_conditions_link} og plattformens %{tos_link}."
         terms_and_conditions: "Vilkår og Betingelser"
-      agree: Ved å klikke &quot;Fullfør bestilling&quot; godtar du at bestillingen din blir behandlet.
       submit: Fullfør bestillingen
       cancel: Tilbake til Betalingsmåte
     errors:
-      global: "Lagring mislyktes, vennligst oppdater de uthevede feltene."
       terms_not_accepted: Vennligst godta vilkår og betingelser
       required: Feltet kan ikke være tomt
       invalid_number: "Vennligst oppgi et gyldig telefonnummer"
@@ -3451,7 +3448,6 @@ nb:
     display_currency: "Vis valuta"
     choose_currency: "Velg Valuta"
     mail_method_settings: "Innstillinger for epost-metode"
-    mail_settings_notice_html: "Noen av følgende innstillinger kan ikke redigeres og er oppført her bare for feilsøking. Endringer kan gjøres ved å oppdatere plattformens secrets og klargjøre dem ved hjelp av <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . Kontakt OFNs globale team for mer informasjon."
     general: "Generelt"
     enable_mail_delivery: "Aktiver epost-levering"
     send_mails_as: "Send Eposter Som"

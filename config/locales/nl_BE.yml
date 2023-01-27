@@ -5,6 +5,10 @@ nl_BE:
       spree/product: Product
       spree/shipping_method: Het verschepen Methode
     attributes:
+      spree/order/ship_address:
+        phone: "Telefoonnummer"
+        firstname: "Voornaam"
+        lastname: "Familienaam"
       spree/user:
         password: "Wachtwoord"
         password_confirmation: "Wachtwoord Bevestiging"
@@ -1595,10 +1599,14 @@ nl_BE:
         card_year:
           label: Jaar
     step3:
-      your_details:
-        title: Jouw gegevens
-      billing_address:
-        title: 'Facturatie-adres:'
+      delivery_details:
+        title: Leveringsdetails
+        edit: bewerking
+        address: Leveringsadres
+      payment_method:
+        edit: bewerking
+      order:
+        edit: bewerking
     errors:
       invalid_email: "Vul een geldig e-mailadres in"
   order_paid: BETAALD

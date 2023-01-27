@@ -5,6 +5,10 @@ ca:
       spree/product: Producte
       spree/shipping_method: Mètode d'enviament
     attributes:
+      spree/order/ship_address:
+        phone: "Número de telèfon "
+        firstname: "Nom"
+        lastname: "Cognom"
       spree/user:
         password: "Contrasenya"
         password_confirmation: "confirmació de la contrasenya"
@@ -1797,10 +1801,14 @@ ca:
         card_year:
           label: Any
     step3:
-      your_details:
-        title: Els teus detalls
-      billing_address:
-        title: Adreça de facturació
+      delivery_details:
+        title: Detalls de lliurament
+        edit: Editar
+        address: Adreça de lliurament
+      payment_method:
+        edit: Editar
+      order:
+        edit: Editar
       terms_and_conditions:
         message_html: "Accepto el %{terms_and_conditions_link} del venedor."
         link_text: "Termes i condicions"
@@ -3376,7 +3384,6 @@ ca:
     display_currency: "Moneda de visualització"
     choose_currency: "Escull la moneda"
     mail_method_settings: "Configuració del mètode de correu"
-    mail_settings_notice_html: "Algunes de les opcions de configuració següents no es poden editar i es mostren aquí només amb finalitats de depuració. Es poden fer canvis actualitzant els secrets de la instància i provisionant-los mitjançant <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . Contacteu amb l'equip global d'OFN per obtenir més informació."
     general: "General"
     enable_mail_delivery: "Habilita el lliurament de correu"
     send_mails_as: "Enviar missatges com"

@@ -5,6 +5,8 @@ sv:
       spree/product: Produkt
       spree/shipping_method: Fraktmetod
     attributes:
+      spree/order/ship_address:
+        phone: "Telefonnummer"
       spree/user:
         password: "Lösenord"
       enterprise_fee:
@@ -953,10 +955,14 @@ sv:
       shipping_info:
         title: 'Leveransadress '
     step3:
-      your_details:
-        title: Dina detaljer
-      billing_address:
-        title: 'Faktureringsadress '
+      delivery_details:
+        title: Leveransdetaljer
+        edit: Redigera
+        address: 'Leveransadress '
+      payment_method:
+        edit: Redigera
+      order:
+        edit: Redigera
     errors:
       invalid_email: "Var vänlig fyll i en giltig epostadress"
   order_paid: BETALD

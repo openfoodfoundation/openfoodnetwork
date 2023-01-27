@@ -1514,6 +1514,13 @@ pl:
           label: Miesiąc
         card_year:
           label: Rok
+    step3:
+      delivery_details:
+        edit: Edytuj
+      payment_method:
+        edit: Edytuj
+      order:
+        edit: Edytuj
   order_paid: OPŁACONY
   order_not_paid: NIEZAPŁACONE
   order_total: Całkowite zamówienie

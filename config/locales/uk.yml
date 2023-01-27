@@ -5,6 +5,10 @@ uk:
       spree/product: Продукт
       spree/shipping_method: Спосіб доставки
     attributes:
+      spree/order/ship_address:
+        phone: "Телефонний номер"
+        firstname: "Ім'я"
+        lastname: "Прізвище"
       spree/user:
         password: "Пароль"
         password_confirmation: "Підтвердження паролю"
@@ -1825,20 +1829,15 @@ uk:
       submit: Далі - Підсумок замовлення
       cancel: Повернутися до ваших даних
     step3:
-      your_details:
-        title: Ваші дані
-        edit: Відредагуйте свої дані
-      billing_address:
-        title: Платіжна адреса
-      shipping_address:
-        title: Адреса доставки
-      delivery_info:
-        title: Інформація про доставку
+      delivery_details:
+        title: Деталі доставки
+        edit: Редагувати
+        address: Адреса доставки
       payment_method:
         title: Спосіб оплати
-        edit: Редагувати спосіб оплати
+        edit: Редагувати
       order:
-        title: Всього замовлення
+        edit: Редагувати
       terms_and_conditions:
         message_html: "Я згоден з %{terms_and_conditions_link} продавця."
         link_text: "Правила та умови"
@@ -1847,11 +1846,9 @@ uk:
       all_terms_and_conditions:
         message_html: "Я погоджуюся з %{terms_and_conditions_link} продавця та платформою %{tos_link}."
         terms_and_conditions: "Правила та умови"
-      agree: Натискаючи «Завершити замовлення», ви погоджуєтеся на обробку вашого замовлення.
       submit: Завершити замовлення
       cancel: Назад до способу оплати
     errors:
-      global: "Не вдалося зберегти. Оновіть виділені поля."
       terms_not_accepted: Будь ласка, прийміть Загальні положення та умови
       required: Поле не може бути порожнім
       invalid_number: "Будь ласка введіть дійсний номер телефону"
@@ -3488,7 +3485,6 @@ uk:
     display_currency: "Показати валюту"
     choose_currency: "Виберіть валюту"
     mail_method_settings: "Налаштування методу ел.пошти"
-    mail_settings_notice_html: "Деякі з наведених нижче налаштувань не можна редагувати та наведено тут лише з метою налагодження. Зміни можна внести, оновивши секрети екземпляра та підготувавши їх за допомогою <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . Щоб дізнатися більше, зверніться до глобальної команди OFN."
     general: "Загальний"
     enable_mail_delivery: "Увімкнути доставку пошти"
     send_mails_as: "Надсилати листи як"

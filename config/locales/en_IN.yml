@@ -5,6 +5,10 @@ en_IN:
       spree/product: Product
       spree/shipping_method: Shipping Method
     attributes:
+      spree/order/ship_address:
+        phone: "Phone number"
+        firstname: "First name"
+        lastname: "Last name"
       spree/user:
         password: "Password"
         reset_password_token: Reset password
@@ -1575,10 +1579,14 @@ en_IN:
       shipping_info:
         title: Shipping info
     step3:
-      your_details:
-        title: Your details
-      billing_address:
-        title: Billing address
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+      payment_method:
+        edit: Edit
+      order:
+        edit: Edit
     errors:
       invalid_email: "Please enter a valid email address"
   order_paid: PAID

@@ -5,6 +5,10 @@ ar:
       spree/product: المنتج
       spree/shipping_method: طريقة الشحن
     attributes:
+      spree/order/ship_address:
+        phone: "رقم الهاتف"
+        firstname: "الاسم الاول"
+        lastname: "الكنية"
       spree/user:
         password: "كلمه السر"
         password_confirmation: "تأكيد كلمة المرور"
@@ -1851,20 +1855,15 @@ ar:
       submit: التالي - ملخص الطلب
       cancel: العودة إلى التفاصيل الخاصة بك
     step3:
-      your_details:
-        title: تفاصيلك
-        edit: تحرير التفاصيل الخاصة بك
-      billing_address:
-        title: عنوان وصول الفواتير
-      shipping_address:
-        title: عنوان الشحن
-      delivery_info:
-        title: معلومات التوصيل
+      delivery_details:
+        title: تفاصيل التسليم
+        edit: تعديل
+        address: عنوان التسليم
       payment_method:
         title: 'طريقة الدفع '
-        edit: تحرير طريقة الدفع
+        edit: تعديل
       order:
-        title: الطلب الكلي
+        edit: تعديل
       terms_and_conditions:
         message_html: "أوافق على %{terms_and_conditions_link} للبائع."
         link_text: "الأحكام والشروط"
@@ -1873,11 +1872,9 @@ ar:
       all_terms_and_conditions:
         message_html: "أوافق على %{terms_and_conditions_link} البائع والمنصة %{tos_link}."
         terms_and_conditions: "الأحكام والشروط"
-      agree: بالنقر فوق "إكمال الطلب" فإنك توافق على معالجة طلبك.
       submit: اكمل الطلب
       cancel: العودة إلى طريقة الدفع
     errors:
-      global: "فشل الحفظ ، يرجى تحديث الحقول المميزة."
       terms_not_accepted: الرجاء قبول الشروط والأحكام
       required: لا يمكن أن يكون الحقل فارغًا
       invalid_number: "يرجى إدخال رقم هاتف صالح"
@@ -3575,7 +3572,6 @@ ar:
     display_currency: "عرض العملة"
     choose_currency: "اختر العملة"
     mail_method_settings: "إعدادات طريقة البريد"
-    mail_settings_notice_html: "لا يمكن تحرير بعض الإعدادات التالية وهي مدرجة هنا فقط لأغراض التصحيح. يمكن إجراء التغييرات عن طريق تحديث أسرار المثيل وتوفيرها باستخدام <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . تواصل مع فريق OFN العالمي لمزيد من التفاصيل."
     general: "عام"
     enable_mail_delivery: "تمكين تسليم البريد"
     send_mails_as: "إرسال رسائل ب"

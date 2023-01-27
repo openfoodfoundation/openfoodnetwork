@@ -5,6 +5,10 @@ tr:
       spree/product: Ürün
       spree/shipping_method: TESLİMAT YÖNTEMİ
     attributes:
+      spree/order/ship_address:
+        phone: "Tel. no"
+        firstname: "Ad"
+        lastname: "Soyadı"
       spree/user:
         password: "Parola"
         password_confirmation: "Parola onayı"
@@ -1698,18 +1702,15 @@ tr:
       submit: Sonraki - Sipariş özeti
       cancel: Bilgilerinize geri dönün
     step3:
-      your_details:
-        title: Bilgilerin
-        edit: Bilgilerinizi düzenleyin
-      billing_address:
-        title: Fatura adresi
-      delivery_info:
-        title: Teslimat bilgileri
+      delivery_details:
+        title: Teslimat Detayları
+        edit: Düzenle
+        address: Teslimat adresi
       payment_method:
         title: Ödeme yöntemi
-        edit: Ödeme yöntemini düzenle
+        edit: Düzenle
       order:
-        title: Sipariş toplamı
+        edit: Düzenle
       terms_and_conditions:
         message_html: "Bu satıcının %{terms_and_conditions_link}'ını onaylıyorum."
         link_text: "Şartlar ve Koşullar"
@@ -3282,7 +3283,6 @@ tr:
     display_currency: "Para birimini göster"
     choose_currency: "Para Birimini Seç"
     mail_method_settings: "E-posta Ayarları"
-    mail_settings_notice_html: "Aşağıdaki ayarlardan bazıları düzenlenemez ve burada yalnızca hata ayıklama amacıyla listelenmiştir. <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> kullanılarak, gizli dizileri güncelleyerek değişiklikler yapılabilir. Daha fazla ayrıntı için OFN küresel ekibine ulaşın."
     general: "Genel"
     enable_mail_delivery: "Posta Dağıtımını Etkinleştir"
     send_mails_as: "Postaları Farklı Gönder"

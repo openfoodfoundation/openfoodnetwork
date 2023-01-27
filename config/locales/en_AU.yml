@@ -5,6 +5,10 @@ en_AU:
       spree/product: Product
       spree/shipping_method: Shipping Method
     attributes:
+      spree/order/ship_address:
+        phone: "Phone number"
+        firstname: "First name"
+        lastname: "Last name"
       spree/user:
         password: "Password"
         reset_password_token: Reset password token
@@ -1623,10 +1627,14 @@ en_AU:
         card_year:
           label: Year
     step3:
-      your_details:
-        title: Your details
-      billing_address:
-        title: Billing address
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+      payment_method:
+        edit: Edit
+      order:
+        edit: Edit
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"

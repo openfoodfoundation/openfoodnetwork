@@ -5,6 +5,10 @@ fr_CM:
       spree/product: Produit
       spree/shipping_method: Méthode de Livraison
     attributes:
+      spree/order/ship_address:
+        phone: "Numéro de téléphone"
+        firstname: "Prénom"
+        lastname: "Nom "
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
@@ -1745,20 +1749,15 @@ fr_CM:
       submit: Etape suivante - Récapitulatif de commande
       cancel: Retour à vos coordonnées
     step3:
-      your_details:
-        title: Vos informations
-        edit: Modifier vos coordonnées
-      billing_address:
-        title: Adresse de facturation
-      shipping_address:
-        title: Adresse de livraison
-      delivery_info:
-        title: Information concernant la livraison
+      delivery_details:
+        title: Détails de livraison
+        edit: Modifier
+        address: Adresse de livraison
       payment_method:
         title: Moyen de paiement
-        edit: Modifier la méthode de paiement
+        edit: Modifier
       order:
-        title: Total commande
+        edit: Modifier
       terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link}."
         link_text: "CGU & CGV"
@@ -1767,11 +1766,9 @@ fr_CM:
       all_terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de CoopCircuits."
         terms_and_conditions: "CGU & CGV"
-      agree: En cliquant sur "Valider ma commande" vous acceptez que votre commande soit traitée.
       submit: Valider ma commande
       cancel: Retour à la méthode de paiement
     errors:
-      global: "La sauvegarde a échoué, merci de mettre à jour les champs mis en évidence."
       terms_not_accepted: Merci d'accepter les CGU & CGV.
       required: Ce champ ne peut pas être vide
       invalid_number: "Merci de renseigner un numéro de téléphone valide"
@@ -3393,7 +3390,6 @@ fr_CM:
     display_currency: "Afficher la devise"
     choose_currency: "Choisir la devise"
     mail_method_settings: "Paramètre méthode mail"
-    mail_settings_notice_html: "Certains champs ne peuvent pas être modifiés car ils sont utilisés uniquement pour déboggage. Les modifications peuvent être réalisées par un développeur via <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. "
     general: "Général"
     enable_mail_delivery: "Permettre distribution des mails"
     send_mails_as: "Envoyer les mails en tant que"

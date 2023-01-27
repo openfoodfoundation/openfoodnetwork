@@ -5,6 +5,10 @@ de_DE:
       spree/product: Produkt
       spree/shipping_method: Lieferoption
     attributes:
+      spree/order/ship_address:
+        phone: "Telefonnummer"
+        firstname: "Vorname"
+        lastname: "Nachname"
       spree/user:
         password: "Passwort"
         password_confirmation: "Passwort erneut eingeben"
@@ -1849,20 +1853,15 @@ de_DE:
       submit: Weiter - Bestellübersicht
       cancel: Zurück - Ihre Daten
     step3:
-      your_details:
-        title: Ihre Daten
-        edit: Ihre Daten ändern
-      billing_address:
-        title: Rechnungsadresse
-      shipping_address:
-        title: Lieferadresse
-      delivery_info:
-        title: Abhol-/Lieferinformationen
+      delivery_details:
+        title: Lieferdetails
+        edit: Bearbeiten
+        address: Liefer-/Abholinformationen
       payment_method:
         title: Zahlungsart
-        edit: Zahlungsart ändern
+        edit: Bearbeiten
       order:
-        title: Bestellübersicht
+        edit: Bearbeiten
       terms_and_conditions:
         message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
         link_text: "Allgemeinen Geschäftsbedingungen (AGB)"
@@ -1871,11 +1870,9 @@ de_DE:
       all_terms_and_conditions:
         message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers und den %{tos_link} des Open Food Network zu."
         terms_and_conditions: "Allgemeinen Geschäftsbedingungen (AGB)"
-      agree: Durch Klicken auf "Zahlungspflichtig bestellen" stimmen Sie der Verarbeitung Ihrer Bestellung zu.
       submit: Zahlungspflichtig bestellen
       cancel: Zurück - Zahlungsart
     errors:
-      global: "Speichern fehlgeschlagen. Bitte prüfen Sie die markierten Felder."
       terms_not_accepted: Bitte akzeptieren Sie die Allgemeinen Geschäftsbedingungen.
       required: Feld darf nicht leer sein.
       invalid_number: "Bitte geben Sie eine gültige Telefonnummer ein."
@@ -3488,7 +3485,6 @@ de_DE:
     display_currency: "Währung anzeigen"
     choose_currency: "Währung auswählen"
     mail_method_settings: "E-Mail-Methodeneinstellungen"
-    mail_settings_notice_html: "Einige der folgenden Einstellungen können nicht geändert werden und werden hier nur zu Zwecken der Fehlerbehebung aufgeführt. Änderungen können vorgenommen werden, indem die Einstellungen der deutschen Instanz aktualisiert und mithilfe von <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> bereitgestellt werden. Wenden Sie sich an das globale Team des Open Food Network, um weitere Informationen zu erhalten."
     general: "Allgemeines"
     enable_mail_delivery: "E-Mail-Versand aktivieren"
     send_mails_as: "E-Mails senden als"

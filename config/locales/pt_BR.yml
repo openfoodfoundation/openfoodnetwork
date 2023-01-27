@@ -5,6 +5,8 @@ pt_BR:
       spree/product: Produto
       spree/shipping_method: Método de envio
     attributes:
+      spree/order/ship_address:
+        phone: "n"
       spree/user:
         password: "Senha"
         password_confirmation: "Confirmação de senha"
@@ -1678,10 +1680,14 @@ pt_BR:
         card_year:
           label: Ano
     step3:
-      your_details:
-        title: Seus detalhes
-      billing_address:
-        title: Endereço de fatura
+      delivery_details:
+        title: Detalhes da entrega
+        edit: Editar
+        address: Endereço para entrega
+      payment_method:
+        edit: Editar
+      order:
+        edit: Editar
       terms_and_conditions:
         message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor"
         link_text: "Termos e Condições"
@@ -3262,7 +3268,6 @@ pt_BR:
     display_currency: "Mostrar moeda"
     choose_currency: "Escolha a Moeda"
     mail_method_settings: "Configurações do método de email"
-    mail_settings_notice_html: "Algumas das seguintes configurações não podem ser editadas e estão listadas aqui apenas para propósitos de 'debugging'. Alterações podem ser realizadas atualizando os 'secrets' e provisionando-os com o <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Entre contato com o global team para mais detalhes. "
     general: "Geral"
     enable_mail_delivery: "Ativar entrega de correio"
     send_mails_as: "Enviar correio como"

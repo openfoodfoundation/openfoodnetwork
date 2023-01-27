@@ -5,6 +5,10 @@ fil_PH:
       spree/product: Produkto
       spree/shipping_method: paraan ng pagpapadala
     attributes:
+      spree/order/ship_address:
+        phone: "telepono"
+        firstname: "Pangalan"
+        lastname: "apelyido"
       spree/user:
         password: "Password"
         reset_password_token: i-reset ang password token
@@ -1560,10 +1564,14 @@ fil_PH:
       shipping_info:
         title: impormasyon sa pagpapadala
     step3:
-      your_details:
-        title: ang inyong detalye
-      billing_address:
-        title: Billing address
+      delivery_details:
+        title: detalye ng pag-deliver
+        edit: i-edit
+        address: address kung saan ide-deliver
+      payment_method:
+        edit: i-edit
+      order:
+        edit: i-edit
     errors:
       invalid_email: "maglagay ng valid na email address"
   order_paid: BAYAD NA

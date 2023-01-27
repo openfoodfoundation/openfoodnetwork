@@ -5,6 +5,10 @@ cy:
       spree/product: Cynnyrch
       spree/shipping_method: Dull Anfon
     attributes:
+      spree/order/ship_address:
+        phone: "Rhif ffôn"
+        firstname: "Enw cyntaf"
+        lastname: "Enw olaf"
       spree/user:
         password: "Cyfrinair"
         password_confirmation: "Cadarnhau'r cyfrinair"
@@ -1851,20 +1855,15 @@ cy:
       submit: Nesaf - Crynodeb o'r Archeb
       cancel: Nôl at Eich Manylion
     step3:
-      your_details:
-        title: Eich manylion
-        edit: Golygu Eich Manylion
-      billing_address:
-        title: Cyfeiriad bilio
-      shipping_address:
-        title: Cyfeiriad cludo
-      delivery_info:
-        title: Gwybodaeth cludo
+      delivery_details:
+        title: Manylion dosbarthu
+        edit: Golygu
+        address: Cyfeiriad dosbarthu
       payment_method:
         title: Dull talu
-        edit: Golygu'r Dull Talu
+        edit: Golygu
       order:
-        title: Cyfanswm yr Archeb
+        edit: Golygu
       terms_and_conditions:
         message_html: "Rwy'n cytuno i %{terms_and_conditions_link} y gwerthwr."
         link_text: "Telerau ac Amodau"
@@ -1873,11 +1872,9 @@ cy:
       all_terms_and_conditions:
         message_html: "Rwyf yn cytuno â %{terms_and_conditions_link}y gwerthwr a'r platfform %{tos_link}"
         terms_and_conditions: "Telerau ac Amodau"
-      agree: Trwy glicio 'Cwblhau'r Archeb' rydych yn cytuno inni brosesu eich archeb.
       submit: Cwblhau'r archeb
       cancel: Nôl at y Dull Talu
     errors:
-      global: "Wedi methu ei gadw, gofynnir ichi ddiweddaru'r meysydd a amlygwyd."
       terms_not_accepted: Mae angen ichi dderbyn y Telerau ac Amodau
       required: Ni chaniateir gadael maes yn wag
       invalid_number: "Noder rhif ffôn dilys os gwelwch yn dda"
@@ -2623,6 +2620,9 @@ cy:
   report_header_hub_phone: "Rhif Ffôn yr Hyb"
   report_header_hub_address_line1: "Llinell 1af Cyfeiriad yr Hyb"
   report_header_hub_address_line2: "2ail Linell Cyfeiriad yr Hyb"
+  report_header_hub_address_city: "Maestref yr Hyb"
+  report_header_hub_address_zipcode: "Cod post yr Hyb"
+  report_header_hub_address_state_name: "Talaith/Sir yr Hyb"
   report_header_code: Côd
   report_header_paid: Wedi talu?
   report_header_delivery: Dosbarthu?
@@ -2657,11 +2657,13 @@ cy:
   report_header_total_tax: "Cyfanswm Treth (%{currency_symbol})"
   report_header_total_excl_tax: "Cyfanswm heb dreth (%{currency_symbol})"
   report_header_total_incl_tax: "Cyfanswm gan gynnwys treth (%{currency_symbol})"
+  report_header_total_orders: "Cyfanswm nifer yr Archebion"
   report_header_enterprise: Menter
   report_header_customer: Cwsmer
   report_header_customer_code: Cod Cwsmer
   report_header_product: Cynnyrch
   report_header_product_properties: Manylion Cynnyrch
+  report_header_product_tax_category: Categori Treth y Cynnyrch
   report_header_quantity: Nifer
   report_header_max_quantity: Uchafswm nifer
   report_header_variant: Amrywiolyn
@@ -2674,6 +2676,7 @@ cy:
   report_header_supplier: Cyflenwr
   report_header_producer: Cynhyrchydd
   report_header_producer_suburb: Maestref y Cynhyrchydd
+  report_header_producer_charges_sales_tax?: Cofrestrwyd ar gyfer GST/TAW
   report_header_unit: Uned
   report_header_group_buy_unit_quantity: Nifer Unedau Grŵp Prynu
   report_header_cost: Cost
@@ -3529,7 +3532,6 @@ cy:
     display_currency: "Arddangos arian cyfred"
     choose_currency: "Dewis Arian Cyfred"
     mail_method_settings: "Gosodiadau Dull Postio"
-    mail_settings_notice_html: "Nid yw'n bosib golygu rhai o'r gosodiadau canlynol, ac fe'u rhestrir yma at ddibenion dadfygio'n unig.  Gellir eu newid trwy ddiweddaru cyfrinachau'r achos a'u darparu trwy ddefnyddio  ofn-install .  Cysylltwch <a href='https://github.com/openfoodfoundation/ofn-install'></a>â thîm byd-eang y Open Food Network am fanylion pellach."
     general: "Cyffredinol"
     enable_mail_delivery: "Galluogi Dosbarthu trwy'r Post"
     send_mails_as: "Anfon eitemau drwy'r Post fel"
@@ -3652,6 +3654,7 @@ cy:
       messages:
         included_price_validation: "ni ellir dewis hwn oni bai bod gennych Barth Treth Diofyn"
         blank: "ni chaniateir ei adael yn wag"
+        invalid_instagram_url: "Defnyddiwch yr enw defnyddiwr yn unig e.e. yr_athro"
     layouts:
       admin:
         login_nav:

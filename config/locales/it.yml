@@ -5,6 +5,10 @@ it:
       spree/product: Prodotto
       spree/shipping_method: Metodo di spedizione
     attributes:
+      spree/order/ship_address:
+        phone: "Numero di telefono"
+        firstname: "Nome"
+        lastname: "Cognome"
       spree/user:
         password: "Password"
         password_confirmation: "Conferma password"
@@ -1850,20 +1854,15 @@ it:
       submit: Prossimo - riepilogo richiesta
       cancel: Indietro a Tuoi dettagli
     step3:
-      your_details:
-        title: I tuoi dettagli
-        edit: Modifica i tuoi dati
-      billing_address:
-        title: Indirizzo di fatturazione
-      shipping_address:
-        title: Indirizzo consegna
-      delivery_info:
-        title: Informazioni sulla consegna
+      delivery_details:
+        title: Dettagli della consegna
+        edit: Modifica
+        address: Indirizzo di consegna
       payment_method:
         title: Metodo di pagamento
-        edit: Modifica metodo di pagamento
+        edit: Modifica
       order:
-        title: Ordine totale
+        edit: Modifica
       terms_and_conditions:
         message_html: "Accetto i %{terms_and_conditions_link} del venditore."
         link_text: "Termini e Condizioni"
@@ -1872,11 +1871,9 @@ it:
       all_terms_and_conditions:
         message_html: "Acconsento ai %{terms_and_conditions_link} del venditore ed ai %{tos_link} della piattaforma."
         terms_and_conditions: "Termini e Condizioni"
-      agree: Cliccando su "Conferma" accetti che la tua gentile richiesta sia processata.
       submit: Completa ordine
       cancel: Torna al metodo di pagamento
     errors:
-      global: "Salvataggio non riuscito. Per favore compila i campi evidenziati."
       terms_not_accepted: Per favore accetta i Termini e Condizioni
       required: Il campo non può essere lasciato vuoto
       invalid_number: "Per favore inserisci un numero di telefono valido"
@@ -3512,7 +3509,6 @@ it:
     display_currency: "Visualizza valuta"
     choose_currency: "Scegli Valuta"
     mail_method_settings: "Impostazioni del metodo di posta"
-    mail_settings_notice_html: "Alcune delle seguenti impostazioni non possono essere modificate e sono elencate qui solo per scopi di debug. È possibile apportare modifiche aggiornando i segreti dell'istanza ed utilizzando <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Contatta il team globale di OFN per maggiori dettagli. "
     general: "Generale"
     enable_mail_delivery: "Abilita recapito posta"
     send_mails_as: "Invia mail come"

@@ -5,6 +5,10 @@ es_CO:
       spree/product: Producto
       spree/shipping_method: Método de envío
     attributes:
+      spree/order/ship_address:
+        phone: "Número de teléfono"
+        firstname: "Nombre"
+        lastname: "Apellidos"
       spree/user:
         password: "Contraseña"
         password_confirmation: "confirmación de contraseña"
@@ -1607,10 +1611,14 @@ es_CO:
         card_year:
           label: Año
     step3:
-      your_details:
-        title: Sus detalles
-      billing_address:
-        title: Dirección de cobro
+      delivery_details:
+        title: Detalles de entrega
+        edit: Editar
+        address: Dirección de entrega
+      payment_method:
+        edit: Editar
+      order:
+        edit: Editar
     errors:
       invalid_email: "Introduce un correo electrónico válido"
   order_paid: PAGADO

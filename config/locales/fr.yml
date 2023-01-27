@@ -5,6 +5,10 @@ fr:
       spree/product: Produit
       spree/shipping_method: Option d'expédition
     attributes:
+      spree/order/ship_address:
+        phone: "Numéro de téléphone"
+        firstname: "Prénom"
+        lastname: "Nom "
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
@@ -1857,20 +1861,18 @@ fr:
       submit: Etape suivante - Récapitulatif de commande
       cancel: Retour à vos coordonnées
     step3:
-      your_details:
-        title: Vos informations
-        edit: Modifier vos coordonnées
-      billing_address:
-        title: Adresse de facturation
-      shipping_address:
-        title: Adresse de livraison
-      delivery_info:
-        title: Information concernant la livraison
+      delivery_details:
+        title: Détails de livraison
+        edit: Modifier
+        address: Adresse de livraison
+        instructions: Instructions
       payment_method:
         title: Moyen de paiement
-        edit: Modifier la méthode de paiement
+        edit: Modifier
+        instructions: Instructions
       order:
         title: Total commande
+        edit: Modifier
       terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link}."
         link_text: "CGU & CGV"
@@ -1879,11 +1881,10 @@ fr:
       all_terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de CoopCircuits."
         terms_and_conditions: "CGU & CGV"
-      agree: En cliquant sur "Valider ma commande" vous acceptez que votre commande soit traitée.
       submit: Valider ma commande
       cancel: Retour à la méthode de paiement
     errors:
-      global: "La sauvegarde a échoué, merci de mettre à jour les champs mis en évidence."
+      saving_failed: "La sauvegarde n'a pas fonctionné, veuillez mettre à jour les champs en rouge. %{messages}"
       terms_not_accepted: Merci d'accepter les CGU & CGV.
       required: Ce champ ne peut pas être vide
       invalid_number: "Merci de renseigner un numéro de téléphone valide"
@@ -1988,10 +1989,10 @@ fr:
     mistakenly_sent: "Vous ne savez pas pourquoi vous recevez cet email ? Veuillez contacter %{owner_email} pour plus d'informations."
   producer_mail_greeting: "Cher(ère)"
   producer_mail_text_before: "Vous trouverez ci-dessous les informations pour le cycle de vente prévu pour :"
-  producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
+  producer_mail_order_text: "Les produits et quantités à livrer :"
   producer_mail_delivery_instructions: "Modalités de livraison des produits:"
   producer_mail_signoff: "Merci et belle fin de journée!"
-  producer_mail_order_customer_text: "Voici un résumé des commandes rangées par acheteurs"
+  producer_mail_order_customer_text: "Détail par client·e :"
   shopping_oc_closed: Les commandes sont terminées
   shopping_oc_closed_description: "Veuillez attendre l'ouverture du prochain cycle de vente (ou contactez-nous directement pour voir si nous pouvons accepter une commande tardive)"
   shopping_oc_last_closed: "Le dernier cycle de vente s'est terminé il y a %{distance_of_time}"
@@ -3457,6 +3458,8 @@ fr:
     server_error: "Erreur serveur"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Retrait"
+      delivery: "Signé, scellé, livré"
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
     taxonomy_edit: "Modifier la taxonomie"
@@ -3544,7 +3547,7 @@ fr:
     display_currency: "Afficher la devise"
     choose_currency: "Choisir la devise"
     mail_method_settings: "Paramètre méthode mail"
-    mail_settings_notice_html: "Certains champs ne peuvent pas être modifiés car ils sont utilisés uniquement pour déboggage. Les modifications peuvent être réalisées par un développeur via <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. "
+    mail_settings_notice_html: "<b> Les modifications apportées ici seront temporaires </b>et peuvent changer à la prochaine mise à jour. <br> Si vous souhaitez réaliser des changements permanents, un administrateur système doit se charger de mettre à jour les informations et provisionner le serveur en utilisant <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install </a> . "
     general: "Général"
     enable_mail_delivery: "Permettre distribution des mails"
     send_mails_as: "Envoyer les mails en tant que"

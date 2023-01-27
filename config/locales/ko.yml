@@ -5,6 +5,10 @@ ko:
       spree/product: 상품
       spree/shipping_method: 배송 방법
     attributes:
+      spree/order/ship_address:
+        phone: "전화번호"
+        firstname: "이름"
+        lastname: "성"
       spree/user:
         password: "비밀번호"
         password_confirmation: "비밀번호 확인"
@@ -1807,20 +1811,15 @@ ko:
       submit: 다음 - 주문 요약
       cancel: 세부 사항으로 돌아가기
     step3:
-      your_details:
-        title: 세부 사항
-        edit: 세부 사항 편집
-      billing_address:
-        title: '청구서 발송지 :'
-      shipping_address:
-        title: 배송지 주소
-      delivery_info:
-        title: 배달 정보
+      delivery_details:
+        title: 배달 세부 사항
+        edit: 편집
+        address: 배달 주소
       payment_method:
         title: 결제 방식
-        edit: 결제 방식 편집
+        edit: 편집
       order:
-        title: 주문 총합
+        edit: 편집
       terms_and_conditions:
         message_html: "판매자의 %{terms_and_conditions_link} 이용약관에 대하여 동의합니다."
         link_text: "조건"
@@ -1829,11 +1828,9 @@ ko:
       all_terms_and_conditions:
         message_html: "판매자 %{terms_and_conditions_link} 이용약관과 플랫폼 %{tos_link}에 대하여 동의합니다."
         terms_and_conditions: "조건"
-      agree: '''주문 완료''를 클릭하면 주문이 처리되는 것에 동의하는 것입니다.'
       submit: 주문 완료
       cancel: 결제 방식으로 돌아가기
     errors:
-      global: "저장하지 못했습니다. 강조 표시된 필드를 업데이트하세요."
       terms_not_accepted: 약관에 동의하십시오.
       required: 필드는 비워 둘 수 없습니다.
       invalid_number: "올바른 전화 번호를 입력하십시오."
@@ -3373,7 +3370,6 @@ ko:
     display_currency: "통화 표시"
     choose_currency: "통화 선택"
     mail_method_settings: "메일 방법 설정"
-    mail_settings_notice_html: "다음 설정 중 일부는 편집할 수 없으며 단지 디버깅을 위해 여기에 나열됩니다. 임시 암호를 업데이트하고 <a href='https://github.com/openfoodfoundation/ofn-install'>ofn 설치</a> 사용을 제공하여 변경할 수 있습니다. 자세한 내용은 OFN 국제 팀에 문의하세요."
     general: "일반"
     enable_mail_delivery: "메일 배달 사용"
     send_mails_as: "다른 이름으로 메일 보내기"

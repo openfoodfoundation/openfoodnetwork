@@ -5,6 +5,10 @@ es_CR:
       spree/product: Producto
       spree/shipping_method: Método de envío
     attributes:
+      spree/order/ship_address:
+        phone: "Número de teléfono"
+        firstname: "Nombre"
+        lastname: "Apellidos"
       spree/user:
         password: "Contraseña"
         password_confirmation: "Confirmación de la contraseña"
@@ -1827,20 +1831,15 @@ es_CR:
       submit: Siguiente - Resumen del pedido
       cancel: Volver a Tus datos
     step3:
-      your_details:
-        title: Sus detalles
-        edit: Edita tus datos
-      billing_address:
-        title: Dirección de cobro
-      shipping_address:
-        title: Dirección de envío
-      delivery_info:
-        title: Información de entrega
+      delivery_details:
+        title: Detalles de entrega
+        edit: Editar
+        address: Dirección de entrega
       payment_method:
         title: Método de pago
-        edit: Editar método de pago
+        edit: Editar
       order:
-        title: Orden total
+        edit: Editar
       terms_and_conditions:
         message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor."
         link_text: "Términos y condiciones"
@@ -1849,11 +1848,9 @@ es_CR:
       all_terms_and_conditions:
         message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor y la plataforma %{tos_link}."
         terms_and_conditions: "Términos y condiciones"
-      agree: Al hacer clic en 'Completar pedido', acepta que se procese su pedido.
       submit: Orden completa
       cancel: Volver a Método de pago
     errors:
-      global: "Error al guardar, actualice los campos resaltados."
       terms_not_accepted: Por favor acepte Términos y Condiciones
       required: El campo no puede estar en blanco
       invalid_number: "Por favor ingrese un número de teléfono válido"

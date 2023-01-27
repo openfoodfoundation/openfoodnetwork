@@ -5,6 +5,10 @@ ru:
       spree/product: Товар
       spree/shipping_method: Способ Доставки
     attributes:
+      spree/order/ship_address:
+        phone: "Номер телефона"
+        firstname: "Имя"
+        lastname: "Фамилия"
       spree/user:
         password: "Пароль"
         password_confirmation: "Подтверждение пароля"
@@ -1850,20 +1854,15 @@ ru:
       submit: Далее - Сводка заказа
       cancel: Назад к Вашим данным
     step3:
-      your_details:
-        title: Информация о Вас
-        edit: Изменить свои данные
-      billing_address:
-        title: Платежный Адрес
-      shipping_address:
-        title: Адрес доставки
-      delivery_info:
-        title: Информация о доставке
+      delivery_details:
+        title: Подробности доставки
+        edit: Изменить
+        address: Адрес доставки
       payment_method:
         title: Способ оплаты
-        edit: Изменить способ оплаты
+        edit: Изменить
       order:
-        title: Весь заказ
+        edit: Изменить
       terms_and_conditions:
         message_html: "Согласен на %{terms_and_conditions_link} продавца."
         link_text: "Условия и Положения"
@@ -1872,11 +1871,9 @@ ru:
       all_terms_and_conditions:
         message_html: "Я согласен с условиями %{terms_and_conditions_link} продавца и платформы %{tos_link}."
         terms_and_conditions: "Условия и Положения"
-      agree: Нажимая «Завершить заказ», вы соглашаетесь с тем, что заказ отправится на обработку.
       submit: Завершить заказ
       cancel: Вернуться к Способу оплаты
     errors:
-      global: "Ошибка сохранения, обновите выделенные поля."
       terms_not_accepted: Пожалуйста, примите Условия использования
       required: Поле не может быть пустым
       invalid_number: "Пожалуйста, введите действующий номер телефона"
@@ -3535,7 +3532,6 @@ ru:
     display_currency: "Показывать валюту"
     choose_currency: "Выбор валюты"
     mail_method_settings: "Почтовые Настройки"
-    mail_settings_notice_html: "Некоторые из следующих параметров нельзя редактировать, и они перечислены здесь только для целей отладки. Изменения можно внести, обновив секреты экземпляра и предоставив их с помощью <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . За подробностями обращайтесь к глобальной команде ОСП."
     general: "Основные"
     enable_mail_delivery: "Включить отправку почты"
     send_mails_as: "Отправлять Почту Как"

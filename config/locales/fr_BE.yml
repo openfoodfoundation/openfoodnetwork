@@ -5,6 +5,10 @@ fr_BE:
       spree/product: Produit
       spree/shipping_method: Méthode de Livraison
     attributes:
+      spree/order/ship_address:
+        phone: "Numéro de téléphone"
+        firstname: "Prénom"
+        lastname: "Nom de famille"
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
@@ -1640,10 +1644,14 @@ fr_BE:
         card_year:
           label: Année
     step3:
-      your_details:
-        title: Vos informations
-      billing_address:
-        title: Adresse de facturation
+      delivery_details:
+        title: Détails de livraison
+        edit: Modifier
+        address: Adresse de livraison
+      payment_method:
+        edit: Modifier
+      order:
+        edit: Modifier
       terms_and_conditions:
         link_text: "Termes et conditions"
       all_terms_and_conditions:
