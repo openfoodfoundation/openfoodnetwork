@@ -384,6 +384,26 @@ describe '
           login_as_admin_and_visit spree.admin_orders_path
         end
 
+        it "can bulk send invoice for 2 orders" do
+          page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click
+
+          page.find("span.icon-reorder", text: "ACTIONS").click
+          within ".ofn-drop-down-with-prepend .menu" do
+            page.find("span", text: "Send Invoices").click
+          end
+
+          expect(page).to have_content "Are you sure you want to proceed?"
+
+          within ".reveal-modal" do
+            expect {
+              find_button("Confirm").click
+            }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+          end
+
+          expect(page).to have_content "Invoice emails sent for 2 orders."
+        end
+
         it "can bulk send email to 2 orders" do
           page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
           page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click

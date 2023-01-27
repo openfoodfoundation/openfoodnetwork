@@ -34,6 +34,9 @@
               %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "resend_confirmation" }
                 = t('.resend_confirmation')
             %div.menu_item
+              %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "send_invoice" }
+                = t('.send_invoice')
+            %div.menu_item
               %span.name.invoices-modal{'ng-controller' => 'bulkInvoiceCtrl', 'ng-click' => 'createBulkInvoice()' }
                 = t('.print_invoices')
             %div.menu_item
@@ -124,6 +127,11 @@
 = render ConfirmModalComponent.new(id: "resend_confirmation", confirm_actions: "click->resend-confirmation-email#confirm", controllers: "resend-confirmation-email") do
   .margin-bottom-30
     = t('.resend_confirmation_confirm_html')
+
+= render ConfirmModalComponent.new(id: "send_invoice", confirm_actions: "click->send-invoice#confirm", controllers: "send-invoice") do
+  .margin-bottom-30
+    = t('.send_invoice_confirm_html')
+
 = render ConfirmModalComponent.new(id: "cancel_orders", confirm_actions: "click->cancel-orders#confirm", controllers: "cancel-orders", message: "spree/admin/orders/messages/cancel_orders") do
   .margin-bottom-30
     = t("js.admin.orders.cancel_the_order_html")
