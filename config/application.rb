@@ -215,7 +215,6 @@ module Openfoodnetwork
     # Instead, they must be explicitly included below
     # http://stackoverflow.com/questions/8012434/what-is-the-purpose-of-config-assets-precompile
     config.assets.initialize_on_precompile = true
-    config.assets.precompile += ['iehack.js']
     config.assets.precompile += ['admin/*.js', 'admin/**/*.js']
     config.assets.precompile += ['web/all.js']
     config.assets.precompile += ['darkswarm/all.js']
