@@ -379,10 +379,12 @@ describe '
     end
 
     context "bulk actions" do
-      context "resend confirmation email" do
-        it "can bulk send email to 2 orders" do
+      context "as a super admin" do
+        before do
           login_as_admin_and_visit spree.admin_orders_path
+        end
 
+        it "can bulk send email to 2 orders" do
           page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
           page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click
 
@@ -403,8 +405,6 @@ describe '
         end
 
         it "can bulk print invoices from 2 orders" do
-          login_as_admin_and_visit spree.admin_orders_path
-
           page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
           page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click
 
@@ -419,8 +419,6 @@ describe '
         end
 
         it "can bulk cancel 2 orders" do
-          login_as_admin_and_visit spree.admin_orders_path
-
           page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
           page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click
 
@@ -451,41 +449,41 @@ describe '
 
           expect(page).to have_content("CANCELLED", count: 2)
         end
+      end
 
-        context "for a hub manager" do
-          before do
-            login_to_admin_as owner2
-            visit spree.admin_orders_path
+      context "for a hub manager" do
+        before do
+          login_to_admin_as owner2
+          visit spree.admin_orders_path
+        end
+
+        it "displays the orders for the respective distributor" do
+          expect(page).to have_content order5.number # displays the only order for distributor5
+          expect(page).not_to have_content order.number
+          expect(page).not_to have_content order2.number
+          expect(page).not_to have_content order3.number
+          expect(page).not_to have_content order4.number
+        end
+
+        it "cannot send emails to orders if permission have been revoked in the meantime" do
+          page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
+          # Find the clicked order
+          order = Spree::Order.find_by(id: page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").value)
+          # Revoke permission for the current user on that specific order by changing its owners
+          order.update_attribute(:distributor, distributor)
+          order.update_attribute(:order_cycle, order_cycle)
+
+          page.find("span.icon-reorder", text: "ACTIONS").click
+          within ".ofn-drop-down-with-prepend .menu" do
+            page.find("span", text: "Resend Confirmation").click
           end
 
-          it "displays the orders for the respective distributor" do
-            expect(page).to have_content order5.number # displays the only order for distributor5
-            expect(page).not_to have_content order.number
-            expect(page).not_to have_content order2.number
-            expect(page).not_to have_content order3.number
-            expect(page).not_to have_content order4.number
-          end
+          expect(page).to have_content "Are you sure you want to proceed?"
 
-          it "cannot send emails to orders if permission have been revoked in the meantime" do
-            page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
-            # Find the clicked order
-            order = Spree::Order.find_by(id: page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").value)
-            # Revoke permission for the current user on that specific order by changing its owners
-            order.update_attribute(:distributor, distributor)
-            order.update_attribute(:order_cycle, order_cycle)
-
-            page.find("span.icon-reorder", text: "ACTIONS").click
-            within ".ofn-drop-down-with-prepend .menu" do
-              page.find("span", text: "Resend Confirmation").click
-            end
-
-            expect(page).to have_content "Are you sure you want to proceed?"
-
-            within ".reveal-modal" do
-              expect {
-                find_button("Confirm").click
-              }.to_not enqueue_job(ActionMailer::MailDeliveryJob)
-            end
+          within ".reveal-modal" do
+            expect {
+              find_button("Confirm").click
+            }.to_not enqueue_job(ActionMailer::MailDeliveryJob)
           end
         end
       end
