@@ -177,7 +177,7 @@ GEM
     bigdecimal (3.0.2)
     bindata (2.4.12)
     bindex (0.8.1)
-    bootsnap (1.15.0)
+    bootsnap (1.16.0)
       msgpack (~> 1.2)
     bugsnag (6.25.1)
       concurrent-ruby (~> 1.0)
