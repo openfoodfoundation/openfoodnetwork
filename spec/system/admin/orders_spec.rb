@@ -346,6 +346,25 @@ describe '
       end
     end
 
+    context "pagination" do
+      before do
+        login_as_admin_and_visit spree.admin_orders_path
+      end
+
+      it "displays pagination options" do
+        # displaying 4 orders (one order per table row)
+        within('tbody') do
+          expect(page).to have_css('tr.ng-scope', :count => 4)
+        end
+        # pagination options also refer 4 order
+        expect(page).to have_content "4 Results found. Viewing 1 to 4."
+        page.find(".per-page-select").click # toggling the pagination dropdown
+        expect(page).to have_content "15 per page"
+        expect(page).to have_content "50 per page"
+        expect(page).to have_content "100 per page"
+      end
+    end
+
     context "with a capturable order" do
       before do
         order.finalize! # ensure order has a payment to capture
