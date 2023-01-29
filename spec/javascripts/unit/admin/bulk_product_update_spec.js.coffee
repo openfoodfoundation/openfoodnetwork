@@ -517,6 +517,10 @@ describe "AdminProductEditCtrl", ->
 
   describe "submitting products to be updated", ->
     describe "packing products", ->
+      beforeEach ->
+        window.bigDecimal = jasmine.createSpyObj "bigDecimal", ["multiply"]
+        window.bigDecimal.multiply.and.callFake (a, b, c) -> (a * b).toFixed(c)
+
       it "extracts variant_unit_with_scale into variant_unit and variant_unit_scale", ->
         testProduct =
           id: 1
@@ -589,6 +593,8 @@ describe "AdminProductEditCtrl", ->
 
       beforeEach ->
         BulkProducts.products = [testProduct]
+        window.bigDecimal = jasmine.createSpyObj "bigDecimal", ["multiply"]
+        window.bigDecimal.multiply.and.callFake (a, b, c) -> (a * b).toFixed(c)
 
       it "extracts unit_value and unit_description from unit_value_with_description", ->
         testProduct = {id: 123, variant_unit_scale: 1.0}
@@ -666,6 +672,24 @@ describe "AdminProductEditCtrl", ->
           unit_value: 12
           unit_description: ''
           unit_value_with_description: "12"
+
+      it "converts unit_value into a float when a comma separated number is provided", ->
+        testProduct = {id: 123, variant_unit_scale: 1.0}
+        testVariant = {unit_value_with_description: "250,5"}
+        $scope.packVariant(testProduct, testVariant)
+        expect(testVariant).toEqual
+          unit_value: 250.5
+          unit_description: ''
+          unit_value_with_description: "250,5"
+
+      it "rounds off the unit_value upto 2 decimal places", ->
+        testProduct = {id: 123, variant_unit_scale: 28.35}
+        testVariant = {unit_value_with_description: "1234.567"}
+        $scope.packVariant(testProduct, testVariant)
+        expect(testVariant).toEqual
+          unit_value: 1234.57
+          unit_description: ''
+          unit_value_with_description: "1234.567"
 
 
     describe "filtering products", ->

@@ -26,8 +26,13 @@ module Reporting
 
         describe "summary rows" do
           let(:report) {
-            Base.new user, initial_invoice_number: '', invoice_date: '', due_date: '',
-                           account_code: ''
+            Base.new(user, params)
+          }
+          let(:params) {
+            {
+              initial_invoice_number: '', invoice_date: '', due_date: '',
+              account_code: ''
+            }
           }
           let(:order) { double(:order) }
           let(:summary_rows) { report.__send__(:summary_rows_for_order, order, 1, {}) }
@@ -84,7 +89,7 @@ module Reporting
           end
 
           describe "when an initial invoice number is given" do
-            subject { Base.new user, initial_invoice_number: '123' }
+            subject { Base.new(user, { initial_invoice_number: '123' }) }
 
             it "increments the number by the index" do
               expect(subject.send(:invoice_number_for, order, 456)).to eq(579)

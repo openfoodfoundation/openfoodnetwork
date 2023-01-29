@@ -1,0 +1,18 @@
+// Overide app/webpacker/css/admin/shared/typography.scss
+
+@mixin v2-link-color() {
+  color: $v2-blue;
+  border-color: $v2-blue;
+  &:hover {
+    color: $v2-blue-dark;
+    border-color: $v2-blue-dark;
+  }
+}
+
+a:not(.button) {
+  @include v2-link-color();
+}
+
+h4 {
+  color: $v2-medium-dark-grey;
+}

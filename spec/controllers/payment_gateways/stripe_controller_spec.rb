@@ -88,8 +88,7 @@ module PaymentGateways
 
         context "using split checkout" do
           before do
-            allow(Flipper).to receive(:enabled?).with(:split_checkout) { true }
-            allow(Flipper).to receive(:enabled?).with(:split_checkout, anything) { true }
+            Flipper.enable(:split_checkout)
 
             order.update_attribute :state, "confirmation"
           end

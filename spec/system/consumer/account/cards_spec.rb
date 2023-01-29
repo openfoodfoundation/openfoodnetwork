@@ -18,19 +18,13 @@ describe "Credit Cards", js: true do
       create(:stored_credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_FDTG')
     }
 
-    around do |example|
-      original_stripe_connect_enabled = Spree::Config[:stripe_connect_enabled]
-      example.run
-      Spree::Config.set(stripe_connect_enabled: original_stripe_connect_enabled)
-    end
-
     before do
       login_as user
 
       allow(Stripe).to receive(:api_key).and_return("sk_test_12345")
       allow(Stripe.config).to receive(:api_key).and_return("sk_test_12345")
       allow(Stripe).to receive(:publishable_key).and_return("some_token")
-      Spree::Config.set(stripe_connect_enabled: true)
+      allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
 
       stub_request(:get, "https://api.stripe.com/v1/customers/cus_AZNMJ").
         to_return(status: 200, body: JSON.generate(id: "cus_AZNMJ"))
@@ -104,6 +98,35 @@ describe "Credit Cards", js: true do
       end
       expect(page).to have_content I18n.t('js.changes_saved')
       expect(customer.reload.allow_charges).to be true
+    end
+
+    it "assign the default card to the next one when the default is deleted" do
+      visit "/account"
+      find("a", text: /Credit Cards/i).click
+
+      within(".card#card#{default_card.id}") do
+        click_button "Delete"
+      end
+
+      expect(page).to have_content "Your card has been removed"
+
+      within ".card#card#{non_default_card.id}" do
+        expect(find_field('default_card')).to be_checked
+      end
+      expect(non_default_card.reload.is_default).to be true
+    end
+
+    context "when no default card" do
+      before do
+        default_card.destroy
+      end
+
+      it "then all 'allow_charges' inputs are disabled" do
+        visit "/account"
+        find("a", text: /Credit Cards/i).click
+
+        expect(find_field('allow_charges', disabled: true)).to be_truthy
+      end
     end
   end
 end

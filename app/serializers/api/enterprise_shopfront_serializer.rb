@@ -7,9 +7,9 @@ module Api
 
     attributes :name, :id, :description, :latitude, :longitude, :long_description, :website,
                :instagram, :linkedin, :twitter, :facebook, :is_primary_producer, :is_distributor,
-               :phone, :visible, :email_address, :hash, :logo, :promo_image, :path, :category,
-               :active, :producers, :orders_close_at, :hubs, :taxons, :supplied_taxons, :pickup,
-               :delivery, :preferred_product_low_stock_display
+               :phone, :whatsapp_phone, :whatsapp_url, :visible, :email_address, :hash, :logo,
+               :promo_image, :path, :category, :active, :producers, :orders_close_at, :hubs,
+               :taxons, :supplied_taxons, :pickup, :delivery, :preferred_product_low_stock_display
 
     has_one :address, serializer: Api::AddressSerializer
     has_many :supplied_properties, serializer: Api::PropertySerializer
@@ -54,7 +54,7 @@ module Api
 
     def producers
       ActiveModel::ArraySerializer.new(
-        enterprise.plus_relatives_and_oc_producers(
+        enterprise.plus_parents_and_order_cycle_producers(
           OrderCycle.not_closed.with_distributor(enterprise)
         ),
         each_serializer: Api::EnterpriseThinSerializer
@@ -63,7 +63,7 @@ module Api
 
     def hubs
       ActiveModel::ArraySerializer.new(
-        enterprise.distributors, each_serializer: Api::EnterpriseThinSerializer
+        enterprise.distributors.not_hidden, each_serializer: Api::EnterpriseThinSerializer
       )
     end
 

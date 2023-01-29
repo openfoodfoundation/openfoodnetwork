@@ -1,0 +1,79 @@
+/* Overide buttons.scss app/webpacker/css/admin/components/buttons.scss */
+
+@mixin backgroundAndBorder($color) {
+  background-color: $color;
+  border: 2px solid $color;
+}
+
+input[type="submit"],
+select[type="submit"],
+.select2-container-multi [type="submit"].select2-choices,
+input[type="button"],
+select[type="button"],
+.select2-container-multi [type="button"].select2-choices,
+button:not(.no-text),
+.button,
+.actions a:not(.no-text),
+fieldset .filter-actions button, // Be more specific to be sure to override the form button style (with a white border)
+fieldset .filter-actions .button:hover,
+.admin__section-header .ofn-drop-down // Same behavior as the button
+{
+  @include backgroundAndBorder($v2-blue-light);
+
+  &:hover {
+    @include backgroundAndBorder($v2-blue);
+    box-shadow: $v2-box-shadow;
+  }
+
+  &.disabled,
+  &[disabled],
+  &.disabled.secondary,
+  &[disabled].secondary {
+    @include backgroundAndBorder($v2-dark-light-grey);
+    box-shadow: none;
+    cursor: default;
+    color: white;
+
+    &:hover {
+      @include backgroundAndBorder($v2-dark-light-grey);
+      box-shadow: none;
+      cursor: default;
+      color: white;
+    }
+  }
+
+  &.secondary,
+  &.cancel,
+  &.icon-remove,
+  &#clear_all_filters {
+    background-color: $white;
+    border: 2px solid $v2-blue-light;
+    color: $v2-blue-light;
+
+    &:hover {
+      background-color: $v2-blue-lightest;
+      color: $v2-blue;
+      box-shadow: $v2-box-shadow;
+    }
+  }
+
+  &.active {
+    @include backgroundAndBorder($v2-blue);
+  }
+}
+
+#table-filter .actions {
+  /* used to draw a line on the right and left of the actions buttons 
+  We can then remove the dropshadow on the buttons */
+  &:before,
+  &:after {
+    background-color: $v2-light-grey; // same color as the border of the fieldset. see forms.scss
+    height: 1px;
+    content: attr(data-initials);
+    flex-grow: 1; // make the line as long as it can
+  }
+}
+
+#table-filter fieldset {
+  border-bottom: 0;
+}

@@ -50,7 +50,9 @@ module OrderCompletion
   end
 
   def order_invalid!
-    Bugsnag.notify("Notice: invalid order loaded during checkout", order: @order)
+    Bugsnag.notify("Notice: invalid order loaded during checkout") do |payload|
+      payload.add_metadata :order, @order
+    end
 
     flash[:error] = t('checkout.order_not_loaded')
     redirect_to main_app.shop_path
@@ -81,7 +83,9 @@ module OrderCompletion
   end
 
   def processing_failed(error = RuntimeError.new(order_processing_error))
-    Bugsnag.notify(error, order: @order)
+    Bugsnag.notify(error) do |payload|
+      payload.add_metadata :order, @order
+    end
     flash[:error] = order_processing_error if flash.blank?
     Checkout::PostCheckoutActions.new(@order).failure
   end

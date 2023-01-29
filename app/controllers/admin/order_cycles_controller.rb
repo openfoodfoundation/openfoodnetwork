@@ -2,10 +2,10 @@
 
 module Admin
   class OrderCyclesController < Admin::ResourceController
-    include OrderCyclesHelper
+    include ::OrderCyclesHelper
     include PaperTrailLogging
 
-    prepend_before_action :set_order_cycle_id, only: [:incoming, :outgoing]
+    prepend_before_action :set_order_cycle_id, only: [:incoming, :outgoing, :checkout_options]
     before_action :load_data_for_index, only: :index
     before_action :require_coordinator, only: :new
     before_action :remove_protected_attrs, only: [:update]
@@ -67,10 +67,12 @@ module Admin
         update_nil_subscription_line_items_price_estimate(@order_cycle)
         respond_to do |format|
           flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
-          format.html { redirect_back(fallback_location: root_path) }
+          format.html { redirect_to_after_update_path }
           format.json { render json: { success: true } }
         end
-      else
+      elsif request.format.html?
+        render :checkout_options
+      elsif request.format.json?
         render json: { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity
       end
     end
@@ -187,6 +189,16 @@ module Admin
                                              orders_close_at_null: true }]
         }
         @collection = collection
+      end
+    end
+
+    def redirect_to_after_update_path
+      if params[:context] == "checkout_options" && params[:save]
+        redirect_to main_app.admin_order_cycle_checkout_options_path(@order_cycle)
+      elsif params[:context] == "checkout_options" && params[:save_and_back_to_list]
+        redirect_to main_app.admin_order_cycles_path
+      else
+        redirect_back(fallback_location: root_path)
       end
     end
 

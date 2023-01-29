@@ -57,6 +57,21 @@ describe 'AdminOrderCycleExchangesCtrl', ->
       {id: 2, name: 'Pepper Tree Place'},
       {id: 4, name: 'coordinator'}
       ])
+  
+  it 'Finds unique enterprises participating in the order cycle that have fees', ->
+    scope.enterpriseFeesForEnterprise = (enterprise_id) ->
+      EnterpriseFee.forEnterprise(parseInt(enterprise_id))
+    scope.enterprises = 
+      1: {id: 1, name: 'Eaterprises'}
+      2: {id: 2, name: 'Pepper Tree Place'}
+      3: {id: 3, name: 'South East'}
+      4: {id: 4, name: 'coordinator'}
+    OrderCycle.participatingEnterpriseIds = jasmine.createSpy('participatingEnterpriseIds').and.returnValue([2, 2])
+    EnterpriseFee.enterprise_fees = [ {enterprise_id: 2} ]
+    expect(scope.enterprisesWithFees()).toEqual([
+      {id: 2, name: 'Pepper Tree Place'},
+      {id: 4, name: 'coordinator'}
+      ])
 
   it 'Removes order cycle exchanges', ->
     scope.removeExchange(event, 'exchange')

@@ -15,6 +15,7 @@ Openfoodnetwork::Application.routes.draw do
       post :bulk_update, on: :collection, as: :bulk_update
       get :incoming
       get :outgoing
+      get :checkout_options
 
       member do
         get :clone
@@ -66,6 +67,10 @@ Openfoodnetwork::Application.routes.draw do
     post '/product_import/save_data', to: 'product_import#save_data', as: 'product_import_save_async'
     post '/product_import/reset_absent', to: 'product_import#reset_absent_products', as: 'product_import_reset_async'
 
+    constraints FeatureToggleConstraint.new(:new_products_page) do
+      get '/new_products', to: 'products#index'
+    end
+
     resources :variant_overrides do
       post :bulk_update, on: :collection
       post :bulk_reset, on: :collection
@@ -105,6 +110,8 @@ Openfoodnetwork::Application.routes.draw do
       put :pause, on: :member
       put :unpause, on: :member
     end
+
+    resources :oidc_settings, only: :index
 
     resources :subscription_line_items, only: [], format: :json do
       post :build, on: :collection

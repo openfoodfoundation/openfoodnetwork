@@ -1,0 +1,93 @@
+= render partial: "/admin/order_cycles/order_cycle_top_buttons"
+
+- content_for :page_title do
+  = t :edit_order_cycle
+
+= form_for [main_app, :admin, @order_cycle], html: { class: "order_cycle" } do |f|
+
+  = render 'wizard_progress'
+
+  %fieldset.no-border-bottom
+    %legend{ align: 'center'}= t('.checkout_options')
+
+  .row
+    .three.columns
+      &nbsp;
+    .ten.columns
+      %table.checkout-options
+        %thead
+          %tr
+            %th{ colspan: 2 }
+              = t('.shipping_methods')
+              = hidden_field_tag "order_cycle[selected_distributor_shipping_method_ids][]", ""
+          - @order_cycle.distributors.each do |distributor|
+            - distributor_shipping_methods = @order_cycle.attachable_distributor_shipping_methods.where("distributor_id = ?", distributor.id).includes(:shipping_method)
+            %tr{ class: "distributor-#{distributor.id}-shipping-methods", "data-controller": "select-all" }
+              %td.text-center
+                - if distributor_shipping_methods.many?
+                  %label
+                    = check_box_tag nil, nil, nil, { "data-action": "change->select-all#toggleAll", "data-select-all-target": "all" }
+                    = t(".select_all")
+              %td
+                %em= distributor.name
+                - distributor_shipping_methods.each do |distributor_shipping_method|
+                  %p
+                    %label{ class: ("disabled" if distributor_shipping_methods.one? || !distributor_shipping_method.shipping_method.frontend?) }
+                      = check_box_tag "order_cycle[selected_distributor_shipping_method_ids][]",
+                          distributor_shipping_method.id,
+                          @order_cycle.distributor_shipping_methods.include?(distributor_shipping_method),
+                          id: "order_cycle_selected_distributor_shipping_method_ids_#{distributor_shipping_method.id}",
+                          data: ({ "action" => "change->select-all#toggleCheckbox", "select-all-target" => "checkbox" } if distributor_shipping_method.shipping_method.frontend?)
+                      = distributor_shipping_method.shipping_method.name
+                - distributor.shipping_methods.backend.each do |shipping_method|
+                  %label.disabled
+                    = check_box_tag nil, nil, false, disabled: true
+                    = shipping_method.name
+                    = "(#{t('.back_end')})"
+                - if distributor.shipping_methods.frontend.none?
+                  %p
+                    = t('.no_shipping_methods')
+          %tr
+            %th{ colspan: 2 }
+              = t('.payment_methods')
+              = hidden_field_tag "order_cycle[selected_distributor_payment_method_ids][]", ""
+          - @order_cycle.distributors.each do |distributor|
+            - distributor_payment_methods = @order_cycle.attachable_distributor_payment_methods.where("distributor_id = ?", distributor.id).includes(:payment_method)
+            %tr{ class: "distributor-#{distributor.id}-payment-methods", "data-controller": "select-all" }
+              %td.text-center
+                - if distributor_payment_methods.many?
+                  %label
+                    = check_box_tag nil, nil, nil, { "data-action": "change->select-all#toggleAll", "data-select-all-target": "all" }
+                    = t(".select_all")
+              %td
+                %em= distributor.name
+                - distributor_payment_methods.each do |distributor_payment_method|
+                  %p
+                    %label{ class: ("disabled" if distributor_payment_methods.one? || !distributor_payment_method.payment_method.frontend?) }
+                      = check_box_tag "order_cycle[selected_distributor_payment_method_ids][]",
+                          distributor_payment_method.id,
+                          @order_cycle.distributor_payment_methods.include?(distributor_payment_method),
+                          id: "order_cycle_selected_distributor_payment_method_ids_#{distributor_payment_method.id}",
+                          data: ({ "action" => "change->select-all#toggleCheckbox", "select-all-target" => "checkbox" } if distributor_payment_method.payment_method.frontend?)
+                      = distributor_payment_method.payment_method.name
+                - distributor.payment_methods.inactive_or_backend.each do |payment_method|
+                  %label.disabled
+                    = check_box_tag nil, nil, false, disabled: true
+                    = payment_method.name
+                    = "(#{t('.back_end')})"
+                - if distributor.payment_methods.available.none?
+                  %p
+                    = t('.no_payment_methods')
+
+  %div#save-bar
+    %div.container
+      %div.seven.columns.alpha
+        - if @order_cycle.errors.any?
+          %h5#status-message.error
+            = @order_cycle.errors.to_a.to_sentence
+      %div.nine.columns.omega.text-right
+        = hidden_field_tag :context, :checkout_options
+        = f.submit t('.save'), class: "red", name: :save
+        = f.submit t('.save_and_back_to_list'), class: "red", name: :save_and_back_to_list
+        %a.button.cancel{ href: main_app.admin_order_cycles_path }
+          = t('.cancel')

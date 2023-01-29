@@ -5,6 +5,10 @@ fr:
       spree/product: Produit
       spree/shipping_method: Option d'expédition
     attributes:
+      spree/order/ship_address:
+        phone: "Numéro de téléphone"
+        firstname: "Prénom"
+        lastname: "Nom "
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
@@ -23,11 +27,14 @@ fr:
         state: Statut
         source: Source
       spree/product:
+        name: "Nom du Produit"
+        price: "Prix"
         primary_taxon: "Catégorie Produit"
         supplier: "Fournisseur"
         shipping_category_id: "Condition de transport"
         variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"
+        unit_value: "Nb unités"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
@@ -61,27 +68,6 @@ fr:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car utilise les informations de stock du producteur"
             on_demand_but_count_on_hand_set: "doit être vide si \"à volonté\""
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
-  errors:
-    messages:
-      content_type_invalid: "a un contenu invalide"
-      file_size_out_of_range: "la taille %{file_size} n'est pas dans la fourchette requise"
-      limit_out_of_range: "le nombre total est hors de la fourchette"
-      image_metadata_missing: "n'est pas une image valide"
-      dimension_min_inclusion: "doit être plus grand ou égal à %{width} x %{height} pixel."
-      dimension_max_inclusion: "doit être plus petit our égal à %{width} x %{height} pixel."
-      dimension_width_inclusion: "la largeur n'est pas comprise entre %{min} et %{max} pixel."
-      dimension_height_inclusion: "la hauteur n'est pas comprise entre %{min} et %{max} pixel."
-      dimension_width_greater_than_or_equal_to: "la largeur doit être supérieure ou égale à %{length} pixel."
-      dimension_height_greater_than_or_equal_to: "la hauteur doit être supérieure ou égale à %{length} pixel."
-      dimension_width_less_than_or_equal_to: "la largeur doit être inférieure ou égale à %{length} pixel."
-      dimension_height_less_than_or_equal_to: "la hauteur doit être inférieure ou égale à %{length} pixel."
-      dimension_width_equal_to: "la largeur doit être égale à %{length} pixel."
-      dimension_height_equal_to: "la hauteur doit être égale à %{length} pixel."
-      aspect_ratio_not_square: "doit être une image carrée"
-      aspect_ratio_not_portrait: "doit être une image en mode portrait"
-      aspect_ratio_not_landscape: "doit être une image en mode paysage"
-      aspect_ratio_is_not: "doit avoir un rapport d'aspect de %{aspect_ratio}"
-      aspect_ratio_unknown: "a un rapport d'aspect inconnu"
   stripe:
     error_code:
       incorrect_number: "Le numéro de carte bancaire est incorrect."
@@ -162,6 +148,7 @@ fr:
   cardholder_name: "Titulaire de la carte"
   community_forum_url: "Lien vers le forum"
   customer_instructions: "Précisions pour l'acheteur"
+  additional_information: "Informations additionnelles"
   devise:
     passwords:
       spree_user:
@@ -198,6 +185,8 @@ fr:
         updated_not_active: "Votre mot de passe a bien été réinitialisé, mais votre email n'a pas encore été confirmé."
         updated: "Votre mot de passer a été changé avec succès. Vous êtes maintenant connecté(e)."
         send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
+    oidc:
+      failure: "La connexion n'a pas fonctionné : %{error}"
   home_page_alert_html: "Bannière d'alerte sur la page d'acceuil en HTML"
   hub_signup_case_studies_html: "HTML page cas d'études hub"
   hub_signup_detail_html: "HTML page inscription hub"
@@ -244,8 +233,8 @@ fr:
     welcome:
       subject: "%{enterprise} est maintenant sur %{sitename}"
       email_welcome: "Merci d’avoir rejoint CoopCircuits "
-      email_registered: "va, dès que vous aurez choisi un type de profil, être créé sur"
-      email_userguide_html: "Le Guide Utilisateur est là pour vous accompagner dans la prise en main de la plateforme. Vous y trouverez les informations détaillées de paramétrage de votre profil entreprise, de vos produits si vous êtes producteur, et de votre boutique si vous avez choisi un type de profil comprenant une boutique. Pour accéder au guide en français, cliquez ici : %{link}"
+      email_registered: "va, dès que vous aurez choisi un type d'entreprise, être créé sur"
+      email_userguide_html: "Le Guide Utilisateur est là pour vous accompagner dans la prise en main de la plateforme. Vous y trouverez les informations détaillées de paramétrage de votre entreprise, de vos produits si vous êtes producteur, et éventuellement de votre boutique. Pour accéder au guide en français, cliquez ici : %{link}"
       userguide: "Guide utilisateur"
       email_admin_html: "Pour gérez votre entreprise, rendez-vous sur l’%{link}. Si vous choisissez CoopCircuits pour organiser vos ventes, l’utilisation est gratuite les 3 premiers mois pour vous permettre de tester notre solution. Au-delà, vous devrez choisir une de nos offres pour continuer à utiliser le service (voir rubrique “nos offres” sur notre site internet)."
       admin_panel: "interface d'administration"
@@ -261,7 +250,7 @@ fr:
     shipped_email:
       dear_customer: "Cher Acheteur,"
       instructions: "Votre commande a été expédiée"
-      shipment_summary: "Résumé de l'envoi"
+      shipment_summary: "Résumé de la commande"
       subject: "Notification d'expédition"
       thanks: "Merci pour votre commande."
       track_information: "Informations de suivi : %{tracking}"
@@ -309,7 +298,6 @@ fr:
   producers_join: Les producteurs et autres circuits courts basés en France sont invités à rejoindre CoopCircuits.
   charges_sales_tax: Soumis à la TVA?
   business_address: "Adresse du siège social"
-  enterprise_permissions: "Permissions Inter-entreprises"
   print_invoice: "Imprimer la facture"
   print_ticket: "Imprimer ticket de caisse"
   select_ticket_printer: "Choisir l'imprimante tickets"
@@ -330,7 +318,7 @@ fr:
   bill_address: Adresse de facturation
   ship_address: Adresse de livraison
   sort_order_cycles_on_shopfront_by: "Trier les cycles de vente par"
-  required_fields: Les champs obligatoires sont mentionnés par un asterisk
+  required_fields: Les champs obligatoires sont indiqués par un astérisque
   select_continue: Choisir et continuer
   remove: Supprimer
   collapse_all: Tout masquer
@@ -343,7 +331,7 @@ fr:
   edit: Modifier
   clone: Dupliquer
   distributors: Distributeurs
-  bulk_order_management: Gestion des commandes par lot
+  bulk_order_management: Gestion des commandes
   enterprises: Entreprises
   enterprise_groups: Groupes
   reports: Rapports
@@ -363,7 +351,7 @@ fr:
   has_shopfront: gère une boutique
   weight: Poids
   volume: Volume
-  items: Pièces
+  items: À la pièce
   summary: Résumé
   detailed: Détaillé
   updated: Mis à jour
@@ -415,6 +403,28 @@ fr:
     destroy: "Détruire"
     rename: "Renommer"
   admin:
+    products_page:
+      title: Produits
+      filters:
+        categories:
+          title: Conditions de transport
+          selected_categories: "%{count} catégories sélectionnées"
+        producers:
+          title: Producteurs
+          selected_producers: "%{count} producteurs sélectionnés"
+        per_page: "%{count} éléments par page"
+        colums: Colonnes
+      columns:
+        name: Nom
+        unit: Unité
+        price: Prix
+        producer: Producteur
+        category: Catégorie
+      columns_selector:
+        unit: Unité
+        price: Prix
+        producer: Producteur
+        category: Catégorie
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -454,7 +464,7 @@ fr:
     items: Pièce
     select_all: Tout sélectionner
     quick_search: Recherche rapide
-    clear_all: Vider
+    clear_all: Réinitialiser
     start_date: "Date de début"
     end_date: "Date de fin"
     form_invalid: "Le formulaire contient des champs manquants ou invalides"
@@ -494,6 +504,8 @@ fr:
         terms_of_service: "Conditions Générales d'Utilisation"
         delete: "Supprimer le fichier"
         confirm_delete: "Etes-vous certain de vouloir supprimer les CGU & CGV actuelles ?"
+        attachment: "Fichier joint"
+        create_terms_of_service: "Créer les CGU"
     number_localization:
       number_localization_settings: "Gestion localisation des nombres"
       enable_localized_number: "Utiliser le traitement international des séparateurs de milliers/centimes"
@@ -503,6 +515,7 @@ fr:
         enable_invoices?: "Autoriser l'émission de factures ?"
         invoice_style2?: "Utiliser le modèle de facture alternatif qui détaille le montant de TVA agrégé par taux et l'information du taux de TVA par produit (pas adapté pour les instances affichant les prix HT)"
         enable_receipt_printing?: "Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?"
+        enterprise_number_required_on_invoices?: "Le SIRET est obligatoire pour générer une facture ?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -551,7 +564,7 @@ fr:
         credit_owed: "Crédit dû"
         balance_due: "Solde dû"
       destroy:
-        has_associated_orders: "Suppression impossible: des commandes sont associées à cet acheteur pour cette boutique"
+        has_associated_subscriptions: "La suppression a planté : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
     contents:
       edit:
         title: Contenu
@@ -579,13 +592,25 @@ fr:
     enterprise_groups:
       index:
         new_button: Nouveau groupe d'entreprises
+      form_primary_details:
+        primary_details: "Informations de base"
+      form_users:
+        users: "Gestionnaires"
+      form_about:
+        about: "À propos"
+      form_images:
+        images: "Images"
+      form_address:
+        contact: "Contact"
+      form_web:
+        web: "Liens web"
     enterprise_roles:
       form:
         manages: gère
       enterprise_role:
         manages: gère
     products:
-      unit_name_placeholder: 'ex: botte'
+      unit_name_placeholder: 'ex: botte, sachet, boîte.. '
       index:
         unit: Unité
         display_as: Unité affichée
@@ -628,7 +653,9 @@ fr:
         conditional_blank: ne peut pas être vide si unit_type est vide
         no_product: n'a pu être associé à aucun produit existant dans la base de données
         not_found: non trouvé dans le base de données
+        category_not_found: n'est pas conforme aux catégories utilisées. Merci de modifier les catégories en utilisant celles listées sur la page d'import ou vérifier qu'il n'y ait pas de faute de frappe ou d'espace à fin du mot.
         not_updatable: ne peut pas être mis à jour pour des produits existants via la fonctionnalité d'import de fichier produits
+        values_must_be_same: doit être identique pour les produits avec un nom identique
         blank: Champ obligatoire
         products_no_permission: vous n'avez pas l'autorisation de gérer les produits de cette entreprise
         inventory_no_permission: vous n'avez pas l'autorisation d'ajouter les produits de ce producteur à votre catalogue boutique
@@ -779,6 +806,9 @@ fr:
         variants_without_unit_value: "ATTENTION: certaines variantes n'ont pas de nombre d'unités"
         all: "Tous"
       select_variant: "Rechercher un produit et sélectionner une variante"
+      note:
+        note_label: "Note :"
+        no_note_present: "Aucune note n'a été ajoutée."
     enterprise:
       select_outgoing_oc_products_from: Sélectionner les produits sortants pour le cycle de vente parmi
     enterprises:
@@ -786,16 +816,20 @@ fr:
         title: Entreprises
         new_enterprise: Nouvelle entreprise
         producer?: "Producteur?"
-        package: Type de profil
+        package: Type d'entreprise
         status: Statut
         manage: Gérer
       form:
         about_us:
+          legend: "À propos"
           desc_short: Description (en bref)
           desc_short_placeholder: Parlez de votre entreprise en une ou deux phrases
           desc_long: A propos
           desc_long_placeholder: Parlez de vous à vos acheteurs ! Ces informations seront visibles sur votre profil public.
+        address:
+          legend: "Adresse"
         business_details:
+          legend: "Juridique"
           abn: SIRET
           abn_placeholder: 'ex: 404 833 048 00022'
           acn: n° TVA intracommunautaire
@@ -806,8 +840,9 @@ fr:
           remove_terms_and_conditions: "Supprimer le fichier"
           uploaded_on: "mis en ligne le"
           reset_form: "Vider les champs"
-          Invoice_item_sorting: Changement d'ordre d'affichage sur facture
-          sort_items_by_supplier?: Ranger par producteur ?
+          business_address_legend: "Adresse du siège social"
+          invoice_item_sorting_legend: "Ordre d'affichage sur facture"
+          sort_items_by_supplier?: Trier par producteur ?
           sort_items_by_supplier_tip: "Lorsque possible, les éléments seront rangés par producteur."
           enabled: Activer
           disabled: Désactiver
@@ -820,6 +855,7 @@ fr:
           legal_phone_number: Numéro de téléphone
           phone_placeholder: "09 00 00 00 00"
         contact:
+          legend: "Contact"
           name: Nom
           name_placeholder: 'ex: Bernard Michelet'
           email_address: Adresse email publique
@@ -827,17 +863,23 @@ fr:
           email_address_tip: "Cette adresse email sera affichée sur votre profil public"
           phone: n° téléphone
           phone_placeholder: 'ex: 06 13 24 35 46'
+          whatsapp_phone: Numéro WhatsApp
+          whatsapp_phone_placeholder: ex. +336 00 00 00 00
+          whatsapp_phone_tip: "Ce numéro sera ajouté sur votre profil public pour être ouvert en tant que lien WhatsApp."
           website: Site internet
           website_placeholder: 'ex: www.maferme.fr'
         enterprise_fees:
+          legend: "Marges et Commissions"
           name: Nom
           fee_type: Type de marge
           manage_fees: Gérer les marges et commissions
           no_fees_yet: Vous n'avez pas encore défini de commissions
           create_button: Créer une commission
         enterprise_permissions:
+          legend: "Permissions Inter-entreprises"
           enterprise_relationships: Permissions inter-entreprises
         images:
+          legend: "Images"
           logo: Logo
           promo_image_placeholder: 'Cette image est affichée dans "A propos"'
           promo_image_note1: 'ATTENTION:'
@@ -846,17 +888,19 @@ fr:
           remove_logo: "Supprimer l'image"
           remove_promo_image: "Supprimer l'image"
         inventory_settings:
+          legend: "Catalogue boutique"
           text1: Vous pouvez choisir de gérer vos stocks et prix via votre
           inventory: catalogue boutique
           text2: >
               Si vous utilisez l'outil "catalogue boutique", vous pouvez choisir si
               les nouveaux produits ajoutés par vos fournisseurs doivent être référencés
-              dans votre catalogue boutique avant qu'ils puissent mis en vente dans
-              votre boutique. Si vous n'utilisez pas cet outil, choisissez l'option
+              dans votre catalogue boutique avant qu'ils puissent être mis en vente
+              dans votre boutique. Si vous n'utilisez pas cet outil, choisissez l'option
               indiquant "recommandé" ci-dessous:
           preferred_product_selection_from_inventory_only_yes: Les nouveaux produits des producteurs peuvent être ajoutés à ma boutique en ligne (recommandé)
           preferred_product_selection_from_inventory_only_no: Les nouveaux produits des producteurs doivent être ajoutés à mon catalogue boutique avant de pouvoir être ajoutés à ma boutique en ligne
         payment_methods:
+          legend: "Méthodes de paiement"
           name: Nom
           applies: Active?
           manage: Gérer les méthodes de paiement
@@ -864,6 +908,7 @@ fr:
           create_button: Créer une nouvelle méthode de paiement
           create_one_button: En créer une maintenant
         primary_details:
+          legend: "Informations de base"
           name: Nom
           name_placeholder: 'ex: La ferme bio de Bernard'
           groups: Groupes
@@ -878,10 +923,13 @@ fr:
           sells: Produits vendus
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
           visible_in_search: Apparaît sur la plateforme?
-          visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de CoopCircuits et la liste des boutiques. <br /> 2. Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
-          visible: Boutique publique (visible par tous)
-          not_visible: Invisible
-          hidden: Masquer toutes les références
+          visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de CoopCircuits, la liste des boutiques et les profils boutiques et producteurs. <br /> 2. Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
+          visible: Visible par tous
+          not_visible: Cachée
+          hidden: Invisible
+        properties:
+          legend: "Propriétés / labels"
+        permalink:
           permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre boutique: %{link}ma-boutique/shop"
           link_to_front: Lien URL de la boutique
@@ -889,6 +937,7 @@ fr:
           ofn_uid: ID OFN
           ofn_uid_tip: L'identifiant unique pour les comptes entreprises sur Open Food Network.
         shipping_methods:
+          legend: "Méthodes de livraison"
           name: "Nom"
           applies: "Active ?"
           manage: "Gérer les méthodes de livraison"
@@ -896,10 +945,11 @@ fr:
           create_one_button: "En créer une maintenant"
           no_method_yet: "Vous n'avez pas encore paramétré de méthode de livraison."
         shop_preferences:
-          shopfront_requires_login: "Boutique privée (accès contrôlé) ?"
-          shopfront_requires_login_tip: "Choisissez si les acheteurs doivent être connectés pour voir la boutique ou si la boutique est visible par tout le monde."
-          shopfront_requires_login_false: "Boutique publique (visible par tous)"
-          shopfront_requires_login_true: "Visible uniquement pour les acheteurs connectés ET figurant sur la liste \"acheteurs\" de la boutique (boutique privée)"
+          legend: "Préférences boutique"
+          shopfront_requires_login: "Boutique privée ? (Restreindre les achats à la liste d'acheteurs de la boutique)"
+          shopfront_requires_login_tip: "Choisissez de restreindre l'accès de la boutique à votre liste d'acheteurs (les personnes listées dans l'onglet \"Acheteurs\" du menu principal). Les personnes non-membres de cette liste pourront trouver votre boutique, mais ne pourront accéder à la page \"produits\" et ne pourront pas passer commande.\n\nSi vous souhaitez aussi rendre votre boutique invisible sur la carte, il faut cocher l'option \"invisible\" dans l'onglet \"Informations de base\" de votre entreprise. "
+          shopfront_requires_login_false: "Non"
+          shopfront_requires_login_true: "Oui"
           recommend_require_login: "Nous recommandons de demander aux utilisateurs de se connecter si vous souhaitez leur permettre de modifier leur commande."
           allow_guest_orders: "Commandes des invités"
           allow_guest_orders_tip: "Autoriser la commande en tant qu'invité ou demander que l'acheteur soit logué."
@@ -925,12 +975,11 @@ fr:
               Accueil n'apparaitra pas.
           shopfront_message_link_tooltip: "Insérer / modifier un lien"
           shopfront_message_link_prompt: "Veuillez entrer l'URL à insérer"
-          shopfront_closed_message: "Message d'accueil boutique fermée"
+          shopfront_closed_message: "Message d'accueil ventes terminées"
           shopfront_closed_message_placeholder: >
-              Vous pouvez ici expliquer à vos acheteurs pourquoi votre boutique est
-              fermée et/ou quand elle ouvrira. Ce texte s'affiche uniquement quand
-              il n'y a pas de cycle de vente en cours (donc quand votre boutique est
-              fermée).
+              Vous pouvez expliquer ici à vos acheteurs pourquoi vos ventes sont fermées
+              et/ou quand débuteront les prochaines commandes. Ce texte s'affiche
+              uniquement quand il n'y a pas de cycle de vente en cours.
           shopfront_category_ordering: "Ordre d'affichage des catégories"
           shopfront_category_ordering_note: "(de haut en bas)"
           open_date: "Date d'ouverture"
@@ -945,6 +994,7 @@ fr:
           enabled: "Activé"
           disabled: "Désactivé"
         social:
+          legend: "Réseaux sociaux"
           twitter_placeholder: "ex. @OpenFoodNet_fr"
           instagram_placeholder: "ex: OpenFoodNet_fr"
           facebook_placeholder: "ex: www.facebook.com/NomDeLaPage"
@@ -962,28 +1012,30 @@ fr:
             i_agree: J'accepte
             cancel: Annuler
         tag_rules:
+          legend: "Règles de tag"
           default_rules:
             by_default: Règles à appliquer "par défaut"
             no_rules_yet: Aucune règle par défaut
             add_new_button: '+ Ajouter une règle par défaut'
-          no_tags_yet: Aucun tag défini par cette entreprise pour le moment
+          no_tags_yet: Aucun tag défini par cette entreprise pour le moment. Cliquez sur le bouton bleu pour ajouter une règle par défaut, puis sur le bouton rouge pour ajouter une règle conditionnelle.
           no_rules_yet: Aucune règle ne concerne ce tag pour le moment
           for_customers_tagged: 'Pour les acheteurs avec le tag:'
           add_new_rule: '+ Ajouter une nouvelle règle'
-          add_new_tag: '+ Ajouter une règle pour un autre tag'
+          add_new_tag: '+ Ajouter une règle conditionnelle'
         users:
+          legend: "Gestionnaires"
           email_confirmation_notice_html: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{email}."
           resend: Renvoyer
           owner: 'Gestionnaire principal'
           contact: "Contact"
-          contact_tip: "Le gestionnaire qui recevra les emails de confirmation de commande et autres notifications de l'entreprise. Il doit avoir confirmé son adresse email pour pouvoir être sélectionné."
+          contact_tip: "Le gestionnaire qui recevra les emails de confirmation de commande et autres notifications de l'entreprise. \nIl faut d'abord l'ajouter comme \"gestionnaire\" dans le champ suivant. Il recevra un email pour confirmer son adresse mail. Vous pourrez ensuite le sélectionner dans \"Notifications\" !"
           owner_tip: Gestionnaire principal de cette entreprise.
           notifications: Notifications
           notifications_tip: Une notification de commande sera envoyée à cette adresse email pour chaque commande passée dans votre boutique.
           notifications_placeholder: 'ex: bernard@maferme.fr'
           notifications_note: 'A noter: si vous saisissez une nouvelle adresse, un email de confirmation sera envoyé à cette adresse avec un lien de validation à cliquer.'
           managers: Gestionnaires
-          managers_tip: Sélectionner ici les utilisateurs ayant la permission de gérer cette entreprise. Ils doivent avoir un compte sur CoopCircuits pour être sélectionnés.
+          managers_tip: Sélectionner ici les utilisateurs ayant la permission de gérer cette entreprise. Ils doivent avoir un compte sur CoopCircuits pour être sélectionnés. Si ce n'est pas le cas, cliquez sur le bouton "Ajouter un nouvel utilisateur" ci-dessous.
           invite_manager: "Inviter un gestionnaire"
           invite_manager_tip: "Inviter un nouvel utilisateur à créer son compte et le nommer comme gestionnaire de cette entreprise."
           add_unregistered_user: "Ajouter un nouvel utilisateur"
@@ -1032,7 +1084,7 @@ fr:
         manage: Gérer
         manage_link: Paramètres
         producer?: "Producteur ?"
-        package: "Type de profil"
+        package: "Type d'entreprise"
         status: "Statut"
       new_form:
         owner: Gestionnaire principal
@@ -1049,7 +1101,7 @@ fr:
         welcome_title: Bienvenue sur CoopCircuits !
         welcome_text: 'Vous avez créé avec succès '
         next_step: Etape suivante
-        choose_starting_point: 'Choisir votre type de profil :'
+        choose_starting_point: 'Choisir votre type d''entreprise :'
         profile: 'Profil'
         producer_profile: 'Profil simple'
       invite_manager:
@@ -1091,19 +1143,33 @@ fr:
         tags: "Tags"
         delivery_details: "Détails de livraison"
         fees: "Commissions"
+        next: "Suivant"
         previous: "Précédent"
         save: "Sauvegarder"
-        save_and_back_to_list: "Sauvegarder et revenir à la liste"
+        save_and_next: "Sauvegarder et suivant"
         cancel: "Annuler"
         back_to_list: "Retour à la liste"
+      checkout_options:
+        back_end: "Visible pour l'administration uniquement"
+        cancel: "Annuler"
+        checkout_options: "Options de commande"
+        distributor: "Boutique"
+        no_payment_methods: Chaque boutique de ce cycle de vente a besoin d'au moins une méthode de paiement.
+        no_shipping_methods: Chaque boutique de ce cycle de vente a besoin d'au moins une méthode de livraison.
+        payment_methods: "Méthodes de paiement"
+        save: "Sauvegarder"
+        save_and_back_to_list: "Sauvegarder et revenir à la liste"
+        select_all: "Tout sélectionner"
+        shipping_methods: "Méthodes de livraison"
       wizard_progress:
         edit: "1. Informations générales"
         incoming: "2. Produits entrants"
         outgoing: "3. Produits vendus (sortants)"
+        checkout_options: "Options de commande"
       exchange_form:
-        pickup_time_tip: Quand des commandes liées à ce cycle de vente seront prêtes à être soumises à l'acheteur
+        pickup_time_tip: 'Indiquez la date à laquelle les commandes seront prêtes (date de distribution ou date d''expédition). Ce texte sera affiché sur votre boutique dans l''encart bleu "Prêt pour : _______"'
         pickup_instructions_placeholder: "Modalités de retrait/livraison"
-        pickup_instructions_tip: Ces instructions sont affichées aux acheteurs après passage d'une commande
+        pickup_instructions_tip: Ces instructions sont affichées aux acheteurs sur leur confirmation de commande
         pickup_time_placeholder: "Prêt pour (ex : jour + créneau horaire)"
         receival_instructions_placeholder: "Modalités de livraison"
         add_fee: 'Ajouter une commission'
@@ -1162,6 +1228,7 @@ fr:
         customer_instructions_placeholder: Commentaires pour le retrait / la livraison
         products: Produits
         fees: Commissions
+        tags: Tags
       destroy_errors:
         orders_present: Ce cycle de vente a déjà été utilisé par un acheteur et ne peut être supprimé. Pour empêcher aux acheteurs d'y accéder, veuillez plutôt le fermer.
         schedule_present: Ce cycle de vente est lié à un rythme d'abonnement et ne peut pas être supprimé. Veuillez d'abord supprimer ce lien ou supprimer le rythme d'abonnement.
@@ -1171,6 +1238,11 @@ fr:
         msg: Ce cycle de vente est lié à %{n} abonnements ouverts. Changer cette date maintenant n'impactera pas les commandes déjà réalisée, mais nous vous déconseillons cette action néanmoins. Etes-vous sûrs de vouloir poursuivre ?
         cancel: Annuler
         proceed: Continuer
+      status:
+        undated: sans date
+        upcoming: futur
+        open: ouvert
+        closed: fermé
     producer_properties:
       index:
         title: Propriétés / labels du producteur
@@ -1186,6 +1258,31 @@ fr:
         has_no_payment_methods: "%{enterprise} n'a pas défini de méthode de paiement"
         has_no_shipping_methods: "%{enterprise} n'a pas défini de méthode de livraison"
         has_no_enterprise_fees: "%{enterprise} n'a pas défini de marges et commissions"
+      side_menu:
+        enterprise:
+          primary_details: "Informations de base"
+          address: "Adresse"
+          contact: "Contact"
+          social: "Réseaux sociaux"
+          about: "À propos"
+          business_details: "Juridique"
+          images: "Images"
+          properties: "Propriétés / labels"
+          shipping_methods: "Méthodes de livraison"
+          payment_methods: "Méthodes de paiement"
+          enterprise_fees: "Marges et Commissions"
+          enterprise_permissions: "Permissions Inter-entreprises"
+          inventory_settings: "Catalogue boutique"
+          tag_rules: "Règles de tag"
+          shop_preferences: "Préférences boutique"
+          users: "Gestionnaires"
+        enterprise_group:
+          primary_details: "Informations de base"
+          users: "Gestionnaires"
+          about: "À propos"
+          images: "Images"
+          contact: "Contact"
+          web: "Liens web"
     enterprise_issues:
       create_new: Créer Nouveau
       resend_email: Renvoyer l'email
@@ -1216,12 +1313,15 @@ fr:
       pack_by_customer: Préparation des commandes par Acheteur
       pack_by_supplier: Préparation des commandes par Producteur
       pack_by_product: Préparation des commandes par Produit
+      revenues_by_hub:
+        name: CA par boutique
+        description: CA par boutique
       orders_and_distributors:
         name: Commandes et Boutiques
         description: Liste des Commandes avec les détails par boutique
       bulk_coop:
-        name: Achat groupés en vrac (non utilisé)
-        description: Rapports achats groupés vrac (non utilisé)
+        name: 'Achat groupés en vrac '
+        description: 'Rapports achats groupés vrac '
       payments:
         name: Rapports des paiements
         description: Rapports des paiements reçus
@@ -1270,12 +1370,21 @@ fr:
         on_screen: "A l'écran"
         spreadsheet: "Tableur (Excel, LibreOffice,...)"
         display: Afficher
-        summary_row: Ligne TOTAL
-        header_row: Ligne titre
+        summary_row: Ligne total produits commandés
+        header_row: Ligne d'en-tête
         raw_data: Données brutes
         formatted_data: Données formatées
       packing:
         name: "Rapports de préparation des paniers"
+    oidc_settings:
+      index:
+        title: "OIDC"
+        connect: "Connecter votre compte"
+        already_connected: "Votre compte est déjà relié avec cette autorisation :"
+        les_communs_link: "Serveur OIDC Les Communs"
+        link_your_account: "Vous devez d'abord vous connecter avec le serveur des Communs."
+        link_account_button: "Relier votre compte OIDC Les Communs"
+        view_account: "Pour voir votre compte, consultez :"
     subscriptions:
       index:
         title: "Abonnements"
@@ -1378,6 +1487,10 @@ fr:
         stripe_connect_fail: Désolé, la connexion de votre compte Stripe a échoué :-(
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
+    resend_confirmation_emails_feedback:
+      one: "Emails envoyés pour 1 commande."
+      many: "Emails envoyés pour %{count} commandes."
+      other: "Emails envoyés pour %{count} commandes."
   api:
     unknown_error: "Quelque chose n'a pas fonctionné. Notre équipe a été notifiée."
     invalid_api_key: "La clé API (%{key}) n'est pas valide."
@@ -1411,8 +1524,8 @@ fr:
     order_not_loaded: "Aucune commande n'a été trouvée pour poursuivre le parcours d'achat."
   shops:
     hubs:
-      show_closed_shops: "Afficher les boutiques fermées"
-      hide_closed_shops: "Masquer les boutiques fermées"
+      show_closed_shops: "Afficher toutes les boutiques"
+      hide_closed_shops: "Afficher seulement les ventes ouvertes"
       show_on_map: "Tout afficher sur la carte"
   shared:
     mailers:
@@ -1436,7 +1549,7 @@ fr:
         cart: "Panier"
     register_call:
       selling_on_ofn: "Vous souhaitez proposer vos produits sur CoopCircuits ?"
-      register: "Démarrez ici"
+      register: "Créez votre compte pro"
     footer:
       footer_secure: "Fiable et sécurisé."
       footer_secure_text: "CoopCircuits utilise un certificat type SSL (2048 bit RSA) pour garantir la confidentialité de vos commandes et données bancaires. Nos serveurs ne conservent pas vos données bancaires et les paiements sont effectués conformément aux normes de sécurité PCI."
@@ -1546,7 +1659,7 @@ fr:
   suburb: Ville
   state: Département
   country: Pays
-  unauthorized: Non authorisé
+  unauthorized: Non autorisé
   terms_of_service: "Conditions Générales d'Utilisation de CoopCircuits"
   on_demand: A volonté
   none: Aucun
@@ -1697,37 +1810,29 @@ fr:
       cart: "panier"
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
     step1:
-      your_details:
-        title: Vos informations
-        first_name:
-          label: Prénom
-          placeholder: ex. Alex
-        last_name:
-          label: Nom
-          placeholder: ex. Dupont
+      contact_information:
+        title: Contact
         email:
           label: Email
-          placeholder: ex. alexdupont@email.com
         phone:
           label: Numéro de téléphone
-          placeholder: ex. 0798765432
       billing_address:
         title: Adresse de facturation
+        first_name:
+          label: Prénom
+        last_name:
+          label: Nom
       address:
         address1:
           label: Adresse (Numéro et rue)
-          placeholder: ex. 17 rue de la chèvre
         address2:
           label: Complément d'adresse (optionnel)
-          placeholder: ex. Appartement 3
         city:
           label: Ville
-          placeholder: ex. Metz
         state_id:
-          label: Statut
+          label: Département
         zipcode:
           label: Code postal
-          placeholder: ex. 57000
         country_id:
           label: Pays
       shipping_info:
@@ -1756,20 +1861,18 @@ fr:
       submit: Etape suivante - Récapitulatif de commande
       cancel: Retour à vos coordonnées
     step3:
-      your_details:
-        title: Vos informations
-        edit: Modifier vos coordonnées
-      billing_address:
-        title: Adresse de facturation
-      shipping_address:
-        title: Adresse de livraison
-      delivery_info:
-        title: Information concernant la livraison
+      delivery_details:
+        title: Détails de livraison
+        edit: Modifier
+        address: Adresse de livraison
+        instructions: Instructions
       payment_method:
         title: Moyen de paiement
-        edit: Modifier la méthode de paiement
+        edit: Modifier
+        instructions: Instructions
       order:
         title: Total commande
+        edit: Modifier
       terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link}."
         link_text: "CGU & CGV"
@@ -1778,17 +1881,17 @@ fr:
       all_terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de CoopCircuits."
         terms_and_conditions: "CGU & CGV"
-      agree: En cliquant sur "Valider ma commande" vous acceptez que votre commande soit traitée.
       submit: Valider ma commande
       cancel: Retour à la méthode de paiement
     errors:
-      global: "La sauvegarde a échoué, merci de mettre à jour les champs mis en évidence."
+      saving_failed: "La sauvegarde n'a pas fonctionné, veuillez mettre à jour les champs en rouge. %{messages}"
       terms_not_accepted: Merci d'accepter les CGU & CGV.
       required: Ce champ ne peut pas être vide
       invalid_number: "Merci de renseigner un numéro de téléphone valide"
       invalid_email: "Veuillez entrer un email valide"
       select_a_shipping_method: Sélectionner une méthode de livraison
       select_a_payment_method: Sélectionner une méthode de paiement
+      no_shipping_methods_available: Il n'est pas possible de passer commande car il n'y a pas d'options de livraison / récupération de commande. Veuillez contacter le gestionnaire de la boutique.
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
@@ -1886,11 +1989,11 @@ fr:
     mistakenly_sent: "Vous ne savez pas pourquoi vous recevez cet email ? Veuillez contacter %{owner_email} pour plus d'informations."
   producer_mail_greeting: "Cher(ère)"
   producer_mail_text_before: "Vous trouverez ci-dessous les informations pour le cycle de vente prévu pour :"
-  producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
+  producer_mail_order_text: "Les produits et quantités à livrer :"
   producer_mail_delivery_instructions: "Modalités de livraison des produits:"
   producer_mail_signoff: "Merci et belle fin de journée!"
-  producer_mail_order_customer_text: "Voici un résumé des commandes rangées par acheteurs"
-  shopping_oc_closed: La boutique est actuellement fermée
+  producer_mail_order_customer_text: "Détail par client·e :"
+  shopping_oc_closed: Les commandes sont terminées
   shopping_oc_closed_description: "Veuillez attendre l'ouverture du prochain cycle de vente (ou contactez-nous directement pour voir si nous pouvons accepter une commande tardive)"
   shopping_oc_last_closed: "Le dernier cycle de vente s'est terminé il y a %{distance_of_time}"
   shopping_oc_next_open: "Le prochain cycle de vente ouvrira dans %{distance_of_time}"
@@ -1915,7 +2018,7 @@ fr:
   map_title: "Carte"
   hubs_buy: "Acheter:"
   hubs_shopping_here: "Achats en cours"
-  hubs_orders_closed: "Boutique fermée"
+  hubs_orders_closed: "Pas de vente en cours"
   hubs_profile_only: "Fiche profil"
   hubs_delivery_options: "Options de livraison"
   hubs_pickup: "Retrait"
@@ -2062,7 +2165,6 @@ fr:
   orders_form_empty_cart: "Vider le panier"
   orders_form_update_cart: "Mettre à jour"
   orders_form_subtotal: "Sous-total"
-  orders_form_admin: "Admin & traitements"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Les commandes ne sont plus possibles pour ce cycle de vente."
   orders_oc_expired_text: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}!"
@@ -2102,7 +2204,7 @@ fr:
   password: Mot de passe
   remember_me: Se souvenir de moi
   are_you_sure: "Confirmer?"
-  orders_open: "Boutique ouverte"
+  orders_open: "Ventes en cours"
   closing: "Fermeture"
   going_back_to_home_page: "Retour à la page d'accueil"
   creating: Création
@@ -2203,7 +2305,10 @@ fr:
         contact_field_placeholder: "Nom du contact principal"
         contact_field_required: "Vous devez saisir une personne référente"
         phone_field: "Numéro de téléphone"
+        whatsapp_phone_field: "Numéro WhatsApp"
+        whatsapp_phone_tooltip: "Ce numéro sera ajouté sur votre profil public pour être ouvert en tant que lien WhatsApp."
         phone_field_placeholder: "ex : 06 24 53 26 53"
+        whatsapp_phone_field_placeholder: "ex. +336 00 00 00 00"
       type:
         title: "Catégorie"
         headline: "Dites-nous en un peu plus sur %{enterprise}"
@@ -2218,7 +2323,7 @@ fr:
         title: "A propos"
         headline: "Vous y êtes presque !"
         message: "Le profil entreprise est en passe d’être créé mais il est pour l’instant vide :-( Pour apparaître proprement sur la carte, ajoutez les éléments demandés dans les écrans suivants concernant"
-        success: "ATTENTION ! Le profil de %{enterprise} ne sera visible sur la plateforme que lorsque vous aurez choisi votre type de profil. Vous serez invité.e à le choisir dans le dernier écran."
+        success: " %{enterprise} a bien été ajoutée à CoopCircuits. Attention, vous apparaîtrez publiquement sur la plateforme uniquement lorsque vous aurez choisi votre catégorie d'entreprise (profil, boutique, boutique multi-producteus). Vous serez invité.e à la choisir dans le dernier écran."
         registration_exit_message: "Si vous quittez ce module, vous pourrez continuer la création de votre profil à tout moment via l’interface d’administration, en vous connectant puis en cliquant sur Profil > Administration."
         enterprise_description: "Description (en bref)"
         enterprise_description_placeholder: "Une phrase pour décrire votre organisation"
@@ -2333,7 +2438,6 @@ fr:
   admin_enterprise_groups_data_powertip: "Le gestionnaire principal en charge de ce groupe."
   admin_enterprise_groups_data_powertip_logo: "Il s'agit du logo du groupe"
   admin_enterprise_groups_data_powertip_promo_image: "Cette image est affichée en haut du profil Groupe."
-  admin_enterprise_groups_contact: "Contact"
   admin_enterprise_groups_contact_phone_placeholder: "ex: 06 13 24 35 46"
   admin_enterprise_groups_contact_address1_placeholder: "ex: 24 rue de la croix verte"
   admin_enterprise_groups_contact_city: "Ville"
@@ -2342,12 +2446,11 @@ fr:
   admin_enterprise_groups_contact_zipcode_placeholder: "ex: 44000"
   admin_enterprise_groups_contact_state_id: "Département"
   admin_enterprise_groups_contact_country_id: "Pays"
-  admin_enterprise_groups_web: "Liens web"
   admin_enterprise_groups_web_twitter: "ex: @OpenFoodNet_fr"
   admin_enterprise_groups_web_website_placeholder: "ex: www.maferme.fr"
   admin_order_cycles: "Gérer les cycles de vente"
   open: "Ouvre"
-  close: "Fermer"
+  close: "Ferme"
   create: "Créer"
   search: "Rechercher"
   supplier: "Fournisseur"
@@ -2428,7 +2531,7 @@ fr:
   spree_admin_product_category: Catégorie Produit
   spree_admin_variant_unit_name: Nom de la pièce (si vendu à la pièce)
   unit_name: "Unité"
-  change_package: "Changer de type de profil"
+  change_package: "Changer de type d'entreprise"
   spree_admin_single_enterprise_hint: "Astuce: Pour permettre aux gens de vous trouver, activez votre visibilité "
   spree_admin_eg_pickup_from_school: "ex : \"Retrait des produits à l'Ecole Marimati / Au Café du coin / chez Babette / ...\""
   spree_admin_eg_collect_your_order: "ex : \"Veuillez récupérer votre commande au 34 rue Victor Hugo, 75018 Paris\""
@@ -2476,7 +2579,7 @@ fr:
   hub_sidebar_at_least: "Sélectionnez une/des boutiques"
   hub_sidebar_blue: "bleu"
   hub_sidebar_red: "rouge"
-  order_cycles_closed_for_hub: "La boutique sélectionnée a fermé temporairement ses commandes. Veuillez essayez à nouveau ultérieurement."
+  order_cycles_closed_for_hub: "Cette boutique n'a pas de ventes en cours. Veuillez essayez à nouveau ultérieurement."
   report_customers_distributor: "Distributeur"
   report_customers_supplier: "Fournisseur"
   report_customers_cycle: "Cycle de vente"
@@ -2518,6 +2621,18 @@ fr:
   report_header_hub_address: Adresse de la boutique
   report_header_to_hub: Distributeur
   report_header_hub_code: Code
+  report_header_hub_id: Hub ID
+  report_header_hub_business_number: "SIRET"
+  report_header_hub_legal_name: "Raison sociale"
+  report_header_hub_contact_name: "Nom du contact"
+  report_header_hub_email: "Email public"
+  report_header_hub_owner_email: Email gestionnaire principal
+  report_header_hub_phone: "Numéro de téléphone"
+  report_header_hub_address_line1: "Adresse ligne 1"
+  report_header_hub_address_line2: "Adresse ligne 2"
+  report_header_hub_address_city: "Ville"
+  report_header_hub_address_zipcode: "Code postal"
+  report_header_hub_address_state_name: "Département"
   report_header_code: Code
   report_header_paid: Payé ?
   report_header_delivery: Livré ?
@@ -2550,11 +2665,15 @@ fr:
   report_header_tax_on_delivery: "TVA sur livraison (%{currency_symbol})"
   report_header_tax_on_fees: "TVA sur commission boutique (%{currency_symbol})"
   report_header_total_tax: "Total TVA (%{currency_symbol})"
+  report_header_total_excl_tax: "Total HT (%{currency_symbol})"
+  report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
+  report_header_total_orders: "Nombre de commandes"
   report_header_enterprise: Entreprise
   report_header_customer: Client
   report_header_customer_code: Code acheteur
   report_header_product: Produit
   report_header_product_properties: Propriétés / labels Produits
+  report_header_product_tax_category: TVA applicable
   report_header_quantity: Quantité
   report_header_max_quantity: Quantité Max
   report_header_variant: Variante
@@ -2567,6 +2686,7 @@ fr:
   report_header_supplier: Fournisseur
   report_header_producer: Producteur
   report_header_producer_suburb: Ville Producteur
+  report_header_producer_charges_sales_tax?: Soumis à la TVA
   report_header_unit: Unité
   report_header_group_buy_unit_quantity: Nb d'unités achetées (vente par lots)
   report_header_cost: Coût
@@ -2586,7 +2706,11 @@ fr:
   report_header_delivery_postcode: Code Postal Livraison
   report_header_bulk_unit_size: Quantité totale du lot
   report_header_weight: Poids
-  report_header_sum_total: Somme Totale
+  report_header_final_weight_volume: Poids ou volume livré
+  report_header_height: Hauteur
+  report_header_width: Largeur
+  report_header_depth: Profondeur
+  report_header_sum_total: Total déjà commandé
   report_header_date_of_order: Date de Commande
   report_header_amount_owing: Montant dû
   report_header_amount_paid: Montant payé
@@ -2662,11 +2786,8 @@ fr:
   images: "Images"
   web: "Web"
   primary_details: "Informations de base"
-  adrdress: "Adresse"
   contact: "Contact"
   social: "Réseaux sociaux"
-  business_details: "Juridique"
-  properties: "Propriétés / labels"
   shipping: "Expédition"
   shipping_methods: "Méthodes de livraison"
   payment_methods: "Méthodes de paiement"
@@ -2676,11 +2797,9 @@ fr:
   payment_updated: "Paiement mis à jour"
   cannot_perform_operation: "Le paiement n'a pas pu être mis à jour."
   action_required: "Une action est requise"
-  inventory_settings: "Catalogue boutique"
   tag_rules: "Règles de tag"
-  shop_preferences: "Préférences boutique"
   enterprise_fee_whole_order: Commande totale
-  enterprise_fee_by: "%{type} marges/frais par %{role} %{enterprise_name}"
+  enterprise_fee_by_name: "%{name} marge par %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Un lien est déjà établi entre ces entreprises."
   validation_msg_at_least_one_hub: "^Sélectionnez au moins une boutique"
   validation_msg_tax_category_cant_be_blank: "^Veuillez sélectionner la TVA applicable"
@@ -2766,8 +2885,10 @@ fr:
       deleting_item_will_cancel_order: "Cette opération va rendre une ou plusieurs commandes vides, sans aucun produit. Elles vont ainsi être annulées. Souhaitez-vous continuer ?"
       modals:
         got_it: "J'ai compris"
-        close: "Fermer"
+        confirm: "Valider"
+        close: "Valider"
         continue: "Suivant"
+        cancel: "Annuler"
         invite: "Inviter"
         invite_title: "Inviter un nouvel utilisateur"
         tag_rule_help:
@@ -2823,10 +2944,10 @@ fr:
               locale de quartier ou épicerie en circuit court en ligne, etc.
           hub_shop_text3: >2+
 
-          choose_package: Choisir le type de profil souhaité
+          choose_package: Choisir le type d'entreprise souhaité
           choose_package_text1: >
               Votre entreprise ne sera activée et visible que lorsque vous aurez choisi
-              le type de profil souhaité parmi les options à gauche.
+              le type d'entreprise souhaité parmi les options à gauche.
           choose_package_text2: >
               Cliquez sur une option pour voir le détail du compte proposé, puis une
               fois votre choix fait, cliquez sur le bouton rouge ENREGISTRER !
@@ -2857,12 +2978,12 @@ fr:
               ATTENTION :
 
               - Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser
-              CoopCircuits pour organiser vos ventes / commandes, choisissez le type
-              de profil “profil simple”.
+              CoopCircuits pour organiser vos ventes / commandes, choisissez la catégorie
+              “profil simple”.
 
               - Si vous fournissez un circuit court utilisant CoopCircuits pour vendre,
               mais ne vendez pas vous-même en direct sur CoopCircuits, choisissez
-              le type de profil “profil simple”.
+              la catégorie “profil simple”.
           producer_hub: Boutique multi-producteurs
           producer_hub_text1: >
               Vous pourrez paramétrer votre boutique en ligne pour l’adapter à vos
@@ -2877,12 +2998,12 @@ fr:
               ATTENTION :
 
               - Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser
-              CoopCircuits pour organiser vos ventes / commandes, choisissez le type
-              de profil “profil simple”.
+              CoopCircuits pour organiser vos ventes / commandes, choisissez la catégorie
+              “profil simple”.
 
               - Si vous fournissez un circuit court utilisant CoopCircuits pour vendre,
               mais ne vendez pas vous-même en direct sur CoopCircuits, choisissez
-              le type de profil “profil simple”.
+              la catégorie “profil simple”.
           get_listing: Pour apparaître sur la carte
           always_free: ' '
           sell_produce_others: Pour vendre des produits de différents fournisseurs
@@ -2931,7 +3052,7 @@ fr:
         inventory_tagged_bottom: "sont:"
       new_tag_rule_dialog:
         select_rule_type: "Choisir le type de règle:"
-        add_rule: "Ajouter une règle"
+        add_rule: "Valider"
       enterprise_fees:
         inherit_from_product: "Hériter du produit"
       orders:
@@ -2956,7 +3077,6 @@ fr:
           pending: "en attente"
           resumed: "recommencé"
           returned: "retourné"
-          skrill: "cash"
         shipment_states:
           backorder: "réapprovisionnement"
           partial: "partiel"
@@ -2974,7 +3094,7 @@ fr:
           pending: "en attente"
           requires_authorization: "authorisation requise"
           processing: "en traitement"
-          void: "faire un avoir"
+          void: "Annulé"
           invalid: "invalide"
         quantity_adjusted: "Le stock disponible est insuffisant. La quantité a été mise à jour en fonction du stock restant."
         quantity_unchanged: "La quantité n'a pas été modifiée."
@@ -3040,7 +3160,7 @@ fr:
         min_quantity: "Quantité min"
         max_quantity: "Quantité max"
       price_breakdown: "Détail du prix"
-      unit_price_tooltip: "Il s'agit du prix unitaire de ce produit. Il permet à l'acheteur de comparer les prix quelque soit le conditionnement final du produit."
+      unit_price_tooltip: "Il s'agit du prix unitaire de ce produit. Il permet à l'acheteur de comparer les prix quel que soit le conditionnement final du produit."
     variants:
       on_demand:
         'yes': "A volonté"
@@ -3229,7 +3349,7 @@ fr:
           select_and_search: "Sélectionnez les filtres et cliquez sur \"générer le rapport\" pour accéder aux données."
       enterprise_fee_summary:
         date_end_before_start_error: "doit être après date début"
-        parameter_not_allowed_error: "Vous n'êtes pas authorisé.e à utiliser un ou plusieurs des filtres sélectionnés pour ce rapport."
+        parameter_not_allowed_error: "Vous n'êtes pas autorisé·e à utiliser un ou plusieurs des filtres sélectionnés pour ce rapport."
         fee_calculated_on_transfer_through_all: "Tous"
         fee_calculated_on_transfer_through_entire_orders: "Commandes complètes via %{distributor}"
         tax_category_various: "Multiples"
@@ -3338,6 +3458,8 @@ fr:
     server_error: "Erreur serveur"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Retrait"
+      delivery: "Signé, scellé, livré"
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
     taxonomy_edit: "Modifier la taxonomie"
@@ -3425,7 +3547,7 @@ fr:
     display_currency: "Afficher la devise"
     choose_currency: "Choisir la devise"
     mail_method_settings: "Paramètre méthode mail"
-    mail_settings_notice_html: "Certains champs ne peuvent pas être modifiés car ils sont utilisés uniquement pour déboggage. Les modifications peuvent être réalisées par un développeur via <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. "
+    mail_settings_notice_html: "<b> Les modifications apportées ici seront temporaires </b>et peuvent changer à la prochaine mise à jour. <br> Si vous souhaitez réaliser des changements permanents, un administrateur système doit se charger de mettre à jour les informations et provisionner le serveur en utilisant <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install </a> . "
     general: "Général"
     enable_mail_delivery: "Permettre distribution des mails"
     send_mails_as: "Envoyer les mails en tant que"
@@ -3506,6 +3628,7 @@ fr:
     email: Email
     account_updated: "Compte mis à jour!"
     email_updated: "Le compte sera mis à jour une fois la nouvelle adresse email confirmée."
+    show_api_key_view_toggled: "L'affichage de la clé API a été modifié"
     my_account: "Mon compte"
     date: "Date"
     time: "Heure"
@@ -3547,6 +3670,7 @@ fr:
       messages:
         included_price_validation: "ne peut pas être sélectionné à moins d'avoir une zone par défaut"
         blank: "Champ obligatoire"
+        invalid_instagram_url: "Uniquement le nom d'utilisateur / identifiant par ex. le_prof"
     layouts:
       admin:
         login_nav:
@@ -3651,6 +3775,13 @@ fr:
           results_found: "%{number} résultats trouvés"
           viewing: "Résultats %{start} à %{end} affichés."
           print_invoices: "Imprimer les factures"
+          cancel_orders: "Annuler les commandes"
+          resend_confirmation: "Renvoyer la confirmation"
+          resend_confirmation_confirm_html: "Cette action va renvoyer l'email de confirmation de commande. Etes-vous sûr de vouloir continuer ?"
+          selected:
+            zero: "Aucune commande sélectionnée"
+            one: "1 commande sélectionnée"
+            other: "%{count} commandes sélectionnées"
         sortable_header:
           payment_state: "Statut du Paiement"
           shipment_state: "Statut livraison"
@@ -3665,6 +3796,9 @@ fr:
           from: "De"
           to: "Facturer à"
           shipping: "Envoi"
+        note:
+          note_label: "Note :"
+          no_note_present: "Aucune note n'a été ajoutée."
         form:
           distribution_fields:
             title: "Distribution"
@@ -3787,11 +3921,12 @@ fr:
           paypal:
             no_payment_via_admin_backend: 'Il n''est pas encore possible de payer avec Paypal via l''administration. '
       products:
-        image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez importer une image au format PNG ou JPG."
+        image_upload_error: "Veuillez utiliser une image au format JPG, PNG, GIF, SVG ou WEBP format."
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
           supplier: "Fournisseur"
+          supplier_select_placeholder: "Sélectionner un producteur"
           product_name: "Nom du Produit"
           units: "Unité de mesure"
           value: "Quantité"
@@ -3837,6 +3972,9 @@ fr:
           select_and_search: "Sélectionner les filtres et cliquer sur %{option} pour accéder aux données."
         customer_names_message:
           customer_names_tip: "Si les noms des acheteurs sont masqués, vous pouvez contacter le gestionnaire de la boutique. Il pourra vous donner accès à cette information."
+        products_and_inventory:
+          all_products:
+            message: "Attention les stocks correspondent aux stocks producteurs et non au stock du catalogue boutique."
       users:
         index:
           listing_users: "Liste des utilisateurs"
@@ -3924,7 +4062,7 @@ fr:
       flatpickr_datetime_format: "d-m-Y H:i"
       today: "Aujourd'hui"
       now: "Maintenant"
-      close: "Fermer"
+      close: "Valider"
     orders:
       error_flash_for_unavailable_items: "Un élément de votre panier est épuisé. Veuillez mettre à jour les quantités sélectionnées."
       edit:
@@ -3952,7 +4090,7 @@ fr:
       pending: en attente
       processing: en traitement
       requires_authorization: "authorisation requise"
-      void: faire un avoir
+      void: Annulé
       invalid: invalide
       authorise: autorise
     order_mailer:
@@ -4000,12 +4138,14 @@ fr:
     shipment_mailer:
       shipped_email:
         dear_customer: "Cher Acheteur,"
-        instructions: "Votre commande de %{distributor} a été envoyée"
-        shipment_summary: "Résumé de l'envoi"
+        instructions: "Votre commande de %{distributor} : a bien été expédiée."
+        shipment_summary: "Résumé de la commande"
         subject: "Notification d'expédition"
         thanks: "Merci pour votre commande."
         track_information: "Informations de suivi : %{tracking}"
         track_link: "Lien de suivi : %{url}"
+        picked_up_instructions: "Votre commande auprès de %{distributor} vous a bien été délivrée :)"
+        picked_up_subject: "Notification de réception"
     test_mailer:
       test_email:
         greeting: "Félicitations !"
@@ -4026,7 +4166,6 @@ fr:
       pending: en attente
       resumed: recommencé
       returned: retourné
-      skrill: cash
     subscription_state:
       active: actif
       pending: en attente
@@ -4052,10 +4191,16 @@ fr:
         connection_failed: "Impossible de se connecter à PayPal."
         generic_error: "PayPal a échoué."
     users:
+      api_keys:
+        regenerate_key: "Regénérer la clé"
+        title: Clé API
+      developer_settings:
+        title: Paramètres développeurs
       form:
         account_settings: Paramètres du Compte
       show:
         tabs:
+          developer_settings: Paramètres développeurs
           orders: Commandes
           cards: Cartes bancaires
           transactions: Achats
@@ -4085,7 +4230,9 @@ fr:
         items: Produits
         total: Total
         paid?: Payé ?
-        view: Afficher
+        status: Statut
+        completed: Finalisé
+        cancelled: Annulée
       saved_cards:
         default?: Carte utilisée par défaut?
         delete?: Supprimer?
@@ -4096,6 +4243,7 @@ fr:
       authorised_shops:
         shop_name: "Nom de la boutique"
         allow_charges?: "Souhaitez-vous autoriser les paiements sur la carte par défaut ?"
+        no_default_saved_cards_tooltip: Vous devez sélectionner une carte bancaire par défaut pour autoriser les paiements.
     localized_number:
       invalid_format: n'est pas un format valide. Veuillez entrer un nombre.
     api:
@@ -4114,6 +4262,7 @@ fr:
       shipment:
         cannot_ready: "La livraison ne peut pas être préparée."
       invalid_taxonomy_id: "L'identifiant de la catégorie n'est pas valide."
+      toggle_api_key_view: "Montrer la clé API pour cet utilisateur"
     activerecord:
       models:
         spree/payment:
@@ -4173,3 +4322,24 @@ fr:
         one: "1 an"
         many: "%{count} ans"
         other: "%{count} ans"
+  errors:
+    not_found:
+      title: "La page que vous recherchez n'existe pas (erreur 404)"
+      message_html: "<b> Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l'  <a href='/'> Accueil </a> et recommencez. </p> <b> Contacter notre support </b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter. </p>"
+    internal_server_error:
+      title: "Nous sommes navré·e·s, mais quelque chose s'est mal passé (erreur 500)."
+      message_html: " <b> Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l' <a href='/''> Accueil </a> et recommencez. </p> <b> Contacter notre support</b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter. </p>"
+    unprocessable_entity:
+      title: "La modification réalisée a été rejetée (erreur 422)"
+      message_html: "<p> La modification souhaitée a été refusée. Peut-être avez-vous essayé de faire quelque chose sans avoir les droits d'accès suffisants ? <br> <h3> <a href='/' > Retourner à l'accueil </a> </h3> </p>"
+  components:
+    multiple_checked_select:
+      filter_placeholder: "Filtres"
+    search_input:
+      placeholder: Rechercher
+    selector_with_filter:
+      selected_items: "%{count} sélectionné"
+      search_placeholder: Rechercher
+    pagination:
+      next: Suivant
+      previous: Précédent

@@ -1,5 +1,7 @@
 name: Linters
 on: [push, pull_request]
+permissions:
+  contents: read # to fetch code (actions/checkout)
 jobs:
   rubocop:
     name: runner / rubocop
@@ -13,6 +15,19 @@ jobs:
         with:
           rubocop_version: gemfile
           rubocop_extensions: rubocop-rails:gemfile
+          reporter: github-pr-check
+          level: error
+          fail_on_error: true
+  prettier:
+    name: runner / prettier
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: prettier
+        uses: EPMatt/reviewdog-action-prettier@v1
+        with:
+          github_token: ${{ secrets.github_token }}
           reporter: github-pr-check
           level: error
           fail_on_error: true

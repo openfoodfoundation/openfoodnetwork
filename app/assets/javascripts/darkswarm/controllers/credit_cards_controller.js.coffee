@@ -20,3 +20,6 @@ angular.module('Darkswarm').controller "CreditCardsCtrl", ($scope, $http, Credit
     ).finally ->
       window.location.reload()
 
+
+  $scope.hasOneDefaultSavedCards = () ->
+    $scope.savedCreditCards.some((card) -> card.is_default)

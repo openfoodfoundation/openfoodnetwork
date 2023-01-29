@@ -116,37 +116,37 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
 
       expected_result = [
         ["Admin", "Sample Coordinator", "Coordinator Fee 1", "Another Customer",
-         "Coordinator", "All", "Sample Coordinator Tax", "512.00"],
+         "Coordinator", "All", "Sample Coordinator Tax", 512],
         ["Admin", "Sample Coordinator", "Coordinator Fee 1", "Sample Customer",
-         "Coordinator", "All", "Sample Coordinator Tax", "1024.00"],
+         "Coordinator", "All", "Sample Coordinator Tax", 1024],
         ["Admin", "Sample Distributor", "Distributor Fee 1", "Another Customer",
-         "Outgoing", "Sample Distributor", "Sample Distributor Tax", "4.00"],
+         "Outgoing", "Sample Distributor", "Sample Distributor Tax", 4],
         ["Admin", "Sample Distributor", "Distributor Fee 1", "Sample Customer",
-         "Outgoing", "Sample Distributor", "Sample Distributor Tax", "8.00"],
+         "Outgoing", "Sample Distributor", "Sample Distributor Tax", 8],
         ["Payment Transaction", "Sample Distributor", "Sample Payment Method", "Another Customer",
-         nil, nil, nil, "2.00"],
+         nil, nil, nil, 2],
         ["Payment Transaction", "Sample Distributor", "Sample Payment Method", "Sample Customer",
-         nil, nil, nil, "4.00"],
+         nil, nil, nil, 4],
         ["Sales", "Sample Coordinator", "Coordinator Fee 2", "Another Customer",
-         "Coordinator", "All", "Various", "1024.00"],
+         "Coordinator", "All", "Various", 1024],
         ["Sales", "Sample Coordinator", "Coordinator Fee 2", "Sample Customer",
-         "Coordinator", "All", "Various", "2048.00"],
+         "Coordinator", "All", "Various", 2048],
         ["Sales", "Sample Distributor", "Distributor Fee 2", "Another Customer",
-         "Outgoing", "Sample Distributor", "Sample Product Tax", "8.00"],
+         "Outgoing", "Sample Distributor", "Sample Product Tax", 8],
         ["Sales", "Sample Distributor", "Distributor Fee 2", "Sample Customer",
-         "Outgoing", "Sample Distributor", "Sample Product Tax", "16.00"],
+         "Outgoing", "Sample Distributor", "Sample Product Tax", 16],
         ["Sales", "Sample Producer", "Producer Fee 1", "Another Customer",
-         "Incoming", "Sample Producer", "Sample Producer Tax", "64.00"],
+         "Incoming", "Sample Producer", "Sample Producer Tax", 64],
         ["Sales", "Sample Producer", "Producer Fee 1", "Sample Customer",
-         "Incoming", "Sample Producer", "Sample Producer Tax", "128.00"],
+         "Incoming", "Sample Producer", "Sample Producer Tax", 128],
         ["Sales", "Sample Producer", "Producer Fee 2", "Another Customer",
-         "Incoming", "Sample Producer", "Sample Product Tax", "128.00"],
+         "Incoming", "Sample Producer", "Sample Product Tax", 128],
         ["Sales", "Sample Producer", "Producer Fee 2", "Sample Customer",
-         "Incoming", "Sample Producer", "Sample Product Tax", "256.00"],
+         "Incoming", "Sample Producer", "Sample Product Tax", 256],
         ["Shipment", "Sample Distributor", "Sample Shipping Method", "Another Customer",
-         nil, nil, "Platform Rate", "1.00"],
+         nil, nil, "Platform Rate", 1],
         ["Shipment", "Sample Distributor", "Sample Shipping Method", "Sample Customer",
-         nil, nil, "Platform Rate", "2.00"]
+         nil, nil, "Platform Rate", 2]
       ]
 
       expected_result.each_with_index do |expected_attributes, row_index|
@@ -173,7 +173,7 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
 
         expected_result = [
           ["Shipment", "Sample Distributor", "Sample Shipping Method", "Sample Customer",
-           nil, nil, "Platform Rate", "1.00"]
+           nil, nil, "Platform Rate", 1]
         ]
 
         expected_result.each_with_index do |expected_attributes, row_index|
@@ -208,9 +208,9 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
 
         expected_result = [
           ["Payment Transaction", "Sample Distributor", "Sample Payment Method", "Sample Customer",
-           nil, nil, nil, "2.00"],
+           nil, nil, nil, 2],
           ["Shipment", "Sample Distributor", "Sample Shipping Method", "Sample Customer",
-           nil, nil, "Platform Rate", "1.00"]
+           nil, nil, "Platform Rate", 1]
         ]
 
         expected_result.each_with_index do |expected_attributes, row_index|
@@ -233,7 +233,7 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
 
         expected_result = [
           ["Shipment", "Sample Distributor", "Sample Shipping Method", "Sample Customer",
-           nil, nil, "Platform Rate", "1.00"]
+           nil, nil, "Platform Rate", 1]
         ]
 
         expected_result.each_with_index do |expected_attributes, row_index|
@@ -280,17 +280,17 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
 
         expected_result = [
           ["Admin", "Sample Coordinator", "Sample Coordinator Fee", "Sample Customer",
-           "Incoming", "Sample Producer", "Sample Coordinator Tax", "512.00"],
+           "Incoming", "Sample Producer", "Sample Coordinator Tax", 512],
           ["Admin", "Sample Coordinator", "Sample Coordinator Fee", "Sample Customer",
-           "Outgoing", "Sample Distributor", "Sample Coordinator Tax", "512.00"],
+           "Outgoing", "Sample Distributor", "Sample Coordinator Tax", 512],
           ["Admin", "Sample Distributor", "Sample Distributor Fee", "Sample Customer",
-           "Incoming", "Sample Producer", "Sample Distributor Tax", "4.00"],
+           "Incoming", "Sample Producer", "Sample Distributor Tax", 4],
           ["Payment Transaction", "Sample Distributor", "Sample Payment Method", "Sample Customer",
-           nil, nil, nil, "2.00"],
+           nil, nil, nil, 2],
           ["Sales", "Sample Producer", "Sample Producer Fee", "Sample Customer",
-           "Outgoing", "Sample Distributor", "Sample Producer Tax", "64.00"],
+           "Outgoing", "Sample Distributor", "Sample Producer Tax", 64],
           ["Shipment", "Sample Distributor", "Sample Shipping Method", "Sample Customer",
-           nil, nil, "Platform Rate", "1.00"]
+           nil, nil, "Platform Rate", 1]
         ]
 
         expected_result.each_with_index do |expected_attributes, row_index|
@@ -361,27 +361,27 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
 
         expected_result = [
           ["Admin", "Sample Coordinator", "Coordinator Fee A", "Sample Customer",
-           "Coordinator", "All", "Coordinator Tax A", "15.00"],
+           "Coordinator", "All", "Coordinator Tax A", 15],
           ["Admin", "Sample Coordinator", "Coordinator Fee A", "Sample Customer",
-           "Incoming", entire_orders_text, "Coordinator Tax A", "15.00"],
+           "Incoming", entire_orders_text, "Coordinator Tax A", 15],
           ["Admin", "Sample Coordinator", "Coordinator Fee A", "Sample Customer",
-           "Outgoing", entire_orders_text, "Coordinator Tax A", "15.00"],
+           "Outgoing", entire_orders_text, "Coordinator Tax A", 15],
           ["Admin", "Sample Coordinator", "Coordinator Fee B", "Sample Customer",
-           "Coordinator", "All", various_tax_categories_text, "20.00"],
+           "Coordinator", "All", various_tax_categories_text, 20],
           ["Admin", "Sample Coordinator", "Coordinator Fee C", "Sample Customer",
-           "Coordinator", "All", nil, "25.00"],
+           "Coordinator", "All", nil, 25],
           ["Admin", "Sample Distributor", "Distributor Fee A", "Sample Customer",
-           "Incoming", entire_orders_text, various_tax_categories_text, "30.00"],
+           "Incoming", entire_orders_text, various_tax_categories_text, 30],
           ["Admin", "Sample Distributor", "Distributor Fee A", "Sample Customer",
-           "Outgoing", entire_orders_text, various_tax_categories_text, "30.00"],
+           "Outgoing", entire_orders_text, various_tax_categories_text, 30],
           ["Payment Transaction", "Sample Distributor", "Sample Payment Method", "Sample Customer",
-           nil, nil, nil, "2.00"],
+           nil, nil, nil, 2],
           ["Sales", "Sample Producer", "Producer Fee A", "Sample Customer",
-           "Incoming", entire_orders_text, "Producer Tax A", "10.00"],
+           "Incoming", entire_orders_text, "Producer Tax A", 10],
           ["Sales", "Sample Producer", "Producer Fee A", "Sample Customer",
-           "Outgoing", entire_orders_text, "Producer Tax A", "10.00"],
+           "Outgoing", entire_orders_text, "Producer Tax A", 10],
           ["Shipment", "Sample Distributor", "Sample Shipping Method", "Sample Customer",
-           nil, nil, "Platform Rate", "1.00"]
+           nil, nil, "Platform Rate", 1]
         ]
 
         expected_result.each_with_index do |expected_attributes, row_index|
@@ -646,12 +646,12 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
 
     describe "for specified payment methods" do
       let!(:payment_method_a) do
-        method = create(:payment_method, name: "Payment A", distributors: [distributor])
+        method = create(:payment_method, :flat_rate, name: "Payment A", distributors: [distributor])
         method.calculator.update_attribute(:preferred_amount, 1)
         method
       end
       let!(:payment_method_b) do
-        method = create(:payment_method, name: "Payment B", distributors: [distributor])
+        method = create(:payment_method, :flat_rate, name: "Payment B", distributors: [distributor])
         method.calculator.update_attribute(:preferred_amount, 1)
         method
       end

@@ -5,6 +5,10 @@ fr_BE:
       spree/product: Produit
       spree/shipping_method: Méthode de Livraison
     attributes:
+      spree/order/ship_address:
+        phone: "Numéro de téléphone"
+        firstname: "Prénom"
+        lastname: "Nom de famille"
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
@@ -23,6 +27,8 @@ fr_BE:
         state: Statut de la commande
         source: Source
       spree/product:
+        name: "Nom du Produit"
+        price: "Prix"
         primary_taxon: "Catégorie de Produit"
         supplier: "Fournisseur"
         shipping_category_id: "Catégorie de livraison"
@@ -60,9 +66,6 @@ fr_BE:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car les paramètres de stock du producteur sont utilisés"
             on_demand_but_count_on_hand_set: "doit être vide si à la demande"
             limited_stock_but_no_count_on_hand: "doit être spécifié car le stock limité est forcé"
-  errors:
-    messages:
-      image_metadata_missing: "n'est pas une image valide"
   stripe:
     error_code:
       incorrect_number: "Le numéro de carte est incorrect."
@@ -203,7 +206,6 @@ fr_BE:
   producers_join: Les producteurs et autres magasins basés en Belgique sont invités à rejoindre Open Food Network.
   charges_sales_tax: Soumis à la TVA?
   business_address: "Adresse de facturation"
-  enterprise_permissions: "Permissions Inter-entreprises"
   print_invoice: "Imprimer la facture"
   print_ticket: "Imprimer ticket de caisse"
   select_ticket_printer: "Choisir l'imprimante tickets"
@@ -300,6 +302,25 @@ fr_BE:
     delete: "Supprimer"
     add: "Ajouter"
   admin:
+    products_page:
+      title: Produits
+      filters:
+        categories:
+          title: Les catégories
+        producers:
+          title: Producteur·trice·s
+        colums: Colonnes
+      columns:
+        name: Nom
+        unit: Unité
+        price: Prix
+        producer: Producteur·trice
+        category: Catégorie
+      columns_selector:
+        unit: Unité
+        price: Prix
+        producer: Producteur·trice
+        category: Catégorie
     begins_at: Commence
     begins_on: Commence le
     customer: Acheteur
@@ -417,8 +438,6 @@ fr_BE:
         search_by_email: "Recherche par email/code..."
         guest_label: "Commande en mode invité"
         credit_owed: "Crédit redevable"
-      destroy:
-        has_associated_orders: "Suppression impossible: des commandes sont associées à cet acheteur pour ce comptoir"
     contents:
       edit:
         title: Contenu
@@ -446,6 +465,18 @@ fr_BE:
     enterprise_groups:
       index:
         new_button: Nouveau groupe d'entreprises
+      form_primary_details:
+        primary_details: "Informations de base"
+      form_users:
+        users: "gestionnaire"
+      form_about:
+        about: "A propos"
+      form_images:
+        images: "Images"
+      form_address:
+        contact: "Contact"
+      form_web:
+        web: "Liens web"
     enterprise_roles:
       form:
         manages: gère
@@ -653,11 +684,15 @@ fr_BE:
         manage: Gérer
       form:
         about_us:
+          legend: "A propos"
           desc_short: Description (en bref)
           desc_short_placeholder: Décrivez de votre entreprise en une ou deux phrases
           desc_long: A propos de nous
           desc_long_placeholder: Parlez de vous à vos acheteurs ! Ces informations seront visibles sur votre profil public.
+        address:
+          legend: "Adresse"
         business_details:
+          legend: "Juridique"
           abn: Numéro d'entreprise
           abn_placeholder: 'ex: 000 000 000'
           acn: n° TVA
@@ -666,7 +701,8 @@ fr_BE:
           invoice_text: Ajouter une mention spécifique en bas des factures
           terms_and_conditions: "Termes et conditions"
           reset_form: "Vider les champs"
-          Invoice_item_sorting: Ordre d'affichage sur facture
+          business_address_legend: "Adresse de facturation"
+          invoice_item_sorting_legend: "Ordre d'affichage sur facture"
           sort_items_by_supplier?: Classer par producteur ?
           sort_items_by_supplier_tip: "Lorsqu'activé, les éléments seront classés par producteur."
           enabled: Activer
@@ -677,6 +713,7 @@ fr_BE:
           address2: Adresse (suite)
           legal_phone_number: Numéro de téléphone
         contact:
+          legend: "Contact"
           name: Nom
           name_placeholder: 'ex: Bernard Dupont'
           email_address: Adresse email publique
@@ -687,12 +724,16 @@ fr_BE:
           website: Site internet
           website_placeholder: 'ex: www.maferme.org'
         enterprise_fees:
+          legend: "Marges et Commissions"
           name: Nom
           fee_type: Type de marge
           manage_fees: Gérer les marges et commissions
           no_fees_yet: Vous n'avez pas encore défini de commissions
           create_button: Créer une commission
+        enterprise_permissions:
+          legend: "Permissions Inter-entreprises"
         images:
+          legend: "Images"
           logo: Logo
           promo_image_placeholder: 'Cette image est affichée dans "A propos"'
           promo_image_note1: 'ATTENTION:'
@@ -701,6 +742,7 @@ fr_BE:
           remove_logo: "Supprimer l'image"
           remove_promo_image: "Supprimer l'image"
         inventory_settings:
+          legend: "Catalogue comptoir"
           text1: Vous pouvez choisir de gérer vos stocks et prix via votre
           inventory: catalogue comptoir
           text2: >
@@ -712,6 +754,7 @@ fr_BE:
           preferred_product_selection_from_inventory_only_yes: Les nouveaux produits des producteurs peuvent être ajoutés à mon comptoir en ligne (recommandé)
           preferred_product_selection_from_inventory_only_no: Les nouveaux produits des producteurs doivent être ajoutés à mon catalogue comptoir avant de pouvoir être ajoutés à mon comptoir en ligne
         payment_methods:
+          legend: "Méthodes de paiement"
           name: Nom
           applies: Active?
           manage: Gérer les méthodes de paiement
@@ -719,6 +762,7 @@ fr_BE:
           create_button: Créer une nouvelle méthode de paiement
           create_one_button: En créer une maintenant
         primary_details:
+          legend: "Informations de base"
           name: Nom
           name_placeholder: 'ex: La ferme bio de Bernard'
           groups: Groupes
@@ -737,6 +781,9 @@ fr_BE:
           visible: Visible par tous
           not_visible: Invisible
           hidden: Masquer toutes les références
+        properties:
+          legend: "Labels / propriétés"
+        permalink:
           permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre comptoir: %{link}ma-boutique/shop"
           link_to_front: Lien URL du comptoir
@@ -744,6 +791,7 @@ fr_BE:
           ofn_uid: OFN UID
           ofn_uid_tip: L'identifiant unique utilisé pour identifier l'entreprise sur Open Food Network.
         shipping_methods:
+          legend: "Méthodes de livraison"
           name: "Nom"
           applies: "Actif?"
           manage: "Gérer les méthodes de livraison"
@@ -751,6 +799,7 @@ fr_BE:
           create_one_button: "En créer une maintenant"
           no_method_yet: "Vous n'avez pas encore paramétré de méthode de livraison."
         shop_preferences:
+          legend: "Préférences comptoir"
           shopfront_requires_login: "Comptoir visible par tous?"
           shopfront_requires_login_tip: "Choisissez si les acheteurs doivent être connectés pour voir le magasin ou si le comptoir est visible par tout le monde."
           shopfront_requires_login_false: "Visible par tous"
@@ -800,6 +849,7 @@ fr_BE:
           enabled: "Activé"
           disabled: "Désactivé"
         social:
+          legend: "Réseaux sociaux"
           twitter_placeholder: "ex. @OpenFoodNet"
           instagram_placeholder: "ex: le_prof"
           facebook_placeholder: "ex: www.facebook.com/NomDeLaPage"
@@ -817,6 +867,7 @@ fr_BE:
             i_agree: J'accepte
             cancel: Annuler
         tag_rules:
+          legend: "Règles de tag"
           default_rules:
             by_default: Règles à appliquer "par défaut"
             no_rules_yet: Aucune règle par défaut
@@ -827,6 +878,7 @@ fr_BE:
           add_new_rule: '+ Ajouter une nouvelle règle'
           add_new_tag: '+ Ajouter un nouveau tag'
         users:
+          legend: "gestionnaire"
           email_confirmation_notice_html: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{email}."
           resend: Renvoyer
           owner: 'Manager principal'
@@ -946,11 +998,21 @@ fr_BE:
         tags: "Tags"
         delivery_details: "Détails de la livraison"
         fees: "Commission"
+        next: "Suivant"
         previous: "Précédent"
         save: "Sauvergarder"
-        save_and_back_to_list: "Sauver et retour à la liste"
+        save_and_next: "Sauver et suivant"
         cancel: "Annuler"
         back_to_list: "Retour à la liste."
+      checkout_options:
+        back_end: "Seulement back office"
+        cancel: "Annuler"
+        distributor: "Comptoir"
+        payment_methods: "Méthodes de paiement"
+        save: "Sauvergarder"
+        save_and_back_to_list: "Sauver et retour à la liste"
+        select_all: "Tout sélectionner"
+        shipping_methods: "Méthodes de livraison"
       wizard_progress:
         edit: "1. Paramètres généraux"
         incoming: "2. Produits entrants"
@@ -1016,6 +1078,7 @@ fr_BE:
         customer_instructions_placeholder: Commentaires pour le retrait / la livraison
         products: Produits
         fees: Commissions
+        tags: Tags
       destroy_errors:
         orders_present: Ce cycle de vente a déjà été utilisé par une personnes qui achète et ne peut être supprimé. Pour empêcher les personnes qui achètent d'y accéder, veuillez plutôt le fermer.
         schedule_present: Ce cycle de vente est lié à un rythme d'abonnement et ne peut pas être supprimé. Veuillez d'abord supprimer ce lien ou supprimer le rythme d'abonnement.
@@ -1025,6 +1088,8 @@ fr_BE:
         msg: Ce cycle de vente est lié à %{n}abonnements ouverts. Changer cette date maintenant n'impactera pas les commandes déjà réalisée, mais nous vous déconseillons cette action néanmoins. Etes-vous sûrs de vouloir poursuivre ?
         cancel: Annuler
         proceed: Continuer
+      status:
+        closed: fermé
     producer_properties:
       index:
         title: Propriétés / labels du producteur
@@ -1040,6 +1105,31 @@ fr_BE:
         has_no_payment_methods: "%{enterprise} n'a pas défini de méthode de paiement"
         has_no_shipping_methods: "%{enterprise} n'a pas défini de méthode de livraison"
         has_no_enterprise_fees: "%{enterprise} n'a pas défini de marges et commissions"
+      side_menu:
+        enterprise:
+          primary_details: "Informations de base"
+          address: "Adresse"
+          contact: "Contact"
+          social: "Réseaux sociaux"
+          about: "A propos"
+          business_details: "Juridique"
+          images: "Images"
+          properties: "Labels / propriétés"
+          shipping_methods: "Méthodes de livraison"
+          payment_methods: "Méthodes de paiement"
+          enterprise_fees: "Marges et Commissions"
+          enterprise_permissions: "Permissions Inter-entreprises"
+          inventory_settings: "Catalogue comptoir"
+          tag_rules: "Règles de tag"
+          shop_preferences: "Préférences comptoir"
+          users: "gestionnaire"
+        enterprise_group:
+          primary_details: "Informations de base"
+          users: "gestionnaire"
+          about: "A propos"
+          images: "Images"
+          contact: "Contact"
+          web: "Liens web"
     enterprise_issues:
       create_new: Créer Nouveau
       resend_email: Renvoyer l'email
@@ -1293,6 +1383,7 @@ fr_BE:
         login: "Se connecter"
         contact: "contacter"
         require_customer_login: "Seuls les clients approuvés peuvent accéder à ce comptoir."
+        require_login_link_html: "Si vous êtes déjà un client approuvé, %{login} ou %{signup} pour continuer."
         require_login_2_html: "Vous voulez commencer à faire vos achats ici? Veuillez %{contact} %{enterprise} et demandez à vous inscrire."
         require_customer_html: "Si vous souhaitez commencer à faire vos achats ici, veuillez %{contact}%{enterprise} et demandez pour vous inscrire."
       select_oc:
@@ -1524,18 +1615,17 @@ fr_BE:
       cart: "panier"
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
     step1:
-      your_details:
-        title: Vos informations
-        first_name:
-          label: Prénom
-        last_name:
-          label: Nom de famille
+      contact_information:
         email:
           label: Email
         phone:
           label: Numéro de téléphone
       billing_address:
         title: Adresse de facturation
+        first_name:
+          label: Prénom
+        last_name:
+          label: Nom de famille
       address:
         city:
           label: Ville
@@ -1554,10 +1644,14 @@ fr_BE:
         card_year:
           label: Année
     step3:
-      your_details:
-        title: Vos informations
-      billing_address:
-        title: Adresse de facturation
+      delivery_details:
+        title: Détails de livraison
+        edit: Modifier
+        address: Adresse de livraison
+      payment_method:
+        edit: Modifier
+      order:
+        edit: Modifier
       terms_and_conditions:
         link_text: "Termes et conditions"
       all_terms_and_conditions:
@@ -1831,7 +1925,6 @@ fr_BE:
   orders_form_empty_cart: "Vider le panier"
   orders_form_update_cart: "Mettre à jour"
   orders_form_subtotal: "Sous-total"
-  orders_form_admin: "Admin & traitements"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Les commandes ne sont plus possibles pour ce cycle de vente."
   orders_oc_expired_text: "Désolé, les commandes pour ce cycle de vente ont été clôturées il y a %{time}! Veuillez contacter directement le comptoir pour voir s'il accepte les commandes tardives."
@@ -2094,7 +2187,6 @@ fr_BE:
   admin_enterprise_groups_data_powertip: "Le manager principal en charge de ce groupe."
   admin_enterprise_groups_data_powertip_logo: "Il s'agit du logo du groupe"
   admin_enterprise_groups_data_powertip_promo_image: "Cette image est affichée en haut du profil Groupe."
-  admin_enterprise_groups_contact: "Contact"
   admin_enterprise_groups_contact_phone_placeholder: "ex: 0475 13 24 35"
   admin_enterprise_groups_contact_address1_placeholder: "ex: 24 rue de la croix verte"
   admin_enterprise_groups_contact_city: "Ville"
@@ -2103,7 +2195,6 @@ fr_BE:
   admin_enterprise_groups_contact_zipcode_placeholder: "ex: 4400"
   admin_enterprise_groups_contact_state_id: "Province"
   admin_enterprise_groups_contact_country_id: "Pays"
-  admin_enterprise_groups_web: "Liens web"
   admin_enterprise_groups_web_twitter: "ex: @OpenFoodNet"
   admin_enterprise_groups_web_website_placeholder: "ex: www.maferme.org"
   admin_order_cycles: "Gérer les cycles de vente"
@@ -2306,6 +2397,8 @@ fr_BE:
   report_header_tax_on_delivery: "TVA sur livraison (%{currency_symbol})"
   report_header_tax_on_fees: "TVA sur commission hub (%{currency_symbol})"
   report_header_total_tax: "Total TVA (%{currency_symbol})"
+  report_header_total_excl_tax: "Total HT (%{currency_symbol})"
+  report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
   report_header_enterprise: Entreprise
   report_header_customer: Client
   report_header_customer_code: Code acheteur
@@ -2342,6 +2435,9 @@ fr_BE:
   report_header_delivery_postcode: Code Postal Livraison
   report_header_bulk_unit_size: Quantité totale du lot
   report_header_weight: Poids
+  report_header_height: Taille
+  report_header_width: largeur
+  report_header_depth: profondeur
   report_header_sum_total: Somme Totale
   report_header_date_of_order: Date de Commande
   report_header_amount_owing: Montant dû
@@ -2413,11 +2509,8 @@ fr_BE:
   images: "Images"
   web: "Web"
   primary_details: "Informations de base"
-  adrdress: "Adresse"
   contact: "Contact"
   social: "Réseaux sociaux"
-  business_details: "Juridique"
-  properties: "Propriétés / labels"
   shipping: "Expédition"
   shipping_methods: "Méthodes de livraison"
   payment_methods: "Méthodes de paiement"
@@ -2425,11 +2518,8 @@ fr_BE:
   payment_processing_failed: "Le paiement n' a pu être effectué , merci de vérifier les données rentrées"
   payment_method_not_supported: "Ce mode de paiement n'est pas possible. Veuillez en choisir un autre."
   payment_updated: "Paiement mis à jour "
-  inventory_settings: "Catalogue comptoir"
   tag_rules: "Règles de tag"
-  shop_preferences: "Préférences comptoir"
   enterprise_fee_whole_order: Commande totale
-  enterprise_fee_by: "%{type}marges/frais par %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Un lien est déjà établi entre ces entreprises."
   validation_msg_at_least_one_hub: "^Sélectionnez au moins  un comptoir"
   validation_msg_tax_category_cant_be_blank: "^Veuillez sélectionner la TVA applicable"
@@ -2513,6 +2603,7 @@ fr_BE:
         got_it: "J'ai compris"
         close: "Fermer"
         continue: "Suivant"
+        cancel: "Annuler"
         invite: "Inviter"
         invite_title: "Inviter un·e nouvel·le utilisateur·trice"
         tag_rule_help:
@@ -2684,7 +2775,6 @@ fr_BE:
           pending: "en attente"
           resumed: "recommencé"
           returned: "retourné"
-          skrill: "cash"
         shipment_states:
           backorder: "réapprovisionnement"
           partial: "partiel"
@@ -2700,9 +2790,12 @@ fr_BE:
           failed: "échec"
           paid: "payé"
           pending: "en attente"
+          requires_authorization: "Autorisation nécessaire"
           processing: "en traitement"
           void: "faire un avoir"
           invalid: "invalide"
+        restock_item: "Recharger le stock de ce produit"
+        restock_items: "Recharger le stock de tous les produits"
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoi...."
@@ -2754,6 +2847,8 @@ fr_BE:
         add_to_cart: "Ajouter"
       bulk_buy_modal:
         max_quantity: "Quantité max"
+      price_breakdown: "Détail du prix"
+      unit_price_tooltip: "Il s'agit du prix unitaire de ce produit. Il permet à l'acheteur de comparer les prix quelque soit le conditionnement final du produit."
     variants:
       on_demand:
         'yes': "A volonté"
@@ -3189,6 +3284,7 @@ fr_BE:
           results_found: "%{number} résultats trouvés"
           viewing: "Résultats %{start} à %{end} affichés."
           print_invoices: "Imprimer les factures"
+          resend_confirmation: "Renvoyer la confirmation"
         sortable_header:
           payment_state: "Statut du Paiement"
           shipment_state: "Statut livraison"
@@ -3315,7 +3411,6 @@ fr_BE:
           paypal:
             no_payment_via_admin_backend: Les payement paypal ne savent pas etre prit dans le Backoffice
       products:
-        image_upload_error: "L'image du produit n'a pas été reconnue. Veuillez télécharger une image au format PNG ou JPG."
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
@@ -3470,6 +3565,7 @@ fr_BE:
       paid: payé
       pending: en attente
       processing: en traitement
+      requires_authorization: "Autorisation nécessaire"
       void: faire un avoir
       invalid: invalide
     order_mailer:
@@ -3531,7 +3627,6 @@ fr_BE:
       pending: en attente
       resumed: recommencé
       returned: retourné
-      skrill: cash
     subscription_state:
       active: actif
       pending: en attente
@@ -3541,6 +3636,8 @@ fr_BE:
     paypal:
       refund_amount: "Quantité"
     users:
+      api_keys:
+        regenerate_key: "Regénération de clé"
       form:
         account_settings: Paramètres du Compte
       show:
@@ -3572,7 +3669,8 @@ fr_BE:
         items: Produits
         total: Total
         paid?: Payé ?
-        view: Afficher
+        status: Statut
+        cancelled: Annulée
       saved_cards:
         default?: Carte utilisée par défaut?
         delete?: Supprimer?
@@ -3599,3 +3697,11 @@ fr_BE:
       shipment:
         cannot_ready: "Impossible de préparer l'expédition."
       invalid_taxonomy_id: "Id taxonomique invalide."
+  components:
+    search_input:
+      placeholder: Rechercher
+    selector_with_filter:
+      search_placeholder: Rechercher
+    pagination:
+      next: Suivant
+      previous: Précédent

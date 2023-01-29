@@ -11,6 +11,8 @@
     - if flash[:success]
       .flash.success= flash[:success]
 
+    = render partial: "shared/flashes"
+
   = render partial: "spree/layouts/admin/progress_spinner"
 
   %header#header{"data-hook" => ""}

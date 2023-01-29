@@ -23,6 +23,7 @@ pl:
         state: Status
         source: Źródło
       spree/product:
+        price: "Cena"
         primary_taxon: "Kategoria produktu"
         supplier: "Dostawca"
         shipping_category_id: "Kategoria dostawy"
@@ -199,7 +200,6 @@ pl:
   search_by_name: Szukaj według nazwy lub miejscowości ...
   producers_join: Australijscy producenci mogą teraz dołączyć do Open Food Network.
   charges_sales_tax: Pobiera podatek VAT?
-  enterprise_permissions: "Uprawnienia podmiotu"
   print_invoice: "Wydrukować fakturę"
   print_ticket: "Wydrukuj bilet"
   select_ticket_printer: "Wybierz drukarkę do wydruku biletów"
@@ -296,6 +296,22 @@ pl:
     delete: "Usuń"
     add: "Dodaj"
   admin:
+    products_page:
+      filters:
+        producers:
+          title: Producenci
+        colums: Kulumny
+      columns:
+        name: Nazwa
+        unit: Jednostka
+        price: Cena
+        producer: Producent
+        category: Kategoria
+      columns_selector:
+        unit: Jednostka
+        price: Cena
+        producer: Producent
+        category: Kategoria
     begins_at: Początek o
     begins_on: Początek się w dniu
     customer: Klient
@@ -410,8 +426,6 @@ pl:
         confirm_delete: "Na pewno chcesz usunąć?"
         search_by_email: "Szukaj według adresu e-mail / kodu ..."
         guest_label: "Kasa dla gości"
-      destroy:
-        has_associated_orders: "Usunięcie nie powiodło się: klient ma zamówienia w swoim sklepie"
     contents:
       edit:
         title: Zawartość
@@ -439,6 +453,10 @@ pl:
     enterprise_groups:
       index:
         new_button: Nowa grupa podmiotów
+      form_about:
+        about: "O nas"
+      form_images:
+        images: "Obrazy"
     enterprise_roles:
       form:
         manages: zarządza
@@ -646,6 +664,7 @@ pl:
         manage: Zarządzaj
       form:
         about_us:
+          legend: "O nas"
           desc_short: Krótki opis
           desc_short_placeholder: Opowiedz nam o sobie w jednym lub dwóch zdaniach
           desc_long: O nas
@@ -670,12 +689,16 @@ pl:
           website: Strona internetowa
           website_placeholder: np. www.dobrze.com
         enterprise_fees:
+          legend: "Opłaty dla podmiotów"
           name: Nazwa
           fee_type: Typ opłaty
           manage_fees: Zarządzaj opłatami dla podmiotów
           no_fees_yet: Nie masz jeszcze żadnych opłat dla podmiotów.
           create_button: Utwórz je teraz
+        enterprise_permissions:
+          legend: "Uprawnienia podmiotu"
         images:
+          legend: "Obrazy"
           logo: Logo
           promo_image_placeholder: 'Ten obraz jest wyświetlany w „O nas”'
           promo_image_note1: 'PROSZĘ ZANOTOWAĆ:'
@@ -694,6 +717,7 @@ pl:
           preferred_product_selection_from_inventory_only_yes: Nowe produkty można umieścić w moim sklepie (zalecane)
           preferred_product_selection_from_inventory_only_no: Nowe produkty muszą zostać dodane do mojego magazynu, zanim będą mogły zostać umieszczone w moim sklepie
         payment_methods:
+          legend: "Metody płatności"
           name: Nazwa
           applies: Dotyczy?
           manage: Zarządzaj formami płatności
@@ -715,13 +739,13 @@ pl:
           sells: Sprzedaje
           sells_tip: "Brak - podmiot nie prowadzi sprzedaży bezpośredniej klientom. <br /> Własne - podmiot sprzedaje klientom własne produkty. <br /> Dowolne - podmiot może sprzedawać własne lub produkty innego podmiotu. <br />"
           visible_in_search: Widoczne w wynikach wyszukiwania?
-          permalink: Permalink (bez spacji)
-          permalink_tip: "Ten link bezpośredni służy do tworzenia adresu URL do Twojego sklepu: %{link} nazwa-Twojego-sklepu / sklepu"
+        properties:
+          legend: "Właściwości"
+        permalink:
           link_to_front: Link do strony sklepu
-          link_to_front_tip: Bezpośredni link do Twojej witryny sklepowej w Open Food Network.
-          ofn_uid: OFN UID
           ofn_uid_tip: Unikalny identyfikator używany do identyfikacji podmiotów w Open Food Network.
         shipping_methods:
+          legend: "Metody dostaw"
           name: "Nazwa"
           applies: "Aktywny?"
           manage: "Zarządzaj metodami dostaw"
@@ -769,6 +793,7 @@ pl:
           shopfront_sort_by_category_placeholder: "Kategoria"
           shopfront_sort_by_producer_placeholder: "Producent"
         social:
+          legend: "Społeczności"
           twitter_placeholder: "np. @profesor"
           instagram_placeholder: "np. @profesor"
           facebook_placeholder: "np. www.facebook.com/TwojaNazwa"
@@ -915,9 +940,14 @@ pl:
         fees: "Opłaty"
         previous: "Poprzedni"
         save: "Zapisz"
-        save_and_back_to_list: "Zapisz i wróć do listy"
         cancel: "Anuluj"
         back_to_list: "Powrót do listy"
+      checkout_options:
+        cancel: "Anuluj"
+        payment_methods: "Metody płatności"
+        save: "Zapisz"
+        select_all: "Zaznacz wszystko"
+        shipping_methods: "Metody dostaw"
       wizard_progress:
         edit: "1. Ustawienia ogólne"
         incoming: "2. Produkty przychodzące"
@@ -979,6 +1009,7 @@ pl:
         customer_instructions_placeholder: Dowody odbioru lub dostawy
         products: Produkty
         fees: Opłaty
+        tags: Tagi
       destroy_errors:
         orders_present: Ten cykl zamówień został wybrany przez klienta i nie można go usunąć. Aby uniemożliwić klientom dostęp do niego, zamknij go.
         schedule_present: Ten cykl zamówień jest powiązany z harmonogramem i nie można go usunąć. Najpierw odłącz lub usuń harmonogram.
@@ -1003,6 +1034,19 @@ pl:
         has_no_payment_methods: "%{enterprise} nie ma metod płatności"
         has_no_shipping_methods: "%{enterprise} nie ma metod dostaw"
         has_no_enterprise_fees: "%{enterprise} nie ma opłat dla podmiotów"
+      side_menu:
+        enterprise:
+          social: "Społeczności"
+          about: "O nas"
+          images: "Obrazy"
+          properties: "Właściwości"
+          shipping_methods: "Metody dostaw"
+          payment_methods: "Metody płatności"
+          enterprise_fees: "Opłaty dla podmiotów"
+          enterprise_permissions: "Uprawnienia podmiotu"
+        enterprise_group:
+          about: "O nas"
+          images: "Obrazy"
     enterprise_issues:
       create_new: Uwórz nowy
       resend_email: Ponownie wysłać wiadomość e-mail
@@ -1458,7 +1502,7 @@ pl:
     already_ordered:
       cart: "koszyk"
     step1:
-      your_details:
+      contact_information:
         email:
           label: E-mail
       address:
@@ -1470,6 +1514,13 @@ pl:
           label: Miesiąc
         card_year:
           label: Rok
+    step3:
+      delivery_details:
+        edit: Edytuj
+      payment_method:
+        edit: Edytuj
+      order:
+        edit: Edytuj
   order_paid: OPŁACONY
   order_not_paid: NIEZAPŁACONE
   order_total: Całkowite zamówienie
@@ -1733,7 +1784,6 @@ pl:
   orders_form_empty_cart: "Pusty koszyk"
   orders_form_update_cart: "Aktualizuj"
   orders_form_subtotal: "Podaj sumę częściową"
-  orders_form_admin: "Administracja i obsługa"
   orders_form_total: "Razem"
   orders_oc_expired_headline: "Ten cykl zamówień został zamknięty"
   orders_oc_expired_text: "Przepraszamy, zamówienia dla tego cyklu zamówień zostały zakończone %{time} temu! Skontaktuj się bezpośrednio z hubem, aby sprawdzić, czy może przyjmować spóźnione zamówienia."
@@ -1995,7 +2045,6 @@ pl:
   admin_enterprise_groups_data_powertip: "Główny użytkownik odpowiedzialny za tę grupę."
   admin_enterprise_groups_data_powertip_logo: "To jest logo grupy"
   admin_enterprise_groups_data_powertip_promo_image: "Ten obraz jest wyświetlany u góry profilu grupy"
-  admin_enterprise_groups_contact: "Kontakt"
   admin_enterprise_groups_contact_phone_placeholder: "np. +48 123 456 789"
   admin_enterprise_groups_contact_address1_placeholder: "np. Łąkowa 1"
   admin_enterprise_groups_contact_city: "Lokalizacja"
@@ -2004,7 +2053,6 @@ pl:
   admin_enterprise_groups_contact_zipcode_placeholder: "np. 60-234"
   admin_enterprise_groups_contact_state_id: "Status"
   admin_enterprise_groups_contact_country_id: "Kraj"
-  admin_enterprise_groups_web: "Zasoby internetowe"
   admin_enterprise_groups_web_twitter: "np. @profesor"
   admin_enterprise_groups_web_website_placeholder: "np. www.sliwa.com"
   admin_order_cycles: "Zarządzaj cyklami zamówień"
@@ -2236,6 +2284,9 @@ pl:
   report_header_delivery_postcode: Kod pocztowy dostawy
   report_header_bulk_unit_size: Rozmiar jednostki zbiorczej
   report_header_weight: Waga
+  report_header_height: Wysokość
+  report_header_width: Szerokość
+  report_header_depth: Głębokość
   report_header_sum_total: Całkowita suma
   report_header_date_of_order: Data zamówienia
   report_header_amount_owing: Kwota należna
@@ -2307,11 +2358,8 @@ pl:
   images: "Obrazy"
   web: "Sieć"
   primary_details: "Podstawowe szczegóły"
-  adrdress: "Adres"
   contact: "Kontakt"
   social: "Społeczności"
-  business_details: "Szczegóły biznesowe"
-  properties: "Właściwości"
   shipping: "Dostawa"
   shipping_methods: "Metody dostaw"
   payment_methods: "Metody płatności"
@@ -2319,11 +2367,8 @@ pl:
   payment_processing_failed: "Nie można przetworzyć płatności. Sprawdź wprowadzone dane"
   payment_method_not_supported: "Ta metoda płatności nie jest obsługiwana. Proszę wybrać inny."
   payment_updated: "Zaktualizowano płatność"
-  inventory_settings: "Ustawienia zapasów"
   tag_rules: "Reguły tagów"
-  shop_preferences: "Preferencje sklepu"
   enterprise_fee_whole_order: Całe zamówienie
-  enterprise_fee_by: "%{type} opłata przez %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^ Ten związek jest już ustanowiony."
   validation_msg_at_least_one_hub: "^ Należy wybrać co najmniej jeden hub"
   validation_msg_tax_category_cant_be_blank: "^ Kategoria podatku nie może być pusta"
@@ -2403,6 +2448,7 @@ pl:
       modals:
         got_it: "Rozumiem"
         close: "Zamknij"
+        cancel: "Anuluj"
         invite: "Zapraszam"
         invite_title: "Zaproś niezarejestrowanego użytkownika"
         tag_rule_help:
@@ -2560,7 +2606,6 @@ pl:
           pending: "w oczekiwaniu"
           resumed: "wznowione"
           returned: "zwrócone"
-          skrill: "skrill"
         shipment_states:
           backorder: "zaległe zamówienie"
           partial: "częściowy"
@@ -3177,6 +3222,7 @@ pl:
           results_found: "%{number} Znalezione wyniki."
           viewing: "Wyświetlam %{start} do %{end}."
           print_invoices: "Wydrukuj faktury"
+          resend_confirmation: "Ponownie wyślij potwierdzenie"
         sortable_header:
           payment_state: "Status Płatności"
           shipment_state: "Status dostawy"
@@ -3298,7 +3344,6 @@ pl:
           paypal:
             no_payment_via_admin_backend: Płatności PayPal nie mogą być przechwytywane w Backoffice
       products:
-        image_upload_error: "Zdjęcie produktu nie zostało rozpoznane. Prześlij obraz w formacie PNG lub JPG."
         new:
           title: "Nowy produkt"
           new_product: "Nowy produkt"
@@ -3506,7 +3551,6 @@ pl:
       pending: w oczekiwaniu
       resumed: wznowione
       returned: zwrócone
-      skrill: skrill
     subscription_state:
       active: aktywny
       pending: w oczekiwaniu
@@ -3547,7 +3591,8 @@ pl:
         items: Sztuki
         total: Razem
         paid?: Opłacony?
-        view: Widok
+        status: Status
+        cancelled: Anulowane
       saved_cards:
         default?: Domyślna?
         delete?: Kasować?
@@ -3581,3 +3626,8 @@ pl:
           few: Płatności
           many: Płatności
           other: Płatności
+  components:
+    search_input:
+      placeholder: Szukaj
+    selector_with_filter:
+      search_placeholder: Szukaj

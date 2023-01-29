@@ -452,7 +452,7 @@ describe Spree::Ability do
       it "should not be able to read other reports" do
         is_expected.not_to have_ability(
           [:group_buys, :payments, :orders_and_distributors, :users_and_enterprises,
-           :xero_invoices], for: :report
+           :xero_invoices, :revenues_by_hub], for: :report
         )
       end
 
@@ -684,7 +684,7 @@ describe Spree::Ability do
       include_examples "allows access to Enterprise Fee Summary"
 
       it "should not be able to read other reports" do
-        is_expected.not_to have_ability([:users_and_enterprises],
+        is_expected.not_to have_ability([:users_and_enterprises, :revenues_by_hub],
                                         for: :report)
       end
 

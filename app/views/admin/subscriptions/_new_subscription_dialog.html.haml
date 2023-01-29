@@ -1,0 +1,9 @@
+#new-subscription-dialog
+  .text-normal.margin-bottom-30.text-center
+    = t('js.admin.subscriptions.new.please_select_a_shop')
+
+  = form_with url: "/admin/subscriptions/new", method: :get  do |f|
+    .text-left.margin-bottom-30
+      = select_tag "subscription[shop_id]", options_from_collection_for_select(@shops, "id", "name"), { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
+    .text-center
+      = f.submit "Continue", class: "button red icon-plus"

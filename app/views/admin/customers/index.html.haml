@@ -102,7 +102,6 @@
             %td.actions
               %a{ 'ng-click' => "deleteCustomer(customer)", :class => "delete-customer icon-trash no-text" }
 
-      -# %show-more.text-center{ data: "filteredCustomers", limit: "customerLimit", increment: "20" }
       %div.text-center{ ng: { show: "filteredCustomers.length > customerLimit" } }
         %input{ type: 'button', value: t(:show_more), ng: { click: 'customerLimit = customerLimit + 20' } }
         %input{ type: 'button', value: t(:show_all_with_more, num: '{{ filteredCustomers.length - customerLimit }}'), ng: { click: 'customerLimit = filteredCustomers.length' } }

@@ -5,6 +5,10 @@ tr:
       spree/product: Ürün
       spree/shipping_method: TESLİMAT YÖNTEMİ
     attributes:
+      spree/order/ship_address:
+        phone: "Tel. no"
+        firstname: "Ad"
+        lastname: "Soyadı"
       spree/user:
         password: "Parola"
         password_confirmation: "Parola onayı"
@@ -23,6 +27,8 @@ tr:
         state: Durum
         source: Kaynak
       spree/product:
+        name: "ÜRÜN ADI"
+        price: "Fiyat"
         primary_taxon: "ÜRÜN KATEGORİSİ"
         supplier: "TEDARİKÇİ"
         shipping_category_id: "TESLİMAT KATEGORİSİ"
@@ -228,7 +234,6 @@ tr:
   search_by_name: Üretici adına veya konuma göre arama yapın...
   producers_join: Bağımsız gıda üreticileri! Açık Gıda Ağı sizler için kullanıma açıldı.
   charges_sales_tax: KDV Uyguluyor mu?
-  enterprise_permissions: "İŞLETME İZİNLERİ"
   print_invoice: "Faturayı yazdır"
   print_ticket: "Etiketi Yazdır"
   select_ticket_printer: "Etiketler için yazıcı seçin"
@@ -334,6 +339,25 @@ tr:
     destroy: "İmha Et"
     rename: "Yeniden Adlandır"
   admin:
+    products_page:
+      title: Ürünler
+      filters:
+        categories:
+          title: Kategoriler
+        producers:
+          title: ÜRETİCİLER
+        colums: Sütunlar
+      columns:
+        name: Ad
+        unit: Birim
+        price: Fiyat
+        producer: ÜRETİCİ
+        category: Kategori
+      columns_selector:
+        unit: Birim
+        price: Fiyat
+        producer: ÜRETİCİ
+        category: Kategori
     adjustments:
       skipped_changing_canceled_order: "İptal edilmiş bir siparişi değiştiremezsiniz."
     begins_at: Başlangıç
@@ -469,8 +493,6 @@ tr:
         guest_label: "Misafir Ödemesi"
         credit_owed: "Artı Bakiye"
         balance_due: "Ödenmesi Gereken Bakiye"
-      destroy:
-        has_associated_orders: "Silme başarısız oldu: müşterinin bağlantılı siparişleri var"
     contents:
       edit:
         title: İÇERİK
@@ -498,6 +520,18 @@ tr:
     enterprise_groups:
       index:
         new_button: Yeni Girişim Grubu
+      form_primary_details:
+        primary_details: "TEMEL BİLGİLER"
+      form_users:
+        users: "Kullanıcılar"
+      form_about:
+        about: "HAKKINDA"
+      form_images:
+        images: "Görseller"
+      form_address:
+        contact: "İLETİŞİM"
+      form_web:
+        web: "Web Kaynakları"
     enterprise_roles:
       form:
         manages: yönetir
@@ -708,11 +742,15 @@ tr:
         manage: Yönet
       form:
         about_us:
+          legend: "HAKKINDA"
           desc_short: Kısa Açıklama
           desc_short_placeholder: Bir veya iki cümleyle bize işletmenizden bahsedin
           desc_long: HAKKIMIZDA
           desc_long_placeholder: Müşterilerinize kendinizden bahsedin. Bu bilgiler profilinizde görünür.
+        address:
+          legend: "Adres"
         business_details:
+          legend: "İşletme Detayları"
           abn: VKN/TCKN
           abn_placeholder: Örn. 12345678990
           acn: Mersis no.
@@ -725,6 +763,7 @@ tr:
         business_address:
           address2: Adres (devam)
         contact:
+          legend: "İLETİŞİM"
           name: Ad
           name_placeholder: Örn. Toprak Güneş
           email_address: E-posta Adresi
@@ -735,12 +774,16 @@ tr:
           website: İnternet sitesi
           website_placeholder: Örn. www.ciftlik.com
         enterprise_fees:
+          legend: "İşletme Ücretleri"
           name: Ad
           fee_type: Ücret Türü
           manage_fees: İŞLETME ÜCRETLERİNİ YÖNET
           no_fees_yet: Henüz herhangi bir işletme ücretiniz yok.
           create_button: Şimdi Oluştur
+        enterprise_permissions:
+          legend: "İŞLETME İZİNLERİ"
         images:
+          legend: "Görseller"
           logo: Logo
           promo_image_placeholder: 'Bu görsel ''Hakkımızda'' kısmında görüntülenir'
           promo_image_note1: 'DİKKAT:'
@@ -749,6 +792,7 @@ tr:
           remove_logo: "Resmi Kaldır"
           remove_promo_image: "Resmi Kaldır"
         inventory_settings:
+          legend: "Stok Ayarları"
           text1: 'Stok seviyelerini ve fiyatları şuradan yönetebilirsiniz:'
           inventory: Stok
           text2: >
@@ -759,6 +803,7 @@ tr:
           preferred_product_selection_from_inventory_only_yes: DÜKKANINIZA YENİ ÜRÜNLER EKLENEBİLİR (ÖNERİLİR)
           preferred_product_selection_from_inventory_only_no: Yeni ürünler dükkanınıza eklemeden önce Stok listesine girilmelidir
         payment_methods:
+          legend: "ÖDEME YÖNTEMLERİ"
           name: Ad
           applies: Uygulanma?
           manage: ÖDEME YÖNTEMLERİNİ YÖNET
@@ -766,6 +811,7 @@ tr:
           create_button: YENİ ÖDEME YÖNTEMİ OLUŞTUR
           create_one_button: Şimdi Oluştur
         primary_details:
+          legend: "TEMEL BİLGİLER"
           name: Ad
           name_placeholder: Örn. Ahmet Amca'nın Ekolojik Meyveleri
           groups: AĞLAR
@@ -781,6 +827,9 @@ tr:
           sells_tip: "Satış Yapmıyor - İşletme müşterilere doğrudan satış yapmaz. <br /> Kendi Ürünleri - İşletme müşterilerine kendi ürünlerini satar. <br /> Kendi ve/veya başkasının ürünleri - İşletme kendi ürünlerini ve/veya diğer işletmelerin ürünlerini satabilir. <br />"
           visible_in_search: ARAMADA GÖRÜNÜR MÜ?
           visible: Herkese açık
+        properties:
+          legend: "ÖZELLİKLER"
+        permalink:
           permalink: Bağlantı Adı (boşluk yok)
           permalink_tip: "Bağlantı adı, mağazanızın bağlantı URL'sini oluşturmak için kullanılır: %{link}sectiginiz-ad/dükkan"
           link_to_front: Dükkan linkiniz
@@ -788,6 +837,7 @@ tr:
           ofn_uid: AGA KN
           ofn_uid_tip: Açık Gıda Ağı'na kayıtlı işletmenize özel tanımlanan kimlik numarası
         shipping_methods:
+          legend: "TESLİMAT YÖNTEMLERİ"
           name: "Ad"
           applies: "AKTİF?"
           manage: "Teslimat Yöntemlerini Yönet"
@@ -795,6 +845,7 @@ tr:
           create_one_button: "Şimdi Oluştur"
           no_method_yet: "Henüz herhangi bir teslimat yönteminiz yok."
         shop_preferences:
+          legend: "Dükkan Tercihleri"
           shopfront_requires_login: "DÜKKANINIZ HERKESE AÇIK MI?"
           shopfront_requires_login_tip: "Dükkanınızın yalnızca üyelerinize mi yoksa herkese mi açık olduğunu seçin."
           shopfront_requires_login_false: "Herkese açık"
@@ -841,6 +892,7 @@ tr:
           enabled: "Etkin"
           disabled: "Kapalı"
         social:
+          legend: "Sosyal"
           twitter_placeholder: "Örn.  @the_usta"
           instagram_placeholder: "Örn. ciftlik   (başına @ işareti koymayınız)"
           facebook_placeholder: "Örn: www.facebook.com/TurkiyeKoop"
@@ -858,6 +910,7 @@ tr:
             i_agree: Onaylıyorum
             cancel: İptal Et
         tag_rules:
+          legend: "ETİKET KURALLARI"
           default_rules:
             by_default: 'Varsayılan '
             no_rules_yet: Henüz varsayılan bir kural uygulanmadı
@@ -868,6 +921,7 @@ tr:
           add_new_rule: '+ Yeni Kural Ekle'
           add_new_tag: '+ Yeni Etiket Ekle'
         users:
+          legend: "Kullanıcılar"
           email_confirmation_notice_html: "E-posta onayı bekleniyor. %{email} adresine bir doğrulama e-postası gönderdik."
           resend: Yeniden gönder
           owner: 'Sahip'
@@ -985,11 +1039,21 @@ tr:
         tags: "ETİKETLER"
         delivery_details: "Teslimat Detayları"
         fees: "Ücretler"
+        next: "Sonrakİ"
         previous: "Önceki"
         save: "Kaydet"
-        save_and_back_to_list: "KAYDET VE LİSTEYE DÖN"
+        save_and_next: "Kaydet ve İlerle"
         cancel: "İptal et"
         back_to_list: "Listeye geri dön"
+      checkout_options:
+        back_end: "Sadece panel"
+        cancel: "İptal et"
+        distributor: "Dağıtımcı"
+        payment_methods: "ÖDEME YÖNTEMLERİ"
+        save: "Kaydet"
+        save_and_back_to_list: "KAYDET VE LİSTEYE DÖN"
+        select_all: "Hepsini seç"
+        shipping_methods: "TESLİMAT YÖNTEMLERİ"
       wizard_progress:
         edit: "1. Genel Ayarlar"
         incoming: "2. Gelen Ürünler"
@@ -1054,6 +1118,7 @@ tr:
         customer_instructions_placeholder: Teslimat / Gönderim Notları
         products: Ürünler
         fees: ücretler
+        tags: ETİKETLER
       destroy_errors:
         orders_present: Bu sipariş dönemine ait bir müşteri talebi var ve bu sebeple silinemez. Müşterilerin erişimini önlemek için silmek yerine sipariş dönemini kapatmayı tercih edin.
         schedule_present: Bu sipariş dönemi bir takvimle bağlantılı ve silinemez. Lütfen önce takvim  bağlantısını kaldırın veya takvimi silin.
@@ -1063,6 +1128,8 @@ tr:
         msg: Bu sipariş dönemine ait %{n} adet üye siparişi var. Tarihin şimdi değiştirilmesi, önceden verilen siparişleri etkilemeyecektir, ancak mümkünse bunu yapmaktan kaçınılmalıdır. Devam etmek istediğinizden emin misiniz?
         cancel: İptal et
         proceed: İlerle
+      status:
+        closed: kapalı
     producer_properties:
       index:
         title: Üretici Özellikleri
@@ -1078,6 +1145,31 @@ tr:
         has_no_payment_methods: "%{enterprise} için bir ödeme yöntemi yok"
         has_no_shipping_methods: "%{enterprise} için bir teslimat yöntemi yok"
         has_no_enterprise_fees: "%{enterprise} için herhangi bir işletme ücreti yok"
+      side_menu:
+        enterprise:
+          primary_details: "TEMEL BİLGİLER"
+          address: "Adres"
+          contact: "İLETİŞİM"
+          social: "Sosyal"
+          about: "HAKKINDA"
+          business_details: "İşletme Detayları"
+          images: "Görseller"
+          properties: "ÖZELLİKLER"
+          shipping_methods: "TESLİMAT YÖNTEMLERİ"
+          payment_methods: "ÖDEME YÖNTEMLERİ"
+          enterprise_fees: "İşletme Ücretleri"
+          enterprise_permissions: "İŞLETME İZİNLERİ"
+          inventory_settings: "Stok Ayarları"
+          tag_rules: "ETİKET KURALLARI"
+          shop_preferences: "Dükkan Tercihleri"
+          users: "Kullanıcılar"
+        enterprise_group:
+          primary_details: "TEMEL BİLGİLER"
+          users: "Kullanıcılar"
+          about: "HAKKINDA"
+          images: "Görseller"
+          contact: "İLETİŞİM"
+          web: "Web Kaynakları"
     enterprise_issues:
       create_new: Yeni oluştur
       resend_email: E-postayı yeniden gönder
@@ -1568,32 +1660,24 @@ tr:
       cart: "sepet"
       message_html: "Bu sipariş dönemi için zaten bir siparişiniz var. Daha önce sipariş ettiğiniz ürünleri görmek için %{cart} adresini kontrol edin. Sipariş dönemi açık olduğu sürece siparişlerinizde değişiklik yapabilirsiniz."
     step1:
-      your_details:
-        title: Bilgilerin
-        first_name:
-          label: Ad
-          placeholder: örn. Leyla
-        last_name:
-          label: Soyad
-          placeholder: örn. Durak
+      contact_information:
         email:
           label: E-posta
-          placeholder: örn. leyla@email.com
         phone:
           label: Tel. no
-          placeholder: örn. 05321100708
       billing_address:
         title: Fatura Adresi
+        first_name:
+          label: Ad
+        last_name:
+          label: Soyad
       address:
         address1:
           label: Adres (Sokak + Ev Numarası)
-          placeholder: örn. Küme Sk. No:7 Uğur Apt.
         address2:
           label: Ek adres bilgisi (isteğe bağlı)
-          placeholder: örn. şairler parkı yanı
         city:
           label: ŞEHİR
-          placeholder: örn. İstanbul
         state_id:
           label: Durum
         zipcode:
@@ -1618,18 +1702,15 @@ tr:
       submit: Sonraki - Sipariş özeti
       cancel: Bilgilerinize geri dönün
     step3:
-      your_details:
-        title: Bilgilerin
-        edit: Bilgilerinizi düzenleyin
-      billing_address:
-        title: Fatura adresi
-      delivery_info:
-        title: Teslimat bilgileri
+      delivery_details:
+        title: Teslimat Detayları
+        edit: Düzenle
+        address: Teslimat adresi
       payment_method:
         title: Ödeme yöntemi
-        edit: Ödeme yöntemini düzenle
+        edit: Düzenle
       order:
-        title: Sipariş toplamı
+        edit: Düzenle
       terms_and_conditions:
         message_html: "Bu satıcının %{terms_and_conditions_link}'ını onaylıyorum."
         link_text: "Şartlar ve Koşullar"
@@ -1915,7 +1996,6 @@ tr:
   orders_form_empty_cart: "Sepeti Boşalt"
   orders_form_update_cart: "Güncelle"
   orders_form_subtotal: "Ürün Ara Toplamı"
-  orders_form_admin: "Yönetim & Operasyon"
   orders_form_total: "Toplam"
   orders_oc_expired_headline: "Bu sipariş dönemi için siparişler kapatıldı"
   orders_oc_expired_text: "Üzgünüz, bu sipariş dönemi siparişleri %{time} önce kapandı! Geç siparişleri kabul edip edemeyeceklerini görmek için lütfen doğrudan pazarınızla iletişime geçin."
@@ -2186,7 +2266,6 @@ tr:
   admin_enterprise_groups_data_powertip: "Bu gruptan sorumlu birincil kullanıcı."
   admin_enterprise_groups_data_powertip_logo: "Grubun logosu"
   admin_enterprise_groups_data_powertip_promo_image: "Bu resim grup profilinin üstünde görüntülenir"
-  admin_enterprise_groups_contact: "İLETİŞİM"
   admin_enterprise_groups_contact_phone_placeholder: "Örn. 532 100 05 01"
   admin_enterprise_groups_contact_address1_placeholder: "Örn. 123 Cadde"
   admin_enterprise_groups_contact_city: "İlçe"
@@ -2195,7 +2274,6 @@ tr:
   admin_enterprise_groups_contact_zipcode_placeholder: "Örn. 34000"
   admin_enterprise_groups_contact_state_id: "Şehir"
   admin_enterprise_groups_contact_country_id: "Ülke"
-  admin_enterprise_groups_web: "Web Kaynakları"
   admin_enterprise_groups_web_twitter: "Örn. @the_ciftlik"
   admin_enterprise_groups_web_website_placeholder: "Örn. www.ciftlik.com"
   admin_order_cycles: "Yönetici Sipariş Dönemleri"
@@ -2398,6 +2476,8 @@ tr:
   report_header_tax_on_delivery: "Teslimat Vergisi (%{currency_symbol})"
   report_header_tax_on_fees: "Ücretler Vergisi (%{currency_symbol})"
   report_header_total_tax: "Toplam Vergi (%{currency_symbol})"
+  report_header_total_excl_tax: "Vergi Hariç Toplam (%{currency_symbol})"
+  report_header_total_incl_tax: "Vergi Dahil Toplam (%{currency_symbol})"
   report_header_enterprise: İşletme
   report_header_customer: Müşteri
   report_header_customer_code: Müşteri kodu
@@ -2434,6 +2514,9 @@ tr:
   report_header_delivery_postcode: Teslimat Adresi Posta Kodu
   report_header_bulk_unit_size: Toplu Alım Miktarı
   report_header_weight: Ağırlık
+  report_header_height: Boy
+  report_header_width: En
+  report_header_depth: Boy
   report_header_sum_total: Toplamı
   report_header_date_of_order: Sipariş Tarihi
   report_header_amount_owing: Borç Tutarı
@@ -2505,11 +2588,8 @@ tr:
   images: "Görseller"
   web: "Web"
   primary_details: "TEMEL BİLGİLER"
-  adrdress: "Adres"
   contact: "İLETİŞİM"
   social: "Sosyal"
-  business_details: "İşletme Detayları"
-  properties: "ÖZELLİKLER"
   shipping: "Teslimat"
   shipping_methods: "TESLİMAT YÖNTEMLERİ"
   payment_methods: "ÖDEME YÖNTEMLERİ"
@@ -2519,11 +2599,8 @@ tr:
   payment_updated: "Ödeme Güncellendi"
   cannot_perform_operation: "Ödeme güncellenemedi"
   action_required: "İşlem gerekiyor"
-  inventory_settings: "Stok Ayarları"
   tag_rules: "ETİKET KURALLARI"
-  shop_preferences: "Dükkan Tercihleri"
   enterprise_fee_whole_order: Tüm sipariş
-  enterprise_fee_by: "%{role}%{enterprise_name} tarafından%{type} ücreti"
   validation_msg_relationship_already_established: "^ Bu ilişki zaten kurulmuş."
   validation_msg_at_least_one_hub: "^ En az bir pazar seçilmelidir"
   validation_msg_tax_category_cant_be_blank: "^ Vergi Kategorisi boş bırakılamaz"
@@ -2607,6 +2684,7 @@ tr:
         got_it: "Anladım"
         close: "Kapat"
         continue: "Devam et"
+        cancel: "İptal et"
         invite: "Davet et"
         invite_title: "Kayıtlı olmayan bir kullanıcıyı davet et"
         tag_rule_help:
@@ -2771,7 +2849,6 @@ tr:
           pending: "Bekliyor"
           resumed: "devam ettirildi"
           returned: "iade"
-          skrill: "skrill"
         shipment_states:
           backorder: "bekleyen sipariş"
           partial: "kısmi"
@@ -3206,7 +3283,6 @@ tr:
     display_currency: "Para birimini göster"
     choose_currency: "Para Birimini Seç"
     mail_method_settings: "E-posta Ayarları"
-    mail_settings_notice_html: "Aşağıdaki ayarlardan bazıları düzenlenemez ve burada yalnızca hata ayıklama amacıyla listelenmiştir. <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> kullanılarak, gizli dizileri güncelleyerek değişiklikler yapılabilir. Daha fazla ayrıntı için OFN küresel ekibine ulaşın."
     general: "Genel"
     enable_mail_delivery: "Posta Dağıtımını Etkinleştir"
     send_mails_as: "Postaları Farklı Gönder"
@@ -3431,6 +3507,7 @@ tr:
           results_found: "%{number} Sonuç bulundu."
           viewing: "%{start} - %{end} görüntüleniyor."
           print_invoices: "Faturaları Yazdır"
+          resend_confirmation: "Onayı Tekrar Gönderin"
         sortable_header:
           payment_state: "Ödeme Durumu"
           shipment_state: "Teslimat Durumu"
@@ -3567,7 +3644,6 @@ tr:
           paypal:
             no_payment_via_admin_backend: Paypal ödemeleri alınamıyor.
       products:
-        image_upload_error: "Ürün resmi tanınamadı. Lütfen PNG veya JPG biçiminde bir resim yükleyin."
         new:
           title: "Yeni Ürün"
           new_product: "Yeni Ürün"
@@ -3804,7 +3880,6 @@ tr:
       pending: bekliyor
       resumed: devam edildi
       returned: iade edildi
-      skrill: skrill
     subscription_state:
       active: AKTİF
       pending: bekliyor
@@ -3830,6 +3905,8 @@ tr:
         connection_failed: "PayPal'a bağlanılamadı."
         generic_error: "PayPal başarısız oldu. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Anahtarı Yeniden Oluştur"
       form:
         account_settings: Hesap Ayarları
       show:
@@ -3863,7 +3940,8 @@ tr:
         items: Ürünler
         total: Toplam
         paid?: Ödendi?
-        view: Göster
+        status: Durum
+        cancelled: İptal edildi
       saved_cards:
         default?: Varsayılan?
         delete?: Sil?
@@ -3936,3 +4014,11 @@ tr:
       x_years:
         one: "1 yıl"
         other: "%{count} yıl"
+  components:
+    search_input:
+      placeholder: Ara
+    selector_with_filter:
+      search_placeholder: Ara
+    pagination:
+      next: Sonrakİ
+      previous: Önceki

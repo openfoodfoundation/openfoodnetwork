@@ -9,6 +9,7 @@
     - else
       = favicon_link_tag "/favicon-staging.ico"
     %link{href: "https://fonts.googleapis.com/css?family=Roboto:400,300italic,400italic,300,700,700italic|Oswald:300,400,700", rel: "stylesheet", type: "text/css"}
+    = render "layouts/matomo_tag"
     = language_meta_tags
 
     = stylesheet_pack_tag "darkswarm"
@@ -18,10 +19,6 @@
     = csrf_meta_tags
 
   %body.off-canvas{ style: "background-image: url(#{image_pack_path('tile-wide.png')})", "data-turbo": "false" }
-    / [if lte IE 8]
-      = render partial: "shared/ie_warning"
-      = javascript_include_tag "iehack"
-
     .off-canvas-wrap{offcanvas: true}
       .inner-wrap
 

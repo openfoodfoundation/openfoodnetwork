@@ -64,7 +64,7 @@ module OpenFoodNetwork
     describe "making labels" do
       let(:variant) { double(:variant, product: double(:product, name: 'Bananas')) }
       let(:enterprise_fee) {
-        double(:enterprise_fee, fee_type: 'packing',
+        double(:enterprise_fee, name: 'packing name',
                                 enterprise: double(:enterprise, name: 'Ballantyne'))
       }
       let(:applicator) { EnterpriseFeeApplicator.new enterprise_fee, variant, 'distributor' }
@@ -72,7 +72,7 @@ module OpenFoodNetwork
       describe "#line_item_adjustment_label" do
         it "makes an adjustment label for a line item" do
           expect(applicator.send(:line_item_adjustment_label)).
-            to eq("Bananas - packing fee by distributor Ballantyne")
+            to eq("Bananas - packing name fee by distributor Ballantyne")
         end
       end
 
@@ -81,7 +81,7 @@ module OpenFoodNetwork
 
         it "makes an adjustment label for an order" do
           expect(applicator.send(:order_adjustment_label)).
-            to eq("Whole order - packing fee by distributor Ballantyne")
+            to eq("Whole order - packing name fee by distributor Ballantyne")
         end
       end
     end

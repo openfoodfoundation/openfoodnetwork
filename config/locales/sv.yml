@@ -5,6 +5,8 @@ sv:
       spree/product: Produkt
       spree/shipping_method: Fraktmetod
     attributes:
+      spree/order/ship_address:
+        phone: "Telefonnummer"
       spree/user:
         password: "Lösenord"
       enterprise_fee:
@@ -16,6 +18,7 @@ sv:
       spree/payment:
         state: Region
       spree/product:
+        price: "Pris"
         supplier: "Leverantör"
         variant_unit: "Enhet för variant"
       variant_override:
@@ -118,6 +121,23 @@ sv:
     update: "Uppdatera"
     add: "Tillägga"
   admin:
+    products_page:
+      title: Produkter
+      filters:
+        producers:
+          title: 'Producenter '
+        colums: Kolumner
+      columns:
+        name: Namn
+        unit: Enhet
+        price: Pris
+        producer: Producent
+        category: Kategori
+      columns_selector:
+        unit: Enhet
+        price: Pris
+        producer: Producent
+        category: Kategori
     date: Datum
     email: epost
     name: Namn
@@ -187,8 +207,6 @@ sv:
         update_address: "Uppdatera adress"
         confirm_delete: "Vill du verkligen radera?"
         search_by_email: "Sök via e-post/kod..."
-      destroy:
-        has_associated_orders: "Radering misslyckades: kunden har associerade order med sin butik"
     contents:
       edit:
         title: Innehåll
@@ -214,6 +232,18 @@ sv:
     enterprise_groups:
       index:
         new_button: Ny företagsgrupp
+      form_primary_details:
+        primary_details: "Viktiga detaljer"
+      form_users:
+        users: "Användare"
+      form_about:
+        about: "Om oss"
+      form_images:
+        images: "Bilder"
+      form_address:
+        contact: "Kontakt"
+      form_web:
+        web: "Webb resurser"
     enterprise_roles:
       form:
         manages: hanterar
@@ -312,11 +342,15 @@ sv:
         manage: Hantera
       form:
         about_us:
+          legend: "Om oss"
           desc_short: Kort beskrivning
           desc_short_placeholder: Berätta om ditt företag i en eller två meningar
           desc_long: Om oss
           desc_long_placeholder: Berätta om kunder om dig själv. Denna information kommer att stå i din allmänna profil.
+        address:
+          legend: "Adress"
         business_details:
+          legend: "Affärsdetaljer"
           abn: ABN
           abn_placeholder: ex 070 56 78 90
           acn: ACN
@@ -326,6 +360,7 @@ sv:
         business_address:
           address2: Adress (fortgående)
         contact:
+          legend: "Kontakt"
           name: Namn
           name_placeholder: ex. Gustav Persson
           phone: Telefon
@@ -333,6 +368,7 @@ sv:
           website: Hemsida
           website_placeholder: ex www.shop.com
         enterprise_fees:
+          legend: "Företagsavgifter"
           name: Namn
           fee_type: Avgiftstyp
           manage_fees: Skötsel av företagsavgifter
@@ -341,12 +377,14 @@ sv:
         enterprise_permissions:
           enterprise_relationships: Företagssamband
         images:
+          legend: "Bilder"
           logo: Logotyp
           promo_image_placeholder: 'Denna bild visas under "Om oss"'
           promo_image_note1: 'VAR VÄNLIG OBSERVERA:'
           promo_image_note2: Varje reklambild som laddas här kommer att beskäras till 1200 x 260.
           promo_image_note3: Logotypen visas högst upp på företagets profilsida och i rullgardinsmenyer.
         inventory_settings:
+          legend: "Lagerstatus"
           text1: Du kan välja att hantera ditt varulager och dina priser via din
           inventory: Inventarielista
           text2: >
@@ -358,6 +396,7 @@ sv:
           preferred_product_selection_from_inventory_only_yes: Nya produkter kan placeras i mitt skyltfönster (rekommenderas)
           preferred_product_selection_from_inventory_only_no: Ny produkter måste adderas till min inventarielista innan de kan placeras i mitt skyltfönster
         payment_methods:
+          legend: "Betalningssätt"
           name: Namn
           applies: Gäller?
           manage: Bestäm betalningssätt
@@ -365,6 +404,7 @@ sv:
           create_button: Skapa ett nytt betalningssätt
           create_one_button: Skapa en nu
         primary_details:
+          legend: "Viktiga detaljer"
           name: Namn
           name_placeholder: t.ex. Professor Plums Biodynamiska Tryfflar
           groups: Grupper
@@ -380,17 +420,22 @@ sv:
           sells_tip: "Inget - företag säljer direkt till kunderna.<br />Egna - Företag säljer egna produkter till kunder.<br />Några - Företag kan sälja egna eller andra företags produkter.<br />"
           visible_in_search: Synlig vid sökning?
           visible: Offentlig
+        properties:
+          legend: "Egenskaper"
+        permalink:
           permalink: Permalänk (inga mellanrum)
           permalink_tip: "Denna permalänk används för att skapa URL:en till din butik: %{link}din-butiks-namn/butik"
           link_to_front: Länk till sitt skyltfönster
           link_to_front_tip: En direkt länk till ditt skyltfönster på OFN
         shipping_methods:
+          legend: "Transportsätt"
           name: "Namn"
           manage: "Bestäm leversmetoder"
           create_button: "Skapa ny leveransmetod"
           create_one_button: "Skapa en nu"
           no_method_yet: "Du har inte bestämt leveransmetod ännu."
         shop_preferences:
+          legend: "Butiksinställningar"
           shopfront_requires_login: "Offentligt visat skyltfönster?"
           shopfront_requires_login_tip: "Välj om kunderna måste logga in för att se skyltfönstret eller om det skall visas för alla."
           shopfront_requires_login_false: "Offentlig"
@@ -417,9 +462,11 @@ sv:
           shopfront_sort_by_category_placeholder: "Kategori"
           shopfront_sort_by_producer_placeholder: "Producent"
         social:
+          legend: "Social"
           twitter_placeholder: "t.ex. @the_prof"
           facebook_placeholder: "eg. www.facebook.com/PageNameHere"
         tag_rules:
+          legend: "Regler för etiketter"
           default_rules:
             by_default: Som standard
             no_rules_yet: Standardregler har ännu ej fasttällts
@@ -430,6 +477,7 @@ sv:
           add_new_rule: '+ Lägg till en ny regel'
           add_new_tag: '+ Lägg till en ny etikett'
         users:
+          legend: "Användare"
           email_confirmation_notice_html: "E-post bekräftelse har inte kommit. Vi har sänt en bekräftande e-post till %{email}."
           resend: Återsänd
           owner: 'Ägare'
@@ -523,7 +571,14 @@ sv:
         products: "Produkter"
         tags: "Taggar"
         fees: "Avgifter"
+        next: "Näst"
         cancel: "Avbryt"
+      checkout_options:
+        cancel: "Avbryt"
+        distributor: "Distributör"
+        payment_methods: "Betalningssätt"
+        select_all: "Markera alla"
+        shipping_methods: "Transportsätt"
       exchange_form:
         pickup_instructions_placeholder: "Instruktioner för upphämtning"
         pickup_time_placeholder: "Klar för (dvs. Datum/Tid)"
@@ -564,6 +619,7 @@ sv:
         customer_instructions_placeholder: Hämtnings eller leverans meddelanden
         products: Produkter
         fees: Avgifter
+        tags: Taggar
       date_warning:
         cancel: Avbryt
     producer_properties:
@@ -576,6 +632,30 @@ sv:
         has_no_payment_methods: "%{enterprise} har inga betalningsmetoder"
         has_no_shipping_methods: "%{enterprise} har inga fraktmetoder"
         has_no_enterprise_fees: "%{enterprise} har inga avgifter"
+      side_menu:
+        enterprise:
+          primary_details: "Viktiga detaljer"
+          address: "Adress"
+          contact: "Kontakt"
+          social: "Social"
+          about: "Om oss"
+          business_details: "Affärsdetaljer"
+          images: "Bilder"
+          properties: "Egenskaper"
+          shipping_methods: "Transportsätt"
+          payment_methods: "Betalningssätt"
+          enterprise_fees: "Företagsavgifter"
+          inventory_settings: "Lagerstatus"
+          tag_rules: "Regler för etiketter"
+          shop_preferences: "Butiksinställningar"
+          users: "Användare"
+        enterprise_group:
+          primary_details: "Viktiga detaljer"
+          users: "Användare"
+          about: "Om oss"
+          images: "Bilder"
+          contact: "Kontakt"
+          web: "Webb resurser"
     enterprise_issues:
       create_new: Skapa ny
       resend_email: Skicka igen
@@ -852,18 +932,17 @@ sv:
       cart: "vagn"
       message_html: "Du har redan en beställning för denna beställningsomgång. Kontrollera %{cart} för att se föremålen du beställde tidigare. Du kan också ta bort varor/artiklar så länge som beställningsomgången är öppen."
     step1:
-      your_details:
-        title: Dina detaljer
-        first_name:
-          label: Förnamn
-        last_name:
-          label: Efternamn
+      contact_information:
         email:
           label: E-post
         phone:
           label: Telefonnummer
       billing_address:
         title: 'Faktureringsadress '
+        first_name:
+          label: Förnamn
+        last_name:
+          label: Efternamn
       address:
         city:
           label: Ort
@@ -876,10 +955,14 @@ sv:
       shipping_info:
         title: 'Leveransadress '
     step3:
-      your_details:
-        title: Dina detaljer
-      billing_address:
-        title: 'Faktureringsadress '
+      delivery_details:
+        title: Leveransdetaljer
+        edit: Redigera
+        address: 'Leveransadress '
+      payment_method:
+        edit: Redigera
+      order:
+        edit: Redigera
     errors:
       invalid_email: "Var vänlig fyll i en giltig epostadress"
   order_paid: BETALD
@@ -1107,7 +1190,6 @@ sv:
   orders_form_empty_cart: "Tom varukorg"
   orders_form_update_cart: "Uppdatera"
   orders_form_subtotal: "Framställ delsumma"
-  orders_form_admin: "Administration och hantering"
   orders_form_total: "Summa "
   orders_oc_expired_headline: "Denna orderomgång är stängd för nya order"
   orders_oc_expired_text: "Tyvärr, order för denna orderomgång stängde  för %{time} sedan! Var vänlig kontakta ditt matcenter för att se om de kan ta emot en sen order. "
@@ -1352,7 +1434,6 @@ sv:
   admin_enterprise_groups_data_powertip: "Huvudansvarig för denna grupp."
   admin_enterprise_groups_data_powertip_logo: "Detta är logotypen för gruppen"
   admin_enterprise_groups_data_powertip_promo_image: "Denna bild visas överst på gruppens profil"
-  admin_enterprise_groups_contact: "Kontakt"
   admin_enterprise_groups_contact_phone_placeholder: "ex 123 456 789"
   admin_enterprise_groups_contact_address1_placeholder: "eg. 123 High Street"
   admin_enterprise_groups_contact_city: "Stadsdel"
@@ -1361,7 +1442,6 @@ sv:
   admin_enterprise_groups_contact_zipcode_placeholder: "eg. 3070"
   admin_enterprise_groups_contact_state_id: "Region"
   admin_enterprise_groups_contact_country_id: "Land"
-  admin_enterprise_groups_web: "Webb resurser"
   admin_enterprise_groups_web_twitter: "t.ex. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "ex www.shop.com"
   admin_order_cycles: "Administratörens order cykel"
@@ -1537,6 +1617,8 @@ sv:
   report_header_tax_on_delivery: "Leveransskatt (%{currency_symbol})"
   report_header_tax_on_fees: "Skatt på avgifter (%{currency_symbol})"
   report_header_total_tax: "Summa skatter (%{currency_symbol})"
+  report_header_total_excl_tax: "Summa exkl skatt (%{currency_symbol})"
+  report_header_total_incl_tax: "Summa inkl skatt (%{currency_symbol})"
   report_header_enterprise: Företag
   report_header_customer: Kund
   report_header_customer_code: Kundnummer
@@ -1642,19 +1724,13 @@ sv:
   images: "Bilder"
   web: "Webb"
   primary_details: "Viktiga detaljer"
-  adrdress: "Adress"
   contact: "Kontakt"
   social: "Social"
-  business_details: "Affärsdetaljer"
-  properties: "Egenskaper"
   shipping_methods: "Transportmetoder"
   payment_methods: "Betalningsmetoder"
   payment_method_fee: "Transaktionsvgift"
-  inventory_settings: "Lagerstatus"
   tag_rules: "Etikettregler"
-  shop_preferences: "Butiksinställningar"
   enterprise_fee_whole_order: Hela beställningen
-  enterprise_fee_by: "%{type} avgift vid %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Den förbindelsen är redan upprättad."
   validation_msg_at_least_one_hub: "^Åtminstone ett matställe måste väljas"
   validation_msg_tax_category_cant_be_blank: "^Skattekategori kan inte vara blank"
@@ -1715,6 +1791,7 @@ sv:
       modals:
         got_it: "Förstått"
         continue: "Fortsätt"
+        cancel: "Avbryt"
         tag_rule_help:
           title: Regler för etiketter
           overview: Översikt
@@ -1836,7 +1913,6 @@ sv:
           pending: "oavslutad"
           resumed: "återupptagen"
           returned: "returnerad"
-          skrill: "skrill"
         shipment_states:
           backorder: "restorder"
           partial: "delvis"
@@ -2063,6 +2139,7 @@ sv:
           ship: "Frakta"
           edit: "Redigera"
           next: "Näst"
+          resend_confirmation: "Skicka om bekräftelse"
         sortable_header:
           payment_state: "Betalningsstatus"
           shipment_state: "Leveransstatus"
@@ -2224,7 +2301,6 @@ sv:
       payment: betalning
       resumed: återupptagen
       returned: returnerad
-      skrill: skrill
     paypal:
       refund_amount: "Belopp"
     users:
@@ -2238,3 +2314,13 @@ sv:
         cancel: Avbryt
         closed: Stängd
         until: Fram tills
+      past_orders:
+        status: Status
+        cancelled: Avbokad
+  components:
+    search_input:
+      placeholder: Sök
+    selector_with_filter:
+      search_placeholder: Sök
+    pagination:
+      next: Näst

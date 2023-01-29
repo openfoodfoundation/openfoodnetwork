@@ -48,14 +48,11 @@ Openfoodnetwork::Application.configure do
     reconnect_attempts: 1
   }
 
+  config.action_cable.url = "#{ENV['OFN_URL']}/cable"
+  config.action_cable.allowed_request_origins = [/http:\/\/#{ENV['OFN_URL']}\/*/, /https:\/\/#{ENV['OFN_URL']}\/*/]
+
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
-
-  # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  # config.assets.precompile += %w( search.js )
-
-  require 'uglifier'
-  config.assets.js_compressor = Uglifier.new(mangle: false, harmony: true)
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false

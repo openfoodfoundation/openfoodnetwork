@@ -5,6 +5,10 @@ ko:
       spree/product: 상품
       spree/shipping_method: 배송 방법
     attributes:
+      spree/order/ship_address:
+        phone: "전화번호"
+        firstname: "이름"
+        lastname: "성"
       spree/user:
         password: "비밀번호"
         password_confirmation: "비밀번호 확인"
@@ -23,6 +27,8 @@ ko:
         state: 상태
         source: 자원
       spree/product:
+        name: "제품 이름"
+        price: "가격"
         primary_taxon: "물품 목록"
         supplier: "공급업체"
         shipping_category_id: "전송물품 목록"
@@ -61,27 +67,6 @@ ko:
             using_producer_stock_settings_but_count_on_hand_set: "생산자 제고 관리를 위해 빈 칸으로 남겨야 합니다."
             on_demand_but_count_on_hand_set: "요구 사항이 있을 경우 빈 칸으로 남겨야 합니다."
             limited_stock_but_no_count_on_hand: "한정된 재고 사항에 따라 명시되어야 합니다."
-  errors:
-    messages:
-      content_type_invalid: "사용 불가한 컨텐츠 타입입니다."
-      file_size_out_of_range: "%{file_size}의 크기는 요구된 범위에 있지 않습니다."
-      limit_out_of_range: "총합이 범위를 넘어섭니다."
-      image_metadata_missing: "가능한 이미지 파일이 아닙니다."
-      dimension_min_inclusion: "%{width} x %{height} 픽셀보다 크거나 같아야 합니다."
-      dimension_max_inclusion: "%{width} x %{height} 픽셀보다 작거나 같아야 합니다."
-      dimension_width_inclusion: "가로의 길이가 %{min} 과 %{max} 픽셀 사이에 있지 않습니다."
-      dimension_height_inclusion: "세로이 길이가 %{min} 과%{max} 픽셀 사이에 있지 않습니다."
-      dimension_width_greater_than_or_equal_to: "가로의 길이는%{length} 픽셀보다 크거나 같아야 합니다."
-      dimension_height_greater_than_or_equal_to: "세로의 길이는 %{length} 픽셀보다 크거나 같아야 합니다."
-      dimension_width_less_than_or_equal_to: "가로의 길이는 %{length} 픽셀보다 작거나 같아야 합니다."
-      dimension_height_less_than_or_equal_to: "세로의 길이는 %{length} 픽셀보다 작거나 같아야 합니다."
-      dimension_width_equal_to: "가로의 길이는 %{length} 픽셀이어야 합니다."
-      dimension_height_equal_to: "세로의 길이는 %{length} 픽셀이어야 합니다."
-      aspect_ratio_not_square: "정사각형 형태의 사진이어야 합니다."
-      aspect_ratio_not_portrait: "세로로 찍은 사진이어야 합니다."
-      aspect_ratio_not_landscape: "가로로 찍은 사진이어야 합니다."
-      aspect_ratio_is_not: "화면 비율이 %{aspect_ratio} 이어야 합니다."
-      aspect_ratio_unknown: "알 수 없는 화면 비율 입니다."
   stripe:
     error_code:
       incorrect_number: "카드 숫자가 맞지 않습니다."
@@ -182,6 +167,7 @@ ko:
         signed_up_but_unconfirmed: "당신 이메일 주소로 확인 링크가 담겨진 메세지를 보냈습니다. 링크를 열어 당신의 계정을 활성화 하세요."
         unknown_error: "계정 생성 도중 문제가 발생하였습니다. 이메일 주소를 확인하고 다시 시도하십시오."
     failure:
+      disabled: "계정이 비활성화되었습니다. 이 문제를 해결하려면 관리자에게 문의하십시오."
       invalid: |
           접근 불가한 이메일과 비밀번호 입니다.
           혹시 게스트로 방문하셨나요? 만약 그렇다면 새 계정을 생성하거나 비밀번호를 초기화 해주세요.
@@ -308,7 +294,6 @@ ko:
   producers_join: 호주 생산자들은 Open Food Network에 가입하는 것을 환영하고 있습니다.
   charges_sales_tax: 부가가치세를 부과하실겁니까?
   business_address: "사업자 주소"
-  enterprise_permissions: "회사 권한"
   print_invoice: "청구서 출력"
   print_ticket: "티켓 출력"
   select_ticket_printer: "티켓을 출력할 프린터를 선택하세요"
@@ -414,6 +399,25 @@ ko:
     destroy: "제거"
     rename: "개명"
   admin:
+    products_page:
+      title: 생산품
+      filters:
+        categories:
+          title: 카테고리
+        producers:
+          title: 생산자들
+        colums: 열
+      columns:
+        name: 이름
+        unit: 단위
+        price: 가격
+        producer: 제공자
+        category: 목록
+      columns_selector:
+        unit: 단위
+        price: 가격
+        producer: 제공자
+        category: 목록
     adjustments:
       skipped_changing_canceled_order: "취소된 명령을 바꿀 수 없습니다."
     begins_at: 시작 시간
@@ -549,8 +553,6 @@ ko:
         guest_label: "게스트 체크아웃"
         credit_owed: "외상값"
         balance_due: "잔액 만기"
-      destroy:
-        has_associated_orders: "삭제 실패: 고객님께서 자신의 상점과 주문을 연결했습니다."
     contents:
       edit:
         title: 콘텐트
@@ -578,6 +580,18 @@ ko:
     enterprise_groups:
       index:
         new_button: 새로운 회사 그룹
+      form_primary_details:
+        primary_details: "기본 세부 사항"
+      form_users:
+        users: "사용자"
+      form_about:
+        about: "무엇인지 알고 싶으시다면"
+      form_images:
+        images: "사진"
+      form_address:
+        contact: "연락처"
+      form_web:
+        web: "웹 자원"
     enterprise_roles:
       form:
         manages: 관리
@@ -790,11 +804,15 @@ ko:
         manage: 관리
       form:
         about_us:
+          legend: "무엇인지 알고 싶으시다면"
           desc_short: 간단한 설명
           desc_short_placeholder: 귀사에 대해 한두 문장으로 설명해 주십시오.
           desc_long: About Us
           desc_long_placeholder: 고객에게 당신에 대해 설명하세요. 이 정보는 공개 프로필에 나타납니다.
+        address:
+          legend: "주소"
         business_details:
+          legend: "사업 세부 사항"
           abn: ABN
           abn_placeholder: eg. 99 123 456 789
           acn: ACN
@@ -805,7 +823,8 @@ ko:
           remove_terms_and_conditions: "파일 삭제"
           uploaded_on: "이미 업로드 됨"
           reset_form: "양식 재설정"
-          Invoice_item_sorting: 청구서 품목 분류
+          business_address_legend: "사업자 주소"
+          invoice_item_sorting_legend: "청구서 품목 분류"
           sort_items_by_supplier?: 공급업체별로 항목을 정렬하시겠습니까?
           sort_items_by_supplier_tip: "이 옵션을 선택하면 공급업체 이름별로 항목이 정렬됩니다."
           enabled: 사용 가능함
@@ -819,6 +838,7 @@ ko:
           legal_phone_number: 법적 전화번호
           phone_placeholder: "98 123 4565"
         contact:
+          legend: "연락처"
           name: 이름
           name_placeholder: 예. Gustav Plum
           email_address: 공용 전자 메일 주소
@@ -829,14 +849,17 @@ ko:
           website: 웹사이트
           website_placeholder: 예시. www.truffles.com
         enterprise_fees:
+          legend: "회사 수수료"
           name: 이름
           fee_type: 지불 방식
           manage_fees: 회사 요금 관리
           no_fees_yet: 회사 비용이 아직 없습니다.
           create_button: 지금 만들기
         enterprise_permissions:
+          legend: "회사 권한"
           enterprise_relationships: 기업 관계
         images:
+          legend: "사진"
           logo: 로고
           promo_image_placeholder: '이 이미지는 "About Us"에 전시됩니다.'
           promo_image_note1: '참고 사항: '
@@ -845,6 +868,7 @@ ko:
           remove_logo: "사진 삭제"
           remove_promo_image: "사진 삭제"
         inventory_settings:
+          legend: "인벤토리 설정"
           text1: 다음을 통해 재고 수준 및 가격을 관리할 수 있습니다.
           inventory: 인벤토리
           text2: >
@@ -853,6 +877,7 @@ ko:
           preferred_product_selection_from_inventory_only_yes: 신상품을 당신의 매장 안에 넣을 수 있습니다. (권장 사항)
           preferred_product_selection_from_inventory_only_no: 새 제품을 내 상점에 넣기 전에 내 인벤토리에 추가해야 합니다.
         payment_methods:
+          legend: "결제 방법"
           name: 이름
           applies: 추가하시겠습니까?
           manage: 결제 방법 관리
@@ -860,6 +885,7 @@ ko:
           create_button: 새로운 결제 방법 생성
           create_one_button: 지금 만들기
         primary_details:
+          legend: "기본 세부 사항"
           name: 이름
           name_placeholder: 예시. Professor Plum's Biodynamic Truffles
           groups: 그룹
@@ -878,6 +904,9 @@ ko:
           visible: 공용
           not_visible: 숨김
           hidden: 모든 참조 숨기기
+        properties:
+          legend: "특성"
+        permalink:
           permalink: 하이퍼링크 (공백 없음)
           permalink_tip: "이 하이퍼링크는 가게의 URL을 만드는 데 사용됩니다 :%{link}당신의 가게 이름/가게"
           link_to_front: 상점 앞 링크
@@ -885,6 +914,7 @@ ko:
           ofn_uid: OFN UID
           ofn_uid_tip: Open Food Network내 기업을 식별하는 데 사용되는 고유 ID
         shipping_methods:
+          legend: "전송 방법"
           name: "이름"
           applies: "활성화 하시겠습니까?"
           manage: "배송 방법 관리"
@@ -892,6 +922,7 @@ ko:
           create_one_button: "지금 만들기"
           no_method_yet: "아직 배송 방법이 없습니다."
         shop_preferences:
+          legend: "상점 기본 설정"
           shopfront_requires_login: "눈에 보이는 상점으로 공개할까요?"
           shopfront_requires_login_tip: "고객이 상점을 보도록 로그인하거나 모든 사람이 볼 수 있도록 할 지 선택해야 합니다."
           shopfront_requires_login_false: "공용"
@@ -937,6 +968,7 @@ ko:
           enabled: "활성화"
           disabled: "비활성화"
         social:
+          legend: "사회성"
           twitter_placeholder: "예. @the_prof"
           instagram_placeholder: "예. 전문가"
           facebook_placeholder: "예. www.facebook.com/PageNameHere"
@@ -954,6 +986,7 @@ ko:
             i_agree: 동의합니다
             cancel: 취소
         tag_rules:
+          legend: "태그 규칙"
           default_rules:
             by_default: 기본값 설정
             no_rules_yet: 아직 적용되는 기본 규칙이 없습니다.
@@ -964,6 +997,7 @@ ko:
           add_new_rule: '+ 새 규칙 추가'
           add_new_tag: '+ 새 태그 추가'
         users:
+          legend: "사용자"
           email_confirmation_notice_html: "이메일 확인이 보류 중입니다. %{email}에게 확인 메일을 보냈습니다."
           resend: 재전송
           owner: '오너'
@@ -1083,11 +1117,21 @@ ko:
         tags: "태그"
         delivery_details: "배달 세부 사항"
         fees: "수수료"
+        next: "다음"
         previous: "이전으로"
         save: "저장"
-        save_and_back_to_list: "저장 후 목록으로 돌아가기"
+        save_and_next: "저장 후 다음"
         cancel: "취소"
         back_to_list: "리스트로 돌아가기"
+      checkout_options:
+        back_end: "고객들을 직접 상대하지 않는 부서 전용"
+        cancel: "취소"
+        distributor: "유통업체"
+        payment_methods: "결제 방법"
+        save: "저장"
+        save_and_back_to_list: "저장 후 목록으로 돌아가기"
+        select_all: "모두 선택"
+        shipping_methods: "전송 방법"
       wizard_progress:
         edit: "1. 일반 설정"
         incoming: "2. 들어오는 제품"
@@ -1154,6 +1198,7 @@ ko:
         customer_instructions_placeholder: 픽업 또는 배송 노트
         products: 생산품
         fees: 수수료
+        tags: 태그
       destroy_errors:
         orders_present: 해당 주문 주기는 고객이 선택했으며 삭제할 수 없습니다. 고객이 접근하지 못하도록 하려면 대신 닫으십시오.
         schedule_present: 해당 주문 주기는 예약에 연결되어 있으므로 삭제할 수 없습니다. 먼저 일정을 연결 해제하거나 삭제하십시오.
@@ -1163,6 +1208,8 @@ ko:
         msg: 이 주문 주기는 %{n} 열린 구독 주문에 연결됩니다. 이 날짜를 지금 변경해도 이미 발주된 주문에는 영향을 미치지 않지만 가능하면 취소해야 합니다. 계속 진행하시겠습니까?
         cancel: 취소
         proceed: 진행하다
+      status:
+        closed: 휴무
     producer_properties:
       index:
         title: 생산자 속성
@@ -1178,6 +1225,31 @@ ko:
         has_no_payment_methods: "%{enterprise}는 지불 방법이 없습니다."
         has_no_shipping_methods: "%{enterprise}는 전송 방법이 없습니다."
         has_no_enterprise_fees: "%{enterprise}는 회사 수수료가 없습니다."
+      side_menu:
+        enterprise:
+          primary_details: "기본 세부 사항"
+          address: "주소"
+          contact: "연락처"
+          social: "사회성"
+          about: "무엇인지 알고 싶으시다면"
+          business_details: "사업 세부 사항"
+          images: "사진"
+          properties: "특성"
+          shipping_methods: "전송 방법"
+          payment_methods: "결제 방법"
+          enterprise_fees: "회사 수수료"
+          enterprise_permissions: "회사 권한"
+          inventory_settings: "인벤토리 설정"
+          tag_rules: "태그 규칙"
+          shop_preferences: "상점 기본 설정"
+          users: "사용자"
+        enterprise_group:
+          primary_details: "기본 세부 사항"
+          users: "사용자"
+          about: "무엇인지 알고 싶으시다면"
+          images: "사진"
+          contact: "연락처"
+          web: "웹 자원"
     enterprise_issues:
       create_new: 새로 생성하기
       resend_email: 이메일 재전송
@@ -1689,37 +1761,28 @@ ko:
       cart: "카트"
       message_html: "이 주문 사이클에 대한 주문이 이미 있습니다. 이전에 주문하신 상품은 %{cart}에서 확인하시기 바랍니다. 주문 사이클가 열려 있는 한 항목을 취소할 수도 있습니다."
     step1:
-      your_details:
-        title: 세부 사항
-        first_name:
-          label: 이름
-          placeholder: 예. Jane
-        last_name:
-          label: 성
-          placeholder: 예. Doe
+      contact_information:
         email:
           label: 이메일
-          placeholder: 예. Janedoe@email.com
         phone:
           label: 전화번호
-          placeholder: 예. 07987654321
       billing_address:
         title: '청구서 발송지 :'
+        first_name:
+          label: 이름
+        last_name:
+          label: 성
       address:
         address1:
           label: 주소 (도로명 + 집 번혼)
-          placeholder: 예. Flat 1 Elm apartments
         address2:
           label: 추가 주소 정보(선택 사항)
-          placeholder: 예. Cavalier avenur
         city:
           label: 시
-          placeholder: 예. London
         state_id:
           label: 상태
         zipcode:
           label: 우편번호
-          placeholder: 예. SW11 3QN
         country_id:
           label: 나라
       shipping_info:
@@ -1748,20 +1811,15 @@ ko:
       submit: 다음 - 주문 요약
       cancel: 세부 사항으로 돌아가기
     step3:
-      your_details:
-        title: 세부 사항
-        edit: 세부 사항 편집
-      billing_address:
-        title: '청구서 발송지 :'
-      shipping_address:
-        title: 배송지 주소
-      delivery_info:
-        title: 배달 정보
+      delivery_details:
+        title: 배달 세부 사항
+        edit: 편집
+        address: 배달 주소
       payment_method:
         title: 결제 방식
-        edit: 결제 방식 편집
+        edit: 편집
       order:
-        title: 주문 총합
+        edit: 편집
       terms_and_conditions:
         message_html: "판매자의 %{terms_and_conditions_link} 이용약관에 대하여 동의합니다."
         link_text: "조건"
@@ -1770,11 +1828,9 @@ ko:
       all_terms_and_conditions:
         message_html: "판매자 %{terms_and_conditions_link} 이용약관과 플랫폼 %{tos_link}에 대하여 동의합니다."
         terms_and_conditions: "조건"
-      agree: '''주문 완료''를 클릭하면 주문이 처리되는 것에 동의하는 것입니다.'
       submit: 주문 완료
       cancel: 결제 방식으로 돌아가기
     errors:
-      global: "저장하지 못했습니다. 강조 표시된 필드를 업데이트하세요."
       terms_not_accepted: 약관에 동의하십시오.
       required: 필드는 비워 둘 수 없습니다.
       invalid_number: "올바른 전화 번호를 입력하십시오."
@@ -2054,7 +2110,6 @@ ko:
   orders_form_empty_cart: "카트가 비어있습니다"
   orders_form_update_cart: "업데이트"
   orders_form_subtotal: "소계 생산"
-  orders_form_admin: "관리 및 처리"
   orders_form_total: "총합"
   orders_oc_expired_headline: "이 주문 주기에 대한 주문이 마감되었습니다."
   orders_oc_expired_text: "죄송하지만 이 주문 주기의 주문은 %{time} 전에 마감되었습니다! 허브에 직접 연락하여 지연된 주문을 받을 수 있는지 확인해보세요."
@@ -2325,7 +2380,6 @@ ko:
   admin_enterprise_groups_data_powertip: "이 그룹을 담당하는 기본 사용자입니다."
   admin_enterprise_groups_data_powertip_logo: "이것은 그룹의 로고입니다."
   admin_enterprise_groups_data_powertip_promo_image: "이 이미지는 그룹 프로필 상단에 전시되어 있습니다"
-  admin_enterprise_groups_contact: "연락처"
   admin_enterprise_groups_contact_phone_placeholder: "예시. 98 7654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "예.  123 High Street"
   admin_enterprise_groups_contact_city: "교외"
@@ -2334,7 +2388,6 @@ ko:
   admin_enterprise_groups_contact_zipcode_placeholder: "예. 3070"
   admin_enterprise_groups_contact_state_id: "상태"
   admin_enterprise_groups_contact_country_id: "나라"
-  admin_enterprise_groups_web: "웹 자원"
   admin_enterprise_groups_web_twitter: "예. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "예시. www.truffles.com"
   admin_order_cycles: "관리자 주문 주기"
@@ -2542,6 +2595,8 @@ ko:
   report_header_tax_on_delivery: "배달 세금 (%{currency_symbol})"
   report_header_tax_on_fees: "수수료 세금 (%{currency_symbol})"
   report_header_total_tax: "세금 총합 (%{currency_symbol})"
+  report_header_total_excl_tax: "세금 제외 합계 (%{currency_symbol})"
+  report_header_total_incl_tax: "세금 포함 합계 (%{currency_symbol})"
   report_header_enterprise: 회사
   report_header_customer: 고객
   report_header_customer_code: 소비자 코드
@@ -2578,6 +2633,9 @@ ko:
   report_header_delivery_postcode: 배달 우편번호
   report_header_bulk_unit_size: 대량 단위 크기
   report_header_weight: 무게
+  report_header_height: 높이
+  report_header_width: 너비
+  report_header_depth: 깊이
   report_header_sum_total: 총합
   report_header_date_of_order: 주문 날짜
   report_header_amount_owing: 미지급액
@@ -2654,11 +2712,8 @@ ko:
   images: "사진"
   web: "웹페이지"
   primary_details: "기본 세부 사항"
-  adrdress: "주소"
   contact: "연락처"
   social: "사회성"
-  business_details: "사업 세부 사항"
-  properties: "특성"
   shipping: "배송"
   shipping_methods: "전송 방법"
   payment_methods: "결제 방법"
@@ -2668,11 +2723,8 @@ ko:
   payment_updated: "결제가 업데이트됨"
   cannot_perform_operation: "결제를 업데이트를 할 수 없습니다."
   action_required: "필요한 작업"
-  inventory_settings: "인벤토리 설정"
   tag_rules: "태그 규칙"
-  shop_preferences: "상점 기본 설정"
   enterprise_fee_whole_order: 전체 주문
-  enterprise_fee_by: "%{role}%{enterprise_name}의 %{type} 수수료"
   validation_msg_relationship_already_established: "그 관계는 이미 정해져 있습니다."
   validation_msg_at_least_one_hub: "적어도 하나 이상의 허브를 선택해야 합니다."
   validation_msg_tax_category_cant_be_blank: "세금 카테고리는 비워 둘 수 없습니다."
@@ -2755,6 +2807,7 @@ ko:
         got_it: "알겠습니다."
         close: "휴무"
         continue: "계속하기"
+        cancel: "취소"
         invite: "초대하기"
         invite_title: "등록되지 않은 사용자 초대"
         tag_rule_help:
@@ -2900,7 +2953,6 @@ ko:
           pending: "보류"
           resumed: "재개됨"
           returned: "반송됨"
-          skrill: "skrill"
         shipment_states:
           backorder: "일시 품절"
           partial: "불완전힘"
@@ -3318,7 +3370,6 @@ ko:
     display_currency: "통화 표시"
     choose_currency: "통화 선택"
     mail_method_settings: "메일 방법 설정"
-    mail_settings_notice_html: "다음 설정 중 일부는 편집할 수 없으며 단지 디버깅을 위해 여기에 나열됩니다. 임시 암호를 업데이트하고 <a href='https://github.com/openfoodfoundation/ofn-install'>ofn 설치</a> 사용을 제공하여 변경할 수 있습니다. 자세한 내용은 OFN 국제 팀에 문의하세요."
     general: "일반"
     enable_mail_delivery: "메일 배달 사용"
     send_mails_as: "다른 이름으로 메일 보내기"
@@ -3544,6 +3595,7 @@ ko:
           results_found: "%{number}개의 결과를 찾았습니다."
           viewing: "%{start}에서 %{end}까지 보기"
           print_invoices: "청구서 출력"
+          resend_confirmation: "확인서 재전송"
         sortable_header:
           payment_state: "결제 상태"
           shipment_state: "배송 현황"
@@ -3680,7 +3732,6 @@ ko:
           paypal:
             no_payment_via_admin_backend: 고객들을 직접 상대하지 않는 부서 전용에서 페이팔 결제를 캡처할 수 없습니다.
       products:
-        image_upload_error: "제품 이미지를 인식할 수 없습니다. PNG 또는 JPG 형식으로 이미지를 업로드하십시오."
         new:
           title: "새 상품"
           new_product: "새 상품"
@@ -3743,6 +3794,7 @@ ko:
           back_to_users_list: "사용자 리스트로 돌아가기"
           general_settings: "일반 설정"
         form:
+          disabled: "비활성화 하시겠습니까?"
           email: "이메일"
           roles: "역할"
           enterprise_limit: "회사 최대치"
@@ -3917,7 +3969,6 @@ ko:
       pending: 보류
       resumed: 재개됨
       returned: 반송됨
-      skrill: skrill
     subscription_state:
       active: 활성화
       pending: 보류
@@ -3943,6 +3994,8 @@ ko:
         connection_failed: "페이팔에 연결할 수 없습니다."
         generic_error: "페이팔을 사용할 수 없습니다. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "키 재생성"
       form:
         account_settings: 계정 설정
       show:
@@ -3976,7 +4029,8 @@ ko:
         items: 항목
         total: 총합
         paid?: 유급 입니까?
-        view: 보기
+        status: 상태
+        cancelled: 취소됨
       saved_cards:
         default?: 기본값으로 설정하시겠습니까?
         delete?: 삭제하시겠습니까?
@@ -4038,3 +4092,11 @@ ko:
         other: "%{count}개월"
       x_years:
         other: "%{count}년"
+  components:
+    search_input:
+      placeholder: 탐색
+    selector_with_filter:
+      search_placeholder: 탐색
+    pagination:
+      next: 다음
+      previous: 이전으로

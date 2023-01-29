@@ -5,6 +5,10 @@ en_US:
       spree/product: Product
       spree/shipping_method: Shipping Method
     attributes:
+      spree/order/ship_address:
+        phone: "Phone number"
+        firstname: "First name"
+        lastname: "Last name"
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
@@ -23,6 +27,8 @@ en_US:
         state: State
         source: Source
       spree/product:
+        name: "Product Name"
+        price: "Price"
         primary_taxon: "Product Category"
         supplier: "Supplier"
         shipping_category_id: "Shipping Category"
@@ -161,6 +167,7 @@ en_US:
         signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
         unknown_error: "Oops! Something went wrong while creating your account. Please check your email address and try again."
     failure:
+      disabled: "Your account has been disabled. Please contact an administrator to resolve this issue."
       invalid: |
           Invalid email or password.
           Were you a guest last time?  Perhaps you need to create an account or reset your password.
@@ -223,7 +230,7 @@ en_US:
       subject: "%{enterprise}: Welcome to the %{sitename} Community!"
       email_welcome: "Welcome"
       email_registered: "is now part of"
-      email_userguide_html: "Hey you made it! Thanks for joining the party. The Open Food Network is a powerful platform, and we've all been on that learning curve, which is sometimes steep - but we'll help you get comfy ASAP! The many humans who create, use, and care for OFN are ready to help you get set up and be successful. Please take a look at our Support page for a start, and we have put together a User Guide with detailed support for setting up your Producer Enterprise or Hub here: %{link}. We also offer drop in \"office hours\" most Mondays and Fridays at 9am Pacific Time, 10 Mountain, 11 Central, and noon Eastern - just point your browser to meet.openfoodnetwork.net."
+      email_userguide_html: "Hey you made it! Thanks for joining the party. The Open Food Network is a powerful platform, and we've all been on that learning curve, which is sometimes steep - but we'll help you get comfy ASAP! The many humans who create, use, and care for OFN are ready to help you get set up and be successful. Please take a look at our Support page (Click \"Support\" at the top of OFN's main page)  for a start, and we have put together a User Guide with detailed support for setting up your Producer Enterprise or Hub here: %{link}. We also offer drop in video call \"office hours\" most Mondays at 9am Pacific Time, 10 Mountain, 11 Central, and noon Eastern - just point your browser to meet.openfoodnetwork.net."
       userguide: "Open Food Network User Guide"
       email_admin_html: "You might have already discovered that you can manage your account by logging into the %{link} or by clicking on the person shape in the top right hand side of the homepage, and selecting \"Administration\" from the dropdown."
       admin_panel: "Admin Panel"
@@ -287,7 +294,6 @@ en_US:
   producers_join: US producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges Sales Tax?
   business_address: "Business Address"
-  enterprise_permissions: "Enterprise Permissions"
   print_invoice: "Invoice"
   print_ticket: "Print invoice"
   select_ticket_printer: "Select printer for invoices"
@@ -393,6 +399,25 @@ en_US:
     destroy: "Destroy"
     rename: "Rename"
   admin:
+    products_page:
+      title: Products
+      filters:
+        categories:
+          title: Categories
+        producers:
+          title: Producers
+        colums: Columns
+      columns:
+        name: Name
+        unit: Unit
+        price: Price
+        producer: Producer
+        category: Category
+      columns_selector:
+        unit: Unit
+        price: Price
+        producer: Producer
+        category: Category
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -481,6 +506,7 @@ en_US:
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
         enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
+        enterprise_number_required_on_invoices?: "Require an Business ID to generate an invoice?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -528,8 +554,6 @@ en_US:
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
-      destroy:
-        has_associated_orders: "Delete failed: customer has associated orders with his shop"
     contents:
       edit:
         title: Content
@@ -557,6 +581,18 @@ en_US:
     enterprise_groups:
       index:
         new_button: New Enterprise Group
+      form_primary_details:
+        primary_details: "Primary Details"
+      form_users:
+        users: "Users"
+      form_about:
+        about: "About"
+      form_images:
+        images: "Images"
+      form_address:
+        contact: "Contact"
+      form_web:
+        web: "Web Resources"
     enterprise_roles:
       form:
         manages: manages
@@ -769,11 +805,15 @@ en_US:
         manage: Manage
       form:
         about_us:
+          legend: "About"
           desc_short: Short Description
           desc_short_placeholder: Tell us about your enterprise in one or two sentences
           desc_long: About Us
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
+        address:
+          legend: "Address"
         business_details:
+          legend: "Business Details"
           abn: License, Certification, or Business ID
           abn_placeholder: eg. 123456789
           acn: Legal Business Name
@@ -784,6 +824,7 @@ en_US:
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
           reset_form: "Reset Form"
+          business_address_legend: "Business Address"
         business_address:
           company_legal_name: Company Legal Name
           company_placeholder: Example Inc.
@@ -793,6 +834,7 @@ en_US:
           legal_phone_number: Business phone number
           phone_placeholder: "777 555-1212"
         contact:
+          legend: "Contact"
           name: Name
           name_placeholder: eg. Justin Jones
           email_address: Public Email Address
@@ -803,14 +845,17 @@ en_US:
           website: Website
           website_placeholder: eg. www.truffles.com
         enterprise_fees:
+          legend: "Enterprise Fees"
           name: Name
           fee_type: Fee Type
           manage_fees: Manage Enterprise Fees
           no_fees_yet: You don't have any enterprise fees yet.
           create_button: Create One Now
         enterprise_permissions:
+          legend: "Enterprise Permissions"
           enterprise_relationships: Enterprise Relationships
         images:
+          legend: "Images"
           logo: Logo
           promo_image_placeholder: 'This image is displayed in "About Us"'
           promo_image_note1: 'PLEASE NOTE:'
@@ -819,6 +864,7 @@ en_US:
           remove_logo: "Remove Image"
           remove_promo_image: "Remove Image"
         inventory_settings:
+          legend: "Inventory Settings"
           text1: You may opt to manage stock levels and prices in via your
           inventory: inventory
           text2: >
@@ -829,6 +875,7 @@ en_US:
           preferred_product_selection_from_inventory_only_yes: New products can be put into my shopfront (recommended)
           preferred_product_selection_from_inventory_only_no: New products must be added to my inventory before they can be put into my shopfront
         payment_methods:
+          legend: "Payment Methods"
           name: Name
           applies: Applies?
           manage: Manage Payment Methods
@@ -836,6 +883,7 @@ en_US:
           create_button: Create New Payment Method
           create_one_button: Create One Now
         primary_details:
+          legend: "Primary Details"
           name: Name
           name_placeholder: eg. Jones Biodynamic Truffles
           groups: Groups
@@ -851,6 +899,9 @@ en_US:
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
           visible_in_search: Visible in search?
           visible: Public
+        properties:
+          legend: "Properties"
+        permalink:
           permalink: Permalink (no spaces)
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front
@@ -858,6 +909,7 @@ en_US:
           ofn_uid: OFN UID
           ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
         shipping_methods:
+          legend: "Shipping Methods"
           name: "Name"
           applies: "Active?"
           manage: "Manage Shipping Methods"
@@ -865,6 +917,7 @@ en_US:
           create_one_button: "Create One Now"
           no_method_yet: "You don't have any shipping methods yet."
         shop_preferences:
+          legend: "Store Preferences"
           shopfront_requires_login: "Publicly visible shopfront?"
           shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
           shopfront_requires_login_false: "Public"
@@ -911,6 +964,7 @@ en_US:
           enabled: "Enabled"
           disabled: "Disabled"
         social:
+          legend: "Social"
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. the_prof"
           facebook_placeholder: "eg. www.facebook.com/PageNameHere"
@@ -928,6 +982,7 @@ en_US:
             i_agree: I Agree
             cancel: Cancel
         tag_rules:
+          legend: "Tag Rules"
           default_rules:
             by_default: By Default
             no_rules_yet: No default rules apply yet
@@ -938,6 +993,7 @@ en_US:
           add_new_rule: '+ Add A New Rule'
           add_new_tag: '+ Add A New Tag'
         users:
+          legend: "Users"
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
           owner: 'Owner'
@@ -1057,11 +1113,21 @@ en_US:
         tags: "Tags"
         delivery_details: "Delivery Details"
         fees: "Fees"
+        next: "Next"
         previous: "Previous"
         save: "Save"
-        save_and_back_to_list: "Save and Back to List"
+        save_and_next: "Save and Next"
         cancel: "Cancel"
         back_to_list: "Back To List"
+      checkout_options:
+        back_end: "Back office only"
+        cancel: "Cancel"
+        distributor: "Distributor"
+        payment_methods: "Payment Methods"
+        save: "Save"
+        save_and_back_to_list: "Save and Back to List"
+        select_all: "Select all"
+        shipping_methods: "Shipping Methods"
       wizard_progress:
         edit: "1. General Settings"
         incoming: "2. Incoming Products"
@@ -1128,6 +1194,7 @@ en_US:
         customer_instructions_placeholder: Pick-up or delivery notes
         products: Products
         fees: Fees
+        tags: Tags
       destroy_errors:
         orders_present: That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead.
         schedule_present: That order cycle is linked to a schedule and cannot be deleted. Please unlink or delete the schedule first.
@@ -1137,6 +1204,8 @@ en_US:
         msg: This order cycle is linked to %{n} open subscription orders. Changing this date now will not affect any orders which have already been placed, but should be avoided if possible. Are you sure you want to proceed?
         cancel: Cancel
         proceed: Proceed
+      status:
+        closed: closed
     producer_properties:
       index:
         title: Producer Properties
@@ -1152,6 +1221,31 @@ en_US:
         has_no_payment_methods: "%{enterprise} has no payment methods"
         has_no_shipping_methods: "%{enterprise} has no shipping methods"
         has_no_enterprise_fees: "%{enterprise} has no enterprise fees"
+      side_menu:
+        enterprise:
+          primary_details: "Primary Details"
+          address: "Address"
+          contact: "Contact"
+          social: "Social"
+          about: "About"
+          business_details: "Business Details"
+          images: "Images"
+          properties: "Properties"
+          shipping_methods: "Shipping Methods"
+          payment_methods: "Payment Methods"
+          enterprise_fees: "Enterprise Fees"
+          enterprise_permissions: "Enterprise Permissions"
+          inventory_settings: "Inventory Settings"
+          tag_rules: "Tag Rules"
+          shop_preferences: "Store Preferences"
+          users: "Users"
+        enterprise_group:
+          primary_details: "Primary Details"
+          users: "Users"
+          about: "About"
+          images: "Images"
+          contact: "Contact"
+          web: "Web Resources"
     enterprise_issues:
       create_new: Create New
       resend_email: Resend Email
@@ -1459,9 +1553,9 @@ en_US:
   menu_4_url: "/groups"
   menu_5_title: "About"
   menu_5_url: "https://about.openfoodnetwork.net/"
-  menu_6_title: "Donate"
-  menu_6_url: "https://donate.openfoodnetwork.net"
-  menu_7_title: "Support"
+  menu_6_title: "Pricing"
+  menu_6_url: "https://about.openfoodnetwork.net/?page_id=114"
+  menu_7_title: "Help"
   menu_7_url: "https://about.openfoodnetwork.net/?page_id=1123"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
@@ -1652,37 +1746,28 @@ en_US:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     step1:
-      your_details:
-        title: Your details
-        first_name:
-          label: First Name
-          placeholder: e.g. Jane
-        last_name:
-          label: Last Name
-          placeholder: e.g. Doe
+      contact_information:
         email:
           label: Email
-          placeholder: e.g. Janedoe@email.com
         phone:
           label: Phone number
-          placeholder: e.g. 07987654321
       billing_address:
         title: Billing address
+        first_name:
+          label: First Name
+        last_name:
+          label: Last Name
       address:
         address1:
           label: Address (Street + House Number)
-          placeholder: e.g. Flat 1 Elm apartments
         address2:
           label: Additional address info (optional)
-          placeholder: e.g. Cavalier avenue
         city:
           label: City
-          placeholder: e.g. Cleveland
         state_id:
           label: State
         zipcode:
           label: Zipcode
-          placeholder: e.g. 92202
         country_id:
           label: Country
       shipping_info:
@@ -1711,20 +1796,15 @@ en_US:
       submit: Next - Order summary
       cancel: Back to your details
     step3:
-      your_details:
-        title: Your details
-        edit: Edit your details
-      billing_address:
-        title: Billing address
-      shipping_address:
-        title: Shipping address
-      delivery_info:
-        title: Delivery info
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
       payment_method:
         title: Payment method
-        edit: Edit payment method
+        edit: Edit
       order:
-        title: Order total
+        edit: Edit
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
@@ -1733,11 +1813,9 @@ en_US:
       all_terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
         terms_and_conditions: "Terms and Conditions"
-      agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
     errors:
-      global: "Saving failed, please update the highlighted fields."
       terms_not_accepted: Please accept Terms and Conditions
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
@@ -2016,7 +2094,6 @@ en_US:
   orders_form_empty_cart: "Empty cart"
   orders_form_update_cart: "Update"
   orders_form_subtotal: "Produce subtotal"
-  orders_form_admin: "Admin & Handling"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Orders have closed for this order cycle"
   orders_oc_expired_text: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders."
@@ -2287,7 +2364,6 @@ en_US:
   admin_enterprise_groups_data_powertip: "The primary user responsible for this group."
   admin_enterprise_groups_data_powertip_logo: "This is the logo for the group"
   admin_enterprise_groups_data_powertip_promo_image: "This image is displayed at the top of the Group profile"
-  admin_enterprise_groups_contact: "Contact"
   admin_enterprise_groups_contact_phone_placeholder: "eg. (123)435-7891"
   admin_enterprise_groups_contact_address1_placeholder: "eg. 123 High Street"
   admin_enterprise_groups_contact_city: "City"
@@ -2296,7 +2372,6 @@ en_US:
   admin_enterprise_groups_contact_zipcode_placeholder: "eg. 24098"
   admin_enterprise_groups_contact_state_id: "State"
   admin_enterprise_groups_contact_country_id: "Country"
-  admin_enterprise_groups_web: "Web Resources"
   admin_enterprise_groups_web_twitter: "eg. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "eg. www.truffles.com"
   admin_order_cycles: "Admin Order Cycles"
@@ -2500,6 +2575,8 @@ en_US:
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
+  report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
+  report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
   report_header_enterprise: Enterprise
   report_header_customer: Customer
   report_header_customer_code: Customer Code
@@ -2536,6 +2613,9 @@ en_US:
   report_header_delivery_postcode: Delivery Postcode
   report_header_bulk_unit_size: Bulk Unit Size
   report_header_weight: Weight
+  report_header_height: Height
+  report_header_width: Width
+  report_header_depth: Depth
   report_header_sum_total: Sum Total
   report_header_date_of_order: Date of Order
   report_header_amount_owing: Amount Owing
@@ -2607,11 +2687,8 @@ en_US:
   images: "Images"
   web: "Web"
   primary_details: "Primary Details"
-  adrdress: "Address"
   contact: "Contact"
   social: "Social"
-  business_details: "Business Details"
-  properties: "Properties"
   shipping: "Shipping"
   shipping_methods: "Shipping Methods"
   payment_methods: "Payment Methods"
@@ -2621,11 +2698,8 @@ en_US:
   payment_updated: "Payment Updated"
   cannot_perform_operation: "Could not update the payment"
   action_required: "Action required"
-  inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"
-  shop_preferences: "Store Preferences"
   enterprise_fee_whole_order: Whole order
-  enterprise_fee_by: "%{type} fee by %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
@@ -2711,6 +2785,7 @@ en_US:
         got_it: "Got it"
         close: "Close"
         continue: "Continue"
+        cancel: "Cancel"
         invite: "Invite"
         invite_title: "Invite an unregistered user"
         tag_rule_help:
@@ -2875,7 +2950,6 @@ en_US:
           pending: "pending"
           resumed: "resumed"
           returned: "returned"
-          skrill: "skrill"
         shipment_states:
           backorder: "backorder"
           partial: "partial"
@@ -3316,7 +3390,6 @@ en_US:
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
     mail_method_settings: "Mail Method Settings"
-    mail_settings_notice_html: "Some of the following settings can't be edited and are listed here just for debugging purposes. Changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details."
     general: "General"
     enable_mail_delivery: "Enable Mail Delivery"
     send_mails_as: "Send Mail As"
@@ -3542,6 +3615,7 @@ en_US:
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
+          resend_confirmation: "Order Confirmation"
         sortable_header:
           payment_state: "Payment State"
           shipment_state: "Shipment State"
@@ -3678,7 +3752,6 @@ en_US:
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
-        image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
         new:
           title: "New Product"
           new_product: "New Product"
@@ -3895,6 +3968,7 @@ en_US:
         thanks: "Thank you for your business."
         track_information: "Tracking Information: %{tracking}"
         track_link: "Tracking Link: %{url}"
+        picked_up_instructions: "We've marked your order from %{distributor} as \"picked up\". Here's what you got:"
     test_mailer:
       test_email:
         greeting: "Congratulations!"
@@ -3915,7 +3989,6 @@ en_US:
       pending: pending
       resumed: resumed
       returned: returned
-      skrill: skrill
     subscription_state:
       active: active
       pending: pending
@@ -3941,6 +4014,8 @@ en_US:
         connection_failed: "Could not connect to PayPal."
         generic_error: "PayPal failed. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Regenerate Key"
       form:
         account_settings: Account Settings
       show:
@@ -3974,7 +4049,8 @@ en_US:
         items: Items
         total: Total
         paid?: Paid?
-        view: View
+        status: Status
+        cancelled: Cancelled
       saved_cards:
         default?: Default?
         delete?: Delete?
@@ -4048,3 +4124,11 @@ en_US:
       x_years:
         one: "1 year"
         other: "%{count} years"
+  components:
+    search_input:
+      placeholder: Search
+    selector_with_filter:
+      search_placeholder: Search
+    pagination:
+      next: Next
+      previous: Previous

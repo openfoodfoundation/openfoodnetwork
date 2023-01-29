@@ -1,0 +1,11 @@
+/* Override file app/webpacker/css/admin/components/sidebar.scss */
+
+#sidebar {
+  border-color: #e7e7e7;
+  .sidebar-title {
+    color: $v2-blue;
+    & > span {
+      background-color: $v2-body-bg;
+    }
+  }
+}

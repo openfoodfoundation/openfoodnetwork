@@ -24,6 +24,98 @@ describe CheckoutHelper, type: :helper do
     end
   end
 
+  describe "#display_checkout_taxes_hash" do
+    let(:order) { build(:order_with_totals) }
+    let(:tax_rate10) { build(:tax_rate, amount: 0.1) }
+    let(:tax_rate20) { build(:tax_rate, amount: 0.2) }
+    let(:other_tax_rate20) { build(:tax_rate, amount: 0.2) }
+    let(:adjustment1) {
+      build(:adjustment, amount: 1, label: "10% tax", originator: tax_rate10)
+    }
+    let(:adjustment2) {
+      build(:adjustment, amount: 2, label: "20% tax", originator: tax_rate20)
+    }
+    let(:other_adjustment2) {
+      build(:adjustment, amount: 2, label: "20% tax", originator: other_tax_rate20)
+    }
+
+    it "produces an empty array without taxes" do
+      expect(helper.display_checkout_taxes_hash(order)).to eq([])
+    end
+
+    it "shows a single tax adjustment" do
+      order.all_adjustments << adjustment1
+      order.save!
+
+      expect(helper.display_checkout_taxes_hash(order)).to eq [
+        {
+          amount: Spree::Money.new(1, currency: order.currency),
+          percentage: "10.0%",
+          rate_amount: 0.1,
+        }
+      ]
+    end
+
+    it "shows multiple tax adjustments" do
+      order.all_adjustments << adjustment1
+      order.all_adjustments << adjustment2
+      order.save!
+
+      expect(helper.display_checkout_taxes_hash(order)).to eq [
+        {
+          amount: Spree::Money.new(1, currency: order.currency),
+          percentage: "10.0%",
+          rate_amount: 0.1,
+        },
+        {
+          amount: Spree::Money.new(2, currency: order.currency),
+          percentage: "20.0%",
+          rate_amount: 0.2,
+        },
+      ]
+    end
+
+    it "sorts adjustments by percentage" do
+      order.all_adjustments << adjustment2
+      order.all_adjustments << adjustment1
+      order.save!
+
+      expect(helper.display_checkout_taxes_hash(order)).to eq [
+        {
+          amount: Spree::Money.new(1, currency: order.currency),
+          percentage: "10.0%",
+          rate_amount: 0.1,
+        },
+        {
+          amount: Spree::Money.new(2, currency: order.currency),
+          percentage: "20.0%",
+          rate_amount: 0.2,
+        },
+      ]
+    end
+
+    it "shows multiple tax adjustments with same percentage" do
+      order.all_adjustments << adjustment2
+      order.all_adjustments << other_adjustment2
+      order.save!
+
+      expect(helper.display_checkout_taxes_hash(order)).to eq [
+        {
+          amount: Spree::Money.new(2, currency: order.currency),
+          percentage: "20.0%",
+          rate_amount: 0.2,
+        },
+        {
+          amount: Spree::Money.new(2, currency: order.currency),
+          percentage: "20.0%",
+          rate_amount: 0.2,
+        },
+      ]
+
+      expect(helper.display_checkout_taxes_hash(order).size).to eq 2
+    end
+  end
+
   it "knows if guests can checkout" do
     distributor = create(:distributor_enterprise)
     order = create(:order, distributor: distributor)
@@ -39,7 +131,7 @@ describe CheckoutHelper, type: :helper do
     let(:enterprise_fee) { create(:enterprise_fee, amount: 123) }
     let!(:fee_adjustment) {
       create(:adjustment, originator: enterprise_fee, adjustable: order,
-                          order: order)
+                          order: order, label: "Enterprise Fee")
     }
 
     before do
@@ -53,11 +145,8 @@ describe CheckoutHelper, type: :helper do
       adjustments = helper.checkout_adjustments_for(order)
 
       shipping_adjustment = order.shipment_adjustments.first
-      expect(adjustments).to include shipping_adjustment
 
-      admin_fee_summary = adjustments.last
-      expect(admin_fee_summary.label).to eq I18n.t(:orders_form_admin)
-      expect(admin_fee_summary.amount).to eq 123
+      expect(adjustments).to match_array [shipping_adjustment, fee_adjustment]
     end
 
     context "tax rate adjustments" do

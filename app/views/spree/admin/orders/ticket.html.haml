@@ -43,7 +43,7 @@
       j(line_item.display_amount_with_adjustments.format(symbol: false, with_currency: false))] }
       .join('" + \'\x0A\' + "')}",
       '\x0A',
-      "#{checkout_adjustments_for(@order, exclude: [:line_item])
+      "#{checkout_adjustments_for(@order, exclude: [:line_item], reject_zero_amount: false)
       .reject{ |a| a.amount == 0 }
       .reverse.map { |adjustment| '%5s %-27.27s%8.8s' %
       ["",
@@ -58,10 +58,10 @@
       j(@order.display_total.format(with_currency: false))]}",
       '\x1B' + '\x45' + '\x0A', // bold off
       '\x0A',
-      "#{display_checkout_taxes_hash(@order).map { |tax_rate, tax_value|
+      "#{display_checkout_taxes_hash(@order).map { |tax|
       '%31s%10s' %
-      [j(t(:tax_total, rate: tax_rate)),
-      j(tax_value.format(with_currency: false))] +
+      [j(t(:tax_total, rate: tax[:percentage])),
+      j(tax[:amount].format(with_currency: false))] +
       '" + \'\x0A\' + "'}.join }",
       "#{'%31s%10s' %
       [j(t(:total_excl_tax)),

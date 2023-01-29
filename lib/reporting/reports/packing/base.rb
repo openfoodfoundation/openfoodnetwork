@@ -26,14 +26,7 @@ module Reporting
         end
 
         def columns_format
-          { price: :currency, quantity: :quantity }
-        end
-
-        def custom_headers
-          return {} if html_render?
-
-          # Use non translated headers to avoid breaking changes
-          @custom_headers ||= report_data.columns.index_by(&:itself).symbolize_keys
+          { quantity: :quantity }
         end
 
         def default_params
@@ -45,7 +38,7 @@ module Reporting
 
         private
 
-        def select_fields
+        def select_fields # rubocop:disable Metrics/AbcSize
           lambda do
             {
               hub: distributor_alias[:name],
@@ -56,6 +49,10 @@ module Reporting
               supplier: supplier_alias[:name],
               product: product_table[:name],
               variant: variant_full_name,
+              weight: line_item_table[:weight],
+              height: line_item_table[:height],
+              width: line_item_table[:width],
+              depth: line_item_table[:depth],
               quantity: line_item_table[:quantity],
               price: (line_item_table[:quantity] * line_item_table[:price]),
               temp_controlled: shipping_category_table[:temperature_controlled],

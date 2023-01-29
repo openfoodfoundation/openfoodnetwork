@@ -21,21 +21,22 @@ class SplitCheckoutController < ::BaseController
 
   def edit
     redirect_to_step_based_on_order unless params[:step]
+    check_step if params[:step]
+    recalculate_tax if params[:step] == "summary"
+
+    flash_error_when_no_shipping_method_available if available_shipping_methods.none?
   end
 
   def update
     if confirm_order || update_order
       return if performed?
 
+      check_payments_adjustments
       clear_invalid_payments
       advance_order_state
       redirect_to_step
     else
-      flash.now[:error] ||= I18n.t('split_checkout.errors.global')
-
-      render status: :unprocessable_entity, operations: cable_car.
-        replace("#checkout", partial("split_checkout/checkout")).
-        replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
+      render_error
     end
   rescue Spree::Core::GatewayError => e
     flash[:error] = I18n.t(:spree_gateway_error_flash_for_checkout, error: e.message)
@@ -44,6 +45,25 @@ class SplitCheckoutController < ::BaseController
   end
 
   private
+
+  def render_error
+    flash.now[:error] ||= I18n.t(
+      'split_checkout.errors.saving_failed',
+      messages: @order.errors.full_messages.to_sentence
+    )
+
+    render status: :unprocessable_entity, operations: cable_car.
+      replace("#checkout", partial("split_checkout/checkout")).
+      replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
+  end
+
+  def flash_error_when_no_shipping_method_available
+    flash[:error] = I18n.t('split_checkout.errors.no_shipping_methods_available')
+  end
+
+  def check_payments_adjustments
+    @order.payments.each(&:ensure_correct_adjustment)
+  end
 
   def clear_invalid_payments
     @order.payments.with_state(:invalid).delete_all
@@ -57,6 +77,7 @@ class SplitCheckoutController < ::BaseController
 
     return true if redirect_to_payment_gateway
 
+    @order.process_payments!
     @order.confirm!
     order_completion_reset @order
   end
@@ -144,5 +165,19 @@ class SplitCheckoutController < ::BaseController
       return redirect_to checkout_step_path(:summary)
     end
     redirect_to_step_based_on_order
+  end
+
+  def check_step
+    case @order.state
+    when "cart", "address", "delivery"
+      redirect_to checkout_step_path(:details) unless params[:step] == "details"
+    when "payment"
+      redirect_to checkout_step_path(:payment) if params[:step] == "summary"
+    end
+  end
+
+  def recalculate_tax
+    @order.create_tax_charge!
+    @order.update_order!
   end
 end

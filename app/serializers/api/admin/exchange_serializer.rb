@@ -42,12 +42,18 @@ module Api
           .visible_variants_for_outgoing_exchanges_to(object.receiver)
       end
 
+      def preloaded_tag_list
+        return object.tag_list unless options[:preloaded_tags]
+
+        options.dig(:preloaded_tags, object.id) || []
+      end
+
       def tag_list
-        object.tag_list.join(",")
+        preloaded_tag_list.join(",")
       end
 
       def tags
-        object.tag_list.map{ |t| { text: t } }
+        preloaded_tag_list.map { |tag| { text: tag } }
       end
     end
   end

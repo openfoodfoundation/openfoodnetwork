@@ -1,0 +1,63 @@
+#!/bin/bash
+#
+# If you suspect that a spec becomes flaky on slow machines:
+#
+#     ./script/rspec-slow-repeat 10 spec/system/some_flaky_spec.rb
+#
+# You can use the resulting pass rate to asses if your code changes fixed it
+# or not. In the end I would run a spec 100 times to be sure it's stable.
+
+function finish() {
+  echo "Exiting..."
+  pkill -P $$
+  if [ "$pass_rate" -lt 100 ]; then
+    echo "Check tmp/rspec.log for details."
+    exit 1
+  else
+    exit 0
+  fi
+}
+
+trap finish SIGINT
+
+if [ "$#" -lt 1 ]; then
+  echo "Usage:   $0 <n> [rspec params]"
+  echo "Example: $0 30 spec/system/admin/order_cycles/simple_spec.rb:202"
+  exit 1
+fi
+
+n="$1"
+passed=0
+
+# Check via uname the environment we are running in to get the number of cores
+if [[ "`uname`" == "Darwin" ]]; then
+  processors="`sysctl -n hw.ncpu.`"
+else
+  processors="`cat /proc/cpuinfo | grep -c processor`"
+fi
+
+echo "Running $n times with $processors cores"
+
+# The purpose here is to occupy the CPU (yes command is not multi-threaded and it occupies only one core)
+# Start one process for each core, and then simulating a very busy CI environment with a 100% CPU load
+# increasing the chance of race conditions when executing specs.
+for i in `seq $processors`; do
+  yes > /dev/null &
+done
+
+export RUBY_DEBUG_ENABLE=0
+export SPRING_QUIET=true
+
+for i in `seq "$n"`; do
+  if ./bin/rspec "${@:2}" >> tmp/rspec.log; then
+    echo "Pass."
+    (( passed++ ))
+  else
+    echo "    !!! Fail !!!"
+  fi
+done
+
+pass_rate="$(( passed * 100 / n))"
+echo "$passed of $n passed ($pass_rate%)"
+
+finish

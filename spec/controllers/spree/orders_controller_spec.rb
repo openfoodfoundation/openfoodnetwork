@@ -457,7 +457,9 @@ describe Spree::OrdersController, type: :controller do
       context "when the order is not yet complete" do
         it "responds with forbidden" do
           spree_put :cancel, params
-          expect(response.status).to redirect_to order_path(order)
+
+          expect(response).to have_http_status(:found)
+          expect(response.body).to match(order_path(order)).and match("redirect")
           expect(flash[:error]).to eq I18n.t(:orders_could_not_cancel)
         end
       end
@@ -474,7 +476,9 @@ describe Spree::OrdersController, type: :controller do
 
         it "responds with success" do
           spree_put :cancel, params
-          expect(response.status).to redirect_to order_path(order)
+
+          expect(response).to have_http_status(:found)
+          expect(response.body).to match(order_path(order)).and match("redirect")
           expect(flash[:success]).to eq I18n.t(:orders_your_order_has_been_cancelled)
         end
       end

@@ -61,7 +61,7 @@ module Spree
             end
 
             it "should return an empty array" do
-              order.stub tax_zone: @zone
+              allow(order).to receive(:tax_zone) { @zone }
               expect(Spree::TaxRate.match(order)).to eq []
             end
 
@@ -73,7 +73,8 @@ module Spree
                 calculator: calculator
               )
 
-              order.stub tax_zone: @zone
+              allow(order).to receive(:tax_zone) { @zone }
+
               expect(Spree::TaxRate.match(order)).to eq [rate]
             end
 
@@ -92,7 +93,8 @@ module Spree
                 calculator: ::Calculator::FlatRate.new
               )
 
-              order.stub tax_zone: @zone
+              allow(order).to receive(:tax_zone) { @zone }
+
               expect(Spree::TaxRate.match(order)).to eq [rate1, rate2]
             end
 
@@ -100,7 +102,8 @@ module Spree
               before do
                 sub_zone = create(:zone, name: "State Zone", zone_members: [])
                 sub_zone.zone_members.create(zoneable: create(:state, country: country))
-                order.stub tax_zone: sub_zone
+                allow(order).to receive(:tax_zone) { sub_zone }
+
                 @rate = Spree::TaxRate.create(
                   amount: 1,
                   zone: @zone,
@@ -134,8 +137,8 @@ module Spree
 
             context "when the order has the same tax zone" do
               before do
-                order.stub tax_zone: @zone
-                order.stub billing_address: tax_address
+                allow(order).to receive(:tax_zone) { @zone }
+                allow(order).to receive(:billing_address) { tax_address }
               end
 
               let(:tax_address) { build_stubbed(:address) }

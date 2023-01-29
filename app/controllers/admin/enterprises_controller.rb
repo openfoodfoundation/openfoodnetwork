@@ -7,6 +7,7 @@ require 'open_food_network/order_cycle_permissions'
 module Admin
   class EnterprisesController < Admin::ResourceController
     include GeocodeEnterpriseAddress
+    include CablecarResponses
 
     # These need to run before #load_resource so that @object is initialised with sanitised values
     prepend_before_action :override_owner, only: :create
@@ -44,7 +45,12 @@ module Admin
     def edit
       @object = Enterprise.where(permalink: params[:id]).
         includes(users: [:ship_address, :bill_address]).first
-      super
+      if params[:stimulus]
+        @enterprise.is_primary_producer = params[:is_primary_producer]
+        @enterprise.sells = params[:enterprise_sells]
+        render operations: cable_car.morph("#side_menu", partial("admin/shared/side_menu"))
+          .morph("#permalink", partial("admin/enterprises/form/permalink"))
+      end
     end
 
     def welcome

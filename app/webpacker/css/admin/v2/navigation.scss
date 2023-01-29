@@ -1,0 +1,84 @@
+#header {
+  #login-nav {
+    li {
+      color: $v2-medium-dark-grey;
+
+      i {
+        @include v2-link-color();
+      }
+    }
+  }
+}
+
+#admin-menu {
+  background-color: $v2-orange;
+
+  li a span.text {
+    font-weight: 700;
+  }
+
+  li.tab-with-icon a:before {
+    display: none;
+  }
+
+  li a:hover,
+  li.selected a {
+    background-color: $v2-orange-light;
+
+    span {
+      text-shadow: 1px 1px 9px $v2-orange;
+    }
+
+    &:after {
+      display: none;
+    }
+  }
+}
+
+#sub-menu {
+  background-color: $v2-orange-light;
+
+  li a {
+    font-size: 100%;
+  }
+
+  li a:hover,
+  li.selected a {
+    text-shadow: 1px 1px 9px $v2-orange;
+    background-color: lighten($v2-orange-light, 7%);
+    &:after {
+      display: none;
+    }
+  }
+}
+
+.admin__section-header {
+  background-color: transparent;
+  border-bottom: none;
+
+  h1.js-admin-page-title {
+    color: $v2-medium-dark-grey;
+  }
+}
+
+nav.menu ul li,
+nav.menu ul #admin-menu li,
+#admin-menu nav.menu ul li {
+  &.active {
+    a {
+      color: $v2-blue-dark;
+      border-bottom-color: $v2-blue-dark;
+    }
+  }
+
+  &.selected a,
+  a {
+    &:hover {
+      color: $v2-blue-dark;
+      border-bottom-color: $v2-blue-dark;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-left-color: transparent;
+    }
+  }
+}

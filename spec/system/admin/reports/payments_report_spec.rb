@@ -31,30 +31,30 @@ describe "Payments Reports" do
     create(:line_item_with_shipment, order: other_order, product: product)
 
     login_as_admin
-    visit main_app.admin_report_path(report_type: 'payments')
+    visit admin_reports_path
   end
 
   context "when choosing itemised payments report type" do
     it "shows orders with payment state, their balance and totals" do
-      select I18n.t(:report_itemised_payment), from: "report_subtype"
+      click_link "Itemised Payment Totals"
       find("[type='submit']").click
 
       expect(page.find("table.report__table thead tr").text).to have_content([
-        I18n.t(:report_header_payment_state),
-        I18n.t(:report_header_distributor),
-        I18n.t(:report_header_product_total_price, currency: currency_symbol),
-        I18n.t(:report_header_shipping_total_price, currency: currency_symbol),
-        I18n.t(:report_header_outstanding_balance_price, currency: currency_symbol),
-        I18n.t(:report_header_total_price, currency: currency_symbol)
+        "Payment State",
+        "Distributor",
+        "Product Total ($)",
+        "Shipping Total ($)",
+        "Outstanding Balance ($)",
+        "Total ($)"
       ].join(" ").upcase)
 
       expect(page.find("table.report__table tbody tr").text).to have_content([
         order.payment_state,
         order.distributor.name,
-        with_currency(order.item_total.to_f + other_order.item_total.to_f),
-        with_currency(order.ship_total.to_f + other_order.ship_total.to_f),
-        with_currency(order.outstanding_balance.to_f + other_order.outstanding_balance.to_f),
-        with_currency(order.total.to_f + other_order.total.to_f)
+        order.item_total.to_f + other_order.item_total.to_f,
+        order.ship_total.to_f + other_order.ship_total.to_f,
+        order.outstanding_balance.to_f + other_order.outstanding_balance.to_f,
+        order.total.to_f + other_order.total.to_f
       ].compact.join(" "))
     end
   end
@@ -71,18 +71,18 @@ describe "Payments Reports" do
     }
 
     it 'shows orders with payment state, their balance and and payment totals' do
-      select I18n.t(:report_payment_totals), from: "report_subtype"
+      click_link "Payment Totals"
       find("[type='submit']").click
 
       expect(page.find("table.report__table thead tr").text).to have_content([
-        I18n.t(:report_header_payment_state),
-        I18n.t(:report_header_distributor),
-        I18n.t(:report_header_product_total_price, currency: currency_symbol),
-        I18n.t(:report_header_shipping_total_price, currency: currency_symbol),
-        I18n.t(:report_header_total_price, currency: currency_symbol),
-        I18n.t(:report_header_eft_price, currency: currency_symbol),
-        I18n.t(:report_header_paypal_price, currency: currency_symbol),
-        I18n.t(:report_header_outstanding_balance_price, currency: currency_symbol),
+        "Payment State",
+        "Distributor",
+        "Product Total ($)",
+        "Shipping Total ($)",
+        "Total ($)",
+        "EFT ($)",
+        "PayPal ($)",
+        "Outstanding Balance ($)"
       ].join(" ").upcase)
 
       expect(page.find("table.report__table tbody tr").text).to have_content([

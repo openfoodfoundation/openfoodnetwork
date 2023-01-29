@@ -29,6 +29,8 @@ angular.module("admin.orders").controller "ordersCtrl", ($scope, $timeout, Reque
     $scope.q = {
       completed_at_not_null: true
     }
+    e = new CustomEvent("flatpickr_clear");
+    window.dispatchEvent(e)
 
   $scope.clearFilters = () ->
     KeyValueMapStore.clearKeyValueMap()

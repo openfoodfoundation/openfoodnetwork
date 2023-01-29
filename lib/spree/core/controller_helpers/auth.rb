@@ -61,7 +61,8 @@ module Spree
 
           return unless user.respond_to?(:spree_api_key) && user.spree_api_key.blank?
 
-          user.generate_spree_api_key!
+          user.generate_api_key
+          user.save
         end
       end
     end

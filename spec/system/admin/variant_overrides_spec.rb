@@ -449,6 +449,7 @@ describe "
         select2_select distributor.name, from: 'order_distributor_id'
         select2_select order_cycle.name, from: 'order_order_cycle_id'
         click_button 'Next'
+        click_link "Order Details"
       end
 
       # Reproducing a bug, issue #1446
@@ -512,8 +513,7 @@ describe "
         product = create(:simple_product, supplier: supplier)
         InventoryItem.create!(
           enterprise: supplier,
-          variant: product.variants.first,
-          visible: true
+          variant: product.variants.first
         )
       end
       first_variant = inventory_items.first.variant

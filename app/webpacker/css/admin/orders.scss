@@ -82,12 +82,30 @@ div#group_buy_calculation {
 	}
 }
 
+// Changing placeholder text colour
+.items-placeholder::placeholder {
+  color: $white;
+  opacity: 1;
+}
+
 th.actions {
   white-space: nowrap;
 }
 
 table.index td.actions {
   text-align: left;
+}
+
+table.edit-note-table {
+	margin-top: -15px;
+
+	tr:first-child th, tr:first-child td {
+		border-top: none;
+	}
+
+	td.actions {
+		width: 15%;
+	}
 }
 
 .index-controls {

@@ -1,0 +1,25 @@
+- content_for :page_title do
+  = t(".title")
+
+= render 'admin/shared/enterprises_sub_menu'
+
+%div
+  %h2= t(".connect")
+  %br
+
+  - if spree_current_user.provider == 'openid_connect' && spree_current_user.uid.present?
+    = t(".already_connected")
+    = spree_current_user.uid
+    %br
+    %br
+
+    = t(".view_account")
+    = link_to t(".les_communs_link"), "#{ Devise.omniauth_configs[:openid_connect].options[:issuer] }/account"
+
+  - else
+    = t(".link_your_account")
+    %br
+    %br
+    = button_to t(".link_account_button"),
+      Spree::Core::Engine.routes.url_helpers.spree_user_openid_connect_omniauth_authorize_path(auth_type: "login"),
+      method: :post

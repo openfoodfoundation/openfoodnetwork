@@ -47,10 +47,9 @@ module Sets
     end
 
     def update_product(product, attributes)
-      original_supplier = product.supplier_id
       return false unless update_product_only_attributes(product, attributes)
 
-      ExchangeVariantDeleter.new.delete(product) if original_supplier != product.supplier_id
+      ExchangeVariantDeleter.new.delete(product) if product.saved_change_to_supplier_id?
 
       update_product_variants(product, attributes) &&
         update_product_master(product, attributes)
@@ -97,6 +96,7 @@ module Sets
       variants_attributes.each do |attributes|
         create_or_update_variant(product, attributes)
       end
+      product.errors.empty?
     end
 
     def create_or_update_variant(product, variant_attributes)
@@ -109,10 +109,17 @@ module Sets
     end
 
     def create_variant(product, variant_attributes)
+      return if variant_attributes.blank?
+
       on_hand = variant_attributes.delete(:on_hand)
       on_demand = variant_attributes.delete(:on_demand)
 
       variant = product.variants.create(variant_attributes)
+
+      if variant.errors.present?
+        product.errors.merge!(variant.errors)
+        return false
+      end
 
       begin
         variant.on_demand = on_demand if on_demand.present?
@@ -125,11 +132,11 @@ module Sets
 
     def notify_bugsnag(error, product, variant, variant_attributes)
       Bugsnag.notify(error) do |report|
-        report.add_tab(:product, product.attributes)
-        report.add_tab(:product_error, product.errors.first) unless product.valid?
-        report.add_tab(:variant_attributes, variant_attributes)
-        report.add_tab(:variant, variant.attributes)
-        report.add_tab(:variant_error, variant.errors.first) unless variant.valid?
+        report.add_metadata(:product, product.attributes)
+        report.add_metadata(:product_error, product.errors.first) unless product.valid?
+        report.add_metadata(:variant_attributes, variant_attributes)
+        report.add_metadata(:variant, variant.attributes)
+        report.add_metadata(:variant_error, variant.errors.first) unless variant.valid?
       end
     end
 

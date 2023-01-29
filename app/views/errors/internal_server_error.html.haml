@@ -1,0 +1,8 @@
+- content_for :title do
+  = I18n.t("errors.internal_server_error.title")
+.dialog
+  %a{href: "/"}
+    %img{src: "/500.jpg"}
+  %h1
+    = t("errors.internal_server_error.title")
+  = t("errors.internal_server_error.message_html")

@@ -37,7 +37,7 @@ describe '
 
       select @supplier.name, from: 'product_supplier_id'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
-      fill_in 'product_unit_value_with_description', with: "5 g"
+      fill_in 'product_unit_value', with: "5.00 g"
       assert_selector(:field, placeholder: "5kg g")
       fill_in 'product_display_as', with: "Big Box of Chocolates"
       select taxon.name, from: "product_primary_taxon_id"
@@ -51,7 +51,7 @@ describe '
 
       expect(page).to have_content "Name can't be blank"
       expect(page).to have_field 'product_supplier_id', with: @supplier.id
-      expect(page).to have_field 'product_unit_value_with_description', with: "5 g"
+      expect(page).to have_field 'product_unit_value', with: "5.00 g"
       expect(page).to have_field 'product_display_as', with: "Big Box of Chocolates"
       expect(page).to have_field 'product_primary_taxon_id', with: taxon.id
       expect(page).to have_field 'product_price', with: '19.99'
@@ -59,9 +59,22 @@ describe '
       expect(page).to have_field 'product_on_demand', checked: true
       expect(page).to have_field 'product_tax_category_id', with: tax_category.id
       expect(page.find("div[id^='taTextElement']")).to have_content 'A description...'
-      expect(page.find("#product_units_field")).to have_content 'Weight (kg)'
+      expect(page.find("#product_variant_unit_field")).to have_content 'Weight (kg)'
 
       expect(page).to have_content "Name can't be blank"
+    end
+
+    it "preserves 'Items' 'Unit Size' selection when submitting with error" do
+      login_to_admin_section
+
+      click_link 'Products'
+      click_link 'New Product'
+
+      select "Items", from: 'product_variant_unit_with_scale'
+
+      click_button 'Create'
+
+      expect(page.find("#product_variant_unit_field")).to have_content 'Items'
     end
 
     it "assigning important attributes", js: true do
@@ -75,7 +88,7 @@ describe '
       select 'New supplier', from: 'product_supplier_id'
       fill_in 'product_name', with: 'A new product !!!'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
-      fill_in 'product_unit_value_with_description', with: 5
+      fill_in 'product_unit_value', with: 5
       select taxon.name, from: "product_primary_taxon_id"
       fill_in 'product_price', with: '19.99'
       fill_in 'product_on_hand', with: 5
@@ -112,7 +125,7 @@ describe '
       fill_in 'product_name', with: 'Hot Cakes'
       select 'New supplier', from: 'product_supplier_id'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
-      fill_in 'product_unit_value_with_description', with: 1
+      fill_in 'product_unit_value', with: 1
       select taxon.name, from: "product_primary_taxon_id"
       fill_in 'product_price', with: '1.99'
       fill_in 'product_on_hand', with: 0
@@ -137,7 +150,7 @@ describe '
       fill_in 'product_name', with: 'Hot Cakes'
       select 'New supplier', from: 'product_supplier_id'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
-      fill_in "product_unit_value_with_description", with: ""
+      fill_in "product_unit_value", with: ""
       select taxon.name, from: "product_primary_taxon_id"
       fill_in 'product_price', with: '1.99'
       fill_in 'product_on_hand', with: 0
@@ -190,10 +203,13 @@ describe '
         expect(page).not_to have_selector "#p_#{order.variants.first.product_id}"
       end
 
-      it 'keeps the line item on the order (admin)' do
-        visit spree.admin_orders_path
-        find(".icon-edit").click
-        expect(page).to have_content(line_item.product.name.to_s)
+      context "a deleted line item from a shipped order" do
+        before do
+          login_as_admin_and_visit spree.edit_admin_order_path(order)
+        end
+        it 'keeps the line item on the order (admin)' do
+          expect(page).to have_content(line_item.product.name.to_s)
+        end
       end
     end
   end
@@ -248,7 +264,7 @@ describe '
           expect(page).to have_selector('#product_supplier_id')
           select 'Another Supplier', from: 'product_supplier_id'
           select 'Weight (g)', from: 'product_variant_unit_with_scale'
-          fill_in 'product_unit_value_with_description', with: '500'
+          fill_in 'product_unit_value', with: '500'
           select taxon.name, from: "product_primary_taxon_id"
           select 'None', from: "product_tax_category_id"
 
@@ -590,8 +606,8 @@ describe '
       attach_file('image_attachment', unsupported_image_file_path)
       click_button "Create"
 
-      expect(page).to have_text "The product image was not recognised."
-      expect(page).to have_text "Please upload an image in PNG or JPG format."
+      expect(page).to have_text "Attachment has an invalid content type"
+      expect(page).to have_text "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
     end
 
     it "deleting product images", js: true do

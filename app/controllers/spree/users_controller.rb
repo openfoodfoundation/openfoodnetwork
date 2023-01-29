@@ -78,7 +78,7 @@ module Spree
 
     def load_object
       @user ||= spree_current_user
-      if @user
+      if @user && !@user.disabled
         authorize! params[:action].to_sym, @user
       else
         redirect_to main_app.login_path

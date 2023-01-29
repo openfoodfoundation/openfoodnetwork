@@ -56,7 +56,7 @@ describe "Registration", js: true do
       fill_in 'enterprise_address', with: '123 Abc Street'
       fill_in 'enterprise_city', with: 'Northcote'
       fill_in 'enterprise_zipcode', with: '3070'
-      expect(page).to have_select('enterprise_country', options: ["Albania", "Australia"],
+      expect(page).to have_select('enterprise_country', options: ["Albania", "Australia", "France"],
                                                         selected: 'Australia')
       select 'Vic', from: 'enterprise_state'
       click_button "Continue"
@@ -136,7 +136,7 @@ describe "Registration", js: true do
       expect(e.facebook).to eq "FaCeBoOk"
       expect(e.linkedin).to eq "LiNkEdIn"
       expect(e.twitter).to eq "TwItTeR"
-      expect(e.instagram).to eq "InStAgRaM"
+      expect(e.instagram).to eq "instagram"
 
       click_link "Go to Enterprise Dashboard"
       expect(page).to have_content "CHOOSE YOUR PACKAGE"

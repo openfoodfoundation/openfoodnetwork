@@ -58,6 +58,34 @@ describe '
     expect(page).to have_selector "#sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_flat_percent[value='12.34']"
   end
 
+  it "creating an enterprise fee with invalid amount shows error flash message" do
+    # Given an enterprise
+    e = create(:supplier_enterprise, name: 'Feedme')
+
+    # When I go to the enterprise fees page
+    login_as_admin_and_visit admin_enterprise_fees_path
+
+    # And I fill in the fields for a new enterprise fee and click update
+    select 'Feedme', from: 'sets_enterprise_fee_set_collection_attributes_0_enterprise_id'
+    select 'Admin', from: 'sets_enterprise_fee_set_collection_attributes_0_fee_type'
+    fill_in 'sets_enterprise_fee_set_collection_attributes_0_name', with: 'Hello!'
+    select 'GST', from: 'sets_enterprise_fee_set_collection_attributes_0_tax_category_id'
+    select 'Flat Percent', from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
+    click_button 'Update'
+
+    # Then I should see my fee and fields for the calculator
+    expect(page).to have_content "Your enterprise fees have been updated."
+    expect(page).to have_selector "input[value='Hello!']"
+
+    # When I fill in the calculator fields and click update
+    fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_flat_percent',
+            with: "\'20.0'"
+    click_button 'Update'
+
+    # Then I should see the flash error message
+    expect(flash_message).to eq('Invalid input. Please use only numbers. For example: 10, 5.5, -20')
+  end
+
   context "editing an enterprise fee" do
     # Given an enterprise fee
     let!(:fee) { create(:enterprise_fee) }
@@ -105,6 +133,16 @@ describe '
       click_button 'Update'
 
       expect(fee.reload.calculator_type).to eq("Calculator::PerItem")
+    end
+
+    it 'shows error flash when updating fee amount with invalid values' do
+      # When I fill in the calculator fields and click update
+      fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_flat_percent',
+              with: "\'20.0'"
+      click_button 'Update'
+
+      # Then I should see the flash error message
+      expect(flash_message).to eq('Invalid input. Please use only numbers. For example: 10, 5.5, -20')
     end
   end
 

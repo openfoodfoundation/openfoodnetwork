@@ -251,11 +251,6 @@ module Spree
       permalink.present? ? permalink : (permalink_was || UrlGenerator.to_url(name))
     end
 
-    # the master variant is not a member of the variants array
-    def variants?
-      variants.any?
-    end
-
     def tax_category
       if self[:tax_category_id].nil?
         TaxCategory.find_by(is_default: true)

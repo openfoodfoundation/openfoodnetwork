@@ -1,6 +1,6 @@
 #### What? Why?
 
-Closes # <!-- Insert issue number here. -->
+- Closes # <!-- Insert issue number here. -->
 
 <!-- Explain why this change is needed and the solution you propose.
      Provide context for others to understand it. -->

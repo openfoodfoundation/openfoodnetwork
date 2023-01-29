@@ -1,0 +1,9 @@
+/* Overide app/webpacker/css/admin/components/progress.scss file */
+
+#progress {
+  background-color: $v2-blue;
+}
+
+#loading {
+  color: $v2-blue;
+}

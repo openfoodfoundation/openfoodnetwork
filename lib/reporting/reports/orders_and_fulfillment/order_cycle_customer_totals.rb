@@ -64,6 +64,7 @@ module Reporting
 
             order_number: proc { |line_items| line_items.first.order.number },
             date: proc { |line_items| line_items.first.order.completed_at.strftime("%F %T") },
+            final_weight_volume: proc { |line_items| line_items.sum(&:final_weight_volume) },
           }
         end
         # rubocop:enable Metrics/AbcSize
@@ -99,6 +100,14 @@ module Reporting
           report_line_items.list(line_item_includes).group_by { |e|
             [e.variant_id, e.price, e.order_id]
           }.values
+        end
+
+        def default_params
+          super.merge(
+            {
+              fields_to_hide: [:final_weight_volume]
+            }
+          )
         end
 
         private

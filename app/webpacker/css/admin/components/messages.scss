@@ -38,6 +38,7 @@
     font-size: 120%;
     color: $color-1;
     font-weight: 600;
+    margin-top: 0;
   
     &.notice  { background-color: rgba($color-notice,  0.8) }
     &.success { background-color: rgba($color-success, 0.8) }

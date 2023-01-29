@@ -116,6 +116,43 @@ module Admin
           end
         end
       end
+
+      describe "queries" do
+        context "as manager, when order cycle has multiple exchanges" do
+          let!(:distributor) { create(:distributor_enterprise) }
+          let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor) }
+          before do
+            order_cycle.exchanges.create! sender: distributor, receiver: distributor, incoming: true,
+                                          receival_instructions: 'A', tag_list: "A"
+            order_cycle.exchanges.create! sender: distributor, receiver: distributor, incoming: false,
+                                          pickup_instructions: 'B', tag_list: "B"
+            controller_login_as_enterprise_user([distributor])
+          end
+
+          it do
+            query_counter = QueryCounter.new
+            get :show, params: { id: order_cycle.id }, as: :json
+            expect(query_counter.queries).to eq(
+              {
+                select: {
+                  enterprise_fees: 3,
+                  enterprise_groups: 1,
+                  enterprises: 22,
+                  exchanges: 7,
+                  order_cycles: 6,
+                  proxy_orders: 1,
+                  schedules: 1,
+                  spree_roles: 9,
+                  spree_variants: 8,
+                  tags: 1
+                },
+                update: { spree_users: 1 }
+              }
+            )
+            query_counter.stop
+          end
+        end
+      end
     end
 
     describe "create" do

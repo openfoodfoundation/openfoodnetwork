@@ -142,3 +142,25 @@ Devise::TokenAuthenticatable.setup do |config|
   # Defines name of the authentication token params key
   config.token_authentication_key = :auth_token
 end
+
+if ENV["OPENID_APP_ID"].present? && ENV["OPENID_APP_SECRET"].present?
+  Devise.setup do |config|
+    protocol = Rails.env.development? ? "http://" : "https://"
+    config.omniauth :openid_connect, {
+      name: :openid_connect,
+      issuer: "https://login.lescommuns.org/auth/realms/data-food-consortium",
+      scope: [:openid, :profile, :email],
+      response_type: :code,
+      uid_field: "email",
+      discovery: true,
+      client_auth_method: :jwks,
+
+      client_options: {
+        identifier: ENV["OPENID_APP_ID"],
+        secret: ENV["OPENID_APP_SECRET"],
+        redirect_uri: "#{protocol}#{ENV["SITE_URL"]}/user/spree_user/auth/openid_connect/callback",
+        jwks_uri: 'https://login.lescommuns.org/auth/realms/data-food-consortium/protocol/openid-connect/certs'
+      }
+    }
+  end
+end

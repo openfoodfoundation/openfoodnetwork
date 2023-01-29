@@ -9,15 +9,18 @@ end
 # Overriding Devise routes to use our own controller
 Spree::Core::Engine.routes.draw do
   devise_for :spree_user,
+             :router_name => "spree",
              :class_name => 'Spree::User',
              :controllers => { :sessions => 'spree/user_sessions',
                                :registrations => 'user_registrations',
                                :passwords => 'user_passwords',
-                               :confirmations => 'user_confirmations'},
-             :skip => [:unlocks, :omniauth_callbacks],
+                               :confirmations => 'user_confirmations',
+                               :omniauth_callbacks => "omniauth_callbacks" },
+             :skip => [:unlocks],
              :path_names => { :sign_out => 'logout' },
              :path_prefix => :user
 
+  resources :api_keys, :only => [:create, :destroy]
   resources :users, :only => [:edit, :update]
 
   devise_scope :spree_user do
@@ -30,6 +33,7 @@ Spree::Core::Engine.routes.draw do
   end
 
   resource :account, :controller => 'users'
+  match '/admin/orders/bulk_cancel' => 'admin/orders#bulk_cancel', :as => "admin_bulk_cancel", via: :post
 
   match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', :as => "admin_bulk_order_management", via: :get
   match '/admin/payment_methods/show_provider_preferences' => 'admin/payment_methods#show_provider_preferences', :via => :get
@@ -111,13 +115,6 @@ Spree::Core::Engine.routes.draw do
         member do
           put :fire
         end
-      end
-    end
-
-    resources :users do
-      member do
-        put :generate_api_key
-        put :clear_api_key
       end
     end
 

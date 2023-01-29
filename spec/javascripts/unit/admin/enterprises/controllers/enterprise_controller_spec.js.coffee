@@ -3,7 +3,6 @@ describe "enterpriseCtrl", ->
   scope = null
   enterprise = null
   PaymentMethods = null
-  ShippingMethods = null
   Enterprises = null
   StatusMessage = null
 
@@ -14,27 +13,17 @@ describe "enterpriseCtrl", ->
       sells: "none"
       owner:
         id: 98
-    PaymentMethods =
-      paymentMethods: "payment methods"
-    ShippingMethods =
-      shippingMethods: "shipping methods"
     receivesNotifications = 99
 
     inject ($rootScope, $controller, _Enterprises_, _StatusMessage_) ->
       scope = $rootScope
       Enterprises = _Enterprises_
       StatusMessage = _StatusMessage_
-      ctrl = $controller "enterpriseCtrl", {$scope: scope, enterprise: enterprise, EnterprisePaymentMethods: PaymentMethods, EnterpriseShippingMethods: ShippingMethods, Enterprises: Enterprises, StatusMessage: StatusMessage, receivesNotifications: receivesNotifications}
+      ctrl = $controller "enterpriseCtrl", {$scope: scope, enterprise: enterprise, EnterprisePaymentMethods: PaymentMethods, Enterprises: Enterprises, StatusMessage: StatusMessage, receivesNotifications: receivesNotifications}
 
   describe "initialisation", ->
     it "stores enterprise", ->
       expect(scope.Enterprise).toEqual enterprise
-
-    it "stores payment methods", ->
-      expect(scope.PaymentMethods).toBe PaymentMethods.paymentMethods
-
-    it "stores shipping methods", ->
-      expect(scope.ShippingMethods).toBe ShippingMethods.shippingMethods
 
   describe "removing logo", ->
     deferred = null

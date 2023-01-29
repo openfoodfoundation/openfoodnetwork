@@ -5,6 +5,12 @@ Openfoodnetwork::Application.routes.draw do
   end
 
   namespace :api do
+
+    constraints FeatureToggleConstraint.new(:dfc_provider) do
+      # Mount DFC API endpoints
+      mount DfcProvider::Engine, at: '/dfc-v1.6/'
+    end
+
     namespace :v0 do
       resources :products do
         collection do
@@ -18,7 +24,7 @@ Openfoodnetwork::Application.routes.draw do
 
       resources :variants, :only => [:index]
 
-      resources :orders, only: [:index, :show] do
+      resources :orders, only: [:index, :show, :update] do
         member do
           put :capture
           put :ship
@@ -84,7 +90,7 @@ Openfoodnetwork::Application.routes.draw do
       end
 
       get '/reports/:report_type(/:report_subtype)', to: 'reports#show',
-          constraints: lambda { |_| Flipper.enabled?(:api_reports) }
+          constraints: lambda { |_| OpenFoodNetwork::FeatureToggle.enabled?(:api_reports) }
     end
 
     namespace :v1 do

@@ -15,7 +15,8 @@ default: &default
     'app/webpacker/css',
     'app/webpacker/fonts',
     'app/webpacker/images',
-    'engines/web/app/assets/stylesheets'
+    'engines/web/app/assets/stylesheets',
+    'app/components'
   ]
 
   # Reload manifest.json on all requests so we reload latest compiled packs
@@ -78,7 +79,9 @@ development:
     headers:
       'Access-Control-Allow-Origin': '*'
     watch_options:
-      ignored: '**/node_modules/**'
+      ignored:
+        - '**/node_modules/**'
+        - '**/*.swp'
 
 production: &production
   <<: *default

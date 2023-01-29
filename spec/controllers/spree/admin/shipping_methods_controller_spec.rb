@@ -31,14 +31,21 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
       expect(shipping_method.reload.calculator.preferred_currency).to eq "EUR"
     end
 
-    it "diplay error message on update if preferred_amount input is invalid" do
-      shipping_method.calculator = create(:calculator_flat_rate, calculable: shipping_method)
-      params[:shipping_method][:calculator_attributes][:preferred_amount] = "\'20.0'"
+    %i[
+      preferred_flat_percent preferred_amount
+      preferred_first_item preferred_additional_item
+      preferred_minimal_amount preferred_normal_amount
+      preferred_discount_amount preferred_per_unit
+    ].each do |shipping_amount|
+      it "diplay error message on update if #{shipping_amount} input is invalid" do
+        shipping_method.calculator = create(:calculator_flat_rate, calculable: shipping_method)
+        params[:shipping_method][:calculator_attributes][shipping_amount] = "\'20.0'"
 
-      spree_post :update, params
+        spree_post :update, params
 
-      expect(flash[:error]).to match I18n.t(:calculator_preferred_value_error) 
-      expect(response).to redirect_to spree.edit_admin_shipping_method_path(shipping_method)
+        expect(flash[:error]).to match I18n.t(:calculator_preferred_value_error)
+        expect(response).to redirect_to spree.edit_admin_shipping_method_path(shipping_method)
+      end
     end
 
     it "updates preferred_per_unit of a Weight calculator" do

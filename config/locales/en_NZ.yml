@@ -5,8 +5,13 @@ en_NZ:
       spree/product: Product
       spree/shipping_method: Shipping Method
     attributes:
+      spree/order/ship_address:
+        phone: "Phone number"
+        firstname: "First name"
+        lastname: "Last name"
       spree/user:
         password: "Password"
+        password_confirmation: "Password confirmation"
         reset_password_token: Reset password token
       enterprise_fee:
         fee_type: Fee Type
@@ -22,6 +27,8 @@ en_NZ:
         state: State
         source: Source
       spree/product:
+        name: "Product Name"
+        price: "Price"
         primary_taxon: "Product Category"
         supplier: "Supplier"
         shipping_category_id: "Shipping Category"
@@ -43,6 +50,8 @@ en_NZ:
           attributes:
             email:
               taken: "There's already an account for this email. Please login or reset your password."
+            reset_password_token:
+              invalid: is invalid
         spree/order:
           no_card: There are no authorised credit cards available to charge
         spree/credit_card:
@@ -58,6 +67,58 @@ en_NZ:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
+  stripe:
+    error_code:
+      incorrect_number: "The card number is incorrect."
+      invalid_number: "The card number is not a valid credit card number."
+      invalid_expiry_month: "The card's expiration month is invalid."
+      invalid_expiry_year: "The card's expiration year is invalid."
+      invalid_cvc: "The card's security code is invalid."
+      expired_card: "The card has expired."
+      incorrect_cvc: "The card's security code is incorrect."
+      incorrect_zip: "The card's zip code failed validation."
+      card_declined: "The card was declined."
+      missing: "There is no card on a customer that is being charged."
+      processing_error: "An error occurred while processing the card."
+      rate_limit: "An error occurred due to requests hitting the API too quickly. Please let us know if you're consistently running into this error."
+      authentication_required: "The card was declined as the transaction requires authentication."
+      approve_with_id: "The payment cannot be authorized."
+      call_issuer: "The card has been declined for an unknown reason."
+      card_not_supported: "The card does not support this type of purchase."
+      card_velocity_exceeded: "The customer has exceeded the balance or credit limit available on their card."
+      currency_not_supported: "The card does not support the specified currency."
+      do_not_honor: "The card has been declined for an unknown reason."
+      do_not_try_again: "The card has been declined for an unknown reason."
+      duplicate_transaction: "A transaction with identical amount and credit card information was submitted very recently."
+      fraudulent: "The payment has been declined as Stripe suspects it is fraudulent."
+      generic_decline: "The card has been declined for an unknown reason."
+      incorrect_pin: "The PIN entered is incorrect. This decline code only applies to payments made with a card reader."
+      insufficient_funds: "The card has insufficient funds to complete the purchase."
+      invalid_account: "The card, or account the card is connected to, is invalid."
+      invalid_amount: "The payment amount is invalid, or exceeds the amount that is allowed."
+      invalid_pin: "The PIN entered is incorrect. This decline code only applies to payments made with a card reader."
+      issuer_not_available: "The card issuer could not be reached, so the payment could not be authorized."
+      lost_card: "The payment has been declined because the card is reported lost."
+      merchant_blacklist: "The payment has been declined because it matches a value on the Stripe user’s block list."
+      new_account_information_available: "The card, or account the card is connected to, is invalid."
+      no_action_taken: "The card has been declined for an unknown reason."
+      not_permitted: "The payment is not permitted."
+      offline_pin_required: "The card has been declined as it requires a PIN."
+      online_or_offline_pin_required: "The card has been declined as it requires a PIN."
+      pickup_card: "The card cannot be used to make this payment (it is possible it has been reported lost or stolen)."
+      pin_try_exceeded: "The allowable number of PIN tries has been exceeded."
+      reenter_transaction: "The payment could not be processed by the issuer for an unknown reason."
+      restricted_card: "The card cannot be used to make this payment (it is possible it has been reported lost or stolen)."
+      revocation_of_all_authorizations: "The card has been declined for an unknown reason."
+      revocation_of_authorization: "The card has been declined for an unknown reason."
+      security_violation: "The card has been declined for an unknown reason."
+      service_not_allowed: "The card has been declined for an unknown reason."
+      stolen_card: "The payment has been declined because the card is reported stolen."
+      stop_payment_order: "The card has been declined for an unknown reason."
+      testmode_decline: "A Stripe test card number was used."
+      transaction_not_allowed: "The card has been declined for an unknown reason."
+      try_again_later: "The card has been declined for an unknown reason."
+      withdrawal_count_limit_exceeded: "The customer has exceeded the balance or credit limit available on their card."
   activemodel:
     errors:
       messages:
@@ -81,8 +142,15 @@ en_NZ:
               no_default_card: "^No default card available for this customer"
             shipping_method:
               not_available_to_shop: "is not available to %{shop}"
+  card_details: "Card details"
+  card_type: "Card type"
+  cardholder_name: "Cardholder name"
+  community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "User password cannot be blank. Please enter a password."
     confirmations:
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
       failed_to_send: "An error occurred whilst sending your confirmation email."
@@ -99,6 +167,7 @@ en_NZ:
         signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
         unknown_error: "Something went wrong while creating your account. Check your email address and try again."
     failure:
+      disabled: "Your account has been disabled. Please contact an administrator to solve this issue."
       invalid: |
           Invalid email or password.
           Were you a guest last time?  Perhaps you need to create an account or reset your password.
@@ -106,17 +175,46 @@ en_NZ:
       already_registered: "This email address is already registered. Please log in to continue, or go back and use another email address."
     success:
       logged_in_succesfully: "Logged in successfully"
+    sessions:
+      signed_out: "Signed out successfully."
+      already_signed_out: "Signed out successfully."
     user_passwords:
       spree_user:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
         updated: "Your password was changed successfully. You are now signed in."
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+  home_page_alert_html: "Home page alert HTML"
+  hub_signup_case_studies_html: "Hub signup case studies HTML"
+  hub_signup_detail_html: "Hub signup detail HTML"
+  hub_signup_pricing_table_html: "Hub signup pricing table HTML"
+  group_signup_case_studies_html: "Group signup case studies HTML"
+  group_signup_detail_html: "Group signup detail HTML"
+  group_signup_pricing_table_html: "Group signup pricing table HTML"
+  item_description: "Item description"
+  menu_1_icon_name: "Menu 1 icon name"
+  menu_2_icon_name: "Menu 2 icon name"
+  menu_3_icon_name: "Menu 3 icon name"
+  menu_4_icon_name: "Menu 4 icon name"
+  menu_5_icon_name: "Menu 5 icon name"
+  menu_6_icon_name: "Menu 6 icon name"
+  menu_7_icon_name: "Menu 7 icon name"
   models:
     order_cycle:
       cloned_order_cycle_name: "COPY OF %{order_cycle}"
     tax_rate:
       included_in_price: "Included in price"
+  open_street_map_enabled: "Open Street Map enabled"
+  open_street_map_default_latitude: "Open Street Map default latitude"
+  open_street_map_default_longitude: "Open Street Map default longitude"
+  open_street_map_provider_name: "Open Street Map provider name"
+  open_street_map_provider_options: "Open Street Map provider options"
+  producer_signup_case_studies_html: "Producer signup case studies HTML"
+  producer_signup_detail_html: "Producer signup detail HTML"
+  producer_signup_pricing_table_html: "Producer signup pricing table HTML"
+  producers_social: "Producers social"
+  resume_order: "Resume order"
   sku: "SKU"
+  subtotal: "Subtotal"
   tax_rate: "Tax rate"
   validators:
     date_time_string_validator:
@@ -143,6 +241,7 @@ en_NZ:
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
+  provider_settings: "Provider settings"
   shipment_mailer:
     shipped_email:
       dear_customer: "Dear Customer,"
@@ -194,7 +293,7 @@ en_NZ:
   search_by_name: Search by name or suburb...
   producers_join: New Zealand producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges GST?
-  enterprise_permissions: "Enterprise Permissions"
+  business_address: "Business Address"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -263,7 +362,9 @@ en_NZ:
   error: Error
   processing_payment: "Processing payment..."
   no_pending_payments: "No pending payments"
+  invalid_payment_state: "Invalid payment state: %{state}"
   filter_results: Filter Results
+  clear_filters: Clear filters
   quantity: Quantity
   pick_up: Pick up
   copy: Copy
@@ -281,6 +382,8 @@ en_NZ:
   height: "Height"
   width: "Width"
   depth: "Depth"
+  payment_could_not_process: "The payment could not be processed"
+  payment_could_not_complete: "The payment could not be completed"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -296,8 +399,31 @@ en_NZ:
     destroy: "Destroy"
     rename: "Rename"
   admin:
+    products_page:
+      title: Products
+      filters:
+        categories:
+          title: Categories
+        producers:
+          title: Producers
+        colums: Columns
+      columns:
+        name: Name
+        unit: Unit
+        price: Price
+        producer: Producer
+        category: Category
+      columns_selector:
+        unit: Unit
+        price: Price
+        producer: Producer
+        category: Category
+    adjustments:
+      skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
     begins_on: Begins On
+    bill_address: "Bill address"
+    ship_address: "Ship address"
     customer: Customer
     date: Date
     email: Email
@@ -361,8 +487,18 @@ en_NZ:
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
       embedded_shopfronts_whitelist: "External Domains Whitelist"
     terms_of_service_files:
+      create:
+        select_file: "Please select a file first."
       show:
+        title: "Terms of Service files"
+        no_files: "No terms of services have been uploaded yet."
+        using_default_terms_html: "The site is currently linking to your old %{tos_link}."
+        current_terms_html: "View the current %{tos_link}. Upload time: %{datetime}."
         terms_of_service: "Terms of Service"
+        delete: "Delete file"
+        confirm_delete: "Are you sure you want to delete the current Terms of Service file?"
+        attachment: "Attachment"
+        create_terms_of_service: "Create Terms of service file"
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
@@ -372,6 +508,7 @@ en_NZ:
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
         enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
+        enterprise_number_required_on_invoices?: "Require an ABN to generate an invoice?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -419,8 +556,6 @@ en_NZ:
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
-      destroy:
-        has_associated_orders: "Delete failed: customer has associated orders with his shop"
     contents:
       edit:
         title: Content
@@ -448,6 +583,16 @@ en_NZ:
     enterprise_groups:
       index:
         new_button: New Enterprise Group
+      form_primary_details:
+        primary_details: "Primary Details"
+      form_users:
+        users: "Users"
+      form_images:
+        images: "Images"
+      form_address:
+        contact: "Contact"
+      form_web:
+        web: "Web Resources"
     enterprise_roles:
       form:
         manages: manages
@@ -587,6 +732,8 @@ en_NZ:
         display_name: Display Name
         category: Category
         description: Description
+        units: Units
+        unit_type: Unit Type
         variant_unit_name: Variant Unit Name
         price: Price
         on_hand: On Hand
@@ -646,6 +793,9 @@ en_NZ:
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
         all: "All"
       select_variant: "Select a variant"
+      note:
+        note_label: "Note:"
+        no_note_present: "No note provided."
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
     enterprises:
@@ -662,7 +812,10 @@ en_NZ:
           desc_short_placeholder: Tell us about your enterprise in one or two sentences
           desc_long: About Us
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
+        address:
+          legend: "Address"
         business_details:
+          legend: "Business Details"
           abn: 'GST No. '
           abn_placeholder: eg. 99 -99-99
           acn: NZBN
@@ -672,9 +825,23 @@ en_NZ:
           terms_and_conditions: "Terms and Conditions"
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
+          reset_form: "Reset Form"
+          business_address_legend: "Business Address"
+          invoice_item_sorting_legend: "Invoice item sorting"
+          sort_items_by_supplier?: Sort items by supplier?
+          sort_items_by_supplier_tip: "When enabled, Items will be sorted by supplier name."
+          enabled: Enable
+          disabled: Disable
         business_address:
+          company_legal_name: Company Legal Name
+          company_placeholder: Example Inc.
+          address1: Legal address
+          address1_placeholder: 123 High St.
           address2: Address (contd.)
+          legal_phone_number: Legal phone number
+          phone_placeholder: "98 123 4565"
         contact:
+          legend: "Contact"
           name: Name
           name_placeholder: eg. Gustav Plum
           email_address: Public Email Address
@@ -682,15 +849,23 @@ en_NZ:
           email_address_tip: "This email address will be displayed in your public profile"
           phone: Phone
           phone_placeholder: eg. 98 7654 3210
+          whatsapp_phone: WhatsApp phone number
+          whatsapp_phone_placeholder: eg. +64 21 987 654
+          whatsapp_phone_tip: "This number will be displayed in your public profile to be opened as a WhatsApp link."
           website: Website
           website_placeholder: eg. www.some-website.co.nz
         enterprise_fees:
+          legend: "Enterprise Fees"
           name: Name
           fee_type: Fee Type
           manage_fees: Manage Enterprise Fees
           no_fees_yet: You don't have any enterprise fees yet.
           create_button: Create One Now
+        enterprise_permissions:
+          legend: "Enterprise Permissions"
+          enterprise_relationships: Enterprise Relationships
         images:
+          legend: "Images"
           logo: Logo
           promo_image_placeholder: 'This image is displayed in "About Us"'
           promo_image_note1: 'PLEASE NOTE:'
@@ -699,6 +874,7 @@ en_NZ:
           remove_logo: "Remove Image"
           remove_promo_image: "Remove Image"
         inventory_settings:
+          legend: "Inventory Settings"
           text1: You may opt to manage stock levels and prices in via your
           inventory: inventory
           text2: >
@@ -709,6 +885,7 @@ en_NZ:
           preferred_product_selection_from_inventory_only_yes: New products can be put into my shopfront (recommended)
           preferred_product_selection_from_inventory_only_no: New products must be added to my inventory before they can be put into my shopfront
         payment_methods:
+          legend: "Payment Methods"
           name: Name
           applies: Applies?
           manage: Manage Payment Methods
@@ -716,6 +893,7 @@ en_NZ:
           create_button: Create New Payment Method
           create_one_button: Create One Now
         primary_details:
+          legend: "Primary Details"
           name: Name
           name_placeholder: eg. Professor Plum's Biodynamic Truffles
           groups: Groups
@@ -730,7 +908,13 @@ en_NZ:
           sells: Sells
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
           visible_in_search: Visible in search?
+          visible_in_search_tip: "Shops can be 11. publicly visible, appearing on the OFN map and listings. 22. Hidden on maps and listings but referenced by other shops and linked in their profile. 33. Completely hidden."
           visible: Public
+          not_visible: Hidden
+          hidden: Hide all references
+        properties:
+          legend: "Properties"
+        permalink:
           permalink: Permalink (no spaces)
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front
@@ -738,6 +922,7 @@ en_NZ:
           ofn_uid: OFN UID
           ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
         shipping_methods:
+          legend: "Shipping Methods"
           name: "Name"
           applies: "Active?"
           manage: "Manage Shipping Methods"
@@ -745,6 +930,7 @@ en_NZ:
           create_one_button: "Create One Now"
           no_method_yet: "You don't have any shipping methods yet."
         shop_preferences:
+          legend: "Shop Preferences"
           shopfront_requires_login: "Publicly visible shopfront?"
           shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
           shopfront_requires_login_false: "Public"
@@ -783,11 +969,17 @@ en_NZ:
           shopfront_category_ordering_note: "(top to bottom)"
           open_date: "Open Date"
           close_date: "Close Date"
+          display_ordering_in_shopfront: "Display ordering in shopfront:"
+          shopfront_sort_by_category: "By category"
+          shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
           shopfront_sort_by_producer_placeholder: "Producer"
+          display_remaining_stock: "Display remaining stock in shopfront if low on-hand"
+          display_remaining_stock_tip: "Let shoppers know when there are only 3 or less items left."
           enabled: "Enabled"
           disabled: "Disabled"
         social:
+          legend: "Social"
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. the_prof"
           facebook_placeholder: "eg. www.facebook.com/PageNameHere"
@@ -805,6 +997,7 @@ en_NZ:
             i_agree: I Agree
             cancel: Cancel
         tag_rules:
+          legend: "Tag Rules"
           default_rules:
             by_default: By Default
             no_rules_yet: No default rules apply yet
@@ -815,6 +1008,7 @@ en_NZ:
           add_new_rule: '+ Add A New Rule'
           add_new_tag: '+ Add A New Tag'
         users:
+          legend: "Users"
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
           owner: 'Owner'
@@ -914,6 +1108,8 @@ en_NZ:
         back_to_list: "Back To List"
         save_and_back_to_list: "Save and Back to List"
         choose_products_from: "Choose Products From:"
+        re_notify_producers: Re notify producers
+        notify_producers_tip: This will send an email to each producer with the list of their orders.
       incoming:
         incoming: "Incoming"
         supplier: "Supplier"
@@ -932,11 +1128,21 @@ en_NZ:
         tags: "Tags"
         delivery_details: "Delivery Details"
         fees: "Fees"
+        next: "Next"
         previous: "Previous"
         save: "Save"
-        save_and_back_to_list: "Save and Back to List"
+        save_and_next: "Save and Next"
         cancel: "Cancel"
         back_to_list: "Back To List"
+      checkout_options:
+        back_end: "Back office only"
+        cancel: "Cancel"
+        distributor: "Distributor"
+        payment_methods: "Payment Methods"
+        save: "Save"
+        save_and_back_to_list: "Save and Back to List"
+        select_all: "Select all"
+        shipping_methods: "Shipping Methods"
       wizard_progress:
         edit: "1. General Settings"
         incoming: "2. Incoming Products"
@@ -954,6 +1160,8 @@ en_NZ:
         add_supplier: 'Add supplier'
         add_distributor: 'Add distributor'
       advanced_settings:
+        automatic_notifications: Automatic notifications
+        automatic_notifications_tip: Automatically notify producers with their orders via emails when order cycles close
         title: Advanced Settings
         choose_product_tip: You can restrict products incoming and outgoing to only %{inventory}'s inventory.
         preferred_product_selection_from_coordinator_inventory_only_here: Coordinator's Inventory Only
@@ -984,6 +1192,7 @@ en_NZ:
         schedule: Schedule
         schedules: Schedules
         new_schedule: New Schedule
+        new_schedule_tooltip: The frequency with which a subscription order is placed
       name_and_timing_form:
         name: Name
         orders_open: Orders open at
@@ -1000,6 +1209,7 @@ en_NZ:
         customer_instructions_placeholder: Pick-up or delivery notes
         products: Products
         fees: Fees
+        tags: Tags
       destroy_errors:
         orders_present: That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead.
         schedule_present: That order cycle is linked to a schedule and cannot be deleted. Please unlink or delete the schedule first.
@@ -1009,6 +1219,11 @@ en_NZ:
         msg: This order cycle is linked to %{n} open subscription orders. Changing this date now will not affect any orders which have already been placed, but should be avoided if possible. Are you sure you want to proceed?
         cancel: Cancel
         proceed: Proceed
+      status:
+        undated: undated
+        upcoming: upcoming
+        open: open
+        closed: closed
     producer_properties:
       index:
         title: Producer Properties
@@ -1024,6 +1239,29 @@ en_NZ:
         has_no_payment_methods: "%{enterprise} has no payment methods"
         has_no_shipping_methods: "%{enterprise} has no shipping methods"
         has_no_enterprise_fees: "%{enterprise} has no enterprise fees"
+      side_menu:
+        enterprise:
+          primary_details: "Primary Details"
+          address: "Address"
+          contact: "Contact"
+          social: "Social"
+          business_details: "Business Details"
+          images: "Images"
+          properties: "Properties"
+          shipping_methods: "Shipping Methods"
+          payment_methods: "Payment Methods"
+          enterprise_fees: "Enterprise Fees"
+          enterprise_permissions: "Enterprise Permissions"
+          inventory_settings: "Inventory Settings"
+          tag_rules: "Tag Rules"
+          shop_preferences: "Shop Preferences"
+          users: "Users"
+        enterprise_group:
+          primary_details: "Primary Details"
+          users: "Users"
+          images: "Images"
+          contact: "Contact"
+          web: "Web Resources"
     enterprise_issues:
       create_new: Create New
       resend_email: Resend Email
@@ -1036,12 +1274,14 @@ en_NZ:
       unitsize: UNITSIZE
       total: TOTAL
       total_items: TOTAL ITEMS
+      total_by_customer: Total By Customer
+      total_by_supplier: Total By Supplier
       supplier_totals: Order Cycle Supplier Totals
       supplier_totals_by_distributor: Order Cycle Supplier Totals by Distributor
       totals_by_supplier: Order Cycle Distributor Totals by Supplier
       customer_totals: Order Cycle Customer Totals
       all_products: All products
-      inventory: Inventory (on hand)
+      inventory: Inventory
       lettuce_share: LettuceShare
       mailing_list: Mailing List
       addresses: Addresses
@@ -1051,6 +1291,7 @@ en_NZ:
       tax_rates: Tax Rates
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
+      pack_by_product: Pack By Product
       orders_and_distributors:
         name: Orders And Distributors
         description: Orders with distributor details
@@ -1079,6 +1320,11 @@ en_NZ:
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      errors:
+        no_report_type: "Please specify a report type"
+        report_not_found: "Report not found"
+        missing_ransack_params: "Please supply Ransack search params in the request"
+      hidden_field: "< Hidden >"
       summary_row:
         total: "TOTAL"
       table:
@@ -1096,13 +1342,21 @@ en_NZ:
           temp_controlled: "TempControlled?"
           price: "Price"
       rendering_options:
+        generate_report: "Generate report"
+        on_screen: "On screen"
+        spreadsheet: "Spreadsheet (Excel, OpenOffice..)"
         display: Display
+        summary_row: Summary Row
+        header_row: Header Row
+        raw_data: Raw Data
+        formatted_data: Formatted Data
       packing:
         name: "Packing Reports"
     subscriptions:
       index:
         title: "Subscriptions"
         new: "New Subscription"
+      issue: "Issue"
       new:
         title: "New Subscription"
       edit:
@@ -1201,8 +1455,11 @@ en_NZ:
       stripe_connect_settings:
         resource: Stripe Connect configuration
   api:
+    unknown_error: "Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
     unauthorized: "You are not authorized to perform that action."
+    unpermitted_parameters: "Parameters not allowed in this request: %{params}"
+    missing_parameter: "A required parameter is missing or empty: %{param}"
     invalid_resource: "Invalid resource. Please fix errors and try again."
     resource_not_found: "The resource you were looking for could not be found."
     enterprise_logo:
@@ -1226,6 +1483,8 @@ en_NZ:
       message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
       terms_and_conditions: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
+    payment_cancelled_due_to_stock: "Payment cancelled: the checkout could not be completed due to stock issues."
+    order_not_loaded: "No valid order found for checkout processing"
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -1276,6 +1535,7 @@ en_NZ:
         login: "login"
         contact: "contact"
         require_customer_login: "Only approved customers can access this shop."
+        require_login_link_html: "If you're already an approved customer, %{login} to proceed."
         require_login_2_html: "Want to start shopping here? Please %{contact} %{enterprise} and ask about joining."
         require_customer_html: "If you'd like to start shopping here, please %{contact} %{enterprise} to ask about joining."
       select_oc:
@@ -1351,6 +1611,12 @@ en_NZ:
   address2: Address (contd.)
   city: City
   city_placeholder: eg. Northcote
+  latitude: Latitude
+  latitude_placeholder: eg. -37.4713077
+  latitude_longitude_tip: Latitude and longitude are needed to display your enterprise on the map.
+  longitude: Longitude
+  longitude_placeholder: eg. 144.7851531
+  use_geocoder: Calculate latitude and longitude automatically from address?
   postcode: Postcode
   postcode_placeholder: eg. 3070
   suburb: Suburb
@@ -1501,23 +1767,28 @@ en_NZ:
   cost_currency: "Cost Currency"
   split_checkout:
     your_details_without_number: Your details
+    payment_method_without_number: Payment method
+    order_summary_without_number: Order summary
     already_ordered:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     step1:
-      your_details:
-        title: Your details
-        first_name:
-          label: First Name
-        last_name:
-          label: Last Name
+      contact_information:
         email:
           label: Email
         phone:
           label: Phone number
       billing_address:
         title: Billing address
+        first_name:
+          label: First Name
+        last_name:
+          label: Last Name
       address:
+        address1:
+          label: Address (Street + House Number)
+        address2:
+          label: Additional address info (optional)
         city:
           label: City
         state_id:
@@ -1528,17 +1799,39 @@ en_NZ:
           label: Country
       shipping_info:
         title: Shipping info
+      submit: Next - Payment method
+      cancel: Back to Edit basket
     step2:
+      payment_method:
+        title: Payment method
       form:
+        card_number:
+          label: Card number
+          placeholder: e.g. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
         card_month:
           label: Month
         card_year:
           label: Year
+        stripe:
+          use_saved_card: Use saved card
+          use_new_card: Enter your card identifiers
+          save_card: Save card for future use
+          create_new_card: or enter new card details below
+      explaination: You can review and confirm your order in the next step which includes the final costs.
+      submit: Next - Order summary
+      cancel: Back to Your details
     step3:
-      your_details:
-        title: Your details
-      billing_address:
-        title: Billing address
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+      payment_method:
+        title: Payment method
+        edit: Edit
+      order:
+        edit: Edit
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
@@ -1547,8 +1840,15 @@ en_NZ:
       all_terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
         terms_and_conditions: "Terms and Conditions"
+      submit: Complete order
+      cancel: Back to Payment method
     errors:
+      terms_not_accepted: Please accept Terms and Conditions
+      required: Field cannot be blank
+      invalid_number: "Please enter a valid phone number"
       invalid_email: "Please enter a valid email address"
+      select_a_shipping_method: Select a shipping method
+      select_a_payment_method: Select a payment method
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
@@ -1567,6 +1867,7 @@ en_NZ:
   order_hub_info: Hub Info
   order_back_to_store: Back To Store
   order_back_to_cart: Back To Cart
+  order_back_to_website: Back To Website
   bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
   unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
   unsaved_changes_error: "Fields with red borders contain errors."
@@ -1603,6 +1904,7 @@ en_NZ:
   email_order_summary_includes_tax: "(includes tax):"
   email_payment_paid: PAID
   email_payment_not_paid: NOT PAID
+  email_payment_description: Payment Description at Checkout
   email_payment_summary: Payment summary
   email_payment_method: "Paying via:"
   email_so_placement_intro_html: "You have a new order with <strong>%{distributor}</strong>"
@@ -1647,6 +1949,7 @@ en_NZ:
   producer_mail_order_text: "Here is a summary of the orders for your products:"
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
   producer_mail_signoff: "Thanks and best wishes"
+  producer_mail_order_customer_text: "Here is a summary of the orders grouped by customers"
   shopping_oc_closed: Orders are closed
   shopping_oc_closed_description: "Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)"
   shopping_oc_last_closed: "The last cycle closed %{distance_of_time} ago"
@@ -1819,7 +2122,6 @@ en_NZ:
   orders_form_empty_cart: "Empty cart"
   orders_form_update_cart: "Update"
   orders_form_subtotal: "Produce subtotal"
-  orders_form_admin: "Admin & Handling"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Orders have closed for this order cycle"
   orders_oc_expired_text: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders."
@@ -1928,6 +2230,7 @@ en_NZ:
       details:
         title: "Details"
         headline: "Let's Get Started"
+        enterprise: "Woot! First we need to know a little bit about your enterprise:"
         producer: "Woot! First we need to know a little bit about your farm:"
         enterprise_name_field: "Enterprise Name:"
         producer_name_field: "Farm Name:"
@@ -1947,6 +2250,10 @@ en_NZ:
         state_field_error: "State required"
         country_field: "Country:"
         country_field_error: "Please select a country"
+        map_location: "Map Location"
+        locate_address: "Locate address on map"
+        drag_pin: "Drag and drop the pin to the correct location if not accurate."
+        confirm_address: "I confirm that the indicated position of the enterprise on the map is correct."
       contact:
         title: "Contact"
         who_is_managing_enterprise: "Who is responsible for managing %{enterprise}?"
@@ -1954,6 +2261,8 @@ en_NZ:
         contact_field_placeholder: "Contact Name"
         contact_field_required: "You need to enter a primary contact."
         phone_field: "Phone number"
+        whatsapp_phone_field: "WhatsApp phone number"
+        whatsapp_phone_tooltip: "This number will be displayed in your public profile to be opened as a WhatsApp link."
         phone_field_placeholder: "eg. (03) 123 4567"
       type:
         title: "Type"
@@ -2082,7 +2391,6 @@ en_NZ:
   admin_enterprise_groups_data_powertip: "The primary user responsible for this group."
   admin_enterprise_groups_data_powertip_logo: "This is the logo for the group"
   admin_enterprise_groups_data_powertip_promo_image: "This image is displayed at the top of the Group profile"
-  admin_enterprise_groups_contact: "Contact"
   admin_enterprise_groups_contact_phone_placeholder: "eg. 98 654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "eg. 123 High Street"
   admin_enterprise_groups_contact_city: "Suburb"
@@ -2091,7 +2399,6 @@ en_NZ:
   admin_enterprise_groups_contact_zipcode_placeholder: "eg. 3070"
   admin_enterprise_groups_contact_state_id: "State"
   admin_enterprise_groups_contact_country_id: "Country"
-  admin_enterprise_groups_web: "Web Resources"
   admin_enterprise_groups_web_twitter: "eg. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "eg. www.some-website.co.nz"
   admin_order_cycles: "Admin Order Cycles"
@@ -2293,6 +2600,8 @@ en_NZ:
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
+  report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
+  report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
   report_header_enterprise: Enterprise
   report_header_customer: Customer
   report_header_customer_code: Customer Code
@@ -2329,6 +2638,9 @@ en_NZ:
   report_header_delivery_postcode: Delivery Postcode
   report_header_bulk_unit_size: Bulk Unit Size
   report_header_weight: Weight
+  report_header_height: Height
+  report_header_width: Width
+  report_header_depth: Depth
   report_header_sum_total: Sum Total
   report_header_date_of_order: Date of Order
   report_header_amount_owing: Amount Owing
@@ -2400,11 +2712,8 @@ en_NZ:
   images: "Images"
   web: "WWW"
   primary_details: "Primary Details"
-  adrdress: "Address"
   contact: "Contact"
   social: "Social"
-  business_details: "Business Details"
-  properties: "Properties"
   shipping: "Shipping"
   shipping_methods: "Shipping Methods"
   payment_methods: "Payment Methods"
@@ -2414,11 +2723,8 @@ en_NZ:
   payment_updated: "Payment Updated"
   cannot_perform_operation: "Could not update the payment"
   action_required: "Action required"
-  inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"
-  shop_preferences: "Shop Preferences"
   enterprise_fee_whole_order: Whole order
-  enterprise_fee_by: "%{type} fee by %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
@@ -2501,6 +2807,7 @@ en_NZ:
         got_it: "Got it"
         close: "Close"
         continue: "Continue"
+        cancel: "Cancel"
         invite: "Invite"
         invite_title: "Invite an unregistered user"
         tag_rule_help:
@@ -2663,7 +2970,6 @@ en_NZ:
           pending: "pending"
           resumed: "resumed"
           returned: "returned"
-          skrill: "skrill"
         shipment_states:
           backorder: "backorder"
           partial: "partial"
@@ -2970,6 +3276,7 @@ en_NZ:
   last: "Last"
   spree:
     all: "All"
+    card_number: "Card number"
     category: "Category"
     credit: "Credit"
     more: "More"
@@ -3055,7 +3362,6 @@ en_NZ:
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
     mail_method_settings: "Mail Method Settings"
-    mail_settings_notice_html: "Some of the following settings can't be edited and are listed here just for debugging purposes. Changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details."
     general: "General"
     enable_mail_delivery: "Enable Mail Delivery"
     send_mails_as: "Send Mails As"
@@ -3269,6 +3575,7 @@ en_NZ:
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
+          resend_confirmation: "Resend Confirmation"
         sortable_header:
           payment_state: "Payment State"
           shipment_state: "Shipment State"
@@ -3283,6 +3590,9 @@ en_NZ:
           from: "From"
           to: "Bill to"
           shipping: "Shipping"
+        note:
+          note_label: "Note:"
+          no_note_present: "No note provided."
         form:
           distribution_fields:
             title: "Distribution"
@@ -3401,7 +3711,6 @@ en_NZ:
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
-        image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
         new:
           title: "New Product"
           new_product: "New Product"
@@ -3634,7 +3943,6 @@ en_NZ:
       pending: pending
       resumed: resumed
       returned: returned
-      skrill: skrill
     subscription_state:
       active: active
       pending: pending
@@ -3660,6 +3968,8 @@ en_NZ:
         connection_failed: "Could not connect to PayPal."
         generic_error: "PayPal failed. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Regenerate Key"
       form:
         account_settings: Account Settings
       show:
@@ -3693,7 +4003,8 @@ en_NZ:
         items: Items
         total: Total
         paid?: Paid?
-        view: View
+        status: Status
+        cancelled: Cancelled
       saved_cards:
         default?: Default?
         delete?: Delete?
@@ -3727,3 +4038,11 @@ en_NZ:
         spree/payment:
           one: Payment
           other: Payments
+  components:
+    search_input:
+      placeholder: Search
+    selector_with_filter:
+      search_placeholder: Search
+    pagination:
+      next: Next
+      previous: Previous

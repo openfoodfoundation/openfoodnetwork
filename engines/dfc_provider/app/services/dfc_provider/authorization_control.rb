@@ -4,28 +4,53 @@
 # It controls an OICD Access token and an enterprise.
 module DfcProvider
   class AuthorizationControl
-    def initialize(access_token)
-      @access_token = access_token
+    # Copied from: https://login.lescommuns.org/auth/realms/data-food-consortium/
+    LES_COMMUNES_PUBLIC_KEY = <<~KEY
+      -----BEGIN PUBLIC KEY-----
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl68JGqAILFzoi/1+6siXXp2vylu+7mPjYKjKelTtHFYXWVkbmVptCsamHlY3jRhqSQYe6M1SKfw8D+uXrrWsWficYvpdlV44Vm7uETZOr1/XBOjpWOi1vLmBVtX6jFeqN1BxfE1PxLROAiGn+MeMg90AJKShD2c5RoNv26e20dgPhshRVFPUGru+0T1RoKyIa64z/qcTcTVD2V7KX+ANMweRODdoPAzQFGGjTnL1uUqIdUwSfHSpXYnKxXOsnPC3Mowkv8UIGWWDxS/yzhWc7sOk1NmC7pb+Cg7G8NKj+Pp9qQZnXF39Dg95ZsxJrl6fyPFvTo3zf9CPG/fUM1CkkwIDAQAB
+      -----END PUBLIC KEY-----
+    KEY
+
+    def self.public_key
+      OpenSSL::PKey::RSA.new(LES_COMMUNES_PUBLIC_KEY)
     end
 
-    def process
-      decode_token
-      find_ofn_user
+    def initialize(request)
+      @request = request
+    end
+
+    def user
+      oidc_user || ofn_user
+    rescue JWT::ExpiredSignature
+      nil
+    end
+
+    private
+
+    def oidc_user
+      find_ofn_user(decode_token) if access_token
+    end
+
+    def ofn_user
+      @request.env['warden']&.user
     end
 
     def decode_token
-      data = JWT.decode(
-        @access_token,
-        nil,
-        false
-      )
-
-      @header = data.last
-      @payload = data.first
+      JWT.decode(
+        access_token,
+        self.class.public_key,
+        true, { algorithm: "RS256" }
+      ).first
     end
 
-    def find_ofn_user
-      Spree::User.where(email: @payload['email']).first
+    def access_token
+      @request.headers['Authorization'].to_s.split(' ').last
+    end
+
+    def find_ofn_user(payload)
+      return if payload["email"].blank?
+
+      Spree::User.find_by(uid: payload["email"])
     end
   end
 end

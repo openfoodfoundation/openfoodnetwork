@@ -59,6 +59,10 @@ FactoryBot.define do
     end
   end
 
+  # Note: Order cycles are sometimes referred to as 'simple if they are for a shop selling their
+  # own produce i.e. :sells = 'own'. However the 'simple_order_cycle' name does not mean this
+  # and may need to be renamed to avoid potential confusion because it actually can create
+  # 'non-simple' order cycles too for distributors selling produce from other enterprises.
   factory :simple_order_cycle, class: OrderCycle do
     sequence(:name) { |n| "Order Cycle #{n}" }
 
@@ -115,5 +119,13 @@ FactoryBot.define do
   factory :closed_order_cycle, parent: :simple_order_cycle do
     orders_open_at  { 2.weeks.ago }
     orders_close_at { 1.week.ago }
+  end
+
+  factory :distributor_order_cycle, parent: :simple_order_cycle do
+    coordinator { create(:distributor_enterprise) }
+  end
+
+  factory :sells_own_order_cycle, parent: :simple_order_cycle do
+    coordinator { create(:enterprise, sells: "own") }
   end
 end

@@ -18,7 +18,7 @@
   .omega.five.columns
     = f.field_container :password do
       = f.label :password, t(".password")
-      = f.password_field :password, class: "fullwidth"
+      = f.password_field :password, class: "fullwidth", autocomplete: "new-password"
       = f.error_message_on :password
     = f.field_container :password do
       = f.label :password_confirmation, t(".confirm_password")

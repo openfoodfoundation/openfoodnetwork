@@ -1,0 +1,8 @@
+- content_for :title do
+  = I18n.t("errors.not_found.title")
+.dialog
+  %a{href: "/"}
+    %img{src: "/500.jpg"}
+  %h1
+    = t("errors.not_found.title")
+  = t("errors.not_found.message_html")
