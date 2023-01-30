@@ -92,7 +92,6 @@ gem 'gmaps4rails'
 gem 'mimemagic', '> 0.3.5'
 gem 'paper_trail', '~> 12.1.0'
 gem 'rack-rewrite'
-gem 'rack-ssl', require: 'rack/ssl'
 gem 'roadie-rails'
 
 gem 'hiredis'
