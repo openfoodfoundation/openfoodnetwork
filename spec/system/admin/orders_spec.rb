@@ -250,6 +250,27 @@ describe '
             expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
           end
         end
+
+        context "orders by order state" do
+          before do
+            order2.update(state: "payment")
+            order3.update(state: "complete")
+            order4.update(state: "cart")
+            order5.cancel
+            login_as_admin_and_visit spree.admin_orders_path
+            uncheck 'Only show complete orders'
+            page.find('.filter-actions .button.icon-search').click
+          end
+
+          it "orders alphabetically by order number" do
+            find("a", text: 'STATE').click
+            expect(page).to have_content "Loading"
+            expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+            find("a", text: 'STATE').click # sets descending ordering
+            expect(page).to have_content "Loading"
+            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
+          end
+        end
       end
     end
 
