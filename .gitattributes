@@ -1,0 +1,11 @@
+# Set default behavior to automatically normalize line endings.
+* text=auto
+
+# Set line endings to LF, even on Windows. Otherwise, execution within Docker fails.
+# See https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings#per-repository-settings
+*.sh text eol=lf
+
+# Same thing for following files, but they don't have an sh extension
+pre-commit eol=lf
+webpack-dev-server eol=lf
+install-bundler eol=lf
