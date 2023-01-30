@@ -13,7 +13,7 @@ module Spree
     include SetUnusedAddressFields
 
     searchable_attributes :number, :state, :shipment_state, :payment_state, :distributor_id,
-                          :order_cycle_id, :email, :total
+                          :order_cycle_id, :email, :total, :customer_id
     searchable_associations :shipping_method, :bill_address
     searchable_scopes :complete, :incomplete
 

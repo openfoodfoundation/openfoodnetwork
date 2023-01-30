@@ -85,6 +85,9 @@ module Reporting
       # Numeric
       elsif report.columns_format[column] == :numeric
         format_numeric(value)
+      # Percentage, a number between 0 and 1
+      elsif report.columns_format[column] == :percentage
+        format_percentage(value)
       # Boolean
       elsif value.in? [true, false]
         format_boolean(value)
@@ -123,6 +126,12 @@ module Reporting
 
     def format_numeric(value)
       number_with_delimiter(value)
+    end
+
+    def format_percentage(value)
+      return '' if value.blank?
+
+      I18n.t('admin.reports.percentage', value: value * 100)
     end
   end
 end

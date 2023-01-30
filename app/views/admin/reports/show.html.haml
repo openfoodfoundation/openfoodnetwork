@@ -5,6 +5,8 @@
   %fieldset.no-border-bottom.print-hidden
     %legend{ align: 'center'}= t(:report_filters)
     = render partial: "admin/reports/filters/#{@report_type}", locals: { f: f }
+    - if @report_subtype && lookup_context.exists?(@report_subtype, "admin/reports/filters/", true)
+      = render partial: "admin/reports/filters/#{@report_subtype}", locals: { f: f }
 
   %fieldset.print-hidden
     %legend{ align: 'center'}= t(:report_render_options)
