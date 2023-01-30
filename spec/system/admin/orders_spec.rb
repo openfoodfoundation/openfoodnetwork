@@ -333,6 +333,27 @@ describe '
             expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
           end
         end
+
+        context "orders with different order totals" do
+          before do
+            Spree::LineItem.where(order_id: order2.id).update(quantity: 5)
+            Spree::LineItem.where(order_id: order3.id).update(quantity: 4)
+            Spree::LineItem.where(order_id: order4.id).update(quantity: 3)
+            Spree::LineItem.where(order_id: order5.id).update(quantity: 2)
+            order2.save
+            order3.save
+            order4.save
+            order5.save
+            login_as_admin_and_visit spree.admin_orders_path
+          end
+
+          it "orders by order total" do
+            find("a", text: 'TOTAL').click # sets ascending ordering
+            expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+            find("a", text: 'TOTAL').click # sets descending ordering
+            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
+          end
+        end
       end
     end
 
