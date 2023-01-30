@@ -281,6 +281,23 @@ describe '
             expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}/m)
           end
         end
+
+        context "orders with different shipment states" do
+          before do
+            Spree::Payment.where(order_id: order2.id).update(amount: 50.0)
+            Spree::Payment.where(order_id: order3.id).update(amount: 100.0)
+            Spree::Payment.where(order_id: order4.id).update(amount: 10.0)
+            order2.ship
+            login_as_admin_and_visit spree.admin_orders_path
+          end
+
+          it "orders by shipment state" do
+            find("a", text: 'SHIPMENT STATE').click # sets ascending ordering
+            expect(page).to have_content(/#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+            find("a", text: 'SHIPMENT STATE').click # sets descending ordering
+            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}/m)
+          end
+        end
       end
     end
 
