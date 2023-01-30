@@ -73,7 +73,8 @@ describe '
     }
     let!(:order5) {
       create(:order_ready_to_ship, user: customer5, distributor: distributor5,
-                                   order_cycle: order_cycle5,)
+                                   order_cycle: order_cycle5,
+                                   bill_address_id: billing_address5.id)
     }
 
     context "logging as superadmin and visiting the orders page" do
@@ -312,6 +313,23 @@ describe '
             find("a", text: 'EMAIL').click # sets ascending ordering
             expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
             find("a", text: 'EMAIL').click # sets descending ordering
+            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
+          end
+        end
+
+        context "orders with different billing addresses" do
+          before do
+            billing_address2.update(lastname: "Mad Hatter")
+            billing_address3.update(lastname: "Duchess")
+            billing_address4.update(lastname: "Cheshire Cat")
+            billing_address5.update(lastname: "Alice")
+            login_as_admin_and_visit spree.admin_orders_path
+          end
+
+          it "orders by last name" do
+            find("a", text: 'NAME').click # sets ascending ordering
+            expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+            find("a", text: 'NAME').click # sets descending ordering
             expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
           end
         end
