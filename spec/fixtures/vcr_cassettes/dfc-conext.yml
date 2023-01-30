@@ -1,0 +1,92 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://static.datafoodconsortium.org/ontologies/context.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/ld+json;profile=http://www.w3.org/ns/json-ld#context, application/ld+json;q=0.9,
+        text/html;q=0.8, application/xhtml+xml;q=0.8, application/json;q=0.5
+      User-Agent:
+      - Ruby RDF.rb/3.2.9
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '464'
+      Server:
+      - GitHub.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Last-Modified:
+      - Fri, 09 Dec 2022 01:03:26 GMT
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"6392895e-7d2"
+      Expires:
+      - Tue, 14 Feb 2023 04:02:27 GMT
+      Cache-Control:
+      - max-age=600
+      X-Proxy-Cache:
+      - MISS
+      X-Github-Request-Id:
+      - 4FE2:5F17:38FC6:3E397:63EB057B
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Tue, 14 Feb 2023 04:28:53 GMT
+      Via:
+      - 1.1 varnish
+      Age:
+      - '0'
+      X-Served-By:
+      - cache-mel11220-MEL
+      X-Cache:
+      - HIT
+      X-Cache-Hits:
+      - '1'
+      X-Timer:
+      - S1676348934.700861,VS0,VE220
+      Vary:
+      - Accept-Encoding
+      X-Fastly-Request-Id:
+      - 503ecc0beedada8e70cf1de97e2bc49618b6f235
+    body:
+      encoding: ASCII-8BIT
+      string: "{\n   \"@context\": {\n    \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\",\n
+        \   \"skos\" : \"http://www.w3.org/2004/02/skos/core#\",\n    \"dfc\": \"http://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#\",\n
+        \   \"dc\": \"http://purl.org/dc/elements/1.1/#\",\n    \"dfc-b\": \"http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#\",\n
+        \   \"dfc-p\": \"http://static.datafoodconsortium.org/ontologies/DFC_ProductOntology.owl#\",\n
+        \   \"dfc-t\": \"http://static.datafoodconsortium.org/ontologies/DFC_TechnicalOntology.owl#\",\n
+        \   \"dfc-m\": \"http://static.datafoodconsortium.org/data/measures.rdf#\",\n\t\t\"dfc-pt\":
+        \"http://static.datafoodconsortium.org/data/productTypes.rdf#\",\n\t\t\"dfc-f\":
+        \"http://static.datafoodconsortium.org/data/facets.rdf#\",\n    \"dfc-p:hasUnit\":{\n
+        \     \"@type\":\"@id\"\n    },\n    \"dfc-b:hasUnit\":{\n      \"@type\":\"@id\"\n
+        \   },\n    \"dfc-b:hasQuantity\":{\n      \"@type\":\"@id\"\n    },\n    \"dfc-p:hasType\":{\n
+        \     \"@type\":\"@id\"\n    },\n    \"dfc-b:hasType\":{\n      \"@type\":\"@id\"\n
+        \   },\n    \"dfc-b:references\":{\n      \"@type\":\"@id\"\n    },\n    \"dfc-b:referencedBy\":{\n
+        \     \"@type\":\"@id\"\n    },\n    \"dfc-b:offeres\":{\n      \"@type\":\"@id\"\n
+        \   },\n    \"dfc-b:supplies\":{\n      \"@type\":\"@id\"\n    },\n    \"dfc-b:defines\":{\n
+        \     \"@type\":\"@id\"\n    },\n    \"dfc-b:affiliates\":{\n      \"@type\":\"@id\"\n
+        \   },\n    \"dfc-b:hasQuantity\":{\n      \"@type\":\"@id\"\n    },\n    \"dfc-b:manages\":{\n
+        \     \"@type\":\"@id\"\n    },\n    \"dfc-b:offeredThrough\":{\n      \"@type\":\"@id\"\n
+        \   },\n    \"dfc-b:hasBrand\":{\n      \"@type\":\"@id\"\n    },\n    \"dfc-b:hasGeographicalOrigin\":{\n
+        \     \"@type\":\"@id\"\n    },\n    \"dfc-b:hasClaim\":{\n      \"@type\":\"@id\"\n
+        \   },\n    \"dfc-b:hasAllergenDimension\":{\n      \"@type\":\"@id\"\n    },\n
+        \   \"dfc-b:hasNutrimentDimension\":{\n      \"@type\":\"@id\"\n    },\n    \"dfc-b:hasPhysicalDimension\":{\n
+        \     \"@type\":\"@id\"\n    },\n    \"dfc:owner\":{\n      \"@type\":\"@id\"\n
+        \   },\n    \"dfc-t:hostedBy\":{\n      \"@type\":\"@id\"\n    },\n    \"dfc-t:hasPivot\":{\n
+        \     \"@type\":\"@id\"\n    },\n    \"dfc-t:represent\":{\n      \"@type\":\"@id\"\n
+        \   }\n  }\n}\n"
+  recorded_at: Tue, 14 Feb 2023 04:28:53 GMT
+recorded_with: VCR 6.1.0
