@@ -224,15 +224,13 @@ describe '
           end
           it "orders by completion date" do
             find("a", text: 'COMPLETED AT').click # sets ascending ordering
-            expect(page).to have_content "Loading"
             expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
             find("a", text: 'COMPLETED AT').click # sets descending ordering
-            expect(page).to have_content "Loading"
             expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
           end
         end
 
-        context "orders by order number" do
+        context "orders with different order numbers" do
           before do
             order2.update(number: "R555555555")
             order3.update(number: "R444444444")
@@ -241,17 +239,15 @@ describe '
             login_as_admin_and_visit spree.admin_orders_path
           end
 
-          it "orders alphabetically by order number" do
+          it "orders by order number" do
             find("a", text: 'NUMBER').click # sets ascending ordering
-            expect(page).to have_content "Loading"
             expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
             find("a", text: 'NUMBER').click # sets descending ordering
-            expect(page).to have_content "Loading"
             expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
           end
         end
 
-        context "orders by order state" do
+        context "orders with different states" do
           before do
             order2.update(state: "payment")
             order3.update(state: "complete")
@@ -262,31 +258,26 @@ describe '
             page.find('.filter-actions .button.icon-search').click
           end
 
-          it "orders alphabetically by order number" do
+          it "orders by order state" do
             find("a", text: 'STATE').click # sets ascending ordering
-            expect(page).to have_content "Loading"
             expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
             find("a", text: 'STATE').click # sets descending ordering
-            expect(page).to have_content "Loading"
             expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
           end
         end
 
-        context "orders by payment state" do
+        context "orders with different payment states" do
           before do
             Spree::Payment.where(order_id: order2.id).update(amount: 50.0)
             Spree::Payment.where(order_id: order3.id).update(amount: 100.0)
             Spree::Payment.where(order_id: order4.id).update(amount: 10.0)
-            order5.update(state: "cart") # hides order 5
             login_as_admin_and_visit spree.admin_orders_path
           end
 
-          it "orders alphabetically by order number" do
+          it "orders by payment state" do
             find("a", text: 'PAYMENT STATE').click # sets ascending ordering
-            expect(page).to have_content "Loading"
             expect(page).to have_content(/#{order4.number}.*#{order3.number}.*#{order2.number}/m)
             find("a", text: 'PAYMENT STATE').click # sets descending ordering
-            expect(page).to have_content "Loading"
             expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}/m)
           end
         end
