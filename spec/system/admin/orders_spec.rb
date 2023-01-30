@@ -83,7 +83,7 @@ describe '
         login_as_admin_and_visit spree.admin_orders_path
       end
 
-      context "fiters" do 
+      context "fiters" do
         it "order cycles appear in descending order by close date on orders page" do
           open_select2('#s2id_q_order_cycle_id_in')
 
@@ -223,12 +223,31 @@ describe '
             login_as_admin_and_visit spree.admin_orders_path
           end
           it "orders by completion date" do
-            find("a", :text => 'COMPLETED AT').click # sets ascending ordering
+            find("a", text: 'COMPLETED AT').click # sets ascending ordering
             expect(page).to have_content "Loading"
-            expect(page).to have_content (/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
-            find("a", :text => 'COMPLETED AT').click # sets descending ordering
+            expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+            find("a", text: 'COMPLETED AT').click # sets descending ordering
             expect(page).to have_content "Loading"
-            expect(page).to have_content (/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
+            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
+          end
+        end
+
+        context "orders by order number" do
+          before do
+            order2.update(number: "R555555555")
+            order3.update(number: "R444444444")
+            order4.update(number: "R333333333")
+            order5.update(number: "R222222222")
+            login_as_admin_and_visit spree.admin_orders_path
+          end
+
+          it "orders alphabetically by order number" do
+            find("a", text: 'NUMBER').click
+            expect(page).to have_content "Loading"
+            expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+            find("a", text: 'NUMBER').click # sets descending ordering
+            expect(page).to have_content "Loading"
+            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
           end
         end
       end
@@ -376,7 +395,7 @@ describe '
       it "displays pagination options" do
         # displaying 4 orders (one order per table row)
         within('tbody') do
-          expect(page).to have_css('tr.ng-scope', :count => 4)
+          expect(page).to have_css('tr.ng-scope', count: 4)
         end
         # pagination options also refer 4 order
         expect(page).to have_content "4 Results found. Viewing 1 to 4."
