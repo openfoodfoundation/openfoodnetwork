@@ -17,14 +17,6 @@
 
       .row
         .alpha.six.columns
-          %fieldset.security.no-border-bottom
-            %legend{:align => "center"}= Spree.t(:security_settings)
-            - @preferences_security.each do |key|
-              - type = Spree::Config.preference_type(key)
-              .field
-                = label_tag(key, Spree.t(key) + ': ') + tag(:br) if type != :boolean
-                = preference_field_tag(key, Spree::Config[key], :type => type)
-                = label_tag(key, Spree.t(key)) + tag(:br) if type == :boolean
           %fieldset.legal.no-border-bottom
             %legend{:align => "center"}= t('.legal_settings')
             .field
