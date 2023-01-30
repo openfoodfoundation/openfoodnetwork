@@ -83,132 +83,154 @@ describe '
         login_as_admin_and_visit spree.admin_orders_path
       end
 
-      it "order cycles appear in descending order by close date on orders page" do
-        open_select2('#s2id_q_order_cycle_id_in')
+      context "fiters" do 
+        it "order cycles appear in descending order by close date on orders page" do
+          open_select2('#s2id_q_order_cycle_id_in')
 
-        expect(find('#q_order_cycle_id_in',
-                    visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two.*Five/m)
+          expect(find('#q_order_cycle_id_in',
+                      visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two.*Five/m)
+        end
+
+        it "filter by multiple order cycles" do
+          select2_select 'Two', from: 'q_order_cycle_id_in'
+          select2_select 'Three', from: 'q_order_cycle_id_in'
+
+          page.find('.filter-actions .button.icon-search').click
+
+          # Order 2 and 3 should show, but not 4
+          expect(page).to have_content order2.number
+          expect(page).to have_content order3.number
+          expect(page).to_not have_content order4.number
+        end
+
+        it "filter by distributors" do
+          select2_select distributor2.name.to_s, from: 'q_distributor_id_in'
+          select2_select distributor4.name.to_s, from: 'q_distributor_id_in'
+
+          page.find('.filter-actions .button.icon-search').click
+
+          # Order 2 and 4 should show, but not 3
+          expect(page).to have_content order2.number
+          expect(page).to_not have_content order3.number
+          expect(page).to have_content order4.number
+        end
+
+        it "filter by complete date" do
+          find("input.datepicker").click
+          select_dates_from_daterangepicker(order3.completed_at.yesterday, order4.completed_at.tomorrow)
+
+          page.find('.filter-actions .button.icon-search').click
+
+          # Order 3 and 4 should show, but not 2
+          expect(page).to_not have_content order2.number
+          expect(page).to have_content order3.number
+          expect(page).to have_content order4.number
+        end
+
+        it "filter by email" do
+          fill_in "Email", with: customer3.email
+
+          page.find('.filter-actions .button.icon-search').click
+
+          # Order 3 should show, but not 2 and 4
+          expect(page).to_not have_content order2.number
+          expect(page).to have_content order3.number
+          expect(page).to_not have_content order4.number
+        end
+
+        it "filter by customer first and last names" do
+          # NOTE: this field refers to the name given in billing addresses and not to customer name
+          # filtering by first name
+          fill_in "First name begins with", with: billing_address2.firstname
+          page.find('.filter-actions .button.icon-search').click
+          # Order 3 should show, but not 2 and 4
+          expect(page).to have_content order2.number
+          expect(page).to_not have_content order3.number
+          expect(page).to_not have_content order4.number
+
+          find("a#clear_filters_button").click
+          # filtering by last name
+
+          fill_in "Last name begins with", with: billing_address4.lastname
+          page.find('.filter-actions .button.icon-search').click
+          # Order 4 should show, but not 2 and 3
+          expect(page).to_not have_content order2.number
+          expect(page).to_not have_content order3.number
+          expect(page).to have_content order4.number
+        end
+
+        it "filter by shipping methods" do
+          select2_select "Pick-up at the farm", from: 'q_shipping_method_id'
+          page.find('.filter-actions .button.icon-search').click
+          # Order 2 should show, but not 3 and 5
+          expect(page).to have_content order2.number
+          expect(page).to_not have_content order3.number
+          expect(page).to_not have_content order4.number
+
+          find("a#clear_filters_button").click
+
+          select2_select "Signed, sealed, delivered", from: 'q_shipping_method_id'
+          page.find('.filter-actions .button.icon-search').click
+          # Order 4 should show, but not 2 and 3
+          expect(page).to_not have_content order2.number
+          expect(page).to_not have_content order3.number
+          expect(page).to have_content order4.number
+        end
+
+        it "filter by invoice number" do
+          fill_in "Invoice number:", with: order2.number
+
+          page.find('.filter-actions .button.icon-search').click
+
+          # Order 2 should show, but not 3 and 4
+          expect(page).to have_content order2.number
+          expect(page).to_not have_content order3.number
+          expect(page).to_not have_content order4.number
+        end
+
+        it "filter by order state" do
+          order.update(state: "payment")
+
+          uncheck 'Only show complete orders'
+          page.find('.filter-actions .button.icon-search').click
+
+          expect(page).to have_content order.number
+          expect(page).to have_content order2.number
+          expect(page).to have_content order3.number
+          expect(page).to have_content order4.number
+          expect(page).to have_content order5.number
+
+          select2_select "payment", from: 'q_state_eq'
+
+          page.find('.filter-actions .button.icon-search').click
+
+          # Order 2 should show, but not 3 and 4
+          expect(page).to have_content order.number
+          expect(page).to_not have_content order2.number
+          expect(page).to_not have_content order3.number
+          expect(page).to_not have_content order4.number
+          expect(page).to_not have_content order5.number
+        end
       end
 
-      it "filter by multiple order cycles" do
-        select2_select 'Two', from: 'q_order_cycle_id_in'
-        select2_select 'Three', from: 'q_order_cycle_id_in'
-
-        page.find('.filter-actions .button.icon-search').click
-
-        # Order 2 and 3 should show, but not 4
-        expect(page).to have_content order2.number
-        expect(page).to have_content order3.number
-        expect(page).to_not have_content order4.number
-      end
-
-      it "filter by distributors" do
-        select2_select distributor2.name.to_s, from: 'q_distributor_id_in'
-        select2_select distributor4.name.to_s, from: 'q_distributor_id_in'
-
-        page.find('.filter-actions .button.icon-search').click
-
-        # Order 2 and 4 should show, but not 3
-        expect(page).to have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to have_content order4.number
-      end
-
-      it "filter by complete date" do
-        find("input.datepicker").click
-        select_dates_from_daterangepicker(order3.completed_at.yesterday, order4.completed_at.tomorrow)
-
-        page.find('.filter-actions .button.icon-search').click
-
-        # Order 3 and 4 should show, but not 2
-        expect(page).to_not have_content order2.number
-        expect(page).to have_content order3.number
-        expect(page).to have_content order4.number
-      end
-
-      it "filter by email" do
-        fill_in "Email", with: customer3.email
-
-        page.find('.filter-actions .button.icon-search').click
-
-        # Order 3 should show, but not 2 and 4
-        expect(page).to_not have_content order2.number
-        expect(page).to have_content order3.number
-        expect(page).to_not have_content order4.number
-      end
-
-      it "filter by customer first and last names" do
-        # NOTE: this field refers to the name given in billing addresses and not to customer name
-        # filtering by first name
-        fill_in "First name begins with", with: billing_address2.firstname
-        page.find('.filter-actions .button.icon-search').click
-        # Order 3 should show, but not 2 and 4
-        expect(page).to have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to_not have_content order4.number
-
-        find("a#clear_filters_button").click
-        # filtering by last name
-
-        fill_in "Last name begins with", with: billing_address4.lastname
-        page.find('.filter-actions .button.icon-search').click
-        # Order 4 should show, but not 2 and 3
-        expect(page).to_not have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to have_content order4.number
-      end
-
-      it "filter by shipping methods" do
-        select2_select "Pick-up at the farm", from: 'q_shipping_method_id'
-        page.find('.filter-actions .button.icon-search').click
-        # Order 2 should show, but not 3 and 5
-        expect(page).to have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to_not have_content order4.number
-
-        find("a#clear_filters_button").click
-
-        select2_select "Signed, sealed, delivered", from: 'q_shipping_method_id'
-        page.find('.filter-actions .button.icon-search').click
-        # Order 4 should show, but not 2 and 3
-        expect(page).to_not have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to have_content order4.number
-      end
-
-      it "filter by invoice number" do
-        fill_in "Invoice number:", with: order2.number
-
-        page.find('.filter-actions .button.icon-search').click
-
-        # Order 2 should show, but not 3 and 4
-        expect(page).to have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to_not have_content order4.number
-      end
-
-      it "filter by order state" do
-        order.update(state: "payment")
-
-        uncheck 'Only show complete orders'
-        page.find('.filter-actions .button.icon-search').click
-
-        expect(page).to have_content order.number
-        expect(page).to have_content order2.number
-        expect(page).to have_content order3.number
-        expect(page).to have_content order4.number
-        expect(page).to have_content order5.number
-
-        select2_select "payment", from: 'q_state_eq'
-
-        page.find('.filter-actions .button.icon-search').click
-
-        # Order 2 should show, but not 3 and 4
-        expect(page).to have_content order.number
-        expect(page).to_not have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to_not have_content order4.number
-        expect(page).to_not have_content order5.number
+      context "ordering" do
+        context "orders with different completion dates" do
+          before do
+            order2.update(completed_at: Time.zone.now - 2.weeks)
+            order3.update(completed_at: Time.zone.now - 3.weeks)
+            order4.update(completed_at: Time.zone.now - 4.weeks)
+            order5.update(completed_at: Time.zone.now - 5.weeks)
+            login_as_admin_and_visit spree.admin_orders_path
+          end
+          it "orders by completion date" do
+            find("a", :text => 'COMPLETED AT').click # sets ascending ordering
+            expect(page).to have_content "Loading"
+            expect(page).to have_content (/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+            find("a", :text => 'COMPLETED AT').click # sets descending ordering
+            expect(page).to have_content "Loading"
+            expect(page).to have_content (/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
+          end
+        end
       end
     end
 
