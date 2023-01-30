@@ -298,6 +298,23 @@ describe '
             expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}/m)
           end
         end
+
+        context "orders from different customers" do
+          before do
+            order2.update(email: "jkl@jkl.com")
+            order3.update(email: "ghi@ghi.com")
+            order4.update(email: "def@def.com")
+            order5.update(email: "abc@abc.com")
+            login_as_admin_and_visit spree.admin_orders_path
+          end
+
+          it "orders by customer email" do
+            find("a", text: 'EMAIL').click # sets ascending ordering
+            expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+            find("a", text: 'EMAIL').click # sets descending ordering
+            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
+          end
+        end
       end
     end
 
