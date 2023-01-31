@@ -28,6 +28,7 @@ module Spree
     before_validation :adjust_quantity
     before_validation :copy_price
     before_validation :copy_tax_category
+    before_validation :copy_dimensions
 
     validates :variant, presence: true
     validates :quantity, numericality: {
@@ -122,6 +123,15 @@ module Spree
       self.tax_category = variant.product.tax_category
     end
 
+    def copy_dimensions
+      return unless variant
+
+      self.weight ||= computed_weight_from_variant
+      self.height ||= variant.height
+      self.width ||= variant.width
+      self.depth ||= variant.depth
+    end
+
     def amount
       price * quantity
     end
@@ -176,6 +186,10 @@ module Spree
       adjustments.tax.inclusive.sum(:amount)
     end
 
+    def added_tax
+      adjustments.tax.additional.sum(:amount)
+    end
+
     def tax_rates
       product.tax_category&.tax_rates || []
     end
@@ -225,6 +239,14 @@ module Spree
     end
 
     private
+
+    def computed_weight_from_variant
+      if variant.product.variant_unit == "weight"
+        variant.unit_value / variant.product.variant_unit_scale
+      else
+        variant.weight
+      end
+    end
 
     def update_inventory
       return unless changed?

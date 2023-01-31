@@ -5,6 +5,8 @@ pt_BR:
       spree/product: Produto
       spree/shipping_method: Método de envio
     attributes:
+      spree/order/ship_address:
+        phone: "n"
       spree/user:
         password: "Senha"
         password_confirmation: "Confirmação de senha"
@@ -23,6 +25,8 @@ pt_BR:
         state: Estado
         source: Origem
       spree/product:
+        name: "Nome do Produto"
+        price: "Preço"
         primary_taxon: "Categoria de Produto"
         supplier: "Fornecedor"
         shipping_category_id: "Tipos de Frete"
@@ -64,6 +68,16 @@ pt_BR:
   stripe:
     error_code:
       incorrect_number: "O número do cartão está incorreto."
+      invalid_number: "O número do cartão não é um número válido."
+      invalid_expiry_month: "O mês de validade do cartão é inválido. "
+      invalid_expiry_year: "O ano da validade do cartão é inválido. "
+      invalid_cvc: "O código de segurança do cartão é inválido. "
+      expired_card: "O cartão está vencido. "
+      incorrect_cvc: "O código de segurança do cartão está incorreto. "
+      incorrect_zip: "O código de área do cartão não permitiu a validação. "
+      card_declined: "O cartão foi recusado. "
+      missing: "Este cliente não possui um cartão para cobrança. "
+      processing_error: "Um erro ocorreu ao processar o cartão. "
   activemodel:
     errors:
       messages:
@@ -221,7 +235,6 @@ pt_BR:
   search_by_name: Procurar por nome ou localidade
   producers_join: Produtores nacionais estão convidados a se unirem à Plataforma de Cooperativas Digital no DF.
   charges_sales_tax: Cobra imposto sobre bens e serviços?
-  enterprise_permissions: "Permissões da Iniciativa"
   print_invoice: "Imprimir fatura"
   print_ticket: "Imprimir bilhetes"
   select_ticket_printer: "Selecione a impressora para bilhetes"
@@ -326,6 +339,23 @@ pt_BR:
     destroy: "Destruir"
     rename: "Renomear"
   admin:
+    products_page:
+      title: Produtos
+      filters:
+        producers:
+          title: Produtores
+        colums: Colunas
+      columns:
+        name: Nome
+        unit: Unidade
+        price: Preço
+        producer: Produtor
+        category: Categoria
+      columns_selector:
+        unit: Unidade
+        price: Preço
+        producer: Produtor
+        category: Categoria
     adjustments:
       skipped_changing_canceled_order: "Não é possível modificar um pedido cancelado"
     begins_at: Começa em
@@ -461,8 +491,6 @@ pt_BR:
         guest_label: "Checkout de convidado"
         credit_owed: "Crédito Devido"
         balance_due: "Saldo Devedor"
-      destroy:
-        has_associated_orders: "Apagar falhou: o cliente tem pedidos associados à sua loja"
     contents:
       edit:
         title: Conteúdo
@@ -490,6 +518,18 @@ pt_BR:
     enterprise_groups:
       index:
         new_button: Novo grupo de iniciativas
+      form_primary_details:
+        primary_details: "Detalhes principais"
+      form_users:
+        users: "Usuários"
+      form_about:
+        about: "Sobre"
+      form_images:
+        images: "Imagens"
+      form_address:
+        contact: "Contato"
+      form_web:
+        web: "Recursos Web"
     enterprise_roles:
       form:
         manages: administra
@@ -700,11 +740,15 @@ pt_BR:
         manage: Administrar
       form:
         about_us:
+          legend: "Sobre"
           desc_short: Descrição curta
           desc_short_placeholder: Conte-nos sobre a sua iniciativa em uma ou duas frases
           desc_long: Sobre nós
           desc_long_placeholder: Conte mais sobre você aqui. Esta informação aparece no seu perfil público.
+        address:
+          legend: "Endereço"
         business_details:
+          legend: "Detalhes da iniciativa"
           abn: CNPJ
           abn_placeholder: 'ex: 11 987 654 321'
           acn: NIRE
@@ -717,6 +761,7 @@ pt_BR:
         business_address:
           address2: Complemento
         contact:
+          legend: "Contato"
           name: Nome
           name_placeholder: 'ex: Gustavo Pereira'
           email_address: Endereço de email público
@@ -727,14 +772,17 @@ pt_BR:
           website: Site
           website_placeholder: 'ex: www.trufas.com.br'
         enterprise_fees:
+          legend: "Taxas da iniciativa"
           name: Nome
           fee_type: Tipo de taxa
           manage_fees: Gerenciar taxas da iniciativa
           no_fees_yet: Você ainda não possui nenhuma taxa de iniciativa.
           create_button: Criar uma agora
         enterprise_permissions:
+          legend: "Permissões da Iniciativa"
           enterprise_relationships: Relações da iniciativa
         images:
+          legend: "Imagens"
           logo: Logo
           promo_image_placeholder: 'Essa imagem aparece em "Sobre nós"'
           promo_image_note1: 'POR FAVOR OBSERVE:'
@@ -743,6 +791,7 @@ pt_BR:
           remove_logo: "Remover imagem"
           remove_promo_image: "Remover imagem"
         inventory_settings:
+          legend: "Configurações de inventário"
           text1: Você pode optar por modificar preços e nível de estoque através de seu
           inventory: inventário
           text2: >
@@ -753,6 +802,7 @@ pt_BR:
           preferred_product_selection_from_inventory_only_yes: Todos os produtos dos meus fornecedores podem ser disponibilizados na minha loja virtual (recomendado)
           preferred_product_selection_from_inventory_only_no: Somente produtos que eu adicionar ao meu Inventário podem ser disponibilizados na minha loja virtual.
         payment_methods:
+          legend: "Métodos de pagamento"
           name: Nome
           applies: Aplica?
           manage: Gerenciar métodos de pagamento
@@ -760,6 +810,7 @@ pt_BR:
           create_button: Criar novo método de pagamento
           create_one_button: 'Criar um agora '
         primary_details:
+          legend: "Detalhes principais"
           name: 'Nome '
           name_placeholder: 'ex: Trufas Biodinâmicas do Pereira'
           groups: Grupos
@@ -775,6 +826,9 @@ pt_BR:
           sells_tip: "Nenhum - iniciativa não vende diretamente para compradores. <br /> Próprio - iniciativa vende produtos próprios para compradores. <br /> Qualquer - iniciativa vende produtos próprios ou de outras iniciativas. <br />"
           visible_in_search: Visível na busca?
           visible: Publico
+        properties:
+          legend: "Propriedades"
+        permalink:
           permalink: Permalink (sem espaços)
           permalink_tip: "Esse link é usado para criar a URL para a sua loja: %{link}nome-loja/loja"
           link_to_front: Link para a loja
@@ -782,6 +836,7 @@ pt_BR:
           ofn_uid: OFN UID
           ofn_uid_tip: O ID exclusivo usado para identificar a iniciativa na Plataforma de Cooperativas Digital no DF.
         shipping_methods:
+          legend: "Método de Envio"
           name: "Nome"
           applies: "Ativo?"
           manage: "Gerenciar métodos de envio"
@@ -789,6 +844,7 @@ pt_BR:
           create_one_button: "Criar um agora"
           no_method_yet: "Você ainda não tem nenhum método de envio."
         shop_preferences:
+          legend: "Preferências da loja"
           shopfront_requires_login: "Loja virtual visível ao público?"
           shopfront_requires_login_tip: "Escolha se os clientes precisarão fazer o login para ver os produtos da loja virtual, ou se eles estarão visíveis para todos."
           shopfront_requires_login_false: "Publico"
@@ -831,6 +887,7 @@ pt_BR:
           enabled: "Ativado"
           disabled: "Desativado"
         social:
+          legend: "Social"
           twitter_placeholder: "ex:  @o_prof"
           instagram_placeholder: "ex. the_prof"
           facebook_placeholder: "ex: www.facebook.com/suapagina"
@@ -848,6 +905,7 @@ pt_BR:
             i_agree: Eu concordo
             cancel: Cancelar
         tag_rules:
+          legend: "Regras de tag"
           default_rules:
             by_default: Por padrão
             no_rules_yet: Ainda não existe nenhuma regra padrão
@@ -858,6 +916,7 @@ pt_BR:
           add_new_rule: '+ Adicionar nova regra'
           add_new_tag: '+ Adicionar nova tag'
         users:
+          legend: "Usuários"
           email_confirmation_notice_html: "Confirmação de e-mail está pendente. Enviamos um e-mail de confirmação para %{email}."
           resend: Reenviar
           owner: 'Proprietário'
@@ -893,7 +952,7 @@ pt_BR:
         producer: Produtor
       change_type_form:
         producer_profile: Perfil Simples
-        connect_ofn: Conecte-se através da OFB
+        connect_ofn: Conecte-se através da Ajunta
         always_free: SEMPRE GRATUITO
         producer_description_text: Adicione os seus produtos à Plataforma de Cooperativas Digital no DF, permitindo que as centrais os comercialize em suas lojas.
         producer_shop: Loja de Produtor
@@ -975,11 +1034,21 @@ pt_BR:
         tags: "Tag"
         delivery_details: "Sobre a Entrega"
         fees: "Taxas"
+        next: "Próximo"
         previous: "Anterior"
         save: "Salvar"
-        save_and_back_to_list: "Salvar e Voltar para a Lista"
+        save_and_next: "Salvar e Seguir"
         cancel: "Cancelar"
         back_to_list: "Voltar Para a Lista"
+      checkout_options:
+        back_end: "Somente Área Administrativa"
+        cancel: "Cancelar"
+        distributor: "Distribuidor"
+        payment_methods: "Métodos de pagamento"
+        save: "Salvar"
+        save_and_back_to_list: "Salvar e Voltar para a Lista"
+        select_all: "Selecionar tudo"
+        shipping_methods: "Método de Envio"
       wizard_progress:
         edit: "1. Configurações Gerais"
         incoming: "2. Entrada de Produtos"
@@ -1043,6 +1112,7 @@ pt_BR:
         customer_instructions_placeholder: Notas de entrega ou retirada
         products: Produtos
         fees: Taxas
+        tags: Tags
       destroy_errors:
         orders_present: Esse ciclo de pedidos foi selecionado por um cliente e não pode ser excluído. Para impedir que os clientes acessem, feche-o.
         schedule_present: Esse ciclo de pedidos está vinculado a um cronograma e não pode ser excluído. Desvincule ou exclua o cronograma primeiro.
@@ -1052,6 +1122,8 @@ pt_BR:
         msg: Esse ciclo de pedidos está vinculado a %{n}de pedidos abertos. Alterar essa data agora não afetará nenhum pedido que já tenha sido feito, mas deve ser evitado, se possível. Tem certeza de que deseja continuar?
         cancel: Cancelar
         proceed: Continuar
+      status:
+        closed: fechados
     producer_properties:
       index:
         title: Propriedades do produtor
@@ -1067,6 +1139,31 @@ pt_BR:
         has_no_payment_methods: "%{enterprise} não possui métodos de pagamento"
         has_no_shipping_methods: "%{enterprise} não possui métodos de envio"
         has_no_enterprise_fees: "%{enterprise} não possui taxas de iniciativa"
+      side_menu:
+        enterprise:
+          primary_details: "Detalhes principais"
+          address: "Endereço"
+          contact: "Contato"
+          social: "Social"
+          about: "Sobre"
+          business_details: "Detalhes da iniciativa"
+          images: "Imagens"
+          properties: "Propriedades"
+          shipping_methods: "Método de Envio"
+          payment_methods: "Métodos de pagamento"
+          enterprise_fees: "Taxas da iniciativa"
+          enterprise_permissions: "Permissões da Iniciativa"
+          inventory_settings: "Configurações de inventário"
+          tag_rules: "Regras de tag"
+          shop_preferences: "Preferências da loja"
+          users: "Usuários"
+        enterprise_group:
+          primary_details: "Detalhes principais"
+          users: "Usuários"
+          about: "Sobre"
+          images: "Imagens"
+          contact: "Contato"
+          web: "Recursos Web"
     enterprise_issues:
       create_new: Criar nova
       resend_email: Reenviar e-mail
@@ -1553,18 +1650,17 @@ pt_BR:
       cart: "carrinho"
       message_html: "Você já possui um pedido para esta compra. Verifique o %{cart} para ver os itens já encomendados. Você também pode cancelar itens enquanto o ciclo estiver aberto."
     step1:
-      your_details:
-        title: Seus detalhes
-        first_name:
-          label: Nome
-        last_name:
-          label: Sobrenome
+      contact_information:
         email:
           label: E-mail
         phone:
           label: n
       billing_address:
         title: Endereço de fatura
+        first_name:
+          label: Nome
+        last_name:
+          label: Sobrenome
       address:
         city:
           label: Cidade
@@ -1585,10 +1681,14 @@ pt_BR:
         card_year:
           label: Ano
     step3:
-      your_details:
-        title: Seus detalhes
-      billing_address:
-        title: Endereço de fatura
+      delivery_details:
+        title: Detalhes da entrega
+        edit: Editar
+        address: Endereço para entrega
+      payment_method:
+        edit: Editar
+      order:
+        edit: Editar
       terms_and_conditions:
         message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor"
         link_text: "Termos e Condições"
@@ -1803,7 +1903,7 @@ pt_BR:
   groups_signup_pricing: Conta de Grupos
   groups_signup_studies: Estudos de Caso
   groups_signup_contact: Pronto para conversar?
-  groups_signup_contact_text: "Entre em contato para descobrir o que a OFB pode fazer por você"
+  groups_signup_contact_text: "Entre em contato para descobrir o que a Ajunta pode fazer por você"
   groups_signup_detail: "Aqui está o detalhe. "
   login_invalid: "E-mail ou senha inválidos"
   producers_about: Sobre nós
@@ -1870,7 +1970,6 @@ pt_BR:
   orders_form_empty_cart: "Carrinho vazio"
   orders_form_update_cart: "Atualizar"
   orders_form_subtotal: "Subtotal dos produtos"
-  orders_form_admin: "Administração e manejo"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Este ciclo de pedidos está fechado para pedidos"
   orders_oc_expired_text: "Desculpe, este ciclo de pedidos fechou há %{time} atrás. Por favor entre em contato diretamente com sua central para saber se podem aceitar pedidos atrasados."
@@ -2066,7 +2165,7 @@ pt_BR:
         enterprise_final_step: "Último passo!"
         enterprise_social_text: "Como as pessoas podem encontrar o/a %{enterprise} online?"
         website: "Website"
-        website_placeholder: "ex: openfoodbrasil.com.br"
+        website_placeholder: "ex: ajunta.com.br"
         facebook: "Facebook"
         facebook_placeholder: "ex: www.facebook.com/suapagina"
         linkedin: "LinkedIn"
@@ -2139,7 +2238,6 @@ pt_BR:
   admin_enterprise_groups_data_powertip: "Usuário responsável pelo grupo"
   admin_enterprise_groups_data_powertip_logo: "Esse é o logo do grupo"
   admin_enterprise_groups_data_powertip_promo_image: "Essa é a imagem que aparecerá no topo do perfil do Grupo"
-  admin_enterprise_groups_contact: "Contato"
   admin_enterprise_groups_contact_phone_placeholder: "ex: 987654321"
   admin_enterprise_groups_contact_address1_placeholder: "ex: Rua Alta, 123"
   admin_enterprise_groups_contact_city: "Cidade"
@@ -2148,7 +2246,6 @@ pt_BR:
   admin_enterprise_groups_contact_zipcode_placeholder: "ex: 02341-001"
   admin_enterprise_groups_contact_state_id: "Estado"
   admin_enterprise_groups_contact_country_id: "País"
-  admin_enterprise_groups_web: "Recursos Web"
   admin_enterprise_groups_web_twitter: "ex: @nome_perfil"
   admin_enterprise_groups_web_website_placeholder: "ex: www.cogumelos.com.br"
   admin_order_cycles: "Ciclo de Pedidos do Administrador"
@@ -2348,6 +2445,8 @@ pt_BR:
   report_header_tax_on_delivery: "Imposto sobre a entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Imposto sobre taxas (%{currency_symbol})"
   report_header_total_tax: "Imposto total (%{currency_symbol})"
+  report_header_total_excl_tax: "Total imposto excluído (%{currency_symbol})"
+  report_header_total_incl_tax: "Total imposto incluído (%{currency_symbol})"
   report_header_enterprise: Iniciativa
   report_header_customer: Consumidor
   report_header_customer_code: Código do Consumidor
@@ -2384,6 +2483,9 @@ pt_BR:
   report_header_delivery_postcode: CEP para entrega
   report_header_bulk_unit_size: Quantidade Mínima para Compra em Atacado
   report_header_weight: Peso
+  report_header_height: Altura
+  report_header_width: Largura
+  report_header_depth: Profundidade
   report_header_sum_total: Soma total
   report_header_date_of_order: Data do pedido
   report_header_amount_owing: Quantidade devedora
@@ -2455,11 +2557,8 @@ pt_BR:
   images: "Imagens"
   web: "Web"
   primary_details: "Detalhes principais"
-  adrdress: "Endereço"
   contact: "Contato"
   social: "Social"
-  business_details: "Detalhes da iniciativa"
-  properties: "Propriedades"
   shipping: "Envio"
   shipping_methods: "Métodos de envio"
   payment_methods: "Métodos de pagamento"
@@ -2469,11 +2568,8 @@ pt_BR:
   payment_updated: "Pagamento atualizado"
   cannot_perform_operation: "Não foi possível atualizar o pagamento"
   action_required: "Ação necessária"
-  inventory_settings: "Configurações de inventário"
   tag_rules: "Regras de tag"
-  shop_preferences: "Preferências da loja"
   enterprise_fee_whole_order: Pedido inteiro
-  enterprise_fee_by: "%{type} taxa por %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Esse relacionamento já foi estabelecido."
   validation_msg_at_least_one_hub: "^Pelo menos uma central deve ser selecionado"
   validation_msg_tax_category_cant_be_blank: "^ Categoria de imposto não pode estar em branco"
@@ -2557,6 +2653,7 @@ pt_BR:
         got_it: "Consegui"
         close: "Fechar"
         continue: "Continuar"
+        cancel: "Cancelar"
         invite: "Convidar"
         invite_title: "Convidar um usuário não registrado"
         tag_rule_help:
@@ -2661,13 +2758,12 @@ pt_BR:
               e produzem alimentos e/ou produtos artesanais.
           producer_text2: >
               Os produtores também podem desempenhar outras funções, como agregar
-              alimentos de outras iniciativas e vendê-lo através de uma loja da Open
-              Food Brasil.
+              alimentos de outras iniciativas e vendê-lo através de uma loja da Ajunta.
           non_producer: Não produtor
           non_producer_text1: >
-              Os não produtores não produzem alimentos próprios, o que significa que
-              eles não podem criar seus próprios produtos para venda através da Open
-              Food Brasil.
+              Os 'não-produtores' são os usuários que não produzem alimentos, o que
+              significa que eles não podem criar ou vender produtos próprios na Ajunta,
+              somente os de outros fornecedores.
           non_producer_text2: >
               Em vez disso, os não produtores se especializam em ligar os produtores
               ao comedor final, quer seja agregando, classificando, embalando, vendendo
@@ -2723,7 +2819,6 @@ pt_BR:
           pending: "pendente"
           resumed: "retomado"
           returned: "retornado"
-          skrill: "skrill"
         shipment_states:
           backorder: "atrasos"
           partial: "parcial"
@@ -3175,7 +3270,6 @@ pt_BR:
     display_currency: "Mostrar moeda"
     choose_currency: "Escolha a Moeda"
     mail_method_settings: "Configurações do método de email"
-    mail_settings_notice_html: "Algumas das seguintes configurações não podem ser editadas e estão listadas aqui para propósitos de 'debugging'. Alterações podem ser realizadas atualizando os 'secrets' e provisionando-os com o <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Entre contato com o global team para mais detalhes. "
     general: "Geral"
     enable_mail_delivery: "Ativar entrega de correio"
     send_mails_as: "Enviar correio como"
@@ -3400,6 +3494,7 @@ pt_BR:
           results_found: "%{number} Resultados encontrados."
           viewing: "Exibindo %{start} a %{end}."
           print_invoices: "Imprimir Faturas"
+          resend_confirmation: "Enviar confirmação novamente"
         sortable_header:
           payment_state: "Estado de pagamento"
           shipment_state: "Situação do Envio"
@@ -3536,7 +3631,6 @@ pt_BR:
           paypal:
             no_payment_via_admin_backend: Pagamentos por Paypal não podem ser completados na Área Administrativa
       products:
-        image_upload_error: "A imagem do produto não foi reconhecida. Faça o upload de uma imagem no formato PNG ou JPG."
         new:
           title: "Novo produto"
           new_product: "Novo produto"
@@ -3735,10 +3829,10 @@ pt_BR:
             Se continuar a ter problemas, por favor não hesite em contactar-nos.
         subject: "Instruções para redefinição de senha"
       confirmation_instructions:
-        subject: "Confirme sua conta na OFB"
+        subject: "Confirme sua conta na Ajunta"
     payment_mailer:
       authorize_payment:
-        subject: "Favor autorizar seu pagamento para %{distributor}na OFB"
+        subject: "Favor autorizar seu pagamento para %{distributor}na Ajunta"
         instructions: "Seu pagamento de %{amount}para %{distributor}necessita uma autenticação adicional. Favor visitar o seguinte endereço URL para autorizar o seu pagamento:"
       authorization_required:
         subject: "Um pagamento requer autorização do comprador"
@@ -3770,7 +3864,6 @@ pt_BR:
       pending: pendente
       resumed: retomado
       returned: retornado
-      skrill: skrill
     subscription_state:
       active: ativo
       pending: pendente
@@ -3796,6 +3889,8 @@ pt_BR:
         connection_failed: "Não foi possível conectar ao PayPal."
         generic_error: "PayPal falhou. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Regenerar chave"
       form:
         account_settings: Configurações da conta
       show:
@@ -3829,7 +3924,8 @@ pt_BR:
         items: Itens
         total: Total
         paid?: Pago?
-        view: Ver
+        status: Status
+        cancelled: Cancelado
       saved_cards:
         default?: Ausente?
         delete?: Excluir?
@@ -3915,3 +4011,11 @@ pt_BR:
         one: "1 ano"
         many: "%{count}anos"
         other: "%{count}anos"
+  components:
+    search_input:
+      placeholder: Buscar
+    selector_with_filter:
+      search_placeholder: Buscar
+    pagination:
+      next: Próximo
+      previous: Anterior

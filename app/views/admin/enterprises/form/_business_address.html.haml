@@ -1,6 +1,12 @@
 .row
+  = t(:required_fields)
+  (
+  %span.required *
+  )
+.row
   .three.columns.alpha
     = bf.label :company, t(".company_legal_name")
+    %span.required *
     %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "business_address_info_modal" }
   .eight.columns.omega
     = bf.text_field :company, { placeholder: t(".company_placeholder") }
@@ -8,7 +14,9 @@
 .row
   .three.columns.alpha
     = bf.label :address1, t('.address1')
+    %span.required *
     %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "business_address_info_modal" }
+  .eight.columns.omega
     = bf.text_field :address1, { placeholder: t(".address1_placeholder") }
 .row
   .alpha.three.columns
@@ -18,27 +26,31 @@
 .row
   .three.columns.alpha
     = bf.label :city, t(:city)
+    %span.required *
     \/
     = bf.label :zipcode, t(:postcode)
+    %span.required *
   .four.columns
     = bf.text_field :city, { placeholder: t(:city_placeholder) }
   .four.columns.omega
     = bf.text_field :zipcode, { placeholder: t(:postcode_placeholder) }
-.row
+.row{"data-controller": "dependent-select", "data-dependent-select-options-value": countries_with_states }
   .three.columns.alpha
     = bf.label :country_id, t(:country)
+    %span.required *
     \/
     = bf.label :state_id, t(:state)
-  %div{ "ng-controller": "countryCtrl", "ng-init": "address_type='business_address'" }
-    .four.columns
-      %input.ofn-select2.fullwidth#enterprise_business_address_attributes_country_id{ name: 'enterprise[business_address_attributes][country_id]', type: 'number', data: 'countries', placeholder: t('admin.choose'), ng: { model: 'Enterprise.business_address.country_id' } }
-    .four.columns.omega
-      %input.ofn-select2.fullwidth#enterprise_business_address_attributes_state_id{ name: 'enterprise[business_address_attributes][state_id]', type: 'number', data: 'countriesById[Enterprise.address.country_id].states', placeholder: t('admin.choose'), ng: { model: 'Enterprise.business_address.state_id' } }
-
+    %span.required *
+  .four.columns
+    = bf.select :country_id, options_for_select(available_countries.map { |c| [c.name, c.id] }, @enterprise.business_address.country_id), {}, { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
+  .four.columns.omega
+    - states = @enterprise.business_address.country.present? ? @enterprise.business_address.country&.states&.map { |s| [s.name, s.id] } : []
+    = bf.select :state_id, states, {}, { "data-controller": "tom-select", "data-dependent-select-target": "select", class: "primary" }
 
 .row
   .three.columns.alpha
     = bf.label :phone, t(".legal_phone_number")
+    %span.required *
     %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "business_address_info_modal" }
   .eight.columns.omega
     = bf.text_field :phone, { placeholder: t(".phone_placeholder") }

@@ -30,8 +30,12 @@ describe "Check out with Stripe", js: true do
                             calculator: Calculator::FlatRate.new(preferred_amount: 5.67))
   }
 
+  around do |example|
+    with_stripe_setup { example.run }
+  end
+
   before do
-    setup_stripe
+    stripe_enable
     set_order order
     add_product_to_cart order, product
     distributor.shipping_methods << [shipping_with_fee, free_shipping]

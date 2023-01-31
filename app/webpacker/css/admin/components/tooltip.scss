@@ -2,3 +2,31 @@
   max-width: 240px;
   white-space: normal;
 }
+
+.tooltip {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 13px;
+  pointer-events: none;
+  background-color: #5498da;
+  padding: 5px 15px;
+  border-radius: 3px;
+  color: #fff;
+  max-width: 240px;
+  white-space: normal;
+}
+
+.arrow {
+  background-color: #5498da;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
+}
+
+.tooltip-container {
+  position: relative;
+  width: 240px;
+}

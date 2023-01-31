@@ -5,9 +5,10 @@ require 'open_food_network/permissions'
 module Api
   module V1
     class CustomersController < Api::V1::BaseController
+      include AddressTransformation
+
       skip_authorization_check only: :index
 
-      before_action :set_customer, only: [:show, :update, :destroy]
       before_action :authorize_action, only: [:show, :update, :destroy]
 
       def index
@@ -17,44 +18,44 @@ module Api
       end
 
       def show
-        render json: Api::V1::CustomerSerializer.new(@customer, include_options)
+        render json: Api::V1::CustomerSerializer.new(customer, include_options)
       end
 
       def create
         authorize! :update, Enterprise.find(customer_params[:enterprise_id])
-        @customer = Customer.new(customer_params)
+        customer = Customer.new(customer_params)
 
-        if @customer.save
-          render json: Api::V1::CustomerSerializer.new(@customer), status: :created
+        if customer.save
+          render json: Api::V1::CustomerSerializer.new(customer), status: :created
         else
-          invalid_resource! @customer
+          invalid_resource! customer
         end
       end
 
       def update
-        if @customer.update(customer_params)
-          render json: Api::V1::CustomerSerializer.new(@customer)
+        if customer.update(customer_params)
+          render json: Api::V1::CustomerSerializer.new(customer)
         else
-          invalid_resource! @customer
+          invalid_resource! customer
         end
       end
 
       def destroy
-        if @customer.destroy
-          render json: Api::V1::CustomerSerializer.new(@customer)
+        if customer.destroy
+          render json: Api::V1::CustomerSerializer.new(customer)
         else
-          invalid_resource! @customer
+          invalid_resource! customer
         end
       end
 
       private
 
-      def set_customer
-        @customer = Customer.find(params[:id])
+      def customer
+        @customer ||= Customer.find(params[:id])
       end
 
       def authorize_action
-        authorize! action_name.to_sym, @customer
+        authorize! action_name.to_sym, customer
       end
 
       def search_customers
@@ -77,7 +78,8 @@ module Api
             :phone, :latitude, :longitude,
             :first_name, :last_name,
             :street_address_1, :street_address_2,
-            :postal_code, :locality, :region, :country,
+            :postal_code, :locality,
+            { region: [:name, :code], country: [:name, :code] },
           ]
         ).to_h
 
@@ -87,39 +89,6 @@ module Api
         transform_address!(attributes, :shipping_address, :ship_address)
 
         attributes
-      end
-
-      def transform_address!(attributes, from, to)
-        return unless attributes.key?(from)
-
-        address = attributes.delete(from)
-
-        if address.nil?
-          attributes[to] = nil
-          return
-        end
-
-        address.transform_keys! do |key|
-          {
-            phone: :phone, latitude: :latitude, longitude: :longitude,
-            first_name: :firstname, last_name: :lastname,
-            street_address_1: :address1, street_address_2: :address2,
-            postal_code: :zipcode,
-            locality: :city,
-            region: :state_name,
-            country: :country,
-          }.with_indifferent_access[key]
-        end
-
-        if address[:state_name].present?
-          address[:state] = Spree::State.find_by(name: address[:state_name])
-        end
-
-        if address[:country].present?
-          address[:country] = Spree::Country.find_by(name: address[:country])
-        end
-
-        attributes["#{to}_attributes"] = address
       end
 
       def editable_enterprises

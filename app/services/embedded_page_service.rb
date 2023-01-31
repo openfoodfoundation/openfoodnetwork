@@ -68,12 +68,12 @@ class EmbeddedPageService
   end
 
   def current_referer
-    return if @request.referer.blank?
-
-    uri = URI(@request.referer)
-    return if uri.host.blank?
+    uri = URI.parse(@request.referer)
+    return unless uri.is_a?(URI::HTTP) && uri.host.present?
 
     uri.host.downcase
+  rescue URI::InvalidURIError
+    false
   end
 
   def current_referer_without_www

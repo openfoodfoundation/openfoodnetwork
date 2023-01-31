@@ -23,7 +23,7 @@ Metrics:
   Enabled: true
 
 Metrics/BlockLength:
-  IgnoredMethods: [
+  AllowedMethods: [
     "class_eval",
     "collection",
     "context",
@@ -41,7 +41,13 @@ Metrics/BlockLength:
     "resources",
     "scenario",
     "shared_examples",
+    "xdescribe",
   ]
+
+Rails/ApplicationRecord:
+  Exclude:
+    # Migrations should not contain application code:
+    - "db/migrate/*.rb"
 
 Rails/SkipsModelValidations:
   AllowedMethods:

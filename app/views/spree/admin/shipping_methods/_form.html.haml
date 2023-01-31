@@ -19,7 +19,7 @@
     .alpha.four.columns
       = f.label :display_on, t(:display)
     .omega.twelve.columns
-      = select(:shipping_method, :display_on, [[t(".both"), nil], [t(".back_end"), "back_end"]], {}, {class: 'select2 fullwidth'})
+      = select(:shipping_method, :display_on, Spree::ShippingMethod::DISPLAY_ON_OPTIONS.map { |key, value| [t(".#{key}"), value] }, {}, {class: 'select2 fullwidth'})
       = error_message_on :shipping_method, :display_on
 
   .row
@@ -27,7 +27,7 @@
       -# The 'Category' label here is just a logical descriptor for the data we are trying to collect for 'requires_ship_address'
       -# and does not relate to shipping categories in any way.
       = f.label :require_ship_address, t(:category)
-    .two.columns
+    .three.columns
       = f.radio_button :require_ship_address, true
       &nbsp;
       = f.label :delivery, t(:delivery)

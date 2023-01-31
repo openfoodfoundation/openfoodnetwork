@@ -37,7 +37,7 @@ describe PlaceProxyOrder do
       order.line_items << build(:line_item)
 
       expect(summarizer).to receive(:record_and_log_error).with(:processing, order, kind_of(String))
-      expect(Bugsnag).to receive(:notify).with(kind_of(StandardError), order: order)
+      expect(Bugsnag).to receive(:notify).with(kind_of(StandardError))
 
       subject.call
     end

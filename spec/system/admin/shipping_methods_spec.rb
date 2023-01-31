@@ -83,6 +83,15 @@ describe 'shipping methods' do
 
       expect(@shipping_method.reload.calculator_type).to eq("Calculator::PerItem")
     end
+
+    it "handle when updating calculator type to 'None'" do
+      visit spree.edit_admin_shipping_method_path(@shipping_method)
+
+      select2_select 'None', from: 'calc_type'
+      click_button 'Update'
+      
+      expect(@shipping_method.reload.calculator_type).to eq "Calculator::None"
+    end
   end
 
   context "as an enterprise user", js: true do
@@ -103,7 +112,7 @@ describe 'shipping methods' do
       login_as enterprise_user
     end
 
-    it "creating a shipping method" do
+    it "creating a shipping method", retry: 3 do
       visit admin_enterprises_path
       within("#e_#{distributor1.id}") { click_link 'Settings' }
       within(".side_menu") do
@@ -128,11 +137,12 @@ describe 'shipping methods' do
       within(".tags .tag-list") do
         expect(page).to have_css '.tag-item', text: "local"
       end
+      click_button "Create"
 
-      click_button I18n.t("actions.create")
-
-      expect(page).to have_content I18n.t('spree.admin.shipping_methods.edit.editing_shipping_method')
-      expect(flash_message).to include "Teleport", "successfully created!"
+      within ".flash-container" do
+        expect(page).to have_content 'Shipping Method "Teleport" has been successfully created!'
+      end
+      expect(page).to have_content "Editing Shipping Method"
 
       expect(first('tags-input .tag-list ti-tag-item')).to have_content "local"
 

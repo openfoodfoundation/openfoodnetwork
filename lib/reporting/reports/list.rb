@@ -20,7 +20,8 @@ module Reporting
           order_cycle_management: order_cycle_management_report_types,
           sales_tax: sales_tax_report_types,
           xero_invoices: xero_report_types,
-          packing: packing_report_types
+          packing: packing_report_types,
+          revenues_by_hub: [],
         }
       end
 

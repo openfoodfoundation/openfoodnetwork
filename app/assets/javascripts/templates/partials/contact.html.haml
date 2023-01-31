@@ -1,7 +1,11 @@
 %div.contact-container
-  %div.modal-centered{"ng-if" => "::enterprise.email_address || enterprise.website || enterprise.phone"}
+  %div.modal-centered{"ng-if" => "::enterprise.email_address || enterprise.website || enterprise.phone || enterprise.whatsapp_phone"}
     %p.modal-header {{'contact' | t}}
     %p{"ng-if" => "::enterprise.phone", "ng-bind" => "::enterprise.phone"}
+
+    %p{"ng-if" => "::enterprise.whatsapp_phone"}
+      %img{ src: image_path("/map_icons/social-logos/whatsapp.svg") }
+      %a{"ng-href" => "{{::enterprise.whatsapp_url}}", target: "_blank", "ng-bind" => "::enterprise.whatsapp_phone"}
 
     %p{"ng-if" => "::enterprise.email_address"}
       %a{"ng-href" => "{{::enterprise.email_address | stripUrl}}", target: "_blank", mailto: true}

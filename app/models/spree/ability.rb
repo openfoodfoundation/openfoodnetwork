@@ -99,7 +99,7 @@ module Spree
           item.order.changes_allowed?
       end
 
-      can [:cancel], Spree::Order do |order|
+      can [:cancel, :bulk_cancel], Spree::Order do |order|
         order.user == user
       end
 
@@ -178,6 +178,8 @@ module Spree
       end
 
       can [:admin, :create], :manager_invitation
+
+      can [:admin, :index], :oidc_setting
     end
 
     def add_product_management_abilities(user)
@@ -244,7 +246,9 @@ module Spree
     end
 
     def add_order_cycle_management_abilities(user)
-      can [:admin, :index, :read, :edit, :update, :incoming, :outgoing], OrderCycle do |order_cycle|
+      can [
+        :admin, :index, :read, :edit, :update, :incoming, :outgoing, :checkout_options
+      ], OrderCycle do |order_cycle|
         OrderCycle.visible_by(user).include? order_cycle
       end
       can [:admin, :index, :create], Schedule

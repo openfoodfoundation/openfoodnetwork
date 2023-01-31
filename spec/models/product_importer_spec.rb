@@ -272,6 +272,26 @@ describe ProductImport::ProductImporter do
     end
   end
 
+  describe "when shipping category is not found" do
+    let(:csv_data) {
+      CSV.generate do |csv|
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "variant_unit_name", "on_demand", "shipping_category"]
+        csv << ["Shipping Test", enterprise.name, "Vegetables", "5", "3.20", "500", "g", "", nil,
+                "not_found"]
+      end
+    }
+    let(:importer) { import_data csv_data }
+
+    it "raises an error" do
+      importer.validate_entries
+      entries = JSON.parse(importer.entries_json)
+      error = entries['2']['errors']['shipping_category']
+
+      expect(error).to include "Shipping_category doesn't match allowed categories"
+    end
+  end
+
   describe "when enterprises are not valid" do
     let(:csv_data) {
       CSV.generate do |csv|

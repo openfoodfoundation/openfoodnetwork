@@ -11,13 +11,9 @@
       - @reports.each do |report_type, report_subtypes|
         %tr
           %td
-            - name = I18n.t(:name, scope: [:admin, :reports, report_type])
-            - url = main_app.admin_report_url(report_type: report_type)
-            = link_to name, url
+            = I18n.t(:name, scope: [:admin, :reports, report_type])
           %td
-            - begin
-              = I18n.t!(:description, scope: [:admin, :reports, report_type])
-              - if feature? :report_inverse_columns_logic, spree_current_user
-                = render partial: "report_subtype", locals: { report_subtypes: report_subtypes, report_type: report_type }
-            - rescue I18n::MissingTranslationData
-              = render partial: "report_subtype", locals: { report_subtypes: report_subtypes, report_type: report_type }
+            - if report_subtypes.empty?
+              - name = I18n.t(:name, scope: [:admin, :reports, report_type])
+              - report_subtypes = [[name, nil]]
+            = render partial: "report_subtype", locals: { report_subtypes: report_subtypes, report_type: report_type }

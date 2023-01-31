@@ -38,6 +38,11 @@
         = t :producers_contact_phone
         %span{"ng-bind" => "::producer.phone"}
 
+      %p.word-wrap{"ng-if" => "::producer.whatsapp_phone"}
+        %a{"ng-href" => "{{::producer.whatsapp_url}}", target: "_blank"}
+          %img{ src: image_pack_path("social-logos/whatsapp.svg") }
+          %span{"ng-bind" => "::producer.whatsapp_phone"}
+
       %p.word-wrap{"ng-if" => "::producer.email_address"}
         %a{"ng-href" => "{{::producer.email_address | stripUrl}}", target: "_blank", mailto: true}
           %span.obfuscatedEmail.email{"ng-bind" => "::producer.email_address | stripUrl"}

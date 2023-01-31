@@ -18,7 +18,8 @@ angular.module('admin.orderCycles')
       OrderCycle.exchangeDirection(exchange)
 
     $scope.enterprisesWithFees = ->
-      $scope.enterprises[id] for id in [OrderCycle.participatingEnterpriseIds()..., [OrderCycle.order_cycle.coordinator_id]...] when $scope.enterpriseFeesForEnterprise(id).length > 0
+      ids = [OrderCycle.participatingEnterpriseIds()..., [OrderCycle.order_cycle.coordinator_id]...]
+      $scope.enterprises[id] for id in Array.from(new Set(ids)) when $scope.enterpriseFeesForEnterprise(id).length > 0
 
     $scope.removeExchange = ($event, exchange) ->
       $event.preventDefault()

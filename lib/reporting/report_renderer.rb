@@ -4,7 +4,7 @@ require 'spreadsheet_architect'
 
 module Reporting
   class ReportRenderer
-    REPORT_FORMATS = [:csv, :json, :xlsx, :pdf].freeze
+    REPORT_FORMATS = [:csv, :json, :html, :xlsx, :pdf].freeze
 
     def initialize(report)
       @report = report
@@ -15,7 +15,7 @@ module Reporting
     end
 
     def html_render?
-      @report.params[:report_format].in?(['', 'pdf'])
+      @report.params[:report_format].in?([nil, '', 'pdf'])
     end
 
     def display_header_row?
@@ -38,30 +38,33 @@ module Reporting
       @report.rows.map(&:to_h).as_json
     end
 
-    def render_as(target_format, controller: nil)
+    def render_as(target_format)
       unless target_format.to_sym.in?(REPORT_FORMATS)
         raise ActionController::BadRequest, "report_format should be in #{REPORT_FORMATS}"
       end
 
-      public_send("to_#{target_format}", controller)
+      public_send("to_#{target_format}")
     end
 
-    def to_csv(_context_controller = nil)
+    def to_html(layout: nil)
+      ApplicationController.render(
+        template: "admin/reports/_table",
+        layout: layout,
+        locals: { report: @report }
+      )
+    end
+
+    def to_csv
       SpreadsheetArchitect.to_csv(headers: table_headers, data: table_rows)
     end
 
-    def to_xlsx(_context_controller = nil)
+    def to_xlsx
       SpreadsheetArchitect.to_xlsx(spreadsheets_options)
     end
 
-    def to_pdf(context_controller)
-      WickedPdf.new.pdf_from_string(
-        context_controller.render_to_string(
-          template: 'admin/reports/_table',
-          layout: 'pdf',
-          locals: { report: @report }
-        )
-      )
+    def to_pdf
+      html = to_html(layout: "pdf")
+      WickedPdf.new.pdf_from_string(html)
     end
 
     private

@@ -6,15 +6,16 @@ class Enterprise < ApplicationRecord
   # The next Rails version will have named variants but we need to store them
   # ourselves for now.
   LOGO_SIZES = {
-    thumb: { resize_to_limit: [100, 100] },
-    small: { resize_to_limit: [180, 180] },
-    medium: { resize_to_limit: [300, 300] },
+    thumb: { gravity: "Center", resize: "100x100^", crop: '100x100+0+0' },
+    small: { gravity: "Center", resize: "180x180^", crop: '180x180+0+0' },
+    medium: { gravity: "Center", resize: "300x300^", crop: '300x300+0+0' },
   }.freeze
   PROMO_IMAGE_SIZES = {
     thumb: { resize_to_limit: [100, 100] },
     medium: { resize_to_fill: [720, 156] },
     large: { resize_to_fill: [1200, 260] },
   }.freeze
+  VALID_INSTAGRAM_REGEX = %r{\A[a-zA-Z0-9._]{1,30}([^/-]*)\z}
 
   searchable_attributes :sells, :is_primary_producer
   searchable_associations :properties
@@ -56,10 +57,9 @@ class Enterprise < ApplicationRecord
   has_many :users, through: :enterprise_roles
   belongs_to :owner, class_name: 'Spree::User',
                      inverse_of: :owned_enterprises
-  has_and_belongs_to_many :payment_methods, join_table: 'distributors_payment_methods',
-                                            class_name: 'Spree::PaymentMethod',
-                                            foreign_key: 'distributor_id'
+  has_many :distributor_payment_methods, foreign_key: :distributor_id
   has_many :distributor_shipping_methods, foreign_key: :distributor_id
+  has_many :payment_methods, through: :distributor_payment_methods
   has_many :shipping_methods, through: :distributor_shipping_methods
   has_many :customers
   has_many :inventory_items
@@ -85,8 +85,8 @@ class Enterprise < ApplicationRecord
   has_one_attached :terms_and_conditions
   has_one_attached :small_farmer_recognition_document
 
-  validates :logo, content_type: %r{\Aimage/.*\Z}
-  validates :promo_image, content_type: %r{\Aimage/.*\Z}
+  validates :logo, content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
+  validates :promo_image, content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
   validates :terms_and_conditions, content_type: {
     in: "application/pdf",
     message: I18n.t(:enterprise_terms_and_conditions_type_error),
@@ -101,6 +101,7 @@ class Enterprise < ApplicationRecord
   validate :shopfront_taxons
   validate :shopfront_producers
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
+  validates :instagram, format: { with: VALID_INSTAGRAM_REGEX, message: Spree.t('errors.messages.invalid_instagram_url') }, allow_blank: true
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :set_unused_address_fields
@@ -121,6 +122,7 @@ class Enterprise < ApplicationRecord
     joins(:shipping_methods).
       joins(:payment_methods).
       merge(Spree::PaymentMethod.available).
+      merge(Spree::ShippingMethod.frontend).
       select('DISTINCT enterprises.*')
   }
   scope :not_ready_for_checkout, lambda {
@@ -197,15 +199,14 @@ class Enterprise < ApplicationRecord
       joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
     end
   }
-  scope :relatives_of_one_union_others, lambda { |one, others|
+
+  scope :parents_of_one_union_others, lambda { |one, others|
     where("
       enterprises.id IN
-        (SELECT child_id FROM enterprise_relationships WHERE enterprise_relationships.parent_id=?)
-      OR enterprises.id IN
         (SELECT parent_id FROM enterprise_relationships WHERE enterprise_relationships.child_id=?)
       OR enterprises.id IN
         (?)
-    ", one, one, others)
+      ", one, others)
   }
 
   def business_address_empty?(attributes)
@@ -260,9 +261,9 @@ class Enterprise < ApplicationRecord
     ", id, id)
   end
 
-  def plus_relatives_and_oc_producers(order_cycles)
+  def plus_parents_and_order_cycle_producers(order_cycles)
     oc_producer_ids = Exchange.in_order_cycle(order_cycles).incoming.pluck :sender_id
-    Enterprise.not_hidden.is_primary_producer.relatives_of_one_union_others(id, oc_producer_ids | [id])
+    Enterprise.not_hidden.is_primary_producer.parents_of_one_union_others(id, oc_producer_ids | [id])
   end
 
   def relatives_including_self
@@ -311,6 +312,10 @@ class Enterprise < ApplicationRecord
 
   def instagram
     correct_instagram_url self[:instagram]
+  end
+
+  def whatsapp_url
+    correct_whatsapp_url self[:whatsapp_phone]
   end
 
   def inventory_variants
@@ -384,7 +389,7 @@ class Enterprise < ApplicationRecord
   end
 
   def ready_for_checkout?
-    shipping_methods.any? && payment_methods.available.any?
+    shipping_methods.frontend.any? && payment_methods.available.any?(&:configured?)
   end
 
   def self.find_available_permalink(test_permalink)
@@ -449,8 +454,12 @@ class Enterprise < ApplicationRecord
     url&.sub(%r{(https?://)?}, '')
   end
 
+  def correct_whatsapp_url(phone_number)
+    phone_number && "https://wa.me/" + phone_number.tr('+ ', '')
+  end
+
   def correct_instagram_url(url)
-    url && strip_url(url).sub(%r{www.instagram.com/}, '').delete("@")
+    url && strip_url(url.downcase).sub(%r{www.instagram.com/}, '').sub(%r{instagram.com/}, '').delete("@")
   end
 
   def correct_twitter_url(url)

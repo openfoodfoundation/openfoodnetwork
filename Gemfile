@@ -69,6 +69,10 @@ gem 'pagy', '~> 5.1'
 gem 'rswag-api'
 gem 'rswag-ui'
 
+gem 'gitlab-omniauth-openid-connect', require: 'omniauth_openid_connect'
+gem 'openid_connect', '~> 1.3'
+gem 'omniauth-rails_csrf_protection'
+
 gem 'angularjs-rails', '1.8.0'
 gem 'bugsnag'
 gem 'haml'
@@ -97,14 +101,15 @@ gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
-gem "cable_ready", "5.0.0.pre3"
+gem "cable_ready", "5.0.0.pre9"
+gem "stimulus_reflex", "3.5.0.pre9"
 
 gem 'combine_pdf'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 gem 'immigrant'
-gem 'roo', github: "roo-rb/roo" # master is currently needed for Ruby 3.x (awaiting new release)
+gem 'roo'
 gem 'spreadsheet_architect'
 
 gem 'whenever', require: false
@@ -113,9 +118,7 @@ gem 'test-unit', '~> 3.5'
 
 gem 'coffee-rails', '~> 5.0.0'
 
-gem 'mini_racer', '0.4.0'
-
-gem 'uglifier', '>= 1.0.3'
+gem 'mini_racer'
 
 gem 'angular_rails_csrf'
 
@@ -131,7 +134,10 @@ gem 'flipper'
 gem 'flipper-active_record'
 gem 'flipper-ui'
 
-gem "view_component", require: "view_component/engine"
+gem "view_component"
+gem 'view_component_reflex', '3.1.14.pre9'
+
+gem 'mini_portile2', '~> 2.8'
 
 group :production, :staging do
   gem 'ddtrace'
@@ -140,8 +146,6 @@ group :production, :staging do
 end
 
 group :test, :development do
-  # Pretty printed test output
-  gem 'awesome_print'
   gem 'bullet'
   gem 'capybara'
   gem 'cuprite'
@@ -149,41 +153,38 @@ group :test, :development do
   gem "factory_bot_rails", '6.2.0', require: false
   gem 'fuubar', '~> 2.5.1'
   gem 'json_spec', '~> 1.1.4'
-  gem 'knapsack'
+  gem 'knapsack_pro'
   gem 'letter_opener', '>= 1.4.1'
   gem 'rspec-rails', ">= 3.5.2"
-  gem 'rspec-retry'
+  gem 'rspec-retry', require: false
   gem 'rswag-specs'
-  gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'timecop'
-  gem 'webdrivers'
+  gem 'debug', '>= 1.0.0'
 end
 
 group :test do
-  gem 'byebug'
   gem 'pdf-reader'
   gem 'rails-controller-testing'
   gem 'simplecov', require: false
-  gem 'test-prof'
-  gem 'webmock'
+  gem 'vcr', require: false
+  gem 'webmock', require: false
   # See spec/spec_helper.rb for instructions
   # gem 'perftools.rb'
 end
 
 group :development do
   gem 'debugger-linecache'
+  gem 'rails-erd'
   gem 'foreman'
   gem 'listen'
   gem 'pry', '~> 0.13.0'
-  gem 'pry-byebug', '~> 3.9.0'
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'web-console'
 
-  gem "view_component_storybook", require: "view_component/storybook/engine"
 
   gem 'rack-mini-profiler', '< 3.0.0'
 end

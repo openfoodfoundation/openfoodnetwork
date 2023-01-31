@@ -24,19 +24,23 @@
     - if Spree::Config[:enable_invoices?]
       .ofn-drop-down-with-prepend
         .ofn-drop-down-prepend{"ng-class": "selected_orders.length == 0 ? 'disabled' : ''"}
-          {{ selected_orders.length }}
-          =t('.selected')
+          {{ "spree.admin.orders.index.selected" | t:{count: selected_orders.length} }}
         .ofn-drop-down{"ng-class": "selected_orders.length == 0 ? 'disabled' : ''"}
           %span{ :class => 'icon-reorder' }
             ="#{t('admin.actions')}".html_safe
           %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
           %div.menu{ 'ng-show' => "expanded" }
             %div.menu_item
+              %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "resend_confirmation" }
+                = t('.resend_confirmation')
+            %div.menu_item
               %span.name.invoices-modal{'ng-controller' => 'bulkInvoiceCtrl', 'ng-click' => 'createBulkInvoice()' }
                 = t('.print_invoices')
-
+            %div.menu_item
+              %span.name{'ng-controller' => 'bulkCancelCtrl', 'ng-click' => 'cancelSelectedOrders()' }
+                = t('.cancel_orders')
     
-    = render partial: 'per_page_controls', locals: { position: "right" }
+    = render partial: 'admin/shared/angular_per_page_controls', locals: { position: "right" }
 
 %table#listing_orders.index.responsive{width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
   %colgroup
@@ -44,7 +48,7 @@
   %thead
     %tr
       %th
-        %input{type: 'checkbox', 'ng-change' => 'toggleAll()', 'ng-model' => 'select_all'}
+        %input#selectAll{type: 'checkbox', 'ng-change' => 'toggleAll()', 'ng-model' => 'select_all'}
       %th
         = t(:products_distributor)
         %th
@@ -61,7 +65,7 @@
   %tbody
     %tr{ng: {repeat: 'order in orders track by order.id', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "{'state-{{order.state}}': true, 'row-loading': rowStatus[order.id] == 'loading'}"}
       %td.align-center
-        %input{type: 'checkbox', 'ng-model' => 'checkboxes[order.id]', 'ng-change' => 'toggleSelection(order.id)'}
+        %input{type: 'checkbox', 'ng-model' => 'checkboxes[order.id]', 'ng-change' => 'toggleSelection(order.id)', value: '{{order.id}}', name: 'order_ids[]'}
       %td.align-center
         {{order.distributor_name}}
       %td.align-center
@@ -93,17 +97,17 @@
       %td.align-center
         %span{'ng-bind-html' => 'order.display_total'}
       %td.actions
-        %div.row-loading-icons
-          %div{ng: {show: 'rowStatus[order.id] == "loading"', cloak: true}, style: "width: 30px; height: 30px;"}
-            = render partial: "components/spinner"
-          %i.success.icon-ok-sign{ng: {show: 'rowStatus[order.id] == "success"'} }
-          %i.error.icon-remove-sign.with-tip{ng: {show: 'rowStatus[order.id] == "error"'}, 'ofn-with-tip' => t('.order_not_updated')}
-        %a.icon_link.with-tip.icon-edit.no-text{'ng-href' => '{{order.edit_path}}', 'data-action' => 'edit', 'ofn-with-tip' => t('.edit')}
-        %div{'ng-if' => 'order.ready_to_ship'}
-          %button.icon-road.icon_link.with-tip.no-text{'ng-click' => 'shipOrder(order)', rel: 'nofollow', 'ofn-with-tip' => t('.ship')}
-        %div{'ng-if' => 'order.ready_to_capture'}
-          %button.icon-capture.icon_link.no-text{'ng-click' => 'capturePayment(order)', rel: 'nofollow', 'ofn-with-tip' => t('.capture')}
-
+        .flex
+          %div.row-loading-icons
+            %div{ng: {show: 'rowStatus[order.id] == "loading"', cloak: true}, style: "width: 30px; height: 30px;"}
+              = render partial: "components/spinner"
+            %i.success.icon-ok-sign{ng: {show: 'rowStatus[order.id] == "success"'} }
+            %i.error.icon-remove-sign.with-tip{ng: {show: 'rowStatus[order.id] == "error"'}, 'ofn-with-tip' => t('.order_not_updated')}
+          %a.icon_link.with-tip.icon-edit.no-text{'ng-href' => '{{order.edit_path}}', 'data-action' => 'edit', 'ofn-with-tip' => t('.edit')}
+          %div{'ng-if' => 'order.ready_to_ship'}
+            %button.icon-road.icon_link.with-tip.no-text{'ng-click' => 'shipOrder(order)', rel: 'nofollow', 'ofn-with-tip' => t('.ship')}
+          %div{'ng-if' => 'order.ready_to_capture'}
+            %button.icon-capture.icon_link.no-text{'ng-click' => 'capturePayment(order)', rel: 'nofollow', 'ofn-with-tip' => t('.capture')}
 .sixteen.columns.alpha#loading{ 'ng-show' => 'RequestMonitor.loading' }
   = render partial: "components/admin_spinner"
   %h1
@@ -114,3 +118,9 @@
 
 .no-objects-found{'ng-show' => "!RequestMonitor.loading && orders.length == 0"}
   = t('.no_orders_found')
+
+= render 'spree/admin/shared/custom-confirm'
+
+= render ConfirmModalComponent.new(id: "resend_confirmation", confirm_actions: "click->resend-confirmation-email#confirm", controllers: "resend-confirmation-email") do
+  .margin-bottom-30
+    = t('.resend_confirmation_confirm_html')

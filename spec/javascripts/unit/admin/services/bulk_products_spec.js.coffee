@@ -3,6 +3,8 @@ describe "BulkProducts service", ->
 
   beforeEach ->
     module "ofn.admin"
+    window.bigDecimal = jasmine.createSpyObj "bigDecimal", ["round"]
+    window.bigDecimal.round.and.callFake (a, b) -> a.toFixed(b)
 
   beforeEach inject (_BulkProducts_, _$httpBackend_) ->
     BulkProducts = _BulkProducts_
@@ -151,6 +153,11 @@ describe "BulkProducts service", ->
       product = {variant_unit_scale: 0.001}
       variant = {unit_value: 5}
       expect(BulkProducts.variantUnitValue(product, variant)).toEqual 5000
+
+    it "returns the scaled value rounded off upto 2 decimal points", ->
+      product = {variant_unit_scale: 28.35}
+      variant = {unit_value: 1234.5}
+      expect(BulkProducts.variantUnitValue(product, variant)).toEqual 43.54
 
     it "returns the unscaled value when the product has no scale", ->
       product = {}

@@ -78,7 +78,6 @@ nav.menu {
       text-transform: uppercase;
       position: relative;
       text-align: center;
-      font-weight: 600;      
 
       i {
         display: inline;
@@ -158,7 +157,7 @@ nav.menu {
         margin-bottom: -5px;
         left: 50%;
         margin-left: -10px;
-        z-index: 1;
+        z-index: 0;
       }
     }
   }

@@ -3,11 +3,10 @@
     .field-block.alpha.four.columns
       .date-range-filter.field
         = label_tag nil, t(:date_range)
-        .date-range-fields
-          = text_field_tag "q[completed_at_gteq]", nil, class: 'datepicker', datepicker: 'q.completed_at_gteq', 'ng-model' => 'q.completed_at_gteq', :placeholder => t(:start)
-          %span.range-divider
-            %i.icon-arrow-right
-          = text_field_tag "q[completed_at_lteq]", nil, class: 'datepicker', datepicker: 'q.completed_at_lteq', 'ng-model' => 'q.completed_at_lteq', :placeholder => t(:stop)
+        .date-range-fields{ data: { controller: "flatpickr", "flatpickr-mode-value": "range", "flatpickr-default-date": "{{ [q.completed_at_gteq, q.completed_at_lteq] }}" } }
+          = text_field_tag nil, nil, class: "datepicker", data: { "flatpickr-target": "instance", action: "flatpickr_clear@window->flatpickr#clear" }
+          = text_field_tag "q[completed_at_gteq]", nil, "ng-model": "q.completed_at_gteq", data: { "flatpickr-target": "start" }, style: "display: none"
+          = text_field_tag "q[completed_at_lteq]", nil, "ng-model": "q.completed_at_lteq", data: { "flatpickr-target": "end" }, style: "display: none"
       .field
         = label_tag nil, t(:status)
         %select2-watch-ng-model{'ng-model': 'q.state_eq'}
@@ -55,6 +54,6 @@
     .actions.filter-actions
       %a.button.icon-search{'ng-click' => 'fetchResults()'}
         = t(:filter_results)
-      %a.button{'ng-click' => 'clearFilters()', "id": "clear_filters_button"}
+      %a.button{'ng-click' => 'clearFilters()', "id": "clear_filters_button", "class": ("secondary" if feature?(:admin_style_v2, spree_current_user)) }
         =  t(:clear_filters)
           

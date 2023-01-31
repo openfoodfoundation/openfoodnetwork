@@ -127,10 +127,17 @@ module WebHelper
     page.find(:css, 'body').click
   end
 
+  def click_on_select2(value, options)
+    find("#s2id_#{options[:from]}").click
+    find(:css, ".select2-result-label", text: options[:select_text] || value).click
+  end
+
   def tomselect_search_and_select(value, options)
-    page.find("[name='#{options[:from]}']").sibling(".ts-wrapper").click
-    page.find(:css, '.ts-dropdown input.dropdown-input').set(value)
-    page.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
+    tomselect_wrapper = page.find("[name='#{options[:from]}']").sibling(".ts-wrapper")
+    tomselect_wrapper.find(".ts-control").click
+    tomselect_wrapper.find(:css, '.ts-dropdown input.dropdown-input').set(value)
+    tomselect_wrapper.find(".ts-control").click
+    tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
   end
 
   def accept_js_alert
@@ -147,7 +154,7 @@ module WebHelper
 
   def fill_in_tag(tag_name, selector = "tags-input .tags input")
     expect(page).to have_selector selector
-    find(:css, selector).send_keys ""
+    find(:css, selector).click
     find(:css, selector).set "#{tag_name}\n"
     expect(page).to have_selector ".tag-list .tag-item span", text: tag_name
   end

@@ -53,14 +53,8 @@ describe '
         { id: "acc_connected123", business_name: "My Org", charges_enabled: true }
       }
 
-      around do |example|
-        original_stripe_connect_enabled = Spree::Config[:stripe_connect_enabled]
-        example.run
-        Spree::Config.set(stripe_connect_enabled: original_stripe_connect_enabled)
-      end
-
       before do
-        Spree::Config.set(stripe_connect_enabled: true)
+        allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
         Stripe.api_key = "sk_test_12345"
         stub_request(:get,
                      "https://api.stripe.com/v1/accounts/acc_connected123").to_return(body: JSON.generate(stripe_account_mock))
@@ -253,9 +247,20 @@ describe '
   end
 
   describe "Setting transaction fees", js: true do
-    let(:calculator) { build(:calculator) }
-    let!(:payment_method) { create(:payment_method, calculator: calculator) }
+    let!(:payment_method) { create(:payment_method) }
     before { login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method }
+
+    it "set by default 'None' as calculator" do
+      expect(page).to have_select "calc_type", selected: "None"
+    end
+
+    it "handle the 'None' calculator" do
+      select2_select "None", from: 'calc_type'
+      click_button 'Update'
+      expect(page).to have_content("Payment Method has been successfully updated!")
+      expect(payment_method.reload.calculator_type).to eq "Calculator::None"
+      expect(page).to have_select "calc_type", selected: "None"
+    end
 
     context "using Flat Percent calculator" do
       before { select2_select "Flat Percent", from: 'calc_type' }
@@ -271,9 +276,11 @@ describe '
     end
 
     context "using Flat Rate (per order) calculator" do
-      # flat rate per order is the default calculator; no need select it and update page
+      before { select2_select "Flat Rate (per order)", from: 'calc_type' }
 
       it "inserts values which persist" do
+        expect(page).to have_content("you must save first before")
+        click_button 'Update'
         fill_in "Amount", with: 2.2
         click_button 'Update'
         expect(page).to have_content("Payment Method has been successfully updated!")

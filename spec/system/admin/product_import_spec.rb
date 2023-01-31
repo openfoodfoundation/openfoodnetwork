@@ -136,6 +136,29 @@ describe "Product Import", js: true do
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
     end
 
+    it "displays info about inconsistent variant unit names, within the same product" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name",
+                "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "50", "3.20", "250", "", "Bag", shipping_category_id_str]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "50", "6.40", "500", "", "Big-Bag", shipping_category_id_str]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+
+      expect(page).to have_content "Select a spreadsheet to upload"
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      proceed_to_validation
+      find('div.header-description', text: 'Items contain errors').click
+      expect(page).to have_content "Variant_unit_name must be the same for products with the same name"
+      expect(page).to have_content "Imported file contains invalid entries"
+
+      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+    end
+
     it "handles saving of named tax and shipping categories" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
@@ -382,36 +405,67 @@ describe "Product Import", js: true do
                                  with: "3.2"
     end
 
-    it "handles the Items unit for inventory import" do
-      product = create(:simple_product, supplier: enterprise, on_hand: nil, name: 'Aubergine',
-                                        unit_value: '1', variant_unit_scale: nil, variant_unit: "items", variant_unit_name: "Bag")
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "unit_type",
-                "units", "on_demand", "variant_unit_name"]
-        csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", "", "3.3",
-                "kg", "1", "true", "Bag"]
+    describe "Item type products" do
+      let!(:product) {
+        create(:simple_product, supplier: enterprise, on_hand: nil, name: 'Aubergine',
+                                unit_value: '1', variant_unit_scale: nil, variant_unit: "items", variant_unit_name: "Bag")
+      }
+      it "are sucessfully imported to inventory" do
+        csv_data = CSV.generate do |csv|
+          csv << ["name", "distributor", "producer", "category", "on_hand", "price", "unit_type",
+                  "units", "on_demand", "variant_unit_name"]
+          csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", "", "3.3",
+                  "kg", "1", "true", "Bag"]
+        end
+
+        File.write('/tmp/test.csv', csv_data)
+        visit main_app.admin_product_import_path
+        select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+        attach_file 'file', '/tmp/test.csv'
+        click_button 'Upload'
+        proceed_to_validation
+        expect(page).to have_selector '.item-count', text: "1"
+        expect(page).to have_no_selector '.invalid-count'
+        expect(page).to have_selector '.inv-create-count', text: '1'
+        save_data
+
+        expect(page).to have_selector '.inv-created-count', text: '1'
+
+        visit main_app.admin_inventory_path
+
+        expect(page).to have_content "Aubergine"
+        expect(page).to have_select "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}-on_demand",
+                                    selected: "Yes"
+        expect(page).to have_input "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}-price",
+                                   with: "3.3"
       end
 
-      File.write('/tmp/test.csv', csv_data)
-      visit main_app.admin_product_import_path
-      select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
-      attach_file 'file', '/tmp/test.csv'
-      click_button 'Upload'
-      proceed_to_validation
-      expect(page).to have_selector '.item-count', text: "1"
-      expect(page).to have_no_selector '.invalid-count'
-      expect(page).to have_selector '.inv-create-count', text: '1'
-      save_data
+      it "displays the appropriate error message, when variant unit names are inconsistent" do
+        csv_data = CSV.generate do |csv|
+          csv << ["name", "distributor", "producer", "category", "on_hand", "price", "unit_type",
+                  "units", "on_demand", "variant_unit_name"]
+          csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", "", "3.3",
+                  "kg", "1", "true", "Bag"]
+          csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", "", "6.6",
+                  "kg", "1", "true", "Big-Bag"]
+        end
 
-      expect(page).to have_selector '.inv-created-count', text: '1'
+        File.write('/tmp/test.csv', csv_data)
+        visit main_app.admin_product_import_path
+        select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+        attach_file 'file', '/tmp/test.csv'
+        click_button 'Upload'
+        proceed_to_validation
 
-      visit main_app.admin_inventory_path
+        find('div.header-description', text: 'Items contain errors').click
+        expect(page).to have_content "Variant_unit_name must be the same for products with the same name"
+        expect(page).to have_content "Imported file contains invalid entries"
+        expect(page).to have_no_selector 'input[type=submit][value="Save"]'
 
-      expect(page).to have_content "Aubergine"
-      expect(page).to have_select "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}-on_demand",
-                                  selected: "Yes"
-      expect(page).to have_input "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}-price",
-                                 with: "3.3"
+        visit main_app.admin_inventory_path
+
+        expect(page).not_to have_content "Aubergine"
+      end
     end
 
     it "handles on_demand and on_hand validations with inventory" do
@@ -693,7 +747,7 @@ describe "Product Import", js: true do
       expect(page).to have_selector '.create-count', text: "1"
 
       expect(page.body).to have_content 'you do not have permission'
-      expect(page).to have_no_selector 'a.button.proceed', visible: true
+      expect(page).to have_no_selector 'a.button.proceed'
     end
   end
 
@@ -739,16 +793,16 @@ describe "Product Import", js: true do
   private
 
   def proceed_to_validation
-    expect(page).to have_selector 'a.button.proceed', visible: true
+    expect(page).to have_selector 'a.button.proceed'
     within("#content") { click_link I18n.t('admin.product_import.import.import') }
-    expect(page).to have_selector 'form.product-import', visible: true
+    expect(page).to have_selector 'form.product-import'
     expect(page).to have_content I18n.t('admin.product_import.import.validation_overview')
   end
 
   def save_data
-    expect(page).to have_selector 'a.button.proceed', visible: true
+    expect(page).to have_selector 'a.button.proceed'
     proceed_with_save
-    expect(page).to have_selector 'div.save-results', visible: true
+    expect(page).to have_selector 'div.save-results'
     expect_import_completed
   end
 

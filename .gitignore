@@ -50,10 +50,12 @@ vendor/bundle/
 coverage
 /reports/
 !/reports/README.md
-/spec/components/stories/**/*.stories.json
 
 /public/packs
 /public/packs-test
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+/config/credentials.yml.enc
+/config/master.key

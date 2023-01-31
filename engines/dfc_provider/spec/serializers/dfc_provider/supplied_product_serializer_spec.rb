@@ -11,12 +11,11 @@ describe DfcProvider::SuppliedProductSerializer do
   describe '#id' do
     let(:supplied_product_id) {
       [
-        'http://test.host/api/dfc_provider',
-        'enterprises',
+        "http://test.host/api/dfc-v1.6/enterprises/",
         product.supplier_id,
-        'supplied_products',
+        "/supplied_products/",
         variant.id
-      ].join('/')
+      ].join
     }
 
     it 'returns the expected value' do

@@ -1,5 +1,5 @@
 import { Controller } from "stimulus";
-import TomSelect from "tom-select";
+import TomSelect from "tom-select/dist/esm/tom-select.complete";
 
 export default class extends Controller {
   static values = { options: Object };
@@ -8,6 +8,9 @@ export default class extends Controller {
     maxOptions: null,
     plugins: ["dropdown_input"],
     allowEmptyOption: true,
+    onItemAdd: function () {
+      this.setTextboxValue("");
+    },
   };
 
   connect(options = {}) {

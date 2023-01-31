@@ -5,6 +5,15 @@ en_CA:
       spree/product: Product
       spree/shipping_method: Shipping/Pick-up Method
     attributes:
+      spree/order/ship_address:
+        address1: "Shipping address line 1"
+        address2: "Shipping address line 2"
+        city: "Shipping address line 3"
+        country: "Shipping address country"
+        phone: "Phone number"
+        firstname: "First name"
+        lastname: "Last name"
+        zipcode: "Shipping address postal code"
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
@@ -23,11 +32,14 @@ en_CA:
         state: State
         source: Source
       spree/product:
+        name: "Product Name"
+        price: "Price"
         primary_taxon: "Product Category"
         supplier: "Supplier"
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+        unit_value: "Unit value"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -61,27 +73,6 @@ en_CA:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because you are using producer stock settings"
             on_demand_but_count_on_hand_set: "must be blank if 'on demand' is used"
             limited_stock_but_no_count_on_hand: "must be specified because you are forcing limited stock"
-  errors:
-    messages:
-      content_type_invalid: "has an invalid content type"
-      file_size_out_of_range: "size %{file_size} is not within required range"
-      limit_out_of_range: "total number is out of range"
-      image_metadata_missing: "is not a valid image"
-      dimension_min_inclusion: "must be greater than or equal to %{width} x %{height} pixels."
-      dimension_max_inclusion: "must be less than or equal to %{width} x %{height} pixels."
-      dimension_width_inclusion: "width is not between %{min} and %{max} pixels."
-      dimension_height_inclusion: "height is not between %{min} and %{max} pixels."
-      dimension_width_greater_than_or_equal_to: "width must be greater than or equal to %{length} pixels."
-      dimension_height_greater_than_or_equal_to: "height must be greater than or equal to %{length} pixels."
-      dimension_width_less_than_or_equal_to: "width must be less than or equal to %{length} pixels."
-      dimension_height_less_than_or_equal_to: "height must be less than or equal to %{length} pixels."
-      dimension_width_equal_to: "width must be equal to %{length} pixels."
-      dimension_height_equal_to: "height must be equal to %{length} pixels."
-      aspect_ratio_not_square: "must be a square image"
-      aspect_ratio_not_portrait: "must be a portrait image"
-      aspect_ratio_not_landscape: "must be a landscape image"
-      aspect_ratio_is_not: "must have an aspect ration of %{aspect_ratio}"
-      aspect_ratio_unknown: "has an unknown aspect ration"
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -162,6 +153,7 @@ en_CA:
   cardholder_name: "Cardholder name"
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
+  additional_information: "Additional information"
   devise:
     passwords:
       spree_user:
@@ -182,6 +174,7 @@ en_CA:
         signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please open the link to activate your account."
         unknown_error: "Something went wrong while creating your account. Check your email address and try again."
     failure:
+      disabled: "Your account has been disabled. Please contact support@openfoodnetwork.ca"
       invalid: |
           Invalid email or password.
           Were you a guest last time?  Perhaps you need to create an account or reset your password.
@@ -197,6 +190,8 @@ en_CA:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
         updated: "Your password was changed successfully. You are now signed in."
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+    oidc:
+      failure: "Could not sign in: %{error}"
   home_page_alert_html: "Home page alert HTML"
   hub_signup_case_studies_html: "Hub signup case studies HTML"
   hub_signup_detail_html: "Hub signup detail HTML"
@@ -259,8 +254,8 @@ en_CA:
   shipment_mailer:
     shipped_email:
       dear_customer: "Dear Customer, "
-      instructions: "Your order has been shipped or picked up."
-      shipment_summary: "Shipment/Pick Up Summary"
+      instructions: "Your order has been shipped."
+      shipment_summary: "Order Summary"
       subject: "Shipment/Pick Up Notification"
       thanks: "Thank you for your business."
       track_information: "Tracking Information: %{tracking}"
@@ -308,7 +303,6 @@ en_CA:
   producers_join: Producers are  welcome to join the Open Food Network.
   charges_sales_tax: Charges sales tax?
   business_address: "Business Address"
-  enterprise_permissions: "Enterprise Permissions"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -414,6 +408,28 @@ en_CA:
     destroy: "Destroy"
     rename: "Rename"
   admin:
+    products_page:
+      title: Products
+      filters:
+        categories:
+          title: Categories
+          selected_categories: "%{count} categories selected"
+        producers:
+          title: Producers
+          selected_producers: "%{count} producers selected"
+        per_page: "%{count} items per page"
+        colums: Columns
+      columns:
+        name: Name
+        unit: Unit
+        price: Price
+        producer: Producer
+        category: Category
+      columns_selector:
+        unit: Unit
+        price: Price
+        producer: Producer
+        category: Category
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -493,6 +509,8 @@ en_CA:
         terms_of_service: "Terms of Service"
         delete: "Delete file"
         confirm_delete: "Are you sure you want to delete the current Terms of Service file?"
+        attachment: "Attachment"
+        create_terms_of_service: "Create a Terms of Service file"
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
@@ -502,6 +520,7 @@ en_CA:
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
         enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
+        enterprise_number_required_on_invoices?: "Require a business number to generate an invoice?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -550,7 +569,7 @@ en_CA:
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
       destroy:
-        has_associated_orders: "Delete failed: customer has associated orders with his shop"
+        has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
     contents:
       edit:
         title: Content
@@ -578,6 +597,18 @@ en_CA:
     enterprise_groups:
       index:
         new_button: New Enterprise Group
+      form_primary_details:
+        primary_details: "Primary Details"
+      form_users:
+        users: "Users"
+      form_about:
+        about: "About"
+      form_images:
+        images: "Images"
+      form_address:
+        contact: "Contact"
+      form_web:
+        web: "Web Resources"
     enterprise_roles:
       form:
         manages: manages
@@ -627,7 +658,9 @@ en_CA:
         conditional_blank: can't be blank if unit_type is blank
         no_product: did not match any products in the database
         not_found: not found in database
+        category_not_found: doesn't match allowed categories. See the correct categories to choose from on the product import page, or check that there's no misspelling.
         not_updatable: cannot be updated on existing products via product import
+        values_must_be_same: must be the same for products with the same name
         blank: can't be blank
         products_no_permission: you do not have permission to manage products for this enterprise
         inventory_no_permission: you do not have permission to create inventory for this producer
@@ -778,6 +811,9 @@ en_CA:
         variants_without_unit_value: "WARNING: Some variants do not have a unit value"
         all: "All"
       select_variant: "Select a variant"
+      note:
+        note_label: "Note:"
+        no_note_present: "No note provided"
     enterprise:
       select_outgoing_oc_products_from: Select outgoing OC products from
     enterprises:
@@ -790,11 +826,15 @@ en_CA:
         manage: Manage
       form:
         about_us:
+          legend: "About"
           desc_short: Short Description
           desc_short_placeholder: Tell us about your enterprise in one or two sentences
           desc_long: About Us
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
+        address:
+          legend: "Address"
         business_details:
+          legend: "Business Details"
           abn: Business Number
           abn_placeholder: eg. 80781 2466
           acn: Busines Number
@@ -805,7 +845,8 @@ en_CA:
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
           reset_form: "Reset Form"
-          Invoice_item_sorting: Invoice item sorting
+          business_address_legend: "Business Address"
+          invoice_item_sorting_legend: "Invoice item sorting"
           sort_items_by_supplier?: Sort items by supplier?
           sort_items_by_supplier_tip: "When enabled, items will be sorted by supplier name."
           enabled: Enable
@@ -819,6 +860,7 @@ en_CA:
           legal_phone_number: Legal phone number
           phone_placeholder: "98 123 4565"
         contact:
+          legend: "Contact"
           name: Name
           name_placeholder: eg. Gustav Plum
           email_address: Public Email Address
@@ -826,17 +868,23 @@ en_CA:
           email_address_tip: "This email address will be displayed in your public profile"
           phone: Phone
           phone_placeholder: eg. 519 885 8888
+          whatsapp_phone: WhatsApp phone number
+          whatsapp_phone_placeholder: eg. +614 9876 5432
+          whatsapp_phone_tip: "This number will be displayed in your public profile to be opened as a WhatsApp link."
           website: Website
           website_placeholder: eg. www.truffles.com
         enterprise_fees:
+          legend: "Enterprise Fees"
           name: Name
           fee_type: Fee Type
           manage_fees: Manage Enterprise Fees
           no_fees_yet: You don't have any enterprise fees yet.
           create_button: Create One Now
         enterprise_permissions:
+          legend: "Enterprise Permissions"
           enterprise_relationships: Enterprise Relationships
         images:
+          legend: "Images"
           logo: Logo
           promo_image_placeholder: 'This image is displayed in "About Us"'
           promo_image_note1: 'PLEASE NOTE:'
@@ -845,6 +893,7 @@ en_CA:
           remove_logo: "Remove Image"
           remove_promo_image: "Remove Image"
         inventory_settings:
+          legend: "Inventory Settings"
           text1: You may opt to manage stock levels and prices in via your
           inventory: inventory
           text2: >
@@ -855,6 +904,7 @@ en_CA:
           preferred_product_selection_from_inventory_only_yes: New products can be put into my shopfront (recommended)
           preferred_product_selection_from_inventory_only_no: New products must be added to my inventory before they can be put into my shopfront
         payment_methods:
+          legend: "Payment Methods"
           name: Name
           applies: Applies?
           manage: Manage Payment Methods
@@ -862,10 +912,11 @@ en_CA:
           create_button: Create New Payment Method
           create_one_button: Create One Now
         primary_details:
+          legend: "Primary Details"
           name: Name
           name_placeholder: eg. Professor Plum's Biodynamic Truffles
           groups: Groups
-          groups_tip: Select any markets or groups that you are a member of. This will help customers find your enterprise.
+          groups_tip: Select any markets, networks or groups that you are a member of. This will help customers find your enterprise.
           groups_placeholder: Start typing to search available markets or groups...
           primary_producer: Primary Producer?
           primary_producer_tip: Select 'Producer' if you are a primary producer, grower, maker or designer
@@ -880,6 +931,9 @@ en_CA:
           visible: Public
           not_visible: Hidden
           hidden: Hide all references
+        properties:
+          legend: "Properties"
+        permalink:
           permalink: Permalink (no spaces)
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front
@@ -887,6 +941,7 @@ en_CA:
           ofn_uid: OFN UID
           ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network
         shipping_methods:
+          legend: "Shipping/Pick Up Methods"
           name: "Name"
           applies: "Active?"
           manage: "Manage Shipping/Pick-Up Methods"
@@ -894,6 +949,7 @@ en_CA:
           create_one_button: "Create One Now"
           no_method_yet: "You don't have any shipping/pick-up methods yet."
         shop_preferences:
+          legend: "Shop Preferences"
           shopfront_requires_login: "Publicly visible shopfront?"
           shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
           shopfront_requires_login_false: "Public"
@@ -942,6 +998,7 @@ en_CA:
           enabled: "Enabled"
           disabled: "Disabled"
         social:
+          legend: "Social"
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. www.instagram.com/YourAccountHere"
           facebook_placeholder: "eg. www.facebook.com/PageNameHere"
@@ -959,6 +1016,7 @@ en_CA:
             i_agree: I Agree
             cancel: Cancel
         tag_rules:
+          legend: "Tag Rules"
           default_rules:
             by_default: By Default
             no_rules_yet: No default rules apply yet
@@ -969,6 +1027,7 @@ en_CA:
           add_new_rule: '+ Add A New Rule'
           add_new_tag: '+ Add A New Tag'
         users:
+          legend: "Users"
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
           owner: 'Owner'
@@ -1088,15 +1147,29 @@ en_CA:
         tags: "Tags"
         delivery_details: "Delivery Details"
         fees: "Fees"
+        next: "Next"
         previous: "Previous"
         save: "Save"
-        save_and_back_to_list: "Save and Back to List"
+        save_and_next: "Save and Next"
         cancel: "Cancel"
         back_to_list: "Back to List"
+      checkout_options:
+        back_end: "Back office only"
+        cancel: "Cancel"
+        checkout_options: "Checkout options"
+        distributor: "Distributor"
+        no_payment_methods: Each distributor on this order cycle requires at least one payment method.
+        no_shipping_methods: Each distributor on this order cycle requires at least one shipping method.
+        payment_methods: "Payment Methods"
+        save: "Save"
+        save_and_back_to_list: "Save and Back to List"
+        select_all: "Select all"
+        shipping_methods: "Shipping/Pick Up Methods"
       wizard_progress:
         edit: "1. General Settings"
         incoming: "2. Incoming Products"
         outgoing: "3. Outgoing Products"
+        checkout_options: "4. Checkout Options"
       exchange_form:
         pickup_time_tip: 'This phrase will help buyers select their shop from multiple shops. It will be preceded by the phrase "Orders for". So enter a pick-up date,  or buyer group... '
         pickup_instructions_placeholder: "Pick-up instructions"
@@ -1159,6 +1232,7 @@ en_CA:
         customer_instructions_placeholder: 'Notes:'
         products: Products
         fees: Fees
+        tags: Tags
       destroy_errors:
         orders_present: That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead.
         schedule_present: That order cycle is linked to a schedule and cannot be deleted. Please unlink or delete the schedule first.
@@ -1168,6 +1242,11 @@ en_CA:
         msg: This order cycle is linked to %{n} open subscription orders. Changing this date now will not affect any orders which have already been placed, but should be avoided if possible. Are you sure you want to proceed?
         cancel: Cancel
         proceed: Proceed
+      status:
+        undated: undated
+        upcoming: upcoming
+        open: open
+        closed: closed
     producer_properties:
       index:
         title: Producer Properties
@@ -1183,6 +1262,31 @@ en_CA:
         has_no_payment_methods: "%{enterprise} has no payment methods"
         has_no_shipping_methods: "%{enterprise} has no shipping methods"
         has_no_enterprise_fees: "%{enterprise} has no enterprise fees"
+      side_menu:
+        enterprise:
+          primary_details: "Primary Details"
+          address: "Address"
+          contact: "Contact"
+          social: "Social"
+          about: "About"
+          business_details: "Business Details"
+          images: "Images"
+          properties: "Properties"
+          shipping_methods: "Shipping/Pick Up Methods"
+          payment_methods: "Payment Methods"
+          enterprise_fees: "Enterprise Fees"
+          enterprise_permissions: "Enterprise Permissions"
+          inventory_settings: "Inventory Settings"
+          tag_rules: "Tag Rules"
+          shop_preferences: "Shop Preferences"
+          users: "Users"
+        enterprise_group:
+          primary_details: "Primary Details"
+          users: "Users"
+          about: "About"
+          images: "Images"
+          contact: "Contact"
+          web: "Web Resources"
     enterprise_issues:
       create_new: Create New
       resend_email: Resend Email
@@ -1213,6 +1317,9 @@ en_CA:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      revenues_by_hub:
+        name: Revenues by Hub
+        description: Revenues by Hub
       orders_and_distributors:
         name: Orders And Distributors
         description: Orders with distributor details
@@ -1273,6 +1380,15 @@ en_CA:
         formatted_data: Formatted Data
       packing:
         name: "Packing Reports"
+    oidc_settings:
+      index:
+        title: "OIDC Settings"
+        connect: "Connect Your Account"
+        already_connected: "Your account is already linked to this DFC authorization account:"
+        les_communs_link: "Les Communs Open ID server"
+        link_your_account: "First you need to link your account with the authorization provider used by DFC (Les Communs Open ID Connect)."
+        link_account_button: "Link your Les Communs OIDC Account"
+        view_account: "To view your account, see:"
     subscriptions:
       index:
         title: "Subscriptions"
@@ -1375,6 +1491,9 @@ en_CA:
         stripe_connect_fail: Sorry, the connection of your Stripe account failed
       stripe_connect_settings:
         resource: Stripe Connect configuration
+    resend_confirmation_emails_feedback:
+      one: "Confirmation email sent for 1 order."
+      other: "Confirmation emails sent for %{count} orders."
   api:
     unknown_error: "Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
@@ -1497,7 +1616,7 @@ en_CA:
   menu_2_url: "/map"
   menu_3_title: "Producers"
   menu_3_url: "/producers"
-  menu_4_title: "Markets"
+  menu_4_title: "Networks"
   menu_4_url: "/groups"
   menu_5_title: "About"
   menu_5_url: "https://about.openfoodnetwork.ca"
@@ -1559,7 +1678,7 @@ en_CA:
   label_map: "Map"
   label_producer: "Producer"
   label_producers: "Producers"
-  label_groups: "Markets"
+  label_groups: "Networks"
   label_about: "About"
   label_blog: "Blog"
   label_support: "Support"
@@ -1694,37 +1813,29 @@ en_CA:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     step1:
-      your_details:
-        title: Your details
-        first_name:
-          label: First Name
-          placeholder: e.g. Jane
-        last_name:
-          label: Last Name
-          placeholder: e.g. Doe
+      contact_information:
+        title: Contact information
         email:
           label: Email
-          placeholder: e.g. Janedoe@email.com
         phone:
           label: Phone number
-          placeholder: e.g. 07987654321
       billing_address:
         title: Billing address
+        first_name:
+          label: First Name
+        last_name:
+          label: Last Name
       address:
         address1:
           label: Address (Street + House Number)
-          placeholder: e.g. Flat 1 Elm Apartments
         address2:
           label: Additional address info (optional)
-          placeholder: e.g. Cavalier avenue
         city:
           label: City
-          placeholder: e.g. London
         state_id:
           label: Province
         zipcode:
           label: Postal Code
-          placeholder: e.g. N0B 2L0
         country_id:
           label: Country
       shipping_info:
@@ -1753,20 +1864,18 @@ en_CA:
       submit: Next - Order Summary
       cancel: Back to your details
     step3:
-      your_details:
-        title: Your details
-        edit: Edit your details
-      billing_address:
-        title: Billing address
-      shipping_address:
-        title: Shipping address
-      delivery_info:
-        title: Delivery info
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+        instructions: Instructions
       payment_method:
         title: Payment Method
-        edit: Edit payment method
+        edit: Edit
+        instructions: Instructions
       order:
-        title: Order total
+        title: Order details
+        edit: Edit
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
@@ -1775,17 +1884,17 @@ en_CA:
       all_terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}"
         terms_and_conditions: "Terms and Conditions"
-      agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
     errors:
-      global: "Saving failed, please update the highlighted fields."
+      saving_failed: "Saving failed, please update the highlighted fields. %{messages}"
       terms_not_accepted: Please accept Terms and Conditions
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
       invalid_email: "Please enter a valid email address"
       select_a_shipping_method: Select a shipping method
       select_a_payment_method: Select a payment method
+      no_shipping_methods_available: Checkout is not possible because no shipping/pick-up options are available. Please contact the shop owner.
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
@@ -1804,6 +1913,7 @@ en_CA:
   order_hub_info: Hub Info
   order_back_to_store: Back To Store
   order_back_to_cart: Back To Cart
+  order_back_to_website: Back to Website
   bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
   unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
   unsaved_changes_error: "Fields with red borders contain errors."
@@ -1872,7 +1982,7 @@ en_CA:
   email_signup_welcome: "Welcome to %{sitename}!"
   email_signup_confirmed_email: "Thanks for confirming your email."
   email_signup_shop_html: "You can now log in at %{link}."
-  email_signup_text: "Thanks for joining the network. If you are a customer, we look forward to introducing you to many fantastic growers, artisans and makers,  and wonderful  hubs and marketplaces. If you are a grower, artisan or maker we are excited to have you as a part of the network."
+  email_signup_text: "Thanks for joining the network. If you are a customer, we look forward to introducing you to many fantastic growers, artisans and makers, and wonderful hubs and marketplaces. If you are a grower, artisan or maker please be sure to follow this link (https://openfoodnetwork.ca/register) to set up your online store - we are excited to have you as a part of the network!"
   email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at %{email}"
   invite_email:
     greeting: "Hello!"
@@ -1896,7 +2006,7 @@ en_CA:
   shopping_tabs_about: "About"
   shopping_tabs_producers: "Producers"
   shopping_tabs_contact: "Contact"
-  shopping_tabs_groups: "Markets"
+  shopping_tabs_groups: "Networks"
   shopping_contact_address: "Address"
   shopping_contact_web: "Contact"
   shopping_contact_social: "Follow"
@@ -1961,14 +2071,14 @@ en_CA:
   components_profiles_show: "Show profiles"
   components_filters_nofilters: "No filters"
   components_filters_clearfilters: "Clear all filters"
-  groups_title: Markets
-  groups_headline: 'Markets / Regions '
-  groups_text: "Markets are collectives of producers, hubs and distributors who share something in common like location, farmers market or philosophy. This makes your shopping experience easier. So explore our groups and have the curating done for you."
+  groups_title: Networks
+  groups_headline: 'Networks / Regions '
+  groups_text: "Networks are collectives of producers, hubs and distributors who share something in common like location, farmers market or philosophy. This makes your shopping experience easier. So explore our networks and have the curating done for you."
   groups_search: "Search name or keyword"
   groups_no_groups: "No groups found"
   groups_about: "About Us"
-  groups_producers: "Our vendors"
-  groups_hubs: "Go Shopping!"
+  groups_producers: "Members"
+  groups_hubs: "Go Shopping"
   groups_contact_web: Contact
   groups_contact_social: Follow
   groups_contact_address: Address
@@ -2058,7 +2168,6 @@ en_CA:
   orders_form_empty_cart: "Empty cart"
   orders_form_update_cart: "Update"
   orders_form_subtotal: "Subtotal"
-  orders_form_admin: "Admin & Handling"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Orders have closed for this order cycle"
   orders_oc_expired_text: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders."
@@ -2199,7 +2308,10 @@ en_CA:
         contact_field_placeholder: "Contact Name"
         contact_field_required: "You need to enter a primary contact."
         phone_field: "Phone number"
+        whatsapp_phone_field: "WhatsApp phone number"
+        whatsapp_phone_tooltip: "This number will be displayed in your public profile to be opened as a WhatsApp link."
         phone_field_placeholder: "eg.(519) 885 8888"
+        whatsapp_phone_field_placeholder: "eg. +614 1234 5678"
       type:
         title: "Type"
         headline: "Last step to add %{enterprise}!"
@@ -2329,7 +2441,6 @@ en_CA:
   admin_enterprise_groups_data_powertip: "The primary user responsible for this group."
   admin_enterprise_groups_data_powertip_logo: "This is the logo for the group"
   admin_enterprise_groups_data_powertip_promo_image: "This image is displayed at the top of the Group profile"
-  admin_enterprise_groups_contact: "Contact"
   admin_enterprise_groups_contact_phone_placeholder: "eg. 519 885 5566"
   admin_enterprise_groups_contact_address1_placeholder: "eg. 123 High Street"
   admin_enterprise_groups_contact_city: "City/Town"
@@ -2338,7 +2449,6 @@ en_CA:
   admin_enterprise_groups_contact_zipcode_placeholder: "eg. 3070"
   admin_enterprise_groups_contact_state_id: "Province"
   admin_enterprise_groups_contact_country_id: "Country"
-  admin_enterprise_groups_web: "Web Resources"
   admin_enterprise_groups_web_twitter: "eg. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "eg. www.truffles.com"
   admin_order_cycles: "Admin Order Cycles"
@@ -2514,6 +2624,18 @@ en_CA:
   report_header_hub_address: Hub Address
   report_header_to_hub: To Hub
   report_header_hub_code: Customer Code
+  report_header_hub_id: Hub ID
+  report_header_hub_business_number: "Hub Business Number"
+  report_header_hub_legal_name: "Hub Legal Name"
+  report_header_hub_contact_name: "Hub Contact Name"
+  report_header_hub_email: "Hub Public Email"
+  report_header_hub_owner_email: Hub Owner Email
+  report_header_hub_phone: "Hub Phone Number"
+  report_header_hub_address_line1: "Hub Address Line 1"
+  report_header_hub_address_line2: "Hub Address Line 2"
+  report_header_hub_address_city: "Hub Region"
+  report_header_hub_address_zipcode: "Hub Postal Code"
+  report_header_hub_address_state_name: "Hub Province"
   report_header_code: Code
   report_header_paid: Paid?
   report_header_delivery: Delivery?
@@ -2546,11 +2668,15 @@ en_CA:
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
+  report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
+  report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
+  report_header_total_orders: "Total Number of Orders"
   report_header_enterprise: Enterprise
   report_header_customer: Customer
   report_header_customer_code: Customer Code
   report_header_product: Product
   report_header_product_properties: Product Properties
+  report_header_product_tax_category: Product Tax Category
   report_header_quantity: Quantity
   report_header_max_quantity: Max Quantity
   report_header_variant: Variant
@@ -2563,6 +2689,7 @@ en_CA:
   report_header_supplier: Supplier
   report_header_producer: Producer
   report_header_producer_suburb: Producer City/Town
+  report_header_producer_charges_sales_tax?: Tax registered
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity
   report_header_cost: Cost
@@ -2582,6 +2709,10 @@ en_CA:
   report_header_delivery_postcode: Delivery Postal Code
   report_header_bulk_unit_size: Bulk Unit Size
   report_header_weight: Weight
+  report_header_final_weight_volume: Final (Weight/Volume)
+  report_header_height: Height
+  report_header_width: Width
+  report_header_depth: Depth
   report_header_sum_total: Sum Total
   report_header_date_of_order: Date of Order
   report_header_amount_owing: Amount Owing
@@ -2658,11 +2789,8 @@ en_CA:
   images: "Images"
   web: "Web"
   primary_details: "Primary Details"
-  adrdress: "Address"
   contact: "Contact"
   social: "Social"
-  business_details: "Business Details"
-  properties: "Properties"
   shipping: "Shipping"
   shipping_methods: "Shipping Methods"
   payment_methods: "Payment Methods"
@@ -2672,11 +2800,9 @@ en_CA:
   payment_updated: "Payment Updated"
   cannot_perform_operation: "Could not update the payment"
   action_required: "Action required"
-  inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"
-  shop_preferences: "Shop Preferences"
   enterprise_fee_whole_order: Whole order
-  enterprise_fee_by: "%{type} fee by %{role} %{enterprise_name}"
+  enterprise_fee_by_name: "%{name} fee by %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
@@ -2760,8 +2886,10 @@ en_CA:
       deleting_item_will_cancel_order: "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
       modals:
         got_it: "Got it"
+        confirm: "Confirm"
         close: "Close"
         continue: "Continue"
+        cancel: "Cancel"
         invite: "Invite"
         invite_title: "Invite an unregistered user"
         tag_rule_help:
@@ -2925,7 +3053,6 @@ en_CA:
           pending: "pending"
           resumed: "resumed"
           returned: "returned"
-          skrill: "skrill"
         shipment_states:
           backorder: "backorder"
           partial: "partial"
@@ -3282,6 +3409,8 @@ en_CA:
     server_error: "Server error"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Pick-up at the farm"
+      delivery: "Signed, sealed, delivered"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     taxonomy_edit: "Taxonomy edit"
@@ -3369,7 +3498,7 @@ en_CA:
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
     mail_method_settings: "Mail Method Settings"
-    mail_settings_notice_html: "Some of the following settings can't be edited and are listed here just for debugging purposes. Changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details."
+    mail_settings_notice_html: "<b>Changes made here will be temporary</b> for debugging only, and may get reverted in the future. <br>Permanent changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details. "
     general: "General"
     enable_mail_delivery: "Enable Mail Delivery"
     send_mails_as: "Send Mails As"
@@ -3450,6 +3579,7 @@ en_CA:
     email: Email
     account_updated: "Account updated!"
     email_updated: "The account will be updated once the new email is confirmed."
+    show_api_key_view_toggled: "Show API key view has been changed!"
     my_account: "My account"
     date: "Date"
     time: "Time"
@@ -3491,6 +3621,7 @@ en_CA:
       messages:
         included_price_validation: "cannot be selected unless you have set a Default Tax Zone"
         blank: "can't be blank"
+        invalid_instagram_url: "Must be user name only eg. the_prof"
     layouts:
       admin:
         login_nav:
@@ -3595,6 +3726,13 @@ en_CA:
           results_found: " %{number}  Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
+          cancel_orders: "Cancel Orders"
+          resend_confirmation: "Resend Confirmation"
+          resend_confirmation_confirm_html: "This will resend the confirmation email to the customer. <br />Are you sure you want to proceed?"
+          selected:
+            zero: "No order selected"
+            one: "1 order selected"
+            other: "%{count} orders selected"
         sortable_header:
           payment_state: "Payment State"
           shipment_state: "Shipment State"
@@ -3609,6 +3747,9 @@ en_CA:
           from: "From"
           to: "Bill to"
           shipping: "Delivery/Pick-up"
+        note:
+          note_label: "Note:"
+          no_note_present: "No note provided"
         form:
           distribution_fields:
             title: "Distribution"
@@ -3731,11 +3872,12 @@ en_CA:
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the backoffice.
       products:
-        image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
+        image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
         new:
           title: "New Product"
           new_product: "New Product"
           supplier: "Supplier"
+          supplier_select_placeholder: "Select a supplier"
           product_name: "Product Name"
           units: "Unit Size"
           value: "Value"
@@ -3781,6 +3923,9 @@ en_CA:
           select_and_search: "Select filters and click on %{option} to access your data."
         customer_names_message:
           customer_names_tip: "If customer names are hidden for the items you have supplied, you can contact the seller  and ask if they can update their preferences and allow you to view customer names."
+        products_and_inventory:
+          all_products:
+            message: "Note that stock levels reported are from supplier product lists only. If you are using Inventory to manage your stock quantities, these values will be ignored in this report. "
       users:
         index:
           listing_users: "Listing Users"
@@ -3794,6 +3939,7 @@ en_CA:
           back_to_users_list: "Back To Users List"
           general_settings: "General Settings"
         form:
+          disabled: "Disabled?"
           email: "Email"
           roles: "Roles"
           enterprise_limit: "Enterprise Limit"
@@ -3943,11 +4089,13 @@ en_CA:
       shipped_email:
         dear_customer: "Dear Customer, "
         instructions: "Your order from %{distributor} has been shipped."
-        shipment_summary: "Shipment/Pick Up Summary"
+        shipment_summary: "Order Summary"
         subject: "Shipment/Pick Up Notification"
         thanks: "Thank you for your business."
         track_information: "Tracking Information: %{tracking}"
         track_link: "Tracking Link: %{url}"
+        picked_up_instructions: "Your order from %{distributor} has been picked-up"
+        picked_up_subject: "Pick up Notification"
     test_mailer:
       test_email:
         greeting: "Congratulations!"
@@ -3968,7 +4116,6 @@ en_CA:
       pending: pending
       resumed: resumed
       returned: returned
-      skrill: skrill
     subscription_state:
       active: active
       pending: pending
@@ -3994,10 +4141,16 @@ en_CA:
         connection_failed: "Could not connect to PayPal."
         generic_error: "PayPal failed. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "Regenerate Key"
+        title: API key
+      developer_settings:
+        title: Developer Settings
       form:
         account_settings: Account Settings
       show:
         tabs:
+          developer_settings: Developer Settings
           orders: Orders
           cards: Credit Cards
           transactions: Transactions
@@ -4027,7 +4180,9 @@ en_CA:
         items: Items
         total: Total
         paid?: Paid?
-        view: View
+        status: Status
+        completed: Completed
+        cancelled: Cancelled
       saved_cards:
         default?: Default?
         delete?: Delete?
@@ -4038,6 +4193,7 @@ en_CA:
       authorised_shops:
         shop_name: "Shop Name"
         allow_charges?: "Authorising"
+        no_default_saved_cards_tooltip: You need to mark one credit card as default to allow charges.
     localized_number:
       invalid_format: has an invalid format. Please enter a number.
     api:
@@ -4056,6 +4212,7 @@ en_CA:
       shipment:
         cannot_ready: "Cannot ready shipment."
       invalid_taxonomy_id: "Invalid taxonomy id."
+      toggle_api_key_view: "Show API key view for user"
     activerecord:
       models:
         spree/payment:
@@ -4102,3 +4259,24 @@ en_CA:
       x_years:
         one: "1 year"
         other: "%{count} years"
+  errors:
+    not_found:
+      title: "The page you were looking for doesn't exist (404)"
+      message_html: "<b>Please try again</b> <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/'>Home</a>and try again.</p> <b>Contact support <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p> <p>It really helps us if you can give as much detail as possible about what the missing page is about.</p>"
+    internal_server_error:
+      title: "We're sorry, but something went wrong (500)"
+      message_html: "<b>Please try again</b> <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/''>Home</a>and try again.</p> <b>We're on it</b> <p>If you have seen this problem before, we probably already know about it and are working on a fix. We record all the errors that come up.</p> <b>Contact support</b> <p> If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>. </p> <p>It really helps us if you can give as much detail as possible about what you were doing when this error occurred.</p>"
+    unprocessable_entity:
+      title: "The change you wanted was rejected (422)"
+      message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to.<br><h3><a href='/' >Return home</a></h3></p>"
+  components:
+    multiple_checked_select:
+      filter_placeholder: "Filter options"
+    search_input:
+      placeholder: Search
+    selector_with_filter:
+      selected_items: "%{count} selected"
+      search_placeholder: Search
+    pagination:
+      next: Next
+      previous: Previous

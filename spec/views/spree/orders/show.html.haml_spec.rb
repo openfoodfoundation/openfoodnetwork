@@ -51,7 +51,7 @@ describe "spree/orders/show.html.haml" do
 
     render
 
-    expect(rendered).to have_no_css("img[src*='logo.png']")
+    expect(rendered).to have_css("img[src*='logo.png']")
     expect(rendered).to have_content("R123456789")
   end
 end

@@ -1,9 +1,9 @@
 .row
   .three.columns.alpha
-    = f.label :name, t('admin.enterprises.form.primary_details.name')
+    = f.label :name, t('primary_details.name', scope: scope)
     %span.required *
   .nine.columns.omega
-    = f.text_field :name, { placeholder: t('admin.enterprises.form.primary_details.name_placeholder'), class: "fullwidth" }
+    = f.text_field :name, { placeholder: t('primary_details.name_placeholder', scope: scope), class: "fullwidth" }
 
 - if spree_current_user.admin?
   .row
@@ -17,8 +17,8 @@
       = f.hidden_field :owner_id, class: "select2 fullwidth", 'user-select' => 'Enterprise.owner'
 .row
   .three.columns.alpha
-    %label= t('admin.enterprises.form.primary_details.primary_producer')
-    %div{'ofn-with-tip' => t('admin.enterprises.form.primary_details.primary_producer_tip')}
+    %label= t('primary_details.primary_producer', scope: scope)
+    %div{'ofn-with-tip' => t('primary_details.primary_producer_tip', scope: scope)}
       %a= t('admin.whats_this')
   .five.columns.omega
     = f.check_box :is_primary_producer, 'ng-model' => 'Enterprise.is_primary_producer'
@@ -28,42 +28,42 @@
   .row
     .alpha.eleven.columns
       .three.columns.alpha
-        = f.label :sells, t('admin.enterprises.form.primary_details.sells')
-        %div{'ofn-with-tip' => t('admin.enterprises.form.primary_details.sells_tip')}
+        = f.label :sells, t('primary_details.sells', scope: scope)
+        %div{'ofn-with-tip' => t('primary_details.sells_tip', scope: scope)}
           %a What's this?
       .two.columns
         = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'
         &nbsp;
-        = f.label :sells, t('admin.enterprises.form.primary_details.none'), value: "none"
+        = f.label :sells, t('primary_details.none', scope: scope), value: "none"
       .two.columns
         = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells'
         &nbsp;
-        = f.label :sells, t('admin.enterprises.form.primary_details.own'), value: "own"
+        = f.label :sells, t('primary_details.own', scope: scope), value: "own"
       .four.columns.omega
         = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells'
         &nbsp;
-        = f.label :sells, t('admin.enterprises.form.primary_details.any'), value: "any"
+        = f.label :sells, t('primary_details.any', scope: scope), value: "any"
 
 .row
   .alpha.three.columns
     = f.label :contact_name, t('.contact_name')
   .omega.nine.columns
-    = f.text_field :contact_name, { placeholder: t('admin.enterprises.form.contact.name_placeholder')}
+    = f.text_field :contact_name, { placeholder: t('contact.name_placeholder', scope: scope)}
 .row
   .alpha.three.columns
-    = f.label :email_address, t('admin.enterprises.form.contact.email_address')
+    = f.label :email_address, t('contact.email_address', scope: scope)
   .omega.nine.columns
-    = f.text_field :email_address, { placeholder: t('admin.enterprises.form.contact.email_address_placeholder'), "ng-model" => "Enterprise.email_address" }
+    = f.text_field :email_address, { placeholder: t('contact.email_address_placeholder', scope: scope), "ng-model" => "Enterprise.email_address" }
 .row
   .alpha.three.columns
-    = f.label :phone, t('admin.enterprises.form.contact.phone')
+    = f.label :phone, t('contact.phone', scope: scope)
   .omega.nine.columns
-    = f.text_field :phone, { placeholder: t('admin.enterprises.form.contact.phone_placeholder')}
+    = f.text_field :phone, { placeholder: t('contact.phone_placeholder', scope: scope)}
 .row
   .alpha.three.columns
-    = f.label :website, t('admin.enterprises.form.contact.website')
+    = f.label :website, t('contact.website', scope: scope)
   .omega.nine.columns
-    = f.text_field :website, { placeholder: t('admin.enterprises.form.contact.website_placeholder')}
+    = f.text_field :website, { placeholder: t('contact.website_placeholder', scope: scope)}
 
 = f.fields_for :address do |af|
   .row
@@ -87,22 +87,21 @@
       = af.text_field :city, { placeholder: t(:city_placeholder)}
     .five.columns.omega
       = af.text_field :zipcode, { placeholder: t(:postcode_placeholder)}
-  %div{ "ng-controller" => "countryCtrl" }
+  %div{"data-controller": "dependent-select", "data-dependent-select-options-value": countries_with_states }
     .row
       .three.columns.alpha
         = af.label :state_id, t(:state)
         \/
         = af.label :country_id, t(:country)
       .four.columns
-        %input.ofn-select2.fullwidth#enterprise_address_attributes_state_id{ name: 'enterprise[address_attributes][state_id]', type: 'number', data: 'countriesById[Enterprise.address.country_id].states', placeholder: t('admin.choose'), ng: { model: 'Enterprise.address.state_id' } }
+        = af.select :country_id, available_countries.map { |c| [c.name, c.id] }, {}, { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
       .five.columns.omega
-        %input.ofn-select2.fullwidth#enterprise_address_attributes_country_id{ name: 'enterprise[address_attributes][country_id]', type: 'number', data: 'countries', placeholder: t('admin.choose'), ng: { model: 'Enterprise.address.country_id' } }
+        = af.select :state_id, @enterprise.address.country.states.map { |s| [s.name, s.id] }, {}, { "data-controller": "tom-select", "data-dependent-select-target": "select", class: "primary" }
   .row
     .three.columns.alpha
       = af.label :latitude, t(:latitude)
       \/
       = af.label :longitude, t(:longitude)
-      %span.required *
       %div{'ofn-with-tip' => t('latitude_longitude_tip')}
         %a= t('admin.whats_this')
     .four.columns

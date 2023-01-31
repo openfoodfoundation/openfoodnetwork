@@ -256,12 +256,13 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
 
   $scope.packVariant = (product, variant) ->
     if variant.hasOwnProperty("unit_value_with_description")
-      match = variant.unit_value_with_description.match(/^([\d\.]+(?= |$)|)( |)(.*)$/)
+      match = variant.unit_value_with_description.match(/^([\d\.\,]+(?= |$)|)( |)(.*)$/)
       if match
         product = BulkProducts.find product.id
-        variant.unit_value  = parseFloat(match[1])
+        variant.unit_value  = parseFloat(match[1].replace(",", "."))
         variant.unit_value  = null if isNaN(variant.unit_value)
-        variant.unit_value *= product.variant_unit_scale if variant.unit_value && product.variant_unit_scale
+        if variant.unit_value && product.variant_unit_scale
+          variant.unit_value = parseFloat(window.bigDecimal.multiply(variant.unit_value, product.variant_unit_scale, 2))
         variant.unit_description = match[3]
 
   $scope.incrementLimit = ->

@@ -57,7 +57,8 @@ describe 'api/v0/orders', swagger_doc: 'v0/swagger.yaml', type: :request do
 
           let(:user) { order_dist_1.distributor.owner }
           let(:'X-Spree-Token') do
-            user.generate_spree_api_key!
+            user.generate_api_key
+            user.save
             user.spree_api_key
           end
 

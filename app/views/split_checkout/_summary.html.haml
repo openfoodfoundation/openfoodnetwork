@@ -1,81 +1,95 @@
-.medium-10
-  %div.checkout-substep
-    %div.checkout-title
-      = t("split_checkout.step3.your_details.title")
-
-    %div.summary
-      %span.summary-label
-        = t("split_checkout.step1.your_details.first_name.label")
-      %span.summary-value
-        = @order.bill_address.firstname
-
-    %div.summary
-      %span.summary-label
-        = t("split_checkout.step1.your_details.last_name.label")
-      %span.summary-value
-        = @order.bill_address.lastname
-
-    %div.summary
-      %span.summary-label
-        = t("split_checkout.step1.your_details.email.label")
-      %span.summary-value
-        = @order.user ? @order.user.email : "Change me"
-    
-    %div.summary
-      %span.summary-label
-        = t("split_checkout.step1.your_details.phone.label")
-      %span.summary-value
-        = @order.bill_address.phone
-
-  %div.checkout-substep
-    %div.checkout-title
-      = t("split_checkout.step3.billing_address.title")
-    = render "summary_address", address: @order.bill_address
-
-  %div.checkout-substep
-    %div.checkout-title
-      = t("split_checkout.step3.shipping_address.title")
-    = render "summary_address", address: @order.shipping_address
-
-  %div.checkout-substep
-    %div.checkout-title
-      = t("split_checkout.step3.delivery_info.title")
-
-    %div.summary
-      %span.summary-label
-        = t("split_checkout.step1.shipping_info.title")
-      %span.summary-value
-        = @order.shipping_method.name
-      %div.summary-description
-        = @order.shipping_method.description
-    
+.summary-main
+  = render partial: "split_checkout/already_ordered" if show_bought_items? && checkout_step?(:summary)
+  .checkout-substep
+    .checkout-title
+      = t("split_checkout.step3.delivery_details.title")
       %a.summary-edit{href: main_app.checkout_step_path(:details)}
-        = t("split_checkout.step3.your_details.edit")
+        = t("split_checkout.step3.delivery_details.edit")
 
-  %div.checkout-substep
-    %div.checkout-title
+    .summary-subtitle
+      = @order.shipping_method.name
+      %em.fees= payment_or_shipping_price(@order.shipping_method, @order)
+    .two-columns
+      %div
+        .summary-subtitle
+          = t("split_checkout.step3.delivery_details.address")
+        %span
+          = @order.bill_address.firstname
+          = @order.bill_address.lastname
+        %div 
+          = @order.bill_address.phone
+        %div
+          = @order.user.email if @order.user
+        %br
+        %div
+          = @order.bill_address.address1
+        - unless @order.bill_address.address2.blank?
+          %div
+            = @order.bill_address.address2
+        %div
+          = @order.bill_address.city
+        %div
+          = @order.bill_address.state
+        %div
+          = @order.bill_address.zipcode
+        %div
+          = @order.bill_address.country
+      - if @order.shipping_method.description.present?
+        %div
+          .summary-subtitle
+            = t("split_checkout.step3.delivery_details.instructions")
+          %div
+            = @order.shipping_method.description
+    
+  %hr
+
+  .checkout-substep
+    .checkout-title
       = t("split_checkout.step3.payment_method.title")
-
-    %div.summary
-      %span.summary-value
-        = last_payment_method(@order)&.name
-      %div.summary-description
-        = last_payment_method(@order)&.description
       %a.summary-edit{href: main_app.checkout_step_path(:payment)}
         = t("split_checkout.step3.payment_method.edit")
+    .two-columns
+      %div
+        - payment_method = last_payment_method(@order)
+        = payment_method&.name
+        %em.fees=payment_or_shipping_price(payment_method, @order)
+      - if payment_method&.description.present? 
+        %div
+          .summary-subtitle
+            = t("split_checkout.step3.payment_method.instructions")
+          %div
+            = last_payment_method(@order)&.description
 
 
   %div.checkout-substep
     %div.checkout-title
       = t("split_checkout.step3.order.title")
+      %a.summary-edit{href: main_app.cart_path}
+        = t("split_checkout.step3.order.edit")
     
-    = render 'spree/orders/summary', order: @order
+    = render 'spree/orders/summary', order: @order, display_footer: false
 
-.checkout-step3{"data-controller": "sticky", "data-sticky-target": "container"}
-  - if any_terms_required?(@order.distributor)
-    = render partial: "terms_and_conditions", locals: { f: f }
-  .medium-6
-    .checkout-submit
-      = f.submit t("split_checkout.step3.submit"), name: "confirm_order", class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
-      %a.button.cancel{href: main_app.checkout_step_path(:payment)}
-        = t("split_checkout.step3.cancel")
+
+.summary-right{ "data-controller": "sticky", "data-sticky-target": "container" }
+  .summary-right-line.total
+    .summary-right-line-label= t :order_total_price
+    .summary-right-line-value#order_total= @order.display_total.to_html
+  
+  .summary-right-line
+    .summary-right-line-label= t :order_produce
+    .summary-right-line-value= display_checkout_subtotal(@order)
+
+  - checkout_adjustments_for(@order, exclude: [:line_item]).reverse_each do |adjustment|
+    .summary-right-line
+      .summary-right-line-label= adjustment.label
+      .summary-right-line-value= adjustment.display_amount.to_html
+
+  - if @order.total_tax > 0
+    .summary-right-line
+      .summary-right-line-label= t :order_includes_tax
+      .summary-right-line-value#tax-row= display_checkout_tax_total(@order)
+  
+  .checkout-submit
+    - if any_terms_required?(@order.distributor)
+      = render partial: "terms_and_conditions", locals: { f: f }
+    = f.submit t("split_checkout.step3.submit"), name: "confirm_order", class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false

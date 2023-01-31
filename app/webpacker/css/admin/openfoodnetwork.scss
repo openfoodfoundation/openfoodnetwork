@@ -96,6 +96,14 @@ form.order_cycle {
   .icon-question-sign {
     font-size: 18px;
   }
+  table.checkout-options {
+    ul {
+      margin-left: 1em;
+    }
+    p, li {
+      margin: 0.5em 0;
+    }
+  }
   table.exchanges {
     tr td.active {
       width: 20px;
@@ -187,7 +195,7 @@ table#listing_enterprise_groups {
 }
 
 .fullwidth_inputs {
-  input[type=text], select {
+  #{$text-inputs}, select {
     width: 100%;
   }
 }

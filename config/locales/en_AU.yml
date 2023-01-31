@@ -5,6 +5,10 @@ en_AU:
       spree/product: Product
       spree/shipping_method: Shipping Method
     attributes:
+      spree/order/ship_address:
+        phone: "Phone number"
+        firstname: "First name"
+        lastname: "Last name"
       spree/user:
         password: "Password"
         reset_password_token: Reset password token
@@ -22,6 +26,8 @@ en_AU:
         state: State
         source: Source
       spree/product:
+        name: "Product Name"
+        price: "Price"
         primary_taxon: "Product Category"
         supplier: "Supplier"
         shipping_category_id: "Shipping Category"
@@ -192,7 +198,6 @@ en_AU:
   search_by_name: Search by name or suburb...
   producers_join: Australian producers are now welcome to join the Open Food Network.
   charges_sales_tax: Charges GST?
-  enterprise_permissions: "Enterprise Permissions"
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -294,6 +299,25 @@ en_AU:
     destroy: "Destroy"
     rename: "Rename"
   admin:
+    products_page:
+      title: Products
+      filters:
+        categories:
+          title: Categories
+        producers:
+          title: Producers
+        colums: Columns
+      columns:
+        name: Name
+        unit: Unit
+        price: Price
+        producer: Producer
+        category: Category
+      columns_selector:
+        unit: Unit
+        price: Price
+        producer: Producer
+        category: Category
     begins_at: Begins At
     begins_on: Begins On
     customer: Customer
@@ -414,8 +438,6 @@ en_AU:
         guest_label: "Guest checkout"
         credit_owed: "Credit Owed"
         balance_due: "Balance Due"
-      destroy:
-        has_associated_orders: "Delete failed: customer has associated orders with his shop"
     contents:
       edit:
         title: Content
@@ -443,6 +465,18 @@ en_AU:
     enterprise_groups:
       index:
         new_button: New Enterprise Group
+      form_primary_details:
+        primary_details: "Primary Details"
+      form_users:
+        users: "Users"
+      form_about:
+        about: "About"
+      form_images:
+        images: "Logo"
+      form_address:
+        contact: "Contact"
+      form_web:
+        web: "Web Resources"
     enterprise_roles:
       form:
         manages: manages
@@ -653,11 +687,15 @@ en_AU:
         manage: Manage
       form:
         about_us:
+          legend: "About"
           desc_short: Short Description
           desc_short_placeholder: Tell us about your enterprise in one or two sentences
           desc_long: About Us
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
+        address:
+          legend: "Address"
         business_details:
+          legend: "Business Details"
           abn: ABN
           abn_placeholder: eg. 99 123 456 789
           acn: ACN
@@ -670,6 +708,7 @@ en_AU:
         business_address:
           address2: Address (contd.)
         contact:
+          legend: "Contact"
           name: Name
           name_placeholder: eg. Gustav Plum
           email_address: Public Email Address
@@ -680,12 +719,16 @@ en_AU:
           website: Website
           website_placeholder: eg. www.truffles.com
         enterprise_fees:
+          legend: "Enterprise Fees"
           name: Name
           fee_type: Fee Type
           manage_fees: Manage Enterprise Fees
           no_fees_yet: You don't have any enterprise fees yet.
           create_button: Create One Now
+        enterprise_permissions:
+          legend: "Enterprise Permissions"
         images:
+          legend: "Logo"
           logo: Logo
           promo_image_placeholder: 'This image is displayed in "About Us"'
           promo_image_note1: 'PLEASE NOTE:'
@@ -694,6 +737,7 @@ en_AU:
           remove_logo: "Remove Image"
           remove_promo_image: "Remove Image"
         inventory_settings:
+          legend: "Inventory Settings"
           text1: You may opt to manage stock levels and prices in via your
           inventory: inventory
           text2: >
@@ -704,6 +748,7 @@ en_AU:
           preferred_product_selection_from_inventory_only_yes: New products can be put into my shopfront (recommended)
           preferred_product_selection_from_inventory_only_no: New products must be added to my inventory before they can be put into my shopfront
         payment_methods:
+          legend: "Payment Methods"
           name: Name
           applies: Applies?
           manage: Manage Payment Methods
@@ -711,6 +756,7 @@ en_AU:
           create_button: Create New Payment Method
           create_one_button: Create One Now
         primary_details:
+          legend: "Primary Details"
           name: Name
           name_placeholder: eg. Professor Plum's Biodynamic Truffles
           groups: Groups
@@ -726,6 +772,9 @@ en_AU:
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
           visible_in_search: Visible in search?
           visible: Public
+        properties:
+          legend: "Properties"
+        permalink:
           permalink: Permalink (no spaces)
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front
@@ -733,6 +782,7 @@ en_AU:
           ofn_uid: OFN UID
           ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
         shipping_methods:
+          legend: "Shipping Methods"
           name: "Name"
           applies: "Active?"
           manage: "Manage Shipping Methods"
@@ -740,6 +790,7 @@ en_AU:
           create_one_button: "Create One Now"
           no_method_yet: "You don't have any shipping methods yet."
         shop_preferences:
+          legend: "Shop Preferences"
           shopfront_requires_login: "Publicly visible shopfront?"
           shopfront_requires_login_tip: "Choose whether customers must login to view the shopfront or if it's visible to everybody."
           shopfront_requires_login_false: "Public"
@@ -786,6 +837,7 @@ en_AU:
           enabled: "Enabled"
           disabled: "Disabled"
         social:
+          legend: "Social"
           twitter_placeholder: "eg. @the_prof"
           instagram_placeholder: "eg. the_prof"
           facebook_placeholder: "eg. www.facebook.com/PageNameHere"
@@ -803,6 +855,7 @@ en_AU:
             i_agree: I Agree
             cancel: Cancel
         tag_rules:
+          legend: "Tag Rules"
           default_rules:
             by_default: By Default
             no_rules_yet: No default rules apply yet
@@ -813,6 +866,7 @@ en_AU:
           add_new_rule: '+ Add A New Rule'
           add_new_tag: '+ Add A New Tag'
         users:
+          legend: "Users"
           email_confirmation_notice_html: "Email confirmation is pending. We've sent a confirmation email to %{email}."
           resend: Resend
           owner: 'Owner'
@@ -937,11 +991,21 @@ en_AU:
         tags: "Tags"
         delivery_details: "Delivery Details"
         fees: "Fees"
+        next: "Next"
         previous: "Previous"
         save: "Save"
-        save_and_back_to_list: "Save and Back to List"
+        save_and_next: "Save and Next"
         cancel: "Cancel"
         back_to_list: "Back To List"
+      checkout_options:
+        back_end: "Back office only"
+        cancel: "Cancel"
+        distributor: "Distributor"
+        payment_methods: "Payment Methods"
+        save: "Save"
+        save_and_back_to_list: "Save and Back to List"
+        select_all: "Select all"
+        shipping_methods: "Shipping Methods"
       wizard_progress:
         edit: "1. General Settings"
         incoming: "2. Incoming Products"
@@ -1005,6 +1069,7 @@ en_AU:
         customer_instructions_placeholder: Pick-up or delivery notes
         products: Products
         fees: Fees
+        tags: Tags
       destroy_errors:
         orders_present: That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead.
         schedule_present: That order cycle is linked to a schedule and cannot be deleted. Please unlink or delete the schedule first.
@@ -1014,6 +1079,8 @@ en_AU:
         msg: This order cycle is linked to %{n} open subscription orders. Changing this date now will not affect any orders which have already been placed, but should be avoided if possible. Are you sure you want to proceed?
         cancel: Cancel
         proceed: Proceed
+      status:
+        closed: closed
     producer_properties:
       index:
         title: Producer Properties
@@ -1029,6 +1096,31 @@ en_AU:
         has_no_payment_methods: "%{enterprise} has no payment methods"
         has_no_shipping_methods: "%{enterprise} has no shipping methods"
         has_no_enterprise_fees: "%{enterprise} has no enterprise fees"
+      side_menu:
+        enterprise:
+          primary_details: "Primary Details"
+          address: "Address"
+          contact: "Contact"
+          social: "Social"
+          about: "About"
+          business_details: "Business Details"
+          images: "Logo"
+          properties: "Properties"
+          shipping_methods: "Shipping Methods"
+          payment_methods: "Payment Methods"
+          enterprise_fees: "Enterprise Fees"
+          enterprise_permissions: "Enterprise Permissions"
+          inventory_settings: "Inventory Settings"
+          tag_rules: "Tag Rules"
+          shop_preferences: "Shop Preferences"
+          users: "Users"
+        enterprise_group:
+          primary_details: "Primary Details"
+          users: "Users"
+          about: "About"
+          images: "Logo"
+          contact: "Contact"
+          web: "Web Resources"
     enterprise_issues:
       create_new: Create New
       resend_email: Resend Email
@@ -1506,18 +1598,17 @@ en_AU:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     step1:
-      your_details:
-        title: Your details
-        first_name:
-          label: First Name
-        last_name:
-          label: Last Name
+      contact_information:
         email:
           label: Email
         phone:
           label: Phone number
       billing_address:
         title: Billing address
+        first_name:
+          label: First Name
+        last_name:
+          label: Last Name
       address:
         city:
           label: City
@@ -1536,10 +1627,14 @@ en_AU:
         card_year:
           label: Year
     step3:
-      your_details:
-        title: Your details
-      billing_address:
-        title: Billing address
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+      payment_method:
+        edit: Edit
+      order:
+        edit: Edit
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
@@ -1815,7 +1910,6 @@ en_AU:
   orders_form_empty_cart: "Empty cart"
   orders_form_update_cart: "Update"
   orders_form_subtotal: "Produce subtotal"
-  orders_form_admin: "Admin & Handling"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Orders have closed for this order cycle"
   orders_oc_expired_text: "Sorry, orders for this order cycle closed %{time} ago! Please contact your hub directly to see if they can accept late orders."
@@ -2078,7 +2172,6 @@ en_AU:
   admin_enterprise_groups_data_powertip: "The primary user responsible for this group."
   admin_enterprise_groups_data_powertip_logo: "This is the logo for the group"
   admin_enterprise_groups_data_powertip_promo_image: "This image is displayed at the top of the Group profile"
-  admin_enterprise_groups_contact: "Contact"
   admin_enterprise_groups_contact_phone_placeholder: "eg. 98 7654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "eg. 123 High Street"
   admin_enterprise_groups_contact_city: "Suburb"
@@ -2087,7 +2180,6 @@ en_AU:
   admin_enterprise_groups_contact_zipcode_placeholder: "eg. 3070"
   admin_enterprise_groups_contact_state_id: "State"
   admin_enterprise_groups_contact_country_id: "Country"
-  admin_enterprise_groups_web: "Web Resources"
   admin_enterprise_groups_web_twitter: "eg. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "eg. www.truffles.com"
   admin_order_cycles: "Admin Order Cycles"
@@ -2288,6 +2380,8 @@ en_AU:
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
+  report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
+  report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
   report_header_enterprise: Enterprise
   report_header_customer: Customer
   report_header_customer_code: Customer Code
@@ -2324,6 +2418,9 @@ en_AU:
   report_header_delivery_postcode: Delivery Postcode
   report_header_bulk_unit_size: Bulk Unit Size
   report_header_weight: Weight
+  report_header_height: Height
+  report_header_width: Width
+  report_header_depth: Depth
   report_header_sum_total: Sum Total
   report_header_date_of_order: Date of Order
   report_header_amount_owing: Amount Owing
@@ -2395,11 +2492,8 @@ en_AU:
   images: "Images"
   web: "Web"
   primary_details: "Primary Details"
-  adrdress: "Address"
   contact: "Contact"
   social: "Social"
-  business_details: "Business Details"
-  properties: "Properties"
   shipping: "Shipping"
   shipping_methods: "Shipping Methods"
   payment_methods: "Payment Methods"
@@ -2407,11 +2501,8 @@ en_AU:
   payment_processing_failed: "Payment could not be processed, please check the details you entered"
   payment_method_not_supported: "That payment method is unsupported. Please choose another one."
   payment_updated: "Payment Updated"
-  inventory_settings: "Inventory Settings"
   tag_rules: "Tag Rules"
-  shop_preferences: "Shop Preferences"
   enterprise_fee_whole_order: Whole order
-  enterprise_fee_by: "%{type} fee by %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
@@ -2493,6 +2584,7 @@ en_AU:
         got_it: "Got it"
         close: "Close"
         continue: "Continue"
+        cancel: "Cancel"
         invite: "Invite"
         invite_title: "Invite an unregistered user"
         tag_rule_help:
@@ -2655,7 +2747,6 @@ en_AU:
           pending: "pending"
           resumed: "resumed"
           returned: "returned"
-          skrill: "skrill"
         shipment_states:
           backorder: "backorder"
           partial: "partial"
@@ -3254,6 +3345,7 @@ en_AU:
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
+          resend_confirmation: "Resend Confirmation"
         sortable_header:
           payment_state: "Payment State"
           shipment_state: "Shipment State"
@@ -3379,7 +3471,6 @@ en_AU:
           paypal:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
-        image_upload_error: "The product image was not recognised. Please upload an image in PNG or JPG format."
         new:
           title: "New Product"
           new_product: "New Product"
@@ -3595,7 +3686,6 @@ en_AU:
       pending: pending
       resumed: resumed
       returned: returned
-      skrill: skrill
     subscription_state:
       active: active
       pending: pending
@@ -3605,6 +3695,8 @@ en_AU:
     paypal:
       refund_amount: "Amount"
     users:
+      api_keys:
+        regenerate_key: "Regenerate Key"
       form:
         account_settings: Account Settings
       show:
@@ -3636,7 +3728,8 @@ en_AU:
         items: Items
         total: Total
         paid?: Paid?
-        view: View
+        status: Status
+        cancelled: Cancelled
       saved_cards:
         default?: Default?
         delete?: Delete?
@@ -3668,3 +3761,11 @@ en_AU:
         spree/payment:
           one: Payment
           other: Payments
+  components:
+    search_input:
+      placeholder: Search
+    selector_with_filter:
+      search_placeholder: Search
+    pagination:
+      next: Next
+      previous: Previous

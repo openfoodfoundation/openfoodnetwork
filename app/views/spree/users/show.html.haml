@@ -20,17 +20,23 @@
     = render 'cards'
     = render 'transactions'
     = render 'settings'
+    = render 'developer_settings' if @user.show_api_key_view
 
   .row.tabset-ctrl#account-tabs{ style: 'margin-bottom: 100px', navigate: 'true', selected: 'orders', prefix: 'account' }
-    .small.12.medium-3.columns.tab{ name: "orders" }
+    .small.12.medium-2.columns.tab{ name: "orders" }
       %a=t('.tabs.orders')
     - if Spree::Config.stripe_connect_enabled && Stripe.publishable_key
-      .small.12.medium-3.columns.tab{ name: "cards" }
+      .small.12.medium-2.columns.tab{ name: "cards" }
         %a=t('.tabs.cards')
-    .small.12.medium-3.columns.tab{ name: "transactions" }
+    .small.12.medium-2.columns.tab{ name: "transactions" }
       %a=t('.tabs.transactions')
-    .small.12.medium-3.columns.tab{ name: "settings" }
+    .small.12.medium-2.columns.tab{ name: "settings" }
       %a=t('.tabs.settings')
+    // the api_keys partial is the only content for now, so we have to hide the whole tab for now
+    // if there is new content, we will need to handle this inside the developer_settings partial
+    - if @user.show_api_key_view
+      .small.12.medium-3.columns.tab{ name: "developer_settings" }
+        %a=t('.tabs.developer_settings')
     .small-12.columns.tab-view
 
   = render partial: "shared/footer"

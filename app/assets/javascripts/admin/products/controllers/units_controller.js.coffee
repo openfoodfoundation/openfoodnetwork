@@ -21,8 +21,14 @@ angular.module("admin.products")
         else
           $scope.product.variant_unit = $scope.product.variant_unit_with_scale
           $scope.product.variant_unit_scale = null
-      else if $scope.product.variant_unit && $scope.product.variant_unit_scale
-        $scope.product.variant_unit_with_scale = VariantUnitManager.getUnitWithScale($scope.product.variant_unit, parseFloat($scope.product.variant_unit_scale))
+      else if $scope.product.variant_unit
+        # Preserves variant_unit_with_scale when form validation fails and reload triggers
+        if $scope.product.variant_unit_scale
+          $scope.product.variant_unit_with_scale = VariantUnitManager.getUnitWithScale(
+            $scope.product.variant_unit, parseFloat($scope.product.variant_unit_scale)
+          )
+        else
+          $scope.product.variant_unit_with_scale = $scope.product.variant_unit
       else
         $scope.product.variant_unit = $scope.product.variant_unit_scale = null
 
@@ -32,11 +38,11 @@ angular.module("admin.products")
         if match
           $scope.product.master.unit_value  = PriceParser.parse(match[1])
           $scope.product.master.unit_value  = null if isNaN($scope.product.master.unit_value)
-          $scope.product.master.unit_value *= $scope.product.variant_unit_scale if $scope.product.master.unit_value && $scope.product.variant_unit_scale
+          $scope.product.master.unit_value = window.bigDecimal.multiply($scope.product.master.unit_value, $scope.product.variant_unit_scale, 2) if $scope.product.master.unit_value && $scope.product.variant_unit_scale
           $scope.product.master.unit_description = match[3]
       else
         value = $scope.product.master.unit_value
-        value /= $scope.product.variant_unit_scale if $scope.product.master.unit_value && $scope.product.variant_unit_scale
+        value = window.bigDecimal.divide(value, $scope.product.variant_unit_scale, 2) if $scope.product.master.unit_value && $scope.product.variant_unit_scale
         $scope.product.master.unit_value_with_description = value + " " + $scope.product.master.unit_description
 
     $scope.processUnitPrice = ->

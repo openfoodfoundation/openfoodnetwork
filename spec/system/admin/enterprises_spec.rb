@@ -56,7 +56,8 @@ describe '
     fill_in 'enterprise_address_attributes_latitude', with: '-37.4713077'
     fill_in 'enterprise_address_attributes_longitude', with: '144.7851531'
     # default country (Australia in this test) should be selected by default
-    select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
+    page.find("#enterprise_address_attributes_country_id-ts-control").click
+    page.find(".option", text: "Australia").click
 
     click_button 'Create'
     expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully created!')
@@ -108,7 +109,7 @@ describe '
     description_input = page.find("text-angular#enterprise_long_description div[id^='taTextElement']")
     description_input.native.send_keys('This is an interesting long description')
 
-    # Check Angularjs switching of sidebar elements
+    # Check StimulusJs switching of sidebar elements
     accept_alert do
       click_link "Primary Details"
     end
@@ -135,7 +136,15 @@ describe '
     expect(page).to have_selector "#payment_methods"
     expect(page).to have_selector "#shipping_methods"
 
-    select2_select eg1.name, from: 'enterprise_group_ids'
+    page.find("#enterprise_group_ids-ts-control").set(eg1.name)
+    page.find("#enterprise_group_ids-ts-dropdown .option.active").click
+
+    within(".permalink") do
+      link_path = "#{main_app.root_url}#{@enterprise.permalink}/shop"
+      link = find_link(link)
+      expect(link[:href]).to eq link_path
+      expect(link[:target]).to eq '_blank'
+    end
 
     accept_alert do
       click_link "Payment Methods"
@@ -178,7 +187,8 @@ describe '
     fill_in 'enterprise_address_attributes_latitude', with: '-37.4713077'
     fill_in 'enterprise_address_attributes_longitude', with: '144.7851531'
     # default country (Australia in this test) should be selected by default
-    select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
+    page.find("#enterprise_address_attributes_state_id-ts-control").click
+    page.find(".option", text: "Victoria").click
 
     accept_alert do
       click_link "Shop Preferences"
@@ -186,7 +196,7 @@ describe '
     shop_message_input = page.find("text-angular#enterprise_preferred_shopfront_message div[id^='taTextElement']")
     shop_message_input.native.send_keys('This is my shopfront message.')
     expect(page).to have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_close_at"
-    #using "find" as fields outside of the screen and are not visible  
+    #using "find" as fields outside of the screen and are not visible
     find(:xpath, '//*[@id="enterprise_preferred_shopfront_order_cycle_order_orders_open_at"]').trigger("click")
     find(:xpath, '//*[@id="enterprise_enable_subscriptions_true"]').trigger("click")
 
@@ -347,8 +357,12 @@ describe '
         fill_in 'enterprise_address_attributes_address1', with: 'z'
         fill_in 'enterprise_address_attributes_city', with: 'z'
         fill_in 'enterprise_address_attributes_zipcode', with: 'z'
-        select2_select 'Australia', from: 'enterprise_address_attributes_country_id'
-        select2_select 'Victoria', from: 'enterprise_address_attributes_state_id'
+
+        page.find("#enterprise_address_attributes_country_id-ts-control").click
+        page.find(".option", text: "Australia").click
+
+        page.find("#enterprise_address_attributes_state_id-ts-control").click
+        page.find(".option", text: "Victoria").click
       end
 
       it "without violating rules" do
@@ -483,9 +497,9 @@ describe '
           within(".side_menu") do
             click_link "Shop Preferences"
           end
-          
+
           choose "enterprise_preferred_shopfront_product_sorting_method_by_category"
-          find("#s2id_autogen8").click
+          find("#s2id_enterprise_preferred_shopfront_taxon_order").click
           find(".select2-result-label", text: "Tricky Taxon").click
           click_button 'Update'
           expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
@@ -504,9 +518,9 @@ describe '
           within(".side_menu") do
             click_link "Shop Preferences"
           end
-          
+
           choose "enterprise_preferred_shopfront_product_sorting_method_by_producer"
-          find("#s2id_autogen9").click
+          find("#s2id_enterprise_preferred_shopfront_producer_order").click
           find(".select2-result-label", text: "First Supplier").click
           click_button 'Update'
           expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')

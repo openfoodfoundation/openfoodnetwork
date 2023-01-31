@@ -26,6 +26,13 @@ module Api
         }
       end
 
+      def update
+        authorize! :admin, order
+
+        order.update!(order_params)
+        render json: order, serializer: Api::OrderDetailedSerializer, current_order: order
+      end
+
       def ship
         authorize! :admin, order
 
@@ -71,6 +78,10 @@ module Api
           where(number: params[:id]).
           includes(line_items: { variant: [:product, :stock_items, :default_price] }).
           first!
+      end
+
+      def order_params
+        params.permit(:note)
       end
     end
   end

@@ -3,6 +3,7 @@ angular.module("admin.utils").directive "tagsWithTranslation", ($timeout) ->
   templateUrl: "admin/tags_input.html"
   scope:
     object: "="
+    form: "="
     tagsAttr: "@?"
     tagListAttr: "@?"
     findTags: "&"
@@ -18,7 +19,15 @@ angular.module("admin.utils").directive "tagsWithTranslation", ($timeout) ->
       scope.limitReached = scope.object[scope.tagsAttr].length >= scope.max if scope.max != undefined
       scope.object[scope.tagListAttr] = (tag.text for tag in scope.object[scope.tagsAttr]).join(",")
 
+    scope.$watch "object", (newObject) -> 
+      scope.object = newObject
+      init()
+
     $timeout ->
+      init()
+    
+    init = ->
+      return unless scope.object
       # Initialize properties if necessary
       scope.tagsAttr ||= "tags"
       scope.tagListAttr ||= "tag_list"

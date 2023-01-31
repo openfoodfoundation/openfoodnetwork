@@ -1,11 +1,7 @@
-import { Controller } from "stimulus"
+import ModalLinkController from "./modal_link_controller";
 
-export default class extends Controller {
-  static values = { target: String }
-
-  open() {
-    let helpModal = document.getElementById(this.targetValue)
-    let helpModalController = this.application.getControllerForElementAndIdentifier(helpModal, "help-modal");
-    helpModalController.open();
+export default class extends ModalLinkController {
+  getIdentifier() {
+    return "help-modal";
   }
 }

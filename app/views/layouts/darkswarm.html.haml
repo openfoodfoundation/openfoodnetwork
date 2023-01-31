@@ -14,6 +14,7 @@
       = favicon_link_tag "/favicon-staging-matria.png"
     %link{href: "https://fonts.googleapis.com/css?family=Roboto:400,300italic,400italic,300,700,700italic|Oswald:300,400,700", rel: "stylesheet", type: "text/css"}
     %link{href: asset_pack_path("media/fonts/OFN-v2.woff"), rel: "preload", as: "font", crossorigin: "anonymous"}
+    = render "layouts/matomo_tag"
     = language_meta_tags
 
     = stylesheet_pack_tag "darkswarm", "data-turbo-track": "reload"
@@ -32,11 +33,9 @@
     = csrf_meta_tags
     %meta{name: "turbo-cache-control", content: "no-cache"}
 
-  %body{ class: body_classes, "body-scroll": "true", "data-turbo": "false" }
-    / [if lte IE 8]
-      = render partial: "shared/ie_warning"
-      = javascript_include_tag "iehack"
+    = action_cable_meta_tag
 
+  %body{ class: body_classes, "body-scroll": "true", "data-turbo": "false" }
     .off-canvas-wrap{ offcanvas: true }
       .fixed.off-canvas-fixed
         = render "shared/menu/menu" unless @hide_menu
@@ -57,6 +56,5 @@
     = inject_currency_config
     = yield :injection_data
 
-    = render "layouts/matomo_tag"
 
     = render "layouts/login_modal"

@@ -17,15 +17,45 @@ describe 'Shops', js: true do
                                 coordinator: create(:distributor_enterprise))
   }
   let!(:producer) { create(:supplier_enterprise) }
-  let!(:er) { create(:enterprise_relationship, parent: distributor, child: producer) }
+  let!(:er) { create(:enterprise_relationship, parent: producer, child: distributor) }
 
   before do
     producer.set_producer_property 'Organic', 'NASAA 12345'
   end
 
-  it "searches by URL" do
-    visit shops_path(anchor: "/?query=xyzzy")
-    expect(page).to have_content "Sorry, no results found for xyzzy"
+  context "searching enterprises" do
+    context "which exist" do
+      it "by URL" do
+        visit shops_path(anchor: "/?query=Enterprise")
+        expect(page).to have_content "Did you mean? #{distributor.name}"
+      end
+
+      it "by typing in the search field" do
+        visit shops_path
+        find('input').set("Enterprise")
+        expect(current_url).to have_content("/shops#/?query=Enterprise")
+        expect(page).to have_content "Did you mean? #{distributor.name}"
+      end
+    end
+
+    context "which do not exist" do
+      it "by URL" do
+        pending("#9649")
+        visit shops_path(anchor: "/?query=xyzzy")
+        sleep 1
+        expect(page).not_to have_content distributor.name
+        expect(page).to have_content "Sorry, no results found for xyzzy. Try another search?"
+      end
+
+      it "by typing in the search field" do
+        pending("#5467")
+        visit shops_path
+        find('input').set("xyzzy")
+        expect(current_url).to have_content("/shops#/?query=xyzzy")
+        expect(page).not_to have_content distributor.name
+        expect(page).to have_content "Sorry, no results found for xyzzy. Try another search?"
+      end
+    end
   end
 
   describe "listing shops" do
@@ -67,7 +97,7 @@ describe 'Shops', js: true do
     let!(:hub) { create(:distributor_enterprise, with_payment_and_shipping: false) }
     let!(:order_cycle) { create(:simple_order_cycle, distributors: [hub], coordinator: hub) }
     let!(:producer) { create(:supplier_enterprise) }
-    let!(:er) { create(:enterprise_relationship, parent: hub, child: producer) }
+    let!(:er) { create(:enterprise_relationship, parent: producer, child: hub) }
 
     it "does not show hubs that are not ready for checkout" do
       visit shops_path

@@ -7,8 +7,10 @@ module Spree
     searchable_attributes :email
 
     devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable,
-           :rememberable, :trackable, :validatable,
-           :encryptable, :confirmable, encryptor: 'authlogic_sha512', reconfirmable: true
+           :rememberable, :trackable, :validatable, :omniauthable,
+           :encryptable, :confirmable,
+           encryptor: 'authlogic_sha512', reconfirmable: true,
+           omniauth_providers: [:openid_connect]
 
     has_many :orders
     belongs_to :ship_address, class_name: 'Spree::Address'
@@ -35,7 +37,7 @@ module Spree
                             foreign_key: :owner_id, inverse_of: :owner
     has_many :customers
     has_many :credit_cards
-
+    has_many :report_rendering_options, class_name: "::ReportRenderingOptions", dependent: :destroy
     accepts_nested_attributes_for :enterprise_roles, allow_destroy: true
 
     accepts_nested_attributes_for :bill_address
@@ -44,11 +46,17 @@ module Spree
     after_create :associate_customers, :associate_orders
 
     validate :limit_owned_enterprises
+    validates :uid, uniqueness: true, if: lambda { uid.present? }
+    validates_email :uid, if: lambda { uid.present? }
 
     class DestroyWithOrdersError < StandardError; end
 
     def self.admin_created?
       User.admin.count > 0
+    end
+
+    def link_from_omniauth(auth)
+      update!(provider: auth.provider, uid: auth.uid)
     end
 
     # Whether a user has a role or not.
@@ -69,6 +77,10 @@ module Spree
 
     def regenerate_reset_password_token
       set_reset_password_token
+    end
+
+    def generate_api_key
+      self.spree_api_key = SecureRandom.hex(24)
     end
 
     def known_users
@@ -130,16 +142,6 @@ module Spree
       else
         credit_cards.where(is_default: true).first
       end
-    end
-
-    def generate_spree_api_key!
-      self.spree_api_key = SecureRandom.hex(24)
-      save!
-    end
-
-    def clear_spree_api_key!
-      self.spree_api_key = nil
-      save!
     end
 
     def last_incomplete_spree_order

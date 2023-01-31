@@ -21,10 +21,18 @@ module Spree
         )
       end
 
-      it "returns nil for unsupported formats" do
+      it "returns download link for unsupported formats" do
         subject.attachment_blob.update_columns(
           content_type: "application/octet-stream"
         )
+
+        expect(subject.url(:small)).to match(
+          %r|^http://test\.host/rails/active_storage/blobs/redirect/.+/logo-black\.png$|
+        )
+      end
+
+      it "returns nil when the attachment is missing" do
+        subject.attachment = nil
 
         expect(subject.url(:small)).to eq nil
       end

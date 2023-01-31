@@ -28,7 +28,7 @@ For those new to Rails, the following tutorial will help get you up to speed wit
 
 So you have set up your local environment according to the requirements listed above. If you're planning on contributing code to the project (which we [LOVE](CONTRIBUTING.md)), it is a good idea to begin by forking this repo using the `Fork` button in the top-right corner of this screen. You should then be able to use `git clone` to copy your fork onto your local machine:
 
-    git clone https://github.com/YOUR_GITHUB_USERNAME_HERE/openfoodnetwork
+    git clone git@github.com:YOUR_GITHUB_USERNAME_HERE/openfoodnetwork.git
 
 Jump into your new local copy of the Open Food Network:
 
@@ -36,7 +36,7 @@ Jump into your new local copy of the Open Food Network:
 
 And then add an `upstream` remote that points to the main repo:
 
-    git remote add upstream https://github.com/openfoodfoundation/openfoodnetwork
+    git remote add upstream git@github.com:openfoodfoundation/openfoodnetwork.git
 
 Fetch the latest version of `master` from `upstream` (ie. the main repo):
 
@@ -68,6 +68,8 @@ To login as the default user, use:
 
     email: ofn@example.com
     password: ofn123
+    
+Seee [Locale and sample data] about loading data.
 
 ### Testing
 
@@ -81,7 +83,7 @@ Then the main application tests can be run with:
 
 The tests of all custom engines can be run with:
 
-    bundle exec rake ofn:specs:engines:rspec
+    bundle exec rspec ./engines
 
 Note: If your OS is not explicitly supported in the setup guides then not all tests may pass. However, you may still be able to develop.
 
@@ -129,3 +131,4 @@ If these commands succeed, you should be able to [continue the setup process](#g
 [rubocop]: https://rubocop.readthedocs.io/en/latest/
 [karma]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Karma
 [slack-dev]: https://openfoodnetwork.slack.com/messages/C2GQ45KNU
+[Locale and sample data]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Locale-and-sample-data

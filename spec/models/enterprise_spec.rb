@@ -155,6 +155,94 @@ describe Enterprise do
       end
     end
 
+    describe "prevent a wrong instagram link pattern" do
+      it "invalidates the instagram attribute https://facebook.com/user" do
+        e = build(:enterprise, instagram: 'https://facebook.com/user')
+        expect(e).to_not be_valid
+      end
+
+      it "invalidates the instagram attribute tagram.com/user" do
+        e = build(:enterprise, instagram: 'tagram.com/user')
+        expect(e).to_not be_valid
+      end
+
+      it "invalidates the instagram attribute https://instagram.com/user/preferences" do
+        e = build(:enterprise, instagram: 'https://instagram.com/user/preferences')
+        expect(e).to_not be_valid
+      end
+
+      it "invalidates the instagram attribute https://instagram.com/user/" do
+        e = build(:enterprise, instagram: 'https://instagram.com/user/')
+        expect(e).to_not be_valid
+      end
+
+      it "invalidates the instagram attribute https://instagram.com/user-user" do
+        e = build(:enterprise, instagram: 'https://instagram.com/user-user')
+        expect(e).to_not be_valid
+      end
+    end
+
+    describe "Verify accepted instagram url pattern" do
+      it "validates empty instagram attribute" do
+        e = build(:enterprise, instagram: '')
+        expect(e).to be_valid
+        expect(e.instagram).to eq ""
+      end
+
+      it "validates the instagram attribute @my_user" do
+        e = build(:enterprise, instagram: '@my_user')
+        expect(e).to be_valid
+        expect(e.instagram).to eq "my_user"
+      end
+
+      it "validates the instagram attribute user" do
+        e = build(:enterprise, instagram: 'user')
+        expect(e).to be_valid
+        expect(e.instagram).to eq "user"
+      end
+
+      it "validates the instagram attribute my_www5.example" do
+        e = build(:enterprise, instagram: 'my_www5.example')
+        expect(e).to be_valid
+        expect(e.instagram).to eq "my_www5.example"
+      end
+
+      it "validates the instagram attribute http://instagram.com/user" do
+        e = build(:enterprise, instagram: 'http://instagram.com/user')
+        expect(e).to be_valid
+        expect(e.instagram).to eq "user"
+      end
+
+      it "validates the instagram attribute https://www.instagram.com/user" do
+        e = build(:enterprise, instagram: 'https://www.instagram.com/user')
+        expect(e).to be_valid
+        expect(e.instagram).to eq "user"
+      end
+
+      it "validates the instagram attribute instagram.com/@user" do
+        e = build(:enterprise, instagram: 'instagram.com/@user')
+        expect(e).to be_valid
+        expect(e.instagram).to eq "user"
+      end
+
+      it "validates the instagram attribute Https://www.Instagram.com/@User" do
+        e = build(:enterprise, instagram: 'Https://www.Instagram.com/@User')
+        expect(e).to be_valid
+        expect(e.instagram).to eq "user"
+      end
+
+      it "validates the instagram attribute instagram.com/user" do
+        e = build(:enterprise, instagram: 'instagram.com/user')
+        expect(e).to be_valid
+        expect(e.instagram).to eq "user"
+      end
+
+      it "renders the expected pattern" do
+        e = build(:enterprise, instagram: 'instagram.com/user')
+        expect(e.instagram).to eq "user"
+      end
+    end
+
     describe "preferred_shopfront_taxon_order" do
       it "empty strings are valid" do
         enterprise = build(:enterprise, preferred_shopfront_taxon_order: "")
@@ -276,6 +364,13 @@ describe Enterprise do
         expect(Enterprise.ready_for_checkout).not_to include e
       end
 
+      it "does not show enterprises which only have backend shipping methods" do
+        create(:shipping_method, distributors: [e],
+                                 display_on: Spree::ShippingMethod::DISPLAY_ON_OPTIONS[:back_end])
+        create(:payment_method, distributors: [e])
+        expect(Enterprise.ready_for_checkout).not_to include e
+      end
+
       it "shows enterprises with available payment and shipping methods" do
         create(:shipping_method, distributors: [e])
         create(:payment_method, distributors: [e])
@@ -299,6 +394,13 @@ describe Enterprise do
       it "shows enterprises with unavailable payment methods" do
         create(:shipping_method, distributors: [e])
         create(:payment_method, distributors: [e], active: false)
+        expect(Enterprise.not_ready_for_checkout).to include e
+      end
+
+      it "shows enterprises which only have backend shipping methods" do
+        create(:shipping_method, distributors: [e],
+                                 display_on: Spree::ShippingMethod::DISPLAY_ON_OPTIONS[:back_end])
+        create(:payment_method, distributors: [e])
         expect(Enterprise.not_ready_for_checkout).to include e
       end
 
@@ -328,10 +430,24 @@ describe Enterprise do
         expect(e.reload).not_to be_ready_for_checkout
       end
 
+      it "returns false for enterprises which only have backend shipping methods" do
+        create(:shipping_method, distributors: [e],
+                                 display_on: Spree::ShippingMethod::DISPLAY_ON_OPTIONS[:back_end])
+        create(:payment_method, distributors: [e])
+        expect(e.reload).not_to be_ready_for_checkout
+      end
+
       it "returns true for enterprises with available payment and shipping methods" do
         create(:shipping_method, distributors: [e])
         create(:payment_method, distributors: [e])
         expect(e.reload).to be_ready_for_checkout
+      end
+
+      it "returns false for enterprises with payment methods that are available but not configured
+          correctly" do
+        create(:shipping_method, distributors: [e])
+        create(:stripe_sca_payment_method, distributors: [e])
+        expect(e.reload).not_to be_ready_for_checkout
       end
     end
 
@@ -674,8 +790,35 @@ describe Enterprise do
     end
   end
 
-  describe "#plus_relatives_and_oc_producers" do
-    it "does not find non-produders " do
+  describe "#parents_of_one_union_others" do
+    it "should return only parent producers" do
+      supplier = create(:supplier_enterprise)
+      distributor = create(:distributor_enterprise, is_primary_producer: false)
+      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      expect(Enterprise.parents_of_one_union_others(supplier, nil)).to include(distributor)
+    end
+
+    it "should return other enterprise if it is passed as a second argument" do
+      another_enterprise = create(:enterprise)
+      supplier = create(:supplier_enterprise)
+      distributor = create(:distributor_enterprise, is_primary_producer: false)
+      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      expect(Enterprise.parents_of_one_union_others(supplier, another_enterprise)).to include(another_enterprise)
+    end
+
+    it "does not find child in the relationship" do
+      supplier = create(:supplier_enterprise)
+      distributor = create(:distributor_enterprise, is_primary_producer: false)
+      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      expect(Enterprise.parents_of_one_union_others(distributor, nil)).not_to include(supplier)
+    end
+  end
+
+  describe "#plus_parents_and_order_cycle_producers" do
+    it "does not find non-producers" do
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
       product = create(:product)
@@ -685,7 +828,55 @@ describe Enterprise do
         distributors: [distributor],
         variants: [product.master]
       )
-      expect(distributor.plus_relatives_and_oc_producers(order_cycle)).to eq([supplier])
+      expect(distributor.plus_parents_and_order_cycle_producers(order_cycle)).to eq([supplier])
+    end
+
+    it "finds parent in the relationship" do
+      supplier = create(:supplier_enterprise)
+      distributor = create(:distributor_enterprise, is_primary_producer: false)
+      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      product = create(:product)
+      order_cycle = create(
+        :simple_order_cycle,
+        distributors: [distributor],
+        suppliers: [supplier],
+        variants: [product.master]
+      )
+      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      expect(distributor.plus_parents_and_order_cycle_producers(order_cycle)).to include(supplier)
+    end
+
+    it "does not find child in the relationship" do
+      supplier = create(:supplier_enterprise)
+      distributor = create(:distributor_enterprise, is_primary_producer: false)
+      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      product = create(:product)
+      order_cycle = create(
+        :simple_order_cycle,
+        suppliers: [supplier],
+        distributors: [distributor],
+        variants: [product.master]
+      )
+      expected = supplier.plus_parents_and_order_cycle_producers(order_cycle)
+      expect(expected).not_to include(distributor)
+    end
+
+    it "it finds sender enterprises for order cycles that are passed" do
+      supplier = create(:supplier_enterprise)
+      sender = create(:supplier_enterprise)
+      distributor = create(:distributor_enterprise, is_primary_producer: false)
+      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      product = create(:product)
+      order_cycle = create(
+        :simple_order_cycle,
+        suppliers: [sender],
+        distributors: [distributor],
+        variants: [product.master]
+      )
+      expected = supplier.plus_parents_and_order_cycle_producers(order_cycle)
+      expect(expected).to include(sender)
     end
   end
 end

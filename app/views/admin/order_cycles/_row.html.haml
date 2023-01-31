@@ -7,10 +7,10 @@
         {{ schedule.name + ($last ? '' : ',') }}
     %span{ ng: { show: 'orderCycle.schedules.length == 0'}} None
   %td.orders_open_at{ ng: { show: 'columns.open.visible' } }
-    %input.datetimepicker{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', ng: { if: 'orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_open_at' }, datetimepicker: 'orderCycle.orders_open_at', 'change-warning' => 'orderCycle' }
+    %input.datetimepicker{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', ng: { if: 'orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_open_at' }, data: { controller: "flatpickr", "flatpickr-enable-time-value": true }, 'change-warning' => 'orderCycle' }
     %input{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', ng: { if: '!orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_open_at'}, disabled: true }
   %td.orders_close_at{ ng: { show: 'columns.close.visible' } }
-    %input.datetimepicker{ id: 'oc{{::orderCycle.id}}_orders_close_at', name: 'oc{{::orderCycle.id}}[orders_close_at]', type: 'text', ng: { if: 'orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_close_at' }, datetimepicker: 'orderCycle.orders_close_at', 'change-warning' => 'orderCycle'  }
+    %input.datetimepicker{ id: 'oc{{::orderCycle.id}}_orders_close_at', name: 'oc{{::orderCycle.id}}[orders_close_at]', type: 'text', ng: { if: 'orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_close_at' }, data: { controller: "flatpickr", "flatpickr-enable-time-value": true }, 'change-warning' => 'orderCycle'  }
     %input{ id: 'oc{{::orderCycle.id}}_orders_close_at', name: 'oc{{::orderCycle.id}}[orders_close_at]', type: 'text', ng: { if: '!orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_close_at'}, disabled: true }
 
   - unless simple_index
@@ -32,8 +32,9 @@
       = t('.variants')
 
   %td.actions
-    %a.edit-order-cycle.icon-edit.no-text{ ng: { href: '{{orderCycle.edit_path}}'}, 'ofn-with-tip' => t(:edit) }
-  %td.actions{ ng: { if: 'orderCycle.viewing_as_coordinator' } }
-    %a.clone-order-cycle.icon-copy.no-text{ ng: { href: '{{orderCycle.clone_path}}'}, 'ofn-with-tip' => t(:clone) }
-  %td.actions{ ng: { if: 'orderCycle.deletable && orderCycle.viewing_as_coordinator' }}
-    %a.delete-order-cycle.icon-trash.no-text{ ng: { href: '{{orderCycle.delete_path}}'}, data: { method: 'delete', confirm: t(:are_you_sure) }, 'ofn-with-tip' => t(:remove) }
+    .flex
+      %a.edit-order-cycle.icon-edit.no-text{ ng: { href: '{{orderCycle.edit_path}}'}, 'ofn-with-tip' => t(:edit) }
+      %div{ ng: { if: 'orderCycle.viewing_as_coordinator' } }
+        %a.clone-order-cycle.icon-copy.no-text{ ng: { href: '{{orderCycle.clone_path}}'}, 'ofn-with-tip' => t(:clone) }
+      %div{ ng: { if: 'orderCycle.deletable && orderCycle.viewing_as_coordinator' }}
+        %a.delete-order-cycle.icon-trash.no-text{ ng: { href: '{{orderCycle.delete_path}}'}, data: { method: 'delete', confirm: t(:are_you_sure) }, 'ofn-with-tip' => t(:remove) }

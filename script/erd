@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# * [Pre-requisites](https://voormedia.github.io/rails-erd/install.html).
+# * [Usage](https://voormedia.github.io/rails-erd/customise.html)
+
+TITLE="Openfoodnetwork domain model - generated `date +%Y-%m-%d`"
+
+rake erd title="$TITLE" filename="doc/erd"

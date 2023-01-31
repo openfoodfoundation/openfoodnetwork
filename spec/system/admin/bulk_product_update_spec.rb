@@ -21,8 +21,8 @@ describe '
 
       visit spree.admin_products_path
 
-      expect(page).to have_field "product_name", with: p1.name, visible: true
-      expect(page).to have_field "product_name", with: p2.name, visible: true
+      expect(page).to have_field "product_name", with: p1.name
+      expect(page).to have_field "product_name", with: p2.name
     end
 
     it "displays a message when number of products is zero" do
@@ -79,9 +79,9 @@ describe '
       expect(page).to have_selector "a.view-variants", count: 1
       find("a.view-variants").click
 
-      expect(page).to have_no_selector "span[name='on_hand']", text: "On demand", visible: true
+      expect(page).to have_no_selector "span[name='on_hand']", text: "On demand"
       expect(page).to have_field "variant_on_hand", with: "4"
-      expect(page).to have_no_field "variant_on_hand", with: "", visible: true
+      expect(page).to have_no_field "variant_on_hand", with: ""
       expect(page).to have_selector "span[name='variant_on_hand']", text: "On demand"
     end
 
@@ -216,7 +216,7 @@ describe '
     fill_in 'product_name', with: 'Big Bag Of Apples'
     select supplier.name, from: 'product_supplier_id'
     select 'Weight (g)', from: 'product_variant_unit_with_scale'
-    fill_in 'product_unit_value_with_description', with: '100'
+    fill_in 'product_unit_value', with: '100'
     fill_in 'product_price', with: '10.00'
     select taxon.name, from: 'product_primary_taxon_id'
     select shipping_category.name, from: 'product_shipping_category_id'
@@ -227,51 +227,111 @@ describe '
     expect(page).to have_field "product_name", with: 'Big Bag Of Apples'
   end
 
-  it "creating new variants" do
-    # Given a product without variants or a unit
-    p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
-    login_as_admin
-    visit spree.admin_products_path
+  context "creating new variants" do
+    before do
+      # Given a product without variants or a unit
+      p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
+      login_as_admin
+      visit spree.admin_products_path
 
-    # I should see an add variant button
-    page.find('a.view-variants').click
-
-    # When I add three variants
-    page.find('a.add-variant', visible: true).click
-    page.find('a.add-variant', visible: true).click
-
-    # They should be added, and should not see edit buttons for new variants
-    expect(page).to have_selector "tr.variant", count: 3
-    expect(page).to have_selector "a.edit-variant", count: 1
-
-    # When I remove two, they should be removed
-    accept_alert do
-      page.all('a.delete-variant', visible: true).first.click
+      # I should see an add variant button
+      page.find('a.view-variants').click
     end
-    expect(page).to have_selector "tr.variant", count: 2
-    page.all('a.delete-variant', visible: true).first.click
-    expect(page).to have_selector "tr.variant", count: 1
 
-    # When I fill out variant details and hit update
-    fill_in "variant_display_name", with: "Case of 12 Bottles"
-    fill_in "variant_unit_value_with_description", with: "3 (12x250 mL bottles)"
-    fill_in "variant_display_as", with: "Case"
-    fill_in "variant_price", with: "4.0"
-    fill_in "variant_on_hand", with: "10"
+    it "handle the default behaviour" do
+      # When I add three variants
+      page.find('a.add-variant').click
+      page.find('a.add-variant').click
 
-    click_button 'Save Changes', match: :first
-    expect(page.find("#status-message")).to have_content "Changes saved."
+      # They should be added, and should not see edit buttons for new variants
+      expect(page).to have_selector "tr.variant", count: 3
+      expect(page).to have_selector "a.edit-variant", count: 1
 
-    updated_variant = Spree::Variant.where(deleted_at: nil).last
-    expect(updated_variant.display_name).to eq "Case of 12 Bottles"
-    expect(updated_variant.unit_value).to eq 3000
-    expect(updated_variant.unit_description).to eq "(12x250 mL bottles)"
-    expect(updated_variant.display_as).to eq "Case"
-    expect(updated_variant.price).to eq 4.0
-    expect(updated_variant.on_hand).to eq 10
+      # When I remove two, they should be removed
+      accept_alert do
+        page.all('a.delete-variant').first.click
+      end
+      expect(page).to have_selector "tr.variant", count: 2
+      page.all('a.delete-variant').first.click
+      expect(page).to have_selector "tr.variant", count: 1
 
-    # Then I should see edit buttons for the new variant
-    expect(page).to have_selector "a.edit-variant", visible: true
+      # When I fill out variant details and hit update
+      fill_in "variant_display_name", with: "Case of 12 Bottles"
+      fill_in "variant_unit_value_with_description", with: "3 (12x250 mL bottles)"
+      fill_in "variant_display_as", with: "Case"
+      fill_in "variant_price", with: "4.0"
+      fill_in "variant_on_hand", with: "10"
+
+      click_button 'Save Changes', match: :first
+      expect(page.find("#status-message")).to have_content "Changes saved."
+
+      updated_variant = Spree::Variant.where(deleted_at: nil).last
+      expect(updated_variant.display_name).to eq "Case of 12 Bottles"
+      expect(updated_variant.unit_value).to eq 3000
+      expect(updated_variant.unit_description).to eq "(12x250 mL bottles)"
+      expect(updated_variant.display_as).to eq "Case"
+      expect(updated_variant.price).to eq 4.0
+      expect(updated_variant.on_hand).to eq 10
+
+      # Then I should see edit buttons for the new variant
+      expect(page).to have_selector "a.edit-variant"
+    end
+
+    context "handle the 'on_demand' variant case creation" do
+      before do
+        p = Spree::Product.first
+        p.master.update_attribute(:on_hand, 5)
+        p.save
+        v1 = FactoryBot.create(:variant, product: p, is_master: false, on_hand: 4)
+        v2 = FactoryBot.create(:variant, product: p, is_master: false, on_demand: true)
+        p.variants << v1
+        p.variants << v2
+      end
+
+      it "when variant unit value is: '120'" do
+        within "tr#v_#{Spree::Variant.second.id}" do
+          page.find(".add-variant").click
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120"
+          fill_in "variant_price", with: "6.66"
+        end
+
+        click_button 'Save Changes', match: :first
+        expect(page.find("#status-message")).to have_content "Changes saved."
+      end
+
+      it "creating a variant with unit value is: '120g' and 'on_hand' filled" do
+        within "tr#v_#{Spree::Variant.second.id}" do
+          page.find(".add-variant").click
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120g"
+          fill_in "variant_price", with: "6.66"
+          fill_in "variant_on_hand", with: "222"
+        end
+
+        click_button 'Save Changes', match: :first
+        expect(page.find("#status-message")).to have_content "Unit value can't be blank Unit value is not a number"
+      end
+
+      it "creating a variant with unit value is: '120g' and 'on_demand' checked" do
+        within "tr#v_#{Spree::Variant.second.id}" do
+          page.find(".add-variant").trigger("click")
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120g"
+          fill_in "variant_price", with: "6.66"
+          check "variant_on_demand"
+        end
+
+        click_button 'Save Changes', match: :first
+        expect(page.find("#status-message")).to have_content "Unit value can't be blank Unit value is not a number"
+      end
+    end
   end
 
   it "updating product attributes" do
@@ -467,12 +527,13 @@ describe '
     s2 = create(:supplier_enterprise)
     p1 = FactoryBot.create(:simple_product, name: "product1", supplier: s1)
     p2 = FactoryBot.create(:simple_product, name: "product2", supplier: s2)
-    login_as_admin
 
-    visit spree.admin_products_path
+    login_as_admin_and_visit spree.admin_products_path
 
     select2_select s1.name, from: "producer_filter"
     apply_filters
+
+    sleep 2 # wait for page to initialise
 
     expect(page).to have_no_field "product_name", with: p2.name
     fill_in "product_name", with: "new product1"
@@ -767,7 +828,7 @@ describe '
         fill_in 'product_name', with: 'Big Bag Of Apples'
         select supplier_permitted.name, from: 'product_supplier_id'
         select 'Weight (g)', from: 'product_variant_unit_with_scale'
-        fill_in 'product_unit_value_with_description', with: '100'
+        fill_in 'product_unit_value', with: '100'
         fill_in 'product_price', with: '10.00'
         select taxon.name, from: 'product_primary_taxon_id'
         select shipping_category.name, from: 'product_shipping_category_id'
@@ -852,10 +913,10 @@ describe '
         attach_file 'image-upload', Rails.root.join("public/500.jpg"), visible: false
 
         # Shows spinner whilst loading
-        expect(page).to have_css ".spinner", visible: true
+        expect(page).to have_css ".spinner"
       end
 
-      expect(page).to have_no_css ".spinner", visible: true
+      expect(page).to have_no_css ".spinner"
       expect(page).to have_no_selector "div.reveal-modal"
 
       within "table#listing_products tr#p_#{product.id}" do

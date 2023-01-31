@@ -15,6 +15,14 @@ if Spree::Country.where(name: "Australia").empty?
   Spree::State.create!({ "name" => "New South Wales", "abbr" => "NSW", :country => country })
 end
 
+if Spree::Country.where(name: "France").empty?
+  Spree::Country.create!({ "name" => "France", "iso3" => "FRA", "iso" => "FR",
+                           "iso_name" => "FRANCE", "numcode" => "250" })
+  country = Spree::Country.find_by(name: 'France')
+  Spree::State.create!({ "name" => "Alsace", "abbr" => "Als", :country => country })
+  Spree::State.create!({ "name" => "Aquitaine", "abbr" => "Aq", :country => country })
+end
+
 # Since the country seeding differs from other environments, the default
 # country id has to be updated here. This line can be removed as soon as the
 # default country id is replaced by something database independent.

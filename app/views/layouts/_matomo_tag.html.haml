@@ -1,24 +1,8 @@
 
 - if Spree::Config.matomo_tag_manager_url.present?
   :javascript
-    var _mtm = _mtm || [];
+    var _mtm = window._mtm = window._mtm || [];
     _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
     var u="#{Spree::Config.matomo_tag_manager_url}";
     g.type='text/javascript'; g.async=true; g.defer=true; g.src=u; s.parentNode.insertBefore(g,s);
-
-- if Spree::Config.matomo_url.present?
-  :javascript
-    var _paq = window._paq || [];
-    _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
-    _paq.push(["setCookieDomain", "*.#{Spree::Config.site_url}"]);
-    _paq.push(["setDomains", ["*.#{Spree::Config.site_url}"]]);
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-      var u="#{Spree::Config.matomo_url}";
-      _paq.push(['setTrackerUrl', u+'matomo.php']);
-      _paq.push(['setSiteId', '#{Spree::Config.matomo_site_id}']);
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-    })();

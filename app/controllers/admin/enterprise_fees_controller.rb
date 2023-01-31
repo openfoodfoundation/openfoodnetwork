@@ -6,6 +6,7 @@ module Admin
   class EnterpriseFeesController < Admin::ResourceController
     before_action :load_enterprise_fee_set, only: :index
     before_action :load_data
+    before_action :check_enterprise_fee_input, only: [:bulk_update]
 
     def index
       @include_calculators = params[:include_calculators].present?
@@ -35,13 +36,6 @@ module Admin
     end
 
     def bulk_update
-      @flat_percent_value = enterprise_fee_bulk_params.dig('collection_attributes', '0', 'calculator_attributes', 'preferred_flat_percent')
-
-      unless @flat_percent_value.nil? || Float(@flat_percent_value, exception: false)
-        flash[:error] = I18n.t(:calculator_preferred_value_error)
-        return redirect_to redirect_path
-      end
-
       @enterprise_fee_set = Sets::EnterpriseFeeSet.new(enterprise_fee_bulk_params)
 
       if @enterprise_fee_set.save
@@ -104,6 +98,26 @@ module Admin
           { calculator_attributes: PermittedAttributes::Calculator.attributes }
         ]
       )
+    end
+
+    def check_enterprise_fee_input
+      enterprise_fee_bulk_params['collection_attributes'].each do |_, fee_row|
+        enterprise_fees = fee_row['calculator_attributes']&.slice(
+          :preferred_flat_percent, :preferred_amount,
+          :preferred_first_item, :preferred_additional_item,
+          :preferred_minimal_amount, :preferred_normal_amount,
+          :preferred_discount_amount, :preferred_per_unit
+        )
+
+        next unless enterprise_fees
+
+        enterprise_fees.each do |_, enterprise_amount|
+          unless enterprise_amount.nil? || Float(enterprise_amount, exception: false)
+            flash[:error] = I18n.t(:calculator_preferred_value_error)
+            return redirect_to redirect_path
+          end
+        end
+      end
     end
   end
 end

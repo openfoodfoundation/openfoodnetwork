@@ -67,6 +67,7 @@ FactoryBot.define do
     transient do
       tax_rate_amount { 0 }
       tax_rate_name { "" }
+      included_in_price { "" }
       zone { nil }
     end
 
@@ -77,7 +78,7 @@ FactoryBot.define do
 
       create(:tax_rate, amount: proxy.tax_rate_amount,
                         tax_category: product.tax_category,
-                        included_in_price: true,
+                        included_in_price: proxy.included_in_price,
                         calculator: Calculator::DefaultTax.new,
                         zone: proxy.zone,
                         name: proxy.tax_rate_name)

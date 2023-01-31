@@ -266,6 +266,64 @@ module Reporting
           end
         end
       end
+
+      describe AllProducts do
+        let(:user) do
+          user = create(:user)
+          user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
+          user
+        end
+        let(:report) do
+          AllProducts.new user, { fields_to_hide: [] }
+        end
+
+        it "Should return headers" do
+          expect(report.table_headers).to eq([
+                                               "Supplier",
+                                               "Producer Suburb",
+                                               "Product",
+                                               "Product Properties",
+                                               "Taxons",
+                                               "Variant Value",
+                                               "Price",
+                                               "Group Buy Unit Quantity",
+                                               "Amount",
+                                               "SKU",
+                                               "On Demand?",
+                                               "On Hand"
+                                             ])
+        end
+
+        it "Should render 'On demand' when the product is available on demand" do
+          product = create(:product)
+          variant = product.variants.first
+          variant.on_demand = true
+          variant.on_hand = 15
+          variant.save!
+
+          first_row = report.table_rows.first
+          on_demand_column = first_row[-2]
+          on_hand_column = first_row[-1]
+
+          expect(on_demand_column).to eq("Yes")
+          expect(on_hand_column).to eq("On demand")
+        end
+
+        it "Should render the on hand count when the product is not available on demand" do
+          product = create(:product)
+          variant = product.variants.first
+          variant.on_demand = false
+          variant.on_hand = 22
+          variant.save!
+
+          first_row = report.table_rows.first
+          on_demand_column = first_row[-2]
+          on_hand_column = first_row[-1]
+
+          expect(on_demand_column).to eq("No")
+          expect(on_hand_column).to eq(22)
+        end
+      end
     end
   end
 end

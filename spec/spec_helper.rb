@@ -3,28 +3,7 @@
 require 'base_spec_helper'
 
 require 'database_cleaner'
-require 'webdrivers'
-require 'selenium-webdriver'
 require 'view_component/test_helpers'
-
-# This spec_helper.rb is being used by the custom engines in engines/. The engines are not set up to
-# use Knapsack, and this provides the option to disable it when running the tests in CI services.
-unless ENV['DISABLE_KNAPSACK']
-  require 'knapsack'
-  Knapsack.tracker.config(enable_time_offset_warning: false) unless ENV['CI']
-  Knapsack::Adapters::RSpecAdapter.bind
-end
-
-Capybara.register_driver :chrome do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(
-    args: %w[headless disable-gpu no-sandbox window-size=1280,768]
-  )
-  options.add_preference(:download, default_directory: DownloadsHelper.path.to_s)
-
-  Capybara::Selenium::Driver
-    .new(app, browser: :chrome, options: options)
-    .tap { |driver| driver.browser.download_path = DownloadsHelper.path.to_s }
-end
 
 Capybara.javascript_driver = :chrome
 Capybara.default_max_wait_time = 30
@@ -44,13 +23,6 @@ RSpec.configure do |config|
   }
   config.before(:each)           { DatabaseCleaner.start }
   config.after(:each)            { DatabaseCleaner.clean }
-
-  def restart_driver
-    Capybara.send('session_pool').values
-      .select { |s| s.driver.is_a?(Capybara::Selenium::Driver) }
-      .each { |s| s.driver.reset! }
-  end
-  config.before(:all) { restart_driver }
 
   config.after(:each, js: true) do
     Capybara.reset_sessions!

@@ -211,7 +211,7 @@ module ProductImport
       reference_entry = all_entries_for_product(entry).first
       return if entry.variant_unit_name.to_s == reference_entry.variant_unit_name.to_s
 
-      mark_as_not_updatable(entry, "variant_unit_name")
+      mark_as_values_must_be_same(entry, "variant_unit_name")
     end
 
     def producer_validation(entry)
@@ -299,7 +299,7 @@ module ProductImport
         entry.public_send("#{type}_category_id=", index[category])
       else
         mark_as_invalid(entry, attribute: "#{type}_category",
-                               error: I18n.t('admin.product_import.model.not_found'))
+                               error: I18n.t('admin.product_import.model.category_not_found'))
       end
     end
 
@@ -423,6 +423,11 @@ module ProductImport
     def mark_as_not_updatable(entry, attribute)
       mark_as_invalid(entry, attribute: attribute,
                              error: I18n.t("admin.product_import.model.not_updatable"))
+    end
+
+    def mark_as_values_must_be_same(entry, attribute)
+      mark_as_invalid(entry, attribute: attribute,
+                             error: I18n.t("admin.product_import.model.values_must_be_same"))
     end
 
     def import_into_inventory?

@@ -6,7 +6,7 @@ class RemoveTransientData
   # This model lets us operate on the sessions DB table using ActiveRecord's
   # methods within the scope of this service. This relies on the AR's
   # convention where a Session model maps to a sessions table.
-  class Session < ActiveRecord::Base
+  class Session < ApplicationRecord
   end
 
   def call

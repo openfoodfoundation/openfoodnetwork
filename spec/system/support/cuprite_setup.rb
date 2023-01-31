@@ -2,18 +2,23 @@
 
 require "capybara/cuprite"
 
+headless = ActiveModel::Type::Boolean.new.cast(ENV.fetch("HEADLESS", true))
+
+browser_options = {}
+browser_options["no-sandbox"] = nil if ENV['CI']
+
 Capybara.register_driver(:cuprite) do |app|
   Capybara::Cuprite::Driver.new(
     app,
     **{
       window_size: [1200, 800],
-      browser_options: {},
-      process_timeout: 20,
-      timeout: 20,
+      browser_options: browser_options,
+      process_timeout: 60,
+      timeout: 60,
       # Don't load scripts from external sources, like google maps or stripe
       url_whitelist: ["http://localhost", "http://0.0.0.0", "http://127.0.0.1"],
       inspector: true,
-      headless: true,
+      headless: headless,
       js_errors: true,
     }
   )

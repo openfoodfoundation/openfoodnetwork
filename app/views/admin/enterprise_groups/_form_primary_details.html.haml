@@ -1,5 +1,5 @@
-%fieldset.alpha.no-border-bottom{ ng: { show: "menu.selected.name=='primary_details'" } }
-  %legend {{menu.selected.label}}
+%fieldset.alpha.no-border-bottom#primary_details_panel{ data: { "tabs-and-panels-target": "panel default" } }
+  %legend= t('.primary_details')
   = f.field_container :name do
     = f.label :name
     %br/

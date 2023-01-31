@@ -11,8 +11,8 @@ require 'view_component/test_helpers'
 
 require_relative "../config/environment"
 require 'rspec/rails'
-require 'capybara'
 require 'rspec/retry'
+require 'capybara'
 require 'paper_trail/frameworks/rspec'
 require "factory_bot_rails"
 
@@ -24,12 +24,15 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+require 'knapsack_pro'
+KnapsackPro::Adapters::RSpecAdapter.bind
+
 # Allow connections to selenium whilst raising errors when connecting to external sites
 require 'webmock/rspec'
 WebMock.enable!
 WebMock.disable_net_connect!(
   allow_localhost: true,
-  allow: 'chromedriver.storage.googleapis.com'
+  allow: ['chromedriver.storage.googleapis.com', 'api.knapsackpro.com']
 )
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -61,8 +64,6 @@ RSpec.configure do |config|
 
   # Show retries in test output
   config.verbose_retry = true
-  # Set maximum retry count
-  config.default_retry_count = 0
 
   # Force colored output, whether or not the output is a TTY
   config.color_mode = :on
@@ -131,7 +132,6 @@ RSpec.configure do |config|
   config.include Spree::UrlHelpers
   config.include Spree::MoneyHelper
   config.include PreferencesHelper
-  config.include OpenFoodNetwork::FeatureToggleHelper
   config.include OpenFoodNetwork::FiltersHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
   config.include OpenFoodNetwork::ProductsHelper

@@ -6,8 +6,8 @@ module Reporting
       class Base < ReportTemplate
         attr_accessor :permissions, :parameters
 
-        def initialize(user, params = {}, request = nil)
-          super(user, params, request)
+        def initialize(user, params = {}, render: false)
+          super(user, params, render: render)
           p = params[:q]
           if p.present?
             p['start_at'] = p.delete('completed_at_gt')

@@ -17,7 +17,6 @@
 .jstree-apple .jstree-hovered { background:#e7f4f9; border:1px solid #d8f0fa; padding:0 3px 0 1px; text-shadow:1px 1px 1px silver; }
 .jstree-apple .jstree-clicked { background:#beebff; border:1px solid #99defd; padding:0 3px 0 1px; }
 .jstree-apple a .jstree-icon { background-position:-56px -20px; }
-.jstree-apple a.jstree-loading .jstree-icon { background:url("throbber.gif") center center no-repeat !important; }
 
 .jstree-apple.jstree-focused { background:white; }
 

@@ -6,18 +6,18 @@ module DfcProvider
   class SuppliedProductSerializer < BaseSerializer
     attribute :id, key: '@id'
     attribute :type, key: '@type'
-    attribute :unit, key: 'dfc:hasUnit'
-    attribute :quantity, key: 'dfc:quantity'
-    attribute :description, key: 'dfc:description'
-    attribute :total_theoritical_stock, key: 'dfc:totalTheoriticalStock'
-    attribute :brand, key: 'dfc:brand'
-    attribute :claim, key: 'dfc:claim'
-    attribute :image, key: 'dfc:image'
+    attribute :unit, key: 'dfc-b:hasUnit'
+    attribute :quantity, key: 'dfc-b:quantity'
+    attribute :description, key: 'dfc-b:description'
+    attribute :total_theoritical_stock, key: 'dfc-b:totalTheoriticalStock'
+    attribute :brand, key: 'dfc-b:brand'
+    attribute :claim, key: 'dfc-b:claim'
+    attribute :image, key: 'dfc-b:image'
     attribute :life_time, key: 'lifeTime'
-    has_many :physical_characteristics, key: 'dfc:physicalCharacterisctics'
+    has_many :physical_characteristics, key: 'dfc-b:physicalCharacterisctics'
 
     def id
-      dfc_provider_routes.api_dfc_provider_enterprise_supplied_product_url(
+      dfc_provider_routes.enterprise_supplied_product_url(
         enterprise_id: object.product.supplier_id,
         id: object.id,
         host: host
@@ -50,7 +50,7 @@ module DfcProvider
     def claim; end
 
     def image
-      object.images.first.try(:attachment, :url)
+      object.images.first&.url(:product)
     end
 
     def life_time; end

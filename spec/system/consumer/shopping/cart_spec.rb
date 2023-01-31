@@ -22,7 +22,7 @@ describe "full-page cart", js: true do
       create(:enterprise_fee, amount: 11.00, tax_category: product_with_tax.tax_category)
     }
     let(:product_with_tax) {
-      create(:taxed_product, supplier: supplier, zone: zone, price: 110.00, tax_rate_amount: 0.1)
+      create(:taxed_product, supplier: supplier, zone: zone, price: 110.00, tax_rate_amount: 0.1, included_in_price: true)
     }
     let(:product_with_fee) {
       create(:simple_product, supplier: supplier, price: 0.86, on_hand: 100)
@@ -106,14 +106,14 @@ describe "full-page cart", js: true do
           visit main_app.cart_path
         end
 
-        it "shows admin and handlings row" do
+        it "shows enterprise fees row row" do
           expect(page).to have_selector('#cart-detail')
-          expect(page).to have_content('Admin & Handling')
+          expect(page).to have_content("Whole order - #{handling_fee.name} fee by distributor #{order_cycle.coordinator.name}")
           expect(page).to have_selector '.cart-item-price',
                                         text: with_currency(0.86)
           expect(page).to have_selector '.order-total.item-total',
                                         text: with_currency(2.58)
-          expect(page).to have_selector '.order-total.distribution-total',
+          expect(page).to have_selector '.order-adjustment .total',
                                         text: with_currency(1.00)
           expect(page).to have_selector '.order-total.grand-total', text: with_currency(3.58) # price * 3 + 1
         end

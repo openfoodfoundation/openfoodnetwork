@@ -64,6 +64,12 @@ describe '
     expect(page).not_to have_selector '.flash.error'
     expect(page).not_to have_content "Line items can't be blank"
 
+    expect(page).to have_selector 'h1', text: 'Customer Details'
+    o = Spree::Order.last
+    expect(o.distributor).to eq(distributor)
+    expect(o.order_cycle).to eq(order_cycle)
+
+    click_link "Order Details"
     click_button "Update And Recalculate Fees"
     expect(page).to have_selector '.flash.error'
     expect(page).to have_content "Line items can't be blank"
@@ -77,11 +83,6 @@ describe '
     expect(page).to have_selector 'td', text: product.name
 
     click_button 'Update'
-
-    expect(page).to have_selector 'h1', text: 'Customer Details'
-    o = Spree::Order.last
-    expect(o.distributor).to eq(distributor)
-    expect(o.order_cycle).to eq(order_cycle)
   end
 
   it "can add a product to an existing order" do
@@ -138,7 +139,7 @@ describe '
       end
 
       it "show a modal 'Are you sure?' that the user can close and then nothing change" do
-        within(".modal", visible: true) do
+        within(".modal") do
           expect do
             click_on("Cancel")
             expect(page).not_to have_content "Are you sure?"
@@ -148,10 +149,10 @@ describe '
 
       it "show a modal 'Are you sure?' that the user confirm and then the item is deleted" do
         expect(order.line_items.length).to eq(2)
-        within(".modal", visible: true) do
+        within(".modal") do
           expect do
             click_on("OK")
-            expect(page).not_to have_css(".modal", visible: true)
+            expect(page).not_to have_css(".modal")
           end.to change { order.reload.line_items.length }.by(-1)
         end
       end
@@ -169,7 +170,7 @@ describe '
         it "that the user can close and then nothing change" do
           expect(page).to have_content "This will cancel the current order."
           expect(page).to have_checked_field "Send a cancellation email to the customer"
-          within(".modal", visible: true) do
+          within(".modal") do
             click_on("Cancel")
           end
           
@@ -180,7 +181,7 @@ describe '
         context "that the user can confirm" do
           it "and then the order is cancelled and no email is sent by default" do
             expect do
-              within(".modal", visible: true) do
+              within(".modal") do
                 uncheck("send_cancellation_email")
                 click_on("OK")
               end
@@ -192,7 +193,7 @@ describe '
 
           it "and check the checkbox to send an email to the customer about its order cancellation" do
             expect do
-              within(".modal", visible: true) do
+              within(".modal") do
                 click_on("OK")
               end
               expect(page).to have_content "Cannot add item to canceled order"
@@ -205,7 +206,7 @@ describe '
         context "that the user can choose to restock item" do
           let(:shipment) { order.shipments.first }
           it "uncheck the checkbox to not restock item" do
-            within(".modal", visible: true) do
+            within(".modal") do
               check("restock_items")
               click_on("OK")
             end
@@ -276,32 +277,10 @@ describe '
 
       login_as user
       new_order_with_distribution(distributor, order_cycle)
-      expect(page).to have_content I18n.t('spree.add_product').upcase
+      expect(page).to have_selector 'h1', text: "Customer Details"
     end
 
     it "creates order and shipment successfully and allows proceeding to payment" do
-      select2_select product.name, from: 'add_variant_id', search: true
-
-      within("table.stock-levels") do
-        expect(page).to have_selector("#stock_item_quantity")
-        fill_in "stock_item_quantity", with: 50
-        find("button.add_variant").click
-      end
-
-      expect(page).to_not have_selector("table.stock-levels")
-      expect(page).to have_selector("table.stock-contents")
-
-      within("tr.stock-item") do
-        expect(page).to have_text("50")
-      end
-
-      order = Spree::Order.last
-      expect(order.line_items.first.quantity).to eq(50)
-      expect(order.shipments.count).to eq(1)
-
-      click_button "Update And Recalculate Fees"
-      expect(page).to have_selector 'h1', text: "Customer Details"
-
       fill_in "order_email", with: "test@test.com"
       
       expect(page).to have_selector('#order_ship_address_attributes_firstname')
@@ -325,19 +304,40 @@ describe '
       select "Victoria", from: "order_bill_address_attributes_state_id"
       fill_in "order_bill_address_attributes_phone", with: "111 1111 1111"
 
-      expect { click_button "Update" }.to change { Customer.count }.by(1)
+      click_button "Update"
+
+      expect(page).to have_content "Customer Details updated"
+      click_link "Order Details"
+
+      expect(page).to have_content I18n.t('spree.add_product').upcase
+      select2_select product.name, from: 'add_variant_id', search: true
+
+      within("table.stock-levels") do
+        expect(page).to have_selector("#stock_item_quantity")
+        fill_in "stock_item_quantity", with: 50
+        find("button.add_variant").click
+      end
+
+      expect(page).to_not have_selector("table.stock-levels")
+      expect(page).to have_selector("table.stock-contents")
+
+      within("tr.stock-item") do
+        expect(page).to have_text("50")
+      end
+
+      order = Spree::Order.last
+      expect(order.line_items.first.quantity).to eq(50)
+      expect(order.shipments.count).to eq(1)
 
       new_customer = Customer.last
-
       expect(new_customer.full_name).to eq('Clark Kent')
       expect(new_customer.bill_address.address1).to eq('Smallville')
       expect(new_customer.bill_address.city).to eq('Kansas')
       expect(new_customer.bill_address.zipcode).to eq('SP1 M11')
       expect(new_customer.bill_address.phone).to eq('111 1111 1111')
-
       expect(new_customer.bill_address).to eq(new_customer.ship_address)
 
-      expect(page).to have_content "Customer Details updated"
+      click_button "Update And Recalculate Fees"
 
       click_link "Payments"
 
@@ -372,12 +372,6 @@ describe '
     # When I create a new order
     login_as user
     new_order_with_distribution(distributor, order_cycle)
-    select2_select product.name, from: 'add_variant_id', search: true
-    find('button.add_variant').click
-    page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS
-    click_button 'Update'
-
-    expect(page).to have_selector 'h1.js-admin-page-title', text: "Customer Details"
 
     # The customer selection partial should be visible
     expect(page).to have_selector '#select-customer'
@@ -385,7 +379,6 @@ describe '
     # And I select that customer's email address and save the order
     tomselect_search_and_select customer.email, from: 'customer_search_override'
     click_button 'Update'
-    expect(page).to have_selector "h1.js-admin-page-title", text: "Customer Details"
 
     # Then their addresses should be associated with the order
     order = Spree::Order.last
@@ -395,6 +388,12 @@ describe '
     expect(order.bill_address.zipcode).to eq customer.bill_address.zipcode
     expect(order.ship_address.city).to eq customer.ship_address.city
     expect(order.bill_address.city).to eq customer.bill_address.city
+
+    click_link "Order Details"
+
+    select2_select product.name, from: 'add_variant_id', search: true
+    find('button.add_variant').click
+    page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS
   end
 
   context "as an enterprise manager" do
@@ -425,7 +424,7 @@ describe '
       end
       let!(:order) do
         create(:order_with_taxes, distributor: distributor1, ship_address: create(:address),
-                                  product_price: 110, tax_rate_amount: 0.1,
+                                  product_price: 110, tax_rate_amount: 0.1, included_in_price: true,
                                   tax_rate_name: "Tax 1").tap do |order|
                                     order.create_tax_charge!
                                     order.update_shipping_fees!
@@ -480,18 +479,31 @@ describe '
       end
       
       context "Check send/print invoice links" do
-        context "when abn number is not mandatory to send/print invoices" do
+        
+        shared_examples_for 'can send/print invoices' do
           before do
-            Spree::Config[:enterprise_number_required_on_invoices?] = false
+            visit spree.edit_admin_order_path(order)
+            find("#links-dropdown .ofn-drop-down").click
           end
 
-          it "should display normal links" do
-            visit spree.edit_admin_order_path(order)
-
-            find("#links-dropdown .ofn-drop-down").click
+          it 'shows the right links' do
             expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
             expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
           end
+
+          it 'can send invoices' do
+            click_link "Send Invoice"
+            expect(page).to have_content "Invoice email has been sent"
+          end
+        end
+
+        context "when abn number is not mandatory to send/print invoices" do
+          before do
+            Spree::Config[:enterprise_number_required_on_invoices?] = false
+            distributor1.update_attribute(:abn, "")
+          end
+
+          it_should_behave_like 'can send/print invoices'
         end
 
         context "when abn number is mandatory to send/print invoices" do
@@ -504,13 +516,7 @@ describe '
               distributor1.update_attribute(:abn, '12345678')
             end
             
-            it "should display normal links" do
-              visit spree.edit_admin_order_path(order)
-
-              find("#links-dropdown .ofn-drop-down").click
-              expect(page).to have_link "Send Invoice", href: spree.invoice_admin_order_path(order)
-              expect(page).to have_link "Print Invoice", href: spree.print_admin_order_path(order)
-            end
+            it_should_behave_like 'can send/print invoices'
           end
 
           context "and a abn number is not set on the distributor" do
@@ -540,12 +546,6 @@ describe '
         end
       end
 
-      it "cannot split the order in different stock locations" do
-        # There's only 1 stock location in OFN,
-        #   so the split functionality that comes with spree should be hidden
-        expect(page).to_not have_selector '.split-item'
-      end
-
       context "with different shipping methods" do
         let!(:different_shipping_method_for_distributor1) do
           create(:shipping_method, name: "Different", distributors: [distributor1])
@@ -573,7 +573,7 @@ describe '
         end
       end
 
-      it "can edit tracking number" do
+      it "can edit and delete tracking number" do
         test_tracking_number = "ABCCBA"
         expect(page).to_not have_content test_tracking_number
 
@@ -582,6 +582,45 @@ describe '
         find('.save-tracking').click
 
         expect(page).to have_content test_tracking_number
+
+        find('.delete-tracking.icon-trash').click
+        # Cancel Deletion
+        # Check if the alert box shows and after clicking cancel
+        # the alert box vanishes and tracking num is still present
+        expect(page).to have_content 'Are you sure?'
+        find('.cancel').click
+        expect(page).to_not have_content 'Are you sure?'
+        expect(page).to have_content test_tracking_number
+
+        find('.delete-tracking.icon-trash').click
+        expect(page).to have_content 'Are you sure?'
+        find('.confirm').click
+        expect(page).to_not have_content test_tracking_number
+      end
+
+      it "can edit and delete note" do
+        test_note = "this is a note"
+        expect(page).to_not have_content test_note
+
+        find('.edit-note.icon-edit').click
+        fill_in "note", with: test_note
+        find('.save-note').click
+
+        expect(page).to have_content test_note
+
+        find('.delete-note.icon-trash').click
+        # Cancel Deletion
+        # Check if the alert box shows and after clicking cancel
+        # the alert box vanishes and note is still present
+        expect(page).to have_content 'Are you sure?'
+        find('.cancel').click
+        expect(page).to_not have_content 'Are you sure?'
+        expect(page).to have_content test_note
+
+        find('.delete-note.icon-trash').click
+        expect(page).to have_content 'Are you sure?'
+        find('.confirm').click
+        expect(page).to_not have_content test_note
       end
 
       it "viewing shipping fees" do
@@ -640,6 +679,8 @@ describe '
 
     it "creating an order with distributor and order cycle" do
       new_order_with_distribution(distributor1, order_cycle1)
+      expect(page).to have_selector 'h1', text: 'Customer Details'
+      click_link "Order Details"
 
       expect(page).to have_content 'ADD PRODUCT'
       select2_select product.name, from: 'add_variant_id', search: true
@@ -658,10 +699,58 @@ describe '
 
       click_button 'Update'
 
-      expect(page).to have_selector 'h1', text: 'Customer Details'
       o = Spree::Order.last
       expect(o.distributor).to eq distributor1
       expect(o.order_cycle).to eq order_cycle1
+    end
+  end
+  
+  describe "searching customers" do
+    def serching_for_customers
+      # opens the customer dropdown
+      find(".items-placeholder").click
+
+      # sets the query name
+      find(".dropdown-input").set("John")
+      within(".customer-details") do
+        expect(page).to have_content("John Doe")
+        expect(page).to have_content(customer.email.to_s)
+      end
+
+      # sets the query email
+      find(".dropdown-input").set("maura@smith.biz")
+      within(".customer-details") do
+        expect(page).to have_content("John Doe")
+        expect(page).to have_content(customer.email.to_s)
+      end
+    end
+
+    context "as the enterprise owner" do
+      before do  
+        product.variants.first.update(on_demand: false, on_hand: 0)
+
+        login_as user
+        new_order_with_distribution(distributor, order_cycle)
+        expect(page).to have_selector 'h1', text: "Customer Details"
+      end
+
+      it "finds a customer by name" do
+        serching_for_customers
+      end
+    end  
+
+    context "as superadmin" do
+      before do
+        product.variants.first.update(on_demand: false, on_hand: 0)
+
+        login_as_admin
+        new_order_with_distribution(distributor, order_cycle)
+        expect(page).to have_selector 'h1', text: "Customer Details"
+      end
+      
+      it "finds a customer by name" do
+        serching_for_customers
+      end
     end
   end
 end

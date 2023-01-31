@@ -77,3 +77,6 @@
     = @order.distributor.invoice_text
 
 = render 'spree/shared/payment'
+
+- if @order.note.present?
+  = render partial: 'spree/shared/order_note'

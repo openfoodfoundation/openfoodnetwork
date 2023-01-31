@@ -1,13 +1,18 @@
 name: 'Mayhem for API'
-on: [push]
+on: workflow_dispatch
+permissions:
+  contents: read # to fetch code (actions/checkout)
 jobs:
   test:
+    permissions:
+      contents: read # to fetch code (actions/checkout)
+      security-events: write # to upload SARIF results (github/codeql-action/upload-sarif)
     if: ${{ github.repository_owner == 'openfoodfoundation' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: docker/build
     - run: docker-compose up --detach
     - run: until curl -f -s http://localhost:3000; do echo "waiting for api server"; sleep 1; done
@@ -34,13 +39,13 @@ jobs:
 
     # Archive HTML report
     - name: Archive Mayhem for API report
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: mapi-report
         path: mapi.html
 
     # Upload SARIF file (only available on public repos or github enterprise)
     - name: Upload SARIF file
-      uses: github/codeql-action/upload-sarif@v1
+      uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: mapi.sarif

@@ -22,6 +22,7 @@ describe "spree/admin/orders/invoice.html.haml" do
   before do
     assign(:order, order)
     allow(view).to receive_messages checkout_adjustments_for: [],
+                                    display_line_items_taxes: '',
                                     display_checkout_tax_total: '10',
                                     display_checkout_total_less_tax: '8',
                                     outstanding_balance_label: 'Outstanding Balance'
@@ -78,5 +79,12 @@ describe "spree/admin/orders/invoice.html.haml" do
     render
     expect(rendered).to have_content "Shipping: Pickup"
     expect(rendered).to_not have_content adas_address_display
+  end
+
+  it "displays order note on invoice when note is given" do
+    order.note = "Test note"
+
+    render
+    expect(rendered).to have_content "Test note"
   end
 end

@@ -25,7 +25,7 @@ module Spree
         order.payment_required?
       }
       go_to_state :confirmation, if: ->(order) {
-        Flipper.enabled? :split_checkout, order.created_by
+        OpenFoodNetwork::FeatureToggle.enabled? :split_checkout, order.created_by
       }
       go_to_state :complete
     end
@@ -311,7 +311,7 @@ module Spree
     # Creates new tax charges if there are any applicable rates. If prices already
     # include taxes then price adjustments are created instead.
     def create_tax_charge!
-      return if state.in?(["cart", "address", "delivery"]) && Flipper.enabled?(:split_checkout)
+      return if state.in?(["cart", "address", "delivery"]) && OpenFoodNetwork::FeatureToggle.enabled?(:split_checkout)
 
       clear_legacy_taxes!
 
@@ -376,10 +376,6 @@ module Spree
       payment_state == 'paid' || payment_state == 'credit_owed'
     end
 
-    def available_payment_methods
-      @available_payment_methods ||= PaymentMethod.available(:both)
-    end
-
     # "Checkout" is the initial state and, for card payments, "pending" is the state after auth
     # These are both valid states to process the payment
     def pending_payments
@@ -433,7 +429,7 @@ module Spree
       all_adjustments.destroy_all
       payments.clear
       shipments.destroy_all
-      restart_checkout_flow if state == "payment"
+      restart_checkout_flow if state.in?(["payment", "confirmation"])
     end
 
     def state_changed(name)
@@ -540,9 +536,9 @@ module Spree
       # And the shipping fee is already up-to-date when this error occurs.
       # https://github.com/openfoodfoundation/openfoodnetwork/issues/3924
       Bugsnag.notify(e) do |report|
-        report.add_tab(:order, attributes)
-        report.add_tab(:shipment, shipment.attributes)
-        report.add_tab(:shipment_in_db, Spree::Shipment.find_by(id: shipment.id).attributes)
+        report.add_metadata(:order, attributes)
+        report.add_metadata(:shipment, shipment.attributes)
+        report.add_metadata(:shipment_in_db, Spree::Shipment.find_by(id: shipment.id).attributes)
       end
     end
 
@@ -704,43 +700,12 @@ module Spree
     end
 
     def require_customer?
-      return false if new_record? || state == 'cart'
-
-      true
-    end
-
-    def customer_is_valid?
-      return true unless require_customer?
-
-      customer.present? && customer.enterprise_id == distributor_id && customer.email == email_for_customer
-    end
-
-    def email_for_customer
-      (user&.email || email)&.downcase
-    end
-
-    def associate_customer
-      return customer if customer.present?
-
-      Customer.of(distributor).find_by(email: email_for_customer)
-    end
-
-    def create_customer
-      return if customer_is_valid?
-
-      Customer.create(
-        enterprise: distributor,
-        email: email_for_customer,
-        user: user,
-        first_name: bill_address&.first_name.to_s,
-        last_name: bill_address&.last_name.to_s,
-        bill_address: bill_address&.clone,
-        ship_address: ship_address&.clone
-      )
+      persisted? && state != "cart"
     end
 
     def ensure_customer
-      self.customer = associate_customer || create_customer
+      self.customer ||= CustomerSyncer.find_and_update_customer(self)
+      self.customer ||= CustomerSyncer.create_customer(self) if require_customer?
     end
 
     def update_adjustment!(adjustment)

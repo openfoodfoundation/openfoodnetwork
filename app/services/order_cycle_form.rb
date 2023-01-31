@@ -8,9 +8,16 @@ class OrderCycleForm
   def initialize(order_cycle, order_cycle_params, user)
     @order_cycle = order_cycle
     @order_cycle_params = order_cycle_params
+    @specified_params = order_cycle_params.keys
     @user = user
     @permissions = OpenFoodNetwork::Permissions.new(user)
     @schedule_ids = order_cycle_params.delete(:schedule_ids)
+    @selected_distributor_payment_method_ids = order_cycle_params.delete(
+      :selected_distributor_payment_method_ids
+    )
+    @selected_distributor_shipping_method_ids = order_cycle_params.delete(
+      :selected_distributor_shipping_method_ids
+    )
   end
 
   def save
@@ -20,13 +27,16 @@ class OrderCycleForm
 
     order_cycle.transaction do
       order_cycle.save!
-      order_cycle.schedule_ids = schedule_ids
+      order_cycle.schedule_ids = schedule_ids if parameter_specified?(:schedule_ids)
       order_cycle.save!
       apply_exchange_changes
+      attach_selected_distributor_payment_methods
+      attach_selected_distributor_shipping_methods
       sync_subscriptions
       true
     end
-  rescue ActiveRecord::RecordInvalid
+  rescue ActiveRecord::RecordInvalid => e
+    add_exception_to_order_cycle_errors(e)
     false
   end
 
@@ -34,10 +44,40 @@ class OrderCycleForm
 
   attr_accessor :order_cycle, :order_cycle_params, :user, :permissions
 
+  def add_exception_to_order_cycle_errors(exception)
+    error = exception.message.split(":").last.strip
+    order_cycle.errors.add(:base, error) if order_cycle.errors.to_a.exclude?(error)
+  end
+
   def apply_exchange_changes
     return if exchanges_unchanged?
 
     OpenFoodNetwork::OrderCycleFormApplicator.new(order_cycle, user).go!
+
+    # reload so outgoing exchanges are up-to-date for shipping/payment method validations
+    order_cycle.reload
+  end
+
+  def attach_selected_distributor_payment_methods
+    return if @selected_distributor_payment_method_ids.nil?
+
+    order_cycle.selected_distributor_payment_method_ids = selected_distributor_payment_method_ids
+    order_cycle.save!
+  end
+
+  def attach_selected_distributor_shipping_methods
+    return if @selected_distributor_shipping_method_ids.nil?
+
+    order_cycle.selected_distributor_shipping_method_ids = selected_distributor_shipping_method_ids
+    order_cycle.save!
+  end
+
+  def attachable_distributor_payment_method_ids
+    @attachable_distributor_payment_method_ids ||= order_cycle.attachable_distributor_payment_methods.map(&:id)
+  end
+
+  def attachable_distributor_shipping_method_ids
+    @attachable_distributor_shipping_method_ids ||= order_cycle.attachable_distributor_shipping_methods.map(&:id)
   end
 
   def exchanges_unchanged?
@@ -46,12 +86,34 @@ class OrderCycleForm
     end
   end
 
-  def schedule_ids?
-    @schedule_ids.present?
+  def selected_distributor_payment_method_ids
+    @selected_distributor_payment_method_ids = (
+      attachable_distributor_payment_method_ids &
+      @selected_distributor_payment_method_ids.reject(&:blank?).map(&:to_i)
+    )
+
+    if attachable_distributor_payment_method_ids.sort == @selected_distributor_payment_method_ids.sort
+      @selected_distributor_payment_method_ids = []
+    end
+
+    @selected_distributor_payment_method_ids
+  end
+
+  def selected_distributor_shipping_method_ids
+    @selected_distributor_shipping_method_ids = (
+      attachable_distributor_shipping_method_ids &
+      @selected_distributor_shipping_method_ids.reject(&:blank?).map(&:to_i)
+    )
+
+    if attachable_distributor_shipping_method_ids.sort == @selected_distributor_shipping_method_ids.sort
+      @selected_distributor_shipping_method_ids = []
+    end
+
+    @selected_distributor_shipping_method_ids
   end
 
   def build_schedule_ids
-    return unless schedule_ids?
+    return unless parameter_specified?(:schedule_ids)
 
     result = existing_schedule_ids
     result |= (requested_schedule_ids & permitted_schedule_ids) # Add permitted and requested
@@ -60,7 +122,7 @@ class OrderCycleForm
   end
 
   def sync_subscriptions
-    return unless schedule_ids?
+    return unless parameter_specified?(:schedule_ids)
     return unless schedule_sync_required?
 
     OrderManagement::Subscriptions::ProxyOrderSyncer.new(subscriptions_to_sync).sync!
@@ -76,6 +138,10 @@ class OrderCycleForm
 
   def requested_schedule_ids
     @schedule_ids.map(&:to_i)
+  end
+
+  def parameter_specified?(key)
+    @specified_params.map(&:to_s).include?(key.to_s)
   end
 
   def permitted_schedule_ids

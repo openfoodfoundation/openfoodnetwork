@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "As a consumer, I want to checkout my order", js: true do
+describe "As a consumer, I want to checkout my order" do
   include ShopWorkflow
   include SplitCheckoutHelper
   include FileHelper
@@ -60,15 +60,17 @@ describe "As a consumer, I want to checkout my order", js: true do
   let(:shipping_backoffice_only) {
     create(:shipping_method, require_ship_address: true, name: "Shipping Backoffice Only", display_on: "back_end")
   }
+  let(:shipping_methods) {
+    [free_shipping_with_required_address, free_shipping, shipping_with_fee, free_shipping_without_required_address, tagged_shipping]
+  }
 
   before do
-    allow(Flipper).to receive(:enabled?).with(:split_checkout).and_return(true)
-    allow(Flipper).to receive(:enabled?).with(:split_checkout, anything).and_return(true)
+    Flipper.enable(:split_checkout)
 
     add_enterprise_fee enterprise_fee
     set_order order
 
-    distributor.shipping_methods.push(free_shipping_with_required_address, free_shipping, shipping_with_fee, free_shipping_without_required_address, tagged_shipping)
+    distributor.shipping_methods.push(shipping_methods)
   end
 
   context "guest checkout when distributor doesn't allow guest orders" do
@@ -137,6 +139,23 @@ describe "As a consumer, I want to checkout my order", js: true do
       click_on "Checkout as guest"
       expect(page).to have_content distributor.name
       expect_to_be_on_first_step
+    end
+
+    context "when no shipping methods are available" do
+      before do
+        shipping_methods.each { |sm| sm.update(tag_list: "hidden") }
+      end
+
+      it "should display an error message" do
+        create(:filter_shipping_methods_tag_rule,
+               enterprise: distributor,
+               is_default: true,
+               preferred_shipping_method_tags: "hidden",
+               preferred_matched_shipping_methods_visibility: 'hidden')
+
+        visit checkout_path
+        expect(page).to have_content "Checkout is not possible due to absence of shipping options. Please contact the shop owner."
+      end
     end
 
     it "should display error when fields are empty" do
@@ -275,6 +294,7 @@ describe "As a consumer, I want to checkout my order", js: true do
           click_button "Next - Payment method"
 
           expect(page).to have_content "Saving failed, please update the highlighted fields."
+          expect(page).to have_content "Shipping address line 1 can't be blank"
           expect(page).to have_content "Shipping address same as billing address?"
           expect(page).to have_content "Save as default shipping address"
           expect(page).to have_checked_field "Shipping address same as billing address?"
@@ -436,9 +456,8 @@ describe "As a consumer, I want to checkout my order", js: true do
 
               shared_examples "displays the shipping fee" do |checkout_page|
                 it "on the #{checkout_page} page" do
-                  within "#line-items" do
-                    expect(page).to have_content("Shipping #{with_currency(4.56)}")
-                  end
+                  expect(page).to have_content("Shipping #{with_currency(4.56)}")
+
                   if checkout_page.eql?("order confirmation")
                     expect(page).to have_content "Your order has been processed successfully"
                   end
@@ -466,11 +485,16 @@ describe "As a consumer, I want to checkout my order", js: true do
 
             it "displays error messages when submitting incomplete billing address" do
               click_button "Next - Payment method"
-              expect(page).to have_content "Saving failed, please update the highlighted fields."
-              expect(page).to have_field("Address", with: "")
-              expect(page).to have_field("City", with: "")
-              expect(page).to have_field("Postcode", with: "")
-              expect(page).to have_content("can't be blank", count: 3)
+              within "checkout" do
+                expect(page).to have_field("Address", with: "")
+                expect(page).to have_field("City", with: "")
+                expect(page).to have_field("Postcode", with: "")
+                expect(page).to have_content("can't be blank", count: 3)
+              end
+              within ".flash[type='error']" do
+                expect(page).to have_content "Saving failed, please update the highlighted fields."
+                expect(page).to have_content("can't be blank", count: 3)
+              end
             end
 
             it "fills in shipping details and redirects the user to the Payment Method step,
@@ -513,17 +537,23 @@ describe "As a consumer, I want to checkout my order", js: true do
         end
         it "should display error when fields are empty" do
           click_button "Next - Payment method"
-          expect(page).to have_content("Saving failed, please update the highlighted fields")
-          expect(page).to have_field("First Name", with: "")
-          expect(page).to have_field("Last Name", with: "")
-          expect(page).to have_field("Email", with: "")
-          expect(page).to have_content("is invalid")
-          expect(page).to have_field("Phone number", with: "")
-          expect(page).to have_field("Address", with: "")
-          expect(page).to have_field("City", with: "")
-          expect(page).to have_field("Postcode", with: "")
-          expect(page).to have_content("can't be blank", count: 7)
-          expect(page).to have_content("Select a shipping method")
+          within "checkout" do
+            expect(page).to have_field("First Name", with: "")
+            expect(page).to have_field("Last Name", with: "")
+            expect(page).to have_field("Email", with: "")
+            expect(page).to have_content("is invalid")
+            expect(page).to have_field("Phone number", with: "")
+            expect(page).to have_field("Address", with: "")
+            expect(page).to have_field("City", with: "")
+            expect(page).to have_field("Postcode", with: "")
+            expect(page).to have_content("can't be blank", count: 7)
+            expect(page).to have_content("Select a shipping method")
+          end
+          within ".flash[type='error']" do
+            expect(page).to have_content("Saving failed, please update the highlighted fields")
+            expect(page).to have_content("can't be blank", count: 13)
+            expect(page).to have_content("is invalid", count: 1)
+          end
         end
       end
 
@@ -558,7 +588,7 @@ describe "As a consumer, I want to checkout my order", js: true do
           expect(page).to have_checked_field "payment_method_#{payment_with_fee.id}"
         end
         it "displays the transaction fee" do
-          expect(page).to have_content("#{payment_with_fee.name} " + "(#{with_currency(1.23)})")
+          expect(page).to have_content("#{payment_with_fee.name} " + with_currency(1.23).to_s)
         end
       end
 
@@ -569,9 +599,8 @@ describe "As a consumer, I want to checkout my order", js: true do
 
         shared_examples "displays the transaction fee" do |checkout_page|
           it "on the #{checkout_page} page" do
-            within "#line-items" do
-              expect(page).to have_content("Transaction fee #{with_currency(1.23)}")
-            end
+            expect(page).to have_content("Transaction fee #{with_currency(1.23)}")
+
             if checkout_page.eql?("order confirmation")
               expect(page).to have_content "Your order has been processed successfully"
             end
@@ -624,8 +653,12 @@ describe "As a consumer, I want to checkout my order", js: true do
           end
 
           context "for Stripe SCA", if: pay_method.eql?("Stripe SCA") do
+            around do |example|
+              with_stripe_setup { example.run }
+            end
+
             before do
-              setup_stripe
+              stripe_enable
               visit checkout_step_path(:payment)
             end
 
@@ -737,10 +770,10 @@ describe "As a consumer, I want to checkout my order", js: true do
       end
 
       describe "navigation available" do
-        it "redirect to Payment method step by clicking on 'Back to payment method' button" do
+        it "redirect to Payment method step by clicking on 'Payment method' link" do
           visit checkout_step_path(:summary)
 
-          click_on "Back to Payment method"
+          click_link "Payment method"
 
           expect(page).to have_content "You can review and confirm your order in the next step which includes the final costs."
         end
@@ -875,6 +908,20 @@ describe "As a consumer, I want to checkout my order", js: true do
           click_on "Next - Payment method"
 
           expect(page).to have_current_path checkout_step_path(:payment)
+        end
+      end
+
+      describe "order state" do
+        before do
+          visit checkout_step_path(:summary)
+        end
+
+        it "emptying the cart changes the order state back to address" do
+          visit main_app.cart_path
+          expect {
+            find('#clear_cart_link').click
+            expect(page).to have_current_path enterprise_shop_path(distributor)
+          }.to change { order.reload.state }.from("confirmation").to("address")
         end
       end
     end

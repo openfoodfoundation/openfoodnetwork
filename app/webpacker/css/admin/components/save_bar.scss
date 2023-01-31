@@ -11,6 +11,10 @@
 
   h5 {
     color: $spree-blue;
+
+    &.error {
+      color: $red-500;
+    }
   }
 
   input {

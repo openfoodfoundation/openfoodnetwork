@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_29_135005) do
+ActiveRecord::Schema.define(version: 2023_01_17_043628) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -43,7 +44,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "adjustment_metadata", force: :cascade do |t|
+  create_table "adjustment_metadata", id: :serial, force: :cascade do |t|
     t.integer "adjustment_id"
     t.integer "enterprise_id"
     t.string "fee_name", limit: 255
@@ -53,7 +54,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["enterprise_id"], name: "index_adjustment_metadata_on_enterprise_id"
   end
 
-  create_table "column_preferences", force: :cascade do |t|
+  create_table "column_preferences", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "action_name", limit: 255, null: false
     t.string "column_name", limit: 255, null: false
@@ -63,14 +64,14 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["user_id", "action_name", "column_name"], name: "index_column_prefs_on_user_id_and_action_name_and_column_name", unique: true
   end
 
-  create_table "coordinator_fees", force: :cascade do |t|
+  create_table "coordinator_fees", id: :serial, force: :cascade do |t|
     t.integer "order_cycle_id"
     t.integer "enterprise_fee_id"
     t.index ["enterprise_fee_id"], name: "index_coordinator_fees_on_enterprise_fee_id"
     t.index ["order_cycle_id"], name: "index_coordinator_fees_on_order_cycle_id"
   end
 
-  create_table "customers", force: :cascade do |t|
+  create_table "customers", id: :serial, force: :cascade do |t|
     t.string "email", limit: 255, null: false
     t.integer "enterprise_id", null: false
     t.string "code", limit: 255
@@ -91,7 +92,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["user_id"], name: "index_customers_on_user_id"
   end
 
-  create_table "delayed_jobs", force: :cascade do |t|
+  create_table "delayed_jobs", id: :serial, force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
@@ -106,14 +107,16 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "distributors_payment_methods", id: false, force: :cascade do |t|
+  create_table "distributors_payment_methods", force: :cascade do |t|
     t.integer "distributor_id"
     t.integer "payment_method_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["distributor_id"], name: "index_distributors_payment_methods_on_distributor_id"
     t.index ["payment_method_id"], name: "index_distributors_payment_methods_on_payment_method_id"
   end
 
-  create_table "distributors_shipping_methods", force: :cascade do |t|
+  create_table "distributors_shipping_methods", id: :serial, force: :cascade do |t|
     t.integer "distributor_id"
     t.integer "shipping_method_id"
     t.datetime "created_at", null: false
@@ -122,7 +125,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["shipping_method_id"], name: "index_distributors_shipping_methods_on_shipping_method_id"
   end
 
-  create_table "enterprise_fees", force: :cascade do |t|
+  create_table "enterprise_fees", id: :serial, force: :cascade do |t|
     t.integer "enterprise_id"
     t.string "fee_type", limit: 255
     t.string "name", limit: 255
@@ -135,20 +138,12 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["tax_category_id"], name: "index_enterprise_fees_on_tax_category_id"
   end
 
-  create_table "enterprise_groups", force: :cascade do |t|
+  create_table "enterprise_groups", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.boolean "on_front_page"
     t.integer "position"
-    t.string "promo_image_file_name", limit: 255
-    t.string "promo_image_content_type", limit: 255
-    t.integer "promo_image_file_size"
-    t.datetime "promo_image_updated_at"
     t.text "description"
     t.text "long_description"
-    t.string "logo_file_name", limit: 255
-    t.string "logo_content_type", limit: 255
-    t.integer "logo_file_size"
-    t.datetime "logo_updated_at"
     t.integer "address_id"
     t.string "email", limit: 255, default: "", null: false
     t.string "website", limit: 255, default: "", null: false
@@ -170,13 +165,13 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["enterprise_id"], name: "index_enterprise_groups_enterprises_on_enterprise_id"
   end
 
-  create_table "enterprise_relationship_permissions", force: :cascade do |t|
+  create_table "enterprise_relationship_permissions", id: :serial, force: :cascade do |t|
     t.integer "enterprise_relationship_id"
     t.string "name", limit: 255, null: false
     t.index ["enterprise_relationship_id"], name: "index_erp_on_erid"
   end
 
-  create_table "enterprise_relationships", force: :cascade do |t|
+  create_table "enterprise_relationships", id: :serial, force: :cascade do |t|
     t.integer "parent_id"
     t.integer "child_id"
     t.index ["child_id"], name: "index_enterprise_relationships_on_child_id"
@@ -184,7 +179,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["parent_id"], name: "index_enterprise_relationships_on_parent_id"
   end
 
-  create_table "enterprise_roles", force: :cascade do |t|
+  create_table "enterprise_roles", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "enterprise_id"
     t.boolean "receives_notifications", default: false
@@ -194,7 +189,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["user_id"], name: "index_enterprise_roles_on_user_id"
   end
 
-  create_table "enterprises", force: :cascade do |t|
+  create_table "enterprises", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.text "description"
     t.text "long_description"
@@ -211,14 +206,6 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "distributor_info"
-    t.string "logo_file_name", limit: 255
-    t.string "logo_content_type", limit: 255
-    t.integer "logo_file_size"
-    t.datetime "logo_updated_at"
-    t.string "promo_image_file_name", limit: 255
-    t.string "promo_image_content_type", limit: 255
-    t.integer "promo_image_file_size"
-    t.datetime "promo_image_updated_at"
     t.string "facebook", limit: 255
     t.string "instagram", limit: 255
     t.string "linkedin", limit: 255
@@ -234,14 +221,11 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.boolean "display_invoice_logo", default: false
     t.boolean "allow_order_changes", default: false, null: false
     t.boolean "enable_subscriptions", default: false, null: false
-    t.string "terms_and_conditions_file_name", limit: 255
-    t.string "terms_and_conditions_content_type", limit: 255
-    t.integer "terms_and_conditions_file_size"
-    t.datetime "terms_and_conditions_updated_at"
     t.integer "business_address_id"
     t.boolean "show_customer_names_to_suppliers", default: false, null: false
     t.string "visible", limit: 255, default: "public", null: false
     t.string "entity_name"
+    t.string "whatsapp_phone", limit: 255
     t.index ["address_id"], name: "index_enterprises_on_address_id"
     t.index ["is_primary_producer", "sells"], name: "index_enterprises_on_is_primary_producer_and_sells"
     t.index ["name"], name: "index_enterprises_on_name", unique: true
@@ -250,7 +234,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["sells"], name: "index_enterprises_on_sells"
   end
 
-  create_table "exchange_fees", force: :cascade do |t|
+  create_table "exchange_fees", id: :serial, force: :cascade do |t|
     t.integer "exchange_id"
     t.integer "enterprise_fee_id"
     t.datetime "created_at", null: false
@@ -259,7 +243,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["exchange_id"], name: "index_exchange_fees_on_exchange_id"
   end
 
-  create_table "exchange_variants", force: :cascade do |t|
+  create_table "exchange_variants", id: :serial, force: :cascade do |t|
     t.integer "exchange_id"
     t.integer "variant_id"
     t.datetime "created_at", null: false
@@ -268,7 +252,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["variant_id"], name: "index_exchange_variants_on_variant_id"
   end
 
-  create_table "exchanges", force: :cascade do |t|
+  create_table "exchanges", id: :serial, force: :cascade do |t|
     t.integer "order_cycle_id"
     t.integer "sender_id"
     t.integer "receiver_id"
@@ -283,14 +267,14 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["sender_id"], name: "index_exchanges_on_sender_id"
   end
 
-  create_table "flipper_features", force: :cascade do |t|
+  create_table "flipper_features", id: :serial, force: :cascade do |t|
     t.string "key", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["key"], name: "index_flipper_features_on_key", unique: true
   end
 
-  create_table "flipper_gates", force: :cascade do |t|
+  create_table "flipper_gates", id: :serial, force: :cascade do |t|
     t.string "feature_key", null: false
     t.string "key", null: false
     t.string "value"
@@ -299,7 +283,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
   end
 
-  create_table "inventory_items", force: :cascade do |t|
+  create_table "inventory_items", id: :serial, force: :cascade do |t|
     t.integer "enterprise_id", null: false
     t.integer "variant_id", null: false
     t.boolean "visible", default: true, null: false
@@ -308,7 +292,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["enterprise_id", "variant_id"], name: "index_inventory_items_on_enterprise_id_and_variant_id", unique: true
   end
 
-  create_table "order_cycle_schedules", force: :cascade do |t|
+  create_table "order_cycle_schedules", id: :serial, force: :cascade do |t|
     t.integer "order_cycle_id", null: false
     t.integer "schedule_id", null: false
     t.datetime "created_at", null: false
@@ -317,7 +301,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["schedule_id"], name: "index_order_cycle_schedules_on_schedule_id"
   end
 
-  create_table "order_cycles", force: :cascade do |t|
+  create_table "order_cycles", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.datetime "orders_open_at"
     t.datetime "orders_close_at"
@@ -329,7 +313,23 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.boolean "mails_sent", default: false
   end
 
-  create_table "producer_properties", force: :cascade do |t|
+  create_table "order_cycles_distributor_payment_methods", id: false, force: :cascade do |t|
+    t.bigint "order_cycle_id"
+    t.bigint "distributor_payment_method_id"
+    t.index ["distributor_payment_method_id"], name: "index_dpm_id_on_order_cycles_distributor_payment_methods"
+    t.index ["order_cycle_id", "distributor_payment_method_id"], name: "order_cycles_distributor_payment_methods_join_index", unique: true
+    t.index ["order_cycle_id"], name: "index_oc_id_on_order_cycles_distributor_payment_methods"
+  end
+
+  create_table "order_cycles_distributor_shipping_methods", id: false, force: :cascade do |t|
+    t.bigint "order_cycle_id"
+    t.bigint "distributor_shipping_method_id"
+    t.index ["distributor_shipping_method_id"], name: "index_dsm_id_on_order_cycles_distributor_shipping_methods"
+    t.index ["order_cycle_id", "distributor_shipping_method_id"], name: "order_cycles_distributor_shipping_methods_join_index", unique: true
+    t.index ["order_cycle_id"], name: "index_oc_id_on_order_cycles_distributor_shipping_methods"
+  end
+
+  create_table "producer_properties", id: :serial, force: :cascade do |t|
     t.string "value", limit: 255
     t.integer "producer_id"
     t.integer "property_id"
@@ -341,7 +341,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["property_id"], name: "index_producer_properties_on_property_id"
   end
 
-  create_table "proxy_orders", force: :cascade do |t|
+  create_table "proxy_orders", id: :serial, force: :cascade do |t|
     t.integer "subscription_id", null: false
     t.integer "order_id"
     t.datetime "canceled_at"
@@ -355,13 +355,23 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["subscription_id"], name: "index_proxy_orders_on_subscription_id"
   end
 
-  create_table "schedules", force: :cascade do |t|
+  create_table "report_rendering_options", force: :cascade do |t|
+    t.bigint "user_id"
+    t.text "options"
+    t.string "report_type"
+    t.string "report_subtype"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_report_rendering_options_on_user_id"
+  end
+
+  create_table "schedules", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "sessions", force: :cascade do |t|
+  create_table "sessions", id: :serial, force: :cascade do |t|
     t.string "session_id", limit: 255, null: false
     t.text "data"
     t.datetime "created_at", null: false
@@ -370,7 +380,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "spree_activators", force: :cascade do |t|
+  create_table "spree_activators", id: :serial, force: :cascade do |t|
     t.string "description", limit: 255
     t.datetime "expires_at"
     t.datetime "created_at", null: false
@@ -386,7 +396,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.string "path", limit: 255
   end
 
-  create_table "spree_addresses", force: :cascade do |t|
+  create_table "spree_addresses", id: :serial, force: :cascade do |t|
     t.string "firstname", limit: 255
     t.string "lastname", limit: 255
     t.string "address1", limit: 255
@@ -407,7 +417,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["lastname"], name: "index_addresses_on_lastname"
   end
 
-  create_table "spree_adjustments", force: :cascade do |t|
+  create_table "spree_adjustments", id: :serial, force: :cascade do |t|
     t.decimal "amount", precision: 10, scale: 2
     t.string "label", limit: 255
     t.integer "adjustable_id"
@@ -429,23 +439,17 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["tax_category_id"], name: "index_spree_adjustments_on_tax_category_id"
   end
 
-  create_table "spree_assets", force: :cascade do |t|
+  create_table "spree_assets", id: :serial, force: :cascade do |t|
     t.integer "viewable_id"
-    t.integer "attachment_width"
-    t.integer "attachment_height"
-    t.integer "attachment_file_size"
     t.integer "position"
     t.string "viewable_type", limit: 50
-    t.string "attachment_content_type", limit: 255
-    t.string "attachment_file_name", limit: 255
     t.string "type", limit: 75
-    t.datetime "attachment_updated_at"
     t.text "alt"
     t.index ["viewable_id"], name: "index_assets_on_viewable_id"
     t.index ["viewable_type", "type"], name: "index_assets_on_viewable_type_and_type"
   end
 
-  create_table "spree_calculators", force: :cascade do |t|
+  create_table "spree_calculators", id: :serial, force: :cascade do |t|
     t.string "type", limit: 255
     t.integer "calculable_id", null: false
     t.string "calculable_type", limit: 255, null: false
@@ -453,7 +457,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "spree_configurations", force: :cascade do |t|
+  create_table "spree_configurations", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.string "type", limit: 50
     t.datetime "created_at", null: false
@@ -461,7 +465,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["name", "type"], name: "index_configurations_on_name_and_type"
   end
 
-  create_table "spree_countries", force: :cascade do |t|
+  create_table "spree_countries", id: :serial, force: :cascade do |t|
     t.string "iso_name", limit: 255
     t.string "iso", limit: 255
     t.string "iso3", limit: 255
@@ -470,7 +474,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.boolean "states_required", default: true
   end
 
-  create_table "spree_credit_cards", force: :cascade do |t|
+  create_table "spree_credit_cards", id: :serial, force: :cascade do |t|
     t.string "month", limit: 255
     t.string "year", limit: 255
     t.string "cc_type", limit: 255
@@ -492,7 +496,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["user_id"], name: "index_spree_credit_cards_on_user_id"
   end
 
-  create_table "spree_gateways", force: :cascade do |t|
+  create_table "spree_gateways", id: :serial, force: :cascade do |t|
     t.string "type", limit: 255
     t.string "name", limit: 255
     t.text "description"
@@ -504,7 +508,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "spree_inventory_units", force: :cascade do |t|
+  create_table "spree_inventory_units", id: :serial, force: :cascade do |t|
     t.string "state", limit: 255
     t.integer "variant_id"
     t.integer "order_id"
@@ -518,7 +522,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["variant_id"], name: "index_inventory_units_on_variant_id"
   end
 
-  create_table "spree_line_items", force: :cascade do |t|
+  create_table "spree_line_items", id: :serial, force: :cascade do |t|
     t.integer "order_id"
     t.integer "variant_id"
     t.integer "quantity", null: false
@@ -530,11 +534,15 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.decimal "distribution_fee", precision: 10, scale: 2
     t.decimal "final_weight_volume", precision: 10, scale: 2
     t.integer "tax_category_id"
+    t.decimal "weight", precision: 8, scale: 2
+    t.decimal "height", precision: 8, scale: 2
+    t.decimal "width", precision: 8, scale: 2
+    t.decimal "depth", precision: 8, scale: 2
     t.index ["order_id"], name: "index_line_items_on_order_id"
     t.index ["variant_id"], name: "index_line_items_on_variant_id"
   end
 
-  create_table "spree_log_entries", force: :cascade do |t|
+  create_table "spree_log_entries", id: :serial, force: :cascade do |t|
     t.integer "source_id"
     t.string "source_type", limit: 255
     t.text "details"
@@ -542,7 +550,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "spree_option_types", force: :cascade do |t|
+  create_table "spree_option_types", id: :serial, force: :cascade do |t|
     t.string "name", limit: 100
     t.string "presentation", limit: 100
     t.datetime "created_at", null: false
@@ -550,7 +558,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.integer "position", default: 0, null: false
   end
 
-  create_table "spree_option_values", force: :cascade do |t|
+  create_table "spree_option_values", id: :serial, force: :cascade do |t|
     t.integer "position"
     t.string "name", limit: 255
     t.string "presentation", limit: 255
@@ -572,7 +580,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["variant_id"], name: "index_option_values_variants_on_variant_id"
   end
 
-  create_table "spree_orders", force: :cascade do |t|
+  create_table "spree_orders", id: :serial, force: :cascade do |t|
     t.string "number", limit: 15
     t.decimal "item_total", precision: 10, scale: 2, default: "0.0", null: false
     t.decimal "total", precision: 10, scale: 2, default: "0.0", null: false
@@ -597,6 +605,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.integer "created_by_id"
     t.decimal "included_tax_total", precision: 10, scale: 2, default: "0.0", null: false
     t.decimal "additional_tax_total", precision: 10, scale: 2, default: "0.0", null: false
+    t.string "note", default: "", null: false
     t.index ["completed_at", "user_id", "created_by_id", "created_at"], name: "spree_orders_completed_at_user_id_created_by_id_created_at_idx"
     t.index ["customer_id"], name: "index_spree_orders_on_customer_id"
     t.index ["distributor_id"], name: "index_spree_orders_on_distributor_id"
@@ -605,7 +614,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["user_id"], name: "index_spree_orders_on_user_id"
   end
 
-  create_table "spree_payment_methods", force: :cascade do |t|
+  create_table "spree_payment_methods", id: :serial, force: :cascade do |t|
     t.string "type", limit: 255
     t.string "name", limit: 255
     t.text "description"
@@ -617,7 +626,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.string "display_on", limit: 255
   end
 
-  create_table "spree_payments", force: :cascade do |t|
+  create_table "spree_payments", id: :serial, force: :cascade do |t|
     t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
     t.integer "order_id"
     t.datetime "created_at", null: false
@@ -635,14 +644,14 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["order_id"], name: "index_spree_payments_on_order_id"
   end
 
-  create_table "spree_paypal_accounts", force: :cascade do |t|
+  create_table "spree_paypal_accounts", id: :serial, force: :cascade do |t|
     t.string "email", limit: 255
     t.string "payer_id", limit: 255
     t.string "payer_country", limit: 255
     t.string "payer_status", limit: 255
   end
 
-  create_table "spree_paypal_express_checkouts", force: :cascade do |t|
+  create_table "spree_paypal_express_checkouts", id: :serial, force: :cascade do |t|
     t.string "token", limit: 255
     t.string "payer_id", limit: 255
     t.string "transaction_id", limit: 255
@@ -654,14 +663,14 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["transaction_id"], name: "index_spree_paypal_express_checkouts_on_transaction_id"
   end
 
-  create_table "spree_pending_promotions", force: :cascade do |t|
+  create_table "spree_pending_promotions", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "promotion_id"
     t.index ["promotion_id"], name: "index_spree_pending_promotions_on_promotion_id"
     t.index ["user_id"], name: "index_spree_pending_promotions_on_user_id"
   end
 
-  create_table "spree_preferences", force: :cascade do |t|
+  create_table "spree_preferences", id: :serial, force: :cascade do |t|
     t.text "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -670,7 +679,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["key"], name: "index_spree_preferences_on_key", unique: true
   end
 
-  create_table "spree_prices", force: :cascade do |t|
+  create_table "spree_prices", id: :serial, force: :cascade do |t|
     t.integer "variant_id", null: false
     t.decimal "amount", precision: 10, scale: 2
     t.string "currency", limit: 255
@@ -678,20 +687,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["variant_id"], name: "index_spree_prices_on_variant_id"
   end
 
-  create_table "spree_product_groups", force: :cascade do |t|
-    t.string "name", limit: 255
-    t.string "permalink", limit: 255
-    t.string "order", limit: 255
-    t.index ["name"], name: "index_product_groups_on_name"
-    t.index ["permalink"], name: "index_product_groups_on_permalink"
-  end
-
-  create_table "spree_product_groups_products", id: false, force: :cascade do |t|
-    t.integer "product_id"
-    t.integer "product_group_id"
-  end
-
-  create_table "spree_product_option_types", force: :cascade do |t|
+  create_table "spree_product_option_types", id: :serial, force: :cascade do |t|
     t.integer "position"
     t.integer "product_id"
     t.integer "option_type_id"
@@ -699,7 +695,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "spree_product_properties", force: :cascade do |t|
+  create_table "spree_product_properties", id: :serial, force: :cascade do |t|
     t.string "value", limit: 255
     t.integer "product_id"
     t.integer "property_id"
@@ -709,7 +705,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["product_id"], name: "index_product_properties_on_product_id"
   end
 
-  create_table "spree_product_scopes", force: :cascade do |t|
+  create_table "spree_product_scopes", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.text "arguments"
     t.integer "product_group_id"
@@ -717,7 +713,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["product_group_id"], name: "index_product_scopes_on_product_group_id"
   end
 
-  create_table "spree_products", force: :cascade do |t|
+  create_table "spree_products", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255, default: "", null: false
     t.text "description"
     t.datetime "available_on"
@@ -754,26 +750,26 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["promotion_rule_id"], name: "index_products_promotion_rules_on_promotion_rule_id"
   end
 
-  create_table "spree_products_taxons", force: :cascade do |t|
+  create_table "spree_products_taxons", id: :serial, force: :cascade do |t|
     t.integer "product_id"
     t.integer "taxon_id"
     t.index ["product_id"], name: "index_products_taxons_on_product_id"
     t.index ["taxon_id"], name: "index_products_taxons_on_taxon_id"
   end
 
-  create_table "spree_promotion_action_line_items", force: :cascade do |t|
+  create_table "spree_promotion_action_line_items", id: :serial, force: :cascade do |t|
     t.integer "promotion_action_id"
     t.integer "variant_id"
     t.integer "quantity", default: 1
   end
 
-  create_table "spree_promotion_actions", force: :cascade do |t|
+  create_table "spree_promotion_actions", id: :serial, force: :cascade do |t|
     t.integer "activator_id"
     t.integer "position"
     t.string "type", limit: 255
   end
 
-  create_table "spree_promotion_rules", force: :cascade do |t|
+  create_table "spree_promotion_rules", id: :serial, force: :cascade do |t|
     t.integer "activator_id"
     t.integer "user_id"
     t.integer "product_group_id"
@@ -791,14 +787,14 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["user_id"], name: "index_promotion_rules_users_on_user_id"
   end
 
-  create_table "spree_properties", force: :cascade do |t|
+  create_table "spree_properties", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.string "presentation", limit: 255, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "spree_return_authorizations", force: :cascade do |t|
+  create_table "spree_return_authorizations", id: :serial, force: :cascade do |t|
     t.string "number", limit: 255
     t.string "state", limit: 255
     t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
@@ -810,7 +806,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.datetime "deleted_at"
   end
 
-  create_table "spree_roles", force: :cascade do |t|
+  create_table "spree_roles", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
   end
 
@@ -821,7 +817,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["user_id"], name: "index_roles_users_on_user_id"
   end
 
-  create_table "spree_shipments", force: :cascade do |t|
+  create_table "spree_shipments", id: :serial, force: :cascade do |t|
     t.string "tracking", limit: 255
     t.string "number", limit: 255
     t.decimal "cost", precision: 10, scale: 2, default: "0.0", null: false
@@ -839,14 +835,14 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["order_id"], name: "index_spree_shipments_on_order_id", unique: true
   end
 
-  create_table "spree_shipping_categories", force: :cascade do |t|
+  create_table "spree_shipping_categories", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "temperature_controlled", default: false, null: false
   end
 
-  create_table "spree_shipping_method_categories", force: :cascade do |t|
+  create_table "spree_shipping_method_categories", id: :serial, force: :cascade do |t|
     t.integer "shipping_method_id", null: false
     t.integer "shipping_category_id", null: false
     t.datetime "created_at", null: false
@@ -855,7 +851,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["shipping_method_id"], name: "index_spree_shipping_method_categories_on_shipping_method_id"
   end
 
-  create_table "spree_shipping_methods", force: :cascade do |t|
+  create_table "spree_shipping_methods", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -873,7 +869,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.integer "zone_id"
   end
 
-  create_table "spree_shipping_rates", force: :cascade do |t|
+  create_table "spree_shipping_rates", id: :serial, force: :cascade do |t|
     t.integer "shipment_id"
     t.integer "shipping_method_id"
     t.boolean "selected", default: false
@@ -883,18 +879,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["shipment_id", "shipping_method_id"], name: "spree_shipping_rates_join_index", unique: true
   end
 
-  create_table "spree_skrill_transactions", force: :cascade do |t|
-    t.string "email", limit: 255
-    t.float "amount"
-    t.string "currency", limit: 255
-    t.integer "transaction_id"
-    t.integer "customer_id"
-    t.string "payment_type", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "spree_state_changes", force: :cascade do |t|
+  create_table "spree_state_changes", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.string "previous_state", limit: 255
     t.integer "stateful_id"
@@ -906,13 +891,13 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["stateful_id"], name: "index_spree_state_changes_on_stateful_id"
   end
 
-  create_table "spree_states", force: :cascade do |t|
+  create_table "spree_states", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.string "abbr", limit: 255
     t.integer "country_id"
   end
 
-  create_table "spree_stock_items", force: :cascade do |t|
+  create_table "spree_stock_items", id: :serial, force: :cascade do |t|
     t.integer "stock_location_id"
     t.integer "variant_id"
     t.integer "count_on_hand", default: 0, null: false
@@ -926,7 +911,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["variant_id"], name: "index_spree_stock_items_on_variant_id", unique: true
   end
 
-  create_table "spree_stock_locations", force: :cascade do |t|
+  create_table "spree_stock_locations", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -943,7 +928,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.boolean "propagate_all_variants", default: true
   end
 
-  create_table "spree_stock_movements", force: :cascade do |t|
+  create_table "spree_stock_movements", id: :serial, force: :cascade do |t|
     t.integer "stock_item_id"
     t.integer "quantity", default: 0
     t.string "action", limit: 255
@@ -954,7 +939,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["stock_item_id"], name: "index_spree_stock_movements_on_stock_item_id"
   end
 
-  create_table "spree_stock_transfers", force: :cascade do |t|
+  create_table "spree_stock_transfers", id: :serial, force: :cascade do |t|
     t.string "type", limit: 255
     t.string "reference", limit: 255
     t.integer "source_location_id"
@@ -967,7 +952,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["source_location_id"], name: "index_spree_stock_transfers_on_source_location_id"
   end
 
-  create_table "spree_tax_categories", force: :cascade do |t|
+  create_table "spree_tax_categories", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.string "description", limit: 255
     t.datetime "created_at", null: false
@@ -976,7 +961,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.datetime "deleted_at"
   end
 
-  create_table "spree_tax_rates", force: :cascade do |t|
+  create_table "spree_tax_rates", id: :serial, force: :cascade do |t|
     t.decimal "amount", precision: 8, scale: 5
     t.integer "zone_id"
     t.integer "tax_category_id"
@@ -988,14 +973,14 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.datetime "deleted_at"
   end
 
-  create_table "spree_taxonomies", force: :cascade do |t|
+  create_table "spree_taxonomies", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "position", default: 0
   end
 
-  create_table "spree_taxons", force: :cascade do |t|
+  create_table "spree_taxons", id: :serial, force: :cascade do |t|
     t.integer "parent_id"
     t.integer "position", default: 0
     t.string "name", limit: 255, null: false
@@ -1014,7 +999,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["taxonomy_id"], name: "index_taxons_on_taxonomy_id"
   end
 
-  create_table "spree_tokenized_permissions", force: :cascade do |t|
+  create_table "spree_tokenized_permissions", id: :serial, force: :cascade do |t|
     t.integer "permissable_id"
     t.string "permissable_type", limit: 255
     t.string "token", limit: 255
@@ -1023,7 +1008,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["permissable_id", "permissable_type"], name: "index_tokenized_name_and_type"
   end
 
-  create_table "spree_users", force: :cascade do |t|
+  create_table "spree_users", id: :serial, force: :cascade do |t|
     t.string "encrypted_password", limit: 255
     t.string "password_salt", limit: 255
     t.string "email", limit: 255
@@ -1057,14 +1042,17 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email", limit: 255
     t.datetime "disabled_at"
+    t.boolean "show_api_key_view", default: false, null: false
+    t.string "provider"
+    t.string "uid"
     t.index ["confirmation_token"], name: "index_spree_users_on_confirmation_token", unique: true
     t.index ["email"], name: "email_idx_unique", unique: true
     t.index ["persistence_token"], name: "index_users_on_persistence_token"
   end
 
-  create_table "spree_variants", force: :cascade do |t|
+  create_table "spree_variants", id: :serial, force: :cascade do |t|
     t.string "sku", limit: 255, default: "", null: false
-    t.decimal "weight", precision: 8, scale: 2, default: "0.0", null: false
+    t.decimal "weight", precision: 8, scale: 2
     t.decimal "height", precision: 8, scale: 2
     t.decimal "width", precision: 8, scale: 2
     t.decimal "depth", precision: 8, scale: 2
@@ -1073,16 +1061,17 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.integer "product_id"
     t.integer "position"
     t.string "cost_currency", limit: 255
-    t.float "unit_value", default: 1.0, null: false
+    t.float "unit_value"
     t.string "unit_description", limit: 255, default: ""
     t.string "display_name", limit: 255
     t.string "display_as", limit: 255
     t.datetime "import_date"
     t.index ["product_id"], name: "index_variants_on_product_id"
     t.index ["sku"], name: "index_spree_variants_on_sku"
+    t.check_constraint "unit_value > (0)::double precision", name: "positive_unit_value"
   end
 
-  create_table "spree_zone_members", force: :cascade do |t|
+  create_table "spree_zone_members", id: :serial, force: :cascade do |t|
     t.integer "zoneable_id"
     t.string "zoneable_type", limit: 255
     t.integer "zone_id"
@@ -1090,7 +1079,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "spree_zones", force: :cascade do |t|
+  create_table "spree_zones", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.string "description", limit: 255
     t.datetime "created_at", null: false
@@ -1099,7 +1088,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.integer "zone_members_count", default: 0
   end
 
-  create_table "stripe_accounts", force: :cascade do |t|
+  create_table "stripe_accounts", id: :serial, force: :cascade do |t|
     t.string "stripe_user_id", limit: 255
     t.string "stripe_publishable_key", limit: 255
     t.datetime "created_at", null: false
@@ -1108,7 +1097,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["enterprise_id"], name: "index_stripe_accounts_on_enterprise_id", unique: true
   end
 
-  create_table "subscription_line_items", force: :cascade do |t|
+  create_table "subscription_line_items", id: :serial, force: :cascade do |t|
     t.integer "subscription_id", null: false
     t.integer "variant_id", null: false
     t.integer "quantity", null: false
@@ -1119,7 +1108,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["variant_id"], name: "index_subscription_line_items_on_variant_id"
   end
 
-  create_table "subscriptions", force: :cascade do |t|
+  create_table "subscriptions", id: :serial, force: :cascade do |t|
     t.integer "shop_id", null: false
     t.integer "customer_id", null: false
     t.integer "schedule_id", null: false
@@ -1144,7 +1133,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["shop_id"], name: "index_subscriptions_on_shop_id"
   end
 
-  create_table "suburbs", force: :cascade do |t|
+  create_table "suburbs", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.string "postcode", limit: 255
     t.float "latitude"
@@ -1152,7 +1141,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.integer "state_id"
   end
 
-  create_table "tag_rules", force: :cascade do |t|
+  create_table "tag_rules", id: :serial, force: :cascade do |t|
     t.integer "enterprise_id", null: false
     t.string "type", limit: 255, null: false
     t.datetime "created_at", null: false
@@ -1161,7 +1150,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.integer "priority", default: 99, null: false
   end
 
-  create_table "taggings", force: :cascade do |t|
+  create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
     t.integer "taggable_id"
     t.string "taggable_type", limit: 255
@@ -1173,22 +1162,18 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
   end
 
-  create_table "tags", force: :cascade do |t|
+  create_table "tags", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "terms_of_service_files", force: :cascade do |t|
+  create_table "terms_of_service_files", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "attachment_file_name"
-    t.string "attachment_content_type"
-    t.integer "attachment_file_size"
-    t.datetime "attachment_updated_at"
   end
 
-  create_table "variant_overrides", force: :cascade do |t|
+  create_table "variant_overrides", id: :serial, force: :cascade do |t|
     t.integer "variant_id", null: false
     t.integer "hub_id", null: false
     t.decimal "price", precision: 10, scale: 2
@@ -1202,7 +1187,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_135005) do
     t.index ["variant_id", "hub_id"], name: "index_variant_overrides_on_variant_id_and_hub_id"
   end
 
-  create_table "versions", force: :cascade do |t|
+  create_table "versions", id: :serial, force: :cascade do |t|
     t.string "item_type", limit: 255, null: false
     t.integer "item_id", null: false
     t.string "event", limit: 255, null: false

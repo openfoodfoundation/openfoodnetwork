@@ -1,0 +1,13 @@
+.ofn-drop-down.ofn-drop-down-v2{ data: { controller: "multiple-checked-select" } }
+  %div.ofn-drop-down-label{ "data-multiple-checked-select-target": "button" }
+    %span{class: "label"}= t('admin.columns')
+    %span{ class: "icon-caret-down", "data-multiple-checked-select-target": "caret" }
+  %div.menu{ class: "hidden", "data-multiple-checked-select-target": "options" }
+    %div.filter
+      %input{ type: "text", "data-multiple-checked-select-target": "filter", placeholder: I18n.t('components.multiple_checked_select.filter_placeholder') }
+    %hr
+    %div.menu_items
+      - @options.each do |option|
+        %label.menu_item{ "data-multiple-checked-select-target": "option", "data-value": option[1], "data-label": option[0] }
+          %input.redesigned-input{ type: "checkbox", checked: @selected.include?(option[1]), name: "#{@name}[]", value: option[1] }
+          = option[0]

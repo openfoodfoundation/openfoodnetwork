@@ -38,3 +38,4 @@ angular.module('admin.orderCycles')
     $scope.removeCoordinatorFee = ($event, index) ->
       $event.preventDefault()
       OrderCycle.removeCoordinatorFee(index)
+      $scope.order_cycle_form.$dirty = true

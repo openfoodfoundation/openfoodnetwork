@@ -48,28 +48,9 @@ module Spree
             @user.spree_roles = roles.reject(&:blank?).collect{ |r| Spree::Role.find(r) }
           end
 
-          message = if new_email_unconfirmed?
-                      Spree.t(:email_updated)
-                    else
-                      Spree.t(:account_updated)
-                    end
-          flash.now[:success] = message
+          flash.now[:success] = update_message
         end
         render :edit
-      end
-
-      def generate_api_key
-        if @user.generate_spree_api_key!
-          flash[:success] = t('spree.api.key_generated')
-        end
-        redirect_to spree.edit_admin_user_path(@user)
-      end
-
-      def clear_api_key
-        if @user.clear_spree_api_key!
-          flash[:success] = t('spree.api.key_cleared')
-        end
-        redirect_to spree.edit_admin_user_path(@user)
       end
 
       protected
@@ -99,6 +80,16 @@ module Spree
       end
 
       private
+
+      def update_message
+        return Spree.t(:show_api_key_view_toggled) if @user.show_api_key_view_previously_changed?
+
+        if new_email_unconfirmed?
+          Spree.t(:email_updated)
+        else
+          Spree.t(:account_updated)
+        end
+      end
 
       # handling raise from Admin::ResourceController#destroy
       def user_destroy_with_orders_error
@@ -137,7 +128,9 @@ module Spree
       end
 
       def user_params
-        ::PermittedAttributes::User.new(params).call([:enterprise_limit])
+        ::PermittedAttributes::User.new(params).call(
+          %i[enterprise_limit show_api_key_view]
+        )
       end
     end
   end

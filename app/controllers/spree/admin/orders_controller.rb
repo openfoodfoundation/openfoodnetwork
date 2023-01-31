@@ -42,6 +42,10 @@ module Spree
           @order.update_order!
         end
 
+        if params[:set_distribution_step] && @order.update(order_params)
+          return redirect_to spree.admin_order_customer_path(@order)
+        end
+
         unless order_params.present? && @order.update(order_params) && @order.line_items.present?
           if @order.line_items.empty? && !params[:suppress_error_msg]
             @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
@@ -55,12 +59,24 @@ module Spree
           redirect_to spree.edit_admin_order_path(@order)
         else
           # Jump to next step if order is not complete
-          redirect_to spree.admin_order_customer_path(@order)
+          redirect_to spree.admin_order_payments_path(@order)
         end
       end
 
       def bulk_management
         load_spree_api_key
+      end
+
+      def bulk_cancel
+        order_ids = params[:order_ids].split(',')
+
+        Spree::Order.where(id: order_ids).find_each do |order|
+          order.send_cancellation_email = params[:send_cancellation_email] != "false"
+          order.restock_items = params.fetch(:restock_items, "true") == "true"
+          order.cancel
+        end
+
+        flash[:success] = Spree.t(:order_updated)
       end
 
       def fire
@@ -126,7 +142,7 @@ module Spree
       end
 
       def require_distributor_abn
-        return if @order.distributor.abn.present?
+        return if @order.distributor.can_invoice?
 
         flash[:error] = t(:must_have_valid_business_number,
                           enterprise_name: @order.distributor.name)

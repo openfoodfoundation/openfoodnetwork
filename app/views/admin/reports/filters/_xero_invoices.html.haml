@@ -16,10 +16,10 @@
     .fourteen.columns.omega= number_field_tag :initial_invoice_number, params[:initial_invoice_number]
   .row
     .two.columns.alpha= label_tag :invoice_date, t(:invoice_date)
-    .fourteen.columns.omega= text_field_tag :invoice_date, params[:invoice_date], class: 'datetimepicker'
+    .fourteen.columns.omega= text_field_tag :invoice_date, params[:invoice_date], class: 'datetimepicker', data: { controller: "flatpickr", "flatpickr-enable-time-value": true }
   .row
     .two.columns.alpha= label_tag :due_date, t(:due_date)
-    .fourteen.columns.omega= text_field_tag :due_date, params[:due_date], class: 'datetimepicker'
+    .fourteen.columns.omega= text_field_tag :due_date, params[:due_date], class: 'datetimepicker', data: { controller: "flatpickr", "flatpickr-enable-time-value": true }
   .row
     .two.columns.alpha= label_tag :account_code, t(:account_code)
     .fourteen.columns.omega= text_field_tag :account_code, params[:account_code]

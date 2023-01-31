@@ -116,21 +116,7 @@ module Admin
 
     # Fetches tags for all customers of the enterprise and returns a hash indexed by customer_id
     def customer_tags_by_id
-      customer_tags = ::ActsAsTaggableOn::Tag.
-        joins(:taggings).
-        includes(:taggings).
-        where(taggings:
-                { taggable_type: 'Customer',
-                  taggable_id: Customer.of(managed_enterprise_id),
-                  context: 'tags' })
-
-      customer_tags.each_with_object({}) do |tag, indexed_hash|
-        tag.taggings.each do |tagging|
-          customer_id = tagging.taggable_id
-          indexed_hash[customer_id] ||= []
-          indexed_hash[customer_id] << tag.name
-        end
-      end
+      BatchTaggableTagsQuery.call(Customer.of(managed_enterprise_id))
     end
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module OrderStockCheck
+  include CablecarResponses
   extend ActiveSupport::Concern
 
   def valid_order_line_items?
@@ -21,12 +22,20 @@ module OrderStockCheck
   def check_order_cycle_expiry
     return unless current_order_cycle&.closed?
 
-    Bugsnag.notify("Notice: order cycle closed during checkout completion", order: current_order)
+    Bugsnag.notify("Notice: order cycle closed during checkout completion") do |payload|
+      payload.add_metadata :order, current_order
+    end
     current_order.empty!
     current_order.set_order_cycle! nil
 
     flash[:info] = I18n.t('order_cycle_closed')
-    redirect_to main_app.shop_path
+    respond_to do |format|
+      format.cable_ready {
+        render status: :see_other, operations: cable_car.redirect_to(url: main_app.shop_path)
+      }
+      format.json { render json: { path: main_app.shop_path }, status: :see_other }
+      format.html { redirect_to main_app.shop_path, status: :see_other }
+    end
   end
 
   private
@@ -36,7 +45,7 @@ module OrderStockCheck
   end
 
   def reset_order_to_cart
-    return if Flipper.enabled? :split_checkout, spree_current_user
+    return if OpenFoodNetwork::FeatureToggle.enabled? :split_checkout, spree_current_user
 
     OrderCheckoutRestart.new(@order).call
   end

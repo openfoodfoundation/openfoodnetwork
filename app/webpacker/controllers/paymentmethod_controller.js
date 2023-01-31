@@ -12,22 +12,20 @@ export default class extends Controller {
 
   selectPaymentMethod(event) {
     this.setPaymentMethod(event.target.dataset.paymentmethodId);
-
-    const stripeCardSelector =
-      this.application.getControllerForElementAndIdentifier(
-        document
-          .getElementById(event.target.dataset.paymentmethodId)
-          .querySelector('[data-controller="stripe-cards"]'),
-        "stripe-cards"
-      );
-    stripeCardSelector?.initSelectedCard();
+    // Send an event to the right (ie. the one with the same paymentmethodId)
+    // StripeCardsController to initialize the form elements with the selected card
+    const customEvent = new CustomEvent("stripecards:initSelectedCard", {
+      detail: event.target.dataset.paymentmethodId,
+    });
+    document.dispatchEvent(customEvent);
   }
 
   setPaymentMethod(paymentMethodContainerId) {
     Array.from(
       document.getElementsByClassName("paymentmethod-container")
     ).forEach((container) => {
-      const enabled = container.id === paymentMethodContainerId
+      const enabled =
+        container.dataset.paymentmethodId === paymentMethodContainerId;
 
       if (enabled) {
         container.style.display = "block";

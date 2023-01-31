@@ -5,6 +5,10 @@ es_CO:
       spree/product: Producto
       spree/shipping_method: Método de envío
     attributes:
+      spree/order/ship_address:
+        phone: "Número de teléfono"
+        firstname: "Nombre"
+        lastname: "Apellidos"
       spree/user:
         password: "Contraseña"
         password_confirmation: "confirmación de contraseña"
@@ -23,6 +27,8 @@ es_CO:
         state: Provincia
         source: Fuente
       spree/product:
+        name: "nombre del producto"
+        price: "Precio"
         primary_taxon: "Categoría del producto"
         supplier: "Proveedor"
         shipping_category_id: "Categoría de envío"
@@ -207,7 +213,6 @@ es_CO:
   search_by_name: Buscar por nombre o municipio...
   producers_join: Los productores colombianos ahora son bienvenidos a unirse a Open Food Network.
   charges_sales_tax: ¿Cargos de IVA?
-  enterprise_permissions: "Permisos de la organización"
   print_invoice: "Imprimir factura"
   print_ticket: "Imprimir Ticket"
   select_ticket_printer: "Seleccionar impresora para los tickets"
@@ -304,6 +309,25 @@ es_CO:
     delete: "Borrar"
     add: "Añadir"
   admin:
+    products_page:
+      title: Productos
+      filters:
+        categories:
+          title: Categorías
+        producers:
+          title: Productoras
+        colums: Columnas
+      columns:
+        name: Nombre
+        unit: Unidad
+        price: Precio
+        producer: Productor
+        category: Categoría
+      columns_selector:
+        unit: Unidad
+        price: Precio
+        producer: Productor
+        category: Categoría
     begins_at: Empieza en
     begins_on: Comienza en
     customer: Cliente
@@ -421,8 +445,6 @@ es_CO:
         confirm_delete: "¿Confirmas que quieres borrar?"
         search_by_email: "Buscar por correo electrónico/código"
         guest_label: "Retirar como invitado"
-      destroy:
-        has_associated_orders: "Error al eliminar: el cliente tiene pedidos asociados a su tienda."
     contents:
       edit:
         title: Contenido
@@ -450,6 +472,18 @@ es_CO:
     enterprise_groups:
       index:
         new_button: Nuevo grupo de organización
+      form_primary_details:
+        primary_details: "Detalles Principales"
+      form_users:
+        users: "Usuarias"
+      form_about:
+        about: "Acerca de"
+      form_images:
+        images: "Imágenes"
+      form_address:
+        contact: "Contacto"
+      form_web:
+        web: "Recursos Web"
     enterprise_roles:
       form:
         manages: Administra
@@ -657,11 +691,15 @@ es_CO:
         manage: Gestionar
       form:
         about_us:
+          legend: "Acerca de"
           desc_short: Descripción corta
           desc_short_placeholder: Háblanos sobre tu organización en una o dos frases
           desc_long: Sobre nosotras
           desc_long_placeholder: Explica a las consumidoras quién eres. Esta información aparecerá en tu perfil público.
+        address:
+          legend: "Dirección"
         business_details:
+          legend: "Detalles de la Organización"
           abn: NIF
           abn_placeholder: ej. 99 123 456 789
           acn: ACN
@@ -671,6 +709,7 @@ es_CO:
         business_address:
           address2: Dirección (continuación)
         contact:
+          legend: "Contacto"
           name: Nombre
           name_placeholder: ej. Gustav Plum
           email_address: Dirección de correo electrónico público
@@ -681,12 +720,16 @@ es_CO:
           website: Website
           website_placeholder: ej. www.truffles.com
         enterprise_fees:
+          legend: "Comisiones de la organización"
           name: Nombre
           fee_type: Tipo de Comisión
           manage_fees: Gestiona las comisiones de la Organización
           no_fees_yet: No tienes comisiones para la organización.
           create_button: Crear una ahora
+        enterprise_permissions:
+          legend: "Permisos de la organización"
         images:
+          legend: "Imágenes"
           logo: Logo
           promo_image_placeholder: 'Esta imagen aparece en "Sobre nosotras"'
           promo_image_note1: 'ATENCIÓN:'
@@ -695,6 +738,7 @@ es_CO:
           remove_logo: "Eliminar la imágen"
           remove_promo_image: "Eliminar la imágen"
         inventory_settings:
+          legend: "Configuración del Inventario"
           text1: Puedes optar por administrar los niveles de stock y los precios a través de tu
           inventory: inventario
           text2: >
@@ -706,6 +750,7 @@ es_CO:
           preferred_product_selection_from_inventory_only_yes: Los nuevos productos se pueden publicar en la tienda (recomendado)
           preferred_product_selection_from_inventory_only_no: Los nuevos productos se deben agregar al inventario antes de que puedan ser puestos en la tienda
         payment_methods:
+          legend: "Métodos de Pago"
           name: Nombre
           applies: ¿Aplicar?
           manage: Gestionar los métodos de pago
@@ -713,6 +758,7 @@ es_CO:
           create_button: Crear un nuevo método de pago
           create_one_button: Crear una ahora
         primary_details:
+          legend: "Detalles Principales"
           name: Nombre
           name_placeholder: ej. Professor Plum's Biodynamic Truffles
           groups: Grupos
@@ -728,6 +774,9 @@ es_CO:
           sells_tip: "Ninguno - La organización no vende directamente a los consumidores.<br />Popios - La organización vende sus propios productos a los consumidores.<br />Cualquiera -  La organización vende sus propios productos o de otros.<br />"
           visible_in_search: ¿Visible en la búsqueda?
           visible: Pública
+        properties:
+          legend: "Propiedades"
+        permalink:
           permalink: Permalink (sin espacios)
           permalink_tip: "Se usa para crear la URL de tu tienda: %{link}nombre-de-tu-tienda/shop"
           link_to_front: Link a la tienda
@@ -735,6 +784,7 @@ es_CO:
           ofn_uid: UID de OFN
           ofn_uid_tip: La identificación única utilizada para identificar la organización en Open Food Network.
         shipping_methods:
+          legend: "Métodos de envío"
           name: "Nombre"
           applies: "¿Activo?"
           manage: "Gestionar métodos de envío"
@@ -742,6 +792,7 @@ es_CO:
           create_one_button: "Crear una ahora"
           no_method_yet: "Todavía no tienes ningún método de envío."
         shop_preferences:
+          legend: "Configuración de la tienda"
           shopfront_requires_login: "¿Quieres que la tienda sea visible y pública?"
           shopfront_requires_login_tip: "Elije si los clientes deben iniciar sesión para ver la tienda o si es visible para todos."
           shopfront_requires_login_false: "Pública"
@@ -785,6 +836,7 @@ es_CO:
           enabled: "Habilitado"
           disabled: "Deshabilitado"
         social:
+          legend: "Social"
           twitter_placeholder: "ej: the_prof"
           instagram_placeholder: "p.ej. @mi_huerta"
           facebook_placeholder: "p.ej. www.facebook.com/NombreDePáginaAquí"
@@ -802,6 +854,7 @@ es_CO:
             i_agree: Estoy de acuerdo
             cancel: Cancelar
         tag_rules:
+          legend: "Reglas de las Etiquetas"
           default_rules:
             by_default: Por Defecto
             no_rules_yet: No hay reglas por defecto aplicadas
@@ -812,6 +865,7 @@ es_CO:
           add_new_rule: '+ Añadir una nueva regla'
           add_new_tag: '+ Añadir una nueva etiqueta'
         users:
+          legend: "Usuarias"
           email_confirmation_notice_html: "Falta la confirmación del email. Te hemos enviado un correo de confirmación a %{email}."
           resend: Reenviar
           owner: 'Propietaria'
@@ -929,11 +983,20 @@ es_CO:
         tags: "Etiquetas"
         delivery_details: "Detalles de entrega"
         fees: "Comisiones"
+        next: "Siguiente"
         previous: "Anterior"
         save: "Guardar"
-        save_and_back_to_list: "Guardar y volver a lista"
+        save_and_next: "Guardar y continuar"
         cancel: "Cancelar"
         back_to_list: "Regresar a la lista"
+      checkout_options:
+        cancel: "Cancelar"
+        distributor: "Distribuidor"
+        payment_methods: "Métodos de Pago"
+        save: "Guardar"
+        save_and_back_to_list: "Guardar y volver a lista"
+        select_all: "Seleccionar todo"
+        shipping_methods: "Métodos de envío"
       wizard_progress:
         edit: "1. Configuración general"
         incoming: "2. Productos entrantes"
@@ -997,6 +1060,7 @@ es_CO:
         customer_instructions_placeholder: Notas de la recogida o entrega
         products: Productos
         fees: Comisiones
+        tags: Etiquetas
       destroy_errors:
         orders_present: Ese ciclo de pedido ha sido seleccionado por un cliente y no puede ser eliminado. Para evitar que los clientes accedan a él, ciérrelo.
         schedule_present: Ese ciclo de pedido está vinculado a una programación y no puede ser eliminado. Desvincula o elimina la programación primero.
@@ -1006,6 +1070,8 @@ es_CO:
         msg: Este ciclo de pedido está vinculado a %{n}pedidos de suscripción abiertos. Cambiar esta fecha ahora no afectará ningun pedido que ya se haya realizado pero se debe evitar si es posible. ¿Estás seguro que deseas continuar?
         cancel: Cancelar
         proceed: Proceder
+      status:
+        closed: cerrado
     producer_properties:
       index:
         title: Propiedades del productor
@@ -1021,6 +1087,31 @@ es_CO:
         has_no_payment_methods: "%{enterprise} no tiene métodos de pago"
         has_no_shipping_methods: "%{enterprise} no tiene ningún método de envío"
         has_no_enterprise_fees: "%{enterprise} no tiene comisiones de organización"
+      side_menu:
+        enterprise:
+          primary_details: "Detalles Principales"
+          address: "Dirección"
+          contact: "Contacto"
+          social: "Social"
+          about: "Acerca de"
+          business_details: "Detalles de la Organización"
+          images: "Imágenes"
+          properties: "Propiedades"
+          shipping_methods: "Métodos de envío"
+          payment_methods: "Métodos de Pago"
+          enterprise_fees: "Comisiones de la organización"
+          enterprise_permissions: "Permisos de la organización"
+          inventory_settings: "Configuración del Inventario"
+          tag_rules: "Reglas de las Etiquetas"
+          shop_preferences: "Configuración de la tienda"
+          users: "Usuarias"
+        enterprise_group:
+          primary_details: "Detalles Principales"
+          users: "Usuarias"
+          about: "Acerca de"
+          images: "Imágenes"
+          contact: "Contacto"
+          web: "Recursos Web"
     enterprise_issues:
       create_new: Crear nuevo
       resend_email: Reenviar correo electrónico
@@ -1491,18 +1582,17 @@ es_CO:
       cart: "carrito"
       message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
     step1:
-      your_details:
-        title: Sus detalles
-        first_name:
-          label: Nombre
-        last_name:
-          label: Apellidos
+      contact_information:
         email:
           label: Email
         phone:
           label: Número de teléfono
       billing_address:
         title: Dirección de cobro
+        first_name:
+          label: Nombre
+        last_name:
+          label: Apellidos
       address:
         city:
           label: Ciudad
@@ -1521,10 +1611,14 @@ es_CO:
         card_year:
           label: Año
     step3:
-      your_details:
-        title: Sus detalles
-      billing_address:
-        title: Dirección de cobro
+      delivery_details:
+        title: Detalles de entrega
+        edit: Editar
+        address: Dirección de entrega
+      payment_method:
+        edit: Editar
+      order:
+        edit: Editar
     errors:
       invalid_email: "Introduce un correo electrónico válido"
   order_paid: PAGADO
@@ -1794,7 +1888,6 @@ es_CO:
   orders_form_empty_cart: "Vaciar carrito"
   orders_form_update_cart: "Actualizar"
   orders_form_subtotal: "Subtotal de productos"
-  orders_form_admin: "Administrar y Gestionar"
   orders_form_total: "Total"
   orders_oc_expired_headline: "Los pedidos están cerrados para este ciclo"
   orders_oc_expired_text: "Lo sentimos, ¡los pedidos para este ciclo cerraron hace %{time}! Contacta con tu nodo directamente para ver si pueden aceptar pedidos tardíos."
@@ -2056,7 +2149,6 @@ es_CO:
   admin_enterprise_groups_data_powertip: "El principal usuario responsable de este grupo."
   admin_enterprise_groups_data_powertip_logo: "Este es el logo del grupo"
   admin_enterprise_groups_data_powertip_promo_image: "Esta imagen se mostrará en la cabecera del perfil del Grupo"
-  admin_enterprise_groups_contact: "Contacto"
   admin_enterprise_groups_contact_phone_placeholder: "ej. 98 7654 3210"
   admin_enterprise_groups_contact_address1_placeholder: "ej. Carrer Torrent de l'Olla"
   admin_enterprise_groups_contact_city: "Barrio"
@@ -2065,7 +2157,6 @@ es_CO:
   admin_enterprise_groups_contact_zipcode_placeholder: "ej. 08025"
   admin_enterprise_groups_contact_state_id: "Provincia"
   admin_enterprise_groups_contact_country_id: "País"
-  admin_enterprise_groups_web: "Recursos Web"
   admin_enterprise_groups_web_twitter: "ej: the_prof"
   admin_enterprise_groups_web_website_placeholder: "ej. www.truffles.com"
   admin_order_cycles: "Ciclos de Pedidos del Admin"
@@ -2265,6 +2356,8 @@ es_CO:
   report_header_tax_on_delivery: "Impuestos sobre la entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Impuesto sobre las comisiones (%{currency_symbol})"
   report_header_total_tax: "Total Impuestos (%{currency_symbol})"
+  report_header_total_excl_tax: "Total Impuestos excl. (%{currency_symbol})"
+  report_header_total_incl_tax: "Total Impuestos incl. (%{currency_symbol})"
   report_header_enterprise: Organización
   report_header_customer: Cliente
   report_header_customer_code: Código del cliente
@@ -2372,11 +2465,8 @@ es_CO:
   images: "Imagenes"
   web: "Web"
   primary_details: "Detalles Principales"
-  adrdress: "Dirección"
   contact: "Contacto"
   social: "Social"
-  business_details: "Detalles de la Organización"
-  properties: "Propiedades"
   shipping: "Envío"
   shipping_methods: "Métodos de envío"
   payment_methods: "Métodos de Pago"
@@ -2384,11 +2474,8 @@ es_CO:
   payment_processing_failed: "No se pudo procesar el pago, por favor verifique los detalles que introdujo"
   payment_method_not_supported: "Ese método de pago no está soportado. Por favor elije otro."
   payment_updated: "Pago actualizado"
-  inventory_settings: "Configuración del Inventario"
   tag_rules: "Reglas de las Etiquetas"
-  shop_preferences: "Configuración de la tienda"
   enterprise_fee_whole_order: Pedido completo
-  enterprise_fee_by: "%{type} comisión por %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Esta relación ya existe."
   validation_msg_at_least_one_hub: "^Al menos se debe seleccionar un nodo"
   validation_msg_tax_category_cant_be_blank: "^La Categoría del Impuesto no puede estar vacía"
@@ -2469,6 +2556,7 @@ es_CO:
         got_it: "Lo entiendo"
         close: "Cerrar"
         continue: "Continuar"
+        cancel: "Cancelar"
         invite: "Invitar"
         invite_title: "Invitar a un usuario no registrado"
         tag_rule_help:
@@ -2628,7 +2716,6 @@ es_CO:
           pending: "pendiente"
           resumed: "resumido"
           returned: "devuelto"
-          skrill: "skrill"
         shipment_states:
           backorder: "orden pendiente"
           partial: "parcial"
@@ -3230,6 +3317,7 @@ es_CO:
           results_found: "%{number} Resultados encontrados."
           viewing: "Viendo de %{start}a %{end}."
           print_invoices: "Imprimir facturas"
+          resend_confirmation: "Reenviar confirmación"
         sortable_header:
           payment_state: "Estado del pago"
           shipment_state: "Estado del envío"
@@ -3355,7 +3443,6 @@ es_CO:
           paypal:
             no_payment_via_admin_backend: Los pagos de Paypal no se pueden capturar en el Backoffice
       products:
-        image_upload_error: "La imágen del producto no fue reconocida. Por favor, cargue una imágen en formato PNG o JPG."
         new:
           title: "Nuevo producto"
           new_product: "Nuevo producto"
@@ -3568,7 +3655,6 @@ es_CO:
       pending: pendiente
       resumed: resumido
       returned: devuelto
-      skrill: skrill
     subscription_state:
       active: activo
       pending: pendiente
@@ -3578,6 +3664,8 @@ es_CO:
     paypal:
       refund_amount: "Cantidad"
     users:
+      api_keys:
+        regenerate_key: "Regenerar llave"
       form:
         account_settings: Configuración de la cuenta
       show:
@@ -3609,7 +3697,8 @@ es_CO:
         items: Artículos
         total: Total
         paid?: ¿Pagado?
-        view: Ver
+        status: Estado
+        cancelled: Cancelado
       saved_cards:
         default?: ¿Por defecto?
         delete?: ¿Borrar?
@@ -3642,3 +3731,11 @@ es_CO:
           one: Pago
           many: Pagos
           other: Pagos
+  components:
+    search_input:
+      placeholder: Buscar
+    selector_with_filter:
+      search_placeholder: Buscar
+    pagination:
+      next: Siguiente
+      previous: Anterior

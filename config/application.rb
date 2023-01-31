@@ -114,7 +114,8 @@ module Openfoodnetwork
           Calculator::FlexiRate,
           Calculator::PerItem,
           Calculator::PriceSack,
-          Calculator::Weight
+          Calculator::Weight,
+          Calculator::None
         ]
 
         app.config.spree.calculators.add_class('enterprise_fees')
@@ -133,7 +134,8 @@ module Openfoodnetwork
           Calculator::FlatRate,
           Calculator::FlexiRate,
           Calculator::PerItem,
-          Calculator::PriceSack
+          Calculator::PriceSack,
+          Calculator::None
         ]
 
         app.config.spree.calculators.add_class('tax_rates')
@@ -153,15 +155,18 @@ module Openfoodnetwork
 
     initializer "ofn.reports" do |app|
       module ::Reporting; end
-      loader = Zeitwerk::Loader.new
-      loader.push_dir("#{Rails.root}/lib/reporting", namespace: ::Reporting)
-      loader.enable_reloading
-      loader.setup
-      loader.eager_load
+      Rails.application.reloader.to_prepare do
+        next if defined?(::Reporting) && defined?(::Reporting::Errors)
+        loader = Zeitwerk::Loader.new
+        loader.push_dir("#{Rails.root}/lib/reporting", namespace: ::Reporting)
+        loader.enable_reloading
+        loader.setup
+        loader.eager_load
 
-      if Rails.env.development?
-        require 'listen'
-        Listen.to("lib/reporting") { loader.reload }.start
+        if Rails.env.development?
+          require 'listen'
+          Listen.to("lib/reporting") { loader.reload }.start
+        end
       end
     end
 
@@ -210,7 +215,6 @@ module Openfoodnetwork
     # Instead, they must be explicitly included below
     # http://stackoverflow.com/questions/8012434/what-is-the-purpose-of-config-assets-precompile
     config.assets.initialize_on_precompile = true
-    config.assets.precompile += ['iehack.js']
     config.assets.precompile += ['admin/*.js', 'admin/**/*.js']
     config.assets.precompile += ['web/all.js']
     config.assets.precompile += ['darkswarm/all.js']
@@ -226,6 +230,7 @@ module Openfoodnetwork
     config.active_record.belongs_to_required_by_default = false
     config.active_record.cache_versioning = false
     config.active_record.has_many_inversing = false
+    config.active_record.yaml_column_permitted_classes = [BigDecimal, Symbol]
 
     config.active_support.escape_html_entities_in_json = true
 
@@ -240,5 +245,11 @@ module Openfoodnetwork
     Rails.autoloaders.main.ignore(Rails.root.join('app/webpacker'))
 
     config.active_storage.service = ENV["S3_BUCKET"].present? ? :amazon : :local
+    config.active_storage.content_types_to_serve_as_binary -= ["image/svg+xml"]
+    config.active_storage.variable_content_types += ["image/svg+xml"]
+
+    config.exceptions_app = self.routes
+
+    config.autoloader = :zeitwerk
   end
 end

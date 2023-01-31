@@ -1,0 +1,22 @@
+# Basically, ignore everythings expect app/webpacker/controllers/*.js and app/webpacker/packs/*.js
+*.css
+*.scss
+# Except v2
+!/app/webpacker/css/admin/v2/**/*.scss
+*.md
+*.yml
+*.yaml
+*.json
+*.html
+
+babel.config.js
+postcss.config.js
+
+/app/assets/
+/config/
+/coverage/
+/engines/
+/public/
+/spec/
+/tmp/
+/vendor/

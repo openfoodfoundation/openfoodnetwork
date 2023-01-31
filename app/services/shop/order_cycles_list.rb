@@ -3,6 +3,18 @@
 # Lists available order cycles for a given customer in a given distributor
 module Shop
   class OrderCyclesList
+    def self.active_for(distributor, customer)
+      new(distributor, customer).call
+    end
+
+    def self.ready_for_checkout_for(distributor, customer)
+      new(distributor, customer).call.select do |order_cycle|
+        order = Spree::Order.new(distributor: distributor, order_cycle: order_cycle)
+        OrderAvailablePaymentMethods.new(order, customer).to_a.any? &&
+          OrderAvailableShippingMethods.new(order, customer).to_a.any?
+      end
+    end
+
     def initialize(distributor, customer)
       @distributor = distributor
       @customer = customer

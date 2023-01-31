@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OrderCycleClosingJob < ActiveJob::Base
+class OrderCycleClosingJob < ApplicationJob
   def perform
     return if recently_closed_order_cycles.empty?
 

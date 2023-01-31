@@ -22,9 +22,14 @@ class OrderCycle < ApplicationRecord
 
   has_many :suppliers, -> { distinct }, source: :sender, through: :cached_incoming_exchanges
   has_many :distributors, -> { distinct }, source: :receiver, through: :cached_outgoing_exchanges
-
   has_many :order_cycle_schedules
   has_many :schedules, through: :order_cycle_schedules
+  has_and_belongs_to_many :selected_distributor_payment_methods,
+                          class_name: 'DistributorPaymentMethod',
+                          join_table: 'order_cycles_distributor_payment_methods'
+  has_and_belongs_to_many :selected_distributor_shipping_methods,
+                          class_name: 'DistributorShippingMethod',
+                          join_table: 'order_cycles_distributor_shipping_methods'
   has_paper_trail meta: { custom_data: proc { |order_cycle| order_cycle.schedule_ids.to_s } }
 
   attr_accessor :incoming_exchanges, :outgoing_exchanges
@@ -150,19 +155,20 @@ class OrderCycle < ApplicationRecord
     ]
   end
 
+  def attachable_distributor_payment_methods
+    DistributorPaymentMethod.joins(:payment_method).
+      merge(Spree::PaymentMethod.available).
+      where("distributor_id IN (?)", distributor_ids)
+  end
+
+  def attachable_distributor_shipping_methods
+    DistributorShippingMethod.joins(:shipping_method).
+      merge(Spree::ShippingMethod.frontend).
+      where("distributor_id IN (?)", distributor_ids)
+  end
+
   def clone!
-    oc = dup
-    oc.name = I18n.t("models.order_cycle.cloned_order_cycle_name", order_cycle: oc.name)
-    oc.orders_open_at = oc.orders_close_at = oc.mails_sent = oc.processed_at = nil
-    oc.coordinator_fee_ids = coordinator_fee_ids
-    # rubocop:disable Layout/LineLength
-    oc.preferred_product_selection_from_coordinator_inventory_only = preferred_product_selection_from_coordinator_inventory_only
-    # rubocop:enable Layout/LineLength
-    oc.schedule_ids = schedule_ids
-    oc.save!
-    exchanges.each { |e| e.clone!(oc) }
-    sync_subscriptions
-    oc.reload
+    OrderCycleClone.new(self).create
   end
 
   def variants
@@ -272,6 +278,34 @@ class OrderCycle < ApplicationRecord
     scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
     items = Spree::LineItem.includes(:variant).joins(:order).merge(orders).to_a
     items.each { |li| scoper.scope(li.variant) }
+  end
+
+  def distributor_payment_methods
+    if simple? || selected_distributor_payment_methods.none?
+      attachable_distributor_payment_methods
+    else
+      attachable_distributor_payment_methods.where(
+        "distributors_payment_methods.id IN (?) OR distributor_id NOT IN (?)",
+        selected_distributor_payment_methods.map(&:id),
+        selected_distributor_payment_methods.map(&:distributor_id)
+      )
+    end
+  end
+
+  def distributor_shipping_methods
+    if simple? || selected_distributor_shipping_methods.none?
+      attachable_distributor_shipping_methods
+    else
+      attachable_distributor_shipping_methods.where(
+        "distributors_shipping_methods.id IN (?) OR distributor_id NOT IN (?)",
+        selected_distributor_shipping_methods.map(&:id),
+        selected_distributor_shipping_methods.map(&:distributor_id)
+      )
+    end
+  end
+
+  def simple?
+    coordinator.sells == 'own'
   end
 
   private

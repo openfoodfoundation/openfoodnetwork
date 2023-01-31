@@ -223,8 +223,16 @@ describe '
 
         click_button 'Create'
 
-        expect(page).to have_select 'new_supplier_id'
-        expect(page).not_to have_select 'new_supplier_id', with_options: [supplier_unmanaged.name]
+        # Wait for API requests to finish:
+        sleep 2
+
+        expect(page).to have_select 'new_supplier_id', with_options: [
+          "Managed supplier",
+          "Permitted supplier",
+        ]
+        expect(page).not_to have_select 'new_supplier_id', with_options: [
+          "Unmanaged supplier",
+        ]
         select 'Managed supplier', from: 'new_supplier_id'
         click_button 'Add supplier'
         select 'Permitted supplier', from: 'new_supplier_id'
@@ -260,6 +268,13 @@ describe '
           find(:css, "tags-input .tags input").set "wholesale\n"
         end
 
+        click_button 'Save and Next'
+
+        expect_shipping_methods_to_be_checked_for(distributor_managed)
+        expect_shipping_methods_to_be_checked_for(distributor_permitted)
+        expect_payment_methods_to_be_checked_for(distributor_managed)
+        expect_payment_methods_to_be_checked_for(distributor_permitted)
+
         click_button 'Save and Back to List'
         order_cycle = OrderCycle.find_by(name: 'My order cycle')
         expect(page).to have_input "oc#{order_cycle.id}[name]", value: order_cycle.name
@@ -270,6 +285,12 @@ describe '
         expect(order_cycle.schedules).to eq([schedule])
         exchange = order_cycle.exchanges.outgoing.to_enterprise(distributor_managed).first
         expect(exchange.tag_list).to eq(["wholesale"])
+        expect(order_cycle.distributor_shipping_methods).to match_array(
+          order_cycle.attachable_distributor_shipping_methods
+        )
+        expect(order_cycle.distributor_payment_methods).to match_array(
+          order_cycle.attachable_distributor_payment_methods
+        )
       end
 
       context "editing an order cycle" do
@@ -308,6 +329,7 @@ describe '
           # And I remove all outgoing exchanges
           page.find("tr.distributor-#{distributor_managed.id} a.remove-exchange").click
           page.find("tr.distributor-#{distributor_permitted.id} a.remove-exchange").click
+          click_button 'Save and Next'
           click_button 'Save and Back to List'
           expect(page).to have_input "oc#{oc.id}[name]", value: oc.name
 
@@ -540,6 +562,7 @@ describe '
       uncheck "order_cycle_incoming_exchange_0_variants_#{v2.id}"
 
       # And I add a fee and save
+      scroll_to(page.find_button("Add coordinator fee"))
       click_button 'Add coordinator fee'
       click_button 'Add coordinator fee'
       click_link 'order_cycle_coordinator_fee_1_remove'
@@ -635,7 +658,15 @@ describe '
       check   "order_cycle_incoming_exchange_0_variants_#{v3.id}"
       uncheck "order_cycle_incoming_exchange_0_variants_#{v3.id}"
 
+      # Add tags
+      expect(page).to have_content "TAGS"
+
+      within "tags-with-translation" do
+        find(:css, "tags-input .tags input").set "wholesale\n"
+      end
+
       # And I select some fees and update
+      scroll_to(page.find_button("Add coordinator fee"))
       click_link 'order_cycle_coordinator_fee_0_remove'
       expect(page).not_to have_select 'order_cycle_coordinator_fee_0_id'
       click_button 'Add coordinator fee'
@@ -669,17 +700,23 @@ describe '
       ex = oc.exchanges.outgoing.first
       expect(ex.pickup_time).to eq('xy')
       expect(ex.pickup_instructions).to eq('yyz')
+
+      # And it should have the tags
+      expect(ex.tag_list).to eq ['wholesale']
     end
   end
 
-  it "modify the minute of a order cycle with the keyboard, check that the modifications are taken into account" do
+  it "modify the minute of a order cycle with the keyboard, check that the modifications are taken into account", retry: 3 do
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
     login_as_admin_and_visit admin_order_cycles_path
     find("#oc#{order_cycle.id}_orders_close_at").click
     datetime = Time.zone.at(Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0))
     input = find(".flatpickr-calendar.open .flatpickr-minute")
     input.send_keys datetime.strftime("%M").to_s.strip
-    expect(page).to have_content "You have unsaved changes"
+    input.send_keys :enter
+    within "#save-bar" do
+      expect(page).to have_content "You have unsaved changes"
+    end
   end
 
   it "deleting an order cycle" do
@@ -693,6 +730,22 @@ describe '
   end
 
   private
+
+  def expect_payment_methods_to_be_checked_for(distributor)
+    distributor.distributor_payment_method_ids.each do |distributor_payment_method_id|
+      expect(page).to have_checked_field(
+        "order_cycle_selected_distributor_payment_method_ids_#{distributor_payment_method_id}"
+      )
+    end
+  end
+
+  def expect_shipping_methods_to_be_checked_for(distributor)
+    distributor.distributor_shipping_method_ids.each do |distributor_shipping_method_id|
+      expect(page).to have_checked_field(
+        "order_cycle_selected_distributor_shipping_method_ids_#{distributor_shipping_method_id}"
+      )
+    end
+  end
 
   def wait_for_edit_form_to_load_order_cycle(order_cycle)
     expect(page).to have_field "order_cycle_name", with: order_cycle.name

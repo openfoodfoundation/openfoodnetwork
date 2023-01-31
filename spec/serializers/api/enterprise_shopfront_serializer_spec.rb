@@ -6,8 +6,8 @@ describe Api::EnterpriseShopfrontSerializer do
   let!(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let!(:producer) { create(:supplier_enterprise) }
   let!(:producer_hidden) { create(:supplier_enterprise_hidden) }
-  let!(:relationship) { create(:enterprise_relationship, parent: hub, child: producer) }
-  let!(:relationship2) { create(:enterprise_relationship, parent: hub, child: producer_hidden) }
+  let!(:relationship) { create(:enterprise_relationship, parent: producer, child: hub) }
+  let!(:relationship2) { create(:enterprise_relationship, parent: producer_hidden, child: hub) }
 
   let!(:taxon1) { create(:taxon, name: 'Meat') }
   let!(:taxon2) { create(:taxon, name: 'Veg') }
@@ -48,6 +48,15 @@ describe Api::EnterpriseShopfrontSerializer do
   it "serializes an array of hubs" do
     expect(serializer.serializable_hash[:hubs]).to be_a ActiveModel::ArraySerializer
     expect(serializer.serializable_hash[:hubs].to_json).to match hub.name
+  end
+
+  context 'when hub is marked as hidden' do
+    before { hub.update_column(:visible, 'hidden') }
+
+    it 'serializes an array of public hubs' do
+      expect(serializer.serializable_hash[:hubs]).to be_a ActiveModel::ArraySerializer
+      expect(serializer.serializable_hash[:hubs].to_json).not_to match hub.name
+    end
   end
 
   it "serializes an array of producers that are public or linked by links" do

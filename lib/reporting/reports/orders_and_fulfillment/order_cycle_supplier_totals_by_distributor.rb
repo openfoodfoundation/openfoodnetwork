@@ -24,7 +24,8 @@ module Reporting
               header: true,
             },
             {
-              group_by: proc { |line_items, _row| line_items.first.variant }
+              group_by: proc { |line_items, _row| line_items.first.variant },
+              sort_by: proc { |variant| variant.product.name }
             },
             {
               group_by: :hub,

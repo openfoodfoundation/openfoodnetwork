@@ -343,7 +343,8 @@ module Spree
     end
 
     def send_shipped_email
-      ShipmentMailer.shipped_email(id).deliver_later
+      delivery = !!shipping_method.require_ship_address
+      ShipmentMailer.shipped_email(id, delivery: delivery).deliver_later
     end
 
     def update_adjustments
