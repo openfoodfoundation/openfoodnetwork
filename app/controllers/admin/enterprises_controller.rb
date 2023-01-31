@@ -14,7 +14,6 @@ module Admin
     prepend_before_action :override_owner, only: :create
     prepend_before_action :override_sells, only: :create
 
-    before_action :load_enterprise_set_on_index, only: :index
     before_action :load_countries, except: [:index, :register, :check_permalink]
     before_action :load_methods_and_fees, only: [:edit, :update]
     before_action :load_groups, only: [:new, :edit, :update, :create]
@@ -34,6 +33,8 @@ module Admin
     include OrderCyclesHelper
 
     def index
+      load_enterprise_set_on_index
+
       respond_to do |format|
         format.html
         format.json {
