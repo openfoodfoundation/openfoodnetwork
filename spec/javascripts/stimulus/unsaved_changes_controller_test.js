@@ -14,23 +14,37 @@ describe("UnsavedChangesController", () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <form id="test-form" data-controller="unsaved-changes" data-action="beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" data-unsaved-changes-changed="false">
-        <input
-          id="test-checkbox"
-          type="checkbox"
-          data-action="change->unsaved-changes#formIsChanged">
+        <input id="test-checkbox" type="checkbox" data-action="change->unsaved-changes#formIsChanged"/>
+        <input id="test-submit" type="submit"/>
       </form>
     `
   })
 
+  describe("#connect", () => {
+    it("disables any submit button", () => {
+      const submit = document.getElementById("test-submit")
+
+      expect(submit.disabled).toBe(true)
+    })  
+  })
+
   describe("#formIsChanged", () => {
     it("changed is set to true", () => {
-      const form = document.getElementById("test-form")
       const checkbox = document.getElementById("test-checkbox")
+      const form = document.getElementById("test-form")
 
       checkbox.click()
 
-      expect(form.dataset.unsavedChangesChanged).toBe('true')
+      expect(form.dataset.unsavedChangesChanged).toBe("true")
+    })
 
+    it("enables any submit button", () => {
+      const checkbox = document.getElementById("test-checkbox")
+      const submit = document.getElementById("test-submit")
+
+      checkbox.click()
+
+      expect(submit.disabled).toBe(false)
     })
   })
 

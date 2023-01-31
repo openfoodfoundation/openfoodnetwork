@@ -16,8 +16,19 @@ import { Controller } from "stimulus";
 // You can also combine the two actions
 //
 export default class extends Controller {
+  connect() {
+    // disable submit button when first loading the page
+    if (!this.isFormChanged()) {
+      this.disableButtons();
+    }
+  }
+
   formIsChanged(event) {
-    this.setChanged("true");
+    // We only do something if the form hasn't already been changed
+    if (!this.isFormChanged()) {
+      this.setChanged("true");
+      this.enableButtons();
+    }
   }
 
   leavingPage(event) {
@@ -50,5 +61,21 @@ export default class extends Controller {
 
   isFormChanged() {
     return this.data.get("changed") == "true";
+  }
+
+  enableButtons() {
+    this.submitButtons().forEach((button) => {
+      button.disabled = false;
+    });
+  }
+
+  disableButtons() {
+    this.submitButtons().forEach((button) => {
+      button.disabled = true;
+    });
+  }
+
+  submitButtons() {
+    return this.element.querySelectorAll("input[type='submit']");
   }
 }
