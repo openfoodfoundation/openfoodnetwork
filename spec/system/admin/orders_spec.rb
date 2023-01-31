@@ -385,6 +385,9 @@ describe '
         end
 
         it "can bulk send invoice for 2 orders" do
+          Spree::Config[:enable_invoices?] = true
+          Spree::Config[:enterprise_number_required_on_invoices?] = false
+
           page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
           page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click
 

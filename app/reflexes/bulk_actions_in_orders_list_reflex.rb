@@ -11,7 +11,7 @@ class BulkActionsInOrdersListReflex < ApplicationReflex
 
   def send_invoice(order_ids)
     orders(order_ids).find_each do |o|
-      Spree::OrderMailer.invoice_email(o.id).deliver_later unless o.distributor.can_invoice?
+      Spree::OrderMailer.invoice_email(o.id).deliver_later if o.distributor.can_invoice?
     end
 
     success("admin.send_invoice_feedback", order_ids.count)
