@@ -217,10 +217,10 @@ describe '
       context "ordering" do
         context "orders with different completion dates" do
           before do
-            order2.update(completed_at: Time.zone.now - 2.weeks)
-            order3.update(completed_at: Time.zone.now - 3.weeks)
-            order4.update(completed_at: Time.zone.now - 4.weeks)
-            order5.update(completed_at: Time.zone.now - 5.weeks)
+            order2.update!(completed_at: Time.zone.now - 2.weeks)
+            order3.update!(completed_at: Time.zone.now - 3.weeks)
+            order4.update!(completed_at: Time.zone.now - 4.weeks)
+            order5.update!(completed_at: Time.zone.now - 5.weeks)
             login_as_admin_and_visit spree.admin_orders_path
           end
           it "orders by completion date" do
@@ -233,10 +233,10 @@ describe '
 
         context "orders with different order numbers" do
           before do
-            order2.update(number: "R555555555")
-            order3.update(number: "R444444444")
-            order4.update(number: "R333333333")
-            order5.update(number: "R222222222")
+            order2.update!(number: "R555555555")
+            order3.update!(number: "R444444444")
+            order4.update!(number: "R333333333")
+            order5.update!(number: "R222222222")
             login_as_admin_and_visit spree.admin_orders_path
           end
 
@@ -250,9 +250,9 @@ describe '
 
         context "orders with different states" do
           before do
-            order2.update(state: "payment")
-            order3.update(state: "complete")
-            order4.update(state: "cart")
+            order2.update!(state: "payment")
+            order3.update!(state: "complete")
+            order4.update!(state: "cart")
             order5.cancel
             login_as_admin_and_visit spree.admin_orders_path
             uncheck 'Only show complete orders'
@@ -269,9 +269,9 @@ describe '
 
         context "orders with different payment states" do
           before do
-            Spree::Payment.where(order_id: order2.id).update(amount: 50.0)
-            Spree::Payment.where(order_id: order3.id).update(amount: 100.0)
-            Spree::Payment.where(order_id: order4.id).update(amount: 10.0)
+            Spree::Payment.where(order_id: order2.id).first.update!(amount: 50.0)
+            Spree::Payment.where(order_id: order3.id).first.update!(amount: 100.0)
+            Spree::Payment.where(order_id: order4.id).first.update!(amount: 10.0)
             login_as_admin_and_visit spree.admin_orders_path
           end
 
@@ -285,9 +285,9 @@ describe '
 
         context "orders with different shipment states" do
           before do
-            Spree::Payment.where(order_id: order2.id).update(amount: 50.0)
-            Spree::Payment.where(order_id: order3.id).update(amount: 100.0)
-            Spree::Payment.where(order_id: order4.id).update(amount: 10.0)
+            Spree::Payment.where(order_id: order2.id).first.update!(amount: 50.0)
+            Spree::Payment.where(order_id: order3.id).first.update!(amount: 100.0)
+            Spree::Payment.where(order_id: order4.id).first.update!(amount: 10.0)
             order2.ship
             login_as_admin_and_visit spree.admin_orders_path
           end
@@ -302,10 +302,10 @@ describe '
 
         context "orders from different customers" do
           before do
-            order2.update(email: "jkl@jkl.com")
-            order3.update(email: "ghi@ghi.com")
-            order4.update(email: "def@def.com")
-            order5.update(email: "abc@abc.com")
+            order2.update!(email: "jkl@jkl.com")
+            order3.update!(email: "ghi@ghi.com")
+            order4.update!(email: "def@def.com")
+            order5.update!(email: "abc@abc.com")
             login_as_admin_and_visit spree.admin_orders_path
           end
 
@@ -319,10 +319,10 @@ describe '
 
         context "orders with different billing addresses" do
           before do
-            billing_address2.update(lastname: "Mad Hatter")
-            billing_address3.update(lastname: "Duchess")
-            billing_address4.update(lastname: "Cheshire Cat")
-            billing_address5.update(lastname: "Alice")
+            billing_address2.update!(lastname: "Mad Hatter")
+            billing_address3.update!(lastname: "Duchess")
+            billing_address4.update!(lastname: "Cheshire Cat")
+            billing_address5.update!(lastname: "Alice")
             login_as_admin_and_visit spree.admin_orders_path
           end
 
@@ -336,10 +336,10 @@ describe '
 
         context "orders with different order totals" do
           before do
-            Spree::LineItem.where(order_id: order2.id).update(quantity: 5)
-            Spree::LineItem.where(order_id: order3.id).update(quantity: 4)
-            Spree::LineItem.where(order_id: order4.id).update(quantity: 3)
-            Spree::LineItem.where(order_id: order5.id).update(quantity: 2)
+            Spree::LineItem.where(order_id: order2.id).first.update!(quantity: 5)
+            Spree::LineItem.where(order_id: order3.id).first.update!(quantity: 4)
+            Spree::LineItem.where(order_id: order4.id).first.update!(quantity: 3)
+            Spree::LineItem.where(order_id: order5.id).first.update!(quantity: 2)
             order2.save
             order3.save
             order4.save
