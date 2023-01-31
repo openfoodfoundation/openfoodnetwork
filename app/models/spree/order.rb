@@ -95,7 +95,7 @@ module Spree
     }
     validate :disallow_guest_order
     validates :email, presence: true,
-                      format: /\A([\w.%+\-']+)@([\w\-]+\.)+(\w{2,})\z/i,
+                      format: /\A([\w.%+\-']+)@([\w-]+\.)+(\w{2,})\z/i,
                       if: :require_email
 
     make_permalink field: :number

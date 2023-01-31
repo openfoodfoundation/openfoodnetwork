@@ -17,7 +17,7 @@ module Admin
     def entity_options
       YAML.safe_load(File.read(Rails.root.join('config/entities_list.yml')))['entities']
     end
-    
+
     def enterprise_side_menu_items(enterprise)
       is_shop = enterprise.sells != "none"
       show_properties = !!enterprise.is_primary_producer
