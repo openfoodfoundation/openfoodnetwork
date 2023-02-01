@@ -1,0 +1,6 @@
+= form_for(calculator, url: "", method: nil, authenticity_token: false) do |calculator_form|
+  - preference_fields(calculator_form.object, calculator_form).each do |field|
+    %span.field
+      = field[:label]
+    %p.field
+      = field[:field]

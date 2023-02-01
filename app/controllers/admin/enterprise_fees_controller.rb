@@ -9,7 +9,6 @@ module Admin
     before_action :check_enterprise_fee_input, only: [:bulk_update]
 
     def index
-      @include_calculators = params[:include_calculators].present?
       @enterprise = current_enterprise
       @enterprises = Enterprise.managed_by(spree_current_user).by_name
 
