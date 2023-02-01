@@ -123,7 +123,6 @@ module Spree
               calculator_attributes: {
                 id: payment_method.calculator.id,
                 preferred_amount: 456,
-                preferred_currency: "GBP"
               }
             }
           }
@@ -138,7 +137,6 @@ module Spree
           expect(payment_method.name).to eq "Updated"
           expect(payment_method.description).to eq "Updated"
           expect(payment_method.calculator.preferred_amount).to eq 456
-          expect(payment_method.calculator.preferred_currency).to eq "GBP"
         end
 
         context "when the given payment method type does not match" do
