@@ -27,7 +27,7 @@ gem 'rails-i18n'
 gem 'rails_safe_tasks', '~> 1.0'
 
 gem "activerecord-import"
-gem "db2fog", github: "openfoodfoundation/db2fog", branch: "rails-6"
+gem "db2fog", github: "openfoodfoundation/db2fog", branch: "rails-7"
 gem "fog-aws", "~> 2.0" # db2fog does not support v3
 gem "mime-types" # required by fog
 
