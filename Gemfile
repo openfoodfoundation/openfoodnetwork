@@ -6,7 +6,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem 'dotenv-rails', require: 'dotenv/rails-now' # Load ENV vars before other gems
 
-gem 'rails', '>= 6.1.4'
+gem 'rails'
 
 # Active Storage
 gem "active_storage_validations"

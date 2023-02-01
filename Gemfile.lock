@@ -856,7 +856,7 @@ DEPENDENCIES
   rack-mini-profiler (< 3.0.0)
   rack-rewrite
   rack-timeout
-  rails (>= 6.1.4)
+  rails
   rails-controller-testing
   rails-erd
   rails-i18n
