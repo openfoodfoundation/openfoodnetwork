@@ -12,12 +12,9 @@ export default class extends ApplicationController {
 
   // private
   getOrdersIds() {
-    const order_ids = [];
-    document
-      .querySelectorAll("#listing_orders input[name='order_ids[]']:checked")
-      .forEach((checkbox) => {
-        order_ids.push(checkbox.value);
-      });
-    return order_ids;
+    const checkboxes = document.querySelectorAll(
+      "#listing_orders input[name='order_ids[]']:checked"
+    );
+    return Array.from(checkboxes).map((checkbox) => checkbox.value);
   }
 }
