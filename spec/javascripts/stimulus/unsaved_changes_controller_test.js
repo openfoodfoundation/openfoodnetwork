@@ -13,7 +13,11 @@ describe("UnsavedChangesController", () => {
 
   beforeEach(() => {
     document.body.innerHTML = `
-      <form id="test-form" data-controller="unsaved-changes" data-action="beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" data-unsaved-changes-changed="false">
+      <form 
+        id="test-form" 
+        data-controller="unsaved-changes" data-action="beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
+        data-unsaved-changes-changed="false"
+      >
         <input id="test-checkbox" type="checkbox" data-action="change->unsaved-changes#formIsChanged"/>
         <input id="test-submit" type="submit"/>
       </form>
@@ -21,16 +25,70 @@ describe("UnsavedChangesController", () => {
   })
 
   describe("#connect", () => {
-    it("disables any submit button", () => {
-      const submit = document.getElementById("test-submit")
+    describe("when disable-submit-button is true", () => {
+      beforeEach(() => {
+        document.body.innerHTML = `
+          <form 
+            id="test-form" data-controller="unsaved-changes" 
+            data-action="beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
+            data-unsaved-changes-changed="false" 
+            data-unsaved-changes-disable-submit-button="true"
+          >
+            <input id="test-checkbox" type="checkbox" data-action="change->unsaved-changes#formIsChanged"/>
+            <input id="test-submit" type="submit"/>
+          </form>
+        `
+      })
 
-      expect(submit.disabled).toBe(true)
+      it("disables any submit button", () => {
+        const submit = document.getElementById("test-submit")
+
+        expect(submit.disabled).toBe(true)
+      })  
+    })  
+
+    describe("when disable-submit-button is false", () => {
+      beforeEach(() => {
+        document.body.innerHTML = `
+          <form 
+            id="test-form" 
+            data-controller="unsaved-changes" 
+            data-action="beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
+            data-unsaved-changes-changed="false" 
+            data-unsaved-changes-disable-submit-button="false"
+          >
+            <input id="test-checkbox" type="checkbox" data-action="change->unsaved-changes#formIsChanged"/>
+            <input id="test-submit" type="submit"/>
+          </form>
+        `
+      })
+
+      it("doesn't disable any submit button", () => {
+        const submit = document.getElementById("test-submit")
+
+        expect(submit.disabled).toBe(false)
+      })  
+    })  
+
+    describe("when disable-submit-button is not set", () => {
+      it("doesn't disable any submit button", () => {
+        const submit = document.getElementById("test-submit")
+
+        expect(submit.disabled).toBe(false)
+      })  
     })  
   })
 
   describe("#formIsChanged", () => {
+    let checkbox
+    let submit 
+
+    beforeEach(() => {
+      checkbox = document.getElementById("test-checkbox")
+      submit = document.getElementById("test-submit")
+    })
+
     it("changed is set to true", () => {
-      const checkbox = document.getElementById("test-checkbox")
       const form = document.getElementById("test-form")
 
       checkbox.click()
@@ -38,17 +96,28 @@ describe("UnsavedChangesController", () => {
       expect(form.dataset.unsavedChangesChanged).toBe("true")
     })
 
-    it("enables any submit button", () => {
-      const checkbox = document.getElementById("test-checkbox")
-      const submit = document.getElementById("test-submit")
+    describe("when disable-submit-button is true", () => {
+      it("enables any submit button", () => {
+        checkbox.click()
 
-      checkbox.click()
+        expect(submit.disabled).toBe(false)
+      })
+    })
 
-      expect(submit.disabled).toBe(false)
+    describe("when disable-submit-button is false", () => {
+      it("does nothing", () => {
+        expect(submit.disabled).toBe(false)
+
+        checkbox.click()
+
+        expect(submit.disabled).toBe(false)
+      })
     })
   })
 
   describe('#leavingPage', () => {
+    let checkbox
+
     beforeEach(() => {
       // Add a mock I18n object to
       const mockedT = jest.fn()
@@ -57,6 +126,8 @@ describe("UnsavedChangesController", () => {
       global.I18n =  {
         t: mockedT
       }
+
+      checkbox = document.getElementById("test-checkbox")
     })
 
     afterEach(() => {
@@ -65,8 +136,6 @@ describe("UnsavedChangesController", () => {
 
     describe('when triggering a beforeunload event', () => {
       it("triggers leave page pop up when leaving page and form has been interacted with", () => {
-        const checkbox = document.getElementById("test-checkbox")
-
         // interact with the form
         checkbox.click()
 
@@ -81,9 +150,18 @@ describe("UnsavedChangesController", () => {
     })
 
     describe('when triggering a turbolinks:before-visit event', () => {
+      let confirmSpy
+
+      beforeEach(() => {
+        confirmSpy = jest.spyOn(window, 'confirm')
+      })
+
+      afterEach(() => {
+        // cleanup
+        confirmSpy.mockRestore()
+      })
+
       it("triggers a confirm popup up when leaving page and form has been interacted with", () => {
-        const checkbox = document.getElementById("test-checkbox")
-        const confirmSpy = jest.spyOn(window, 'confirm')
         confirmSpy.mockImplementation((msg) => {})
 
         // interact with the form
@@ -94,12 +172,9 @@ describe("UnsavedChangesController", () => {
         window.dispatchEvent(turbolinkEv)
 
         expect(confirmSpy).toHaveBeenCalled()
-
       })
 
       it("stays on the page if user clicks cancel on the confirm popup", () => {
-        const checkbox = document.getElementById("test-checkbox")
-        const confirmSpy = jest.spyOn(window, 'confirm')
         // return false to simulate a user clicking on cancel
         confirmSpy.mockImplementation((msg) => (false)) 
 
@@ -114,9 +189,6 @@ describe("UnsavedChangesController", () => {
 
         expect(confirmSpy).toHaveBeenCalled()
         expect(preventDefaultSpy).toHaveBeenCalled()
-
-        // cleanup
-        confirmSpy.mockRestore()
       })
     })
   })

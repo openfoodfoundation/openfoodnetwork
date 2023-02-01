@@ -4,21 +4,34 @@ import { Controller } from "stimulus";
 //
 // Usage :
 // - with beforeunload event :
-//    <form data-controller="unsaved-changes" data-action="beforeunload@window->unsaved-changes#leavingPage" data-unsaved-changes-changed="true">
-//      <input data-action="change->unsaved-changes#formIsChanged">
+//    <form
+//      data-controller="unsaved-changes"
+//      data-action="beforeunload@window->unsaved-changes#leavingPage"
+//      data-unsaved-changes-changed="true"
+//    >
+//      <input data-action="change->unsaved-changes#formIsChanged" />
 //    </form>
 //
 // - with turbolinks :
-//    <form data-controller="unsaved-changes" data-action="turbolinks:before-visit@window->unsaved-changes#leavingPage" data-unsaved-changes-changed="true">
-//      <input data-action="change->unsaved-changes#formIsChanged">
+//    <form
+//      data-controller="unsaved-changes"
+//      data-action="turbolinks:before-visit@window->unsaved-changes#leavingPage"
+//      data-unsaved-changes-changed="true"
+//    >
+//      <input data-action="change->unsaved-changes#formIsChanged" />
 //    </form>
 //
 // You can also combine the two actions
+// You also need to add 'data-action="change->unsaved-changes#formIsChanged"' on all the form element
+// that can be interacted with
+//
+// Optional, you can add 'data-unsaved-changes-changed="true"' if you want to disable all
+// submit buttons when the form hasn't been interacted with
 //
 export default class extends Controller {
   connect() {
     // disable submit button when first loading the page
-    if (!this.isFormChanged()) {
+    if (!this.isFormChanged() && this.isSubmitButtonDisabled()) {
       this.disableButtons();
     }
   }
@@ -27,7 +40,10 @@ export default class extends Controller {
     // We only do something if the form hasn't already been changed
     if (!this.isFormChanged()) {
       this.setChanged("true");
-      this.enableButtons();
+
+      if (this.isSubmitButtonDisabled()) {
+        this.enableButtons();
+      }
     }
   }
 
@@ -61,6 +77,14 @@ export default class extends Controller {
 
   isFormChanged() {
     return this.data.get("changed") == "true";
+  }
+
+  isSubmitButtonDisabled() {
+    if (this.data.has("disable-submit-button")) {
+      return this.data.get("disable-submit-button") == "true";
+    }
+
+    return false;
   }
 
   enableButtons() {
