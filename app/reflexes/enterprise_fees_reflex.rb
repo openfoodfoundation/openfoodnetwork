@@ -2,7 +2,6 @@
 
 class EnterpriseFeesReflex < ApplicationReflex
   def delete
-    enterprise_fee = EnterpriseFee.find_by id: element.dataset["enterprise_fee_id"]
     return unless can? :destroy, enterprise_fee
 
     if enterprise_fee.destroy
@@ -10,5 +9,10 @@ class EnterpriseFeesReflex < ApplicationReflex
     else
       flash[:error] = enterprise_fee.errors.full_messages.first
     end
+  end
+
+  # private
+  def enterprise_fee
+    @enterprise_fee ||= EnterpriseFee.find_by id: element.dataset["enterprise_fee_id"]
   end
 end
