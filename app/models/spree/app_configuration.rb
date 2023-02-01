@@ -33,8 +33,6 @@ module Spree
     preference :allow_backorder_shipping, :boolean, default: false
     preference :allow_checkout_on_gateway_error, :boolean, default: false
     preference :allow_guest_checkout, :boolean, default: true
-    preference :allow_ssl_in_production, :boolean, default: true
-    preference :allow_ssl_in_staging, :boolean, default: true
     # Replace with the name of a zone if you would like to limit the countries
     preference :checkout_zone, :string, default: nil
     preference :currency, :string, default: "USD"
