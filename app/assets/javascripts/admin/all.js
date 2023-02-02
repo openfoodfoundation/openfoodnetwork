@@ -40,7 +40,6 @@
 //= require ./customers/customers
 //= require ./dropdown/dropdown
 //= require ./enterprises/enterprises
-//= require ./enterprise_fees/enterprise_fees
 //= require ./enterprise_groups/enterprise_groups
 //= require ./index_utils/index_utils
 //= require ./inventory_items/inventory_items
