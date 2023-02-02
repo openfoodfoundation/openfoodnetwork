@@ -14,17 +14,10 @@ module Admin
 
       blank_enterprise_fee = EnterpriseFee.new
       blank_enterprise_fee.enterprise = current_enterprise
+      blank_enterprise_fee.calculator = EnterpriseFee.calculators.first.new
 
       @collection = @collection.to_a
       3.times { @collection << blank_enterprise_fee }
-
-      respond_to do |format|
-        format.html
-        format.json {
-          render_as_json @collection, controller: self, include_calculators: @include_calculators
-        }
-        # format.json { @presented_collection = @collection.each_with_index.map { |ef, i| EnterpriseFeePresenter.new(self, ef, i) } }
-      end
     end
 
     def for_order_cycle
