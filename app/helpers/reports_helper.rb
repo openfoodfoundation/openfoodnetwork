@@ -32,7 +32,28 @@ module ReportsHelper
     end
   end
 
+  def fee_name_options(orders)
+    EnterpriseFee.where(id: enterprise_fee_ids(orders))
+      .pluck(:name, :id)
+  end
+
+  def fee_owner_options(orders)
+    Enterprise.where(id: enterprise_fee_owner_ids(orders))
+      .pluck(:name, :id)
+  end
+
   def currency_symbol
     Spree::Money.currency_symbol
+  end
+
+  def enterprise_fee_owner_ids(orders)
+    EnterpriseFee.where(id: enterprise_fee_ids(orders))
+      .pluck(:enterprise_id)
+  end
+
+  def enterprise_fee_ids(orders)
+    Spree::Adjustment.enterprise_fee
+      .where(order_id: orders.map(&:id))
+      .pluck(:originator_id)
   end
 end
