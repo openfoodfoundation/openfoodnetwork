@@ -1675,12 +1675,6 @@ ca:
   card_has_been_removed: "S'ha eliminat la teva targeta (número: %{number})"
   card_could_not_be_removed: Ho sentim, no s'ha pogut eliminar la targeta
   invalid_credit_card: "Targeta de crèdit no vàlida"
-  ie_warning_headline: "El vostre navegador no està actualitzat :-("
-  ie_warning_text: "Per obtenir la millor experiència a Open Food Network et recomanem que actualitzis el teu navegador:"
-  ie_warning_chrome: Descarrega Chrome
-  ie_warning_firefox: Descarrega Firefox
-  ie_warning_ie: Actualitza Internet Explorer
-  ie_warning_other: "No pots actualitzar el navegador? Prova Open Food Network al telèfon mòbil :-)"
   legal:
     cookies_policy:
       header: "Com utilitzem les cookies"
@@ -2506,6 +2500,7 @@ ca:
   report_customers_cycle: "Cicle de Comanda"
   report_customers_type: "Tipus d'informe"
   report_customers_csv: "Descarrega com a csv"
+  report_customers: Consumidora
   report_producers: "Productors"
   report_type: "Tipus d'informe"
   report_hubs: "Grups"
@@ -2570,6 +2565,8 @@ ca:
   report_header_delivery_charge: "Càrrec de lliurament (%{currency_symbol})"
   report_header_tax_on_delivery: "Impost sobre el lliurament (%{currency_symbol})"
   report_header_tax_on_fees: "Impost sobre les comissions (%{currency_symbol})"
+  report_header_tax_category: "Categoria d'impostos"
+  report_header_tax_rate: "Impost"
   report_header_total_tax: "Impost total (%{currency_symbol})"
   report_header_total_excl_tax: "Total excl. impostos (%{currency_symbol})"
   report_header_total_incl_tax: "Total incl. impostos (%{currency_symbol})"
@@ -3373,9 +3370,6 @@ ca:
     default_seo_title: "Títol Seo predeterminat "
     default_meta_description: "Descripció Meta predeterminada"
     default_meta_keywords: "Paraules clau meta predeterminades"
-    security_settings: "Configuració de seguretat"
-    allow_ssl_in_production: "Permet que SSL s'utilitzi en mode de producció"
-    allow_ssl_in_staging: "Permet que SSL s'utilitzi en mode de staging"
     currency_decimal_mark: "Separador decimal de moneda"
     currency_settings: "Configuració de moneda"
     currency_symbol_position: Posa "símbol de moneda abans o després d'una quantitat"?

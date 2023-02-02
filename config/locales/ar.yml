@@ -1707,12 +1707,6 @@ ar:
   card_has_been_removed: "تمت إزالة بطاقتك (الرقم: %{number})"
   card_could_not_be_removed: عذرًا ، تعذرت إزالة البطاقة
   invalid_credit_card: "بطاقة الائتمان غير صالحة"
-  ie_warning_headline: "متصفحك غير محدث :-("
-  ie_warning_text: "للحصول على أفضل تجربة لشبكة الغذاء المفتوح ، نوصي بشدة بترقية متصفحك:"
-  ie_warning_chrome: تحميل متصفح كروم
-  ie_warning_firefox: تحميل متصفح فايرفوكس
-  ie_warning_ie: ترقية Internet Explorer
-  ie_warning_other: "لا يمكنك ترقية متصفحك؟ جرب شبكة الغذاء المفتوح على هاتفك الذكي :-)"
   legal:
     cookies_policy:
       header: "كيف نستخدم ملفات تعريف الارتباط"
@@ -2575,6 +2569,7 @@ ar:
   report_customers_cycle: "ترتيب الدورة"
   report_customers_type: "نوع التقرير"
   report_customers_csv: "تنزيل بتنسيق CSV"
+  report_customers: عميل
   report_producers: "المنتجين"
   report_type: "نوع التقرير"
   report_hubs: "مراكز بيع"
@@ -2652,8 +2647,10 @@ ar:
   report_header_taxable_items_total: "إجمالي العناصر الخاضعة للضريبة (%{currency_symbol})"
   report_header_sales_tax: "ضريبة المبيعات (%{currency_symbol})"
   report_header_delivery_charge: "رسوم التوصيل (%{currency_symbol})"
+  report_header_tax: "ضريبة"
   report_header_tax_on_delivery: "الضريبة على التسليم (%{currency_symbol})"
   report_header_tax_on_fees: "الضريبة على الرسوم (%{currency_symbol})"
+  report_header_tax_category: "الفئة الضريبية"
   report_header_total_tax: "إجمالي الضريبة (%{currency_symbol})"
   report_header_total_excl_tax: "المجموع باستثناء الضريبة (%{currency_symbol})"
   report_header_total_incl_tax: "إجمالي مدفوع الضريبة (%{currency_symbol})"
@@ -3561,9 +3558,6 @@ ar:
     default_seo_title: "العنوان الافتراضي ل SEO"
     default_meta_description: "وصف التعريف الافتراضي"
     default_meta_keywords: "الكلمات الرئيسية الوصفية الافتراضية"
-    security_settings: "اعدادات الامان"
-    allow_ssl_in_production: "السماح باستخدام طبقة المقابس الآمنة في وضع الإنتاج"
-    allow_ssl_in_staging: "اسمح باستخدام طبقة المقابس الآمنة في وضع التدريج"
     currency_decimal_mark: "العملة العشرية"
     currency_settings: "إعدادات العملة"
     currency_symbol_position: ضع &quot;رمز العملة قبل أو بعد مبلغ الدولار؟&quot;

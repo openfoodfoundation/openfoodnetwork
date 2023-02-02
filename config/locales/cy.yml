@@ -1708,12 +1708,6 @@ cy:
   card_has_been_removed: "Dilëwyd eich cerdyn (rhif: %{number})"
   card_could_not_be_removed: Mae'n ddrwg gennym, nid oedd yn bosib dileu'r cerdyn
   invalid_credit_card: "Cerdyn credyd annilys"
-  ie_warning_headline: "Mae eich porwr yn hen :-("
-  ie_warning_text: "I gael y profiad gorau gyda'r Open Food Network rydym yn argymell yn gryf uwchraddio'ch porwr:"
-  ie_warning_chrome: Dadlwytho Chrome
-  ie_warning_firefox: Dadlwytho Firefox
-  ie_warning_ie: Uwchraddio Internet Explorer
-  ie_warning_other: "Methu uwchraddio'ch porwr? Rhowch gynnig ar y Open Food Network ar eich ffôn clyfar :-)"
   legal:
     cookies_policy:
       header: "Sut Rydym yn Defnyddio Cwcis"
@@ -2575,6 +2569,7 @@ cy:
   report_customers_cycle: "Cylch archebu "
   report_customers_type: "Math o Adroddiad"
   report_customers_csv: "Lawrlwytho fel csv"
+  report_customers: Cwsmer
   report_producers: "Prynu bwyd"
   report_type: "Math o Adroddiad"
   report_hubs: "Hybiau"
@@ -2652,8 +2647,10 @@ cy:
   report_header_taxable_items_total: "Cyfanswm Eitemau Trethadwy (%{currency_symbol})"
   report_header_sales_tax: "Treth Gwerthu (%{currency_symbol})"
   report_header_delivery_charge: "Tâl Dosbarthu (%{currency_symbol})"
+  report_header_tax: "Treth"
   report_header_tax_on_delivery: "Treth ar Gyflenwi (%{currency_symbol})"
   report_header_tax_on_fees: "Treth ar Ffioedd (%{currency_symbol})"
+  report_header_tax_category: "Categori Treth"
   report_header_total_tax: "Cyfanswm Treth (%{currency_symbol})"
   report_header_total_excl_tax: "Cyfanswm heb dreth (%{currency_symbol})"
   report_header_total_incl_tax: "Cyfanswm gan gynnwys treth (%{currency_symbol})"
@@ -3521,9 +3518,6 @@ cy:
     default_seo_title: "Teitl SEO diofyn"
     default_meta_description: "Disgrifiad Meta diofyn"
     default_meta_keywords: "Allweddeiriau Meta diofyn"
-    security_settings: "Gosodiadau Diogelwch"
-    allow_ssl_in_production: "Caniatáu defnyddio SSL yn y modd cynhyrchu"
-    allow_ssl_in_staging: "Caniatáu defnyddio SSL yn y modd llwyfannu"
     currency_decimal_mark: "Marc degol arian cyfred"
     currency_settings: "Gosodiadau Arian Parod"
     currency_symbol_position: Noder "symbol arian cyfred cyn neu ar ôl swm doler?"
@@ -3954,6 +3948,9 @@ cy:
           select_and_search: "Dewis hidlwyr a chlicio ar %{option} i gael mynediad i'ch data."
         customer_names_message:
           customer_names_tip: "Os cuddiwyd enwau cwsmeriaid ar gyfer archebion a gyflenwyd gennych, gallwch gysylltu â'r dosbarthwr a gofyn a yw'n bosib iddyn nhw ddiweddaru eu dewisiadau siop i ganiatáu i'w cyflenwyr weld enwau cwsmeriaid."
+        products_and_inventory:
+          all_products:
+            message: "Noder y caiff lefelau stoc eu hadrodd o restrau cynnyrch cyflenwyr yn unig. Os ydych yn defnyddio’r rhestr stoc i reoli maint eich stoc, caiff y gwerthoedd hyn eu hanwybyddu yn yr adroddiad hwn."
       users:
         index:
           listing_users: "Yn rhestru Defnyddwyr"
@@ -4122,6 +4119,8 @@ cy:
         thanks: "Diolch am archebu gyda ni."
         track_information: "Gwybodaeth Tracio: %{tracking}"
         track_link: "Dolen Tracio: %{url}"
+        picked_up_instructions: "Casglwyd eich archeb gan %{distributor}"
+        picked_up_subject: "Hysbysiad Casglu"
     test_mailer:
       test_email:
         greeting: "Llongyfarchiadau!"
@@ -4314,11 +4313,16 @@ cy:
   errors:
     not_found:
       title: "Nid yw'r dudalen rydych yn chwilio amdani'n bodoli (404)"
+      message_html: "<b>Rhowch gynnig arall</b> <p>. Hwyrach taw problem dros dro yw hon. Cliciwch y botwm ‘yn ôl’ i ddychwelyd at y sgrin flaenorol, neu ewch yn ôl i’r <a href='/'> Hafan </a>, a rhowch gynnig arall </p>. <b> Cysylltwch â’r ddesg</b> <p>Gymorth os bydd y broblem yn parhau neu os bydd yn fater brys, cofiwch ddweud wrthym amdano. Mae ein manylion cyswllt ar gael ar dudalen ‘Lleol’ <a href='https://openfoodnetwork.org/ofn-local/' target='blank'> y Rhwydwaith Bwyd Agored byd-eang </a>. </p> <p> Bydd o gymorth mawr inni os gallwch roi cymaint o fanylion â phosibl am y dudalen sydd ar goll.</p>"
     internal_server_error:
       title: "Mae'n ddrwg gennym, aeth rhywbeth o'i le (500)"
+      message_html: "<b>Rhowch gynnig arall</b> <p>. Hwyrach taw problem dros dro yw hon. Cliciwch y botwm ‘yn ôl’ i ddychwelyd at y sgrin flaenorol, neu ewch yn ôl i’r <a href='/''> Hafan </a>, a rhowch gynnig arall </p>. <b>Rydym yn gwybod am hyn</b><p>. Os ydych chi wedi gweld y broblem hon o’r blaen, mae’n debyg ein bod yn gwybod amdano, ac yn gweithio i’w drwsio. Byddwn yn cofnodi pob nam sy'n digwydd.</p><b>Cysylltwch â’r ddesg Gymorth</b><p>os bydd y broblem yn parhau neu os bydd yn fater brys, cofiwch ddweud wrthym amdano. Mae ein manylion cyswllt ar gael ar dudalen ‘Lleol’<a href='https://openfoodnetwork.org/ofn-local/' target='blank'>y Rhwydwaith Bwyd Agored byd-eang</a>. </p><p> Bydd o gymorth mawr inni os gallwch roi cymaint o fanylion â phosibl inni am yr hyn roeddech yn ei wneud pan ddigwyddodd y nam hwn.</p>"
     unprocessable_entity:
       title: "Gwrthodwyd y newid roeddech chi am ei wneud (422)"
+      message_html: "<p>Gwrthodwyd y newid roeddech chi am ei wneud. Hwyrach ichi geisio newid rhywbeth nad oes gennych fynediad ato.<br><h3><a href='/' >Ewch yn ôl i’r Hafan.</a></h3></p>"
   components:
+    multiple_checked_select:
+      filter_placeholder: "Opsiynau hidlo"
     search_input:
       placeholder: Chwilio
     selector_with_filter:

@@ -1520,12 +1520,6 @@ fr_BE:
   card_has_been_removed: "Votre carte a été supprimée (numéro : %{number})"
   card_could_not_be_removed: Désolée, la carte n'a pas pu être supprimée :-(
   invalid_credit_card: "Carte de crédit non valable"
-  ie_warning_headline: "Votre navigateur n'est pas à jour :-("
-  ie_warning_text: "Pour une expérience optimale sur Open Food Network, nous vous recommandons fortement de mettre à jour votre navigateur:"
-  ie_warning_chrome: Télécharger Chrome
-  ie_warning_firefox: Télécharger Firefox
-  ie_warning_ie: Mettre à jour Internet Explorer
-  ie_warning_other: "Impossible de mettre à jour votre navigateur? Essayez Open Food Network sur votre smartphone :-)"
   legal:
     cookies_policy:
       header: "Notre usage des Cookies"
@@ -2330,6 +2324,7 @@ fr_BE:
   report_customers_cycle: "Cycle de vente"
   report_customers_type: "Type de rapport"
   report_customers_csv: "Télécharger en csv"
+  report_customers: Acheteur·euse
   report_producers: "Producteur·trice·s"
   report_type: "Type de rapport"
   report_hubs: "Comptoirs"
@@ -2396,6 +2391,8 @@ fr_BE:
   report_header_delivery_charge: "Frais de livraison (%{currency_symbol})"
   report_header_tax_on_delivery: "TVA sur livraison (%{currency_symbol})"
   report_header_tax_on_fees: "TVA sur commission hub (%{currency_symbol})"
+  report_header_tax_category: "TVA applicable"
+  report_header_tax_rate: "TVA applicable"
   report_header_total_tax: "Total TVA (%{currency_symbol})"
   report_header_total_excl_tax: "Total HT (%{currency_symbol})"
   report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
@@ -3068,9 +3065,6 @@ fr_BE:
     default_seo_title: "Titre SEO par défaut"
     default_meta_description: "Meta Description par défaut"
     default_meta_keywords: "Meta Mots-clés par défaut"
-    security_settings: "Paramètres de sécurité "
-    allow_ssl_in_production: "Autoriser SSL en mode production "
-    allow_ssl_in_staging: "Autoriser SSL quand est employé en mode visible "
     currency_decimal_mark: "Devise à la décimale "
     currency_settings: "Devise "
     currency_symbol_position: Mettez "symbole monétaire avant ou après le montant en euros?"

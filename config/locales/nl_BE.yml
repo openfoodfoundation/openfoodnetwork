@@ -1475,12 +1475,6 @@ nl_BE:
   card_has_been_removed: "Jouw kaart werd verwijderd (nummer: %{number})"
   card_could_not_be_removed: Sorry, de kaart kon niet verwijderd worden
   invalid_credit_card: "Invalide credit card"
-  ie_warning_headline: "Je browser is verouderd :-("
-  ie_warning_text: "Voor het beste Open Food Network gebruikerservaring, raden we sterk aan om je browser te updaten:"
-  ie_warning_chrome: Download Chrome
-  ie_warning_firefox: Download Firefox
-  ie_warning_ie: Upgrade Internet Explorer
-  ie_warning_other: "Kan je je browser niet upgraden? Probeer het Open Food Network op je smartphone :-)"
   legal:
     cookies_policy:
       header: "Hoe We Cookies Gebruiken"
@@ -2281,6 +2275,7 @@ nl_BE:
   report_customers_cycle: "Bestelcyclus"
   report_customers_type: "Vermeld Type"
   report_customers_csv: "Download als csv"
+  report_customers: Klant
   report_producers: "Producenten"
   report_type: "Vermeld Type"
   report_hubs: "Hubs"
@@ -2344,6 +2339,8 @@ nl_BE:
   report_header_delivery_charge: "Leveringsprijs (%{currency_symbol})"
   report_header_tax_on_delivery: "Belastingspercentage op Levering (%{currency_symbol})"
   report_header_tax_on_fees: "Belasting op Kosten (%{currency_symbol})"
+  report_header_tax_category: "Belastingcategorie"
+  report_header_tax_rate: "belastingtarief"
   report_header_total_tax: "Totaal Belasting (%{currency_symbol})"
   report_header_total_excl_tax: "Totaal excl. belastingen (%{currency_symbol}) "
   report_header_total_incl_tax: "Totaal incl. belastingen(%{currency_symbol}) "
@@ -2996,9 +2993,6 @@ nl_BE:
     default_seo_title: "Standaardtitel SEO"
     default_meta_description: "Standaard Meta Beschrijving"
     default_meta_keywords: "Standaard Meta Sleutelwoorden "
-    security_settings: "Beveiligheidsinstellingen"
-    allow_ssl_in_production: "SSl toelaten wanneer  in productiemode wordt gebruikt "
-    allow_ssl_in_staging: "SSL toelaten wanneer in mode zichtbaar wordt gebruikt"
     currency_decimal_mark: "Valuta 1 decimaal bij"
     currency_settings: "Gebruikte munt"
     currency_symbol_position: Zet "muntsymbool voor of na het bedrag?"

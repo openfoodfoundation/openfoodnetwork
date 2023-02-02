@@ -1446,12 +1446,6 @@ fil_PH:
   card_has_been_removed: "ang iyong card ay natanggal na (numero:%{number})"
   card_could_not_be_removed: paumanhin, hindi matanggal ang card
   invalid_credit_card: "hindi valid ang credit card"
-  ie_warning_headline: "ang iyong browser ay out of date :-("
-  ie_warning_text: "para sa pinakamagandang karanasan sa Open Food Network, mariin naming nirerekomenda ang pag-upgrade ng inyong browser:"
-  ie_warning_chrome: i-download ang Chrome
-  ie_warning_firefox: i-download ang Firefox
-  ie_warning_ie: i-upgrade ang Internet Explorer
-  ie_warning_other: "Hindi ma-upgrade ang browser? Subukan ang Open Food Network sa inyong smartphone :-)"
   legal:
     cookies_policy:
       header: "paano kami gumagamit ng cookies"
@@ -2234,6 +2228,7 @@ fil_PH:
   report_customers_cycle: "order cycle"
   report_customers_type: "uri ng ulat"
   report_customers_csv: "i-download bilang csv"
+  report_customers: Customer
   report_producers: "Mga Producer"
   report_type: "uri ng ulat"
   report_hubs: "mga Hub"
@@ -2297,6 +2292,7 @@ fil_PH:
   report_header_delivery_charge: "bayad sa pag-deliver(%{currency_symbol})"
   report_header_tax_on_delivery: "tax sa pagdeliver (%{currency_symbol})"
   report_header_tax_on_fees: "Buwis sa Fees (%{currency_symbol})"
+  report_header_tax_category: "kategorya ng tax"
   report_header_total_tax: "kabuuang tax(%{currency_symbol})"
   report_header_total_excl_tax: "Kabuuang tax na hindi kasama (%{currency_symbol})"
   report_header_total_incl_tax: "Kabuuang tax na kasama (%{currency_symbol})"
@@ -3009,9 +3005,6 @@ fil_PH:
     default_seo_title: "default Seo Title"
     default_meta_description: "Default na paglalarawan ng Meta"
     default_meta_keywords: "Default Meta Keywords"
-    security_settings: "mga setting para sa seguridad"
-    allow_ssl_in_production: "payagan na gamitin ang SSL sa moda ng produksiyon"
-    allow_ssl_in_staging: "payagan ang SSL sa moda ng staging"
     currency_decimal_mark: "marka para sa currency decimal"
     currency_settings: "mga setting para sa currency"
     currency_symbol_position: ilagay ang "simbolo ng salapi bago o pagtapos ng halaga ng piso?"

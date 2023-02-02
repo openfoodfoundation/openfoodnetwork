@@ -1564,12 +1564,6 @@ tr:
   card_has_been_removed: "Kartınız kaldırıldı (sayı: %{number})"
   card_could_not_be_removed: Maalesef kart kaldırılamadı
   invalid_credit_card: "Geçersiz kredi kartı"
-  ie_warning_headline: "Tarayıcınız güncel değil :-("
-  ie_warning_text: "En iyi Açık Gıda Ağı deneyimi için tarayıcınızı güncellemenizi önemle öneririz:"
-  ie_warning_chrome: Chrome'u indirin
-  ie_warning_firefox: Firefox'u indirin
-  ie_warning_ie: Internet Explorer'ı yükseltin
-  ie_warning_other: "Tarayıcınızı yükseltemiyor musunuz? Akıllı telefonunuzdan Açık Gıda Ağı'nı deneyin :-)"
   legal:
     cookies_policy:
       header: "Çerezleri Nasıl Kullanıyoruz"
@@ -2412,6 +2406,7 @@ tr:
   report_customers_cycle: "Sipariş Dönemi"
   report_customers_type: "Rapor türü"
   report_customers_csv: "Csv olarak indir"
+  report_customers: Müşteri
   report_producers: "ÜRETİCİLER"
   report_type: "Rapor türü"
   report_hubs: "Pazarlar"
@@ -2473,8 +2468,10 @@ tr:
   report_header_taxable_items_total: "Vergiye tabi kalemler toplamı (%{currency_symbol})"
   report_header_sales_tax: "Satış Vergisi (%{currency_symbol})"
   report_header_delivery_charge: "Teslimat Ücreti (%{currency_symbol})"
+  report_header_tax: "Vergi"
   report_header_tax_on_delivery: "Teslimat Vergisi (%{currency_symbol})"
   report_header_tax_on_fees: "Ücretler Vergisi (%{currency_symbol})"
+  report_header_tax_category: "Vergi Kategorisi"
   report_header_total_tax: "Toplam Vergi (%{currency_symbol})"
   report_header_total_excl_tax: "Vergi Hariç Toplam (%{currency_symbol})"
   report_header_total_incl_tax: "Vergi Dahil Toplam (%{currency_symbol})"
@@ -3272,9 +3269,6 @@ tr:
     default_seo_title: "Varsayılan Seo Başlığı"
     default_meta_description: "Varsayılan Meta Açıklaması"
     default_meta_keywords: "Varsayılan Meta Anahtar Kelimeleri"
-    security_settings: "Güvenlik ayarları"
-    allow_ssl_in_production: "SSL'nin üretim modunda kullanılmasına izin ver"
-    allow_ssl_in_staging: "SSL'nin hazırlama modunda kullanılmasına izin ver"
     currency_decimal_mark: "Para birimi ondalık işareti"
     currency_settings: "Para Birimi Ayarları"
     currency_symbol_position: Para birimi simgesi tutarından önce mi, sonra mı olsun?

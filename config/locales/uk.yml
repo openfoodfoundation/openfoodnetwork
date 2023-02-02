@@ -1682,12 +1682,6 @@ uk:
   card_has_been_removed: "Вашу картку видалено (номер: %{number})"
   card_could_not_be_removed: Вибачте, не вдалося видалити картку
   invalid_credit_card: "Недійсна кредитна картка"
-  ie_warning_headline: "Ваш браузер застарів :-("
-  ie_warning_text: "Для найкращого використання Open Food Network ми наполегливо рекомендуємо оновити ваш браузер:"
-  ie_warning_chrome: Завантажити Chrome
-  ie_warning_firefox: Завантажте Firefox
-  ie_warning_ie: Оновіть Internet Explorer
-  ie_warning_other: "Не можете оновити браузер? Спробуйте Open Food Network на своєму смартфоні :-)"
   legal:
     cookies_policy:
       header: "Як ми використовуємо файли cookie"
@@ -2548,6 +2542,7 @@ uk:
   report_customers_cycle: "Цикл замовлення"
   report_customers_type: "Тип звіту"
   report_customers_csv: "Завантажити як csv"
+  report_customers: Замовник
   report_producers: "Виробники"
   report_type: "Тип звіту"
   report_hubs: "Хаби"
@@ -2613,8 +2608,10 @@ uk:
   report_header_taxable_items_total: "Усього об’єктів оподаткування (%{currency_symbol})"
   report_header_sales_tax: "Податок з продажу (%{currency_symbol})"
   report_header_delivery_charge: "Вартість доставки (%{currency_symbol})"
+  report_header_tax: "податок"
   report_header_tax_on_delivery: "Податок на доставку (%{currency_symbol})"
   report_header_tax_on_fees: "Податок на збори (%{currency_symbol})"
+  report_header_tax_category: "Категорія податку"
   report_header_total_tax: "Всього податок (%{currency_symbol})"
   report_header_total_excl_tax: "Всього без податків (%{currency_symbol})"
   report_header_total_incl_tax: "Всього в т.ч. податок (%{currency_symbol})"
@@ -3474,9 +3471,6 @@ uk:
     default_seo_title: "Назва Seo за замовчуванням"
     default_meta_description: "Метаопис за замовчуванням"
     default_meta_keywords: "Мета-ключові слова за замовчуванням"
-    security_settings: "Параметри безпеки"
-    allow_ssl_in_production: "Дозволити використання SSL у робочому режимі"
-    allow_ssl_in_staging: "Дозволити використання SSL у проміжному режимі"
     currency_decimal_mark: "Десятковий знак валюти"
     currency_settings: "Параметри валюти"
     currency_symbol_position: Поставити "символ валюти до або після суми в гривнях";

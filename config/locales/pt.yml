@@ -1495,12 +1495,6 @@ pt:
   saving_credit_card: A guardar cartão de crédito...
   card_has_been_removed: "O seu cartão foi removido (número: %{number})"
   card_could_not_be_removed: Pedimos desculpa, o cartão não pôde ser removido.
-  ie_warning_headline: "O seu navegador está desactualizado :-("
-  ie_warning_text: "Para ter uma melhor experiência com a Open Food Network, recomendamos vivamente que actualize o seu navegador:"
-  ie_warning_chrome: Descarregar Chrome
-  ie_warning_firefox: Descarregar Firefox
-  ie_warning_ie: Actualizar Internet Explorer
-  ie_warning_other: "Não consegue actualizar o navegador? Tente aceder à OFN pelo smartphone :-)"
   legal:
     cookies_policy:
       header: "Como usámos as Cookies"
@@ -2291,6 +2285,7 @@ pt:
   report_customers_cycle: "Ciclo de Encomendas"
   report_customers_type: "Tipo de Relatório"
   report_customers_csv: "Descarregar como csv"
+  report_customers: Consumidor
   report_producers: "Produtores"
   report_type: "Tipo de Relatório"
   report_hubs: "Centrais"
@@ -2354,6 +2349,8 @@ pt:
   report_header_delivery_charge: "Taxa de Entrega (%{currency_symbol})"
   report_header_tax_on_delivery: "Imposto sobre a Entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Imposto sobre honorários (%{currency_symbol})"
+  report_header_tax_category: "Categoria de Imposto"
+  report_header_tax_rate: "Taxa de Impostos"
   report_header_total_tax: "Total de Impostos (%{currency_symbol})"
   report_header_total_excl_tax: "Total excl. impostos (%{currency_symbol})"
   report_header_total_incl_tax: "Total incl. impostos (%{currency_symbol})"
@@ -3017,9 +3014,6 @@ pt:
     default_seo_title: "Título SEO por defeito"
     default_meta_description: "Meta Description por defeito"
     default_meta_keywords: "Meta keywords por defeito"
-    security_settings: "Configurações de Segurança"
-    allow_ssl_in_production: "Permitir que SSL seja usado em produção"
-    allow_ssl_in_staging: "Permitir que SSL seja usado em pre-produção"
     currency_decimal_mark: "Separador Decimal da Moeda"
     currency_settings: "Configurações de Moeda"
     currency_symbol_position: Colocar o símbolo de moeda antes ou depois do valor?

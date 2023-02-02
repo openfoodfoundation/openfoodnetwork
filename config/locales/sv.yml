@@ -874,12 +874,6 @@ sv:
   card_number: Kortnummer
   card_securitycode: "Säkerhetskod"
   card_expiry_date: Förfallodatum
-  ie_warning_headline: "Din webbläsare är föråldrad :("
-  ie_warning_text: "För den bästa upplevelsen av Open Food Network rekommenderas att uppdatera din webbläsare:"
-  ie_warning_chrome: Hämta Chrome
-  ie_warning_firefox: Hämta Firefox
-  ie_warning_ie: Uppdatera din Internet Explorer webbläsare
-  ie_warning_other: "Kan du inte uppdatera din webbläsare? Pröva Open Food Network på din smartphone :-)"
   home_shop: Handla nu
   brandstory_headline: "Mat, icke-inkorporerad."
   brandstory_intro: "Ibland är det bästa sättet att fixa till systemet att starta ett nytt..."
@@ -1554,6 +1548,7 @@ sv:
   report_customers_cycle: "Ordercykel"
   report_customers_type: "Rapporttyp"
   report_customers_csv: "Ladda ned sm csv"
+  report_customers: Kund
   report_producers: "Producenter "
   report_type: "Rapporttyp"
   report_hubs: "Hubbar"
@@ -1616,6 +1611,8 @@ sv:
   report_header_delivery_charge: "Leveransavgift (%{currency_symbol})"
   report_header_tax_on_delivery: "Leveransskatt (%{currency_symbol})"
   report_header_tax_on_fees: "Skatt på avgifter (%{currency_symbol})"
+  report_header_tax_category: "Skattekategori"
+  report_header_tax_rate: "Skattesats"
   report_header_total_tax: "Summa skatter (%{currency_symbol})"
   report_header_total_excl_tax: "Summa exkl skatt (%{currency_symbol})"
   report_header_total_incl_tax: "Summa inkl skatt (%{currency_symbol})"

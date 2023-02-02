@@ -1664,12 +1664,6 @@ ko:
   card_has_been_removed: "카드가 제거되었습니다. (번호 : %{number})"
   card_could_not_be_removed: 죄송합니다. 카드를 제거할 수 없습니다.
   invalid_credit_card: "잘못된 신용 카드"
-  ie_warning_headline: "브라우저가 최신 버전이 아닙니다. :-("
-  ie_warning_text: "최고의 Open Food Network 환경을 위해 브라우저를 업그레이드하는 것을 추천합니다."
-  ie_warning_chrome: Chrome 다운로드
-  ie_warning_firefox: Firefox 다운로드
-  ie_warning_ie: Internet Explorer 업그레이드
-  ie_warning_other: "브라우저를 업그레이드할 수 없나요? 스마트폰으로 Open Food Network를 해보세요 :-)"
   legal:
     cookies_policy:
       header: "쿠키 사용 용도"
@@ -2527,6 +2521,7 @@ ko:
   report_customers_cycle: "주문 주기"
   report_customers_type: "유형 기록하기"
   report_customers_csv: "csv 형태로 다운로드"
+  report_customers: 고객
   report_producers: "생산자들"
   report_type: "유형 기록하기"
   report_hubs: "물류센터"
@@ -2592,8 +2587,10 @@ ko:
   report_header_taxable_items_total: "과세 품목 합계 (%{currency_symbol})"
   report_header_sales_tax: "판매세 (%{currency_symbol})"
   report_header_delivery_charge: "배달 요금 (%{currency_symbol})"
+  report_header_tax: "세금"
   report_header_tax_on_delivery: "배달 세금 (%{currency_symbol})"
   report_header_tax_on_fees: "수수료 세금 (%{currency_symbol})"
+  report_header_tax_category: "세금 목록"
   report_header_total_tax: "세금 총합 (%{currency_symbol})"
   report_header_total_excl_tax: "세금 제외 합계 (%{currency_symbol})"
   report_header_total_incl_tax: "세금 포함 합계 (%{currency_symbol})"
@@ -3359,9 +3356,6 @@ ko:
     default_seo_title: "기본 검색 엔진 최적화 제목"
     default_meta_description: "기본 메타 설명"
     default_meta_keywords: "기본 메타 키워드"
-    security_settings: "보안 설정"
-    allow_ssl_in_production: "프로덕션 모드에서 SSL 사용 허용"
-    allow_ssl_in_staging: "스테이징 모드에서 SSL 사용 허용"
     currency_decimal_mark: "통화 소수 표"
     currency_settings: "통화 설정"
     currency_symbol_position: '"통화 기호"를 달러 액수 앞이나 뒤에 붙이시겠습니까?'

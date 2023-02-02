@@ -1670,12 +1670,6 @@ de_CH:
   card_has_been_removed: "Ihre Kreditkarte wurde entfernt (Nummer: %{number})."
   card_could_not_be_removed: Die Kreditkarte konnte nicht entfernt werden.
   invalid_credit_card: "Ungültige Kreditkarte"
-  ie_warning_headline: "Ihr Browser ist veraltet. :-("
-  ie_warning_text: "Für das beste Open-Food-Schweiz-Erlebnis empfehlen wir dringend, Ihren Browser zu aktualisieren:"
-  ie_warning_chrome: Chrome herunterladen
-  ie_warning_firefox: Firefox herunterladen
-  ie_warning_ie: Internet Explorer aktualisieren
-  ie_warning_other: "Können Sie Ihren Browser nicht aktualisieren? Versuchen Sie Open Food Schweiz auf Ihrem Smartphone! :-)"
   legal:
     cookies_policy:
       header: "Wie wir Cookies verwenden"
@@ -2533,6 +2527,7 @@ de_CH:
   report_customers_cycle: "Bestellzyklus"
   report_customers_type: "Berichtsart"
   report_customers_csv: "Als csv-Datei herunterladen"
+  report_customers: Kunde
   report_producers: "Unsere Produzenten"
   report_type: "Berichtsart"
   report_hubs: "Hubs"
@@ -2598,8 +2593,10 @@ de_CH:
   report_header_taxable_items_total: "Steuerpflichtige Posten insgesamt (%{currency_symbol})"
   report_header_sales_tax: "Umsatzsteuer (%{currency_symbol})"
   report_header_delivery_charge: "Liefergebühr (%{currency_symbol})"
+  report_header_tax: "Steuern"
   report_header_tax_on_delivery: "Steuer auf Lieferkosten (%{currency_symbol})"
   report_header_tax_on_fees: "Steuer auf Gebühren (%{currency_symbol})"
+  report_header_tax_category: "Steuerkategorie"
   report_header_total_tax: "Summe Steuern (%{currency_symbol})"
   report_header_total_excl_tax: "Summe exkl. Steuern (%{currency_symbol})"
   report_header_total_incl_tax: "Summe inkl. Steuern (%{currency_symbol})"
@@ -3420,9 +3417,6 @@ de_CH:
     default_seo_title: "Standard SEO-Titel"
     default_meta_description: "Standard Meta-Beschreibung"
     default_meta_keywords: "Standard Meta-Schlüsselwörter"
-    security_settings: "Sicherheitseinstellungen"
-    allow_ssl_in_production: "Zulassen, dass SSL im Produktionsmodus verwendet wird"
-    allow_ssl_in_staging: "Zulassen, dass SSL im Staging-Modus verwendet wird"
     currency_decimal_mark: "Dezimalzeichen der Währung"
     currency_settings: "Währungseinstellungen"
     currency_symbol_position: Währungssymbol (CHF) vor oder nach dem Betrag?

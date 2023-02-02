@@ -1716,12 +1716,6 @@ en_CA:
   card_has_been_removed: "Your card has been removed (number: %{number})"
   card_could_not_be_removed: Sorry, the card could not be removed
   invalid_credit_card: "Invalid credit card"
-  ie_warning_headline: "Your browser is out of date :-("
-  ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
-  ie_warning_chrome: Download Chrome
-  ie_warning_firefox: Download Firefox
-  ie_warning_ie: Upgrade Internet Explorer
-  ie_warning_other: "Can't upgrade your browser? Try Open Food Network on your smartphone :-)"
   legal:
     cookies_policy:
       header: "How We Use Cookies"
@@ -2588,6 +2582,7 @@ en_CA:
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"
   report_customers_csv: "Download as csv"
+  report_customers: Customer
   report_producers: "Producers"
   report_type: "Report Type"
   report_hubs: "Hubs"
@@ -2665,8 +2660,11 @@ en_CA:
   report_header_taxable_items_total: "Taxable Items Total (%{currency_symbol})"
   report_header_sales_tax: "Sales Tax (%{currency_symbol})"
   report_header_delivery_charge: "Delivery Charge (%{currency_symbol})"
+  report_header_tax: "Tax"
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
+  report_header_tax_category: "Tax Category"
+  report_header_tax_rate: "Tax Rate"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
   report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
   report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
@@ -3487,9 +3485,6 @@ en_CA:
     default_seo_title: "Default Seo Title"
     default_meta_description: "Default Meta Description"
     default_meta_keywords: "Default Meta Keywords"
-    security_settings: "Security Settings"
-    allow_ssl_in_production: "Allow SSL to be used in production mode"
-    allow_ssl_in_staging: "Allow SSL to be used in staging mode"
     currency_decimal_mark: "Currency decimal mark"
     currency_settings: "Currency Settings"
     currency_symbol_position: Put "currency symbol before or after dollar amount?"

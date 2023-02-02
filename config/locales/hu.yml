@@ -1688,12 +1688,6 @@ hu:
   card_has_been_removed: "Kártyáját eltávolították (szám: %{number})"
   card_could_not_be_removed: Sajnálom, a kártyát nem lehetett eltávolítani
   invalid_credit_card: "Érvénytelen hitelkártya"
-  ie_warning_headline: "A böngésződ elavult :-("
-  ie_warning_text: "A legjobb Open Food Network élmény érdekében erősen javasoljuk, hogy frissítse böngészőjét:"
-  ie_warning_chrome: Töltse le a Chrome-ot
-  ie_warning_firefox: Töltse le a Firefoxot
-  ie_warning_ie: Frissítse az Internet Explorert
-  ie_warning_other: "Nem tudja frissíteni a böngészőjét? Próbáld ki az Open Food Network-et okostelefonodon :-)"
   legal:
     cookies_policy:
       header: "Hogyan használjuk a sütiket"
@@ -2553,6 +2547,7 @@ hu:
   report_customers_cycle: "Rendelési ciklus"
   report_customers_type: "Jelentés típusa"
   report_customers_csv: "Letöltés csv-ként"
+  report_customers: Vevő
   report_producers: "Termelők"
   report_type: "Jelentés típusa"
   report_hubs: "Átvételi pontok"
@@ -2620,8 +2615,10 @@ hu:
   report_header_taxable_items_total: "Adóköteles tételek összesen (%{currency_symbol})"
   report_header_sales_tax: "Forgalmi adó (%{currency_symbol})"
   report_header_delivery_charge: "Szállítási díj (%{currency_symbol})"
+  report_header_tax: "Adó"
   report_header_tax_on_delivery: "Szállítási adó (%{currency_symbol})"
   report_header_tax_on_fees: "Díjak adója (%{currency_symbol})"
+  report_header_tax_category: "Adókategória"
   report_header_total_tax: "Összes adó (%{currency_symbol})"
   report_header_total_excl_tax: "Összesen, kivéve adó (%{currency_symbol})"
   report_header_total_incl_tax: "Összesen, beleértve adó (%{currency_symbol})"
@@ -3477,9 +3474,6 @@ hu:
     default_seo_title: "Alapértelmezett SEO cím"
     default_meta_description: "Alapértelmezett meta leírás"
     default_meta_keywords: "Alapértelmezett metakulcsszavak"
-    security_settings: "Biztonsági beállítások"
-    allow_ssl_in_production: "Az SSL használatának engedélyezése éles módban"
-    allow_ssl_in_staging: "Az SSL használatának engedélyezése átmeneti módban"
     currency_decimal_mark: "Pénznem tizedesjegye"
     currency_settings: "Pénznem beállításai"
     currency_symbol_position: Tedd a "valuta szimbólumot a dollárösszeg elé vagy után?"

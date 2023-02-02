@@ -1707,12 +1707,6 @@ ru:
   card_has_been_removed: "Ваша карта была удалена (number: %{number})"
   card_could_not_be_removed: Извините, карта не может быть удалена
   invalid_credit_card: "Неверная кредитная карта"
-  ie_warning_headline: "Ваш браузер устарел :-("
-  ie_warning_text: "Для лучшей работы с Открытой Сетью Продуктов, настоятельно рекомендуем обновить Ваш браузер:"
-  ie_warning_chrome: Скачать Chrome
-  ie_warning_firefox: Скачать Firefox
-  ie_warning_ie: Обновить Internet Explorer
-  ie_warning_other: "Не можете обновить Ваш браузер? Попробуйте Открытую Сеть Продуктов на Вашем телефоне"
   legal:
     cookies_policy:
       header: "Теперь Мы Используем Cookies"
@@ -2574,6 +2568,7 @@ ru:
   report_customers_cycle: "Цикл Заказа"
   report_customers_type: "Тип Отчета"
   report_customers_csv: "Скачать как csv"
+  report_customers: Клиент
   report_producers: "Производители"
   report_type: "Тип Отчета"
   report_hubs: "Центры"
@@ -2651,8 +2646,10 @@ ru:
   report_header_taxable_items_total: "Итого по статьям налогообложения (%{currency_symbol})"
   report_header_sales_tax: "Налог с продаж (%{currency_symbol})"
   report_header_delivery_charge: "Стоимость доставки (%{currency_symbol})"
+  report_header_tax: "Налог"
   report_header_tax_on_delivery: "Налог на доставку (%{currency_symbol})"
   report_header_tax_on_fees: "Налог на сборы (%{currency_symbol})"
+  report_header_tax_category: "Налоговая Категория"
   report_header_total_tax: "Общий налог (%{currency_symbol})"
   report_header_total_excl_tax: "Итого искл. налог (%{currency_symbol})"
   report_header_total_incl_tax: "Итого, вкл. налог (%{currency_symbol})"
@@ -3521,9 +3518,6 @@ ru:
     default_seo_title: "SEO Title По Умолчанию"
     default_meta_description: "Meta Description По Умолчанию"
     default_meta_keywords: "Meta Keywords По Умолчанию"
-    security_settings: "Настройки Безопасности"
-    allow_ssl_in_production: "Использовать SSL в production режиме"
-    allow_ssl_in_staging: "Использовать SSL в staging режиме"
     currency_decimal_mark: "Разделитель десятых"
     currency_settings: "Настройки Валюты"
     currency_symbol_position: Вставлять знак валюты до или после суммы?

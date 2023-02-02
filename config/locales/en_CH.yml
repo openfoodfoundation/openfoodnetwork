@@ -35,8 +35,6 @@ en_CH:
   menu_5_url: "https://www.openfoodswitzerland.ch/"
   menu_6_url: "https://www.openfoodswitzerland.ch"
   menu_7_url: "https://www.openfoodswitzerland.ch/"
-  ie_warning_text: "For the best Open Food Switzerland experience, we strongly recommend upgrading your browser:"
-  ie_warning_other: "Can't upgrade your browser? Try Open Food Switzerland on your smartphone :-)"
   legal:
     cookies_policy:
       disabling_cookies_desc: "As a user you can always allow, block or delete Open Food Switzerland’s or any other website cookies whenever you want to through your browser’s setting control. Each browser has a different operative. Here are the links:"

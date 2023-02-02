@@ -1691,12 +1691,6 @@ nb:
   card_has_been_removed: "Ditt kort er fjernet (nummer: %{number})"
   card_could_not_be_removed: Beklager, kortet kunne ikke fjernes
   invalid_credit_card: "Ugyldig kort"
-  ie_warning_headline: "Din nettleser er for gammel :-("
-  ie_warning_text: "For den beste opplevelsen med Open Food Network anbefaler vi på det sterkeste å oppgradere nettleseren din:"
-  ie_warning_chrome: Last ned Chrome
-  ie_warning_firefox: Last ned Firefox
-  ie_warning_ie: Oppgrader Internet Explorer
-  ie_warning_other: "Kan ikke oppgradere nettleseren din? Prøv Open Food Network på smart-telefonen din :-)"
   legal:
     cookies_policy:
       header: "Hvordan vi bruker informasjonskapsler"
@@ -2558,6 +2552,7 @@ nb:
   report_customers_cycle: "Bestillingsrunde"
   report_customers_type: "Rapporttype"
   report_customers_csv: "Last ned som csv"
+  report_customers: Kunde
   report_producers: "Produsenter"
   report_type: "Rapporttype"
   report_hubs: "Hubs"
@@ -2625,8 +2620,11 @@ nb:
   report_header_taxable_items_total: "Sum varer som krever avgift (%{currency_symbol})"
   report_header_sales_tax: "Salgsavgift (%{currency_symbol})"
   report_header_delivery_charge: "Leveringsavgift (%{currency_symbol})"
+  report_header_tax: "Avgift"
   report_header_tax_on_delivery: "Leveringsavgift (%{currency_symbol})"
   report_header_tax_on_fees: "Avgiftsavgift (%{currency_symbol})"
+  report_header_tax_category: "Avgiftskategori"
+  report_header_tax_rate: "Avgiftsrate"
   report_header_total_tax: "Sum avgifter (%{currency_symbol})"
   report_header_total_excl_tax: "Sum eks. avgift (%{currency_symbol})"
   report_header_total_incl_tax: "Sum inkl. avgift (%{currency_symbol})"
@@ -3437,9 +3435,6 @@ nb:
     default_seo_title: "Standard SEO Tittel"
     default_meta_description: "Standard Meta Beskrivelse"
     default_meta_keywords: "Standard Meta Nøkkelord"
-    security_settings: "Sikkerhetsinnstillinger"
-    allow_ssl_in_production: "Tillat at SSL brukes i produksjonsmodus"
-    allow_ssl_in_staging: "Tillat at SSL brukes i staging-modus"
     currency_decimal_mark: "Valuta desimaltegn"
     currency_settings: "Valutainnstillinger"
     currency_symbol_position: Sett "valutasymbol før eller etter dollarbeløp?"

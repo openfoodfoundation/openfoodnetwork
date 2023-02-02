@@ -1642,12 +1642,6 @@ es:
   card_has_been_removed: "Su tarjeta ha sido eliminada (número: %{number})"
   card_could_not_be_removed: Lo sentimos, la tarjeta no se pudo quitar
   invalid_credit_card: "Tarjeta de crédito inválida"
-  ie_warning_headline: "Su navegador está desactualizado :-("
-  ie_warning_text: "Para la mejor esperiencia de Open Food Network, recomendamos actualizar su navegador:"
-  ie_warning_chrome: Descargar Chrome
-  ie_warning_firefox: Descargar Firefox
-  ie_warning_ie: Actualizar Internet Explorer
-  ie_warning_other: "¿No puede actualizar su navegador? Pruebe Open Food Network en su teléfono :-)"
   legal:
     cookies_policy:
       header: "Cómo utilizamos las cookies"
@@ -2504,6 +2498,7 @@ es:
   report_customers_cycle: "Ciclo de Pedido"
   report_customers_type: "Tipo de Informe"
   report_customers_csv: "Descargar como CSV"
+  report_customers: Consumidora
   report_producers: "Productoras"
   report_type: "Tipo de Informe"
   report_hubs: "Hubs"
@@ -2565,8 +2560,11 @@ es:
   report_header_taxable_items_total: "Artículos con Impuestos en Total (%{currency_symbol})"
   report_header_sales_tax: "Impuesto sobre las Ventas (%{currency_symbol})"
   report_header_delivery_charge: "Gastos de Envío (%{currency_symbol})"
+  report_header_tax: "Impuesto"
   report_header_tax_on_delivery: "Impuestos sobre la entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Impuesto sobre las comisiones (%{currency_symbol})"
+  report_header_tax_category: "Categoría de impuestos"
+  report_header_tax_rate: "Porcentaje del Impuesto"
   report_header_total_tax: "Total Impuestos (%{currency_symbol})"
   report_header_total_excl_tax: "Total Impuestos excl. (%{currency_symbol})"
   report_header_total_incl_tax: "Total Impuestos incl. (%{currency_symbol})"
@@ -3394,9 +3392,6 @@ es:
     default_seo_title: "Título Seo predeterminado"
     default_meta_description: "Meta Descripción predeterminada"
     default_meta_keywords: "Palabras clave Meta predeterminadas"
-    security_settings: "Configuraciones de seguridad"
-    allow_ssl_in_production: "Permitir que SSL se utilice en modo de producción"
-    allow_ssl_in_staging: "Permitir que SSL se utilice en modo de staging"
     currency_decimal_mark: "Marca decimal de la moneda"
     currency_settings: "Ajustes de moneda"
     currency_symbol_position: ¿Poner "símbolo de moneda antes o después de la cantidad?"

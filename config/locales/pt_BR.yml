@@ -1554,12 +1554,6 @@ pt_BR:
   card_has_been_removed: "O seu cartão foi removido (número: %{number})"
   card_could_not_be_removed: Desculpe, o cartão não pode ser removido
   invalid_credit_card: "Cartão de crédito inválido"
-  ie_warning_headline: "Seu navegador está desatualizado :("
-  ie_warning_text: "Para a melhor experiência na Ajunta, recomendamos que você atualize seu navegador:"
-  ie_warning_chrome: Baixar Chrome
-  ie_warning_firefox: Baixar Firefox
-  ie_warning_ie: Atualizar Internet Explorer
-  ie_warning_other: "Não consegue atualizar o navegador? Tente acessar a Ajunta pelo smartphone :)"
   legal:
     cookies_policy:
       header: "Como usamos cookies"
@@ -2382,6 +2376,7 @@ pt_BR:
   report_customers_cycle: "Ciclo de pedidos"
   report_customers_type: "Relatar tipo"
   report_customers_csv: "Fazer download como csv"
+  report_customers: Consumidor
   report_producers: "Produtores"
   report_type: "Relatar tipo"
   report_payment: "Métodos de pagamento"
@@ -2443,6 +2438,8 @@ pt_BR:
   report_header_delivery_charge: "Taxa de entrega (%{currency_symbol})`"
   report_header_tax_on_delivery: "Imposto sobre a entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Imposto sobre taxas (%{currency_symbol})"
+  report_header_tax_category: "Categoria de taxa"
+  report_header_tax_rate: "Taxa de imposto"
   report_header_total_tax: "Imposto total (%{currency_symbol})"
   report_header_total_excl_tax: "Total imposto excluído (%{currency_symbol})"
   report_header_total_incl_tax: "Total imposto incluído (%{currency_symbol})"
@@ -3257,9 +3254,6 @@ pt_BR:
     default_seo_title: "Título de SEO padrão"
     default_meta_description: "Meta padrão Descrição"
     default_meta_keywords: "Meta Palavras-chave Padrão"
-    security_settings: "Configurações de segurança"
-    allow_ssl_in_production: "Permitir que o SSL seja usado no modo de produção"
-    allow_ssl_in_staging: "Permitir que o SSL seja usado no modo de preparação"
     currency_decimal_mark: "Marca decimal da moeda"
     currency_settings: "Configurações de moeda"
     currency_symbol_position: Coloque "símbolo de moeda antes ou depois do valor em dólar?"

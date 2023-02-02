@@ -6,9 +6,14 @@ fr:
       spree/shipping_method: Option d'expédition
     attributes:
       spree/order/ship_address:
+        address1: "Prénom et nom"
+        address2: "Adresse (Numéro et rue)"
+        city: "Département"
+        country: "Pays"
         phone: "Numéro de téléphone"
         firstname: "Prénom"
         lastname: "Nom "
+        zipcode: "Code postal"
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
@@ -1298,6 +1303,7 @@ fr:
       total_by_customer: Total par acheteur
       total_by_supplier: Total par producteur
       supplier_totals: Totaux Cycle de Vente par Producteur
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Totaux Cycle de Vente par Producteur pour chaque boutique
       totals_by_supplier: Totaux Cycle de Vente par boutique pour chaque Producteur
       customer_totals: Totaux Cycle de Vente par Acheteur
@@ -1308,6 +1314,7 @@ fr:
       addresses: Adresses
       payment_methods: Rapport Méthodes de Paiement
       delivery: Rapport de Livraison
+      sales_tax_totals_by_producer: Détail des montants de taxes par producteur
       tax_types: Par type de taxe
       tax_rates: Par taux de taxe
       pack_by_customer: Préparation des commandes par Acheteur
@@ -1713,12 +1720,6 @@ fr:
   card_has_been_removed: "Votre carte a été supprimée (numéro : %{number})"
   card_could_not_be_removed: Désolée, la carte n'a pas pu être supprimée :-(
   invalid_credit_card: "Cette carte de crédit n'est pas valide"
-  ie_warning_headline: "Votre navigateur n'est pas à jour :-("
-  ie_warning_text: "Pour une expérience optimale sur CoopCircuits, nous vous recommandons fortement de mettre à jour votre navigateur:"
-  ie_warning_chrome: Télécharger Chrome
-  ie_warning_firefox: Télécharger Firefox
-  ie_warning_ie: Mettre à jour Internet Explorer
-  ie_warning_other: "Impossible de mettre à jour votre navigateur? Essayez CoopCircuits sur votre smartphone :-)"
   legal:
     cookies_policy:
       header: "Notre usage des Cookies"
@@ -2585,6 +2586,7 @@ fr:
   report_customers_cycle: "Cycle de vente"
   report_customers_type: "Type de rapport"
   report_customers_csv: "Télécharger en csv"
+  report_customers: Acheteur
   report_producers: "Producteurs"
   report_type: "Type de rapport"
   report_hubs: "Boutiques"
@@ -2662,8 +2664,12 @@ fr:
   report_header_taxable_items_total: "Montant produits soumis à TVA (%{currency_symbol})"
   report_header_sales_tax: "TVA sur produits (%{currency_symbol})"
   report_header_delivery_charge: "Frais de livraison (%{currency_symbol})"
+  report_header_tax: "Taxe"
   report_header_tax_on_delivery: "TVA sur livraison (%{currency_symbol})"
   report_header_tax_on_fees: "TVA sur commission boutique (%{currency_symbol})"
+  report_header_tax_category: "TVA applicable"
+  report_header_tax_rate_name: "Taxe"
+  report_header_tax_rate: "TVA applicable"
   report_header_total_tax: "Total TVA (%{currency_symbol})"
   report_header_total_excl_tax: "Total HT (%{currency_symbol})"
   report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
@@ -2686,6 +2692,7 @@ fr:
   report_header_supplier: Fournisseur
   report_header_producer: Producteur
   report_header_producer_suburb: Ville Producteur
+  report_header_producer_tax_status: Statut du producteur
   report_header_producer_charges_sales_tax?: Soumis à la TVA
   report_header_unit: Unité
   report_header_group_buy_unit_quantity: Nb d'unités achetées (vente par lots)
@@ -2702,6 +2709,7 @@ fr:
   report_header_distributor_address: Adresse Boutique
   report_header_distributor_city: Ville Distributeur
   report_header_distributor_postcode: Code Postal Distributeur
+  report_header_distributor_tax_status: Statut de la boutique
   report_header_delivery_address: Adresse Livraison
   report_header_delivery_postcode: Code Postal Livraison
   report_header_bulk_unit_size: Quantité totale du lot
@@ -3536,9 +3544,6 @@ fr:
     default_seo_title: "Titre référencement web (SEO) par défaut"
     default_meta_description: "Meta description par défaut"
     default_meta_keywords: "Meta mots clés par défaut"
-    security_settings: "Paramètres de sécurité"
-    allow_ssl_in_production: "Autoriser l'utilisation SSL dans l'environnement de production"
-    allow_ssl_in_staging: "Autoriser l'utilisation SSL dans l'environnement de staging"
     currency_decimal_mark: "Symbole du séparateur de décimales"
     currency_settings: "Paramètres devise"
     currency_symbol_position: Mettre le symbole de la devise avant ou après le montant ?

@@ -6,9 +6,14 @@ de_DE:
       spree/shipping_method: Lieferoption
     attributes:
       spree/order/ship_address:
+        address1: "Lieferadresse Straße + Hausnummer"
+        address2: "Lieferadresse Adresszusatz"
+        city: "Lieferadresse Ort"
+        country: "Lieferadresse Land"
         phone: "Telefonnummer"
         firstname: "Vorname"
         lastname: "Nachname"
+        zipcode: "Lieferadresse Postleitzahl"
       spree/user:
         password: "Passwort"
         password_confirmation: "Passwort erneut eingeben"
@@ -408,8 +413,11 @@ de_DE:
       filters:
         categories:
           title: Lieferkategorien
+          selected_categories: "%{count} Kategorien ausgewählt"
         producers:
           title: Unsere Produzenten
+          selected_producers: "%{count} Produzenten ausgewählt"
+        per_page: "%{count} Produkte pro Seite"
         colums: Spalten
       columns:
         name: Name
@@ -646,13 +654,14 @@ de_DE:
       model:
         no_file: "Fehler: Es wurde keine Datei hochgeladen."
         could_not_process: "Die Datei konnte nicht verarbeitet werden: Ungültiges Datenformat."
-        incorrect_value: Der eingetragene Wert ist fehlerhaft.
-        conditional_blank: Darf nicht leer sein, wenn das Feld 'unit_type' leer ist.
-        no_product: Es konnten keine passenden Produkte in der Datenbank gefunden werden.
-        not_found: Konnte nicht in der Datenbank gefunden werden.
+        incorrect_value: enthält einen fehlerhaften Wert.
+        conditional_blank: darf nicht leer sein, wenn das Feld 'unit_type' leer ist.
+        no_product: entspricht keinem passenden Produkt in der Datenbank.
+        not_found: konnte nicht in der Datenbank gefunden werden.
         category_not_found: stimmt nicht mit den verfügbaren Kategorien überein. Diese finden Sie auf der Seite zum Produktimport. Überprüfen Sie zusätzlich Ihre Angaben auf Tippfehler.
-        not_updatable: Kann über den Produktimport nicht auf bestehende Produkte aktualisiert werden.
-        blank: darf nicht leer sein
+        not_updatable: kann über den Produktimport nicht für bestehende Produkte aktualisiert werden.
+        values_must_be_same: muss für gleichnamige Produkte gleich sein.
+        blank: darf nicht leer sein.
         products_no_permission: Sie sind nicht berechtigt, Produkte dieses Unternehmens zu verwalten.
         inventory_no_permission: Sie sind nicht berechtigt, für diesen Produzenten Produkte in den Katalog aufzunehmen.
         none_saved: Es konnten keine Produkte erfolgreich gespeichert werden.
@@ -694,8 +703,8 @@ de_DE:
         options_and_defaults: Importoptionen und Voreinstellungen
         no_permission: Sie sind nicht berechtigt, dieses Unternehmen zu verwalten.
         not_found: Das Unternehmen konnte nicht in der Datenbank gefunden werden.
-        no_name: Für einige Produkte ist kein Name definiert.
-        blank_enterprise: Für einige Produkte ist kein Unternehmen definiert.
+        no_name: Für einige Produkte ist kein Name angegeben.
+        blank_enterprise: Für einige Produkte ist kein Unternehmen angegeben.
         reset_absent?: Fehlende Produkte zurücksetzen?
         reset_absent_tip: Den Lagerbestand für alle nicht in der Datei vorhandenen Produkte auf Null setzen.
         overwrite_all: Alle überschreiben
@@ -1295,6 +1304,7 @@ de_DE:
       total_by_customer: Gesamtsummen nach Kunden
       total_by_supplier: Gesamtsummen nach Lieferanten
       supplier_totals: Lieferantengesamtsummen
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Lieferantengesamtsummen nach Verteilstelle
       totals_by_supplier: Verteilstellengesamtsummen nach Lieferanten
       customer_totals: Kundengesamtsummen
@@ -1305,6 +1315,7 @@ de_DE:
       addresses: Adressen
       payment_methods: Zahlungsarten
       delivery: Lieferungen
+      sales_tax_totals_by_producer: Umsatzsteuer nach Produzenten
       tax_types: Steuerarten
       tax_rates: Steuersätze
       pack_by_customer: Packliste nach Kunden
@@ -1484,6 +1495,9 @@ de_DE:
         stripe_connect_fail: Die Verbindung Ihres Stripe-Kontos ist fehlgeschlagen.
       stripe_connect_settings:
         resource: Konfiguration für Stripe Connect
+    resend_confirmation_emails_feedback:
+      one: "Bestätigungs-E-Mail für 1 Bestellung gesendet."
+      other: "E-Mail-Bestätigung wurde für %{count} Bestellungen gesendet."
   api:
     unknown_error: "Etwas ist schief gelaufen. Unser Team wurde benachrichtigt."
     invalid_api_key: "Ungültiger API-Schlüssel (%{key}) angegeben."
@@ -1649,7 +1663,7 @@ de_DE:
   use_geocoder: Breiten- und Längengrad automatisch aus der Adresse bestimmen
   postcode: Postleitzahl
   postcode_placeholder: z. B. 30701
-  suburb: Vorort
+  suburb: Ort
   state: Bundesland
   country: Land
   unauthorized: Nicht autorisiert
@@ -1706,12 +1720,6 @@ de_DE:
   card_has_been_removed: "Ihre Kreditkarte wurde entfernt (Nummer: %{number})."
   card_could_not_be_removed: Die Kreditkarte konnte nicht entfernt werden.
   invalid_credit_card: "Ungültige Kreditkarte"
-  ie_warning_headline: "Ihr Browser ist veraltet. :-("
-  ie_warning_text: "Für das beste Open-Food-Network-Erlebnis empfehlen wir dringend, Ihren Browser zu aktualisieren:"
-  ie_warning_chrome: Chrome herunterladen
-  ie_warning_firefox: Firefox herunterladen
-  ie_warning_ie: Internet Explorer aktualisieren
-  ie_warning_other: "Können Sie Ihren Browser nicht aktualisieren? Versuchen Sie Open Food Network auf Ihrem Smartphone! :-)"
   legal:
     cookies_policy:
       header: "Wie wir Cookies verwenden"
@@ -1798,12 +1806,13 @@ de_DE:
   split_checkout:
     your_details_without_number: Ihre Daten
     payment_method_without_number: Zahlungsart
-    order_summary_without_number: Bestellübersicht
+    order_summary_without_number: Bestellabschluss
     already_ordered:
       cart: "im Warenkorb"
       message_html: "Sie haben bereits eine Bestellung für diesen Bestellzyklus. Überprüfen Sie den %{cart}, um die Artikel zu sehen, die Sie zuvor bestellt haben. Sie können Artikel auch stornieren, solange der Bestellzyklus geöffnet ist."
     step1:
       contact_information:
+        title: Kontaktdaten
         email:
           label: E-Mail-Adresse
         phone:
@@ -1850,17 +1859,20 @@ de_DE:
           save_card: Kreditkarte für zukünftige Verwendung speichern
           create_new_card: oder geben Sie unten neue Kreditkartendetails ein
       explaination: Sie können Ihre Bestellung im nächsten Schritt überprüfen und die endgültigen Kosten bestätigen.
-      submit: Weiter - Bestellübersicht
+      submit: Weiter - Bestellabschluss
       cancel: Zurück - Ihre Daten
     step3:
       delivery_details:
         title: Lieferdetails
         edit: Bearbeiten
         address: Liefer-/Abholinformationen
+        instructions: Informationen
       payment_method:
         title: Zahlungsart
         edit: Bearbeiten
+        instructions: Informationen
       order:
+        title: Bestellübersicht
         edit: Bearbeiten
       terms_and_conditions:
         message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
@@ -1873,6 +1885,7 @@ de_DE:
       submit: Zahlungspflichtig bestellen
       cancel: Zurück - Zahlungsart
     errors:
+      saving_failed: "Speichern fehlgeschlagen. Bitte prüfen Sie die markierten Felder. %{messages}"
       terms_not_accepted: Bitte akzeptieren Sie die Allgemeinen Geschäftsbedingungen.
       required: Feld darf nicht leer sein.
       invalid_number: "Bitte geben Sie eine gültige Telefonnummer ein."
@@ -2573,6 +2586,7 @@ de_DE:
   report_customers_cycle: "Bestellzyklus"
   report_customers_type: "Berichtsart"
   report_customers_csv: "Als csv-Datei herunterladen"
+  report_customers: Kunde
   report_producers: "Unsere Produzenten"
   report_type: "Berichtsart"
   report_hubs: "Hubs"
@@ -2650,8 +2664,12 @@ de_DE:
   report_header_taxable_items_total: "Steuerpflichtige Posten insgesamt (%{currency_symbol})"
   report_header_sales_tax: "Umsatzsteuer (%{currency_symbol})"
   report_header_delivery_charge: "Liefergebühr (%{currency_symbol})"
+  report_header_tax: "Steuern"
   report_header_tax_on_delivery: "Steuer auf Lieferkosten (%{currency_symbol})"
   report_header_tax_on_fees: "Steuer auf Gebühren (%{currency_symbol})"
+  report_header_tax_category: "Steuerkategorie"
+  report_header_tax_rate_name: "Steuersatz"
+  report_header_tax_rate: "Steuersatz"
   report_header_total_tax: "Summe Steuern (%{currency_symbol})"
   report_header_total_excl_tax: "Summe exkl. Steuern (%{currency_symbol})"
   report_header_total_incl_tax: "Summe inkl. Steuern (%{currency_symbol})"
@@ -2661,6 +2679,7 @@ de_DE:
   report_header_customer_code: Kundennummer
   report_header_product: Produkt
   report_header_product_properties: Produkteigenschaften
+  report_header_product_tax_category: Steuerkategorie
   report_header_quantity: Menge
   report_header_max_quantity: Max Menge
   report_header_variant: Produktvariante
@@ -3474,9 +3493,6 @@ de_DE:
     default_seo_title: "Standard SEO-Titel"
     default_meta_description: "Standard Meta-Beschreibung"
     default_meta_keywords: "Standard Meta-Schlüsselwörter"
-    security_settings: "Sicherheitseinstellungen"
-    allow_ssl_in_production: "Zulassen, dass SSL im Produktionsmodus verwendet wird"
-    allow_ssl_in_staging: "Zulassen, dass SSL im Staging-Modus verwendet wird"
     currency_decimal_mark: "Dezimalzeichen der Währung"
     currency_settings: "Währungseinstellungen"
     currency_symbol_position: Währungssymbol (€) vor oder nach dem Betrag?
@@ -3574,7 +3590,7 @@ de_DE:
     zipcode: Postleitzahl
     weight: Gewicht (pro kg oder lb)
     error_user_destroy_with_orders: "Benutzer mit abgeschlossenen Bestellungen dürfen nicht gelöscht werden."
-    cannot_create_payment_without_payment_methods: "Sie können keine Zahlung für eine Bestellung erstellen, ohne dass Zahlungsarten definiert sind."
+    cannot_create_payment_without_payment_methods: "Sie können keine Zahlung für eine Bestellung erstellen, wenn keine Zahlungsarten angelegt sind."
     please_define_payment_methods: "Bitte definieren Sie zunächst die Zahlungsarten."
     options: "Optionen"
     has_no_shipped_units: "hat keine gelieferten Einheiten"

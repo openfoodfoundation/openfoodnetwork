@@ -1706,12 +1706,6 @@ it:
   card_has_been_removed: "La tua Carta è stata rimossa (number: %{number})"
   card_could_not_be_removed: Spiacenti, la carta non ha potuto essere rimossa
   invalid_credit_card: "Carta di credito non valida"
-  ie_warning_headline: "Il tuo browser non è aggiornato :-("
-  ie_warning_text: "Per una migliore esperienza con Open Food Network, ti raccomandiamo caldamente di aggiornare il browser:"
-  ie_warning_chrome: Scarica Chrome
-  ie_warning_firefox: Scarica Firefox
-  ie_warning_ie: Aggiorna Internet Explorer
-  ie_warning_other: "Non puoi aggiornare il browser? Prova Open Food Network sul tuo smartphone :-)"
   legal:
     cookies_policy:
       header: "Come usiamo i cookie"
@@ -2574,6 +2568,7 @@ it:
   report_customers_cycle: "Ciclo di richieste"
   report_customers_type: "Tipo di rapporto"
   report_customers_csv: "Scarica come csv"
+  report_customers: Cliente
   report_producers: "Produttori"
   report_type: "Tipo di rapporto"
   report_hubs: "Distributori"
@@ -2651,8 +2646,11 @@ it:
   report_header_taxable_items_total: "Totale Articoli con tariffe (%{currency_symbol})"
   report_header_sales_tax: "Tariffa vendite (%{currency_symbol})"
   report_header_delivery_charge: "Tariffa consegna (%{currency_symbol})"
+  report_header_tax: "IVA"
   report_header_tax_on_delivery: "Oneri sulla consegna (%{currency_symbol})"
   report_header_tax_on_fees: "Oneri sulle provvigioni (%{currency_symbol})"
+  report_header_tax_category: "Categoria d'imposta"
+  report_header_tax_rate: "Aliquota d'imposta"
   report_header_total_tax: "Oneri totali (%{currency_symbol})"
   report_header_total_excl_tax: "Totale imponibile (%{currency_symbol})"
   report_header_total_incl_tax: "Totale IVA incl. (%{currency_symbol})"
@@ -3498,9 +3496,6 @@ it:
     default_seo_title: "Titolo Seo predefinito"
     default_meta_description: "Meta Descrizione predefinita"
     default_meta_keywords: "Parole chiave Meta predefinite"
-    security_settings: "Impostazioni di sicurezza"
-    allow_ssl_in_production: "Consentire l'utilizzo di SSL in modalità produzione"
-    allow_ssl_in_staging: "Consentire l'utilizzo di SSL nella modalità di gestione temporanea"
     currency_decimal_mark: "Valuta decimale"
     currency_settings: "Impostazioni valuta"
     currency_symbol_position: Metti "simbolo di valuta prima o dopo l'importo?"
