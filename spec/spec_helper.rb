@@ -42,6 +42,9 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = false
 
+  # You can use `rspec -n` to run only failed specs.
+  config.example_status_persistence_file_path = "tmp/rspec-status.txt"
+
   # Helpers
   config.include ViewComponent::TestHelpers, type: :component
   config.include ControllerRequestsHelper, type: :controller
