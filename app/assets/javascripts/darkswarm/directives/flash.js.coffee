@@ -17,9 +17,12 @@ angular.module('Darkswarm').directive "ofnFlash", (flash, $timeout, RailsFlashLo
     
     # Callback when a new flash message is pushed to flash service
     show = (message, type)=>
-      if message
-        $scope.flashes.push({message: message, type: typePairings[type]})
-        $timeout($scope.delete, 10000)
+      return unless message
+      # if same message already exists, don't add it again
+      return if $scope.flashes.some((flash) -> flash.message == message)
+
+      $scope.flashes.push({message: message, type: typePairings[type]})
+      $timeout($scope.delete, 10000)
 
     $scope.delete = ->
       $scope.flashes.shift()
