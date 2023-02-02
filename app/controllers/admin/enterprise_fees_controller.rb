@@ -35,6 +35,8 @@ module Admin
     end
 
     def bulk_update
+      sanitize_inherits_tax_category
+
       @enterprise_fee_set = Sets::EnterpriseFeeSet.new(enterprise_fee_bulk_params)
 
       if @enterprise_fee_set.save
@@ -116,6 +118,15 @@ module Admin
             return redirect_to redirect_path
           end
         end
+      end
+    end
+
+    def sanitize_inherits_tax_category
+      # if tax_category_id param is -1, inherits_tax_category should be true
+      # otherwise, inherits_tax_category should be false
+      params["sets_enterprise_fee_set"]["collection_attributes"].each do |_, p|
+        p['inherits_tax_category'] = p['tax_category_id'] == '-1'
+        p['tax_category_id'] = nil if p['inherits_tax_category']
       end
     end
   end
