@@ -144,6 +144,65 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       expect(table).to have_content(coordinator_country_tax)
       expect(table).to have_content(summary_row)
     end
+
+    context "filtering" do
+      let(:fee_name_selector){ "#s2id_q_enterprise_fee_id_in" }
+      let(:fee_owner_selector){ "#s2id_q_enterprise_fee_owner_id_in" }
+
+      let(:summary_row_after_filtering_by_fee_name){
+        ["TOTAL", "20.0", "0.8", "20.8"].join(" ")
+      }
+
+      let(:summary_row_after_filtering_by_fee_owner){
+        ["TOTAL", "15.0", "0.61", "15.61"].join(" ")
+      }
+
+      it "should filter by fee name" do
+        login_as admin
+        visit admin_reports_path
+        click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
+
+        page.find(fee_name_selector).click
+        find('li', text: coordinator_fees.name).click
+
+        expect(page).to have_button("Go")
+        click_on "Go"
+
+        expect(page.find("table.report__table thead tr")).to have_content(table_header)
+
+        table = page.find("table.report__table tbody")
+        expect(table).to_not have_content(supplier_state_tax)
+        expect(table).to_not have_content(supplier_country_tax)
+        expect(table).to_not have_content(distributor_state_tax)
+        expect(table).to_not have_content(distributor_country_tax)
+        expect(table).to have_content(coordinator_state_tax)
+        expect(table).to have_content(coordinator_country_tax)
+        expect(table).to have_content(summary_row_after_filtering_by_fee_name)
+      end
+
+      it "should filter by fee owner" do
+        login_as admin
+        visit admin_reports_path
+        click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
+
+        page.find(fee_owner_selector).click
+        find('li', text: supplier.name).click
+
+        expect(page).to have_button("Go")
+        click_on "Go"
+
+        expect(page.find("table.report__table thead tr")).to have_content(table_header)
+
+        table = page.find("table.report__table tbody")
+        expect(table).to have_content(supplier_state_tax)
+        expect(table).to have_content(supplier_country_tax)
+        expect(table).to_not have_content(distributor_state_tax)
+        expect(table).to_not have_content(distributor_country_tax)
+        expect(table).to_not have_content(coordinator_state_tax)
+        expect(table).to_not have_content(coordinator_country_tax)
+        expect(table).to have_content(summary_row_after_filtering_by_fee_owner)
+      end
+    end
   end
 
   context 'included tax' do

@@ -1,17 +1,15 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 module Reporting
   module Reports
     module EnterpriseFeeSummary
       class EnterpriseFeesWithTaxReportByProducer < ReportTemplate
-        attr_accessor :permissions, :parameters
+        attr_accessor :permissions
 
         def initialize(user, params = {}, render: false)
           super(user, params, render: render)
-          @parameters = Parameters.new(p || {})
-          @parameters.validate!
           @permissions = Permissions.new(user)
-          @parameters.authorize!(@permissions)
         end
 
         def search
@@ -26,9 +24,44 @@ module Reporting
           @report_line_items ||= Reporting::LineItems.new(order_permissions, params)
         end
 
+        def supplier_ids_filter(supplier_id)
+          return true if params[:supplier_id_in].blank?
+
+          params[:supplier_id_in].include?(supplier_id)
+        end
+
+        def enterprise_fee_filtered_ids
+          return @enterprise_fee_filtered_ids unless @enterprise_fee_filtered_ids.nil?
+
+          @enterprise_fee_filtered_ids = EnterpriseFee.where(nil)
+          unless enterprise_fee_ids_filter.empty?
+            @enterprise_fee_filtered_ids = @enterprise_fee_filtered_ids.where(
+              id: enterprise_fee_ids_filter
+            )
+          end
+          unless enterprise_fee_owner_ids_filter.empty?
+            @enterprise_fee_filtered_ids = @enterprise_fee_filtered_ids.where(
+              enterprise_id: enterprise_fee_owner_ids_filter
+            )
+          end
+          @enterprise_fee_filtered_ids = @enterprise_fee_filtered_ids.pluck(:id)
+        end
+
+        def enterprise_fee_filters?
+          enterprise_fee_ids_filter + enterprise_fee_owner_ids_filter != []
+        end
+
+        def enterprise_fee_ids_filter
+          ransack_params["enterprise_fee_id_in"]&.filter(&:present?) || []
+        end
+
+        def enterprise_fee_owner_ids_filter
+          ransack_params["enterprise_fee_owner_id_in"]&.filter(&:present?) || []
+        end
+
         def query_result
           # The objective is to group the orders by
-          # [entreprise_rate, tax_rate, supplier_id, distributor_id and order_cycle_id]
+          # [entreprise_fee, tax_rate, supplier_id, distributor_id and order_cycle_id]
 
           # The order.all_adjustment describes
           #   - the enterprise fees applied on the order
@@ -40,7 +73,7 @@ module Reporting
           #     b. id of the adjustment
           #   2. order.all_adjustemnt.tax.where(adjustment_id: id,"Spree::Adjustment")
           #     - this will return the tax applied on the enterprise fees
-          orders = search.result.to_a
+          orders = report_line_items.list.map(&:order).uniq
           orders.flat_map(&join_enterprise_fee)
             .flat_map(&join_tax_rate)
             .flat_map(&join_supplier)
@@ -50,10 +83,14 @@ module Reporting
 
         def join_enterprise_fee
           proc do |order|
-            order
+            query = order
               .all_adjustments
               .enterprise_fee
-              .group('originator_id')
+
+            if enterprise_fee_filters?
+              query = query.where(originator_id: enterprise_fee_filtered_ids)
+            end
+            query.group('originator_id')
               .pluck("originator_id", 'array_agg(id)')
               .map do |enterprise_fee_id, enterprise_fee_adjustment_ids|
                 {
@@ -89,6 +126,7 @@ module Reporting
             order
               .line_items
               .map(&:supplier_id)
+              .filter(&method(:supplier_ids_filter))
               .map do |supplier_id|
                 {
                   tax_rate_id: item[:tax_rate_id],
@@ -190,8 +228,13 @@ module Reporting
         end
 
         def enterprise_fees_for_orders(order_ids)
-          Spree::Adjustment.enterprise_fee
+          enterprise_fees = Spree::Adjustment.enterprise_fee
             .where(order_id: order_ids)
+          return enterprise_fees unless enterprise_fee_filters?
+
+          enterprise_fees.where(
+            originator_id: enterprise_fee_filtered_ids
+          )
         end
 
         def distributor(query_result_row)
@@ -312,3 +355,4 @@ module Reporting
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
