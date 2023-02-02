@@ -4,12 +4,12 @@
 = content_for :page_title do
   = t('.title')
 
-= ng_form_for @enterprise_fee_set, :url => main_app.bulk_update_admin_enterprise_fees_path, :html => {'ng-app' => 'admin.enterpriseFees', 'ng-controller' => 'enterpriseFeesCtrl'} do |enterprise_fee_set_form|
+= form_for @enterprise_fee_set, url: main_app.bulk_update_admin_enterprise_fees_path, html: { "data-controller": "filter-rows" } do |enterprise_fee_set_form|
   = hidden_field_tag 'enterprise_id', @enterprise.id if @enterprise
-  = render "admin/enterprise_fees/data"
+  =# render "admin/enterprise_fees/data"
   = render :partial => 'spree/shared/error_messages', :locals => { :target => @enterprise_fee_set }
 
-  %input.search{'ng-model' => 'query', 'placeholder' => t('.search')}
+  %input.search{"placeholder": t('.search'), "data-action": "input->filter-rows#filter" }
 
   %table.index#listing_enterprise_fees
     %thead
@@ -28,22 +28,44 @@
           = t('.calculator_values')
         %th.actions
     %tbody
-      = enterprise_fee_set_form.ng_fields_for :collection do |f|
-        %tr{ ng: { repeat: 'enterprise_fee in enterprise_fees | filter:query' } }
+      - tax_categories = @tax_categories.map{ |e| [ e.name, e.id ] }
+      - tax_categories << [ I18n.t('js.admin.enterprise_fees.inherit_from_product'), -1 ]
+      
+      = enterprise_fee_set_form.fields_for :collection, @collection do |f|
+        - tc_id = f.object.tax_category_id
+        - if tc_id.nil?
+          - tc_id = -1
+        
+        - object_id = f.object.id ? f.object.id : "new"
+          
+        - searchable = ""
+        - if !f.object.new_record?
+          - searchable = f.object.name + ", "
+          - searchable += f.object.enterprise.name + ", " 
+          - searchable += f.object.calculator.description + ", " 
+          - searchable += t("#{f.object.fee_type}_fee") + ", "
+          - searchable += tax_categories.find{ |tc| tc[1] == tc_id }[0]
+
+        %tr{"data-enterprise-fee-id": object_id, "data-filter-rows-target": "row", "data-searchable": searchable}
           %td
-            = f.ng_hidden_field :id
-            %ofn-select{ :id => angular_id(:enterprise_id), data: 'enterprises', ng: { model: 'enterprise_fee.enterprise_id' }, style: "width: 90%" }
-            %input{ type: "hidden", name: angular_name(:enterprise_id), ng: { value: "enterprise_fee.enterprise_id" } }
-          %td= f.ng_select :fee_type, enterprise_fee_type_options, 'enterprise_fee.fee_type'
-          %td= f.ng_text_field :name, { placeholder: t('.name_placeholder') }
+            = f.select :enterprise_id, options_for_select(@enterprises.map{ |e| [ e.name, e.id ] }, f.object.enterprise_id), { include_blank: true }
           %td
-            %ofn-select{ :id => angular_id(:tax_category_id), data: 'tax_categories', include_blank: true, ng: { model: 'enterprise_fee.tax_category_id' } }
-            %input{ type: "hidden", name: angular_name(:tax_category_id), 'watch-tax-category' => true }
-            %input{ type: "hidden", name: angular_name(:inherits_tax_category), ng: { value: "enterprise_fee.inherits_tax_category" } }
+            = f.select :fee_type, enterprise_fee_type_options
           %td
-            %ofn-select.calculator_type{ :id => angular_id(:calculator_type), ng: { model: 'enterprise_fee.calculator_type' }, value_attr: 'name', text_attr: 'description', data: 'calculators', 'spree-ensure-calculator-preferences-match-type' => true }
-            %input{ type: "hidden", name: angular_name(:calculator_type), ng: { value: "enterprise_fee.calculator_type" } }
-          %td{'ng-bind-html-unsafe-compiled' => 'enterprise_fee.calculator_settings'}
-          %td.actions{'spree-delete-resource' => "1"}
+
+            = f.text_field :name, { placeholder: t('.name_placeholder') }
+          %td
+            = f.select :tax_category_id, options_for_select(tax_categories, tc_id), { "data-controller": "tax_ca", "data-action": "change->enterprise-fees#tax_category_changed" }
+            = f.hidden_field :inherits_tax_category, { "data-enterprise-fees-target": "inherits_tax_category" }
+          %td
+            = f.select :calculator_type, options_for_select(@calculators.map { |e| [ e.description, e.name ] }, f.object.calculator_type), {},  { "data-reflex": "change->EnterpriseFees#calculator_changed", "data-reflex-dataset": "combined" }
+          %td
+            .calculator-settings{ id: "calculator-settings-#{object_id}" }
+              = render partial: "calculator_form", locals: { f: f, calculator: f.object.calculator }
+          
+          - if !f.object.new_record?
+            %td.actions
+              %a.delete-resource.icon_link.icon-trash.no-text{ "data-reflex": "click->EnterpriseFees#delete", "data-reflex-dataset": "combined" }
+                      
 
   = enterprise_fee_set_form.submit t(:update)
