@@ -154,9 +154,7 @@ describe '
     login_as_admin_and_visit admin_enterprise_fees_path
 
     # And I click delete
-    accept_alert do
-      find("a.delete-resource").click
-    end
+    find("a.delete-resource").click
 
     # Then my enterprise fee should have been deleted
     visit admin_enterprise_fees_path
