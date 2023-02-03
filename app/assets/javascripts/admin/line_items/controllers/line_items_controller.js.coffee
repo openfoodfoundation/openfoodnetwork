@@ -53,18 +53,8 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.dereferenceLoadedData()
 
   $scope.loadOrders = ->
-    [formattedStartDate, formattedEndDate] = $scope.formatDates($scope.startDate, $scope.endDate)
-
     RequestMonitor.load $scope.orders = Orders.index(
-      "q[state_not_eq]": "canceled",
-      "q[shipment_state_not_eq]": "shipped",
-      "q[completed_at_not_null]": "true",
-      "q[distributor_id_eq]": $scope.distributorFilter,
-      "q[order_cycle_id_eq]": $scope.orderCycleFilter,
-      "q[completed_at_gteq]": if formattedStartDate then formattedStartDate else undefined,
-      "q[completed_at_lt]": if formattedEndDate then formattedEndDate else undefined,
-      "page": $scope.page,
-      "per_page": $scope.per_page
+      "q[id_in][]": $scope.line_items.map((line_item) -> line_item.order.id)
     )
 
   $scope.loadLineItems = ->
