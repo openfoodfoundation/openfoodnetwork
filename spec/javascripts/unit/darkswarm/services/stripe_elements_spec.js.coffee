@@ -2,6 +2,8 @@ describe 'StripeElements Service', ->
   $httpBackend = $q = $rootScope = StripeElements = null
   StripeMock = { createToken: null }
   CardMock = { some: "card" }
+  BugsnagMock =
+    notify: (arg) ->
 
   beforeEach ->
     module 'Darkswarm'
@@ -46,9 +48,9 @@ describe 'StripeElements Service', ->
       it "doesn't submit the form, shows an error message instead", inject (Loading, RailsFlashLoader) ->
         spyOn(Loading, "clear")
         spyOn(RailsFlashLoader, "loadFlash")
-        spyOn(Bugsnag, "notify")
+        spyOn(BugsnagMock, "notify")
         StripeElements.requestToken(secrets, submit).then (data) ->
           expect(submit).not.toHaveBeenCalled()
           expect(Loading.clear).toHaveBeenCalled()
           expect(RailsFlashLoader.loadFlash).toHaveBeenCalledWith({error: "Error: There was a problem"})
-          expect(Bugsnag.notify).toHaveBeenCalled()
+          expect(BugsnagMock.notify).toHaveBeenCalled()
