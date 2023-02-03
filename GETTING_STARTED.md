@@ -11,6 +11,9 @@ Head to our wiki on [Learning Rails](https://github.com/openfoodfoundation/openf
 The fastest way to make it work locally is to use Docker, you only need to setup git, see the [Docker setup guide](docker/README.md).
 Otherwise, for a local setup you will need:
 * Ruby and bundler (check current Ruby version in [.ruby-version](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/.ruby-version) file)
+    - To manage versions, it's recommended to use [rbenv](https://github.com/rbenv/rbenv) or [RVM](https://rvm.io/)
+* Node and yarn (check current Node version in [.node-version](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/.node-version) file)
+    - [nodevn](https://github.com/nodenv/nodenv) is recommended.
 * PostgreSQL database
 * Redis (for background jobs)
 * Chrome (for testing)
@@ -19,8 +22,6 @@ The following guides will provide OS-specific step-by-step instructions to get t
 - [Ubuntu Setup Guide][ubuntu]
 - [Debian Setup Guide][debian]
 - [OSX Setup Guide][osx]
-
-If you are likely to need to manage multiple version of ruby on your local machine, we recommend version managers such as [rbenv](https://github.com/rbenv/rbenv) or [RVM](https://rvm.io/).
 
 For those new to Rails, the following tutorial will help get you up to speed with configuring a [Rails environment](http://guides.rubyonrails.org/getting_started.html).
 
