@@ -44,7 +44,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.refreshData = ->
     return "cancel" unless $scope.confirmRefresh()
 
-    $scope.loadOrders()
     $scope.loadLineItems()
 
     unless $scope.initialized
@@ -84,13 +83,15 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     RequestMonitor.load $scope.suppliers = Enterprises.index(action: "visible", ams_prefix: "basic", "q[is_primary_producer_eq]": "true")
 
   $scope.dereferenceLoadedData = ->
-    RequestMonitor.load $q.all([$scope.orders.$promise, $scope.distributors.$promise, $scope.orderCycles.$promise, $scope.suppliers.$promise, $scope.line_items.$promise]).then ->
-      Dereferencer.dereferenceAttr $scope.orders, "distributor", Enterprises.byID
-      Dereferencer.dereferenceAttr $scope.orders, "order_cycle", OrderCycles.byID
+    RequestMonitor.load $q.all([$scope.distributors.$promise, $scope.orderCycles.$promise, $scope.suppliers.$promise, $scope.line_items.$promise]).then ->
       Dereferencer.dereferenceAttr $scope.line_items, "supplier", Enterprises.byID
-      Dereferencer.dereferenceAttr $scope.line_items, "order", Orders.byID
-      $scope.bulk_order_form.$setPristine()
-      StatusMessage.clear()
+      $scope.loadOrders()
+      RequestMonitor.load $q.all([$scope.orders.$promise]).then ->
+        Dereferencer.dereferenceAttr $scope.line_items, "order", Orders.byID  
+        Dereferencer.dereferenceAttr $scope.orders, "distributor", Enterprises.byID
+        Dereferencer.dereferenceAttr $scope.orders, "order_cycle", OrderCycles.byID
+        $scope.bulk_order_form.$setPristine()
+        StatusMessage.clear()
 
       unless $scope.initialized
         $scope.initialized = true
