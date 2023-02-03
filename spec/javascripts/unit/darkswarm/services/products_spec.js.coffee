@@ -8,6 +8,7 @@ describe 'Products service', ->
   Cart = null
   shopfront = null
   currentOrder = null
+  currentHub = null
   product = null
   productWithImage = null
   properties = null
@@ -33,6 +34,8 @@ describe 'Products service', ->
       ]
     currentOrder =
       line_items: []
+    currentHub =
+      id: 1
     properties =
       { id: 1, name: "some property" }
     taxons =
@@ -51,6 +54,7 @@ describe 'Products service', ->
     module ($provide)->
       $provide.value "shopfront", shopfront
       $provide.value "currentOrder", currentOrder
+      $provide.value "currentHub", currentHub
       $provide.value "taxons", taxons
       $provide.value "properties", properties
       $provide.value "GmapsGeo", GmapsGeo
