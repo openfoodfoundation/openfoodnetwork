@@ -190,7 +190,7 @@
           %td.actions
             %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }
 
-  %div{'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
+  %div{'ng-show' => "!RequestMonitor.loading && line_items.length > 0" }
     = render partial: 'admin/shared/angular_pagination'
 
 = render 'spree/admin/shared/custom-confirm'

@@ -9,7 +9,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.sharedResource = false
   $scope.columns = Columns.columns
   $scope.sorting = SortOptions
-  $scope.pagination = Orders.pagination
+  $scope.pagination = LineItems.pagination
   $scope.per_page_options = [
     {id: 15, name: t('js.admin.orders.index.per_page', results: 15)},
     {id: 50, name: t('js.admin.orders.index.per_page', results: 50)},
