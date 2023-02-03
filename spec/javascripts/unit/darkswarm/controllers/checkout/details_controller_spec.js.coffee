@@ -2,12 +2,14 @@ describe "DetailsCtrl", ->
   ctrl = null
   scope = null
   order = null
+  CurrentUser = null
 
   beforeEach ->
     module("Darkswarm")
     inject ($controller, $rootScope) ->
       scope = $rootScope.$new() 
-      ctrl = $controller 'DetailsCtrl', {$scope: scope}
+      CurrentUser = { id: 1 }
+      ctrl = $controller 'DetailsCtrl', { $scope: scope, CurrentUser: CurrentUser }
 
 
   it "finds a field by path", ->
