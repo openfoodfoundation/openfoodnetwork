@@ -47,6 +47,7 @@ module Spree
     scope :with_state, ->(s) { where(state: s.to_s) }
     scope :completed, -> { with_state('completed') }
     scope :incomplete, -> { where(state: %w(checkout pending requires_authorization)) }
+    scope :checkout, -> { with_state('checkout') }
     scope :pending, -> { with_state('pending') }
     scope :failed, -> { with_state('failed') }
     scope :valid, -> { where.not(state: %w(failed invalid)) }
