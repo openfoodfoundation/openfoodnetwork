@@ -303,6 +303,29 @@ describe Spree::Order do
     end
   end
 
+  describe "#cancel" do
+    let(:order) { create(:order_with_totals_and_distribution, :completed) }
+
+    before { order.cancel! }
+
+    it "should cancel the order" do
+      expect(order.state).to eq 'canceled'
+    end
+
+    it "should cancel the shipments" do
+      expect(order.shipments.pluck(:state)).to eq ['canceled']
+    end
+
+    context "when payment has not been taken" do
+      context "and payment is in checkout state" do
+        it "should change the state of the payment to void" do
+          order.payments.reload
+          expect(order.payments.pluck(:state)).to eq ['void']
+        end
+      end
+    end
+  end
+
   context "insufficient_stock_lines" do
     let(:line_item) { build(:line_item) }
 

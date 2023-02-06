@@ -61,7 +61,7 @@ module OrderManagement
           expect(order.shipment_state).to be_nil
         end
 
-        ["shipped", "ready", "pending"].each do |state|
+        ["shipped", "ready", "pending", "canceled"].each do |state|
           it "is #{state}" do
             allow(shipment).to receive(:state).and_return(state)
             updater.update_shipment_state
