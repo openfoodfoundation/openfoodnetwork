@@ -91,6 +91,10 @@ module Spree
       event :complete_authorization do
         transition from: [:requires_authorization], to: :completed
       end
+      event :resume do
+        transition from: [:void], to: :checkout
+      end
+
 
       after_transition to: :completed, do: :set_captured_at
     end
