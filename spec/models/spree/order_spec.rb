@@ -326,6 +326,30 @@ describe Spree::Order do
     end
   end
 
+  describe "#resume" do
+    let(:order) { create(:order_with_totals_and_distribution, :completed) }
+
+    before do
+      order.cancel!
+      order.resume!
+    end
+
+    it "should resume the order" do
+      expect(order.state).to eq 'resumed'
+    end
+
+    it "should resume the shipments" do
+      expect(order.shipments.pluck(:state)).to eq ['pending']
+    end
+
+    context "when payment is in void state" do
+      it "should change the state of the payment to checkout" do
+        order.payments.reload
+        expect(order.payments.pluck(:state)).to eq ['checkout']
+      end
+    end
+  end
+
   context "insufficient_stock_lines" do
     let(:line_item) { build(:line_item) }
 

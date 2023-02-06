@@ -673,6 +673,8 @@ module Spree
 
     def after_resume
       shipments.each(&:resume!)
+      payments.void.each(&:resume!)
+
       update(payment_state: updater.update_payment_state)
     end
 
