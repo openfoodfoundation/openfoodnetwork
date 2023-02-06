@@ -237,6 +237,7 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
+    date (3.3.3)
     ddtrace (1.9.0)
       debase-ruby_core_source (>= 0.10.16, <= 3.2.0)
       libdatadog (~> 1.0.1.1.0)
@@ -393,8 +394,11 @@ GEM
     loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    mail (2.7.1)
+    mail (2.8.1)
       mini_mime (>= 0.1.1)
+      net-imap
+      net-pop
+      net-smtp
     marcel (1.0.2)
     matrix (0.4.2)
     method_source (1.0.0)
@@ -417,6 +421,11 @@ GEM
     msgpack (1.6.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
+    net-imap (0.3.4)
+      date
+      net-protocol
+    net-pop (0.1.2)
+      net-protocol
     net-protocol (0.1.3)
       timeout
     net-smtp (0.3.2)
@@ -702,7 +711,7 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
     uniform_notifier (1.16.0)
-    valid_email2 (4.0.4)
+    valid_email2 (4.0.5)
       activemodel (>= 3.2)
       mail (~> 2.5)
     validate_email (0.1.6)
