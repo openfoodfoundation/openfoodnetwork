@@ -44,7 +44,7 @@
     "@webpack-cli/serve": "*",
     "husky": "^8.0.0",
     "jasmine-core": "~2.4.1",
-    "jest": "^27.4.7",
+    "jest": "^29.4.1",
     "karma": "~6.4.1",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coffee-preprocessor": "~1.0.1",
