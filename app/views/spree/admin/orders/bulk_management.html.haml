@@ -106,7 +106,7 @@
       %columns-dropdown{ action: "#{controller_name}_#{action_name}" }
     %div{ style: "flex-grow: 1"}
       %div{ style: "float: right;"}
-        = render partial: 'admin/shared/angular_per_page_controls', locals: { position: "right" }
+        = render partial: 'admin/shared/angular_per_page_controls', locals: { position: "right", model: "line_items" }
  
 
   %div.sixteen.columns.alpha#loading{ 'ng-if' => 'RequestMonitor.loading' }
