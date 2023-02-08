@@ -15,7 +15,8 @@ describe("UnsavedChangesController", () => {
     document.body.innerHTML = `
       <form 
         id="test-form" 
-        data-controller="unsaved-changes" data-action="beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
+        data-controller="unsaved-changes" 
+        data-action="unsaved-changes#submit beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
         data-unsaved-changes-changed="false"
       >
         <input id="test-checkbox" type="checkbox" data-action="change->unsaved-changes#formIsChanged"/>
@@ -29,8 +30,9 @@ describe("UnsavedChangesController", () => {
       beforeEach(() => {
         document.body.innerHTML = `
           <form 
-            id="test-form" data-controller="unsaved-changes" 
-            data-action="beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
+            id="test-form" 
+            data-controller="unsaved-changes" 
+            data-action="unsaved-changes#submit beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
             data-unsaved-changes-changed="false" 
             data-unsaved-changes-disable-submit-button="true"
           >
@@ -53,7 +55,7 @@ describe("UnsavedChangesController", () => {
           <form 
             id="test-form" 
             data-controller="unsaved-changes" 
-            data-action="beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
+            data-action="unsaved-changes#submit beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
             data-unsaved-changes-changed="false" 
             data-unsaved-changes-disable-submit-button="false"
           >
@@ -189,6 +191,41 @@ describe("UnsavedChangesController", () => {
 
         expect(confirmSpy).toHaveBeenCalled()
         expect(preventDefaultSpy).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe('#submit', () => {
+    let checkbox
+
+    beforeEach(() => {
+      // Add a mock I18n object to
+      const mockedT = jest.fn()
+      mockedT.mockImplementation((string) => (string))
+
+      global.I18n =  {
+        t: mockedT
+      }
+
+      checkbox = document.getElementById("test-checkbox")
+    })
+
+    afterEach(() => {
+      delete global.I18n
+    })
+
+    describe('when submiting the form', () => {
+      it("changed is set to true", () => {
+        const form = document.getElementById("test-form")
+
+        // interact with the form
+        checkbox.click()
+
+        // submit the form 
+        const submitEvent = new Event("submit")
+        form.dispatchEvent(submitEvent)
+
+        expect(form.dataset.unsavedChangesChanged).toBe("false")
       })
     })
   })

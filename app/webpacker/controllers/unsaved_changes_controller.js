@@ -6,7 +6,7 @@ import { Controller } from "stimulus";
 // - with beforeunload event :
 //    <form
 //      data-controller="unsaved-changes"
-//      data-action="beforeunload@window->unsaved-changes#leavingPage"
+//      data-action="unsaved-changes#submit beforeunload@window->unsaved-changes#leavingPage"
 //      data-unsaved-changes-changed="true"
 //    >
 //      <input data-action="change->unsaved-changes#formIsChanged" />
@@ -15,14 +15,19 @@ import { Controller } from "stimulus";
 // - with turbolinks :
 //    <form
 //      data-controller="unsaved-changes"
-//      data-action="turbolinks:before-visit@window->unsaved-changes#leavingPage"
+//      data-action="unsaved-changes#submit turbolinks:before-visit@window->unsaved-changes#leavingPage"
 //      data-unsaved-changes-changed="true"
 //    >
 //      <input data-action="change->unsaved-changes#formIsChanged" />
 //    </form>
 //
-// You can also combine the two actions
-// You also need to add 'data-action="change->unsaved-changes#formIsChanged"' on all the form element
+// You can also combine the two event trigger ie : 
+//    <form
+//      data-controller="unsaved-changes"
+//      data-action="unsaved-changes#submit beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage"
+//      data-unsaved-changes-changed="true"
+//    >
+// You then need to add 'data-action="change->unsaved-changes#formIsChanged"' on all the form element
 // that can be interacted with
 //
 // Optional, you can add 'data-unsaved-changes-changed="true"' if you want to disable all
@@ -69,6 +74,11 @@ export default class extends Controller {
         return event.returnValue;
       }
     }
+  }
+
+  submit(event) {
+    // if we are submitting the form, we don't want to trigger a warning so set changed to false 
+    this.setChanged("false")
   }
 
   setChanged(changed) {
