@@ -234,6 +234,7 @@ Metrics/ClassLength:
     - 'lib/reporting/reports/enterprise_fee_summary/enterprise_fees_with_tax_report_by_order.rb'
     - 'lib/reporting/reports/enterprise_fee_summary/scope.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
+    - 'lib/reporting/reports/enterprise_fee_summary/enterprise_fees_with_tax_report_by_producer.rb'
 
 # Offense count: 34
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
 module Reporting
   module Reports
     module EnterpriseFeeSummary
@@ -355,4 +354,3 @@ module Reporting
     end
   end
 end
-# rubocop:enable Metrics/ClassLength
