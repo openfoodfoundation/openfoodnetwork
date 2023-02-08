@@ -7,9 +7,11 @@ describe ProductComponent, type: :component do
 
   describe 'unit' do
     before do
-      render_inline(ProductComponent.new(
-        product: product, columns: [{ label: "Unit", value: "unit", sortable: false }]
-      ))
+      render_inline(
+        ProductComponent.new(
+          product: product, columns: [{ label: "Unit", value: "unit", sortable: false }]
+        )
+      )
     end
 
     it 'concatenates the unit value and the unit description' do
@@ -26,9 +28,11 @@ describe ProductComponent, type: :component do
     end
 
     before do
-      render_inline(ProductComponent.new(
-        product: product, columns: [{ label: "Category", value: "category", sortable: false }]
-      ))
+      render_inline(
+        ProductComponent.new(
+          product: product, columns: [{ label: "Category", value: "category", sortable: false }]
+        )
+      )
     end
 
     it "joins the categories' name" do
@@ -41,9 +45,11 @@ describe ProductComponent, type: :component do
     let(:on_hand) { 5 }
 
     before do
-      render_inline(ProductComponent.new(
-        product: product, columns: [{ label: "On Hand", value: "on_hand", sortable: false }]
-      ))
+      render_inline(
+        ProductComponent.new(
+          product: product, columns: [{ label: "On Hand", value: "on_hand", sortable: false }]
+        )
+      )
     end
 
     it 'return product on_hand' do
@@ -65,9 +71,12 @@ describe ProductComponent, type: :component do
     let(:available_on) { Time.zone.now }
 
     before do
-      render_inline(ProductComponent.new(
-        product: product, columns: [{ label: "Available On", value: "available_on", sortable: false }]
-      ))
+      render_inline(
+        ProductComponent.new(
+          product: product,
+          columns: [{ label: "Available On", value: "available_on", sortable: false }]
+        )
+      )
     end
 
     it 'return formated available_on' do
