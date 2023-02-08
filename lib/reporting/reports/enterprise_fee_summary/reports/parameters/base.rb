@@ -28,10 +28,10 @@ module Reporting
             protected
 
             def require_valid_datetime_range
-              return if start_at.blank? || end_at.blank?
+              return if completed_at_gt.blank? || completed_at_lt.blank?
 
               error_message = self.class.date_end_before_start_error_message
-              errors.add(:end_at, error_message) unless start_at < end_at
+              errors.add(:completed_at_lt, error_message) unless completed_at_gt < completed_at_lt
             end
           end
         end
