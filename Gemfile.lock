@@ -329,8 +329,9 @@ GEM
     good_migrations (0.2.1)
       activerecord (>= 3.1)
       railties (>= 3.1)
-    haml (5.2.2)
-      temple (>= 0.8.0)
+    haml (6.1.1)
+      temple (>= 0.8.2)
+      thor
       tilt
     hashdiff (1.0.1)
     hashery (2.1.2)
@@ -697,7 +698,7 @@ GEM
       activesupport (>= 3)
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
-    temple (0.8.2)
+    temple (0.10.0)
     test-unit (3.5.7)
       power_assert
     thor (1.2.1)
