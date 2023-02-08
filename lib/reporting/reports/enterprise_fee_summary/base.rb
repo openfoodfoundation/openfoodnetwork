@@ -8,7 +8,8 @@ module Reporting
 
         def initialize(user, params = {}, render: false)
           super(user, params, render: render)
-          p = params[:q]
+          # Clone hash before modifying it:
+          p = params[:q].clone
           if p.present?
             p['start_at'] = p.delete('completed_at_gt')
             p['end_at'] = p.delete('completed_at_lt')

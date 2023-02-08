@@ -99,6 +99,12 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
     let!(:second_customer_order) { prepare_order(customer: customer) }
     let!(:other_customer_order) { prepare_order(customer: another_customer) }
 
+    it "doesn't delete params" do
+      params = ActionController::Parameters.new("completed_at_gt" => "2023-02-08+00:00")
+      described_class.new(current_user, params)
+      expect(params["completed_at_gt"]).to eq "2023-02-08+00:00"
+    end
+
     it "groups and sorts entries correctly" do
       totals = subject.query_result
 
