@@ -41,6 +41,7 @@
     "webpack": "~4"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.19.6",
     "@webpack-cli/serve": "*",
     "husky": "^8.0.0",
     "jasmine-core": "~2.4.1",
