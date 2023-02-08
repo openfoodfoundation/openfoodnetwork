@@ -40,7 +40,7 @@
               %span.name{'ng-controller' => 'bulkCancelCtrl', 'ng-click' => 'cancelSelectedOrders()' }
                 = t('.cancel_orders')
     
-    = render partial: 'admin/shared/angular_per_page_controls', locals: { position: "right" }
+    = render partial: 'admin/shared/angular_per_page_controls', locals: { position: "right", model: "orders" }
 
 %table#listing_orders.index.responsive{width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
   %colgroup
