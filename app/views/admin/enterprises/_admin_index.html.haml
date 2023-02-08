@@ -38,3 +38,5 @@
         %tr
           %td{colspan: "4"}= t(:none)
   = f.submit t(:update)
+
+  = render partial: 'admin/shared/pagy_links', locals: { pagy: @pagy }
