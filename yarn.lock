@@ -6426,10 +6426,10 @@ mri@^1.1.5:
   resolved "https://registry.yarnpkg.com/mri/-/mri-1.2.0.tgz#6721480fec2a11a4889861115a48b6cbe7cc8f0b"
   integrity sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==
 
-mrujs@^0.7.4:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/mrujs/-/mrujs-0.7.4.tgz#7b4778e8845ece7b9136ada9dec843a36d5b55c7"
-  integrity sha512-IdFK+yIvGa0CuPFEPyMKbPYm8ZAIlW49INqHKKy/n8b1y/yDOZ/8kg7i1s1/0EyQHxQonzbHL/M1Pt35opNZNg==
+mrujs@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/mrujs/-/mrujs-0.10.1.tgz#63f64a37fc6dd9ce14a7296a09a5efaac54a322f"
+  integrity sha512-VRilxqfFi0PAEsaNHUQvtf3QKpU7p9xXA97HyksIc4Jb13Bap/9d212dUddC31TnEGby7GymWU+EKRiZIcOJmQ==
   dependencies:
     morphdom ">=2.6.0 <3.0.0"
 
