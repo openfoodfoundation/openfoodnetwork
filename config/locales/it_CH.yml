@@ -3624,6 +3624,10 @@ it_CH:
           authorized: "autorizzato"
           received: "ricevuto"
           canceled: "Annullato"
+      line_items:
+        index:
+          results_found: "%{number} Risultati trovati."
+          viewing: "Guardando da %{start} a %{end}"
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Non è possibile aggiungere articoli a richieste cancellate"

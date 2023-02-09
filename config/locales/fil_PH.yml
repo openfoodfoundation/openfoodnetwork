@@ -3194,6 +3194,10 @@ fil_PH:
           authorized: "pinayagan"
           received: "natanggap"
           canceled: "kanselado"
+      line_items:
+        index:
+          results_found: "%{number}Natagpuang resulta."
+          viewing: "makikita ang%{start} hanggang%{end}."
       orders:
         index:
           listing_orders: "listahan ng mga order"

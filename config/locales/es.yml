@@ -3604,6 +3604,10 @@ es:
           authorized: "autorizado"
           received: "recibido"
           canceled: "cancelado"
+      line_items:
+        index:
+          results_found: "%{number} Resultados encontrados."
+          viewing: "Viendo de %{start}a %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "No se puede agregar el artículo al pedido cancelado"

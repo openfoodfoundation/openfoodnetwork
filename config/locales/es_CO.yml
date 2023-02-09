@@ -3292,6 +3292,10 @@ es_CO:
           authorized: "Autorizado"
           received: "Recibido"
           canceled: "Cancelado"
+      line_items:
+        index:
+          results_found: "%{number} Resultados encontrados."
+          viewing: "Viendo de %{start}a %{end}."
       orders:
         index:
           listing_orders: "Listado de pedidos"

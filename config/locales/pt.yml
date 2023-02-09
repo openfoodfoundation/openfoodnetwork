@@ -3163,6 +3163,10 @@ pt:
           authorized: "Autorizada"
           received: "Recebida"
           canceled: "Cancelada"
+      line_items:
+        index:
+          results_found: "%{number} resultados encontrados."
+          viewing: "A ver de %{start}a %{end}."
       orders:
         index:
           listing_orders: "Lista de Encomendas"

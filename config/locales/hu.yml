@@ -3687,6 +3687,10 @@ hu:
           authorized: "Felhatalmazott"
           received: "Megkapta"
           canceled: "Törölve"
+      line_items:
+        index:
+          results_found: "%{number} találat."
+          viewing: "%{start} – %{end} megtekintése."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "A törölt rendeléshez nem lehet tételt hozzáadni"

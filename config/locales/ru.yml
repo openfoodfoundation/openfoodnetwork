@@ -3731,6 +3731,10 @@ ru:
           authorized: "Авторизован"
           received: "Получен"
           canceled: "Отменен"
+      line_items:
+        index:
+          results_found: "Найдено %{number} Результатов."
+          viewing: "Просмотр с %{start} по %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Невозможно добавить товар в отмененный заказ"

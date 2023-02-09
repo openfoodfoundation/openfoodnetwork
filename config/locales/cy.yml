@@ -1297,6 +1297,7 @@ cy:
       total_by_customer: Cyfanswm fesul Cwsmer
       total_by_supplier: Cyfanswm fesul Cyflenwr
       supplier_totals: Cyfanswm Cylch Archebu Cyflenwyr
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Cyfanswm Cylch Archebu Cyflenwyr fesul Dosbarthwr
       totals_by_supplier: Cyfanswm Cylch Dosbarthu  Archebion fesul Cyflenwr
       customer_totals: Archebu Cyfansymiau Cwsmer Beicio
@@ -3732,6 +3733,10 @@ cy:
           authorized: "Awdurdodwyd"
           received: "Derbyniwyd"
           canceled: "Canslwyd"
+      line_items:
+        index:
+          results_found: "Cafwyd hyd i%{number} canlyniad."
+          viewing: "Yn edrych ar %{start} i %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Nid yw'n bosib ychwanegu'r eitem i archeb a ganslwyd."

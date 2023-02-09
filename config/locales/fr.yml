@@ -1667,7 +1667,7 @@ fr:
   state: Département
   country: Pays
   unauthorized: Non autorisé
-  terms_of_service: "Conditions Générales d'Utilisation de CoopCircuits"
+  terms_of_service: "Conditions Générales d'Utilisation et de vente de CoopCircuits"
   on_demand: A volonté
   none: Aucun
   not_allowed: Non autorisé
@@ -2565,7 +2565,7 @@ fr:
   new_order: "Nouvelle commande"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
   enterprise_tos_message: "Nous soutenons la mise en place d'un système de distribution résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux organisations s'enregistrant sur CoopCircuits de valider nos "
-  enterprise_tos_agree: "Je valide les Conditions Générales d'Utilisation de CoopCircuits."
+  enterprise_tos_agree: "Je valide les Conditions Générales d'Utilisation et de vente de CoopCircuits."
   tax_settings: "Paramètres TVA"
   products_require_tax_category: "vous devez choisir la TVA applicable"
   admin_shared_address_1: "Adresse"
@@ -2638,7 +2638,7 @@ fr:
   report_header_code: Code
   report_header_paid: Payé ?
   report_header_delivery: Livré ?
-  report_header_shipping: Livraison
+  report_header_shipping: Méthode de livraison
   report_header_shipping_method: Méthode de Livraison
   report_header_shipping_instructions: Instructions de Livraison
   report_header_ship_street: Rue Livraison
@@ -2692,7 +2692,7 @@ fr:
   report_header_supplier: Fournisseur
   report_header_producer: Producteur
   report_header_producer_suburb: Ville Producteur
-  report_header_producer_tax_status: Statut du producteur
+  report_header_producer_tax_status: Soumis à la TVA
   report_header_producer_charges_sales_tax?: Soumis à la TVA
   report_header_unit: Unité
   report_header_group_buy_unit_quantity: Nb d'unités achetées (vente par lots)
@@ -3759,6 +3759,10 @@ fr:
           authorized: "Autorisé"
           received: "Reçu"
           canceled: "Annulé"
+      line_items:
+        index:
+          results_found: "%{number} résultats trouvés"
+          viewing: "Résultats %{start} à %{end} affichés."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Il n'est pas possible d'ajouter des produits sur une commande annulée"
@@ -4029,7 +4033,7 @@ fr:
           unit: "Unité"
       shared:
         configuration_menu:
-          terms_of_service: "Conditions Générales d'Utilisation"
+          terms_of_service: "Conditions Générales d'Utilisation et de Vente"
         sortable_header:
           name: "Produit/Variante"
           number: "N° commande"

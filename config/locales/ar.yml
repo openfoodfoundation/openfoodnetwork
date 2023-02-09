@@ -6,9 +6,14 @@ ar:
       spree/shipping_method: طريقة الشحن
     attributes:
       spree/order/ship_address:
+        address1: "عنوان الشحن 1"
+        address2: "عنوان الشحن 2"
+        city: "عنوان الشحن الضاحية 1"
+        country: "عنوان الشحن الدولة"
         phone: "رقم الهاتف"
         firstname: "الاسم الاول"
         lastname: "الكنية"
+        zipcode: "الرمز البريدي لعنوان الشحن"
       spree/user:
         password: "كلمه السر"
         password_confirmation: "تأكيد كلمة المرور"
@@ -1296,6 +1301,7 @@ ar:
       total_by_customer: الإجمالي حسب العميل
       total_by_supplier: الإجمالي حسب المورد
       supplier_totals: اجمالي دورة الطلب الموردين
+      percentage: "%{value}٪"
       supplier_totals_by_distributor: اجمالي دورة الطلب الموردين حسب الموزع
       totals_by_supplier: اجمالي دورة الطلب الموزعين من قبل المورد
       customer_totals: اجمالي دورة الطلب للعملاء
@@ -1306,6 +1312,7 @@ ar:
       addresses: عناوين
       payment_methods: تقرير طرق الدفع
       delivery: إشعار بالإستلام
+      sales_tax_totals_by_producer: إجمالي ضريبة المبيعات حسب المنتج
       tax_types: أنواع الضرائب
       tax_rates: معدلات الضريبة
       pack_by_customer: تم التعبئة من العملاء
@@ -1485,6 +1492,13 @@ ar:
         stripe_connect_fail: عذرًا ، فشل اتصال حساب Stripe الخاص بك
       stripe_connect_settings:
         resource: تهيئة ربط Strip
+    resend_confirmation_emails_feedback:
+      zero: "تم إرسال رسائل التأكيد عبر البريد الإلكتروني لطلبات %{count}."
+      one: "تم إرسال بريد إلكتروني للتأكيد لطلب واحد."
+      two: "تم إرسال رسائل التأكيد عبر البريد الإلكتروني لطلبات %{count}."
+      few: "تم إرسال رسائل التأكيد عبر البريد الإلكتروني لطلبات %{count}."
+      many: "تم إرسال رسائل التأكيد عبر البريد الإلكتروني لطلبات %{count}."
+      other: "تم إرسال رسائل التأكيد عبر البريد الإلكتروني لطلبات %{count}."
   api:
     unknown_error: "هناك خطأ ما. تم إخطار فريقنا."
     invalid_api_key: "مفتاح API المحدد غير صالح (%{key})."
@@ -1853,10 +1867,13 @@ ar:
         title: تفاصيل التسليم
         edit: تعديل
         address: عنوان التسليم
+        instructions: التعليمات
       payment_method:
         title: 'طريقة الدفع '
         edit: تعديل
+        instructions: التعليمات
       order:
+        title: تفاصيل الطلب
         edit: تعديل
       terms_and_conditions:
         message_html: "أوافق على %{terms_and_conditions_link} للبائع."
@@ -1869,6 +1886,7 @@ ar:
       submit: اكمل الطلب
       cancel: العودة إلى طريقة الدفع
     errors:
+      saving_failed: "فشل الحفظ ، يرجى تحديث الحقول المميزة. %{messages}"
       terms_not_accepted: الرجاء قبول الشروط والأحكام
       required: لا يمكن أن يكون الحقل فارغًا
       invalid_number: "يرجى إدخال رقم هاتف صالح"
@@ -2651,6 +2669,8 @@ ar:
   report_header_tax_on_delivery: "الضريبة على التسليم (%{currency_symbol})"
   report_header_tax_on_fees: "الضريبة على الرسوم (%{currency_symbol})"
   report_header_tax_category: "الفئة الضريبية"
+  report_header_tax_rate_name: "اسم معدل الضريبة"
+  report_header_tax_rate: "معدل الضريبة"
   report_header_total_tax: "إجمالي الضريبة (%{currency_symbol})"
   report_header_total_excl_tax: "المجموع باستثناء الضريبة (%{currency_symbol})"
   report_header_total_incl_tax: "إجمالي مدفوع الضريبة (%{currency_symbol})"
@@ -2673,6 +2693,7 @@ ar:
   report_header_supplier: المورد
   report_header_producer: المنتج
   report_header_producer_suburb: منتج الضاحية
+  report_header_producer_tax_status: الوضع الضريبي للمنتج
   report_header_producer_charges_sales_tax?: مسجل في ضريبة السلع والخدمات / ضريبة القيمة المضافة
   report_header_unit: وحدة
   report_header_group_buy_unit_quantity: مجموعة شراء وحدة الكمية
@@ -2689,6 +2710,7 @@ ar:
   report_header_distributor_address: عنوان الموزع
   report_header_distributor_city: مدينة الموزع
   report_header_distributor_postcode: الرمز البريدي للموزع
+  report_header_distributor_tax_status: الوضع الضريبي للموزع
   report_header_delivery_address: عنوان التسليم
   report_header_delivery_postcode: تسليم الرمز البريدي
   report_header_bulk_unit_size: حجم الوحدة بالجملة
@@ -2868,6 +2890,7 @@ ar:
       deleting_item_will_cancel_order: "ستؤدي هذه العملية إلى أمر واحد أو أكثر من الطلبات الفارغة ، والتي سيتم إلغاؤها. هل ترغب في المتابعة؟"
       modals:
         got_it: "فهمتك"
+        confirm: "التأكيد"
         close: "إغلاق"
         continue: "تابع"
         cancel: "إلغاء"
@@ -3482,6 +3505,8 @@ ar:
     server_error: "خطأ في الخادم"
     shipping_method_names:
       UPS Ground: "UPS الأرضي"
+      pick_up: "التسليم من المزرعة مباشرة"
+      delivery: "موقعة ومختومة وتم التسليم"
     start_date: "تاريخ البدء"
     successfully_removed: "تمت الإزالة بنجاح"
     taxonomy_edit: "التصنيف"
@@ -3566,6 +3591,7 @@ ar:
     display_currency: "عرض العملة"
     choose_currency: "اختر العملة"
     mail_method_settings: "إعدادات طريقة البريد"
+    mail_settings_notice_html: "<b>التغييرات التي يتم إجراؤها هنا ستكون مؤقتة</b> للتصحيح فقط ، وقد يتم التراجع عنها في المستقبل.<br> يمكن إجراء تغييرات دائمة عن طريق تحديث أسرار المثيل وتوفيرها باستخدام <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . تواصل مع فريق OFN العالمي لمزيد من التفاصيل."
     general: "عام"
     enable_mail_delivery: "تمكين تسليم البريد"
     send_mails_as: "إرسال رسائل ب"
@@ -3772,6 +3798,10 @@ ar:
           authorized: "مخول"
           received: "تم الاستلام"
           canceled: "ألغيت"
+      line_items:
+        index:
+          results_found: "تم العثور على النتائج %{number}."
+          viewing: "عرض %{start} إلى %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "لا يمكن إضافة عنصر إلى الطلب الملغى"
@@ -3795,6 +3825,7 @@ ar:
           print_invoices: "طباعة الفواتير"
           cancel_orders: "إلغاء الطلبات"
           resend_confirmation: "أعد إرسال التأكيد"
+          resend_confirmation_confirm_html: "سيؤدي هذا إلى إعادة إرسال البريد الإلكتروني للتأكيد إلى العميل.<br /> هل انت متأكد انك تريد المتابعة؟"
           selected:
             zero: "لم يتم اختيار أي طلب"
             one: "طلب واحد تم اختياره"

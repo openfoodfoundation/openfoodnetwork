@@ -3712,6 +3712,10 @@ fr_CA:
           authorized: "Autorisé"
           received: "Reçu"
           canceled: "Annulée"
+      line_items:
+        index:
+          results_found: " %{number} résultats trouvés"
+          viewing: "Résultats %{start} à  %{end} affichés."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Il n'est pas possible d'ajouter des produits sur une commande annulée."

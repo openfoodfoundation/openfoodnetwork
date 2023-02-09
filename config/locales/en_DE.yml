@@ -3025,6 +3025,10 @@ en_DE:
         form:
           product: "Product"
           amount: "Amount"
+      line_items:
+        index:
+          results_found: "%{number} Results found."
+          viewing: "Viewing %{start} to %{end}."
       orders:
         index:
           listing_orders: "Listing Orders"

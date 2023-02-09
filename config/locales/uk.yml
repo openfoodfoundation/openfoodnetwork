@@ -3683,6 +3683,10 @@ uk:
           authorized: "Авторизований"
           received: "Отримано"
           canceled: "Скасовано"
+      line_items:
+        index:
+          results_found: "%{number} Результати знайдено."
+          viewing: "Перегляд %{start} до %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Неможливо додати товар до скасованого замовлення"

@@ -3582,6 +3582,10 @@ ca:
           authorized: "Autoritzat"
           received: "Rebut"
           canceled: "Cancel·lat"
+      line_items:
+        index:
+          results_found: "%{number} Resultats trobats."
+          viewing: "Veient %{start} a %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "No es pot afegir l'article a la comanda cancel·lada"

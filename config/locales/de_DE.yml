@@ -602,7 +602,7 @@ de_DE:
       form_users:
         users: "Benutzer"
       form_about:
-        about: "Verkaufen"
+        about: "Über uns"
       form_images:
         images: "Bilder"
       form_address:
@@ -826,7 +826,7 @@ de_DE:
         manage: Verwalten
       form:
         about_us:
-          legend: "Verkaufen"
+          legend: "Über uns"
           desc_short: Kurzbeschreibung
           desc_short_placeholder: Schreiben Sie etwas in ein oder zwei Sätzen über Ihr Unternehmen.
           desc_long: Über uns
@@ -1270,7 +1270,7 @@ de_DE:
           address: "Adresse"
           contact: "Kontaktdaten"
           social: "Soziale Medien"
-          about: "Verkaufen"
+          about: "Über uns"
           business_details: "Geschäftsdetails"
           images: "Bilder"
           properties: "Eigenschaften"
@@ -1285,7 +1285,7 @@ de_DE:
         enterprise_group:
           primary_details: "Unternehmen"
           users: "Benutzer"
-          about: "Verkaufen"
+          about: "Über uns"
           images: "Bilder"
           contact: "Kontaktdaten"
           web: "Homepage"
@@ -2668,7 +2668,7 @@ de_DE:
   report_header_tax_on_delivery: "Steuer auf Lieferkosten (%{currency_symbol})"
   report_header_tax_on_fees: "Steuer auf Gebühren (%{currency_symbol})"
   report_header_tax_category: "Steuerkategorie"
-  report_header_tax_rate_name: "Steuersatz"
+  report_header_tax_rate_name: "Steuersatzname"
   report_header_tax_rate: "Steuersatz"
   report_header_total_tax: "Summe Steuern (%{currency_symbol})"
   report_header_total_excl_tax: "Summe exkl. Steuern (%{currency_symbol})"
@@ -2692,6 +2692,8 @@ de_DE:
   report_header_supplier: Lieferant
   report_header_producer: Produzent
   report_header_producer_suburb: Produzentenort
+  report_header_producer_tax_status: Produzent berechnet Steuern
+  report_header_producer_charges_sales_tax?: Berechnet Steuern
   report_header_unit: Einheit
   report_header_group_buy_unit_quantity: Gruppenkauf Einheitsmenge
   report_header_cost: Summe
@@ -2707,10 +2709,12 @@ de_DE:
   report_header_distributor_address: Verteilstellenadresse
   report_header_distributor_city: Verteilstellen-Stadt
   report_header_distributor_postcode: Verteilstellen-Postleitzahl
+  report_header_distributor_tax_status: Verteilstelle berechnet Steuern
   report_header_delivery_address: Lieferadresse
   report_header_delivery_postcode: Lieferpostleitzahl
   report_header_bulk_unit_size: Gruppenkauf-Einheit
   report_header_weight: Gewicht
+  report_header_final_weight_volume: Tatsächliche Menge
   report_header_height: Höhe
   report_header_width: Breite
   report_header_depth: Tiefe
@@ -2887,6 +2891,7 @@ de_DE:
       deleting_item_will_cancel_order: "Das Löschen dieses Produkts führt zu einer oder mehreren leeren Bestellungen, die daher automatisch storniert werden. Möchten Sie fortfahren?"
       modals:
         got_it: "Verstanden"
+        confirm: "Bestätigen"
         close: "Schließen"
         continue: "Weiter"
         cancel: "Stornieren"
@@ -3417,6 +3422,8 @@ de_DE:
     server_error: "Serverfehler"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Abholung"
+      delivery: "Lieferung"
     start_date: "Anfangsdatum"
     successfully_removed: "Erfolgreich gelöscht"
     taxonomy_edit: "Kategorien bearbeiten"
@@ -3501,6 +3508,7 @@ de_DE:
     display_currency: "Währung anzeigen"
     choose_currency: "Währung auswählen"
     mail_method_settings: "E-Mail-Methodeneinstellungen"
+    mail_settings_notice_html: "<b>Hier vorgenommene Änderungen sind nur vorübergehend</b> zum Debuggen und können in Zukunft rückgängig gemacht werden.<br> Dauerhafte Änderungen können vorgenommen werden, indem die Daten der Instanz aktualisiert und mithilfe von <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install bereitgestellt</a> werden. Wenden Sie sich für weitere Einzelheiten an das globale OFN-Team."
     general: "Allgemeines"
     enable_mail_delivery: "E-Mail-Versand aktivieren"
     send_mails_as: "E-Mails senden als"
@@ -3623,6 +3631,7 @@ de_DE:
       messages:
         included_price_validation: "kann nur ausgewählt werden, wenn Sie eine Standardsteuerzone festgelegt haben"
         blank: "darf nicht leer sein"
+        invalid_instagram_url: "darf nur den Benutzernamen enthalten, z. B. the_prof"
     layouts:
       admin:
         login_nav:
@@ -3706,6 +3715,10 @@ de_DE:
           authorized: "autorisiert"
           received: "empfangen"
           canceled: "storniert"
+      line_items:
+        index:
+          results_found: "%{number} Ergebnisse gefunden."
+          viewing: "Angezeigt wird %{start} bis %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Einer stornierten Bestellung können keine Produkte hinzugefügt werden. "
@@ -3729,6 +3742,7 @@ de_DE:
           print_invoices: "Rechnungen drucken"
           cancel_orders: "Bestellungen stornieren"
           resend_confirmation: "Bestätigung erneut senden"
+          resend_confirmation_confirm_html: "Sind Sie sicher, dass Sie die E-Mail-Bestätigungen erneut senden wollen?"
           selected:
             zero: "Keine Bestellung ausgewählt"
             one: "1 Bestellung ausgewählt"
@@ -3877,6 +3891,7 @@ de_DE:
           title: "Neues Produkt"
           new_product: "Neues Produkt"
           supplier: "Lieferant"
+          supplier_select_placeholder: "Lieferant wählen"
           product_name: "Produktname"
           units: "Einheit"
           value: "Menge"
@@ -3922,6 +3937,9 @@ de_DE:
           select_and_search: "Treffen Sie Ihre Auswahl und klicken Sie auf %{option}, um den Bericht zu erstellen."
         customer_names_message:
           customer_names_tip: "Wenn Kundennamen für von Ihnen gelieferte Bestellungen ausgeblendet sind, können Sie sich an den Händler wenden und ihn bitten, seine Ladeneinstellungen anzupassen, damit seine Lieferanten Kundennamen anzeigen können."
+        products_and_inventory:
+          all_products:
+            message: "Beachten Sie, dass die gemeldeten Lagerbestände nur aus den Produktlisten der Lieferanten stammen. Wenn Sie den Katalog verwenden, um Ihre Lagerbestand zu verwalten, werden diese Werte in diesem Bericht ignoriert."
       users:
         index:
           listing_users: "Benutzer verwalten"
@@ -4270,6 +4288,7 @@ de_DE:
     search_input:
       placeholder: Suche
     selector_with_filter:
+      selected_items: "%{count} ausgewählt"
       search_placeholder: Suche
     pagination:
       next: Nächste

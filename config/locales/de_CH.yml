@@ -3629,6 +3629,10 @@ de_CH:
           authorized: "Autorisiert"
           received: "Empfangen"
           canceled: "abgebrochen"
+      line_items:
+        index:
+          results_found: "%{number} Ergebnisse gefunden."
+          viewing: "Angezeigt wird %{start} bis %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Artikel kann nicht zu stornierter Bestellung hinzugefügt werden"

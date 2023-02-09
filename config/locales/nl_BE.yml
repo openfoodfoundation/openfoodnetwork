@@ -3185,6 +3185,10 @@ nl_BE:
           authorized: "Toegestaan"
           received: "Ontvangen"
           canceled: "Geannuleerd"
+      line_items:
+        index:
+          results_found: "1%{number} Resultaten gevonden"
+          viewing: "Resultaten te zien 1%{start} tot 2%{end}."
       orders:
         index:
           listing_orders: "Lijst van de bestellingen"

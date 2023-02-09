@@ -3481,6 +3481,10 @@ tr:
           authorized: "Yetkili"
           received: "Alındı"
           canceled: "İptal edildi"
+      line_items:
+        index:
+          results_found: "%{number} Sonuç bulundu."
+          viewing: "%{start} - %{end} görüntüleniyor."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "İptal edilmiş bir siparişe ürün eklenemez"

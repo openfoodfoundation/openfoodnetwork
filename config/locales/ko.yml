@@ -3568,6 +3568,10 @@ ko:
           authorized: "승인됨"
           received: "수신됨"
           canceled: "취소됨"
+      line_items:
+        index:
+          results_found: "%{number}개의 결과를 찾았습니다."
+          viewing: "%{start}에서 %{end}까지 보기"
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "취소된 주문에 항목을 추가할 수 없습니다."

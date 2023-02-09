@@ -8,6 +8,7 @@ en_GB:
       spree/order/ship_address:
         address1: "Shipping address line 1"
         address2: "Shipping address line 2"
+        city: "Shipping address town"
         country: "Shipping address country"
         phone: "Phone number"
         firstname: "First name"
@@ -3708,6 +3709,10 @@ en_GB:
           authorized: "Authorised"
           received: "Received"
           canceled: "Canceled"
+      line_items:
+        index:
+          results_found: "%{number} Results found."
+          viewing: "Viewing %{start} to %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Cannot add item to canceled order"

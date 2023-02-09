@@ -3648,6 +3648,10 @@ nb:
           authorized: "Autorisert"
           received: "Mottatt"
           canceled: "Avbrutt"
+      line_items:
+        index:
+          results_found: "%{number} Resultater funnet."
+          viewing: "Ser %{start} til %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Kan ikke legge varen til den avbrutte bestillingen"
