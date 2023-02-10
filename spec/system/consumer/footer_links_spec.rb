@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Footer Links", js: true do
+describe "Footer Links" do
   describe "policy link" do
     it "showing" do
       visit root_path
@@ -12,7 +12,7 @@ describe "Footer Links", js: true do
     it "opens cookies policy page" do
       visit root_path
       click_link "cookies policy"
-      expect(page).to have_content I18n.t('legal.cookies_policy.header')
+      expect(page).to have_content "How We Use Cookies"
     end
   end
 
