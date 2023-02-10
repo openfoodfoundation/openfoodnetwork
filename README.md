@@ -22,7 +22,7 @@ Our [GETTING_STARTED](GETTING_STARTED.md) and [CONTRIBUTING](CONTRIBUTING.md) gu
 
 ### Hacktoberfest :tada:
 
-Are you participating in [Hacktoberfest](https://hacktoberfest.digitalocean.com/)? Go check out our [Welcome New Developers project board](https://github.com/orgs/openfoodfoundation/projects/5)! We have curated all issues we consider to be a good starting point for new members of the community and categorized them by skills and level of complexity. 
+Are you participating in [Hacktoberfest](https://hacktoberfest.digitalocean.com/)? Go check out our [Welcome New Developers project board][welcome-dev]! We have curated all issues we consider to be a good starting point for new members of the community and categorized them by skills and level of complexity. 
 Have a look and pick the one you would prefer working on!
 
 ## Provisioning
@@ -52,5 +52,5 @@ Copyright (c) 2012 - 2022 Open Food Foundation, released under the AGPL licence.
 [ofn-handbook]: https://ofn-user-guide.gitbook.io/ofn-handbook/
 [ofn-install]: https://github.com/openfoodfoundation/ofn-install
 [super-admin-guide]: https://ofn-user-guide.gitbook.io/ofn-super-admin-guide
-[welcome-dev]: https://github.com/orgs/openfoodfoundation/projects/2
+[welcome-dev]: https://github.com/orgs/openfoodfoundation/projects/5
 [zenhub]: https://www.zenhub.com/extension
