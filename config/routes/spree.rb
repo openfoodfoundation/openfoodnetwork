@@ -88,7 +88,6 @@ Spree::Core::Engine.routes.draw do
         post :resend
         get :invoice
         get :print
-        get :print_ticket
       end
 
       collection do
