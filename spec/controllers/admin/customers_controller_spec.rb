@@ -45,7 +45,7 @@ module Admin
             it 'calls CustomersWithBalance' do
               customers_with_balance = instance_double(CustomersWithBalance)
               allow(CustomersWithBalance)
-                .to receive(:new).with(enterprise) { customers_with_balance }
+                .to receive(:new).with(Customer.of(enterprise)) { customers_with_balance }
 
               expect(customers_with_balance).to receive(:query) { Customer.none }
 

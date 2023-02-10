@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe CustomersWithBalance do
-  subject(:customers_with_balance) { described_class.new(customer.enterprise.id) }
+  subject(:customers_with_balance) { described_class.new(Customer.where(id: customer)) }
 
   describe '#query' do
     let(:customer) { create(:customer) }
@@ -16,6 +16,23 @@ describe CustomersWithBalance do
       expect(outstanding_balance).to receive(:statement)
 
       customers_with_balance.query
+    end
+
+    describe 'arguments' do
+      context 'with customers collection' do
+        it 'returns balance' do
+          customers = create_pair(:customer)
+          id_b = described_class.new(Customer.where(id: customers)).query
+            .map{ |c| [c.id, c.balance_value] }
+          expect(id_b).to eq([[customers.first.id, 0], [customers.second.id, 0]])
+        end
+      end
+
+      context 'with empty customers collection' do
+        it 'returns empty customers collection' do
+          expect(described_class.new(Customer.none).query).to eq([])
+        end
+      end
     end
 
     context 'when orders are in cart state' do
