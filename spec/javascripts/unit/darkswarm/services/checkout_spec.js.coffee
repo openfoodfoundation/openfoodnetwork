@@ -3,6 +3,7 @@ describe 'Checkout service', ->
     notify: (arg) ->
   Checkout = null
   orderData = null
+  currentHub = null
   $httpBackend = null
   Navigation = null
   navigationSpy = null
@@ -49,6 +50,9 @@ describe 'Checkout service', ->
         lastname: "Harrington"
       ship_address: {test: "bar"}
       user_id: 901
+    currentHub =
+        hub:
+          id: 99
 
     window.Bugsnag = BugsnagMock
 
@@ -58,6 +62,7 @@ describe 'Checkout service', ->
       $provide.value "Loading", Loading
       $provide.value "currentOrder", orderData
       $provide.value "shippingMethods", shippingMethods
+      $provide.value "currentHub", currentHub
       $provide.value "paymentMethods", paymentMethods
       $provide.value "StripeInstancePublishableKey", "instance_publishable_key"
       null

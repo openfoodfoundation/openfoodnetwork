@@ -55,6 +55,7 @@ describe "Hubs service", ->
     module ($provide)->
       $provide.value "CurrentHub", CurrentHubMock
       $provide.value "GmapsGeo", GmapsGeo
+      $provide.value "taxons", []
       null
     inject ($injector)->
       OfnMap = $injector.get("OfnMap")
