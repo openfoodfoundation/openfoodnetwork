@@ -15,7 +15,8 @@ module DfcProvider
     end
 
     def show
-      render json: variant, serializer: DfcProvider::CatalogItemSerializer
+      dfc_object = DfcBuilder.catalog_item(variant)
+      render json: DfcLoader.connector.export(dfc_object)
     end
 
     private
