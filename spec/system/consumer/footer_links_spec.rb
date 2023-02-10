@@ -12,7 +12,9 @@ describe "Footer Links" do
     it "opens cookies policy page" do
       visit root_path
       click_link "cookies policy"
-      expect(page).to have_content "How We Use Cookies"
+      within "div.reveal-modal" do
+        expect(page).to have_content "How We Use Cookies"
+      end
     end
   end
 
