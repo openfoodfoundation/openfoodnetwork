@@ -53,5 +53,5 @@ Copyright (c) 2012 - 2022 Open Food Foundation, released under the AGPL licence.
 [ofn-install]: https://github.com/openfoodfoundation/ofn-install
 [super-admin-guide]: https://ofn-user-guide.gitbook.io/ofn-super-admin-guide
 [welcome-dev]: https://github.com/orgs/openfoodfoundation/projects/5
-[welcome-dev]: https://github.com/orgs/openfoodfoundation/projects/6
+[welcome-qa]: https://github.com/orgs/openfoodfoundation/projects/6
 [zenhub]: https://www.zenhub.com/extension
