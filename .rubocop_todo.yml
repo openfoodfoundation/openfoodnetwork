@@ -839,7 +839,6 @@ Rails/OutputSafety:
     - 'lib/reporting/queries/query_builder.rb'
     - 'lib/reporting/queries/query_interface.rb'
     - 'lib/spree/money.rb'
-    - 'spec/system/admin/order_print_ticket_spec.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
