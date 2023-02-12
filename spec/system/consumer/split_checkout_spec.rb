@@ -284,6 +284,18 @@ describe "As a consumer, I want to checkout my order" do
       visit checkout_path
     end
 
+    context "when no selecting a shipping method" do
+      before do
+        fill_out_details
+        fill_out_billing_address
+      end
+
+      it "errors is shown to the user when submitting the form" do
+        click_button "Next - Payment method"
+        expect(page).to have_content "Select a shipping method"
+      end
+    end
+
     context "details step" do
       context "when form is submitted but invalid" do
         it "display the checkbox about shipping address same as billing address when selecting a shipping method that requires ship address" do
