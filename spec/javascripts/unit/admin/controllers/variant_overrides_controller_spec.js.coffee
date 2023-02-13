@@ -37,8 +37,8 @@ describe "VariantOverridesCtrl", ->
   describe "when more than one hub is available", ->
     beforeEach ->
       inject ($controller) ->
-        hubs = [{id: 1, name: 'Hub1'}, {id: 12, name: 'Hub2'}]
-        $controller 'AdminVariantOverridesCtrl', { $scope: scope, hubs: hubs, producers: [], products: [], hubPermissions: []}
+        two_hubs = [{id: 1, name: 'Hub1'}, {id: 12, name: 'Hub2'}]
+        $controller 'AdminVariantOverridesCtrl', { $scope: scope, hubs: two_hubs, producers: [], products: [], hubPermissions: []}
 
     it "initialises the hub list and the selects the only hub in the list", ->
       expect(scope.hubs).toEqual { 1: {id: 1, name: 'Hub1'}, 12: {id: 12, name: 'Hub2'} }
