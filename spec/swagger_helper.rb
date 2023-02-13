@@ -27,8 +27,9 @@ RSpec.configure do |config|
       components: {
         schemas: {
           error_response: ErrorsSchema.schema,
+          # only customer#show is with extra_fields: {name: :balance, required: true}
           customer: CustomerSchema.schema(require_all: true),
-          customers_collection: CustomerSchema.collection(require_all: true)
+          customers_collection: CustomerSchema.collection(require_all: true, extra_fields: :balance)
         },
         securitySchemes: {
           api_key_header: {

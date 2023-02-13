@@ -6,10 +6,16 @@ module Api
   module V1
     class CustomersController < Api::V1::BaseController
       include AddressTransformation
+      include ExtraFields
 
       skip_authorization_check only: :index
 
       before_action :authorize_action, only: [:show, :update, :destroy]
+
+      # Query parameters
+      before_action only: [:index] do
+        @extra_customer_fields = extra_fields :customer, [:balance]
+      end
 
       def index
         @pagy, customers = pagy(search_customers, pagy_options)
@@ -51,7 +57,11 @@ module Api
       private
 
       def customer
-        @customer ||= Customer.find(params[:id])
+        @customer ||= if action_name == "show"
+                        CustomersWithBalance.new(Customer.where(id: params[:id])).query.first!
+                      else
+                        Customer.find(params[:id])
+                      end
       end
 
       def authorize_action
@@ -61,6 +71,11 @@ module Api
       def search_customers
         customers = visible_customers.includes(:bill_address, :ship_address)
         customers = customers.where(enterprise_id: params[:enterprise_id]) if params[:enterprise_id]
+
+        if @extra_customer_fields.include?(:balance)
+          customers = CustomersWithBalance.new(customers).query
+        end
+
         customers.ransack(params[:q]).result.order(:id)
       end
 

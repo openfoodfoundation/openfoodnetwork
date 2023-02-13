@@ -26,10 +26,13 @@ describe "Customers", type: :request do
     get "List customers" do
       tags "Customers"
       parameter name: :enterprise_id, in: :query, type: :string
+      parameter name: "extra_fields[customer]", in: :query, type: :string, example: :balance,
+                description: "Add extra fields to each customer"
       produces "application/json"
 
       response "200", "Customers list" do
         param(:enterprise_id) { enterprise1.id }
+        param("extra_fields[customer]") { :balance }
         schema "$ref": "#/components/schemas/customers_collection"
 
         run_test!
@@ -102,6 +105,33 @@ describe "Customers", type: :request do
         get "/api/v1/customers", params: { page: "0" }
         expect(json_response_ids).to eq nil
         expect(json_error_detail).to eq 'expected :page >= 1; got "0"'
+      end
+    end
+
+    describe "query parameters" do
+      describe "extra_fields[customer]" do
+        context "with balance" do
+          it "adds balance to each customer" do
+            get "/api/v1/customers", params: { extra_fields: { customer: :balance } }
+            balances = json_response[:data].map{ |c| c[:attributes][:balance] }
+            expect(balances.all?{ |b| b.is_a? Numeric }).to eq(true)
+          end
+        end
+
+        context "with unknown field" do
+          it "returns unprocessable entity" do
+            get "/api/v1/customers", params: { extra_fields: { customer: :unknown } }
+            expect([response.status, json_error_detail]).to eq [422, "Unsupported fields: unknown"]
+          end
+        end
+
+        context "when not recevied" do
+          it "does not add balances" do
+            get "/api/v1/customers"
+            balances = json_response[:data].map{ |c| c[:attributes][:balance] }
+            expect([response.status, balances.compact]).to eq [200, []]
+          end
+        end
       end
     end
 
@@ -191,7 +221,10 @@ describe "Customers", type: :request do
 
       response "200", "Customer" do
         param(:id) { customer1.id }
-        schema "$ref": "#/components/schemas/customer"
+        schema CustomerSchema.schema(
+          require_all: true,
+          extra_fields: { name: :balance, required: true }
+        )
 
         run_test! do
           date_time_string =

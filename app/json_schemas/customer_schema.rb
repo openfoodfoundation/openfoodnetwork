@@ -61,4 +61,9 @@ class CustomerSchema < JsonApiSchema
   def self.relationships
     [:enterprise]
   end
+
+  # Optional attributes included with eg: CustomerSchema.schema(extra_fields: :balance)
+  def self.balance
+    { balance: { type: :number, format: :double } }
+  end
 end
