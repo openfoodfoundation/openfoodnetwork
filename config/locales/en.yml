@@ -35,6 +35,8 @@ en:
         firstname: "First name"
         lastname: "Last name"
         zipcode: "Shipping address postcode"
+      spree/order/bill_address:
+        phone: Customer phone
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"

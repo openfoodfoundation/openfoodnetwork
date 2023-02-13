@@ -60,7 +60,6 @@ class SplitCheckoutController < ::BaseController
   def order_error_messages
     # Remove ship_address.* errors if no shipping method is not selected
     remove_ship_address_errors if @order.errors[:shipping_method].present?
-
   end
 
   def remove_ship_address_errors

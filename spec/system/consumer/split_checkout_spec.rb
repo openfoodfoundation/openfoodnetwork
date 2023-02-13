@@ -198,6 +198,11 @@ describe "As a consumer, I want to checkout my order" do
           expect(page).not_to have_content "Shipping address suburb 1 can't be blank"
           expect(page).not_to have_content "Shipping address postcode can't be blank"
         end
+
+        it "should not display bill address phone number error message" do
+          expect(page).not_to have_content "Bill address phone can't be blank"
+          expect(page).to have_content "Customer phone can't be blank"
+        end
       end
 
       it "should allow visit '/checkout/details'" do
