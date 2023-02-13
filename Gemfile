@@ -90,7 +90,7 @@ gem 'bootsnap', require: false
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'mimemagic', '> 0.3.5'
-gem 'paper_trail', '~> 12.1.0'
+gem 'paper_trail', '~> 12.1'
 gem 'rack-rewrite'
 gem 'roadie-rails'
 
