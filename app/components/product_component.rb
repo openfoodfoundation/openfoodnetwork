@@ -20,42 +20,40 @@ class ProductComponent < ViewComponentReflex::Component
     @product.id
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
   def column_value(column)
-    # unless it is a column that needs specific formatting, we just use the product method
-    return @product.public_send(column.to_sym) if use_product_method?(column)
-
     case column
+    when 'name'
+      @product.name
+    when 'price'
+      @product.price
     when 'unit'
       "#{@product.unit_value} #{@product.variant_unit}"
     when 'producer'
       @product.supplier.name
     when 'category'
       @product.taxons.map(&:name).join(', ')
+    when 'sku'
+      @product.sku
     when 'on_hand'
-      return 0 if @product.on_hand.nil?
-
-      @product.on_hand
+      @product.on_hand || 0
+    when 'on_demand'
+      @product.on_demand
     when 'tax_category'
       @product.tax_category.name
+    when 'inherits_properties'
+      @product.inherits_properties
     when 'available_on'
       format_date(@product.available_on)
     when 'import_date'
       format_date(@product.import_date)
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/MethodLength
 
   private
 
-  def use_product_method?(column)
-    # columns that need some specific formatting
-    exceptions = %w[on_hand tax_category available_on import_date]
-
-    @product.respond_to?(column.to_sym) && !exceptions.include?(column)
-  end
-
   def format_date(date)
-    return '' if date.nil?
-
-    date.strftime(DATETIME_FORMAT)
+    date&.strftime(DATETIME_FORMAT) || ''
   end
 end
