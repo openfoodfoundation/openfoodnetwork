@@ -60,6 +60,9 @@ class SplitCheckoutController < ::BaseController
   def order_error_messages
     # Remove ship_address.* errors if no shipping method is not selected
     remove_ship_address_errors if @order.errors[:shipping_method].present?
+    # Reorder errors to make sure the most important ones are shown first
+    # and finally, return the error messages to sentence
+    reorder_errors.map(&:full_message).to_sentence
   end
 
   def remove_ship_address_errors
@@ -69,6 +72,28 @@ class SplitCheckoutController < ::BaseController
     @order.errors.delete("ship_address.phone")
     @order.errors.delete("ship_address.lastname")
     @order.errors.delete("ship_address.zipcode")
+  end
+
+  def reorder_errors
+    @order.errors.sort_by do |e|
+      case e.attribute
+      when /email/i then 0
+      when /phone/i then 1
+      when /bill_address/i then 2 + bill_address_error_order(e)
+      else 20
+      end
+    end
+  end
+
+  def bill_address_error_order(error)
+    case error.attribute
+    when /firstname/i then 0
+    when /lastname/i then 1
+    when /address1/i then 2
+    when /city/i then 3
+    when /zipcode/i then 4
+    else 5
+    end
   end
 
   def flash_error_when_no_shipping_method_available

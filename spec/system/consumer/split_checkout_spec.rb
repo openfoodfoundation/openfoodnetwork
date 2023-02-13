@@ -203,6 +203,17 @@ describe "As a consumer, I want to checkout my order" do
           expect(page).not_to have_content "Bill address phone can't be blank"
           expect(page).to have_content "Customer phone can't be blank"
         end
+
+        context "with no email filled in" do
+          before do
+            fill_in "Email", with: ""
+            click_button "Next - Payment method"
+          end
+
+          it "should display error message in the right order" do
+            expect(page).to have_content "Customer E-Mail can't be blank, Customer E-Mail is invalid, Customer phone can't be blank, Bill address firstname can't be blank, Bill address lastname can't be blank, Bill address address1 can't be blank, Bill address city can't be blank, Bill address zipcode can't be blank, and Shipping method Select a shipping method"
+          end
+        end
       end
 
       it "should allow visit '/checkout/details'" do
