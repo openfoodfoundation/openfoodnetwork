@@ -19,59 +19,11 @@ class JsonApiSchema
     end
 
     def schema(options = {})
-      {
-        type: :object,
-        properties: {
-          data: {
-            type: :object,
-            properties: data_properties(**options)
-          },
-          meta: { type: :object },
-          links: { type: :object }
-        },
-        required: [:data]
-      }
+      Structure.schema(data_properties(**options))
     end
 
     def collection(options)
-      {
-        type: :object,
-        properties: {
-          data: {
-            type: :array,
-            items: {
-              type: :object,
-              properties: data_properties(**options)
-            }
-          },
-          meta: {
-            type: :object,
-            properties: {
-              pagination: {
-                type: :object,
-                properties: {
-                  results: { type: :integer, example: 250 },
-                  pages: { type: :integer, example: 5 },
-                  page: { type: :integer, example: 2 },
-                  per_page: { type: :integer, example: 50 },
-                }
-              }
-            },
-            required: [:pagination]
-          },
-          links: {
-            type: :object,
-            properties: {
-              self: { type: :string },
-              first: { type: :string },
-              prev: { type: :string, nullable: true },
-              next: { type: :string, nullable: true },
-              last: { type: :string }
-            }
-          }
-        },
-        required: [:data, :meta, :links]
-      }
+      Structure.collection(data_properties(**options))
     end
 
     private
@@ -81,24 +33,11 @@ class JsonApiSchema
       attributes = get_attributes(extra_fields_result)
       required = get_required(require_all, extra_fields, extra_fields_result)
 
-      {
-        id: { type: :string, example: "1" },
-        type: { type: :string, example: object_name },
-        attributes: {
-          type: :object,
-          properties: attributes,
-          required: required
-        },
-        relationships: {
-          type: :object,
-          properties: relationships.to_h do |name|
-            [
-              name,
-              relationship_schema(name)
-            ]
-          end
-        }
-      }
+      Structure.data_properties(object_name, attributes, required, relationship_properties)
+    end
+
+    def relationship_properties
+      relationships.to_h { |name| [name, relationship_schema(name)] }
     end
 
     # Example
