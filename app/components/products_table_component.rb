@@ -4,7 +4,7 @@ class ProductsTableComponent < ViewComponentReflex::Component
   include Pagy::Backend
 
   SORTABLE_COLUMNS = ['name', 'import_date'].freeze
-  SELECTABLE_COMUMNS = [
+  SELECTABLE_COLUMNS = [
     { label: I18n.t("admin.products_page.columns_selector.price"), value: "price" },
     { label: I18n.t("admin.products_page.columns_selector.unit"), value: "unit" },
     { label: I18n.t("admin.products_page.columns_selector.producer"), value: "producer" },
@@ -32,7 +32,7 @@ class ProductsTableComponent < ViewComponentReflex::Component
   def initialize(user:)
     super
     @user = user
-    @selectable_columns = SELECTABLE_COMUMNS
+    @selectable_columns = SELECTABLE_COLUMNS
     @columns_selected = ['unit', 'price', 'on_hand', 'category', 'import_date']
     @per_page = PER_PAGE
     @per_page_selected = [10]

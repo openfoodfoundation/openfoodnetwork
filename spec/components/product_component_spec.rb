@@ -22,10 +22,11 @@ describe ProductComponent, type: :component do
   describe 'category' do
     let(:product) do
       product = create(:simple_product)
-      product.taxons << create(:taxon, name: 'random')
+      product.taxons = taxons
 
       product
     end
+    let(:taxons) { [create(:taxon, name: 'random 1'), create(:taxon, name: 'random 2')] }
 
     before do
       render_inline(
@@ -36,7 +37,9 @@ describe ProductComponent, type: :component do
     end
 
     it "joins the categories' name" do
-      expect(page.find('.category')).to have_content(product.taxons.map(&:name).join(', '))
+      expect(page.find('.category')).to have_content(
+        /random 1, random 2/, exact: true, normalize_ws: true
+      )
     end
   end
 
@@ -52,7 +55,7 @@ describe ProductComponent, type: :component do
       )
     end
 
-    it 'return product on_hand' do
+    it 'returns product on_hand' do
       expect(page.find('.on_hand')).to have_content(on_hand)
     end
 
@@ -79,7 +82,7 @@ describe ProductComponent, type: :component do
       )
     end
 
-    it 'return formated available_on' do
+    it 'returns formated available_on' do
       expect(page.find('.available_on')).to have_content(available_on.strftime('%F %T'))
     end
 
