@@ -187,6 +187,19 @@ describe "As a consumer, I want to checkout my order" do
         click_on "Checkout as guest"
       end
 
+      context "should show proper list of errors" do
+        before do
+          click_button "Next - Payment method"
+          expect(page).to have_content "Saving failed, please update the highlighted fields."
+        end
+
+        it "should not display any shipping errors messages when shipping method is not selected" do
+          expect(page).not_to have_content "Shipping address line 1 can't be blank"
+          expect(page).not_to have_content "Shipping address suburb 1 can't be blank"
+          expect(page).not_to have_content "Shipping address postcode can't be blank"
+        end
+      end
+
       it "should allow visit '/checkout/details'" do
         expect(page).to have_current_path("/checkout/details")
       end
@@ -306,8 +319,6 @@ describe "As a consumer, I want to checkout my order" do
           click_button "Next - Payment method"
 
           expect(page).to have_content "Saving failed, please update the highlighted fields."
-          expect(page).to have_content "Shipping address line 1 can't be blank"
-          expect(page).to have_content "Shipping address same as billing address?"
           expect(page).to have_content "Save as default shipping address"
           expect(page).to have_checked_field "Shipping address same as billing address?"
         end
@@ -563,7 +574,7 @@ describe "As a consumer, I want to checkout my order" do
           end
           within ".flash[type='error']" do
             expect(page).to have_content("Saving failed, please update the highlighted fields")
-            expect(page).to have_content("can't be blank", count: 13)
+            expect(page).to have_content("can't be blank", count: 7)
             expect(page).to have_content("is invalid", count: 1)
           end
         end

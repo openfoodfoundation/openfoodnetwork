@@ -49,12 +49,27 @@ class SplitCheckoutController < ::BaseController
   def render_error
     flash.now[:error] ||= I18n.t(
       'split_checkout.errors.saving_failed',
-      messages: @order.errors.full_messages.to_sentence
+      messages: order_error_messages
     )
 
     render status: :unprocessable_entity, operations: cable_car.
       replace("#checkout", partial("split_checkout/checkout")).
       replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
+  end
+
+  def order_error_messages
+    # Remove ship_address.* errors if no shipping method is not selected
+    remove_ship_address_errors if @order.errors[:shipping_method].present?
+
+  end
+
+  def remove_ship_address_errors
+    @order.errors.delete("ship_address.firstname")
+    @order.errors.delete("ship_address.address1")
+    @order.errors.delete("ship_address.city")
+    @order.errors.delete("ship_address.phone")
+    @order.errors.delete("ship_address.lastname")
+    @order.errors.delete("ship_address.zipcode")
   end
 
   def flash_error_when_no_shipping_method_available
