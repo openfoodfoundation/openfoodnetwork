@@ -4,7 +4,6 @@
   = t :edit_order_cycle
 
 = form_for [main_app, :admin, @order_cycle], html: { class: "order_cycle" , data: { controller: 'unsaved-changes', action: 'unsaved-changes#submit beforeunload@window->unsaved-changes#leavingPage', 'unsaved-changes-changed': "false" } } do |f|
-
   = render 'wizard_progress'
 
   %fieldset.no-border-bottom
@@ -26,7 +25,7 @@
               %td.text-center
                 - if distributor_shipping_methods.many?
                   %label
-                    = check_box_tag nil, nil, nil, { "data-action": "change->select-all#toggleAll change->unsaved-changes#formIsChanged", "data-select-all-target": "all" }
+                    = check_box_tag nil, nil, nil, { "data-action": "change->select-all#toggleAll", "data-select-all-target": "all" }
                     = t(".select_all")
               %td
                 %em= distributor.name
@@ -37,7 +36,7 @@
                           distributor_shipping_method.id,
                           @order_cycle.distributor_shipping_methods.include?(distributor_shipping_method),
                           id: "order_cycle_selected_distributor_shipping_method_ids_#{distributor_shipping_method.id}",
-                          data: ({ "action" => "change->select-all#toggleCheckbox change->unsaved-changes#formIsChanged", "select-all-target" => "checkbox" } if distributor_shipping_method.shipping_method.frontend?)
+                          data: ({ "action" => "change->select-all#toggleCheckbox", "select-all-target" => "checkbox" } if distributor_shipping_method.shipping_method.frontend?)
                       = distributor_shipping_method.shipping_method.name
                 - distributor.shipping_methods.backend.each do |shipping_method|
                   %label.disabled
@@ -57,7 +56,7 @@
               %td.text-center
                 - if distributor_payment_methods.many?
                   %label
-                    = check_box_tag nil, nil, nil, { "data-action": "change->select-all#toggleAll change->unsaved-changes#formIsChanged", "data-select-all-target": "all" }
+                    = check_box_tag nil, nil, nil, { "data-action": "change->select-all#toggleAll", "data-select-all-target": "all" }
                     = t(".select_all")
               %td
                 %em= distributor.name
@@ -68,7 +67,7 @@
                           distributor_payment_method.id,
                           @order_cycle.distributor_payment_methods.include?(distributor_payment_method),
                           id: "order_cycle_selected_distributor_payment_method_ids_#{distributor_payment_method.id}",
-                          data: ({ "action" => "change->select-all#toggleCheckbox change->unsaved-changes#formIsChanged", "select-all-target" => "checkbox" } if distributor_payment_method.payment_method.frontend?)
+                          data: ({ "action" => "change->select-all#toggleCheckbox", "select-all-target" => "checkbox" } if distributor_payment_method.payment_method.frontend?)
                       = distributor_payment_method.payment_method.name
                 - distributor.payment_methods.inactive_or_backend.each do |payment_method|
                   %label.disabled

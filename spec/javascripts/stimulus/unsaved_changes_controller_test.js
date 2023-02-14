@@ -19,7 +19,7 @@ describe("UnsavedChangesController", () => {
         data-action="unsaved-changes#submit beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
         data-unsaved-changes-changed="false"
       >
-        <input id="test-checkbox" type="checkbox" data-action="change->unsaved-changes#formIsChanged"/>
+        <input id="test-checkbox" type="checkbox" />
         <input id="test-submit" type="submit"/>
       </form>
     `
@@ -36,7 +36,7 @@ describe("UnsavedChangesController", () => {
             data-unsaved-changes-changed="false" 
             data-unsaved-changes-disable-submit-button="true"
           >
-            <input id="test-checkbox" type="checkbox" data-action="change->unsaved-changes#formIsChanged"/>
+            <input id="test-checkbox" type="checkbox" />
             <input id="test-submit" type="submit"/>
           </form>
         `
@@ -59,7 +59,7 @@ describe("UnsavedChangesController", () => {
             data-unsaved-changes-changed="false" 
             data-unsaved-changes-disable-submit-button="false"
           >
-            <input id="test-checkbox" type="checkbox" data-action="change->unsaved-changes#formIsChanged"/>
+            <input id="test-checkbox" type="checkbox" />
             <input id="test-submit" type="submit"/>
           </form>
         `

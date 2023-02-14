@@ -21,20 +21,25 @@ import { Controller } from "stimulus";
 //      <input data-action="change->unsaved-changes#formIsChanged" />
 //    </form>
 //
-// You can also combine the two event trigger ie : 
+// You can also combine the two event trigger ie :
 //    <form
 //      data-controller="unsaved-changes"
 //      data-action="unsaved-changes#submit beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage"
 //      data-unsaved-changes-changed="true"
 //    >
-// You then need to add 'data-action="change->unsaved-changes#formIsChanged"' on all the form element
-// that can be interacted with
 //
 // Optional, you can add 'data-unsaved-changes-changed="true"' if you want to disable all
 // submit buttons when the form hasn't been interacted with
 //
 export default class extends Controller {
   connect() {
+    // add onChange event to all form element
+    this.element
+      .querySelectorAll("input, select, textarea")
+      .forEach((input) => {
+        input.addEventListener("change", this.formIsChanged.bind(this));
+      });
+
     // disable submit button when first loading the page
     if (!this.isFormChanged() && this.isSubmitButtonDisabled()) {
       this.disableButtons();
@@ -77,8 +82,8 @@ export default class extends Controller {
   }
 
   submit(event) {
-    // if we are submitting the form, we don't want to trigger a warning so set changed to false 
-    this.setChanged("false")
+    // if we are submitting the form, we don't want to trigger a warning so set changed to false
+    this.setChanged("false");
   }
 
   setChanged(changed) {
