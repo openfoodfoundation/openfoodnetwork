@@ -9,12 +9,21 @@ describe "Footer Links" do
       expect(page).to have_link "cookies policy"
     end
 
-    it "opens cookies policy page" do
-      visit root_path
-      click_link "cookies policy"
-      within "div.reveal-modal" do
-        expect(page).to have_content "How We Use Cookies"
+    shared_examples "opens the cookie policy modal" do |content|
+      it "with the right content" do
+        within "div.reveal-modal" do
+          expect(page).to have_content content
+        end
       end
+    end
+
+    context "when english is the default language" do
+      before do
+        visit root_path
+        click_link "cookies policy"
+      end
+
+      it_behaves_like "opens the cookie policy modal", "How We Use Cookies"
     end
   end
 
