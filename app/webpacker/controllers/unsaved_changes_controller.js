@@ -6,7 +6,7 @@ import { Controller } from "stimulus";
 // - with beforeunload event :
 //    <form
 //      data-controller="unsaved-changes"
-//      data-action="unsaved-changes#submit beforeunload@window->unsaved-changes#leavingPage"
+//      data-action="beforeunload@window->unsaved-changes#leavingPage"
 //      data-unsaved-changes-changed="true"
 //    >
 //      <input data-action="change->unsaved-changes#formIsChanged" />
@@ -15,7 +15,7 @@ import { Controller } from "stimulus";
 // - with turbolinks :
 //    <form
 //      data-controller="unsaved-changes"
-//      data-action="unsaved-changes#submit turbolinks:before-visit@window->unsaved-changes#leavingPage"
+//      data-action="turbolinks:before-visit@window->unsaved-changes#leavingPage"
 //      data-unsaved-changes-changed="true"
 //    >
 //      <input data-action="change->unsaved-changes#formIsChanged" />
@@ -24,11 +24,11 @@ import { Controller } from "stimulus";
 // You can also combine the two event trigger ie :
 //    <form
 //      data-controller="unsaved-changes"
-//      data-action="unsaved-changes#submit beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage"
+//      data-action="beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage"
 //      data-unsaved-changes-changed="true"
 //    >
 //
-// Optional, you can add 'data-unsaved-changes-changed="true"' if you want to disable all
+// Optional, you can add 'data-unsaved-changes-disable-submit-button="true"' if you want to disable all
 // submit buttons when the form hasn't been interacted with
 //
 export default class extends Controller {
@@ -39,6 +39,8 @@ export default class extends Controller {
       .forEach((input) => {
         input.addEventListener("change", this.formIsChanged.bind(this));
       });
+
+    this.element.addEventListener("submit", this.handleSubmit.bind(this));
 
     // disable submit button when first loading the page
     if (!this.isFormChanged() && this.isSubmitButtonDisabled()) {
@@ -81,7 +83,7 @@ export default class extends Controller {
     }
   }
 
-  submit(event) {
+  handleSubmit(event) {
     // if we are submitting the form, we don't want to trigger a warning so set changed to false
     this.setChanged("false");
   }

@@ -16,7 +16,7 @@ describe("UnsavedChangesController", () => {
       <form 
         id="test-form" 
         data-controller="unsaved-changes" 
-        data-action="unsaved-changes#submit beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
+        data-action="beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
         data-unsaved-changes-changed="false"
       >
         <input id="test-checkbox" type="checkbox" />
@@ -32,7 +32,7 @@ describe("UnsavedChangesController", () => {
           <form 
             id="test-form" 
             data-controller="unsaved-changes" 
-            data-action="unsaved-changes#submit beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
+            data-action="beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
             data-unsaved-changes-changed="false" 
             data-unsaved-changes-disable-submit-button="true"
           >
@@ -55,7 +55,7 @@ describe("UnsavedChangesController", () => {
           <form 
             id="test-form" 
             data-controller="unsaved-changes" 
-            data-action="unsaved-changes#submit beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
+            data-action="beforeunload@window->unsaved-changes#leavingPage turbolinks:before-visit@window->unsaved-changes#leavingPage" 
             data-unsaved-changes-changed="false" 
             data-unsaved-changes-disable-submit-button="false"
           >
@@ -195,7 +195,7 @@ describe("UnsavedChangesController", () => {
     })
   })
 
-  describe('#submit', () => {
+  describe('#handleSubmit', () => {
     let checkbox
 
     beforeEach(() => {
