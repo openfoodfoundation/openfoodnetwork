@@ -317,7 +317,8 @@ module Reporting
         def filter_by_date(params)
           filter_scope("spree_orders.completed_at >= ?", params.completed_at_gt) \
             if params.completed_at_gt.present?
-          filter_scope("spree_orders.completed_at <= ?", params.completed_at_lt) if params.completed_at_lt.present?
+          filter_scope("spree_orders.completed_at <= ?", params.completed_at_lt) \
+            if params.completed_at_lt.present?
         end
 
         def filter_by_distribution(params)
