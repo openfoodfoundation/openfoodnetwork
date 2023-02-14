@@ -14,6 +14,12 @@ describe Spree::Order do
       order.save
       expect(order.errors.full_messages).to include "Shipping address line 1 can't be blank"
     end
+
+    it "provides friendly error messages for bill address" do
+      order.bill_address = Spree::Address.new
+      order.save
+      expect(order.errors.full_messages).to include "Bill address (Street + House number) can't be blank"
+    end
   end
 
   context "#products" do
