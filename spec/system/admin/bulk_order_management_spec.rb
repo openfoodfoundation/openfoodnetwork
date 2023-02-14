@@ -59,6 +59,57 @@ describe '
       end
     end
 
+    context "pagination" do
+      let!(:o1) {
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.now )
+      }
+      let!(:o2) {
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.now )
+      }
+
+      before do
+        15.times {
+          create(:line_item_with_shipment, order: o1)
+        }
+        5.times {
+          create(:line_item_with_shipment, order: o2)
+        }
+      end
+
+      it "splits results according to line items from orders" do
+        visit_bulk_order_management
+
+        expect(page).to have_select2 "autogen4", selected: "15 per page" # should be default option
+        expect(page).to have_content "20 Results found. Viewing 1 to 15."
+        expect(page).to have_button("« First", disabled: true)
+        expect(page).to have_button("Previous", disabled: true)
+        expect(page).to have_button("1", disabled: true)
+        expect(page).to have_button("2", disabled: false)
+        expect(page).to have_button("Next", disabled: false)
+        expect(page).to have_button("Last »", disabled: false)
+        within "tbody" do
+          expect(page).to have_css("tr", count: 15) # verifies that the remaining 15 line items are shown
+        end
+        click_button "2" # switches to the second results page
+        within "tbody" do
+          expect(page).to have_css("tr", count: 5) # verifies that the remaining 5 line items are shown
+        end
+        click_button "1" # switches to the first results page
+        select2_select "50 per page", from: "autogen4" # should display all 20 line items
+        expect(page).to have_content "20 Results found. Viewing 1 to 20."
+        expect(page).to have_button("« First", disabled: true)
+        expect(page).to have_button("Previous", disabled: true)
+        expect(page).to have_button("1", disabled: true)
+        expect(page).to_not have_button("2")
+        expect(page).to have_button("Next", disabled: true)
+        expect(page).to have_button("Last »", disabled: true)
+        select2_select "100 per page", from: "autogen4" # should display all 20 line items
+        expect(page).to have_content "20 Results found. Viewing 1 to 20."
+      end
+    end
+
     context "displaying individual columns" do
       let!(:o1) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
