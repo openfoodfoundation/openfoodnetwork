@@ -25,6 +25,19 @@ describe "Footer Links" do
 
       it_behaves_like "opens the cookie policy modal", "How We Use Cookies"
     end
+
+    context "when spanish is selected" do
+      before do
+        visit root_path
+        find('.language-switcher').click
+        within '.language-switcher .dropdown' do
+          find('li a[href="/locales/es"]').click
+        end
+        click_link "política de cookies"
+      end
+
+      it_behaves_like "opens the cookie policy modal", "Cómo utilizamos las cookies"
+    end
   end
 
   describe "privacy policy link" do
