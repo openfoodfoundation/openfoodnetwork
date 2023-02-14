@@ -212,3 +212,12 @@
 		}
 	}
 }
+
+.ofn-drop-down.ofn-drop-down-v2 {
+	// Add very specific styling here for components that are in transition:
+	// ie. the ones using the two classes above
+	.ofn-drop-down-label {
+		padding-top: 7px;
+		padding-bottom: 7px;
+	}
+}
