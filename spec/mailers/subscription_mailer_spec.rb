@@ -419,7 +419,7 @@ of this failed payment."
         it "sends the email, which notifies the enterprise that some issues were encountered" do
           expect(summary).to receive(:orders_affected_by).with(:other) { [order3, order4] }
           SubscriptionMailer.confirmation_summary_email(summary).deliver_now
-          expect(body).to include("Failed Payment (% orders)" % 2)
+          expect(body).to include("Failed Payment (%d orders)" % 2)
           expect(body).to include 'Automatic processing of payment for these orders failed due to an error. The error has been listed where possible.'
           expect(body).to include("Other Failure (%d orders)" % 2)
           expect(body).to include 'Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.'
