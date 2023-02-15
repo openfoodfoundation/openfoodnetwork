@@ -784,6 +784,23 @@ describe '
               expect(o2.reload.state).to eq("complete")
             end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
           end
+
+          it "deletes one line item and do not show any popup if it does not lead to order cancelation" do
+            expect(page).to have_selector "tr#li_#{li1.id}"
+            within("tr#li_#{li1.id} td.bulk") do
+              check "bulk"
+            end
+
+            find("div#bulk-actions-dropdown").click
+            find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
+
+            expect(page).to have_content "Loading orders"
+
+            expect(page).to have_no_selector ".modal"
+            expect(page).to have_no_selector "tr#li_#{li1.id}"
+            expect(page).to have_selector "tr#li_#{li11.id}"
+            expect(o1.reload.state).to eq("complete")
+          end
         end
       end
 
