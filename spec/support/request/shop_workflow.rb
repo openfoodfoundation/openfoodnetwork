@@ -20,7 +20,7 @@ module ShopWorkflow
     wait_for_cart
     toggle_cart
     within '.cart-sidebar' do
-      expect(page).to have_link I18n.t('shared.menu.cart_sidebar.edit_cart')
+      expect(page).to have_link 'Edit cart'
     end
     first("a.edit-cart").click
   end
