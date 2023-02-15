@@ -136,14 +136,14 @@ describe Enterprise do
       it "prevents duplicate names for new records" do
         e = Enterprise.new name: enterprise.name
         expect(e).to_not be_valid
-        expect(e.errors[:name].first).to include I18n.t('enterprise_name_error', email: owner.email)
+        expect(e.errors[:name].first).to include enterprise_name_error(owner.email)
       end
 
       it "prevents duplicate names for existing records" do
         e = create(:enterprise, name: 'foo')
         e.name = enterprise.name
         expect(e).to_not be_valid
-        expect(e.errors[:name].first).to include I18n.t('enterprise_name_error', email: owner.email)
+        expect(e.errors[:name].first).to include enterprise_name_error(owner.email)
       end
 
       it "does not prohibit the saving of an enterprise with no name clash" do
@@ -879,4 +879,11 @@ describe Enterprise do
       expect(expected).to include(sender)
     end
   end
+end
+
+def enterprise_name_error(owner_email)
+  "has already been taken. \
+If this is your enterprise and you would like to claim ownership, \
+or if you would like to trade with this enterprise please contact \
+the current manager of this profile at %s." % owner_email
 end
