@@ -66,7 +66,7 @@ describe PaypalItemsBuilder do
     end
 
     it "lists the payment fee adjustment" do
-      payment_fee = items.find{ |i| i[:Name] == I18n.t('payment_method_fee') }
+      payment_fee = items.find{ |i| i[:Name] == 'Transaction fee' }
 
       expect(payment_fee[:Quantity]).to eq 1
       expect(payment_fee[:Amount]).to eq(currencyID: order.currency,
@@ -107,7 +107,7 @@ describe PaypalItemsBuilder do
     end
 
     it "does not list the shipping fee" do
-      shipping_fee_item = items.find{ |i| i[:Name] == I18n.t('shipping') }
+      shipping_fee_item = items.find{ |i| i[:Name] == 'Shipping' }
 
       expect(order.all_adjustments.shipping.count).to eq 1
       expect(shipping_fee_item).to be_nil
