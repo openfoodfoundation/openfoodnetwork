@@ -24,6 +24,7 @@ describe Enterprise do
     it { is_expected.to have_many(:distributed_orders) }
     it { is_expected.to belong_to(:address) }
     it { is_expected.to belong_to(:business_address) }
+    it { is_expected.to have_many(:vouchers) }
 
     it "destroys enterprise roles upon its own demise" do
       e = create(:enterprise)
