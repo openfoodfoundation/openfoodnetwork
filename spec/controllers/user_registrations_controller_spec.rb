@@ -39,7 +39,10 @@ describe UserRegistrationsController, type: :controller do
 
       expect(response.status).to eq(401)
       json = JSON.parse(response.body)
-      expect(json).to eq("message" => I18n.t('devise.user_registrations.spree_user.unknown_error'))
+      expect(json).to eq(
+        "message" =>
+        'Something went wrong while creating your account. Check your email address and try again.'
+      )
     end
 
     it "returns 200 when registration succeeds" do
