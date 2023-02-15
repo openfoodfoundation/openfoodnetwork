@@ -36,7 +36,7 @@ describe CheckoutController, type: :controller do
     get :edit
 
     expect(response).to redirect_to shop_url
-    expect(flash[:info]).to eq I18n.t('order_cycle_closed')
+    expect(flash[:info]).to eq 'The order cycle you\'ve selected has just closed. Please try again!'
   end
 
   it "redirects home with message if hub is not ready for checkout" do
@@ -50,7 +50,7 @@ describe CheckoutController, type: :controller do
     get :edit
 
     expect(response).to redirect_to root_url
-    expect(flash[:info]).to eq(I18n.t('order_cycles_closed_for_hub'))
+    expect(flash[:info]).to eq('The hub you have selected is temporarily closed for orders. Please try again later.')
   end
 
   describe "#update" do
@@ -257,7 +257,7 @@ describe CheckoutController, type: :controller do
       spree_post :update, format: :json, order: {}
       expect(response.status).to eq(400)
       expect(response.body).to eq({ errors: {},
-                                    flash: { error: I18n.t("checkout.failed") } }.to_json)
+                                    flash: { error: 'The checkout failed. Please let us know so that we can process your order.' } }.to_json)
     end
 
     it "returns a specific error on Spree::Core::GatewayError" do
@@ -265,7 +265,7 @@ describe CheckoutController, type: :controller do
       spree_post :update, format: :json, order: {}
 
       expect(response.status).to eq(400)
-      flash_message = I18n.t(:spree_gateway_error_flash_for_checkout, error: "Gateway blow up")
+      flash_message = "There was a problem with your payment information: %s" % 'Gateway blow up'
       expect(json_response["flash"]["error"]).to eq flash_message
     end
 

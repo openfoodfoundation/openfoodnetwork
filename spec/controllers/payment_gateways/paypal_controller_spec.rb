@@ -55,7 +55,9 @@ module PaymentGateways
           expect(post(:confirm, params: { payment_method_id: payment_method.id })).
             to redirect_to checkout_path
 
-          expect(flash[:error]).to eq I18n.t(:payment_processing_failed)
+          expect(flash[:error]).to eq(
+            'Payment could not be processed, please check the details you entered'
+          )
         end
       end
     end
