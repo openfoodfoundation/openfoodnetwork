@@ -32,7 +32,7 @@ describe Admin::TermsOfServiceFilesController, type: :controller do
       it "redirects and show an error" do
         post :create, params: {}
         expect(response).to redirect_to admin_terms_of_service_files_path
-        expect(flash[:error]).to eq I18n.t(".admin.terms_of_service_files.create.select_file")
+        expect(flash[:error]).to eq 'Please select a file first.'
       end
     end
 
