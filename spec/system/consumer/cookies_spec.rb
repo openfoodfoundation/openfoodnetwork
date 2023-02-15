@@ -62,7 +62,7 @@ describe "Cookies", js: true do
       scenario "it is not showing" do
         Spree::Config[:cookies_consent_banner_toggle] = false
         visit root_path
-        expect(page).to have_no_content I18n.t('legal.cookies_banner.cookies_usage')
+        expect(page).to have_no_content 'This site uses cookies in order to make your navigation frictionless and secure, and to help us understand how you use it in order to improve the features we offer.'
       end
     end
   end
@@ -124,7 +124,7 @@ describe "Cookies", js: true do
   end
 
   def expect_visible_cookies_policy_page
-    expect(page).to have_content I18n.t('legal.cookies_policy.header')
+    expect(page).to have_content 'How We Use Cookies'
   end
 
   def expect_visible_cookies_banner
@@ -136,7 +136,7 @@ describe "Cookies", js: true do
   end
 
   def accept_cookies_button_text
-    I18n.t('legal.cookies_banner.cookies_accept_button')
+    'Accept Cookies'
   end
 
   def visit_root_path_and_wait
@@ -169,10 +169,10 @@ describe "Cookies", js: true do
   end
 
   def matomo_description_text
-    I18n.t('legal.cookies_policy.cookie_matomo_basics_desc')
+    'Matomo first party cookies to collect statistics.'
   end
 
   def matomo_opt_out_iframe
-    I18n.t('legal.cookies_policy.statistics_cookies_matomo_optout')
+    'Do you want to opt-out of Matomo analytics? We don’t collect any personal data, and Matomo helps us to improve our service, but we respect your choice :-)'
   end
 end

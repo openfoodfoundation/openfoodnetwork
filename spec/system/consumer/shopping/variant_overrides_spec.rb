@@ -253,6 +253,6 @@ describe "shopping with variant overrides defined", js: true do
   def click_checkout
     toggle_cart
     wait_for_cart
-    click_link I18n.t('shared.menu.cart_sidebar.checkout')
+    click_link 'Checkout'
   end
 end

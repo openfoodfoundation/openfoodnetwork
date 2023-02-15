@@ -66,17 +66,17 @@ describe "Authentication", js: true do
               fill_in "Password", with: user.password
               click_login_button
 
-              expect(page).to have_content I18n.t('email_unconfirmed')
+              expect(page).to have_content 'You must confirm your email address before you can reset your password.'
               expect do
-                page.find("a", text: I18n.t('devise.confirmations.resend_confirmation_email')).click
+                page.find("a", text: 'Resend confirmation email.').click
               end.to enqueue_job ActionMailer::MailDeliveryJob
               expect(enqueued_jobs.last.to_s).to match "confirmation_instructions"
 
-              expect(page).to have_content I18n.t('devise.confirmations.send_instructions')
+              expect(page).to have_content 'You will receive an email with instructions about how to confirm your account in a few minutes.'
 
               visit spree.spree_user_confirmation_path(confirmation_token: user.confirmation_token)
               expect(user.reload.confirmed?).to be true
-              expect(page).to have_text I18n.t('devise.confirmations.confirmed')
+              expect(page).to have_text 'Thanks for confirming your email! You can now log in.'
             end
           end
         end
@@ -114,7 +114,7 @@ describe "Authentication", js: true do
 
             expect do
               click_signup_button
-              expect(page).to have_content I18n.t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
+              expect(page).to have_content 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.'
             end.to enqueue_job ActionMailer::MailDeliveryJob
           end
         end
@@ -150,13 +150,13 @@ describe "Authentication", js: true do
             it "cannot reset password before confirming email" do
               fill_in "Your email", with: email
               click_reset_password_button
-              expect(page).to have_content I18n.t('email_unconfirmed')
-              page.find("a", text: I18n.t('devise.confirmations.resend_confirmation_email')).click
-              expect(page).to have_content I18n.t('devise.confirmations.send_instructions')
+              expect(page).to have_content 'You must confirm your email address before you can reset your password.'
+              page.find("a", text: 'Resend confirmation email.').click
+              expect(page).to have_content 'You will receive an email with instructions about how to confirm your account in a few minutes.'
 
               visit spree.spree_user_confirmation_path(confirmation_token: user.confirmation_token)
               expect(user.reload.confirmed?).to be true
-              expect(page).to have_text I18n.t('devise.confirmations.confirmed')
+              expect(page).to have_text 'Thanks for confirming your email! You can now log in.'
 
               select_login_tab "Forgot Password?"
               fill_in "Your email", with: email
@@ -205,7 +205,7 @@ describe "Authentication", js: true do
       it "shows confirmed message in modal" do
         visit root_path(anchor: "/login", validation: "confirmed")
         expect(page).to have_login_modal
-        expect(page).to have_content I18n.t('devise.confirmations.confirmed')
+        expect(page).to have_content 'Thanks for confirming your email! You can now log in.'
       end
     end
 
@@ -230,7 +230,7 @@ describe "Authentication", js: true do
           fill_in_and_submit_login_form(user)
           expect_logged_in
 
-          expect(page).to have_content I18n.t(:home_shop, locale: :es).upcase
+          expect(page).to have_content 'COMPRAR AHORA'
         end
       end
 
@@ -243,7 +243,7 @@ describe "Authentication", js: true do
           fill_in_and_submit_login_form(user)
           expect_logged_in
 
-          expect(page).to have_content I18n.t(:home_shop, locale: :en).upcase
+          expect(page).to have_content 'SHOP NOW'
           expect(user.reload.locale).to eq "en"
         end
       end
@@ -259,7 +259,7 @@ describe "Authentication", js: true do
           fill_in_and_submit_login_form(user)
           expect_logged_in
 
-          expect(page).to have_content I18n.t(:home_shop, locale: :es).upcase
+          expect(page).to have_content 'COMPRAR AHORA'
           expect(user.reload.locale).to eq "es"
 
           page.driver.remove_cookie("locale")

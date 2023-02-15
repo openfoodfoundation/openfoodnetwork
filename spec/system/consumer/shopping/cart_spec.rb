@@ -239,7 +239,7 @@ describe "full-page cart", js: true do
 
             # shows a relevant Flash message
             expect(page).to have_selector ".alert-box",
-                                          text: I18n.t('spree.orders.error_flash_for_unavailable_items')
+                                          text: 'An item in your cart has become unavailable. Please update the selected quantities.'
 
             # "Continue Shopping" and "Checkout" buttons are disabled
             expect(page).to have_selector "a.continue-shopping[disabled=disabled]"
@@ -255,7 +255,7 @@ describe "full-page cart", js: true do
             expect(page).to_not have_selector "#order_line_items_attributes_0_quantity.ng-invalid-stock"
             expect(page).to have_selector "#update-button.alert"
 
-            click_button I18n.t("update")
+            click_button 'Update'
 
             # "Continue Shopping" and "Checkout" buttons are not disabled after cart is updated
             expect(page).to_not have_selector "a.continue-shopping[disabled=disabled]"
@@ -294,7 +294,7 @@ describe "full-page cart", js: true do
         expect(page).to have_no_content item1.variant.name
         expect(page).to have_no_content item2.variant.name
 
-        expect(page).to have_link I18n.t(:orders_bought_edit_button), href: spree.account_path
+        expect(page).to have_link 'Edit confirmed items', href: spree.account_path
         find("td.toggle-bought").click
 
         expect(page).to have_content item1.variant.name
