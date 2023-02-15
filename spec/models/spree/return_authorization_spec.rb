@@ -86,7 +86,7 @@ describe Spree::ReturnAuthorization do
 
       expect(Spree::Adjustment).to receive(:create).with(
         amount: -20,
-        label: I18n.t('spree.rma_credit'),
+        label: 'RMA credit',
         order: order,
         adjustable: order,
         originator: return_authorization
