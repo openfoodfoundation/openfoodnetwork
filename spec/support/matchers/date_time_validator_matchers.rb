@@ -11,7 +11,7 @@ RSpec::Matchers.define :validate_date_time_format_of do |attribute|
   match do |instance|
     @instance, @attribute = instance, attribute
 
-    invalid_format_message = I18n.t("validators.date_time_string_validator.invalid_format_error")
+    invalid_format_message = 'must be valid'
 
     allow(instance).to receive(attribute) { "Invalid Format" }
     instance.valid?
