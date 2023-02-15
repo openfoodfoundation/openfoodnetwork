@@ -99,7 +99,7 @@ describe SubscriptionMailer, type: :mailer do
       before { allow(order).to receive(:new_outstanding_balance) { 0 } }
 
       it 'displays the payment status' do
-        expect(email.body).to include(I18n.t(:email_payment_not_paid))
+        expect(email.body).to include('NOT PAID')
       end
     end
   end
@@ -152,7 +152,7 @@ describe SubscriptionMailer, type: :mailer do
       before { allow(order).to receive(:new_outstanding_balance) { 0 } }
 
       it 'displays the payment status' do
-        expect(email.body).to include(I18n.t(:email_payment_not_paid))
+        expect(email.body).to include('NOT PAID')
       end
     end
   end
@@ -191,11 +191,13 @@ describe SubscriptionMailer, type: :mailer do
 
     it "sends the email" do
       body = strip_tags(SubscriptionMailer.deliveries.last.body.encoded)
-      expect(body).to include I18n.t("email_so_failed_payment_intro_html")
-      explainer = I18n.t("email_so_failed_payment_explainer_html",
-                         distributor: subscription.shop.name)
+      expect(body).to include 'We tried to process a payment, but had some problems...'
+      email_so_failed_payment_explainer_html = "The payment for your subscription with <strong>%s</strong> \
+failed because of a problem with your credit card. <strong>%s</strong> has been notified \
+of this failed payment."
+      explainer = email_so_failed_payment_explainer_html % ([subscription.shop.name] * 2)
       expect(body).to include strip_tags(explainer)
-      details = I18n.t("email_so_failed_payment_details_html", distributor: subscription.shop.name)
+      details = 'Here are the details of the failure provided by the payment gateway:'
       expect(body).to include strip_tags(details)
       expect(body).to include "This is a payment failure error"
     end
@@ -245,10 +247,10 @@ describe SubscriptionMailer, type: :mailer do
       it "sends the email, which notifies the enterprise that all orders were successfully processed" do
         SubscriptionMailer.placement_summary_email(summary).deliver_now
 
-        expect(body).to include I18n.t("#{scope}.placement_summary_email.intro", shop: shop.name)
-        expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 37)
-        expect(body).to include I18n.t("#{scope}.summary_overview.success_all")
-        expect(body).to_not include I18n.t("#{scope}.summary_overview.issues")
+        expect(body).to include("Below is a summary of the subscription orders that have just been placed for %s." % shop.name)
+        expect(body).to include("A total of %d subscriptions were marked for automatic processing." % 37)
+        expect(body).to include 'All were processed successfully.'
+        expect(body).to_not include 'Details of the issues encountered are provided below.'
       end
 
       it "renders the shop's logo" do
@@ -274,12 +276,12 @@ describe SubscriptionMailer, type: :mailer do
       context "when no unrecorded issues are present" do
         it "sends the email, which notifies the enterprise that some issues were encountered" do
           SubscriptionMailer.placement_summary_email(summary).deliver_now
-          expect(body).to include I18n.t("#{scope}.placement_summary_email.intro", shop: shop.name)
-          expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 37)
-          expect(body).to include I18n.t("#{scope}.summary_overview.success_some", count: 35)
-          expect(body).to include I18n.t("#{scope}.summary_overview.issues")
-          expect(body).to include I18n.t("#{scope}.summary_detail.processing.title", count: 2)
-          expect(body).to include I18n.t("#{scope}.summary_detail.processing.explainer")
+          expect(body).to include("Below is a summary of the subscription orders that have just been placed for %s." % shop.name)
+          expect(body).to include("A total of %d subscriptions were marked for automatic processing." % 37)
+          expect(body).to include('Of these, %d were processed successfully.' % 35)
+          expect(body).to include 'Details of the issues encountered are provided below.'
+          expect(body).to include('Error Encountered (%d orders)' % 2)
+          expect(body).to include 'Automatic processing of these orders failed due to an error. The error has been listed where possible.'
 
           # Lists orders for which an error was encountered
           expect(body).to include order1.number
@@ -287,7 +289,7 @@ describe SubscriptionMailer, type: :mailer do
 
           # Reports error messages provided by the summary, or default if none provided
           expect(body).to include "Some Error Message"
-          expect(body).to include I18n.t("#{scope}.summary_detail.no_message_provided")
+          expect(body).to include 'No error message provided'
         end
       end
 
@@ -302,10 +304,10 @@ describe SubscriptionMailer, type: :mailer do
         it "sends the email, which notifies the enterprise that some issues were encountered" do
           expect(summary).to receive(:orders_affected_by).with(:other) { [order3, order4] }
           SubscriptionMailer.placement_summary_email(summary).deliver_now
-          expect(body).to include I18n.t("#{scope}.summary_detail.processing.title", count: 2)
-          expect(body).to include I18n.t("#{scope}.summary_detail.processing.explainer")
-          expect(body).to include I18n.t("#{scope}.summary_detail.other.title", count: 2)
-          expect(body).to include I18n.t("#{scope}.summary_detail.other.explainer")
+          expect(body).to include("Error Encountered (%d orders)" % 2)
+          expect(body).to include 'Automatic processing of these orders failed due to an error. The error has been listed where possible.'
+          expect(body).to include("Other Failure (%d orders)" % 2)
+          expect(body).to include 'Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.'
 
           # Lists orders for which no error or success was recorded
           expect(body).to include order3.number
@@ -328,19 +330,19 @@ describe SubscriptionMailer, type: :mailer do
       end
 
       it "sends the email, which notifies the enterprise that some issues were encountered" do
-        expect(body).to include I18n.t("#{scope}.placement_summary_email.intro", shop: shop.name)
-        expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 2)
-        expect(body).to include I18n.t("#{scope}.summary_overview.success_zero")
-        expect(body).to include I18n.t("#{scope}.summary_overview.issues")
-        expect(body).to include I18n.t("#{scope}.summary_detail.changes.title", count: 2)
-        expect(body).to include I18n.t("#{scope}.summary_detail.changes.explainer")
+        expect(body).to include("Below is a summary of the subscription orders that have just been placed for %s" % shop.name)
+        expect(body).to include("A total of %d subscriptions were marked for automatic processing." % 2)
+        expect(body).to include 'Of these, none were processed successfully.'
+        expect(body).to include 'Details of the issues encountered are provided below.'
+        expect(body).to include("Insufficient Stock (%d orders)" % 2)
+        expect(body).to include 'These orders were processed but insufficient stock was available for some requested items'
 
         # Lists orders for which an error was encountered
         expect(body).to include order1.number
         expect(body).to include order2.number
 
         # No error messages reported when non provided
-        expect(body).to_not include I18n.t("#{scope}.summary_detail.no_message_provided")
+        expect(body).to_not include 'No error message provided'
       end
     end
   end
@@ -365,10 +367,10 @@ describe SubscriptionMailer, type: :mailer do
       end
 
       it "sends the email, which notifies the enterprise that all orders were successfully processed" do
-        expect(body).to include I18n.t("#{scope}.confirmation_summary_email.intro", shop: shop.name)
-        expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 37)
-        expect(body).to include I18n.t("#{scope}.summary_overview.success_all")
-        expect(body).to_not include I18n.t("#{scope}.summary_overview.issues")
+        expect(body).to include("Below is a summary of the subscription orders that have just been finalised for %s." % shop.name)
+        expect(body).to include("A total of %d subscriptions were marked for automatic processing." % 37)
+        expect(body).to include 'All were processed successfully.'
+        expect(body).to_not include 'Details of the issues encountered are provided below.'
       end
     end
 
@@ -389,13 +391,12 @@ describe SubscriptionMailer, type: :mailer do
       context "when no unrecorded issues are present" do
         it "sends the email, which notifies the enterprise that some issues were encountered" do
           SubscriptionMailer.confirmation_summary_email(summary).deliver_now
-          expect(body).to include I18n.t("#{scope}.confirmation_summary_email.intro",
-                                         shop: shop.name)
-          expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 37)
-          expect(body).to include I18n.t("#{scope}.summary_overview.success_some", count: 35)
-          expect(body).to include I18n.t("#{scope}.summary_overview.issues")
-          expect(body).to include I18n.t("#{scope}.summary_detail.failed_payment.title", count: 2)
-          expect(body).to include I18n.t("#{scope}.summary_detail.failed_payment.explainer")
+          expect(body).to include("Below is a summary of the subscription orders that have just been finalised for %s." % shop.name)
+          expect(body).to include("A total of %d subscriptions were marked for automatic processing." % 37)
+          expect(body).to include("Of these, %d were processed successfully." % 35)
+          expect(body).to include 'Details of the issues encountered are provided below.'
+          expect(body).to include("Failed Payment (%d orders)" % 2)
+          expect(body).to include 'Automatic processing of payment for these orders failed due to an error. The error has been listed where possible.'
 
           # Lists orders for which an error was encountered
           expect(body).to include order1.number
@@ -403,7 +404,7 @@ describe SubscriptionMailer, type: :mailer do
 
           # Reports error messages provided by the summary, or default if none provided
           expect(body).to include "Some Error Message"
-          expect(body).to include I18n.t("#{scope}.summary_detail.no_message_provided")
+          expect(body).to include 'No error message provided'
         end
       end
 
@@ -418,10 +419,10 @@ describe SubscriptionMailer, type: :mailer do
         it "sends the email, which notifies the enterprise that some issues were encountered" do
           expect(summary).to receive(:orders_affected_by).with(:other) { [order3, order4] }
           SubscriptionMailer.confirmation_summary_email(summary).deliver_now
-          expect(body).to include I18n.t("#{scope}.summary_detail.failed_payment.title", count: 2)
-          expect(body).to include I18n.t("#{scope}.summary_detail.failed_payment.explainer")
-          expect(body).to include I18n.t("#{scope}.summary_detail.other.title", count: 2)
-          expect(body).to include I18n.t("#{scope}.summary_detail.other.explainer")
+          expect(body).to include("Failed Payment (% orders)" % 2)
+          expect(body).to include 'Automatic processing of payment for these orders failed due to an error. The error has been listed where possible.'
+          expect(body).to include("Other Failure (%d orders)" % 2)
+          expect(body).to include 'Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.'
 
           # Lists orders for which no error or success was recorded
           expect(body).to include order3.number
@@ -444,19 +445,19 @@ describe SubscriptionMailer, type: :mailer do
       end
 
       it "sends the email, which notifies the enterprise that some issues were encountered" do
-        expect(body).to include I18n.t("#{scope}.confirmation_summary_email.intro", shop: shop.name)
-        expect(body).to include I18n.t("#{scope}.summary_overview.total", count: 2)
-        expect(body).to include I18n.t("#{scope}.summary_overview.success_zero")
-        expect(body).to include I18n.t("#{scope}.summary_overview.issues")
-        expect(body).to include I18n.t("#{scope}.summary_detail.changes.title", count: 2)
-        expect(body).to include I18n.t("#{scope}.summary_detail.changes.explainer")
+        expect(body).to include("Below is a summary of the subscription orders that have just been finalised for %s." % shop.name)
+        expect(body).to include("A total of %d subscriptions were marked for automatic processing." % 2)
+        expect(body).to include 'Of these, none were processed successfully.'
+        expect(body).to include 'Details of the issues encountered are provided below.'
+        expect(body).to include("Insufficient Stock (%d orders)" % 2)
+        expect(body).to include 'These orders were processed but insufficient stock was available for some requested items'
 
         # Lists orders for which an error was encountered
         expect(body).to include order1.number
         expect(body).to include order2.number
 
         # No error messages reported when non provided
-        expect(body).to_not include I18n.t("#{scope}.summary_detail.no_message_provided")
+        expect(body).to_not include 'No error message provided'
       end
     end
   end
