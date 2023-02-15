@@ -67,7 +67,7 @@ describe UserConfirmationsController, type: :controller do
     it "redirects the user to login" do
       spree_post :create, spree_user: { email: unconfirmed_user.email }
       expect(response).to redirect_to login_path
-      expect(flash[:success]).to eq I18n.t('devise.user_confirmations.spree_user.confirmation_sent')
+      expect(flash[:success]).to eq 'Email confirmation sent'
     end
 
     it "sends the confirmation email" do
