@@ -3,7 +3,6 @@
 redis_connection_settings = {
   url: ENV.fetch("OFN_REDIS_JOBS_URL", "redis://localhost:6381/0"),
   network_timeout: 5,
-  expires_in: Rails.env.development? ? 90.minutes : nil
 }
 
 Sidekiq.configure_server do |config|
