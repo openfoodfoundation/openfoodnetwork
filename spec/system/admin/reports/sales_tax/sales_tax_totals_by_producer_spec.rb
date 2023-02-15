@@ -80,7 +80,7 @@ describe "Sales Tax Totals By Producer" do
     it "generates the report" do
       login_as admin
       visit admin_reports_path
-      click_on I18n.t("admin.reports.sales_tax_totals_by_producer")
+      click_on 'Sales Tax Totals By Producer'
 
       expect(page).to have_button("Go")
       click_on "Go"
@@ -141,7 +141,7 @@ describe "Sales Tax Totals By Producer" do
     it "generates the report" do
       login_as admin
       visit admin_reports_path
-      click_on I18n.t("admin.reports.sales_tax_totals_by_producer")
+      click_on 'Sales Tax Totals By Producer'
 
       expect(page).to have_button("Go")
       click_on "Go"
@@ -328,7 +328,7 @@ describe "Sales Tax Totals By Producer" do
       end
       login_as admin
       visit admin_reports_path
-      click_on I18n.t("admin.reports.sales_tax_totals_by_producer")
+      click_on 'Sales Tax Totals By Producer'
     end
 
     it "should load all the orders" do

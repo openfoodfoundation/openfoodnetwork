@@ -104,7 +104,7 @@ describe '
       click_link 'Adjustments'
 
       expect(page).to_not have_selector('tr a.icon-edit')
-      expect(page).to_not have_selector('a.icon-plus'), text: I18n.t(:new_adjustment)
+      expect(page).to_not have_selector('a.icon-plus'), text: 'New Adjustment'
     end
   end
 end

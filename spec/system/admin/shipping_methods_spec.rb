@@ -33,9 +33,9 @@ describe 'shipping methods' do
       check "shipping_method_distributor_ids_#{distributor1.id}"
       check "shipping_method_distributor_ids_#{distributor2.id}"
       check "shipping_method_shipping_categories_"
-      click_button I18n.t("actions.create")
+      click_button 'Create'
 
-      expect(page).to have_no_button I18n.t("actions.create")
+      expect(page).to have_no_button 'Create'
 
       # Then the shipping method should have its distributor set
       expect(flash_message).to include "Carrier Pidgeon", "successfully created!"

@@ -277,9 +277,9 @@ describe "
             expect(page).to have_input "variant-overrides-#{variant.id}-price", with: '77.77',
                                                                                 placeholder: '1.23'
             expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: "",
-                                                                                        placeholder: I18n.t("js.variants.on_demand.yes")
+                                                                                        placeholder: 'On demand'
             expect(page).to have_select "variant-overrides-#{variant.id}-on_demand",
-                                        selected: I18n.t("js.variant_overrides.on_demand.yes")
+                                        selected: 'Yes'
 
             expect(page).to have_input "variant-overrides-#{variant2.id}-count_on_hand",
                                        with: "40", placeholder: ""
@@ -306,22 +306,22 @@ describe "
 
           it "updates on_demand settings" do
             select_on_demand variant, :no
-            click_button I18n.t("save_changes")
-            expect(page).to have_content I18n.t("js.changes_saved")
+            click_button 'Save Changes'
+            expect(page).to have_content 'Changes saved.'
 
             vo.reload
             expect(vo.on_demand).to eq(false)
 
             select_on_demand variant, :yes
-            click_button I18n.t("save_changes")
-            expect(page).to have_content I18n.t("js.changes_saved")
+            click_button 'Save Changes'
+            expect(page).to have_content 'Changes saved.'
 
             vo.reload
             expect(vo.on_demand).to eq(true)
 
             select_on_demand variant, :use_producer_settings
-            click_button I18n.t("save_changes")
-            expect(page).to have_content I18n.t("js.changes_saved")
+            click_button 'Save Changes'
+            expect(page).to have_content 'Changes saved.'
 
             vo.reload
             expect(vo.on_demand).to be_nil
@@ -407,8 +407,8 @@ describe "
               expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: ""
 
               # It saves the changes.
-              click_button I18n.t("save_changes")
-              expect(page).to have_content I18n.t("js.changes_saved")
+              click_button 'Save Changes'
+              expect(page).to have_content 'Changes saved.'
               vo.reload
               expect(vo.count_on_hand).to be_nil
               expect(vo.on_demand).to be_nil
@@ -418,17 +418,17 @@ describe "
               # Successfully change stock settings.
               select_on_demand variant, :no
               fill_in "variant-overrides-#{variant.id}-count_on_hand", with: "1111"
-              click_button I18n.t("save_changes")
-              expect(page).to have_content I18n.t("js.changes_saved")
+              click_button 'Save Changes'
+              expect(page).to have_content 'Changes saved.'
 
               # Make stock settings incompatible.
               select_on_demand variant, :no
               fill_in "variant-overrides-#{variant.id}-count_on_hand", with: ""
 
               # It does not save the changes.
-              click_button I18n.t("save_changes")
-              expect(page).to have_content I18n.t("activerecord.errors.models.variant_override.count_on_hand.limited_stock_but_no_count_on_hand")
-              expect(page).to have_no_content I18n.t("js.changes_saved")
+              click_button 'Save Changes'
+              expect(page).to have_content 'must be specified because forcing limited stock'
+              expect(page).to have_no_content 'Changes saved.'
 
               vo.reload
               expect(vo.count_on_hand).to eq(1111)

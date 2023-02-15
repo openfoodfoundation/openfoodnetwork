@@ -309,7 +309,7 @@ describe '
       expect(page).to have_content "Customer Details updated"
       click_link "Order Details"
 
-      expect(page).to have_content I18n.t('spree.add_product').upcase
+      expect(page).to have_content 'Add Product'.upcase
       select2_select product.name, from: 'add_variant_id', search: true
 
       within("table.stock-levels") do
@@ -463,7 +463,7 @@ describe '
         expect(page).to have_selector "fieldset#order-total", text: order.display_total
 
         # shows the order tax adjustments
-        within('fieldset', text: I18n.t('spree.admin.orders.form.line_item_adjustments').upcase) do
+        within('fieldset', text: 'Line Item Adjustments'.upcase) do
           expect(page).to have_selector "td", match: :first, text: "Tax 1"
           expect(page).to have_selector "td.total", text: Spree::Money.new(10)
         end
