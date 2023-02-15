@@ -62,7 +62,7 @@ describe "checking out an order that initially fails", type: :request do
       # Checking out a BogusGateway without a source fails at :payment
       # Shipments and payments should then be cleared before rendering checkout
       expect(response.status).to be 400
-      expect(flash[:error]).to eq I18n.t(:payment_processing_failed)
+      expect(flash[:error]).to eq 'Payment could not be processed, please check the details you entered'
       order.reload
       expect(order.shipments.count).to be 0
       expect(order.payments.count).to be 0
