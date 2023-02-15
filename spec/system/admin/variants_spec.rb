@@ -43,7 +43,7 @@ describe '
       expected_cancel_url = Regexp.new(
         Regexp.escape(spree.admin_product_variants_path(product, filter))
       )
-      expect(page).to have_link(I18n.t('actions.cancel'), href: expected_cancel_url)
+      expect(page).to have_link('Cancel', href: expected_cancel_url)
     end
   end
 
@@ -96,7 +96,7 @@ describe '
       expected_cancel_url = Regexp.new(
         Regexp.escape(spree.admin_product_variants_path(product, filter))
       )
-      expect(page).to have_link(I18n.t('actions.cancel'), href: expected_cancel_url)
+      expect(page).to have_link('Cancel', href: expected_cancel_url)
     end
 
     it "when variant_unit is weight" do

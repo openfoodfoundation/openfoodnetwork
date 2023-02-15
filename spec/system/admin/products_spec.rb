@@ -312,44 +312,44 @@ describe '
 
       # Link back to the bulk product update page should include the filters
       expected_admin_product_url = Regexp.new(Regexp.escape("#{spree.admin_products_path}#?#{filter.to_query}"))
-      expect(page).to have_link(I18n.t('admin.products.back_to_products_list'),
+      expect(page).to have_link('Back to products list',
                                 href: expected_admin_product_url)
-      expect(page).to have_link(I18n.t(:cancel), href: expected_admin_product_url)
+      expect(page).to have_link('Cancel', href: expected_admin_product_url)
 
       expected_product_url = Regexp.new(Regexp.escape(spree.edit_admin_product_path(
                                                         product.permalink, filter
                                                       )))
-      expect(page).to have_link(I18n.t('admin.products.tabs.product_details'),
+      expect(page).to have_link('Product Details',
                                 href: expected_product_url)
 
       expected_product_image_url = Regexp.new(Regexp.escape(spree.admin_product_images_path(
                                                               product.permalink, filter
                                                             )))
-      expect(page).to have_link(I18n.t('admin.products.tabs.images'),
+      expect(page).to have_link('Images',
                                 href: expected_product_image_url)
 
       expected_product_variant_url = Regexp.new(Regexp.escape(spree.admin_product_variants_path(
                                                                 product.permalink, filter
                                                               )))
-      expect(page).to have_link(I18n.t('admin.products.tabs.variants'),
+      expect(page).to have_link('Variants',
                                 href: expected_product_variant_url)
 
       expected_product_properties_url = Regexp.new(Regexp.escape(spree.admin_product_product_properties_path(
                                                                    product.permalink, filter
                                                                  )))
-      expect(page).to have_link(I18n.t('admin.products.tabs.product_properties'),
+      expect(page).to have_link('Product Properties',
                                 href: expected_product_properties_url)
 
       expected_product_group_buy_option_url = Regexp.new(Regexp.escape(spree.group_buy_options_admin_product_path(
                                                                          product.permalink, filter
                                                                        )))
-      expect(page).to have_link(I18n.t('admin.products.tabs.group_buy_options'),
+      expect(page).to have_link('Group Buy Options',
                                 href: expected_product_group_buy_option_url)
 
       expected_product_seo_url = Regexp.new(Regexp.escape(spree.seo_admin_product_path(
                                                             product.permalink, filter
                                                           )))
-      expect(page).to have_link(I18n.t(:search), href: expected_product_seo_url)
+      expect(page).to have_link('Search', href: expected_product_seo_url)
     end
 
     it "editing product group buy options" do
@@ -375,7 +375,7 @@ describe '
 
       expected_cancel_link = Regexp.new(Regexp.escape(spree.edit_admin_product_path(product,
                                                                                     filter)))
-      expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
+      expect(page).to have_link('Cancel', href: expected_cancel_link)
     end
 
     it "editing product group buy options with url filter" do
@@ -411,7 +411,7 @@ describe '
 
       expected_cancel_link = Regexp.new(Regexp.escape(spree.edit_admin_product_path(product,
                                                                                     filter)))
-      expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
+      expect(page).to have_link('Cancel', href: expected_cancel_link)
     end
 
     it "editing product Search with url filter" do
@@ -440,7 +440,7 @@ describe '
       expected_cancel_link = Regexp.new(Regexp.escape(spree.admin_product_product_properties_path(
                                                         product, filter
                                                       )))
-      expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
+      expect(page).to have_link('Cancel', href: expected_cancel_link)
     end
 
     it "deleting product properties", js: true do
@@ -526,7 +526,7 @@ describe '
 
       expected_cancel_link = Regexp.new(Regexp.escape(spree.admin_product_images_path(product,
                                                                                       filter)))
-      expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
+      expect(page).to have_link('Cancel', href: expected_cancel_link)
     end
 
     it "upload a new product image including url filters", js: true do
@@ -552,7 +552,7 @@ describe '
       expected_new_image_link = Regexp.new(Regexp.escape(spree.new_admin_product_image_path(
                                                            product, filter
                                                          )))
-      expect(page).to have_link(I18n.t('spree.new_image'), href: expected_new_image_link)
+      expect(page).to have_link('New Image', href: expected_new_image_link)
     end
 
     it "loading edit product image page including url filter", js: true do
@@ -571,7 +571,7 @@ describe '
 
       expected_cancel_link = Regexp.new(Regexp.escape(spree.admin_product_images_path(product,
                                                                                       filter)))
-      expect(page).to have_link(I18n.t(:cancel), href: expected_cancel_link)
+      expect(page).to have_link('Cancel', href: expected_cancel_link)
       expect(page).to have_link("Back To Images List", href: expected_cancel_link)
     end
 
