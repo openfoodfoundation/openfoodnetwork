@@ -55,7 +55,7 @@ module PaymentGateways
 
             expect(order.completed?).to be true
             expect(response).to redirect_to order_path(order, order_token: order.token)
-            expect(flash[:notice]).to eq I18n.t(:order_processed_successfully)
+            expect(flash[:notice]).to eq 'Your order has been processed successfully'
           end
         end
 
@@ -82,7 +82,8 @@ module PaymentGateways
             get :confirm, params: { payment_intent: "pi_123" }
 
             expect(response).to redirect_to shop_url
-            expect(flash[:info]).to eq I18n.t('order_cycle_closed')
+            expect(flash[:info]).to eq "The order cycle you've selected has just closed. \
+Please try again!"
           end
         end
 
@@ -107,7 +108,8 @@ module PaymentGateways
 
           expect(order.completed?).to be false
           expect(response).to redirect_to checkout_path
-          expect(flash[:error]).to eq I18n.t(:payment_processing_failed)
+          expect(flash[:error]).to eq "Payment could not be processed, \
+please check the details you entered"
         end
       end
 
@@ -119,7 +121,8 @@ module PaymentGateways
 
           expect(order.completed?).to be false
           expect(response).to redirect_to checkout_path
-          expect(flash[:error]).to eq I18n.t(:payment_processing_failed)
+          expect(flash[:error]).to eq "Payment could not be processed, \
+please check the details you entered"
         end
       end
 
@@ -136,7 +139,8 @@ module PaymentGateways
 
           expect(order.completed?).to be false
           expect(response).to redirect_to checkout_path
-          expect(flash[:error]).to eq I18n.t(:payment_processing_failed)
+          expect(flash[:error]).to eq "Payment could not be processed, \
+please check the details you entered"
         end
       end
 
@@ -171,7 +175,8 @@ module PaymentGateways
             get :confirm, params: { payment_intent: "pi_123" }
 
             expect(response).to redirect_to cart_path
-            expect(flash[:notice]).to eq I18n.t('checkout.payment_cancelled_due_to_stock')
+            expect(flash[:notice]).to eq "Payment cancelled: the checkout could not be \
+completed due to stock issues."
 
             expect(order.state).to eq "cart"
             expect(payment.state).to eq "void"
@@ -280,7 +285,7 @@ module PaymentGateways
             get :authorize, params: { order_number: order.number, payment_intent: payment_intent }
 
             expect(response).to redirect_to order_path(order)
-            expect(flash[:error]).to eq("#{I18n.t('payment_could_not_process')}. error message")
+            expect(flash[:error]).to eq("The payment could not be processed. error message")
             payment.reload
             expect(payment.cvv_response_message).to be nil
             expect(payment.state).to eq("failed")
@@ -303,7 +308,7 @@ module PaymentGateways
             get :authorize, params: { order_number: order.number, payment_intent: payment_intent }
 
             expect(response).to redirect_to order_path(order)
-            expect(flash[:error]).to eq("#{I18n.t('payment_could_not_process')}. ")
+            expect(flash[:error]).to eq("The payment could not be processed. ")
             payment.reload
             expect(payment.cvv_response_message).to eq("https://stripe.com/redirect")
             expect(payment.state).to eq("requires_authorization")
