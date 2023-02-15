@@ -143,7 +143,7 @@ describe "Order Management", js: true do
         expect(find("tr.variant-#{item1.variant.id}")).to have_content item1.product.name
         expect(find("tr.variant-#{item2.variant.id}")).to have_content item2.product.name
         expect(find("tr.variant-#{item3.variant.id}")).to have_content item3.product.name
-        expect(page).to have_no_button I18n.t(:save_changes)
+        expect(page).to have_no_button 'Save Changes'
       end
     end
 
@@ -158,8 +158,8 @@ describe "Order Management", js: true do
       it "allows quantity to be changed, items to be removed and the order to be cancelled" do
         visit order_path(order)
 
-        expect(page).to have_button I18n.t(:order_saved), disabled: true
-        expect(page).to have_no_button I18n.t(:save_changes)
+        expect(page).to have_button 'Order Saved', disabled: true
+        expect(page).to have_no_button 'Save Changes'
 
         # Changing the quantity of an item
         within "tr.variant-#{item1.variant.id}" do
@@ -171,14 +171,14 @@ describe "Order Management", js: true do
           fill_in 'order_line_items_attributes_0_quantity', with: 5
         end
 
-        expect(page).to have_button I18n.t(:save_changes)
+        expect(page).to have_button 'Save Changes'
 
         expect(find("tr.variant-#{item2.variant.id}")).to have_content item2.product.name
         expect(find("tr.variant-#{item3.variant.id}")).to have_content item3.product.name
         expect(find("tr.order-adjustment")).to have_content "Shipping"
         expect(find("tr.order-adjustment")).to have_content "5.00"
 
-        click_button I18n.t(:save_changes)
+        click_button 'Save Changes'
 
         expect(find(".order-total.grand-total")).to have_content "115.00"
         expect(item1.reload.quantity).to eq 5
@@ -193,9 +193,9 @@ describe "Order Management", js: true do
 
         # Cancelling the order
         accept_alert do
-          click_link(I18n.t(:cancel_order))
+          click_link('Cancel Order')
         end
-        expect(page).to have_content I18n.t(:orders_show_cancelled)
+        expect(page).to have_content 'Cancelled'
         expect(order.reload).to be_canceled
       end
     end
