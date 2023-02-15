@@ -12,6 +12,7 @@ module AuthenticationHelper
   def login_as_admin_and_visit(path_visit)
     login_as_admin
     visit path_visit
+    expect_logged_in # Make sure user is logged in
   end
 
   def login_to_admin_section
