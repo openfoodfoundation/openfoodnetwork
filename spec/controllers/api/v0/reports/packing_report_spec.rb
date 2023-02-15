@@ -80,10 +80,10 @@ describe Api::V0::ReportsController, type: :controller do
   def supplier_report_row(line_item)
     {
       "hub" => line_item.order.distributor.name,
-      "customer_code" => I18n.t("hidden_field", scope: i18n_scope),
-      "first_name" => I18n.t("hidden_field", scope: i18n_scope),
-      "last_name" => I18n.t("hidden_field", scope: i18n_scope),
-      "phone" => I18n.t("hidden_field", scope: i18n_scope),
+      'customer_code' => '< Hidden >',
+      'first_name' => '< Hidden >',
+      'last_name' => '< Hidden >',
+      'phone' => '< Hidden >',
       "supplier" => line_item.product.supplier.name,
       "product" => line_item.product.name,
       "variant" => line_item.full_name,
@@ -108,9 +108,5 @@ describe Api::V0::ReportsController, type: :controller do
       "last_name" => bill_address.lastname,
       "phone" => bill_address.phone,
     }
-  end
-
-  def i18n_scope
-    "admin.reports"
   end
 end

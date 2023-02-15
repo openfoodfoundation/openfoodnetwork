@@ -43,7 +43,7 @@ describe Api::V0::ReportsController, type: :controller do
         api_get :show, q: { example: 'test' }
 
         expect(response.status).to eq 422
-        expect(json_response["error"]).to eq I18n.t('errors.no_report_type', scope: i18n_scope)
+        expect(json_response["error"]).to eq 'Please specify a report type'
       end
     end
 
@@ -54,7 +54,7 @@ describe Api::V0::ReportsController, type: :controller do
         api_get :show, report_type: "xxxxxx", q: { example: 'test' }
 
         expect(response.status).to eq 422
-        expect(json_response["error"]).to eq I18n.t('errors.report_not_found', scope: i18n_scope)
+        expect(json_response["error"]).to eq 'Report not found'
       end
     end
 
@@ -64,16 +64,8 @@ describe Api::V0::ReportsController, type: :controller do
       it "returns an error" do
         api_get :show, report_type: "packing"
         expect(response.status).to eq 422
-        expect(json_response["error"]).to eq(
-          I18n.t('errors.missing_ransack_params', scope: i18n_scope)
-        )
+        expect(json_response["error"]).to eq('Please supply Ransack search params in the request')
       end
     end
-  end
-
-  private
-
-  def i18n_scope
-    "admin.reports"
   end
 end
