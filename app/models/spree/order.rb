@@ -665,6 +665,7 @@ module Spree
 
     def after_cancel
       shipments.each(&:cancel!)
+      payments.checkout.each(&:void!)
 
       OrderMailer.cancel_email(id).deliver_later if send_cancellation_email
       update(payment_state: updater.update_payment_state)
@@ -672,6 +673,8 @@ module Spree
 
     def after_resume
       shipments.each(&:resume!)
+      payments.void.each(&:resume!)
+
       update(payment_state: updater.update_payment_state)
     end
 
