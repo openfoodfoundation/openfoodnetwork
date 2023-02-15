@@ -32,8 +32,6 @@ describe Reporting::Reports::EnterpriseFeeSummary::Summarizer do
   end
 
   it "represents an enterprise fee without name" do
-    pending "Enterprise Fee Summary report fails #10395"
-
     data = row.merge(
       "fee_name" => nil,
       "placement_enterprise_role" => "coordinator",

@@ -31,7 +31,7 @@ module Reporting
           return DataRepresentations::PaymentMethodFee if for_payment_method?
           return DataRepresentations::ShippingMethodFee if for_shipping_method?
 
-          enterprise_fee_adjustment_presentation_klass if for_enterprise_fee?
+          enterprise_fee_adjustment_presentation_klass
         end
 
         def enterprise_fee_adjustment_presentation_klass
