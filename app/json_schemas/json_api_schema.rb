@@ -41,29 +41,28 @@ class JsonApiSchema
     end
 
     # Example
-    # extra_fields: :my_method
-    # => extra_fields_result = my_method
+    # MySchema.schema(extra_fields: :my_method)
+    # => extra_fields_result = MySchema.my_method
     # => attributes = attributes.merge(extra_fields_result)
     #
-    # extra_fields: {name: :my_method, required: true, opts: {method_opt: true}}
-    # => extra_fields_result = my_method({method_opt: true})
+    # MySchema.schema(extra_fields: {name: :my_method, required: true, opts: {method_opt: true}})
+    # => extra_fields_result = MySchema.my_method(method_opt: true)
     # => attributes = attributes.merge(extra_fields_result)
     # => required += extra_fields_result.keys
     #
-    # extra_fields: [:my_method, :another_method]
-    # => extra_fields_result = my_method.merge(another_method)
+    # MySchema.schema(extra_fields: [:my_method, :another_method])
+    # => extra_fields_result = MySchema.my_method.merge(another_method)
     # => attributes = attribtues.merge(extra_fields_result)
     #
-    # To test use eg::
-    # => MySchema.collection(..., extra_fields: ...)
-    #     .dig(:properties, :data, :items, :properties, :attributes)
+    # To test use eg:
+    # MySchema.schema(extra_fields: :my_method)
+    #   .dig(:properties, :data, :properties, :attributes)
     def get_extra_fields(extra_fields)
       case extra_fields
       when Symbol
         public_send(extra_fields)
       when Hash
-        extra_fields[:opts] &&
-          public_send(extra_fields[:name], extra_fields[:opts]) || public_send(extra_fields[:name])
+        public_send(extra_fields[:name], **extra_fields[:opts].to_h)
       when Array
         obj = {}
 
