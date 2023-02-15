@@ -46,7 +46,7 @@ module Api
             spree_delete :destroy, enterprise_id: enterprise
 
             expect(response.status).to eq(409)
-            expect(json_response["error"]).to eq I18n.t("api.enterprise_terms_and_conditions.destroy_attachment_does_not_exist")
+            expect(json_response['error']).to eq 'Terms and Conditions file does not exist'
           end
         end
       end

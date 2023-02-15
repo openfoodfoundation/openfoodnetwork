@@ -307,7 +307,7 @@ module Api
           it "returns an error" do
             put :capture, params: { id: order.number }
 
-            expect(json_response['error']).to eq I18n.t(:payment_processing_failed)
+            expect(json_response['error']).to eq 'Payment could not be processed, please check the details you entered'
           end
         end
       end
