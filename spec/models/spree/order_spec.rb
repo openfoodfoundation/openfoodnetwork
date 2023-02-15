@@ -18,7 +18,7 @@ describe Spree::Order do
     it "provides friendly error messages for bill address" do
       order.bill_address = Spree::Address.new
       order.save
-      expect(order.errors.full_messages).to include "Bill address (Street + House number) can't be blank"
+      expect(order.errors.full_messages).to include "Billing address (Street + House number) can't be blank"
     end
   end
 

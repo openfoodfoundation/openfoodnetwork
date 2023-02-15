@@ -211,7 +211,7 @@ describe "As a consumer, I want to checkout my order" do
           end
 
           it "should display error message in the right order" do
-            expect(page).to have_content "Customer E-Mail can't be blank, Customer E-Mail is invalid, Customer phone can't be blank, Bill address firstname can't be blank, Bill address lastname can't be blank, Bill address (Street + House number) can't be blank, Bill address city can't be blank, Bill address postcode can't be blank, and Shipping method Select a shipping method"
+            expect(page).to have_content "Customer E-Mail can't be blank, Customer E-Mail is invalid, Customer phone can't be blank, Billing address first name can't be blank, Billing address last name can't be blank, Billing address (Street + House number) can't be blank, Billing address city can't be blank, Billing address postcode can't be blank, and Shipping method Select a shipping method"
           end
         end
       end
