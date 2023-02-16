@@ -3,8 +3,7 @@
 - content_for :page_title do
   = t :edit_order_cycle
 
-= form_for [main_app, :admin, @order_cycle], html: { class: "order_cycle" } do |f|
-
+= form_for [main_app, :admin, @order_cycle], html: { class: "order_cycle" , data: { controller: 'unsaved-changes', action: 'beforeunload@window->unsaved-changes#leavingPage', 'unsaved-changes-changed': "false" } } do |f|
   = render 'wizard_progress'
 
   %fieldset.no-border-bottom
