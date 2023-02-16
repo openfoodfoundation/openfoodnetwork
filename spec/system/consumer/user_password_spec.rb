@@ -20,7 +20,7 @@ describe "User password confirm/reset page" do
       visit spree.spree_user_confirmation_path(confirmation_token: user.confirmation_token)
 
       expect(user.reload.confirmed?).to be true
-      expect(page).to have_text I18n.t(:change_my_password)
+      expect(page).to have_text 'Change my password'
 
       fill_in "Password", with: "my secret"
       fill_in "Password Confirmation", with: "my secret"
@@ -34,7 +34,7 @@ describe "User password confirm/reset page" do
       visit spree.spree_user_confirmation_path(confirmation_token: user.confirmation_token)
 
       expect(user.reload.confirmed?).to be true
-      expect(page).to have_text I18n.t(:change_my_password)
+      expect(page).to have_text 'Change my password'
 
       fill_in "Password", with: ""
       fill_in "Password Confirmation", with: ""

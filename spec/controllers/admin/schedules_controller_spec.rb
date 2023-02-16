@@ -255,7 +255,7 @@ describe Admin::SchedulesController, type: :controller do
             it "returns an error message and prevents me from deleting the schedule" do
               expect { spree_delete :destroy, params }.to_not change(Schedule, :count)
               json_response = JSON.parse(response.body)
-              expect(json_response["errors"]).to include I18n.t('admin.schedules.destroy.associated_subscriptions_error')
+              expect(json_response["errors"]).to include 'This schedule cannot be deleted because it has associated subscriptions'
             end
           end
         end

@@ -23,7 +23,7 @@ module Admin
           spree_post :create, email: existing_user.email, enterprise_id: enterprise.id
 
           expect(response.status).to eq 422
-          expect(json_response['errors']).to eq I18n.t('admin.enterprises.invite_manager.user_already_exists')
+          expect(json_response['errors']).to eq 'User already exists'
         end
       end
 

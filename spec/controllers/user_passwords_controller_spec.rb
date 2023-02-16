@@ -16,19 +16,21 @@ describe UserPasswordsController, type: :controller do
     it "returns 404 if user is not found" do
       spree_post :create, spree_user: { email: "xxxxxxxxxx@example.com" }
       expect(response.status).to eq 404
-      expect(response.body).to match I18n.t(:email_not_found)
+      expect(response.body).to match 'Email address not found'
     end
 
     it "returns 422 if user is registered but not confirmed" do
       spree_post :create, spree_user: { email: unconfirmed_user.email }
       expect(response.status).to eq 422
-      expect(response.body).to match I18n.t(:email_unconfirmed)
+      expect(response.body).to match "You must confirm your email \
+address before you can reset your password."
     end
 
     it "returns 200 when password reset was successful" do
       spree_post :create, spree_user: { email: user.email }
       expect(response.status).to eq 200
-      expect(response.body).to match I18n.t(:password_reset_sent)
+      expect(response.body).to match "An email with instructions on resetting \
+your password has been sent!"
     end
   end
 

@@ -136,7 +136,7 @@ describe '
 
       it "displays a column for order date" do
         expect(page).to have_selector "th.date",
-                                      text: I18n.t("admin.orders.bulk_management.order_date").upcase
+                                      text: 'Completed at'.upcase
         expect(page).to have_selector "td.date", text: o1.completed_at.strftime('%B %d, %Y')
         expect(page).to have_selector "td.date", text: o2.completed_at.strftime('%B %d, %Y')
       end
@@ -344,7 +344,7 @@ describe '
       it "displays the default selected columns" do
         expect(page).to have_selector "th", text: "NAME"
         expect(page).to have_selector "th",
-                                      text: I18n.t("admin.orders.bulk_management.order_date").upcase
+                                      text: 'Completed at'.upcase
         expect(page).to have_selector "th", text: "PRODUCER"
         expect(page).to have_selector "th", text: "PRODUCT: UNIT"
         expect(page).to have_selector "th", text: "QUANTITY"
@@ -360,7 +360,7 @@ describe '
           expect(page).to have_no_selector "th", text: "PRODUCER"
           expect(page).to have_selector "th", text: "NAME"
           expect(page).to have_selector "th",
-                                        text: I18n.t("admin.orders.bulk_management.order_date").upcase
+                                        text: 'Completed at'.upcase
           expect(page).to have_selector "th", text: "PRODUCT: UNIT"
           expect(page).to have_selector "th", text: "QUANTITY"
           expect(page).to have_selector "th", text: "MAX"

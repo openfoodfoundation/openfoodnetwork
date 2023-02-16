@@ -14,7 +14,7 @@ describe OrderBalance do
       end
 
       it "returns 'balance due'" do
-        expect(order_balance.label).to eq(I18n.t(:balance_due))
+        expect(order_balance.label).to eq('Balance due')
       end
     end
 
@@ -24,7 +24,7 @@ describe OrderBalance do
       end
 
       it "returns 'credit owed'" do
-        expect(order_balance.label).to eq(I18n.t(:credit_owed))
+        expect(order_balance.label).to eq('Credit Owed')
       end
     end
 
@@ -34,7 +34,7 @@ describe OrderBalance do
       end
 
       it "returns 'balance due'" do
-        expect(order_balance.label).to eq(I18n.t(:balance_due))
+        expect(order_balance.label).to eq('Balance due')
       end
     end
   end

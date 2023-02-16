@@ -31,18 +31,18 @@ describe OrderDataMasker do
           'state_id' => nil
         )
 
-        expect(order.email).to eq(I18n.t('admin.reports.hidden'))
+        expect(order.email).to eq('HIDDEN')
       end
 
       it 'does not mask the full name' do
         described_class.new(order).call
 
         expect(order.bill_address.attributes).not_to include(
-          firstname: I18n.t('admin.reports.hidden'),
+          firstname: 'HIDDEN',
           lastname: ''
         )
         expect(order.ship_address.attributes).not_to include(
-          firstname: I18n.t('admin.reports.hidden'),
+          firstname: 'HIDDEN',
           lastname: ''
         )
       end
@@ -72,18 +72,18 @@ describe OrderDataMasker do
           'state_id' => nil
         )
 
-        expect(order.email).to eq(I18n.t('admin.reports.hidden'))
+        expect(order.email).to eq('HIDDEN')
       end
 
       it 'masks the full name' do
         described_class.new(order).call
 
         expect(order.bill_address.attributes).to include(
-          'firstname' => I18n.t('admin.reports.hidden'),
+          'firstname' => 'HIDDEN',
           'lastname' => ''
         )
         expect(order.ship_address.attributes).to include(
-          'firstname' => I18n.t('admin.reports.hidden'),
+          'firstname' => 'HIDDEN',
           'lastname' => ''
         )
       end

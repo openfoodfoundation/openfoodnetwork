@@ -308,7 +308,7 @@ describe '
 
           visit edit_admin_order_cycle_path(oc)
 
-          expect(page).to have_content I18n.t("admin.order_cycles.edit.re_notify_producers").upcase
+          expect(page).to have_content 'Re notify producers'.upcase
         end
 
         it "allows removing exchanges" do

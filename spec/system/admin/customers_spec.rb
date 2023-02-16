@@ -89,7 +89,7 @@ describe 'Customers' do
             end
           end
           expect(page).to have_selector "#info-dialog .text",
-                                        text: I18n.t('admin.customers.destroy.has_associated_subscriptions')
+                                        text: 'Delete failed: This customer has active subscriptions. Cancel them first.'
           click_button "OK"
         }.to_not change{ Customer.count }
 
@@ -191,7 +191,7 @@ describe 'Customers' do
           find(:css, "tags-input .tags input").set "awesome\n"
           expect(page).to have_css ".tag_watcher.update-pending"
         end
-        expect(page).to have_content I18n.t('admin.unsaved_changes')
+        expect(page).to have_content 'You have unsaved changes'
         click_button "Save Changes"
 
         # Every says it updated

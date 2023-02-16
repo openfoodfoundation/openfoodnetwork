@@ -183,7 +183,7 @@ describe '
       let(:hub) { create(:distributor_enterprise) }
       let!(:override) { create(:variant_override, variant: variant, hub: hub ) }
       let(:variant_overrides_tip) {
-        I18n.t('spree.admin.products.index.products_variant.variant_has_n_overrides', n: 1)
+        "This variant has %d override(s)" % 1
       }
 
       it "displays an icon indicating a variant has overrides" do

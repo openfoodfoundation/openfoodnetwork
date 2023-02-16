@@ -70,15 +70,15 @@ describe '
 
         select2_select "Missing", from: "payment_method_preferred_enterprise_id"
         expect(page).to have_selector "#stripe-account-status .alert-box.error",
-                                      text: I18n.t("spree.admin.payment_methods.stripe_connect.account_missing_msg")
-        connect_one = I18n.t("spree.admin.payment_methods.stripe_connect.connect_one")
+                                      text: 'No Stripe account exists for this enterprise.'
+        connect_one = 'Connect One'
         expect(page).to have_link connect_one,
                                   href: edit_admin_enterprise_path(missing_account_enterprise,
                                                                    anchor: "/payment_methods")
 
         select2_select "Revoked", from: "payment_method_preferred_enterprise_id"
         expect(page).to have_selector "#stripe-account-status .alert-box.error",
-                                      text: I18n.t("spree.admin.payment_methods.stripe_connect.access_revoked_msg")
+                                      text: 'Access to this Stripe account has been revoked, please reconnect your account.'
 
         select2_select "Connected", from: "payment_method_preferred_enterprise_id"
         expect(page).to have_selector "#stripe-account-status .status", text: "Status: Connected"

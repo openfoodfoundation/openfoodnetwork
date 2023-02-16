@@ -206,7 +206,7 @@ module Spree
                 it "does not save the payment method" do
                   spree_put :update, params
                   expect(response).to render_template :edit
-                  expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include I18n.t(:error_required)
+                  expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include 'can\'t be blank'
                 end
               end
 
@@ -216,7 +216,7 @@ module Spree
                 it "does not save the payment method" do
                   spree_put :update, params
                   expect(response).to render_template :edit
-                  expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include I18n.t(:error_required)
+                  expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include 'can\'t be blank'
                 end
               end
             end
