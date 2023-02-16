@@ -11,6 +11,9 @@ class OrderCycleWebhookService
     # Endpoints for coordinator owner
     webhook_endpoints = order_cycle.coordinator.owner.webhook_endpoints
 
+    # Plus unique endpoints for distributor owners (ignore duplicates)
+    webhook_endpoints |= order_cycle.distributors.map(&:owner).flat_map(&:webhook_endpoints)
+
     webhook_endpoints.each do |endpoint|
       WebhookDeliveryJob.perform_later(endpoint.url, event, webhook_payload)
     end

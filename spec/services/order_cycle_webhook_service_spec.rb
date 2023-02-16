@@ -61,9 +61,77 @@ describe OrderCycleWebhookService do
       end
     end
 
-    pending "creates webhook payload for order cycle distributor"
+    describe "distributors" do
+      context "multiple distributors have owners with endpoint configured" do
+        let(:order_cycle) {
+          create(
+            :simple_order_cycle,
+            coordinator: coordinator,
+            distributors: two_distributors,
+          )
+        }
+        let(:two_distributors) {
+          (1..2).map do |i|
+            user = create(:user)
+            user.webhook_endpoints.create!(url: "http://distributor#{i}_owner_url")
+            create(:distributor_enterprise, owner: user)
+          end
+        }
 
-    pending "doesn't create webhook payload for order cycle supplier"
+        it "creates webhook payload for each order cycle distributor" do
+          data = {
+            coordinator_id: order_cycle.coordinator_id,
+            coordinator_name: "Starship Enterprise",
+          }
+
+          expect{ OrderCycleWebhookService.create_webhook_job(order_cycle, "order_cycle.opened") }
+            .to enqueue_job(WebhookDeliveryJob).with("http://distributor1_owner_url",
+                                                     "order_cycle.opened", hash_including(data))
+            .and enqueue_job(WebhookDeliveryJob).with("http://distributor2_owner_url",
+                                                      "order_cycle.opened", hash_including(data))
+        end
+      end
+
+      context "distributor owner is same user as coordinator owner" do
+        let(:user) { coordinator.owner }
+        let(:order_cycle) {
+          create(
+            :simple_order_cycle,
+            coordinator: coordinator,
+            distributors: [create(:distributor_enterprise, owner: user)],
+          )
+        }
+
+        it "creates only one webhook payload for the user's endpoint" do
+          user.webhook_endpoints.create! url: "http://coordinator_owner_url"
+
+          expect{ OrderCycleWebhookService.create_webhook_job(order_cycle, "order_cycle.opened") }
+            .to enqueue_job(WebhookDeliveryJob).with("http://coordinator_owner_url", any_args)
+        end
+      end
+    end
+
+    describe "suppliers" do
+      context "supplier has owner with endpoint configured" do
+        let(:order_cycle) {
+          create(
+            :simple_order_cycle,
+            coordinator: coordinator,
+            suppliers: [supplier],
+          )
+        }
+        let(:supplier) {
+          user = create(:user)
+          user.webhook_endpoints.create!(url: "http://supplier_owner_url")
+          create(:supplier_enterprise, owner: user)
+        }
+
+        it "doesn't create a webhook payload for supplier owner" do
+          expect{ OrderCycleWebhookService.create_webhook_job(order_cycle, "order_cycle.opened") }
+            .to_not enqueue_job(WebhookDeliveryJob).with("http://supplier_owner_url", any_args)
+        end
+      end
+    end
   end
 
   context "without webhook subscribed to enterprise" do
