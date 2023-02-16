@@ -27,14 +27,22 @@ en:
       spree/shipping_method: Shipping Method
     attributes:
       spree/order/ship_address:
-        address1: "Shipping address line 1"
+        address1: "Shipping address (Street + House number)"
         address2: "Shipping address line 2"
-        city: "Shipping address suburb 1"
+        city: "Shipping address city"
         country: "Shipping address country"
         phone: "Phone number"
         firstname: "First name"
         lastname: "Last name"
         zipcode: "Shipping address postcode"
+      spree/order/bill_address:
+        address1: "Billing address (Street + House number)"
+        zipcode: "Billing address postcode"
+        city: "Billing address city"
+        country: "Billing address country"
+        firstname: "Billing address first name"
+        lastname: "Billing address last name"
+        phone: Customer phone
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
