@@ -3,27 +3,37 @@
 class ProductsTableComponent < ViewComponentReflex::Component
   include Pagy::Backend
 
-  SORTABLE_COLUMNS = ["name"].freeze
-  SELECTABLE_COMUMNS = [{ label: I18n.t("admin.products_page.columns_selector.price"),
-                          value: "price" },
-                        { label: I18n.t("admin.products_page.columns_selector.unit"),
-                          value: "unit" },
-                        { label: I18n.t("admin.products_page.columns_selector.producer"),
-                          value: "producer" },
-                        { label: I18n.t("admin.products_page.columns_selector.category"),
-                          value: "category" }].sort { |a, b|
+  SORTABLE_COLUMNS = ['name', 'import_date'].freeze
+  SELECTABLE_COLUMNS = [
+    { label: I18n.t("admin.products_page.columns_selector.price"), value: "price" },
+    { label: I18n.t("admin.products_page.columns_selector.unit"), value: "unit" },
+    { label: I18n.t("admin.products_page.columns_selector.producer"), value: "producer" },
+    { label: I18n.t("admin.products_page.columns_selector.category"), value: "category" },
+    { label: I18n.t("admin.products_page.columns_selector.sku"), value: "sku" },
+    { label: I18n.t("admin.products_page.columns_selector.on_hand"), value: "on_hand" },
+    { label: I18n.t("admin.products_page.columns_selector.on_demand"), value: "on_demand" },
+    { label: I18n.t("admin.products_page.columns_selector.tax_category"), value: "tax_category" },
+    {
+      label: I18n.t("admin.products_page.columns_selector.inherits_properties"),
+      value: "inherits_properties"
+    },
+    { label: I18n.t("admin.products_page.columns_selector.available_on"), value: "available_on" },
+    { label: I18n.t("admin.products_page.columns_selector.import_date"), value: "import_date" }
+  ].sort do |a, b|
     a[:label] <=> b[:label]
-  }.freeze
+  end.freeze
+
   PER_PAGE_VALUE = [10, 25, 50, 100].freeze
   PER_PAGE = PER_PAGE_VALUE.map { |value| { label: value, value: value } }
-  NAME_COLUMN = { label: I18n.t("admin.products_page.columns.name"), value: "name",
-                  sortable: true }.freeze
+  NAME_COLUMN = {
+    label: I18n.t("admin.products_page.columns.name"), value: "name", sortable: true
+  }.freeze
 
   def initialize(user:)
     super
     @user = user
-    @selectable_columns = SELECTABLE_COMUMNS
-    @columns_selected = ["price", "unit"]
+    @selectable_columns = SELECTABLE_COLUMNS
+    @columns_selected = ['unit', 'price', 'on_hand', 'category', 'import_date']
     @per_page = PER_PAGE
     @per_page_selected = [10]
     @categories = [{ label: "All", value: "all" }] +
@@ -40,16 +50,20 @@ class ProductsTableComponent < ViewComponentReflex::Component
     @search_term = ""
   end
 
+  # any change on a "reflex_data_attributes" (defined in the template) will trigger a re render
   def before_render
     fetch_products
     refresh_columns
   end
 
+  # Element refers to the component the data is set on
   def search_term
+    # Element is SearchInputComponent
     @search_term = element.dataset['value']
   end
 
   def toggle_column
+    # Element is SelectorComponent
     column = element.dataset['value']
     @columns_selected = if @columns_selected.include?(column)
                           @columns_selected - [column]
@@ -59,26 +73,33 @@ class ProductsTableComponent < ViewComponentReflex::Component
   end
 
   def click_sort
-    @sort = { column: element.dataset['sort-value'],
-              direction: element.dataset['sort-direction'] == "asc" ? "desc" : "asc" }
+    # Element is TableHeaderComponent
+    @sort = {
+      column: element.dataset['sort-value'],
+      direction: element.dataset['sort-direction'] == "asc" ? "desc" : "asc"
+    }
   end
 
   def toggle_per_page
+    # Element is SelectorComponent
     selected = element.dataset['value'].to_i
     @per_page_selected = [selected] if PER_PAGE_VALUE.include?(selected)
   end
 
   def toggle_category
+    # Element is SelectorWithFilterComponent
     category_clicked = element.dataset['value']
     @categories_selected = toggle_selector_with_filter(category_clicked, @categories_selected)
   end
 
   def toggle_producer
+    # Element is SelectorWithFilterComponent
     producer_clicked = element.dataset['value']
     @producers_selected = toggle_selector_with_filter(producer_clicked, @producers_selected)
   end
 
   def change_page
+    # Element is PaginationComponent
     page = element.dataset['page'].to_i
     @page = page if page > 0
   end
@@ -86,10 +107,13 @@ class ProductsTableComponent < ViewComponentReflex::Component
   private
 
   def refresh_columns
-    @columns = @columns_selected.map { |column|
-      { label: I18n.t("admin.products_page.columns.#{column}"), value: column,
-        sortable: SORTABLE_COLUMNS.include?(column) }
-    }.sort! { |a, b| a[:label] <=> b[:label] }
+    @columns = @columns_selected.map do |column|
+      {
+        label: I18n.t("admin.products_page.columns.#{column}"),
+        value: column,
+        sortable: SORTABLE_COLUMNS.include?(column)
+      }
+    end.sort! { |a, b| a[:label] <=> b[:label] }
     @columns.unshift(NAME_COLUMN)
   end
 
@@ -145,8 +169,13 @@ class ProductsTableComponent < ViewComponentReflex::Component
   def product_query_includes
     [
       master: [:images],
-      variants: [:default_price, :stock_locations, :stock_items, :variant_overrides,
-                 { option_values: :option_type }]
+      variants: [
+        :default_price,
+        :stock_locations,
+        :stock_items,
+        :variant_overrides,
+        { option_values: :option_type }
+      ]
     ]
   end
 end
