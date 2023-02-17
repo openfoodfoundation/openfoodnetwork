@@ -11,6 +11,7 @@ export default class extends Controller {
   // private
 
   populateSelect(sourceId) {
+    this.tomselect = this.selectTarget.tomselect;
     this.removeCurrentOptions();
     this.populateNewOptions(sourceId);
   }
@@ -18,8 +19,12 @@ export default class extends Controller {
   removeCurrentOptions() {
     this.selectTarget.innerHTML = "";
 
-    this.selectTarget.tomselect?.clear();
-    this.selectTarget.tomselect?.clearOptions();
+    if (!this.tomselect) {
+      return;
+    }
+
+    this.tomselect.clear();
+    this.tomselect.clearOptions();
   }
 
   populateNewOptions(sourceId) {
@@ -29,8 +34,18 @@ export default class extends Controller {
       this.addOption(item[0], item[1]);
     });
 
-    this.selectTarget.tomselect?.sync();
-    this.selectTarget.tomselect?.addItem(options[0]?.[1]);
+    if (!this.tomselect) {
+      return;
+    }
+
+    if (options.length == 0) {
+      this.tomselect.disable();
+    } else {
+      this.tomselect.enable();
+      this.tomselect.addItem(options[0]?.[1]);
+      this.tomselect.sync();
+      this.tomselect.setValue(null);
+    }
   }
 
   addOption(label, value) {
@@ -41,6 +56,7 @@ export default class extends Controller {
   }
 
   dependentOptionsFor(sourceId) {
-    return this.optionsValue.find((option) => option[0] === sourceId)[1];
+    let options = this.optionsValue.find((option) => option[0] === sourceId);
+    return options ? options[1] : [];
   }
 }
