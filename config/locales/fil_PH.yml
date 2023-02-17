@@ -299,11 +299,25 @@ fil_PH:
         price: Presyo
         producer: Producer
         category: kategorya
+        sku: SKU
+        on_hand: "on hand"
+        on_demand: "on demand"
+        tax_category: "kategorya ng tax"
+        inherits_properties: "gayahin ang mga katangian?"
+        available_on: "Magagamit Nakabukas"
+        import_date: "petsa ng pag-import"
       columns_selector:
         unit: yunit
         price: Presyo
         producer: Producer
         category: kategorya
+        sku: SKU
+        on_hand: "on hand"
+        on_demand: "on demand"
+        tax_category: "kategorya ng tax"
+        inherits_properties: "gayahin ang mga katangian?"
+        available_on: "Magagamit Nakabukas"
+        import_date: "petsa ng pag-import"
     begins_at: nagsimula sa
     begins_on: nagsisimula sa
     customer: Customer

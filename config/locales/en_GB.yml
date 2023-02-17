@@ -6,9 +6,7 @@ en_GB:
       spree/shipping_method: Shipping Method
     attributes:
       spree/order/ship_address:
-        address1: "Shipping address line 1"
         address2: "Shipping address line 2"
-        city: "Shipping address town"
         country: "Shipping address country"
         phone: "Phone number"
         firstname: "First name"
@@ -425,11 +423,25 @@ en_GB:
         price: Price
         producer: Producer
         category: Category
+        sku: Product Code
+        on_hand: "In Stock"
+        on_demand: "Unlimited"
+        tax_category: "Tax Category"
+        inherits_properties: "Inherits Properties?"
+        available_on: "Available On"
+        import_date: "Import Date"
       columns_selector:
         unit: Unit
         price: Price
         producer: Producer
         category: Category
+        sku: Product Code
+        on_hand: "In Stock"
+        on_demand: "Unlimited"
+        tax_category: "Tax Category"
+        inherits_properties: "Inherits Properties?"
+        available_on: "Available On"
+        import_date: "Import Date"
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At

@@ -413,11 +413,25 @@ ko:
         price: 가격
         producer: 제공자
         category: 목록
+        sku: 재고 관리 단위
+        on_hand: "대기 중"
+        on_demand: "수요로 함"
+        tax_category: "세금 목록"
+        inherits_properties: "속성을 상속하시겠습니까?"
+        available_on: "사용 가능 날짜"
+        import_date: "수입 날짜"
       columns_selector:
         unit: 단위
         price: 가격
         producer: 제공자
         category: 목록
+        sku: 재고 관리 단위
+        on_hand: "대기 중"
+        on_demand: "수요로 함"
+        tax_category: "세금 목록"
+        inherits_properties: "속성을 상속하시겠습니까?"
+        available_on: "사용 가능 날짜"
+        import_date: "수입 날짜"
     adjustments:
       skipped_changing_canceled_order: "취소된 명령을 바꿀 수 없습니다."
     begins_at: 시작 시간

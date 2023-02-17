@@ -417,11 +417,25 @@ ca:
         price: Preu
         producer: Productora
         category: Categoria
+        sku: Número de referència (SKU)
+        on_hand: "Disponibles"
+        on_demand: "Sota demanda"
+        tax_category: "Categoria d'impostos"
+        inherits_properties: "Hereda propietats?"
+        available_on: "Disponible el"
+        import_date: "Data d'importació"
       columns_selector:
         unit: Unitat
         price: Preu
         producer: Productora
         category: Categoria
+        sku: Número de referència (SKU)
+        on_hand: "Disponibles"
+        on_demand: "Sota demanda"
+        tax_category: "Categoria d'impostos"
+        inherits_properties: "Hereda propietats?"
+        available_on: "Disponible el"
+        import_date: "Data d'importació"
     adjustments:
       skipped_changing_canceled_order: "No podeu canviar una comanda cancel·lada."
     begins_at: Comença a

@@ -413,11 +413,25 @@ uk:
         price: Ціна
         producer: Виробник
         category: Категорія
+        sku: Артикул
+        on_hand: "Під рукою"
+        on_demand: "На вимогу"
+        tax_category: "Категорія податку"
+        inherits_properties: "Успадковує властивості?"
+        available_on: "Доступно на"
+        import_date: "Дата імпорту"
       columns_selector:
         unit: Одиниця
         price: Ціна
         producer: Виробник
         category: Категорія
+        sku: Артикул
+        on_hand: "Під рукою"
+        on_demand: "На вимогу"
+        tax_category: "Категорія податку"
+        inherits_properties: "Успадковує властивості?"
+        available_on: "Доступно на"
+        import_date: "Дата імпорту"
     adjustments:
       skipped_changing_canceled_order: "Ви не можете змінити скасоване замовлення."
     begins_at: Починається о

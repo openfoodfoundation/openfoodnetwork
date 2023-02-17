@@ -420,11 +420,25 @@ cy:
         price: Pris
         producer: Cynhyrchydd
         category: Categori
+        sku: Cod y Cynnyrch
+        on_hand: "Ar gael"
+        on_demand: "Ar alw"
+        tax_category: "Categori Treth"
+        inherits_properties: "Yn etifeddu manylion cynnyrch?"
+        available_on: "Ar gael ar"
+        import_date: "Dyddiad Mewnforio"
       columns_selector:
         unit: Uned
         price: Pris
         producer: Cynhyrchydd
         category: Categori
+        sku: Cod y Cynnyrch
+        on_hand: "Ar gael"
+        on_demand: "Ar alw"
+        tax_category: "Categori Treth"
+        inherits_properties: "Yn etifeddu manylion cynnyrch?"
+        available_on: "Ar gael ar"
+        import_date: "Dyddiad Mewnforio"
     adjustments:
       skipped_changing_canceled_order: "Nid yw'n bosib newid archeb a ganslwyd"
     begins_at: Yn dechrau am

@@ -345,11 +345,25 @@ pt:
         price: Preço
         producer: Produtor/a
         category: Categoria
+        sku: SKU
+        on_hand: "Disponível"
+        on_demand: "Sob Encomenda"
+        tax_category: "Categoria de Imposto"
+        inherits_properties: "Herda Propriedades?"
+        available_on: "Disponível em"
+        import_date: "Data de Importação"
       columns_selector:
         unit: Unidade
         price: Preço
         producer: Produtor/a
         category: Categoria
+        sku: SKU
+        on_hand: "Disponível"
+        on_demand: "Sob Encomenda"
+        tax_category: "Categoria de Imposto"
+        inherits_properties: "Herda Propriedades?"
+        available_on: "Disponível em"
+        import_date: "Data de Importação"
     begins_at: Começa às
     begins_on: Começa em
     customer: Consumidor/a

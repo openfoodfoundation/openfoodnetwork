@@ -64,7 +64,7 @@ hu:
               after_orders_open_at: a nyitás dátuma után kell lennie
         variant_override:
           count_on_hand:
-            using_producer_stock_settings_but_count_on_hand_set: "üresnek kell lennie, mert a gyártói készlet beállításait használja"
+            using_producer_stock_settings_but_count_on_hand_set: "üresnek kell lennie, mert a termelői készlet beállításait használja"
             on_demand_but_count_on_hand_set: "Igény esetén üresnek kell lennie"
             limited_stock_but_no_count_on_hand: "meg kell adni, mert korlátozott a készlet"
   stripe:
@@ -347,7 +347,7 @@ hu:
   supplier_only: Csak szállító
   has_shopfront: Átadópontot üzemeltet
   weight: Súly
-  volume: Hangerő
+  volume: Űrtartalom
   items: Tételek
   summary: Összegzés
   detailed: Részletes
@@ -414,11 +414,25 @@ hu:
         price: Ár
         producer: Termelő
         category: Kategória
+        sku: SKU
+        on_hand: "Készlet"
+        on_demand: "Igény szerint"
+        tax_category: "Adókategória"
+        inherits_properties: "Megörökli az tulajdonságokat?"
+        available_on: "Elérhető"
+        import_date: "Importálás dátuma"
       columns_selector:
         unit: Mértékegység
         price: Ár
         producer: Termelő
         category: Kategória
+        sku: SKU
+        on_hand: "Készlet"
+        on_demand: "Igény szerint"
+        tax_category: "Adókategória"
+        inherits_properties: "Megörökli az tulajdonságokat?"
+        available_on: "Elérhető"
+        import_date: "Importálás dátuma"
     adjustments:
       skipped_changing_canceled_order: "A törölt rendelést nem módosíthatja."
     begins_at: 'Kezdete:'
@@ -454,7 +468,7 @@ hu:
     tags: Címkék
     variant: Változat
     weight: Súly
-    volume: Hangerő
+    volume: Űrtartalom
     items: Tételek
     select_all: Mindet kiválaszt
     quick_search: Gyors keresés
@@ -463,7 +477,7 @@ hu:
     end_date: "Befejezés dátuma"
     form_invalid: "Az űrlap hiányzó vagy érvénytelen mezőket tartalmaz"
     clear_filters: Szűrők törlése
-    clear: Egyértelmű
+    clear: Törlés
     save: Mentés
     cancel: Vissza
     back: Vissza
@@ -556,7 +570,7 @@ hu:
         search_by_email: "Keresés email/kód alapján..."
         guest_label: "Vendég kijelentkezés"
         credit_owed: "Hiteltartozás"
-        balance_due: "Esedékes egyenleg"
+        balance_due: "Fizetendő összeg"
       destroy:
         has_associated_subscriptions: "A törlés sikertelen. A felhasználónak aktív előjegyzései vannak. Törölje őket előbb."
     contents:
@@ -1155,7 +1169,7 @@ hu:
         outgoing: "3. Kimenő termékek"
         checkout_options: "4. Fizetési lehetőségek"
       exchange_form:
-        pickup_time_tip: Megrendelésnél ettől kezdve készen állnak az ügyfél számára
+        pickup_time_tip: Megrendelésnél ettől kezdve készen állnak a vásárló számára
         pickup_instructions_placeholder: "Felvételi utasítások"
         pickup_instructions_tip: Ezek az utasítások a rendelés befejezése után jelennek meg az ügyfelek számára
         pickup_time_placeholder: "Készen áll (pl. dátum/idő)"
@@ -1210,7 +1224,7 @@ hu:
         distributors: forgalmazók
         variants: változatai
       simple_form:
-        ready_for: Elkészül ekkorra
+        ready_for: Nyitás
         ready_for_placeholder: Dátum idő
         customer_instructions: Vevői utasítások
         customer_instructions_placeholder: Átvételi vagy szállítólevelek
@@ -1506,12 +1520,12 @@ hu:
     mailers:
       powered_by:
         open_food_network: "Open Food Network"
-        powered_html: "Vásárlási élményét a %{open_food_network} biztosítja."
+        powered_html: "A vásárlás hátterét az %{open_food_network} biztosítja."
     menu:
       cart:
         cart: "Kosár"
       cart_sidebar:
-        checkout: "Pénztár"
+        checkout: "Tovább"
         edit_cart: "Kosár szerkesztése"
         items_in_cart_singular: "%{num} tétel a kosarában"
         items_in_cart_plural: "%{num} termék a kosarában"
@@ -1562,7 +1576,7 @@ hu:
   invoice_column_tax: "Adó"
   invoice_column_price: "Ár"
   invoice_column_item: "Tétel"
-  invoice_column_qty: "Menny"
+  invoice_column_qty: "Mennyiség"
   invoice_column_unit_price_with_taxes: "Egységár (ÁFA-val)"
   invoice_column_unit_price_without_taxes: "Egységár (adó nélkül)"
   invoice_column_price_with_taxes: "Teljes ár (áfával)"
@@ -1578,7 +1592,7 @@ hu:
   invoice_issued_on: "Kiállított számla:"
   order_number: "Számlaszám:"
   date_of_transaction: "A tranzakció dátuma:"
-  ticket_column_qty: "Menny"
+  ticket_column_qty: "Mennyiség"
   ticket_column_item: "Tétel"
   ticket_column_unit_price: "Egységár"
   ticket_column_total_price: "Teljes ár"
@@ -1665,13 +1679,13 @@ hu:
   label_less: "Mutass kevesebbet"
   label_notices: "Megjegyzések"
   cart_items: "tételeket"
-  cart_headline: "Kosarad"
+  cart_headline: "Kosár"
   total: "Összesen"
   cart_updating: "Kosár frissítése..."
   cart_empty: "Kosár üres"
   cart_edit: "Szerkeszd a kosaradat"
   item: "Tétel"
-  qty: "Menny"
+  qty: "Mennyiség"
   card_number: Kártyaszám
   card_securitycode: "Biztonsági kód"
   card_expiry_date: Lejárati dátum
@@ -1747,32 +1761,32 @@ hu:
   stats_shops: "élelmiszerátvételi pontok"
   stats_shoppers: "élelmiszervásárlók"
   stats_orders: "rendelés"
-  checkout_title: Pénztár
-  checkout_now: Fizessen most
-  checkout_order_ready: Rendelés készen áll
+  checkout_title: Tovább
+  checkout_now: Utolsó lépés
+  checkout_order_ready: Átvételi időpont
   checkout_hide: Elrejt
-  checkout_expand: Kiterjed
+  checkout_expand: Kinyit
   checkout_headline: "Rendben, készen áll a fizetésre?"
   checkout_as_guest: "Rendelés regisztráció nélkül"
-  checkout_details: "Az adataid"
-  checkout_billing: "Számlázási info"
+  checkout_details: "Személyes adatok"
+  checkout_billing: "Számlázási információ"
   checkout_default_bill_address: "Mentés alapértelmezett számlázási címként"
   checkout_shipping: Szállítási információ
   checkout_default_ship_address: "Mentés alapértelmezett szállítási címként"
   checkout_method_free: Ingyenes
   checkout_address_same: A szállítási cím megegyezik a számlázási címmel?
-  checkout_ready_for: "Elkészül ekkorra:"
+  checkout_ready_for: "Nyitás:"
   checkout_instructions: "Megjegyzés, vagy különleges igény?"
   checkout_payment: Fizetés
   checkout_send: Rendelés leadása most
-  checkout_your_order: A rendelését
-  checkout_cart_total: Kosár összesen
+  checkout_your_order: Összesítés
+  checkout_cart_total: Termékek összege
   checkout_shipping_price: Szállítás
   checkout_total_price: Összesen
   checkout_back_to_cart: "Vissza a kosárba"
   cost_currency: "Költség Pénznem"
   split_checkout:
-    your_details_without_number: Az adataid
+    your_details_without_number: Személyes adatok
     payment_method_without_number: Fizetési mód
     order_summary_without_number: Megrendelés-összesítő
     already_ordered:
@@ -1858,7 +1872,7 @@ hu:
       no_shipping_methods_available: Szállítási lehetőségek hiánya miatt a fizetés nem lehetséges. Kérjük, lépjen kapcsolatba az üzlet tulajdonosával.
   order_paid: FIZETETT
   order_not_paid: NEM FIZETETT
-  order_total: Teljes rendelés
+  order_total: Fizetendő összeg
   order_payment: "Fizetés:"
   order_billing_address: Számlázási cím
   order_delivery_on: Kiszállítás
@@ -1866,7 +1880,7 @@ hu:
   order_delivery_time: Szállítási idő
   order_special_instructions: "Az Ön megjegyzései:"
   order_pickup_time: Átvétel időpontja
-  order_pickup_instructions: Gyűjtési útmutató
+  order_pickup_instructions: Átvételi információk
   order_produce: Összesen
   order_total_price: Összesen
   order_includes_tax: (adót tartalmaz)
@@ -1895,15 +1909,15 @@ hu:
   email_signoff: "Egészségére,"
   email_signature: "%{sitename} csapat"
   email_confirm_customer_greeting: "Szia %{name}!"
-  email_confirm_customer_intro_html: "Köszönjük, hogy a <strong>%{distributor}</strong>-nál vásárolt!"
-  email_confirm_customer_number_html: "Megrendelés visszaigazolása <strong>#%{number}</strong>"
-  email_confirm_customer_details_html: "Itt vannak a <strong>%{distributor}</strong>-tól származó megrendelésének részletei:"
+  email_confirm_customer_intro_html: "Köszönjük a vásárlást! <strong>%{distributor}</strong>"
+  email_confirm_customer_number_html: "Megrendelés visszaigazolás <strong>#%{number}</strong>"
+  email_confirm_customer_details_html: "Megrendelés részletei:"
   email_confirm_customer_signoff: "Üdvözlettel,"
   email_confirm_shop_greeting: "Szia %{name}!"
   email_confirm_shop_order_html: "Szép munka! Új megrendelése van a következőhöz: <strong>%{distributor}</strong>!"
-  email_confirm_shop_number_html: "Megrendelés visszaigazolása <strong>#%{number}</strong>"
+  email_confirm_shop_number_html: "Megrendelés visszaigazolás <strong>#%{number}</strong>"
   email_order_summary_item: "Tétel"
-  email_order_summary_quantity: "Menny"
+  email_order_summary_quantity: "Mennyiség"
   email_order_summary_sku: "SKU"
   email_order_summary_price: "Ár"
   email_order_summary_subtotal: "Részösszeg:"
@@ -1911,11 +1925,10 @@ hu:
   email_order_summary_includes_tax: "(adót tartalmaz):"
   email_payment_paid: FIZETETT
   email_payment_not_paid: NEM FIZETETT
-  email_payment_description: Fizetési leírás a pénztárnál
-  email_payment_summary: Fizetési összefoglaló
+  email_payment_description: Fizetési információk
   email_payment_method: "Fizetés:"
   email_so_placement_intro_html: "Új rendelése van a <strong>%{distributor}</strong>-nál"
-  email_so_placement_details_html: "Íme a <strong>%{distributor}</strong>-ra vonatkozó megrendelésének részletei:"
+  email_so_placement_details_html: "Megrendelés részletei:"
   email_so_placement_changes: "Sajnos nem minden kért termék volt elérhető. Az Ön által kért eredeti mennyiségek alább áthúzva jelennek meg."
   email_so_payment_success_intro_html: "A(z) <strong>%{distributor}</strong> kereskedőtől származó megrendelésének automatikus fizetése megtörtént."
   email_so_placement_explainer_html: "Ez a rendelés automatikusan létrejött az Ön számára."
@@ -1937,7 +1950,7 @@ hu:
   email_shipping_delivery_address: "Szállítási cím:"
   email_shipping_collection_details: Gyűjtemény részletei
   email_shipping_collection_time: "Átvétel időpontja:"
-  email_shipping_collection_instructions: "Gyűjtési útmutató:"
+  email_shipping_collection_instructions: "Átvételi információk:"
   email_special_instructions: "Az Ön megjegyzései:"
   email_signup_greeting: Helló!
   email_signup_welcome: "Üdvözöljük a %{sitename} oldalon!"
@@ -1963,7 +1976,7 @@ hu:
   shopping_oc_next_open: "A következő ciklus %{distance_of_time} múlva kezdődik"
   shopping_oc_select: "Válassz..."
   shopping_tabs_home: "Nyitólap"
-  shopping_tabs_shop: "Üzlet"
+  shopping_tabs_shop: "Átadópont"
   shopping_tabs_about: "Rólunk"
   shopping_tabs_producers: "Termelők"
   shopping_tabs_contact: "Kapcsolat"
@@ -1975,7 +1988,7 @@ hu:
   shopping_producers_of_hub: "%{hub}termelői:"
   enterprises_next_closing: "A következő rendelés lezárása"
   enterprises_currently_open: "A rendelések jelenleg nyitva vannak"
-  enterprises_ready_for: "Elkészül ekkorra"
+  enterprises_ready_for: "Nyitás"
   enterprises_choose: "Válaszd ki, hogy mikor szeretné megrendelni:"
   maps_open: "Nyisd ki"
   maps_closed: "Zárva"
@@ -2002,7 +2015,7 @@ hu:
     many: '<a href=''%{path}'' target=''_blank''>%{count} rendelése van a(z) %{árusítóhely</a>-nál jelenleg ellenőrzésre nyitva. A módosításokat a következő időpontig hajthatja végre: %{oc_close}.'
     other: '<a href=''%{path}'' target=''_blank''>%{count} rendelése van a(z) %{árusítóhely</a>-nál jelenleg ellenőrzésre nyitva. A módosításokat a következő időpontig hajthatja végre: %{oc_close}.'
   orders_changeable_orders_alert_html: 'Ezt a rendelést megerősítették, de módosíthatja a következőt: <strong>%{oc_close}</strong>.'
-  products_clear: Egyértelmű
+  products_clear: Törlés
   products_showing: "Megjelenítve:"
   products_results_for: "eredmények"
   products_or: "vagy"
@@ -2013,12 +2026,12 @@ hu:
   products_filter_by: "Szűrés"
   products_filter_selected: "kiválasztott"
   products_filter_heading: "Szűrők"
-  products_filter_clear: "Egyértelmű"
+  products_filter_clear: "Törlés"
   products_filter_done: "Kész"
   products_loading: "Termékek betöltése..."
   products_updating_cart: "Kosár frissítése..."
   products_cart_empty: "Kosár üres"
-  products_edit_cart: "Szerkeszd a kosaradat"
+  products_edit_cart: "Kosár szerkesztése"
   products_change: "Nincs mentendő módosítás."
   products_update_error: "A mentés a következő hibá(k) miatt nem sikerült:"
   products_update_error_msg: "A mentés nem sikerült."
@@ -2121,13 +2134,13 @@ hu:
   orders: "Megrendelések"
   orders_fees: "Díjak..."
   orders_edit_title: "Bevásárlókosár"
-  orders_edit_headline: "Kosarad"
-  orders_edit_time: "Rendelés készen áll"
-  orders_edit_continue: "Folytatni a vásárlást"
-  orders_edit_checkout: "Pénztár"
-  orders_form_empty_cart: "Üres Kosár"
+  orders_edit_headline: "Kosár"
+  orders_edit_time: "Átvételi időpont"
+  orders_edit_continue: "Vásárlás folytatása"
+  orders_edit_checkout: "Tovább"
+  orders_form_empty_cart: "Kosár ürítése"
   orders_form_update_cart: "Frissítés"
-  orders_form_subtotal: "Részösszeg létrehozása"
+  orders_form_subtotal: "Termékek ára"
   orders_form_total: "Összesen"
   orders_oc_expired_headline: "A rendelések erre a rendelési ciklusra lezárultak"
   orders_oc_expired_text: "Sajnáljuk, a rendelések erre a rendelési ciklusra %{time} ezelőtt lezárultak! Kérjük, forduljon közvetlenül a központhoz, hogy megtudja, képesek-e elfogadni a késői rendeléseket."
@@ -2135,7 +2148,7 @@ hu:
   orders_oc_expired_text_link: "vagy tekintse meg az ezen a átvételi ponton elérhető többi rendelési ciklust"
   orders_oc_expired_email: "Email:"
   orders_oc_expired_phone: "Telefon:"
-  orders_show_title: "Megrendelés visszaigazolása"
+  orders_show_title: "Megrendelés visszaigazolás"
   orders_show_time: "Rendelés kész"
   orders_show_order_number: "Rendelésszám:%{number}"
   orders_show_cancelled: "Törölve"
@@ -2357,7 +2370,7 @@ hu:
   shop_variant_quantity_max: "max"
   follow: "Kövesse"
   shop_for_products_html: "Vásároljon <span class=turquoise>%{enterprise}</span> termékeket itt:"
-  change_shop: "Üzlet módosítása erre:"
+  change_shop: "Átadópont módosítása erre:"
   shop_at: "Vásároljon most itt:"
   admin_fee: "Adminisztrációs díj"
   sales_fee: "Értékesítési díj"
@@ -2374,7 +2387,7 @@ hu:
   payment_state: "Fizetési állapot"
   shipping_state: "Szállítási állapot"
   value: "Mennyiség"
-  balance_due: "Esedékes egyenleg"
+  balance_due: "Fizetendő összeg"
   credit: "Hitel"
   Paid: "Fizetett"
   Ready: "Kész"
@@ -2824,7 +2837,7 @@ hu:
     unavailable: Nem érhető el
     profile: Profil
     hub: Kerékagy
-    shop: Üzlet
+    shop: Átadópont
     choose: Választ
     resolve_errors: Kérjük, oldja meg a következő hibákat
     more_items: "+ %{count} további"
@@ -3049,9 +3062,9 @@ hu:
           shipped: "kiszállított"
           canceled: "törölve"
         payment_states:
-          balance_due: "esedékes egyenleg"
+          balance_due: "fizetendő összeg"
           completed: "elkészült"
-          checkout: "pénztár"
+          checkout: "tovább"
           credit_owed: "hiteltartozás"
           failed: "nem sikerült"
           paid: "fizetett"
@@ -3130,7 +3143,7 @@ hu:
         'yes': "Igény szerint"
     variant_overrides:
       on_demand:
-        use_producer_settings: "Használd a gyártói készletbeállításokat"
+        use_producer_settings: "Használd a termelői készletbeállításokat"
         'yes': "Igen"
         'no': "Nem"
       inventory_products: "Készlettermékek"
@@ -3543,7 +3556,7 @@ hu:
     no_results: "Nincs eredmény"
     create: "Létrehozás"
     loading: "Betöltés"
-    flat_percent: "Lapos százalék"
+    flat_percent: "Fix százalék"
     per_kg: "Kg-onként"
     amount: "Összeg"
     currency: "Valuta"
@@ -4006,9 +4019,9 @@ hu:
       shipped: kiszállított
       canceled: törölve
     payment_states:
-      balance_due: esedékes egyenleg
+      balance_due: fizetendő összeg
       completed: elkészült
-      checkout: pénztár
+      checkout: tovább
       credit_owed: hiteltartozás
       failed: nem sikerült
       paid: fizetett
@@ -4035,7 +4048,7 @@ hu:
         intro: "Egy ügyfél törölte a"
         view_cancelled_order: "A törölt rendelés megtekintése"
       confirm_email:
-        subject: "Megrendelés visszaigazolása"
+        subject: "Megrendelés visszaigazolás"
       invoice_email:
         hi: "Szia %{name}"
         invoice_attached_text: Mellékelten talál egy számlát a legutóbbi rendeléséről
@@ -4133,7 +4146,7 @@ hu:
         authorise: Engedélyezze
       open_orders:
         order: Rendelés
-        shop: Üzlet
+        shop: Átadópont
         changes_allowed_until: Változások engedélyezettek ig
         items: Tételek
         total: Összesen
@@ -4143,7 +4156,7 @@ hu:
         until: Amíg
       past_orders:
         order: Rendelés
-        shop: Üzlet
+        shop: Átadópont
         completed_at: 'Elkészült:'
         items: Tételek
         total: Összesen

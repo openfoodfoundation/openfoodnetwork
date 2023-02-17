@@ -6,9 +6,7 @@ de_DE:
       spree/shipping_method: Lieferoption
     attributes:
       spree/order/ship_address:
-        address1: "Lieferadresse Straße + Hausnummer"
         address2: "Lieferadresse Adresszusatz"
-        city: "Lieferadresse Ort"
         country: "Lieferadresse Land"
         phone: "Telefonnummer"
         firstname: "Vorname"
@@ -425,11 +423,25 @@ de_DE:
         price: Preis
         producer: Produzent
         category: Kategorie
+        sku: Artikelnummer
+        on_hand: "Verfügbar"
+        on_demand: "Unbegrenzt/auf Bestellung"
+        tax_category: "Steuerkategorie"
+        inherits_properties: "Übernimmt Eigenschaften des Ladens?"
+        available_on: "Verfügbar am"
+        import_date: "Importdatum"
       columns_selector:
         unit: Einheit
         price: Preis
         producer: Produzent
         category: Kategorie
+        sku: Artikelnummer
+        on_hand: "Verfügbar"
+        on_demand: "Unbegrenzt/auf Bestellung"
+        tax_category: "Steuerkategorie"
+        inherits_properties: "Übernimmt Eigenschaften des Ladens?"
+        available_on: "Verfügbar am"
+        import_date: "Importdatum"
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
     begins_at: Beginnt

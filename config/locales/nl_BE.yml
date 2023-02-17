@@ -308,11 +308,25 @@ nl_BE:
         price: Prijs
         producer: Producent
         category: Categorie
+        sku: SKU
+        on_hand: "Bij de Hand"
+        on_demand: "Op Aanvraag"
+        tax_category: "Belastingcategorie"
+        inherits_properties: "Erft Eigenschappen?"
+        available_on: "Beschikbaar op"
+        import_date: "Importdatum"
       columns_selector:
         unit: Unit
         price: Prijs
         producer: Producent
         category: Categorie
+        sku: SKU
+        on_hand: "Bij de Hand"
+        on_demand: "Op Aanvraag"
+        tax_category: "Belastingcategorie"
+        inherits_properties: "Erft Eigenschappen?"
+        available_on: "Beschikbaar op"
+        import_date: "Importdatum"
     begins_at: Begint Bij
     begins_on: Begint Op
     customer: Klant

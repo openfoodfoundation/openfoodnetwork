@@ -420,11 +420,25 @@ it:
         price: Prezzo
         producer: Produttore
         category: Categoria
+        sku: Codice ID
+        on_hand: "Disponibile"
+        on_demand: "A richiesta"
+        tax_category: "Categoria d'imposta"
+        inherits_properties: "Eredita proprietà?"
+        available_on: "Disponibile il"
+        import_date: "Data di importazione"
       columns_selector:
         unit: Unità
         price: Prezzo
         producer: Produttore
         category: Categoria
+        sku: Codice ID
+        on_hand: "Disponibile"
+        on_demand: "A richiesta"
+        tax_category: "Categoria d'imposta"
+        inherits_properties: "Eredita proprietà?"
+        available_on: "Disponibile il"
+        import_date: "Data di importazione"
     adjustments:
       skipped_changing_canceled_order: "Non puoi modificare una richiesta annullata"
     begins_at: Inizia a

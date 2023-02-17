@@ -6,14 +6,22 @@ ar:
       spree/shipping_method: طريقة الشحن
     attributes:
       spree/order/ship_address:
-        address1: "عنوان الشحن 1"
+        address1: "عنوان الشحن (الشارع + رقم المنزل)"
         address2: "عنوان الشحن 2"
-        city: "عنوان الشحن الضاحية 1"
+        city: "عنوان الشحن المدينة"
         country: "عنوان الشحن الدولة"
         phone: "رقم الهاتف"
         firstname: "الاسم الاول"
         lastname: "الكنية"
         zipcode: "الرمز البريدي لعنوان الشحن"
+      spree/order/bill_address:
+        address1: "عنوان الفاتورة (الشارع + رقم المنزل)"
+        zipcode: "الرمز البريدي لعنوان الفاتورة"
+        city: "عنوان إرسال الفواتير المدينة "
+        country: "عنوان إرسال الفواتير البلد "
+        firstname: "عنوان إرسال الفواتير - الاسم الأول "
+        lastname: "عنوان إرسال الفواتير - الاسم الأخير"
+        phone: هاتف العميل
       spree/user:
         password: "كلمه السر"
         password_confirmation: "تأكيد كلمة المرور"
@@ -425,11 +433,25 @@ ar:
         price: السعر
         producer: المنتج
         category: الفئة
+        sku: SKU
+        on_hand: "متوفر"
+        on_demand: "على الطلب"
+        tax_category: "الفئة الضريبية"
+        inherits_properties: "الخصائص الموروثة؟"
+        available_on: "متاح على"
+        import_date: "تاريخ الاستيراد"
       columns_selector:
         unit: وحدة
         price: السعر
         producer: المنتج
         category: الفئة
+        sku: SKU
+        on_hand: "متوفر"
+        on_demand: "على الطلب"
+        tax_category: "الفئة الضريبية"
+        inherits_properties: "الخصائص الموروثة؟"
+        available_on: "متاح على"
+        import_date: "تاريخ الاستيراد"
     adjustments:
       skipped_changing_canceled_order: "لا يمكنك تغيير الطلب الذي تم إلغاؤه."
     begins_at: يبدأ عند
@@ -1624,11 +1646,11 @@ ar:
   menu_4_title: "مجموعات"
   menu_4_url: "/groups"
   menu_5_title: "حول"
-  menu_5_url: "https://about.flaha.org/"
+  menu_5_url: "https://about.flaha.org"
   menu_6_title: "الاتصال"
-  menu_6_url: "https://openfoodnetwork.org/au/connect/"
+  menu_6_url: "https://join.slack.com/t/flahaqaopenfo-2gd5913/shared_invite/zt-1pg0uzd4j-tFxELTtA9iA78ipnO3NZ5w"
   menu_7_title: "تعلم"
-  menu_7_url: "https://openfoodnetwork.org/au/learn/"
+  menu_7_url: "https://kh.flaha.org"
   logo: "الشعار (640 × 130)"
   logo_mobile: "شعار الجوال (75 × 26)"
   logo_mobile_svg: "شعار الجوال (SVG)"

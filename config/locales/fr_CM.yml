@@ -371,11 +371,25 @@ fr_CM:
         price: Prix
         producer: Producteur
         category: Catégorie
+        sku: Référence Produit
+        on_hand: "En stock"
+        on_demand: "A volonté"
+        tax_category: "TVA applicable"
+        inherits_properties: "Hériter des propriétés?"
+        available_on: "Disponible via"
+        import_date: "Date d'import (si import)"
       columns_selector:
         unit: Unité
         price: Prix
         producer: Producteur
         category: Catégorie
+        sku: Référence Produit
+        on_hand: "En stock"
+        on_demand: "A volonté"
+        tax_category: "TVA applicable"
+        inherits_properties: "Hériter des propriétés?"
+        available_on: "Disponible via"
+        import_date: "Date d'import (si import)"
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence

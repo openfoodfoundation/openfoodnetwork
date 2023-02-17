@@ -133,11 +133,23 @@ sv:
         price: Pris
         producer: Producent
         category: Kategori
+        sku: SKU
+        on_hand: "På lager"
+        on_demand: "På begäran"
+        tax_category: "Skattekategori"
+        inherits_properties: "Ärva egenskaper?"
+        available_on: "Tillgänglig "
       columns_selector:
         unit: Enhet
         price: Pris
         producer: Producent
         category: Kategori
+        sku: SKU
+        on_hand: "På lager"
+        on_demand: "På begäran"
+        tax_category: "Skattekategori"
+        inherits_properties: "Ärva egenskaper?"
+        available_on: "Tillgänglig "
     date: Datum
     email: epost
     name: Namn

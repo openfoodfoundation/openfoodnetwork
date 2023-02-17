@@ -353,11 +353,25 @@ tr:
         price: Fiyat
         producer: ÜRETİCİ
         category: Kategori
+        sku: Stok Kodu
+        on_hand: "Mevcut"
+        on_demand: "Talep Üzerine"
+        tax_category: "Vergi Kategorisi"
+        inherits_properties: "Özellikler devralınsın mı?"
+        available_on: "Şu Tarihte Hazır"
+        import_date: "İçe Aktarım Tarihi"
       columns_selector:
         unit: Birim
         price: Fiyat
         producer: ÜRETİCİ
         category: Kategori
+        sku: Stok Kodu
+        on_hand: "Mevcut"
+        on_demand: "Talep Üzerine"
+        tax_category: "Vergi Kategorisi"
+        inherits_properties: "Özellikler devralınsın mı?"
+        available_on: "Şu Tarihte Hazır"
+        import_date: "İçe Aktarım Tarihi"
     adjustments:
       skipped_changing_canceled_order: "İptal edilmiş bir siparişi değiştiremezsiniz."
     begins_at: Başlangıç

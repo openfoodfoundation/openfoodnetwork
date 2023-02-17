@@ -307,11 +307,23 @@ pl:
         price: Cena
         producer: Producent
         category: Kategoria
+        sku: SKU
+        on_hand: "Dostępne"
+        on_demand: "Na żądanie"
+        tax_category: "Kategoria podatku"
+        inherits_properties: "Dziedziczy właściwości?"
+        available_on: "Dostępne na"
       columns_selector:
         unit: Jednostka
         price: Cena
         producer: Producent
         category: Kategoria
+        sku: SKU
+        on_hand: "Dostępne"
+        on_demand: "Na żądanie"
+        tax_category: "Kategoria podatku"
+        inherits_properties: "Dziedziczy właściwości?"
+        available_on: "Dostępne na"
     begins_at: Początek o
     begins_on: Początek się w dniu
     customer: Klient

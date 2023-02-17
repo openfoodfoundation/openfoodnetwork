@@ -409,11 +409,25 @@ es:
         price: Precio
         producer: Productora
         category: Categoría
+        sku: SKU
+        on_hand: "Disponibles"
+        on_demand: "Bajo demanda"
+        tax_category: "Categoría de impuestos"
+        inherits_properties: "¿Hereda propiedades?"
+        available_on: "Disponible en"
+        import_date: "Fecha de importación"
       columns_selector:
         unit: Unidad
         price: Precio
         producer: Productora
         category: Categoría
+        sku: SKU
+        on_hand: "Disponibles"
+        on_demand: "Bajo demanda"
+        tax_category: "Categoría de impuestos"
+        inherits_properties: "¿Hereda propiedades?"
+        available_on: "Disponible en"
+        import_date: "Fecha de importación"
     adjustments:
       skipped_changing_canceled_order: "No puede cambiar un pedido cancelado."
     begins_at: Empieza en

@@ -316,11 +316,25 @@ fr_BE:
         price: Prix
         producer: Producteur·trice
         category: Catégorie
+        sku: Référence produit
+        on_hand: "En stock"
+        on_demand: "A la demande"
+        tax_category: "TVA applicable"
+        inherits_properties: "Hériter des propriétés?"
+        available_on: "Disponible via"
+        import_date: "Date d'import (si import)"
       columns_selector:
         unit: Unité
         price: Prix
         producer: Producteur·trice
         category: Catégorie
+        sku: Référence produit
+        on_hand: "En stock"
+        on_demand: "A la demande"
+        tax_category: "TVA applicable"
+        inherits_properties: "Hériter des propriétés?"
+        available_on: "Disponible via"
+        import_date: "Date d'import (si import)"
     begins_at: Commence
     begins_on: Commence le
     customer: Acheteur

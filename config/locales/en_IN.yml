@@ -300,11 +300,25 @@ en_IN:
         price: Price
         producer: Producer
         category: Category
+        sku: Product Code
+        on_hand: "In Stock"
+        on_demand: "Unlimited"
+        tax_category: "Tax Category"
+        inherits_properties: "Inherits Properties?"
+        available_on: "Available On"
+        import_date: "Import Date"
       columns_selector:
         unit: Unit
         price: Price
         producer: Producer
         category: Category
+        sku: Product Code
+        on_hand: "In Stock"
+        on_demand: "Unlimited"
+        tax_category: "Tax Category"
+        inherits_properties: "Inherits Properties?"
+        available_on: "Available On"
+        import_date: "Import Date"
     begins_at: Begins At
     begins_on: Begins On
     customer: Customer

@@ -6,9 +6,7 @@ en_CA:
       spree/shipping_method: Shipping/Pick-up Method
     attributes:
       spree/order/ship_address:
-        address1: "Shipping address line 1"
         address2: "Shipping address line 2"
-        city: "Shipping address line 3"
         country: "Shipping address country"
         phone: "Phone number"
         firstname: "First name"
@@ -425,11 +423,25 @@ en_CA:
         price: Price
         producer: Producer
         category: Category
+        sku: SKU
+        on_hand: "On Hand"
+        on_demand: "On Demand"
+        tax_category: "Tax Category"
+        inherits_properties: "Inherits Properties?"
+        available_on: "Available"
+        import_date: "Import Date"
       columns_selector:
         unit: Unit
         price: Price
         producer: Producer
         category: Category
+        sku: SKU
+        on_hand: "On Hand"
+        on_demand: "On Demand"
+        tax_category: "Tax Category"
+        inherits_properties: "Inherits Properties?"
+        available_on: "Available"
+        import_date: "Import Date"
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At

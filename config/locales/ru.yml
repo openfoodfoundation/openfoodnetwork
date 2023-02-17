@@ -418,11 +418,25 @@ ru:
         price: Цена
         producer: Производитель
         category: Категория
+        sku: SKU
+        on_hand: "В наличии"
+        on_demand: "По Запросу"
+        tax_category: "Налоговая Категория"
+        inherits_properties: "Наследовать Свойства?"
+        available_on: "Доступен С"
+        import_date: "Дата Импорта"
       columns_selector:
         unit: Единица измерения
         price: Цена
         producer: Производитель
         category: Категория
+        sku: SKU
+        on_hand: "В наличии"
+        on_demand: "По Запросу"
+        tax_category: "Налоговая Категория"
+        inherits_properties: "Наследовать Свойства?"
+        available_on: "Доступен С"
+        import_date: "Дата Импорта"
     adjustments:
       skipped_changing_canceled_order: "Вы не можете изменить отмененный заказ."
     begins_at: Начинается С

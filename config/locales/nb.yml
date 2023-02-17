@@ -414,11 +414,25 @@ nb:
         price: Pris
         producer: Produsent
         category: Kategori
+        sku: SKU
+        on_hand: "Tilgjengelig"
+        on_demand: "Ved forespørsel"
+        tax_category: "Avgiftskategori"
+        inherits_properties: "Arver egenskaper?"
+        available_on: "Tilgjengelig På"
+        import_date: "Importdato"
       columns_selector:
         unit: Enhet
         price: Pris
         producer: Produsent
         category: Kategori
+        sku: SKU
+        on_hand: "Tilgjengelig"
+        on_demand: "Ved forespørsel"
+        tax_category: "Avgiftskategori"
+        inherits_properties: "Arver egenskaper?"
+        available_on: "Tilgjengelig På"
+        import_date: "Importdato"
     adjustments:
       skipped_changing_canceled_order: "Du kan ikke endre en avbrutt bestilling."
     begins_at: Begynner på
