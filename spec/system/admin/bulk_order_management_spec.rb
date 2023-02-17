@@ -602,38 +602,6 @@ describe '
       end
     end
 
-    context "using quick search" do
-      let!(:o1) {
-        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now )
-      }
-      let!(:o2) {
-        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now )
-      }
-      let!(:o3) {
-        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now )
-      }
-      let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
-      let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
-      let!(:li3) { create(:line_item_with_shipment, order: o3 ) }
-
-      before :each do
-        visit_bulk_order_management
-      end
-
-      it "filters line items based on their attributes and the contents of the quick search input" do
-        expect(page).to have_selector "tr#li_#{li1.id}"
-        expect(page).to have_selector "tr#li_#{li2.id}"
-        expect(page).to have_selector "tr#li_#{li3.id}"
-        fill_in "quick_search", with: o1.email
-        expect(page).to have_selector "tr#li_#{li1.id}"
-        expect(page).to have_no_selector "tr#li_#{li2.id}"
-        expect(page).to have_no_selector "tr#li_#{li3.id}"
-      end
-    end
-
     context "using date restriction controls" do
       let!(:o1) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
@@ -791,39 +759,6 @@ describe '
             expect(page).to have_no_selector "tr#li_#{li2.id}"
             expect(o2.reload.state).to eq("canceled")
           end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
-        end
-      end
-
-      context "when a filter has been applied" do
-        it "only toggles checkboxes which are in filteredLineItems" do
-          fill_in "quick_search", with: o1.number
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
-          check "toggle_bulk"
-          fill_in "quick_search", with: ''
-          wait_until { request_monitor_finished 'LineItemsCtrl' }
-          expect(find("tr#li_#{li1.id} input[type='checkbox'][name='bulk']").checked?).to be true
-          expect(find("tr#li_#{li2.id} input[type='checkbox'][name='bulk']").checked?).to be false
-          expect(find("input[type='checkbox'][name='toggle_bulk']").checked?).to be false
-        end
-
-        it "only applies the delete action to filteredLineItems" do
-          check "toggle_bulk"
-          fill_in "quick_search", with: o1.number
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
-
-          find("div#bulk-actions-dropdown").click
-          find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
-
-          within ".modal" do
-            click_on("OK")
-          end
-
-          expect(page).to have_no_selector "tr#li_#{li1.id}"
-          expect(page).to have_selector "#quick_search"
-          fill_in "quick_search", with: ''
-          wait_until { request_monitor_finished 'LineItemsCtrl' }
-          expect(page).to have_selector "tr#li_#{li2.id}"
-          expect(page).to have_no_selector "tr#li_#{li1.id}"
         end
       end
     end

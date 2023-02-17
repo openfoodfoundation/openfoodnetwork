@@ -26,7 +26,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.distributorFilter = ''
     $scope.supplierFilter = ''
     $scope.orderCycleFilter = ''
-    $scope.quickSearch = ''
     $scope.startDate = undefined
     $scope.endDate = undefined
     event = new CustomEvent('flatpickr:clear')
