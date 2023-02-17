@@ -384,27 +384,45 @@ describe '
           login_as_admin_and_visit spree.admin_orders_path
         end
 
-        it "can bulk send invoice for 2 orders" do
-          Spree::Config[:enable_invoices?] = true
-          Spree::Config[:enterprise_number_required_on_invoices?] = false
-
-          page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
-          page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click
-
-          page.find("span.icon-reorder", text: "ACTIONS").click
-          within ".ofn-drop-down-with-prepend .menu" do
-            page.find("span", text: "Send Invoices").click
+        context "bulk print invoices" do
+          before do
+            Spree::Config[:enable_invoices?] = true
+            Spree::Config[:enterprise_number_required_on_invoices?] = false
           end
 
-          expect(page).to have_content "Are you sure you want to proceed?"
+          context "with multiple orders with differents states" do
+            before do
+              order2.update(state: "complete")
+              order3.update(state: "resumed")
+              order4.update(state: "canceled")
+              order5.update(state: "payment")
+            end
 
-          within ".reveal-modal" do
-            expect {
-              find_button("Confirm").click
-            }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+            it "can bulk print invoices but only for the 'complete' or 'resumed' ones" do
+              within "#listing_orders" do
+                page.find("input[name='order_ids[]'][value='#{order2.id}']").click
+                page.find("input[name='order_ids[]'][value='#{order3.id}']").click
+                page.find("input[name='order_ids[]'][value='#{order4.id}']").click
+                page.find("input[name='order_ids[]'][value='#{order5.id}']").click
+              end
+
+              page.find("span.icon-reorder", text: "ACTIONS").click
+              within ".ofn-drop-down-with-prepend .menu" do
+                page.find("span", text: "Send Invoices").click
+              end
+
+              expect(page).to have_content "This will email customer invoices for all selected complete orders."
+              expect(page).to have_content "Are you sure you want to proceed?"
+
+              within ".reveal-modal" do
+                expect {
+                  find_button("Confirm").click
+                }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+              end
+
+              expect(page).to have_content "Invoice emails sent for 2 orders."
+            end
           end
-
-          expect(page).to have_content "Invoice emails sent for 2 orders."
         end
 
         it "can bulk send email to 2 orders" do
