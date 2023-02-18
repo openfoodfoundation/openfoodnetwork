@@ -39,6 +39,8 @@ module ProductImport
         enterprise_validation(entry)
         unit_fields_validation(entry)
         variant_of_product_validation(entry)
+        price_validation(entry)
+        on_hand_on_demand_validation(entry)
 
         next if entry.enterprise_id.blank?
 
@@ -170,6 +172,11 @@ module ProductImport
                                error: I18n.t('admin.product_import.model.blank'))
       end
 
+      unless is_numeric(entry.units) && entry.units.to_i > 0
+        mark_as_invalid(entry, attribute: 'units',
+                               error: I18n.t('admin.product_import.model.incorrect_value'))
+      end
+
       return if import_into_inventory?
 
       # unit_type must be valid type
@@ -187,6 +194,43 @@ module ProductImport
 
       mark_as_invalid(entry, attribute: 'variant_unit_name',
                              error: I18n.t('admin.product_import.model.conditional_blank'))
+    end
+
+    def is_numeric(value)
+      return true unless Float(value, exception: false).nil?
+    end
+
+    def price_validation(entry)
+      return if is_numeric(entry.price)
+
+      if empty_or_placeholder_value(entry.price)
+        mark_as_invalid(entry, attribute: 'price',
+                               error: I18n.t('admin.product_import.model.blank'))
+      else
+        mark_as_invalid(entry, attribute: 'price',
+                               error: I18n.t('admin.product_import.model.incorrect_value'))
+      end
+    end
+
+    def on_hand_on_demand_validation(entry)
+      on_hand_present_numeric = !empty_or_placeholder_value(entry.on_hand) &&
+                                is_numeric(entry.on_hand)
+      on_hand_value = entry.on_hand&.to_i
+      on_demand_present_numeric = !empty_or_placeholder_value(entry.on_demand) &&
+                                  is_numeric(entry.on_demand)
+      on_demand_value = entry.on_demand&.to_i
+
+      return if (on_hand_present_numeric && on_hand_value >= 0) ||
+                (on_demand_present_numeric && on_demand_value == 1)
+
+      mark_as_invalid(entry, attribute: 'on_hand',
+                             error: I18n.t('admin.product_import.model.incorrect_value'))
+      mark_as_invalid(entry, attribute: 'on_demand',
+                             error: I18n.t('admin.product_import.model.incorrect_value'))
+    end
+
+    def empty_or_placeholder_value(value)
+      !value&.present? || value.nil? || value.to_s.strip == '' || value.to_s.strip == "-"
     end
 
     def variant_of_product_validation(entry)
@@ -287,8 +331,7 @@ module ProductImport
         entry.primary_taxon_id = @spreadsheet_data.categories_index[category_name]
       else
         mark_as_invalid(entry, attribute: "category",
-                               error: I18n.t(:error_not_found_in_database,
-                                             name: category_name))
+                               error: I18n.t('admin.product_import.model.category_not_found'))
       end
     end
 
