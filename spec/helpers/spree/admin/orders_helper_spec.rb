@@ -9,10 +9,8 @@ describe Spree::Admin::OrdersHelper, type: :helper do
 
     around do |example|
       original_invoices_setting = Spree::Config[:enable_invoices?]
-      original_tickets_setting = Spree::Config[:enable_receipt_printing?]
       example.run
       Spree::Config[:enable_invoices?] = original_invoices_setting
-      Spree::Config[:enable_receipt_printing?] = original_tickets_setting
     end
 
     before do
@@ -21,7 +19,6 @@ describe Spree::Admin::OrdersHelper, type: :helper do
       allow(order).to receive(:can_cancel?) { false }
       allow(order).to receive(:resumed?) { false }
       Spree::Config[:enable_invoices?] = false
-      Spree::Config[:enable_receipt_printing?] = false
     end
 
     it "returns only edit order link when all conditions are set to false" do
@@ -80,20 +77,6 @@ describe Spree::Admin::OrdersHelper, type: :helper do
           expect(links.size).to eq 4
           expect(links[2][:name]).to eq "Send Invoice"
           expect(links[3][:name]).to eq "Print Invoice"
-        end
-      end
-
-      context "with tickets enabled" do
-        before do
-          Spree::Config[:enable_receipt_printing?] = true
-        end
-
-        it "adds print and select ticket links" do
-          links = helper.order_links(order)
-
-          expect(links.size).to eq 4
-          expect(links[2][:name]).to eq "Print Ticket"
-          expect(links[3][:name]).to eq "Select printer for tickets"
         end
       end
     end

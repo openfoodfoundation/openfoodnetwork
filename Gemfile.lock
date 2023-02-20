@@ -9,13 +9,6 @@ GIT
       rails (>= 3.2.0, < 7.0)
 
 GIT
-  remote: https://github.com/openfoodfoundation/ofn-qz.git
-  revision: 467f6ea1c44529c7c91cac4c8211bbd863588c0b
-  branch: ofn-rails-4
-  specs:
-    ofn-qz (0.1.0)
-
-GIT
   remote: https://github.com/openfoodfoundation/select2-rails.git
   revision: fc240e85fbdf1878ff3c39d972c0cd9a312f5ed4
   branch: v349_with_thor_v1
@@ -840,7 +833,6 @@ DEPENDENCIES
   mini_racer
   monetize (~> 1.11)
   oauth2 (~> 1.4.7)
-  ofn-qz!
   omniauth-rails_csrf_protection
   omniauth_openid_connect
   openid_connect (~> 1.3)

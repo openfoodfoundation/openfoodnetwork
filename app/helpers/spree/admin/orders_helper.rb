@@ -27,7 +27,7 @@ module Spree
       private
 
       def complete_order_links
-        [resend_confirmation_link] + invoice_links + ticket_links
+        [resend_confirmation_link] + invoice_links
       end
 
       def invoice_links
@@ -50,12 +50,6 @@ module Spree
         else
           notify_about_required_enterprise_number
         end
-      end
-
-      def ticket_links
-        return [] unless Spree::Config[:enable_receipt_printing?]
-
-        [print_ticket_link, select_ticket_printer_link]
       end
 
       def edit_order_link
@@ -98,20 +92,6 @@ module Spree
           url: "#",
           icon: 'icon-print',
           confirm: t(:must_have_valid_business_number, enterprise_name: @order.distributor.name) }
-      end
-
-      def print_ticket_link
-        { name: t(:print_ticket),
-          url: print_ticket_admin_order_path(@order),
-          icon: 'icon-print',
-          target: "_blank" }
-      end
-
-      def select_ticket_printer_link
-        { name: t(:select_ticket_printer),
-          url: "#{print_ticket_admin_order_path(@order)}#select-printer",
-          icon: 'icon-print',
-          target: "_blank" }
       end
 
       def ship_order_link

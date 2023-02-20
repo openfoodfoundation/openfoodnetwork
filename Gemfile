@@ -125,8 +125,6 @@ gem 'jquery-rails', '4.4.0'
 gem 'jquery-ui-rails', '~> 4.2'
 gem "select2-rails", github: "openfoodfoundation/select2-rails", branch: "v349_with_thor_v1"
 
-gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', branch: 'ofn-rails-4'
-
 gem 'good_migrations'
 
 gem 'flipper'

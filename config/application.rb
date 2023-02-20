@@ -219,7 +219,6 @@ module Openfoodnetwork
     config.assets.precompile += ['web/all.js']
     config.assets.precompile += ['darkswarm/all.js']
     config.assets.precompile += ['shared/*']
-    config.assets.precompile += ['qz/*']
     config.assets.precompile += ['*.jpg', '*.jpeg', '*.png', '*.gif' '*.svg']
 
     # Apply framework defaults. New recommended defaults are successively added with each Rails version and

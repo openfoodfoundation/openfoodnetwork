@@ -9,14 +9,12 @@ module Spree
       helper CheckoutHelper
 
       before_action :load_order, only: [:edit, :update, :fire, :resend,
-                                        :invoice, :print, :print_ticket]
+                                        :invoice, :print]
       before_action :load_distribution_choices, only: [:new, :edit, :update]
 
       # Ensure that the distributor is set for an order when
       before_action :ensure_distribution, only: :new
       before_action :require_distributor_abn, only: :invoice
-
-      content_security_policy false, only: :print_ticket
 
       respond_to :html, :json
 
@@ -115,10 +113,6 @@ module Spree
 
       def print
         render_with_wicked_pdf InvoiceRenderer.new.args(@order)
-      end
-
-      def print_ticket
-        render template: "spree/admin/orders/ticket", layout: false
       end
 
       private
