@@ -570,6 +570,10 @@ describe '
           find('.save-method').click
 
           expect(page).to have_content "Shipping: #{different_shipping_method_for_distributor1.name}"
+
+          within "#order-total" do 
+            expect(page).to have_content "$175.00"
+          end
         end
 
         context "when the distributor unsupport a shipping method that's selected in an existing order " do
