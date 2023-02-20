@@ -138,7 +138,7 @@
               %a{ :href => '', 'ng-click' => "sorting.toggle('order.phone')" }
                 = t("admin.phone")
             %th.date{ 'ng-show' => 'columns.order_date.visible' }
-              %a{ :href => '', 'ng-click' => "sorting.toggle('order.completed_at')" }
+              %a{ :href => '', 'ng-click' => "sorting.toggle('order.completed_at_utc_iso8601')" }
                 = t("admin.orders.bulk_management.order_date")
             %th.producer{ 'ng-show' => 'columns.producer.visible' }
               %a{ :href => '', 'ng-click' => "sorting.toggle('supplier.name')" }
