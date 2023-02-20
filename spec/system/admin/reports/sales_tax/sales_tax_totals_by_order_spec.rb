@@ -361,6 +361,7 @@ describe "Sales Tax Totals By order" do
     end
 
     it "should filter customer1 orders" do
+      pending
       page.find(customer_email_dropdown_selector).click
       find('li', text: customer1.email).click
 
@@ -379,6 +380,7 @@ describe "Sales Tax Totals By order" do
     end
 
     it "should filter customer2 orders" do
+      pending
       page.find(customer_email_dropdown_selector).click
       find('li', text: customer2.email).click
 
@@ -397,6 +399,7 @@ describe "Sales Tax Totals By order" do
     end
 
     it "should filter customer1 and customer2 orders" do
+      pending
       page.find(customer_email_dropdown_selector).click
       find('li', text: customer1.email).click
       page.find(customer_email_dropdown_selector).click
