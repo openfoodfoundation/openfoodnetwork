@@ -49,7 +49,6 @@ module Reporting
                                                                          double(name: "taxon2")]
             allow(variant).to receive_message_chain(:product, :group_buy_unit_size).and_return(21)
             allow(subject).to receive(:query_result).and_return [variant]
-            allow(subject).to receive(:raw_render?).and_return(true)
 
             expect(subject.table_rows).to eq([[
                                                "Supplier",
