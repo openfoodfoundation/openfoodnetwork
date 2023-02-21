@@ -47,11 +47,16 @@ module Reporting
 
       proc_args = [group_value, datas.map(&:item), datas.map(&:full_row)]
       row = rule[:summary_row].call(*proc_args)
+      row = add_summary_row_type(row)
       row = slice_and_format_row(OpenStruct.new(row.reverse_merge!(blank_row)))
       add_summary_row_label(row, rule, proc_args)
     end
 
     private
+
+    def add_summary_row_type(row)
+      row.reverse_merge!({ report_row_type: "summary" })
+    end
 
     def add_summary_row_label(row, rule, proc_args)
       previous_key = nil
