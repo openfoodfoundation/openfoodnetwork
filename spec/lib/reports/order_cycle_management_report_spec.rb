@@ -165,7 +165,7 @@ module Reporting
               end
 
               it 'returns rows with payment information' do
-                allow(subject).to receive(:raw_render?).and_return(true)
+                allow(subject).to receive(:unformatted_render?).and_return(true)
                 expect(subject.table_rows).to eq([[
                                                    order.billing_address.firstname,
                                                    order.billing_address.lastname,
@@ -192,7 +192,7 @@ module Reporting
               end
 
               it 'returns rows with delivery information' do
-                allow(subject).to receive(:raw_render?).and_return(true)
+                allow(subject).to receive(:unformatted_render?).and_return(true)
                 expect(subject.table_rows).to eq([[
                                                    order.ship_address.firstname,
                                                    order.ship_address.lastname,

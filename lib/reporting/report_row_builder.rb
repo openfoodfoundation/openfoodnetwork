@@ -30,7 +30,7 @@ module Reporting
     def slice_and_format_row(row)
       result = row.to_h.select { |k, _v| k.in?(report.fields_to_show) }
 
-      unless report.raw_render?
+      unless report.unformatted_render?
         result = result.map { |k, v| [k, format_cell(v, k)] }.to_h
       end
       OpenStruct.new(result)
