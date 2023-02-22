@@ -108,8 +108,8 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 gem 'immigrant'
-gem 'roo'
-gem 'spreadsheet_architect'
+gem 'roo' # read spreadsheets
+gem 'spreadsheet_architect' # write spreadsheets
 
 gem 'whenever', require: false
 
@@ -181,7 +181,6 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'web-console'
-
 
   gem 'rack-mini-profiler', '< 3.0.0'
 end
