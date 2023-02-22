@@ -1144,6 +1144,17 @@ en:
           add_unregistered_user: "Add an unregistered user"
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
+        vouchers:
+          legend: Vouchers
+          rate: Rate
+          label: Label
+          purpose: Purpose
+          expiry: Expiry
+          use_limit: Use/Limit
+          customers: Customer
+          net_value: Net Value
+          add_new: Add New
+          no_voucher_yet: No Vouchers yet
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1382,6 +1393,7 @@ en:
           tag_rules: "Tag Rules"
           shop_preferences: "Shop Preferences"
           users: "Users"
+          vouchers: Vouchers
         enterprise_group:
           primary_details: "Primary Details"
           users: "Users"
@@ -1590,6 +1602,13 @@ en:
     schedules:
       destroy:
         associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
+    vouchers:
+      new:
+        legend: New Voucher
+        back: Back
+        save: Save
+        voucher_code: Voucher Code
+        voucher_amount: Amount
 
     # Admin controllers
     controllers:

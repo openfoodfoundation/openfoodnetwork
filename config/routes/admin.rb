@@ -40,6 +40,9 @@ Openfoodnetwork::Application.routes.draw do
       end
 
       resources :tag_rules, only: [:destroy]
+
+      # TODO do we need to remove more routes
+      resources :vouchers, only: [:new, :create]
     end
 
     resources :enterprise_relationships
