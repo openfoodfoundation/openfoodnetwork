@@ -108,8 +108,8 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 gem 'immigrant'
-gem 'roo'
-gem 'spreadsheet_architect'
+gem 'roo' # read spreadsheets
+gem 'spreadsheet_architect' # write spreadsheets
 
 gem 'whenever', require: false
 
