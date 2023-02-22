@@ -5,6 +5,7 @@ module Admin
 
    def new
      @enterprise = Enterprise.find_by permalink: params[:enterprise_id]
+     @voucher = Voucher.new
    end
   end
 end
