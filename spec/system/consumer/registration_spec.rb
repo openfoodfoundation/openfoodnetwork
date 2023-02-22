@@ -70,8 +70,13 @@ describe "Registration", js: true do
       expect(page).to have_content 'Last step to add My Awesome Enterprise!'
 
       # Choosing a type
+      click_button "Create Profile"
+      expect(page).to have_content("Please choose one. Are you are producer?")
+      expect(page).to have_button "Create Profile", disabled: true
+
       click_link "producer-panel"
       expect(page).to have_selector '#producer-panel.selected'
+      expect(page).to have_button "Create Profile", disabled: false
 
       # Next (profile is created at this point)
       click_button "Create Profile"
