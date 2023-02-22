@@ -1146,6 +1146,7 @@ en:
           email_not_confirmed: "Email not confirmed"
         vouchers:
           legend: Vouchers
+          voucher_code: Voucher Code
           rate: Rate
           label: Label
           purpose: Purpose
