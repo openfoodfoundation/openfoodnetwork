@@ -184,6 +184,5 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'web-console'
 
-
   gem 'rack-mini-profiler', '< 3.0.0'
 end
