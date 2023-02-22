@@ -26,17 +26,27 @@ describe '
     context "displaying the list of line items" do
       let!(:o1) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now )
+                                        completed_at: Time.zone.parse('2022-05-05 15:30:45'))
       }
       let!(:o2) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now )
+                                        completed_at: Time.zone.parse('2022-04-26 15:10:45'))
+      }
+      let!(:o21) {
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.parse('2022-08-04 09:10:45'))
+      }
+      let!(:o22) {
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.parse('2022-06-07 09:10:45'))
       }
       let!(:o3) { create(:order_with_distributor, state: 'address', completed_at: nil ) }
       let!(:o4) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:o5) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:li1) { create(:line_item_with_shipment, order: o1) }
       let!(:li2) { create(:line_item_with_shipment, order: o2) }
+      let!(:li21) { create(:line_item_with_shipment, order: o21) }
+      let!(:li22) { create(:line_item_with_shipment, order: o22) }
       let!(:li3) { create(:line_item, order: o3 ) }
       let!(:li4) { create(:line_item_with_shipment, order: o4) }
       let!(:li5) { create(:line_item_with_shipment, order: o5) }
@@ -56,6 +66,13 @@ describe '
         expect(page).to have_selector "tr#li_#{li2.id}"
         expect(page).to have_no_selector "tr#li_#{li4.id}"
         expect(page).to have_no_selector "tr#li_#{li5.id}"
+      end
+
+      it "orders by completion date" do
+        find("a", text: 'COMPLETED AT').click # sets ascending ordering
+        expect(page).to have_content(/#{li2.product.name}.*#{li1.product.name}.*#{li22.product.name}.*#{li21.product.name}/m)
+        find("a", text: 'COMPLETED AT').click # sets descending ordering
+        expect(page).to have_content(/#{li21.product.name}.*#{li22.product.name}.*#{li1.product.name}.*#{li2.product.name}/m)
       end
     end
 
