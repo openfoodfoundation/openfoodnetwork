@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class OrderFeesHandler
-  attr_reader :order, :distributor, :order_cycle
+  attr_reader :order
+
+  delegate :distributor, :order_cycle, to: :order
 
   def initialize(order)
     @order = order
-    @distributor = order.distributor
-    @order_cycle = order.order_cycle
   end
 
   def recreate_all_fees!
