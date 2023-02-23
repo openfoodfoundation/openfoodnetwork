@@ -518,7 +518,6 @@ de_CH:
         title: "Rechnungseinstellungen"
         enable_invoices?: "Rechnungen aktivieren?"
         invoice_style2?: "Verwenden Sie die Rechnungsvorlage mit Aufschlüsselung verschiedener Steuersätze pro Artikel (empfohlen in der EU, noch nicht für Länder mit Preisen ohne Steuern geeignet)."
-        enable_receipt_printing?: "Optionen zum Drucken von Belegen mit Thermodruckern in der Dropdown-Liste anzeigen?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1574,10 +1573,6 @@ de_CH:
   invoice_issued_on: "Rechnungsdatum:"
   order_number: "Rechnungsnummer:"
   date_of_transaction: "Bestelldatum:"
-  ticket_column_qty: "Menge"
-  ticket_column_item: "Artikel"
-  ticket_column_unit_price: "Stückpreis"
-  ticket_column_total_price: "Gesamtpreis"
   menu_1_title: "Einkaufen"
   menu_1_url: "/shops"
   menu_2_title: "Karte"

@@ -525,7 +525,6 @@ ca:
         title: "Configuració de la factura"
         enable_invoices?: "Activar factures?"
         invoice_style2?: "Utilitzeu el model de factura alternatiu que inclou el desglossament dels càrregs totals per tarifa i la informació sobre la taxa impositiva per article (encara no està disponible per als països sense recàrregs en concpte d'impostos)"
-        enable_receipt_printing?: "Mostra les opcions per imprimir rebuts amb impressores tèrmiques en el menú desplegable de la comanda?"
         enterprise_number_required_on_invoices?: "Vols fer el NIF obligatori per generar una factura?"
     stripe_connect_settings:
       edit:
@@ -1579,10 +1578,6 @@ ca:
   invoice_issued_on: "Factura emesa el:"
   order_number: "Nombre de factura:"
   date_of_transaction: "Data de la transacció:"
-  ticket_column_qty: "Quantitat"
-  ticket_column_item: "Article"
-  ticket_column_unit_price: "Preu unitari"
-  ticket_column_total_price: "Preu total"
   menu_1_title: "Botigues"
   menu_1_url: "/shops"
   menu_2_title: "Mapa"

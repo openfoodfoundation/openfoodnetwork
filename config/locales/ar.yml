@@ -541,7 +541,6 @@ ar:
         title: "إعدادات الفاتورة"
         enable_invoices?: "تمكين الفواتير؟"
         invoice_style2?: "استخدم نموذج الفاتورة البديل الذي يتضمن إجمالي تفاصيل الضرائب لكل سعر ومعلومات معدل الضريبة لكل عنصر (غير مناسب حتى الآن للدول التي تعرض الأسعار باستثناء الضريبة)"
-        enable_receipt_printing?: "إظهار خيارات لإيصالات الطباعة باستخدام الطابعات الحرارية من أجل ترتيب القائمة المنسدلة؟"
         enterprise_number_required_on_invoices?: "هل تتطلب ABN لإنشاء فاتورة؟"
     stripe_connect_settings:
       edit:
@@ -1633,10 +1632,6 @@ ar:
   invoice_issued_on: "الفاتورة الصادرة في:"
   order_number: "رقم الفاتورة:"
   date_of_transaction: "تاريخ المعاملة:"
-  ticket_column_qty: "الكمية"
-  ticket_column_item: "بند"
-  ticket_column_unit_price: "سعر الوحدة"
-  ticket_column_total_price: "السعر الكلي"
   menu_1_title: "متاجر"
   menu_1_url: "/shops"
   menu_2_title: "خريطة"

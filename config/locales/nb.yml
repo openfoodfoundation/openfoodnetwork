@@ -522,7 +522,6 @@ nb:
         title: "Fakturainnstillinger"
         enable_invoices?: "Aktivér Fakturaer?"
         invoice_style2?: "Bruk den alternative fakturamodellen som inkluderer total avgiftsoppdeling pr rate og avgiftsrateinfo pr vare (passer ikke for land som viser priser ekskludert avgift)"
-        enable_receipt_printing?: "Vis valg for utskrift av kvitteringer ved bruk av kvitteringsprinter i nedtrekksmeny for bestillinger? "
         enterprise_number_required_on_invoices?: "Krev et Org nr for å generere en faktura?"
     stripe_connect_settings:
       edit:
@@ -1595,10 +1594,6 @@ nb:
   invoice_issued_on: "Fakturadato:"
   order_number: "Fakturanummer:"
   date_of_transaction: "Transaksjonsdato:"
-  ticket_column_qty: "Antall"
-  ticket_column_item: "Vare"
-  ticket_column_unit_price: "Enhetspris"
-  ticket_column_total_price: "Totalpris"
   menu_1_title: "Butikker"
   menu_1_url: "/shops"
   menu_2_title: "Kart"

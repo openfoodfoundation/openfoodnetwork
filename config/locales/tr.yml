@@ -459,7 +459,6 @@ tr:
         title: "Fatura Ayarları"
         enable_invoices?: "Faturalar etkinleştirilsin mi?"
         invoice_style2?: "Oran başına toplam vergi dökümü ve kalem başına vergi oranı bilgilerini içeren alternatif fatura modelini kullanın "
-        enable_receipt_printing?: "Sipariş listesinde termal yazıcılar kullanarak makbuz yazdırma seçeneklerini göster?"
     stripe_connect_settings:
       edit:
         title: "Ödeme Bağlantısı"
@@ -1468,10 +1467,6 @@ tr:
   invoice_issued_on: "Fatura Düznleme Tarihi"
   order_number: "Fatura numarası:"
   date_of_transaction: "İşlem tarihi:"
-  ticket_column_qty: "Miktar"
-  ticket_column_item: "Ürün"
-  ticket_column_unit_price: "Birim fiyat"
-  ticket_column_total_price: "Toplam tutar"
   menu_1_title: "PAZAR YERİ"
   menu_1_url: "/shops"
   menu_2_title: "HARİTA"

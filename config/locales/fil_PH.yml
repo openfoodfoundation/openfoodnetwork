@@ -389,7 +389,6 @@ fil_PH:
         title: "settings ng invoice"
         enable_invoices?: "paganahin ang mga invoice?"
         invoice_style2?: "gamitin ang alternatibong modelo ng invoice na kinabibilangan ng kabuuang breakdown ng tax bawat rate at impormasyon ng rate ng tax kada item (hindi pa akma para sa mga bansang nagpapakita na presyo na hindi kasama ang tax)"
-        enable_receipt_printing?: "ipakita ang mga pagpipilian sa pag-print ng mga resibo gamit ang thermal printers sa dropdown ng order?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1356,10 +1355,6 @@ fil_PH:
   invoice_issued_on: "inilabas ang invoice noong:"
   order_number: "numero ng invoice"
   date_of_transaction: "Petsa ng Transaksiyon:"
-  ticket_column_qty: "Dami:"
-  ticket_column_item: "Item"
-  ticket_column_unit_price: "Presyo kada Yunit"
-  ticket_column_total_price: "Kabuuang Presyo"
   menu_1_title: "Mga Shop"
   menu_1_url: "/shops"
   menu_2_title: "Mapa"

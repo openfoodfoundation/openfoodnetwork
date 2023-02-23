@@ -398,7 +398,6 @@ nl_BE:
         title: "Factuur instellingen"
         enable_invoices?: "Facturen inschakelen?"
         invoice_style2?: "Gebruik het alternatieve factuurmodel dat de totale belastingsuitsplitsing per tarief en belastingtariefinformatie per artikel bevat (nog niet geschikt voor landen met prijzen exclusief belastingen)."
-        enable_receipt_printing?: "Toon opties voor het afdrukken van kassabonnen met behulp van thermische printers in de volgorde dropdown?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1385,10 +1384,6 @@ nl_BE:
   invoice_issued_on: "Aanmaakdatum Factuur:"
   order_number: "Factuurnummer:"
   date_of_transaction: "Transactiedatum:"
-  ticket_column_qty: "Aantal"
-  ticket_column_item: "Artikel"
-  ticket_column_unit_price: "Stukprijs"
-  ticket_column_total_price: "Totaalprijs"
   menu_1_title: "Winkels"
   menu_1_url: "/shops"
   menu_2_title: "Kaart"

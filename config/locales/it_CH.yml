@@ -518,7 +518,6 @@ it_CH:
         title: "Impostazioni fiscali"
         enable_invoices?: "Abilita conferme d'ordine?"
         invoice_style2?: "Utilizzare il modello di fattura alternativa che include la ripartizione totale delle imposte per tariffa e le informazioni sulla tariffa fiscale per articolo (non ancora adatto per i paesi che visualizzano i prezzi al netto delle imposte)"
-        enable_receipt_printing?: "Visualizzo le opzioni per stampare la ricevuta usando la stampante termica nel menù a cascata?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1561,10 +1560,6 @@ it_CH:
   invoice_issued_on: "Documento emesso il: "
   order_number: "Numero documento:"
   date_of_transaction: "Data della transazione:"
-  ticket_column_qty: "Qty"
-  ticket_column_item: "Articolo"
-  ticket_column_unit_price: "Prezzo unitario"
-  ticket_column_total_price: "Prezzo totale"
   menu_1_title: "Negozi"
   menu_1_url: "/shops"
   menu_2_title: "Mappa"

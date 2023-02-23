@@ -526,7 +526,6 @@ ru:
         title: "Настройки Счёта"
         enable_invoices?: "Включить Счета?"
         invoice_style2?: "Используйте альтернативную модель счета-фактуры, которая включает общую разбивку налогов по ставке и информацию о ставке налога по каждой позиции (пока не подходит для стран, в которых цены отображаются без учета налогов)"
-        enable_receipt_printing?: "Показать параметры для печати чеков с использованием термопринтеров в раскрывающемся списке?"
         enterprise_number_required_on_invoices?: "Требовать ABN для создания счета?"
     stripe_connect_settings:
       edit:
@@ -1611,10 +1610,6 @@ ru:
   invoice_issued_on: "Счёт выписан:"
   order_number: "Номер счёта:"
   date_of_transaction: "Дата операции:"
-  ticket_column_qty: "Кол-во"
-  ticket_column_item: "Позиция"
-  ticket_column_unit_price: "Цена за единицу"
-  ticket_column_total_price: "Итоговая цена"
   menu_1_title: "Магазины"
   menu_1_url: "/shops"
   menu_2_title: "Карта"

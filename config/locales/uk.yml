@@ -521,7 +521,6 @@ uk:
         title: "Налаштування рахунка-фактури"
         enable_invoices?: "Увімкнути рахунки-фактури?"
         invoice_style2?: "Використовуйте альтернативну модель рахунка-фактури, яка включає загальну розбивку податку на ставку та інформацію про ставку податку на один товар (поки що не підходить для країн, де відображаються ціни без урахування податку)"
-        enable_receipt_printing?: "Показати варіанти друку квитанцій за допомогою термопринтерів у спадному меню порядку?"
         enterprise_number_required_on_invoices?: "Вимагати ABN для створення рахунку?"
     stripe_connect_settings:
       edit:
@@ -1586,10 +1585,6 @@ uk:
   invoice_issued_on: "Рахунок виставлено:"
   order_number: "Номер рахунку:"
   date_of_transaction: "Дата операції:"
-  ticket_column_qty: "К-ть"
-  ticket_column_item: "Товар"
-  ticket_column_unit_price: "Ціна за од."
-  ticket_column_total_price: "Загальна ціна"
   menu_1_title: "Магазини"
   menu_1_url: "/магазини"
   menu_2_title: "Карта"

@@ -518,7 +518,6 @@ fr_CH:
         title: "Paramètres de facturation"
         enable_invoices?: "Autoriser l'émission de factures ?"
         invoice_style2?: "Utiliser le modèle de facture alternatif qui détaille le montant de TVA agrégé par taux et l'information du taux de TVA par produit (pas adapté pour les instances affichant les prix HT)"
-        enable_receipt_printing?: "Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1574,10 +1573,6 @@ fr_CH:
   invoice_issued_on: "Date de facture :"
   order_number: "N° de facture :"
   date_of_transaction: "Date de la transaction :"
-  ticket_column_qty: "Qté"
-  ticket_column_item: "Produit"
-  ticket_column_unit_price: "Prix unitaire"
-  ticket_column_total_price: "Prix total"
   menu_1_title: "Acheter"
   menu_1_url: "/shops"
   menu_2_title: "Carte"
