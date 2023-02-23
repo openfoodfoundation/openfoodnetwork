@@ -78,6 +78,10 @@ class OrderCycleForm
     return if @selected_distributor_shipping_method_ids.nil?
 
     if distributor_only?
+      # A distributor can only update methods associated with their own
+      # enterprise, so we load all previously selected methods, and replace
+      # only the distributor's methods with their selection (not touching other
+      # distributor's methods).
       shipping_method_ids = order_cycle.selected_distributor_shipping_method_ids
       shipping_method_ids -= user_distributor_shipping_method_ids
       shipping_method_ids += user_only_selected_distributor_shipping_method_ids
