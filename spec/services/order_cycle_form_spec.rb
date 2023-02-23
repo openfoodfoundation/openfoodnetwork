@@ -226,21 +226,23 @@ describe OrderCycleForm do
         let!(:distributor){ create(:distributor_enterprise) }
         let!(:payment_method){ create(:payment_method, distributors: [distributor]) }
         let!(:payment_method2){ create(:payment_method, distributors: [distributor]) }
-        let!(:distributor_payment_method){ payment_method.distributor_payment_methods.first }
-        let!(:distributor_payment_method2){ payment_method2.distributor_payment_methods.first }
+        let!(:distributor_payment_method){ distributor.distributor_payment_methods.first.id }
+        let!(:distributor_payment_method2){ distributor.distributor_payment_methods.second.id }
         let!(:supplier){ create(:supplier_enterprise) }
+
         context "the submitter is a coordinator" do
           it "saves the changes" do
             order_cycle = create(:distributor_order_cycle, distributors: [distributor])
 
             form = OrderCycleForm.new(
               order_cycle,
-              { selected_distributor_payment_method_ids: [distributor_payment_method.id] },
+              { selected_distributor_payment_method_ids: [distributor_payment_method] },
               order_cycle.coordinator.users.first
             )
 
-            expect(form.save).to be true
-            expect(order_cycle.distributor_payment_methods).to eq [distributor_payment_method]
+            expect{ form.save }.to change{ order_cycle.distributor_payment_methods.pluck(:id) }
+              .from([distributor_payment_method, distributor_payment_method2])
+              .to([distributor_payment_method])
           end
         end
 
@@ -251,14 +253,11 @@ describe OrderCycleForm do
 
             form = OrderCycleForm.new(
               order_cycle,
-              { selected_distributor_payment_method_ids: [distributor_payment_method.id] },
+              { selected_distributor_payment_method_ids: [distributor_payment_method] },
               supplier.users.first
             )
 
-            expect(form).not_to receive(:attach_selected_distributor_payment_methods)
-            expect(order_cycle.distributor_payment_methods).to match_array [
-              distributor_payment_method, distributor_payment_method2
-            ]
+            expect{ form.save }.to_not change{ order_cycle.distributor_payment_methods.pluck(:id) }
           end
         end
 
@@ -268,12 +267,13 @@ describe OrderCycleForm do
 
             form = OrderCycleForm.new(
               order_cycle,
-              { selected_distributor_payment_method_ids: [distributor_payment_method.id] },
+              { selected_distributor_payment_method_ids: [distributor_payment_method2] },
               create(:admin_user)
             )
 
-            expect(form.save).to be true
-            expect(order_cycle.distributor_payment_methods).to eq [distributor_payment_method]
+            expect{ form.save }.to change{ order_cycle.distributor_payment_methods.pluck(:id) }
+              .from([distributor_payment_method, distributor_payment_method2])
+              .to([distributor_payment_method2])
           end
         end
 
@@ -284,12 +284,13 @@ describe OrderCycleForm do
 
               form = OrderCycleForm.new(
                 order_cycle,
-                { selected_distributor_payment_method_ids: [distributor_payment_method.id] },
+                { selected_distributor_payment_method_ids: [distributor_payment_method] },
                 distributor.users.first
               )
 
-              expect(form.save).to be true
-              expect(order_cycle.distributor_payment_methods).to eq [distributor_payment_method]
+              expect{ form.save }.to change{ order_cycle.distributor_payment_methods.pluck(:id) }
+                .from([distributor_payment_method, distributor_payment_method2])
+                .to([distributor_payment_method])
             end
           end
           context "can't update other distributors' payment methods" do
@@ -300,14 +301,13 @@ describe OrderCycleForm do
 
               form = OrderCycleForm.new(
                 order_cycle,
-                { selected_distributor_payment_method_ids: [distributor_payment_method.id] },
+                { selected_distributor_payment_method_ids: [distributor_payment_method] },
                 distributor2.users.first
               )
 
-              expect(form).not_to receive(:attach_selected_distributor_payment_methods)
-              expect(order_cycle.distributor_payment_methods).to match_array [
-                distributor_payment_method, distributor_payment_method2
-              ]
+              expect{ form.save }.to_not change{
+                                           order_cycle.distributor_payment_methods.pluck(:id)
+                                         }
             end
           end
         end
