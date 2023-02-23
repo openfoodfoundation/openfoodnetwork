@@ -50,10 +50,6 @@ module Reporting
           data["shipping_method_name"].present?
         end
 
-        def for_enterprise_fee?
-          data["fee_name"].present?
-        end
-
         def for_coordinator_fee?
           data["placement_enterprise_role"] == "coordinator"
         end
