@@ -331,7 +331,7 @@ describe OrderCycleForm do
           form = OrderCycleForm.new(
             order_cycle,
             { selected_distributor_payment_method_ids: [distributor_payment_method_ii.id] },
-            order_cycle.coordinator
+            order_cycle.coordinator.users.first
           )
 
           expect(form.save).to be true
@@ -447,7 +447,7 @@ describe OrderCycleForm do
           form = OrderCycleForm.new(
             order_cycle,
             { selected_distributor_shipping_method_ids: [distributor_shipping_method_ii.id] },
-            order_cycle.coordinator
+            order_cycle.coordinator.users.first
           )
 
           expect(form.save).to be true
