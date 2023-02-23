@@ -223,22 +223,93 @@ describe OrderCycleForm do
 
     context "updating payment methods" do
       context "and it's valid" do
-        it "saves the changes" do
-          distributor = create(:distributor_enterprise)
-          distributor_payment_method = create(
-            :payment_method,
-            distributors: [distributor]
-          ).distributor_payment_methods.first
-          order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+        let!(:distributor){ create(:distributor_enterprise) }
+        let!(:payment_method){ create(:payment_method, distributors: [distributor]) }
+        let!(:payment_method2){ create(:payment_method, distributors: [distributor]) }
+        let!(:distributor_payment_method){ payment_method.distributor_payment_methods.first }
+        let!(:distributor_payment_method2){ payment_method2.distributor_payment_methods.first }
+        let!(:supplier){ create(:supplier_enterprise) }
+        context "the submitter is a coordinator" do
+          it "saves the changes" do
+            order_cycle = create(:distributor_order_cycle, distributors: [distributor])
 
-          form = OrderCycleForm.new(
-            order_cycle,
-            { selected_distributor_payment_method_ids: [distributor_payment_method.id] },
-            order_cycle.coordinator
-          )
+            form = OrderCycleForm.new(
+              order_cycle,
+              { selected_distributor_payment_method_ids: [distributor_payment_method.id] },
+              order_cycle.coordinator.users.first
+            )
 
-          expect(form.save).to be true
-          expect(order_cycle.distributor_payment_methods).to eq [distributor_payment_method]
+            expect(form.save).to be true
+            expect(order_cycle.distributor_payment_methods).to eq [distributor_payment_method]
+          end
+        end
+
+        context "submitter is a supplier" do
+          it "doesn't save the changes" do
+            order_cycle = create(:distributor_order_cycle, distributors: [distributor],
+                                                           suppliers: [supplier])
+
+            form = OrderCycleForm.new(
+              order_cycle,
+              { selected_distributor_payment_method_ids: [distributor_payment_method.id] },
+              supplier.users.first
+            )
+
+            expect(form).not_to receive(:attach_selected_distributor_payment_methods)
+            expect(order_cycle.distributor_payment_methods).to match_array [
+              distributor_payment_method, distributor_payment_method2
+            ]
+          end
+        end
+
+        context "submitter is an admin" do
+          it "saves the changes" do
+            order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+
+            form = OrderCycleForm.new(
+              order_cycle,
+              { selected_distributor_payment_method_ids: [distributor_payment_method.id] },
+              create(:admin_user)
+            )
+
+            expect(form.save).to be true
+            expect(order_cycle.distributor_payment_methods).to eq [distributor_payment_method]
+          end
+        end
+
+        context "submitter is a distributor" do
+          context "can update his own payment methods" do
+            it "saves the changes" do
+              order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+
+              form = OrderCycleForm.new(
+                order_cycle,
+                { selected_distributor_payment_method_ids: [distributor_payment_method.id] },
+                distributor.users.first
+              )
+
+              expect(form.save).to be true
+              expect(order_cycle.distributor_payment_methods).to eq [distributor_payment_method]
+            end
+          end
+          context "can't update other distributors' payment methods" do
+            let(:distributor2){ create(:distributor_enterprise) }
+            it "doesn't save the changes" do
+              order_cycle = create(:distributor_order_cycle,
+                                   distributors: [distributor, distributor2])
+
+              form = OrderCycleForm.new(
+                order_cycle,
+                { selected_distributor_payment_method_ids: [distributor_payment_method.id] },
+                distributor2.users.first
+              )
+
+              expect(form).not_to receive(:attach_selected_distributor_payment_methods)
+              expect(order_cycle.distributor_payment_methods).to match_array [
+                distributor_payment_method, distributor_payment_method2
+              ]
+            end
+          end
         end
       end
 
@@ -271,22 +342,90 @@ describe OrderCycleForm do
 
     context "updating shipping methods" do
       context "and it's valid" do
-        it "saves the changes" do
-          distributor = create(:distributor_enterprise)
-          distributor_shipping_method = create(
-            :shipping_method,
-            distributors: [distributor]
-          ).distributor_shipping_methods.first
-          order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+        let(:distributor){ create(:distributor_enterprise) }
+        let(:shipping_method){ create(:shipping_method, distributors: [distributor]) }
+        let(:shipping_method2){ create(:shipping_method, distributors: [distributor]) }
+        let(:distributor_shipping_method){ shipping_method.distributor_shipping_methods.first }
+        let(:distributor_shipping_method2){ shipping_method2.distributor_shipping_methods.first }
+        let(:supplier){ create(:supplier_enterprise) }
+        context "the submitter is a coordinator" do
+          it "saves the changes" do
+            order_cycle = create(:distributor_order_cycle, distributors: [distributor])
 
-          form = OrderCycleForm.new(
-            order_cycle,
-            { selected_distributor_shipping_method_ids: [distributor_shipping_method.id] },
-            order_cycle.coordinator
-          )
+            form = OrderCycleForm.new(
+              order_cycle,
+              { selected_distributor_shipping_method_ids: [distributor_shipping_method.id] },
+              order_cycle.coordinator.users.first
+            )
 
-          expect(form.save).to be true
-          expect(order_cycle.distributor_shipping_methods).to eq [distributor_shipping_method]
+            expect(form.save).to be true
+            expect(order_cycle.distributor_shipping_methods).to eq [distributor_shipping_method]
+          end
+        end
+        context "submitter is a supplier" do
+          it "doesn't save the changes" do
+            order_cycle = create(:distributor_order_cycle, distributors: [distributor],
+                                                           suppliers: [supplier])
+
+            form = OrderCycleForm.new(
+              order_cycle,
+              { selected_distributor_shipping_method_ids: [distributor_shipping_method.id] },
+              supplier.users.first
+            )
+
+            expect(form).not_to receive(:attach_selected_distributor_shipping_methods)
+            expect(order_cycle.distributor_shipping_methods).to match_array [
+              distributor_shipping_method, distributor_shipping_method2
+            ]
+          end
+        end
+        context "submitter is an admin" do
+          it "saves the changes" do
+            order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+
+            form = OrderCycleForm.new(
+              order_cycle,
+              { selected_distributor_shipping_method_ids: [distributor_shipping_method.id] },
+              create(:admin_user)
+            )
+
+            expect(form.save).to be true
+            expect(order_cycle.distributor_shipping_methods).to eq [distributor_shipping_method]
+          end
+        end
+        context "submitter is a distributor" do
+          context "can update his own shipping methods" do
+            it "saves the changes" do
+              order_cycle = create(:distributor_order_cycle, distributors: [distributor])
+
+              form = OrderCycleForm.new(
+                order_cycle,
+                { selected_distributor_shipping_method_ids: [distributor_shipping_method.id] },
+                distributor.users.first
+              )
+
+              expect(form.save).to be true
+              expect(order_cycle.distributor_shipping_methods).to eq [distributor_shipping_method]
+            end
+          end
+          context "can't update other distributors' shipping methods" do
+            let(:distributor2){ create(:distributor_enterprise) }
+            it "doesn't save the changes" do
+              order_cycle = create(:distributor_order_cycle,
+                                   distributors: [distributor, distributor2])
+
+              form = OrderCycleForm.new(
+                order_cycle,
+                { selected_distributor_shipping_method_ids: [distributor_shipping_method.id] },
+                distributor2.users.first
+              )
+
+              expect(form).not_to receive(:attach_selected_distributor_shipping_methods)
+              expect(order_cycle.distributor_shipping_methods).to match_array [
+                distributor_shipping_method, distributor_shipping_method2
+              ]
+            end
+          end
         end
       end
 
