@@ -35,7 +35,9 @@ describe 'Enterprises Index' do
     end
 
     context "editing enterprises in bulk" do
-      let!(:distributor){ create(:distributor_enterprise, sells: 'none') }
+      let!(:distributor) {
+        create(:distributor_enterprise, sells: 'none', name: "Adam's Market")
+      }
       let!(:mani) { create(:user, enterprise_limit: 1) }
 
       before do
@@ -64,7 +66,11 @@ describe 'Enterprises Index' do
       end
 
       context "with data that violates rules" do
-        let!(:second_distributor) { create(:distributor_enterprise, sells: 'none') }
+        let!(:second_distributor) {
+          # Choose name appearing at the end of the list because the spec
+          # relies on the order of saving records during update.
+          create(:distributor_enterprise, sells: "none", name: "Zed's Shop")
+        }
 
         before do
           second_distributor.users << mani
@@ -76,11 +82,14 @@ describe 'Enterprises Index' do
           select_new_owner(mani, distributor)
           select_new_owner(mani, second_distributor)
 
-          click_button "Update"
+          expect {
+            click_button "Update"
 
-          expect(flash_message).to eq('Update failed')
-          expect(page).to have_content "#{mani.email} is not permitted to own any more enterprises (limit is 1)."
-          second_distributor.reload
+            expect(flash_message).to eq('Update failed')
+            expect(page).to have_content "#{mani.email} is not permitted to own any more enterprises (limit is 1)."
+            second_distributor.reload
+          }.to_not change { second_distributor.owner }
+
           expect(second_distributor.owner).to_not eq mani
         end
 
