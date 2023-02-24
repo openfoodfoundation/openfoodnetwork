@@ -87,12 +87,9 @@ describe 'Enterprises Index' do
         end
 
         def select_new_owner(user, enterprise)
-          enterprise_row_number = all('tr').index { |tr| tr.text.include? enterprise.name }
-          enterprise_row_number -= 1
-
-          within("tr.enterprise-#{enterprise.id}") do
-            select user.email,
-                   from: "sets_enterprise_set_collection_attributes_#{enterprise_row_number}_owner_id"
+          # The fifth table column contains the owner field.
+          within("tr.enterprise-#{enterprise.id} td:nth-child(5)") do
+            select user.email
           end
         end
       end
