@@ -5,7 +5,7 @@ require 'system_helper'
 describe '
     As an admin
     I want to check the unit price of my products/variants
-', js: true do
+' do
   include AuthenticationHelper
   include WebHelper
 

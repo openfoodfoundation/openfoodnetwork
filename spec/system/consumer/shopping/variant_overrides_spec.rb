@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "shopping with variant overrides defined", js: true do
+describe "shopping with variant overrides defined" do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow

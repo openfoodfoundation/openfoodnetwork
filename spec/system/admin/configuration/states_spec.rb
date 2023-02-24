@@ -39,7 +39,7 @@ describe "States" do
   end
 
   context "creating and editing states" do
-    it "should allow an admin to edit existing states", js: true do
+    it "should allow an admin to edit existing states" do
       go_to_states_page
       select2_select country.name, from: "country"
 
@@ -51,7 +51,7 @@ describe "States" do
       expect(page).to have_content("Calgary")
     end
 
-    it "should allow an admin to create states for non default countries", js: true do
+    it "should allow an admin to create states for non default countries" do
       go_to_states_page
       select2_select @hungary.name, from: "country"
       # Just so the change event actually gets triggered in this spec
@@ -67,7 +67,7 @@ describe "States" do
       expect(find("#s2id_country span.select2-chosen").text).to eq("Hungary")
     end
 
-    it "should show validation errors", js: true do
+    it "should show validation errors" do
       go_to_states_page
       select2_select country.name, from: "country"
       click_link "new_state_link"

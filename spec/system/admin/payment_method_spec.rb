@@ -13,7 +13,7 @@ describe '
     @distributors = (1..3).map { create(:distributor_enterprise) }
   end
 
-  describe "creating a payment method", js: true do
+  describe "creating a payment method" do
     it "assigning a distributor to the payment method" do
       login_as_admin_and_visit spree.edit_admin_general_settings_path
       click_link 'Payment Methods'
@@ -109,7 +109,7 @@ describe '
     end
   end
 
-  it "updating a payment method", js: true do
+  it "updating a payment method" do
     payment_method = create(:payment_method, distributors: [@distributors[0]],
                                              calculator: build(:calculator_flat_rate))
     login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method
@@ -154,7 +154,7 @@ describe '
     expect(payment_method.preferences[:signature]).to eq 'sig'
   end
 
-  context "as an enterprise user", js: true do
+  context "as an enterprise user" do
     let(:enterprise_user) { create(:user) }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
@@ -246,7 +246,7 @@ describe '
     end
   end
 
-  describe "Setting transaction fees", js: true do
+  describe "Setting transaction fees" do
     let!(:payment_method) { create(:payment_method) }
     before { login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method }
 

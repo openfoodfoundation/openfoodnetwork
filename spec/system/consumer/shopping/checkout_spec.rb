@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "As a consumer I want to check out my cart", js: true do
+describe "As a consumer I want to check out my cart" do
   include AuthenticationHelper
   include ShopWorkflow
   include CheckoutRequestsHelper
@@ -502,8 +502,7 @@ describe "As a consumer I want to check out my cart", js: true do
           expect(order.shipment_state).to eq "pending"
         end
 
-        it "takes us to the cart page with an error when a product becomes out of stock just before we purchase",
-           js: true do
+        it "takes us to the cart page with an error when a product becomes out of stock just before we purchase" do
           variant.on_demand = false
           variant.on_hand = 0
           variant.save!

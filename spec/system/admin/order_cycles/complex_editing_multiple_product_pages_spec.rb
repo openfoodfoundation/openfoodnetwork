@@ -5,12 +5,12 @@ require 'system_helper'
 describe '
     As an administrator
     I want to manage complex order cycles
-', js: true do
+' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper
 
-  describe "editing an order cycle with multiple pages of products", js: true do
+  describe "editing an order cycle with multiple pages of products" do
     let(:order_cycle) { create(:order_cycle) }
     let(:supplier_enterprise) { order_cycle.exchanges.incoming.first.sender }
     let!(:new_product) { create(:product, supplier: supplier_enterprise) }

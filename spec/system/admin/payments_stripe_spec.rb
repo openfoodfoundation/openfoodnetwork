@@ -138,7 +138,7 @@ describe '
       end
     end
 
-    context "that is completed", js: true do
+    context "that is completed" do
       let(:payment) { OrderPaymentFinder.new(order.reload).last_payment }
 
       before do

@@ -5,7 +5,7 @@ require 'system_helper'
 describe '
   As an Administrator
   I want to manage relationships between enterprises
-', js: true do
+' do
   include WebHelper
   include AuthenticationHelper
 

@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "As a consumer I want to check out my cart", js: true do
+describe "As a consumer I want to check out my cart" do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow

@@ -7,7 +7,7 @@ describe 'Subscriptions' do
   include AuthenticationHelper
   include WebHelper
 
-  context "as an enterprise user", js: true do
+  context "as an enterprise user" do
     let!(:user) { create(:user) }
     let!(:shop) { create(:distributor_enterprise, owner: user, enable_subscriptions: true) }
     let!(:shop2) { create(:distributor_enterprise, owner: user, enable_subscriptions: true) }

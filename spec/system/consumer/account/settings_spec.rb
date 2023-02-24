@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Account Settings", js: true do
+describe "Account Settings" do
   include AuthenticationHelper
   include OpenFoodNetwork::EmailHelper
 

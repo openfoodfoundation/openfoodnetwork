@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Registration", js: true do
+describe "Registration" do
   include AuthenticationHelper
   include WebHelper
 

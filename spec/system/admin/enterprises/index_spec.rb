@@ -121,7 +121,7 @@ describe 'Enterprises Index' do
       login_as enterprise_manager
     end
 
-    context "listing enterprises", js: true do
+    context "listing enterprises" do
       it "displays enterprises I have permission to manage" do
         visit admin_enterprises_path
 
@@ -178,7 +178,7 @@ describe 'Enterprises Index' do
       login_as user
     end
 
-    context "listing enterprises", js: true do
+    context "listing enterprises" do
       it "allows me to change or update the package and producer properties of enterprises I manage" do
         visit admin_enterprises_path
 
