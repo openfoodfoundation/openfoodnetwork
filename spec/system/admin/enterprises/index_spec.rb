@@ -74,28 +74,26 @@ describe 'Enterprises Index' do
           login_as_admin_and_visit admin_enterprises_path
         end
 
-        def enterprise_row_index(enterprise_name)
-          enterprise_row_number = all('tr').index { |tr| tr.text.include? enterprise_name }
-          enterprise_row_number - 1
-        end
-
         it "does not update the enterprises and displays errors" do
-          d_row_index = enterprise_row_index(d.name)
-          within("tr.enterprise-#{d.id}") do
-            select d_manager.email,
-                   from: "sets_enterprise_set_collection_attributes_#{d_row_index}_owner_id"
-          end
+          select_new_owner(d_manager, d)
+          select_new_owner(d_manager, second_distributor)
 
-          second_distributor_row_index = enterprise_row_index(second_distributor.name)
-          within("tr.enterprise-#{second_distributor.id}") do
-            select d_manager.email,
-                   from: "sets_enterprise_set_collection_attributes_#{second_distributor_row_index}_owner_id"
-          end
           click_button "Update"
+
           expect(flash_message).to eq('Update failed')
           expect(page).to have_content "#{d_manager.email} is not permitted to own any more enterprises (limit is 1)."
           second_distributor.reload
           expect(second_distributor.owner).to_not eq d_manager
+        end
+
+        def select_new_owner(user, enterprise)
+          enterprise_row_number = all('tr').index { |tr| tr.text.include? enterprise.name }
+          enterprise_row_number -= 1
+
+          within("tr.enterprise-#{enterprise.id}") do
+            select user.email,
+                   from: "sets_enterprise_set_collection_attributes_#{enterprise_row_number}_owner_id"
+          end
         end
       end
     end
