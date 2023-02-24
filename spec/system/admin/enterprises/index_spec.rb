@@ -39,8 +39,7 @@ describe 'Enterprises Index' do
       let!(:d_manager) { create(:user, enterprise_limit: 1) }
 
       before do
-        d_manager.enterprise_roles.build(enterprise: d).save
-        expect(d.owner).to_not eq d_manager
+        d.users << d_manager
       end
 
       context "without violating rules" do
@@ -68,8 +67,7 @@ describe 'Enterprises Index' do
         let!(:second_distributor) { create(:distributor_enterprise, sells: 'none') }
 
         before do
-          d_manager.enterprise_roles.build(enterprise: second_distributor).save
-          expect(d.owner).to_not eq d_manager
+          second_distributor.users << d_manager
 
           login_as_admin_and_visit admin_enterprises_path
         end
