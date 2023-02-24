@@ -35,7 +35,6 @@ describe 'Enterprises Index' do
     end
 
     context "editing enterprises in bulk" do
-      let!(:s){ create(:supplier_enterprise) }
       let!(:d){ create(:distributor_enterprise, sells: 'none') }
       let!(:d_manager) { create(:user, enterprise_limit: 1) }
 
