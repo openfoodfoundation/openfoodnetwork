@@ -5,10 +5,6 @@ require 'base_spec_helper'
 require 'database_cleaner'
 require 'view_component/test_helpers'
 
-Capybara.javascript_driver = :chrome
-Capybara.default_max_wait_time = 30
-Capybara.disable_animation = true
-
 RSpec.configure do |config|
   # DatabaseCleaner
   config.before(:suite) {
