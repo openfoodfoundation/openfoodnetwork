@@ -202,8 +202,13 @@ module ProductImport
 
     def price_validation(entry)
       return if is_numeric(entry.price)
-      error = empty_or_placeholder_value(entry.price)? '.blank': '.incorrect_value'
-      mark_as_invalid(entry, attribute: 'price', error: I18n.t('admin.product_import.model' + error))
+
+      if empty_or_placeholder_value(entry.price)
+        error_string = 'admin.product_import.model.blank'
+      else
+        error_string = 'admin.product_import.model.incorrect_value'
+      end
+      mark_as_invalid(entry, attribute: 'price', error: I18n.t(error_string))
     end
 
     def on_hand_on_demand_validation(entry)
