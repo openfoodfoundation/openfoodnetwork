@@ -567,13 +567,13 @@ describe "Product Import", js: true do
       csv_data = CSV.generate do |csv|
         csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units",
                 "on_demand"]
-        csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", "", "3.20", "500",
+        csv << ["Eggs", "Another Enterprise", "User Enterprise", "Vegetables", "", "3.20", "500",
                 "1"]
-        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50",
+        csv << ["Potatoes", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50",
                 "500", "invalid"]
-        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "invalid", "1.50",
+        csv << ["Carrots", "Another Enterprise", "User Enterprise", "Vegetables", "invalid", "1.50",
                 "500", "invalid"]
-        csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", nil, "1.50",
+        csv << ["Melons", "Another Enterprise", "User Enterprise", "Vegetables", nil, "1.50",
                 "500", "invalid"]
       end
       File.write('/tmp/test.csv', csv_data)
