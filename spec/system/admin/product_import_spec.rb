@@ -585,6 +585,7 @@ describe "Product Import", js: true do
       proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "4"
+      expect(page).to have_content "content 12"
       expect(page).to have_selector '.inv-create-count', text: '2'
       expect(page).to have_selector '.invalid-count', text: "2"
 
