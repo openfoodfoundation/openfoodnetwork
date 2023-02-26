@@ -565,16 +565,16 @@ describe "Product Import", js: true do
 
     it "handles on_demand and on_hand validations - non-numeric values" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units",
-                "on_demand"]
-        csv << ["Eggs", "Another Enterprise", "User Enterprise", "Vegetables", "", "3.20", "500",
-                "1"]
-        csv << ["Potatoes", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50",
-                "500", "invalid"]
-        csv << ["Carrots", "Another Enterprise", "User Enterprise", "Vegetables", "invalid", "1.50",
-                "500", "invalid"]
-        csv << ["Melons", "Another Enterprise", "User Enterprise", "Vegetables", nil, "1.50",
-                "500", "invalid"]
+        csv << ["name", "producer", "category", "on_hand", "price", "on_demand", "units", "unit_type",
+                "display_name", "shipping_category_id"]
+        csv << ["Beans", "User Enterprise", "Vegetables", "invalid", "3.50", "1", "500", "g", "Small Bag",
+                shipping_category_id_str]
+        csv << ["Sprouts", "User Enterprise", "Vegetables", "6", "6", "invalid", "500", "g", "Small Bag",
+                shipping_category_id_str]
+        csv << ["Cabbage", "User Enterprise", "Vegetables", "invalid", "1.5", "invalid", "1", "kg", "Bag",
+                shipping_category_id_str]
+        csv << ["Aubergine", "User Enterprise", "Vegetables", nil, "1.5", "invalid", "1", "kg", "Bag",
+                shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 
