@@ -563,7 +563,7 @@ describe "Product Import", js: true do
       expect(page).not_to have_content "line 3: Sprouts"
     end
 
-    it "handles on_demand and on_hand validations with inventory - non-numeric values" do
+    it "handles on_demand and on_hand validations - non-numeric values" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units",
                 "on_demand"]
@@ -579,15 +579,14 @@ describe "Product Import", js: true do
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
-      select 'Inventories', from: "settings_import_into"
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
       proceed_to_validation
 
-      # expect(page).to have_selector '.item-count', text: "4"
-      # expect(page).to have_selector '.inv-create-count', text: '2'
-      # expect(page).to have_selector '.invalid-count', text: "2"
+      expect(page).to have_selector '.item-count', text: "4"
+      expect(page).to have_selector '.inv-create-count', text: '2'
+      expect(page).to have_selector '.invalid-count', text: "2"
 
       find('div.header-description', text: 'Items contain errors').click
       expect(page).to have_content "line 4: Cabbage - On_hand incorrect value - On_demand incorrect value"
@@ -598,7 +597,7 @@ describe "Product Import", js: true do
       expect(page).not_to have_content "line 3: Sprouts"
     end
 
-    it "handles on_demand and on_hand validations with inventory - negative values" do
+    it "handles on_demand and on_hand validations - negative values" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units",
                 "on_demand"]
@@ -614,15 +613,46 @@ describe "Product Import", js: true do
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      proceed_to_validation
+
+      expect(page).to have_selector '.item-count', text: "4"
+      expect(page).to have_selector '.inv-create-count', text: '2'
+      expect(page).to have_selector '.invalid-count', text: "2"
+
+      find('div.header-description', text: 'Items contain errors').click
+      expect(page).to have_content "line 4: Cabbage - On_hand incorrect value - On_demand incorrect value"
+      expect(page).to have_content "line 5: Aubergine - On_hand incorrect value - On_demand incorrect value"
+      expect(page).to have_content "Imported file contains invalid entries"
+      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(page).not_to have_content "line 2: Beans"
+      expect(page).not_to have_content "line 3: Sprouts"
+    end
+
+    it "handles on_demand and on_hand validations with inventory - With both values set" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units",
+                "on_demand"]
+        csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", "6", "3.20", "500",
+                "1"]
+        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50",
+                "500", "1"]
+        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "0", "1.50",
+                "500", "1"]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
       select 'Inventories', from: "settings_import_into"
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
       proceed_to_validation
 
-      # expect(page).to have_selector '.item-count', text: "4"
-      # expect(page).to have_selector '.inv-create-count', text: '2'
-      # expect(page).to have_selector '.invalid-count', text: "2"
+      expect(page).to have_selector '.item-count', text: "3"
+      expect(page).to have_selector '.invalid-count', text: "3"
 
       find('div.header-description', text: 'Items contain errors').click
       expect(page).to have_content "line 4: Cabbage - On_hand incorrect value - On_demand incorrect value"
