@@ -203,13 +203,12 @@ module ProductImport
     def price_validation(entry)
       return if is_numeric(entry.price)
 
-      if empty_or_placeholder_value(entry.price)
-        mark_as_invalid(entry, attribute: 'price',
-                               error: I18n.t('admin.product_import.model.blank'))
-      else
-        mark_as_invalid(entry, attribute: 'price',
-                               error: I18n.t('admin.product_import.model.incorrect_value'))
-      end
+      error_string = if empty_or_placeholder_value(entry.price)
+                       'admin.product_import.model.blank'
+                     else
+                       'admin.product_import.model.incorrect_value'
+                     end
+      mark_as_invalid(entry, attribute: 'price', error: I18n.t(error_string))
     end
 
     def on_hand_on_demand_validation(entry)
@@ -230,7 +229,7 @@ module ProductImport
     end
 
     def empty_or_placeholder_value(value)
-      !value&.present? || value.nil? || value.to_s.strip == '' || value.to_s.strip == "-"
+      value.blank? || value.to_s.strip == "-"
     end
 
     def variant_of_product_validation(entry)
