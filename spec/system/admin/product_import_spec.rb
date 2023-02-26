@@ -585,13 +585,12 @@ describe "Product Import", js: true do
       proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "4"
-      # expect(page).to have_content "content 12"
       expect(page).to have_selector '.create-count', text: '2'
       expect(page).to have_selector '.invalid-count', text: "2"
 
       find('div.header-description', text: 'Items contain errors').click
-      expect(page).to have_content "line 4: Cabbage - On_hand incorrect value - On_demand incorrect value"
-      expect(page).to have_content "line 5: Aubergine - On_hand incorrect value - On_demand incorrect value"
+      expect(page).to have_content "line 4: Cabbage ( Bag ) - On_hand incorrect value - On_demand incorrect value"
+      expect(page).to have_content "line 5: Aubergine ( Bag ) - On_hand incorrect value - On_demand incorrect value"
       expect(page).to have_content "Imported file contains invalid entries"
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
       expect(page).not_to have_content "line 2: Beans"
