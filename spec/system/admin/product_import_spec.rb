@@ -655,12 +655,10 @@ describe "Product Import", js: true do
       expect(page).to have_selector '.invalid-count', text: "3"
 
       find('div.header-description', text: 'Items contain errors').click
-      expect(page).to have_content "line 4: Cabbage - On_hand incorrect value - On_demand incorrect value"
-      expect(page).to have_content "line 5: Aubergine - On_hand incorrect value - On_demand incorrect value"
+      expect(page).to have_content "line 2: Beans - Count_on_hand must be blank if on demand"
+      expect(page).to have_content "line 3: Sprouts - Count_on_hand must be blank if on demand"
       expect(page).to have_content "Imported file contains invalid entries"
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
-      expect(page).not_to have_content "line 2: Beans"
-      expect(page).not_to have_content "line 3: Sprouts"
     end
 
     it "imports lines with all allowed units" do
