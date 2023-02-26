@@ -574,7 +574,7 @@ describe "Product Import", js: true do
         csv << ["Cabbage", "User Enterprise", "Vegetables", "invalid", "1.5", "invalid", "1", "kg", "Bag",
                 shipping_category_id_str]
         csv << ["Aubergine", "User Enterprise", "Vegetables", nil, "1.5", "invalid", "1", "kg", "Bag",
-                shipping_category_id_str]
+                shipping_category_id_str ]
       end
       File.write('/tmp/test.csv', csv_data)
 
