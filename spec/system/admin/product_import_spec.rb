@@ -528,7 +528,7 @@ describe "Product Import", js: true do
       end
     end
 
-    it "handles on_demand and on_hand validations with inventory" do
+    it "handles on_demand and on_hand validations with inventory - nill or empty values" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units",
                 "on_demand"]
@@ -539,7 +539,7 @@ describe "Product Import", js: true do
         csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "", "1.50",
                 "500", nil]
         csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", nil, "1.50",
-                "500", "0"]
+                "500", ""]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -561,6 +561,105 @@ describe "Product Import", js: true do
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
       expect(page).not_to have_content "line 2: Beans"
       expect(page).not_to have_content "line 3: Sprouts"
+    end
+
+    it "handles on_demand and on_hand validations - non-numeric values" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "producer", "category", "on_hand", "price", "on_demand", "units", "unit_type",
+                "display_name", "shipping_category_id"]
+        csv << ["Beans", "User Enterprise", "Vegetables", "invalid", "3.50", "1", "500", "g", "Small Bag",
+                shipping_category_id_str]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6", "invalid", "500", "g", "Big Bag",
+                shipping_category_id_str]
+        csv << ["Cabbage", "User Enterprise", "Vegetables", "invalid", "1.5", "invalid", "1", "kg", "Bag",
+                shipping_category_id_str]
+        csv << ["Aubergine", "User Enterprise", "Vegetables", nil, "1.5", "invalid", "1", "kg", "Bag",
+                shipping_category_id_str]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      proceed_to_validation
+
+      expect(page).to have_selector '.item-count', text: "4"
+      expect(page).to have_selector '.create-count', text: '2'
+      expect(page).to have_selector '.invalid-count', text: "2"
+
+      find('div.header-description', text: 'Items contain errors').click
+      expect(page).to have_content "line 4: Cabbage ( Bag ) - On_hand incorrect value - On_demand incorrect value"
+      expect(page).to have_content "line 5: Aubergine ( Bag ) - On_hand incorrect value - On_demand incorrect value"
+      expect(page).to have_content "Imported file contains invalid entries"
+      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(page).not_to have_content "line 2: Beans"
+      expect(page).not_to have_content "line 3: Sprouts"
+    end
+
+    it "handles on_demand and on_hand validations - negative values" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "producer", "category", "on_hand", "price", "on_demand", "units", "unit_type",
+                "display_name", "shipping_category_id"]
+        csv << ["Beans", "User Enterprise", "Vegetables", "-1", "3.50", "1", "500", "g", "Small Bag",
+                shipping_category_id_str]
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6", "-1", "500", "g", "Big Bag",
+                shipping_category_id_str]
+        csv << ["Cabbage", "User Enterprise", "Vegetables", "-1", "1.5", "-1", "1", "kg", "Bag",
+                shipping_category_id_str]
+        csv << ["Aubergine", "User Enterprise", "Vegetables", nil, "1.5", "-1", "1", "kg", "Bag",
+                shipping_category_id_str]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      proceed_to_validation
+
+      expect(page).to have_selector '.item-count', text: "4"
+      expect(page).to have_selector '.create-count', text: '2'
+      expect(page).to have_selector '.invalid-count', text: "2"
+
+      find('div.header-description', text: 'Items contain errors').click
+      expect(page).to have_content "line 4: Cabbage ( Bag ) - On_hand incorrect value - On_demand incorrect value"
+      expect(page).to have_content "line 5: Aubergine ( Bag ) - On_hand incorrect value - On_demand incorrect value"
+      expect(page).to have_content "Imported file contains invalid entries"
+      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(page).not_to have_content "line 2: Beans"
+      expect(page).not_to have_content "line 3: Sprouts"
+    end
+
+    it "handles on_demand and on_hand validations with inventory - With both values set" do
+      csv_data = CSV.generate do |csv|
+        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units",
+                "on_demand"]
+        csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", "6", "3.20", "500",
+                "1"]
+        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50",
+                "500", "1"]
+        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "0", "1.50",
+                "500", "1"]
+      end
+      File.write('/tmp/test.csv', csv_data)
+
+      visit main_app.admin_product_import_path
+      select 'Inventories', from: "settings_import_into"
+      attach_file 'file', '/tmp/test.csv'
+      click_button 'Upload'
+
+      proceed_to_validation
+
+      expect(page).to have_selector '.item-count', text: "3"
+      expect(page).to have_selector '.invalid-count', text: "3"
+
+      find('div.header-description', text: 'Items contain errors').click
+      expect(page).to have_content "line 2: Beans - Count_on_hand must be blank if on demand"
+      expect(page).to have_content "line 3: Sprouts - Count_on_hand must be blank if on demand"
+      expect(page).to have_content "line 4: Cabbage - Count_on_hand must be blank if on demand"
+      expect(page).to have_content "Imported file contains invalid entries"
+      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
     end
 
     it "imports lines with all allowed units" do
