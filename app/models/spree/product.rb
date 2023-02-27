@@ -415,8 +415,8 @@ module Spree
       # If the master cannot be saved, the Product object will get its errors
       # and will be destroyed
     rescue ActiveRecord::RecordInvalid
-      master.errors.each do |att, error|
-        errors.add(att, error)
+      master.errors.each do |error|
+        errors.add error.attribute, error.message
       end
       raise
     end
