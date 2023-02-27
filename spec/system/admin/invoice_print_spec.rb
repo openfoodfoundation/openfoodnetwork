@@ -45,7 +45,7 @@ describe '
 
     context "with no payment" do
       it "do not display the payment description information" do
-        login_as_admin_and_visit spree.print_admin_order_path(order)
+        login_as_admin_and_visit spree.print_admin_order_path(order), should_expect_logged_in: false
         convert_pdf_to_page
         expect(page).to have_no_content 'Payment Description at Checkout'
       end
@@ -60,7 +60,7 @@ describe '
       end
 
       it "display the payment description section" do
-        login_as_admin_and_visit spree.print_admin_order_path(order)
+        login_as_admin_and_visit spree.print_admin_order_path(order), should_expect_logged_in: false
         convert_pdf_to_page
         expect(page).to have_content 'Payment Description at Checkout'
         expect(page).to have_content 'description1'
@@ -79,7 +79,7 @@ describe '
       end
 
       it "display the payment description section and use the one from the completed payment" do
-        login_as_admin_and_visit spree.print_admin_order_path(order)
+        login_as_admin_and_visit spree.print_admin_order_path(order), should_expect_logged_in: false
         convert_pdf_to_page
         expect(page).to have_content 'Payment Description at Checkout'
         expect(page).to have_content 'description1'
@@ -99,7 +99,7 @@ describe '
       end
 
       it "display the payment description section and use the one from the last payment" do
-        login_as_admin_and_visit spree.print_admin_order_path(order)
+        login_as_admin_and_visit spree.print_admin_order_path(order), should_expect_logged_in: false
         convert_pdf_to_page
         expect(page).to have_content 'Payment Description at Checkout'
         expect(page).to have_content 'description2'
@@ -116,7 +116,8 @@ describe '
 
     before do
       allow(Spree::Config).to receive(:invoice_style2?).and_return(alternative_invoice)
-      login_as_admin_and_visit spree.print_admin_order_path(completed_order)
+      login_as_admin_and_visit spree.print_admin_order_path(completed_order),
+                               should_expect_logged_in: false
       convert_pdf_to_page
     end
 
@@ -201,7 +202,8 @@ describe '
       context "legacy invoice" do
         before do
           allow(Spree::Config).to receive(:invoice_style2?).and_return(false)
-          login_as_admin_and_visit spree.print_admin_order_path(order1)
+          login_as_admin_and_visit spree.print_admin_order_path(order1),
+                                   should_expect_logged_in: false
           convert_pdf_to_page
         end
 
@@ -231,7 +233,8 @@ describe '
       context "alternative invoice" do
         before do
           allow(Spree::Config).to receive(:invoice_style2?).and_return(true)
-          login_as_admin_and_visit spree.print_admin_order_path(order1)
+          login_as_admin_and_visit spree.print_admin_order_path(order1),
+                                   should_expect_logged_in: false
           convert_pdf_to_page
         end
 
@@ -331,7 +334,8 @@ describe '
       context "legacy invoice" do
         before do
           allow(Spree::Config).to receive(:invoice_style2?).and_return(false)
-          login_as_admin_and_visit spree.print_admin_order_path(order2)
+          login_as_admin_and_visit spree.print_admin_order_path(order2),
+                                   should_expect_logged_in: false
           convert_pdf_to_page
         end
         it "displays $0.0 when a line item has no tax" do
@@ -362,7 +366,8 @@ describe '
       context "alternative invoice" do
         before do
           allow(Spree::Config).to receive(:invoice_style2?).and_return(true)
-          login_as_admin_and_visit spree.print_admin_order_path(order2)
+          login_as_admin_and_visit spree.print_admin_order_path(order2),
+                                   should_expect_logged_in: false
           convert_pdf_to_page
         end
         it "displays the taxes correctly" do
