@@ -6,7 +6,7 @@ describe '
     As a consumer
     I want to view my order history with each hub
     and view any outstanding balance.
-', js: true do
+' do
   include UIComponentHelper
   include AuthenticationHelper
 

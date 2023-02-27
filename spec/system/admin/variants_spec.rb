@@ -9,7 +9,7 @@ describe '
   include AuthenticationHelper
   include WebHelper
 
-  describe "new variant", js: true do
+  describe "new variant" do
     it "creating a new variant" do
       # Given a product with a unit-related option type
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
@@ -83,7 +83,7 @@ describe '
     end
   end
 
-  describe "editing unit value and description for a variant", js: true do
+  describe "editing unit value and description for a variant" do
     it "when the product variant page has product filter" do
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
       filter = { producerFilter: 2 }
@@ -147,7 +147,7 @@ describe '
     end
   end
 
-  describe "editing on hand and on demand values", js: true do
+  describe "editing on hand and on demand values" do
     let(:product) { create(:simple_product) }
     let(:variant) { product.variants.first }
 
@@ -188,7 +188,7 @@ describe '
     end
   end
 
-  it "soft-deletes variants", js: true do
+  it "soft-deletes variants" do
     product = create(:simple_product)
     variant = create(:variant, product: product)
 
@@ -204,7 +204,7 @@ describe '
     expect(variant.reload.deleted_at).not_to be_nil
   end
 
-  it "editing display name for a variant", js: true do
+  it "editing display name for a variant" do
     product = create(:simple_product)
     variant = product.variants.first
 

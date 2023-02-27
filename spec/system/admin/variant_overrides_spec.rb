@@ -6,7 +6,7 @@ describe "
   Managing a hub's inventory
   I want to override the stock level and price of products
   Without affecting other hubs that share the same products
-", js: true do
+" do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper

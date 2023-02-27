@@ -6,7 +6,7 @@ describe "Business Address" do
   include WebHelper
   include AuthenticationHelper
 
-  context "as an Enterprise user", js: true do
+  context "as an Enterprise user" do
     let(:enterprise_user) { create(:user, enterprise_limit: 1) }
     let(:distributor) { create(:distributor_enterprise, name: "First Distributor") }
 

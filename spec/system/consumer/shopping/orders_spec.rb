@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Order Management", js: true do
+describe "Order Management" do
   include AuthenticationHelper
   include OpenFoodNetwork::EmailHelper
 

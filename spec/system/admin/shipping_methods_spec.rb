@@ -94,7 +94,7 @@ describe 'shipping methods' do
     end
   end
 
-  context "as an enterprise user", js: true do
+  context "as an enterprise user" do
     let(:enterprise_user) { create(:user) }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }

@@ -76,15 +76,6 @@ module UIComponentHelper
     sleep 0.3 # Allow 300ms for sidebar animation to finish
   end
 
-  def wait_for_ajax
-    counter = 0
-    while page.execute_script("return $.active").to_i.positive?
-      counter += 1
-      sleep(0.1)
-      raise "AJAX request took longer than 5 seconds." if counter >= 50
-    end
-  end
-
   def be_logged_in_as(user_or_email)
     if user_or_email.is_a? Spree::User
       have_content user_or_email.email
@@ -95,10 +86,6 @@ module UIComponentHelper
 
   def be_logged_out
     have_content "Log in"
-  end
-
-  def open_active_table_row
-    page.find("hub:first-child .active_table_row:first-child").click
   end
 
   def expand_active_table_node(name)

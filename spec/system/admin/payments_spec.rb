@@ -36,7 +36,7 @@ describe '
     end
   end
 
-  context "creating an order's first payment via admin", js: true do
+  context "creating an order's first payment via admin" do
     before do
       order.update_columns(
         state: "payment",

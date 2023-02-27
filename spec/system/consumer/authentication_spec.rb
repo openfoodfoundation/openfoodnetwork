@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Authentication", js: true do
+describe "Authentication" do
   include AuthenticationHelper
   include UIComponentHelper
   include OpenFoodNetwork::EmailHelper
