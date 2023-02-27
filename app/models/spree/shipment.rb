@@ -123,7 +123,7 @@ module Spree
       if original_shipping_method_id.present? &&
          distributor_shipping_rates.map(&:shipping_method_id)
              .exclude?(original_shipping_method_id)
-        cost = estimator.__send__(:calculate_cost, shipping_method, to_package)
+        cost = estimator.calculate_cost(shipping_method, to_package)
         unless cost.nil?
           original_shipping_rate = shipping_method.shipping_rates.new(cost: cost)
           self.shipping_rates = distributor_shipping_rates + [original_shipping_rate]
