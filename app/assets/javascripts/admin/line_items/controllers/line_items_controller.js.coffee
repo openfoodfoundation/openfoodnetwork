@@ -151,7 +151,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
               Promise.all(LineItems.delete(item) for item in items).then(-> $scope.refreshData())
       , "js.admin.deleting_item_will_cancel_order")   
     else
-      Promise.all(LineItems.delete(item) for item in lineItemsToDelete).then(-> $scope.refreshData())
+      ofnDeleteLineItemsAlert(() ->
+        Promise.all(LineItems.delete(item) for item in lineItemsToDelete).then(-> $scope.refreshData())
+      , lineItemsToDelete.length)
 
   $scope.allBoxesChecked = ->
     checkedCount = $scope.filteredLineItems.reduce (count,lineItem) ->

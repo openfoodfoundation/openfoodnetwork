@@ -785,7 +785,7 @@ describe '
             end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
           end
 
-          it "deletes one line item and do not show any popup if it does not lead to order cancelation" do
+          it "deletes one line item should show modal confirmation about this line item deletion and not about order cancelation" do
             expect(page).to have_selector "tr#li_#{li1.id}"
             within("tr#li_#{li1.id} td.bulk") do
               check "bulk"
@@ -793,6 +793,11 @@ describe '
 
             find("div#bulk-actions-dropdown").click
             find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
+
+            within ".modal" do
+              expect(page).to have_content "This will delete one line item from the order. Are you sure you want to proceed?"
+              click_on "OK"
+            end
 
             expect(page).to have_content "Loading orders"
 
