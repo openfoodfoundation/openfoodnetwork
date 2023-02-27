@@ -24,7 +24,7 @@ class SplitCheckoutController < ::BaseController
     check_step if params[:step]
     recalculate_tax if params[:step] == "summary"
 
-    flash_error_when_no_shipping_method_available if available_shipping_methods.none?
+    flash_error_when_no_shipping_method_available if load_allowed_shipping_methods.none?
   end
 
   def update
