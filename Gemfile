@@ -97,7 +97,7 @@ gem 'rack-timeout'
 gem 'roadie-rails'
 
 gem 'puma'
-gem 'redis', '>= 4.0'
+gem 'redis'
 gem "hiredis-client"
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
