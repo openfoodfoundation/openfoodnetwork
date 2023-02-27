@@ -13,7 +13,7 @@
     .three.columns
       &nbsp;
     .ten.columns
-      %table.checkout-options
+      %table.checkout-options{ "data-controller": "checkbox-selection" }
         %thead
           %tr
             %th{ colspan: 2 }
@@ -25,7 +25,7 @@
               %td.text-center
                 - if distributor_shipping_methods.many?
                   %label
-                    = check_box_tag nil, nil, nil, { "data-action": "change->select-all#toggleAll", "data-select-all-target": "all" }
+                    = check_box_tag nil, nil, nil, { "data-action": "change->select-all#toggleAll change->checkbox-selection#disableButtons", "data-select-all-target": "all" }
                     = t(".select_all")
               %td
                 %em= distributor.name
@@ -36,7 +36,7 @@
                           distributor_shipping_method.id,
                           @order_cycle.distributor_shipping_methods.include?(distributor_shipping_method),
                           id: "order_cycle_selected_distributor_shipping_method_ids_#{distributor_shipping_method.id}",
-                          data: ({ "action" => "change->select-all#toggleCheckbox", "select-all-target" => "checkbox" } if distributor_shipping_method.shipping_method.frontend?)
+                          data: ({ "action" => "change->select-all#toggleCheckbox change->checkbox-selection#disableButtons", "select-all-target" => "checkbox",  "checkbox-selection-target" => "checkbox", "group" => "shipping" } if distributor_shipping_method.shipping_method.frontend?)
                       = distributor_shipping_method.shipping_method.name
                 - distributor.shipping_methods.backend.each do |shipping_method|
                   %label.disabled
@@ -56,7 +56,7 @@
               %td.text-center
                 - if distributor_payment_methods.many?
                   %label
-                    = check_box_tag nil, nil, nil, { "data-action": "change->select-all#toggleAll", "data-select-all-target": "all" }
+                    = check_box_tag nil, nil, nil, { "data-action": "change->select-all#toggleAll change->checkbox-selection#disableButtons", "data-select-all-target": "all" }
                     = t(".select_all")
               %td
                 %em= distributor.name
@@ -67,7 +67,7 @@
                           distributor_payment_method.id,
                           @order_cycle.distributor_payment_methods.include?(distributor_payment_method),
                           id: "order_cycle_selected_distributor_payment_method_ids_#{distributor_payment_method.id}",
-                          data: ({ "action" => "change->select-all#toggleCheckbox", "select-all-target" => "checkbox" } if distributor_payment_method.payment_method.frontend?)
+                          data: ({ "action" => "change->select-all#toggleCheckbox change->checkbox-selection#disableButtons", "select-all-target" => "checkbox", "checkbox-selection-target" => "checkbox", "group" => "distributor" } if distributor_payment_method.payment_method.frontend?)
                       = distributor_payment_method.payment_method.name
                 - distributor.payment_methods.inactive_or_backend.each do |payment_method|
                   %label.disabled
@@ -78,6 +78,9 @@
                   %p
                     = t('.no_payment_methods')
 
+  %div{"data-checkbox-selection-visibility":""}
+    This is a warning alert—check it out!
+
   %div#save-bar
     %div.container
       %div.seven.columns.alpha
@@ -86,7 +89,7 @@
             = @order_cycle.errors.to_a.to_sentence
       %div.nine.columns.omega.text-right
         = hidden_field_tag :context, :checkout_options
-        = f.submit t('.save'), class: "red", name: :save
-        = f.submit t('.save_and_back_to_list'), class: "red", name: :save_and_back_to_list
+        = f.submit t('.save'), class: "red", name: :save, "data-checkbox-selection-button":""
+        = f.submit t('.save_and_back_to_list'), class: "red", name: :save_and_back_to_list, "data-checkbox-selection-button":""
         %a.button.cancel{ href: main_app.admin_order_cycles_path }
           = t('.cancel')
