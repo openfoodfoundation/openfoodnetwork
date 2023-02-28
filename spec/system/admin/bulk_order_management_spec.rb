@@ -127,6 +127,81 @@ describe '
       end
     end
 
+    context "searching" do
+      let!(:a1) { create(:address, phone: "1234567890", firstname: "Willy", lastname: "Wonka") }
+      let!(:o1) {
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.now, bill_address: a1)
+      }
+      let!(:o2) {
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.now )
+      }
+      let!(:s1) { create(:supplier_enterprise) }
+      let!(:s2) { create(:supplier_enterprise) }
+      let!(:li1) { create(:line_item_with_shipment, order: o1, product: create(:product, supplier: s1)) }
+      let!(:li2) { create(:line_item_with_shipment, order: o2, product: create(:product, supplier: s2)) }
+      let!(:li3) { create(:line_item_with_shipment, order: o2, product: create(:product, supplier: s2)) }
+
+      before :each do
+        visit_bulk_order_management
+      end
+
+      it "by product name" do
+        fill_in "quick_filter", with: li1.product.name
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+      end
+
+      it "by supplier name" do
+        fill_in "quick_filter", with: li1.product.supplier.name
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+      end
+
+      it "by email" do
+        fill_in "quick_filter", with: o1.email
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+      end
+
+      it "by order number" do
+        fill_in "quick_filter", with: o1.number
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+      end
+
+      it "by phone number" do
+        fill_in "quick_filter", with: o1.bill_address.phone
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+      end
+
+      it "by distributor name" do
+        fill_in "quick_filter", with: o1.distributor.name
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+      end
+
+      it "by customer name" do
+        fill_in "quick_filter", with: o1.bill_address.firstname
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+
+        fill_in "quick_filter", with: o1.bill_address.lastname
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+      end
+    end
+
     context "displaying individual columns" do
       let!(:o1) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
@@ -1003,5 +1078,15 @@ describe '
   def displays_default_orders
     expect(page).to have_selector "tr#li_#{li1.id}"
     expect(page).to have_selector "tr#li_#{li2.id}"
+  end
+
+  def expect_line_items_results(line_items, excluded_line_items)
+    expect(page).to have_text "Loading orders"
+    line_items.each do |li|
+      expect(page).to have_selector "tr#li_#{li.id}"
+    end
+    excluded_line_items.each do |li|
+      expect(page).to have_no_selector "tr#li_#{li.id}"
+    end
   end
 end
