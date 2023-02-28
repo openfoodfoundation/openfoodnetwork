@@ -1419,7 +1419,7 @@
   resolved "https://registry.yarnpkg.com/@hotwired/stimulus-webpack-helpers/-/stimulus-webpack-helpers-1.0.1.tgz#4cd74487adeca576c9865ac2b9fe5cb20cef16dd"
   integrity sha512-wa/zupVG0eWxRYJjC1IiPBdt3Lruv0RqGN+/DTMmUWUyMAEB27KXmVY6a8YpUVTM7QwVuaLNGW4EqDgrS2upXQ==
 
-"@hotwired/stimulus@>= 3.0", "@hotwired/stimulus@^3.2.1":
+"@hotwired/stimulus@>= 3.0, < 4", "@hotwired/stimulus@^3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@hotwired/stimulus/-/stimulus-3.2.1.tgz#e3de23623b0c52c247aba4cd5d530d257008676b"
   integrity sha512-HGlzDcf9vv/EQrMJ5ZG6VWNs8Z/xMN+1o2OhV1gKiSG6CqZt5MCBB1gRg5ILiN3U0jEAxuDTNPRfBcnZBDmupQ==
@@ -1685,10 +1685,10 @@
   resolved "https://registry.yarnpkg.com/@orchidjs/unicode-variants/-/unicode-variants-1.0.4.tgz#6d2f812e3b19545bba2d81caffff1204de9a6a58"
   integrity sha512-NvVBRnZNE+dugiXERFsET1JlKZfM5lJDEpSMilKW4bToYJ7pxf0Zne78xyXB2ny2c2aHfJ6WLnz1AaTNHAmQeQ==
 
-"@rails/actioncable@>= 6.0":
-  version "7.0.3"
-  resolved "https://registry.npmjs.org/@rails/actioncable/-/actioncable-7.0.3.tgz#71f08e958883af64f6a20489318b5e95d2c6dc5b"
-  integrity sha512-Iefl21FZD+ck1di6xSHMYzSzRiNJTHV4NrAzCfDfqc/wPz4xncrP8f2/fJ+2jzwKIaDn76UVMsALh7R5OzsF8Q==
+"@rails/actioncable@>= 6.0, < 8":
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-7.0.4.tgz#70a3ca56809f7aaabb80af2f9c01ae51e1a8ed41"
+  integrity sha512-tz4oM+Zn9CYsvtyicsa/AwzKZKL+ITHWkhiu7x+xF77clh2b4Rm+s6xnOgY/sGDWoFWZmtKsE95hxBPkgQQNnQ==
 
 "@rails/webpacker@5.4.4":
   version "5.4.4"
@@ -2847,13 +2847,6 @@ cable_ready@5.0.0-pre10:
   integrity sha512-NevHcu5N5zzUKxyS/cYtkIY6mm7y1anQr9zxu65fqptMOBZS2fukXpz9YEn659yGKyqtCMVNrzkNtkICkBoGAQ==
   dependencies:
     morphdom "2.6.1"
-
-"cable_ready@>= 5.0.0-pre9":
-  version "5.0.0-pre9"
-  resolved "https://registry.npmjs.org/cable_ready/-/cable_ready-5.0.0-pre9.tgz#9c082b796f7b7add7965ce637a8d8717726be5ab"
-  integrity sha512-m7XggG+LRPFLsbH78G603F3AAYpkv+VfGCouN6RrP20Mgz9H0+xr7v2DN2F1CeJBBAliYPKcAt/48uTGjSrBaA==
-  dependencies:
-    morphdom "^2.6.1"
 
 cacache@^12.0.2:
   version "12.0.4"
@@ -6467,7 +6460,7 @@ moment@^2.29.1:
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
-morphdom@2.6.1, "morphdom@>=2.6.0 <3.0.0", morphdom@^2.6.1:
+morphdom@2.6.1, "morphdom@>=2.6.0 <3.0.0":
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/morphdom/-/morphdom-2.6.1.tgz#e868e24f989fa3183004b159aed643e628b4306e"
   integrity sha512-Y8YRbAEP3eKykroIBWrjcfMw7mmwJfjhqdpSvoqinu8Y702nAwikpXcNFDiIkyvfCLxLM9Wu95RZqo4a9jFBaA==
@@ -8665,14 +8658,14 @@ stimulus@^3.0.1:
     "@hotwired/stimulus" "^3.2.1"
     "@hotwired/stimulus-webpack-helpers" "^1.0.0"
 
-stimulus_reflex@3.5.0-pre9:
-  version "3.5.0-pre9"
-  resolved "https://registry.npmjs.org/stimulus_reflex/-/stimulus_reflex-3.5.0-pre9.tgz#e99eaf11e9e7476df10cd8f5c557d368f54446b3"
-  integrity sha512-ZhGUuJaKaWhHU5eGnZQ3pgnv0/pJ4dtNABDtMZRAHNm3ngsHY5dpR/H801a1ozD6J5rpadONvhhBcPjPY/x6NQ==
+stimulus_reflex@3.5.0-pre10:
+  version "3.5.0-pre10"
+  resolved "https://registry.yarnpkg.com/stimulus_reflex/-/stimulus_reflex-3.5.0-pre10.tgz#5d907af1647d6fe49e4ee6b228867b9af817682e"
+  integrity sha512-Y4EeAvcXTa4Kkso8EVRh7ZqYAYO6PerAhmoV0i7KJ4nEAxwPQ7/z5ez8597qD2SnhR+/nsVAxj6yF5LcdNBb3Q==
   dependencies:
-    "@hotwired/stimulus" ">= 3.0"
-    "@rails/actioncable" ">= 6.0"
-    cable_ready ">= 5.0.0-pre9"
+    "@hotwired/stimulus" ">= 3.0, < 4"
+    "@rails/actioncable" ">= 6.0, < 8"
+    cable_ready "5.0.0-pre10"
 
 stream-browserify@^2.0.1:
   version "2.0.2"
