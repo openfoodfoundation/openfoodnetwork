@@ -14,7 +14,7 @@ module Spree
 
     searchable_attributes :number, :state, :shipment_state, :payment_state, :distributor_id,
                           :order_cycle_id, :email, :total, :customer_id
-    searchable_associations :shipping_method, :bill_address
+    searchable_associations :shipping_method, :bill_address, :distributor
     searchable_scopes :complete, :incomplete
 
     checkout_flow do

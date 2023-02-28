@@ -4,7 +4,7 @@ module Spree
   class Address < ApplicationRecord
     include AddressDisplay
 
-    searchable_attributes :firstname, :lastname
+    searchable_attributes :firstname, :lastname, :phone
     searchable_associations :country, :state
 
     belongs_to :country, class_name: "Spree::Country"
