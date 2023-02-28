@@ -13,7 +13,7 @@
     = f.field_container :description do
       = f.label :description, t(:description)
       %text-angular{'id' => 'product_description', 'name' => 'product[description]', 'class' => 'text-angular', 'textangular-unsafe-sanitizer' => true, "textangular-links-target-blank" => true, 'ta-toolbar' => "[['bold','italics','underline','clear'],['insertLink']]"}
-        = sanitize(@product.description, attributes: ["href", "target"])
+        = sanitize(@product.description, scrubber: ContentScrubber.new)
       = f.error_message_on :description
 
   .right.four.columns.omega
