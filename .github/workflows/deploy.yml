@@ -1,0 +1,53 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+env:
+  TIMEZONE: UTC
+  RAILS_ENV: staging
+
+jobs:
+  build-and-delopy:
+    name: Deploy
+    runs-on: ubuntu-20.04
+    # Required for GH OIDC
+    permissions:
+      id-token: write
+      contents: read
+    services:
+      postgres:
+        image: postgres:10
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_DB: open_food_network_test
+          POSTGRES_USER: ofn
+          POSTGRES_PASSWORD: f00d
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node and Cache
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.18
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Type Check
+        run: npm run type-check
+      - name: Unit Tests
+        run: npm run test
+      - name: Create Artifact
+        run: npm run synth # often 'npm run build'
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: eu-central-1
+      - name: Deploy Artifact to Staging
+        run: npx cdk deploy --app "./cdk.out/assembly-Staging" --all --concurrency 10 --method=direct --require-approval never
