@@ -16,8 +16,8 @@ module Reporting
           end
 
           context "for type of parameters" do
-            it { is_expected.to validate_date_time_format_of(:start_at) }
-            it { is_expected.to validate_date_time_format_of(:end_at) }
+            it { is_expected.to validate_date_time_format_of(:completed_at_gt) }
+            it { is_expected.to validate_date_time_format_of(:completed_at_lt) }
             it { is_expected.to validate_integer_array(:distributor_ids) }
             it { is_expected.to validate_integer_array(:producer_ids) }
             it { is_expected.to validate_integer_array(:order_cycle_ids) }
@@ -43,21 +43,21 @@ module Reporting
               expect(subject.payment_method_ids).to eq(["1"])
             end
 
-            describe "requiring start_at to be before end_at" do
+            describe "requiring completed_at_gt to be before completed_at_lt" do
               let(:now) { Time.zone.now.utc }
 
-              it "adds error when start_at is after end_at" do
-                allow(subject).to receive(:start_at) { now.to_s }
-                allow(subject).to receive(:end_at) { (now - 1.hour).to_s }
+              it "adds error when completed_at_gt is after completed_at_lt" do
+                allow(subject).to receive(:completed_at_gt) { now.to_s }
+                allow(subject).to receive(:completed_at_lt) { (now - 1.hour).to_s }
 
                 expect(subject).not_to be_valid
                 error_message = described_class.date_end_before_start_error_message
-                expect(subject.errors[:end_at]).to eq([error_message])
+                expect(subject.errors[:completed_at_lt]).to eq([error_message])
               end
 
-              it "does not add error when start_at is before end_at" do
-                allow(subject).to receive(:start_at) { now.to_s }
-                allow(subject).to receive(:end_at) { (now + 1.hour).to_s }
+              it "does not add error when completed_at_gt is before completed_at_lt" do
+                allow(subject).to receive(:completed_at_gt) { now.to_s }
+                allow(subject).to receive(:completed_at_lt) { (now + 1.hour).to_s }
 
                 expect(subject).to be_valid
               end

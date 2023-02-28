@@ -6,12 +6,13 @@ module Reporting
       class Parameters < Reporting::Reports::EnterpriseFeeSummary::Reports::Parameters::Base
         include ActiveModel::Validations
 
-        attr_accessor :start_at, :end_at, :distributor_ids, :producer_ids, :order_cycle_ids,
-                      :enterprise_fee_ids, :shipping_method_ids, :payment_method_ids
+        attr_accessor :completed_at_gt, :completed_at_lt, :distributor_ids,
+                      :producer_ids, :order_cycle_ids, :enterprise_fee_ids,
+                      :shipping_method_ids, :payment_method_ids
 
         before_validation :cleanup_arrays
 
-        validates :start_at, :end_at, date_time_string: true
+        validates :completed_at_gt, :completed_at_lt, date_time_string: true
         validates :distributor_ids, :producer_ids, integer_array: true
         validates :order_cycle_ids, integer_array: true
         validates :enterprise_fee_ids, integer_array: true
