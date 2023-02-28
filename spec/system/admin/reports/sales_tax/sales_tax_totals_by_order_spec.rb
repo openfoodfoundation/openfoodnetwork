@@ -105,7 +105,7 @@ describe "Sales Tax Totals By order" do
     it "generates the report" do
       login_as admin
       visit admin_reports_path
-      click_on I18n.t("admin.reports.sales_tax_totals_by_order")
+      click_on "Sales Tax Totals By Order"
 
       expect(page).to have_button("Go")
       click_on "Go"
@@ -167,7 +167,7 @@ describe "Sales Tax Totals By order" do
     it "generates the report" do
       login_as admin
       visit admin_reports_path
-      click_on I18n.t("admin.reports.sales_tax_totals_by_order")
+      click_on "Sales Tax Totals By Order"
 
       expect(page).to have_button("Go")
       click_on "Go"
@@ -335,7 +335,7 @@ describe "Sales Tax Totals By order" do
 
       login_as admin
       visit admin_reports_path
-      click_on I18n.t("admin.reports.sales_tax_totals_by_order")
+      click_on "Sales Tax Totals By Order"
     end
 
     it "should load all the orders" do
@@ -422,6 +422,21 @@ describe "Sales Tax Totals By order" do
       ).to have_content(customer2_state_tax_rate_row)
       expect(page.find("table.report__table tbody").text).to have_content(customer2_summary_row)
       expect(page).to have_selector(table_raw_selector, count: 6)
+    end
+
+    context "downloads files" do
+      let(:report_file) do
+        CSV.read("spec/fixtures/reports/sales_tax_by_order/sales_tax_by_order.csv")
+      end
+      it 'as csv' do
+        expect(downloaded_filenames.length).to eq(0) # downloads folder should be empty
+        select "CSV", from: "report_format"
+        click_on "Go"
+        wait_for_download
+        expect(downloaded_filenames.length).to eq(1) # downloads folder should contain 1 file
+        expect(downloaded_filename).to match(/.*\.csv/)
+        expect(CSV.read(downloaded_filename)).to eq(report_file)
+      end
     end
   end
 end
