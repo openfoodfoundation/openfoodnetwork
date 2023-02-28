@@ -38,10 +38,10 @@ describe 'Enterprises Index' do
       let!(:distributor) {
         create(:distributor_enterprise, sells: 'none', name: "Adam's Market")
       }
-      let!(:mani) { create(:user, enterprise_limit: 1) }
+      let!(:manager) { create(:user, enterprise_limit: 1) }
 
       before do
-        distributor.users << mani
+        distributor.users << manager
       end
 
       context "without violating rules" do
@@ -54,14 +54,14 @@ describe 'Enterprises Index' do
             expect(page).to have_checked_field "sets_enterprise_set_collection_attributes_0_visible"
             uncheck "sets_enterprise_set_collection_attributes_0_visible"
             select 'any', from: "sets_enterprise_set_collection_attributes_0_sells"
-            select mani.email, from: 'sets_enterprise_set_collection_attributes_0_owner_id'
+            select manager.email, from: 'sets_enterprise_set_collection_attributes_0_owner_id'
           end
           click_button "Update"
           expect(flash_message).to eq('Enterprises updated successfully')
           distributor.reload
           expect(distributor.visible).to eq "hidden"
           expect(distributor.sells).to eq 'any'
-          expect(distributor.owner).to eq mani
+          expect(distributor.owner).to eq manager
         end
       end
 
@@ -73,24 +73,24 @@ describe 'Enterprises Index' do
         }
 
         before do
-          second_distributor.users << mani
+          second_distributor.users << manager
 
           login_as_admin_and_visit admin_enterprises_path
         end
 
         it "does not update the enterprises and displays errors" do
-          select_new_owner(mani, distributor)
-          select_new_owner(mani, second_distributor)
+          select_new_owner(manager, distributor)
+          select_new_owner(manager, second_distributor)
 
           expect {
             click_button "Update"
 
             expect(flash_message).to eq('Update failed')
-            expect(page).to have_content "#{mani.email} is not permitted to own any more enterprises (limit is 1)."
+            expect(page).to have_content "#{manager.email} is not permitted to own any more enterprises (limit is 1)."
             second_distributor.reload
           }.to_not change { second_distributor.owner }
 
-          expect(second_distributor.owner).to_not eq mani
+          expect(second_distributor.owner).to_not eq manager
         end
 
         def select_new_owner(user, enterprise)
