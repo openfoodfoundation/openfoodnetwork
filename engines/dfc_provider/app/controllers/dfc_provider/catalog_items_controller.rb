@@ -15,8 +15,9 @@ module DfcProvider
     end
 
     def show
-      dfc_object = DfcBuilder.catalog_item(variant)
-      render json: DfcLoader.connector.export(dfc_object)
+      catalog_item = DfcBuilder.catalog_item(variant)
+      offers = catalog_item.offers
+      render json: DfcLoader.connector.export(catalog_item, *offers)
     end
 
     private
