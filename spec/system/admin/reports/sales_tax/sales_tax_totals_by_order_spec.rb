@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'system_helper'
+require 'roo'
 
 describe "Sales Tax Totals By order" do
   #  Scenarion 1: added tax
@@ -428,6 +429,11 @@ describe "Sales Tax Totals By order" do
       let(:report_file) do
         CSV.read("spec/fixtures/reports/sales_tax_by_order/sales_tax_by_order.csv")
       end
+
+      let(:report_file_xlsx) do
+        File.open("spec/fixtures/reports/sales_tax_by_order/sales_tax_by_order.xlsx")
+      end
+
       it 'as csv' do
         expect(downloaded_filenames.length).to eq(0) # downloads folder should be empty
         select "CSV", from: "report_format"
@@ -436,6 +442,25 @@ describe "Sales Tax Totals By order" do
         expect(downloaded_filenames.length).to eq(1) # downloads folder should contain 1 file
         expect(downloaded_filename).to match(/.*\.csv/)
         expect(CSV.read(downloaded_filename)).to eq(report_file)
+      end
+
+      it 'as xlsx' do
+        expect(downloaded_filenames.length).to eq(0) # downloads folder should be empty
+        select "Spreadsheet", from: "report_format"
+        find("#display_summary_row").uncheck
+        click_on "Go"
+        wait_for_download
+        expect(downloaded_filenames.length).to eq(1) # downloads folder should contain 1 file
+        expect(downloaded_filename).to match(/.*\.xlsx/)
+        downloaded_xlsx = Roo::Excelx.new(downloaded_filename)
+        downloaded_content = [downloaded_xlsx.row(1), downloaded_xlsx.row(2),
+                              downloaded_xlsx.row(3), downloaded_xlsx.row(4),
+                              downloaded_xlsx.row(5)]
+        fixture_xlsx = Roo::Excelx.new(report_file_xlsx)
+        fixture_content = [fixture_xlsx.row(1), fixture_xlsx.row(2), fixture_xlsx.row(3),
+                           fixture_xlsx.row(4),
+                           fixture_xlsx.row(5)]
+        expect(downloaded_content).to eq(fixture_content)
       end
     end
   end
