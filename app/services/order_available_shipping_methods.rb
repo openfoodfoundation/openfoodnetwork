@@ -16,9 +16,7 @@ class OrderAvailableShippingMethods
 
     shipping_methods = shipping_methods_before_tag_rules_applied
 
-    applicator = OpenFoodNetwork::TagRuleApplicator.new(distributor,
-                                                        "FilterShippingMethods", customer&.tag_list)
-    applicator.filter!(shipping_methods)
+    tag_rules.filter!(shipping_methods)
 
     shipping_methods.uniq
   end
@@ -39,5 +37,11 @@ class OrderAvailableShippingMethods
     order_cycle.distributor_shipping_methods
       .where(distributor_id: distributor.id)
       .select(:shipping_method_id)
+  end
+
+  def tag_rules
+    OpenFoodNetwork::TagRuleApplicator.new(
+      distributor, "FilterShippingMethods", customer&.tag_list
+    )
   end
 end
