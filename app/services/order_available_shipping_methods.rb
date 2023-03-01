@@ -14,14 +14,12 @@ class OrderAvailableShippingMethods
   def to_a
     return [] if distributor.blank?
 
-    shipping_methods = shipping_methods_before_tag_rules_applied
-
     tag_rules.filter(shipping_methods)
   end
 
   private
 
-  def shipping_methods_before_tag_rules_applied
+  def shipping_methods
     if order_cycle.nil? || order_cycle.simple?
       distributor.shipping_methods
     else
