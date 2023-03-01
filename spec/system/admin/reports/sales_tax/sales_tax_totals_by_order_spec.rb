@@ -462,6 +462,15 @@ describe "Sales Tax Totals By order" do
                            fixture_xlsx.row(5)]
         expect(downloaded_content).to eq(fixture_content)
       end
+      
+      it 'as pdf' do
+        expect(downloaded_filenames.length).to eq(0) # downloads folder should be empty
+        select "PDF", from: "report_format"
+        click_on "Go"
+        wait_for_download
+        expect(downloaded_filenames.length).to eq(1) # downloads folder should contain 1 file
+        expect(downloaded_filename).to match(/.*\.pdf/)
+      end
     end
   end
 end
