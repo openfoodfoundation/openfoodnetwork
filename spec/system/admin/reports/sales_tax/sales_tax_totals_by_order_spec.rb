@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'system_helper'
-require 'roo'
 
 describe "Sales Tax Totals By order" do
   #  Scenarion 1: added tax
@@ -425,51 +424,56 @@ describe "Sales Tax Totals By order" do
       expect(page).to have_selector(table_raw_selector, count: 6)
     end
 
-    context "downloads files" do
-      let(:report_file) do
-        CSV.read("spec/fixtures/reports/sales_tax_by_order/sales_tax_by_order.csv")
+    describe "downloading" do
+      context "csv files" do
+        let(:report_file_csv) do
+          CSV.read("spec/fixtures/reports/sales_tax_by_order/sales_tax_by_order.csv")
+        end
+
+        it 'downloads the file' do
+          expect(downloaded_filenames.length).to eq(0) # downloads folder should be empty
+          select "CSV", from: "report_format"
+          click_on "Go"
+          wait_for_download
+          expect(downloaded_filenames.length).to eq(1) # downloads folder should contain 1 file
+          expect(downloaded_filename).to match(/.*\.csv/)
+          expect(CSV.read(downloaded_filename)).to eq(report_file_csv)
+        end
       end
 
-      let(:report_file_xlsx) do
-        File.open("spec/fixtures/reports/sales_tax_by_order/sales_tax_by_order.xlsx")
+      context "xlsx files" do
+        let(:report_file_xlsx) do
+          File.open("spec/fixtures/reports/sales_tax_by_order/sales_tax_by_order.xlsx")
+        end
+
+        it 'downloads the file' do
+          expect(downloaded_filenames.length).to eq(0) # downloads folder should be empty
+          select "Spreadsheet", from: "report_format"
+          find("#display_summary_row").uncheck
+          click_on "Go"
+          wait_for_download
+          expect(downloaded_filenames.length).to eq(1) # downloads folder should contain 1 file
+          expect(downloaded_filename).to match(/.*\.xlsx/)
+          downloaded_content = extract_xlsx_rows(downloaded_filename, 1..5)
+          fixture_content = extract_xlsx_rows(report_file_xlsx, 1..5)
+          expect(downloaded_content).to eq(fixture_content)
+        end
+
+        def extract_xlsx_rows(file, range)
+          xlsx = Roo::Excelx.new(file)
+          range.map { |i| xlsx.row(i) }
+        end
       end
 
-      it 'as csv' do
-        expect(downloaded_filenames.length).to eq(0) # downloads folder should be empty
-        select "CSV", from: "report_format"
-        click_on "Go"
-        wait_for_download
-        expect(downloaded_filenames.length).to eq(1) # downloads folder should contain 1 file
-        expect(downloaded_filename).to match(/.*\.csv/)
-        expect(CSV.read(downloaded_filename)).to eq(report_file)
-      end
-
-      it 'as xlsx' do
-        expect(downloaded_filenames.length).to eq(0) # downloads folder should be empty
-        select "Spreadsheet", from: "report_format"
-        find("#display_summary_row").uncheck
-        click_on "Go"
-        wait_for_download
-        expect(downloaded_filenames.length).to eq(1) # downloads folder should contain 1 file
-        expect(downloaded_filename).to match(/.*\.xlsx/)
-        downloaded_xlsx = Roo::Excelx.new(downloaded_filename)
-        downloaded_content = [downloaded_xlsx.row(1), downloaded_xlsx.row(2),
-                              downloaded_xlsx.row(3), downloaded_xlsx.row(4),
-                              downloaded_xlsx.row(5)]
-        fixture_xlsx = Roo::Excelx.new(report_file_xlsx)
-        fixture_content = [fixture_xlsx.row(1), fixture_xlsx.row(2), fixture_xlsx.row(3),
-                           fixture_xlsx.row(4),
-                           fixture_xlsx.row(5)]
-        expect(downloaded_content).to eq(fixture_content)
-      end
-      
-      it 'as pdf' do
-        expect(downloaded_filenames.length).to eq(0) # downloads folder should be empty
-        select "PDF", from: "report_format"
-        click_on "Go"
-        wait_for_download
-        expect(downloaded_filenames.length).to eq(1) # downloads folder should contain 1 file
-        expect(downloaded_filename).to match(/.*\.pdf/)
+      context "pdf files" do
+        it 'downloads the file' do
+          expect(downloaded_filenames.length).to eq(0) # downloads folder should be empty
+          select "PDF", from: "report_format"
+          click_on "Go"
+          wait_for_download
+          expect(downloaded_filenames.length).to eq(1) # downloads folder should contain 1 file
+          expect(downloaded_filename).to match(/.*\.pdf/)
+        end
       end
     end
   end
