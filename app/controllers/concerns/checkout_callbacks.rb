@@ -54,7 +54,7 @@ module CheckoutCallbacks
   end
 
   def load_allowed_shipping_methods
-    @allowed_shipping_methods = sorted_available_shipping_methods.filter(
+    @allowed_shipping_methods ||= sorted_available_shipping_methods.filter(
       &method(:supports_all_products_shipping_categories?)
     )
   end
