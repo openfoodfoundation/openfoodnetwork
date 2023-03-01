@@ -15,10 +15,9 @@ module CheckoutCallbacks
     prepend_before_action :require_distributor_chosen
 
     before_action :load_order, :associate_user, :load_saved_addresses, :load_saved_credit_cards
-    before_action :load_shipping_methods,
-                  :load_allowed_shipping_methods, if: -> {
-                                                        params[:step] == "details"
-                                                      }
+    before_action :allowed_shipping_methods, if: -> {
+                                                   params[:step] == "details"
+                                                 }
 
     before_action :ensure_order_not_completed
     before_action :ensure_checkout_allowed
@@ -49,11 +48,7 @@ module CheckoutCallbacks
     @selected_card = nil
   end
 
-  def load_shipping_methods
-    @shipping_methods = sorted_available_shipping_methods
-  end
-
-  def load_allowed_shipping_methods
+  def allowed_shipping_methods
     @allowed_shipping_methods ||= sorted_available_shipping_methods.filter(
       &method(:supports_all_products_shipping_categories?)
     )

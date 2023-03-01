@@ -76,7 +76,7 @@
     - display_ship_address = false
     - ship_method_description = nil
 
-    - selected_shipping_method ||= @shipping_methods[0].id if @shipping_methods.length == 1
+    - selected_shipping_method ||= @allowed_shipping_methods[0].id if @allowed_shipping_methods.length == 1
     - @allowed_shipping_methods.each do |shipping_method|
       - ship_method_is_selected = shipping_method.id == selected_shipping_method.to_i
       %div.checkout-input.checkout-input-radio
