@@ -136,15 +136,16 @@ module OpenFoodNetwork
             before do
               allow(applicator).to receive(:reject?).with(child1) { true }
               allow(applicator).to receive(:reject?).with(child2) { false }
-              applicator.filter!(list)
             end
 
             it "rejects the specified children from the array" do
+              applicator.filter!(list)
               expect(children).to eq [child2]
             end
 
-            it "does not remove the element from the original list" do
-              expect(list).to eq [element]
+            it "does not remove the element from the result" do
+              result = applicator.filter!(list)
+              expect(result).to eq [element]
             end
           end
 
@@ -152,15 +153,16 @@ module OpenFoodNetwork
             before do
               allow(applicator).to receive(:reject?).with(child1) { true }
               allow(applicator).to receive(:reject?).with(child2) { true }
-              applicator.filter!(list)
             end
 
             it "removes all children from the array" do
+              applicator.filter!(list)
               expect(children).to eq []
             end
 
-            it "removes the element from the original list" do
-              expect(list).to eq []
+            it "removes the element from the result" do
+              result = applicator.filter!(list)
+              expect(result).to eq []
             end
           end
         end
@@ -173,22 +175,22 @@ module OpenFoodNetwork
           context "when reject? returns false for the element" do
             before do
               allow(applicator).to receive(:reject?).with(element) { false }
-              applicator.filter!(list)
             end
 
-            it "does not remove the element from the original list" do
-              expect(list).to eq [element]
+            it "does not remove the element from the result" do
+              result = applicator.filter!(list)
+              expect(result).to eq [element]
             end
           end
 
           context "when reject? returns true for the element" do
             before do
               allow(applicator).to receive(:reject?).with(element) { true }
-              applicator.filter!(list)
             end
 
-            it "removes the element from the original list" do
-              expect(list).to eq []
+            it "removes the element from the result" do
+              result = applicator.filter!(list)
+              expect(result).to eq []
             end
           end
         end
@@ -258,8 +260,8 @@ module OpenFoodNetwork
         }
 
         it "applies the default rule" do
-          applicator.filter!(products_array)
-          expect(products_array).to eq [
+          result = applicator.filter!(products_array)
+          expect(result).to eq [
             { :id => 2, :name => 'product 2',
               "variants" => [{ :id => 9, "tag_list" => ["tag2"] }] }, product3
           ]
@@ -273,8 +275,8 @@ module OpenFoodNetwork
 
         it "applies those rules" do
           # product_tag_rule1 and product_tag_rule2 are being applied
-          applicator.filter!(products_array)
-          expect(products_array).to eq [product1, product2]
+          result = applicator.filter!(products_array)
+          expect(result).to eq [product1, product2]
         end
       end
     end
