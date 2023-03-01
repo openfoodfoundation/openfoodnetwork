@@ -120,9 +120,9 @@ module OpenFoodNetwork
         applicator.filter!(OrderCycle.none)
       end
 
-      context "when subject is an array" do
+      context "when filtering an array" do
         let(:element) { double(:element, ) }
-        let(:subject) { [element] }
+        let(:list) { [element] }
 
         context "when rule_class reponds to tagged_children_for" do
           let(:child1) { double(:child) }
@@ -136,15 +136,15 @@ module OpenFoodNetwork
             before do
               allow(applicator).to receive(:reject?).with(child1) { true }
               allow(applicator).to receive(:reject?).with(child2) { false }
-              applicator.filter!(subject)
+              applicator.filter!(list)
             end
 
             it "rejects the specified children from the array" do
               expect(children).to eq [child2]
             end
 
-            it "does not remove the element from the original subject" do
-              expect(subject).to eq [element]
+            it "does not remove the element from the original list" do
+              expect(list).to eq [element]
             end
           end
 
@@ -152,15 +152,15 @@ module OpenFoodNetwork
             before do
               allow(applicator).to receive(:reject?).with(child1) { true }
               allow(applicator).to receive(:reject?).with(child2) { true }
-              applicator.filter!(subject)
+              applicator.filter!(list)
             end
 
             it "removes all children from the array" do
               expect(children).to eq []
             end
 
-            it "removes the element from the original subject" do
-              expect(subject).to eq []
+            it "removes the element from the original list" do
+              expect(list).to eq []
             end
           end
         end
@@ -173,22 +173,22 @@ module OpenFoodNetwork
           context "when reject? returns false for the element" do
             before do
               allow(applicator).to receive(:reject?).with(element) { false }
-              applicator.filter!(subject)
+              applicator.filter!(list)
             end
 
-            it "does not remove the element from the original subject" do
-              expect(subject).to eq [element]
+            it "does not remove the element from the original list" do
+              expect(list).to eq [element]
             end
           end
 
           context "when reject? returns true for the element" do
             before do
               allow(applicator).to receive(:reject?).with(element) { true }
-              applicator.filter!(subject)
+              applicator.filter!(list)
             end
 
-            it "removes the element from the original subject" do
-              expect(subject).to eq []
+            it "removes the element from the original list" do
+              expect(list).to eq []
             end
           end
         end
