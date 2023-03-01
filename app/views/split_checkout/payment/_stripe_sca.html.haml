@@ -29,5 +29,5 @@
     - if spree_current_user
       .checkout-input
         = check_box_tag "order[payments_attributes][][source_attributes][save_requested_by_customer]", 1, false
-        = label :save_requested_by_customer, t('split_checkout.step2.form.stripe.save_card'), { for: "save_requested_by_customer" }
+        = label_tag :order_payments_attributes__source_attributes_save_requested_by_customer, t('split_checkout.step2.form.stripe.save_card')
       
