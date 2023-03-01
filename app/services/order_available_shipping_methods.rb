@@ -18,7 +18,7 @@ class OrderAvailableShippingMethods
 
     tag_rules.filter!(shipping_methods)
 
-    shipping_methods.uniq
+    shipping_methods
   end
 
   private
@@ -30,7 +30,7 @@ class OrderAvailableShippingMethods
       distributor.shipping_methods.where(
         id: available_distributor_shipping_methods_ids
       )
-    end.frontend.to_a
+    end.frontend.to_a.uniq
   end
 
   def available_distributor_shipping_methods_ids
