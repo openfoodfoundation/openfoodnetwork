@@ -112,22 +112,12 @@ module OpenFoodNetwork
     describe "filter!" do
       let(:applicator) { OpenFoodNetwork::TagRuleApplicator.new(enterprise, "FilterProducts", []) }
 
-      context "when the subject is nil" do
-        let(:subject) { double(:subject, reject!: false) }
-
-        it "returns immediately" do
-          applicator.filter!(subject)
-          expect(subject).to_not have_received(:reject!)
-        end
+      it "handles nil" do
+        applicator.filter!(nil)
       end
 
-      context "when subject is empty" do
-        let(:subject) { double(:subject, reject!: false) }
-
-        it "returns immediately" do
-          applicator.filter!(subject)
-          expect(subject).to_not have_received(:reject!)
-        end
+      it "handles an empty collection" do
+        applicator.filter!(OrderCycle.none)
       end
 
       context "when subject is an array" do
