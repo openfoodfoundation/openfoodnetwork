@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require './spec/models/concerns/calculator_validation_spec'
+require './spec/models/concerns/nested_calculator_validation_spec'
 
 class Spree::Gateway::Test < Spree::Gateway
 end
