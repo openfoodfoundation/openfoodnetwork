@@ -45,4 +45,21 @@ shared_examples "a parent model that has a Calculator" do |parent_name|
       expect(error_messages).not_to include(/^Calculator preferred/)
     end
   end
+
+  context "when number localization is enabled and the associated Calculator is invalid" do
+    let(:localized_parent) do
+      build(parent_name, calculator: Calculator::FlatRate.new(preferred_amount: "invalid"))
+    end
+
+    before do
+      allow(Spree::Config).to receive(:enable_localized_number?).and_return true
+      localized_parent.valid?
+    end
+
+    it "adds custom error messages to base" do
+      expect(localized_parent.errors[:base]).to include(
+        /#{I18n.t('spree.localized_number.invalid_format')}/
+      )
+    end
+  end
 end
