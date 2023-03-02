@@ -81,7 +81,7 @@ en:
         count_on_hand: "On Hand"
     errors:
       messages:
-        calculator_preferred_value_error: "Invalid input. Please use only numbers. For example: 10, 5.5, -20"
+        calculator_preferred_value_error: "has an invalid input. Please use only numbers. For example: 10, 5.5, -20"
       models:
         spree/user:
           attributes:
