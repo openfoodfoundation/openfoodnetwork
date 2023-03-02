@@ -21,7 +21,7 @@ module NestedCalculatorValidation
   def add_custom_error_messages
     calculator.errors.messages&.each do |attribute, msgs|
       msgs.each do |msg|
-        errors.add(:base, "#{localize_calculator_attributes[attribute]}: #{msg}")
+        errors.add(:base, "#{localize_calculator_attributes[attribute]} #{msg}")
       end
     end
   end
