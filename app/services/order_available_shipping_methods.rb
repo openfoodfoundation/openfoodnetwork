@@ -16,7 +16,7 @@ class OrderAvailableShippingMethods
 
     shipping_methods = shipping_methods_before_tag_rules_applied
 
-    tag_rules.filter!(shipping_methods)
+    tag_rules.filter(shipping_methods)
   end
 
   private

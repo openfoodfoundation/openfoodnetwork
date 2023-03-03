@@ -13,7 +13,7 @@ module OpenFoodNetwork
       @customer_tags = customer_tags || []
     end
 
-    def filter!(subject)
+    def filter(subject)
       subject.to_a.reject do |element|
         if rule_class.respond_to?(:tagged_children_for)
           children = rule_class.tagged_children_for(element)

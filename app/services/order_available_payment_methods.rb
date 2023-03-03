@@ -18,7 +18,7 @@ class OrderAvailablePaymentMethods
 
     applicator = OpenFoodNetwork::TagRuleApplicator.new(distributor,
                                                         "FilterPaymentMethods", customer&.tag_list)
-    applicator.filter!(payment_methods)
+    applicator.filter(payment_methods)
   end
 
   private
