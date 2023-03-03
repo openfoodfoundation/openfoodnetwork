@@ -214,4 +214,42 @@ describe OrderAvailableShippingMethods do
       end
     end
   end
+
+  context "when certain shipping categories are required" do
+    subject { OrderAvailableShippingMethods.new(order) }
+    let(:order) {
+      build(:order, distributor: distributor, order_cycle: oc)
+    }
+    let(:oc) { create(:order_cycle) }
+    let(:distributor) { oc.distributors.first }
+    let(:standard_shipping) {
+      create(:shipping_method, distributors: [distributor], shipping_categories: [bike_transport])
+    }
+    let(:cooled_shipping) {
+      create(:shipping_method, distributors: [distributor], shipping_categories: [refrigerated])
+    }
+    let(:bike_transport) { Spree::ShippingCategory.new(name: "bike") }
+    let(:refrigerated) { Spree::ShippingCategory.new(name: "fridge") }
+
+    before {
+      standard_shipping
+      cooled_shipping
+    }
+
+    it "provides all shipping methods for an empty order" do
+      expect(subject.to_a).to match_array [standard_shipping, cooled_shipping]
+    end
+
+    it "provides all shipping methods for normal products" do
+      order.line_items << build(:line_item)
+      expect(subject.to_a).to match_array [standard_shipping, cooled_shipping]
+    end
+
+    it "filters shipping methods for products needing refrigeration" do
+      product = oc.products.first
+      product.update!(shipping_category: refrigerated)
+      order.line_items << build(:line_item, variant: product.variants.first)
+      expect(subject.to_a).to eq [cooled_shipping]
+    end
+  end
 end
