@@ -51,10 +51,9 @@ module OrderManagement
       end
 
       def shipping_methods(package)
-        shipping_methods = package.shipping_methods
-        shipping_methods.delete_if { |ship_method| !ship_method.calculator.available?(package) }
-        shipping_methods.delete_if { |ship_method| !ship_method.include?(order.ship_address) }
-        shipping_methods
+        package.shipping_methods
+          .reject { |ship_method| !ship_method.calculator.available?(package) }
+          .reject { |ship_method| !ship_method.include?(order.ship_address) }
       end
     end
   end
