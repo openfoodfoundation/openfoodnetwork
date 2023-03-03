@@ -20,21 +20,21 @@ describe Enterprise do
           enterprise.set_producer_property 'Biodynamic', 'ASDF 4321'
         end
 
-        pending "touches enterprise when a classification on that product changes" do
+        it "touches enterprise when a classification on that product changes" do
           expect {
-            later { classification.save! }
+            later { classification.touch }
           }.to change { enterprise.reload.updated_at }
         end
 
-        pending "touches enterprise when a property on that product changes" do
+        it "touches enterprise when a property on that product changes" do
           expect {
-            later { property.save! }
+            later { property.touch }
           }.to change { enterprise.reload.updated_at }
         end
 
-        pending "touches enterprise when a producer property on that product changes" do
+        it "touches enterprise when a producer property on that product changes" do
           expect {
-            later { producer_property.save! }
+            later { producer_property.touch }
           }.to change { enterprise.reload.updated_at }
         end
 
@@ -64,21 +64,21 @@ describe Enterprise do
         context "with an order cycle" do
           before { oc }
 
-          pending "touches enterprise when a classification on that product changes" do
+          it "touches enterprise when a classification on that product changes" do
             expect {
-              later { classification.save! }
+              later { classification.touch }
             }.to change { enterprise.reload.updated_at }
           end
 
-          pending "touches enterprise when a property on that product changes" do
+          it "touches enterprise when a property on that product changes" do
             expect {
-              later { property.save! }
+              later { property.touch }
             }.to change { enterprise.reload.updated_at }
           end
 
-          pending "touches enterprise when a producer property on that product changes" do
+          it "touches enterprise when a producer property on that product changes" do
             expect {
-              later { producer_property.save! }
+              later { producer_property.touch }
             }.to change { enterprise.reload.updated_at }
           end
 
@@ -106,9 +106,9 @@ describe Enterprise do
         let(:child_enterprise) { create(:supplier_enterprise) }
         let!(:er) { create(:enterprise_relationship, parent: enterprise, child: child_enterprise) }
 
-        pending "touches enterprise when enterprise relationship is updated" do
+        it "touches enterprise when enterprise relationship is updated" do
           expect {
-            later { er.save! }
+            later { er.touch }
           }.to change { enterprise.reload.updated_at }
         end
       end
@@ -120,9 +120,9 @@ describe Enterprise do
           enterprise.shipping_methods << sm
         end
 
-        pending "touches enterprise when distributor_shipping_method is updated" do
+        it "touches enterprise when distributor_shipping_method is updated" do
           expect {
-            later { enterprise.distributor_shipping_methods.first.save! }
+            later { enterprise.distributor_shipping_methods.first.touch }
           }.to change { enterprise.reload.updated_at }
         end
 
