@@ -18,9 +18,6 @@ module OrderManagement
           allow_any_instance_of(Spree::ShippingMethod).
             to receive_message_chain(:calculator, :compute).and_return(4.00)
           allow_any_instance_of(Spree::ShippingMethod).
-            to receive_message_chain(:calculator, :preferences).
-            and_return(currency: order.currency)
-          allow_any_instance_of(Spree::ShippingMethod).
             to receive_message_chain(:calculator, :marked_for_destruction?)
 
           allow(package).to receive_messages(shipping_methods: [shipping_method])
@@ -45,21 +42,6 @@ module OrderManagement
           it "does not return shipping rates from a shipping method" do
             allow_any_instance_of(Spree::ShippingMethod).
               to receive_message_chain(:calculator, :available?).and_return(false)
-            shipping_rates = subject.shipping_rates(package)
-            expect(shipping_rates).to eq []
-          end
-        end
-
-        context "the currency matches the order's currency" do
-          it "returns shipping rates from a shipping method" do
-            shipping_rates = subject.shipping_rates(package)
-            expect(shipping_rates.first.cost).to eq 4.00
-          end
-        end
-
-        context "the currency is different than the order's currency" do
-          it "does not return shipping rates from a shipping method" do
-            order.currency = "USD"
             shipping_rates = subject.shipping_rates(package)
             expect(shipping_rates).to eq []
           end
