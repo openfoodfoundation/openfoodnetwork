@@ -52,8 +52,8 @@ module OrderManagement
 
       def shipping_methods(package)
         package.shipping_methods
-          .reject { |ship_method| !ship_method.calculator.available?(package) }
-          .reject { |ship_method| !ship_method.include?(order.ship_address) }
+          .select { |ship_method| ship_method.calculator.available?(package) }
+          .select { |ship_method| ship_method.include?(order.ship_address) }
       end
     end
   end
