@@ -104,6 +104,9 @@ module Admin
           subscription.subscription_line_items.nil_price_estimate.each do |line_item|
             variant = OrderManagement::Subscriptions::
                 VariantsList.eligible_variants(shop).find_by(id: line_item.variant_id)
+            # If the variant is not available in the shop, the price estimate will be nil
+            next if variant.nil?
+
             price = variant.price + fee_calculator.indexed_fees_for(variant)
             line_item.update_column(:price_estimate, price)
           end
