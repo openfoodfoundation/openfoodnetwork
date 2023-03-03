@@ -51,9 +51,9 @@ module OrderManagement
       end
 
       def shipping_methods(package)
-        package.shipping_methods
-          .select { |ship_method| ship_method.calculator.available?(package) }
-          .select { |ship_method| ship_method.include?(order.ship_address) }
+        package.shipping_methods.select { |ship_method|
+          ship_method.calculator.available?(package) && ship_method.include?(order.ship_address)
+        }
       end
     end
   end
