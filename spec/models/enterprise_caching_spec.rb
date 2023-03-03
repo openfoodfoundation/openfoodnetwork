@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Enterprise do
   context "key-based caching invalidation" do
     describe "is touched when a(n)" do
-      let(:enterprise) { create(:distributor_enterprise, updated_at: 1.week.ago) }
+      let(:enterprise) { create(:distributor_enterprise) }
       let(:taxon) { create(:taxon) }
       let(:supplier2) { create(:supplier_enterprise) }
 
@@ -22,25 +22,25 @@ describe Enterprise do
 
         pending "touches enterprise when a classification on that product changes" do
           expect {
-            classification.save!
+            later { classification.save! }
           }.to change { enterprise.reload.updated_at }
         end
 
         pending "touches enterprise when a property on that product changes" do
           expect {
-            property.save!
+            later { property.save! }
           }.to change { enterprise.reload.updated_at }
         end
 
         pending "touches enterprise when a producer property on that product changes" do
           expect {
-            producer_property.save!
+            later { producer_property.save! }
           }.to change { enterprise.reload.updated_at }
         end
 
         it "touches enterprise when the supplier of a product changes" do
           expect {
-            product.update!(supplier: supplier2)
+            later { product.update!(supplier: supplier2) }
           }.to change { enterprise.reload.updated_at }
         end
       end
@@ -66,38 +66,38 @@ describe Enterprise do
 
           pending "touches enterprise when a classification on that product changes" do
             expect {
-              classification.save!
+              later { classification.save! }
             }.to change { enterprise.reload.updated_at }
           end
 
           pending "touches enterprise when a property on that product changes" do
             expect {
-              property.save!
+              later { property.save! }
             }.to change { enterprise.reload.updated_at }
           end
 
           pending "touches enterprise when a producer property on that product changes" do
             expect {
-              producer_property.save!
+              later { producer_property.save! }
             }.to change { enterprise.reload.updated_at }
           end
 
           it "touches enterprise when the supplier of a product changes" do
             expect {
-              product.update!(supplier: supplier2)
+              later { product.update!(supplier: supplier2) }
             }.to change { enterprise.reload.updated_at }
           end
 
           it "touches enterprise when a relevant exchange is updated" do
             expect {
-              oc.exchanges.first.update!(updated_at: Time.zone.now)
+              later { oc.exchanges.first.update!(updated_at: Time.zone.now) }
             }.to change { enterprise.reload.updated_at }
           end
         end
 
         it "touches enterprise when the product's variant is added to order cycle" do
           expect {
-            oc
+            later { oc }
           }.to change { enterprise.reload.updated_at }
         end
       end
@@ -108,7 +108,7 @@ describe Enterprise do
 
         pending "touches enterprise when enterprise relationship is updated" do
           expect {
-            er.save!
+            later { er.save! }
           }.to change { enterprise.reload.updated_at }
         end
       end
@@ -122,22 +122,26 @@ describe Enterprise do
 
         pending "touches enterprise when distributor_shipping_method is updated" do
           expect {
-            enterprise.distributor_shipping_methods.first.save!
+            later { enterprise.distributor_shipping_methods.first.save! }
           }.to change { enterprise.reload.updated_at }
         end
 
         it "touches enterprise when shipping method is updated" do
           expect {
-            sm.save!
+            later { sm.save! }
           }.to change { enterprise.reload.updated_at }
         end
       end
 
       it "touches enterprise when address is updated" do
         expect {
-          enterprise.address.save!
+          later { enterprise.address.save! }
         }.to change { enterprise.reload.updated_at }
       end
     end
+  end
+
+  def later(&block)
+    Timecop.travel(1.day.from_now, &block)
   end
 end
