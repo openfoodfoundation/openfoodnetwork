@@ -426,7 +426,7 @@ module Spree
 
           context "when enterprise fees are taxed per-order" do
             let(:enterprise_fee) {
-              create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: true,
+              create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: false,
                                       calculator: ::Calculator::FlatRate.new(preferred_amount: 50.0))
             }
 
