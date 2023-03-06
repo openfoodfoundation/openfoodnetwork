@@ -589,16 +589,14 @@ describe "AdminProductEditCtrl", ->
         expect($scope.packVariant).toHaveBeenCalledWith(testProduct, testVariant)
 
     describe "packing variants", ->
-      testProduct = {id: 123}
-
       beforeEach ->
-        BulkProducts.products = [testProduct]
         window.bigDecimal = jasmine.createSpyObj "bigDecimal", ["multiply"]
         window.bigDecimal.multiply.and.callFake (a, b, c) -> (a * b).toFixed(c)
 
       it "extracts unit_value and unit_description from unit_value_with_description", ->
         testProduct = {id: 123, variant_unit_scale: 1.0}
         testVariant = {unit_value_with_description: "250.5 (bottle)"}
+        BulkProducts.products = [testProduct]
         $scope.products = [testProduct]
         $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
@@ -609,6 +607,7 @@ describe "AdminProductEditCtrl", ->
       it "extracts into unit_value when only a number is provided", ->
         testProduct = {id: 123, variant_unit_scale: 1.0}
         testVariant = {unit_value_with_description: "250.5"}
+        BulkProducts.products = [testProduct]
         $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: 250.5
@@ -616,7 +615,9 @@ describe "AdminProductEditCtrl", ->
           unit_value_with_description: "250.5"
 
       it "extracts into unit_description when only a string is provided", ->
+        testProduct = {id: 123}
         testVariant = {unit_value_with_description: "Medium"}
+        BulkProducts.products = [testProduct]
         $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: null
@@ -624,7 +625,9 @@ describe "AdminProductEditCtrl", ->
           unit_value_with_description: "Medium"
 
       it "extracts into unit_description when a string starting with a number is provided", ->
+        testProduct = {id: 123}
         testVariant = {unit_value_with_description: "1kg"}
+        BulkProducts.products = [testProduct]
         $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: null
@@ -632,7 +635,9 @@ describe "AdminProductEditCtrl", ->
           unit_value_with_description: "1kg"
 
       it "sets blank values when no value provided", ->
+        testProduct = {id: 123}
         testVariant = {unit_value_with_description: ""}
+        BulkProducts.products = [testProduct]
         $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: null
@@ -640,13 +645,16 @@ describe "AdminProductEditCtrl", ->
           unit_value_with_description: ""
 
       it "sets nothing when the field is undefined", ->
+        testProduct = {id: 123}
         testVariant = {}
+        BulkProducts.products = [testProduct]
         $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual {}
 
       it "sets zero when the field is zero", ->
         testProduct = {id: 123, variant_unit_scale: 1.0}
         testVariant = {unit_value_with_description: "0"}
+        BulkProducts.products = [testProduct]
         $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: 0
@@ -676,6 +684,7 @@ describe "AdminProductEditCtrl", ->
       it "converts unit_value into a float when a comma separated number is provided", ->
         testProduct = {id: 123, variant_unit_scale: 1.0}
         testVariant = {unit_value_with_description: "250,5"}
+        BulkProducts.products = [testProduct]
         $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: 250.5
@@ -683,8 +692,9 @@ describe "AdminProductEditCtrl", ->
           unit_value_with_description: "250,5"
 
       it "rounds off the unit_value upto 2 decimal places", ->
-        testProduct = {id: 123, variant_unit_scale: 28.35}
+        testProduct = {id: 123, variant_unit_scale: 1.0}
         testVariant = {unit_value_with_description: "1234.567"}
+        BulkProducts.products = [testProduct]
         $scope.packVariant(testProduct, testVariant)
         expect(testVariant).toEqual
           unit_value: 1234.57

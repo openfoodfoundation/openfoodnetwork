@@ -122,7 +122,7 @@ describe Spree::OrdersController, type: :controller do
       get :edit
 
       expect(response).to redirect_to root_url
-      expect(flash[:info]).to eq(I18n.t('order_cycles_closed_for_hub'))
+      expect(flash[:info]).to eq('The hub you have selected is temporarily closed for orders. Please try again later.')
     end
 
     describe "when an item is in the cart" do
@@ -161,7 +161,7 @@ describe Spree::OrdersController, type: :controller do
         it "displays a flash message when we view the cart" do
           get :edit
           expect(response.status).to eq 200
-          expect(flash[:error]).to eq I18n.t('spree.orders.error_flash_for_unavailable_items')
+          expect(flash[:error]).to eq 'An item in your cart has become unavailable. Please update the selected quantities.'
         end
       end
 
@@ -173,7 +173,7 @@ describe Spree::OrdersController, type: :controller do
         it "displays a flash message when we view the cart" do
           get :edit
           expect(response.status).to eq 200
-          expect(flash[:error]).to eq I18n.t('spree.orders.error_flash_for_unavailable_items')
+          expect(flash[:error]).to eq 'An item in your cart has become unavailable. Please update the selected quantities.'
         end
       end
     end
@@ -359,7 +359,7 @@ describe Spree::OrdersController, type: :controller do
 
       it "does not remove items, flash suggests cancellation" do
         spree_post :update, params
-        expect(flash[:error]).to eq I18n.t(:orders_cannot_remove_the_final_item)
+        expect(flash[:error]).to eq 'Cannot remove the final item from an order, please cancel the order instead.'
         expect(response).to redirect_to order_path(order)
         expect(order.reload.line_items.count).to eq 2
       end
@@ -460,7 +460,7 @@ describe Spree::OrdersController, type: :controller do
 
           expect(response).to have_http_status(:found)
           expect(response.body).to match(order_path(order)).and match("redirect")
-          expect(flash[:error]).to eq I18n.t(:orders_could_not_cancel)
+          expect(flash[:error]).to eq 'Sorry, the order could not be cancelled'
         end
       end
 
@@ -479,7 +479,7 @@ describe Spree::OrdersController, type: :controller do
 
           expect(response).to have_http_status(:found)
           expect(response.body).to match(order_path(order)).and match("redirect")
-          expect(flash[:success]).to eq I18n.t(:orders_your_order_has_been_cancelled)
+          expect(flash[:success]).to eq 'Your order has been cancelled'
         end
       end
     end

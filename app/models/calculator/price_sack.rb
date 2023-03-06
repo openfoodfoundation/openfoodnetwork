@@ -9,7 +9,6 @@ module Calculator
     preference :minimal_amount, :decimal, default: 0
     preference :normal_amount, :decimal, default: 0
     preference :discount_amount, :decimal, default: 0
-    preference :currency, :string, default: Spree::Config[:currency]
 
     localize_number :preferred_minimal_amount,
                     :preferred_normal_amount,

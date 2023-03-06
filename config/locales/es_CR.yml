@@ -5,6 +5,10 @@ es_CR:
       spree/product: Producto
       spree/shipping_method: Método de envío
     attributes:
+      spree/order/ship_address:
+        phone: "Número de teléfono"
+        firstname: "Nombre"
+        lastname: "Apellidos"
       spree/user:
         password: "Contraseña"
         password_confirmation: "Confirmación de la contraseña"
@@ -409,11 +413,25 @@ es_CR:
         price: Precio
         producer: Productor
         category: Categoría
+        sku: SKU
+        on_hand: "Disponibles"
+        on_demand: "Bajo demanda"
+        tax_category: "Categoría de impuestos"
+        inherits_properties: "¿Hereda propiedades?"
+        available_on: "Disponible en"
+        import_date: "Fecha de importación"
       columns_selector:
         unit: Unidad
         price: Precio
         producer: Productor
         category: Categoría
+        sku: SKU
+        on_hand: "Disponibles"
+        on_demand: "Bajo demanda"
+        tax_category: "Categoría de impuestos"
+        inherits_properties: "¿Hereda propiedades?"
+        available_on: "Disponible en"
+        import_date: "Fecha de importación"
     adjustments:
       skipped_changing_canceled_order: "No se puede cambiar una orden cancelada"
     begins_at: Empieza en
@@ -503,7 +521,6 @@ es_CR:
         title: "Configuración de factura"
         enable_invoices?: "Habilitar facturas?"
         invoice_style2?: "Utiliza el modelo de factura alternativo que incluye el desglose fiscal total por tipo de interés y tasa de impuestos por artículo (todavía no es adecuado para países que muestran los precios sin impuestos)"
-        enable_receipt_printing?: "¿Mostrar opciones para imprimir recibos usando impresoras térmicas en el desplegable del pedido?"
         enterprise_number_required_on_invoices?: "¿Requiere un ABN para generar una factura?"
     stripe_connect_settings:
       edit:
@@ -1570,10 +1587,6 @@ es_CR:
   invoice_issued_on: "Factura emitida el:"
   order_number: "Número de factura:"
   date_of_transaction: "Fecha de la transacción:"
-  ticket_column_qty: "Cantidad"
-  ticket_column_item: "Artículo"
-  ticket_column_unit_price: "Precio por unidad"
-  ticket_column_total_price: "Precio total"
   menu_1_title: "Tiendas"
   menu_1_url: "/shops"
   menu_2_title: "Mapa"
@@ -1680,12 +1693,6 @@ es_CR:
   card_has_been_removed: "Su tarjeta ha sido eliminada (número: %{number})"
   card_could_not_be_removed: Lo sentimos, la tarjeta no se pudo eliminar
   invalid_credit_card: "Tarjeta de crédito inválida"
-  ie_warning_headline: "Su navegador está desactualizado :-("
-  ie_warning_text: "Para una mejor experiencia utilizando La Feria, le recomendamos actualizar su navegador:"
-  ie_warning_chrome: Descargar Chrome
-  ie_warning_firefox: Descargar Firefox
-  ie_warning_ie: Actualizar Internet Explorer
-  ie_warning_other: "¿No puede actualizar su navegador? Pruebe usar Open Food Network (LaFeriaCR) en su teléfono :-)"
   legal:
     cookies_policy:
       header: "Cómo utilizamos las cookies"
@@ -1827,20 +1834,15 @@ es_CR:
       submit: Siguiente - Resumen del pedido
       cancel: Volver a Tus datos
     step3:
-      your_details:
-        title: Sus detalles
-        edit: Edita tus datos
-      billing_address:
-        title: Dirección de cobro
-      shipping_address:
-        title: Dirección de envío
-      delivery_info:
-        title: Información de entrega
+      delivery_details:
+        title: Detalles de entrega
+        edit: Editar
+        address: Dirección de entrega
       payment_method:
         title: Método de pago
-        edit: Editar método de pago
+        edit: Editar
       order:
-        title: Orden total
+        edit: Editar
       terms_and_conditions:
         message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor."
         link_text: "Términos y condiciones"
@@ -1849,11 +1851,9 @@ es_CR:
       all_terms_and_conditions:
         message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor y la plataforma %{tos_link}."
         terms_and_conditions: "Términos y condiciones"
-      agree: Al hacer clic en 'Completar pedido', acepta que se procese su pedido.
       submit: Orden completa
       cancel: Volver a Método de pago
     errors:
-      global: "Error al guardar, actualice los campos resaltados."
       terms_not_accepted: Por favor acepte Términos y Condiciones
       required: El campo no puede estar en blanco
       invalid_number: "Por favor ingrese un número de teléfono válido"
@@ -2553,6 +2553,7 @@ es_CR:
   report_customers_cycle: "Ciclo de Pedido"
   report_customers_type: "Tipo de Reporte"
   report_customers_csv: "Descargar como CSV"
+  report_customers: Cliente
   report_producers: "Productores"
   report_type: "Tipo de Reporte"
   report_hubs: "Centros de acopio"
@@ -2618,8 +2619,10 @@ es_CR:
   report_header_taxable_items_total: "Total en artículos con impuestos (%{currency_symbol})"
   report_header_sales_tax: "Impuesto sobre las ventas (%{currency_symbol})"
   report_header_delivery_charge: "Cobros de Envío (%{currency_symbol})"
+  report_header_tax: "Impuesto"
   report_header_tax_on_delivery: "Impuestos sobre la entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Impuesto sobre las comisiones (%{currency_symbol})"
+  report_header_tax_category: "Categoría de impuestos"
   report_header_total_tax: "Total Impuestos (%{currency_symbol})"
   report_header_total_excl_tax: "Total Impuestos excl. (%{currency_symbol})"
   report_header_total_incl_tax: "Total Impuestos incl. (%{currency_symbol})"
@@ -3437,9 +3440,6 @@ es_CR:
     default_seo_title: "Título Seo predeterminado"
     default_meta_description: "Meta Descripción predeterminada"
     default_meta_keywords: "Palabras clave Meta predeterminadas"
-    security_settings: "Configuraciones de seguridad"
-    allow_ssl_in_production: "Permitir el uso de SSL modo de producción"
-    allow_ssl_in_staging: "Permitir que SSL se utilice en modo de staging"
     currency_decimal_mark: "Marca decimal de la moneda"
     currency_settings: "Ajustes de moneda"
     currency_symbol_position: ¿Poner "símbolo" de moneda antes o después de la cantidad?
@@ -3630,6 +3630,10 @@ es_CR:
           authorized: "Autorizado"
           received: "Recibido"
           canceled: "Cancelado"
+      line_items:
+        index:
+          results_found: "%{number} Resultados encontrados."
+          viewing: "Viendo de %{start}a %{end}."
       orders:
         index:
           listing_orders: "Listado de pedidos"

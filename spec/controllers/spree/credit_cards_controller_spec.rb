@@ -97,7 +97,7 @@ describe Spree::CreditCardsController, type: :controller do
           expect{ spree_post :new_from_token, params }.to_not change(Spree::CreditCard, :count)
 
           json_response = JSON.parse(response.body)
-          flash_message = I18n.t(:spree_gateway_error_flash_for_checkout, error: "Bup-bow...")
+          flash_message = "There was a problem with your payment information: %s" % 'Bup-bow...'
           expect(json_response["flash"]["error"]).to eq flash_message
         end
       end
@@ -111,7 +111,7 @@ describe Spree::CreditCardsController, type: :controller do
         it "renders a flash error" do
           spree_put :update, params
           json_response = JSON.parse(response.body)
-          expect(json_response['flash']['error']).to eq I18n.t(:card_could_not_be_updated)
+          expect(json_response['flash']['error']).to eq 'Card could not be updated'
         end
       end
 
@@ -143,7 +143,7 @@ describe Spree::CreditCardsController, type: :controller do
             it "renders an error" do
               spree_put :update, params
               json_response = JSON.parse(response.body)
-              expect(json_response['flash']['error']).to eq I18n.t(:card_could_not_be_updated)
+              expect(json_response['flash']['error']).to eq 'Card could not be updated'
             end
           end
 
@@ -174,7 +174,7 @@ describe Spree::CreditCardsController, type: :controller do
         it "redirects to /account with a flash error, does not request deletion with Stripe" do
           expect(controller).to_not receive(:destroy_at_stripe)
           spree_delete :destroy, params
-          expect(flash[:error]).to eq I18n.t(:card_could_not_be_removed)
+          expect(flash[:error]).to eq 'Sorry, the card could not be removed'
           expect(response.status).to eq 200
         end
       end
@@ -206,7 +206,7 @@ describe Spree::CreditCardsController, type: :controller do
 
             it "doesn't delete the card" do
               expect{ spree_delete :destroy, params }.to_not change(Spree::CreditCard, :count)
-              expect(flash[:error]).to eq I18n.t(:card_could_not_be_removed)
+              expect(flash[:error]).to eq 'Sorry, the card could not be removed'
               expect(response.status).to eq 422
             end
           end
@@ -219,8 +219,7 @@ describe Spree::CreditCardsController, type: :controller do
 
             it "deletes the card and redirects to account_path" do
               expect{ spree_delete :destroy, params }.to change(Spree::CreditCard, :count).by(-1)
-              expect(flash[:success]).to eq I18n.t(:card_has_been_removed,
-                                                   number: "x-#{card.last_digits}")
+              expect(flash[:success]).to eq "Your card has been removed (number: %s)" % "x-#{card.last_digits}"
               expect(response.status).to eq 200
             end
 

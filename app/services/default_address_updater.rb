@@ -15,7 +15,7 @@ class DefaultAddressUpdater
     assign_bill_addresses
     assign_ship_addresses
 
-    customer.save
+    customer&.save
     user&.save
   end
 

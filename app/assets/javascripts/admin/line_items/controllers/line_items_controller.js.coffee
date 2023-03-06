@@ -9,41 +9,41 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.sharedResource = false
   $scope.columns = Columns.columns
   $scope.sorting = SortOptions
+  $scope.pagination = LineItems.pagination
+  $scope.per_page_options = [
+    {id: 15, name: t('js.admin.orders.index.per_page', results: 15)},
+    {id: 50, name: t('js.admin.orders.index.per_page', results: 50)},
+    {id: 100, name: t('js.admin.orders.index.per_page', results: 100)}
+  ]
+  $scope.page = 1
+  $scope.per_page = $scope.per_page_options[0].id
+  
 
   $scope.confirmRefresh = ->
     LineItems.allSaved() || confirm(t("unsaved_changes_warning"))
-
-  $scope.initStartAndEnDate = ->
-    $scope.startDate = moment().startOf('day').subtract(7, 'days').format('YYYY-MM-DD')
-    $scope.endDate = moment().startOf('day').format('YYYY-MM-DD')
 
   $scope.resetFilters = ->
     $scope.distributorFilter = ''
     $scope.supplierFilter = ''
     $scope.orderCycleFilter = ''
     $scope.quickSearch = ''
-    $scope.initStartAndEnDate()
-    event = new CustomEvent('flatpickr:change', {
-      detail: { 
-        startDate: $scope.startDate,
-        endDate: $scope.endDate
-      }
-    })
+    $scope.startDate = undefined
+    $scope.endDate = undefined
+    event = new CustomEvent('flatpickr:clear')
     window.dispatchEvent(event)
 
   $scope.resetSelectFilters = ->
     $scope.resetFilters()
     $scope.refreshData()
 
+  $scope.fetchResults = ->
+    # creates indirection in order to factorize the code between orders and bulk orders
+    # used in app/views/admin/shared/_angular_per_page_controls.html.haml
+    $scope.refreshData()
+
   $scope.refreshData = ->
-    $scope.formattedStartDate = moment($scope.startDate).format()
-    $scope.formattedEndDate = moment($scope.endDate).add(1,'day').format()
-
-    return unless moment($scope.formattedStartDate).isValid() and moment($scope.formattedEndDate).isValid()
-
     return "cancel" unless $scope.confirmRefresh()
 
-    $scope.loadOrders()
     $scope.loadLineItems()
 
     unless $scope.initialized
@@ -51,33 +51,14 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
     $scope.dereferenceLoadedData()
 
-  $scope.setOrderCycleDateRange = ->
-    start_date = OrderCycles.byID[$scope.orderCycleFilter].orders_open_at
-    end_date = OrderCycles.byID[$scope.orderCycleFilter].orders_close_at
-    format = "YYYY-MM-DD HH:mm:ss Z"
-    $scope.startDate = moment(start_date, format).format('YYYY-MM-DD')
-    $scope.endDate = moment(end_date, format).startOf('day').format('YYYY-MM-DD')
-     # throw a flatpickr:change event to change the date back in the datepicker
-    event = new CustomEvent('flatpickr:change', {
-      detail: { 
-        startDate: $scope.startDate,
-        endDate: $scope.endDate
-      }
-    })
-    window.dispatchEvent(event)
-
   $scope.loadOrders = ->
     RequestMonitor.load $scope.orders = Orders.index(
-      "q[state_not_eq]": "canceled",
-      "q[shipment_state_not_eq]": "shipped",
-      "q[completed_at_not_null]": "true",
-      "q[distributor_id_eq]": $scope.distributorFilter,
-      "q[order_cycle_id_eq]": $scope.orderCycleFilter,
-      "q[completed_at_gteq]": $scope.formattedStartDate,
-      "q[completed_at_lt]": $scope.formattedEndDate
+      "q[id_in][]": $scope.line_items.map((line_item) -> line_item.order.id)
     )
 
   $scope.loadLineItems = ->
+    [formattedStartDate, formattedEndDate] = $scope.formatDates($scope.startDate, $scope.endDate)
+
     RequestMonitor.load LineItems.index(
       "q[order_state_not_eq]": "canceled",
       "q[order_shipment_state_not_eq]": "shipped",
@@ -85,9 +66,16 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       "q[order_distributor_id_eq]": $scope.distributorFilter,
       "q[variant_product_supplier_id_eq]": $scope.supplierFilter,
       "q[order_order_cycle_id_eq]": $scope.orderCycleFilter,
-      "q[order_completed_at_gteq]": $scope.formattedStartDate,
-      "q[order_completed_at_lt]": $scope.formattedEndDate
+      "q[order_completed_at_gteq]": if formattedStartDate then formattedStartDate else undefined,
+      "q[order_completed_at_lt]": if formattedEndDate then formattedEndDate else undefined,
+      "page": $scope.page,
+      "per_page": $scope.per_page
     )
+
+  $scope.formatDates = (startDate, endDate) ->
+    formattedStartDate = moment(startDate).format('YYYY-MM-DD') if startDate
+    formattedEndDate = moment(endDate).add(1,'day').format('YYYY-MM-DD') if endDate
+    return [formattedStartDate, formattedEndDate]
 
   $scope.loadAssociatedData = ->
     RequestMonitor.load $scope.distributors = Enterprises.index(action: "visible", ams_prefix: "basic", "q[sells_in][]": ["own", "any"])
@@ -95,13 +83,15 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     RequestMonitor.load $scope.suppliers = Enterprises.index(action: "visible", ams_prefix: "basic", "q[is_primary_producer_eq]": "true")
 
   $scope.dereferenceLoadedData = ->
-    RequestMonitor.load $q.all([$scope.orders.$promise, $scope.distributors.$promise, $scope.orderCycles.$promise, $scope.suppliers.$promise, $scope.line_items.$promise]).then ->
-      Dereferencer.dereferenceAttr $scope.orders, "distributor", Enterprises.byID
-      Dereferencer.dereferenceAttr $scope.orders, "order_cycle", OrderCycles.byID
+    RequestMonitor.load $q.all([$scope.distributors.$promise, $scope.orderCycles.$promise, $scope.suppliers.$promise, $scope.line_items.$promise]).then ->
       Dereferencer.dereferenceAttr $scope.line_items, "supplier", Enterprises.byID
-      Dereferencer.dereferenceAttr $scope.line_items, "order", Orders.byID
-      $scope.bulk_order_form.$setPristine()
-      StatusMessage.clear()
+      $scope.loadOrders()
+      RequestMonitor.load $q.all([$scope.orders.$promise]).then ->
+        Dereferencer.dereferenceAttr $scope.line_items, "order", Orders.byID  
+        Dereferencer.dereferenceAttr $scope.orders, "distributor", Enterprises.byID
+        Dereferencer.dereferenceAttr $scope.orders, "order_cycle", OrderCycles.byID
+        $scope.bulk_order_form.$setPristine()
+        StatusMessage.clear()
 
       unless $scope.initialized
         $scope.initialized = true
@@ -219,7 +209,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
   $scope.getGroupBySizeFormattedValueWithUnitName = (value, unitsProduct, unitsVariant) ->
     scale = $scope.getScale(unitsProduct, unitsVariant)
-    if scale
+    if scale && value
       value = value / scale if scale != 28.35 && scale != 1 && scale != 453.6 # divide by scale if not smallest unit
       $scope.getFormattedValueWithUnitName(value, unitsProduct, unitsVariant, scale)
     else
@@ -262,5 +252,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     if lineItem.quantity > 0
       lineItem.final_weight_volume = LineItems.pristineByID[lineItem.id].final_weight_volume * lineItem.quantity / LineItems.pristineByID[lineItem.id].quantity
       $scope.weightAdjustedPrice(lineItem)
+
+  $scope.changePage = (newPage) ->
+    $scope.page = newPage
+    $scope.refreshData()
 
   $scope.resetSelectFilters()

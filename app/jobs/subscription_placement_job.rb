@@ -2,7 +2,7 @@
 
 require 'order_management/subscriptions/summarizer'
 
-class SubscriptionPlacementJob < ActiveJob::Base
+class SubscriptionPlacementJob < ApplicationJob
   def perform
     proxy_orders.each do |proxy_order|
       place_order_for(proxy_order)

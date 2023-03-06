@@ -26,17 +26,27 @@ describe '
     context "displaying the list of line items" do
       let!(:o1) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now )
+                                        completed_at: Time.zone.parse('2022-05-05 15:30:45'))
       }
       let!(:o2) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now )
+                                        completed_at: Time.zone.parse('2022-04-26 15:10:45'))
+      }
+      let!(:o21) {
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.parse('2022-08-04 09:10:45'))
+      }
+      let!(:o22) {
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.parse('2022-06-07 09:10:45'))
       }
       let!(:o3) { create(:order_with_distributor, state: 'address', completed_at: nil ) }
       let!(:o4) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:o5) { create(:order_with_distributor, state: 'complete', completed_at: Time.zone.now ) }
       let!(:li1) { create(:line_item_with_shipment, order: o1) }
       let!(:li2) { create(:line_item_with_shipment, order: o2) }
+      let!(:li21) { create(:line_item_with_shipment, order: o21) }
+      let!(:li22) { create(:line_item_with_shipment, order: o22) }
       let!(:li3) { create(:line_item, order: o3 ) }
       let!(:li4) { create(:line_item_with_shipment, order: o4) }
       let!(:li5) { create(:line_item_with_shipment, order: o5) }
@@ -56,6 +66,64 @@ describe '
         expect(page).to have_selector "tr#li_#{li2.id}"
         expect(page).to have_no_selector "tr#li_#{li4.id}"
         expect(page).to have_no_selector "tr#li_#{li5.id}"
+      end
+
+      it "orders by completion date" do
+        find("a", text: 'COMPLETED AT').click # sets ascending ordering
+        expect(page).to have_content(/#{li2.product.name}.*#{li1.product.name}.*#{li22.product.name}.*#{li21.product.name}/m)
+        find("a", text: 'COMPLETED AT').click # sets descending ordering
+        expect(page).to have_content(/#{li21.product.name}.*#{li22.product.name}.*#{li1.product.name}.*#{li2.product.name}/m)
+      end
+    end
+
+    context "pagination" do
+      let!(:o1) {
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.now )
+      }
+      let!(:o2) {
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.now )
+      }
+
+      before do
+        15.times {
+          create(:line_item_with_shipment, order: o1)
+        }
+        5.times {
+          create(:line_item_with_shipment, order: o2)
+        }
+      end
+
+      it "splits results according to line items from orders" do
+        visit_bulk_order_management
+
+        expect(page).to have_select2 "autogen4", selected: "15 per page" # should be default option
+        expect(page).to have_content "20 Results found. Viewing 1 to 15."
+        expect(page).to have_button("« First", disabled: true)
+        expect(page).to have_button("Previous", disabled: true)
+        expect(page).to have_button("1", disabled: true)
+        expect(page).to have_button("2", disabled: false)
+        expect(page).to have_button("Next", disabled: false)
+        expect(page).to have_button("Last »", disabled: false)
+        within "tbody" do
+          expect(page).to have_css("tr", count: 15) # verifies that the remaining 15 line items are shown
+        end
+        click_button "2" # switches to the second results page
+        within "tbody" do
+          expect(page).to have_css("tr", count: 5) # verifies that the remaining 5 line items are shown
+        end
+        click_button "1" # switches to the first results page
+        select2_select "50 per page", from: "autogen4" # should display all 20 line items
+        expect(page).to have_content "20 Results found. Viewing 1 to 20."
+        expect(page).to have_button("« First", disabled: true)
+        expect(page).to have_button("Previous", disabled: true)
+        expect(page).to have_button("1", disabled: true)
+        expect(page).to_not have_button("2")
+        expect(page).to have_button("Next", disabled: true)
+        expect(page).to have_button("Last »", disabled: true)
+        select2_select "100 per page", from: "autogen4" # should display all 20 line items
+        expect(page).to have_content "20 Results found. Viewing 1 to 20."
       end
     end
 
@@ -85,7 +153,7 @@ describe '
 
       it "displays a column for order date" do
         expect(page).to have_selector "th.date",
-                                      text: I18n.t("admin.orders.bulk_management.order_date").upcase
+                                      text: 'Completed at'.upcase
         expect(page).to have_selector "td.date", text: o1.completed_at.strftime('%B %d, %Y')
         expect(page).to have_selector "td.date", text: o2.completed_at.strftime('%B %d, %Y')
       end
@@ -293,7 +361,7 @@ describe '
       it "displays the default selected columns" do
         expect(page).to have_selector "th", text: "NAME"
         expect(page).to have_selector "th",
-                                      text: I18n.t("admin.orders.bulk_management.order_date").upcase
+                                      text: 'Completed at'.upcase
         expect(page).to have_selector "th", text: "PRODUCER"
         expect(page).to have_selector "th", text: "PRODUCT: UNIT"
         expect(page).to have_selector "th", text: "QUANTITY"
@@ -309,7 +377,7 @@ describe '
           expect(page).to have_no_selector "th", text: "PRODUCER"
           expect(page).to have_selector "th", text: "NAME"
           expect(page).to have_selector "th",
-                                        text: I18n.t("admin.orders.bulk_management.order_date").upcase
+                                        text: 'Completed at'.upcase
           expect(page).to have_selector "th", text: "PRODUCT: UNIT"
           expect(page).to have_selector "th", text: "QUANTITY"
           expect(page).to have_selector "th", text: "MAX"
@@ -466,37 +534,6 @@ describe '
           page.find('.filter-actions .button.icon-search').click
           displays_default_orders
         end
-
-        it "selecting an OC pre-selects the date range from that OC" do
-          displays_default_orders
-          click_on_select2 oc3.name, from: "order_cycle_filter"
-          expect(find("input.datepicker").value).to eq "#{oc3.orders_open_at.strftime('%F')} to #{oc3.orders_close_at.strftime('%F')}"
-          displays_default_orders
-          click_on_select2 oc1.name, from: "order_cycle_filter"
-          displays_default_orders
-          expect(find("input.datepicker").value).to eq "#{oc1.orders_open_at.strftime('%F')} to #{oc1.orders_close_at.strftime('%F')}"
-          # only filters results after clicking the 'Filter Results' button
-          displays_default_orders
-          page.find('.filter-actions .button.icon-search').click
-          expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to_not have_selector "tr#li_#{li2.id}"
-          # only filters results after clicking the 'Clear Filters' button resets to display the default results
-          page.find("#clear_filters_button").click
-          displays_default_orders
-        end
-
-        it "allows combining the order cycle and the pre-selected date with a custom date" do
-          click_on_select2 oc3.name, from: "order_cycle_filter"
-          expect(find("input.datepicker").value).to eq "#{oc3.orders_open_at.strftime('%F')} to #{oc3.orders_close_at.strftime('%F')}"
-          page.find('.filter-actions .button.icon-search').click
-          expect(page).to have_selector "tr#li_#{li3.id}"
-          expect(page).to have_selector "tr#li_#{li4.id}"
-          find("input.datepicker").click # selecting a date range, within oc3
-          select_dates_from_daterangepicker(o4.completed_at - 1.day, o4.completed_at + 1.day)
-          page.find('.filter-actions .button.icon-search').click
-          expect(page).to have_selector "tr#li_#{li4.id}"
-          expect(page).to_not have_selector "tr#li_#{li3.id}"
-        end
       end
 
       context "combination of filters" do
@@ -624,17 +661,11 @@ describe '
         visit_bulk_order_management
       end
 
-      it "displays date fields for filtering orders, with default values set" do
-        # use Date.current since Date.today is without timezone
-        one_week_ago = today.prev_day(7).strftime("%F")
-        expect(find("input.datepicker").value).to eq "#{one_week_ago} to #{today.strftime('%F')}"
-      end
-
-      it "only loads line items whose orders meet the date restriction criteria", retry: 3 do
-        expect(page).to have_no_selector "tr#li_#{li1.id}"
+      it "loads all line items because no date restriction on first load" do
+        expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
         expect(page).to have_selector "tr#li_#{li3.id}"
-        expect(page).to have_no_selector "tr#li_#{li4.id}"
+        expect(page).to have_selector "tr#li_#{li4.id}"
       end
 
       it "displays only line items whose orders meet the date restriction criteria, when changed", retry: 3 do

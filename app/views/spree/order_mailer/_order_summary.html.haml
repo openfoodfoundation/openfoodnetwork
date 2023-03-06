@@ -40,7 +40,7 @@
         = t :email_order_summary_subtotal
       %td{align: "right"}
         = display_checkout_subtotal(@order)
-    - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+    - checkout_adjustments_for(@order, exclude: [:line_item]).reverse_each do |adjustment|
       %tr
         %td{align: "right", colspan: "3"}
           = "#{raw(adjustment.label)}:"

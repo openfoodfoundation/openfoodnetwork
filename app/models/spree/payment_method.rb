@@ -113,7 +113,7 @@ module Spree
     end
 
     def init
-      self.calculator ||= ::Calculator::FlatRate.new(preferred_amount: 0)
+      self.calculator ||= ::Calculator::None.new
     end
 
     def has_distributor?(distributor)

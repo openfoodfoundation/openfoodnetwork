@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "As a consumer I want to check out my cart", js: true do
+describe "As a consumer I want to check out my cart" do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
@@ -110,7 +110,7 @@ describe "As a consumer I want to check out my cart", js: true do
         end
 
         expect(page).to have_selector 'div.login-modal'
-        expect(page).to have_content I18n.t('devise.failure.already_registered')
+        expect(page).to have_content 'This email address is already registered. Please log in to continue, or go back and use another email address.'
       end
     end
   end

@@ -3,6 +3,8 @@
   .reveal-modal.fade.tiny.help-modal{ "data-modal-target": "modal" }
     = content
 
+    = render @message if @message
+
     .modal-actions
       %input{ class: "button icon-plus #{close_button_class}", type: 'button', value: t('js.admin.modals.cancel'), "data-action": "click->modal#close" }
       %input{ class: "button icon-plus primary", type: 'button', value: t('js.admin.modals.confirm'), "data-action": @confirm_actions }

@@ -7,7 +7,7 @@ describe 'Subscriptions' do
   include AuthenticationHelper
   include WebHelper
 
-  context "as an enterprise user", js: true do
+  context "as an enterprise user" do
     let!(:user) { create(:user) }
     let!(:shop) { create(:distributor_enterprise, owner: user, enable_subscriptions: true) }
     let!(:shop2) { create(:distributor_enterprise, owner: user, enable_subscriptions: true) }
@@ -417,7 +417,7 @@ describe 'Subscriptions' do
 
         # Can't use a Stripe payment method because customer does not allow it
         select2_select stripe_payment_method.name, from: 'payment_method_id'
-        expect(page).to have_content I18n.t('admin.subscriptions.details.charges_not_allowed')
+        expect(page).to have_content 'Charges are not allowed by this customer'
         click_button 'Save Changes'
         expect(page).to have_content 'Credit card charges are not allowed by this customer'
         select2_select payment_method.name, from: 'payment_method_id'
@@ -504,7 +504,7 @@ describe 'Subscriptions' do
           expect(page).to have_content 'Saved'
 
           expect(page).to have_selector "#order_update_issues_dialog .message",
-                                        text: I18n.t("admin.subscriptions.order_update_issues_msg")
+                                        text: 'Some orders could not be automatically updated, this is most likely because they have been manually edited. Please review the issues listed below and make any adjustments to individual orders if required.'
         end
       end
     end
@@ -732,7 +732,6 @@ describe 'Subscriptions' do
   end
 
   def variant_not_in_open_or_upcoming_order_cycle_warning
-    I18n.t("not_in_open_and_upcoming_order_cycles_warning",
-           scope: "admin.subscriptions.subscription_line_items")
+    'There are no open or upcoming order cycles for this product.'
   end
 end

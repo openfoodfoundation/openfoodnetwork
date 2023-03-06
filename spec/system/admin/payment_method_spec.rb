@@ -13,7 +13,7 @@ describe '
     @distributors = (1..3).map { create(:distributor_enterprise) }
   end
 
-  describe "creating a payment method", js: true do
+  describe "creating a payment method" do
     it "assigning a distributor to the payment method" do
       login_as_admin_and_visit spree.edit_admin_general_settings_path
       click_link 'Payment Methods'
@@ -70,15 +70,15 @@ describe '
 
         select2_select "Missing", from: "payment_method_preferred_enterprise_id"
         expect(page).to have_selector "#stripe-account-status .alert-box.error",
-                                      text: I18n.t("spree.admin.payment_methods.stripe_connect.account_missing_msg")
-        connect_one = I18n.t("spree.admin.payment_methods.stripe_connect.connect_one")
+                                      text: 'No Stripe account exists for this enterprise.'
+        connect_one = 'Connect One'
         expect(page).to have_link connect_one,
                                   href: edit_admin_enterprise_path(missing_account_enterprise,
                                                                    anchor: "/payment_methods")
 
         select2_select "Revoked", from: "payment_method_preferred_enterprise_id"
         expect(page).to have_selector "#stripe-account-status .alert-box.error",
-                                      text: I18n.t("spree.admin.payment_methods.stripe_connect.access_revoked_msg")
+                                      text: 'Access to this Stripe account has been revoked, please reconnect your account.'
 
         select2_select "Connected", from: "payment_method_preferred_enterprise_id"
         expect(page).to have_selector "#stripe-account-status .status", text: "Status: Connected"
@@ -109,7 +109,7 @@ describe '
     end
   end
 
-  it "updating a payment method", js: true do
+  it "updating a payment method" do
     payment_method = create(:payment_method, distributors: [@distributors[0]],
                                              calculator: build(:calculator_flat_rate))
     login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method
@@ -154,7 +154,7 @@ describe '
     expect(payment_method.preferences[:signature]).to eq 'sig'
   end
 
-  context "as an enterprise user", js: true do
+  context "as an enterprise user" do
     let(:enterprise_user) { create(:user) }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }
@@ -246,10 +246,21 @@ describe '
     end
   end
 
-  describe "Setting transaction fees", js: true do
-    let(:calculator) { build(:calculator) }
-    let!(:payment_method) { create(:payment_method, calculator: calculator) }
+  describe "Setting transaction fees" do
+    let!(:payment_method) { create(:payment_method) }
     before { login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method }
+
+    it "set by default 'None' as calculator" do
+      expect(page).to have_select "calc_type", selected: "None"
+    end
+
+    it "handle the 'None' calculator" do
+      select2_select "None", from: 'calc_type'
+      click_button 'Update'
+      expect(page).to have_content("Payment Method has been successfully updated!")
+      expect(payment_method.reload.calculator_type).to eq "Calculator::None"
+      expect(page).to have_select "calc_type", selected: "None"
+    end
 
     context "using Flat Percent calculator" do
       before { select2_select "Flat Percent", from: 'calc_type' }
@@ -265,9 +276,11 @@ describe '
     end
 
     context "using Flat Rate (per order) calculator" do
-      # flat rate per order is the default calculator; no need select it and update page
+      before { select2_select "Flat Rate (per order)", from: 'calc_type' }
 
       it "inserts values which persist" do
+        expect(page).to have_content("you must save first before")
+        click_button 'Update'
         fill_in "Amount", with: 2.2
         click_button 'Update'
         expect(page).to have_content("Payment Method has been successfully updated!")

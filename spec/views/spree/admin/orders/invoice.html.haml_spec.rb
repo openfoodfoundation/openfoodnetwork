@@ -22,6 +22,7 @@ describe "spree/admin/orders/invoice.html.haml" do
   before do
     assign(:order, order)
     allow(view).to receive_messages checkout_adjustments_for: [],
+                                    display_line_items_taxes: '',
                                     display_checkout_tax_total: '10',
                                     display_checkout_total_less_tax: '8',
                                     outstanding_balance_label: 'Outstanding Balance'

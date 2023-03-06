@@ -11,6 +11,9 @@ Head to our wiki on [Learning Rails](https://github.com/openfoodfoundation/openf
 The fastest way to make it work locally is to use Docker, you only need to setup git, see the [Docker setup guide](docker/README.md).
 Otherwise, for a local setup you will need:
 * Ruby and bundler (check current Ruby version in [.ruby-version](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/.ruby-version) file)
+    - To manage versions, it's recommended to use [rbenv](https://github.com/rbenv/rbenv) or [RVM](https://rvm.io/)
+* Node and yarn (check current Node version in [.node-version](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/.node-version) file)
+    - [nodevn](https://github.com/nodenv/nodenv) is recommended.
 * PostgreSQL database
 * Redis (for background jobs)
 * Chrome (for testing)
@@ -20,15 +23,13 @@ The following guides will provide OS-specific step-by-step instructions to get t
 - [Debian Setup Guide][debian]
 - [OSX Setup Guide][osx]
 
-If you are likely to need to manage multiple version of ruby on your local machine, we recommend version managers such as [rbenv](https://github.com/rbenv/rbenv) or [RVM](https://rvm.io/).
-
 For those new to Rails, the following tutorial will help get you up to speed with configuring a [Rails environment](http://guides.rubyonrails.org/getting_started.html).
 
 ### Get it
 
 So you have set up your local environment according to the requirements listed above. If you're planning on contributing code to the project (which we [LOVE](CONTRIBUTING.md)), it is a good idea to begin by forking this repo using the `Fork` button in the top-right corner of this screen. You should then be able to use `git clone` to copy your fork onto your local machine:
 
-    git clone https://github.com/YOUR_GITHUB_USERNAME_HERE/openfoodnetwork
+    git clone git@github.com:YOUR_GITHUB_USERNAME_HERE/openfoodnetwork.git
 
 Jump into your new local copy of the Open Food Network:
 
@@ -36,7 +37,7 @@ Jump into your new local copy of the Open Food Network:
 
 And then add an `upstream` remote that points to the main repo:
 
-    git remote add upstream https://github.com/openfoodfoundation/openfoodnetwork
+    git remote add upstream git@github.com:openfoodfoundation/openfoodnetwork.git
 
 Fetch the latest version of `master` from `upstream` (ie. the main repo):
 

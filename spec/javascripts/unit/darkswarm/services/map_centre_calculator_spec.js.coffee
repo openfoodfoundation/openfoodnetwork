@@ -6,6 +6,7 @@ describe 'MapCentreCalculator service', ->
 
   beforeEach ->
     module 'Darkswarm'
+    module('admin.enterprises')
     defaultLongitude = -6
     defaultLatitude = 53
     angular.module('Darkswarm').value 'openStreetMapConfig', {

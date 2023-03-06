@@ -104,26 +104,26 @@ describe '
       table_headers = rows.map { |r| r.all("th").map { |c| c.text.strip } }
 
       expect(table_headers).to eq([
-                                    [I18n.t("report_header_order_date"),
-                                     I18n.t("report_header_order_id"),
-                                     I18n.t("report_header_customer_name"),
-                                     I18n.t("report_header_customer_email"),
-                                     I18n.t("report_header_customer_phone"),
-                                     I18n.t("report_header_customer_city"),
-                                     I18n.t("report_header_sku"),
-                                     I18n.t("report_header_item_name"),
-                                     I18n.t("report_header_variant"),
-                                     I18n.t("report_header_quantity"),
-                                     I18n.t("report_header_max_quantity"),
-                                     I18n.t("report_header_cost"),
-                                     I18n.t("report_header_shipping_cost"),
-                                     I18n.t("report_header_payment_method"),
-                                     I18n.t("report_header_distributor"),
-                                     I18n.t("report_header_distributor_address"),
-                                     I18n.t("report_header_distributor_city"),
-                                     I18n.t("report_header_distributor_postcode"),
-                                     I18n.t("report_header_shipping_method"),
-                                     I18n.t("report_header_shipping_instructions")]
+                                    ['Order date',
+                                     'Order Id',
+                                     'Customer Name',
+                                     'Customer Email',
+                                     'Customer Phone',
+                                     'Customer City',
+                                     'SKU',
+                                     'Item name',
+                                     'Variant',
+                                     'Quantity',
+                                     'Max Quantity',
+                                     'Cost',
+                                     'Shipping Cost',
+                                     'Payment Method',
+                                     'Distributor',
+                                     'Distributor address',
+                                     'Distributor city',
+                                     'Distributor postcode',
+                                     'Shipping Method',
+                                     'Shipping instructions']
                                            .map(&:upcase)
                                   ])
 
@@ -142,10 +142,10 @@ describe '
       table_headers = rows.map { |r| r.all("th").map { |c| c.text.strip } }
 
       expect(table_headers).to eq([
-                                    [I18n.t("report_header_payment_state"),
-                                     I18n.t("report_header_distributor"),
-                                     I18n.t("report_header_payment_type"),
-                                     I18n.t("report_header_total_price", currency: currency_symbol)]
+                                    ['Payment State',
+                                     'Distributor',
+                                     'Payment Type',
+                                     "Total (%s)" % currency_symbol]
                                            .map(&:upcase)
                                   ])
 
@@ -262,7 +262,7 @@ describe '
     end
   end
 
-  describe "products and inventory report", js: true do
+  describe "products and inventory report" do
     let(:supplier) { create(:supplier_enterprise, name: 'Supplier Name') }
     let(:taxon)    { create(:taxon, name: 'Taxon Name') }
     let(:product1) {

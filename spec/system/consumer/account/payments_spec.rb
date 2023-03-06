@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Payments requiring action", js: true do
+describe "Payments requiring action" do
   include AuthenticationHelper
 
   describe "as a logged in user" do
@@ -24,8 +24,8 @@ describe "Payments requiring action", js: true do
       it "shows a table of payments requiring authorization" do
         visit "/account"
 
-        find("a", text: /#{I18n.t('spree.users.show.tabs.transactions')}/i).click
-        expect(page).to have_content I18n.t("spree.users.transactions.authorisation_required")
+        find("a", text: /Transactions/i).click
+        expect(page).to have_content 'Authorisation Required'
       end
     end
 
@@ -37,8 +37,8 @@ describe "Payments requiring action", js: true do
       it "does not show the table of payments requiring authorization" do
         visit "/account"
 
-        find("a", text: /#{I18n.t('spree.users.show.tabs.transactions')}/i).click
-        expect(page).to_not have_content I18n.t("spree.users.transactions.authorisation_required")
+        find("a", text: /Transactions/i).click
+        expect(page).to_not have_content 'Authorisation Required'
       end
     end
   end

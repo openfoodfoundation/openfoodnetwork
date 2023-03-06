@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Darkswarm data caching", js: true, caching: true do
+describe "Darkswarm data caching", caching: true do
   let!(:taxon) { create(:taxon, name: "Cached Taxon") }
   let!(:property) { create(:property, presentation: "Cached Property") }
 

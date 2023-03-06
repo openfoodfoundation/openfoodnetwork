@@ -1,23 +1,6 @@
 # frozen_string_literal: true
 
 module WebHelper
-  def self.included(base)
-    base.extend ClassMethods
-  end
-
-  module ClassMethods
-    # By default, Capybara uses a 30 s wait time, which is more reliable for CI, but too slow
-    # for TDD. Use this to make tests fail fast. Usage:
-    #
-    # describe "foo" do
-    #   use_short_wait
-    #   ...
-    # end
-    def use_short_wait(seconds = 2)
-      around { |example| Capybara.using_wait_time(seconds) { example.run } }
-    end
-  end
-
   def have_input(name, opts = {})
     selector  = "[name='#{name}']"
     selector += "[placeholder='#{opts[:placeholder]}']" if opts.key? :placeholder
@@ -28,14 +11,6 @@ module WebHelper
     expect(element.value).to eq(opts[:with]) if element && opts.key?(:with)
 
     have_selector selector, visible: visible
-  end
-
-  def fill_in_fields(field_values)
-    field_values.each do |key, value|
-      fill_in key, with: value
-    rescue Capybara::ElementNotFound
-      find_field(key).select(value)
-    end
   end
 
   def select_by_value(value, options = {})
@@ -52,11 +27,6 @@ module WebHelper
     yield
   end
 
-  def visit_delete(url)
-    response = Capybara.current_session.driver.delete url
-    click_link 'redirected' if response.status == 302
-  end
-
   def set_i18n_locale(locale = 'en')
     page.execute_script("I18n.locale = '#{locale}'")
   end
@@ -67,24 +37,6 @@ module WebHelper
 
   def get_i18n_translation(key = nil)
     page.evaluate_script("I18n.t('#{key}');")
-  end
-
-  # Fetch the content of a script block
-  # eg. script_content with: 'my-script.com'
-  # Returns nil if not found
-  # Raises an exception if multiple matching blocks are found
-  def script_content(opts = {})
-    elems = page.all('script', visible: false)
-
-    elems = elems.to_a.select { |e| e.text(:all).include? opts[:with] } if opts[:with]
-
-    if elems.none?
-      nil
-    elsif elems.many?
-      raise "Multiple results returned for script_content"
-    else
-      elems.first.text(:all)
-    end
   end
 
   # http://www.elabs.se/blog/53-why-wait_until-was-removed-from-capybara
@@ -140,14 +92,6 @@ module WebHelper
     tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
   end
 
-  def accept_js_alert
-    page.driver.browser.switch_to.alert.accept
-  end
-
-  def angular_http_requests_finished(controller = nil)
-    page.evaluate_script("#{angular_scope(controller)}.injector().get('$http').pendingRequests.length == 0")
-  end
-
   def request_monitor_finished(controller = nil)
     page.evaluate_script("#{angular_scope(controller)}.scope().RequestMonitor.loading == false")
   end
@@ -166,9 +110,5 @@ module WebHelper
   def angular_scope(controller = nil)
     element = controller ? "[ng-controller=#{controller}]" : '.ng-scope'
     "angular.element(document.querySelector('#{element}'))"
-  end
-
-  def wait_for_ajax
-    wait_until { page.evaluate_script("$.active").zero? }
   end
 end

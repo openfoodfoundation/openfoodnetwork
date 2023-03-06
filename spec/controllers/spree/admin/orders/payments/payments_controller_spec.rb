@@ -85,7 +85,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           it "redirects to new payment page with flash error" do
             spree_post :create, payment: params, order_id: order.number
 
-            redirects_to_new_payment_page_with_flash_error(I18n.t('action_required'))
+            redirects_to_new_payment_page_with_flash_error('Action required')
           end
         end
 
@@ -186,7 +186,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
         spree_put :fire, params
 
-        expect(flash[:success]).to eq(I18n.t(:payment_updated))
+        expect(flash[:success]).to eq('Payment Updated')
       end
     end
 
@@ -222,7 +222,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
 
         spree_put :fire, params
 
-        expect(flash[:success]).to eq(I18n.t(:payment_updated))
+        expect(flash[:success]).to eq('Payment Updated')
       end
     end
 
@@ -241,7 +241,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       it "resends the authorization email" do
         spree_put :fire, params
 
-        expect(flash[:success]).to eq(I18n.t(:payment_updated))
+        expect(flash[:success]).to eq('Payment Updated')
         expect(PaymentMailer).to have_received(:authorize_payment)
         expect(mail_mock).to have_received(:deliver_later)
       end
@@ -259,7 +259,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
         spree_put :fire, params
 
         expect(payment).to_not receive(:unrecognized_event)
-        expect(flash[:error]).to eq(I18n.t(:cannot_perform_operation))
+        expect(flash[:error]).to eq('Could not update the payment')
       end
     end
   end

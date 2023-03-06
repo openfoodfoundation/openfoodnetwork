@@ -17,7 +17,7 @@ shared_examples "a model using the LocalizedNumber module" do |attributes|
     it "creates an error if the input to #{attribute} is invalid" do
       subject.send(setter, '1.59,99')
       subject.valid?
-      expect(subject.errors[attribute]).to include(I18n.t('spree.localized_number.invalid_format'))
+      expect(subject.errors[attribute]).to include('has an invalid format. Please enter a number.')
     end
   end
 end

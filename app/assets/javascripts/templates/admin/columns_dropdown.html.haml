@@ -1,11 +1,13 @@
-.ofn-drop-down.right#columns-dropdown{ ng: { controller: 'ColumnsDropdownCtrl' } }
-  %span{ :class => 'icon-reorder' }= "&nbsp; #{t('admin.columns')}".html_safe
-  %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
+.ofn-drop-down.ofn-drop-down-v2.right#columns-dropdown{ ng: { controller: 'ColumnsDropdownCtrl' } }
+  .ofn-drop-down-label
+    = "&nbsp; #{t('admin.columns')}".html_safe
+    %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
   %div.menu{ 'ng-show' => "expanded" }
-    %div.menu_item{ ng: { repeat: "column in columns", click: "toggle(column)", class: "{selected: column.visible}" } }
-      %span.check
-      %span.name {{ column.name }}
-    %hr
-    %div.menu_item.text-center
-      %input.fullwidth.orange{ type: "button", ng: { value: "saved() ? 'Saved': 'Saving'", show: "saved() || saving", disabled: "saved()" } }
-      %input.fullwidth.red{ type: "button", :value => t('admin.column_save_as_default').html_safe, ng: { show: "!saved() && !saving", click: "saveColumnPreferences(action)"} }
+    .menu_items
+      .menu_item{ ng: { repeat: "column in columns", click: "toggle(column);" } }
+        %input.redesigned-input{ type: "checkbox", ng: { checked: "column.visible" } }
+        {{ column.name }}
+      %hr
+      %div.menu_item.text-center
+        %input.fullwidth.orange{ type: "button", ng: { value: "saved() ? 'Saved': 'Saving'", show: "saved() || saving", disabled: "saved()" } }
+        %input.fullwidth.red{ type: "button", :value => t('admin.column_save_as_default').html_safe, ng: { show: "!saved() && !saving", click: "saveColumnPreferences(action)"} }

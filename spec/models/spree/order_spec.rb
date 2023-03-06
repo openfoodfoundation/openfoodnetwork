@@ -8,6 +8,20 @@ describe Spree::Order do
   let(:user) { build(:user, email: "spree@example.com") }
   let(:order) { build(:order, user: user) }
 
+  describe "#errors" do
+    it "provides friendly error messages" do
+      order.ship_address = Spree::Address.new
+      order.save
+      expect(order.errors.full_messages).to include "Shipping address (Street + House number) can't be blank"
+    end
+
+    it "provides friendly error messages for bill address" do
+      order.bill_address = Spree::Address.new
+      order.save
+      expect(order.errors.full_messages).to include "Billing address (Street + House number) can't be blank"
+    end
+  end
+
   context "#products" do
     let(:order) { create(:order_with_line_items) }
 
@@ -291,6 +305,53 @@ describe Spree::Order do
         order.line_items.first.variant.product.tap(&:destroy)
         order.cancel!
         expect(Spree::Order.by_state(:canceled)).to include order
+      end
+    end
+  end
+
+  describe "#cancel" do
+    let(:order) { create(:order_with_totals_and_distribution, :completed) }
+
+    before { order.cancel! }
+
+    it "should cancel the order" do
+      expect(order.state).to eq 'canceled'
+    end
+
+    it "should cancel the shipments" do
+      expect(order.shipments.pluck(:state)).to eq ['canceled']
+    end
+
+    context "when payment has not been taken" do
+      context "and payment is in checkout state" do
+        it "should change the state of the payment to void" do
+          order.payments.reload
+          expect(order.payments.pluck(:state)).to eq ['void']
+        end
+      end
+    end
+  end
+
+  describe "#resume" do
+    let(:order) { create(:order_with_totals_and_distribution, :completed) }
+
+    before do
+      order.cancel!
+      order.resume!
+    end
+
+    it "should resume the order" do
+      expect(order.state).to eq 'resumed'
+    end
+
+    it "should resume the shipments" do
+      expect(order.shipments.pluck(:state)).to eq ['pending']
+    end
+
+    context "when payment is in void state" do
+      it "should change the state of the payment to checkout" do
+        order.payments.reload
+        expect(order.payments.pluck(:state)).to eq ['checkout']
       end
     end
   end
@@ -1036,7 +1097,7 @@ describe Spree::Order do
 
     it "returns a validation error" do
       expect{ order.next }.to change(order.errors, :count).from(0).to(1)
-      expect(order.errors.messages[:email]).to eq [I18n.t('devise.failure.already_registered')]
+      expect(order.errors.messages[:email]).to eq ['This email address is already registered. Please log in to continue, or go back and use another email address.']
       expect(order.state).to eq 'cart'
     end
   end

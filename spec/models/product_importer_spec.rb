@@ -247,8 +247,8 @@ describe ProductImport::ProductImporter do
     # an unquoted \n will create a non valid line which will fail entry validation hence why we are only testing with \r
     it "should raise an unquoted field error if data include unquoted field with \r character" do
       expect(importer.errors.messages.values).to include(
-        [I18n.t('admin.product_import.model.malformed_csv',
-                error_message: "Unquoted fields do not allow new line <\"\\r\"> in line 3.")]
+        [format("Product Import encountered a malformed CSV: %s",
+                "Unquoted fields do not allow new line <\"\\r\"> in line 3.")]
       )
     end
   end
@@ -490,7 +490,7 @@ describe ProductImport::ProductImporter do
       expect(filter('invalid', entries)).to eq 2
 
       importer.entries.each do |entry|
-        expect(entry.errors.messages.values).to include [I18n.t('admin.product_import.model.not_updatable')]
+        expect(entry.errors.messages.values).to include ['cannot be updated on existing products via product import']
       end
     end
   end

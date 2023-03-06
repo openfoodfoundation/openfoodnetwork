@@ -1,0 +1,7 @@
+- position ||= ""
+.per-page{'ng-show' => "!RequestMonitor.loading && #{model}.length > 0", class: ("right" if position == "right") }
+  %input.per-page-select.ofn-select2{type: 'number', data: 'per_page_options', 'min-search' => 999, 'ng-model' => 'per_page', 'ng-change' => 'fetchResults()'}
+
+  %span.per-page-feedback
+    {{ "spree.admin.#{model}.index.results_found" | t:{number: pagination.results} }}
+    {{ 'spree.admin.#{model}.index.viewing' | t:{start: ((pagination.page -1) * pagination.per_page) +1, end: ((pagination.page -1) * pagination.per_page) + #{model}.length} }}

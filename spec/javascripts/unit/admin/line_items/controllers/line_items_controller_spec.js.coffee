@@ -49,10 +49,10 @@ describe "LineItemsCtrl", ->
         return Promise.resolve()
       allSaved: jasmine.createSpy('allSaved').and.returnValue(true)
 
-    httpBackend.expectGET("/api/v0/orders.json?q%5Bcompleted_at_gteq%5D=SomeDate&q%5Bcompleted_at_lt%5D=SomeDate&q%5Bcompleted_at_not_null%5D=true&q%5Bdistributor_id_eq%5D=&q%5Border_cycle_id_eq%5D=&q%5Bshipment_state_not_eq%5D=shipped&q%5Bstate_not_eq%5D=canceled").respond {orders: [order], pagination: {page: 1, pages: 1, results: 1}}
     httpBackend.expectGET("/admin/enterprises/visible.json?ams_prefix=basic&q%5Bsells_in%5D%5B%5D=own&q%5Bsells_in%5D%5B%5D=any").respond [distributor]
     httpBackend.expectGET("/admin/order_cycles.json?ams_prefix=basic&as=distributor&q%5Borders_close_at_gt%5D=SomeDate").respond [orderCycle]
     httpBackend.expectGET("/admin/enterprises/visible.json?ams_prefix=basic&q%5Bis_primary_producer_eq%5D=true").respond [supplier]
+    httpBackend.expectGET("/api/v0/orders.json?q%5Bid_in%5D%5B%5D=#{order.id}").respond { orders: [order] }
 
     scope.bulk_order_form = jasmine.createSpyObj('bulk_order_form', ['$setPristine'])
 
@@ -347,6 +347,19 @@ describe "LineItemsCtrl", ->
           unitsVariant = { unit_value: "453.6" }
           spyOn(VariantUnitManager, "getUnitName").and.returnValue "lb"
           expect(scope.formattedValueWithUnitName(2, unitsProduct, unitsVariant)).toEqual "2 lb"
+
+      describe "get group by size formatted value with unit name", ->
+        beforeEach ->
+          spyOn(VariantUnitManager, "getUnitName").and.returnValue "kg"
+        
+        unitsProduct = { variant_unit: "weight", variant_unit_scale: 1000 }
+         
+        it "returns the formatted value with unit name", ->
+          expect(scope.getGroupBySizeFormattedValueWithUnitName(1000, unitsProduct)).toEqual "1 kg"
+
+        it "handle the case when the value is actually null or empty", ->
+          expect(scope.getGroupBySizeFormattedValueWithUnitName(null, unitsProduct)).toEqual ""
+          expect(scope.getGroupBySizeFormattedValueWithUnitName("", unitsProduct)).toEqual ""
 
 
       describe "updating the price upon updating the weight of a line item", ->

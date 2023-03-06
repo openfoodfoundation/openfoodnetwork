@@ -9,7 +9,6 @@ describe Admin::InvoiceSettingsController, type: :controller do
         preferences: {
           enable_invoices?: 0,
           invoice_style2?: 1,
-          enable_receipt_printing?: 1,
         }
       }
     }
@@ -31,14 +30,6 @@ describe Admin::InvoiceSettingsController, type: :controller do
         post :update, params: params
       }.to change {
         Spree::Config[:invoice_style2?]
-      }.to(true)
-    end
-
-    it "disables receipt printing" do
-      expect {
-        post :update, params: params
-      }.to change {
-        Spree::Config[:enable_receipt_printing?]
       }.to(true)
     end
   end

@@ -5,6 +5,23 @@ ar:
       spree/product: المنتج
       spree/shipping_method: طريقة الشحن
     attributes:
+      spree/order/ship_address:
+        address1: "عنوان الشحن (الشارع + رقم المنزل)"
+        address2: "عنوان الشحن 2"
+        city: "عنوان الشحن المدينة"
+        country: "عنوان الشحن الدولة"
+        phone: "رقم الهاتف"
+        firstname: "الاسم الاول"
+        lastname: "الكنية"
+        zipcode: "الرمز البريدي لعنوان الشحن"
+      spree/order/bill_address:
+        address1: "عنوان الفاتورة (الشارع + رقم المنزل)"
+        zipcode: "الرمز البريدي لعنوان الفاتورة"
+        city: "عنوان إرسال الفواتير المدينة "
+        country: "عنوان إرسال الفواتير البلد "
+        firstname: "عنوان إرسال الفواتير - الاسم الأول "
+        lastname: "عنوان إرسال الفواتير - الاسم الأخير"
+        phone: هاتف العميل
       spree/user:
         password: "كلمه السر"
         password_confirmation: "تأكيد كلمة المرور"
@@ -416,11 +433,25 @@ ar:
         price: السعر
         producer: المنتج
         category: الفئة
+        sku: SKU
+        on_hand: "متوفر"
+        on_demand: "على الطلب"
+        tax_category: "الفئة الضريبية"
+        inherits_properties: "الخصائص الموروثة؟"
+        available_on: "متاح على"
+        import_date: "تاريخ الاستيراد"
       columns_selector:
         unit: وحدة
         price: السعر
         producer: المنتج
         category: الفئة
+        sku: SKU
+        on_hand: "متوفر"
+        on_demand: "على الطلب"
+        tax_category: "الفئة الضريبية"
+        inherits_properties: "الخصائص الموروثة؟"
+        available_on: "متاح على"
+        import_date: "تاريخ الاستيراد"
     adjustments:
       skipped_changing_canceled_order: "لا يمكنك تغيير الطلب الذي تم إلغاؤه."
     begins_at: يبدأ عند
@@ -510,7 +541,6 @@ ar:
         title: "إعدادات الفاتورة"
         enable_invoices?: "تمكين الفواتير؟"
         invoice_style2?: "استخدم نموذج الفاتورة البديل الذي يتضمن إجمالي تفاصيل الضرائب لكل سعر ومعلومات معدل الضريبة لكل عنصر (غير مناسب حتى الآن للدول التي تعرض الأسعار باستثناء الضريبة)"
-        enable_receipt_printing?: "إظهار خيارات لإيصالات الطباعة باستخدام الطابعات الحرارية من أجل ترتيب القائمة المنسدلة؟"
         enterprise_number_required_on_invoices?: "هل تتطلب ABN لإنشاء فاتورة؟"
     stripe_connect_settings:
       edit:
@@ -1292,6 +1322,7 @@ ar:
       total_by_customer: الإجمالي حسب العميل
       total_by_supplier: الإجمالي حسب المورد
       supplier_totals: اجمالي دورة الطلب الموردين
+      percentage: "%{value}٪"
       supplier_totals_by_distributor: اجمالي دورة الطلب الموردين حسب الموزع
       totals_by_supplier: اجمالي دورة الطلب الموزعين من قبل المورد
       customer_totals: اجمالي دورة الطلب للعملاء
@@ -1302,6 +1333,7 @@ ar:
       addresses: عناوين
       payment_methods: تقرير طرق الدفع
       delivery: إشعار بالإستلام
+      sales_tax_totals_by_producer: إجمالي ضريبة المبيعات حسب المنتج
       tax_types: أنواع الضرائب
       tax_rates: معدلات الضريبة
       pack_by_customer: تم التعبئة من العملاء
@@ -1481,6 +1513,13 @@ ar:
         stripe_connect_fail: عذرًا ، فشل اتصال حساب Stripe الخاص بك
       stripe_connect_settings:
         resource: تهيئة ربط Strip
+    resend_confirmation_emails_feedback:
+      zero: "تم إرسال رسائل التأكيد عبر البريد الإلكتروني لطلبات %{count}."
+      one: "تم إرسال بريد إلكتروني للتأكيد لطلب واحد."
+      two: "تم إرسال رسائل التأكيد عبر البريد الإلكتروني لطلبات %{count}."
+      few: "تم إرسال رسائل التأكيد عبر البريد الإلكتروني لطلبات %{count}."
+      many: "تم إرسال رسائل التأكيد عبر البريد الإلكتروني لطلبات %{count}."
+      other: "تم إرسال رسائل التأكيد عبر البريد الإلكتروني لطلبات %{count}."
   api:
     unknown_error: "هناك خطأ ما. تم إخطار فريقنا."
     invalid_api_key: "مفتاح API المحدد غير صالح (%{key})."
@@ -1593,10 +1632,6 @@ ar:
   invoice_issued_on: "الفاتورة الصادرة في:"
   order_number: "رقم الفاتورة:"
   date_of_transaction: "تاريخ المعاملة:"
-  ticket_column_qty: "الكمية"
-  ticket_column_item: "بند"
-  ticket_column_unit_price: "سعر الوحدة"
-  ticket_column_total_price: "السعر الكلي"
   menu_1_title: "متاجر"
   menu_1_url: "/shops"
   menu_2_title: "خريطة"
@@ -1606,11 +1641,11 @@ ar:
   menu_4_title: "مجموعات"
   menu_4_url: "/groups"
   menu_5_title: "حول"
-  menu_5_url: "https://about.flaha.org/"
+  menu_5_url: "https://about.flaha.org"
   menu_6_title: "الاتصال"
-  menu_6_url: "https://openfoodnetwork.org/au/connect/"
+  menu_6_url: "https://join.slack.com/t/flahaqaopenfo-2gd5913/shared_invite/zt-1pg0uzd4j-tFxELTtA9iA78ipnO3NZ5w"
   menu_7_title: "تعلم"
-  menu_7_url: "https://openfoodnetwork.org/au/learn/"
+  menu_7_url: "https://kh.flaha.org"
   logo: "الشعار (640 × 130)"
   logo_mobile: "شعار الجوال (75 × 26)"
   logo_mobile_svg: "شعار الجوال (SVG)"
@@ -1703,12 +1738,6 @@ ar:
   card_has_been_removed: "تمت إزالة بطاقتك (الرقم: %{number})"
   card_could_not_be_removed: عذرًا ، تعذرت إزالة البطاقة
   invalid_credit_card: "بطاقة الائتمان غير صالحة"
-  ie_warning_headline: "متصفحك غير محدث :-("
-  ie_warning_text: "للحصول على أفضل تجربة لشبكة الغذاء المفتوح ، نوصي بشدة بترقية متصفحك:"
-  ie_warning_chrome: تحميل متصفح كروم
-  ie_warning_firefox: تحميل متصفح فايرفوكس
-  ie_warning_ie: ترقية Internet Explorer
-  ie_warning_other: "لا يمكنك ترقية متصفحك؟ جرب شبكة الغذاء المفتوح على هاتفك الذكي :-)"
   legal:
     cookies_policy:
       header: "كيف نستخدم ملفات تعريف الارتباط"
@@ -1851,20 +1880,18 @@ ar:
       submit: التالي - ملخص الطلب
       cancel: العودة إلى التفاصيل الخاصة بك
     step3:
-      your_details:
-        title: تفاصيلك
-        edit: تحرير التفاصيل الخاصة بك
-      billing_address:
-        title: عنوان وصول الفواتير
-      shipping_address:
-        title: عنوان الشحن
-      delivery_info:
-        title: معلومات التوصيل
+      delivery_details:
+        title: تفاصيل التسليم
+        edit: تعديل
+        address: عنوان التسليم
+        instructions: التعليمات
       payment_method:
         title: 'طريقة الدفع '
-        edit: تحرير طريقة الدفع
+        edit: تعديل
+        instructions: التعليمات
       order:
-        title: الطلب الكلي
+        title: تفاصيل الطلب
+        edit: تعديل
       terms_and_conditions:
         message_html: "أوافق على %{terms_and_conditions_link} للبائع."
         link_text: "الأحكام والشروط"
@@ -1873,11 +1900,10 @@ ar:
       all_terms_and_conditions:
         message_html: "أوافق على %{terms_and_conditions_link} البائع والمنصة %{tos_link}."
         terms_and_conditions: "الأحكام والشروط"
-      agree: بالنقر فوق "إكمال الطلب" فإنك توافق على معالجة طلبك.
       submit: اكمل الطلب
       cancel: العودة إلى طريقة الدفع
     errors:
-      global: "فشل الحفظ ، يرجى تحديث الحقول المميزة."
+      saving_failed: "فشل الحفظ ، يرجى تحديث الحقول المميزة. %{messages}"
       terms_not_accepted: الرجاء قبول الشروط والأحكام
       required: لا يمكن أن يكون الحقل فارغًا
       invalid_number: "يرجى إدخال رقم هاتف صالح"
@@ -2578,6 +2604,7 @@ ar:
   report_customers_cycle: "ترتيب الدورة"
   report_customers_type: "نوع التقرير"
   report_customers_csv: "تنزيل بتنسيق CSV"
+  report_customers: عميل
   report_producers: "المنتجين"
   report_type: "نوع التقرير"
   report_hubs: "مراكز بيع"
@@ -2655,8 +2682,12 @@ ar:
   report_header_taxable_items_total: "إجمالي العناصر الخاضعة للضريبة (%{currency_symbol})"
   report_header_sales_tax: "ضريبة المبيعات (%{currency_symbol})"
   report_header_delivery_charge: "رسوم التوصيل (%{currency_symbol})"
+  report_header_tax: "ضريبة"
   report_header_tax_on_delivery: "الضريبة على التسليم (%{currency_symbol})"
   report_header_tax_on_fees: "الضريبة على الرسوم (%{currency_symbol})"
+  report_header_tax_category: "الفئة الضريبية"
+  report_header_tax_rate_name: "اسم معدل الضريبة"
+  report_header_tax_rate: "معدل الضريبة"
   report_header_total_tax: "إجمالي الضريبة (%{currency_symbol})"
   report_header_total_excl_tax: "المجموع باستثناء الضريبة (%{currency_symbol})"
   report_header_total_incl_tax: "إجمالي مدفوع الضريبة (%{currency_symbol})"
@@ -2679,6 +2710,7 @@ ar:
   report_header_supplier: المورد
   report_header_producer: المنتج
   report_header_producer_suburb: منتج الضاحية
+  report_header_producer_tax_status: الوضع الضريبي للمنتج
   report_header_producer_charges_sales_tax?: مسجل في ضريبة السلع والخدمات / ضريبة القيمة المضافة
   report_header_unit: وحدة
   report_header_group_buy_unit_quantity: مجموعة شراء وحدة الكمية
@@ -2695,6 +2727,7 @@ ar:
   report_header_distributor_address: عنوان الموزع
   report_header_distributor_city: مدينة الموزع
   report_header_distributor_postcode: الرمز البريدي للموزع
+  report_header_distributor_tax_status: الوضع الضريبي للموزع
   report_header_delivery_address: عنوان التسليم
   report_header_delivery_postcode: تسليم الرمز البريدي
   report_header_bulk_unit_size: حجم الوحدة بالجملة
@@ -2874,6 +2907,7 @@ ar:
       deleting_item_will_cancel_order: "ستؤدي هذه العملية إلى أمر واحد أو أكثر من الطلبات الفارغة ، والتي سيتم إلغاؤها. هل ترغب في المتابعة؟"
       modals:
         got_it: "فهمتك"
+        confirm: "التأكيد"
         close: "إغلاق"
         continue: "تابع"
         cancel: "إلغاء"
@@ -3488,6 +3522,8 @@ ar:
     server_error: "خطأ في الخادم"
     shipping_method_names:
       UPS Ground: "UPS الأرضي"
+      pick_up: "التسليم من المزرعة مباشرة"
+      delivery: "موقعة ومختومة وتم التسليم"
     start_date: "تاريخ البدء"
     successfully_removed: "تمت الإزالة بنجاح"
     taxonomy_edit: "التصنيف"
@@ -3564,9 +3600,6 @@ ar:
     default_seo_title: "العنوان الافتراضي ل SEO"
     default_meta_description: "وصف التعريف الافتراضي"
     default_meta_keywords: "الكلمات الرئيسية الوصفية الافتراضية"
-    security_settings: "اعدادات الامان"
-    allow_ssl_in_production: "السماح باستخدام طبقة المقابس الآمنة في وضع الإنتاج"
-    allow_ssl_in_staging: "اسمح باستخدام طبقة المقابس الآمنة في وضع التدريج"
     currency_decimal_mark: "العملة العشرية"
     currency_settings: "إعدادات العملة"
     currency_symbol_position: ضع &quot;رمز العملة قبل أو بعد مبلغ الدولار؟&quot;
@@ -3575,7 +3608,7 @@ ar:
     display_currency: "عرض العملة"
     choose_currency: "اختر العملة"
     mail_method_settings: "إعدادات طريقة البريد"
-    mail_settings_notice_html: "لا يمكن تحرير بعض الإعدادات التالية وهي مدرجة هنا فقط لأغراض التصحيح. يمكن إجراء التغييرات عن طريق تحديث أسرار المثيل وتوفيرها باستخدام <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . تواصل مع فريق OFN العالمي لمزيد من التفاصيل."
+    mail_settings_notice_html: "<b>التغييرات التي يتم إجراؤها هنا ستكون مؤقتة</b> للتصحيح فقط ، وقد يتم التراجع عنها في المستقبل.<br> يمكن إجراء تغييرات دائمة عن طريق تحديث أسرار المثيل وتوفيرها باستخدام <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . تواصل مع فريق OFN العالمي لمزيد من التفاصيل."
     general: "عام"
     enable_mail_delivery: "تمكين تسليم البريد"
     send_mails_as: "إرسال رسائل ب"
@@ -3782,6 +3815,10 @@ ar:
           authorized: "مخول"
           received: "تم الاستلام"
           canceled: "ألغيت"
+      line_items:
+        index:
+          results_found: "تم العثور على النتائج %{number}."
+          viewing: "عرض %{start} إلى %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "لا يمكن إضافة عنصر إلى الطلب الملغى"
@@ -3805,6 +3842,7 @@ ar:
           print_invoices: "طباعة الفواتير"
           cancel_orders: "إلغاء الطلبات"
           resend_confirmation: "أعد إرسال التأكيد"
+          resend_confirmation_confirm_html: "سيؤدي هذا إلى إعادة إرسال البريد الإلكتروني للتأكيد إلى العميل.<br /> هل انت متأكد انك تريد المتابعة؟"
           selected:
             zero: "لم يتم اختيار أي طلب"
             one: "طلب واحد تم اختياره"

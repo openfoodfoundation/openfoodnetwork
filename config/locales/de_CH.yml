@@ -5,6 +5,10 @@ de_CH:
       spree/product: Produkt
       spree/shipping_method: Lieferoption
     attributes:
+      spree/order/ship_address:
+        phone: "Telefonnummer (optional)"
+        firstname: "Vorname"
+        lastname: "Nachname"
       spree/user:
         password: "Passwort"
         password_confirmation: "Passwort erneut eingeben"
@@ -408,11 +412,25 @@ de_CH:
         price: Preis
         producer: Produzent
         category: Kategorie
+        sku: Artikelnummer
+        on_hand: "Verfügbar"
+        on_demand: "Unbegrenzt/auf Bestellung"
+        tax_category: "Steuerkategorie"
+        inherits_properties: "Übernimmt Eigenschaften des Ladens?"
+        available_on: "Verfügbar am"
+        import_date: "Importdatum"
       columns_selector:
         unit: Einheit
         price: Preis
         producer: Produzent
         category: Kategorie
+        sku: Artikelnummer
+        on_hand: "Verfügbar"
+        on_demand: "Unbegrenzt/auf Bestellung"
+        tax_category: "Steuerkategorie"
+        inherits_properties: "Übernimmt Eigenschaften des Ladens?"
+        available_on: "Verfügbar am"
+        import_date: "Importdatum"
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
     begins_at: Beginnt
@@ -500,7 +518,6 @@ de_CH:
         title: "Rechnungseinstellungen"
         enable_invoices?: "Rechnungen aktivieren?"
         invoice_style2?: "Verwenden Sie die Rechnungsvorlage mit Aufschlüsselung verschiedener Steuersätze pro Artikel (empfohlen in der EU, noch nicht für Länder mit Preisen ohne Steuern geeignet)."
-        enable_receipt_printing?: "Optionen zum Drucken von Belegen mit Thermodruckern in der Dropdown-Liste anzeigen?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1556,10 +1573,6 @@ de_CH:
   invoice_issued_on: "Rechnungsdatum:"
   order_number: "Rechnungsnummer:"
   date_of_transaction: "Bestelldatum:"
-  ticket_column_qty: "Menge"
-  ticket_column_item: "Artikel"
-  ticket_column_unit_price: "Stückpreis"
-  ticket_column_total_price: "Gesamtpreis"
   menu_1_title: "Einkaufen"
   menu_1_url: "/shops"
   menu_2_title: "Karte"
@@ -1666,12 +1679,6 @@ de_CH:
   card_has_been_removed: "Ihre Kreditkarte wurde entfernt (Nummer: %{number})."
   card_could_not_be_removed: Die Kreditkarte konnte nicht entfernt werden.
   invalid_credit_card: "Ungültige Kreditkarte"
-  ie_warning_headline: "Ihr Browser ist veraltet. :-("
-  ie_warning_text: "Für das beste Open-Food-Schweiz-Erlebnis empfehlen wir dringend, Ihren Browser zu aktualisieren:"
-  ie_warning_chrome: Chrome herunterladen
-  ie_warning_firefox: Firefox herunterladen
-  ie_warning_ie: Internet Explorer aktualisieren
-  ie_warning_other: "Können Sie Ihren Browser nicht aktualisieren? Versuchen Sie Open Food Schweiz auf Ihrem Smartphone! :-)"
   legal:
     cookies_policy:
       header: "Wie wir Cookies verwenden"
@@ -1813,20 +1820,15 @@ de_CH:
       submit: Weiter - Bestellübersicht
       cancel: Zurück - Ihre Daten
     step3:
-      your_details:
-        title: Ihre Daten
-        edit: Ihre Daten ändern
-      billing_address:
-        title: Rechnungsadresse
-      shipping_address:
-        title: Lieferadresse
-      delivery_info:
-        title: Abhol-/Lieferinformationen
+      delivery_details:
+        title: Lieferdetails
+        edit: Bearbeiten
+        address: Lieferadresse
       payment_method:
         title: Zahlungsart
-        edit: Zahlungsart ändern
+        edit: Bearbeiten
       order:
-        title: Bestellübersicht
+        edit: Bearbeiten
       terms_and_conditions:
         message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
         link_text: "Allgemeinen Geschäftsbedingungen (AGB)"
@@ -1835,11 +1837,9 @@ de_CH:
       all_terms_and_conditions:
         message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers und den %{tos_link} des Open Food Network zu."
         terms_and_conditions: "Allgemeinen Geschäftsbedingungen (AGB)"
-      agree: Durch Klicken auf "Zahlungspflichtig bestellen" stimmen Sie der Verarbeitung Ihrer Bestellung zu.
       submit: Zahlungspflichtig bestellen
       cancel: Zurück - Zahlungsart
     errors:
-      global: "Speichern fehlgeschlagen. Bitte prüfen Sie die markierten Felder."
       terms_not_accepted: Bitte akzeptieren Sie die Allgemeinen Geschäftsbedingungen.
       required: Feld darf nicht leer sein.
       invalid_number: "Bitte geben Sie eine gültige Telefonnummer ein."
@@ -2536,6 +2536,7 @@ de_CH:
   report_customers_cycle: "Bestellzyklus"
   report_customers_type: "Berichtsart"
   report_customers_csv: "Als csv-Datei herunterladen"
+  report_customers: Kunde
   report_producers: "Unsere Produzenten"
   report_type: "Berichtsart"
   report_hubs: "Hubs"
@@ -2601,8 +2602,10 @@ de_CH:
   report_header_taxable_items_total: "Steuerpflichtige Posten insgesamt (%{currency_symbol})"
   report_header_sales_tax: "Umsatzsteuer (%{currency_symbol})"
   report_header_delivery_charge: "Liefergebühr (%{currency_symbol})"
+  report_header_tax: "Steuern"
   report_header_tax_on_delivery: "Steuer auf Lieferkosten (%{currency_symbol})"
   report_header_tax_on_fees: "Steuer auf Gebühren (%{currency_symbol})"
+  report_header_tax_category: "Steuerkategorie"
   report_header_total_tax: "Summe Steuern (%{currency_symbol})"
   report_header_total_excl_tax: "Summe exkl. Steuern (%{currency_symbol})"
   report_header_total_incl_tax: "Summe inkl. Steuern (%{currency_symbol})"
@@ -3423,9 +3426,6 @@ de_CH:
     default_seo_title: "Standard SEO-Titel"
     default_meta_description: "Standard Meta-Beschreibung"
     default_meta_keywords: "Standard Meta-Schlüsselwörter"
-    security_settings: "Sicherheitseinstellungen"
-    allow_ssl_in_production: "Zulassen, dass SSL im Produktionsmodus verwendet wird"
-    allow_ssl_in_staging: "Zulassen, dass SSL im Staging-Modus verwendet wird"
     currency_decimal_mark: "Dezimalzeichen der Währung"
     currency_settings: "Währungseinstellungen"
     currency_symbol_position: Währungssymbol (CHF) vor oder nach dem Betrag?
@@ -3434,7 +3434,6 @@ de_CH:
     display_currency: "Währung anzeigen"
     choose_currency: "Währung auswählen"
     mail_method_settings: "E-Mail-Methodeneinstellungen"
-    mail_settings_notice_html: "Einige der folgenden Einstellungen können nicht geändert werden und werden hier nur zu Zwecken der Fehlerbehebung aufgeführt. Änderungen können vorgenommen werden, indem die Einstellungen der deutschen Instanz aktualisiert und mithilfe von <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> bereitgestellt werden. Wenden Sie sich an das globale Team des Open Food Network, um weitere Informationen zu erhalten."
     general: "Allgemeines"
     enable_mail_delivery: "E-Mail-Versand aktivieren"
     send_mails_as: "E-Mails senden als"
@@ -3639,6 +3638,10 @@ de_CH:
           authorized: "Autorisiert"
           received: "Empfangen"
           canceled: "abgebrochen"
+      line_items:
+        index:
+          results_found: "%{number} Ergebnisse gefunden."
+          viewing: "Angezeigt wird %{start} bis %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Artikel kann nicht zu stornierter Bestellung hinzugefügt werden"

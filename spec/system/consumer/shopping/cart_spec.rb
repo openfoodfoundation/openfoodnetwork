@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "full-page cart", js: true do
+describe "full-page cart" do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
@@ -203,18 +203,16 @@ describe "full-page cart", js: true do
           variant2.update!(on_hand: 3, on_demand: false)
           visit main_app.cart_path
 
-          accept_alert 'Insufficient stock available, only 2 remaining' do
-            within "tr.variant-#{variant.id}" do
-              fill_in "order_line_items_attributes_0_quantity", with: '4'
-            end
+          within "tr.variant-#{variant.id}" do
+            fill_in "order_line_items_attributes_0_quantity", with: '4'
           end
+          expect(page).to have_content "Insufficient stock available, only 2 remaining"
           expect(page).to have_field "order_line_items_attributes_0_quantity", with: '2'
 
-          accept_alert 'Insufficient stock available, only 3 remaining' do
-            within "tr.variant-#{variant2.id}" do
-              fill_in "order_line_items_attributes_1_quantity", with: '4'
-            end
+          within "tr.variant-#{variant2.id}" do
+            fill_in "order_line_items_attributes_1_quantity", with: '4'
           end
+          expect(page).to have_content "Insufficient stock available, only 3 remaining"
           expect(page).to have_field "order_line_items_attributes_1_quantity", with: '3'
         end
 
@@ -225,12 +223,8 @@ describe "full-page cart", js: true do
           visit main_app.cart_path
           variant.update! on_hand: 2
 
-          accept_alert do
-            fill_in "order_line_items_attributes_0_quantity", with: '4'
-          end
+          fill_in "order_line_items_attributes_0_quantity", with: '4'
           click_button 'Update'
-
-          expect(page).to have_content "Insufficient stock available, only 2 remaining"
           expect(page).to have_field "order_line_items_attributes_0_quantity", with: '1'
         end
 
@@ -245,7 +239,7 @@ describe "full-page cart", js: true do
 
             # shows a relevant Flash message
             expect(page).to have_selector ".alert-box",
-                                          text: I18n.t('spree.orders.error_flash_for_unavailable_items')
+                                          text: 'An item in your cart has become unavailable. Please update the selected quantities.'
 
             # "Continue Shopping" and "Checkout" buttons are disabled
             expect(page).to have_selector "a.continue-shopping[disabled=disabled]"
@@ -261,7 +255,7 @@ describe "full-page cart", js: true do
             expect(page).to_not have_selector "#order_line_items_attributes_0_quantity.ng-invalid-stock"
             expect(page).to have_selector "#update-button.alert"
 
-            click_button I18n.t("update")
+            click_button 'Update'
 
             # "Continue Shopping" and "Checkout" buttons are not disabled after cart is updated
             expect(page).to_not have_selector "a.continue-shopping[disabled=disabled]"
@@ -300,7 +294,7 @@ describe "full-page cart", js: true do
         expect(page).to have_no_content item1.variant.name
         expect(page).to have_no_content item2.variant.name
 
-        expect(page).to have_link I18n.t(:orders_bought_edit_button), href: spree.account_path
+        expect(page).to have_link 'Edit confirmed items', href: spree.account_path
         find("td.toggle-bought").click
 
         expect(page).to have_content item1.variant.name

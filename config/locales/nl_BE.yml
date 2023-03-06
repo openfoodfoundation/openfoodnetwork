@@ -5,6 +5,10 @@ nl_BE:
       spree/product: Product
       spree/shipping_method: Het verschepen Methode
     attributes:
+      spree/order/ship_address:
+        phone: "Telefoonnummer"
+        firstname: "Voornaam"
+        lastname: "Familienaam"
       spree/user:
         password: "Wachtwoord"
         password_confirmation: "Wachtwoord Bevestiging"
@@ -304,11 +308,25 @@ nl_BE:
         price: Prijs
         producer: Producent
         category: Categorie
+        sku: SKU
+        on_hand: "Bij de Hand"
+        on_demand: "Op Aanvraag"
+        tax_category: "Belastingcategorie"
+        inherits_properties: "Erft Eigenschappen?"
+        available_on: "Beschikbaar op"
+        import_date: "Importdatum"
       columns_selector:
         unit: Unit
         price: Prijs
         producer: Producent
         category: Categorie
+        sku: SKU
+        on_hand: "Bij de Hand"
+        on_demand: "Op Aanvraag"
+        tax_category: "Belastingcategorie"
+        inherits_properties: "Erft Eigenschappen?"
+        available_on: "Beschikbaar op"
+        import_date: "Importdatum"
     begins_at: Begint Bij
     begins_on: Begint Op
     customer: Klant
@@ -380,7 +398,6 @@ nl_BE:
         title: "Factuur instellingen"
         enable_invoices?: "Facturen inschakelen?"
         invoice_style2?: "Gebruik het alternatieve factuurmodel dat de totale belastingsuitsplitsing per tarief en belastingtariefinformatie per artikel bevat (nog niet geschikt voor landen met prijzen exclusief belastingen)."
-        enable_receipt_printing?: "Toon opties voor het afdrukken van kassabonnen met behulp van thermische printers in de volgorde dropdown?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1367,10 +1384,6 @@ nl_BE:
   invoice_issued_on: "Aanmaakdatum Factuur:"
   order_number: "Factuurnummer:"
   date_of_transaction: "Transactiedatum:"
-  ticket_column_qty: "Aantal"
-  ticket_column_item: "Artikel"
-  ticket_column_unit_price: "Stukprijs"
-  ticket_column_total_price: "Totaalprijs"
   menu_1_title: "Winkels"
   menu_1_url: "/shops"
   menu_2_title: "Kaart"
@@ -1471,12 +1484,6 @@ nl_BE:
   card_has_been_removed: "Jouw kaart werd verwijderd (nummer: %{number})"
   card_could_not_be_removed: Sorry, de kaart kon niet verwijderd worden
   invalid_credit_card: "Invalide credit card"
-  ie_warning_headline: "Je browser is verouderd :-("
-  ie_warning_text: "Voor het beste Open Food Network gebruikerservaring, raden we sterk aan om je browser te updaten:"
-  ie_warning_chrome: Download Chrome
-  ie_warning_firefox: Download Firefox
-  ie_warning_ie: Upgrade Internet Explorer
-  ie_warning_other: "Kan je je browser niet upgraden? Probeer het Open Food Network op je smartphone :-)"
   legal:
     cookies_policy:
       header: "Hoe We Cookies Gebruiken"
@@ -1595,10 +1602,14 @@ nl_BE:
         card_year:
           label: Jaar
     step3:
-      your_details:
-        title: Jouw gegevens
-      billing_address:
-        title: 'Facturatie-adres:'
+      delivery_details:
+        title: Leveringsdetails
+        edit: bewerking
+        address: Leveringsadres
+      payment_method:
+        edit: bewerking
+      order:
+        edit: bewerking
     errors:
       invalid_email: "Vul een geldig e-mailadres in"
   order_paid: BETAALD
@@ -2273,6 +2284,7 @@ nl_BE:
   report_customers_cycle: "Bestelcyclus"
   report_customers_type: "Vermeld Type"
   report_customers_csv: "Download als csv"
+  report_customers: Klant
   report_producers: "Producenten"
   report_type: "Vermeld Type"
   report_hubs: "Hubs"
@@ -2336,6 +2348,8 @@ nl_BE:
   report_header_delivery_charge: "Leveringsprijs (%{currency_symbol})"
   report_header_tax_on_delivery: "Belastingspercentage op Levering (%{currency_symbol})"
   report_header_tax_on_fees: "Belasting op Kosten (%{currency_symbol})"
+  report_header_tax_category: "Belastingcategorie"
+  report_header_tax_rate: "belastingtarief"
   report_header_total_tax: "Totaal Belasting (%{currency_symbol})"
   report_header_total_excl_tax: "Totaal excl. belastingen (%{currency_symbol}) "
   report_header_total_incl_tax: "Totaal incl. belastingen(%{currency_symbol}) "
@@ -2988,9 +3002,6 @@ nl_BE:
     default_seo_title: "Standaardtitel SEO"
     default_meta_description: "Standaard Meta Beschrijving"
     default_meta_keywords: "Standaard Meta Sleutelwoorden "
-    security_settings: "Beveiligheidsinstellingen"
-    allow_ssl_in_production: "SSl toelaten wanneer  in productiemode wordt gebruikt "
-    allow_ssl_in_staging: "SSL toelaten wanneer in mode zichtbaar wordt gebruikt"
     currency_decimal_mark: "Valuta 1 decimaal bij"
     currency_settings: "Gebruikte munt"
     currency_symbol_position: Zet "muntsymbool voor of na het bedrag?"
@@ -3183,6 +3194,10 @@ nl_BE:
           authorized: "Toegestaan"
           received: "Ontvangen"
           canceled: "Geannuleerd"
+      line_items:
+        index:
+          results_found: "1%{number} Resultaten gevonden"
+          viewing: "Resultaten te zien 1%{start} tot 2%{end}."
       orders:
         index:
           listing_orders: "Lijst van de bestellingen"

@@ -263,7 +263,7 @@ module Spree
 
     def add_order_management_abilities(user)
       can [:index, :create], Spree::Order
-      can [:read, :update, :fire, :resend, :invoice, :print, :print_ticket], Spree::Order do |order|
+      can [:read, :update, :fire, :resend, :invoice, :print], Spree::Order do |order|
         # We allow editing orders with a nil distributor as this state occurs
         # during the order creation process from the admin backend
         order.distributor.nil? ||

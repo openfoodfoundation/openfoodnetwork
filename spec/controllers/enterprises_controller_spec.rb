@@ -185,7 +185,7 @@ describe EnterprisesController, type: :controller do
     end
 
     it "shows a flash message with the error" do
-      expect(request.flash[:error]).to eq(I18n.t(:enterprise_shop_show_error))
+      expect(request.flash[:error]).to eq('The shop you are looking for doesn\'t exist or is inactive on OFN. Please check other shops.')
     end
   end
 end

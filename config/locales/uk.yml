@@ -5,6 +5,10 @@ uk:
       spree/product: Продукт
       spree/shipping_method: Спосіб доставки
     attributes:
+      spree/order/ship_address:
+        phone: "Телефонний номер"
+        firstname: "Ім'я"
+        lastname: "Прізвище"
       spree/user:
         password: "Пароль"
         password_confirmation: "Підтвердження паролю"
@@ -409,11 +413,25 @@ uk:
         price: Ціна
         producer: Виробник
         category: Категорія
+        sku: Артикул
+        on_hand: "Під рукою"
+        on_demand: "На вимогу"
+        tax_category: "Категорія податку"
+        inherits_properties: "Успадковує властивості?"
+        available_on: "Доступно на"
+        import_date: "Дата імпорту"
       columns_selector:
         unit: Одиниця
         price: Ціна
         producer: Виробник
         category: Категорія
+        sku: Артикул
+        on_hand: "Під рукою"
+        on_demand: "На вимогу"
+        tax_category: "Категорія податку"
+        inherits_properties: "Успадковує властивості?"
+        available_on: "Доступно на"
+        import_date: "Дата імпорту"
     adjustments:
       skipped_changing_canceled_order: "Ви не можете змінити скасоване замовлення."
     begins_at: Починається о
@@ -503,7 +521,6 @@ uk:
         title: "Налаштування рахунка-фактури"
         enable_invoices?: "Увімкнути рахунки-фактури?"
         invoice_style2?: "Використовуйте альтернативну модель рахунка-фактури, яка включає загальну розбивку податку на ставку та інформацію про ставку податку на один товар (поки що не підходить для країн, де відображаються ціни без урахування податку)"
-        enable_receipt_printing?: "Показати варіанти друку квитанцій за допомогою термопринтерів у спадному меню порядку?"
         enterprise_number_required_on_invoices?: "Вимагати ABN для створення рахунку?"
     stripe_connect_settings:
       edit:
@@ -1568,10 +1585,6 @@ uk:
   invoice_issued_on: "Рахунок виставлено:"
   order_number: "Номер рахунку:"
   date_of_transaction: "Дата операції:"
-  ticket_column_qty: "К-ть"
-  ticket_column_item: "Товар"
-  ticket_column_unit_price: "Ціна за од."
-  ticket_column_total_price: "Загальна ціна"
   menu_1_title: "Магазини"
   menu_1_url: "/магазини"
   menu_2_title: "Карта"
@@ -1678,12 +1691,6 @@ uk:
   card_has_been_removed: "Вашу картку видалено (номер: %{number})"
   card_could_not_be_removed: Вибачте, не вдалося видалити картку
   invalid_credit_card: "Недійсна кредитна картка"
-  ie_warning_headline: "Ваш браузер застарів :-("
-  ie_warning_text: "Для найкращого використання Open Food Network ми наполегливо рекомендуємо оновити ваш браузер:"
-  ie_warning_chrome: Завантажити Chrome
-  ie_warning_firefox: Завантажте Firefox
-  ie_warning_ie: Оновіть Internet Explorer
-  ie_warning_other: "Не можете оновити браузер? Спробуйте Open Food Network на своєму смартфоні :-)"
   legal:
     cookies_policy:
       header: "Як ми використовуємо файли cookie"
@@ -1825,20 +1832,15 @@ uk:
       submit: Далі - Підсумок замовлення
       cancel: Повернутися до ваших даних
     step3:
-      your_details:
-        title: Ваші дані
-        edit: Відредагуйте свої дані
-      billing_address:
-        title: Платіжна адреса
-      shipping_address:
-        title: Адреса доставки
-      delivery_info:
-        title: Інформація про доставку
+      delivery_details:
+        title: Деталі доставки
+        edit: Редагувати
+        address: Адреса доставки
       payment_method:
         title: Спосіб оплати
-        edit: Редагувати спосіб оплати
+        edit: Редагувати
       order:
-        title: Всього замовлення
+        edit: Редагувати
       terms_and_conditions:
         message_html: "Я згоден з %{terms_and_conditions_link} продавця."
         link_text: "Правила та умови"
@@ -1847,11 +1849,9 @@ uk:
       all_terms_and_conditions:
         message_html: "Я погоджуюся з %{terms_and_conditions_link} продавця та платформою %{tos_link}."
         terms_and_conditions: "Правила та умови"
-      agree: Натискаючи «Завершити замовлення», ви погоджуєтеся на обробку вашого замовлення.
       submit: Завершити замовлення
       cancel: Назад до способу оплати
     errors:
-      global: "Не вдалося зберегти. Оновіть виділені поля."
       terms_not_accepted: Будь ласка, прийміть Загальні положення та умови
       required: Поле не може бути порожнім
       invalid_number: "Будь ласка введіть дійсний номер телефону"
@@ -2551,6 +2551,7 @@ uk:
   report_customers_cycle: "Цикл замовлення"
   report_customers_type: "Тип звіту"
   report_customers_csv: "Завантажити як csv"
+  report_customers: Замовник
   report_producers: "Виробники"
   report_type: "Тип звіту"
   report_hubs: "Хаби"
@@ -2616,8 +2617,10 @@ uk:
   report_header_taxable_items_total: "Усього об’єктів оподаткування (%{currency_symbol})"
   report_header_sales_tax: "Податок з продажу (%{currency_symbol})"
   report_header_delivery_charge: "Вартість доставки (%{currency_symbol})"
+  report_header_tax: "податок"
   report_header_tax_on_delivery: "Податок на доставку (%{currency_symbol})"
   report_header_tax_on_fees: "Податок на збори (%{currency_symbol})"
+  report_header_tax_category: "Категорія податку"
   report_header_total_tax: "Всього податок (%{currency_symbol})"
   report_header_total_excl_tax: "Всього без податків (%{currency_symbol})"
   report_header_total_incl_tax: "Всього в т.ч. податок (%{currency_symbol})"
@@ -3477,9 +3480,6 @@ uk:
     default_seo_title: "Назва Seo за замовчуванням"
     default_meta_description: "Метаопис за замовчуванням"
     default_meta_keywords: "Мета-ключові слова за замовчуванням"
-    security_settings: "Параметри безпеки"
-    allow_ssl_in_production: "Дозволити використання SSL у робочому режимі"
-    allow_ssl_in_staging: "Дозволити використання SSL у проміжному режимі"
     currency_decimal_mark: "Десятковий знак валюти"
     currency_settings: "Параметри валюти"
     currency_symbol_position: Поставити "символ валюти до або після суми в гривнях";
@@ -3488,7 +3488,6 @@ uk:
     display_currency: "Показати валюту"
     choose_currency: "Виберіть валюту"
     mail_method_settings: "Налаштування методу ел.пошти"
-    mail_settings_notice_html: "Деякі з наведених нижче налаштувань не можна редагувати та наведено тут лише з метою налагодження. Зміни можна внести, оновивши секрети екземпляра та підготувавши їх за допомогою <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . Щоб дізнатися більше, зверніться до глобальної команди OFN."
     general: "Загальний"
     enable_mail_delivery: "Увімкнути доставку пошти"
     send_mails_as: "Надсилати листи як"
@@ -3693,6 +3692,10 @@ uk:
           authorized: "Авторизований"
           received: "Отримано"
           canceled: "Скасовано"
+      line_items:
+        index:
+          results_found: "%{number} Результати знайдено."
+          viewing: "Перегляд %{start} до %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Неможливо додати товар до скасованого замовлення"

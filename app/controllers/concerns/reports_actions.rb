@@ -39,6 +39,14 @@ module ReportsActions
     params[:report_subtype] || report_subtypes_codes.first
   end
 
+  def report_title
+    if report_subtype
+      report_subtype_title
+    else
+      I18n.t(:name, scope: [:admin, :reports, report_type])
+    end
+  end
+
   def report_subtype_title
     report_subtypes.select { |_name, key| key.to_sym == report_subtype.to_sym }.first[0]
   end

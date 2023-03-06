@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Tag Rules', js: true do
+describe 'Tag Rules' do
   include AuthenticationHelper
   include WebHelper
 

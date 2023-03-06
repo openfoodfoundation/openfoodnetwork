@@ -29,6 +29,10 @@ module OrderManagement
         shipping_rates
       end
 
+      def calculate_cost(shipping_method, package)
+        shipping_method.calculator.compute(package)
+      end
+
       private
 
       # Sets the first available shipping method to "selected".
@@ -55,10 +59,6 @@ module OrderManagement
             ship_method.calculator.preferences[:currency] == currency)
         }
         shipping_methods
-      end
-
-      def calculate_cost(shipping_method, package)
-        shipping_method.calculator.compute(package)
       end
     end
   end

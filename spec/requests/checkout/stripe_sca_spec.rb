@@ -244,7 +244,8 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
           expect(response.status).to be 400
 
           expect(json_response["flash"]["error"])
-            .to eq(I18n.t(:spree_gateway_error_flash_for_checkout, error: 'customer-store-failure'))
+            .to eq(format("There was a problem with your payment information: %s",
+                          'customer-store-failure'))
           expect(order.payments.completed.count).to be 0
         end
       end

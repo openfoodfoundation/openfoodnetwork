@@ -6,14 +6,9 @@ module Reporting
       class Base < ReportTemplate
         attr_accessor :permissions, :parameters
 
-        def initialize(user, params = {}, request = nil)
-          super(user, params, request)
-          p = params[:q]
-          if p.present?
-            p['start_at'] = p.delete('completed_at_gt')
-            p['end_at'] = p.delete('completed_at_lt')
-          end
-          @parameters = Parameters.new(p || {})
+        def initialize(user, params = {}, render: false)
+          super(user, params, render: render)
+          @parameters = Parameters.new(params.fetch(:q, {}))
           @parameters.validate!
           @permissions = Permissions.new(user)
           @parameters.authorize!(@permissions)

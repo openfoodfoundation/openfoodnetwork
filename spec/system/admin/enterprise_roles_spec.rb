@@ -5,7 +5,7 @@ require 'system_helper'
 describe '
   As an Administrator
   I want to manage relationships between users and enterprises
-', js: true do
+' do
   include AuthenticationHelper
   include WebHelper
   include OpenFoodNetwork::EmailHelper
@@ -156,9 +156,9 @@ create(:enterprise)
 
         within '#invite-manager-modal' do
           fill_in 'invite_email', with: new_email
-          click_button I18n.t('js.admin.modals.invite')
-          expect(page).to have_content I18n.t('user_invited', email: new_email)
-          click_button I18n.t('js.admin.modals.close')
+          click_button 'Invite'
+          expect(page).to have_content "#{new_email} has been invited to manage this enterprise"
+          click_button 'Close'
         end
 
         expect(page).not_to have_selector "#invite-manager-modal"

@@ -5,6 +5,13 @@ de_DE:
       spree/product: Produkt
       spree/shipping_method: Lieferoption
     attributes:
+      spree/order/ship_address:
+        address2: "Lieferadresse Adresszusatz"
+        country: "Lieferadresse Land"
+        phone: "Telefonnummer"
+        firstname: "Vorname"
+        lastname: "Nachname"
+        zipcode: "Lieferadresse Postleitzahl"
       spree/user:
         password: "Passwort"
         password_confirmation: "Passwort erneut eingeben"
@@ -404,8 +411,11 @@ de_DE:
       filters:
         categories:
           title: Lieferkategorien
+          selected_categories: "%{count} Kategorien ausgewählt"
         producers:
           title: Unsere Produzenten
+          selected_producers: "%{count} Produzenten ausgewählt"
+        per_page: "%{count} Produkte pro Seite"
         colums: Spalten
       columns:
         name: Name
@@ -413,11 +423,25 @@ de_DE:
         price: Preis
         producer: Produzent
         category: Kategorie
+        sku: Artikelnummer
+        on_hand: "Verfügbar"
+        on_demand: "Unbegrenzt/auf Bestellung"
+        tax_category: "Steuerkategorie"
+        inherits_properties: "Übernimmt Eigenschaften des Ladens?"
+        available_on: "Verfügbar am"
+        import_date: "Importdatum"
       columns_selector:
         unit: Einheit
         price: Preis
         producer: Produzent
         category: Kategorie
+        sku: Artikelnummer
+        on_hand: "Verfügbar"
+        on_demand: "Unbegrenzt/auf Bestellung"
+        tax_category: "Steuerkategorie"
+        inherits_properties: "Übernimmt Eigenschaften des Ladens?"
+        available_on: "Verfügbar am"
+        import_date: "Importdatum"
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
     begins_at: Beginnt
@@ -507,7 +531,6 @@ de_DE:
         title: "Rechnungseinstellungen"
         enable_invoices?: "Rechnungen aktivieren?"
         invoice_style2?: "Verwenden Sie die Rechnungsvorlage mit Aufschlüsselung verschiedener Steuersätze pro Artikel (empfohlen in der EU, noch nicht für Länder mit Preisen ohne Steuern geeignet)."
-        enable_receipt_printing?: "Optionen zum Drucken von Belegen mit Thermodruckern in der Dropdown-Liste anzeigen?"
         enterprise_number_required_on_invoices?: "Umsatzsteueridentifikationsnummer (USt-IdNr.) erforderlich um Rechnungen zu erstellen?"
     stripe_connect_settings:
       edit:
@@ -590,7 +613,7 @@ de_DE:
       form_users:
         users: "Benutzer"
       form_about:
-        about: "Verkaufen"
+        about: "Über uns"
       form_images:
         images: "Bilder"
       form_address:
@@ -642,13 +665,14 @@ de_DE:
       model:
         no_file: "Fehler: Es wurde keine Datei hochgeladen."
         could_not_process: "Die Datei konnte nicht verarbeitet werden: Ungültiges Datenformat."
-        incorrect_value: Der eingetragene Wert ist fehlerhaft.
-        conditional_blank: Darf nicht leer sein, wenn das Feld 'unit_type' leer ist.
-        no_product: Es konnten keine passenden Produkte in der Datenbank gefunden werden.
-        not_found: Konnte nicht in der Datenbank gefunden werden.
+        incorrect_value: enthält einen fehlerhaften Wert.
+        conditional_blank: darf nicht leer sein, wenn das Feld 'unit_type' leer ist.
+        no_product: entspricht keinem passenden Produkt in der Datenbank.
+        not_found: konnte nicht in der Datenbank gefunden werden.
         category_not_found: stimmt nicht mit den verfügbaren Kategorien überein. Diese finden Sie auf der Seite zum Produktimport. Überprüfen Sie zusätzlich Ihre Angaben auf Tippfehler.
-        not_updatable: Kann über den Produktimport nicht auf bestehende Produkte aktualisiert werden.
-        blank: darf nicht leer sein
+        not_updatable: kann über den Produktimport nicht für bestehende Produkte aktualisiert werden.
+        values_must_be_same: muss für gleichnamige Produkte gleich sein.
+        blank: darf nicht leer sein.
         products_no_permission: Sie sind nicht berechtigt, Produkte dieses Unternehmens zu verwalten.
         inventory_no_permission: Sie sind nicht berechtigt, für diesen Produzenten Produkte in den Katalog aufzunehmen.
         none_saved: Es konnten keine Produkte erfolgreich gespeichert werden.
@@ -690,8 +714,8 @@ de_DE:
         options_and_defaults: Importoptionen und Voreinstellungen
         no_permission: Sie sind nicht berechtigt, dieses Unternehmen zu verwalten.
         not_found: Das Unternehmen konnte nicht in der Datenbank gefunden werden.
-        no_name: Für einige Produkte ist kein Name definiert.
-        blank_enterprise: Für einige Produkte ist kein Unternehmen definiert.
+        no_name: Für einige Produkte ist kein Name angegeben.
+        blank_enterprise: Für einige Produkte ist kein Unternehmen angegeben.
         reset_absent?: Fehlende Produkte zurücksetzen?
         reset_absent_tip: Den Lagerbestand für alle nicht in der Datei vorhandenen Produkte auf Null setzen.
         overwrite_all: Alle überschreiben
@@ -813,7 +837,7 @@ de_DE:
         manage: Verwalten
       form:
         about_us:
-          legend: "Verkaufen"
+          legend: "Über uns"
           desc_short: Kurzbeschreibung
           desc_short_placeholder: Schreiben Sie etwas in ein oder zwei Sätzen über Ihr Unternehmen.
           desc_long: Über uns
@@ -1257,7 +1281,7 @@ de_DE:
           address: "Adresse"
           contact: "Kontaktdaten"
           social: "Soziale Medien"
-          about: "Verkaufen"
+          about: "Über uns"
           business_details: "Geschäftsdetails"
           images: "Bilder"
           properties: "Eigenschaften"
@@ -1272,7 +1296,7 @@ de_DE:
         enterprise_group:
           primary_details: "Unternehmen"
           users: "Benutzer"
-          about: "Verkaufen"
+          about: "Über uns"
           images: "Bilder"
           contact: "Kontaktdaten"
           web: "Homepage"
@@ -1291,6 +1315,7 @@ de_DE:
       total_by_customer: Gesamtsummen nach Kunden
       total_by_supplier: Gesamtsummen nach Lieferanten
       supplier_totals: Lieferantengesamtsummen
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Lieferantengesamtsummen nach Verteilstelle
       totals_by_supplier: Verteilstellengesamtsummen nach Lieferanten
       customer_totals: Kundengesamtsummen
@@ -1301,6 +1326,7 @@ de_DE:
       addresses: Adressen
       payment_methods: Zahlungsarten
       delivery: Lieferungen
+      sales_tax_totals_by_producer: Umsatzsteuer nach Produzenten
       tax_types: Steuerarten
       tax_rates: Steuersätze
       pack_by_customer: Packliste nach Kunden
@@ -1480,6 +1506,9 @@ de_DE:
         stripe_connect_fail: Die Verbindung Ihres Stripe-Kontos ist fehlgeschlagen.
       stripe_connect_settings:
         resource: Konfiguration für Stripe Connect
+    resend_confirmation_emails_feedback:
+      one: "Bestätigungs-E-Mail für 1 Bestellung gesendet."
+      other: "E-Mail-Bestätigung wurde für %{count} Bestellungen gesendet."
   api:
     unknown_error: "Etwas ist schief gelaufen. Unser Team wurde benachrichtigt."
     invalid_api_key: "Ungültiger API-Schlüssel (%{key}) angegeben."
@@ -1592,10 +1621,6 @@ de_DE:
   invoice_issued_on: "Rechnungsdatum:"
   order_number: "Rechnungsnummer:"
   date_of_transaction: "Bestelldatum:"
-  ticket_column_qty: "Menge"
-  ticket_column_item: "Artikel"
-  ticket_column_unit_price: "Stückpreis"
-  ticket_column_total_price: "Gesamtpreis"
   menu_1_title: "Einkaufen"
   menu_1_url: "/shops"
   menu_2_title: "Karte"
@@ -1645,7 +1670,7 @@ de_DE:
   use_geocoder: Breiten- und Längengrad automatisch aus der Adresse bestimmen
   postcode: Postleitzahl
   postcode_placeholder: z. B. 30701
-  suburb: Vorort
+  suburb: Ort
   state: Bundesland
   country: Land
   unauthorized: Nicht autorisiert
@@ -1702,12 +1727,6 @@ de_DE:
   card_has_been_removed: "Ihre Kreditkarte wurde entfernt (Nummer: %{number})."
   card_could_not_be_removed: Die Kreditkarte konnte nicht entfernt werden.
   invalid_credit_card: "Ungültige Kreditkarte"
-  ie_warning_headline: "Ihr Browser ist veraltet. :-("
-  ie_warning_text: "Für das beste Open-Food-Network-Erlebnis empfehlen wir dringend, Ihren Browser zu aktualisieren:"
-  ie_warning_chrome: Chrome herunterladen
-  ie_warning_firefox: Firefox herunterladen
-  ie_warning_ie: Internet Explorer aktualisieren
-  ie_warning_other: "Können Sie Ihren Browser nicht aktualisieren? Versuchen Sie Open Food Network auf Ihrem Smartphone! :-)"
   legal:
     cookies_policy:
       header: "Wie wir Cookies verwenden"
@@ -1794,12 +1813,13 @@ de_DE:
   split_checkout:
     your_details_without_number: Ihre Daten
     payment_method_without_number: Zahlungsart
-    order_summary_without_number: Bestellübersicht
+    order_summary_without_number: Bestellabschluss
     already_ordered:
       cart: "im Warenkorb"
       message_html: "Sie haben bereits eine Bestellung für diesen Bestellzyklus. Überprüfen Sie den %{cart}, um die Artikel zu sehen, die Sie zuvor bestellt haben. Sie können Artikel auch stornieren, solange der Bestellzyklus geöffnet ist."
     step1:
       contact_information:
+        title: Kontaktdaten
         email:
           label: E-Mail-Adresse
         phone:
@@ -1846,23 +1866,21 @@ de_DE:
           save_card: Kreditkarte für zukünftige Verwendung speichern
           create_new_card: oder geben Sie unten neue Kreditkartendetails ein
       explaination: Sie können Ihre Bestellung im nächsten Schritt überprüfen und die endgültigen Kosten bestätigen.
-      submit: Weiter - Bestellübersicht
+      submit: Weiter - Bestellabschluss
       cancel: Zurück - Ihre Daten
     step3:
-      your_details:
-        title: Ihre Daten
-        edit: Ihre Daten ändern
-      billing_address:
-        title: Rechnungsadresse
-      shipping_address:
-        title: Lieferadresse
-      delivery_info:
-        title: Abhol-/Lieferinformationen
+      delivery_details:
+        title: Lieferdetails
+        edit: Bearbeiten
+        address: Liefer-/Abholinformationen
+        instructions: Informationen
       payment_method:
         title: Zahlungsart
-        edit: Zahlungsart ändern
+        edit: Bearbeiten
+        instructions: Informationen
       order:
         title: Bestellübersicht
+        edit: Bearbeiten
       terms_and_conditions:
         message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
         link_text: "Allgemeinen Geschäftsbedingungen (AGB)"
@@ -1871,11 +1889,10 @@ de_DE:
       all_terms_and_conditions:
         message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers und den %{tos_link} des Open Food Network zu."
         terms_and_conditions: "Allgemeinen Geschäftsbedingungen (AGB)"
-      agree: Durch Klicken auf "Zahlungspflichtig bestellen" stimmen Sie der Verarbeitung Ihrer Bestellung zu.
       submit: Zahlungspflichtig bestellen
       cancel: Zurück - Zahlungsart
     errors:
-      global: "Speichern fehlgeschlagen. Bitte prüfen Sie die markierten Felder."
+      saving_failed: "Speichern fehlgeschlagen. Bitte prüfen Sie die markierten Felder. %{messages}"
       terms_not_accepted: Bitte akzeptieren Sie die Allgemeinen Geschäftsbedingungen.
       required: Feld darf nicht leer sein.
       invalid_number: "Bitte geben Sie eine gültige Telefonnummer ein."
@@ -2576,6 +2593,7 @@ de_DE:
   report_customers_cycle: "Bestellzyklus"
   report_customers_type: "Berichtsart"
   report_customers_csv: "Als csv-Datei herunterladen"
+  report_customers: Kunde
   report_producers: "Unsere Produzenten"
   report_type: "Berichtsart"
   report_hubs: "Hubs"
@@ -2653,8 +2671,12 @@ de_DE:
   report_header_taxable_items_total: "Steuerpflichtige Posten insgesamt (%{currency_symbol})"
   report_header_sales_tax: "Umsatzsteuer (%{currency_symbol})"
   report_header_delivery_charge: "Liefergebühr (%{currency_symbol})"
+  report_header_tax: "Steuern"
   report_header_tax_on_delivery: "Steuer auf Lieferkosten (%{currency_symbol})"
   report_header_tax_on_fees: "Steuer auf Gebühren (%{currency_symbol})"
+  report_header_tax_category: "Steuerkategorie"
+  report_header_tax_rate_name: "Steuersatzname"
+  report_header_tax_rate: "Steuersatz"
   report_header_total_tax: "Summe Steuern (%{currency_symbol})"
   report_header_total_excl_tax: "Summe exkl. Steuern (%{currency_symbol})"
   report_header_total_incl_tax: "Summe inkl. Steuern (%{currency_symbol})"
@@ -2664,6 +2686,7 @@ de_DE:
   report_header_customer_code: Kundennummer
   report_header_product: Produkt
   report_header_product_properties: Produkteigenschaften
+  report_header_product_tax_category: Steuerkategorie
   report_header_quantity: Menge
   report_header_max_quantity: Max Menge
   report_header_variant: Produktvariante
@@ -2676,6 +2699,8 @@ de_DE:
   report_header_supplier: Lieferant
   report_header_producer: Produzent
   report_header_producer_suburb: Produzentenort
+  report_header_producer_tax_status: Produzent berechnet Steuern
+  report_header_producer_charges_sales_tax?: Berechnet Steuern
   report_header_unit: Einheit
   report_header_group_buy_unit_quantity: Gruppenkauf Einheitsmenge
   report_header_cost: Summe
@@ -2691,10 +2716,12 @@ de_DE:
   report_header_distributor_address: Verteilstellenadresse
   report_header_distributor_city: Verteilstellen-Stadt
   report_header_distributor_postcode: Verteilstellen-Postleitzahl
+  report_header_distributor_tax_status: Verteilstelle berechnet Steuern
   report_header_delivery_address: Lieferadresse
   report_header_delivery_postcode: Lieferpostleitzahl
   report_header_bulk_unit_size: Gruppenkauf-Einheit
   report_header_weight: Gewicht
+  report_header_final_weight_volume: Tatsächliche Menge
   report_header_height: Höhe
   report_header_width: Breite
   report_header_depth: Tiefe
@@ -2871,6 +2898,7 @@ de_DE:
       deleting_item_will_cancel_order: "Das Löschen dieses Produkts führt zu einer oder mehreren leeren Bestellungen, die daher automatisch storniert werden. Möchten Sie fortfahren?"
       modals:
         got_it: "Verstanden"
+        confirm: "Bestätigen"
         close: "Schließen"
         continue: "Weiter"
         cancel: "Stornieren"
@@ -3401,6 +3429,8 @@ de_DE:
     server_error: "Serverfehler"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Abholung"
+      delivery: "Lieferung"
     start_date: "Anfangsdatum"
     successfully_removed: "Erfolgreich gelöscht"
     taxonomy_edit: "Kategorien bearbeiten"
@@ -3477,9 +3507,6 @@ de_DE:
     default_seo_title: "Standard SEO-Titel"
     default_meta_description: "Standard Meta-Beschreibung"
     default_meta_keywords: "Standard Meta-Schlüsselwörter"
-    security_settings: "Sicherheitseinstellungen"
-    allow_ssl_in_production: "Zulassen, dass SSL im Produktionsmodus verwendet wird"
-    allow_ssl_in_staging: "Zulassen, dass SSL im Staging-Modus verwendet wird"
     currency_decimal_mark: "Dezimalzeichen der Währung"
     currency_settings: "Währungseinstellungen"
     currency_symbol_position: Währungssymbol (€) vor oder nach dem Betrag?
@@ -3488,7 +3515,7 @@ de_DE:
     display_currency: "Währung anzeigen"
     choose_currency: "Währung auswählen"
     mail_method_settings: "E-Mail-Methodeneinstellungen"
-    mail_settings_notice_html: "Einige der folgenden Einstellungen können nicht geändert werden und werden hier nur zu Zwecken der Fehlerbehebung aufgeführt. Änderungen können vorgenommen werden, indem die Einstellungen der deutschen Instanz aktualisiert und mithilfe von <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> bereitgestellt werden. Wenden Sie sich an das globale Team des Open Food Network, um weitere Informationen zu erhalten."
+    mail_settings_notice_html: "<b>Hier vorgenommene Änderungen sind nur vorübergehend</b> zum Debuggen und können in Zukunft rückgängig gemacht werden.<br> Dauerhafte Änderungen können vorgenommen werden, indem die Daten der Instanz aktualisiert und mithilfe von <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install bereitgestellt</a> werden. Wenden Sie sich für weitere Einzelheiten an das globale OFN-Team."
     general: "Allgemeines"
     enable_mail_delivery: "E-Mail-Versand aktivieren"
     send_mails_as: "E-Mails senden als"
@@ -3578,7 +3605,7 @@ de_DE:
     zipcode: Postleitzahl
     weight: Gewicht (pro kg oder lb)
     error_user_destroy_with_orders: "Benutzer mit abgeschlossenen Bestellungen dürfen nicht gelöscht werden."
-    cannot_create_payment_without_payment_methods: "Sie können keine Zahlung für eine Bestellung erstellen, ohne dass Zahlungsarten definiert sind."
+    cannot_create_payment_without_payment_methods: "Sie können keine Zahlung für eine Bestellung erstellen, wenn keine Zahlungsarten angelegt sind."
     please_define_payment_methods: "Bitte definieren Sie zunächst die Zahlungsarten."
     options: "Optionen"
     has_no_shipped_units: "hat keine gelieferten Einheiten"
@@ -3611,6 +3638,7 @@ de_DE:
       messages:
         included_price_validation: "kann nur ausgewählt werden, wenn Sie eine Standardsteuerzone festgelegt haben"
         blank: "darf nicht leer sein"
+        invalid_instagram_url: "darf nur den Benutzernamen enthalten, z. B. the_prof"
     layouts:
       admin:
         login_nav:
@@ -3694,6 +3722,10 @@ de_DE:
           authorized: "autorisiert"
           received: "empfangen"
           canceled: "storniert"
+      line_items:
+        index:
+          results_found: "%{number} Ergebnisse gefunden."
+          viewing: "Angezeigt wird %{start} bis %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Einer stornierten Bestellung können keine Produkte hinzugefügt werden. "
@@ -3717,6 +3749,7 @@ de_DE:
           print_invoices: "Rechnungen drucken"
           cancel_orders: "Bestellungen stornieren"
           resend_confirmation: "Bestätigung erneut senden"
+          resend_confirmation_confirm_html: "Sind Sie sicher, dass Sie die E-Mail-Bestätigungen erneut senden wollen?"
           selected:
             zero: "Keine Bestellung ausgewählt"
             one: "1 Bestellung ausgewählt"
@@ -3865,6 +3898,7 @@ de_DE:
           title: "Neues Produkt"
           new_product: "Neues Produkt"
           supplier: "Lieferant"
+          supplier_select_placeholder: "Lieferant wählen"
           product_name: "Produktname"
           units: "Einheit"
           value: "Menge"
@@ -3910,6 +3944,9 @@ de_DE:
           select_and_search: "Treffen Sie Ihre Auswahl und klicken Sie auf %{option}, um den Bericht zu erstellen."
         customer_names_message:
           customer_names_tip: "Wenn Kundennamen für von Ihnen gelieferte Bestellungen ausgeblendet sind, können Sie sich an den Händler wenden und ihn bitten, seine Ladeneinstellungen anzupassen, damit seine Lieferanten Kundennamen anzeigen können."
+        products_and_inventory:
+          all_products:
+            message: "Beachten Sie, dass die gemeldeten Lagerbestände nur aus den Produktlisten der Lieferanten stammen. Wenn Sie den Katalog verwenden, um Ihre Lagerbestand zu verwalten, werden diese Werte in diesem Bericht ignoriert."
       users:
         index:
           listing_users: "Benutzer verwalten"
@@ -4258,6 +4295,7 @@ de_DE:
     search_input:
       placeholder: Suche
     selector_with_filter:
+      selected_items: "%{count} ausgewählt"
       search_placeholder: Suche
     pagination:
       next: Nächste

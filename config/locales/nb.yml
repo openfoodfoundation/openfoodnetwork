@@ -5,6 +5,10 @@ nb:
       spree/product: Produkt
       spree/shipping_method: Leveringsmetode
     attributes:
+      spree/order/ship_address:
+        phone: "Telefonnummer"
+        firstname: "Fornavn"
+        lastname: "Etternavn"
       spree/user:
         password: "Passord"
         password_confirmation: "Passord-bekreftelse"
@@ -410,11 +414,25 @@ nb:
         price: Pris
         producer: Produsent
         category: Kategori
+        sku: SKU
+        on_hand: "Tilgjengelig"
+        on_demand: "Ved forespørsel"
+        tax_category: "Avgiftskategori"
+        inherits_properties: "Arver egenskaper?"
+        available_on: "Tilgjengelig På"
+        import_date: "Importdato"
       columns_selector:
         unit: Enhet
         price: Pris
         producer: Produsent
         category: Kategori
+        sku: SKU
+        on_hand: "Tilgjengelig"
+        on_demand: "Ved forespørsel"
+        tax_category: "Avgiftskategori"
+        inherits_properties: "Arver egenskaper?"
+        available_on: "Tilgjengelig På"
+        import_date: "Importdato"
     adjustments:
       skipped_changing_canceled_order: "Du kan ikke endre en avbrutt bestilling."
     begins_at: Begynner på
@@ -504,7 +522,6 @@ nb:
         title: "Fakturainnstillinger"
         enable_invoices?: "Aktivér Fakturaer?"
         invoice_style2?: "Bruk den alternative fakturamodellen som inkluderer total avgiftsoppdeling pr rate og avgiftsrateinfo pr vare (passer ikke for land som viser priser ekskludert avgift)"
-        enable_receipt_printing?: "Vis valg for utskrift av kvitteringer ved bruk av kvitteringsprinter i nedtrekksmeny for bestillinger? "
         enterprise_number_required_on_invoices?: "Krev et Org nr for å generere en faktura?"
     stripe_connect_settings:
       edit:
@@ -1577,10 +1594,6 @@ nb:
   invoice_issued_on: "Fakturadato:"
   order_number: "Fakturanummer:"
   date_of_transaction: "Transaksjonsdato:"
-  ticket_column_qty: "Antall"
-  ticket_column_item: "Vare"
-  ticket_column_unit_price: "Enhetspris"
-  ticket_column_total_price: "Totalpris"
   menu_1_title: "Butikker"
   menu_1_url: "/shops"
   menu_2_title: "Kart"
@@ -1687,12 +1700,6 @@ nb:
   card_has_been_removed: "Ditt kort er fjernet (nummer: %{number})"
   card_could_not_be_removed: Beklager, kortet kunne ikke fjernes
   invalid_credit_card: "Ugyldig kort"
-  ie_warning_headline: "Din nettleser er for gammel :-("
-  ie_warning_text: "For den beste opplevelsen med Open Food Network anbefaler vi på det sterkeste å oppgradere nettleseren din:"
-  ie_warning_chrome: Last ned Chrome
-  ie_warning_firefox: Last ned Firefox
-  ie_warning_ie: Oppgrader Internet Explorer
-  ie_warning_other: "Kan ikke oppgradere nettleseren din? Prøv Open Food Network på smart-telefonen din :-)"
   legal:
     cookies_policy:
       header: "Hvordan vi bruker informasjonskapsler"
@@ -1834,20 +1841,15 @@ nb:
       submit: Neste - Bestillingssammendrag
       cancel: Tilbake til dine detaljer
     step3:
-      your_details:
-        title: Dine detaljer
-        edit: Rediger detaljene dine
-      billing_address:
-        title: Fakturaadresse
-      shipping_address:
-        title: Leveringsadresse
-      delivery_info:
-        title: Leveringsinformasjon
+      delivery_details:
+        title: Leveringsdetaljer
+        edit: Rediger
+        address: Leveringsadresse
       payment_method:
         title: Betalingsmetode
-        edit: Rediger betalingsmåte
+        edit: Rediger
       order:
-        title: Totalt for bestillingen
+        edit: Rediger
       terms_and_conditions:
         message_html: "Jeg godtar selgers %{terms_and_conditions_link}."
         link_text: "Vilkår og Betingelser"
@@ -1856,11 +1858,9 @@ nb:
       all_terms_and_conditions:
         message_html: "Jeg godtar selgerens %{terms_and_conditions_link} og plattformens %{tos_link}."
         terms_and_conditions: "Vilkår og Betingelser"
-      agree: Ved å klikke &quot;Fullfør bestilling&quot; godtar du at bestillingen din blir behandlet.
       submit: Fullfør bestillingen
       cancel: Tilbake til Betalingsmåte
     errors:
-      global: "Lagring mislyktes, vennligst oppdater de uthevede feltene."
       terms_not_accepted: Vennligst godta vilkår og betingelser
       required: Feltet kan ikke være tomt
       invalid_number: "Vennligst oppgi et gyldig telefonnummer"
@@ -2561,6 +2561,7 @@ nb:
   report_customers_cycle: "Bestillingsrunde"
   report_customers_type: "Rapporttype"
   report_customers_csv: "Last ned som csv"
+  report_customers: Kunde
   report_producers: "Produsenter"
   report_type: "Rapporttype"
   report_hubs: "Hubs"
@@ -2628,8 +2629,11 @@ nb:
   report_header_taxable_items_total: "Sum varer som krever avgift (%{currency_symbol})"
   report_header_sales_tax: "Salgsavgift (%{currency_symbol})"
   report_header_delivery_charge: "Leveringsavgift (%{currency_symbol})"
+  report_header_tax: "Avgift"
   report_header_tax_on_delivery: "Leveringsavgift (%{currency_symbol})"
   report_header_tax_on_fees: "Avgiftsavgift (%{currency_symbol})"
+  report_header_tax_category: "Avgiftskategori"
+  report_header_tax_rate: "Avgiftsrate"
   report_header_total_tax: "Sum avgifter (%{currency_symbol})"
   report_header_total_excl_tax: "Sum eks. avgift (%{currency_symbol})"
   report_header_total_incl_tax: "Sum inkl. avgift (%{currency_symbol})"
@@ -3440,9 +3444,6 @@ nb:
     default_seo_title: "Standard SEO Tittel"
     default_meta_description: "Standard Meta Beskrivelse"
     default_meta_keywords: "Standard Meta Nøkkelord"
-    security_settings: "Sikkerhetsinnstillinger"
-    allow_ssl_in_production: "Tillat at SSL brukes i produksjonsmodus"
-    allow_ssl_in_staging: "Tillat at SSL brukes i staging-modus"
     currency_decimal_mark: "Valuta desimaltegn"
     currency_settings: "Valutainnstillinger"
     currency_symbol_position: Sett "valutasymbol før eller etter dollarbeløp?"
@@ -3451,7 +3452,6 @@ nb:
     display_currency: "Vis valuta"
     choose_currency: "Velg Valuta"
     mail_method_settings: "Innstillinger for epost-metode"
-    mail_settings_notice_html: "Noen av følgende innstillinger kan ikke redigeres og er oppført her bare for feilsøking. Endringer kan gjøres ved å oppdatere plattformens secrets og klargjøre dem ved hjelp av <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . Kontakt OFNs globale team for mer informasjon."
     general: "Generelt"
     enable_mail_delivery: "Aktiver epost-levering"
     send_mails_as: "Send Eposter Som"
@@ -3657,6 +3657,10 @@ nb:
           authorized: "Autorisert"
           received: "Mottatt"
           canceled: "Avbrutt"
+      line_items:
+        index:
+          results_found: "%{number} Resultater funnet."
+          viewing: "Ser %{start} til %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Kan ikke legge varen til den avbrutte bestillingen"

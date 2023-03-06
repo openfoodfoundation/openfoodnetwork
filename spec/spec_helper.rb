@@ -5,28 +5,17 @@ require 'base_spec_helper'
 require 'database_cleaner'
 require 'view_component/test_helpers'
 
-Capybara.javascript_driver = :chrome
-Capybara.default_max_wait_time = 30
-Capybara.disable_animation = true
-
 RSpec.configure do |config|
   # DatabaseCleaner
   config.before(:suite) {
     DatabaseCleaner.clean_with :deletion, except: ['spree_countries', 'spree_states']
   }
   config.before(:each)           { DatabaseCleaner.strategy = :transaction }
-  config.before(:each, js: true) {
-    DatabaseCleaner.strategy = :deletion, { except: ['spree_countries', 'spree_states'] }
-  }
   config.before(:each, concurrency: true) {
     DatabaseCleaner.strategy = :deletion, { except: ['spree_countries', 'spree_states'] }
   }
   config.before(:each)           { DatabaseCleaner.start }
   config.after(:each)            { DatabaseCleaner.clean }
-
-  config.after(:each, js: true) do
-    Capybara.reset_sessions!
-  end
 
   # Precompile Webpacker assets (once) when starting the suite. The default setup can result
   # in the assets getting compiled many times throughout the build, slowing it down.
@@ -41,6 +30,9 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = false
+
+  # You can use `rspec -n` to run only failed specs.
+  config.example_status_persistence_file_path = "tmp/rspec-status.txt"
 
   # Helpers
   config.include ViewComponent::TestHelpers, type: :component

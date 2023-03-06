@@ -114,7 +114,8 @@ module Openfoodnetwork
           Calculator::FlexiRate,
           Calculator::PerItem,
           Calculator::PriceSack,
-          Calculator::Weight
+          Calculator::Weight,
+          Calculator::None
         ]
 
         app.config.spree.calculators.add_class('enterprise_fees')
@@ -133,7 +134,8 @@ module Openfoodnetwork
           Calculator::FlatRate,
           Calculator::FlexiRate,
           Calculator::PerItem,
-          Calculator::PriceSack
+          Calculator::PriceSack,
+          Calculator::None
         ]
 
         app.config.spree.calculators.add_class('tax_rates')
@@ -213,12 +215,10 @@ module Openfoodnetwork
     # Instead, they must be explicitly included below
     # http://stackoverflow.com/questions/8012434/what-is-the-purpose-of-config-assets-precompile
     config.assets.initialize_on_precompile = true
-    config.assets.precompile += ['iehack.js']
     config.assets.precompile += ['admin/*.js', 'admin/**/*.js']
     config.assets.precompile += ['web/all.js']
     config.assets.precompile += ['darkswarm/all.js']
     config.assets.precompile += ['shared/*']
-    config.assets.precompile += ['qz/*']
     config.assets.precompile += ['*.jpg', '*.jpeg', '*.png', '*.gif' '*.svg']
 
     # Apply framework defaults. New recommended defaults are successively added with each Rails version and

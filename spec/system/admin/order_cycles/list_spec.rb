@@ -5,7 +5,7 @@ require 'system_helper'
 describe '
     As an administrator
     I want to list and filter order cycles
-', js: true do
+' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper
@@ -117,7 +117,7 @@ describe '
     # Attempting to edit dates of an open order cycle with active subscriptions
     find("#oc#{oc1.id}_orders_open_at").click
     expect(page).to have_selector "#confirm-dialog .message",
-                                  text: I18n.t('admin.order_cycles.date_warning.msg', n: 1)
+                                  text: date_warning_msg(1)
   end
 
   describe 'listing order cycles with other locales' do
@@ -188,5 +188,9 @@ describe '
   def select_incoming_variant(supplier, exchange_no, variant)
     page.find("table.exchanges tr.supplier-#{supplier.id} td.products").click
     check "order_cycle_incoming_exchange_#{exchange_no}_variants_#{variant.id}"
+  end
+
+  def date_warning_msg(nbr = 1)
+    "This order cycle is linked to %d open subscription orders. Changing this date now will not affect any orders which have already been placed, but should be avoided if possible. Are you sure you want to proceed?" % nbr
   end
 end

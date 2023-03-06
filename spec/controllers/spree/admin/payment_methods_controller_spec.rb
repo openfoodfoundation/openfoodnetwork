@@ -123,7 +123,6 @@ module Spree
               calculator_attributes: {
                 id: payment_method.calculator.id,
                 preferred_amount: 456,
-                preferred_currency: "GBP"
               }
             }
           }
@@ -138,7 +137,6 @@ module Spree
           expect(payment_method.name).to eq "Updated"
           expect(payment_method.description).to eq "Updated"
           expect(payment_method.calculator.preferred_amount).to eq 456
-          expect(payment_method.calculator.preferred_currency).to eq "GBP"
         end
 
         context "when the given payment method type does not match" do
@@ -208,7 +206,7 @@ module Spree
                 it "does not save the payment method" do
                   spree_put :update, params
                   expect(response).to render_template :edit
-                  expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include I18n.t(:error_required)
+                  expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include 'can\'t be blank'
                 end
               end
 
@@ -218,7 +216,7 @@ module Spree
                 it "does not save the payment method" do
                   spree_put :update, params
                   expect(response).to render_template :edit
-                  expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include I18n.t(:error_required)
+                  expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include 'can\'t be blank'
                 end
               end
             end

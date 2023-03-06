@@ -7,12 +7,13 @@
   - default
   - mailers
 
-:schedule:
-  HeartbeatJob:
-    every: ["5m", first_in: "0s"]
-  SubscriptionPlacementJob:
-    every: "5m"
-  SubscriptionConfirmJob:
-    every: "5m"
-  OrderCycleClosingJob:
-    every: "5m"
+:scheduler:
+  :schedule:
+    HeartbeatJob:
+      every: ["5m", first_in: "0s"]
+    SubscriptionPlacementJob:
+      every: "5m"
+    SubscriptionConfirmJob:
+      every: "5m"
+    OrderCycleClosingJob:
+      every: "5m"

@@ -5,6 +5,10 @@ ko:
       spree/product: 상품
       spree/shipping_method: 배송 방법
     attributes:
+      spree/order/ship_address:
+        phone: "전화번호"
+        firstname: "이름"
+        lastname: "성"
       spree/user:
         password: "비밀번호"
         password_confirmation: "비밀번호 확인"
@@ -409,11 +413,25 @@ ko:
         price: 가격
         producer: 제공자
         category: 목록
+        sku: 재고 관리 단위
+        on_hand: "대기 중"
+        on_demand: "수요로 함"
+        tax_category: "세금 목록"
+        inherits_properties: "속성을 상속하시겠습니까?"
+        available_on: "사용 가능 날짜"
+        import_date: "수입 날짜"
       columns_selector:
         unit: 단위
         price: 가격
         producer: 제공자
         category: 목록
+        sku: 재고 관리 단위
+        on_hand: "대기 중"
+        on_demand: "수요로 함"
+        tax_category: "세금 목록"
+        inherits_properties: "속성을 상속하시겠습니까?"
+        available_on: "사용 가능 날짜"
+        import_date: "수입 날짜"
     adjustments:
       skipped_changing_canceled_order: "취소된 명령을 바꿀 수 없습니다."
     begins_at: 시작 시간
@@ -501,7 +519,6 @@ ko:
         title: "청구서 설정"
         enable_invoices?: "청구서를 사용하시겠습니까?"
         invoice_style2?: "비율별 총 세금 내역 및 품목별 세율 정보를 포함하는 대체 송장 모델을 사용해 주세요. (세금을 제외한 가격을 표시하는 국가에는 아직 적합하지 않음)"
-        enable_receipt_printing?: "열 프린터를 사용하여 영수증을 인쇄하는 옵션을 드롭다운 순서대로 표시하시겠습니까?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1550,10 +1567,6 @@ ko:
   invoice_issued_on: "송장 발행일 :"
   order_number: "송장 번호 :"
   date_of_transaction: "거래 날짜 :"
-  ticket_column_qty: "수량"
-  ticket_column_item: "항목"
-  ticket_column_unit_price: "단가"
-  ticket_column_total_price: "총 가격"
   menu_1_title: "가게"
   menu_1_url: "/가게"
   menu_2_title: "지도"
@@ -1660,12 +1673,6 @@ ko:
   card_has_been_removed: "카드가 제거되었습니다. (번호 : %{number})"
   card_could_not_be_removed: 죄송합니다. 카드를 제거할 수 없습니다.
   invalid_credit_card: "잘못된 신용 카드"
-  ie_warning_headline: "브라우저가 최신 버전이 아닙니다. :-("
-  ie_warning_text: "최고의 Open Food Network 환경을 위해 브라우저를 업그레이드하는 것을 추천합니다."
-  ie_warning_chrome: Chrome 다운로드
-  ie_warning_firefox: Firefox 다운로드
-  ie_warning_ie: Internet Explorer 업그레이드
-  ie_warning_other: "브라우저를 업그레이드할 수 없나요? 스마트폰으로 Open Food Network를 해보세요 :-)"
   legal:
     cookies_policy:
       header: "쿠키 사용 용도"
@@ -1807,20 +1814,15 @@ ko:
       submit: 다음 - 주문 요약
       cancel: 세부 사항으로 돌아가기
     step3:
-      your_details:
-        title: 세부 사항
-        edit: 세부 사항 편집
-      billing_address:
-        title: '청구서 발송지 :'
-      shipping_address:
-        title: 배송지 주소
-      delivery_info:
-        title: 배달 정보
+      delivery_details:
+        title: 배달 세부 사항
+        edit: 편집
+        address: 배달 주소
       payment_method:
         title: 결제 방식
-        edit: 결제 방식 편집
+        edit: 편집
       order:
-        title: 주문 총합
+        edit: 편집
       terms_and_conditions:
         message_html: "판매자의 %{terms_and_conditions_link} 이용약관에 대하여 동의합니다."
         link_text: "조건"
@@ -1829,11 +1831,9 @@ ko:
       all_terms_and_conditions:
         message_html: "판매자 %{terms_and_conditions_link} 이용약관과 플랫폼 %{tos_link}에 대하여 동의합니다."
         terms_and_conditions: "조건"
-      agree: '''주문 완료''를 클릭하면 주문이 처리되는 것에 동의하는 것입니다.'
       submit: 주문 완료
       cancel: 결제 방식으로 돌아가기
     errors:
-      global: "저장하지 못했습니다. 강조 표시된 필드를 업데이트하세요."
       terms_not_accepted: 약관에 동의하십시오.
       required: 필드는 비워 둘 수 없습니다.
       invalid_number: "올바른 전화 번호를 입력하십시오."
@@ -2530,6 +2530,7 @@ ko:
   report_customers_cycle: "주문 주기"
   report_customers_type: "유형 기록하기"
   report_customers_csv: "csv 형태로 다운로드"
+  report_customers: 고객
   report_producers: "생산자들"
   report_type: "유형 기록하기"
   report_hubs: "물류센터"
@@ -2595,8 +2596,10 @@ ko:
   report_header_taxable_items_total: "과세 품목 합계 (%{currency_symbol})"
   report_header_sales_tax: "판매세 (%{currency_symbol})"
   report_header_delivery_charge: "배달 요금 (%{currency_symbol})"
+  report_header_tax: "세금"
   report_header_tax_on_delivery: "배달 세금 (%{currency_symbol})"
   report_header_tax_on_fees: "수수료 세금 (%{currency_symbol})"
+  report_header_tax_category: "세금 목록"
   report_header_total_tax: "세금 총합 (%{currency_symbol})"
   report_header_total_excl_tax: "세금 제외 합계 (%{currency_symbol})"
   report_header_total_incl_tax: "세금 포함 합계 (%{currency_symbol})"
@@ -3362,9 +3365,6 @@ ko:
     default_seo_title: "기본 검색 엔진 최적화 제목"
     default_meta_description: "기본 메타 설명"
     default_meta_keywords: "기본 메타 키워드"
-    security_settings: "보안 설정"
-    allow_ssl_in_production: "프로덕션 모드에서 SSL 사용 허용"
-    allow_ssl_in_staging: "스테이징 모드에서 SSL 사용 허용"
     currency_decimal_mark: "통화 소수 표"
     currency_settings: "통화 설정"
     currency_symbol_position: '"통화 기호"를 달러 액수 앞이나 뒤에 붙이시겠습니까?'
@@ -3373,7 +3373,6 @@ ko:
     display_currency: "통화 표시"
     choose_currency: "통화 선택"
     mail_method_settings: "메일 방법 설정"
-    mail_settings_notice_html: "다음 설정 중 일부는 편집할 수 없으며 단지 디버깅을 위해 여기에 나열됩니다. 임시 암호를 업데이트하고 <a href='https://github.com/openfoodfoundation/ofn-install'>ofn 설치</a> 사용을 제공하여 변경할 수 있습니다. 자세한 내용은 OFN 국제 팀에 문의하세요."
     general: "일반"
     enable_mail_delivery: "메일 배달 사용"
     send_mails_as: "다른 이름으로 메일 보내기"
@@ -3578,6 +3577,10 @@ ko:
           authorized: "승인됨"
           received: "수신됨"
           canceled: "취소됨"
+      line_items:
+        index:
+          results_found: "%{number}개의 결과를 찾았습니다."
+          viewing: "%{start}에서 %{end}까지 보기"
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "취소된 주문에 항목을 추가할 수 없습니다."

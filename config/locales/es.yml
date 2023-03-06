@@ -5,6 +5,10 @@ es:
       spree/product: Producto
       spree/shipping_method: Método de envío
     attributes:
+      spree/order/ship_address:
+        phone: "Número de teléfono"
+        firstname: "Nombre"
+        lastname: "Apellido"
       spree/user:
         password: "Contraseña"
         password_confirmation: "confirmación de contraseña"
@@ -405,11 +409,25 @@ es:
         price: Precio
         producer: Productora
         category: Categoría
+        sku: SKU
+        on_hand: "Disponibles"
+        on_demand: "Bajo demanda"
+        tax_category: "Categoría de impuestos"
+        inherits_properties: "¿Hereda propiedades?"
+        available_on: "Disponible en"
+        import_date: "Fecha de importación"
       columns_selector:
         unit: Unidad
         price: Precio
         producer: Productora
         category: Categoría
+        sku: SKU
+        on_hand: "Disponibles"
+        on_demand: "Bajo demanda"
+        tax_category: "Categoría de impuestos"
+        inherits_properties: "¿Hereda propiedades?"
+        available_on: "Disponible en"
+        import_date: "Fecha de importación"
     adjustments:
       skipped_changing_canceled_order: "No puede cambiar un pedido cancelado."
     begins_at: Empieza en
@@ -497,7 +515,6 @@ es:
         title: "Configuración de Factura"
         enable_invoices?: "Habilitar facturas?"
         invoice_style2?: "Utiliza el modelo de factura alternativo que incluye el desglose fiscal total por tipo de interés y tasa de impuestos por artículo (todavía no es adecuado para países que muestran los precios sin impuestos)"
-        enable_receipt_printing?: "¿Mostrar opciones para imprimir recibos usando impresoras térmicas en el desplegable del pedido?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1528,10 +1545,6 @@ es:
   invoice_issued_on: "Factura emitida el:"
   order_number: "Número de Factura:"
   date_of_transaction: "Fecha de la transacción:"
-  ticket_column_qty: "Cantidad"
-  ticket_column_item: "Artículo"
-  ticket_column_unit_price: "Precio por unidad"
-  ticket_column_total_price: "Precio total"
   menu_1_title: "Tiendas"
   menu_1_url: "/shops"
   menu_2_title: "Mapa"
@@ -1638,12 +1651,6 @@ es:
   card_has_been_removed: "Su tarjeta ha sido eliminada (número: %{number})"
   card_could_not_be_removed: Lo sentimos, la tarjeta no se pudo quitar
   invalid_credit_card: "Tarjeta de crédito inválida"
-  ie_warning_headline: "Su navegador está desactualizado :-("
-  ie_warning_text: "Para la mejor esperiencia de Open Food Network, recomendamos actualizar su navegador:"
-  ie_warning_chrome: Descargar Chrome
-  ie_warning_firefox: Descargar Firefox
-  ie_warning_ie: Actualizar Internet Explorer
-  ie_warning_other: "¿No puede actualizar su navegador? Pruebe Open Food Network en su teléfono :-)"
   legal:
     cookies_policy:
       header: "Cómo utilizamos las cookies"
@@ -1785,20 +1792,15 @@ es:
       submit: Siguiente - Resumen del pedido
       cancel: Regresar a Su información
     step3:
-      your_details:
-        title: Sus detalles
-        edit: Editar su información
-      billing_address:
-        title: Dirección de cobro
-      shipping_address:
-        title: Dirección de envío
-      delivery_info:
-        title: Información de la entrega
+      delivery_details:
+        title: Detalles de entrega
+        edit: Editar
+        address: Dirección de entrega
       payment_method:
         title: Método de pago
-        edit: Editar método de pago
+        edit: Editar
       order:
-        title: Total del pedido
+        edit: Editar
       terms_and_conditions:
         message_html: "Acepto el %{terms_and_conditions_link} del vendedor."
         link_text: "Términos y Condiciones"
@@ -1807,11 +1809,9 @@ es:
       all_terms_and_conditions:
         message_html: "Acepto el %{terms_and_conditions_link} del vendedor y la plataforma %{tos_link}."
         terms_and_conditions: "Términos y Condiciones"
-      agree: Al hacer clic a 'Completar pedido' acepta que se procese su pedido.
       submit: Completar pedido
       cancel: Regresar a Método de pago
     errors:
-      global: "Error al guardar, actualice los campos resaltados."
       terms_not_accepted: Por favor acepte Términos y condiciones
       required: Espacio no puede estar en blanco
       invalid_number: "Por favor ingresar un número de teléfono válido"
@@ -2507,6 +2507,7 @@ es:
   report_customers_cycle: "Ciclo de Pedido"
   report_customers_type: "Tipo de Informe"
   report_customers_csv: "Descargar como CSV"
+  report_customers: Consumidora
   report_producers: "Productoras"
   report_type: "Tipo de Informe"
   report_hubs: "Hubs"
@@ -2568,8 +2569,11 @@ es:
   report_header_taxable_items_total: "Artículos con Impuestos en Total (%{currency_symbol})"
   report_header_sales_tax: "Impuesto sobre las Ventas (%{currency_symbol})"
   report_header_delivery_charge: "Gastos de Envío (%{currency_symbol})"
+  report_header_tax: "Impuesto"
   report_header_tax_on_delivery: "Impuestos sobre la entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Impuesto sobre las comisiones (%{currency_symbol})"
+  report_header_tax_category: "Categoría de impuestos"
+  report_header_tax_rate: "Porcentaje del Impuesto"
   report_header_total_tax: "Total Impuestos (%{currency_symbol})"
   report_header_total_excl_tax: "Total Impuestos excl. (%{currency_symbol})"
   report_header_total_incl_tax: "Total Impuestos incl. (%{currency_symbol})"
@@ -3397,9 +3401,6 @@ es:
     default_seo_title: "Título Seo predeterminado"
     default_meta_description: "Meta Descripción predeterminada"
     default_meta_keywords: "Palabras clave Meta predeterminadas"
-    security_settings: "Configuraciones de seguridad"
-    allow_ssl_in_production: "Permitir que SSL se utilice en modo de producción"
-    allow_ssl_in_staging: "Permitir que SSL se utilice en modo de staging"
     currency_decimal_mark: "Marca decimal de la moneda"
     currency_settings: "Ajustes de moneda"
     currency_symbol_position: ¿Poner "símbolo de moneda antes o después de la cantidad?"
@@ -3408,7 +3409,6 @@ es:
     display_currency: "Mostrar moneda"
     choose_currency: "Elegir moneda"
     mail_method_settings: "Configuración del método de correo"
-    mail_settings_notice_html: "Algunas de las siguientes configuraciones no se pueden editar y se enumeran aquí solo con fines de depuración. Se pueden realizar cambios actualizando los secretos de la instancia y aprovisionándolos con <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . Comuníquese con el equipo global de OFN para obtener más detalles."
     general: "General"
     enable_mail_delivery: "Habilitar entrega de correo"
     send_mails_as: "Enviar correos como"
@@ -3613,6 +3613,10 @@ es:
           authorized: "autorizado"
           received: "recibido"
           canceled: "cancelado"
+      line_items:
+        index:
+          results_found: "%{number} Resultados encontrados."
+          viewing: "Viendo de %{start}a %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "No se puede agregar el artículo al pedido cancelado"

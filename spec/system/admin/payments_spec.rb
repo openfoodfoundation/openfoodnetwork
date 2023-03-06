@@ -14,7 +14,7 @@ describe '
     it "displays the order balance as the default payment amount" do
       login_as_admin_and_visit spree.new_admin_order_payment_path order
 
-      expect(page).to have_content I18n.t(:new_payment)
+      expect(page).to have_content 'New Payment'
       expect(page).to have_field(:payment_amount, with: order.outstanding_balance.to_f)
     end
   end
@@ -32,11 +32,11 @@ describe '
     it "renders the new payment page" do
       login_as_admin_and_visit spree.new_admin_order_payment_path order
 
-      expect(page).to have_content I18n.t(:new_payment)
+      expect(page).to have_content 'New Payment'
     end
   end
 
-  context "creating an order's first payment via admin", js: true do
+  context "creating an order's first payment via admin" do
     before do
       order.update_columns(
         state: "payment",

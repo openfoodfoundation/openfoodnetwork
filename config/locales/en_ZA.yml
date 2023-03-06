@@ -5,6 +5,10 @@ en_ZA:
       spree/product: Product
       spree/shipping_method: Shipping Method
     attributes:
+      spree/order/ship_address:
+        phone: "Phone number"
+        firstname: "First name"
+        lastname: "Last name"
       spree/user:
         password: "Password"
         reset_password_token: Reset password
@@ -295,11 +299,25 @@ en_ZA:
         price: Price
         producer: Producer
         category: Category
+        sku: SKU
+        on_hand: "In Stock"
+        on_demand: "Unlimited"
+        tax_category: "Tax Category"
+        inherits_properties: "Inherits Properties?"
+        available_on: "Available On"
+        import_date: "Import Date"
       columns_selector:
         unit: Unit
         price: Price
         producer: Producer
         category: Category
+        sku: SKU
+        on_hand: "In Stock"
+        on_demand: "Unlimited"
+        tax_category: "Tax Category"
+        inherits_properties: "Inherits Properties?"
+        available_on: "Available On"
+        import_date: "Import Date"
     begins_at: Begins At
     begins_on: Begins On
     customer: Customer
@@ -371,7 +389,6 @@ en_ZA:
         title: "Invoice Settings"
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
-        enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1336,10 +1353,6 @@ en_ZA:
   invoice_issued_on: "Invoice issued on:"
   order_number: "Invoice number:"
   date_of_transaction: "Date of transaction:"
-  ticket_column_qty: "Qty"
-  ticket_column_item: "Item"
-  ticket_column_unit_price: "Unit Price"
-  ticket_column_total_price: "Total Price"
   menu_1_title: "Shops"
   menu_1_url: "/shops"
   menu_2_title: "Map"
@@ -1440,12 +1453,6 @@ en_ZA:
   card_has_been_removed: "Your card has been removed (number: %{number})"
   card_could_not_be_removed: Sorry, the card could not be removed
   invalid_credit_card: "Invalid credit card"
-  ie_warning_headline: "Your browser is out of date :-("
-  ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
-  ie_warning_chrome: Download Chrome
-  ie_warning_firefox: Download Firefox
-  ie_warning_ie: Upgrade Internet Explorer
-  ie_warning_other: "Can't upgrade your browser? Try Open Food Network on your smartphone :-)"
   legal:
     cookies_policy:
       header: "How We Use Cookies"
@@ -1558,10 +1565,14 @@ en_ZA:
       shipping_info:
         title: Shipping info
     step3:
-      your_details:
-        title: Your details
-      billing_address:
-        title: Billing address
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+      payment_method:
+        edit: Edit
+      order:
+        edit: Edit
     errors:
       invalid_email: "Please enter a valid email address"
   order_paid: PAID
@@ -2231,6 +2242,7 @@ en_ZA:
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"
   report_customers_csv: "Download as csv"
+  report_customers: Customer
   report_producers: "Pricing"
   report_type: "Report Type"
   report_hubs: "Hubs"
@@ -2294,6 +2306,7 @@ en_ZA:
   report_header_delivery_charge: "Delivery Charge (%{currency_symbol})"
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
+  report_header_tax_category: "Tax Category"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
   report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
   report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
@@ -2927,9 +2940,6 @@ en_ZA:
     default_seo_title: "Default SEO Title"
     default_meta_description: "Default Meta Description"
     default_meta_keywords: "Default Meta Keywords"
-    security_settings: "Security Settings"
-    allow_ssl_in_production: "Allow SSL to be used in production mode"
-    allow_ssl_in_staging: "Allow SSL to be used in staging mode"
     currency_decimal_mark: "Currency decimal mark"
     currency_settings: "Currency Settings"
     currency_symbol_position: Put "currency symbol before or after Rand amount?"
@@ -3082,6 +3092,10 @@ en_ZA:
         form:
           product: "Product"
           amount: "Amount"
+      line_items:
+        index:
+          results_found: "%{number} Results found."
+          viewing: "Viewing %{start} to %{end}."
       orders:
         index:
           listing_orders: "Listing Orders"

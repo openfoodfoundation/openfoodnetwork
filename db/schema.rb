@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_17_043628) do
+ActiveRecord::Schema.define(version: 2023_02_13_160135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -1132,14 +1132,6 @@ ActiveRecord::Schema.define(version: 2023_01_17_043628) do
     t.index ["shop_id"], name: "index_subscriptions_on_shop_id"
   end
 
-  create_table "suburbs", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
-    t.string "postcode", limit: 255
-    t.float "latitude"
-    t.float "longitude"
-    t.integer "state_id"
-  end
-
   create_table "tag_rules", id: :serial, force: :cascade do |t|
     t.integer "enterprise_id", null: false
     t.string "type", limit: 255, null: false
@@ -1299,7 +1291,6 @@ ActiveRecord::Schema.define(version: 2023_01_17_043628) do
   add_foreign_key "subscriptions", "spree_addresses", column: "ship_address_id", name: "subscriptions_ship_address_id_fk"
   add_foreign_key "subscriptions", "spree_payment_methods", column: "payment_method_id", name: "subscriptions_payment_method_id_fk"
   add_foreign_key "subscriptions", "spree_shipping_methods", column: "shipping_method_id", name: "subscriptions_shipping_method_id_fk"
-  add_foreign_key "suburbs", "spree_states", column: "state_id", name: "suburbs_state_id_fk"
   add_foreign_key "variant_overrides", "enterprises", column: "hub_id", name: "variant_overrides_hub_id_fk"
   add_foreign_key "variant_overrides", "spree_variants", column: "variant_id", name: "variant_overrides_variant_id_fk"
 end

@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Groups', js: true do
+describe 'Groups' do
   include AuthenticationHelper
   include UIComponentHelper
 

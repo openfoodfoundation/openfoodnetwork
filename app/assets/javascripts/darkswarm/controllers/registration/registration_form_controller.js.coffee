@@ -7,8 +7,12 @@ angular.module('Darkswarm').controller "RegistrationFormCtrl", ($scope, Registra
     form.$valid
 
   $scope.create = (form) ->
-    $scope.disableButton()
-    EnterpriseRegistrationService.create($scope.enableButton) if $scope.valid(form)
+    if ($scope.valid(form)) 
+      $scope.disableButton()
+      EnterpriseRegistrationService.create().then(() ->
+        $scope.enableButton()
+      )
+    end
 
   $scope.update = (nextStep, form) ->
     EnterpriseRegistrationService.update(nextStep) if $scope.valid(form)

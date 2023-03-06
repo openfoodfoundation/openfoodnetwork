@@ -5,6 +5,10 @@ tr:
       spree/product: Ürün
       spree/shipping_method: TESLİMAT YÖNTEMİ
     attributes:
+      spree/order/ship_address:
+        phone: "Tel. no"
+        firstname: "Ad"
+        lastname: "Soyadı"
       spree/user:
         password: "Parola"
         password_confirmation: "Parola onayı"
@@ -349,11 +353,25 @@ tr:
         price: Fiyat
         producer: ÜRETİCİ
         category: Kategori
+        sku: Stok Kodu
+        on_hand: "Mevcut"
+        on_demand: "Talep Üzerine"
+        tax_category: "Vergi Kategorisi"
+        inherits_properties: "Özellikler devralınsın mı?"
+        available_on: "Şu Tarihte Hazır"
+        import_date: "İçe Aktarım Tarihi"
       columns_selector:
         unit: Birim
         price: Fiyat
         producer: ÜRETİCİ
         category: Kategori
+        sku: Stok Kodu
+        on_hand: "Mevcut"
+        on_demand: "Talep Üzerine"
+        tax_category: "Vergi Kategorisi"
+        inherits_properties: "Özellikler devralınsın mı?"
+        available_on: "Şu Tarihte Hazır"
+        import_date: "İçe Aktarım Tarihi"
     adjustments:
       skipped_changing_canceled_order: "İptal edilmiş bir siparişi değiştiremezsiniz."
     begins_at: Başlangıç
@@ -441,7 +459,6 @@ tr:
         title: "Fatura Ayarları"
         enable_invoices?: "Faturalar etkinleştirilsin mi?"
         invoice_style2?: "Oran başına toplam vergi dökümü ve kalem başına vergi oranı bilgilerini içeren alternatif fatura modelini kullanın "
-        enable_receipt_printing?: "Sipariş listesinde termal yazıcılar kullanarak makbuz yazdırma seçeneklerini göster?"
     stripe_connect_settings:
       edit:
         title: "Ödeme Bağlantısı"
@@ -1450,10 +1467,6 @@ tr:
   invoice_issued_on: "Fatura Düznleme Tarihi"
   order_number: "Fatura numarası:"
   date_of_transaction: "İşlem tarihi:"
-  ticket_column_qty: "Miktar"
-  ticket_column_item: "Ürün"
-  ticket_column_unit_price: "Birim fiyat"
-  ticket_column_total_price: "Toplam tutar"
   menu_1_title: "PAZAR YERİ"
   menu_1_url: "/shops"
   menu_2_title: "HARİTA"
@@ -1560,12 +1573,6 @@ tr:
   card_has_been_removed: "Kartınız kaldırıldı (sayı: %{number})"
   card_could_not_be_removed: Maalesef kart kaldırılamadı
   invalid_credit_card: "Geçersiz kredi kartı"
-  ie_warning_headline: "Tarayıcınız güncel değil :-("
-  ie_warning_text: "En iyi Açık Gıda Ağı deneyimi için tarayıcınızı güncellemenizi önemle öneririz:"
-  ie_warning_chrome: Chrome'u indirin
-  ie_warning_firefox: Firefox'u indirin
-  ie_warning_ie: Internet Explorer'ı yükseltin
-  ie_warning_other: "Tarayıcınızı yükseltemiyor musunuz? Akıllı telefonunuzdan Açık Gıda Ağı'nı deneyin :-)"
   legal:
     cookies_policy:
       header: "Çerezleri Nasıl Kullanıyoruz"
@@ -1698,18 +1705,15 @@ tr:
       submit: Sonraki - Sipariş özeti
       cancel: Bilgilerinize geri dönün
     step3:
-      your_details:
-        title: Bilgilerin
-        edit: Bilgilerinizi düzenleyin
-      billing_address:
-        title: Fatura adresi
-      delivery_info:
-        title: Teslimat bilgileri
+      delivery_details:
+        title: Teslimat Detayları
+        edit: Düzenle
+        address: Teslimat adresi
       payment_method:
         title: Ödeme yöntemi
-        edit: Ödeme yöntemini düzenle
+        edit: Düzenle
       order:
-        title: Sipariş toplamı
+        edit: Düzenle
       terms_and_conditions:
         message_html: "Bu satıcının %{terms_and_conditions_link}'ını onaylıyorum."
         link_text: "Şartlar ve Koşullar"
@@ -2411,6 +2415,7 @@ tr:
   report_customers_cycle: "Sipariş Dönemi"
   report_customers_type: "Rapor türü"
   report_customers_csv: "Csv olarak indir"
+  report_customers: Müşteri
   report_producers: "ÜRETİCİLER"
   report_type: "Rapor türü"
   report_hubs: "Pazarlar"
@@ -2472,8 +2477,10 @@ tr:
   report_header_taxable_items_total: "Vergiye tabi kalemler toplamı (%{currency_symbol})"
   report_header_sales_tax: "Satış Vergisi (%{currency_symbol})"
   report_header_delivery_charge: "Teslimat Ücreti (%{currency_symbol})"
+  report_header_tax: "Vergi"
   report_header_tax_on_delivery: "Teslimat Vergisi (%{currency_symbol})"
   report_header_tax_on_fees: "Ücretler Vergisi (%{currency_symbol})"
+  report_header_tax_category: "Vergi Kategorisi"
   report_header_total_tax: "Toplam Vergi (%{currency_symbol})"
   report_header_total_excl_tax: "Vergi Hariç Toplam (%{currency_symbol})"
   report_header_total_incl_tax: "Vergi Dahil Toplam (%{currency_symbol})"
@@ -3271,9 +3278,6 @@ tr:
     default_seo_title: "Varsayılan Seo Başlığı"
     default_meta_description: "Varsayılan Meta Açıklaması"
     default_meta_keywords: "Varsayılan Meta Anahtar Kelimeleri"
-    security_settings: "Güvenlik ayarları"
-    allow_ssl_in_production: "SSL'nin üretim modunda kullanılmasına izin ver"
-    allow_ssl_in_staging: "SSL'nin hazırlama modunda kullanılmasına izin ver"
     currency_decimal_mark: "Para birimi ondalık işareti"
     currency_settings: "Para Birimi Ayarları"
     currency_symbol_position: Para birimi simgesi tutarından önce mi, sonra mı olsun?
@@ -3282,7 +3286,6 @@ tr:
     display_currency: "Para birimini göster"
     choose_currency: "Para Birimini Seç"
     mail_method_settings: "E-posta Ayarları"
-    mail_settings_notice_html: "Aşağıdaki ayarlardan bazıları düzenlenemez ve burada yalnızca hata ayıklama amacıyla listelenmiştir. <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> kullanılarak, gizli dizileri güncelleyerek değişiklikler yapılabilir. Daha fazla ayrıntı için OFN küresel ekibine ulaşın."
     general: "Genel"
     enable_mail_delivery: "Posta Dağıtımını Etkinleştir"
     send_mails_as: "Postaları Farklı Gönder"
@@ -3487,6 +3490,10 @@ tr:
           authorized: "Yetkili"
           received: "Alındı"
           canceled: "İptal edildi"
+      line_items:
+        index:
+          results_found: "%{number} Sonuç bulundu."
+          viewing: "%{start} - %{end} görüntüleniyor."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "İptal edilmiş bir siparişe ürün eklenemez"

@@ -309,7 +309,7 @@ describe '
       expect(page).to have_content "Customer Details updated"
       click_link "Order Details"
 
-      expect(page).to have_content I18n.t('spree.add_product').upcase
+      expect(page).to have_content 'Add Product'.upcase
       select2_select product.name, from: 'add_variant_id', search: true
 
       within("table.stock-levels") do
@@ -420,7 +420,7 @@ describe '
 
     describe "viewing the edit page" do
       let!(:shipping_method_for_distributor1) do
-        create(:shipping_method, name: "Normal", distributors: [distributor1])
+        create(:shipping_method_with, :flat_rate, name: "Normal", amount: 12, distributors: [distributor1])
       end
       let!(:order) do
         create(:order_with_taxes, distributor: distributor1, ship_address: create(:address),
@@ -463,7 +463,7 @@ describe '
         expect(page).to have_selector "fieldset#order-total", text: order.display_total
 
         # shows the order tax adjustments
-        within('fieldset', text: I18n.t('spree.admin.orders.form.line_item_adjustments').upcase) do
+        within('fieldset', text: 'Line Item Adjustments'.upcase) do
           expect(page).to have_selector "td", match: :first, text: "Tax 1"
           expect(page).to have_selector "td.total", text: Spree::Money.new(10)
         end
@@ -548,7 +548,7 @@ describe '
 
       context "with different shipping methods" do
         let!(:different_shipping_method_for_distributor1) do
-          create(:shipping_method, name: "Different", distributors: [distributor1])
+          create(:shipping_method_with, :flat_rate, name: "Different", amount: 15, distributors: [distributor1])
         end
         let!(:shipping_method_for_distributor2) do
           create(:shipping_method, name: "Other", distributors: [distributor2])
@@ -570,6 +570,81 @@ describe '
           find('.save-method').click
 
           expect(page).to have_content "Shipping: #{different_shipping_method_for_distributor1.name}"
+
+          within "#order-total" do 
+            expect(page).to have_content "$175.00"
+          end
+        end
+
+        context "when the distributor unsupport a shipping method that's selected in an existing order " do
+          before do
+            distributor1.shipping_methods = [shipping_method_for_distributor1, different_shipping_method_for_distributor1]
+            order.shipments.each(&:refresh_rates)
+            order.shipment.adjustments.first.open
+            order.select_shipping_method(different_shipping_method_for_distributor1)
+            order.shipment.adjustments.first.close
+            distributor1.shipping_methods = [shipping_method_for_distributor1]
+          end
+          context "shipment is shipped" do
+            before do
+              order.shipments.first.update_attribute(:state, 'shipped')
+            end
+
+            it "should not change the shipping method" do
+              visit spree.edit_admin_order_path(order)
+              expect(page).to have_content "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
+
+              within "#order-total" do 
+                expect(page).to have_content "$160.00"
+              end
+            end
+
+            context "when shipping rate is updated" do
+              before do
+                different_shipping_method_for_distributor1.shipping_rates.first.update!(cost: 16)              
+              end
+
+              it "should not update the shipping cost" do
+                visit spree.edit_admin_order_path(order)
+                expect(page).to have_content "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
+
+                within "#order-total" do 
+                  expect(page).to have_content "$160.00"
+                end  
+              end
+            end
+          end
+          context "shipment is pending" do
+            before do
+              order.shipments.first.ensure_correct_adjustment
+              expect(order.shipments.first.state).to eq('pending')
+            end
+
+            it "should not replace the selected shipment method" do
+              visit spree.edit_admin_order_path(order)
+              expect(page).to have_content "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
+
+              within "#order-total" do 
+                expect(page).to have_content "$160.00"
+              end
+            end
+
+            context "when shipping rate is updated" do
+              before do
+                different_shipping_method_for_distributor1.shipping_rates.first.update!(cost: 16)             
+              end
+
+              it "should not update the shipping cost" do
+                # Since the order is completed, the price is not supposed to be updated 
+                visit spree.edit_admin_order_path(order)
+                expect(page).to have_content "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
+
+                within "#order-total" do 
+                  expect(page).to have_content "$160.00"
+                end  
+              end
+            end
+          end
         end
       end
 

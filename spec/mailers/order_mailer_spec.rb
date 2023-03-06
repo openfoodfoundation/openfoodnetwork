@@ -11,7 +11,7 @@ describe Spree::OrderMailer do
     let(:order) { build(:order_with_totals_and_distribution) }
 
     it 'renders the shared/_payment.html.haml partial' do
-      expect(email.body).to include(I18n.t(:email_payment_summary))
+      expect(email.body).to include('Payment summary')
     end
 
     context 'when the order has outstanding balance' do
@@ -26,7 +26,7 @@ describe Spree::OrderMailer do
       before { allow(order).to receive(:new_outstanding_balance) { 0 } }
 
       it 'displays the payment status' do
-        expect(email.body).to include(I18n.t(:email_payment_not_paid))
+        expect(email.body).to include('NOT PAID')
       end
     end
 
@@ -54,7 +54,7 @@ describe Spree::OrderMailer do
     let(:order) { build(:order_with_totals_and_distribution) }
 
     it 'renders the shared/_payment.html.haml partial' do
-      expect(email.body).to include(I18n.t(:email_payment_summary))
+      expect(email.body).to include('Payment summary')
     end
 
     context 'when the order has outstanding balance' do
@@ -67,7 +67,7 @@ describe Spree::OrderMailer do
 
     context 'when the order has no outstanding balance' do
       it 'displays the payment status' do
-        expect(email.body).to include(I18n.t(:email_payment_not_paid))
+        expect(email.body).to include('NOT PAID')
       end
     end
   end

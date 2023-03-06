@@ -1,7 +1,23 @@
 #!/bin/bash
 set -e
 
-# This script runs the entire test suite AND logs the screen output.
-
+# This test script :
+# - prepares the database for rspec tests
+# - launches the rspec tests
 DATE=`date +%Y%m%d-%H%M%S-%3N`
-docker/test-log 2>&1 | tee log/test-$DATE.log
+
+echo '--------------------------------------------------------------'
+echo 'BEGIN: docker-compose run web bundle exec rake db:test:prepare'
+echo '--------------------------------------------------------------'
+docker-compose run web bundle exec rake db:test:prepare 2>&1 | tee log/test-prepare-$DATE.log
+echo '------------------------------------------------------------'
+echo 'END: docker-compose run web bundle exec rake db:test:prepare'
+echo '------------------------------------------------------------'
+
+echo '----------------------------------------------------'
+echo 'BEGIN: docker-compose run web bundle exec rspec spec'
+echo '----------------------------------------------------'
+docker-compose run web bundle exec rspec --no-color spec 2>&1 | tee log/test-rspec-$DATE.log
+echo '--------------------------------------------------'
+echo 'END: docker-compose run web bundle exec rspec spec'
+echo '--------------------------------------------------'

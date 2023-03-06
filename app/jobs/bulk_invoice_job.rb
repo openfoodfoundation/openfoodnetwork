@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BulkInvoiceJob < ActiveJob::Base
+class BulkInvoiceJob < ApplicationJob
   def perform(order_ids, filepath)
     pdf = CombinePDF.new
 

@@ -33,9 +33,9 @@ describe 'shipping methods' do
       check "shipping_method_distributor_ids_#{distributor1.id}"
       check "shipping_method_distributor_ids_#{distributor2.id}"
       check "shipping_method_shipping_categories_"
-      click_button I18n.t("actions.create")
+      click_button 'Create'
 
-      expect(page).to have_no_button I18n.t("actions.create")
+      expect(page).to have_no_button 'Create'
 
       # Then the shipping method should have its distributor set
       expect(flash_message).to include "Carrier Pidgeon", "successfully created!"
@@ -83,9 +83,18 @@ describe 'shipping methods' do
 
       expect(@shipping_method.reload.calculator_type).to eq("Calculator::PerItem")
     end
+
+    it "handle when updating calculator type to 'None'" do
+      visit spree.edit_admin_shipping_method_path(@shipping_method)
+
+      select2_select 'None', from: 'calc_type'
+      click_button 'Update'
+      
+      expect(@shipping_method.reload.calculator_type).to eq "Calculator::None"
+    end
   end
 
-  context "as an enterprise user", js: true do
+  context "as an enterprise user" do
     let(:enterprise_user) { create(:user) }
     let(:distributor1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:distributor2) { create(:distributor_enterprise, name: 'Second Distributor') }

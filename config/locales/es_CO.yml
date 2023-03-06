@@ -5,6 +5,10 @@ es_CO:
       spree/product: Producto
       spree/shipping_method: Método de envío
     attributes:
+      spree/order/ship_address:
+        phone: "Número de teléfono"
+        firstname: "Nombre"
+        lastname: "Apellidos"
       spree/user:
         password: "Contraseña"
         password_confirmation: "confirmación de contraseña"
@@ -319,11 +323,25 @@ es_CO:
         price: Precio
         producer: Productor
         category: Categoría
+        sku: SKU
+        on_hand: "Disponibles"
+        on_demand: "Bajo demanda"
+        tax_category: "Categoría de impuestos"
+        inherits_properties: "¿Hereda propiedades?"
+        available_on: "Disponible en"
+        import_date: "Fecha de importación"
       columns_selector:
         unit: Unidad
         price: Precio
         producer: Productor
         category: Categoría
+        sku: SKU
+        on_hand: "Disponibles"
+        on_demand: "Bajo demanda"
+        tax_category: "Categoría de impuestos"
+        inherits_properties: "¿Hereda propiedades?"
+        available_on: "Disponible en"
+        import_date: "Fecha de importación"
     begins_at: Empieza en
     begins_on: Comienza en
     customer: Cliente
@@ -395,7 +413,6 @@ es_CO:
         title: "Configuración de factura"
         enable_invoices?: "Habilitar facturas?"
         invoice_style2?: "Utiliza el modelo de factura alternativo que incluye el desglose fiscal total por tipo de interés y tasa de impuestos por artículo (todavía no es adecuado para países que muestran los precios sin impuestos)"
-        enable_receipt_printing?: "¿Mostrar opciones para imprimir recibos usando impresoras térmicas en el desplegable del pedido?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1379,10 +1396,6 @@ es_CO:
   invoice_issued_on: "Factura emitida el:"
   order_number: "Número de factura:"
   date_of_transaction: "Fecha de la transacción:"
-  ticket_column_qty: "Cantidad"
-  ticket_column_item: "Artículo"
-  ticket_column_unit_price: "Precio por unidad"
-  ticket_column_total_price: "Precio total"
   menu_1_title: "Tiendas"
   menu_1_url: "/shops"
   menu_2_title: "Mapa"
@@ -1483,12 +1496,6 @@ es_CO:
   card_has_been_removed: "Su tarjeta ha sido eliminada (número: %{number})"
   card_could_not_be_removed: Lo sentimos, la tarjeta no se pudo eliminar
   invalid_credit_card: "Tarjeta de crédito inválida"
-  ie_warning_headline: "Su navegador está desactualizado :-("
-  ie_warning_text: "Para una mejor experiencia utilizando La Feria, le recomendamos actualizar su navegador:"
-  ie_warning_chrome: Descargar Chrome
-  ie_warning_firefox: Descargar Firefox
-  ie_warning_ie: Actualizar Internet Explorer
-  ie_warning_other: "¿No puedes actualizar tu navegador? Pruebe Open Food Network en su teléfono inteligente :-)"
   legal:
     cookies_policy:
       header: "Cómo utilizamos las cookies"
@@ -1607,10 +1614,14 @@ es_CO:
         card_year:
           label: Año
     step3:
-      your_details:
-        title: Sus detalles
-      billing_address:
-        title: Dirección de cobro
+      delivery_details:
+        title: Detalles de entrega
+        edit: Editar
+        address: Dirección de entrega
+      payment_method:
+        edit: Editar
+      order:
+        edit: Editar
     errors:
       invalid_email: "Introduce un correo electrónico válido"
   order_paid: PAGADO
@@ -2284,6 +2295,7 @@ es_CO:
   report_customers_cycle: "Ciclo de Pedido"
   report_customers_type: "Tipo de Reporte"
   report_customers_csv: "Descargar como CSV"
+  report_customers: Cliente
   report_producers: "Productoras"
   report_type: "Tipo de Reporte"
   report_hubs: "Nodos"
@@ -2347,6 +2359,7 @@ es_CO:
   report_header_delivery_charge: "Cobros de Envío (%{currency_symbol})"
   report_header_tax_on_delivery: "Impuestos sobre la entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Impuesto sobre las comisiones (%{currency_symbol})"
+  report_header_tax_category: "Categoría de impuestos"
   report_header_total_tax: "Total Impuestos (%{currency_symbol})"
   report_header_total_excl_tax: "Total Impuestos excl. (%{currency_symbol})"
   report_header_total_incl_tax: "Total Impuestos incl. (%{currency_symbol})"
@@ -3096,9 +3109,6 @@ es_CO:
     default_seo_title: "Título Seo predeterminado"
     default_meta_description: "Meta Descripción predeterminada"
     default_meta_keywords: "Palabras clave Meta predeterminadas"
-    security_settings: "Configuraciones de seguridad"
-    allow_ssl_in_production: "Permitir el uso de SSL modo de producción"
-    allow_ssl_in_staging: "Permitir que SSL se utilice en modo de staging"
     currency_decimal_mark: "Marca decimal de la moneda"
     currency_settings: "Ajustes de moneda"
     currency_symbol_position: ¿Poner "símbolo" de moneda antes o después de la cantidad?
@@ -3291,6 +3301,10 @@ es_CO:
           authorized: "Autorizado"
           received: "Recibido"
           canceled: "Cancelado"
+      line_items:
+        index:
+          results_found: "%{number} Resultados encontrados."
+          viewing: "Viendo de %{start}a %{end}."
       orders:
         index:
           listing_orders: "Listado de pedidos"

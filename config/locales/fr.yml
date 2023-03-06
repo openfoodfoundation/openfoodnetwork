@@ -5,6 +5,23 @@ fr:
       spree/product: Produit
       spree/shipping_method: Option d'expédition
     attributes:
+      spree/order/ship_address:
+        address1: "Adresse de livraison (Numéro et Rue)"
+        address2: "Adresse (Numéro et rue)"
+        city: "Adresse de livraison - Ville"
+        country: "Pays"
+        phone: "Numéro de téléphone"
+        firstname: "Prénom"
+        lastname: "Nom "
+        zipcode: "Code postal"
+      spree/order/bill_address:
+        address1: "Adresse de facturation (Numéro et rue)"
+        zipcode: "Adresse de facturation - Code postal"
+        city: "Adresse de facturation - Ville"
+        country: "Adresse de facturation - Pays"
+        firstname: "Adresse de facturation - Prénom"
+        lastname: "Adresse de facturation - Nom"
+        phone: Téléphone
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
@@ -416,11 +433,25 @@ fr:
         price: Prix
         producer: Producteur
         category: Catégorie
+        sku: Référence Produit
+        on_hand: "En stock"
+        on_demand: "A volonté"
+        tax_category: "TVA applicable"
+        inherits_properties: "Hériter des propriétés?"
+        available_on: "Disponible via"
+        import_date: "Date d'import (si import)"
       columns_selector:
         unit: Unité
         price: Prix
         producer: Producteur
         category: Catégorie
+        sku: Référence Produit
+        on_hand: "En stock"
+        on_demand: "A volonté"
+        tax_category: "TVA applicable"
+        inherits_properties: "Hériter des propriétés?"
+        available_on: "Disponible via"
+        import_date: "Date d'import (si import)"
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -510,7 +541,6 @@ fr:
         title: "Paramètres de facturation"
         enable_invoices?: "Autoriser l'émission de factures ?"
         invoice_style2?: "Utiliser le modèle de facture alternatif qui détaille le montant de TVA agrégé par taux et l'information du taux de TVA par produit (pas adapté pour les instances affichant les prix HT)"
-        enable_receipt_printing?: "Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?"
         enterprise_number_required_on_invoices?: "Le SIRET est obligatoire pour générer une facture ?"
     stripe_connect_settings:
       edit:
@@ -1294,6 +1324,7 @@ fr:
       total_by_customer: Total par acheteur
       total_by_supplier: Total par producteur
       supplier_totals: Totaux Cycle de Vente par Producteur
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Totaux Cycle de Vente par Producteur pour chaque boutique
       totals_by_supplier: Totaux Cycle de Vente par boutique pour chaque Producteur
       customer_totals: Totaux Cycle de Vente par Acheteur
@@ -1304,6 +1335,8 @@ fr:
       addresses: Adresses
       payment_methods: Rapport Méthodes de Paiement
       delivery: Rapport de Livraison
+      sales_tax_totals_by_producer: Détail des montants de taxes par producteur
+      sales_tax_totals_by_order: Détail des montants de taxes par commande
       tax_types: Par type de taxe
       tax_rates: Par taux de taxe
       pack_by_customer: Préparation des commandes par Acheteur
@@ -1483,6 +1516,10 @@ fr:
         stripe_connect_fail: Désolé, la connexion de votre compte Stripe a échoué :-(
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
+    resend_confirmation_emails_feedback:
+      one: "Emails envoyés pour 1 commande."
+      many: "Emails envoyés pour %{count} commandes."
+      other: "Emails envoyés pour %{count} commandes."
   api:
     unknown_error: "Quelque chose n'a pas fonctionné. Notre équipe a été notifiée."
     invalid_api_key: "La clé API (%{key}) n'est pas valide."
@@ -1595,10 +1632,6 @@ fr:
   invoice_issued_on: "Date de facture :"
   order_number: "N° de facture :"
   date_of_transaction: "Date de la transaction :"
-  ticket_column_qty: "Qté"
-  ticket_column_item: "Produit"
-  ticket_column_unit_price: "Prix unitaire"
-  ticket_column_total_price: "Prix total"
   menu_1_title: "Acheter"
   menu_1_url: "/shops"
   menu_2_title: "Carte"
@@ -1652,7 +1685,7 @@ fr:
   state: Département
   country: Pays
   unauthorized: Non autorisé
-  terms_of_service: "Conditions Générales d'Utilisation de CoopCircuits"
+  terms_of_service: "Conditions Générales d'Utilisation et de vente de CoopCircuits"
   on_demand: A volonté
   none: Aucun
   not_allowed: Non autorisé
@@ -1705,12 +1738,6 @@ fr:
   card_has_been_removed: "Votre carte a été supprimée (numéro : %{number})"
   card_could_not_be_removed: Désolée, la carte n'a pas pu être supprimée :-(
   invalid_credit_card: "Cette carte de crédit n'est pas valide"
-  ie_warning_headline: "Votre navigateur n'est pas à jour :-("
-  ie_warning_text: "Pour une expérience optimale sur CoopCircuits, nous vous recommandons fortement de mettre à jour votre navigateur:"
-  ie_warning_chrome: Télécharger Chrome
-  ie_warning_firefox: Télécharger Firefox
-  ie_warning_ie: Mettre à jour Internet Explorer
-  ie_warning_other: "Impossible de mettre à jour votre navigateur? Essayez CoopCircuits sur votre smartphone :-)"
   legal:
     cookies_policy:
       header: "Notre usage des Cookies"
@@ -1853,20 +1880,18 @@ fr:
       submit: Etape suivante - Récapitulatif de commande
       cancel: Retour à vos coordonnées
     step3:
-      your_details:
-        title: Vos informations
-        edit: Modifier vos coordonnées
-      billing_address:
-        title: Adresse de facturation
-      shipping_address:
-        title: Adresse de livraison
-      delivery_info:
-        title: Information concernant la livraison
+      delivery_details:
+        title: Détails de livraison
+        edit: Modifier
+        address: Adresse de livraison
+        instructions: Instructions
       payment_method:
         title: Moyen de paiement
-        edit: Modifier la méthode de paiement
+        edit: Modifier
+        instructions: Instructions
       order:
         title: Total commande
+        edit: Modifier
       terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link}."
         link_text: "CGU & CGV"
@@ -1875,11 +1900,10 @@ fr:
       all_terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de CoopCircuits."
         terms_and_conditions: "CGU & CGV"
-      agree: En cliquant sur "Valider ma commande" vous acceptez que votre commande soit traitée.
       submit: Valider ma commande
       cancel: Retour à la méthode de paiement
     errors:
-      global: "La sauvegarde a échoué, merci de mettre à jour les champs mis en évidence."
+      saving_failed: "La sauvegarde n'a pas fonctionné, veuillez mettre à jour les champs en rouge. %{messages}"
       terms_not_accepted: Merci d'accepter les CGU & CGV.
       required: Ce champ ne peut pas être vide
       invalid_number: "Merci de renseigner un numéro de téléphone valide"
@@ -1984,10 +2008,10 @@ fr:
     mistakenly_sent: "Vous ne savez pas pourquoi vous recevez cet email ? Veuillez contacter %{owner_email} pour plus d'informations."
   producer_mail_greeting: "Cher(ère)"
   producer_mail_text_before: "Vous trouverez ci-dessous les informations pour le cycle de vente prévu pour :"
-  producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
+  producer_mail_order_text: "Les produits et quantités à livrer :"
   producer_mail_delivery_instructions: "Modalités de livraison des produits:"
   producer_mail_signoff: "Merci et belle fin de journée!"
-  producer_mail_order_customer_text: "Voici un résumé des commandes rangées par acheteurs"
+  producer_mail_order_customer_text: "Détail par client·e :"
   shopping_oc_closed: Les commandes sont terminées
   shopping_oc_closed_description: "Veuillez attendre l'ouverture du prochain cycle de vente (ou contactez-nous directement pour voir si nous pouvons accepter une commande tardive)"
   shopping_oc_last_closed: "Le dernier cycle de vente s'est terminé il y a %{distance_of_time}"
@@ -2559,7 +2583,7 @@ fr:
   new_order: "Nouvelle commande"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
   enterprise_tos_message: "Nous soutenons la mise en place d'un système de distribution résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux organisations s'enregistrant sur CoopCircuits de valider nos "
-  enterprise_tos_agree: "Je valide les Conditions Générales d'Utilisation de CoopCircuits."
+  enterprise_tos_agree: "Je valide les Conditions Générales d'Utilisation et de vente de CoopCircuits."
   tax_settings: "Paramètres TVA"
   products_require_tax_category: "vous devez choisir la TVA applicable"
   admin_shared_address_1: "Adresse"
@@ -2580,6 +2604,7 @@ fr:
   report_customers_cycle: "Cycle de vente"
   report_customers_type: "Type de rapport"
   report_customers_csv: "Télécharger en csv"
+  report_customers: Acheteur
   report_producers: "Producteurs"
   report_type: "Type de rapport"
   report_hubs: "Boutiques"
@@ -2631,7 +2656,7 @@ fr:
   report_header_code: Code
   report_header_paid: Payé ?
   report_header_delivery: Livré ?
-  report_header_shipping: Livraison
+  report_header_shipping: Méthode de livraison
   report_header_shipping_method: Méthode de Livraison
   report_header_shipping_instructions: Instructions de Livraison
   report_header_ship_street: Rue Livraison
@@ -2657,8 +2682,12 @@ fr:
   report_header_taxable_items_total: "Montant produits soumis à TVA (%{currency_symbol})"
   report_header_sales_tax: "TVA sur produits (%{currency_symbol})"
   report_header_delivery_charge: "Frais de livraison (%{currency_symbol})"
+  report_header_tax: "Taxe"
   report_header_tax_on_delivery: "TVA sur livraison (%{currency_symbol})"
   report_header_tax_on_fees: "TVA sur commission boutique (%{currency_symbol})"
+  report_header_tax_category: "TVA applicable"
+  report_header_tax_rate_name: "Taxe"
+  report_header_tax_rate: "TVA applicable"
   report_header_total_tax: "Total TVA (%{currency_symbol})"
   report_header_total_excl_tax: "Total HT (%{currency_symbol})"
   report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
@@ -2681,6 +2710,7 @@ fr:
   report_header_supplier: Fournisseur
   report_header_producer: Producteur
   report_header_producer_suburb: Ville Producteur
+  report_header_producer_tax_status: Soumis à la TVA
   report_header_producer_charges_sales_tax?: Soumis à la TVA
   report_header_unit: Unité
   report_header_group_buy_unit_quantity: Nb d'unités achetées (vente par lots)
@@ -2697,6 +2727,7 @@ fr:
   report_header_distributor_address: Adresse Boutique
   report_header_distributor_city: Ville Distributeur
   report_header_distributor_postcode: Code Postal Distributeur
+  report_header_distributor_tax_status: Statut de la boutique
   report_header_delivery_address: Adresse Livraison
   report_header_delivery_postcode: Code Postal Livraison
   report_header_bulk_unit_size: Quantité totale du lot
@@ -2880,6 +2911,7 @@ fr:
       deleting_item_will_cancel_order: "Cette opération va rendre une ou plusieurs commandes vides, sans aucun produit. Elles vont ainsi être annulées. Souhaitez-vous continuer ?"
       modals:
         got_it: "J'ai compris"
+        confirm: "Valider"
         close: "Valider"
         continue: "Suivant"
         cancel: "Annuler"
@@ -3452,6 +3484,8 @@ fr:
     server_error: "Erreur serveur"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Retrait"
+      delivery: "Signé, scellé, livré"
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
     taxonomy_edit: "Modifier la taxonomie"
@@ -3528,9 +3562,6 @@ fr:
     default_seo_title: "Titre référencement web (SEO) par défaut"
     default_meta_description: "Meta description par défaut"
     default_meta_keywords: "Meta mots clés par défaut"
-    security_settings: "Paramètres de sécurité"
-    allow_ssl_in_production: "Autoriser l'utilisation SSL dans l'environnement de production"
-    allow_ssl_in_staging: "Autoriser l'utilisation SSL dans l'environnement de staging"
     currency_decimal_mark: "Symbole du séparateur de décimales"
     currency_settings: "Paramètres devise"
     currency_symbol_position: Mettre le symbole de la devise avant ou après le montant ?
@@ -3539,7 +3570,7 @@ fr:
     display_currency: "Afficher la devise"
     choose_currency: "Choisir la devise"
     mail_method_settings: "Paramètre méthode mail"
-    mail_settings_notice_html: "Certains champs ne peuvent pas être modifiés car ils sont utilisés uniquement pour déboggage. Les modifications peuvent être réalisées par un développeur via <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. "
+    mail_settings_notice_html: "<b> Les modifications apportées ici seront temporaires </b>et peuvent changer à la prochaine mise à jour. <br> Si vous souhaitez réaliser des changements permanents, un administrateur système doit se charger de mettre à jour les informations et provisionner le serveur en utilisant <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install </a> . "
     general: "Général"
     enable_mail_delivery: "Permettre distribution des mails"
     send_mails_as: "Envoyer les mails en tant que"
@@ -3746,6 +3777,10 @@ fr:
           authorized: "Autorisé"
           received: "Reçu"
           canceled: "Annulé"
+      line_items:
+        index:
+          results_found: "%{number} résultats trouvés"
+          viewing: "Résultats %{start} à %{end} affichés."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Il n'est pas possible d'ajouter des produits sur une commande annulée"
@@ -3769,6 +3804,7 @@ fr:
           print_invoices: "Imprimer les factures"
           cancel_orders: "Annuler les commandes"
           resend_confirmation: "Renvoyer la confirmation"
+          resend_confirmation_confirm_html: "Cette action va renvoyer l'email de confirmation de commande. Etes-vous sûr de vouloir continuer ?"
           selected:
             zero: "Aucune commande sélectionnée"
             one: "1 commande sélectionnée"
@@ -4015,7 +4051,7 @@ fr:
           unit: "Unité"
       shared:
         configuration_menu:
-          terms_of_service: "Conditions Générales d'Utilisation"
+          terms_of_service: "Conditions Générales d'Utilisation et de Vente"
         sortable_header:
           name: "Produit/Variante"
           number: "N° commande"

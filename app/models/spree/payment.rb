@@ -47,9 +47,11 @@ module Spree
     scope :with_state, ->(s) { where(state: s.to_s) }
     scope :completed, -> { with_state('completed') }
     scope :incomplete, -> { where(state: %w(checkout pending requires_authorization)) }
+    scope :checkout, -> { with_state('checkout') }
     scope :pending, -> { with_state('pending') }
     scope :failed, -> { with_state('failed') }
     scope :valid, -> { where.not(state: %w(failed invalid)) }
+    scope :void, -> { with_state('void') }
     scope :authorization_action_required, -> { where.not(cvv_response_message: nil) }
     scope :requires_authorization, -> { with_state("requires_authorization") }
     scope :with_payment_intent, ->(code) { where(response_code: code) }
@@ -89,6 +91,10 @@ module Spree
       event :complete_authorization do
         transition from: [:requires_authorization], to: :completed
       end
+      event :resume do
+        transition from: [:void], to: :checkout
+      end
+
 
       after_transition to: :completed, do: :set_captured_at
     end

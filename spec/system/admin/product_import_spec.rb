@@ -3,7 +3,7 @@
 require 'system_helper'
 require 'open_food_network/permissions'
 
-describe "Product Import", js: true do
+describe "Product Import" do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper
@@ -98,7 +98,7 @@ describe "Product Import", js: true do
 
       wait_until { page.find("a.button.view").present? }
 
-      click_link I18n.t('admin.product_import.save_results.view_products')
+      click_link 'Go To Products Page'
 
       expect(page).to have_content 'Bulk Edit Products'
       wait_until { page.find("#p_#{potatoes.id}").present? }
@@ -216,7 +216,7 @@ describe "Product Import", js: true do
       potatoes = Spree::Product.find_by(name: 'Potatoes')
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      click_link I18n.t('admin.product_import.save_results.view_products')
+      click_link 'Go To Products Page'
 
       wait_until { page.find("#p_#{carrots.id}").present? }
 
@@ -321,7 +321,7 @@ describe "Product Import", js: true do
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
-      select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+      select 'Inventories', from: "settings_import_into"
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
@@ -357,7 +357,7 @@ describe "Product Import", js: true do
       expect(Float(cabbage_override.price)).to eq 1.50
       expect(cabbage_override.count_on_hand).to eq 2001
 
-      click_link I18n.t('admin.product_import.save_results.view_inventory')
+      click_link 'Go To Inventory Page'
       expect(page).to have_content 'Inventory'
 
       select enterprise2.name, from: "hub_id", visible: false
@@ -382,7 +382,7 @@ describe "Product Import", js: true do
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
-      select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+      select 'Inventories', from: "settings_import_into"
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
@@ -420,7 +420,7 @@ describe "Product Import", js: true do
 
         File.write('/tmp/test.csv', csv_data)
         visit main_app.admin_product_import_path
-        select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+        select 'Inventories', from: "settings_import_into"
         attach_file 'file', '/tmp/test.csv'
         click_button 'Upload'
         proceed_to_validation
@@ -452,7 +452,7 @@ describe "Product Import", js: true do
 
         File.write('/tmp/test.csv', csv_data)
         visit main_app.admin_product_import_path
-        select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+        select 'Inventories', from: "settings_import_into"
         attach_file 'file', '/tmp/test.csv'
         click_button 'Upload'
         proceed_to_validation
@@ -482,7 +482,7 @@ describe "Product Import", js: true do
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
-      select I18n.t('admin.product_import.index.inventories'), from: "settings_import_into"
+      select 'Inventories', from: "settings_import_into"
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
@@ -683,7 +683,7 @@ describe "Product Import", js: true do
       expect(page).to have_content 'Select a spreadsheet to upload'
       click_button 'Upload'
 
-      expect(flash_message).to eq I18n.t(:product_import_file_not_found_notice)
+      expect(flash_message).to eq 'File not found or could not be opened'
     end
 
     it "handles cases where no meaningful data can be read from the file" do
@@ -712,8 +712,7 @@ describe "Product Import", js: true do
       expect(page).to have_no_selector '.create-count'
       expect(page).to have_no_selector '.update-count'
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
-      expect(flash_message).to match(I18n.t('admin.product_import.model.malformed_csv',
-                                            error_message: ""))
+      expect(flash_message).to match("Product Import encountered a malformed CSV: %s" % '')
 
       File.delete('/tmp/test.csv')
     end
@@ -741,7 +740,7 @@ describe "Product Import", js: true do
 
       proceed_to_validation
 
-      expect(page).to have_content I18n.t('admin.product_import.import.validation_overview')
+      expect(page).to have_content 'Import validation overview'
       expect(page).to have_selector '.item-count', text: "2"
       expect(page).to have_selector '.invalid-count', text: "1"
       expect(page).to have_selector '.create-count', text: "1"
@@ -767,11 +766,11 @@ describe "Product Import", js: true do
       it "validates and saves all batches" do
         # Upload and validate file.
         attach_file "file", csv_file
-        click_button I18n.t("admin.product_import.index.upload")
+        click_button 'Upload'
         proceed_to_validation
 
         # Check that all rows are validated.
-        heading = I18n.t('admin.product_import.import.products_to_create')
+        heading = 'Products will be created'
         find(".header-description", text: heading).click
         expect(page).to have_content "Imported Product 10"
         expect(page).to have_content "Imported Product 60"
@@ -794,9 +793,9 @@ describe "Product Import", js: true do
 
   def proceed_to_validation
     expect(page).to have_selector 'a.button.proceed'
-    within("#content") { click_link I18n.t('admin.product_import.import.import') }
+    within("#content") { click_link 'Import' }
     expect(page).to have_selector 'form.product-import'
-    expect(page).to have_content I18n.t('admin.product_import.import.validation_overview')
+    expect(page).to have_content 'Import validation overview'
   end
 
   def save_data
@@ -807,7 +806,7 @@ describe "Product Import", js: true do
   end
 
   def proceed_with_save
-    click_link I18n.t("admin.product_import.import.save")
+    click_link 'Save'
   end
 
   def expect_import_completed

@@ -341,7 +341,7 @@ module Admin
             spree_put :bulk_update, format: :json
           end.to change(oc, :orders_open_at).by(0)
           json_response = JSON.parse(response.body)
-          expect(json_response['errors']).to eq I18n.t('admin.order_cycles.bulk_update.no_data')
+          expect(json_response['errors']).to eq 'Hm, something went wrong. No order cycle data found.'
         end
 
         context "when a validation error occurs" do
@@ -425,7 +425,7 @@ module Admin
         it "displays an error message when we attempt to delete it" do
           get :destroy, params: { id: oc.id }
           expect(response).to redirect_to admin_order_cycles_path
-          expect(flash[:error]).to eq I18n.t('admin.order_cycles.destroy_errors.orders_present')
+          expect(flash[:error]).to eq 'That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead.'
         end
       end
 
@@ -435,7 +435,7 @@ module Admin
         it "displays an error message when we attempt to delete it" do
           get :destroy, params: { id: oc.id }
           expect(response).to redirect_to admin_order_cycles_path
-          expect(flash[:error]).to eq I18n.t('admin.order_cycles.destroy_errors.schedule_present')
+          expect(flash[:error]).to eq 'That order cycle is linked to a schedule and cannot be deleted. Please unlink or delete the schedule first.'
         end
       end
 

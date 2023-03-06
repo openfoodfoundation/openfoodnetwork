@@ -1,0 +1,11 @@
+.modal-message
+  .form
+    %input{ type: "checkbox", name: "send_cancellation_email", value: "1", id: "send_cancellation_email", checked: "true" }
+    %label{ for: "send_cancellation_email" }
+      = t("js.admin.orders.cancel_the_order_send_cancelation_email")
+    %br
+    %input{ type: "checkbox", name: "restock_items", id: "restock_items", checked: "true" }
+    %label{ for: "restock_items" }
+      = t("js.admin.orders.restock_items")
+    .margin-bottom-30
+

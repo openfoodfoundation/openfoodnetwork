@@ -24,6 +24,14 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .node-version
+
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+
       - name: prettier
         uses: EPMatt/reviewdog-action-prettier@v1
         with:

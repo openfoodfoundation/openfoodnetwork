@@ -73,8 +73,7 @@ RSpec.configure do |config|
     expectations.syntax = :expect
   end
 
-  # Enable caching in any specs tagged with `caching: true`. Usage is exactly the same as the
-  # well-known `js: true` tag used to enable javascript in feature specs.
+  # Enable caching in any specs tagged with `caching: true`.
   config.around(:each, :caching) do |example|
     caching = ActionController::Base.perform_caching
     ActionController::Base.perform_caching = example.metadata[:caching]

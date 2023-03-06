@@ -186,6 +186,10 @@ module Spree
       adjustments.tax.inclusive.sum(:amount)
     end
 
+    def added_tax
+      adjustments.tax.additional.sum(:amount)
+    end
+
     def tax_rates
       product.tax_category&.tax_rates || []
     end

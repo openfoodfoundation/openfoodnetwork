@@ -70,7 +70,9 @@ module Reporting
       def sales_tax_report_types
         [
           [i18n_translate("tax_types"), :tax_types],
-          [i18n_translate("tax_rates"), :tax_rates]
+          [i18n_translate("tax_rates"), :tax_rates],
+          [i18n_translate("sales_tax_totals_by_producer"), :sales_tax_totals_by_producer],
+          [i18n_translate("sales_tax_totals_by_order"), :sales_tax_totals_by_order]
         ]
       end
 

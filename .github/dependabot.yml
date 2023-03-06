@@ -6,10 +6,12 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    # Only specific requirements are specified in Gemfile, so don't touch it.
     versioning-strategy: lockfile-only
 
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "daily"
-    versioning-strategy: lockfile-only
+    # All versions are specified in package.json, so please update them.
+    versioning-strategy: increase

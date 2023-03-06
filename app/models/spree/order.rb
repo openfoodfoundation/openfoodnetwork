@@ -13,7 +13,7 @@ module Spree
     include SetUnusedAddressFields
 
     searchable_attributes :number, :state, :shipment_state, :payment_state, :distributor_id,
-                          :order_cycle_id, :email, :total
+                          :order_cycle_id, :email, :total, :customer_id
     searchable_associations :shipping_method, :bill_address
     searchable_scopes :complete, :incomplete
 
@@ -665,6 +665,7 @@ module Spree
 
     def after_cancel
       shipments.each(&:cancel!)
+      payments.checkout.each(&:void!)
 
       OrderMailer.cancel_email(id).deliver_later if send_cancellation_email
       update(payment_state: updater.update_payment_state)
@@ -672,6 +673,8 @@ module Spree
 
     def after_resume
       shipments.each(&:resume!)
+      payments.void.each(&:resume!)
+
       update(payment_state: updater.update_payment_state)
     end
 

@@ -45,7 +45,7 @@ describe Stripe::CallbacksController, type: :controller do
         it "renders a failure message" do
           allow(connector).to receive(:enterprise) { enterprise }
           spree_get :index, params
-          expect(flash[:notice]).to eq I18n.t('admin.controllers.enterprises.stripe_connect_cancelled')
+          expect(flash[:notice]).to eq 'Connection to Stripe has been cancelled'
           expect(response).to redirect_to edit_admin_enterprise_path(enterprise,
                                                                      anchor: 'payment_methods')
         end
@@ -57,7 +57,7 @@ describe Stripe::CallbacksController, type: :controller do
         it "renders a failure message" do
           allow(connector).to receive(:enterprise) { enterprise }
           spree_get :index, params
-          expect(flash[:error]).to eq I18n.t('admin.controllers.enterprises.stripe_connect_fail')
+          expect(flash[:error]).to eq 'Sorry, the connection of your Stripe account failed'
           expect(response).to redirect_to edit_admin_enterprise_path(enterprise,
                                                                      anchor: 'payment_methods')
         end
@@ -70,7 +70,7 @@ describe Stripe::CallbacksController, type: :controller do
       it "redirects to the enterprise edit path" do
         allow(connector).to receive(:enterprise) { enterprise }
         spree_get :index, params
-        expect(flash[:success]).to eq I18n.t('admin.controllers.enterprises.stripe_connect_success')
+        expect(flash[:success]).to eq 'Stripe account connected successfully'
         expect(response).to redirect_to edit_admin_enterprise_path(enterprise,
                                                                    anchor: 'payment_methods')
       end

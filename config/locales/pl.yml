@@ -307,11 +307,23 @@ pl:
         price: Cena
         producer: Producent
         category: Kategoria
+        sku: SKU
+        on_hand: "Dostępne"
+        on_demand: "Na żądanie"
+        tax_category: "Kategoria podatku"
+        inherits_properties: "Dziedziczy właściwości?"
+        available_on: "Dostępne na"
       columns_selector:
         unit: Jednostka
         price: Cena
         producer: Producent
         category: Kategoria
+        sku: SKU
+        on_hand: "Dostępne"
+        on_demand: "Na żądanie"
+        tax_category: "Kategoria podatku"
+        inherits_properties: "Dziedziczy właściwości?"
+        available_on: "Dostępne na"
     begins_at: Początek o
     begins_on: Początek się w dniu
     customer: Klient
@@ -381,7 +393,6 @@ pl:
         title: "Ustawienia faktury"
         enable_invoices?: "Włączyć faktury?"
         invoice_style2?: "Użyj alternatywnego modelu fakturowania, który zawiera podział podatku według stawki i informacje o stawce podatku dla pozycji (jeszcze nie jest odpowiedni dla krajów, w których są wyświetlane ceny bez podatku)"
-        enable_receipt_printing?: "Wyświetlić opcje drukowania paragonów za pomocą drukarek termicznych w menu rozwijanym?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1305,10 +1316,6 @@ pl:
   invoice_issued_on: "Faktura wystawiona dnia:"
   order_number: "Numer faktury:"
   date_of_transaction: "Data transakcji:"
-  ticket_column_qty: "Ilość"
-  ticket_column_item: "Pozycja"
-  ticket_column_unit_price: "Cena jednostkowa"
-  ticket_column_total_price: "Cena całkowita"
   menu_1_title: "Sklepy"
   menu_1_url: "/shops"
   menu_2_title: "Mapa"
@@ -1409,12 +1416,6 @@ pl:
   card_has_been_removed: "Twoja karta została usunięta (numer: %{number})"
   card_could_not_be_removed: Przepraszamy, nie można usunąć karty
   invalid_credit_card: "Nieprawidłowa karta kredytowa"
-  ie_warning_headline: "Twoja przeglądarka jest nieaktualna :-("
-  ie_warning_text: "Aby uzyskać najlepsze wrażenia z Open Food Network, zdecydowanie zalecamy aktualizację przeglądarki:"
-  ie_warning_chrome: Pobierz Chrome
-  ie_warning_firefox: Pobierz przeglądarkę Firefox
-  ie_warning_ie: Zaktualizuj Internet Explorera
-  ie_warning_other: "Nie możesz zaktualizować swojej przeglądarki? Wypróbuj Open Food Network na swoim smartfonie :-)"
   legal:
     cookies_policy:
       header: "Jak używamy plików cookie"
@@ -1514,6 +1515,13 @@ pl:
           label: Miesiąc
         card_year:
           label: Rok
+    step3:
+      delivery_details:
+        edit: Edytuj
+      payment_method:
+        edit: Edytuj
+      order:
+        edit: Edytuj
   order_paid: OPŁACONY
   order_not_paid: NIEZAPŁACONE
   order_total: Całkowite zamówienie
@@ -2180,6 +2188,7 @@ pl:
   report_customers_cycle: "Cykl zamówień"
   report_customers_type: "Typ raportu"
   report_customers_csv: "Pobierz jako plik csv"
+  report_customers: Klient
   report_producers: "Producenci"
   report_hubs: "Huby"
   report_payment: "Metody płatności"
@@ -2240,6 +2249,7 @@ pl:
   report_header_delivery_charge: "Opłata za dostawę (%{currency_symbol})"
   report_header_tax_on_delivery: "Podatek przy dostawie (%{currency_symbol})"
   report_header_tax_on_fees: "Podatek od opłat (%{currency_symbol})"
+  report_header_tax_category: "Kategoria podatku"
   report_header_total_tax: "Całkowity podatek (%{currency_symbol})"
   report_header_enterprise: Podmiot
   report_header_customer: Klient
@@ -3006,9 +3016,6 @@ pl:
     default_seo_title: "Domyślny tytuł SEO"
     default_meta_description: "Domyślny opis meta"
     default_meta_keywords: "Domyślne słowa kluczowe meta"
-    security_settings: "Ustawienia bezpieczeństwa"
-    allow_ssl_in_production: "Zezwalaj na używanie SSL w trybie production"
-    allow_ssl_in_staging: "Zezwalaj na używanie protokołu SSL w trybie staging"
     currency_decimal_mark: "Znak dziesiętny waluty"
     currency_settings: "Ustawienia waluty"
     currency_symbol_position: Wstaw „symbol waluty przed kwotą w dolarach czy po niej?”

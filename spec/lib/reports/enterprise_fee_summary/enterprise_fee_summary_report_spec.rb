@@ -99,6 +99,12 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
     let!(:second_customer_order) { prepare_order(customer: customer) }
     let!(:other_customer_order) { prepare_order(customer: another_customer) }
 
+    it "doesn't delete params" do
+      params = ActionController::Parameters.new("completed_at_gt" => "2023-02-08+00:00")
+      described_class.new(current_user, params)
+      expect(params["completed_at_gt"]).to eq "2023-02-08+00:00"
+    end
+
     it "groups and sorts entries correctly" do
       totals = subject.query_result
 
@@ -462,8 +468,8 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
         end
       end
 
-      context "on or after start_at" do
-        let(:parameters_attributes) { { start_at: timestamp } }
+      context "on or after completed_at_gt" do
+        let(:parameters_attributes) { { completed_at_gt: timestamp } }
 
         it "filters entries" do
           totals = subject.query_result
@@ -474,8 +480,8 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
         end
       end
 
-      context "on or before end_at" do
-        let(:parameters_attributes) { { end_at: timestamp } }
+      context "on or before completed_at_lt" do
+        let(:parameters_attributes) { { completed_at_lt: timestamp } }
 
         it "filters entries" do
           totals = subject.query_result
@@ -646,12 +652,12 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
 
     describe "for specified payment methods" do
       let!(:payment_method_a) do
-        method = create(:payment_method, name: "Payment A", distributors: [distributor])
+        method = create(:payment_method, :flat_rate, name: "Payment A", distributors: [distributor])
         method.calculator.update_attribute(:preferred_amount, 1)
         method
       end
       let!(:payment_method_b) do
-        method = create(:payment_method, name: "Payment B", distributors: [distributor])
+        method = create(:payment_method, :flat_rate, name: "Payment B", distributors: [distributor])
         method.calculator.update_attribute(:preferred_amount, 1)
         method
       end

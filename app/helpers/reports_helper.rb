@@ -26,6 +26,12 @@ module ReportsHelper
     end.uniq
   end
 
+  def customer_email_options(order_customers)
+    order_customers.map do |customer|
+      [customer&.email, customer&.id]
+    end
+  end
+
   def currency_symbol
     Spree::Money.currency_symbol
   end

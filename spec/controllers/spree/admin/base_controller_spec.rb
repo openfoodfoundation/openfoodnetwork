@@ -24,7 +24,7 @@ describe Spree::Admin::BaseController, type: :controller do
 
         it "passes a prefix to the serializer method and renders with serializer" do
           expect(controller).to receive(:serializer).with(prefix) { "SerializerClass" }
-          expect(controller).to receive(:render).with(json: data, serializer: "SerializerClass")
+          expect(controller).to receive(:render).with({ json: data, serializer: "SerializerClass" })
           controller.send(:render_as_json, data, ams_prefix: prefix)
         end
       end
@@ -34,7 +34,7 @@ describe Spree::Admin::BaseController, type: :controller do
 
         it "does not pass a prefix to the serializer method and renders with serializer" do
           expect(controller).to receive(:serializer).with(prefix) { "SerializerClass" }
-          expect(controller).to receive(:render).with(json: data, serializer: "SerializerClass")
+          expect(controller).to receive(:render).with({ json: data, serializer: "SerializerClass" })
           controller.send(:render_as_json, data, ams_prefix: prefix)
         end
       end
@@ -48,8 +48,9 @@ describe Spree::Admin::BaseController, type: :controller do
 
         it "passes a prefix to the serializer method and renders with each_serializer" do
           expect(controller).to receive(:serializer).with(prefix) { "SerializerClass" }
-          expect(controller).to receive(:render).with(json: data,
-                                                      each_serializer: "SerializerClass")
+          expect(controller).to receive(:render).with(
+            { json: data, each_serializer: "SerializerClass" }
+          )
           controller.send(:render_as_json, data, ams_prefix: prefix)
         end
       end
@@ -59,8 +60,9 @@ describe Spree::Admin::BaseController, type: :controller do
 
         it "does not pass a prefix to the serializer method and renders with each_serializer" do
           expect(controller).to receive(:serializer).with(prefix) { "SerializerClass" }
-          expect(controller).to receive(:render).with(json: data,
-                                                      each_serializer: "SerializerClass")
+          expect(controller).to receive(:render).with(
+            { json: data, each_serializer: "SerializerClass" }
+          )
           controller.send(:render_as_json, data, ams_prefix: prefix)
         end
       end

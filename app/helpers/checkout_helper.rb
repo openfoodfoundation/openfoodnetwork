@@ -11,6 +11,7 @@ module CheckoutHelper
 
   def checkout_adjustments_for(order, opts = {})
     exclude = opts[:exclude] || {}
+    reject_zero_amount = opts.fetch(:reject_zero_amount, true)
 
     adjustments = order.all_adjustments.eligible.to_a
 
@@ -30,6 +31,10 @@ module CheckoutHelper
       adjustments.reject! { |a|
         a.adjustable_type == 'Spree::LineItem'
       }
+    end
+
+    if reject_zero_amount
+      adjustments.reject! { |a| a.amount == 0 }
     end
 
     adjustments

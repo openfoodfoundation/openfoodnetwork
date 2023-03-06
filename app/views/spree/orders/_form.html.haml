@@ -31,7 +31,7 @@
             %span.order-total.item-total= display_checkout_subtotal(@order)
           %td
 
-        - checkout_adjustments_for(@order, exclude: [:line_item]).reject{ |a| a.amount == 0 }.reverse_each do |adjustment|
+        - checkout_adjustments_for(@order, exclude: [:line_item]).reverse_each do |adjustment|
           %tr.order-adjustment
             %td.text-right{:colspan => "3"}
               = adjustment.label

@@ -463,7 +463,7 @@ describe Admin::SubscriptionsController, type: :controller do
                 spree_put :cancel, params
                 expect(response.status).to be 409
                 json_response = JSON.parse(response.body)
-                expect(json_response['errors']['open_orders']).to eq I18n.t('admin.subscriptions.confirm_cancel_open_orders_msg')
+                expect(json_response['errors']['open_orders']).to eq 'Some orders for this subscription are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?'
               end
             end
 
@@ -564,7 +564,7 @@ describe Admin::SubscriptionsController, type: :controller do
                 spree_put :pause, params
                 expect(response.status).to be 409
                 json_response = JSON.parse(response.body)
-                expect(json_response['errors']['open_orders']).to eq I18n.t('admin.subscriptions.confirm_cancel_open_orders_msg')
+                expect(json_response['errors']['open_orders']).to eq 'Some orders for this subscription are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?'
               end
             end
 
@@ -685,7 +685,7 @@ describe Admin::SubscriptionsController, type: :controller do
                   spree_put :unpause, params
                   expect(response.status).to be 409
                   json_response = JSON.parse(response.body)
-                  expect(json_response['errors']['canceled_orders']).to eq I18n.t('admin.subscriptions.resume_canceled_orders_msg')
+                  expect(json_response['errors']['canceled_orders']).to eq 'Some orders for this subscription can be resumed right now. You can resume them from the orders dropdown.'
                 end
               end
 

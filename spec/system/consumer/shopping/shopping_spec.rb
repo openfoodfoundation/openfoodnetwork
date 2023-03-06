@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "As a consumer I want to shop with a distributor", js: true do
+describe "As a consumer I want to shop with a distributor" do
   include AuthenticationHelper
   include FileHelper
   include WebHelper
@@ -677,7 +677,7 @@ describe "As a consumer I want to shop with a distributor", js: true do
   def expect_out_of_stock_behavior
     # Shows an "out of stock" modal, with helpful user feedback
     within(".out-of-stock-modal") do
-      expect(page).to have_content I18n.t('js.out_of_stock.out_of_stock_text').strip
+      expect(page).to have_content 'While you\'ve been shopping, the stock levels for one or more of the products in your cart have reduced. Here\'s what\'s changed:'
     end
 
     # Removes the item from the client-side cart and marks the variant as unavailable

@@ -5,6 +5,10 @@ fr_CM:
       spree/product: Produit
       spree/shipping_method: Méthode de Livraison
     attributes:
+      spree/order/ship_address:
+        phone: "Numéro de téléphone"
+        firstname: "Prénom"
+        lastname: "Nom "
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
@@ -367,11 +371,25 @@ fr_CM:
         price: Prix
         producer: Producteur
         category: Catégorie
+        sku: Référence Produit
+        on_hand: "En stock"
+        on_demand: "A volonté"
+        tax_category: "TVA applicable"
+        inherits_properties: "Hériter des propriétés?"
+        available_on: "Disponible via"
+        import_date: "Date d'import (si import)"
       columns_selector:
         unit: Unité
         price: Prix
         producer: Producteur
         category: Catégorie
+        sku: Référence Produit
+        on_hand: "En stock"
+        on_demand: "A volonté"
+        tax_category: "TVA applicable"
+        inherits_properties: "Hériter des propriétés?"
+        available_on: "Disponible via"
+        import_date: "Date d'import (si import)"
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -459,7 +477,6 @@ fr_CM:
         title: "Paramètres de facturation"
         enable_invoices?: "Autoriser l'émission de factures ?"
         invoice_style2?: "Utiliser le modèle de facture alternatif qui détaille le montant de TVA agrégé par taux et l'information du taux de TVA par produit (pas adapté pour les instances affichant les prix HT)"
-        enable_receipt_printing?: "Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1488,10 +1505,6 @@ fr_CM:
   invoice_issued_on: "Date de facture :"
   order_number: "N° de facture :"
   date_of_transaction: "Date de la transaction :"
-  ticket_column_qty: "Qté"
-  ticket_column_item: "Produit"
-  ticket_column_unit_price: "Prix unitaire"
-  ticket_column_total_price: "Prix total"
   menu_1_title: "Acheter"
   menu_1_url: "/shops"
   menu_2_title: "Carte"
@@ -1598,12 +1611,6 @@ fr_CM:
   card_has_been_removed: "Votre carte a été supprimée (numéro : %{number})"
   card_could_not_be_removed: Désolée, la carte n'a pas pu être supprimée :-(
   invalid_credit_card: "Cette carte de crédit n'est pas valide"
-  ie_warning_headline: "Votre navigateur n'est pas à jour :-("
-  ie_warning_text: "Pour une expérience optimale sur CoopCircuits, nous vous recommandons fortement de mettre à jour votre navigateur:"
-  ie_warning_chrome: Télécharger Chrome
-  ie_warning_firefox: Télécharger Firefox
-  ie_warning_ie: Mettre à jour Internet Explorer
-  ie_warning_other: "Impossible de mettre à jour votre navigateur? Essayez CoopCircuits sur votre smartphone :-)"
   legal:
     cookies_policy:
       header: "Notre usage des Cookies"
@@ -1745,20 +1752,15 @@ fr_CM:
       submit: Etape suivante - Récapitulatif de commande
       cancel: Retour à vos coordonnées
     step3:
-      your_details:
-        title: Vos informations
-        edit: Modifier vos coordonnées
-      billing_address:
-        title: Adresse de facturation
-      shipping_address:
-        title: Adresse de livraison
-      delivery_info:
-        title: Information concernant la livraison
+      delivery_details:
+        title: Détails de livraison
+        edit: Modifier
+        address: Adresse de livraison
       payment_method:
         title: Moyen de paiement
-        edit: Modifier la méthode de paiement
+        edit: Modifier
       order:
-        title: Total commande
+        edit: Modifier
       terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link}."
         link_text: "CGU & CGV"
@@ -1767,11 +1769,9 @@ fr_CM:
       all_terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de CoopCircuits."
         terms_and_conditions: "CGU & CGV"
-      agree: En cliquant sur "Valider ma commande" vous acceptez que votre commande soit traitée.
       submit: Valider ma commande
       cancel: Retour à la méthode de paiement
     errors:
-      global: "La sauvegarde a échoué, merci de mettre à jour les champs mis en évidence."
       terms_not_accepted: Merci d'accepter les CGU & CGV.
       required: Ce champ ne peut pas être vide
       invalid_number: "Merci de renseigner un numéro de téléphone valide"
@@ -2467,6 +2467,7 @@ fr_CM:
   report_customers_cycle: "Cycle de vente"
   report_customers_type: "Type de rapport"
   report_customers_csv: "Télécharger en csv"
+  report_customers: Client
   report_producers: "Producteurs"
   report_type: "Type de rapport"
   report_hubs: "Boutiques"
@@ -2528,8 +2529,10 @@ fr_CM:
   report_header_taxable_items_total: "Montant produits soumis à TVA (%{currency_symbol})"
   report_header_sales_tax: "TVA sur produits (%{currency_symbol})"
   report_header_delivery_charge: "Frais de livraison (%{currency_symbol})"
+  report_header_tax: "Taxe"
   report_header_tax_on_delivery: "TVA sur livraison (%{currency_symbol})"
   report_header_tax_on_fees: "TVA sur commission boutique (%{currency_symbol})"
+  report_header_tax_category: "TVA applicable"
   report_header_total_tax: "Total TVA (%{currency_symbol})"
   report_header_total_excl_tax: "Total HT (%{currency_symbol})"
   report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
@@ -3382,9 +3385,6 @@ fr_CM:
     default_seo_title: "Titre référencement web (SEO) par défaut"
     default_meta_description: "Meta description par défaut"
     default_meta_keywords: "Meta mots clés par défaut"
-    security_settings: "Paramètres de sécurité"
-    allow_ssl_in_production: "Autoriser l'utilisation SSL dans l'environnement de production"
-    allow_ssl_in_staging: "Autoriser l'utilisation SSL dans l'environnement de staging"
     currency_decimal_mark: "Symbole du séparateur de décimales"
     currency_settings: "Paramètres devise"
     currency_symbol_position: Mettre le symbole de la devise avant ou après le montant ?
@@ -3393,7 +3393,6 @@ fr_CM:
     display_currency: "Afficher la devise"
     choose_currency: "Choisir la devise"
     mail_method_settings: "Paramètre méthode mail"
-    mail_settings_notice_html: "Certains champs ne peuvent pas être modifiés car ils sont utilisés uniquement pour déboggage. Les modifications peuvent être réalisées par un développeur via <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. "
     general: "Général"
     enable_mail_delivery: "Permettre distribution des mails"
     send_mails_as: "Envoyer les mails en tant que"
@@ -3598,6 +3597,10 @@ fr_CM:
           authorized: "Autorisé"
           received: "Reçu"
           canceled: "Annulé"
+      line_items:
+        index:
+          results_found: "%{number} résultats trouvés"
+          viewing: "Résultats %{start} à %{end} affichés."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Il n'est pas possible d'ajouter des produits sur une commande annulée"

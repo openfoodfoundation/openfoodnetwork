@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "As a consumer, I want to check unit price information for a product", js: true do
+describe "As a consumer, I want to check unit price information for a product" do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
@@ -39,12 +39,12 @@ describe "As a consumer, I want to check unit price information for a product", 
       find('.question-mark-icon').click
       expect(page).to have_selector '.joyride-tip-guide.question-mark-tooltip'
       within '.joyride-tip-guide.question-mark-tooltip' do
-        expect(page).to have_content I18n.t('js.shopfront.unit_price_tooltip')
+        expect(page).to have_content 'This is the unit price of this product. It allows you to compare the price of products independent of packaging sizes & weights.'
       end
 
       page.find("body").click
       expect(page).not_to have_selector '.joyride-tip-guide.question-mark-tooltip'
-      expect(page).to have_no_content I18n.t('js.shopfront.unit_price_tooltip')
+      expect(page).to have_no_content 'This is the unit price of this product. It allows you to compare the price of products independent of packaging sizes & weights.'
     end
   end
 
@@ -60,11 +60,11 @@ describe "As a consumer, I want to check unit price information for a product", 
       find(".cart-content .question-mark-icon").click
       expect(page).to have_selector '.joyride-tip-guide.question-mark-tooltip'
       within '.joyride-tip-guide.question-mark-tooltip' do
-        expect(page).to have_content I18n.t('js.shopfront.unit_price_tooltip')
+        expect(page).to have_content 'This is the unit price of this product. It allows you to compare the price of products independent of packaging sizes & weights.'
       end
       page.find("body").click
       expect(page).not_to have_selector '.joyride-tip-guide.question-mark-tooltip'
-      expect(page).to have_no_content I18n.t('js.shopfront.unit_price_tooltip')
+      expect(page).to have_no_content 'This is the unit price of this product. It allows you to compare the price of products independent of packaging sizes & weights.'
     end
   end
 end

@@ -45,7 +45,7 @@ module Api
             spree_delete :destroy, enterprise_id: enterprise
 
             expect(response.status).to eq(409)
-            expect(json_response["error"]).to eq I18n.t("api.enterprise_promo_image.destroy_attachment_does_not_exist")
+            expect(json_response['error']).to eq 'Promo image does not exist'
           end
         end
       end

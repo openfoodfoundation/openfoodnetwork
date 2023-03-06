@@ -5,6 +5,10 @@ fr_BE:
       spree/product: Produit
       spree/shipping_method: Méthode de Livraison
     attributes:
+      spree/order/ship_address:
+        phone: "Numéro de téléphone"
+        firstname: "Prénom"
+        lastname: "Nom de famille"
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
@@ -312,11 +316,25 @@ fr_BE:
         price: Prix
         producer: Producteur·trice
         category: Catégorie
+        sku: Référence produit
+        on_hand: "En stock"
+        on_demand: "A la demande"
+        tax_category: "TVA applicable"
+        inherits_properties: "Hériter des propriétés?"
+        available_on: "Disponible via"
+        import_date: "Date d'import (si import)"
       columns_selector:
         unit: Unité
         price: Prix
         producer: Producteur·trice
         category: Catégorie
+        sku: Référence produit
+        on_hand: "En stock"
+        on_demand: "A la demande"
+        tax_category: "TVA applicable"
+        inherits_properties: "Hériter des propriétés?"
+        available_on: "Disponible via"
+        import_date: "Date d'import (si import)"
     begins_at: Commence
     begins_on: Commence le
     customer: Acheteur
@@ -388,7 +406,6 @@ fr_BE:
         title: "Paramètres de facturation"
         enable_invoices?: "Permettre les factures ?"
         invoice_style2?: "Utiliser le modèle de facture alternatif qui détaille le montant de TVA agrégé par taux et l'information du taux de TVA par produit (pas adapté pour les instances affichant les prix HT)"
-        enable_receipt_printing?: "Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?"
     stripe_connect_settings:
       edit:
         title: "connexion Stripe"
@@ -1410,10 +1427,6 @@ fr_BE:
   invoice_issued_on: "Date de facture :"
   order_number: "N° de facture :"
   date_of_transaction: "Date de la transaction :"
-  ticket_column_qty: "Qté"
-  ticket_column_item: "Produit"
-  ticket_column_unit_price: "Prix unitaire"
-  ticket_column_total_price: "Prix total"
   menu_1_title: "Comptoirs"
   menu_1_url: "/shops"
   menu_2_title: "Carte"
@@ -1516,12 +1529,6 @@ fr_BE:
   card_has_been_removed: "Votre carte a été supprimée (numéro : %{number})"
   card_could_not_be_removed: Désolée, la carte n'a pas pu être supprimée :-(
   invalid_credit_card: "Carte de crédit non valable"
-  ie_warning_headline: "Votre navigateur n'est pas à jour :-("
-  ie_warning_text: "Pour une expérience optimale sur Open Food Network, nous vous recommandons fortement de mettre à jour votre navigateur:"
-  ie_warning_chrome: Télécharger Chrome
-  ie_warning_firefox: Télécharger Firefox
-  ie_warning_ie: Mettre à jour Internet Explorer
-  ie_warning_other: "Impossible de mettre à jour votre navigateur? Essayez Open Food Network sur votre smartphone :-)"
   legal:
     cookies_policy:
       header: "Notre usage des Cookies"
@@ -1640,10 +1647,14 @@ fr_BE:
         card_year:
           label: Année
     step3:
-      your_details:
-        title: Vos informations
-      billing_address:
-        title: Adresse de facturation
+      delivery_details:
+        title: Détails de livraison
+        edit: Modifier
+        address: Adresse de livraison
+      payment_method:
+        edit: Modifier
+      order:
+        edit: Modifier
       terms_and_conditions:
         link_text: "Termes et conditions"
       all_terms_and_conditions:
@@ -2322,6 +2333,7 @@ fr_BE:
   report_customers_cycle: "Cycle de vente"
   report_customers_type: "Type de rapport"
   report_customers_csv: "Télécharger en csv"
+  report_customers: Acheteur·euse
   report_producers: "Producteur·trice·s"
   report_type: "Type de rapport"
   report_hubs: "Comptoirs"
@@ -2388,6 +2400,8 @@ fr_BE:
   report_header_delivery_charge: "Frais de livraison (%{currency_symbol})"
   report_header_tax_on_delivery: "TVA sur livraison (%{currency_symbol})"
   report_header_tax_on_fees: "TVA sur commission hub (%{currency_symbol})"
+  report_header_tax_category: "TVA applicable"
+  report_header_tax_rate: "TVA applicable"
   report_header_total_tax: "Total TVA (%{currency_symbol})"
   report_header_total_excl_tax: "Total HT (%{currency_symbol})"
   report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
@@ -3060,9 +3074,6 @@ fr_BE:
     default_seo_title: "Titre SEO par défaut"
     default_meta_description: "Meta Description par défaut"
     default_meta_keywords: "Meta Mots-clés par défaut"
-    security_settings: "Paramètres de sécurité "
-    allow_ssl_in_production: "Autoriser SSL en mode production "
-    allow_ssl_in_staging: "Autoriser SSL quand est employé en mode visible "
     currency_decimal_mark: "Devise à la décimale "
     currency_settings: "Devise "
     currency_symbol_position: Mettez "symbole monétaire avant ou après le montant en euros?"
@@ -3256,6 +3267,10 @@ fr_BE:
           authorized: "Autorisé"
           received: "Reçu"
           canceled: "Annulé"
+      line_items:
+        index:
+          results_found: "%{number} résultats trouvés"
+          viewing: "Résultats %{start} à %{end} affichés."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Impossible d'ajouter un article à une commande annulée"

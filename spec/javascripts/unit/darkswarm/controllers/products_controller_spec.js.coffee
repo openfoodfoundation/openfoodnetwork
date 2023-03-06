@@ -6,6 +6,7 @@ describe 'ProductsCtrl', ->
   Cart = {}
   Taxons = null
   Properties = null
+  currentHub = null
 
   beforeEach ->
     module('Darkswarm')
@@ -19,10 +20,12 @@ describe 'ProductsCtrl', ->
     Taxons:
       taxons: []
     Properties: {}
+    currentHub =
+      id: 1
 
     inject ($rootScope, $controller) ->
       scope = $rootScope
-      ctrl = $controller 'ProductsCtrl', {$scope: scope, Products: Products, OrderCycle: OrderCycle, Cart: Cart, Taxons: Taxons, Properties: Properties}
+      ctrl = $controller 'ProductsCtrl', {$scope: scope, Products: Products, OrderCycle: OrderCycle, Cart: Cart, Taxons: Taxons, Properties: Properties, currentHub: currentHub}
 
   it 'fetches products from Products', ->
     expect(scope.Products.products).toEqual ['testy mctest']

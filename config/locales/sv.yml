@@ -5,6 +5,8 @@ sv:
       spree/product: Produkt
       spree/shipping_method: Fraktmetod
     attributes:
+      spree/order/ship_address:
+        phone: "Telefonnummer"
       spree/user:
         password: "Lösenord"
       enterprise_fee:
@@ -131,11 +133,23 @@ sv:
         price: Pris
         producer: Producent
         category: Kategori
+        sku: SKU
+        on_hand: "På lager"
+        on_demand: "På begäran"
+        tax_category: "Skattekategori"
+        inherits_properties: "Ärva egenskaper?"
+        available_on: "Tillgänglig "
       columns_selector:
         unit: Enhet
         price: Pris
         producer: Producent
         category: Kategori
+        sku: SKU
+        on_hand: "På lager"
+        on_demand: "På begäran"
+        tax_category: "Skattekategori"
+        inherits_properties: "Ärva egenskaper?"
+        available_on: "Tillgänglig "
     date: Datum
     email: epost
     name: Namn
@@ -185,7 +199,6 @@ sv:
       edit:
         title: "Fakturainställningar"
         invoice_style2?: "Använd den alternativa faktureringsmodellen som inkluderar totala skattefördelning per beräkning och skatt per artikel (ännu inte passande för länder som visar priser exklusive skatt)"
-        enable_receipt_printing?: "Visa alternativ för att skriva ut recept genom att använda termiska skrivare i ordermenyn? "
     customers:
       index:
         new_customer: "Ny kund"
@@ -796,10 +809,6 @@ sv:
   invoice_issued_on: "Faktura utfärdad på:"
   order_number: "Fakturanummer:"
   date_of_transaction: "Transaktionsdatum:"
-  ticket_column_qty: "Kvantitet"
-  ticket_column_item: "Vara"
-  ticket_column_unit_price: "Styckpris"
-  ticket_column_total_price: "Summa"
   menu_1_title: "Butiker"
   menu_2_title: "Karta"
   menu_3_title: "Producenter "
@@ -872,12 +881,6 @@ sv:
   card_number: Kortnummer
   card_securitycode: "Säkerhetskod"
   card_expiry_date: Förfallodatum
-  ie_warning_headline: "Din webbläsare är föråldrad :("
-  ie_warning_text: "För den bästa upplevelsen av Open Food Network rekommenderas att uppdatera din webbläsare:"
-  ie_warning_chrome: Hämta Chrome
-  ie_warning_firefox: Hämta Firefox
-  ie_warning_ie: Uppdatera din Internet Explorer webbläsare
-  ie_warning_other: "Kan du inte uppdatera din webbläsare? Pröva Open Food Network på din smartphone :-)"
   home_shop: Handla nu
   brandstory_headline: "Mat, icke-inkorporerad."
   brandstory_intro: "Ibland är det bästa sättet att fixa till systemet att starta ett nytt..."
@@ -953,10 +956,14 @@ sv:
       shipping_info:
         title: 'Leveransadress '
     step3:
-      your_details:
-        title: Dina detaljer
-      billing_address:
-        title: 'Faktureringsadress '
+      delivery_details:
+        title: Leveransdetaljer
+        edit: Redigera
+        address: 'Leveransadress '
+      payment_method:
+        edit: Redigera
+      order:
+        edit: Redigera
     errors:
       invalid_email: "Var vänlig fyll i en giltig epostadress"
   order_paid: BETALD
@@ -1548,6 +1555,7 @@ sv:
   report_customers_cycle: "Ordercykel"
   report_customers_type: "Rapporttyp"
   report_customers_csv: "Ladda ned sm csv"
+  report_customers: Kund
   report_producers: "Producenter "
   report_type: "Rapporttyp"
   report_hubs: "Hubbar"
@@ -1610,6 +1618,8 @@ sv:
   report_header_delivery_charge: "Leveransavgift (%{currency_symbol})"
   report_header_tax_on_delivery: "Leveransskatt (%{currency_symbol})"
   report_header_tax_on_fees: "Skatt på avgifter (%{currency_symbol})"
+  report_header_tax_category: "Skattekategori"
+  report_header_tax_rate: "Skattesats"
   report_header_total_tax: "Summa skatter (%{currency_symbol})"
   report_header_total_excl_tax: "Summa exkl skatt (%{currency_symbol})"
   report_header_total_incl_tax: "Summa inkl skatt (%{currency_symbol})"

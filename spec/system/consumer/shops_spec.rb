@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Shops', js: true do
+describe 'Shops' do
   include AuthenticationHelper
   include UIComponentHelper
   include WebHelper

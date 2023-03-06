@@ -20,15 +20,13 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
 
     before { controller_login_as_admin }
 
-    it "updates preferred_amount and preferred_currency of a FlatRate calculator" do
+    it "updates preferred_amount of a FlatRate calculator" do
       shipping_method.calculator = create(:calculator_flat_rate, calculable: shipping_method)
       params[:shipping_method][:calculator_attributes][:preferred_amount] = 123
-      params[:shipping_method][:calculator_attributes][:preferred_currency] = "EUR"
 
       spree_post :update, params
 
       expect(shipping_method.reload.calculator.preferred_amount).to eq 123
-      expect(shipping_method.reload.calculator.preferred_currency).to eq "EUR"
     end
 
     %i[
@@ -43,7 +41,8 @@ describe Spree::Admin::ShippingMethodsController, type: :controller do
 
         spree_post :update, params
 
-        expect(flash[:error]).to match I18n.t(:calculator_preferred_value_error)
+        expect(flash[:error]).to match "Invalid input. \
+Please use only numbers. For example: 10, 5.5, -20"
         expect(response).to redirect_to spree.edit_admin_shipping_method_path(shipping_method)
       end
     end

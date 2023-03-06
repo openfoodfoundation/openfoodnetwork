@@ -5,6 +5,13 @@ en_GB:
       spree/product: Product
       spree/shipping_method: Shipping Method
     attributes:
+      spree/order/ship_address:
+        address2: "Shipping address line 2"
+        country: "Shipping address country"
+        phone: "Phone number"
+        firstname: "First name"
+        lastname: "Last name"
+        zipcode: "Shipping address postcode"
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
@@ -416,11 +423,25 @@ en_GB:
         price: Price
         producer: Producer
         category: Category
+        sku: Product Code
+        on_hand: "In Stock"
+        on_demand: "Unlimited"
+        tax_category: "Tax Category"
+        inherits_properties: "Inherits Properties?"
+        available_on: "Available On"
+        import_date: "Import Date"
       columns_selector:
         unit: Unit
         price: Price
         producer: Producer
         category: Category
+        sku: Product Code
+        on_hand: "In Stock"
+        on_demand: "Unlimited"
+        tax_category: "Tax Category"
+        inherits_properties: "Inherits Properties?"
+        available_on: "Available On"
+        import_date: "Import Date"
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -510,7 +531,6 @@ en_GB:
         title: "Invoice Settings"
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
-        enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
         enterprise_number_required_on_invoices?: "Require a company number to generate an invoice?"
     stripe_connect_settings:
       edit:
@@ -651,6 +671,7 @@ en_GB:
         not_found: not found in database
         category_not_found: doesn't match allowed categories. See the correct categories to choose from on the product import page, or check that there's no misspelling.
         not_updatable: cannot be updated on existing products via product import
+        values_must_be_same: must be the same for products with the same name
         blank: can't be blank
         products_no_permission: you do not have permission to manage products for this enterprise
         inventory_no_permission: you do not have permission to create inventory for this producer
@@ -1292,6 +1313,7 @@ en_GB:
       total_by_customer: Total By Customer
       total_by_supplier: Total By Supplier
       supplier_totals: Order Cycle Supplier Totals
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Order Cycle Supplier Totals by Distributor
       totals_by_supplier: Order Cycle Distributor Totals by Supplier
       customer_totals: Order Cycle Customer Totals
@@ -1302,6 +1324,7 @@ en_GB:
       addresses: Addresses
       payment_methods: Payment Methods Report
       delivery: Delivery Report
+      sales_tax_totals_by_producer: Sales Tax Totals By Producer
       tax_types: Tax Types
       tax_rates: Tax Rates
       pack_by_customer: Pack By Customer
@@ -1538,11 +1561,11 @@ en_GB:
       mobile_menu:
         cart: "Basket"
     register_call:
-      selling_on_ofn: "Interested in selling through the Open Food Network?"
+      selling_on_ofn: "Interested in selling on the Open Food Network?"
       register: "Register here"
     footer:
       footer_secure: "Secure and trusted."
-      footer_secure_text: "Open Food Network uses SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private. Our servers do not store your credit card details and payments are processed by PCI-compliant services."
+      footer_secure_text: "Open Food Network does not store your credit card details. We use SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private and payments are processed by PCI-compliant services."
       footer_contact_headline: "Keep in touch"
       footer_contact_email: "Email us"
       footer_nav_headline: "Navigate"
@@ -1559,7 +1582,7 @@ en_GB:
   shop:
     messages:
       customer_required:
-        login: "login"
+        login: "sign in"
         contact: "contact"
         require_customer_login: "Only approved customers can access this shop."
         require_login_link_html: "If you're already an approved customer, %{login} to proceed."
@@ -1593,23 +1616,19 @@ en_GB:
   invoice_issued_on: "Invoice issued on:"
   order_number: "Invoice number:"
   date_of_transaction: "Date of transaction:"
-  ticket_column_qty: "Qty"
-  ticket_column_item: "Item"
-  ticket_column_unit_price: "Unit Price"
-  ticket_column_total_price: "Total Price"
   menu_1_title: "Home"
   menu_1_url: "/"
   menu_2_title: "About"
   menu_2_url: "https://about.openfoodnetwork.org.uk"
-  menu_3_title: "Buy Food"
+  menu_3_title: "Buy"
   menu_3_url: "/shops"
   menu_4_title: "Groups"
   menu_4_url: "/groups"
-  menu_5_title: "Open My Shop"
+  menu_5_title: "Sell"
   menu_5_url: "https://about.openfoodnetwork.org.uk/open-my-shop/"
   menu_6_title: "Resources"
   menu_6_url: "https://about.openfoodnetwork.org.uk/resources"
-  menu_7_title: "Contact Support"
+  menu_7_title: "Software Support"
   menu_7_url: "https://about.openfoodnetwork.org.uk/support-2"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
@@ -1670,7 +1689,7 @@ en_GB:
   label_blog: "Blog"
   label_support: "Support"
   label_shopping: "Shopping"
-  label_login: "Login"
+  label_login: "Sign in"
   label_logout: "Logout"
   label_signup: "Sign up"
   label_administration: "Administration"
@@ -1703,12 +1722,6 @@ en_GB:
   card_has_been_removed: "Your card has been removed (number: %{number})"
   card_could_not_be_removed: Sorry, the card could not be removed
   invalid_credit_card: "Invalid credit card"
-  ie_warning_headline: "Your browser is out of date :-("
-  ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
-  ie_warning_chrome: Download Chrome
-  ie_warning_firefox: Download Firefox
-  ie_warning_ie: Upgrade Internet Explorer
-  ie_warning_other: "Can't upgrade your browser? Try Open Food Network on your smartphone :-)"
   legal:
     cookies_policy:
       header: "How We Use Cookies"
@@ -1745,25 +1758,25 @@ en_GB:
       cookies_policy_link_desc: "If you want to learn more, check our"
       cookies_policy_link: "cookies policy"
       cookies_accept_button: "Accept Cookies"
-  home_shop: Shop Now
+  home_shop: Buy
   brandstory_headline: "Growing Local Food Online"
-  brandstory_intro: "THE online community helping you to build a successful food enterprise"
+  brandstory_intro: "Read about our mission"
   brandstory_part1: "The Open Food Network software platform allows farmers to sell produce online, at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
   brandstory_part2: "Food Producers can create an online shop, collect payments, sell through other shops on the platform and access reduced-rate courier services."
   brandstory_part3: "Wholesalers can integrate OFN with their existing systems and manage buying groups to  supply customers with their produce through our national network of food hubs and shops."
   brandstory_part4: "Communities can bring together producers in their local area to create virtual farmers’ markets, building a resilient local food economy."
   brandstory_part5_strong: "And what’s just as important as the software itself are the values which underpin it. "
   brandstory_part6: "If you sell good food - as a farmer, farmer’s market, food co-op, or food hub- then choose software that aligns with your values to build food systems for people and planet, not profit.  By working collectively rather than competitively, we share the costs of developing new software, and we ensure that our project is resilient!"
-  system_headline: "Selling on OFN - 3 easy steps"
-  system_step1: "1. Create Your Enterprise"
-  system_step1_text: "Set up your enterprise with a name, description, photos, contact details and social media links."
+  system_headline: "Selling with us - 3 easy steps"
+  system_step1: "1. Open your shop"
+  system_step1_text: "• Add your shop name\n• Enter a description and contact details\n• Add photos and social media details "
   system_step2: "2. Add Your Products"
-  system_step2_text: "Add products to your shop - your own and/or from other producers around you. Set images, descriptions, prices, stock levels and flexible weights and measures."
-  system_step3: "3. Plan your Deliveries"
-  system_step3_text: "Set up payment methods. Create multiple pick-up points and delivery details. Create recurring orders and regular distributions."
-  cta_headline: "The sustainable Food Network of the future."
-  cta_label: "I'm Ready"
-  stats_headline: "We're creating a new food system."
+  system_step2_text: "• Create your products \n• Set prices, stock levels, descriptions and images\n• Connect with other local producers to stock their products (optional)"
+  system_step3: "3. Plan Your Deliveries"
+  system_step3_text: "• Set up payment methods \n• Create pick-up and/or delivery options\n• Create subscriptions for regular orders"
+  cta_headline: "The sustainable food network of our future."
+  cta_label: "Start shopping"
+  stats_headline: "Join over 15k shoppers and producers in creating a new food system"
   stats_producers: "food producers"
   stats_shops: "food shops"
   stats_shoppers: "food shoppers"
@@ -1801,6 +1814,7 @@ en_GB:
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     step1:
       contact_information:
+        title: Contact information
         email:
           label: Email
         phone:
@@ -1850,20 +1864,18 @@ en_GB:
       submit: Next - Order summary
       cancel: Back to Your details
     step3:
-      your_details:
-        title: Your details
-        edit: Edit your details
-      billing_address:
-        title: Billing address
-      shipping_address:
-        title: Shipping address
-      delivery_info:
-        title: Delivery info
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+        instructions: Instructions
       payment_method:
         title: Payment method
-        edit: Edit payment method
+        edit: Edit
+        instructions: Instructions
       order:
-        title: Order total
+        title: Order details
+        edit: Edit
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
@@ -1872,11 +1884,10 @@ en_GB:
       all_terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
         terms_and_conditions: "Terms and Conditions"
-      agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
     errors:
-      global: "Saving failed, please update the highlighted fields."
+      saving_failed: "Saving failed, please update the highlighted fields. %{messages}"
       terms_not_accepted: Please accept Terms and Conditions
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
@@ -1920,7 +1931,7 @@ en_GB:
   email_confirmation_notice_unexpected: "You received this message because you signed up on %{sitename}, or were invited to sign up by someone you probably know. If you don't understand why you are receiving this email, please write to %{contact}."
   email_social: "Connect with Us:"
   email_contact: "Email us:"
-  email_signoff: "Cheers,"
+  email_signoff: "Thank you,"
   email_signature: "%{sitename} Team"
   email_confirm_customer_greeting: "Hi %{name},"
   email_confirm_customer_intro_html: "Thanks for shopping at <strong>%{distributor}</strong>!"
@@ -1985,7 +1996,7 @@ en_GB:
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
   producer_mail_signoff: "Thanks and best wishes"
   producer_mail_order_customer_text: "Here is a summary of the orders grouped by customers"
-  shopping_oc_closed: Orders are closed
+  shopping_oc_closed: Orders closed for now
   shopping_oc_closed_description: "Please wait until the next cycle opens (or contact us directly to see if we can accept any late orders)"
   shopping_oc_last_closed: "The last cycle closed %{distance_of_time} ago"
   shopping_oc_next_open: "The next cycle opens in %{distance_of_time}"
@@ -1994,7 +2005,7 @@ en_GB:
   shopping_tabs_shop: "Shop"
   shopping_tabs_about: "About"
   shopping_tabs_producers: "Producers"
-  shopping_tabs_contact: "Contact"
+  shopping_tabs_contact: "Contact us"
   shopping_tabs_groups: "Groups"
   shopping_contact_address: "Address"
   shopping_contact_web: "Contact"
@@ -2010,7 +2021,7 @@ en_GB:
   map_title: "Map"
   hubs_buy: "Shop for:"
   hubs_shopping_here: "Shopping here"
-  hubs_orders_closed: "Orders closed"
+  hubs_orders_closed: "Orders closed for now"
   hubs_profile_only: "Profile only"
   hubs_delivery_options: "Delivery options"
   hubs_pickup: "Pickup"
@@ -2062,7 +2073,7 @@ en_GB:
   components_filters_clearfilters: "Clear all filters"
   groups_title: Groups
   groups_headline: Groups / regions
-  groups_text: "Every producer is unique. Every business has something different to offer. Our groups are collectives of producers, hubs and distributors who share something in common like location, farmers market or philosophy. This makes your shopping experience easier. So explore our groups and have the curating done for you."
+  groups_text: "Every producer is unique. Every business has something different to offer. Our groups are collectives of producers, hubs and distributors who share something in common, whether that's belonging to a local farmers market, specialising in a specific product, or sharing a philosophy. Explore our curated groups below."
   groups_search: "Search name or keyword"
   groups_no_groups: "No groups found"
   groups_about: "About Us"
@@ -2136,7 +2147,7 @@ en_GB:
   sell_embed: "We collectively budget for new feature development from the international OFN community. This way the huge cost of good software development can be shared. If you want a new feature, chances are someone in France, South Africa, Australia, India or Brazil might want it too! Use the Community Forum to suggest features you'd like to see."
   sell_ask_services: "Ask us about OFN services."
   shops_title: Shops
-  shops_headline: Shopping, transformed.
+  shops_headline: Transform your shopping.
   shops_text: Food grows in cycles, farmers harvest in cycles, and we order food in cycles. If you find an order cycle closed, check back soon.
   shops_signup_title: Sign up as a hub
   shops_signup_headline: Food hubs, unlimited.
@@ -2577,6 +2588,7 @@ en_GB:
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"
   report_customers_csv: "Download as csv"
+  report_customers: Customer
   report_producers: "Producers"
   report_type: "Report Type"
   report_hubs: "Hubs"
@@ -2654,8 +2666,12 @@ en_GB:
   report_header_taxable_items_total: "Taxable Items Total (%{currency_symbol})"
   report_header_sales_tax: "Sales Tax (%{currency_symbol})"
   report_header_delivery_charge: "Delivery Charge (%{currency_symbol})"
+  report_header_tax: "Tax"
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
+  report_header_tax_category: "Tax Category"
+  report_header_tax_rate_name: "Tax Rate Name"
+  report_header_tax_rate: "Tax Rate"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
   report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
   report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
@@ -2678,6 +2694,7 @@ en_GB:
   report_header_supplier: Supplier
   report_header_producer: Producer
   report_header_producer_suburb: Producer Suburb
+  report_header_producer_tax_status: Tax Rate Name
   report_header_producer_charges_sales_tax?: GST/VAT Registered
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity
@@ -2694,10 +2711,12 @@ en_GB:
   report_header_distributor_address: Distributor address
   report_header_distributor_city: Distributor city
   report_header_distributor_postcode: Distributor postcode
+  report_header_distributor_tax_status: Distributor Tax Status
   report_header_delivery_address: Delivery Address
   report_header_delivery_postcode: Delivery Postcode
   report_header_bulk_unit_size: Bulk Unit Size
   report_header_weight: Weight
+  report_header_final_weight_volume: Final (Weight/Volume)
   report_header_height: Height
   report_header_width: Width
   report_header_depth: Depth
@@ -2874,6 +2893,7 @@ en_GB:
       deleting_item_will_cancel_order: "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
       modals:
         got_it: "Got it"
+        confirm: "Confirm"
         close: "Close"
         continue: "Continue"
         cancel: "Cancel"
@@ -3403,6 +3423,8 @@ en_GB:
     server_error: "Server error"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Pick-up at the farm"
+      delivery: "Signed, sealed, delivered"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     taxonomy_edit: "Taxonomy edit"
@@ -3462,7 +3484,7 @@ en_GB:
     new_payment: "New Payment"
     capture: "Capture"
     void: "Void"
-    login: "Login"
+    login: "Sign in"
     password: "Password"
     signature: "Signature"
     solution: "Solution"
@@ -3479,9 +3501,6 @@ en_GB:
     default_seo_title: "Default SEO Title"
     default_meta_description: "Default Meta Description"
     default_meta_keywords: "Default Meta Keywords"
-    security_settings: "Security Settings"
-    allow_ssl_in_production: "Allow SSL to be used in production mode"
-    allow_ssl_in_staging: "Allow SSL to be used in staging mode"
     currency_decimal_mark: "Currency decimal mark"
     currency_settings: "Currency Settings"
     currency_symbol_position: Put "currency symbol before or after pound amount?"
@@ -3490,7 +3509,7 @@ en_GB:
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
     mail_method_settings: "Mail Method Settings"
-    mail_settings_notice_html: "Some of the following settings can't be edited and are listed here just for debugging purposes. Changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details."
+    mail_settings_notice_html: "<b>Changes made here will be temporary</b> for debugging only, and may get reverted in the future. <br>Permanent changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details."
     general: "General"
     enable_mail_delivery: "Enable Mail Delivery"
     send_mails_as: "Send Mails As"
@@ -3697,6 +3716,10 @@ en_GB:
           authorized: "Authorised"
           received: "Received"
           canceled: "Canceled"
+      line_items:
+        index:
+          results_found: "%{number} Results found."
+          viewing: "Viewing %{start} to %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
@@ -3720,6 +3743,7 @@ en_GB:
           print_invoices: "Print Invoices"
           cancel_orders: "Cancel Orders"
           resend_confirmation: "Resend Confirmation"
+          resend_confirmation_confirm_html: "This will resend the confirmation email to the customer.<br />Are you sure you want to proceed?"
           selected:
             zero: "No order selected"
             one: "1 order selected"
@@ -3868,6 +3892,7 @@ en_GB:
           title: "New Product"
           new_product: "New Product"
           supplier: "Supplier"
+          supplier_select_placeholder: "Select a supplier"
           product_name: "Product Name"
           units: "Unit Size"
           value: "Value"

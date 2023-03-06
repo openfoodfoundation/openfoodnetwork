@@ -684,17 +684,6 @@ Rails/ApplicationController:
   Exclude:
     - 'engines/dfc_provider/app/controllers/dfc_provider/base_controller.rb'
 
-# Offense count: 6
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/ApplicationJob:
-  Exclude:
-    - 'app/jobs/bulk_invoice_job.rb'
-    - 'app/jobs/heartbeat_job.rb'
-    - 'app/jobs/order_cycle_closing_job.rb'
-    - 'app/jobs/order_cycle_notification_job.rb'
-    - 'app/jobs/subscription_confirm_job.rb'
-    - 'app/jobs/subscription_placement_job.rb'
-
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/ApplicationMailer:
@@ -850,7 +839,6 @@ Rails/OutputSafety:
     - 'lib/reporting/queries/query_builder.rb'
     - 'lib/reporting/queries/query_interface.rb'
     - 'lib/spree/money.rb'
-    - 'spec/system/admin/order_print_ticket_spec.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).

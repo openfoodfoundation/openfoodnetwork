@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Shops caching", js: true, caching: true do
+describe "Shops caching", caching: true do
   include WebHelper
   include UIComponentHelper
 

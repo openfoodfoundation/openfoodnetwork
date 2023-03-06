@@ -5,6 +5,13 @@ en_CA:
       spree/product: Product
       spree/shipping_method: Shipping/Pick-up Method
     attributes:
+      spree/order/ship_address:
+        address2: "Shipping address line 2"
+        country: "Shipping address country"
+        phone: "Phone number"
+        firstname: "First name"
+        lastname: "Last name"
+        zipcode: "Shipping address postal code"
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
@@ -404,8 +411,11 @@ en_CA:
       filters:
         categories:
           title: Categories
+          selected_categories: "%{count} categories selected"
         producers:
           title: Producers
+          selected_producers: "%{count} producers selected"
+        per_page: "%{count} items per page"
         colums: Columns
       columns:
         name: Name
@@ -413,11 +423,25 @@ en_CA:
         price: Price
         producer: Producer
         category: Category
+        sku: SKU
+        on_hand: "On Hand"
+        on_demand: "On Demand"
+        tax_category: "Tax Category"
+        inherits_properties: "Inherits Properties?"
+        available_on: "Available"
+        import_date: "Import Date"
       columns_selector:
         unit: Unit
         price: Price
         producer: Producer
         category: Category
+        sku: SKU
+        on_hand: "On Hand"
+        on_demand: "On Demand"
+        tax_category: "Tax Category"
+        inherits_properties: "Inherits Properties?"
+        available_on: "Available"
+        import_date: "Import Date"
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -507,7 +531,6 @@ en_CA:
         title: "Invoice Settings"
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
-        enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
         enterprise_number_required_on_invoices?: "Require a business number to generate an invoice?"
     stripe_connect_settings:
       edit:
@@ -648,6 +671,7 @@ en_CA:
         not_found: not found in database
         category_not_found: doesn't match allowed categories. See the correct categories to choose from on the product import page, or check that there's no misspelling.
         not_updatable: cannot be updated on existing products via product import
+        values_must_be_same: must be the same for products with the same name
         blank: can't be blank
         products_no_permission: you do not have permission to manage products for this enterprise
         inventory_no_permission: you do not have permission to create inventory for this producer
@@ -1478,6 +1502,9 @@ en_CA:
         stripe_connect_fail: Sorry, the connection of your Stripe account failed
       stripe_connect_settings:
         resource: Stripe Connect configuration
+    resend_confirmation_emails_feedback:
+      one: "Confirmation email sent for 1 order."
+      other: "Confirmation emails sent for %{count} orders."
   api:
     unknown_error: "Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
@@ -1590,10 +1617,6 @@ en_CA:
   invoice_issued_on: "Invoice issued on:"
   order_number: "Invoice number:"
   date_of_transaction: "Date of transaction:"
-  ticket_column_qty: "Qty"
-  ticket_column_item: "Item"
-  ticket_column_unit_price: "Unit Price"
-  ticket_column_total_price: "Total Price"
   menu_1_title: "Shops"
   menu_1_url: "/shops"
   menu_2_title: "Map"
@@ -1700,12 +1723,6 @@ en_CA:
   card_has_been_removed: "Your card has been removed (number: %{number})"
   card_could_not_be_removed: Sorry, the card could not be removed
   invalid_credit_card: "Invalid credit card"
-  ie_warning_headline: "Your browser is out of date :-("
-  ie_warning_text: "For the best Open Food Network experience, we strongly recommend upgrading your browser:"
-  ie_warning_chrome: Download Chrome
-  ie_warning_firefox: Download Firefox
-  ie_warning_ie: Upgrade Internet Explorer
-  ie_warning_other: "Can't upgrade your browser? Try Open Food Network on your smartphone :-)"
   legal:
     cookies_policy:
       header: "How We Use Cookies"
@@ -1798,6 +1815,7 @@ en_CA:
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     step1:
       contact_information:
+        title: Contact information
         email:
           label: Email
         phone:
@@ -1847,20 +1865,18 @@ en_CA:
       submit: Next - Order Summary
       cancel: Back to your details
     step3:
-      your_details:
-        title: Your details
-        edit: Edit your details
-      billing_address:
-        title: Billing address
-      shipping_address:
-        title: Shipping address
-      delivery_info:
-        title: Delivery info
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+        instructions: Instructions
       payment_method:
         title: Payment Method
-        edit: Edit payment method
+        edit: Edit
+        instructions: Instructions
       order:
-        title: Order total
+        title: Order details
+        edit: Edit
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
         link_text: "Terms and Conditions"
@@ -1869,11 +1885,10 @@ en_CA:
       all_terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}"
         terms_and_conditions: "Terms and Conditions"
-      agree: By clicking 'Complete order' you agree to your order being processed.
       submit: Complete order
       cancel: Back to Payment method
     errors:
-      global: "Saving failed, please update the highlighted fields."
+      saving_failed: "Saving failed, please update the highlighted fields. %{messages}"
       terms_not_accepted: Please accept Terms and Conditions
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
@@ -2574,6 +2589,7 @@ en_CA:
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"
   report_customers_csv: "Download as csv"
+  report_customers: Customer
   report_producers: "Producers"
   report_type: "Report Type"
   report_hubs: "Hubs"
@@ -2651,8 +2667,11 @@ en_CA:
   report_header_taxable_items_total: "Taxable Items Total (%{currency_symbol})"
   report_header_sales_tax: "Sales Tax (%{currency_symbol})"
   report_header_delivery_charge: "Delivery Charge (%{currency_symbol})"
+  report_header_tax: "Tax"
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
+  report_header_tax_category: "Tax Category"
+  report_header_tax_rate: "Tax Rate"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
   report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
   report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
@@ -2662,6 +2681,7 @@ en_CA:
   report_header_customer_code: Customer Code
   report_header_product: Product
   report_header_product_properties: Product Properties
+  report_header_product_tax_category: Product Tax Category
   report_header_quantity: Quantity
   report_header_max_quantity: Max Quantity
   report_header_variant: Variant
@@ -2674,6 +2694,7 @@ en_CA:
   report_header_supplier: Supplier
   report_header_producer: Producer
   report_header_producer_suburb: Producer City/Town
+  report_header_producer_charges_sales_tax?: Tax registered
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity
   report_header_cost: Cost
@@ -2693,6 +2714,7 @@ en_CA:
   report_header_delivery_postcode: Delivery Postal Code
   report_header_bulk_unit_size: Bulk Unit Size
   report_header_weight: Weight
+  report_header_final_weight_volume: Final (Weight/Volume)
   report_header_height: Height
   report_header_width: Width
   report_header_depth: Depth
@@ -2869,6 +2891,7 @@ en_CA:
       deleting_item_will_cancel_order: "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
       modals:
         got_it: "Got it"
+        confirm: "Confirm"
         close: "Close"
         continue: "Continue"
         cancel: "Cancel"
@@ -3391,6 +3414,8 @@ en_CA:
     server_error: "Server error"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Pick-up at the farm"
+      delivery: "Signed, sealed, delivered"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     taxonomy_edit: "Taxonomy edit"
@@ -3467,9 +3492,6 @@ en_CA:
     default_seo_title: "Default Seo Title"
     default_meta_description: "Default Meta Description"
     default_meta_keywords: "Default Meta Keywords"
-    security_settings: "Security Settings"
-    allow_ssl_in_production: "Allow SSL to be used in production mode"
-    allow_ssl_in_staging: "Allow SSL to be used in staging mode"
     currency_decimal_mark: "Currency decimal mark"
     currency_settings: "Currency Settings"
     currency_symbol_position: Put "currency symbol before or after dollar amount?"
@@ -3478,7 +3500,7 @@ en_CA:
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
     mail_method_settings: "Mail Method Settings"
-    mail_settings_notice_html: "Some of the following settings can't be edited and are listed here just for debugging purposes. Changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details."
+    mail_settings_notice_html: "<b>Changes made here will be temporary</b> for debugging only, and may get reverted in the future. <br>Permanent changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details. "
     general: "General"
     enable_mail_delivery: "Enable Mail Delivery"
     send_mails_as: "Send Mails As"
@@ -3601,6 +3623,7 @@ en_CA:
       messages:
         included_price_validation: "cannot be selected unless you have set a Default Tax Zone"
         blank: "can't be blank"
+        invalid_instagram_url: "Must be user name only eg. the_prof"
     layouts:
       admin:
         login_nav:
@@ -3684,6 +3707,10 @@ en_CA:
           authorized: "Authorized"
           received: "Received"
           canceled: "Canceled"
+      line_items:
+        index:
+          results_found: " %{number}  Results found."
+          viewing: "Viewing %{start} to %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "You cannot add an item to a cancelled order."
@@ -3707,6 +3734,7 @@ en_CA:
           print_invoices: "Print Invoices"
           cancel_orders: "Cancel Orders"
           resend_confirmation: "Resend Confirmation"
+          resend_confirmation_confirm_html: "This will resend the confirmation email to the customer. <br />Are you sure you want to proceed?"
           selected:
             zero: "No order selected"
             one: "1 order selected"
@@ -3855,6 +3883,7 @@ en_CA:
           title: "New Product"
           new_product: "New Product"
           supplier: "Supplier"
+          supplier_select_placeholder: "Select a supplier"
           product_name: "Product Name"
           units: "Unit Size"
           value: "Value"
@@ -3900,6 +3929,9 @@ en_CA:
           select_and_search: "Select filters and click on %{option} to access your data."
         customer_names_message:
           customer_names_tip: "If customer names are hidden for the items you have supplied, you can contact the seller  and ask if they can update their preferences and allow you to view customer names."
+        products_and_inventory:
+          all_products:
+            message: "Note that stock levels reported are from supplier product lists only. If you are using Inventory to manage your stock quantities, these values will be ignored in this report. "
       users:
         index:
           listing_users: "Listing Users"
@@ -4249,6 +4281,7 @@ en_CA:
     search_input:
       placeholder: Search
     selector_with_filter:
+      selected_items: "%{count} selected"
       search_placeholder: Search
     pagination:
       next: Next

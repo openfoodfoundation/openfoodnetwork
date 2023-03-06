@@ -6,7 +6,7 @@ describe '
     As a consumer
     I want to see a list of producers
     So that I can shop at hubs distributing their products
-', js: true do
+' do
   include AuthenticationHelper
   include WebHelper
   include UIComponentHelper

@@ -5,6 +5,8 @@ pt_BR:
       spree/product: Produto
       spree/shipping_method: Método de envio
     attributes:
+      spree/order/ship_address:
+        phone: "n"
       spree/user:
         password: "Senha"
         password_confirmation: "Confirmação de senha"
@@ -349,11 +351,25 @@ pt_BR:
         price: Preço
         producer: Produtor
         category: Categoria
+        sku: SKU
+        on_hand: "Disponível"
+        on_demand: "Sob Encomenda"
+        tax_category: "Categoria de taxa"
+        inherits_properties: "Herdar Propriedades?"
+        available_on: "Disponível Em"
+        import_date: "Data de importação"
       columns_selector:
         unit: Unidade
         price: Preço
         producer: Produtor
         category: Categoria
+        sku: SKU
+        on_hand: "Disponível"
+        on_demand: "Sob Encomenda"
+        tax_category: "Categoria de taxa"
+        inherits_properties: "Herdar Propriedades?"
+        available_on: "Disponível Em"
+        import_date: "Data de importação"
     adjustments:
       skipped_changing_canceled_order: "Não é possível modificar um pedido cancelado"
     begins_at: Começa em
@@ -441,7 +457,6 @@ pt_BR:
         title: "Configuração da fatura"
         enable_invoices?: "Ativar faturas?"
         invoice_style2?: "Use o modelo alternativo de fatura que inclui o total de impostos dividido por taxa e taxa de imposto por item (ainda não disponível para países que exibem preços sem taxas)"
-        enable_receipt_printing?: "Mostrar opções para imprimir recibos usando impressoras térmicas em pedidos suspensos?"
     stripe_connect_settings:
       edit:
         title: "Stripe conectado"
@@ -1442,10 +1457,6 @@ pt_BR:
   invoice_issued_on: "Fatura emitida em:"
   order_number: "Número da fatura:"
   date_of_transaction: "Dia da transação:"
-  ticket_column_qty: "Qtd"
-  ticket_column_item: "Ítem"
-  ticket_column_unit_price: "Preço Unitário"
-  ticket_column_total_price: "Preço Total"
   menu_1_title: "Lojas"
   menu_1_url: "/shops"
   menu_2_title: "Mapa"
@@ -1552,12 +1563,6 @@ pt_BR:
   card_has_been_removed: "O seu cartão foi removido (número: %{number})"
   card_could_not_be_removed: Desculpe, o cartão não pode ser removido
   invalid_credit_card: "Cartão de crédito inválido"
-  ie_warning_headline: "Seu navegador está desatualizado :("
-  ie_warning_text: "Para a melhor experiência na Ajunta, recomendamos que você atualize seu navegador:"
-  ie_warning_chrome: Baixar Chrome
-  ie_warning_firefox: Baixar Firefox
-  ie_warning_ie: Atualizar Internet Explorer
-  ie_warning_other: "Não consegue atualizar o navegador? Tente acessar a Ajunta pelo smartphone :)"
   legal:
     cookies_policy:
       header: "Como usamos cookies"
@@ -1678,10 +1683,14 @@ pt_BR:
         card_year:
           label: Ano
     step3:
-      your_details:
-        title: Seus detalhes
-      billing_address:
-        title: Endereço de fatura
+      delivery_details:
+        title: Detalhes da entrega
+        edit: Editar
+        address: Endereço para entrega
+      payment_method:
+        edit: Editar
+      order:
+        edit: Editar
       terms_and_conditions:
         message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor"
         link_text: "Termos e Condições"
@@ -2376,6 +2385,7 @@ pt_BR:
   report_customers_cycle: "Ciclo de pedidos"
   report_customers_type: "Relatar tipo"
   report_customers_csv: "Fazer download como csv"
+  report_customers: Consumidor
   report_producers: "Produtores"
   report_type: "Relatar tipo"
   report_payment: "Métodos de pagamento"
@@ -2437,6 +2447,8 @@ pt_BR:
   report_header_delivery_charge: "Taxa de entrega (%{currency_symbol})`"
   report_header_tax_on_delivery: "Imposto sobre a entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Imposto sobre taxas (%{currency_symbol})"
+  report_header_tax_category: "Categoria de taxa"
+  report_header_tax_rate: "Taxa de imposto"
   report_header_total_tax: "Imposto total (%{currency_symbol})"
   report_header_total_excl_tax: "Total imposto excluído (%{currency_symbol})"
   report_header_total_incl_tax: "Total imposto incluído (%{currency_symbol})"
@@ -3251,9 +3263,6 @@ pt_BR:
     default_seo_title: "Título de SEO padrão"
     default_meta_description: "Meta padrão Descrição"
     default_meta_keywords: "Meta Palavras-chave Padrão"
-    security_settings: "Configurações de segurança"
-    allow_ssl_in_production: "Permitir que o SSL seja usado no modo de produção"
-    allow_ssl_in_staging: "Permitir que o SSL seja usado no modo de preparação"
     currency_decimal_mark: "Marca decimal da moeda"
     currency_settings: "Configurações de moeda"
     currency_symbol_position: Coloque "símbolo de moeda antes ou depois do valor em dólar?"
@@ -3262,7 +3271,6 @@ pt_BR:
     display_currency: "Mostrar moeda"
     choose_currency: "Escolha a Moeda"
     mail_method_settings: "Configurações do método de email"
-    mail_settings_notice_html: "Algumas das seguintes configurações não podem ser editadas e estão listadas aqui apenas para propósitos de 'debugging'. Alterações podem ser realizadas atualizando os 'secrets' e provisionando-os com o <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Entre contato com o global team para mais detalhes. "
     general: "Geral"
     enable_mail_delivery: "Ativar entrega de correio"
     send_mails_as: "Enviar correio como"

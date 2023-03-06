@@ -82,7 +82,7 @@ module Reporting
             },
             {
               group_by: proc { |line_items, _row| line_items.first.order },
-              sort_by: proc { |order| order.bill_address.full_name_reverse },
+              sort_by: proc { |order| order.bill_address.full_name_reverse.downcase },
               header: proc { |_order, _items, rows| row_header(rows.first) },
               fields_used_in_header: [:customer, :email, :phone, :order_cycle, :order_number],
               summary_row: proc { |order, _grouped_line_items, rows| summary_row(order, rows) }

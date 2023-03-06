@@ -16,11 +16,6 @@
     = label_tag nil, t('.invoice_style2?')
 
   .field.align-center
-    = hidden_field_tag 'preferences[enable_receipt_printing?]', '0'
-    = check_box_tag 'preferences[enable_receipt_printing?]', '1',  Spree::Config[:enable_receipt_printing?]
-    = label_tag nil, t('.enable_receipt_printing?')
-
-  .field.align-center
     = hidden_field_tag 'preferences[enterprise_number_required_on_invoices?]', '0'
     = check_box_tag 'preferences[enterprise_number_required_on_invoices?]', '1',  Spree::Config[:enterprise_number_required_on_invoices?]
     = label_tag nil, t('.enterprise_number_required_on_invoices?')

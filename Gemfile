@@ -17,7 +17,7 @@ gem 'activemerchant', '>= 1.78.0'
 gem 'rexml'
 gem 'angular-rails-templates', '>= 0.3.0'
 gem 'awesome_nested_set'
-gem 'ransack', '2.4.2'
+gem 'ransack', '~> 2.6.0'
 gem 'responders'
 gem 'webpacker', '~> 5'
 
@@ -69,7 +69,7 @@ gem 'pagy', '~> 5.1'
 gem 'rswag-api'
 gem 'rswag-ui'
 
-gem 'gitlab-omniauth-openid-connect', require: 'omniauth_openid_connect'
+gem 'omniauth_openid_connect'
 gem 'openid_connect', '~> 1.3'
 gem 'omniauth-rails_csrf_protection'
 
@@ -83,16 +83,15 @@ gem 'actionpack-action_caching'
 #   AMS is deprecated, we will introduce an alternative at some point
 gem "active_model_serializers", "0.8.4"
 gem 'activerecord-session_store'
-gem 'acts-as-taggable-on', '~> 8.1'
+gem 'acts-as-taggable-on'
 gem 'angularjs-file-upload-rails', '~> 2.4.1'
 gem 'bigdecimal', '3.0.2'
 gem 'bootsnap', require: false
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'mimemagic', '> 0.3.5'
-gem 'paper_trail', '~> 12.1.0'
+gem 'paper_trail', '~> 12.1'
 gem 'rack-rewrite'
-gem 'rack-ssl', require: 'rack/ssl'
 gem 'roadie-rails'
 
 gem 'hiredis'
@@ -109,8 +108,8 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 gem 'immigrant'
-gem 'roo'
-gem 'spreadsheet_architect'
+gem 'roo' # read spreadsheets
+gem 'spreadsheet_architect' # write spreadsheets
 
 gem 'whenever', require: false
 
@@ -125,8 +124,6 @@ gem 'angular_rails_csrf'
 gem 'jquery-rails', '4.4.0'
 gem 'jquery-ui-rails', '~> 4.2'
 gem "select2-rails", github: "openfoodfoundation/select2-rails", branch: "v349_with_thor_v1"
-
-gem 'ofn-qz', github: 'openfoodfoundation/ofn-qz', branch: 'ofn-rails-4'
 
 gem 'good_migrations'
 
@@ -184,7 +181,6 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'web-console'
-
 
   gem 'rack-mini-profiler', '< 3.0.0'
 end

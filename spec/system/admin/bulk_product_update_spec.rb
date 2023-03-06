@@ -183,7 +183,7 @@ describe '
       let(:hub) { create(:distributor_enterprise) }
       let!(:override) { create(:variant_override, variant: variant, hub: hub ) }
       let(:variant_overrides_tip) {
-        I18n.t('spree.admin.products.index.products_variant.variant_has_n_overrides', n: 1)
+        "This variant has %d override(s)" % 1
       }
 
       it "displays an icon indicating a variant has overrides" do
@@ -345,7 +345,7 @@ describe '
     login_as_admin
     visit spree.admin_products_path
 
-    toggle_columns "Available On", /^Category?/, "Inherits Properties?", "SKU"
+    toggle_columns "Available On", /^Category?/i, "Inherits Properties?", "SKU"
 
     within "tr#p_#{p.id}" do
       expect(page).to have_field "product_name", with: p.name
@@ -712,7 +712,7 @@ describe '
         expect(page).to have_selector "th", text: "ON HAND"
         expect(page).to have_selector "th", text: "AV. ON"
 
-        toggle_columns /^.{0,1}Producer$/
+        toggle_columns /^.{0,1}Producer$/i
 
         expect(page).to have_no_selector "th", text: "PRODUCER"
         expect(page).to have_selector "th", text: "NAME"
