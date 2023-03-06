@@ -19,4 +19,10 @@ end
 
 Rails.configuration.middleware.use Flipper::Middleware::Memoizer, preload_all: true
 
+if Rails.env.test?
+  Rails.application.configure do
+    Flipper.memoize = false
+  end
+end
+
 Flipper.register(:admins) { |actor| actor.respond_to?(:admin?) && actor.admin? }
