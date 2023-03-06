@@ -122,10 +122,8 @@ describe Admin::SchedulesController, type: :controller do
 
           spree_put :update, format: :json, id: coordinated_schedule.id,
                              order_cycle_ids: [coordinated_order_cycle.id, coordinated_order_cycle2.id]
-          reset_controller_environment
           spree_put :update, format: :json, id: coordinated_schedule.id,
                              order_cycle_ids: [coordinated_order_cycle.id]
-          reset_controller_environment
           spree_put :update, format: :json, id: coordinated_schedule.id,
                              order_cycle_ids: [coordinated_order_cycle.id]
         end
