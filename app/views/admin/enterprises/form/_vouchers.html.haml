@@ -9,23 +9,23 @@
       %tr
         %th= t('.voucher_code')
         %th= t('.rate')
-        %th= t('.label')
-        %th= t('.purpose')
-        %th= t('.expiry')
-        %th= t('.use_limit')
-        %th= t('.customers')
-        %th= t('.net_value')
+        /%th= t('.label')
+        /%th= t('.purpose')
+        /%th= t('.expiry')
+        /%th= t('.use_limit')
+        /%th= t('.customers')
+        /%th= t('.net_value')
     %tbody
       - @enterprise.vouchers.each do |voucher|
         %tr
           %td= voucher.code
           %td= voucher.display_value  
-          %td
-          %td
-          %td
-          %td
-          %td
-          %td
+          /%td
+          /%td
+          /%td
+          /%td
+          /%td
+          /%td
 
 - else
   %p.text-center
