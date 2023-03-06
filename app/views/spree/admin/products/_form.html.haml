@@ -45,7 +45,7 @@
 
     = f.field_container :shipping_categories do
       = f.label :shipping_category_id, t(:shipping_categories)
-      = f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { :include_blank => t(:none) }, { :class => 'select2' })
+      = f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { :class => 'select2' })
       = f.error_message_on :shipping_category
 
     = f.field_container :tax_category do
