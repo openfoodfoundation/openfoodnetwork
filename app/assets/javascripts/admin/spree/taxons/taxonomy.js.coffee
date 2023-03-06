@@ -8,7 +8,7 @@ handle_move = (e, data) ->
   node = data.rslt.o
   new_parent = data.rslt.np
 
-  url = new URL(base_url)
+  url = new URL(Spree.routes.admin_taxonomy_taxons)
   url.pathname = url.pathname + '/' + node.attr("id") 
   data = {
     _method: "put",
