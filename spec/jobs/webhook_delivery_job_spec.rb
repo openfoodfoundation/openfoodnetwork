@@ -22,7 +22,7 @@ describe WebhookDeliveryJob do
   end
 
   it "delivers a payload" do
-    Timecop.freeze(Time.zone.now) do
+    Timecop.freeze do
       expected_body = {
         id: /.+/,
         at: Time.zone.now.to_s,
@@ -48,9 +48,9 @@ describe WebhookDeliveryJob do
       ]
 
       private_addresses.each do |url|
-        # Unfortunately this isn't allowed in CI, but it should work in your
-        # development environment.
-        xit "rejects private address #{url}" do
+        it "rejects private address #{url}" do
+          # Github Actions doesn't allow local connections.
+          pending if ENV["CI"]
           expect {
             WebhookDeliveryJob.perform_now(url, event, data)
           }.to raise_error(PrivateAddressCheck::PrivateConnectionAttemptedError)
