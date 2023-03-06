@@ -1,0 +1,5 @@
+Distributor,Order Cycle,Order number,Tax Category,Tax Rate Name,Tax Rate,Total excl. tax ($),Tax,Total incl. tax ($),First Name,Last Name,Code,Email
+Distributor,oc1,ORDER_NUMBER_1,tax_category,State,0.015,115.0,1.73,116.73,cfname,clname,ABC123,order1@example.com
+Distributor,oc1,ORDER_NUMBER_1,tax_category,Country,0.025,115.0,2.88,117.88,cfname,clname,ABC123,order1@example.com
+Distributor,oc1,ORDER_NUMBER_2,tax_category,State,0.015,215.0,3.23,218.23,c2fname,c2lname,DEF456,order2@example.com
+Distributor,oc1,ORDER_NUMBER_2,tax_category,Country,0.025,215.0,5.38,220.38,c2fname,c2lname,DEF456,order2@example.com
