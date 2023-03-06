@@ -1,18 +1,14 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["checkbox"]
+  static targets = ["checkbox", "errorMessage"]
 
   get disableElements() {
     return document.querySelectorAll("[data-checkbox-selection-button]")
   }
 
-  get visibleElements() {
-    return document.querySelectorAll("[data-checkbox-selection-visibility]")
-  }
-
   connect() {
-    this.changeVisibilityElements(false)
+    this.handleError(false)
   }
 
   disableButtons() {
@@ -34,12 +30,11 @@ export default class extends Controller {
       element.disabled = isAllUnchecked
     })
 
-    this.changeVisibilityElements(isAllUnchecked)
+    this.handleError(isAllUnchecked)
   }
 
-  changeVisibilityElements(isVisible) {
-    this.visibleElements.forEach((element) => {
-      element.style.display = isVisible ? "block" : "none"
-    })
+  handleError(isVisible) {
+    const error = this.errorMessageTarget
+    error.style.display = isVisible ? "block" : "none"
   }
 }

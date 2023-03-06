@@ -3,7 +3,7 @@
 - content_for :page_title do
   = t :edit_order_cycle
 
-= form_for [main_app, :admin, @order_cycle], html: { class: "order_cycle" , data: { controller: 'unsaved-changes', action: 'beforeunload@window->unsaved-changes#leavingPage', 'unsaved-changes-changed': "false" } } do |f|
+= form_for [main_app, :admin, @order_cycle], html: { class: "order_cycle" , data: { controller: 'unsaved-changes checkbox-selection', action: 'beforeunload@window->unsaved-changes#leavingPage', 'unsaved-changes-changed': "false" } } do |f|
   = render 'wizard_progress'
 
   %fieldset.no-border-bottom
@@ -13,7 +13,7 @@
     .three.columns
       &nbsp;
     .ten.columns
-      %table.checkout-options{ "data-controller": "checkbox-selection" }
+      %table.checkout-options
         %thead
           %tr
             %th{ colspan: 2 }
@@ -78,11 +78,11 @@
                   %p
                     = t('.no_payment_methods')
 
-  %div{"data-checkbox-selection-visibility":""}
-    This is a warning alert—check it out!
 
   %div#save-bar
     %div.container
+      %span.error-message{"data-checkbox-selection-target":"errorMessage"}
+        Please select at least one shipping method and one payment method.
       %div.seven.columns.alpha
         - if @order_cycle.errors.any?
           %h5#status-message.error

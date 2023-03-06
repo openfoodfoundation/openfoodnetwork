@@ -9,6 +9,15 @@
   background-color: $spree-light-blue;
   color: $spree-blue;
 
+  .container {
+    align-items: center;
+  }
+
+  .error-message {
+    color: $red-500;
+    width: 100%;
+  }
+
   h5 {
     color: $spree-blue;
 
