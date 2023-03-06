@@ -19,5 +19,5 @@
           .alpha.four.columns
             = f.label :amount, t('.voucher_amount')
           .omega.eight.columns
-            $
-            = f.text_field :amount, value: 10, disabled: true
+            = Spree::Money.currency_symbol
+            = f.text_field :amount, value: @voucher.value, disabled: true
