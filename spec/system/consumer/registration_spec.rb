@@ -98,7 +98,6 @@ describe "Registration" do
       click_button "Continue"
       expect(page).to have_content 'Step 1. Select Logo Image'
 
-
       # Images
       # Upload logo image
       attach_file "image-select", Rails.root.join("spec/fixtures/files/logo.png"), visible: false
@@ -118,12 +117,12 @@ describe "Registration" do
       click_button "Continue"
       expect(page).to have_content 'How can people find My Awesome Enterprise online?'
 
-      # Filling in social with invalid value for instagram
-      fill_in "enterprise_instagram", with: "www.instagram.com/coopcircuits/ "
-      click_button "Continue"
+      # Filling in social with invalid value for instagram - slash after InStAgRaM
+      fill_in "enterprise_instagram", with: 'www.instagram.com/InStAgRaM/'
       accept_alert "Failed to update your enterprise." do
-        expect(page).to have_content "Must be user name only eg. the_prof"
+        click_button "Continue"
       end
+      expect(page).to have_content "Must be user name only eg. the_prof"
 
       # Filling in social
       fill_in 'enterprise_website', with: 'www.shop.com'
