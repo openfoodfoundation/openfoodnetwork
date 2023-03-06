@@ -9,6 +9,19 @@ describe EnterpriseFee do
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:name) }
+
+    it "requires a per-item calculator to inherit tax" do
+      subject = build(
+        :enterprise_fee,
+        inherits_tax_category: true,
+        calculator: Calculator::FlatRate.new
+      )
+
+      expect(subject.save).to eq false
+      expect(subject.errors.full_messages.first).to eq(
+        "Inheriting the tax categeory requires a per-item calculator."
+      )
+    end
   end
 
   describe "callbacks" do

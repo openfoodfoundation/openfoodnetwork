@@ -92,6 +92,8 @@ en:
         preferred_per_unit: "Calculator Per Unit:"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Inheriting the tax categeory requires a per-item calculator."
         spree/user:
           attributes:
             email:
@@ -113,8 +115,6 @@ en:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
-        enterpise_fee:
-          cannot_inherit_from_product_when_per_order_calculator_selected: "You cannot select 'Inherit From Product' when a per order calculator is selected"
   # Used by active_storage_validations
   errors:
     messages:

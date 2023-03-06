@@ -60,9 +60,7 @@ class EnterpriseFee < ApplicationRecord
     end
 
     if inherits_tax_category? && PER_ORDER_CALCULATORS.include?(calculator_type)
-      errors.add(:inherits_tax_category,
-                 I18n.t("activerecord.errors.models." \
-                  "enterpise_fee.cannot_inherit_from_product_when_per_order_calculator_selected"))
+      errors.add(:base, :inherit_tax_requires_per_item_calculator)
       throw :abort
     end
 
