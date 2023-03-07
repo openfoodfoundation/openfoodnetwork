@@ -44,8 +44,11 @@ describe 'AdminEditOrderCycleCtrl', ->
     expect(OrderCycle.removeCoordinatorFee).toHaveBeenCalledWith(0)
     expect(scope.order_cycle_form.$dirty).toEqual true
 
-  it 'Submits the order cycle via OrderCycle update', ->
+  it 'Submits the order cycle via OrderCycle update without clearing the navigation check', ->
+    spyOn(NavigationCheck, 'clear')
     eventMock = {preventDefault: jasmine.createSpy()}
     scope.submit(eventMock,'/admin/order_cycles')
     expect(eventMock.preventDefault).toHaveBeenCalled()
     expect(OrderCycle.update).toHaveBeenCalledWith('/admin/order_cycles', scope.order_cycle_form)
+    expect(NavigationCheck.clear).not.toHaveBeenCalled()
+
