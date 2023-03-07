@@ -12,6 +12,10 @@ describe '
   let(:enterprise) { create(:supplier_enterprise, name: 'Feedme') }
   let(:voucher_code) { 'awesomevoucher' }
 
+  before do
+    Flipper.enable(:vouchers)
+  end
+
   it 'lists enterprise vouchers' do
     # Given an enterprise with vouchers
     Voucher.create!(enterprise: enterprise, code: voucher_code)
