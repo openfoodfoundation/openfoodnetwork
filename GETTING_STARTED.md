@@ -48,14 +48,14 @@ Fetch the latest version of `master` from `upstream` (ie. the main repo):
 First, you need to create the database user the app will use by manually typing the following in your terminal:
 
 ```sh
-$ sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"
+sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"
 ```
 
 This will create the "ofn" user as superuser and allowing it to create databases. If this command fails, check the [troubleshooting section](#creating-the-database) for an alternative.
 
 Next, it is _strongly recommended_ to run the setup script.
 ```sh
-$ script/setup
+./script/setup
 ```
 If the script succeeds you're ready to start developing. If not, take a look at the output as it should be informative enough to help you troubleshoot.
 
@@ -114,13 +114,13 @@ Below are fixes to potential issues that can happen during the installation proc
 
 #### Creating the database
 
-If the ```$ sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"``` command doesn't work, you can run the following commands instead:
+If the `sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"` command doesn't work, you can run the following commands instead:
 ```
-$ createuser --superuser --pwprompt ofn
-Enter password for new role: f00d
-Enter it again: f00d
-$ createdb open_food_network_dev --owner=ofn
-$ createdb open_food_network_test --owner=ofn
+createuser --superuser --pwprompt ofn
+# Enter password for new role: f00d
+# Enter it again: f00d
+createdb open_food_network_dev --owner=ofn
+createdb open_food_network_test --owner=ofn
 ```
 If these commands succeed, you should be able to [continue the setup process](#get-it-running).
 
