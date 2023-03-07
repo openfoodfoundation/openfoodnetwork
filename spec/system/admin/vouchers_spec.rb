@@ -40,10 +40,6 @@ describe '
 
     # Then I should get redirect to the entreprise voucher tab and see the created voucher
     expect(page).to have_selector '.success', text: 'Voucher has been successfully created!'
-
-    # TODO: doesn't automatically show the voucher tab
-    click_link 'Vouchers'
-
     expect(page).to have_content voucher_code
     expect(page).to have_content "10"
 
@@ -58,7 +54,7 @@ describe '
       # When I go to the new voucher page
       login_as_admin_and_visit new_admin_enterprise_voucher_path(enterprise)
 
-      # And I fill in filers with invalid data click save
+      # And I fill in fields with invalid data and click save
       click_button 'Save'
 
       # Then I should see an error flash message
