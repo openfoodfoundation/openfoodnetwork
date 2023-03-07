@@ -14,6 +14,7 @@ module Admin
       producers.size == 1 ? producers.first.id : nil
     end
 
+    # rubocop:disable Metrics/MethodLength
     def enterprise_side_menu_items(enterprise)
       is_shop = enterprise.sells != "none"
       show_properties = !!enterprise.is_primary_producer
@@ -34,7 +35,7 @@ module Admin
         { name: 'shipping_methods', icon_class: "icon-truck", show: show_shipping_methods },
         { name: 'payment_methods',  icon_class: "icon-money", show: show_payment_methods },
         { name: 'enterprise_fees',  icon_class: "icon-tasks", show: show_enterprise_fees },
-        { name: 'vouchers',  icon_class: "icon-ticket", show: true },
+        { name: 'vouchers', icon_class: "icon-ticket", show: true },
         { name: 'enterprise_permissions', icon_class: "icon-plug", show: true,
           href: admin_enterprise_relationships_path },
         { name: 'inventory_settings', icon_class: "icon-list-ol", show: is_shop },
@@ -43,5 +44,6 @@ module Admin
         { name: 'users', icon_class: "icon-user", show: true }
       ]
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end
