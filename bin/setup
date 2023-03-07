@@ -32,5 +32,7 @@ FileUtils.chdir APP_ROOT do
   system! "bin/rails log:clear tmp:clear"
 
   puts "\n== Restarting application server =="
-  system! "bin/rails restart"
+  # system! "bin/rails restart"
+  # Faster to do it manually:
+  system! "touch tmp/restart.txt"
 end
