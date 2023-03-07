@@ -41,8 +41,9 @@ Openfoodnetwork::Application.routes.draw do
 
       resources :tag_rules, only: [:destroy]
 
-      # TODO do we need to remove more routes
-      resources :vouchers, only: [:new, :create]
+      constraints FeatureToggleConstraint.new(:vouchers) do
+        resources :vouchers, only: [:new, :create]
+      end
     end
 
     resources :enterprise_relationships
