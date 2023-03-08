@@ -459,11 +459,11 @@ class Enterprise < ApplicationRecord
   end
 
   def correct_instagram_url(url)
-    url && strip_url(url.downcase).sub(%r{www.instagram.com/}, '').sub(%r{instagram.com/}, '').delete("@")
+    url && strip_url(url.downcase).sub(%r{(www\.)?instagram.com/}, '').delete("@")
   end
 
   def correct_twitter_url(url)
-    url && strip_url(url).sub(%r{www.twitter.com/}, '').delete("@")
+    url && strip_url(url).sub(%r{(www\.)?twitter.com/}, '').delete("@")
   end
 
   def set_unused_address_fields
