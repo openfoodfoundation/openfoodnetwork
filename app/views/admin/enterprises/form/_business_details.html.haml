@@ -39,17 +39,15 @@
   .omega.eight.columns#terms_and_conditions{data: { 'reflex-root': '#terms_and_conditions' } }
     - if @enterprise.terms_and_conditions.attached?
       = link_to "#{@enterprise.terms_and_conditions.blob.filename} #{ t('.uploaded_on') } #{@enterprise.terms_and_conditions.blob.created_at}", url_for(@enterprise.terms_and_conditions), target: '_blank'
-
+      %div
+        %a.icon-trash{ href: '#', data: {  action: 'click->terms-and-conditions#remove', "terms-and-conditions-message-value": t('js.admin.enterprises.form.images.immediate_terms_and_conditions_removal_warning'), 'enterprise-id': @enterprise.id}}
+          = t('.remove_terms_and_conditions')
+    .pad-top
     %div
       .button.small{ data: { controller: 'help-modal-link', action: 'click->help-modal-link#open', "help-modal-link-target-value": "terms_and_conditions_warning_modal" } }
         = t('.upload')
       %span{ data: { "terms-and-conditions-target": "filename" } }
       = f.file_field :terms_and_conditions, accept: 'application/pdf', style: 'display: none;', data: { "terms-and-conditions-target": "fileinput" }
-      
-    .pad-top
-    - if @enterprise.terms_and_conditions.attached?
-      %a.button.red{ href: '#', data: {  action: 'click->terms-and-conditions#remove', "terms-and-conditions-message-value": t('js.admin.enterprises.form.images.immediate_terms_and_conditions_removal_warning'), 'enterprise-id': @enterprise.id}}
-        = t('.remove_terms_and_conditions')
 
   = render HelpModalComponent.new(id: "terms_and_conditions_warning_modal", close_button: false ) do
     %div
