@@ -793,6 +793,17 @@ describe "As a consumer, I want to checkout my order" do
         create(:order_ready_for_confirmation, distributor: distributor)
       }
 
+      describe "with an order with special instructions" do
+        before do
+          order.update_attribute(:special_instructions, "Please deliver on Tuesday")
+          visit checkout_step_path(:summary)
+        end
+
+        it "displays the special instructions" do
+          expect(page).to have_content "Please deliver on Tuesday"
+        end
+      end
+
       describe "completing the checkout" do
         it "keeps the distributor selected for the current user after completion" do
           visit checkout_step_path(:summary)
