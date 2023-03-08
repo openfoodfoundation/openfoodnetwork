@@ -737,6 +737,7 @@ describe '
                                         completed_at: Time.zone.now )
       }
       let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
+      let!(:li11) { create(:line_item_with_shipment, order: o1 ) }
       let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
 
       before :each do
@@ -770,27 +771,58 @@ describe '
       end
 
       context "performing actions" do
-        it "deletes selected items" do
-          expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to have_selector "tr#li_#{li2.id}"
-          within("tr#li_#{li2.id} td.bulk") do
-            check "bulk"
+        context "deletes selected items" do
+          it "displays a confirmation dialog when deleting one or more items leads to order cancelation" do
+            expect(page).to have_selector "tr#li_#{li1.id}"
+            expect(page).to have_selector "tr#li_#{li11.id}"
+            within("tr#li_#{li1.id} td.bulk") do
+              check "bulk"
+            end
+            within("tr#li_#{li11.id} td.bulk") do
+              check "bulk"
+            end
+
+            find("div#bulk-actions-dropdown").click
+            find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
+
+            expect(page).to have_content "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
+
+            expect do
+              within(".modal") do
+                check("send_cancellation_email")
+                click_on("OK")
+              end
+              # order 1 should be canceled
+              expect(page).to have_no_selector "tr#li_#{li1.id}"
+              expect(page).to have_no_selector "tr#li_#{li11.id}"
+              expect(o1.reload.state).to eq("canceled")
+              # order 2 should not be canceled
+              expect(page).to have_selector "tr#li_#{li2.id}"
+              expect(o2.reload.state).to eq("complete")
+            end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
           end
 
-          find("div#bulk-actions-dropdown").click
-          find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
-
-          expect(page).to have_content "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
-
-          expect do
-            within(".modal") do
-              check("send_cancellation_email")
-              click_on("OK")
-            end
+          it "deletes one line item should show modal confirmation about this line item deletion and not about order cancelation" do
             expect(page).to have_selector "tr#li_#{li1.id}"
-            expect(page).to have_no_selector "tr#li_#{li2.id}"
-            expect(o2.reload.state).to eq("canceled")
-          end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+            within("tr#li_#{li1.id} td.bulk") do
+              check "bulk"
+            end
+
+            find("div#bulk-actions-dropdown").click
+            find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
+
+            within ".modal" do
+              expect(page).to have_content "This will delete one line item from the order. Are you sure you want to proceed?"
+              click_on "OK"
+            end
+
+            expect(page).to have_content "Loading orders"
+
+            expect(page).to have_no_selector ".modal"
+            expect(page).to have_no_selector "tr#li_#{li1.id}"
+            expect(page).to have_selector "tr#li_#{li11.id}"
+            expect(o1.reload.state).to eq("complete")
+          end
         end
       end
 
