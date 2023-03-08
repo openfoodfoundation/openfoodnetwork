@@ -240,6 +240,7 @@ module Openfoodnetwork
     config.generators.template_engine = :haml
 
     Rails.application.routes.default_url_options[:host] = ENV["SITE_URL"]
+    DfcProvider::Engine.routes.default_url_options[:host] = ENV["SITE_URL"]
 
     Rails.autoloaders.main.ignore(Rails.root.join('app/webpacker'))
 
