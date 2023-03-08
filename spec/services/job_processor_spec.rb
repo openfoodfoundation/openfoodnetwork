@@ -1,11 +1,5 @@
 # frozen_string_literal: true
 
-# We need to configure MiniRacer to allow forking.
-# Otherwise this spec hangs on CI.
-# https://github.com/rubyjs/mini_racer#fork-safety
-require "mini_racer"
-MiniRacer::Platform.set_flags!(:single_threaded)
-
 require 'spec_helper'
 
 class TestJob < ApplicationJob
