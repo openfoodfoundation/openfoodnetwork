@@ -1,5 +1,15 @@
 .medium-6
   %div.checkout-substep{"data-controller": "paymentmethod"}
+    - if @order.distributor.vouchers.present?
+      .checkout-title
+        = t("split_checkout.step2.voucher.apply_voucher")
+
+      .checkout-input.voucher
+        .two-columns-inputs.voucher
+          = f.text_field :voucher_code, { placeholder: t("split_checkout.step2.voucher.placeholder"), class: "voucher" }
+          - # TODO: enable button when code entered
+          = f.submit t("split_checkout.step2.voucher.apply"), class: "button cancel voucher", disabled: true 
+        
     %div.checkout-title
       = t("split_checkout.step2.payment_method.title")
 

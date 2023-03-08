@@ -2055,6 +2055,10 @@ en:
       explaination: You can review and confirm your order in the next step which includes the final costs.
       submit: Next - Order summary
       cancel: Back to Your details
+      voucher:
+        apply_voucher: Apply voucher 
+        apply: Apply 
+        placeholder: Enter voucher code
     step3:
       delivery_details:
         title: Delivery details

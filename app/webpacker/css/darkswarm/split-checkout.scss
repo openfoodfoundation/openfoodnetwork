@@ -404,6 +404,22 @@
   gap: 1rem;
   justify-content: space-between;
 
+  &.voucher {
+    justify-content: normal;
+
+    input {
+      width: 50%;
+    }
+
+    .button {
+      &.cancel {
+        width: 30%;
+        border-radius: 0.5em;
+        padding:0;
+      }
+    }
+  }
+
   > .checkout-input {
     flex: 1;
   }
@@ -417,6 +433,11 @@
     gap: 0;
     &:last-child > .checkout-input {
       margin-bottom: 1.5rem;
+    }
+
+    &.voucher {
+      flex-direction: row;
+      gap: 1rem;
     }
   }
 }

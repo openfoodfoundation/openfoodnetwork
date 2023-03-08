@@ -708,6 +708,30 @@ describe "As a consumer, I want to checkout my order" do
         end
       end
 
+      describe "vouchers" do
+        context "with no voucher available" do
+          before do
+            visit checkout_step_path(:payment)
+          end
+
+          it "doesn't show voucher input" do
+            expect(page).not_to have_content "Apply voucher"
+          end
+        end
+
+        context "with voucher available" do
+          let!(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor) }
+
+          before do
+            visit checkout_step_path(:payment)
+          end
+
+          it "shows voucher input" do
+            expect(page).to have_content "Apply voucher"
+          end
+        end
+      end
+
       describe "choosing" do
         shared_examples "different payment methods" do |pay_method|
           context "checking out with #{pay_method}", if: pay_method.eql?("Stripe SCA") == false do
