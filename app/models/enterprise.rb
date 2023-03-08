@@ -450,7 +450,8 @@ class Enterprise < ApplicationRecord
   end
 
   def strip_url(url)
-    url&.sub(%r{(https?://)?}, '')
+    # Strip protocol and trailing slash
+    url&.sub(%r{(https?://)?}, '')&.sub(%r{/\z}, '')
   end
 
   def correct_whatsapp_url(phone_number)

@@ -117,8 +117,8 @@ describe "Registration" do
       click_button "Continue"
       expect(page).to have_content 'How can people find My Awesome Enterprise online?'
 
-      # Filling in social with invalid value for instagram - slash after InStAgRaM
-      fill_in "enterprise_instagram", with: 'www.instagram.com/InStAgRaM/'
+      # Filling in social with invalid value for instagram - a link to a post instead of user
+      fill_in "enterprise_instagram", with: 'https://www.instagram.com/p/Cpg4McNPyJA/'
       accept_alert "Failed to update your enterprise." do
         click_button "Continue"
       end
@@ -129,7 +129,7 @@ describe "Registration" do
       fill_in 'enterprise_facebook', with: 'FaCeBoOk'
       fill_in 'enterprise_linkedin', with: 'LiNkEdIn'
       fill_in 'enterprise_twitter', with: 'https://www.twitter.com/@TwItTeR'
-      fill_in 'enterprise_instagram', with: 'www.instagram.com/InStAgRaM'
+      fill_in 'enterprise_instagram', with: 'https://www.instagram.com/OpenFoodNetwork/'
       click_button "Continue"
       expect(page).to have_content 'Finished!'
 
@@ -147,7 +147,7 @@ describe "Registration" do
       expect(e.facebook).to eq "FaCeBoOk"
       expect(e.linkedin).to eq "LiNkEdIn"
       expect(e.twitter).to eq "TwItTeR"
-      expect(e.instagram).to eq "instagram"
+      expect(e.instagram).to eq "openfoodnetwork"
 
       click_link "Go to Enterprise Dashboard"
       expect(page).to have_content "CHOOSE YOUR PACKAGE"
