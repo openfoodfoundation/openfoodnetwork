@@ -6,32 +6,32 @@
       %td{ :align => "left", colspan: 3 }
         %h6
           = "#{t('.issued_on')}: "
-          = l Time.zone.now.to_date
+          = l @invoice_presenter.invoice_date
     %tr{ valign: "top" }
       %td{ :align => "left" }
         %h4
           = "#{t('.tax_invoice')}: "
-          = "#{@order.number}"
+          = "#{@invoice_presenter.order_number}"
       %td{width: "10%" }
         &nbsp;
       %td{ :align => "right" }
-        %h4= @order.order_cycle&.name
+        %h4= @invoice_presenter.order_cycle.name
     %tr{ valign: "top" }
       %td{ align: "left", colspan: 3 }
-        - if @order.distributor.business_address.blank?
-          %strong= "#{t('.from')}: #{@order.distributor.name}"
+        - if @invoice_presenter.distributor.business_address.blank?
+          %strong= "#{t('.from')}: #{@invoice_presenter.distributor.name}"
         - else 
-          %strong= "#{t('.from')}: #{@order.distributor.business_address.company}"
-        - if @order.distributor.abn.present?
+          %strong= "#{t('.from')}: #{@invoice_presenter.distributor.business_address.company}"
+        - if @invoice_presenter.distributor.abn.present?
           %br
-          = "#{t(:abn)} #{@order.distributor.abn}"
+          = "#{t(:abn)} #{@invoice_presenter.distributor.abn}"
         %br
-        - if @order.distributor.business_address.blank?
-          = @order.distributor.address.full_address
+        - if @invoice_presenter.distributor.business_address.blank?
+          = @invoice_presenter.distributor.address.full_address
         - else
-          = @order.distributor.business_address.full_address
+          = @invoice_presenter.distributor.business_address.full_address
         %br
-        = @order.distributor.contact.email
+        = @invoice_presenter.distributor.contact.email
     %tr{ valign: "top" }
       %td{ colspan: 3 }
         &nbsp;
@@ -39,44 +39,44 @@
       %td{ align: "left" }
         %strong= "#{t('.to')}:"
         %br
-        - if @order.bill_address
-          = @order.bill_address.full_name
-        - if @order&.customer&.code.present?
+        - if @invoice_presenter.bill_address
+          = @invoice_presenter.bill_address.full_name
+        - if @invoice_presenter.customer.code.present?
           %br
-          = "#{t('.code')}: #{@order.customer.code}"
+          = "#{t('.code')}: #{@invoice_presenter.customer.code}"
         %br
-        - if @order.bill_address
-          = @order.bill_address.full_address
+        - if @invoice_presenter.bill_address
+          = @invoice_presenter.bill_address.full_address
         %br
-        - if @order&.customer&.email.present?
-          = "#{@order.customer.email},"
-        - if @order.bill_address
-          = "#{@order.bill_address.phone}"
+        - if @invoice_presenter.customer.email.present?
+          = "#{@invoice_presenter.customer.email},"
+        - if @invoice_presenter.bill_address
+          = "#{@invoice_presenter.bill_address.phone}"
       %td
         &nbsp;
       %td{ align: "left", style: "border-left: .1em solid black; padding-left: 1em" }
-        %strong= "#{t('.shipping')}: #{@order.shipping_method&.name}"
-        - if @order.shipping_method&.require_ship_address
+        %strong= "#{t('.shipping')}: #{@invoice_presenter.shipping_method.name}"
+        - if @invoice_presenter.shipping_method.require_ship_address
           %br
-          = @order.ship_address.full_name
+          = @invoice_presenter.ship_address.full_name
           %br
-          = @order.ship_address.full_address
+          = @invoice_presenter.ship_address.full_address
           %br
-          = @order.ship_address.phone
-        - if @order.special_instructions.present?
+          = @invoice_presenter.ship_address.phone
+        - if @invoice_presenter.order_special_instructions.present?
           %br
           %br
             %strong= t :customer_instructions
-          = @order.special_instructions
+          = @invoice_presenter.order_special_instructions
 
 
 = render 'spree/admin/orders/invoice_table'
 
-- if @order.distributor.invoice_text.present?
+- if @invoice_presenter.distributor.invoice_text.present?
   %p
-    = @order.distributor.invoice_text
+    = @invoice_presenter.distributor.invoice_text
 
-= render 'spree/shared/payment'
+= render 'spree/admin/orders/_invoice/payment'
 
-- if @order.note.present?
-  = render partial: 'spree/shared/order_note'
+- if @invoice_presenter.order_note.present?
+  = render partial: 'spree/admin/orders/_invoice/order_note'

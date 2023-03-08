@@ -68,6 +68,7 @@ module Spree
              },
              class_name: 'Spree::Adjustment',
              dependent: :destroy
+    has_many :invoices
 
     belongs_to :order_cycle
     belongs_to :distributor, class_name: 'Enterprise'
@@ -572,6 +573,29 @@ module Spree
       else
         line_items.sort_by { |li| [li.product.name] }
       end
+    end
+
+    def can_generate_new_invoice?
+      return true if invoices.empty?
+
+      !invoice_comparator.equal? current_state_invoice, invoices.last
+    end
+
+    def invoice_comparator
+      @invoice_comparator ||= InvoiceComparator.new
+    end
+
+    def current_state_invoice
+      Invoice.new(
+        order: self, 
+        data: serialize_for_invoice, 
+        date: Time.now.to_date,
+        number: invoices.count + 1
+      )
+    end
+
+    def serialize_for_invoice
+      Invoice::OrderSerializer.new(self).serializable_hash
     end
 
     private

@@ -1,0 +1,24 @@
+%table.index{"data-hook" => "invoices"}
+  %thead{"data-hook" => "invoice_head"}
+    %tr
+      %th= "#{t('spree.date')}/#{t('spree.time')}"
+      %th= t(:invoice_number)
+      %th= t(:amount)
+      %th= t(:status)
+      %th= t(:file)
+  %tbody
+    - @order.invoices.each do |invoice|
+      - tr_class = cycle('odd', 'even')
+      - tr_id = spree_dom_id(invoice)
+      %tr{:class => tr_class, "data-hook" => "invoice_row", :id => tr_id}
+        %td.align-center.created_at
+          = pretty_time(invoice.date)
+        %td.align-center.label
+          = invoice.number
+        %td.align-center.label
+          = invoice.data['order']['total']
+        %td.align-center.label
+          = t(invoice.status)
+        %td.align-center.label
+          =link_to(t(:download),invoice.status)
+

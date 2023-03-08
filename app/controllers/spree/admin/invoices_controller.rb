@@ -6,6 +6,10 @@ module Spree
       respond_to :json
       authorize_resource class: false
 
+      def index
+        @order = Spree::Order.find_by_number(params[:order_id])
+      end
+
       def create
         invoice_service = BulkInvoiceService.new
         invoice_service.start_pdf_job(params[:order_ids])

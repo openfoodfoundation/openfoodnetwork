@@ -1,0 +1,14 @@
+%table.payments-list
+  %thead
+    %tr
+      %th= t('.date_time')
+      %th= t('.payment_method')
+      %th.payment-state= t('.payment_state')
+      %th.amount= t('.amount')
+  %tbody
+    - payments.each do |payment|
+      %tr
+        %td= l(payment.created_at, format: "%b %d, %Y %H:%M")
+        %td.payment-method-name= payment.payment_method_name
+        %td.payment-state.payment-state-value= t(payment.state, scope: [:spree, :payment_states], default: payment.state.capitalize)
+        %td.amount= payment.display_amount.to_html

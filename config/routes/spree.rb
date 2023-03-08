@@ -100,6 +100,7 @@ Spree::Core::Engine.routes.draw do
       end
 
       resources :adjustments
+      resources :invoices
 
       resources :payments do
         member do
