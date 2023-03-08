@@ -271,7 +271,7 @@ describe OrderCycleForm do
               create(:admin_user)
             )
 
-            expect{ form.save }.to change{ order_cycle.distributor_payment_methods.pluck(:id) }
+            expect{ form.save }.to change{ order_cycle.distributor_payment_methods.pluck(:id).sort }
               .from([distributor_payment_method, distributor_payment_method2])
               .to([distributor_payment_method2])
           end
