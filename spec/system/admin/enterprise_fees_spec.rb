@@ -191,28 +191,56 @@ describe '
       login_as enterprise_user
     end
 
-    it "creates enterprise fees" do
-      visit edit_admin_enterprise_path(distributor1)
-      within(".side_menu") { click_link 'Enterprise Fees' }
-      click_link "Create One Now"
+    context "creating an enterprise fee" do
+      before do
+        visit edit_admin_enterprise_path(distributor1)
+        within(".side_menu") { click_link 'Enterprise Fees' }
+        click_link "Create One Now"
+      end
 
-      select distributor1.name,
-             from: 'sets_enterprise_fee_set_collection_attributes_0_enterprise_id'
-      select 'Packing', from: 'sets_enterprise_fee_set_collection_attributes_0_fee_type'
-      fill_in 'sets_enterprise_fee_set_collection_attributes_0_name', with: 'foo'
-      select 'GST', from: 'sets_enterprise_fee_set_collection_attributes_0_tax_category_id'
-      select 'Flat Percent', from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
-      click_button 'Update'
+      shared_examples "shared example" do |tax_category, calculator, flash_message, fee_count|
+        context "setting it up as #{tax_category}, with a #{calculator} calculator" do
+          it "triggers the expected message" do
+            select distributor1.name,
+                   from: 'sets_enterprise_fee_set_collection_attributes_0_enterprise_id'
+            select 'Packing', from: 'sets_enterprise_fee_set_collection_attributes_0_fee_type'
+            fill_in 'sets_enterprise_fee_set_collection_attributes_0_name', with: 'foo'
+            select tax_category, from: 'sets_enterprise_fee_set_collection_attributes_0_tax_category_id'
+            select calculator, from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
+            click_button 'Update'
 
-      expect(flash_message).to eq('Your enterprise fees have been updated.')
+            # The correct flash message should be displayed
+            expect(page).to have_content(flash_message)
 
-      # After saving, we should be redirected to the fees for our chosen enterprise
-      expect(page)
-        .not_to have_select 'sets_enterprise_fee_set_collection_attributes_1_enterprise_id',
-                            selected: 'Second Distributor'
+            # After saving, we should be redirected to the fees for our chosen enterprise
+            expect(page).not_to have_select 'sets_enterprise_fee_set_collection_attributes_1_enterprise_id',
+                                            selected: 'Second Distributor'
+            # A new enterprise fee is created
+            expect(EnterpriseFee.count).to eq(fee_count)
+          end
+        end
+      end
 
-      enterprise_fee = EnterpriseFee.find_by name: 'foo'
-      expect(enterprise_fee.enterprise).to eq(distributor1)
+      xcontext "an error message is displayed" do
+        # pending "#10348"
+        message = 'Inheriting the tax categeory requires a per-item calculator.'
+        it_behaves_like "shared example", 'Inherit From Product', 'Flat Rate (per order)', message, 0
+      end
+
+      context "an success message is displayed" do
+        message = 'Your enterprise fees have been updated.'
+        it_behaves_like "shared example", 'Inherit From Product', 'Flat Rate (per item)', message, 1
+      end
+
+      context "an success message is displayed" do
+        message = 'Your enterprise fees have been updated.'
+        it_behaves_like "shared example", 'GST', 'Flat Rate (per order)', message, 1
+      end
+
+      context "an success message is displayed" do
+        message = 'Your enterprise fees have been updated.'
+        it_behaves_like "shared example", 'GST', 'Flat Rate (per item)', message, 1
+      end
     end
 
     it "shows me only enterprise fees for the enterprise I select" do
