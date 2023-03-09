@@ -42,15 +42,43 @@ describe "As a consumer I want to shop with a distributor" do
       expect(first("distributor img")['src']).to include "logo-white.png"
     end
 
-    it "shows the producers for a distributor" do
-      exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id)
-      add_variant_to_order_cycle(exchange, variant)
-
-      visit shop_path
-      within ".tab-buttons" do
-        click_link "Producers"
+    describe "producers tab" do
+      before do
+        exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id)
+        add_variant_to_order_cycle(exchange, variant)
+        visit shop_path
+        within ".tab-buttons" do
+          click_link "Producers"
+        end
       end
-      expect(page).to have_content supplier.name
+
+      it "shows the producers for a distributor" do
+        expect(page).to have_content supplier.name
+        find("a", text: supplier.name).click
+        within ".reveal-modal" do
+          expect(page).to have_content supplier.name
+        end
+      end
+
+      context "when the producer visibility is set to 'hidden'" do
+        before do
+          supplier.visible = "hidden"
+          supplier.save
+          visit shop_path
+          within ".tab-buttons" do
+            click_link "Producers"
+          end
+        end
+
+        it "shows the producer name" do
+          expect(page).to have_content supplier.name
+        end
+
+        it "does not show the producer modal" do
+          expect(page).to_not have_link supplier.name
+          expect(page).to_not have_selector ".reveal-modal"
+        end
+      end
     end
 
     describe "selecting an order cycle" do
