@@ -6,7 +6,12 @@ module DfcProvider
     before_action :check_enterprise
 
     def show
-      render json: current_enterprise, serializer: DfcProvider::EnterpriseSerializer
+      enterprise = EnterpriseBuilder.enterprise(current_enterprise)
+      render json: DfcLoader.connector.export(
+        enterprise,
+        *enterprise.suppliedProducts,
+        *enterprise.catalogItems,
+      )
     end
 
     private
