@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require DfcProvider::Engine.root.join("spec/spec_helper")
 
 describe DfcProvider::PersonsController, type: :controller do
   render_views
