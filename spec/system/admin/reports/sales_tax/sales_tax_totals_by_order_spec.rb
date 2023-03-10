@@ -30,7 +30,7 @@ describe "Sales Tax Totals By order" do
   }
   let!(:state_zone){ create(:zone_with_state_member) }
   let!(:country_zone){ create(:zone_with_member) }
-  let!(:tax_category){ create(:tax_category, name: 'tax_category') }
+  let!(:tax_category){ create(:tax_category, name: 'GST Food') }
   let!(:state_tax_rate){
     create(:tax_rate, zone: state_zone, tax_category: tax_category,
                       name: 'State', amount: 0.015)
@@ -47,9 +47,12 @@ describe "Sales Tax Totals By order" do
 
   let!(:variant){ create(:variant) }
   let!(:product){ variant.product }
-  let!(:supplier){ create(:supplier_enterprise, name: 'Supplier', charges_sales_tax: true) }
+  let!(:supplier){
+    create(:supplier_enterprise, name: 'SupplierEnterprise', charges_sales_tax: true)
+  }
   let!(:distributor){
-    create(:distributor_enterprise_with_tax, name: 'Distributor', charges_sales_tax: true)
+    create(:distributor_enterprise_with_tax, name: 'DistributorEnterpriseWithTax',
+                                             charges_sales_tax: true)
   }
   let!(:distributor_fee){
     create(:enterprise_fee, :flat_rate, amount: 5,
@@ -112,10 +115,10 @@ describe "Sales Tax Totals By order" do
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
 
       expect(page.find("table.report__table tbody").text).to have_content([
-        "Distributor",
+        "DistributorEnterpriseWithTax",
         "oc1",
         "ORDER_NUMBER_1",
-        "tax_category",
+        "GST Food",
         "State",
         "1.5 %",
         "115.0",
@@ -128,10 +131,10 @@ describe "Sales Tax Totals By order" do
       ].join(" "))
 
       expect(page.find("table.report__table tbody").text).to have_content([
-        "Distributor",
+        "DistributorEnterpriseWithTax",
         "oc1",
         "ORDER_NUMBER_1",
-        "tax_category",
+        "GST Food",
         "Country",
         "2.5 %",
         "115.0",
@@ -174,10 +177,10 @@ describe "Sales Tax Totals By order" do
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
 
       expect(page.find("table.report__table tbody").text).to have_content([
-        "Distributor",
+        "DistributorEnterpriseWithTax",
         "oc1",
         "ORDER_NUMBER_1",
-        "tax_category",
+        "GST Food",
         "State",
         "1.5 %",
         "110.5",
@@ -190,10 +193,10 @@ describe "Sales Tax Totals By order" do
       ].join(" "))
 
       expect(page.find("table.report__table tbody").text).to have_content([
-        "Distributor",
+        "DistributorEnterpriseWithTax",
         "oc1",
         "ORDER_NUMBER_1",
-        "tax_category",
+        "GST Food",
         "Country",
         "2.5 %",
         "110.5",
@@ -225,10 +228,10 @@ describe "Sales Tax Totals By order" do
     let!(:table_raw_selector){ "table.report__table tbody tr" }
     let(:customer1_country_tax_rate_row){
       [
-        "Distributor",
+        "DistributorEnterpriseWithTax",
         "oc1",
         "ORDER_NUMBER_1",
-        "tax_category",
+        "GST Food",
         "Country",
         "2.5 %",
         "115.0",
@@ -242,10 +245,10 @@ describe "Sales Tax Totals By order" do
     }
     let(:customer1_state_tax_rate_row){
       [
-        "Distributor",
+        "DistributorEnterpriseWithTax",
         "oc1",
         "ORDER_NUMBER_1",
-        "tax_category",
+        "GST Food",
         "State",
         "1.5 %",
         "115.0",
@@ -272,10 +275,10 @@ describe "Sales Tax Totals By order" do
 
     let(:customer2_country_tax_rate_row){
       [
-        "Distributor",
+        "DistributorEnterpriseWithTax",
         "oc1",
         "ORDER_NUMBER_2",
-        "tax_category",
+        "GST Food",
         "Country",
         "2.5 %",
         "215.0",
@@ -289,10 +292,10 @@ describe "Sales Tax Totals By order" do
     }
     let(:customer2_state_tax_rate_row){
       [
-        "Distributor",
+        "DistributorEnterpriseWithTax",
         "oc1",
         "ORDER_NUMBER_2",
-        "tax_category",
+        "GST Food",
         "State",
         "1.5 %",
         "215.0",
@@ -425,56 +428,63 @@ describe "Sales Tax Totals By order" do
     end
 
     describe "downloading" do
-      context "csv files" do
-        let(:report_file_csv) do
-          CSV.read("spec/fixtures/reports/sales_tax_by_order/sales_tax_by_order.csv")
-        end
+      shared_examples "reports generated as" do |output_type, extension, expect_totals|
+        context output_type.to_s do
+          it "downloads the file" do
+            select output_type, from: "report_format"
 
-        it 'downloads the file' do
-          expect(downloaded_filenames.length).to eq(0) # downloads folder should be empty
-          select "CSV", from: "report_format"
-          click_on "Go"
-          wait_for_download
-          expect(downloaded_filenames.length).to eq(1) # downloads folder should contain 1 file
-          expect(downloaded_filename).to match(/.*\.csv/)
-          expect(CSV.read(downloaded_filename)).to eq(report_file_csv)
+            expect { generate_report }.to change { downloaded_filenames.length }.from(0).to(1)
+
+            expect(downloaded_filename).to match(/.*\.#{extension}/)
+
+            downloaded_file_txt = load_file_txt(extension, downloaded_filename)
+
+            expect(downloaded_file_txt).to include "DistributorEnterpriseWithTax", "oc1",
+                                                   "ORDER_NUMBER_1", "GST Food"
+            expect(downloaded_file_txt).to include "State", "cfname", "clname", "ABC123",
+                                                   "order1@example.com"
+            # order1, first tax rate line
+            expect(downloaded_file_txt).to match /115.0\s+1.73\s+116.73/
+            # order1, second tax rate line
+            expect(downloaded_file_txt).to match /115.0\s+2.88\s+117.88/
+            # order2, first tax rate line
+            expect(downloaded_file_txt).to match /215.0\s+3.23\s+218.23/
+            # order2, second tax rate line
+            expect(downloaded_file_txt).to match /215.0\s+5.38\s+220.38/
+
+            expectation = expect_totals ? :to : :not_to
+            # correct totals with white-space between them
+            expect(downloaded_file_txt).public_send(expectation,
+                                                    match(/TOTAL\s+215.0\s+8.61\s+223.61/))
+            # correct totals with white-space between them
+            expect(downloaded_file_txt).public_send(expectation,
+                                                    match(/TOTAL\s+115.0\s+4.61\s+119.61/))
+          end
         end
       end
 
-      context "xlsx files" do
-        let(:report_file_xlsx) do
-          File.open("spec/fixtures/reports/sales_tax_by_order/sales_tax_by_order.xlsx")
-        end
+      it_behaves_like "reports generated as", "CSV", "csv", false
+      it_behaves_like "reports generated as", "Spreadsheet", "xlsx", true
+      it_behaves_like "reports generated as", "PDF", "pdf", true
+    end
+  end
 
-        it 'downloads the file' do
-          expect(downloaded_filenames.length).to eq(0) # downloads folder should be empty
-          select "Spreadsheet", from: "report_format"
-          find("#display_summary_row").uncheck
-          click_on "Go"
-          wait_for_download
-          expect(downloaded_filenames.length).to eq(1) # downloads folder should contain 1 file
-          expect(downloaded_filename).to match(/.*\.xlsx/)
-          downloaded_content = extract_xlsx_rows(downloaded_filename, 1..5)
-          fixture_content = extract_xlsx_rows(report_file_xlsx, 1..5)
-          expect(downloaded_content).to eq(fixture_content)
-        end
+  def generate_report
+    click_on "Go"
+    wait_for_download
+  end
 
-        def extract_xlsx_rows(file, range)
-          xlsx = Roo::Excelx.new(file)
-          range.map { |i| xlsx.row(i) }
-        end
-      end
-
-      context "pdf files" do
-        it 'downloads the file' do
-          expect(downloaded_filenames.length).to eq(0) # downloads folder should be empty
-          select "PDF", from: "report_format"
-          click_on "Go"
-          wait_for_download
-          expect(downloaded_filenames.length).to eq(1) # downloads folder should contain 1 file
-          expect(downloaded_filename).to match(/.*\.pdf/)
-        end
-      end
+  def load_file_txt(extension, downloaded_filename)
+    case extension
+    when "csv"
+      CSV.read(downloaded_filename).join(" ")
+    when "xlsx"
+      xlsx = Roo::Excelx.new(downloaded_filename)
+      xlsx.map(&:to_a).join(" ")
+    when "pdf"
+      # Load PDF pages and contents join into one big string
+      pdf = PDF::Reader.new(downloaded_filename)
+      pdf.pages.map(&:text).join(" ")
     end
   end
 end

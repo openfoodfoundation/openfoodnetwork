@@ -9,6 +9,7 @@ module DownloadsHelper
 
   def downloaded_filename
     wait_for_download
+    expect(downloaded_filenames.length).to eq(1) # downloads folder should contain 1 file
     downloaded_filenames.first
   end
 
