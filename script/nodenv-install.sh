@@ -9,8 +9,13 @@ if nodenv install --skip-existing; then
   echo "Correct Node version is installed."
 else
   echo "Upgrading node-build:"
-  # If homebrew (macOS) installed, try that first. Otherwise look in plugins directory.
-  brew upgrade node-build || git -C "$(nodenv root)"/plugins/node-build pull
+
+  if command -v brew &> /dev/null; then
+    # Installation via Homebrew is recommended on macOS.
+    brew upgrade node-build
+  else
+    git -C "$(nodenv root)"/plugins/node-build pull
+  fi
 
   nodenv install
 fi
