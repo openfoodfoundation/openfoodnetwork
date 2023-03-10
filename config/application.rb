@@ -249,7 +249,5 @@ module Openfoodnetwork
     config.active_storage.variable_content_types += ["image/svg+xml"]
 
     config.exceptions_app = self.routes
-
-    config.autoloader = :zeitwerk
   end
 end
