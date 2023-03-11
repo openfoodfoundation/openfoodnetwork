@@ -458,6 +458,19 @@ describe "As a consumer, I want to checkout my order" do
             fill_notes("SpEcIaL NoTeS")
             proceed_to_payment
           end
+
+          context 'when the user has no shipping address' do
+            before do
+              # Hack so we can have "Shipping address same as billing address?" unticked
+              choose free_shipping_with_required_address.name
+              uncheck "Shipping address same as billing address?"
+              choose free_shipping_without_required_address.name
+            end
+
+            it "redirects the user to the Payment Method step" do
+              proceed_to_payment
+            end
+          end
         end
 
         describe "selecting a delivery method with a shipping fee" do
@@ -792,6 +805,17 @@ describe "As a consumer, I want to checkout my order" do
       let(:order) {
         create(:order_ready_for_confirmation, distributor: distributor)
       }
+
+      describe "with an order with special instructions" do
+        before do
+          order.update_attribute(:special_instructions, "Please deliver on Tuesday")
+          visit checkout_step_path(:summary)
+        end
+
+        it "displays the special instructions" do
+          expect(page).to have_content "Please deliver on Tuesday"
+        end
+      end
 
       describe "completing the checkout" do
         it "keeps the distributor selected for the current user after completion" do

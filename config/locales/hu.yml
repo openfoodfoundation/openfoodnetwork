@@ -1124,8 +1124,8 @@ hu:
         back_to_list: "Vissza a listához"
         save_and_back_to_list: "Mentés és Vissza a listához"
         choose_products_from: "Válasszon termékeket a következők közül:"
-        re_notify_producers: Értesítse újra a gyártókat
-        notify_producers_tip: Ez minden gyártónak e-mailt küld a rendeléseik listájával.
+        re_notify_producers: Értesítse újra a termelőket
+        notify_producers_tip: Ez minden termelőnak e-mailt küld a rendeléseik listájával.
       incoming:
         incoming: "Beérkező"
         supplier: "Termelő"
@@ -1246,7 +1246,7 @@ hu:
         closed: zárva
     producer_properties:
       index:
-        title: A gyártó tulajdonságai
+        title: A termelő tulajdonságai
     proxy_orders:
       cancel:
         could_not_cancel_the_order: A rendelést nem lehetett törölni
@@ -2088,7 +2088,7 @@ hu:
   producers_signup_motivation: Adja el ételeit, és mesélje el történeteit változatos új piacokon. Takarítson meg időt és pénzt minden rezsinél. Kockázat nélkül támogatjuk az innovációt. Kiegyenlítettük a játékteret.
   producers_signup_send: Csatlakozz most
   producers_signup_enterprise: Vállalkozási fiókok
-  producers_signup_studies: Gyártóink történetei.
+  producers_signup_studies: Termelőink történetei.
   producers_signup_cta_headline: Csatlakozz most!
   producers_signup_cta_action: Csatlakozz most
   producers_signup_detail: Itt a részlet.
@@ -2454,12 +2454,12 @@ hu:
   new_order_cycle: "Új rendelési ciklus"
   new_order_cycle_tooltip: "Nyissa meg az üzletet egy bizonyos ideig"
   select_a_coordinator_for_your_order_cycle: "Válasszon koordinátort a rendelési ciklushoz"
-  notify_producers: 'Értesítse a gyártókat'
+  notify_producers: 'Értesítse a termelőket'
   edit_order_cycle: "Rendelési ciklus szerkesztése"
   roles: "Szerepek"
   update: "Frissítés"
   delete: Töröl
-  add_producer_property: "Gyártói tulajdon hozzáadása"
+  add_producer_property: "Termelői tulajdonság hozzáadása"
   in_progress: "Folyamatban"
   started_at: "-kor kezdődött"
   queued: "Sorban"

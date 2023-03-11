@@ -100,10 +100,13 @@ module Admin
       order_cycle.schedules.each do |schedule|
         Subscription.where(schedule_id: schedule.id).each do |subscription|
           shop = Enterprise.managed_by(spree_current_user).find_by(id: subscription.shop_id)
+          fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(shop, order_cycle)
           subscription.subscription_line_items.nil_price_estimate.each do |line_item|
             variant = OrderManagement::Subscriptions::
                 VariantsList.eligible_variants(shop).find_by(id: line_item.variant_id)
-            fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(shop, order_cycle)
+            # If the variant is not available in the shop, the price estimate will be nil
+            next if variant.nil?
+
             price = variant.price + fee_calculator.indexed_fees_for(variant)
             line_item.update_column(:price_estimate, price)
           end

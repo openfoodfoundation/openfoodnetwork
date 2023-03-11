@@ -24,7 +24,7 @@ class SplitCheckoutController < ::BaseController
     check_step if params[:step]
     recalculate_tax if params[:step] == "summary"
 
-    flash_error_when_no_shipping_method_available if available_shipping_methods.none?
+    flash_error_when_no_shipping_method_available if allowed_shipping_methods.none?
   end
 
   def update
@@ -141,6 +141,10 @@ class SplitCheckoutController < ::BaseController
   def update_order
     return if params[:confirm_order] || @order.errors.any?
 
+    # If we have "pick up" shipping method (require_ship_address is set to false), use the
+    # distributor address as shipping address
+    use_shipping_address_from_distributor if shipping_method_ship_address_not_required?
+
     @order.select_shipping_method(params[:shipping_method_id])
     @order.update(order_params)
     @order.updater.update_totals_and_states
@@ -148,6 +152,29 @@ class SplitCheckoutController < ::BaseController
     validate_current_step!
 
     @order.errors.empty?
+  end
+
+  def use_shipping_address_from_distributor
+    @order.ship_address = @order.address_from_distributor
+
+    # Add the missing data
+    bill_address = params[:order][:bill_address_attributes]
+    @order.ship_address.firstname = bill_address[:firstname]
+    @order.ship_address.lastname = bill_address[:lastname]
+    @order.ship_address.phone = bill_address[:phone]
+
+    # Remove shipping address from parameter so we don't override the address we just set
+    params[:order].delete(:ship_address_attributes)
+  end
+
+  def shipping_method_ship_address_not_required?
+    selected_shipping_method = allowed_shipping_methods&.select do |sm|
+      sm.id.to_s == params[:shipping_method_id]
+    end
+
+    return false if selected_shipping_method.empty?
+
+    selected_shipping_method.first.require_ship_address == false
   end
 
   def summary_step?

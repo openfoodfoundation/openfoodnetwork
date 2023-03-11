@@ -212,6 +212,34 @@ module Admin
         before { controller_login_as_enterprise_user([coordinator]) }
         let(:params) { { format: :json, id: order_cycle.id, order_cycle: {} } }
 
+        context "when order cycle has subscriptions" do
+          let(:coordinator) { order_cycle.coordinator }
+          let(:producer) { create(:supplier_enterprise) }
+          let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
+          let!(:p) { create(:product) }
+          let!(:v) { p.variants.first }
+          let!(:incoming_exchange) {
+            create(:exchange, order_cycle: order_cycle, sender: producer, receiver: coordinator,
+                              incoming: true, variants: [v])
+          }
+          let!(:outgoing_exchange) {
+            create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: coordinator,
+                              incoming: false, variants: [v])
+          }
+          let!(:subscription) { create(:subscription, shop: coordinator, schedule: schedule) }
+          let!(:subscription_line_item) { create(:subscription_line_item, subscription: subscription, variant: v) }
+
+          before do
+            allow(form_mock).to receive(:save) { true }
+            v.destroy
+          end
+
+          it "can update order cycle even if the variant has been deleted" do
+            spree_put :update, { format: :json, id: order_cycle.id, order_cycle: {} }
+            expect(response.status).to eq 200
+          end
+        end
+
         context "when updating succeeds" do
           before { allow(form_mock).to receive(:save) { true } }
 

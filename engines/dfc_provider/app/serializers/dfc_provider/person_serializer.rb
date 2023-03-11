@@ -30,7 +30,6 @@ module DfcProvider
     def id
       dfc_provider_routes.person_url(
         id: object.id,
-        host: host
       )
     end
 
