@@ -6,12 +6,22 @@ en_FR:
       spree/shipping_method: Shipping Method
     attributes:
       spree/order/ship_address:
+        address1: "Shipping address (Street + House number)"
         address2: "Address (Street + House Number)"
+        city: "Shipping address city"
         country: "Pays"
         phone: "Phone number"
         firstname: "First name"
         lastname: "Last name"
         zipcode: "Code postal"
+      spree/order/bill_address:
+        address1: "Billing address (Street + House number)"
+        zipcode: "Billing address postcode"
+        city: "Billing address city"
+        country: "Billing address country"
+        firstname: "Billing address first name"
+        lastname: "Billing address last name"
+        phone: Customer phone
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
@@ -531,7 +541,6 @@ en_FR:
         title: "Invoice Settings"
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
-        enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
         enterprise_number_required_on_invoices?: "Require an ABN to generate an invoice?"
     stripe_connect_settings:
       edit:
@@ -1326,6 +1335,7 @@ en_FR:
       payment_methods: Payment Methods Report
       delivery: Delivery Report
       sales_tax_totals_by_producer: Sales Tax Totals By Producer
+      sales_tax_totals_by_order: Sales Tax Totals By Order
       tax_types: Tax Types
       tax_rates: Tax Rates
       pack_by_customer: Pack By Customer
@@ -1620,10 +1630,6 @@ en_FR:
   invoice_issued_on: "Invoice issued on:"
   order_number: "Invoice number:"
   date_of_transaction: "Date of transaction:"
-  ticket_column_qty: "Qty"
-  ticket_column_item: "Item"
-  ticket_column_unit_price: "Unit Price"
-  ticket_column_total_price: "Total Price"
   menu_1_title: "Shops"
   menu_1_url: "/shops"
   menu_2_title: "Map"

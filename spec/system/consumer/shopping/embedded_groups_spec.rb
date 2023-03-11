@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Using embedded shopfront functionality", js: true do
+describe "Using embedded shopfront functionality" do
   include OpenFoodNetwork::EmbeddedPagesHelper
 
   describe 'embedded groups' do

@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "As a consumer, I want to check unit price information for a product", js: true do
+describe "As a consumer, I want to check unit price information for a product" do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow

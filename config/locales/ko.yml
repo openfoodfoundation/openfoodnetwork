@@ -519,7 +519,6 @@ ko:
         title: "청구서 설정"
         enable_invoices?: "청구서를 사용하시겠습니까?"
         invoice_style2?: "비율별 총 세금 내역 및 품목별 세율 정보를 포함하는 대체 송장 모델을 사용해 주세요. (세금을 제외한 가격을 표시하는 국가에는 아직 적합하지 않음)"
-        enable_receipt_printing?: "열 프린터를 사용하여 영수증을 인쇄하는 옵션을 드롭다운 순서대로 표시하시겠습니까?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1568,10 +1567,6 @@ ko:
   invoice_issued_on: "송장 발행일 :"
   order_number: "송장 번호 :"
   date_of_transaction: "거래 날짜 :"
-  ticket_column_qty: "수량"
-  ticket_column_item: "항목"
-  ticket_column_unit_price: "단가"
-  ticket_column_total_price: "총 가격"
   menu_1_title: "가게"
   menu_1_url: "/가게"
   menu_2_title: "지도"

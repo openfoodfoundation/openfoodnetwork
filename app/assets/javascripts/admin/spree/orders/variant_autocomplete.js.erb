@@ -250,6 +250,18 @@ ofnCancelOrderAlert = function(callback, i18nKey) {
   $('#custom-confirm').show();
 }
 
+ofnDeleteLineItemsAlert = function(callback, count) {
+  $('#custom-confirm .message').html(`${t("js.admin.orders.delete_line_items_html", {count: count})}`);
+  $('#custom-confirm button.confirm').click(() => {
+    $('#custom-confirm').hide();
+    callback();
+  });
+  $('#custom-confirm button.cancel').click(() => {
+    $('#custom-confirm').hide();
+  });
+  $('#custom-confirm').show();
+}
+
 ofnConfirm = function(callback) {
   $('#custom-confirm .message').html(
       ` ${t("are_you_sure")}

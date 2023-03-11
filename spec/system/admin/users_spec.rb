@@ -74,7 +74,7 @@ describe "Managing users" do
           expect(page).to have_content("The account will be updated once the new email is confirmed.")
         end
 
-        it "should allow to generate, regenarate and clear the user api key", js: true do
+        it "should allow to generate, regenarate and clear the user api key" do
           user = Spree::User.find_by(email: "a@example.com")
           expect(page).to have_content "NO KEY"
 
@@ -150,7 +150,7 @@ describe "Managing users" do
       end
     end
 
-    describe "resending confirmation email", js: true do
+    describe "resending confirmation email" do
       let(:user) { create :user, confirmed_at: nil }
 
       around do |example|

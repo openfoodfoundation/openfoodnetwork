@@ -314,8 +314,14 @@ module ProductImport
     end
 
     def entry_matches_existing_variant?(entry, existing_variant)
-      existing_variant.display_name == entry.display_name &&
+      display_name_are_the_same?(entry, existing_variant) &&
         existing_variant.unit_value == entry.unit_value.to_f
+    end
+
+    def display_name_are_the_same?(entry, existing_variant)
+      return true if entry.display_name.blank? && existing_variant.display_name.blank?
+
+      existing_variant.display_name == entry.display_name
     end
 
     def category_validation(entry)

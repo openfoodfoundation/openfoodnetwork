@@ -33,7 +33,6 @@ Spree::Core::Engine.routes.draw do
   end
 
   resource :account, :controller => 'users'
-  match '/admin/orders/bulk_cancel' => 'admin/orders#bulk_cancel', :as => "admin_bulk_cancel", via: :post
 
   match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', :as => "admin_bulk_order_management", via: :get
   match '/admin/payment_methods/show_provider_preferences' => 'admin/payment_methods#show_provider_preferences', :via => :get
@@ -88,7 +87,6 @@ Spree::Core::Engine.routes.draw do
         post :resend
         get :invoice
         get :print
-        get :print_ticket
       end
 
       collection do

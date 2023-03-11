@@ -522,7 +522,6 @@ en_IE:
         title: "Invoice Settings"
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
-        enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
         enterprise_number_required_on_invoices?: "Require an ABN to generate an invoice?"
     stripe_connect_settings:
       edit:
@@ -1591,10 +1590,6 @@ en_IE:
   invoice_issued_on: "Invoice issued on:"
   order_number: "Invoice number:"
   date_of_transaction: "Date of transaction:"
-  ticket_column_qty: "Qty"
-  ticket_column_item: "Item"
-  ticket_column_unit_price: "Unit Price"
-  ticket_column_total_price: "Total Price"
   menu_1_title: "Shops"
   menu_1_url: "/shops"
   menu_2_title: "Map"

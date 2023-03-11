@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "As a consumer I want to shop with a distributor", js: true do
+describe "As a consumer I want to shop with a distributor" do
   include AuthenticationHelper
   include FileHelper
   include WebHelper

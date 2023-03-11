@@ -5,8 +5,6 @@
 class ContentSanitizer
   include ActionView::Helpers::SanitizeHelper
 
-  ALLOWED_TAGS = ["p", "b", "strong", "em", "i", "a", "u"].freeze
-  ALLOWED_ATTRIBUTES = ["href", "target"].freeze
   FILTERED_CHARACTERS = {
     "&amp;amp;" => "&",
     "&amp;" => "&",
@@ -24,7 +22,7 @@ class ContentSanitizer
   def sanitize_content(content)
     return unless content.present?
 
-    content = sanitize(content.to_s, tags: ALLOWED_TAGS, attributes: ALLOWED_ATTRIBUTES)
+    content = sanitize(content.to_s, scrubber: ContentScrubber.new)
 
     filter_characters(content)
   end

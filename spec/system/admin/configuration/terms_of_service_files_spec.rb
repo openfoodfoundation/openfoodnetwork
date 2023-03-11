@@ -32,7 +32,7 @@ describe "Terms of Service files" do
       expect(page).to have_button "Create Terms of service file"
     end
 
-    it "can delete the current file", js: true do
+    it "can delete the current file" do
       attachment = File.open(Rails.root.join(test_file_path))
       file = Rack::Test::UploadedFile.new(attachment, "application/pdf")
       TermsOfServiceFile.create!(attachment: file)

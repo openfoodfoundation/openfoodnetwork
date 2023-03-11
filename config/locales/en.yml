@@ -612,7 +612,6 @@ en:
         title: "Invoice Settings"
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
-        enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
         enterprise_number_required_on_invoices?: "Require an ABN to generate an invoice?"
 
     stripe_connect_settings:
@@ -1416,6 +1415,7 @@ en:
       payment_methods: Payment Methods Report
       delivery: Delivery Report
       sales_tax_totals_by_producer: Sales Tax Totals By Producer
+      sales_tax_totals_by_order: Sales Tax Totals By Order
       tax_types: Tax Types
       tax_rates: Tax Rates
       pack_by_customer: Pack By Customer
@@ -1727,11 +1727,6 @@ en:
   invoice_issued_on: "Invoice issued on:"
   order_number: "Invoice number:"
   date_of_transaction: "Date of transaction:"
-
-  ticket_column_qty: "Qty"
-  ticket_column_item: "Item"
-  ticket_column_unit_price: "Unit Price"
-  ticket_column_total_price: "Total Price"
 
   menu_1_title: "Shops"
   menu_1_url: "/shops"
@@ -3258,6 +3253,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
         restock_item: "Restock Items: return this item to stock"
         restock_items: "Restock Items: return all items to stock"
+        delete_line_items_html:
+          one: "This will delete one line item from the order.<br />Are you sure you want to proceed?"
+          other: "This will delete %{count} line items from the order.<br />Are you sure you want to proceed?"
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."

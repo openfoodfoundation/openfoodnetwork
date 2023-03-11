@@ -31,7 +31,7 @@ module Reporting
           return DataRepresentations::PaymentMethodFee if for_payment_method?
           return DataRepresentations::ShippingMethodFee if for_shipping_method?
 
-          enterprise_fee_adjustment_presentation_klass if for_enterprise_fee?
+          enterprise_fee_adjustment_presentation_klass
         end
 
         def enterprise_fee_adjustment_presentation_klass
@@ -48,10 +48,6 @@ module Reporting
 
         def for_shipping_method?
           data["shipping_method_name"].present?
-        end
-
-        def for_enterprise_fee?
-          data["fee_name"].present?
         end
 
         def for_coordinator_fee?

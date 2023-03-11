@@ -15,7 +15,9 @@ module CheckoutCallbacks
     prepend_before_action :require_distributor_chosen
 
     before_action :load_order, :associate_user, :load_saved_addresses, :load_saved_credit_cards
-    before_action :load_shipping_methods, if: -> { params[:step] == "details" }
+    before_action :allowed_shipping_methods, if: -> {
+                                                   params[:step] == "details"
+                                                 }
 
     before_action :ensure_order_not_completed
     before_action :ensure_checkout_allowed
@@ -46,8 +48,22 @@ module CheckoutCallbacks
     @selected_card = nil
   end
 
-  def load_shipping_methods
-    @shipping_methods = available_shipping_methods.sort { |a, b| a.name.casecmp(b.name) }
+  def allowed_shipping_methods
+    @allowed_shipping_methods ||= sorted_available_shipping_methods.filter(
+      &method(:supports_all_products_shipping_categories?)
+    )
+  end
+
+  def sorted_available_shipping_methods
+    available_shipping_methods.sort { |a, b| a.name.casecmp(b.name) }
+  end
+
+  def supports_all_products_shipping_categories?(shipping_method)
+    (products_shipping_categories - shipping_method.shipping_categories.pluck(:id)).empty?
+  end
+
+  def products_shipping_categories
+    @products_shipping_categories ||= @order.products.pluck(:shipping_category_id).uniq
   end
 
   def redirect_to_shop?

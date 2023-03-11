@@ -6,9 +6,22 @@ it:
       spree/shipping_method: Metodo di spedizione
     attributes:
       spree/order/ship_address:
+        address1: "Dati di consegna - Indirizzo"
+        address2: "Dati di consegna - continuazione indirizzo"
+        city: "Dati di consegna - città"
+        country: "Dati di consegna - nazione"
         phone: "Numero di telefono"
         firstname: "Nome"
         lastname: "Cognome"
+        zipcode: "Dati di consegna - CAP"
+      spree/order/bill_address:
+        address1: "Dati di fatturazione - indirizzo"
+        zipcode: "Dati di fatturazione - CAP"
+        city: "Dati di fatturazione - città"
+        country: "Dati di fatturazione - nazione"
+        firstname: "Dati di fatturazione - nome"
+        lastname: "Dati di fatturazione - cognome"
+        phone: Telefono
       spree/user:
         password: "Password"
         password_confirmation: "Conferma password"
@@ -528,7 +541,6 @@ it:
         title: "Impostazioni fiscali"
         enable_invoices?: "Abilita conferme d'ordine?"
         invoice_style2?: "Utilizzare il modello di fattura alternativa che include la ripartizione totale delle imposte per tariffa e le informazioni sulla tariffa fiscale per articolo (non ancora adatto per i paesi che visualizzano i prezzi al netto delle imposte)"
-        enable_receipt_printing?: "Visualizzo le opzioni per stampare la ricevuta usando la stampante termica nel menù a cascata?"
         enterprise_number_required_on_invoices?: "Richiedi un codice fiscale per generare una fattura?"
     stripe_connect_settings:
       edit:
@@ -1312,6 +1324,7 @@ it:
       total_by_customer: Totale Per Consumatore
       total_by_supplier: Totale Per Fornitore
       supplier_totals: Totali Ciclo di richieste fornitori
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Totali Ciclo di richieste fornitori per distributore
       totals_by_supplier: Totali Ciclo di richieste fornitori per fornitore
       customer_totals: Ciclo Ordini Cliente Totale
@@ -1322,6 +1335,8 @@ it:
       addresses: Indirizzi
       payment_methods: Rapporto Metodi di pagamento
       delivery: Rapporto Consegne
+      sales_tax_totals_by_producer: Totali tasse vendita per produttore
+      sales_tax_totals_by_order: Totali tasse vendita per ordine
       tax_types: Tipologia tariffe
       tax_rates: Aliquote IVA
       pack_by_customer: Imballato dal Cliente
@@ -1583,7 +1598,7 @@ it:
         require_login_2_html: "Vuoi iniziare a acquistare qui? Per favore %{contact} %{enterprise} e chiedi di essere aggiunto."
         require_customer_html: "Se vuoi iniziare a comprare, per favore %{contact} %{enterprise} per chiedere di aggiungerti ai clienti."
       select_oc:
-        select_oc_html: "Per vedere i prodotti disponibili,<span class='highlighted'>scegli la data di consegna</span> dal riquadro in alto a destra."
+        select_oc_html: "Per vedere i prodotti disponibili, <span class='highlighted'>scegli la data di consegna</span> dal riquadro in alto a destra."
     products:
       summary:
         bulk: "Volume"
@@ -1610,10 +1625,6 @@ it:
   invoice_issued_on: "Documento emesso il: "
   order_number: "Numero documento:"
   date_of_transaction: "Data della transazione:"
-  ticket_column_qty: "Qty"
-  ticket_column_item: "Articolo"
-  ticket_column_unit_price: "Prezzo unitario"
-  ticket_column_total_price: "Prezzo totale"
   menu_1_title: "Negozi"
   menu_1_url: "/shops"
   menu_2_title: "Mappa"
@@ -1623,7 +1634,7 @@ it:
   menu_4_title: "Reti"
   menu_4_url: "/groups"
   menu_5_title: "Chi siamo"
-  menu_5_url: "https://about.openfoodnetwork.org.au/"
+  menu_5_url: "https://www.openfooditalia.org/"
   menu_6_title: "Blog"
   menu_6_url: "https://apropos.openfoodfrance.org/blog/"
   menu_7_title: "Support"
@@ -1866,10 +1877,13 @@ it:
         title: Dettagli della consegna
         edit: Modifica
         address: Indirizzo di consegna
+        instructions: Istruzioni
       payment_method:
         title: Metodo di pagamento
         edit: Modifica
+        instructions: Istruzioni
       order:
+        title: Dettagli ordine
         edit: Modifica
       terms_and_conditions:
         message_html: "Accetto i %{terms_and_conditions_link} del venditore."
@@ -1882,6 +1896,7 @@ it:
       submit: Completa ordine
       cancel: Torna al metodo di pagamento
     errors:
+      saving_failed: "Salvataggio fallito, per favore controlla i campi evidenziati. %{messages}"
       terms_not_accepted: Per favore accetta i Termini e Condizioni
       required: Il campo non può essere lasciato vuoto
       invalid_number: "Per favore inserisci un numero di telefono valido"
@@ -2664,6 +2679,7 @@ it:
   report_header_tax_on_delivery: "Oneri sulla consegna (%{currency_symbol})"
   report_header_tax_on_fees: "Oneri sulle provvigioni (%{currency_symbol})"
   report_header_tax_category: "Categoria d'imposta"
+  report_header_tax_rate_name: "Nome tassa"
   report_header_tax_rate: "Aliquota d'imposta"
   report_header_total_tax: "Oneri totali (%{currency_symbol})"
   report_header_total_excl_tax: "Totale imponibile (%{currency_symbol})"
@@ -2687,6 +2703,7 @@ it:
   report_header_supplier: Fornitore
   report_header_producer: Produttore
   report_header_producer_suburb: Comune produttore
+  report_header_producer_tax_status: Stato tassa produttore
   report_header_producer_charges_sales_tax?: Partita IVA / Codice fiscale
   report_header_unit: Unità
   report_header_group_buy_unit_quantity: Raggruppare per quantità di unità
@@ -2703,6 +2720,7 @@ it:
   report_header_distributor_address: Indirizzo distributore
   report_header_distributor_city: Città distributore
   report_header_distributor_postcode: CAP distributore
+  report_header_distributor_tax_status: Stato tassa distributore
   report_header_delivery_address: Indirizzo consegna
   report_header_delivery_postcode: CAP consegna
   report_header_bulk_unit_size: Quantità minima per Acquisto di Gruppo
@@ -2792,7 +2810,7 @@ it:
   shipping: "Spedizione"
   shipping_methods: "Metodi di Spedizione"
   payment_methods: "Metodi di pagamento"
-  payment_method_fee: "Imposta di transizione"
+  payment_method_fee: "Imposta di transazione"
   payment_processing_failed: "Non è stato possibile elaborare il pagamento, per favore controlla i dettagli che hai inserito"
   payment_method_not_supported: "Questo metodo di pagamento non è supportato. Per favore scegline un altro."
   payment_updated: "Pagamento aggiornato"
@@ -2884,6 +2902,7 @@ it:
       deleting_item_will_cancel_order: "Questa operazione risulterà in una o più gentili richieste vuote che saranno cancellate. Desideri proseguire?"
       modals:
         got_it: "Capito"
+        confirm: "Conferma"
         close: "Ok"
         continue: "Continua"
         cancel: "Annulla"
@@ -3434,6 +3453,8 @@ it:
     server_error: "Errore Server"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Ritiro in azienda"
+      delivery: "Firmato, sigillato, consegnato"
     start_date: "Data inizio"
     successfully_removed: "Rimosso con successo"
     taxonomy_edit: "Modifica tassonomia"
@@ -3518,6 +3539,7 @@ it:
     display_currency: "Visualizza valuta"
     choose_currency: "Scegli Valuta"
     mail_method_settings: "Impostazioni del metodo di posta"
+    mail_settings_notice_html: "<b>Le modifiche efettuate saranno temporanee</b> solo per il debugging, potrebbero essere invertite in futuro. <br>Modifiche permanenti possono essere effettuate modificando i dati nascosti dell'istanza utilizzando <a href='https://github.com/openfoodfoundation/ofn-install'>intallazione ofn </a>. Contatta il team globale OFN per maggiori dettagli. "
     general: "Generale"
     enable_mail_delivery: "Abilita recapito posta"
     send_mails_as: "Invia mail come"

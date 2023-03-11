@@ -432,7 +432,7 @@ describe '
           expect(page).to have_content "Are you sure you want to proceed?"
           expect(page).to have_content "This will cancel the current order."
 
-          within "#custom-confirm.modal" do
+          within ".reveal-modal" do
             expect {
               find_button("Cancel").click # Cancels the cancel action
             }.to_not enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
@@ -443,9 +443,9 @@ describe '
             page.find("span", text: "Cancel Orders").click
           end
 
-          within "#custom-confirm.modal" do
+          within ".reveal-modal" do
             expect {
-              find_button("OK").click # Confirms the cancel action
+              find_button("Confirm").click # Confirms the cancel action
             }.to_not enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
           end
 

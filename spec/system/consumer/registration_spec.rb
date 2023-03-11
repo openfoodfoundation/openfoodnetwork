@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Registration", js: true do
+describe "Registration" do
   include AuthenticationHelper
   include WebHelper
 
@@ -70,6 +70,10 @@ describe "Registration", js: true do
       expect(page).to have_content 'Last step to add My Awesome Enterprise!'
 
       # Choosing a type
+      click_button "Create Profile"
+      expect(page).to have_content("Please choose one. Are you are producer?")
+      expect(page).to have_button "Create Profile", disabled: false
+
       click_link "producer-panel"
       expect(page).to have_selector '#producer-panel.selected'
 

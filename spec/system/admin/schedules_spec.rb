@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Schedules', js: true do
+describe 'Schedules' do
   include AuthenticationHelper
   include WebHelper
 

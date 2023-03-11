@@ -528,7 +528,6 @@ cy:
         title: "Gosodiadau Anfoneb"
         enable_invoices?: "Galluogi Anfonebau?"
         invoice_style2?: "Defnyddiwch y model anfoneb amgen sy'n cynnwys dadansoddiad treth cyfan fesul cyfradd a gwybodaeth cyfradd dreth fesul eitem (ddim yn addas eto ar gyfer gwledydd sy'n arddangos prisiau ac eithrio treth)"
-        enable_receipt_printing?: "Dangos opsiynau ar gyfer argraffu derbynebau gan ddefnyddio argraffwyr thermol yn nhrefn y cwymplen?"
         enterprise_number_required_on_invoices?: "Angen rhif y cwmni i greu anfoneb?"
     stripe_connect_settings:
       edit:
@@ -1613,10 +1612,6 @@ cy:
   invoice_issued_on: "Cyhoeddwyd yr anfoneb ar:"
   order_number: "Rhif yr anfoneb:"
   date_of_transaction: "Dyddiad y trafodiad:"
-  ticket_column_qty: "Nifer"
-  ticket_column_item: "Eitem"
-  ticket_column_unit_price: "Pris yr Uned"
-  ticket_column_total_price: "Cyfanswm Pris"
   menu_1_title: "Hafan"
   menu_1_url: "/"
   menu_2_title: "Amdanom"

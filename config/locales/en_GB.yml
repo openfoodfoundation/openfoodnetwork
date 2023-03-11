@@ -531,7 +531,6 @@ en_GB:
         title: "Invoice Settings"
         enable_invoices?: "Enable Invoices?"
         invoice_style2?: "Use the alternative invoice model that includes total tax breakdown per rate and tax rate info per item (not yet suitable for countries displaying prices excluding tax)"
-        enable_receipt_printing?: "Show options for printing receipts using thermal printers in order dropdown?"
         enterprise_number_required_on_invoices?: "Require a company number to generate an invoice?"
     stripe_connect_settings:
       edit:
@@ -1617,10 +1616,6 @@ en_GB:
   invoice_issued_on: "Invoice issued on:"
   order_number: "Invoice number:"
   date_of_transaction: "Date of transaction:"
-  ticket_column_qty: "Qty"
-  ticket_column_item: "Item"
-  ticket_column_unit_price: "Unit Price"
-  ticket_column_total_price: "Total Price"
   menu_1_title: "Home"
   menu_1_url: "/"
   menu_2_title: "About"
@@ -1936,7 +1931,7 @@ en_GB:
   email_confirmation_notice_unexpected: "You received this message because you signed up on %{sitename}, or were invited to sign up by someone you probably know. If you don't understand why you are receiving this email, please write to %{contact}."
   email_social: "Connect with Us:"
   email_contact: "Email us:"
-  email_signoff: "Cheers,"
+  email_signoff: "Thank you,"
   email_signature: "%{sitename} Team"
   email_confirm_customer_greeting: "Hi %{name},"
   email_confirm_customer_intro_html: "Thanks for shopping at <strong>%{distributor}</strong>!"
@@ -2078,7 +2073,7 @@ en_GB:
   components_filters_clearfilters: "Clear all filters"
   groups_title: Groups
   groups_headline: Groups / regions
-  groups_text: "Every producer is unique. Every business has something different to offer. Our groups are collectives of producers, hubs and distributors who share something in common like location, farmers market or philosophy. This makes your shopping experience easier. So explore our groups and have the curating done for you."
+  groups_text: "Every producer is unique. Every business has something different to offer. Our groups are collectives of producers, hubs and distributors who share something in common, whether that's belonging to a local farmers market, specialising in a specific product, or sharing a philosophy. Explore our curated groups below."
   groups_search: "Search name or keyword"
   groups_no_groups: "No groups found"
   groups_about: "About Us"

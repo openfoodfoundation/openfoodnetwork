@@ -6,12 +6,22 @@ fr:
       spree/shipping_method: Option d'expédition
     attributes:
       spree/order/ship_address:
+        address1: "Adresse de livraison (Numéro et Rue)"
         address2: "Adresse (Numéro et rue)"
+        city: "Adresse de livraison - Ville"
         country: "Pays"
         phone: "Numéro de téléphone"
         firstname: "Prénom"
         lastname: "Nom "
         zipcode: "Code postal"
+      spree/order/bill_address:
+        address1: "Adresse de facturation (Numéro et rue)"
+        zipcode: "Adresse de facturation - Code postal"
+        city: "Adresse de facturation - Ville"
+        country: "Adresse de facturation - Pays"
+        firstname: "Adresse de facturation - Prénom"
+        lastname: "Adresse de facturation - Nom"
+        phone: Téléphone
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
@@ -531,7 +541,6 @@ fr:
         title: "Paramètres de facturation"
         enable_invoices?: "Autoriser l'émission de factures ?"
         invoice_style2?: "Utiliser le modèle de facture alternatif qui détaille le montant de TVA agrégé par taux et l'information du taux de TVA par produit (pas adapté pour les instances affichant les prix HT)"
-        enable_receipt_printing?: "Afficher les options d'impression de tickets de caisse dans le menu déroulant des commandes?"
         enterprise_number_required_on_invoices?: "Le SIRET est obligatoire pour générer une facture ?"
     stripe_connect_settings:
       edit:
@@ -1327,6 +1336,7 @@ fr:
       payment_methods: Rapport Méthodes de Paiement
       delivery: Rapport de Livraison
       sales_tax_totals_by_producer: Détail des montants de taxes par producteur
+      sales_tax_totals_by_order: Détail des montants de taxes par commande
       tax_types: Par type de taxe
       tax_rates: Par taux de taxe
       pack_by_customer: Préparation des commandes par Acheteur
@@ -1622,10 +1632,6 @@ fr:
   invoice_issued_on: "Date de facture :"
   order_number: "N° de facture :"
   date_of_transaction: "Date de la transaction :"
-  ticket_column_qty: "Qté"
-  ticket_column_item: "Produit"
-  ticket_column_unit_price: "Prix unitaire"
-  ticket_column_total_price: "Prix total"
   menu_1_title: "Acheter"
   menu_1_url: "/shops"
   menu_2_title: "Carte"

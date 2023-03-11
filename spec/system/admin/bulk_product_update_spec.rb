@@ -345,7 +345,7 @@ describe '
     login_as_admin
     visit spree.admin_products_path
 
-    toggle_columns "Available On", /^Category?/, "Inherits Properties?", "SKU"
+    toggle_columns "Available On", /^Category?/i, "Inherits Properties?", "SKU"
 
     within "tr#p_#{p.id}" do
       expect(page).to have_field "product_name", with: p.name
@@ -712,7 +712,7 @@ describe '
         expect(page).to have_selector "th", text: "ON HAND"
         expect(page).to have_selector "th", text: "AV. ON"
 
-        toggle_columns /^.{0,1}Producer$/
+        toggle_columns /^.{0,1}Producer$/i
 
         expect(page).to have_no_selector "th", text: "PRODUCER"
         expect(page).to have_selector "th", text: "NAME"

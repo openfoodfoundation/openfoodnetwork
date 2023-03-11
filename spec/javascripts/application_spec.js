@@ -14,6 +14,7 @@
 //= require moment/min/moment.min.js
 //= require i18n
 //= require handlebars
+//= require jquery2
 
 angular.module('templates', [])
 angular.module('uiGmapgoogle-maps', []);

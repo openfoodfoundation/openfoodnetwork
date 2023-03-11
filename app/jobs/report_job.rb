@@ -19,7 +19,7 @@ class ReportJob < ActiveJob::Base
   private
 
   def write(result)
-    File.write(filename, result)
+    File.write(filename, result, mode: "wb")
   end
 
   def read_result

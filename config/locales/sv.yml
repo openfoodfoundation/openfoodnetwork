@@ -199,7 +199,6 @@ sv:
       edit:
         title: "Fakturainställningar"
         invoice_style2?: "Använd den alternativa faktureringsmodellen som inkluderar totala skattefördelning per beräkning och skatt per artikel (ännu inte passande för länder som visar priser exklusive skatt)"
-        enable_receipt_printing?: "Visa alternativ för att skriva ut recept genom att använda termiska skrivare i ordermenyn? "
     customers:
       index:
         new_customer: "Ny kund"
@@ -810,10 +809,6 @@ sv:
   invoice_issued_on: "Faktura utfärdad på:"
   order_number: "Fakturanummer:"
   date_of_transaction: "Transaktionsdatum:"
-  ticket_column_qty: "Kvantitet"
-  ticket_column_item: "Vara"
-  ticket_column_unit_price: "Styckpris"
-  ticket_column_total_price: "Summa"
   menu_1_title: "Butiker"
   menu_2_title: "Karta"
   menu_3_title: "Producenter "

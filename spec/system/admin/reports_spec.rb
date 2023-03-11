@@ -262,7 +262,7 @@ describe '
     end
   end
 
-  describe "products and inventory report", js: true do
+  describe "products and inventory report" do
     let(:supplier) { create(:supplier_enterprise, name: 'Supplier Name') }
     let(:taxon)    { create(:taxon, name: 'Taxon Name') }
     let(:product1) {

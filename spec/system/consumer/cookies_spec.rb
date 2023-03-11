@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Cookies", js: true do
+describe "Cookies" do
   describe "banner" do
     # keeps banner toggle config unchanged
     around do |example|

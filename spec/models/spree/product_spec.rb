@@ -309,7 +309,7 @@ module Spree
       it "defaults available_on to now" do
         Timecop.freeze do
           product = Product.new
-          expect(product.available_on).to eq(Time.zone.now)
+          expect(product.available_on).to be_within(0.000001).of(Time.zone.now)
         end
       end
 

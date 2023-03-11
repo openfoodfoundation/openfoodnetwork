@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Check out with Paypal", js: true do
+describe "Check out with Paypal" do
   include ShopWorkflow
   include CheckoutRequestsHelper
   include AuthenticationHelper

@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Multilingual', js: true do
+describe 'Multilingual' do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow

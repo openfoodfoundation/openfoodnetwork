@@ -30,8 +30,10 @@ class OrderCycleForm
       order_cycle.schedule_ids = schedule_ids if parameter_specified?(:schedule_ids)
       order_cycle.save!
       apply_exchange_changes
-      attach_selected_distributor_payment_methods
-      attach_selected_distributor_shipping_methods
+      if can_update_selected_payment_or_shipping_methods?
+        attach_selected_distributor_payment_methods
+        attach_selected_distributor_shipping_methods
+      end
       sync_subscriptions
       true
     end
@@ -61,14 +63,33 @@ class OrderCycleForm
   def attach_selected_distributor_payment_methods
     return if @selected_distributor_payment_method_ids.nil?
 
-    order_cycle.selected_distributor_payment_method_ids = selected_distributor_payment_method_ids
+    if distributor_only?
+      payment_method_ids = order_cycle.selected_distributor_payment_method_ids
+      payment_method_ids -= user_distributor_payment_method_ids
+      payment_method_ids += user_only_selected_distributor_payment_method_ids
+      order_cycle.selected_distributor_payment_method_ids = payment_method_ids
+    else
+      order_cycle.selected_distributor_payment_method_ids = selected_distributor_payment_method_ids
+    end
     order_cycle.save!
   end
 
   def attach_selected_distributor_shipping_methods
     return if @selected_distributor_shipping_method_ids.nil?
 
-    order_cycle.selected_distributor_shipping_method_ids = selected_distributor_shipping_method_ids
+    if distributor_only?
+      # A distributor can only update methods associated with their own
+      # enterprise, so we load all previously selected methods, and replace
+      # only the distributor's methods with their selection (not touching other
+      # distributor's methods).
+      shipping_method_ids = order_cycle.selected_distributor_shipping_method_ids
+      shipping_method_ids -= user_distributor_shipping_method_ids
+      shipping_method_ids += user_only_selected_distributor_shipping_method_ids
+      order_cycle.selected_distributor_shipping_method_ids = shipping_method_ids
+    else
+      order_cycle.selected_distributor_shipping_method_ids = selected_distributor_shipping_method_ids
+    end
+
     order_cycle.save!
   end
 
@@ -99,6 +120,10 @@ class OrderCycleForm
     @selected_distributor_payment_method_ids
   end
 
+  def user_only_selected_distributor_payment_method_ids
+    user_distributor_payment_method_ids.intersection(selected_distributor_payment_method_ids)
+  end
+
   def selected_distributor_shipping_method_ids
     @selected_distributor_shipping_method_ids = (
       attachable_distributor_shipping_method_ids &
@@ -110,6 +135,10 @@ class OrderCycleForm
     end
 
     @selected_distributor_shipping_method_ids
+  end
+
+  def user_only_selected_distributor_shipping_method_ids
+    user_distributor_shipping_method_ids.intersection(selected_distributor_shipping_method_ids)
   end
 
   def build_schedule_ids
@@ -159,5 +188,38 @@ class OrderCycleForm
 
   def new_schedule_ids
     @order_cycle.schedule_ids - existing_schedule_ids
+  end
+
+  def can_update_selected_payment_or_shipping_methods?
+    @user.admin? || coordinator? || distributor?
+  end
+
+  def coordinator?
+    @user.enterprises.include?(@order_cycle.coordinator)
+  end
+
+  def distributor?
+    !user_distributors_ids.empty?
+  end
+
+  def distributor_only?
+    distributor? && !@user.admin? && !coordinator?
+  end
+
+  def user_distributors_ids
+    @user_distributors_ids ||= @user.enterprises.pluck(:id)
+      .intersection(@order_cycle.distributors.pluck(:id))
+  end
+
+  def user_distributor_payment_method_ids
+    @user_distributor_payment_method_ids ||=
+      DistributorPaymentMethod.where(distributor_id: user_distributors_ids)
+        .pluck(:id)
+  end
+
+  def user_distributor_shipping_method_ids
+    @user_distributor_shipping_method_ids ||=
+      DistributorShippingMethod.where(distributor_id: user_distributors_ids)
+        .pluck(:id)
   end
 end

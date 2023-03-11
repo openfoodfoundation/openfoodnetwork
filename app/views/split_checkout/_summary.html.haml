@@ -34,6 +34,10 @@
           = @order.bill_address.zipcode
         %div
           = @order.bill_address.country
+        - if @order.special_instructions.present?
+          %br
+          %em
+            = @order.special_instructions
       - if @order.shipping_method.description.present?
         %div
           .summary-subtitle

@@ -393,7 +393,6 @@ pl:
         title: "Ustawienia faktury"
         enable_invoices?: "Włączyć faktury?"
         invoice_style2?: "Użyj alternatywnego modelu fakturowania, który zawiera podział podatku według stawki i informacje o stawce podatku dla pozycji (jeszcze nie jest odpowiedni dla krajów, w których są wyświetlane ceny bez podatku)"
-        enable_receipt_printing?: "Wyświetlić opcje drukowania paragonów za pomocą drukarek termicznych w menu rozwijanym?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1317,10 +1316,6 @@ pl:
   invoice_issued_on: "Faktura wystawiona dnia:"
   order_number: "Numer faktury:"
   date_of_transaction: "Data transakcji:"
-  ticket_column_qty: "Ilość"
-  ticket_column_item: "Pozycja"
-  ticket_column_unit_price: "Cena jednostkowa"
-  ticket_column_total_price: "Cena całkowita"
   menu_1_title: "Sklepy"
   menu_1_url: "/shops"
   menu_2_title: "Mapa"

@@ -43,6 +43,10 @@ describe ProductImport::ProductImporter do
     create(:variant, product_id: product.id, price: '8.50', on_hand: '100', unit_value: '500',
                      display_name: 'Preexisting Banana')
   }
+  let!(:variant_with_empty_display_name) {
+    create(:variant, product_id: product.id, price: '8.50', on_hand: '100', unit_value: '500',
+                     display_name: '')
+  }
   let!(:product2) {
     create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Beans', unit_value: '500',
                             primary_taxon_id: category.id, description: nil)
@@ -373,6 +377,28 @@ describe ProductImport::ProductImporter do
 
       expect(filter('valid', entries)).to eq 1
       expect(filter('invalid', entries)).to eq 0
+      expect(filter('update_product', entries)).to eq 1
+    end
+  end
+
+  describe "updating variant having an nil display name with CSV with empty display name" do
+    let(:csv_data) {
+      CSV.generate do |csv|
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "display_name", "shipping_category"]
+        csv << ["Hypothetical Cake", enterprise2.name, "Cake", "5", "5.50", "1", "g",
+                "", shipping_category.name]
+      end
+    }
+    let(:importer) { import_data csv_data }
+
+    it "consider both existing and imported as the same and should be then updated" do
+      importer.validate_entries
+      entries = JSON.parse(importer.entries_json)
+
+      expect(filter('valid', entries)).to eq 1
+      expect(filter('invalid', entries)).to eq 0
+      expect(filter('create_product', entries)).to eq 0
       expect(filter('update_product', entries)).to eq 1
     end
   end

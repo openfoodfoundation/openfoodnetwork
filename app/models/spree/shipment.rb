@@ -116,7 +116,22 @@ module Spree
 
       # The call to Stock::Estimator below will replace the current shipping_method
       original_shipping_method_id = shipping_method.try(:id)
-      self.shipping_rates = OrderManagement::Stock::Estimator.new(order).shipping_rates(to_package)
+
+      estimator = OrderManagement::Stock::Estimator.new(order)
+      distributor_shipping_rates = estimator.shipping_rates(to_package)
+
+      if original_shipping_method_id.present? &&
+         distributor_shipping_rates.map(&:shipping_method_id)
+             .exclude?(original_shipping_method_id)
+        cost = estimator.calculate_cost(shipping_method, to_package)
+        unless cost.nil?
+          original_shipping_rate = shipping_method.shipping_rates.new(cost: cost)
+          self.shipping_rates = distributor_shipping_rates + [original_shipping_rate]
+          self.selected_shipping_rate_id = original_shipping_rate.id
+        end
+      else
+        self.shipping_rates = distributor_shipping_rates
+      end
 
       keep_original_shipping_method_selection(original_shipping_method_id)
 

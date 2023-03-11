@@ -219,7 +219,6 @@ module Openfoodnetwork
     config.assets.precompile += ['web/all.js']
     config.assets.precompile += ['darkswarm/all.js']
     config.assets.precompile += ['shared/*']
-    config.assets.precompile += ['qz/*']
     config.assets.precompile += ['*.jpg', '*.jpeg', '*.png', '*.gif' '*.svg']
 
     # Apply framework defaults. New recommended defaults are successively added with each Rails version and
@@ -241,6 +240,7 @@ module Openfoodnetwork
     config.generators.template_engine = :haml
 
     Rails.application.routes.default_url_options[:host] = ENV["SITE_URL"]
+    DfcProvider::Engine.routes.default_url_options[:host] = ENV["SITE_URL"]
 
     Rails.autoloaders.main.ignore(Rails.root.join('app/webpacker'))
 

@@ -5,7 +5,7 @@ require 'system_helper'
 describe '
     As an administrator
     I want to list and filter order cycles
-', js: true do
+' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper

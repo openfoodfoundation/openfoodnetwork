@@ -29,15 +29,20 @@ describe '
       expect(page).to have_selector('span', text: 'COMPLETE', count: 2)
 
       page.check('selectAll')
-      page.find('.ofn-drop-down').click
-      page.find('.menu').find('span', text: 'Cancel Orders').click
+      page.find("span.icon-reorder", text: "ACTIONS").click
+      within ".ofn-drop-down-with-prepend .menu" do
+        page.find("span", text: "Cancel Orders").click
+      end
 
-      within '.modal' do
-        click_on "OK"
+      within '.reveal-modal' do
+        expect {
+          find_button("Confirm").click
+        }.to change { o1.reload.state }.from('complete').to('canceled')
+          .and change { o2.reload.state }.from('complete').to('canceled')
       end
 
       # Verify that the orders have a STATE of CANCELLED
-      expect(page).to have_selector('span', text: 'CANCELLED', count: 2)
+      expect(page).to have_selector('span.canceled', text: 'CANCELLED', count: 2)
     end
   end
 end

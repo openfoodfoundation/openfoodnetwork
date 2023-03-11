@@ -436,7 +436,6 @@ pt:
         title: "Configuração de Faturas"
         enable_invoices?: "Ativar Faturas?"
         invoice_style2?: "Use o modelo alternativo de fatura que inclui o total de impostos dividido por taxa e taxa de imposto por item (ainda não disponível para países que exibem preços sem taxas)"
-        enable_receipt_printing?: "Mostrar opções para imprimir recibos usando impressoras térmicas no selector de encomendas?"
     stripe_connect_settings:
       edit:
         title: "Ligar ao Stripe"
@@ -1406,10 +1405,6 @@ pt:
   invoice_issued_on: "Fatura emitida em:"
   order_number: "Número da fatura:"
   date_of_transaction: "Data da transação:"
-  ticket_column_qty: "Qtd"
-  ticket_column_item: "Item"
-  ticket_column_unit_price: "Preço Unitário"
-  ticket_column_total_price: "Preço Total"
   menu_1_title: "Lojas"
   menu_1_url: "/shops"
   menu_2_title: "Mapa"

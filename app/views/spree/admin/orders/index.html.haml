@@ -37,7 +37,7 @@
               %span.name.invoices-modal{'ng-controller' => 'bulkInvoiceCtrl', 'ng-click' => 'createBulkInvoice()' }
                 = t('.print_invoices')
             %div.menu_item
-              %span.name{'ng-controller' => 'bulkCancelCtrl', 'ng-click' => 'cancelSelectedOrders()' }
+              %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "cancel_orders" }
                 = t('.cancel_orders')
     
     = render partial: 'admin/shared/angular_per_page_controls', locals: { position: "right", model: "orders" }
@@ -124,3 +124,6 @@
 = render ConfirmModalComponent.new(id: "resend_confirmation", confirm_actions: "click->resend-confirmation-email#confirm", controllers: "resend-confirmation-email") do
   .margin-bottom-30
     = t('.resend_confirmation_confirm_html')
+= render ConfirmModalComponent.new(id: "cancel_orders", confirm_actions: "click->cancel-orders#confirm", controllers: "cancel-orders", message: "spree/admin/orders/messages/cancel_orders") do
+  .margin-bottom-30
+    = t("js.admin.orders.cancel_the_order_html")

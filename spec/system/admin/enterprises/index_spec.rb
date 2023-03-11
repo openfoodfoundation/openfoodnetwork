@@ -35,13 +35,13 @@ describe 'Enterprises Index' do
     end
 
     context "editing enterprises in bulk" do
-      let!(:s){ create(:supplier_enterprise) }
-      let!(:d){ create(:distributor_enterprise, sells: 'none') }
-      let!(:d_manager) { create(:user, enterprise_limit: 1) }
+      let!(:distributor) {
+        create(:distributor_enterprise, sells: 'none', name: "Adam's Market")
+      }
+      let!(:manager) { create(:user, enterprise_limit: 1) }
 
       before do
-        d_manager.enterprise_roles.build(enterprise: d).save
-        expect(d.owner).to_not eq d_manager
+        distributor.users << manager
       end
 
       context "without violating rules" do
@@ -50,53 +50,54 @@ describe 'Enterprises Index' do
         end
 
         it "updates the enterprises" do
-          within("tr.enterprise-#{d.id}") do
+          within("tr.enterprise-#{distributor.id}") do
             expect(page).to have_checked_field "sets_enterprise_set_collection_attributes_0_visible"
             uncheck "sets_enterprise_set_collection_attributes_0_visible"
             select 'any', from: "sets_enterprise_set_collection_attributes_0_sells"
-            select d_manager.email, from: 'sets_enterprise_set_collection_attributes_0_owner_id'
+            select manager.email, from: 'sets_enterprise_set_collection_attributes_0_owner_id'
           end
           click_button "Update"
           expect(flash_message).to eq('Enterprises updated successfully')
-          distributor = Enterprise.find(d.id)
+          distributor.reload
           expect(distributor.visible).to eq "hidden"
           expect(distributor.sells).to eq 'any'
-          expect(distributor.owner).to eq d_manager
+          expect(distributor.owner).to eq manager
         end
       end
 
       context "with data that violates rules" do
-        let!(:second_distributor) { create(:distributor_enterprise, sells: 'none') }
+        let!(:second_distributor) {
+          # Choose name appearing at the end of the list because the spec
+          # relies on the order of saving records during update.
+          create(:distributor_enterprise, sells: "none", name: "Zed's Shop")
+        }
 
         before do
-          d_manager.enterprise_roles.build(enterprise: second_distributor).save
-          expect(d.owner).to_not eq d_manager
+          second_distributor.users << manager
 
           login_as_admin_and_visit admin_enterprises_path
         end
 
-        def enterprise_row_index(enterprise_name)
-          enterprise_row_number = all('tr').index { |tr| tr.text.include? enterprise_name }
-          enterprise_row_number - 1
+        it "does not update the enterprises and displays errors" do
+          select_new_owner(manager, distributor)
+          select_new_owner(manager, second_distributor)
+
+          expect {
+            click_button "Update"
+
+            expect(flash_message).to eq('Update failed')
+            expect(page).to have_content "#{manager.email} is not permitted to own any more enterprises (limit is 1)."
+            second_distributor.reload
+          }.to_not change { second_distributor.owner }
+
+          expect(second_distributor.owner).to_not eq manager
         end
 
-        it "does not update the enterprises and displays errors" do
-          d_row_index = enterprise_row_index(d.name)
-          within("tr.enterprise-#{d.id}") do
-            select d_manager.email,
-                   from: "sets_enterprise_set_collection_attributes_#{d_row_index}_owner_id"
+        def select_new_owner(user, enterprise)
+          # The fifth table column contains the owner field.
+          within("tr.enterprise-#{enterprise.id} td:nth-child(5)") do
+            select user.email
           end
-
-          second_distributor_row_index = enterprise_row_index(second_distributor.name)
-          within("tr.enterprise-#{second_distributor.id}") do
-            select d_manager.email,
-                   from: "sets_enterprise_set_collection_attributes_#{second_distributor_row_index}_owner_id"
-          end
-          click_button "Update"
-          expect(flash_message).to eq('Update failed')
-          expect(page).to have_content "#{d_manager.email} is not permitted to own any more enterprises (limit is 1)."
-          second_distributor.reload
-          expect(second_distributor.owner).to_not eq d_manager
         end
       end
     end
@@ -121,7 +122,7 @@ describe 'Enterprises Index' do
       login_as enterprise_manager
     end
 
-    context "listing enterprises", js: true do
+    context "listing enterprises" do
       it "displays enterprises I have permission to manage" do
         visit admin_enterprises_path
 
@@ -178,7 +179,7 @@ describe 'Enterprises Index' do
       login_as user
     end
 
-    context "listing enterprises", js: true do
+    context "listing enterprises" do
       it "allows me to change or update the package and producer properties of enterprises I manage" do
         visit admin_enterprises_path
 

@@ -56,7 +56,7 @@ describe "Tax Rates" do
       expect(page).to have_content("cannot be selected unless you have set a Default Tax Zone")
     end
 
-    it "can be deleted", js: true do
+    it "can be deleted" do
       click_link "Tax Rates"
       accept_alert do
         find(".delete-resource").click

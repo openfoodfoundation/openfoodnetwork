@@ -518,7 +518,6 @@ es_US:
         title: "Configuración de Factura"
         enable_invoices?: "Habilitar facturas?"
         invoice_style2?: "Utiliza el modelo de factura alternativo que incluye el desglose fiscal total por tipo de interés y tasa de impuestos por artículo (todavía no es adecuado para países que muestran los precios sin impuestos)"
-        enable_receipt_printing?: "¿Mostrar opciones para imprimir recibos usando impresoras térmicas en el desplegable del pedido?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -1544,10 +1543,6 @@ es_US:
   invoice_issued_on: "Factura emitida el:"
   order_number: "Número de Factura:"
   date_of_transaction: "Fecha de la transacción:"
-  ticket_column_qty: "Cantidad"
-  ticket_column_item: "Artículo"
-  ticket_column_unit_price: "Precio por unidad"
-  ticket_column_total_price: "Precio total"
   menu_1_title: "Tiendas"
   menu_1_url: "/shops"
   menu_2_title: "Mapa"

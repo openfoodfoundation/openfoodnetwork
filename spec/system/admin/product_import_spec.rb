@@ -3,7 +3,7 @@
 require 'system_helper'
 require 'open_food_network/permissions'
 
-describe "Product Import", js: true do
+describe "Product Import" do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper

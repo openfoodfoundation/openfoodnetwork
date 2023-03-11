@@ -5,12 +5,12 @@ require 'system_helper'
 describe '
     As an administrator
     I want to manage simple order cycles
-', js: true do
+' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper
 
-  it "updating many order cycle opening/closing times at once", js: true do
+  it "updating many order cycle opening/closing times at once" do
     # Given three order cycles
     oc1 = create(:simple_order_cycle,
                  orders_open_at: Time.zone.local(2000, 12, 12, 12, 12, 0),
@@ -529,7 +529,7 @@ describe '
       expect(page).not_to have_selector 'th', text: 'DISTRIBUTORS'
     end
 
-    it "creates order cycles", js: true do
+    it "creates order cycles" do
       # When I go to the new order cycle page
       visit admin_order_cycles_path
       click_link 'New Order Cycle'

@@ -522,7 +522,6 @@ hu:
         title: "Számlabeállítások"
         enable_invoices?: "Engedélyezi a számlákat?"
         invoice_style2?: "Használd az alternatív számlamodellt, amely tartalmazza az adókulcsonkénti teljes adórészletezést és az adókulcs-információkat tételenként (még nem alkalmas azokban az országokban, ahol az árak adó nélkül jelennek meg)"
-        enable_receipt_printing?: "Megjeleníti a nyugták hőnyomtatókkal történő nyomtatási lehetőségeit sorrendben?"
         enterprise_number_required_on_invoices?: "Kér cégjegyzékszámot számlakészítéskor?"
     stripe_connect_settings:
       edit:
@@ -1125,8 +1124,8 @@ hu:
         back_to_list: "Vissza a listához"
         save_and_back_to_list: "Mentés és Vissza a listához"
         choose_products_from: "Válasszon termékeket a következők közül:"
-        re_notify_producers: Értesítse újra a gyártókat
-        notify_producers_tip: Ez minden gyártónak e-mailt küld a rendeléseik listájával.
+        re_notify_producers: Értesítse újra a termelőket
+        notify_producers_tip: Ez minden termelőnak e-mailt küld a rendeléseik listájával.
       incoming:
         incoming: "Beérkező"
         supplier: "Termelő"
@@ -1247,7 +1246,7 @@ hu:
         closed: zárva
     producer_properties:
       index:
-        title: A gyártó tulajdonságai
+        title: A termelő tulajdonságai
     proxy_orders:
       cancel:
         could_not_cancel_the_order: A rendelést nem lehetett törölni
@@ -1592,10 +1591,6 @@ hu:
   invoice_issued_on: "Kiállított számla:"
   order_number: "Számlaszám:"
   date_of_transaction: "A tranzakció dátuma:"
-  ticket_column_qty: "Mennyiség"
-  ticket_column_item: "Tétel"
-  ticket_column_unit_price: "Egységár"
-  ticket_column_total_price: "Teljes ár"
   menu_1_title: "Átadópontok"
   menu_1_url: "/shops"
   menu_2_title: "Térkép"
@@ -2093,7 +2088,7 @@ hu:
   producers_signup_motivation: Adja el ételeit, és mesélje el történeteit változatos új piacokon. Takarítson meg időt és pénzt minden rezsinél. Kockázat nélkül támogatjuk az innovációt. Kiegyenlítettük a játékteret.
   producers_signup_send: Csatlakozz most
   producers_signup_enterprise: Vállalkozási fiókok
-  producers_signup_studies: Gyártóink történetei.
+  producers_signup_studies: Termelőink történetei.
   producers_signup_cta_headline: Csatlakozz most!
   producers_signup_cta_action: Csatlakozz most
   producers_signup_detail: Itt a részlet.
@@ -2121,7 +2116,7 @@ hu:
   sell_ask_services: "Kérdezzen minket az OFN szolgáltatásairól."
   shops_title: Átadópontok
   shops_headline: Bevásárlás, másképpen.
-  shops_text: A növénytermesztés, az állattenyésztés, az élelem előállítása, de még az áruátadás is ciklusokban történik. A növények hétről hétre és eltérő ütemben fejlődnek. Ha lezárt rendelési ciklust találsz valahol, nézd meg, ki van-e írva a rendelési ciklus nyitásának időpontja. Ha nem, látogass vissza később az adott termelőhöz, közösséghez.
+  shops_text: Rendelési ciklusokban dolgozunk. A növénytermesztés, az állattenyésztés, az élelem előállítása ciklikus folyamat. Így nálunk az áruátadás is ciklusokban történik, pont ahogy a növények is hétről hétre, és eltérő ütemben fejlődnek. Ha lezárt rendelési ciklust találsz valahol, nézd meg, ki van-e írva a rendelési ciklus nyitásának időpontja. Ha nem, látogass vissza később az adott termelőhöz, közösséghez.
   shops_signup_title: Regisztráljon átvételi pontként
   shops_signup_headline: Élelmiszer-központok, korlátlan.
   shops_signup_motivation: Bármi legyen is a modelled, támogatunk téged. Azonban változol, veled vagyunk. Mi non-profit, független," és nyílt forráskódú. Mi vagyunk azok a szoftverpartnerek, akikről álmodott.
@@ -2459,12 +2454,12 @@ hu:
   new_order_cycle: "Új rendelési ciklus"
   new_order_cycle_tooltip: "Nyissa meg az üzletet egy bizonyos ideig"
   select_a_coordinator_for_your_order_cycle: "Válasszon koordinátort a rendelési ciklushoz"
-  notify_producers: 'Értesítse a gyártókat'
+  notify_producers: 'Értesítse a termelőket'
   edit_order_cycle: "Rendelési ciklus szerkesztése"
   roles: "Szerepek"
   update: "Frissítés"
   delete: Töröl
-  add_producer_property: "Gyártói tulajdon hozzáadása"
+  add_producer_property: "Termelői tulajdonság hozzáadása"
   in_progress: "Folyamatban"
   started_at: "-kor kezdődött"
   queued: "Sorban"
@@ -2905,11 +2900,8 @@ hu:
               Open Food Network mindig ingyenes lesz.
           hub_shop: Átvételi pont árusítóhely
           hub_shop_text1: >
-              Your enterprise is the backbone of your local food system. You aggregate
-              produce: Az Ön vállalkozása a helyi élelmezési rendszer gerince. Ön
-              összesített termelést from other enterprises and can sell it through
-              your árusítóhely on the Open Food Network.: más vállalkozásoktól, és
-              értékesítheti az Open Food Network üzletében.
+              A vállalkozásod a helyi élelmezési rendszer csomópontja. Más termelőktől
+              érkező árukat adhat át a vásárlóknak az átadóponton.
           hub_shop_text2: >
               Átvételi ponts can take many forms, whether they be a food co-op, a
               buying group, a veggie-box: A központok sokféle formát ölthetnek, hogy
@@ -2955,12 +2947,8 @@ hu:
               kérjük válaszd a „Termelő átvételi pont” lehetőséget.
           producer_hub: Termelő Átvételi pont
           producer_hub_text1: >
-              Your enterprise is the backbone of your local food system. You can sell
-              your own: Az Ön vállalkozása a helyi élelmezési rendszer gerince. Eladhatod
-              a sajátodat produce as well as produce aggregated from other enterprises
-              through your árusítóhelyfront: termelni, valamint más vállalkozásoktól
-              összesített termékeket az üzletén keresztül on the Open Food Network.:
-              az Open Food Networkön.
+              A vállalkozásod a helyi élelmezési rendszer csomópontja. Más termelőktől
+              érkező árukat adhat át a vásárlóknak az átadóponton.
           producer_hub_text2: >
               Termelő Átvételi ponts can take many forms, whether they be a CSA, a
               veggie-box program,: A termelői központok többféle formát ölthetnek,
@@ -2986,11 +2974,8 @@ hu:
               or mould it.: emeld fel, főzd meg, süsd meg, fermentálják, tejjel vagy
               formázni.
           producer_text2: >
-              Termelős can also perform other functions, such as aggregating food
-              from other: A gyártók más funkciókat is elláthatnak, mint például az
-              élelmiszerek összesítése másból enterprises and selling it through a
-              árusítóhely on the Open Food Network.: és az Open Food Network egy átvételi
-              pontján keresztül értékesíti.
+              A termelők a saját élelmiszeren kívül más termelőktől érkező árukat
+              is adhatnak át a vásárlóknak az átadóponton.
           non_producer: Nem termelő
           non_producer_text1: >
               Non-termelős do not produce any food themselves, meaning that they cannot
