@@ -288,8 +288,10 @@ describe OrderCycleForm do
                 distributor.users.first
               )
 
-              expect{ form.save }.to change{ order_cycle.distributor_payment_methods.pluck(:id) }
-                .from([distributor_payment_method, distributor_payment_method2])
+              expect{ form.save }.to change{
+                                       order_cycle.distributor_payment_methods.pluck(:id).sort
+                                     }
+                .from([distributor_payment_method, distributor_payment_method2].sort)
                 .to([distributor_payment_method])
             end
           end
