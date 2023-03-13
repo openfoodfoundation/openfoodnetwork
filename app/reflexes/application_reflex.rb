@@ -23,4 +23,8 @@ class ApplicationReflex < StimulusReflex::Reflex
   def current_ability
     Spree::Ability.new(current_user)
   end
+
+  def with_locale(&block)
+    I18n.with_locale(current_user.locale, &block)
+  end
 end
