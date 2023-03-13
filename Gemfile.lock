@@ -231,7 +231,7 @@ GEM
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
     date (3.3.3)
-    ddtrace (1.10.0)
+    ddtrace (1.10.1)
       debase-ruby_core_source (>= 0.10.16, <= 3.2.0)
       libdatadog (~> 2.0.0.1.0)
       libddwaf (~> 1.6.2.0.0)
