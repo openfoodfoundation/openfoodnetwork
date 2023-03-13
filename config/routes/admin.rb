@@ -42,8 +42,6 @@ Openfoodnetwork::Application.routes.draw do
       resources :tag_rules, only: [:destroy]
     end
 
-    resources :manager_invitations, only: [:create]
-
     resources :enterprise_relationships
     resources :enterprise_roles
 
