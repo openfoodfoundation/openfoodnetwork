@@ -3,6 +3,7 @@
 module Admin
   class ManagerInvitationsController < Spree::Admin::BaseController
     authorize_resource class: false
+    include ManagerInvitations
 
     def create
       @email = params[:email]
@@ -18,7 +19,7 @@ module Admin
         return
       end
 
-      new_user = create_new_manager
+      new_user = create_new_manager(@email, @enterprise)
 
       if new_user
         render json: { user: new_user.id }, status: :ok
@@ -26,22 +27,6 @@ module Admin
         render json: { errors: t('admin.enterprises.invite_manager.error') },
                status: :internal_server_error
       end
-    end
-
-    private
-
-    def create_new_manager
-      password = Devise.friendly_token
-      new_user = Spree::User.create(email: @email, unconfirmed_email: @email, password: password)
-      new_user.reset_password_token = Devise.friendly_token
-      # Same time as used in Devise's lib/devise/models/recoverable.rb.
-      new_user.reset_password_sent_at = Time.now.utc
-      new_user.save!
-
-      @enterprise.users << new_user
-      EnterpriseMailer.manager_invitation(@enterprise, new_user).deliver_later
-
-      new_user
     end
   end
 end
