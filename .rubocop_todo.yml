@@ -119,7 +119,6 @@ Layout/LineLength:
     - 'spec/controllers/admin/bulk_line_items_controller_spec.rb'
     - 'spec/controllers/admin/column_preferences_controller_spec.rb'
     - 'spec/controllers/admin/enterprises_controller_spec.rb'
-    - 'spec/controllers/admin/manager_invitations_controller_spec.rb'
     - 'spec/controllers/admin/order_cycles_controller_spec.rb'
     - 'spec/controllers/admin/schedules_controller_spec.rb'
     - 'spec/controllers/admin/stripe_accounts_controller_spec.rb'
