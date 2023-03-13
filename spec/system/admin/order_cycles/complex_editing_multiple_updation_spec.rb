@@ -9,22 +9,9 @@ describe '
   include AuthenticationHelper
   include WebHelper
 
-  before do
-    Capybara.current_driver = :selenium_chrome_headless
-    Capybara.javascript_driver = :selenium_chrome_headless
-    Capybara.default_max_wait_time = 10
-  end
-
-  after do
-    Capybara.use_default_driver
-  end
-
   it "Alerts for unsaved changes on general settings (/edit) page" do
     oc = create(:order_cycle)
     login_as_admin_and_visit edit_admin_order_cycle_path(oc)
-
-    # Wait for the page to finish loading
-    sleep 3
 
     # Expect correct values
     expect(page.find('#order_cycle_name').value).to eq(oc.name)
@@ -43,22 +30,14 @@ describe '
     expect(page).to have_button('Next', disabled: true)
 
     # Trying to go to another page with unsaved changes
-    click_link 'Orders'
-
-    # expect an alert about unsaved changes
-    expect(page.driver.browser.switch_to.alert.text)
-
-    # Dismiss the alert
-    page.driver.browser.switch_to.alert.dismiss
+    dismiss_confirm "" do
+      click_link 'Orders'
+    end
 
     # Click cancel with unsaved changes
-    click_button 'Cancel'
-
-    # expect an alert about unsaved changes
-    expect(page.driver.browser.switch_to.alert.text)
-
-    # Dismiss the alert
-    page.driver.browser.switch_to.alert.dismiss
+    dismiss_confirm "" do
+      click_button 'Cancel'
+    end
 
     # Saving first change
     click_button 'Save'
@@ -77,22 +56,14 @@ describe '
     expect(page).to have_button('Next', disabled: true)
 
     # Trying to go to another page with unsaved changes
-    click_link 'Orders'
-
-    # expect an alert about unsaved changes
-    expect(page.driver.browser.switch_to.alert.text)
-
-    # Dismiss the alert
-    page.driver.browser.switch_to.alert.dismiss
+    dismiss_confirm "" do
+      click_link 'Orders'
+    end
 
     # Click cancel with unsaved changes
-    click_button 'Cancel'
-
-    # expect an alert about unsaved changes
-    expect(page.driver.browser.switch_to.alert.text)
-
-    # Dismiss the alert
-    page.driver.browser.switch_to.alert.dismiss
+    dismiss_confirm "" do
+      click_button 'Cancel'
+    end
 
     # Saving Second change
     click_button 'Save'
@@ -115,9 +86,6 @@ describe '
     # Go to incoming step
     click_button 'Next'
 
-    # Wait for the page to finish loading
-    sleep 3
-
     # Expect details
     expect(page).to have_selector 'td.supplier_name', text: oc.suppliers.first.name
     expect(page).to have_button('Save', disabled: true)
@@ -132,22 +100,14 @@ describe '
     expect(page).to have_button('Next', disabled: true)
 
     # Trying to go to another page with unsaved changes
-    click_link 'Orders'
-
-    # expect an alert about unsaved changes
-    expect(page.driver.browser.switch_to.alert.text)
-
-    # Dismiss the alert
-    page.driver.browser.switch_to.alert.dismiss
+    dismiss_confirm "" do
+      click_link 'Orders'
+    end
 
     # Click cancel with unsaved changes
-    click_button 'Cancel'
-
-    # expect an alert about unsaved changes
-    expect(page.driver.browser.switch_to.alert.text)
-
-    # Dismiss the alert
-    page.driver.browser.switch_to.alert.dismiss
+    dismiss_confirm "" do
+      click_button 'Cancel'
+    end
 
     # Saving first change
     click_button 'Save'
@@ -164,22 +124,14 @@ describe '
     expect(page).to have_button('Next', disabled: true)
 
     # Trying to go to another page with unsaved changes
-    click_link 'Orders'
-
-    # expect an alert about unsaved changes
-    expect(page.driver.browser.switch_to.alert.text)
-
-    # Dismiss the alert
-    page.driver.browser.switch_to.alert.dismiss
+    dismiss_confirm "" do
+      click_link 'Orders'
+    end
 
     # Click cancel with unsaved changes
-    click_button 'Cancel'
-
-    # expect an alert about unsaved changes
-    expect(page.driver.browser.switch_to.alert.text)
-
-    # Dismiss the alert
-    page.driver.browser.switch_to.alert.dismiss
+    dismiss_confirm "" do
+      click_button 'Cancel'
+    end
 
     # Saving Second change
     click_button 'Save'
@@ -205,9 +157,6 @@ describe '
     # Go to outgoing step
     click_button 'Next'
 
-    # Wait for the page to finish loading
-    sleep 3
-
     # Expect details
     expect(page).to have_selector 'td.distributor_name', text: oc.distributors.first.name
     expect(page).to have_field 'order_cycle_outgoing_exchange_0_pickup_instructions',
@@ -222,22 +171,14 @@ describe '
     expect(page).to have_button('Next', disabled: true)
 
     # Trying to go to another page with unsaved changes
-    click_link 'Orders'
-
-    # expect an alert about unsaved changes
-    expect(page.driver.browser.switch_to.alert.text)
-
-    # Dismiss the alert
-    page.driver.browser.switch_to.alert.dismiss
+    dismiss_confirm "" do
+      click_link 'Orders'
+    end
 
     # Click cancel with unsaved changes
-    click_button 'Cancel'
-
-    # expect an alert about unsaved changes
-    expect(page.driver.browser.switch_to.alert.text)
-
-    # Dismiss the alert
-    page.driver.browser.switch_to.alert.dismiss
+    dismiss_confirm "" do
+      click_button 'Cancel'
+    end
 
     # Saving first change
     click_button 'Save'
@@ -254,22 +195,14 @@ describe '
     expect(page).to have_button('Next', disabled: true)
 
     # Trying to go to another page with unsaved changes
-    click_link 'Orders'
-
-    # expect an alert about unsaved changes
-    expect(page.driver.browser.switch_to.alert.text)
-
-    # Dismiss the alert
-    page.driver.browser.switch_to.alert.dismiss
+    dismiss_confirm "" do
+      click_link 'Orders'
+    end
 
     # Click cancel with unsaved changes
-    click_button 'Cancel'
-
-    # expect an alert about unsaved changes
-    expect(page.driver.browser.switch_to.alert.text)
-
-    # Dismiss the alert
-    page.driver.browser.switch_to.alert.dismiss
+    dismiss_confirm "" do
+      click_button 'Cancel'
+    end
 
     # Saving Second change
     click_button 'Save'
