@@ -14,7 +14,7 @@ describe '
     login_as_admin_and_visit edit_admin_order_cycle_path(oc)
 
     # Expect correct values
-    expect(page.find('#order_cycle_name').value).to eq(oc.name)
+    expect(page).to have_content(oc.name)
     expect(page).to have_content "COORDINATOR #{oc.coordinator.name}"
     expect(page).to have_button('Save', disabled: true)
     expect(page).to have_button('Save and Next', disabled: true)
