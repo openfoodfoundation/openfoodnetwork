@@ -22,7 +22,8 @@ class DfcBuilder
     )
 
     DataFoodConsortium::Connector::SuppliedProduct.new(
-      id, name: variant.name, description: variant.description
+      id, name: variant.name, description: variant.description,
+          quantity: QuantitativeValueBuilder.quantity(variant),
     )
   end
 
