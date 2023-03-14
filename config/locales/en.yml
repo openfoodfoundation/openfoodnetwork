@@ -1157,6 +1157,7 @@ en:
           no_voucher_yet: No Vouchers yet
         white_label:
           legend: "White Label"
+          hide_ofn_navigation: "Hide OFN navigation"
       actions:
         edit_profile: Settings
         properties: Properties

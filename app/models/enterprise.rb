@@ -30,6 +30,7 @@ class Enterprise < ApplicationRecord
   preference :shopfront_product_sorting_method, :string, default: "by_category"
   preference :invoice_order_by_supplier, :boolean, default: false
   preference :product_low_stock_display, :boolean, default: false
+  preference :hide_ofn_navigation, :boolean, default: false
 
   # Allow hubs to restrict visible variants to only those in their inventory
   preference :product_selection_from_inventory_only, :boolean, default: false
