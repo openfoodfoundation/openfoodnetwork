@@ -2,7 +2,7 @@
 
 require DfcProvider::Engine.root.join("spec/spec_helper")
 
-describe DfcProvider::AuthorizationControl do
+describe AuthorizationControl do
   include AuthorizationHelper
 
   let(:user) { create(:oidc_user) }

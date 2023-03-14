@@ -15,7 +15,7 @@ describe DfcProvider::PersonsController, type: :controller do
 
       context 'with an authenticated user' do
         before do
-          allow_any_instance_of(DfcProvider::AuthorizationControl)
+          allow_any_instance_of(AuthorizationControl)
             .to receive(:user)
             .and_return(user)
         end

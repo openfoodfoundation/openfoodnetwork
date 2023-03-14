@@ -32,11 +32,11 @@ module DfcProvider
     end
 
     def supplies
-      DfcProvider::VariantFetcher.new(object).scope
+      VariantFetcher.new(object).scope
     end
 
     def manages
-      DfcProvider::VariantFetcher.new(object).scope
+      VariantFetcher.new(object).scope
     end
   end
 end

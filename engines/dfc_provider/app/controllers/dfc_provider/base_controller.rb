@@ -42,7 +42,7 @@ module DfcProvider
     end
 
     def authorization_control
-      DfcProvider::AuthorizationControl.new(request)
+      AuthorizationControl.new(request)
     end
 
     def not_found
