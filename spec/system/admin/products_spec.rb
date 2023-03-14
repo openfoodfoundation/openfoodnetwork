@@ -72,7 +72,7 @@ describe '
 
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
       fill_in 'product_unit_value', with: 0
-      
+
       click_button 'Create'
 
       # Should not be able to click create button with unit value as 0
@@ -87,7 +87,7 @@ describe '
 
       select "Items", from: 'product_variant_unit_with_scale'
       fill_in 'product_unit_value', with: 0
-      
+
       click_button 'Create'
 
       # Should not be able to click create button with unit value as 0
@@ -101,8 +101,8 @@ describe '
       click_link 'New Product'
 
       select "Items", from: 'product_variant_unit_with_scale'
-      fill_in 'product_unit_value', with:'a'
-      
+      fill_in 'product_unit_value', with: 'a'
+
       click_button 'Create'
 
       # Should not be able to click create button with unit value as non-number

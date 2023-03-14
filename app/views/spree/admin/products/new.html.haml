@@ -34,7 +34,7 @@
           = f.field_container :unit_value do
             = f.label :unit_value, t(".value"), 'ng-disabled' => "!hasUnit(product)"
             %span.required *
-            %input.fullwidth{ id: 'product_unit_value', 'ng-model' => 'product.master.unit_value_with_description', :type => 'number', min: '0.01', step: 'any', placeholder: "eg. 2", 'ng-disabled' => "!hasUnit(product)" }
+            %input.fullwidth{ id: 'product_unit_value', 'ng-model' => 'product.master.unit_value_with_description', :type => 'number', min: '0.01', placeholder: "eg. 2", 'ng-disabled' => "!hasUnit(product)" }
             %input{ type: 'hidden', 'ng-value': 'product.master.unit_value', "ng-init": "product.master.unit_value='#{@product.master.unit_value}'", name: 'product[unit_value]' }
             %input{ type: 'hidden', 'ng-value': 'product.master.unit_description', "ng-init": "product.master.unit_description='#{@product.master.unit_description}'", name: 'product[unit_description]' }
             = f.error_message_on :unit_value
