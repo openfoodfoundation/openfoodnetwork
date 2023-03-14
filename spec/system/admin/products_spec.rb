@@ -77,6 +77,7 @@ describe '
 
       # Should not be able to click create button with unit value as 0
       expect(page).to have_content "Value must be greater than or equal to 0.01"
+    end
 
     it "trying to click 'create' with 0 unit value - Varient Unit size" do
       login_to_admin_section
@@ -91,6 +92,7 @@ describe '
 
       # Should not be able to click create button with unit value as 0
       expect(page).to have_content "Value must be greater than or equal to 0.01"
+    end
 
     it "trying to fill unit value with non numeric data" do
       login_to_admin_section
@@ -105,6 +107,7 @@ describe '
 
       # Should not be able to click create button with unit value as non-number
       expect(page).to have_content "Please enter a number."
+    end
 
     it "preserves 'Items' 'Unit Size' selection when submitting with error" do
       login_to_admin_section
