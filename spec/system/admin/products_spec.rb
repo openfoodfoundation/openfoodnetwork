@@ -64,6 +64,48 @@ describe '
       expect(page).to have_content "Name can't be blank"
     end
 
+    it "trying to click 'create' with 0 unit value - Known Unit size" do
+      login_to_admin_section
+
+      click_link 'Products'
+      click_link 'New Product'
+
+      select "Weight (kg)", from: 'product_variant_unit_with_scale'
+      fill_in 'product_unit_value', with: 0
+      
+      click_button 'Create'
+
+      # Should not be able to click create button with unit value as 0
+      expect(page).to have_content "Value must be greater than or equal to 0.01"
+
+    it "trying to click 'create' with 0 unit value - Varient Unit size" do
+      login_to_admin_section
+
+      click_link 'Products'
+      click_link 'New Product'
+
+      select "Items", from: 'product_variant_unit_with_scale'
+      fill_in 'product_unit_value', with: 0
+      
+      click_button 'Create'
+
+      # Should not be able to click create button with unit value as 0
+      expect(page).to have_content "Value must be greater than or equal to 0.01"
+
+    it "trying to fill unit value with non numeric data" do
+      login_to_admin_section
+
+      click_link 'Products'
+      click_link 'New Product'
+
+      select "Items", from: 'product_variant_unit_with_scale'
+      fill_in 'product_unit_value', with:'a'
+      
+      click_button 'Create'
+
+      # Should not be able to click create button with unit value as non-number
+      expect(page).to have_content "Please enter a number."
+
     it "preserves 'Items' 'Unit Size' selection when submitting with error" do
       login_to_admin_section
 
