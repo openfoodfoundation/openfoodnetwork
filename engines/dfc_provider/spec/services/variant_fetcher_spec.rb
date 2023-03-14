@@ -14,8 +14,6 @@ describe VariantFetcher do
   it "returns the variants of a supplier" do
     product = create(:product, supplier: enterprise)
 
-    pending "ignoring of the master variant"
-    # it currently returns two variants instead of one
     expect(subject.scope.count).to eq 1
     expect(subject.scope).to eq product.variants
   end
