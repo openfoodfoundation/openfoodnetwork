@@ -20,13 +20,13 @@ class InviteManagerReflex < ApplicationReflex
       return
     end
 
-    begin
-      new_user = create_new_manager(email, enterprise)
+    new_user = create_new_manager(email, enterprise)
+
+    if new_user.valid?
       locals[:success] = true
-      locals[:email] = new_user.email
-    rescue StandardError => e
-      @error = e.message
-      locals[:error] = @error || I18n.t('admin.enterprises.invite_manager.error')
+    else
+      locals[:error] = new_user.errors.full_messages.to_sentence ||
+                       I18n.t('admin.enterprises.invite_manager.error')
     end
 
     return_morph(locals)
