@@ -23,6 +23,14 @@ module Admin
       show_enterprise_fees = can?(:manage_enterprise_fees,
                                   enterprise) && (is_shop || enterprise.is_primary_producer)
 
+      build_enterprise_side_menu_items(is_shop, show_properties, show_shipping_methods,
+                                       show_payment_methods, show_enterprise_fees)
+    end
+
+    private
+
+    def build_enterprise_side_menu_items(is_shop, show_properties, show_shipping_methods,
+                                         show_payment_methods, show_enterprise_fees)
       [
         { name: 'primary_details', icon_class: "icon-home", show: true, selected: 'selected' },
         { name: 'address', icon_class: "icon-map-marker", show: true },
