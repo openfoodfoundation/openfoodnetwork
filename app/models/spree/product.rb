@@ -27,6 +27,8 @@ module Spree
     include PermalinkGenerator
     include ProductStock
 
+    self.ignored_columns = [:meta_description]
+
     acts_as_paranoid
 
     searchable_attributes :supplier_id, :primary_taxon_id, :meta_keywords
