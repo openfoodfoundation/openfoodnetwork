@@ -492,7 +492,7 @@ en:
         price: Price
         producer: Producer
         category: Category
-        sku: SKU 
+        sku: SKU
         on_hand: "On Hand"
         on_demand: "On Demand"
         tax_category: "Tax Category"
@@ -504,7 +504,7 @@ en:
         price: Price
         producer: Producer
         category: Category
-        sku: SKU 
+        sku: SKU
         on_hand: "On Hand"
         on_demand: "On Demand"
         tax_category: "Tax Category"
@@ -1259,6 +1259,7 @@ en:
         distributor: "Distributor"
         no_payment_methods: Each distributor on this order cycle requires at least one payment method.
         no_shipping_methods: Each distributor on this order cycle requires at least one shipping method.
+        no_methods: Each distributor on this order cycle requires at least one shipping method and one payment method.
         payment_methods: "Payment Methods"
         save: "Save"
         save_and_back_to_list: "Save and Back to List"
@@ -2871,7 +2872,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_supplier: Supplier
   report_header_producer: Producer
   report_header_producer_suburb: Producer Suburb
-  report_header_producer_tax_status: Producer Tax Status  
+  report_header_producer_tax_status: Producer Tax Status
   report_header_producer_charges_sales_tax?: GST/VAT Registered
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity
@@ -2888,7 +2889,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_distributor_address: Distributor address
   report_header_distributor_city: Distributor city
   report_header_distributor_postcode: Distributor postcode
-  report_header_distributor_tax_status: Distributor Tax Status  
+  report_header_distributor_tax_status: Distributor Tax Status
   report_header_delivery_address: Delivery Address
   report_header_delivery_postcode: Delivery Postcode
   report_header_bulk_unit_size: Bulk Unit Size
