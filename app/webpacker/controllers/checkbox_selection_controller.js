@@ -1,5 +1,6 @@
 import { Controller } from "stimulus";
 
+const isAllFalse = (values) => values.every((isChecked) => !isChecked)
 export default class extends Controller {
   static targets = ["checkbox", "errorMessage"]
 
@@ -7,24 +8,24 @@ export default class extends Controller {
     return document.querySelectorAll("[data-checkbox-selection-button]")
   }
 
+  get groupStates() {
+    return this.checkboxTargets.reduce((acc, element) => {
+      const { group } = element.dataset
+      const groupValues = acc[group] || []
+
+      return {
+        ...acc,
+        [group]: [...groupValues, element.checked]
+      }
+    }, {})
+  }
+
   connect() {
     this.handleError(false)
   }
 
   disableButtons() {
-    const groupStates = this.checkboxTargets.reduce((acc, element) => {
-     const group = element.getAttribute("data-group")
-
-      if (group in acc) {
-        acc[group].push(element.checked)
-        return acc
-      }
-
-      acc[group] = [element.checked]
-      return acc
-    }, {})
-
-    const isAllUnchecked = Object.values(groupStates).flatMap((values) => values.every((isChecked) => !isChecked)).some((checked) => checked)
+    const isAllUnchecked = Object.values(this.groupStates).flatMap(isAllFalse).some(Boolean)
 
     this.disableElements.forEach((element) => {
       element.disabled = isAllUnchecked
@@ -34,7 +35,16 @@ export default class extends Controller {
   }
 
   handleError(isVisible) {
+    const groups = this.groupStates
+    const uncheckedGroup = Object.keys(groups).filter((group) => !groups[group].some(Boolean))
+
+    const errorMessage = uncheckedGroup.length > 1
+    ? I18n.t(`admin.order_cycles.checkout_options.no_methods`)
+    : I18n.t(`admin.order_cycles.checkout_options.no_${uncheckedGroup.toString()}_methods`)
+
     const error = this.errorMessageTarget
+
     error.style.display = isVisible ? "block" : "none"
+    error.innerHTML = errorMessage
   }
 }
