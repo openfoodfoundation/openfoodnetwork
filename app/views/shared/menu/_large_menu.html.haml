@@ -10,14 +10,15 @@
           = t 'powered_by'
           %a{href: '/'}
             = t 'title'
-    %ul.nav-main-menu
-      - [*1..7].each do |menu_number|
-        - menu_name = "menu_#{menu_number}"
-        - if ContentConfig[menu_name].present?
-          %li
-            %a{href: t("#{menu_name}_url") }
-              %span.nav-primary
-                = t "#{menu_name}_title"
+    - unless hide_ofn_navigation?
+      %ul.nav-main-menu
+        - [*1..7].each do |menu_number|
+          - menu_name = "menu_#{menu_number}"
+          - if ContentConfig[menu_name].present?
+            %li
+              %a{href: t("#{menu_name}_url") }
+                %span.nav-primary
+                  = t "#{menu_name}_title"
     %ul.nav-icons-menu
       - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
         = render 'shared/menu/language_selector'
