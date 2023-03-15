@@ -67,7 +67,7 @@
                           distributor_payment_method.id,
                           @order_cycle.distributor_payment_methods.include?(distributor_payment_method),
                           id: "order_cycle_selected_distributor_payment_method_ids_#{distributor_payment_method.id}",
-                          data: ({ "action" => "change->select-all#toggleCheckbox change->checkbox-selection#disableButtons", "select-all-target" => "checkbox", "checkbox-selection-target" => "checkbox", "group" => "distributor" } if distributor_payment_method.payment_method.frontend?)
+                          data: ({ "action" => "change->select-all#toggleCheckbox change->checkbox-selection#disableButtons", "select-all-target" => "checkbox", "checkbox-selection-target" => "checkbox", "group" => "payment" } if distributor_payment_method.payment_method.frontend?)
                       = distributor_payment_method.payment_method.name
                 - distributor.payment_methods.inactive_or_backend.each do |payment_method|
                   %label.disabled
