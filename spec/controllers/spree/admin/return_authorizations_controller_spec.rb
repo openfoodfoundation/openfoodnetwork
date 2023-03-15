@@ -23,11 +23,9 @@ module Spree
         expect(return_authorization.amount.to_s).to eq "20.2"
         expect(return_authorization.reason.to_s).to eq "broken"
 
-        # Reset the test controller between requests
-        reset_controller_environment
-
         # Update return authorization
-        spree_put :update, id: return_authorization.id,
+        spree_put :update, order_id: order.number,
+                           id: return_authorization.id,
                            return_authorization: { amount: "10.2", reason: "half broken" }
 
         expect(response).to redirect_to spree.admin_order_return_authorizations_url(order.number)
