@@ -17,7 +17,14 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   ]
   $scope.page = 1
   $scope.per_page = $scope.per_page_options[0].id
-  
+  searchThrough = ["order_distributor_name",
+    "order_bill_address_phone",
+    "order_bill_address_firstname",
+    "order_bill_address_lastname",
+    "variant_product_supplier_name",
+    "order_email",
+    "order_number",
+    "product_name"].join("_or_") + "_cont"
 
   $scope.confirmRefresh = ->
     LineItems.allSaved() || confirm(t("unsaved_changes_warning"))
@@ -26,7 +33,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.distributorFilter = ''
     $scope.supplierFilter = ''
     $scope.orderCycleFilter = ''
-    $scope.quickSearch = ''
+    $scope.query = ''
     $scope.startDate = undefined
     $scope.endDate = undefined
     event = new CustomEvent('flatpickr:clear')
@@ -60,6 +67,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     [formattedStartDate, formattedEndDate] = $scope.formatDates($scope.startDate, $scope.endDate)
 
     RequestMonitor.load LineItems.index(
+      "q[#{searchThrough}]": $scope.query,
       "q[order_state_not_eq]": "canceled",
       "q[order_shipment_state_not_eq]": "shipped",
       "q[order_completed_at_not_null]": "true",
