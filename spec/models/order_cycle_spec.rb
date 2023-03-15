@@ -557,21 +557,18 @@ describe OrderCycle do
     }
 
     it "reset opened_at if open date change in future" do
-      expect(oc.opened_at).to_not be_nil
-      oc.update!(orders_open_at: 1.week.from_now, orders_close_at: 2.weeks.from_now)
-      expect(oc.opened_at).to be_nil
+      expect{ oc.update!(orders_open_at: 1.week.from_now, orders_close_at: 2.weeks.from_now) }
+        .to change { oc.opened_at }.to be_nil
     end
 
     it "it does not reset opened_at if open date is changed to be earlier" do
-      expect(oc.opened_at).to_not be_nil
-      oc.update!(orders_open_at: 3.days.ago)
-      expect(oc.opened_at).to_not be_nil
+      expect{ oc.update!(orders_open_at: 3.days.ago) }
+        .to_not change { oc.opened_at }
     end
 
     it "it does not reset opened_at if open date does not change" do
-      expect(oc.opened_at).to_not be_nil
-      oc.update!(orders_close_at: 1.day.from_now)
-      expect(oc.opened_at).to_not be_nil
+      expect{ oc.update!(orders_close_at: 1.day.from_now) }
+        .to_not change { oc.opened_at }
     end
   end
 
