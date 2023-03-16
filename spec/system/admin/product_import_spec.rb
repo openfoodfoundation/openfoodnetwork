@@ -567,9 +567,9 @@ describe "Product Import" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "on_demand", "units", "unit_type",
                 "display_name", "shipping_category_id"]
-        csv << ["Beans", "User Enterprise", "Vegetables", "invalid", "3.50", "1", "500", "g", "Small Bag",
+        csv << ["Beans", "User Enterprise", "Vegetables", "invalid", "3.50", "1", "0.5", "g", "Small Bag",
                 shipping_category_id_str]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6", "invalid", "500", "g", "Big Bag",
+        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6", "invalid", "5", "kg", "Big Bag",
                 shipping_category_id_str]
         csv << ["Cabbage", "User Enterprise", "Vegetables", "invalid", "1.5", "invalid", "1", "kg", "Bag",
                 shipping_category_id_str]
@@ -594,7 +594,7 @@ describe "Product Import" do
       expect(page).to have_content "Imported file contains invalid entries"
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
       expect(page).not_to have_content "line 2: Beans"
-      expect(page).not_to have_content "line 3: Sprouts"
+      expect(page).not_to have_content "line 3: Potatoes"
     end
 
     it "handles on_demand and on_hand validations - negative values" do
