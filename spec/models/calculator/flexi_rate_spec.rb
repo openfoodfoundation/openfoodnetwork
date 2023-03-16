@@ -46,5 +46,7 @@ describe Calculator::FlexiRate do
   context "extends LocalizedNumber" do
     it_behaves_like "a model using the LocalizedNumber module",
                     [:preferred_first_item, :preferred_additional_item]
+    it_behaves_like "a Spree Calculator model using the LocalizedNumber module",
+                    [:preferred_first_item, :preferred_additional_item]
   end
 end

@@ -17,7 +17,8 @@ module Calculator
     validates :preferred_minimal_amount,
               :preferred_normal_amount,
               :preferred_discount_amount,
-              numericality: { message: :calculator_preferred_value_error }
+              numericality: { message: :calculator_preferred_value_error },
+              unless: -> { Spree::Config.enable_localized_number? }
 
     def self.description
       I18n.t(:price_sack)

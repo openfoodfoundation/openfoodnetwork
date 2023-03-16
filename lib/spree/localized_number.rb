@@ -21,7 +21,7 @@ module Spree
           elsif Spree::Config.enable_localized_number?
             @invalid_localized_number ||= []
             @invalid_localized_number << attribute
-            number = nil
+            number = nil unless is_a?(Spree::Calculator)
           end
           if has_attribute?(attribute)
             # In this case it's a regular AR attribute with standard setters

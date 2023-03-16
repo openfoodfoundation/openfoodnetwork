@@ -15,7 +15,8 @@ module Calculator
 
     validates :preferred_first_item,
               :preferred_additional_item,
-              numericality: { message: :calculator_preferred_value_error }
+              numericality: { message: :calculator_preferred_value_error },
+              unless: -> { Spree::Config.enable_localized_number? }
 
     def self.description
       I18n.t(:flexible_rate)

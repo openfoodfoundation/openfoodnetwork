@@ -22,5 +22,7 @@ describe Calculator::FlatPercentPerItem do
 
   context "extends LocalizedNumber" do
     it_behaves_like "a model using the LocalizedNumber module", [:preferred_flat_percent]
+    it_behaves_like "a Spree Calculator model using the LocalizedNumber module",
+                    [:preferred_flat_percent]
   end
 end

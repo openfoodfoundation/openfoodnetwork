@@ -21,3 +21,24 @@ shared_examples "a model using the LocalizedNumber module" do |attributes|
     end
   end
 end
+
+shared_examples "a Spree Calculator model using the LocalizedNumber module" do |attributes|
+  before do
+    allow(Spree::Config).to receive(:enable_localized_number?).and_return true
+  end
+
+  attributes.each do |attribute|
+    setter = "#{attribute}="
+
+    it do
+      should_not validate_numericality_of(attribute).
+        with_message(I18n.t('activerecord.errors.messages.calculator_preferred_value_error'))
+    end
+
+    it "does not modify the attribute value when it is invalid" do
+      subject.send(setter, 'invalid')
+      subject.valid?
+      expect(subject.send(attribute)).to eq 'invalid'
+    end
+  end
+end
