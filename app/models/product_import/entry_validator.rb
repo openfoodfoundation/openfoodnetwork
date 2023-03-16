@@ -172,7 +172,7 @@ module ProductImport
                                error: I18n.t('admin.product_import.model.blank'))
       end
 
-      unless is_numeric(entry.units) && entry.units.to_i > 0
+      unless is_numeric(entry.units) && entry.units.to_f > 0
         mark_as_invalid(entry, attribute: 'units',
                                error: I18n.t('admin.product_import.model.incorrect_value'))
       end
