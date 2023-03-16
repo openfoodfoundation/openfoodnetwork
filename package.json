@@ -41,7 +41,6 @@
     "webpack": "~4"
   },
   "devDependencies": {
-    "@webpack-cli/serve": "*",
     "husky": "^8.0.0",
     "jasmine-core": "~4.6.0",
     "jest": "^27.4.7",
