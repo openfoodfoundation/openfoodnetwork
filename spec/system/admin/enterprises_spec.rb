@@ -10,6 +10,7 @@ describe '
   include AuthenticationHelper
   include ShopWorkflow
   include UIComponentHelper
+  include FileHelper
 
   it "viewing an enterprise" do
     e = create(:enterprise)
@@ -643,6 +644,34 @@ describe '
 
         it "does not show the white label settings" do
           expect(page).not_to have_link "White Label"
+        end
+      end
+
+      context "when white label is active via `hide_ofn_navigation`" do
+        before do
+          distributor1.update_attribute(:preferred_hide_ofn_navigation, true)
+        end
+
+        it "can updload the white label logo for the current shop" do
+          attach_file "enterprise_white_label_logo", white_logo_path
+          click_button 'Update'
+          expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(distributor1.reload.white_label_logo_blob.filename).to eq("logo-white.png")
+        end
+
+        context "when enterprise has a white label logo" do
+          before do
+            distributor1.update white_label_logo: white_logo_file
+          end
+
+          it "can remove the white label logo for the current shop" do
+            click_button "Remove"
+            within ".reveal-modal" do
+              click_button "Confirm"
+            end
+            expect(flash_message).to eq("Logo removed")
+            expect(distributor1.reload.white_label_logo).to be_nil
+          end
         end
       end
     end
