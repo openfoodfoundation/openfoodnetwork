@@ -60,4 +60,17 @@ describe Api::Admin::EnterpriseSerializer do
       end
     end
   end
+
+  context "for white label logo" do
+    let(:enterprise) { create(:distributor_enterprise, white_label_logo: black_logo_file) }
+
+    context "when there is a white label logo" do
+      it "includes URLs of image versions" do
+        serializer = Api::Admin::EnterpriseSerializer.new(enterprise)
+        expect(serializer.as_json[:white_label_logo]).to be_present
+        expect(serializer.as_json[:white_label_logo][:default]).to match(/logo-black\.png$/)
+        expect(serializer.as_json[:white_label_logo][:mobile]).to match(/logo-black\.png$/)
+      end
+    end
+  end
 end

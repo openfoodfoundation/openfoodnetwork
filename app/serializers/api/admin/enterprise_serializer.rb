@@ -14,7 +14,7 @@ module Api
                  :logo, :promo_image, :terms_and_conditions,
                  :terms_and_conditions_file_name, :terms_and_conditions_updated_at,
                  :preferred_invoice_order_by_supplier, :preferred_product_low_stock_display,
-                 :visible, :hide_ofn_navigation
+                 :visible, :hide_ofn_navigation, :white_label_logo
 
       has_one :owner, serializer: Api::Admin::UserSerializer
       has_many :users, serializer: Api::Admin::UserSerializer
@@ -27,6 +27,10 @@ module Api
 
       def promo_image
         attachment_urls(object.promo_image, Enterprise::PROMO_IMAGE_SIZES)
+      end
+
+      def white_label_logo
+        attachment_urls(object.white_label_logo, Enterprise::WHITE_LABEL_LOGO_SIZES)
       end
 
       def terms_and_conditions

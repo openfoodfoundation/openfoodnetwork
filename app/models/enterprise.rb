@@ -15,6 +15,9 @@ class Enterprise < ApplicationRecord
     medium: { resize_to_fill: [720, 156] },
     large: { resize_to_fill: [1200, 260] },
   }.freeze
+  WHITE_LABEL_LOGO_SIZES = {
+    default: { gravity: "Center", resize: "217x44^", crop: '217x44+0+0' }
+  }.freeze
   VALID_INSTAGRAM_REGEX = %r{\A[a-zA-Z0-9._]{1,30}([^/-]*)\z}
 
   searchable_attributes :sells, :is_primary_producer, :name
@@ -84,6 +87,7 @@ class Enterprise < ApplicationRecord
   has_one_attached :logo
   has_one_attached :promo_image
   has_one_attached :terms_and_conditions
+  has_one_attached :white_label_logo
 
   validates :logo,
             processable_image: true,
@@ -299,6 +303,14 @@ class Enterprise < ApplicationRecord
 
     Rails.application.routes.url_helpers.url_for(
       promo_image.variant(PROMO_IMAGE_SIZES[name])
+    )
+  end
+
+  def white_label_logo_url(name = :default)
+    return unless white_label_logo.variable?
+
+    Rails.application.routes.url_helpers.url_for(
+      white_label_logo.variant(WHITE_LABEL_LOGO_SIZES[name])
     )
   end
 
