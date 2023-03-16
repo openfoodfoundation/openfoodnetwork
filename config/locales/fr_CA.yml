@@ -6,9 +6,22 @@ fr_CA:
       spree/shipping_method: Option d'expédition
     attributes:
       spree/order/ship_address:
+        address1: "Adresse de livraison (Numéro et Rue)"
+        address2: "Adresse (Numéro et rue)"
+        city: "Adresse de livraison - Ville"
+        country: "Pays"
         phone: "Numéro de téléphone"
         firstname: "Prénom"
         lastname: "Nom de famille"
+        zipcode: "Code postal"
+      spree/order/bill_address:
+        address1: "Adresse de facturation (Numéro et rue)"
+        zipcode: "Adresse de facturation - Code postal"
+        city: "Adresse de facturation - Ville"
+        country: "Adresse de facturation - Pays"
+        firstname: "Adresse de facturation - Prénom"
+        lastname: "Adresse de facturation - Nom"
+        phone: Téléphone
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
@@ -409,8 +422,11 @@ fr_CA:
       filters:
         categories:
           title: Conditions de transport
+          selected_categories: "%{count} catégories sélectionnées"
         producers:
           title: Producteurs
+          selected_producers: "%{count} producteurs sélectionnés"
+        per_page: "%{count} éléments par page"
         colums: Colonnes
       columns:
         name: Nom
@@ -666,6 +682,7 @@ fr_CA:
         not_found: n'a pas été trouvé dans la base de donnée
         category_not_found: n'est pas conforme aux catégories utilisées. Merci de modifier les catégories en utilisant celles listées sur la page d'import ou vérifier qu'il n'y ait pas de faute de frappe ou d'espace à fin du mot.
         not_updatable: ne peut pas être mis à jour pour des produits existants via la fonctionnalité d'import de fichier produits
+        values_must_be_same: doit être identique pour les produits avec un nom identique
         blank: Champ obligatoire
         products_no_permission: vous n'avez pas les droits requis pour gérer les produits de cette entreprise
         inventory_no_permission: Vous n'avez pas la permission de créer un catalogue boutique pour ce producteur
@@ -1309,6 +1326,7 @@ fr_CA:
       total_by_customer: Total par acheteur
       total_by_supplier: Total par producteur
       supplier_totals: Totaux Cycle de Vente par Producteur
+      percentage: "%{value}%"
       supplier_totals_by_distributor: Totaux Cycle de Vente par Producteur pour chaque Hub Distributeur
       totals_by_supplier: Totaux Cycle de Vente par Hub Distributeur pour chaque Producteur
       customer_totals: Totaux Cycle de Vente par Acheteur
@@ -1319,6 +1337,8 @@ fr_CA:
       addresses: Adresses
       payment_methods: Rapport Méthodes de Paiement
       delivery: Rapport de Livraison
+      sales_tax_totals_by_producer: Détail des montants de taxes par producteur
+      sales_tax_totals_by_order: Détail des montants de taxes par commande
       tax_types: Type de taxe
       tax_rates: Taux de taxe
       pack_by_customer: Préparation des commandes par Acheteur
@@ -1497,6 +1517,10 @@ fr_CA:
         stripe_connect_fail: Désolé, la connexion de votre compte Stripe a échoué :-(
       stripe_connect_settings:
         resource: Configuration de Stripe Connect
+    resend_confirmation_emails_feedback:
+      one: "Emails envoyés pour 1 commande."
+      many: "Emails envoyés pour %{count} commandes"
+      other: "Emails envoyés pour %{count} commandes."
   api:
     unknown_error: "Quelque chose n'a pas fonctionné. Notre équipe a été notifiée."
     invalid_api_key: " La clé API (%{key}) n'est pas valide."
@@ -1807,6 +1831,7 @@ fr_CA:
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
     step1:
       contact_information:
+        title: Contact
         email:
           label: Email
         phone:
@@ -1860,10 +1885,13 @@ fr_CA:
         title: Détails de livraison
         edit: Modifier
         address: Adresse de livraison
+        instructions: Instructions
       payment_method:
         title: Méthode de paiement
         edit: Modifier
+        instructions: Instructions
       order:
+        title: Total commande
         edit: Modifier
       terms_and_conditions:
         message_html: "J'accepte les %{terms_and_conditions_link}"
@@ -1876,6 +1904,7 @@ fr_CA:
       submit: Valider ma commande
       cancel: Retour à la méthode de paiement
     errors:
+      saving_failed: "La sauvegarde n'a pas fonctionné, veuillez mettre à jour les champs en rouge.%{messages}"
       terms_not_accepted: Merci d'accepter les CGU & CGV.
       required: Ce champ ne peut pas être vide
       invalid_number: "Merci de renseigner un numéro de téléphone valide"
@@ -2576,6 +2605,7 @@ fr_CA:
   report_customers_cycle: "Cycle de vente"
   report_customers_type: "Type de rapport"
   report_customers_csv: "Télécharger en csv"
+  report_customers: Acheteur
   report_producers: "Producteurs"
   report_type: "Type de rapport"
   report_hubs: "Hubs"
@@ -2657,6 +2687,7 @@ fr_CA:
   report_header_tax_on_delivery: "Taxe sur livraison (%{currency_symbol})"
   report_header_tax_on_fees: "Taxe sur commission hub (%{currency_symbol})"
   report_header_tax_category: "Type de taxe"
+  report_header_tax_rate_name: "Taxe"
   report_header_tax_rate: "Taxe applicable"
   report_header_total_tax: "Total Taxe (%{currency_symbol})"
   report_header_total_excl_tax: "Total HT (%{currency_symbol})"
@@ -2667,6 +2698,7 @@ fr_CA:
   report_header_customer_code: Code acheteur
   report_header_product: Produit
   report_header_product_properties: Propriétés / labels Produits
+  report_header_product_tax_category: Taxe applicable
   report_header_quantity: Nb commandé
   report_header_max_quantity: Quantité Max
   report_header_variant: Variante
@@ -2679,6 +2711,8 @@ fr_CA:
   report_header_supplier: Fournisseur
   report_header_producer: Producteur
   report_header_producer_suburb: Ville Producteur
+  report_header_producer_tax_status: Soumis à la taxe
+  report_header_producer_charges_sales_tax?: Soumis à la GST
   report_header_unit: Unité
   report_header_group_buy_unit_quantity: Nb d'unités achetées (vente par lots)
   report_header_cost: Coût
@@ -2694,10 +2728,12 @@ fr_CA:
   report_header_distributor_address: Adresse Hub Distributeur
   report_header_distributor_city: Ville Distributeur
   report_header_distributor_postcode: Code Postal Distributeur
+  report_header_distributor_tax_status: Statut de la boutique
   report_header_delivery_address: Adresse Livraison
   report_header_delivery_postcode: Code Postal Livraison
   report_header_bulk_unit_size: Quantité totale du lot
   report_header_weight: Poids
+  report_header_final_weight_volume: Poids ou volume livré
   report_header_height: Hauteur
   report_header_width: Largeur
   report_header_depth: Profondeur
@@ -2876,6 +2912,7 @@ fr_CA:
       deleting_item_will_cancel_order: "Cette opération va rendre une ou plusieurs commandes vides, sans aucun produit. Elles vont ainsi être annulées. Souhaitez-vous continuer ?"
       modals:
         got_it: "J'ai compris"
+        confirm: "Valider"
         close: "Fermer"
         continue: "Suivant"
         cancel: "Annuler"
@@ -3432,6 +3469,8 @@ fr_CA:
     server_error: "Erreur serveur"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Retrait"
+      delivery: "Signé, scellé, livré"
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
     taxonomy_edit: "Modifier la taxonomie"
@@ -3516,6 +3555,7 @@ fr_CA:
     display_currency: "Afficher la devise"
     choose_currency: "Choisir la devise"
     mail_method_settings: "Paramètre méthode mail"
+    mail_settings_notice_html: "<b>Les modifications apportées ici seront temporaires</b>et peuvent changer à la prochaine mise à jour. <br>  Si vous souhaitez réaliser des changements permanents, un administrateur système doit se charger de mettre à jour les informations et provisionner le serveur en utilisant<a href='https://github.com/openfoodfoundation/ofn-install'> ofn-install </a>."
     general: "Général"
     enable_mail_delivery: "Permettre distribution des mails"
     send_mails_as: "Envoyer les mails en tant que"
@@ -3638,6 +3678,7 @@ fr_CA:
       messages:
         included_price_validation: "Ce cycle de vente a déjà été utilisé par un acheteur et ne peut être supprimé. Pour empêcher aux acheteurs d'y accéder, veuillez plutôt le fermer."
         blank: "Champ obligatoire"
+        invalid_instagram_url: "Uniquement le nom d'utilisateur / identifiant par ex. le_prof"
     layouts:
       admin:
         login_nav:
@@ -3748,6 +3789,7 @@ fr_CA:
           print_invoices: "Imprimer les factures"
           cancel_orders: "Annuler les commandes"
           resend_confirmation: "Renvoyer la confirmation"
+          resend_confirmation_confirm_html: "Cette action va renvoyer l'email de confirmation de commande. Etes-vous sûr de vouloir continuer ?"
           selected:
             zero: "Aucune commande sélectionnée"
             one: "1 commande sélectionnée"
@@ -3896,6 +3938,7 @@ fr_CA:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
           supplier: "Fournisseur"
+          supplier_select_placeholder: "Sélectionner un producteur"
           product_name: "Nom du Produit"
           units: "Unité de mesure"
           value: "Nb unités"
@@ -3941,6 +3984,9 @@ fr_CA:
           select_and_search: "Sélectionner les filtres et cliquez sur %{option} pour accéder aux données."
         customer_names_message:
           customer_names_tip: "Si les noms des acheteurs sont masqué, vous pouvez contacter le gestionnaire de la boutique. Il pourra vous donner accès à cette information."
+        products_and_inventory:
+          all_products:
+            message: "Attention les stocks correspondent aux stocks producteurs et non au stock du catalogue boutique."
       users:
         index:
           listing_users: "Liste des utilisateurs"
@@ -4304,6 +4350,7 @@ fr_CA:
     search_input:
       placeholder: Chercher
     selector_with_filter:
+      selected_items: "%{count} sélectionné"
       search_placeholder: Chercher
     pagination:
       next: Suivant

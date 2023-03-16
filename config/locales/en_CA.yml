@@ -6,12 +6,22 @@ en_CA:
       spree/shipping_method: Shipping/Pick-up Method
     attributes:
       spree/order/ship_address:
+        address1: "Shipping address (House number + Street)"
         address2: "Shipping address line 2"
+        city: "Shipping address city"
         country: "Shipping address country"
         phone: "Phone number"
         firstname: "First name"
         lastname: "Last name"
         zipcode: "Shipping address postal code"
+      spree/order/bill_address:
+        address1: "Billing address (House number & Street)"
+        zipcode: "Billing address Postal Code"
+        city: "Billing address City"
+        country: "Billing address country"
+        firstname: "Billing address first name"
+        lastname: "Billing address last name"
+        phone: Customer phone
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
@@ -1313,6 +1323,7 @@ en_CA:
       total_by_customer: Total by Customer
       total_by_supplier: Total By Supplier
       supplier_totals: Order Cycle Supplier Totals
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Order Cycle Supplier Totals by Distributor
       totals_by_supplier: Order Cycle Distributor Totals by Supplier
       customer_totals: Order Cycle Customer Totals
@@ -1323,6 +1334,8 @@ en_CA:
       addresses: Addresses
       payment_methods: Payment Methods Report
       delivery: Delivery Report
+      sales_tax_totals_by_producer: Sales Tax Totals by Producer
+      sales_tax_totals_by_order: Sales Tax Totals by Order
       tax_types: Tax Types
       tax_rates: Tax Rates
       pack_by_customer: Pack By Customer
@@ -2671,6 +2684,7 @@ en_CA:
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
   report_header_tax_category: "Tax Category"
+  report_header_tax_rate_name: "Tax Rate Name"
   report_header_tax_rate: "Tax Rate"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
   report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
@@ -2694,6 +2708,7 @@ en_CA:
   report_header_supplier: Supplier
   report_header_producer: Producer
   report_header_producer_suburb: Producer City/Town
+  report_header_producer_tax_status: Producer Tax Status
   report_header_producer_charges_sales_tax?: Tax registered
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity
@@ -2710,6 +2725,7 @@ en_CA:
   report_header_distributor_address: Distributor address
   report_header_distributor_city: Distributor city
   report_header_distributor_postcode: Distributor postal code
+  report_header_distributor_tax_status: Distributor Tax Status
   report_header_delivery_address: Delivery Address
   report_header_delivery_postcode: Delivery Postal Code
   report_header_bulk_unit_size: Bulk Unit Size
@@ -3083,6 +3099,9 @@ en_CA:
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer."
         restock_item: "Restock Items: Return this item to stock"
         restock_items: "Restock Items: Return all items to stock"
+        delete_line_items_html:
+          one: "This will delete one line item from the order. <br />Are you sure you want to proceed?"
+          other: "This will delete %{count} line items from the order.<br />Are you sure you want to proceed?"
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."

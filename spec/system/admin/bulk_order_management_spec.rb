@@ -127,6 +127,81 @@ describe '
       end
     end
 
+    context "searching" do
+      let!(:a1) { create(:address, phone: "1234567890", firstname: "Willy", lastname: "Wonka") }
+      let!(:o1) {
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.now, bill_address: a1)
+      }
+      let!(:o2) {
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.now )
+      }
+      let!(:s1) { create(:supplier_enterprise) }
+      let!(:s2) { create(:supplier_enterprise) }
+      let!(:li1) { create(:line_item_with_shipment, order: o1, product: create(:product, supplier: s1)) }
+      let!(:li2) { create(:line_item_with_shipment, order: o2, product: create(:product, supplier: s2)) }
+      let!(:li3) { create(:line_item_with_shipment, order: o2, product: create(:product, supplier: s2)) }
+
+      before :each do
+        visit_bulk_order_management
+      end
+
+      it "by product name" do
+        fill_in "quick_filter", with: li1.product.name
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+      end
+
+      it "by supplier name" do
+        fill_in "quick_filter", with: li1.product.supplier.name
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+      end
+
+      it "by email" do
+        fill_in "quick_filter", with: o1.email
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+      end
+
+      it "by order number" do
+        fill_in "quick_filter", with: o1.number
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+      end
+
+      it "by phone number" do
+        fill_in "quick_filter", with: o1.bill_address.phone
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+      end
+
+      it "by distributor name" do
+        fill_in "quick_filter", with: o1.distributor.name
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+      end
+
+      it "by customer name" do
+        fill_in "quick_filter", with: o1.bill_address.firstname
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+
+        fill_in "quick_filter", with: o1.bill_address.lastname
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+      end
+    end
+
     context "displaying individual columns" do
       let!(:o1) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
@@ -602,38 +677,6 @@ describe '
       end
     end
 
-    context "using quick search" do
-      let!(:o1) {
-        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now )
-      }
-      let!(:o2) {
-        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now )
-      }
-      let!(:o3) {
-        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now )
-      }
-      let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
-      let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
-      let!(:li3) { create(:line_item_with_shipment, order: o3 ) }
-
-      before :each do
-        visit_bulk_order_management
-      end
-
-      it "filters line items based on their attributes and the contents of the quick search input" do
-        expect(page).to have_selector "tr#li_#{li1.id}"
-        expect(page).to have_selector "tr#li_#{li2.id}"
-        expect(page).to have_selector "tr#li_#{li3.id}"
-        fill_in "quick_search", with: o1.email
-        expect(page).to have_selector "tr#li_#{li1.id}"
-        expect(page).to have_no_selector "tr#li_#{li2.id}"
-        expect(page).to have_no_selector "tr#li_#{li3.id}"
-      end
-    end
-
     context "using date restriction controls" do
       let!(:o1) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
@@ -823,39 +866,6 @@ describe '
             expect(page).to have_selector "tr#li_#{li11.id}"
             expect(o1.reload.state).to eq("complete")
           end
-        end
-      end
-
-      context "when a filter has been applied" do
-        it "only toggles checkboxes which are in filteredLineItems" do
-          fill_in "quick_search", with: o1.number
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
-          check "toggle_bulk"
-          fill_in "quick_search", with: ''
-          wait_until { request_monitor_finished 'LineItemsCtrl' }
-          expect(find("tr#li_#{li1.id} input[type='checkbox'][name='bulk']").checked?).to be true
-          expect(find("tr#li_#{li2.id} input[type='checkbox'][name='bulk']").checked?).to be false
-          expect(find("input[type='checkbox'][name='toggle_bulk']").checked?).to be false
-        end
-
-        it "only applies the delete action to filteredLineItems" do
-          check "toggle_bulk"
-          fill_in "quick_search", with: o1.number
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
-
-          find("div#bulk-actions-dropdown").click
-          find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
-
-          within ".modal" do
-            click_on("OK")
-          end
-
-          expect(page).to have_no_selector "tr#li_#{li1.id}"
-          expect(page).to have_selector "#quick_search"
-          fill_in "quick_search", with: ''
-          wait_until { request_monitor_finished 'LineItemsCtrl' }
-          expect(page).to have_selector "tr#li_#{li2.id}"
-          expect(page).to have_no_selector "tr#li_#{li1.id}"
         end
       end
     end
@@ -1100,5 +1110,15 @@ describe '
   def displays_default_orders
     expect(page).to have_selector "tr#li_#{li1.id}"
     expect(page).to have_selector "tr#li_#{li2.id}"
+  end
+
+  def expect_line_items_results(line_items, excluded_line_items)
+    expect(page).to have_text "Loading orders"
+    line_items.each do |li|
+      expect(page).to have_selector "tr#li_#{li.id}"
+    end
+    excluded_line_items.each do |li|
+      expect(page).to have_no_selector "tr#li_#{li.id}"
+    end
   end
 end
