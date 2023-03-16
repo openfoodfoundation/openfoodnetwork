@@ -4,7 +4,7 @@
   .three.columns.alpha
     = f.label :hide_ofn_navigation, t('.hide_ofn_navigation')
   .three.columns
-    = f.check_box :hide_ofn_navigation
+    = f.check_box :hide_ofn_navigation, { "data-controller": "checkbox-display", "data-checkbox-display-target-id-value": "white_label_logo" }
     
 .row{id: "white_label_logo"}
   .three.columns.alpha
