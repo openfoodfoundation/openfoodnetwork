@@ -148,10 +148,6 @@ module Spree
       spree_orders.incomplete.where(created_by_id: id).order('created_at DESC').first
     end
 
-    def flipper_id
-      "#{self.class.name};#{id}"
-    end
-
     def disabled
       disabled_at.present?
     end
