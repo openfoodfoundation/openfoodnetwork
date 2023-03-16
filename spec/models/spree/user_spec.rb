@@ -7,6 +7,7 @@ describe Spree::User do
 
   describe "associations" do
     it { is_expected.to have_many(:owned_enterprises) }
+    it { is_expected.to have_many(:webhook_endpoints).dependent(:destroy) }
 
     describe "addresses" do
       let(:user) { create(:user, bill_address: create(:address)) }

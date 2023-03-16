@@ -476,6 +476,7 @@ GEM
       ttfunk
     pg (1.2.3)
     power_assert (2.0.2)
+    private_address_check (0.5.0)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -806,6 +807,7 @@ DEPENDENCIES
   digest
   dotenv-rails
   factory_bot_rails (= 6.2.0)
+  faraday
   ffaker
   flipper
   flipper-active_record
@@ -848,6 +850,7 @@ DEPENDENCIES
   paypal-sdk-merchant (= 1.117.2)
   pdf-reader
   pg (~> 1.2.3)
+  private_address_check
   pry (~> 0.13.0)
   puma
   rack-mini-profiler (< 3.0.0)

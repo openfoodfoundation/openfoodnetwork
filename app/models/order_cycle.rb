@@ -34,6 +34,7 @@ class OrderCycle < ApplicationRecord
 
   attr_accessor :incoming_exchanges, :outgoing_exchanges
 
+  before_update :reset_opened_at, if: :will_save_change_to_orders_open_at?
   before_update :reset_processed_at, if: :will_save_change_to_orders_close_at?
   after_save :sync_subscriptions, if: :opening?
 
@@ -331,6 +332,14 @@ class OrderCycle < ApplicationRecord
     return if orders_close_at > orders_open_at
 
     errors.add(:orders_close_at, :after_orders_open_at)
+  end
+
+  def reset_opened_at
+    # Reset only if order cycle is opening again at a later date
+    return unless orders_open_at.present? && orders_open_at_was.present?
+    return unless orders_open_at > orders_open_at_was
+
+    self.opened_at = nil
   end
 
   def reset_processed_at

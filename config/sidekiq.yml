@@ -15,5 +15,7 @@
       every: "5m"
     SubscriptionConfirmJob:
       every: "5m"
+    OrderCycleOpenedJob:
+      every: "5m"
     OrderCycleClosingJob:
       every: "5m"

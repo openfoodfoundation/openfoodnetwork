@@ -136,6 +136,9 @@ gem 'view_component_reflex', '3.1.14.pre9'
 
 gem 'mini_portile2', '~> 2.8'
 
+gem "faraday"
+gem "private_address_check"
+
 group :production, :staging do
   gem 'ddtrace'
   gem 'rack-timeout'

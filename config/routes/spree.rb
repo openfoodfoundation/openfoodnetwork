@@ -32,7 +32,9 @@ Spree::Core::Engine.routes.draw do
     put '/password/change' => 'user_passwords#update', :as => :update_password
   end
 
-  resource :account, :controller => 'users'
+  resource :account, :controller => 'users' do
+    resources :webhook_endpoints, only: [:create, :destroy], controller: '/webhook_endpoints'
+  end
 
   match '/admin/orders/bulk_management' => 'admin/orders#bulk_management', :as => "admin_bulk_order_management", via: :get
   match '/admin/payment_methods/show_provider_preferences' => 'admin/payment_methods#show_provider_preferences', :via => :get
