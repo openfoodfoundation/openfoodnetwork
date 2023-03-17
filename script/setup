@@ -17,11 +17,13 @@ YELLOW='\033[0;33m'
 RED='\033[0;31m'
 NO_COLOR='\033[0m'
 
-RUBY_VERSION=$(cat .ruby-version)
-
 # Check ruby version
-if ! ruby --version | grep $RUBY_VERSION > /dev/null; then
-  printf "${RED}Open Food Network requires ruby ${RUBY_VERSION}${NO_COLOR}. Have a look at: https://github.com/rbenv/rbenv\n"
+RUBY_VERSION=$(cat .ruby-version)
+if command -v rbenv > /dev/null; then
+  ./script/rbenv-install.sh
+elif ! ruby --version | grep $RUBY_VERSION > /dev/null; then
+  printf "${RED}Open Food Network requires ruby ${RUBY_VERSION}${NO_COLOR}. "
+  printf "Have a look at: https://github.com/rbenv/rbenv\n"
   exit 1
 fi
 
