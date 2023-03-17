@@ -48,7 +48,7 @@ Fetch the latest version of `master` from `upstream` (ie. the main repo):
 First, you need to create the database user the app will use by manually typing the following in your terminal:
 
 ```sh
-sudo -u postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"
+sudo --login --user=postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PASSWORD 'f00d'"
 ```
 
 This will create the "ofn" user as superuser and allowing it to create databases. If this command fails, check the [troubleshooting section](#creating-the-database) for an alternative.
