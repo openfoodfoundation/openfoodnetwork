@@ -5,6 +5,7 @@ require 'system_helper'
 describe 'White label setting' do
   include AuthenticationHelper
   include ShopWorkflow
+  include FileHelper
 
   let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let!(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
@@ -18,6 +19,13 @@ describe 'White label setting' do
                                 variants: [product.variants.first])
   }
   let!(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
+  let(:complete_order) {
+    create(:order_with_credit_payment,
+           user: nil,
+           email: "guest@user.com",
+           distributor: distributor,
+           order_cycle: order_cycle)
+  }
 
   let(:ofn_navigation) { 'ul.nav-main-menu' }
 
@@ -102,13 +110,6 @@ describe 'White label setting' do
         end
 
         context "when the user has a complete order" do
-          let(:complete_order) {
-            create(:order_with_credit_payment,
-                   user: nil,
-                   email: "guest@user.com",
-                   distributor: distributor,
-                   order_cycle: order_cycle)
-          }
           before do
             set_order(complete_order)
           end
@@ -160,6 +161,112 @@ describe 'White label setting' do
         end
 
         it_behaves_like "does not hide the OFN navigation"
+      end
+    end
+
+    context "manage the white_label_logo preference" do
+      context "when the distributor has no logo" do
+        before do
+          distributor.update_attribute(:hide_ofn_navigation, true)
+        end
+
+        shared_examples "shows/hide the right logos" do
+          it "shows the OFN logo on shop page" do
+            expect(page).to have_selector "img[src*='/default_images/ofn-logo.png']"
+          end
+        end
+
+        context "on shop page" do
+          before do
+            visit main_app.enterprise_shop_path(distributor)
+          end
+
+          it_behaves_like "shows/hide the right logos"
+        end
+
+        context "on cart page" do
+          before do
+            order.update_attribute(:state, 'cart')
+            order.line_items << create(:line_item, variant: product.variants.first)
+            set_order(order)
+            visit main_app.cart_path
+          end
+
+          it_behaves_like "shows/hide the right logos"
+        end
+
+        context "on checkout page" do
+          before do
+            order.update_attribute(:state, 'cart')
+            order.line_items << create(:line_item, variant: product.variants.first)
+            set_order(order)
+            visit checkout_path
+          end
+
+          it_behaves_like "shows/hide the right logos"
+        end
+
+        context "on order confirmation page" do
+          before do
+            visit order_path(complete_order, order_token: complete_order.token)
+          end
+
+          it_behaves_like "shows/hide the right logos"
+        end
+      end
+
+      context "when the distributor has a logo" do
+        before do
+          distributor.update_attribute(:hide_ofn_navigation, true)
+          distributor.update white_label_logo: white_logo_file
+        end
+
+        shared_examples "shows/hide the right logos" do
+          it "shows the white label logo on shop page" do
+            expect(page).to have_selector "img[src*='/logo-white.png']"
+          end
+          it "does not show the OFN logo on shop page" do
+            expect(page).not_to have_selector "img[src*='/default_images/ofn-logo.png']"
+          end
+        end
+
+        context "on shop page" do
+          before do
+            visit main_app.enterprise_shop_path(distributor)
+          end
+
+          it_behaves_like "shows/hide the right logos"
+        end
+
+        context "on cart page" do
+          before do
+            order.update_attribute(:state, 'cart')
+            order.line_items << create(:line_item, variant: product.variants.first)
+            set_order(order)
+            visit main_app.cart_path
+          end
+
+          it_behaves_like "shows/hide the right logos"
+        end
+
+        context "on checkout page" do
+          before do
+            order.update_attribute(:state, 'cart')
+            order.line_items << create(:line_item, variant: product.variants.first)
+            set_order(order)
+            visit checkout_path
+          end
+
+          it_behaves_like "shows/hide the right logos"
+        end
+
+        context "on order confirmation page" do
+          before do
+            visit order_path(complete_order, order_token: complete_order.token)
+          end
+
+          it_behaves_like "shows/hide the right logos"
+        end
       end
     end
   end
