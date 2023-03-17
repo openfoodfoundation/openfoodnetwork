@@ -5,6 +5,8 @@ module WhiteLabel
   include EnterprisesHelper
 
   def hide_ofn_navigation
+    return false unless OpenFoodNetwork::FeatureToggle.enabled?(:white_label)
+
     # if the distributor has the hide_ofn_navigation preference set to true
     # then we should hide the OFN navigation
     @hide_ofn_navigation = distributor.preferred_hide_ofn_navigation
