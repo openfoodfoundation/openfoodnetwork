@@ -168,7 +168,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def shipping_method_ship_address_not_required?
-    selected_shipping_method = allowed_shipping_methods&.select do |sm|
+    selected_shipping_method = available_shipping_methods&.select do |sm|
       sm.id.to_s == params[:shipping_method_id]
     end
 
