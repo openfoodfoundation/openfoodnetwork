@@ -27,10 +27,8 @@ elif ! ruby --version | grep $RUBY_VERSION > /dev/null; then
   exit 1
 fi
 
-# Set up Ruby dependencies via Bundler
-if ! command -v bundle > /dev/null; then
-  ./script/install-bundler
-fi
+# Install used Bundler version
+./script/install-bundler
 
 # Install all dependencies
 bundle check || bundle install
