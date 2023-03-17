@@ -91,9 +91,31 @@ describe 'White label setting' do
           set_order(complete_order)
         end
 
-        it "hides the OFN navigation when visiting the order confirmation page" do
-          visit order_path(complete_order, order_token: complete_order.token)
-          expect(page).to have_no_selector ofn_navigation
+        shared_examples "hides the OFN navigation when needed only for the order confirmation" do
+          it "hides" do
+            visit order_path(complete_order, order_token: complete_order.token)
+            expect(page).to have_no_selector ofn_navigation
+          end
+        end
+
+        context "when the current distributor is the distributor of the order" do
+          before do
+            allow_any_instance_of(EnterprisesHelper).to receive(:current_distributor).
+              and_return(distributor)
+          end
+
+          it_behaves_like "hides the OFN navigation when needed only for the order confirmation"
+        end
+
+        context "when the user has a current distributor that is not the distributor's order" do
+          let!(:another_distributor) { create(:distributor_enterprise) }
+          before do
+            another_distributor.update_attribute(:preferred_hide_ofn_navigation, false)
+            allow_any_instance_of(EnterprisesHelper).to receive(:current_distributor).
+              and_return(another_distributor)
+          end
+
+          it_behaves_like "hides the OFN navigation when needed only for the order confirmation"
         end
       end
 
