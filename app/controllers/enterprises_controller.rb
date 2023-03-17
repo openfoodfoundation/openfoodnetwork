@@ -7,6 +7,7 @@ class EnterprisesController < BaseController
   helper Spree::ProductsHelper
   include OrderCyclesHelper
   include SerializerHelper
+  include WhiteLabel
 
   protect_from_forgery except: :check_permalink
 
@@ -14,6 +15,7 @@ class EnterprisesController < BaseController
   prepend_before_action :set_order_cycles, :require_distributor_chosen, :reset_order, only: :shop
 
   before_action :clean_permalink, only: :check_permalink
+  before_action :hide_ofn_navigation, only: :shop
 
   respond_to :js, only: :permalink_checker
 

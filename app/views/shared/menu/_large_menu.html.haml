@@ -10,7 +10,7 @@
           = t 'powered_by'
           %a{href: '/'}
             = t 'title'
-    - unless hide_ofn_navigation?
+    - unless @hide_ofn_navigation
       %ul.nav-main-menu
         - [*1..7].each do |menu_number|
           - menu_name = "menu_#{menu_number}"

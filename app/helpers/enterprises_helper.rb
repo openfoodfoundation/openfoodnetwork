@@ -87,26 +87,4 @@ module EnterprisesHelper
       main_app.producers_url
     end
   end
-
-  def hide_ofn_navigation?
-    # if we are not on a shopfront, a cart page, checkout page or the order confirmation page
-    # then we should show the OFN navigation
-    # whatever the current distributor has set for the hide_ofn_navigation preference
-    return false unless current_distributor && current_page?(main_app.enterprise_shop_path(current_distributor)) || # shopfront
-                        request.path.start_with?(main_app.checkout_path) || # checkout
-                        current_page?(main_app.cart_path) || # cart
-                        request.path.start_with?("/orders/") # order confirmation
-
-    distributor = if request.path.start_with?("/orders/")
-                    # if we are on an order confirmation page,
-                    # we need to get the distributor from the order, not the current one
-                    Spree::Order.find_by(number: params[:id]).distributor
-                  else
-                    current_distributor
-                  end
-
-    # if the current distributor has the hide_ofn_navigation preference set to true
-    # then we should hide the OFN navigation
-    distributor.preferred_hide_ofn_navigation
-  end
 end

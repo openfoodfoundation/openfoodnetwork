@@ -5,6 +5,7 @@ require 'open_food_network/address_finder'
 class CheckoutController < ::BaseController
   include OrderStockCheck
   include OrderCompletion
+  include WhiteLabel
 
   layout 'darkswarm'
 
@@ -26,6 +27,8 @@ class CheckoutController < ::BaseController
 
   before_action :associate_user
   before_action :check_authorization
+
+  before_action :hide_ofn_navigation, only: :edit
 
   helper 'spree/orders'
 

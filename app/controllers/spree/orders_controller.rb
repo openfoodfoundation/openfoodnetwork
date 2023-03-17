@@ -5,6 +5,7 @@ module Spree
     include OrderCyclesHelper
     include Rails.application.routes.url_helpers
     include CablecarResponses
+    include WhiteLabel
 
     layout 'darkswarm'
 
@@ -22,6 +23,7 @@ module Spree
     prepend_before_action :require_distributor_chosen, only: :edit
     before_action :check_hub_ready_for_checkout, only: :edit
     before_action :check_at_least_one_line_item, only: :update
+    before_action :hide_ofn_navigation, only: [:show, :edit]
 
     def show
       @order = Spree::Order.find_by!(number: params[:id])

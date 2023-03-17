@@ -91,6 +91,7 @@ describe Spree::OrdersController, type: :controller do
 
     it "redirects to shop when order is empty" do
       allow(controller).to receive(:current_distributor).and_return(distributor)
+      allow(distributor).to receive(:preferred_hide_ofn_navigation).and_return false
       allow(controller).to receive(:current_order_cycle).and_return(order_cycle)
       allow(controller).to receive(:current_order).and_return order
       allow(order).to receive_message_chain(:line_items, :empty?).and_return true
