@@ -283,7 +283,7 @@ GEM
       websocket-driver (>= 0.6, < 0.8)
     ffaker (2.21.0)
     ffi (1.15.5)
-    flipper (0.26.0)
+    flipper (0.26.2)
       concurrent-ruby (< 2)
     flipper-active_record (0.26.0)
       activerecord (>= 4.2, < 8)
