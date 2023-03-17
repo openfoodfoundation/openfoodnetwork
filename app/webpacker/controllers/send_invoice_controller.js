@@ -6,6 +6,6 @@ export default class extends BulkActionsController {
   }
 
   confirm() {
-    super.confirm("BulkActionsInOrdersList#resend_confirmation_email");
+    super.confirm("BulkActionsInOrdersList#send_invoice");
   }
 }
