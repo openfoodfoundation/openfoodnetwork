@@ -16,6 +16,10 @@ module Spree
         @payment_method = payment_method_class.constantize.new(base_params)
         @object = @payment_method
 
+        if !base_params["calculator_type"] && gateway_params["calculator_type"]
+          @payment_method.calculator_type = gateway_params["calculator_type"]
+        end
+
         load_hubs
 
         if @payment_method.save

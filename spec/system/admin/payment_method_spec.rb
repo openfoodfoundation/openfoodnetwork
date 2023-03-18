@@ -112,6 +112,44 @@ describe '
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[2].id}",
                                  checked: false
     end
+
+    it "retains and displays data that was just submitted" do
+      login_as_admin_and_visit spree.edit_admin_general_settings_path
+      click_link 'Payment Methods'
+      click_link 'New Payment Method'
+
+      fill_in "payment_method_name", with: 'Cheque payment method'
+      fill_in "payment_method_description", with: "Payment description"
+      select2_select "PayPal Express", from: "payment_method_type"
+      select2_select "Flat Percent", from: 'calc_type'
+
+      click_button 'Create'
+
+      expect(page).to have_field "payment_method_name", with: "Cheque payment method"
+      expect(page).to have_field "payment_method_description", with: "Payment description"
+      expect(page).to have_select("payment_method_type", selected: "PayPal Express")
+      expect(page).to have_select("calc_type", selected: "Flat Percent")
+
+      select2_select "Price Sack", from: 'calc_type'
+
+      click_button 'Create'
+
+      expect(page).to have_select("calc_type", selected: "Price Sack")
+      expect(page).to have_field "payment_method_name", with: "Cheque payment method"
+      expect(page).to have_field "payment_method_description", with: "Payment description"
+      expect(page).to have_select("payment_method_type", selected: "PayPal Express")
+
+      check "payment_method_distributor_ids_#{@distributors[0].id}"
+
+      click_button 'Create'
+
+      expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}",
+                                 checked: true
+      expect(page).to have_select("calc_type", selected: "Price Sack")
+      expect(page).to have_field "payment_method_name", with: "Cheque payment method"
+      expect(page).to have_field "payment_method_description", with: "Payment description"
+      expect(page).to have_select("payment_method_type", selected: "PayPal Express")
+    end
   end
 
   it "updating a payment method" do
