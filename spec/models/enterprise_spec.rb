@@ -171,8 +171,8 @@ describe Enterprise do
         expect(e).to_not be_valid
       end
 
-      it "invalidates the instagram attribute https://instagram.com/user/" do
-        e = build(:enterprise, instagram: 'https://instagram.com/user/')
+      it "invalidates the instagram attribute https://www.instagram.com/p/Cpg4McNPyJA/" do
+        e = build(:enterprise, instagram: 'https://www.instagram.com/p/Cpg4McNPyJA/')
         expect(e).to_not be_valid
       end
 

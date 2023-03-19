@@ -98,14 +98,6 @@ describe "Registration" do
       click_button "Continue"
       expect(page).to have_content 'Step 1. Select Logo Image'
 
-      # Enterprise should be updated
-      e.reload
-      expect(e.description).to eq "Short description"
-      expect(e.long_description).to eq "Long description"
-      expect(e.abn).to eq '12345'
-      expect(e.acn).to eq '54321'
-      expect(e.charges_sales_tax).to be true
-
       # Images
       # Upload logo image
       attach_file "image-select", Rails.root.join("spec/fixtures/files/logo.png"), visible: false
@@ -125,22 +117,37 @@ describe "Registration" do
       click_button "Continue"
       expect(page).to have_content 'How can people find My Awesome Enterprise online?'
 
+      # Filling in social with invalid value for instagram - a link to a post instead of user
+      fill_in "enterprise_instagram", with: 'https://www.instagram.com/p/Cpg4McNPyJA/'
+      accept_alert "Failed to update your enterprise." do
+        click_button "Continue"
+      end
+      expect(page).to have_content "Must be user name only eg. the_prof"
+
       # Filling in social
       fill_in 'enterprise_website', with: 'www.shop.com'
       fill_in 'enterprise_facebook', with: 'FaCeBoOk'
       fill_in 'enterprise_linkedin', with: 'LiNkEdIn'
-      fill_in 'enterprise_twitter', with: 'https://www.twitter.com/@TwItTeR'
-      fill_in 'enterprise_instagram', with: 'www.instagram.com/InStAgRaM'
+      fill_in 'enterprise_twitter', with: 'https://twitter.com/@OpenFoodNet'
+      fill_in 'enterprise_instagram', with: 'https://www.instagram.com/OpenFoodNetwork/'
       click_button "Continue"
       expect(page).to have_content 'Finished!'
 
       # Done
+      # Check values set in about tab
       e.reload
+      expect(e.description).to eq "Short description"
+      expect(e.long_description).to eq "Long description"
+      expect(e.abn).to eq '12345'
+      expect(e.acn).to eq '54321'
+      expect(e.charges_sales_tax).to be true
+
+      # Check values set in social tab
       expect(e.website).to eq "www.shop.com"
       expect(e.facebook).to eq "FaCeBoOk"
       expect(e.linkedin).to eq "LiNkEdIn"
-      expect(e.twitter).to eq "TwItTeR"
-      expect(e.instagram).to eq "instagram"
+      expect(e.twitter).to eq "OpenFoodNet"
+      expect(e.instagram).to eq "openfoodnetwork"
 
       click_link "Go to Enterprise Dashboard"
       expect(page).to have_content "CHOOSE YOUR PACKAGE"

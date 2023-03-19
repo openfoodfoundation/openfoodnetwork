@@ -55,6 +55,10 @@ angular.module('Darkswarm').factory "EnterpriseRegistrationService", ($http, Reg
       ).catch((response) ->
         Loading.clear()
         alert(t('failed_to_update_enterprise_unknown'))
+        if response.data.errors.instagram
+          igErr = document.querySelector("#instagram-error")
+          igErr.style.display = 'block'
+          igErr.textContent = response.data.errors.instagram[0]
       )
 
     prepare: =>
