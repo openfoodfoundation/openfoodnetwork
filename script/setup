@@ -27,9 +27,6 @@ elif ! ruby --version | grep $RUBY_VERSION > /dev/null; then
   exit 1
 fi
 
-# Install used Bundler version
-./script/install-bundler
-
 # Install dependencies, prepare database and tidy
 ./bin/setup
 

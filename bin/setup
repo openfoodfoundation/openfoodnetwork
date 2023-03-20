@@ -14,7 +14,7 @@ FileUtils.chdir APP_ROOT do
   # Add necessary setup steps to this file.
 
   puts "== Installing dependencies =="
-  system! "gem install bundler --conservative"
+  system! "script/install-bundler"
   system("bundle check") || system!("bundle install")
 
   # Install JavaScript dependencies
