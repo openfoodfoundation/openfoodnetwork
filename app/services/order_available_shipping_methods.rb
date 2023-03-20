@@ -20,6 +20,9 @@ class OrderAvailableShippingMethods
   private
 
   def filter_by_category(methods)
+    return methods unless OpenFoodNetwork::FeatureToggle.enabled?(:match_shipping_categories,
+                                                                  distributor&.owner)
+
     required_category_ids = order.products.pluck(:shipping_category_id).to_set
     return methods if required_category_ids.empty?
 

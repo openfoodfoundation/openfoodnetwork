@@ -234,6 +234,8 @@ describe OrderAvailableShippingMethods do
     before {
       standard_shipping
       cooled_shipping
+
+      Flipper.enable(:match_shipping_categories)
     }
 
     it "provides all shipping methods for an empty order" do
