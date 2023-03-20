@@ -696,6 +696,10 @@ describe '
             expect(distributor1.reload.white_label_logo_blob.filename).to eq("logo-white.png")
           end
 
+          it "does not show the white label logo link field" do
+            expect(page).not_to have_field "white_label_logo_link"
+          end
+
           context "when enterprise has a white label logo" do
             before do
               distributor1.update white_label_logo: white_logo_file
@@ -716,6 +720,14 @@ describe '
               expect(flash_message).to match(/Logo removed/)
               distributor1.reload
               expect(distributor1.white_label_logo).to_not be_attached
+            end
+
+            it "can edit the text field white_label_logo_link" do
+              fill_in "enterprise_white_label_logo_link", with: "https://www.openfoodnetwork.org"
+              click_button 'Update'
+              expect(flash_message)
+                .to eq('Enterprise "First Distributor" has been successfully updated!')
+              expect(distributor1.reload.white_label_logo_link).to eq("https://www.openfoodnetwork.org")
             end
           end
         end
