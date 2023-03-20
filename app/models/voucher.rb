@@ -1,6 +1,8 @@
 # frozen_string_literal: false
 
 class Voucher < ApplicationRecord
+  acts_as_paranoid
+
   include CalculatedAdjustments
 
   belongs_to :enterprise
