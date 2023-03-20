@@ -77,7 +77,7 @@ components:
                 billing_address:
                   type: object
                   nullable: true
-                  example:
+                  example: 
                 shipping_address:
                   type: object
                   nullable: true
@@ -190,7 +190,7 @@ components:
                   billing_address:
                     type: object
                     nullable: true
-                    example:
+                    example: 
                   shipping_address:
                     type: object
                     nullable: true
@@ -210,6 +210,9 @@ components:
                       country:
                         code: AU
                         name: Australia
+                  balance:
+                    type: number
+                    format: double
                 required:
                 - id
                 - enterprise_id
@@ -307,6 +310,12 @@ paths:
         in: query
         schema:
           type: string
+      - name: extra_fields[customer]
+        in: query
+        example: balance
+        description: Add extra fields to each customer
+        schema:
+          type: string
       responses:
         '200':
           description: Customers list
@@ -366,7 +375,7 @@ paths:
                 billing_address:
                   type: object
                   nullable: true
-                  example:
+                  example: 
                 shipping_address:
                   type: object
                   nullable: true
@@ -406,7 +415,120 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/customer"
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: '1'
+                      type:
+                        type: string
+                        example: customer
+                      attributes:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          enterprise_id:
+                            type: integer
+                            example: 2
+                          first_name:
+                            type: string
+                            nullable: true
+                            example: Alice
+                          last_name:
+                            type: string
+                            nullable: true
+                            example: Springs
+                          code:
+                            type: string
+                            nullable: true
+                            example: BUYER1
+                          email:
+                            type: string
+                            example: alice@example.com
+                          allow_charges:
+                            type: boolean
+                            example: false
+                          tags:
+                            type: array
+                            items:
+                              type: string
+                            example:
+                            - staff
+                            - discount
+                          terms_and_conditions_accepted_at:
+                            type: string
+                            format: date-time
+                            nullable: true
+                            example: '2022-03-12T15:55:00.000+11:00'
+                          billing_address:
+                            type: object
+                            nullable: true
+                            example: 
+                          shipping_address:
+                            type: object
+                            nullable: true
+                            example:
+                              phone: 0404 333 222 111
+                              latitude: -37.8173751
+                              longitude: 144.964803195704
+                              first_name: Alice
+                              last_name: Springs
+                              street_address_1: 1 Flinders Street
+                              street_address_2: ''
+                              postal_code: '1234'
+                              locality: Melbourne
+                              region:
+                                code: Vic
+                                name: Victoria
+                              country:
+                                code: AU
+                                name: Australia
+                          balance:
+                            type: number
+                            format: double
+                        required:
+                        - id
+                        - enterprise_id
+                        - first_name
+                        - last_name
+                        - code
+                        - email
+                        - allow_charges
+                        - tags
+                        - terms_and_conditions_accepted_at
+                        - billing_address
+                        - shipping_address
+                        - balance
+                      relationships:
+                        type: object
+                        properties:
+                          enterprise:
+                            type: object
+                            properties:
+                              data:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                  type:
+                                    type: string
+                                    example: enterprise
+                              links:
+                                type: object
+                                properties:
+                                  related:
+                                    type: string
+                  meta:
+                    type: object
+                  links:
+                    type: object
+                required:
+                - data
         '404':
           description: Not found
           content:
@@ -476,7 +598,7 @@ paths:
                 billing_address:
                   type: object
                   nullable: true
-                  example:
+                  example: 
                 shipping_address:
                   type: object
                   nullable: true

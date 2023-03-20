@@ -16,6 +16,10 @@ module Api
         address(object.shipping_address)
       end
 
+      attribute :balance, if: proc { |record|
+        record.respond_to?(:balance_value)
+      }, &:balance_value
+
       belongs_to :enterprise, links: {
         related: ->(object) {
           url_helpers.api_v1_enterprise_url(id: object.enterprise_id)

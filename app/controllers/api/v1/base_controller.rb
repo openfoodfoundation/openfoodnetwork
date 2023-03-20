@@ -106,7 +106,9 @@ module Api
       end
 
       def json_api_error(message, **options)
-        { errors: [{ detail: message }] }.merge(options)
+        error_options = options.delete(:error_options) || {}
+
+        { errors: [{ detail: message }.merge(error_options)] }.merge(options)
       end
 
       def json_api_invalid(message, errors)

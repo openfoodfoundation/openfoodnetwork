@@ -1624,6 +1624,11 @@ en:
       destroy_attachment_does_not_exist: "Terms and Conditions file does not exist"
     orders:
       failed_to_update: "Failed to update order"
+    query_param:
+      error: 
+        title: Invalid query parameter
+        extra_fields: "Unsupported fields: %{fields}" 
+      
 
 # Frontend views
 #
