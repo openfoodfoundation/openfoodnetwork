@@ -22,7 +22,6 @@ class SplitCheckoutController < ::BaseController
   before_action :hide_ofn_navigation, only: [:edit, :update]
 
   def edit
-    #  TODO Calculate percent amount covered by the voucher for display purposes
     @voucher_adjustment = @order.vouchers.first
 
     redirect_to_step_based_on_order unless params[:step]
@@ -33,7 +32,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def update
-    return add_voucher if payment_step? and params[:order][:voucher_code]
+    return add_voucher if payment_step? && params[:order][:voucher_code]
 
     if confirm_order || update_order
       return if performed?
@@ -49,6 +48,13 @@ class SplitCheckoutController < ::BaseController
     flash[:error] = I18n.t(:spree_gateway_error_flash_for_checkout, error: e.message)
     @order.update_column(:state, "payment")
     render cable_ready: cable_car.redirect_to(url: checkout_step_path(:payment))
+  end
+
+  def destroy
+    adjustment = Spree::Adjustment.find_by(id: params[:adjustment_id])
+    adjustment.destroy
+
+    redirect_to checkout_step_path(:payment)
   end
 
   private

@@ -2056,9 +2056,12 @@ en:
       submit: Next - Order summary
       cancel: Back to Your details
       voucher:
+        voucher: Voucher
         apply_voucher: Apply voucher 
         apply: Apply 
         placeholder: Enter voucher code
+        remove_code: Remove code
+        confirm_delete: Are you sure you want to remove the voucher ?
     step3:
       delivery_details:
         title: Delivery details

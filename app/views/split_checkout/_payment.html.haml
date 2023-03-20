@@ -4,10 +4,13 @@
       .checkout-title
         = t("split_checkout.step2.voucher.apply_voucher")
 
-      .checkout-input.voucher
+      .checkout-input
         .two-columns-inputs.voucher
           -if @voucher_adjustment.present?
-            = "Voucher used: #{@voucher_adjustment.label}"
+            %span.button.voucher-added
+              %i.ofn-i_051-check-big
+                = "#{@voucher_adjustment.originator.display_value} #{t("split_checkout.step2.voucher.voucher")}"
+            = link_to t("split_checkout.step2.voucher.remove_code"), checkout_destroy_path(adjustment_id: @voucher_adjustment.id), method: "delete", data: { confirm: t("split_checkout.step2.voucher.confirm_delete") }
           - else
             = f.text_field :voucher_code, { placeholder: t("split_checkout.step2.voucher.placeholder"), class: "voucher" }
             - # TODO: enable button when code entered

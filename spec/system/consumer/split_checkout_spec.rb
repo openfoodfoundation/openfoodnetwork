@@ -744,7 +744,25 @@ describe "As a consumer, I want to checkout my order" do
               fill_in "Enter voucher code", with: voucher.code
               click_button("Apply")
 
-              expect(page).to have_content("Voucher used: some_code")
+              expect(page).to have_content("$10.00 Voucher")
+            end
+          end
+
+          describe "removing voucher from order" do
+            before do
+              voucher.create_adjustment(voucher.code, order)
+              # Reload the page so we pickup the voucher
+              visit checkout_step_path(:payment)
+            end
+
+            it "removes voucher" do
+              accept_confirm "Are you sure you want to remove the voucher ?" do
+                click_on "Remove code"
+              end
+
+              within '.voucher' do
+                expect(page).to have_button("Apply")
+              end
             end
           end
         end

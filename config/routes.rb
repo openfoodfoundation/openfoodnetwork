@@ -74,7 +74,7 @@ Openfoodnetwork::Application.routes.draw do
     match "/checkout", via: :get, controller: "payment_gateways/stripe", action: "confirm"
     match "/orders/:order_number", via: :get, controller: "payment_gateways/stripe", action: "authorize"
   end
-  
+
   namespace :payment_gateways do
     get "/paypal", to: "paypal#express", as: :paypal_express
     get "/paypal/confirm", to: "paypal#confirm", as: :confirm_paypal
@@ -91,6 +91,8 @@ Openfoodnetwork::Application.routes.draw do
       get '/checkout/:step', to: 'split_checkout#edit', as: :checkout_step
       put '/checkout/:step', to: 'split_checkout#update', as: :checkout_update
     end
+
+    delete '/checkout/payment', to: 'split_checkout#destroy', as: :checkout_destroy
 
     # Redirects to the new checkout for any other 'step' (ie. /checkout/cart from the legacy checkout)
     get '/checkout/:other', to: redirect('/checkout')
