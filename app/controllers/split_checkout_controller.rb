@@ -32,7 +32,11 @@ class SplitCheckoutController < ::BaseController
   end
 
   def update
-    return add_voucher if payment_step? && params[:order][:voucher_code]
+    if add_voucher
+      return redirect_to checkout_step_path(:payment)
+    elsif @order.errors.present?
+      return render_error
+    end
 
     if confirm_order || update_order
       return if performed?
@@ -191,19 +195,21 @@ class SplitCheckoutController < ::BaseController
   end
 
   def add_voucher
+    return unless payment_step? && params[:order] && params[:order][:voucher_code]
+
     # Fetch Voucher
     voucher = Voucher.find_by(code: params[:order][:voucher_code], enterprise: @order.distributor)
 
     if voucher.nil?
       @order.errors.add(:voucher, I18n.t('split_checkout.errors.voucher_not_found'))
-      return render_error
+      return false
     end
 
     # Create adjustment
     # TODO add tax part of adjustement
     voucher.create_adjustment(voucher.code, @order)
 
-    redirect_to checkout_step_path(:payment)
+    true
   end
 
   def summary_step?
