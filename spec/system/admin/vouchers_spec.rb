@@ -31,8 +31,12 @@ describe '
 
   it 'creates a voucher' do
     # Given an enterprise
-    # When I go to the new voucher page
-    login_as_admin_and_visit new_admin_enterprise_voucher_path(enterprise)
+    # When I go to the enterprise voucher tab and click new
+    login_as_admin_and_visit edit_admin_enterprise_path(enterprise)
+    click_link 'Vouchers'
+    within "#vouchers_panel" do
+      click_link 'Add New'
+    end
 
     # And I fill in the fields for a new voucher click save
     fill_in 'voucher_code', with: voucher_code
