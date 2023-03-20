@@ -4,10 +4,10 @@
       %strong
         = cookie_name
       %span /
-      = t 'legal.cookies_policy.cookie_domain'
+      {{ 'legal.cookies_policy.cookie_domain' | t }}
       - if cookie_domain
         = cookie_domain
       - else
         = "{{ instance_hostname }}"
     %p
-      = cookie_desc
+      = "{{ '#{cookie_desc}' | t }}"

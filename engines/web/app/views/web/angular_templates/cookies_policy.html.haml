@@ -1,87 +1,87 @@
 %h2
-  = t 'legal.cookies_policy.header'
+  {{ 'legal.cookies_policy.header' | t }}
 %p
-  = t 'legal.cookies_policy.desc_part_1'
+  {{ 'legal.cookies_policy.desc_part_1' | t }}
 %p
-  = t 'legal.cookies_policy.desc_part_2'
+  {{ 'legal.cookies_policy.desc_part_2' | t }}
 %p
-  = t 'legal.cookies_policy.desc_part_3'
+  {{ 'legal.cookies_policy.desc_part_3' | t }}
 
 %h2
-  = t 'legal.cookies_policy.essential_cookies'
+  {{ 'legal.cookies_policy.essential_cookies' | t }}
 %p
-  = t 'legal.cookies_policy.essential_cookies_desc'
+  {{ 'legal.cookies_policy.essential_cookies_desc' | t }}
 
 %table{ng: { controller:"CookiesPolicyModalCtrl"}}
-  = render_cookie_entry( "_ofn_session_id", t( "legal.cookies_policy.cookie_session_desc" ) )
-  = render_cookie_entry( "cookies_consent", t( "legal.cookies_policy.cookie_consent_desc" ) )
-  = render_cookie_entry( "remember_spree_user_token", t( "legal.cookies_policy.cookie_remember_me_desc" ) )
-  = render_cookie_entry( "qos_token", t( "legal.cookies_policy.cookie_openstreemap_desc" ), "openstreetmap.org" )
+  = render_cookie_entry( "_ofn_session_id", "legal.cookies_policy.cookie_session_desc" )
+  = render_cookie_entry( "cookies_consent", "legal.cookies_policy.cookie_consent_desc" )
+  = render_cookie_entry( "remember_spree_user_token", "legal.cookies_policy.cookie_remember_me_desc" )
+  = render_cookie_entry( "qos_token", "legal.cookies_policy.cookie_openstreemap_desc", "openstreetmap.org" )
   %tr
     %td
       %p
         %strong m
         %span /
-        = t 'legal.cookies_policy.cookie_domain'
+        {{ 'legal.cookies_policy.cookie_domain' | t }}
         = "m.stripe.com"
       %p
         %strong nsr
         %span /
-        = t 'legal.cookies_policy.cookie_domain'
+        {{ 'legal.cookies_policy.cookie_domain' | t }}
         = "m.stripe.network"
       %p
         %strong __stripe_sid
         %span /
-        = t 'legal.cookies_policy.cookie_domain'
+        {{ 'legal.cookies_policy.cookie_domain' | t }}
         = "{{ instance_hostname }}"
       %p
         %strong __stripe_mid
         %span /
-        = t 'legal.cookies_policy.cookie_domain'
+        {{ 'legal.cookies_policy.cookie_domain' | t }}
         = "{{ instance_hostname }}"
       %p
-        = t 'legal.cookies_policy.cookie_stripe_desc'
+        {{ 'legal.cookies_policy.cookie_stripe_desc' | t }}
 %p
-  = t 'legal.cookies_policy.essential_cookies_note'
+  {{ 'legal.cookies_policy.essential_cookies_note' | t }}
 
 - if Spree::Config.cookies_policy_matomo_section
   %h2
-    = t 'legal.cookies_policy.statistics_cookies'
+    {{ 'legal.cookies_policy.statistics_cookies' | t }}
   %p
-    = t 'legal.cookies_policy.statistics_cookies_desc'
+    {{ 'legal.cookies_policy.statistics_cookies_desc' | t }}
   %p
-    = t 'legal.cookies_policy.statistics_cookies_matomo_desc_html'
+    {{ 'legal.cookies_policy.statistics_cookies_matomo_desc_html' | t }}
 
   %table{ng: { controller:"CookiesPolicyModalCtrl"}}
-    = render_cookie_entry( "_pk_ref, _pk_cvar, _pk_id and _pk_ses", t( "legal.cookies_policy.cookie_matomo_basics_desc" ) )
-    = render_cookie_entry( "_pk_hsr, _pk_cvar, _pk_id and _pk_ses", t( "legal.cookies_policy.cookie_matomo_heatmap_desc" ) )
-    = render_cookie_entry( "piwik_ignore, _pk_cvar, _pk_id and _pk_ses", t( "legal.cookies_policy.cookie_matomo_ignore_desc" ) )
+    = render_cookie_entry( "_pk_ref, _pk_cvar, _pk_id and _pk_ses", "legal.cookies_policy.cookie_matomo_basics_desc" )
+    = render_cookie_entry( "_pk_hsr, _pk_cvar, _pk_id and _pk_ses", "legal.cookies_policy.cookie_matomo_heatmap_desc" )
+    = render_cookie_entry( "piwik_ignore, _pk_cvar, _pk_id and _pk_ses", "legal.cookies_policy.cookie_matomo_ignore_desc" )
 
   - if Spree::Config.matomo_url.present?
     %p
-      = t 'legal.cookies_policy.statistics_cookies_matomo_optout'
+      {{ 'legal.cookies_policy.statistics_cookies_matomo_optout' | t }}
     %p
       %iframe{ src: matomo_iframe_src }
 
 %h2
-  = t 'legal.cookies_policy.disabling_cookies_header'
+  {{ 'legal.cookies_policy.disabling_cookies_header' | t }}
 %p
-  = t 'legal.cookies_policy.disabling_cookies_desc'
+  {{ 'legal.cookies_policy.disabling_cookies_desc' | t }}
 %ul
   %li
-    %a{ href: t( 'legal.cookies_policy.disabling_cookies_firefox_link' ), target: "_blank" }
+    %a{ "ng-href" => "{{ 'legal.cookies_policy.disabling_cookies_firefox_link' | t }}", target: "_blank" }
       Firefox
   %li
-    %a{ href: t( 'legal.cookies_policy.disabling_cookies_chrome_link' ), target: "_blank" }
+    %a{ "ng-href" => "{{ 'legal.cookies_policy.disabling_cookies_chrome_link' | t }}", target: "_blank" }
       Chrome
   %li
-    %a{ href: t( 'legal.cookies_policy.disabling_cookies_ie_link' ), target: "_blank" }
+    %a{ "ng-href" => "{{ 'legal.cookies_policy.disabling_cookies_ie_link' | t }}", target: "_blank" }
       Internet Explorer
   %li
-    %a{ href: t( 'legal.cookies_policy.disabling_cookies_safari_link' ), target: "_blank" }
+    %a{ "ng-href" => "{{ 'legal.cookies_policy.disabling_cookies_safari_link' | t }}", target: "_blank" }
       Safari
 %p
-  = t 'legal.cookies_policy.disabling_cookies_note'
+  {{ 'legal.cookies_policy.disabling_cookies_note' | t }}
 
 %a.close-reveal-modal{"ng-click" => "$close()"}
   %i.ofn-i_009-close
