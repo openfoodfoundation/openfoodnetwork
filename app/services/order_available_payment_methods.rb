@@ -18,9 +18,7 @@ class OrderAvailablePaymentMethods
 
     applicator = OpenFoodNetwork::TagRuleApplicator.new(distributor,
                                                         "FilterPaymentMethods", customer&.tag_list)
-    applicator.filter!(payment_methods)
-
-    payment_methods.uniq
+    applicator.filter(payment_methods)
   end
 
   private
@@ -32,7 +30,7 @@ class OrderAvailablePaymentMethods
       distributor.payment_methods.where(
         id: available_distributor_payment_methods_ids
       )
-    end.available.select(&:configured?)
+    end.available.select(&:configured?).uniq
   end
 
   def available_distributor_payment_methods_ids

@@ -109,30 +109,20 @@ module OpenFoodNetwork
       end
     end
 
-    describe "filter!" do
+    describe "filter" do
       let(:applicator) { OpenFoodNetwork::TagRuleApplicator.new(enterprise, "FilterProducts", []) }
 
-      context "when the subject is nil" do
-        let(:subject) { double(:subject, reject!: false) }
-
-        it "returns immediately" do
-          applicator.filter!(subject)
-          expect(subject).to_not have_received(:reject!)
-        end
+      it "handles nil" do
+        applicator.filter(nil)
       end
 
-      context "when subject is empty" do
-        let(:subject) { double(:subject, reject!: false) }
-
-        it "returns immediately" do
-          applicator.filter!(subject)
-          expect(subject).to_not have_received(:reject!)
-        end
+      it "handles an empty collection" do
+        applicator.filter(OrderCycle.none)
       end
 
-      context "when subject is an array" do
+      context "when filtering an array" do
         let(:element) { double(:element, ) }
-        let(:subject) { [element] }
+        let(:list) { [element] }
 
         context "when rule_class reponds to tagged_children_for" do
           let(:child1) { double(:child) }
@@ -146,15 +136,16 @@ module OpenFoodNetwork
             before do
               allow(applicator).to receive(:reject?).with(child1) { true }
               allow(applicator).to receive(:reject?).with(child2) { false }
-              applicator.filter!(subject)
             end
 
             it "rejects the specified children from the array" do
+              applicator.filter(list)
               expect(children).to eq [child2]
             end
 
-            it "does not remove the element from the original subject" do
-              expect(subject).to eq [element]
+            it "does not remove the element from the result" do
+              result = applicator.filter(list)
+              expect(result).to eq [element]
             end
           end
 
@@ -162,15 +153,16 @@ module OpenFoodNetwork
             before do
               allow(applicator).to receive(:reject?).with(child1) { true }
               allow(applicator).to receive(:reject?).with(child2) { true }
-              applicator.filter!(subject)
             end
 
             it "removes all children from the array" do
+              applicator.filter(list)
               expect(children).to eq []
             end
 
-            it "removes the element from the original subject" do
-              expect(subject).to eq []
+            it "removes the element from the result" do
+              result = applicator.filter(list)
+              expect(result).to eq []
             end
           end
         end
@@ -183,22 +175,22 @@ module OpenFoodNetwork
           context "when reject? returns false for the element" do
             before do
               allow(applicator).to receive(:reject?).with(element) { false }
-              applicator.filter!(subject)
             end
 
-            it "does not remove the element from the original subject" do
-              expect(subject).to eq [element]
+            it "does not remove the element from the result" do
+              result = applicator.filter(list)
+              expect(result).to eq [element]
             end
           end
 
           context "when reject? returns true for the element" do
             before do
               allow(applicator).to receive(:reject?).with(element) { true }
-              applicator.filter!(subject)
             end
 
-            it "removes the element from the original subject" do
-              expect(subject).to eq []
+            it "removes the element from the result" do
+              result = applicator.filter(list)
+              expect(result).to eq []
             end
           end
         end
@@ -268,8 +260,8 @@ module OpenFoodNetwork
         }
 
         it "applies the default rule" do
-          applicator.filter!(products_array)
-          expect(products_array).to eq [
+          result = applicator.filter(products_array)
+          expect(result).to eq [
             { :id => 2, :name => 'product 2',
               "variants" => [{ :id => 9, "tag_list" => ["tag2"] }] }, product3
           ]
@@ -283,8 +275,8 @@ module OpenFoodNetwork
 
         it "applies those rules" do
           # product_tag_rule1 and product_tag_rule2 are being applied
-          applicator.filter!(products_array)
-          expect(products_array).to eq [product1, product2]
+          result = applicator.filter(products_array)
+          expect(result).to eq [product1, product2]
         end
       end
     end
