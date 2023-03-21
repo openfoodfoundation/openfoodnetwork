@@ -31,7 +31,7 @@ describe "Uploading Terms and Conditions PDF" do
         go_to_business_details
 
         # Add PDF
-        attach_file "enterprise[terms_and_conditions]", original_terms
+        attach_file "enterprise[terms_and_conditions]", original_terms, make_visible: true
 
         time = Time.zone.local(2002, 4, 13, 0, 0, 0)
         Timecop.freeze(run_time = time) do
@@ -46,7 +46,7 @@ describe "Uploading Terms and Conditions PDF" do
         expect(page).to have_content time.strftime("%F %T")
 
         # Replace PDF
-        attach_file "enterprise[terms_and_conditions]", updated_terms
+        attach_file "enterprise[terms_and_conditions]", updated_terms, make_visible: true
         click_button "Update"
         expect(page).
           to have_content "Enterprise \"#{distributor.name}\" has been successfully updated!"
