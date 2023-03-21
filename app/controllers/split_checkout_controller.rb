@@ -22,8 +22,6 @@ class SplitCheckoutController < ::BaseController
   before_action :hide_ofn_navigation, only: [:edit, :update]
 
   def edit
-    @voucher_adjustment = @order.vouchers.first
-
     redirect_to_step_based_on_order unless params[:step]
     check_step if params[:step]
     recalculate_tax if params[:step] == "summary"
