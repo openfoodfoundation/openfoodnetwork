@@ -24,6 +24,6 @@ class JobProcessor
   ensure
     # If this Puma thread is interrupted then we need to detach the child
     # process to avoid it becoming a zombie.
-    Process.detach(child)
+    Process.detach(child) if child
   end
 end

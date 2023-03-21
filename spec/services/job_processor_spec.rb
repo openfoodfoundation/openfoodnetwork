@@ -47,5 +47,16 @@ describe JobProcessor do
         expect(end_time).to be_within(10.seconds).of start_time
       end
     end
+
+    describe "when forking fails" do
+      before do
+        # We can't make `fork` fail and choose the method call before it.
+        expect(ENV).to receive(:fetch).and_raise("Test Error")
+      end
+
+      it "raises the causing error" do
+        expect { JobProcessor.perform_forked(job) }.to raise_error "Test Error"
+      end
+    end
   end
 end
