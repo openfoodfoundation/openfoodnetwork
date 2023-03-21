@@ -8,7 +8,7 @@ module AuthorizationHelper
 
   def allow_token_for(payload)
     private_key = OpenSSL::PKey::RSA.generate 2048
-    allow(DfcProvider::AuthorizationControl).to receive(:public_key).
+    allow(AuthorizationControl).to receive(:public_key).
       and_return(private_key.public_key)
 
     JWT.encode(payload, private_key, "RS256")
