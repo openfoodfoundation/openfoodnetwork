@@ -85,8 +85,12 @@
 
   - checkout_adjustments_for(@order, exclude: [:line_item]).reverse_each do |adjustment|
     .summary-right-line
-      .summary-right-line-label= adjustment.label
-      .summary-right-line-value= adjustment.display_amount.to_html
+      -if adjustment.originator_type == 'Voucher'
+        .summary-right-line-label.voucher= adjustment.label
+        .summary-right-line-value.voucher= adjustment.display_amount.to_html
+      -else
+        .summary-right-line-label= adjustment.label
+        .summary-right-line-value= adjustment.display_amount.to_html
 
   - if @order.total_tax > 0
     .summary-right-line

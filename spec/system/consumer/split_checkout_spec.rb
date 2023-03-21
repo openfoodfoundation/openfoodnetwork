@@ -1084,6 +1084,23 @@ describe "As a consumer, I want to checkout my order" do
           }.to change { order.reload.state }.from("confirmation").to("address")
         end
       end
+
+      describe "vouchers" do
+        let(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor) }
+
+        before do
+          # Add voucher to the order
+          voucher.create_adjustment(voucher.code, order)
+
+          visit checkout_step_path(:summary)
+        end
+
+        it "shows the applied voucher" do
+          within ".summary-right" do
+            expect(page).to have_content "some_code"
+          end
+        end
+      end
     end
 
     context "with previous open orders" do

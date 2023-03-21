@@ -332,6 +332,10 @@
       padding-left: 20px;
       padding-right: 20px;
       border-right: 1px solid #DDD;
+
+      .voucher {
+        color: $teal-500
+      }
     }
   }
 }
