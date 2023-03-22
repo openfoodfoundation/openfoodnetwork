@@ -229,7 +229,7 @@ module Admin
     end
 
     def member_action?
-      collection_actions.exclude? action
+      !collection_actions.include? action
     end
 
     def new_actions

@@ -44,7 +44,7 @@ class OrderCartReset
   end
 
   def order_cycle_not_listed?(order_cycle, listed_order_cycles)
-    order_cycle.present? && listed_order_cycles.exclude?(order_cycle)
+    order_cycle.present? && !listed_order_cycles.include?(order_cycle)
   end
 
   # If no OC is selected and there is only one in the list of OCs, selects it

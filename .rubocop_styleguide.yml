@@ -128,3 +128,9 @@ Metrics/PerceivedComplexity:
 
 Naming/PredicateName:
   Enabled: false
+
+Style/InverseMethods:
+  Enabled: true
+  InverseMethods:
+    :include?: ~
+
