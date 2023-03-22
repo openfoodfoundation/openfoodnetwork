@@ -10,7 +10,13 @@ module Reporting
       @report = report
     end
 
+    # Strip header and summary rows for these formats
     def raw_render?
+      @report.params[:report_format].in?(['csv'])
+    end
+
+    # Do not format values for these output formats
+    def unformatted_render?
       @report.params[:report_format].in?(['json', 'csv'])
     end
 

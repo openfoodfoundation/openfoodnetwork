@@ -6,7 +6,8 @@ module Reporting
     attr_accessor :user, :params, :ransack_params
 
     delegate :render_as, :as_json, :to_html, :to_csv, :to_xlsx, :to_pdf, :to_json, to: :renderer
-    delegate :raw_render?, :html_render?, :display_header_row?, :display_summary_row?, to: :renderer
+    delegate :unformatted_render?, :html_render?, :display_header_row?, :display_summary_row?,
+             to: :renderer
 
     delegate :rows, :table_rows, :grouped_data, to: :rows_builder
     delegate :available_headers, :table_headers, :fields_to_hide, :fields_to_show,
