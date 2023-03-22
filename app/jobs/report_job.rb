@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Renders a report and saves it to a temporary file.
-class ReportJob < ActiveJob::Base
+class ReportJob < ApplicationJob
   def perform(report_class, user, params, format)
     report = report_class.new(user, params, render: true)
     result = report.render_as(format)

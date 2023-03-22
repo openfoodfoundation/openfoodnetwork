@@ -95,7 +95,6 @@ module Spree
         transition from: [:void], to: :checkout
       end
 
-
       after_transition to: :completed, do: :set_captured_at
     end
 
@@ -188,7 +187,7 @@ module Spree
     end
 
     def validate_source
-      if source && !skip_source_validation && !source.valid?
+      if source && !skip_source_validation && source.invalid?
         source.errors.each do |error|
           field_name =
             I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{error.attribute}")

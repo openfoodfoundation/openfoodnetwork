@@ -115,7 +115,7 @@ module Spree
     def find_line_item_by_variant(variant, raise_error = false)
       line_item = order.find_line_item_by_variant(variant)
 
-      if !line_item.present? && raise_error
+      if line_item.blank? && raise_error
         raise ActiveRecord::RecordNotFound, "Line item not found for variant #{variant.sku}"
       end
 
