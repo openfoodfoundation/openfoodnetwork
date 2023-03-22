@@ -60,9 +60,7 @@ module OpenFoodNetwork
     end
 
     def self.enabled?(feature_name, user = nil)
-      feature = Flipper.feature(feature_name)
-      feature.add unless feature.exist?
-      feature.enabled?(user)
+      Flipper.enabled?(feature_name, user)
     end
 
     def self.disabled?(feature_name, user = nil)
