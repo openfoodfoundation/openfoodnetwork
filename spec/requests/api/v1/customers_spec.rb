@@ -5,6 +5,8 @@ require "swagger_helper"
 describe "Customers", type: :request do
   let!(:enterprise1) { create(:enterprise, name: "The Farm") }
   let!(:enterprise2) { create(:enterprise) }
+  let!(:enterprise3) { create(:enterprise) }
+
   let!(:customer1) {
     create(
       :customer,
@@ -71,6 +73,33 @@ describe "Customers", type: :request do
         it "returns customers of enterprises the user manages" do
           get "/api/v1/customers"
           expect(json_response_ids).to eq [customer3.id.to_s]
+        end
+      end
+
+      context "as a user who manages the enterprise" do
+        let!(:user){ enterprise3.users.first }
+        before do
+          EnterpriseRole.create!(user: user, enterprise: enterprise1)
+          login_as user
+        end
+
+        it "returns customers of enterprises the user manages" do
+          get "/api/v1/customers"
+          expect(json_response_ids).to eq [customer1.id.to_s, customer2.id.to_s]
+        end
+      end
+
+      context "as an enterprise that has edit profile permission" do
+        let!(:user){ enterprise3.users.first }
+        before do
+          EnterpriseRelationship.create!(parent: enterprise1, child: enterprise3,
+                                         permissions_list: [:edit_profile])
+          login_as user
+        end
+
+        it "shoult not return customers of the managed enterprise" do
+          get "/api/v1/customers"
+          expect(json_response_ids).to eq []
         end
       end
 
