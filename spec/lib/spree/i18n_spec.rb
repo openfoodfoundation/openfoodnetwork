@@ -21,7 +21,7 @@ describe "i18n" do
       }
     )
 
-    allow(ActionView::Base).
+    allow(ActionView::Helpers::TranslationHelper).
       to receive(:raise_on_missing_translations).
       and_return(false)
   end
