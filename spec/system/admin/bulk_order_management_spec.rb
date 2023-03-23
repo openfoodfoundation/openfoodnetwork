@@ -228,7 +228,7 @@ describe '
 
       it "displays a column for user's full name" do
         expect(page).to have_selector "th.full_name", text: "NAME"
-        expect(page).to have_selector "td.full_name", text: o1.bill_address.full_name
+        expect(page).to have_selector "td.full_name", text: "#{o1.bill_address.last_name}, #{o1.bill_address.first_name}"
         expect(page).to have_selector "td.full_name", text: ""
       end
 
@@ -266,46 +266,69 @@ describe '
     end
 
     describe "sorting of line items" do
-      let!(:o1) {
-        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now)
-      }
-      let!(:o2) {
-        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now)
-      }
+      let!(:o1) do
+        create(
+          :order_with_distributor,
+          bill_address: create(:address, first_name: 'Bob', last_name: 'Taylor'),
+          state: 'complete',
+          shipment_state: 'ready',
+          completed_at: Time.zone.now
+        )
+      end
+
+      let!(:o2) do
+        create(
+          :order_with_distributor,
+          bill_address: create(:address, first_name: 'Mary', last_name: 'Smith'),
+          state: 'complete',
+          shipment_state: 'ready',
+          completed_at: Time.zone.now
+        )
+      end
+
+      let!(:o3) do
+        create(
+          :order_with_distributor,
+          bill_address: create(:address, first_name: 'Bill', last_name: 'Taylor'),
+          state: 'complete',
+          shipment_state: 'ready',
+          completed_at: Time.zone.now
+        )
+      end
+
       let!(:li1) { create(:line_item_with_shipment, order: o1) }
       let!(:li2) { create(:line_item_with_shipment, order: o2) }
+      let!(:li3) { create(:line_item_with_shipment, order: o3) }
 
       before :each do
         visit_bulk_order_management
       end
 
-      it "sorts by customer name when the customer name header is clicked" do
-        customer_names = [o1.name, o2.name].sort
-
+      it "sorts by customer last name when the customer name header is clicked" do
         within "#listing_orders thead" do
           click_on "Name"
         end
 
         expect(page).to have_selector("#listing_orders .line_item:nth-child(1) .full_name",
-                                      text: customer_names[0])
+                                      text: "Smith, Mary")
         expect(page).to have_selector("#listing_orders .line_item:nth-child(2) .full_name",
-                                      text: customer_names[1])
+                                      text: "Taylor, Bill")
+        expect(page).to have_selector("#listing_orders .line_item:nth-child(3) .full_name",
+                                      text: "Taylor, Bob")
       end
 
-      it "sorts by customer name in reverse when the customer name header is clicked twice" do
-        customer_names = [o1.name, o2.name].sort.reverse
-
+      it "sorts by customer last name in reverse when the customer name header is clicked twice" do
         within "#listing_orders thead" do
           click_on "Name"
           click_on "Name"
         end
 
         expect(page).to have_selector("#listing_orders .line_item:nth-child(1) .full_name",
-                                      text: customer_names[1])
+                                      text: "Taylor, Bob")
         expect(page).to have_selector("#listing_orders .line_item:nth-child(2) .full_name",
-                                      text: customer_names[0])
+                                      text: "Taylor, Bill")
+        expect(page).to have_selector("#listing_orders .line_item:nth-child(3) .full_name",
+                                      text: "Smith, Mary")
       end
     end
   end

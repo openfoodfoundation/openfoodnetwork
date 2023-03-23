@@ -11,5 +11,6 @@ angular.module("admin.indexUtils").factory 'SortOptions', ->
       sortingExpr
 
     toggle: (predicate) ->
-      @reverse = (@predicate == predicate) && !@reverse
+      # predicate is a string or an array of strings
+      @reverse = (JSON.stringify(@predicate) == JSON.stringify(predicate)) && !@reverse
       @predicate = predicate
