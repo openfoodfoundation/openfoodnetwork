@@ -6,8 +6,7 @@
     =f.label :owner_id, t('.owner')
     - if full_permissions
       %span.required *
-    %div{'ofn-with-tip' => t('.owner_tip')}
-      %a= t('admin.whats_this')
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.owner_tip')}
   .eight.columns.omega
     - if full_permissions
       = f.hidden_field :owner_id, class: "select2 fullwidth", 'user-select' => 'Enterprise.owner', 'ng-model' => 'Enterprise.owner'
@@ -19,8 +18,7 @@
     =f.label :user_ids, t('.notifications')
     - if full_permissions
       %span.required *
-    %div{'ofn-with-tip' => t('.contact_tip')}
-      %a= t('admin.whats_this')
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.contact_tip')}
   .eight.columns.omega
     - if full_permissions
       %select.select2.fullwidth{id: 'receives_notifications_dropdown', name: 'receives_notifications', ng: {model: 'receivesNotifications', init: "receivesNotifications = '#{@enterprise.contact.id}'"}}
@@ -34,8 +32,7 @@
     =f.label :user_ids, t('.managers')
     - if full_permissions
       %span.required *
-    %div{'ofn-with-tip' => t('.managers_tip')}
-      %a= t('admin.whats_this')
+    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.managers_tip')}
   .eight.columns.omega
     - if full_permissions
       %table.managers
@@ -66,8 +63,7 @@
       .three.columns.alpha
         %label
           = t('.invite_manager')
-        %div{'ofn-with-tip' => t('.invite_manager_tip')}
-          %a= t('admin.whats_this')
+        = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.invite_manager_tip')}
       .eight.columns.omega
         .row
           %a.button{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "invite-manager-modal" }
@@ -76,22 +72,4 @@
 -# add to admin footer to avoid nesting invitation form inside enterprise form
 - content_for :admin_footer do
   = render HelpModalComponent.new(id: "invite-manager-modal", close_button: false) do
-    %div{ng: {app: 'admin.enterprises', controller: 'enterpriseCtrl'}}
-
-      .margin-bottom-30.text-center
-        .text-big
-          = t('js.admin.modals.invite_title')
-
-      %p.alert-box.ok{ng: {show: 'invite_success'}}
-        {{invite_success}}
-
-      %p.alert-box.error{ng: {show: 'invite_errors'}}
-        {{invite_errors}}
-
-      %input#invite_email.fullwidth.margin-bottom-20{ng: {model: 'newUser'}}
-
-      .margin-bottom-20.text-center
-        %button.text-center.margin-top-10{ng: {show: '!invite_success', click: 'inviteManager()'}}
-          = t('js.admin.modals.invite')
-        %button.text-center.margin-top-10{"data-action": "click->help-modal#close", ng: {show: 'invite_success', click: 'resetModal();'}}
-          = t('js.admin.modals.close')
+    = render partial: 'admin/enterprises/form/add_new_unregistered_manager', locals: { error: nil, success: nil }
