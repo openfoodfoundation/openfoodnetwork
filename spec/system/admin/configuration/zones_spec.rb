@@ -8,18 +8,21 @@ describe "Zones" do
 
   it "list existing zones" do
     login_as_admin_and_visit spree.edit_admin_general_settings_path
+    create(:zone, name: "northern", description: "middle position alphabetically")
     create(:zone, name: "eastern", description: "zone is eastern")
     create(:zone, name: "western", description: "cool san fran")
 
     click_link "Zones"
 
     within_row(1) { expect(page).to have_content("eastern") }
-    within_row(2) { expect(page).to have_content("western") }
+    within_row(2) { expect(page).to have_content("northern") }
+    within_row(3) { expect(page).to have_content("western") }
 
     click_link "zones_order_by_description_title"
 
     within_row(1) { expect(page).to have_content("western") }
-    within_row(2) { expect(page).to have_content("eastern") }
+    within_row(2) { expect(page).to have_content("northern") }
+    within_row(3) { expect(page).to have_content("eastern") }
   end
 
   it "create a new zone" do

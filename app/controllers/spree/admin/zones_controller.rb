@@ -13,7 +13,7 @@ module Spree
 
       def collection
         params[:q] ||= {}
-        params[:q][:s] ||= "ascend_by_name"
+        params[:q][:s] ||= "name asc"
         @search = super.ransack(params[:q])
         @pagy, @zones = pagy(@search.result, items: Spree::Config[:orders_per_page])
         @zones
