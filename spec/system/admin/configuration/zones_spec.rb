@@ -6,12 +6,8 @@ describe "Zones" do
   include AuthenticationHelper
   include WebHelper
 
-  before do
-    login_as_admin
-  end
-
   it "list existing zones" do
-    visit spree.edit_admin_general_settings_path
+    login_as_admin_and_visit spree.edit_admin_general_settings_path
     create(:zone, name: "eastern", description: "zone is eastern")
     create(:zone, name: "western", description: "cool san fran")
 
@@ -27,7 +23,7 @@ describe "Zones" do
   end
 
   it "create a new zone" do
-    visit spree.admin_zones_path
+    login_as_admin_and_visit spree.admin_zones_path
     click_link "admin_new_zone_link"
     expect(page).to have_content("New Zone")
 
@@ -40,7 +36,7 @@ describe "Zones" do
 
   it "edit existing zone" do
     zone = create(:zone_with_member)
-    visit spree.edit_admin_zone_path(zone.id)
+    login_as_admin_and_visit spree.edit_admin_zone_path(zone.id)
 
     expect(page).to have_checked_field "country_based"
 
