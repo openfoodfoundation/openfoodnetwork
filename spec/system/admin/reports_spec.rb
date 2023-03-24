@@ -31,6 +31,21 @@ describe '
     end
   end
 
+  describe "Background processing" do
+    before do
+      Flipper.enable(:background_reports)
+      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
+    end
+
+    it "can run the customers report" do
+      login_as_admin_and_visit admin_report_path(
+        report_type: :customers, report_subtype: :mailing_list
+      )
+      click_button "Go"
+      expect(page).to have_content "EMAIL FIRST NAME"
+    end
+  end
+
   describe "Can access Customers reports and generate customers report" do
     before do
       login_as_admin_and_visit admin_reports_path
