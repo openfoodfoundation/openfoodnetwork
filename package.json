@@ -50,7 +50,7 @@
     "karma-chrome-launcher": "~3.1.0",
     "karma-coffee-preprocessor": "~1.0.1",
     "karma-jasmine": "~0.3.8",
-    "prettier": "2.8.6",
+    "prettier": "2.8.7",
     "pretty-quick": "^3.1.3"
   }
 }
