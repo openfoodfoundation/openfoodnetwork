@@ -796,7 +796,7 @@ hu:
         order_date: "Elkészült:"
         max: "Max"
         product_unit: "Termék: Egység"
-        weight_volume: "Súly/térfogat (g)"
+        weight_volume: "Súly/térfogat (kg)"
         ask: "Kérdez?"
         page_title: "Tömeges megrendelés kezelése"
         actions_delete: "Kiválasztottak törlése"
@@ -1311,9 +1311,9 @@ hu:
       delivery: Kézbesítési jelentés
       tax_types: Adótípusok
       tax_rates: Adókulcsok
-      pack_by_customer: Csomagolás Ügyfél által
-      pack_by_supplier: Csomagolás Szállító által
-      pack_by_product: Csomagolás Termékenként
+      pack_by_customer: Összekészítés Ügyfelenként
+      pack_by_supplier: Összekészítés Szállítónként
+      pack_by_product: Összekészítés Termékenként
       revenues_by_hub:
         name: Bevételek Átvételi pont szerint
         description: Bevételek átvételi pont szerint
@@ -1355,7 +1355,7 @@ hu:
       table:
         select_and_search: "Válaszd ki a szűrőket, és kattintson a %{option} elemre az adatok eléréséhez."
         headings:
-          hub: "Kerékagy"
+          hub: "Átadópont"
           customer_code: "Kód"
           first_name: "Keresztnév"
           last_name: "Vezetéknév"
@@ -1363,8 +1363,8 @@ hu:
           product: "Termék"
           variant: "Változat"
           quantity: "Mennyiség"
-          is_temperature_controlled: "TempControlled?"
-          temp_controlled: "TempControlled?"
+          is_temperature_controlled: "Hűtést igényel?"
+          temp_controlled: "Hűtést igényel?"
           price: "Ár"
       rendering_options:
         generate_report: "Jelentést készít"
@@ -1376,7 +1376,7 @@ hu:
         raw_data: Nyers adatok
         formatted_data: Formázott adatok
       packing:
-        name: "Csomagolási jelentések"
+        name: "Összekészítési jelentések"
     subscriptions:
       index:
         title: "Előfizetések"
@@ -2469,7 +2469,7 @@ hu:
   loading_customers: "Ügyfelek betöltése"
   no_customers_found: "Nem található ügyfelek"
   go: "Megy"
-  hub: "Kerékagy"
+  hub: "Átadópont"
   producer: "Termelő"
   product: "Termék"
   price: "Ár"
@@ -2588,7 +2588,7 @@ hu:
   report_header_address: Cím
   report_header_billing_address: számlázási cím
   report_header_relationship: Kapcsolat
-  report_header_hub: Kerékagy
+  report_header_hub: Átadópont
   report_header_hub_address: Átvételi pont címe
   report_header_to_hub: Átvételi ponthoz
   report_header_hub_code: Átvételi pont kód
@@ -2706,7 +2706,7 @@ hu:
   report_header_sum_max_total: "Összeg Max összesen"
   report_header_total_excl_vat: "Összesen, kivéve adó (%{currency_symbol})"
   report_header_total_incl_vat: "Összesen, beleértve adó (%{currency_symbol})"
-  report_header_temp_controlled: TempControlled?
+  report_header_temp_controlled: Hűtést igényel?
   report_header_is_producer: Termelő?
   report_header_not_confirmed: Nem megerősített
   report_header_gst_on_income: GST a bevételekre
@@ -2831,7 +2831,7 @@ hu:
     error: Hiba
     unavailable: Nem érhető el
     profile: Profil
-    hub: Kerékagy
+    hub: Átadópont
     shop: Átadópont
     choose: Választ
     resolve_errors: Kérjük, oldja meg a következő hibákat

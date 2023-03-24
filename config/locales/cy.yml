@@ -6,9 +6,13 @@ cy:
       spree/shipping_method: Dull Anfon
     attributes:
       spree/order/ship_address:
+        address2: "Cyfeiriad danfon llinell 2"
+        city: "Tref y cyfeiriad danfon"
+        country: "Gwlad y cyfeiriad danfon"
         phone: "Rhif ffôn"
         firstname: "Enw cyntaf"
         lastname: "Enw olaf"
+        zipcode: "Cod post y cyfeiriad danfon"
       spree/user:
         password: "Cyfrinair"
         password_confirmation: "Cadarnhau'r cyfrinair"
@@ -1321,6 +1325,7 @@ cy:
       addresses: Cyfeiriadau
       payment_methods: Adroddiad Dulliau Talu
       delivery: Adroddiad Cyflenwi
+      sales_tax_totals_by_producer: Cyfanswm Trethi Gwerthu fesul Cynhyrchwr
       tax_types: Mathau o dreth
       tax_rates: Cyfraddau Treth
       pack_by_customer: Pecyn fesul Cwsmer
@@ -1810,6 +1815,7 @@ cy:
       message_html: "Mae gennych chi archeb ar gyfer y cylch archebu hwn eisoes. Gwiriwch y %{cart} i weld yr eitemau a archebwyd o'r blaen. Gallwch hefyd ganslo eitemau cyn belled â bod y cylch archebu ar agor."
     step1:
       contact_information:
+        title: Manylion cyswllt
         email:
           label: E-bost
         phone:
@@ -1863,10 +1869,13 @@ cy:
         title: Manylion dosbarthu
         edit: Golygu
         address: Cyfeiriad dosbarthu
+        instructions: Cyfarwyddiadau
       payment_method:
         title: Dull talu
         edit: Golygu
+        instructions: Cyfarwyddiadau
       order:
+        title: Manylion yr archeb
         edit: Golygu
       terms_and_conditions:
         message_html: "Rwy'n cytuno i %{terms_and_conditions_link} y gwerthwr."
@@ -1879,6 +1888,7 @@ cy:
       submit: Cwblhau'r archeb
       cancel: Nôl at y Dull Talu
     errors:
+      saving_failed: "Wedi methu cadw, llenwch y meysydd a amlygwyd. %{messages}"
       terms_not_accepted: Mae angen ichi dderbyn y Telerau ac Amodau
       required: Ni chaniateir gadael maes yn wag
       invalid_number: "Noder rhif ffôn dilys os gwelwch yn dda"
@@ -2661,6 +2671,8 @@ cy:
   report_header_tax_on_delivery: "Treth ar Gyflenwi (%{currency_symbol})"
   report_header_tax_on_fees: "Treth ar Ffioedd (%{currency_symbol})"
   report_header_tax_category: "Categori Treth"
+  report_header_tax_rate_name: "Enw’r Gyfradd Dreth"
+  report_header_tax_rate: "Cyfradd Dreth"
   report_header_total_tax: "Cyfanswm Treth (%{currency_symbol})"
   report_header_total_excl_tax: "Cyfanswm heb dreth (%{currency_symbol})"
   report_header_total_incl_tax: "Cyfanswm gan gynnwys treth (%{currency_symbol})"
@@ -2683,6 +2695,7 @@ cy:
   report_header_supplier: Cyflenwr
   report_header_producer: Cynhyrchydd
   report_header_producer_suburb: Maestref y Cynhyrchydd
+  report_header_producer_tax_status: Statws Treth y Cynhyrchwr
   report_header_producer_charges_sales_tax?: Cofrestrwyd ar gyfer GST/TAW
   report_header_unit: Uned
   report_header_group_buy_unit_quantity: Nifer Unedau Grŵp Prynu
@@ -2699,10 +2712,12 @@ cy:
   report_header_distributor_address: Cyfeiriad dosbarthwr
   report_header_distributor_city: Dinas ddosbarthu
   report_header_distributor_postcode: Cod post dosbarthwr
+  report_header_distributor_tax_status: Statws Treth y Dosbarthwr
   report_header_delivery_address: Cyfeiriad Dosbarthu
   report_header_delivery_postcode: Cod Post Cyflenwi
   report_header_bulk_unit_size: Maint Uned Swmp
   report_header_weight: Pwysau
+  report_header_final_weight_volume: Terfynol (Pwysau/Cyfaint)
   report_header_height: Uchder
   report_header_width: Lled
   report_header_depth: Dyfnder
@@ -2879,6 +2894,7 @@ cy:
       deleting_item_will_cancel_order: "Bydd y weithred hon yn golygu un neu fwy o archebion gwag, fydd yn cael eu canslo. Ydych chi'n siwr eich bod am wneud hyn?"
       modals:
         got_it: "Yn deall"
+        confirm: "Cadarnhau"
         close: "Cau"
         continue: "Parhau"
         cancel: "Canslo"
@@ -3452,6 +3468,8 @@ cy:
     server_error: "Nam gyda'r gweinydd"
     shipping_method_names:
       UPS Ground: "UPS dros y tir"
+      pick_up: "Casglu ar y fferm"
+      delivery: "Llofnodwyd, cadarnhawyd a chyflenwyd"
     start_date: "Dyddiad cychwyn"
     successfully_removed: "Llwyddwyd i ddileu"
     taxonomy_edit: "Golygu tacsonomi"
@@ -3536,6 +3554,7 @@ cy:
     display_currency: "Arddangos arian cyfred"
     choose_currency: "Dewis Arian Cyfred"
     mail_method_settings: "Gosodiadau Dull Postio"
+    mail_settings_notice_html: "<b>Bydd unrhyw newid a wneir fan hyn yn un dros dro at ddiben dadfygio’n unig</b>, a hwyrach y caiff ei droi yn ôl yn y dyfodol. <br>Gellir gwneud newidiadau parhaol trwy ddiweddaru cyfrinachau’r achos a’u cyflenwi trwy ddefnyddio <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Cysylltwch â thîm byd-eang OFN am fanylion pellach."
     general: "Cyffredinol"
     enable_mail_delivery: "Galluogi Dosbarthu trwy'r Post"
     send_mails_as: "Anfon eitemau drwy'r Post fel"
@@ -3769,6 +3788,7 @@ cy:
           print_invoices: "Argraffu anfonebau"
           cancel_orders: "Canslo Archebion"
           resend_confirmation: "Ailanfon Cadarnhad "
+          resend_confirmation_confirm_html: "Bydd hwn yn ail-anfon yr ebost cadarnhau at y cwsmer. <br />Ydych chi’n siŵr eich bod am wneud hyn?"
           selected:
             zero: "Ni ddewiswyd archeb."
             one: "Dewiswyd 1 archeb"
@@ -3917,6 +3937,7 @@ cy:
           title: "Cynnyrch Newydd"
           new_product: "Cynnyrch Newydd"
           supplier: "Cyflenwr"
+          supplier_select_placeholder: "Dewis cyflenwr"
           product_name: "Enw Cynnyrch"
           units: "Maint yr Uned"
           value: "Gwerth"
@@ -4340,6 +4361,7 @@ cy:
     search_input:
       placeholder: Chwilio
     selector_with_filter:
+      selected_items: "Dewiswyd %{count}"
       search_placeholder: Chwilio
     pagination:
       next: Nesaf

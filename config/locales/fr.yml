@@ -1520,6 +1520,10 @@ fr:
       one: "Emails envoyés pour 1 commande."
       many: "Emails envoyés pour %{count} commandes."
       other: "Emails envoyés pour %{count} commandes."
+    send_invoice_feedback:
+      one: "Emails envoyés pour 1 commande."
+      many: "Emails envoyés pour %{count} commandes."
+      other: "Emails envoyés pour %{count} commandes."
   api:
     unknown_error: "Quelque chose n'a pas fonctionné. Notre équipe a été notifiée."
     invalid_api_key: "La clé API (%{key}) n'est pas valide."
@@ -1536,6 +1540,10 @@ fr:
       destroy_attachment_does_not_exist: "Aucun fichier"
     orders:
       failed_to_update: "La mise à jour de la commande échoué"
+    query_param:
+      error:
+        title: Paramètre de la requête invalide
+        extra_fields: "Champs invalides : %{fields}"
   checkout:
     already_ordered:
       cart: "panier"
@@ -3128,6 +3136,10 @@ fr:
         cancel_the_order_send_cancelation_email: "Envoyer un email d'annulation à l'acheteur"
         restock_item: "Recharger le stock de ce produit"
         restock_items: "Recharger le stock de tous les produits"
+        delete_line_items_html:
+          one: "Cette action va annuler la commande. <br /> Etes-vous sûr de vouloir continuer ?"
+          many: "Cette action va annuler la commande. <br /> Etes-vous sûr de vouloir continuer ?"
+          other: "Cette action va annuler la commande. <br /> Etes-vous sûr de vouloir continuer ?"
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoi...."
@@ -3444,6 +3456,13 @@ fr:
   first: "Début"
   previous: "Précédent"
   last: "Fin"
+  webhook_endpoints:
+    create:
+      success: Le webhook a bien été créé.
+      error: Le webhook n'a pas pu être créé.
+    destroy:
+      success: Le webhook a bien été supprimé.
+      error: Le webhook n'a pas pu être supprimé.
   spree:
     add_country: "Ajouter un pays"
     add_state: "Ajouter un département"
@@ -3805,6 +3824,8 @@ fr:
           cancel_orders: "Annuler les commandes"
           resend_confirmation: "Renvoyer la confirmation"
           resend_confirmation_confirm_html: "Cette action va renvoyer l'email de confirmation de commande. Etes-vous sûr de vouloir continuer ?"
+          send_invoice: "Envoyer les factures"
+          send_invoice_confirm_html: "Vous allez envoyer les factures clients pour toutes les commandes sélectionnées. <br>Souhaitez-vous continuer ?"
           selected:
             zero: "Aucune commande sélectionnée"
             one: "1 commande sélectionnée"
@@ -4221,6 +4242,16 @@ fr:
       api_keys:
         regenerate_key: "Regénérer la clé"
         title: Clé API
+      webhook_endpoints:
+        title: 'Webhook '
+        description: Les événements dans le système peuvent déclencher des webhooks vers des systèmes externes.
+        event_types:
+          order_cycle_opened: Cycle de vente ouvert
+        event_type:
+          header: Type d'évènement
+        url:
+          header: URL du point de terminaison
+          create_placeholder: Entrez l'URL du point de terminaison du webhook
       developer_settings:
         title: Paramètres développeurs
       form:
