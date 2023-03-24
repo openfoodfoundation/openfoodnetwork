@@ -3,7 +3,7 @@
 require 'system_helper'
 
 describe '
-    As an administrator
+    As an entreprise user
     I want to manage vouchers
 ' do
   include WebHelper
@@ -11,9 +11,13 @@ describe '
 
   let(:enterprise) { create(:supplier_enterprise, name: 'Feedme') }
   let(:voucher_code) { 'awesomevoucher' }
+  let(:enterprise_user) { create(:user, enterprise_limit: 1) }
 
   before do
     Flipper.enable(:vouchers)
+
+    enterprise_user.enterprise_roles.build(enterprise: enterprise).save
+    login_as enterprise_user
   end
 
   it 'lists enterprise vouchers' do
@@ -21,7 +25,8 @@ describe '
     Voucher.create!(enterprise: enterprise, code: voucher_code)
 
     # When I go to the enterprise voucher tab
-    login_as_admin_and_visit edit_admin_enterprise_path(enterprise)
+    visit edit_admin_enterprise_path(enterprise)
+
     click_link 'Vouchers'
 
     # Then I see a list of vouchers
@@ -32,7 +37,8 @@ describe '
   it 'creates a voucher' do
     # Given an enterprise
     # When I go to the enterprise voucher tab and click new
-    login_as_admin_and_visit edit_admin_enterprise_path(enterprise)
+    visit edit_admin_enterprise_path(enterprise)
+
     click_link 'Vouchers'
     within "#vouchers_panel" do
       click_link 'Add New'
@@ -56,7 +62,7 @@ describe '
     it 'shows an error flash message' do
       # Given an enterprise
       # When I go to the new voucher page
-      login_as_admin_and_visit new_admin_enterprise_voucher_path(enterprise)
+      visit new_admin_enterprise_voucher_path(enterprise)
 
       # And I fill in fields with invalid data and click save
       click_button 'Save'
