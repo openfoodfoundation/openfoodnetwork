@@ -8,7 +8,6 @@ describe "Zones" do
 
   before do
     login_as_admin
-    Spree::Zone.delete_all
   end
 
   it "list existing zones" do
