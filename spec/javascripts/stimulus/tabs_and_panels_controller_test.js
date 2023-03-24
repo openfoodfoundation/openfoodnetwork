@@ -87,7 +87,7 @@ describe('TabsAndPanelsController', () => {
       const { location } = window;
       const mockLocationToString = (panel) => {
         // Mocking window.location.toString() 
-        const url = `http://localhost:3000/admin/enterprises/great-shop/edit#!#${panel}`
+        const url = `http://localhost:3000/admin/enterprises/great-shop/edit#/${panel}`
         const mockedToString = jest.fn()
         mockedToString.mockImplementation(() => (url))
 

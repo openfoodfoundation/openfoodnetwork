@@ -15,9 +15,15 @@ export default class extends Controller {
 
     // Display panel specified in url anchor
     const anchors = window.location.toString().split("#");
-    const anchor = anchors.length > 1 ? anchors.pop() : "";
+    let anchor = anchors.length > 1 ? anchors.pop() : "";
 
     if (anchor != "") {
+      // Conveniently AngularJs rewrite "example.com#panel" to "example.com#/panel" :(
+      // strip the starting / if any
+      if (anchor[0] == "/") {
+        anchor = anchor.slice(1);
+      }
+
       this.updateActivePanel(anchor);
 
       // tab
