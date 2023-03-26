@@ -22,21 +22,25 @@ describe "spree/admin/orders/index.html.haml" do
     allow(view).to receive_messages spree_current_user: create(:user)
   end
 
-  describe "print invoices button" do
-    it "displays button when invoices are enabled" do
+  describe "Bulk order actions" do
+    it "display all buttons when invoices are enabled" do
       Spree::Config[:enable_invoices?] = true
 
       render
 
       expect(rendered).to have_content("Print Invoices")
+      expect(rendered).to have_content("Resend Confirmation")
+      expect(rendered).to have_content("Cancel Orders")
     end
 
-    it "does not display button when invoices are disabled" do
+    it "does not display print button when invoices are disabled but others remain" do
       Spree::Config[:enable_invoices?] = false
 
       render
 
       expect(rendered).to_not have_content("Print Invoices")
+      expect(rendered).to have_content("Resend Confirmation")
+      expect(rendered).to have_content("Cancel Orders")
     end
   end
 end
