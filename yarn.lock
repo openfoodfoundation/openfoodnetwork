@@ -2841,19 +2841,12 @@ bytes@3.1.2:
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.1.2.tgz#8b0beeb98605adf1b128fa4386403c009e0221a5"
   integrity sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==
 
-cable_ready@5.0.0-pre10:
-  version "5.0.0-pre10"
-  resolved "https://registry.yarnpkg.com/cable_ready/-/cable_ready-5.0.0-pre10.tgz#e92ca5b481335dfff95ae148b7b0da86e98001c0"
-  integrity sha512-NevHcu5N5zzUKxyS/cYtkIY6mm7y1anQr9zxu65fqptMOBZS2fukXpz9YEn659yGKyqtCMVNrzkNtkICkBoGAQ==
+cable_ready@5.0.0-rc1, "cable_ready@>= 5.0.0-pre9":
+  version "5.0.0-rc1"
+  resolved "https://registry.yarnpkg.com/cable_ready/-/cable_ready-5.0.0-rc1.tgz#d755f793ef963af18f2696dc07588b616ef76fc6"
+  integrity sha512-Zg964GzT4lNxLoZWR51R7SJub0u/8gYbO7yZPgc3rT/IuOROwEg8/kf5c9/nTYluaFciCNo4Wy9XIeZRzpPhRg==
   dependencies:
     morphdom "2.6.1"
-
-"cable_ready@>= 5.0.0-pre9":
-  version "5.0.0-pre9"
-  resolved "https://registry.npmjs.org/cable_ready/-/cable_ready-5.0.0-pre9.tgz#9c082b796f7b7add7965ce637a8d8717726be5ab"
-  integrity sha512-m7XggG+LRPFLsbH78G603F3AAYpkv+VfGCouN6RrP20Mgz9H0+xr7v2DN2F1CeJBBAliYPKcAt/48uTGjSrBaA==
-  dependencies:
-    morphdom "^2.6.1"
 
 cacache@^12.0.2:
   version "12.0.4"
@@ -6467,7 +6460,7 @@ moment@^2.29.1:
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
-morphdom@2.6.1, "morphdom@>=2.6.0 <3.0.0", morphdom@^2.6.1:
+morphdom@2.6.1, "morphdom@>=2.6.0 <3.0.0":
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/morphdom/-/morphdom-2.6.1.tgz#e868e24f989fa3183004b159aed643e628b4306e"
   integrity sha512-Y8YRbAEP3eKykroIBWrjcfMw7mmwJfjhqdpSvoqinu8Y702nAwikpXcNFDiIkyvfCLxLM9Wu95RZqo4a9jFBaA==
