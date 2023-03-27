@@ -410,10 +410,9 @@ describe OrderCycleForm do
               )
 
               expect{ form.save }.to change{
-                order_cycle.distributor_shipping_methods.pluck(:id)
-              }.from([
-                       distributor_shipping_method, distributor_shipping_method2
-                     ]).to([distributor_shipping_method])
+                order_cycle.distributor_shipping_methods.pluck(:id).sort
+              }.from([distributor_shipping_method, distributor_shipping_method2].sort)
+                .to([distributor_shipping_method])
             end
           end
           context "can't update other distributors' shipping methods" do
