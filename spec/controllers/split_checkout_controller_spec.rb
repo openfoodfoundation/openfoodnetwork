@@ -255,12 +255,6 @@ describe SplitCheckoutController, type: :controller do
             expect(order.reload.vouchers.length).to eq(1)
           end
 
-          context "when voucher covers more than order total" do
-            pending "adds the voucher"
-
-            pending "shows a warning"
-          end
-
           context "when voucher doesn't exist" do
             let(:checkout_params) do
               {

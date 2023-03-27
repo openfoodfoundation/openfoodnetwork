@@ -21,6 +21,18 @@ class Voucher < ApplicationRecord
     Spree::Money.new(value)
   end
 
+  # override the one from CalculatedAdjustments so we limit adjustment to the maximum amount
+  # needed to cover the order, ie if the voucher covers more than the order.total we only need
+  # to create a adjustment covering the order.total
+  # Doesn't work with taxes for now
+  def compute_amount(order)
+    amount = calculator.compute(order)
+
+    return -order.total if amount.abs > order.total
+
+    amount
+  end
+
   private
 
   # For now voucher are only flat rate of 10

@@ -731,6 +731,37 @@ describe "As a consumer, I want to checkout my order" do
           end
 
           describe "adding voucher to the order" do
+            shared_examples "adding voucher to the order" do
+              before do
+                fill_in "Enter voucher code", with: voucher.code
+                click_button("Apply")
+              end
+
+              it "adds a voucher to the order" do
+                expect(page).to have_content("$10.00 Voucher")
+              end
+            end
+
+            it_behaves_like "adding voucher to the order"
+
+            context "when voucher covers more then the order total" do
+              before do
+                order.total = 6
+                order.save!
+              end
+
+              it_behaves_like "adding voucher to the order"
+
+              it "shows a warning message" do
+                fill_in "Enter voucher code", with: voucher.code
+                click_button("Apply")
+
+                expect(page).to have_content(
+                  "Your voucher value is more than your order. By using this voucher you are forfeiting the remaining value."
+                )
+              end
+            end
+
             context "voucher doesn't exist" do
               it "show an error" do
                 fill_in "Enter voucher code", with: "non_code"
@@ -738,13 +769,6 @@ describe "As a consumer, I want to checkout my order" do
 
                 expect(page).to have_content("Voucher Not found")
               end
-            end
-
-            it "adds a voucher to the order" do
-              fill_in "Enter voucher code", with: voucher.code
-              click_button("Apply")
-
-              expect(page).to have_content("$10.00 Voucher")
             end
           end
 
