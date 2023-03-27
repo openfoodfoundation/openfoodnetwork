@@ -279,7 +279,16 @@ describe SplitCheckoutController, type: :controller do
           end
 
           context "when adding fails" do
-            pending  "returns 422 and an error message"
+            it "returns 422 and an error message" do
+              # Makes adding the voucher fails
+              allow(voucher).to receive(:compute_amount).and_return(0)
+              allow(Voucher).to receive(:find_by).and_return(voucher)
+
+              put :update, params: params
+
+              expect(response.status).to eq 422
+              expect(flash[:error]).to match "There was an error while adding the voucher"
+            end
           end
         end
 

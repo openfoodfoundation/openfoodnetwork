@@ -203,9 +203,12 @@ class SplitCheckoutController < ::BaseController
       return false
     end
 
-    # Create adjustment
-    # TODO add tax part of adjustement
-    voucher.create_adjustment(voucher.code, @order)
+    adjustment = voucher.create_adjustment(voucher.code, @order)
+
+    if adjustment.nil?
+      @order.errors.add(:voucher, I18n.t('split_checkout.errors.add_voucher_error'))
+      return false
+    end
 
     true
   end
