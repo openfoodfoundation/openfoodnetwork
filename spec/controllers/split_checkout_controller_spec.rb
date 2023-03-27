@@ -235,6 +235,65 @@ describe SplitCheckoutController, type: :controller do
           expect(order.payments.first.source.id).to eq saved_card.id
         end
       end
+
+      describe "Vouchers" do
+        let(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor) }
+
+        describe "adding a voucher" do
+          let(:checkout_params) do
+            {
+              order: {
+                voucher_code: voucher.code
+              }
+            }
+          end
+
+          it "adds a voucher to the order" do
+            put :update, params: params
+
+            expect(response).to redirect_to checkout_step_path(:payment)
+            expect(order.reload.vouchers.length).to eq(1)
+          end
+
+          context "when voucher covers more than order total" do
+            pending "adds the voucher"
+
+            pending "shows a warning"
+          end
+
+          context "when voucher doesn't exist" do
+            let(:checkout_params) do
+              {
+                order: {
+                  voucher_code: "non_voucher"
+                }
+              }
+            end
+
+            it "returns 422 and an error message" do
+              put :update, params: params
+
+              expect(response.status).to eq 422
+              expect(flash[:error]).to match "Voucher Not found"
+            end
+          end
+
+          context "when adding fails" do
+            pending  "returns 422 and an error message"
+          end
+        end
+
+        describe "removing a voucher" do
+          it "removes the voucher" do
+            adjustment = voucher.create_adjustment(voucher.code, order)
+
+            delete :destroy, params: { adjustment_id: adjustment.id }
+
+            expect(response).to redirect_to checkout_step_path(:payment)
+            expect(order.reload.vouchers.length).to eq(0)
+          end
+        end
+      end
     end
 
     context "summary step" do
