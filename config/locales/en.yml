@@ -1438,6 +1438,11 @@ en:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      show:
+        report_taking_longer: >
+          This report is taking longer to process.
+          It may contain a lot of data or we are busy with other reports.
+          You can try again later.
       revenues_by_hub:
         name: Revenues By Hub
         description: Revenues by hub

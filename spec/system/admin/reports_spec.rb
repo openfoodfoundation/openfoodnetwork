@@ -44,6 +44,19 @@ describe '
       click_button "Go"
       expect(page).to have_content "EMAIL FIRST NAME"
     end
+
+    it "displays a friendly timeout message" do
+      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
+      login_as_admin_and_visit admin_report_path(
+        report_type: :customers, report_subtype: :mailing_list
+      )
+      expect_any_instance_of(Admin::ReportsController).to receive(:sleep).
+        and_raise(Rack::Timeout::RequestTimeoutException.new(nil))
+
+      click_button "Go"
+
+      expect(page).to have_content "This report is taking longer to process."
+    end
   end
 
   describe "Can access Customers reports and generate customers report" do

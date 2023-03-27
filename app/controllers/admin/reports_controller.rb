@@ -26,6 +26,8 @@ module Admin
       else
         show_report
       end
+    rescue Rack::Timeout::RequestTimeoutException
+      render_timeout_error
     end
 
     private
@@ -36,6 +38,7 @@ module Admin
 
     def show_report
       assign_view_data
+      @table = render_report_as(:html) if render_data?
       render "show"
     end
 
@@ -45,7 +48,6 @@ module Admin
       @report_subtype = report_subtype
       @report_title = report_title
       @rendering_options = rendering_options
-      @table = render_report_as(:html) if render_data?
       @data = Reporting::FrontendData.new(spree_current_user)
     end
 
@@ -65,6 +67,12 @@ module Admin
       else
         @report.render_as(format)
       end
+    end
+
+    def render_timeout_error
+      assign_view_data
+      @error = ".report_taking_longer"
+      render "show"
     end
   end
 end
