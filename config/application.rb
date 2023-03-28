@@ -249,5 +249,7 @@ module Openfoodnetwork
     config.active_storage.variable_content_types += ["image/svg+xml"]
 
     config.exceptions_app = self.routes
+
+    config.active_storage.service_urls_expire_in = 60.minutes
   end
 end
