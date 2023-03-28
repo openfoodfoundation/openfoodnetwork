@@ -1422,6 +1422,7 @@ en:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      report_download_your_file_ok: Please download your report
       revenues_by_hub:
         name: Revenues By Hub
         description: Revenues by hub
@@ -1457,6 +1458,8 @@ en:
         no_report_type: "Please specify a report type"
         report_not_found: "Report not found"
         missing_ransack_params: "Please supply Ransack search params in the request"
+        report_generation_timed_out: "Sorry, processing of your report have taken too much time"
+        no_file_could_be_generated: "No file could be generated"
       hidden_field: "< Hidden >"
       summary_row:
         total: "TOTAL"
