@@ -177,16 +177,28 @@ module Reporting
           [
             { group_by: :distributor },
             { group_by: :producer },
-            { group_by: :order_cycle, summary_row: order_cycle_totals_row }
+            {
+              # TOTAL (appear second)
+              group_by: :order_cycle,
+              summary_row: order_cycle_totals_row,
+            },
+            {
+              # Cost of produce (appear first)
+              group_by: :order_cycle,
+              summary_row_class: nil,
+              summary_row_label: nil,
+              summary_row: order_cycle_line_items_row,
+            },
           ]
         end
 
         def order_cycle_totals_row
           proc do |_key, items, _rows|
             order_ids = items.flat_map(&:second).map(&:id).uniq
+            line_items = items.flat_map(&:second).uniq.map(&:line_items).flatten
 
-            total_excl_tax = total_fees_excl_tax(order_ids)
-            tax = tax_for_order_ids(order_ids)
+            total_excl_tax = total_fees_excl_tax(order_ids) + line_items_excl_tax(line_items)
+            tax = tax_for_order_ids(order_ids) + tax_for_line_items(line_items)
             {
               total_excl_tax: total_excl_tax,
               tax: tax,
@@ -195,8 +207,45 @@ module Reporting
           end
         end
 
+        def order_cycle_line_items_row
+          proc do |key, items, _rows|
+            line_items = items.flat_map(&:last).uniq.map(&:line_items).flatten
+            producer = producer(items.first)
+
+            total_excl_tax = line_items_excl_tax(line_items)
+            tax = tax_for_line_items(line_items)
+            {
+              distributor: distributor(items.first),
+              producer: producer,
+              producer_tax_status: producer_tax_status(items.first),
+              order_cycle: key,
+              enterprise_fee_name: I18n.t('report_line_cost_of_produce'),
+              enterprise_fee_type: I18n.t('report_line_line_items'),
+              enterprise_fee_owner: producer,
+              total_excl_tax: total_excl_tax,
+              tax: tax,
+              total_incl_tax: total_excl_tax + tax,
+            }
+          end
+        end
+
         def total_fees_excl_tax(order_ids)
           enterprise_fees_amount_for_orders(order_ids) - included_tax_for_order_ids(order_ids)
+        end
+
+        def line_items_excl_tax(line_items)
+          cost_of_line_items(line_items) - line_items.sum(&:included_tax)
+        end
+
+        def cost_of_line_items(line_items)
+          line_items.sum(&:amount)
+        end
+
+        # This query gets called twice for each set of line_items, ideally it would be cached.
+        def tax_for_line_items(line_items)
+          line_items.map do |line_item|
+            line_item.adjustments.eligible.tax.sum('amount')
+          end.sum
         end
 
         def included_tax_for_order_ids(order_ids)
