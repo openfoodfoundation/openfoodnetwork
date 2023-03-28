@@ -683,4 +683,45 @@ describe '
        '', 'N']
     end
   end
+
+  describe 'Generating report messages' do
+    before do
+      allow(OpenFoodNetwork::FeatureToggle).to receive(:enabled?).and_return(true)
+      @admin = login_as_admin
+      visit admin_reports_path
+      click_link "Order Cycle Supplier Totals"
+      select('PDF', from: 'report_format')
+    end
+
+    let(:report_class) { Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals }
+
+    context 'When reporting job succeeded' do
+      before do
+        allow_any_instance_of(report_class).to receive(:report_from_job).and_return(blob)
+        click_button "Go"
+      end
+
+      let(:blob) { ActiveStorage::Blob.new(filename: 'example.pdf') }
+
+      it 'displays a flash message with a link to the report' do
+        expect(page).to have_content 'Please download your report'
+      end
+    end
+
+    context 'When reporting job failed/took too long' do
+      it 'displays a flash message noticing the error' do
+        allow_any_instance_of(report_class).to receive(:report_from_job).and_raise(Timeout::Error)
+        click_button "Go"
+        expect(page).to have_content 'Sorry, processing of your report have taken too much time'
+      end
+    end
+
+    context 'When Errno error from generation' do
+      it 'displays a flash message noticing no file could be generated' do
+        allow_any_instance_of(report_class).to receive(:report_from_job).and_raise(Errno::ENOENT)
+        click_button "Go"
+        expect(page).to have_content 'No file could be generated'
+      end
+    end
+  end
 end
