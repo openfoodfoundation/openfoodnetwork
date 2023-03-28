@@ -5,7 +5,8 @@ module Reporting
     include ReportsHelper
     attr_accessor :user, :params, :ransack_params
 
-    delegate :render_as, :as_json, :to_html, :to_csv, :to_xlsx, :to_pdf, :to_json, to: :renderer
+    delegate :render_as, :report_from_job, :as_json, :to_html, :to_csv, :to_xlsx, :to_pdf, :to_json,
+             to: :renderer
     delegate :unformatted_render?, :html_render?, :display_header_row?, :display_summary_row?,
              to: :renderer
 

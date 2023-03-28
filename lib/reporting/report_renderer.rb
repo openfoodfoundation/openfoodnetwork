@@ -52,6 +52,15 @@ module Reporting
       public_send("to_#{target_format}")
     end
 
+    def report_from_job(format, user, report_class, params)
+      job = ReportJob.new
+      JobProcessor.perform_forked(
+        job,
+        report_class, user, params, format
+      )
+      job.result
+    end
+
     def to_html(layout: nil)
       ApplicationController.render(
         template: "admin/reports/_table",
