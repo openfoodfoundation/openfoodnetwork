@@ -11,12 +11,12 @@ class UserPasswordsController < Spree::UserPasswordsController
     self.resource = resource_class.send_reset_password_instructions(raw_params[resource_name])
 
     if resource.errors.empty?
-      render operations: cable_car.inner_html(
+      render cable_ready: cable_car.inner_html(
         "#forgot-feedback",
         partial("layouts/alert", locals: { type: "success", message: t(:password_reset_sent) })
       )
     else
-      render status: :not_found, operations: cable_car.inner_html(
+      render status: :not_found, cable_ready: cable_car.inner_html(
         "#forgot-feedback",
         partial("layouts/alert", locals: { type: "alert", message: t(:email_not_found) })
       )
@@ -26,7 +26,7 @@ class UserPasswordsController < Spree::UserPasswordsController
   private
 
   def render_unconfirmed_response
-    render status: :unprocessable_entity, operations: cable_car.inner_html(
+    render status: :unprocessable_entity, cable_ready: cable_car.inner_html(
       "#forgot-feedback",
       partial("layouts/alert",
               locals: { type: "alert", message: t(:email_unconfirmed),

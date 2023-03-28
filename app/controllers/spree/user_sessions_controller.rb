@@ -24,11 +24,11 @@ module Spree
       if spree_user_signed_in?
         flash[:success] = t('devise.success.logged_in_succesfully')
 
-        render operations: cable_car.redirect_to(
+        render cable_ready: cable_car.redirect_to(
           url: return_url_or_default(after_sign_in_path_for(spree_current_user))
         )
       else
-        render status: :unauthorized, operations: cable_car.inner_html(
+        render status: :unauthorized, cable_ready: cable_car.inner_html(
           "#login-feedback",
           partial("layouts/alert", locals: { type: "alert", message: t('devise.failure.invalid') })
         )
@@ -60,7 +60,7 @@ module Spree
     end
 
     def render_unconfirmed_response
-      render status: :unprocessable_entity, operations: cable_car.inner_html(
+      render status: :unprocessable_entity, cable_ready: cable_car.inner_html(
         "#login-feedback",
         partial("layouts/alert", locals: { type: "alert", message: t(:email_unconfirmed),
                                            unconfirmed: true, tab: "login" })

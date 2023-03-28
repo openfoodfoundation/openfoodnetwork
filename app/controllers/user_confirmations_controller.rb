@@ -22,7 +22,7 @@ class UserConfirmationsController < DeviseController
         set_flash_message(:error, :confirmation_not_sent)
       end
     else
-      render operations: cable_car.inner_html(
+      render cable_ready: cable_car.inner_html(
         "##{params[:tab] || 'forgot'}-feedback",
         partial("layouts/alert", locals: { type: "success", message: t("devise.confirmations.send_instructions") })
       )

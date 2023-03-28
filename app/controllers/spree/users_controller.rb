@@ -30,7 +30,7 @@ module Spree
       registered = Spree::User.find_by(email: params[:email]).present?
 
       if registered
-        render status: :ok, operations: cable_car.
+        render status: :ok, cable_ready: cable_car.
           inner_html(
             "#login-feedback",
             partial("layouts/alert", locals: { type: "alert", message: t('devise.failure.already_registered') })
@@ -45,12 +45,12 @@ module Spree
       @user = Spree::User.new(user_params)
 
       if @user.save
-        render operations: cable_car.inner_html(
+        render cable_ready: cable_car.inner_html(
           "#signup-feedback",
           partial("layouts/alert", locals: { type: "success", message: t('devise.user_registrations.spree_user.signed_up_but_unconfirmed') })
         )
       else
-        render status: :unprocessable_entity, operations: cable_car.morph(
+        render status: :unprocessable_entity, cable_ready: cable_car.morph(
           "#signup-tab",
           partial("layouts/signup_tab", locals: { signup_form_user: @user })
         )
