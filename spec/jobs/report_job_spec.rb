@@ -9,6 +9,7 @@ describe ReportJob do
   let(:enterprise) { create(:enterprise) }
   let(:params) { {} }
   let(:format) { :csv }
+  let(:configured_job) { instance_double(ActiveJob::ConfiguredJob) }
 
   it "generates a report" do
     job = ReportJob.new
@@ -20,17 +21,25 @@ describe ReportJob do
     job = ReportJob.perform_later(*report_args)
     expect(job.done?).to eq false
 
-    # This performs the job in the same process but that's good enought for
-    # testing the job code. I hope that we can rely on the job worker.
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
-    job.retry_job
+    perform_enqueued_jobs(only: ReportJob)
 
     expect(job.done?).to eq true
     expect_csv_report(job)
   end
 
+  it 'sets a purge job on blob creation' do
+    allow(ActiveStorage::PurgeJob).to receive(:set).and_return(configured_job)
+    allow(configured_job).to receive(:perform_later)
+    job = ReportJob.new
+    job.perform(*report_args)
+    job.result
+
+    expect(ActiveStorage::PurgeJob).to have_received(:set).with(hash_including(:wait))
+  end
+
   def expect_csv_report(job)
-    table = CSV.parse(job.result)
+    blob = job.result
+    table = CSV.parse(blob.download)
     expect(table[0][1]).to eq "Relationship"
     expect(table[1][1]).to eq "owns"
   end

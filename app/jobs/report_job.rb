@@ -13,19 +13,18 @@ class ReportJob < ActiveJob::Base
   end
 
   def result
-    @result ||= read_result
+    blob = ActiveStorage::Blob.create_and_upload!(io: File.open(filename), filename: filename)
+    ActiveStorage::PurgeJob
+      .set(wait: Rails.configuration.active_storage.service_urls_expire_in)
+      .perform_later(blob)
+    File.unlink(filename)
+    blob
   end
 
   private
 
   def write(result)
     File.write(filename, result, mode: "wb")
-  end
-
-  def read_result
-    File.read(filename)
-  ensure
-    File.unlink(filename)
   end
 
   def filename
