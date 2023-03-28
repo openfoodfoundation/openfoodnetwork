@@ -18,7 +18,7 @@ Flipper::UI.configure do |config|
     config.banner_text = <<~TEXT
       ⚠️ Production environment: be aware that the changes have an impact on the
       application. Please read the how-to before:
-      https://github.com/openfoodfoundation/openfoodnetwork/wiki/Feature-toggle-with-Flipper
+      https://github.com/openfoodfoundation/openfoodnetwork/wiki/Feature-toggles
     TEXT
     config.banner_class = 'danger'
   end
