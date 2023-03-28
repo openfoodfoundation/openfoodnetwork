@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module ReportsHelper
+  JOB_TIMEOUT = 10
+
   def report_order_cycle_options(order_cycles)
     order_cycles.map do |oc|
       orders_open_at = oc.orders_open_at&.to_s(:short) || 'NA'

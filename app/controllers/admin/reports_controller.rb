@@ -4,6 +4,7 @@ module Admin
   class ReportsController < Spree::Admin::BaseController
     include ReportsActions
     helper ReportsHelper
+    include ActiveStorage::SetCurrent
 
     before_action :authorize_report, only: [:show]
 
@@ -31,11 +32,18 @@ module Admin
     private
 
     def export_report
-      send_data render_report_as(report_format), filename: report_filename
+      if OpenFoodNetwork::FeatureToggle.enabled?(:background_reports, spree_current_user)
+        assign_view_data
+        blob_or_message
+        render "show"
+      else
+        send_data @report.render_as(report_format), filename: report_filename
+      end
     end
 
     def show_report
       assign_view_data
+      @table = @report.render_as(:html) if render_data?
       render "show"
     end
 
@@ -45,7 +53,6 @@ module Admin
       @report_subtype = report_subtype
       @report_title = report_title
       @rendering_options = rendering_options
-      @table = render_report_as(:html) if render_data?
       @data = Reporting::FrontendData.new(spree_current_user)
     end
 
@@ -53,19 +60,15 @@ module Admin
       request.post?
     end
 
-    def render_report_as(format)
-      if OpenFoodNetwork::FeatureToggle.enabled?(:background_reports, spree_current_user)
-        job = ReportJob.new
-        JobProcessor.perform_forked(
-          job,
-          report_class, spree_current_user, params, format
-        )
-
-        # This result has been rendered by Rails in safe mode already.
-        job.result.html_safe # rubocop:disable Rails/OutputSafety
-      else
-        @report.render_as(format)
-      end
+    def blob_or_message
+      Timeout.timeout(ReportsHelper::JOB_TIMEOUT) {
+        blob = @report.report_from_job(report_format, spree_current_user, report_class, params)
+        flash.now[:ok_to_download] = blob
+      }
+    rescue Errno::ENOENT
+      flash.now[:ko_to_download] = I18n.t('admin.reports.errors.no_file_could_be_generated')
+    rescue StandardError
+      flash.now[:ko_to_download] = I18n.t('admin.reports.errors.report_generation_timed_out')
     end
   end
 end
