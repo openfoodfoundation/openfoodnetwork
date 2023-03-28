@@ -3,10 +3,11 @@
 require 'system_helper'
 
 describe "Enterprise Summary Fee with Tax Report By Producer" do
-  #   1 order cycle the has:
+  #   1 order cycle has:
   #     - coordinator fees price 20
   #     - incoming exchange fees 15
   #     - outgoing exchange fees 10
+  #     - cost of line items     100
   #   tax
   #       country: 2.5%
   #       state: 1.5%
@@ -30,7 +31,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
   }
   let!(:ship_address){ create(:ship_address) }
 
-  let!(:variant){ create(:variant) }
+  let!(:variant){ create(:variant, tax_category: tax_category) }
   let!(:product){ variant.product }
   let!(:distributor){ create(:distributor_enterprise_with_tax, name: 'Distributor') }
   let!(:supplier){ create(:supplier_enterprise, name: 'Supplier', charges_sales_tax: true) }
@@ -79,6 +80,12 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
   end
 
   context 'added tax' do
+    #   1 order cycle has:
+    #     - coordinator fees  (20) 1.5% = 0.30, 2.5% = 0.50
+    #     - incoming exchange (15) 1.5% = 0.23, 2.5% = 0.38
+    #     - outgoing exchange (10) 1.5% = 0.15, 2.5% = 0.25
+    #     - line items       (100) 1.5% = 1.50, 2.5% = 2.50
+
     before do
       order.line_items.create({ variant: variant, quantity: 1, price: 100 })
       order.update!({
@@ -121,8 +128,17 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
        "tax_category", "Country", "0.025", "10.0", "0.25", "10.25"].join(" ")
     }
 
+    let(:cost_of_produce){
+      ["Distributor", "Supplier", "Yes", "oc1", "Cost of produce", "line items", "Supplier",
+       "100.0", "4.0", "104.0"].join(" ")
+    }
     let(:summary_row){
-      ["TOTAL", "45.0", "1.81", "46.81"].join(" ")
+      [
+        "TOTAL", # Fees and line items
+        "145.0", # Tax excl: 20 + 15 + 10 + 100
+        "5.81",  # Tax     : (0.30 + 0.50) + (0.23 + 0.38) + (0.15 + 0.25) + (1.50 + 2.50)
+        "150.81" # Tax incl: 145.00 + 5.81
+      ].join(" ")
     }
 
     it 'generates the report' do
@@ -142,6 +158,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       expect(table).to have_content(distributor_country_tax)
       expect(table).to have_content(coordinator_state_tax)
       expect(table).to have_content(coordinator_country_tax)
+      expect(table).to have_content(cost_of_produce)
       expect(table).to have_content(summary_row)
     end
 
@@ -150,11 +167,11 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       let(:fee_owner_selector){ "#s2id_q_enterprise_fee_owner_id_in" }
 
       let(:summary_row_after_filtering_by_fee_name){
-        ["TOTAL", "20.0", "0.8", "20.8"].join(" ")
+        ["TOTAL", "120.0", "4.8", "124.8"].join(" ")
       }
 
       let(:summary_row_after_filtering_by_fee_owner){
-        ["TOTAL", "15.0", "0.61", "15.61"].join(" ")
+        ["TOTAL", "115.0", "4.61", "119.61"].join(" ")
       }
 
       it "should filter by fee name" do
@@ -177,6 +194,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         expect(table).to_not have_content(distributor_country_tax)
         expect(table).to have_content(coordinator_state_tax)
         expect(table).to have_content(coordinator_country_tax)
+        expect(table).to have_content(cost_of_produce)
         expect(table).to have_content(summary_row_after_filtering_by_fee_name)
       end
 
@@ -200,12 +218,19 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         expect(table).to_not have_content(distributor_country_tax)
         expect(table).to_not have_content(coordinator_state_tax)
         expect(table).to_not have_content(coordinator_country_tax)
+        expect(table).to have_content(cost_of_produce)
         expect(table).to have_content(summary_row_after_filtering_by_fee_owner)
       end
     end
   end
 
   context 'included tax' do
+    #   1 order cycle has:
+    #     - coordinator fees  (20) 1.5% = 0.30, 2.5% = 0.50
+    #     - incoming exchange (15) 1.5% = 0.23, 2.5% = 0.38
+    #     - outgoing exchange (10) 1.5% = 0.15, 2.5% = 0.25
+    #     - line items       (100) 1.5% = 1.50, 2.5% = 2.50
+
     before do
       state_tax_rate.update!({ included_in_price: true })
       country_tax_rate.update!({ included_in_price: true })
@@ -248,8 +273,12 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
        "tax_category", "Country", "0.025", "9.61", "0.24", "9.85"].join(" ")
     }
 
+    let(:cost_of_produce){
+      ["Distributor", "Supplier", "Yes", "oc1", "Cost of produce", "line items", "Supplier",
+       "96.08", "3.92", "100.0"].join(" ")
+    }
     let(:summary_row){
-      ["TOTAL", "43.23", "1.77", "45.0"].join(" ")
+      ["TOTAL", "139.31", "5.69", "145.0"].join(" ")
     }
 
     it 'generates the report' do
@@ -269,6 +298,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       expect(table).to have_content(distributor_country_tax)
       expect(table).to have_content(coordinator_state_tax)
       expect(table).to have_content(coordinator_country_tax)
+      expect(table).to have_content(cost_of_produce)
       expect(table).to have_content(summary_row)
     end
   end
