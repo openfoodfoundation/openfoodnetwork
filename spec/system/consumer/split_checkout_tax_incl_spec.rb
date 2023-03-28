@@ -134,6 +134,44 @@ describe "As a consumer, I want to see adjustment breakdown" do
           # DB checks
           assert_db_tax_incl
         end
+
+        context "when using a voucher" do
+          let!(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor) }
+
+          it "will include a tax included amount on the voucher adjustment" do
+            visit checkout_step_path(:details)
+
+            choose "Delivery"
+
+            click_button "Next - Payment method"
+
+            # add Voucher
+            fill_in "Enter voucher code", with: voucher.code
+            click_button("Apply")
+
+            # Choose payment ??
+            click_on "Next - Order summary"
+            click_on "Complete order"
+
+            # UI checks
+            expect(page).to have_content("Confirmed")
+            expect(page).to have_selector('#order_total', text: with_currency(0.00))
+            expect(page).to have_selector('#tax-row', text: with_currency(1.15))
+
+            # Voucher
+            within "#line-items" do
+              expect(page).to have_content(voucher.code)
+              expect(page).to have_content(with_currency(-10.00))
+            end
+
+            # DB check
+            order_within_zone.reload
+            voucher_adjustment = order_within_zone.vouchers.first
+
+            expect(voucher_adjustment.amount.to_f).to eq(-10)
+            expect(voucher_adjustment.included_tax.to_f).to eq(-1.15)
+          end
+        end
       end
     end
 

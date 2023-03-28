@@ -290,5 +290,14 @@ class SplitCheckoutController < ::BaseController
   def recalculate_tax
     @order.create_tax_charge!
     @order.update_order!
+
+    apply_voucher if @order.vouchers.present?
+  end
+
+  def apply_voucher
+    Voucher.adjust!(@order)
+
+    # update order to take into account the voucher we applied
+    @order.update_order!
   end
 end
