@@ -10,6 +10,10 @@
       .flash.notice= notice
     - if flash[:success]
       .flash.success= flash[:success]
+    - if flash[:ok_to_download]
+      .msg.success= link_to I18n.t('admin.reports.report_download_your_file_ok'), flash[:ok_to_download].url(disposition: 'attachment')
+    - if flash[:ko_to_download]
+      .msg.error= flash[:ko_to_download]
 
     = render partial: "shared/flashes"
 

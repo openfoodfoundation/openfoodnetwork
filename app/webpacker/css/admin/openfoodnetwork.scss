@@ -32,7 +32,7 @@ text-angular .ta-editor {
   left: 275px;
 }
 
-span.error, div.error:not(.flash) {
+span.error, div.error:not(.flash, .msg) {
   color: $warning-red;
 }
 

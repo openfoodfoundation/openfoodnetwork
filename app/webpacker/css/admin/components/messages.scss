@@ -32,7 +32,7 @@
   width: 100%;
   z-index: 1000;
 
-  .flash {
+  .flash, .msg {
     padding: 18px;
     text-align: center;  
     font-size: 120%;
@@ -48,6 +48,8 @@
     &:nth-child(2) { padding: 24px; }
     &:nth-child(3) { padding: 20px; }
   }
+
+  a, a:visited { color: $color-1; }
 }
 
 .notice:not(.flash) {
