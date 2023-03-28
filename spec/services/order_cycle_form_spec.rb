@@ -362,8 +362,10 @@ describe OrderCycleForm do
               order_cycle.coordinator.users.first
             )
 
-            expect{ form.save }.to change{ order_cycle.distributor_shipping_methods.pluck(:id) }
-              .from([distributor_shipping_method, distributor_shipping_method2])
+            expect{ form.save }.to change{
+                                     order_cycle.distributor_shipping_methods.pluck(:id).sort
+                                   }
+              .from([distributor_shipping_method, distributor_shipping_method2].sort)
               .to([distributor_shipping_method])
           end
         end
@@ -379,8 +381,8 @@ describe OrderCycleForm do
             )
 
             expect{ form.save }.not_to change{
-              order_cycle.distributor_shipping_methods.pluck(:id)
-            }.from([distributor_shipping_method, distributor_shipping_method2])
+              order_cycle.distributor_shipping_methods.pluck(:id).sort
+            }.from([distributor_shipping_method, distributor_shipping_method2].sort)
           end
         end
         context "submitter is an admin" do
@@ -393,8 +395,10 @@ describe OrderCycleForm do
               create(:admin_user)
             )
 
-            expect{ form.save }.to change{ order_cycle.distributor_shipping_methods.pluck(:id) }
-              .from([distributor_shipping_method, distributor_shipping_method2])
+            expect{ form.save }.to change{
+                                     order_cycle.distributor_shipping_methods.pluck(:id).sort
+                                   }
+              .from([distributor_shipping_method, distributor_shipping_method2].sort)
               .to([distributor_shipping_method])
           end
         end
@@ -432,11 +436,11 @@ describe OrderCycleForm do
               )
 
               expect{ form.save }.not_to change{
-                order_cycle.distributor_shipping_methods.pluck(:id)
+                order_cycle.distributor_shipping_methods.pluck(:id).sort
               }.from [
                 distributor_shipping_method, distributor_shipping_method2,
                 distributor_shipping_method3
-              ]
+              ].sort
             end
           end
         end
