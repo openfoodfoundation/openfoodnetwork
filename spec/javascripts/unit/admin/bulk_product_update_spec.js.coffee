@@ -192,7 +192,6 @@ describe "filtering products for submission to database", ->
       available_on: available_on
       deleted_at: null
       permalink: null
-      meta_description: null
       meta_keywords: null
       tax_category_id: null
       shipping_category_id: null
@@ -998,7 +997,6 @@ describe "AdminProductEditCtrl", ->
         deleted_at: null
         permalink: 'test-product'
         permalink_live: 'test-product'
-        meta_description: null
         meta_keywords: null
         tax_category_id: null
         shipping_category_id: null

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_13_160135) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_15_031807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -718,7 +718,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_160135) do
     t.datetime "available_on", precision: nil
     t.datetime "deleted_at", precision: nil
     t.string "permalink", limit: 255
-    t.text "meta_description"
     t.string "meta_keywords", limit: 255
     t.integer "tax_category_id"
     t.integer "shipping_category_id"

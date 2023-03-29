@@ -5,11 +5,6 @@
       %span.icon-question-sign{ 'ofn-with-tip' => t('admin.products.seo.product_search_tip') }
       %br/
       = f.text_field :meta_keywords, :class => 'fullwidth', :rows => 6
-    = f.field_container :meta_description do
-      = f.label :meta_description, t('admin.products.seo.SEO_keywords')
-      %span.icon-question-sign{ 'ofn-with-tip' => t('admin.products.seo.seo_tip') }
-      %br/
-      = f.text_field :meta_description, :class => 'fullwidth', :rows => 6
   .alpha.eleven.columns
     = f.field_container :notes do
       = f.label :notes, t(:notes)

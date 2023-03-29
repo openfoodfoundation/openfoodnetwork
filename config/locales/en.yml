@@ -728,7 +728,6 @@ en:
       seo:
         product_search_keywords: "Product Search Keywords"
         product_search_tip: "Type words to help search your products in the shops. Use space to separate each keyword."
-        SEO_keywords: "SEO Keywords"
         seo_tip: "Type words to help search your products in the web. Use space to separate each keyword."
       search: "Search"
       properties:
