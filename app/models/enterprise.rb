@@ -16,8 +16,8 @@ class Enterprise < ApplicationRecord
     large: { resize_to_fill: [1200, 260] },
   }.freeze
   WHITE_LABEL_LOGO_SIZES = {
-    default: { gravity: "Center", resize: "217x44^", crop: '217x44+0+0' },
-    mobile: { gravity: "Center", resize: "75x26^", crop: '75x26+0+0' },
+    default: { gravity: "Center", resize_to_fill: [217, 44] },
+    mobile: { gravity: "Center", resize_to_fill: [75, 26] },
   }.freeze
   VALID_INSTAGRAM_REGEX = %r{\A[a-zA-Z0-9._]{1,30}([^/-]*)\z}
 
