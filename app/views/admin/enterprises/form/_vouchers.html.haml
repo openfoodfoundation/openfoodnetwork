@@ -1,0 +1,33 @@
+.text-right
+  %a.button{ href: "#{new_admin_enterprise_voucher_path(@enterprise)}"}
+    = t('.add_new')
+%br
+
+- if @enterprise.vouchers.present?
+  %table
+    %thead
+      %tr
+        %th= t('.voucher_code')
+        %th= t('.rate')
+        /%th= t('.label')
+        /%th= t('.purpose')
+        /%th= t('.expiry')
+        /%th= t('.use_limit')
+        /%th= t('.customers')
+        /%th= t('.net_value')
+    %tbody
+      - @enterprise.vouchers.each do |voucher|
+        %tr
+          %td= voucher.code
+          %td= voucher.display_value  
+          /%td
+          /%td
+          /%td
+          /%td
+          /%td
+          /%td
+
+- else
+  %p.text-center
+    = t('.no_voucher_yet')
+

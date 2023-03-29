@@ -37,6 +37,9 @@ module OpenFoodNetwork
       "split_checkout" => <<~DESC,
         Replace the one-page checkout with a multi-step checkout.
       DESC
+      "vouchers" => <<~DESC,
+        Add voucher functionality. Voucher can be managed via Enterprise settings.
+      DESC
     }.freeze
 
     # Move your feature entry from CURRENT_FEATURES to RETIRED_FEATURES when

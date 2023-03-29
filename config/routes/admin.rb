@@ -40,6 +40,10 @@ Openfoodnetwork::Application.routes.draw do
       end
 
       resources :tag_rules, only: [:destroy]
+
+      constraints FeatureToggleConstraint.new(:vouchers) do
+        resources :vouchers, only: [:new, :create]
+      end
     end
 
     resources :enterprise_relationships

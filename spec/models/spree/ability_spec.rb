@@ -788,6 +788,10 @@ describe Spree::Ability do
         is_expected.to have_ability([:admin, :known_users, :customers], for: :search)
         is_expected.not_to have_ability([:users], for: :search)
       end
+
+      it "has the ability to manage vouchers" do
+        is_expected.to have_ability([:admin, :create], for: Voucher)
+      end
     end
 
     context 'enterprise owner' do

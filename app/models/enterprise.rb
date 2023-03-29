@@ -65,6 +65,7 @@ class Enterprise < ApplicationRecord
   has_many :inventory_items
   has_many :tag_rules
   has_one :stripe_account, dependent: :destroy
+  has_many :vouchers
 
   delegate :latitude, :longitude, :city, :state_name, to: :address
 
