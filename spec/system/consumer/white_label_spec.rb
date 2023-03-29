@@ -46,7 +46,7 @@ describe 'White label setting' do
     context "manage the hide_ofn_navigation preference" do
       context "when the preference is set to true" do
         before do
-          distributor.update_attribute(:preferred_hide_ofn_navigation, true)
+          distributor.update_attribute(:hide_ofn_navigation, true)
         end
 
         shared_examples "hides the OFN navigation when needed only" do
@@ -132,7 +132,7 @@ describe 'White label setting' do
           context "when the user has a current distributor that is not the distributor's order" do
             let!(:another_distributor) { create(:distributor_enterprise) }
             before do
-              another_distributor.update_attribute(:preferred_hide_ofn_navigation, false)
+              another_distributor.update_attribute(:hide_ofn_navigation, false)
               allow_any_instance_of(EnterprisesHelper).to receive(:current_distributor).
                 and_return(another_distributor)
             end
@@ -153,7 +153,7 @@ describe 'White label setting' do
 
       context "when the preference is set to false" do
         before do
-          distributor.update_attribute(:preferred_hide_ofn_navigation, false)
+          distributor.update_attribute(:hide_ofn_navigation, false)
           set_order(order)
           allow_any_instance_of(EnterprisesHelper).to receive(:current_distributor).
             and_return(distributor)

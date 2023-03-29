@@ -9,6 +9,6 @@ module WhiteLabel
 
     # if the distributor has the hide_ofn_navigation preference set to true
     # then we should hide the OFN navigation
-    @hide_ofn_navigation = distributor.preferred_hide_ofn_navigation
+    @hide_ofn_navigation = distributor.hide_ofn_navigation
   end
 end
