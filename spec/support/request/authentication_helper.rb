@@ -4,9 +4,7 @@ module AuthenticationHelper
   include Warden::Test::Helpers
 
   def login_as_admin
-    admin_user = create(:admin_user)
-    login_as admin_user
-    admin_user
+    login_as create(:admin_user)
   end
 
   def login_as_admin_and_visit(path_visit)

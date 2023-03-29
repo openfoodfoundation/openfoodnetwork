@@ -22,6 +22,7 @@ describe '
   end
 
   it "creating a new enterprise" do
+    admin = create(:admin_user)
     eg1 = create(:enterprise_group, name: 'eg1')
     eg2 = create(:enterprise_group, name: 'eg2')
     payment_method = create(:payment_method)
@@ -29,7 +30,7 @@ describe '
     enterprise_fee = create(:enterprise_fee)
 
     # Navigating
-    admin = login_as_admin
+    login_as admin
     visit '/admin/enterprises'
     click_link 'New Enterprise'
 
