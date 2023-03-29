@@ -384,7 +384,7 @@ describe '
 
       before do
         new_user.enterprise_roles.build(enterprise: supplier_managed).save
-        login_to_admin_as new_user
+        login_as new_user
       end
 
       it "editing an order cycle" do
@@ -467,7 +467,7 @@ describe '
                                          permissions_list: [:add_to_order_cycle])
 
         new_user.enterprise_roles.build(enterprise: my_distributor).save
-        login_to_admin_as new_user
+        login_as new_user
       end
 
       it "editing an order cycle" do
@@ -555,7 +555,7 @@ describe '
 
     before do
       user.enterprise_roles.create! enterprise: enterprise
-      login_to_admin_as user
+      login_as user
     end
 
     it "shows me an index of order cycles without enterprise columns" do

@@ -16,11 +16,6 @@ module AuthenticationHelper
     login_as_admin_and_visit(spree.admin_dashboard_path)
   end
 
-  def login_to_admin_as(user)
-    login_as user
-    visit spree.admin_dashboard_path
-  end
-
   def fill_in_and_submit_login_form(user)
     fill_in "Email", with: user.email
     fill_in "Password", with: user.password

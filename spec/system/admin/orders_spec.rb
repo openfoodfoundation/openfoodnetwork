@@ -539,7 +539,7 @@ distributors: [distributor4, distributor5]) }
 
       context "for a hub manager" do
         before do
-          login_to_admin_as owner2
+          login_as owner2
           visit spree.admin_orders_path
         end
 

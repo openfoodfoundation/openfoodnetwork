@@ -785,7 +785,7 @@ describe '
       @enterprise_user.enterprise_roles.build(enterprise: supplier_managed2).save
       @enterprise_user.enterprise_roles.build(enterprise: distributor_managed).save
 
-      login_to_admin_as @enterprise_user
+      login_as @enterprise_user
     end
 
     it "shows only products that I supply" do
