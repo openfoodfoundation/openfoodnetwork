@@ -13,7 +13,8 @@ describe '
     oc = create(:order_cycle)
 
     # When I edit the form
-    login_as_admin_and_visit edit_admin_order_cycle_path(oc)
+    login_as_admin
+    visit edit_admin_order_cycle_path(oc)
 
     wait_for_edit_form_to_load_order_cycle(oc)
 

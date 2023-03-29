@@ -21,7 +21,8 @@ describe '
     }
 
     before :each do
-      login_as_admin_and_visit spree.admin_orders_path
+      login_as_admin
+      visit spree.admin_orders_path
     end
 
     it "deletes orders" do

@@ -7,13 +7,9 @@ module AuthenticationHelper
     login_as create(:admin_user)
   end
 
-  def login_as_admin_and_visit(path_visit)
-    login_as_admin
-    visit path_visit
-  end
-
   def login_to_admin_section
-    login_as_admin_and_visit(spree.admin_dashboard_path)
+    login_as_admin
+    visit spree.admin_dashboard_path
   end
 
   def fill_in_and_submit_login_form(user)

@@ -118,7 +118,8 @@ describe '
     end
 
     it "creating an on-demand product" do
-      login_as_admin_and_visit spree.admin_products_path
+      login_as_admin
+      visit spree.admin_products_path
 
       click_link 'New Product'
 
@@ -144,7 +145,8 @@ describe '
     end
 
     it "creating product with empty unit value" do
-      login_as_admin_and_visit spree.admin_products_path
+      login_as_admin
+      visit spree.admin_products_path
 
       click_link 'New Product'
 
@@ -174,7 +176,8 @@ describe '
       let!(:product2) { create(:simple_product, name: 'a product to delete', supplier: @supplier) }
 
       before do
-        login_as_admin_and_visit spree.admin_products_path
+        login_as_admin
+        visit spree.admin_products_path
 
         within "#p_#{product2.id}" do
           accept_alert { page.find("[data-powertip=Remove]").click }
@@ -194,7 +197,8 @@ describe '
 
       context "a deleted line item from a shipped order" do
         before do
-          login_as_admin_and_visit spree.admin_products_path
+          login_as_admin
+          visit spree.admin_products_path
 
           within "#p_#{order.variants.first.product_id}" do
             accept_alert { page.find("[data-powertip=Remove]").click }
@@ -224,7 +228,8 @@ describe '
 
     context 'products' do
       before do
-        login_as_admin_and_visit spree.admin_products_path
+        login_as_admin
+        visit spree.admin_products_path
       end
 
       it 'creates a copy of the product' do

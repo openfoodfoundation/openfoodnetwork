@@ -11,7 +11,8 @@ describe "Tax Rates" do
   let!(:tax_category) { create(:tax_category, name: "Full") }
 
   before do
-    login_as_admin_and_visit spree.edit_admin_general_settings_path
+    login_as_admin
+    visit spree.edit_admin_general_settings_path
   end
 
   # Regression test for Spree #535

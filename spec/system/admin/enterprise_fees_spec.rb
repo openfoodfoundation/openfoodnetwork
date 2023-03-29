@@ -16,7 +16,8 @@ describe '
                                   tax_category: tax_category_gst)
     amount = fee.calculator.preferred_amount
 
-    login_as_admin_and_visit spree.edit_admin_general_settings_path
+    login_as_admin
+    visit spree.edit_admin_general_settings_path
     click_link 'Enterprise Fees'
 
     expect(page).to have_select "sets_enterprise_fee_set_collection_attributes_0_enterprise_id"
@@ -35,7 +36,8 @@ describe '
     e = create(:supplier_enterprise, name: 'Feedme')
 
     # When I go to the enterprise fees page
-    login_as_admin_and_visit admin_enterprise_fees_path
+    login_as_admin
+    visit admin_enterprise_fees_path
 
     # And I fill in the fields for a new enterprise fee and click update
     select 'Feedme', from: 'sets_enterprise_fee_set_collection_attributes_0_enterprise_id'
@@ -64,7 +66,8 @@ describe '
     e = create(:supplier_enterprise, name: 'Feedme')
 
     # When I go to the enterprise fees page
-    login_as_admin_and_visit admin_enterprise_fees_path
+    login_as_admin
+    visit admin_enterprise_fees_path
 
     # And I fill in the fields for a new enterprise fee and click update
     select 'Feedme', from: 'sets_enterprise_fee_set_collection_attributes_0_enterprise_id'
@@ -96,7 +99,8 @@ describe '
 
     before do
       # When I go to the enterprise fees page
-      login_as_admin_and_visit admin_enterprise_fees_path
+      login_as_admin
+      visit admin_enterprise_fees_path
       # And I update the fields for the enterprise fee and click update
       select 'Foo', from: 'sets_enterprise_fee_set_collection_attributes_0_enterprise_id'
       select 'Admin', from: 'sets_enterprise_fee_set_collection_attributes_0_fee_type'
@@ -160,7 +164,8 @@ describe '
     fee = create(:enterprise_fee)
 
     # When I go to the enterprise fees page
-    login_as_admin_and_visit admin_enterprise_fees_path
+    login_as_admin
+    visit admin_enterprise_fees_path
 
     # And I click delete
     accept_alert do

@@ -278,7 +278,8 @@ describe 'Tag Rules' do
   end
 
   def visit_tag_rules
-    login_as_admin_and_visit main_app.edit_admin_enterprise_path(enterprise)
+    login_as_admin
+    visit main_app.edit_admin_enterprise_path(enterprise)
     expect(page).to have_content "PRIMARY DETAILS"
     click_link "Tag Rules"
   end

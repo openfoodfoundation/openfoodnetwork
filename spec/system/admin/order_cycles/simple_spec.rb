@@ -23,7 +23,8 @@ describe '
                  orders_close_at: Time.zone.local(2041, 12, 12, 12, 12, 5))
 
     # When I go to the order cycles page
-    login_as_admin_and_visit admin_order_cycles_path
+    login_as_admin
+    visit admin_order_cycles_path
 
     ## -- OC1
     find("input#oc#{oc1.id}_name").set ""
@@ -76,7 +77,8 @@ describe '
     oc = create(:simple_order_cycle)
 
     # When I clone it
-    login_as_admin_and_visit admin_order_cycles_path
+    login_as_admin
+    visit admin_order_cycles_path
     within "tr.order-cycle-#{oc.id}" do
       find('a.clone-order-cycle').click
     end
@@ -102,7 +104,8 @@ describe '
       end
 
       it "displays a warning on the order cycles screen" do
-        login_as_admin_and_visit admin_order_cycles_path
+        login_as_admin
+        visit admin_order_cycles_path
         expect(page).to have_content(
           "The hub #{hub.name} is listed in an active order cycle, "\
           "but does not have valid shipping and payment methods. Until you set these up, "\
@@ -643,7 +646,8 @@ describe '
       ex.update! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
       # When I edit it
-      login_as_admin_and_visit admin_order_cycles_path
+      login_as_admin
+      visit admin_order_cycles_path
       within "tr.order-cycle-#{oc.id}" do
         find("a.edit-order-cycle").click
       end
@@ -680,7 +684,8 @@ describe '
       ex.update! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
       # When I edit it
-      login_as_admin_and_visit edit_admin_order_cycle_path oc
+      login_as_admin
+      visit edit_admin_order_cycle_path oc
 
       wait_for_edit_form_to_load_order_cycle(oc)
 
@@ -749,7 +754,8 @@ describe '
      "check that the modifications are taken into account", 
      retry: 3 do
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
-    login_as_admin_and_visit admin_order_cycles_path
+    login_as_admin
+    visit admin_order_cycles_path
     find("#oc#{order_cycle.id}_orders_close_at").click
     datetime = Time.zone.at(Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0))
     input = find(".flatpickr-calendar.open .flatpickr-minute")
@@ -762,7 +768,8 @@ describe '
 
   it "deleting an order cycle" do
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
-    login_as_admin_and_visit admin_order_cycles_path
+    login_as_admin
+    visit admin_order_cycles_path
     expect(page).to have_selector "tr.order-cycle-#{order_cycle.id}"
     accept_alert do
       first('a.delete-order-cycle').click

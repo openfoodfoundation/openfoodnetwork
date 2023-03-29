@@ -13,14 +13,16 @@ describe 'Account and Billing Settings' do
 
     context "as an admin user" do
       it "loads the page" do
-        login_as_admin_and_visit spree.edit_admin_general_settings_path
+        login_as_admin
+        visit spree.edit_admin_general_settings_path
         click_link "Tax Settings"
 
         expect(page).to have_unchecked_field 'preferences_products_require_tax_category'
       end
 
       it "attributes can be changed" do
-        login_as_admin_and_visit spree.edit_admin_tax_settings_path
+        login_as_admin
+        visit spree.edit_admin_tax_settings_path
 
         check 'preferences_products_require_tax_category'
 
