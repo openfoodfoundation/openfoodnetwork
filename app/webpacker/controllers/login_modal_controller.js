@@ -1,5 +1,4 @@
 import { Controller } from "stimulus";
-import CableReady from "cable_ready";
 
 export default class extends Controller {
   static targets = ["background", "modal", "email"];
