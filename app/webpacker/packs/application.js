@@ -7,7 +7,9 @@ import * as Turbo from "@hotwired/turbo";
 window.Turbo = Turbo;
 window.CableReady = CableReady;
 mrujs.start({
-  plugins: [new CableCar(CableReady)],
+  plugins: [
+    new CableCar(CableReady, { mimeType: "text/vnd.cable-ready.json" }),
+  ],
 });
 
 require.context("../fonts", true);
