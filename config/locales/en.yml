@@ -79,6 +79,17 @@ en:
         orders_close_at: Close date
       variant_override:
         count_on_hand: "On Hand"
+      spree/calculator:
+        preferred_flat_percent: "Flat Percent"
+        preferred_amount: "Amount"
+        preferred_first_item: "First Item"
+        preferred_additional_item: "Additional Item Cost"
+        preferred_max_items: "Max Items"
+        preferred_minimal_amount: "Minimal Amount"
+        preferred_normal_amount: "Normal Amount"
+        preferred_discount_amount: "Discount Amount"
+        preferred_unit_from_list: "Unit From List"
+        preferred_per_unit: "Per Unit"
     errors:
       messages:
         calculator_preferred_value_error: "has an invalid input. Please use only numbers. For example: 10, 5.5, -20"

@@ -27,7 +27,8 @@ shared_examples "a parent model that has a Calculator" do |parent_name|
     end
 
     it "adds custom error messages to base" do
-      expect(invalid_parent.errors[:base]).to include(/^Amount: Invalid input/)
+      error_messages = invalid_parent.errors.full_messages
+      expect(error_messages).to include(/^Calculator Amount has an invalid input./)
     end
 
     it "has the correct number of errors messages" do
@@ -57,7 +58,8 @@ shared_examples "a parent model that has a Calculator" do |parent_name|
     end
 
     it "adds custom error messages to base" do
-      expect(localized_parent.errors[:base]).to include(/Amount has an invalid format/)
+      error_messages = localized_parent.errors.full_messages
+      expect(error_messages).to include(/^Calculator Amount has an invalid format./)
     end
   end
 end
