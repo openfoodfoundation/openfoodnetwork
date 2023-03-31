@@ -10,6 +10,14 @@ class ContentScrubber < Rails::Html::PermitScrubber
     self.attributes = ALLOWED_ATTRIBUTES
   end
 
+  def scrub(node)
+    if node.name == 'p' && (node.children.empty? || node.text.blank?)
+      node.remove
+    else
+      super
+    end
+  end
+
   def skip_node?(node)
     node.text?
   end

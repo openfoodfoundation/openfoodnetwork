@@ -53,5 +53,9 @@ describe ContentSanitizer do
     it "echos nil if given nil" do
       expect(service.sanitize_content(nil)).to be(nil)
     end
+
+    it "removes empty <p> tags and keeps non-empty ones" do
+      expect(service.sanitize_content("<p> </p><p></p><p><b></b><p>hello</p><p></p><p>world!</p>")).to eq("<p>hello</p><p>world!</p>")
+    end
   end
 end
