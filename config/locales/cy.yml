@@ -641,7 +641,6 @@ cy:
       seo:
         product_search_keywords: "Allweddeiriau Chwilio Cynnyrch"
         product_search_tip: "Teipiwch eiriau i helpu i chwilio am eich cynnyrch yn y siopau. Defnyddiwch fwlch i wahanu pob allweddair."
-        SEO_keywords: "Allweddeiriau SEO"
         seo_tip: "Teipiwch eiriau i helpu chwilio am eich cynnyrch ar y we. Defnyddiwch fwlch i wahanu pob allweddair."
       search: "Chwilio"
       properties:
@@ -1057,6 +1056,9 @@ cy:
           add_unregistered_user: "Ychwanegwch ddefnyddiwr anghofrestredig"
           email_confirmed: "Cadarnhawyd yr e-bost "
           email_not_confirmed: "E-bost heb ei gadarnhau"
+        vouchers:
+          rate: Cyfradd
+          customers: Cwsmer
       actions:
         edit_profile: Gosodiadau
         properties: Manylion
@@ -1498,6 +1500,11 @@ cy:
     schedules:
       destroy:
         associated_subscriptions_error: Nid yw'n bosib dileu'r amserlen hon oherwydd bod tanysgrifiadau cysylltiedig yn berthnasol
+    vouchers:
+      new:
+        back: Yn ôl
+        save: Cadw
+        voucher_amount: Nifer
     controllers:
       enterprises:
         stripe_connect_cancelled: "Canslwyd y cysylltiad â Stripe"
@@ -1521,6 +1528,9 @@ cy:
       destroy_attachment_does_not_exist: "Nid yw'r ffeil Telerau ac Amodau yn bodoli"
     orders:
       failed_to_update: "Wedi methu diweddaru'r archeb"
+    query_param:
+      error:
+        title: Invalid query parameter
   checkout:
     already_ordered:
       cart: "basged"
@@ -3428,6 +3438,13 @@ cy:
   first: "Yn gyntaf"
   previous: "Blaenorol"
   last: "Diwethaf"
+  webhook_endpoints:
+    create:
+      success: Webhook endpoint failed to create
+      error: Webhook endpoint failed to create
+    destroy:
+      success: Webhook endpoint successfully deleted
+      error: Webhook endpoint failed to delete
   spree:
     add_country: "Ychwanegu gwlad"
     add_state: "Ychwanegu sir"
@@ -4204,6 +4221,16 @@ cy:
       api_keys:
         regenerate_key: "Allwedd Adfer"
         title: Allwedd API
+      webhook_endpoints:
+        title: Webhook Endpoints
+        description: Events in the system may trigger webhooks to external systems.
+        event_types:
+          order_cycle_opened: Order Cycle Opened
+        event_type:
+          header: Event type
+        url:
+          header: Endpoint URL
+          create_placeholder: Enter the URL of the remote webhook endpoint
       developer_settings:
         title: Gosodiadau'r Datblygwr
       form:

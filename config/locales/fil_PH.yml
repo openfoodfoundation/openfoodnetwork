@@ -490,7 +490,6 @@ fil_PH:
       seo:
         product_search_keywords: "mga keyword sa paghahanap ng produkto"
         product_search_tip: "mag-type ng mga salita upang matulungang mahanap ang inyong produkto sa mga shop. gumamit ng laktaw sa paghihiwalay ng bawat keyword."
-        SEO_keywords: "SEO Keywords"
         seo_tip: "mag-type ng mga salita upang matulungang mahanap ang inyong produkto sa web. gumamit ng laktaw sa paghihiwalay ng bawat keyword."
       search: "hanapin"
       properties:
@@ -864,6 +863,9 @@ fil_PH:
           add_unregistered_user: "magdagdag ng hindi rehistradong user"
           email_confirmed: "ang email ay kumpirmado na"
           email_not_confirmed: "ang email ay hindi pa kumpirmado"
+        vouchers:
+          rate: antas
+          customers: Customer
       actions:
         edit_profile: Settings
         properties: mga katangian
@@ -1261,6 +1263,11 @@ fil_PH:
     schedules:
       destroy:
         associated_subscriptions_error: ang iskedyul na ito ay hindi maialis sapagkat ito ay nauugnay sa ibang mga subscription.
+    vouchers:
+      new:
+        back: bumalik
+        save: i-save
+        voucher_amount: Halaga
     controllers:
       enterprises:
         stripe_connect_cancelled: "koneksyon sa Stripe ay kinansel"

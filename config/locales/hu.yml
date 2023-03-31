@@ -631,7 +631,6 @@ hu:
       seo:
         product_search_keywords: "Termékkeresési kulcsszavak"
         product_search_tip: "Írjon be olyan szavakat, amelyek megkönnyítik a termékek keresését az oldalon. Használjon szóközt az egyes kulcsszavak elválasztásához."
-        SEO_keywords: "SEO kulcsszavak"
         seo_tip: "Írjon be olyan szavakat, amelyek megkönnyítik termékei keresését az interneten. Használjon szóközt az egyes kulcsszavak elválasztásához."
       search: "Keresés"
       properties:
@@ -1043,6 +1042,9 @@ hu:
           add_unregistered_user: "Nem regisztrált felhasználó hozzáadása"
           email_confirmed: "E-mail megerősítve"
           email_not_confirmed: "Az e-mail cím nincs megerősítve"
+        vouchers:
+          rate: Mérték
+          customers: Vevő
       actions:
         edit_profile: Beállítások
         properties: Tulajdonságok
@@ -1472,6 +1474,11 @@ hu:
     schedules:
       destroy:
         associated_subscriptions_error: Ezt az ütemezést nem lehet törölni, mert előfizetései vannak hozzá
+    vouchers:
+      new:
+        back: Vissza
+        save: Mentés
+        voucher_amount: Összeg
     controllers:
       enterprises:
         stripe_connect_cancelled: "A Stripe-hoz való csatlakozás megszakadt"

@@ -500,6 +500,8 @@ sv:
           notifications_note: 'Observera: En ny e-postadress behöver kanske bli bekräftad före användning'
           managers: Chefer
           managers_tip: Andra användare med tillstånd att leda detta företag.
+        vouchers:
+          customers: Kund
       actions:
         edit_profile: Inställningar
         properties: Egenskaper
@@ -747,6 +749,10 @@ sv:
         save: "SPARA"
         saving: "SPARANDE"
         saved: "SPARAD"
+    vouchers:
+      new:
+        back: Backa
+        voucher_amount: Belopp
   checkout:
     already_ordered:
       cart: "vagn"

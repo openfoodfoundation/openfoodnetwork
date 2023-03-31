@@ -494,7 +494,6 @@ en_IN:
       seo:
         product_search_keywords: "Product Search Keywords"
         product_search_tip: "Type words to help search your products in the shops. Use space to separate each keyword."
-        SEO_keywords: "SEO Keywords"
         seo_tip: "Type words to help search your products in the web. Use space to separate each keyword."
       search: "Search"
       properties:
@@ -869,6 +868,9 @@ en_IN:
           add_unregistered_user: "Add an unregistered user"
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
+        vouchers:
+          rate: Rate
+          customers: Customer
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1268,6 +1270,11 @@ en_IN:
     schedules:
       destroy:
         associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
+    vouchers:
+      new:
+        back: Back
+        save: Save
+        voucher_amount: Amount
     controllers:
       enterprises:
         stripe_connect_cancelled: "Connection to Stripe has been cancelled"

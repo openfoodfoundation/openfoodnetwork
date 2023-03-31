@@ -624,7 +624,6 @@ it_CH:
       seo:
         product_search_keywords: "Cerca prodotto per parole chiave"
         product_search_tip: "Digita le parole che possono aiutare a trovare i tuoi prodotti nei negozi. Usa lo spazio per separare ciascuna parola chiave."
-        SEO_keywords: "SEO Keywords"
         seo_tip: "Digita le parole che possono aiutare a trovare i tuoi prodotti nel web. Usa lo spazio per separare ciascuna parola chiave."
       search: "Cerca"
       properties:
@@ -1030,6 +1029,9 @@ it_CH:
           add_unregistered_user: "Aggiungi un utente non registrato"
           email_confirmed: "Email confermata"
           email_not_confirmed: "Email non confermata"
+        vouchers:
+          rate: Tariffa
+          customers: Cliente
       actions:
         edit_profile: Impostazioni
         properties: Proprietà
@@ -1441,6 +1443,11 @@ it_CH:
     schedules:
       destroy:
         associated_subscriptions_error: Questa programmazione non può essere cancellata perché ha una sottoscrizione associata
+    vouchers:
+      new:
+        back: Indietro
+        save: Salva
+        voucher_amount: Quantità
     controllers:
       enterprises:
         stripe_connect_cancelled: "La connessione con Stripe è stata cancellata"

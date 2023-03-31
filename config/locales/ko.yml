@@ -625,7 +625,6 @@ ko:
       seo:
         product_search_keywords: "제품 검색 키워드"
         product_search_tip: "매장에서 제품을 검색하는 데 도움이 되는 단어를 입력하십시오. 각 키워드를 구분하려면 공백을 사용합니다."
-        SEO_keywords: "SEO 키워드"
         seo_tip: "웹에서 제품을 검색하는 데 도움이 되는 단어를 입력하십시오. 각 키워드를 구분하려면 공백을 사용합니다."
       search: "탐색"
       properties:
@@ -1028,6 +1027,9 @@ ko:
           add_unregistered_user: "등록되지 않은 사용자 추가"
           email_confirmed: "확인한 이메일"
           email_not_confirmed: "확인안한 이메일"
+        vouchers:
+          rate: 비율
+          customers: 고객
       actions:
         edit_profile: 설정
         properties: 특성
@@ -1448,6 +1450,11 @@ ko:
     schedules:
       destroy:
         associated_subscriptions_error: 연결된 구독이 있으므로 이 일정을 삭제할 수 없습니다.
+    vouchers:
+      new:
+        back: 뒤로
+        save: 저장
+        voucher_amount: 수량
     controllers:
       enterprises:
         stripe_connect_cancelled: "Stripe와의 연결이 취소되었습니다"

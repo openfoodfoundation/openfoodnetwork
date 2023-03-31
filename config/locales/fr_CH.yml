@@ -624,7 +624,6 @@ fr_CH:
       seo:
         product_search_keywords: "Mots-clés de recherche produits"
         product_search_tip: "Saisissez des mots qui peuvent simplifier la recherche de vo produits dans les boutiques. Laissez un espace entre chaque mot-clé."
-        SEO_keywords: "Mot-clés de référencement web"
         seo_tip: "Saisissez des mots qui peuvent simplifier la recherche de vos produits sur le web. Laissez un espace entre chaque mot-clé."
       search: "Rechercher"
       properties:
@@ -1034,6 +1033,9 @@ fr_CH:
           add_unregistered_user: "Ajouter un nouvel utilisateur"
           email_confirmed: "Email confirmé"
           email_not_confirmed: "Email non confirmé"
+        vouchers:
+          rate: Taux
+          customers: Client
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1454,6 +1456,11 @@ fr_CH:
     schedules:
       destroy:
         associated_subscriptions_error: Ce rythme d'abonnement ne peut pas être supprimé car il est associé à des abonnements.
+    vouchers:
+      new:
+        back: Retour
+        save: Sauvegarder
+        voucher_amount: Montant
     controllers:
       enterprises:
         stripe_connect_cancelled: "La connexion avec Stripe a été annulée"

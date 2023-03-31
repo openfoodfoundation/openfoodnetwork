@@ -542,7 +542,6 @@ pt:
       seo:
         product_search_keywords: "Palavras-chave para Pesquisa de Produto"
         product_search_tip: "Insira palavras que ajudem a encontrar os seus produtos nas lojas. Use um espaço para separar cada palavra-chave"
-        SEO_keywords: "Palavras-chave para fins de SEO"
         seo_tip: "Insira palavras que ajudem a encontrar os seus produtos na web. Use um espaço para separar cada palavra-chave"
       search: "Procurar"
       properties:
@@ -926,6 +925,9 @@ pt:
           add_unregistered_user: "Adicionar um/a utilizador/a não-registado/a"
           email_confirmed: "Email confirmado"
           email_not_confirmed: "Email não confirmado"
+        vouchers:
+          rate: Taxa
+          customers: Consumidor
       actions:
         edit_profile: Definições
         properties: Propriedades
@@ -1312,6 +1314,11 @@ pt:
     schedules:
       destroy:
         associated_subscriptions_error: Este horário não pode ser eliminado porque tem subscrições associadas
+    vouchers:
+      new:
+        back: Voltar
+        save: Guardar
+        voucher_amount: Quantia
     controllers:
       enterprises:
         stripe_connect_cancelled: "A ligação ao Stripe foi cancelada"

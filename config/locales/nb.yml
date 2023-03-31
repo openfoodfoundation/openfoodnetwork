@@ -631,7 +631,6 @@ nb:
       seo:
         product_search_keywords: "Nøkkelord for produktsøk"
         product_search_tip: "Skriv ord for å søke etter dine produkter i butikkene. Bruk mellomrom for å skille mellom hvert nøkkelord."
-        SEO_keywords: "SEO Nøkkelord"
         seo_tip: "Skriv ord for å søke etter produktene dine på nettet. Bruk mellomrom for å skille mellom hvert søkeord."
       search: "Søk"
       properties:
@@ -1045,6 +1044,9 @@ nb:
           add_unregistered_user: "Legg til en uregistrert bruker"
           email_confirmed: "Epost bekreftet"
           email_not_confirmed: "Epost ikke bekreftet"
+        vouchers:
+          rate: Sats
+          customers: Kunde
       actions:
         edit_profile: Innstillinger
         properties: Egenskaper
@@ -1475,6 +1477,11 @@ nb:
     schedules:
       destroy:
         associated_subscriptions_error: Denne tidsplanen kan ikke slettes fordi den har tilknyttede abonnementer
+    vouchers:
+      new:
+        back: Tilbake
+        save: Lagre
+        voucher_amount: Antall
     controllers:
       enterprises:
         stripe_connect_cancelled: "Tilkobling til Stripe har blitt avbrutt"

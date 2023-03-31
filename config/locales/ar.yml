@@ -650,7 +650,6 @@ ar:
       seo:
         product_search_keywords: "كلمات البحث المنتج"
         product_search_tip: "اكتب كلمات للمساعدة في البحث عن منتجاتك في المتاجر. استخدام المسافة لفصل كل كلمة رئيسية."
-        SEO_keywords: "SEO الكلمات الرئيسية"
         seo_tip: "اكتب كلمات للمساعدة في البحث عن منتجاتك على الويب. استخدام المسافة لفصل كل كلمة رئيسية."
       search: "بحث"
       properties:
@@ -1065,6 +1064,9 @@ ar:
           add_unregistered_user: "إضافة مستخدم غير مسجل"
           email_confirmed: "تأكيد البريد الإلكتروني"
           email_not_confirmed: "البريد الإلكتروني غير مؤكد"
+        vouchers:
+          rate: معدل
+          customers: عميل
       actions:
         edit_profile: الإعدادات
         properties: الخصائص
@@ -1506,6 +1508,11 @@ ar:
     schedules:
       destroy:
         associated_subscriptions_error: لا يمكن حذف هذا الجدول لأنه يحتوي على اشتراكات مقترنة
+    vouchers:
+      new:
+        back: عودة
+        save: حفظ
+        voucher_amount: القيمة
     controllers:
       enterprises:
         stripe_connect_cancelled: "تم إلغاء الاتصال بـ Stripe"

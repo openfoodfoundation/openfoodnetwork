@@ -635,7 +635,6 @@ ru:
       seo:
         product_search_keywords: "Ключевые слова для поиска товара"
         product_search_tip: "Введите слова, чтобы помочь найти ваши продукты в магазинах. Используйте пробел в качестве разделителя между словами."
-        SEO_keywords: "SEO ключевые слова"
         seo_tip: "Введите слова, чтобы помочь найти ваши продукты в Интернете. Используйте пробел в качестве разделителя между словами."
       search: "Поиск"
       properties:
@@ -1051,6 +1050,9 @@ ru:
           add_unregistered_user: "Добавить незарегистрированного пользователя"
           email_confirmed: "Email подтверждён"
           email_not_confirmed: "Email не подтверждён"
+        vouchers:
+          rate: Ставка
+          customers: Клиент
       actions:
         edit_profile: Настройки
         properties: Свойства
@@ -1491,6 +1493,11 @@ ru:
     schedules:
       destroy:
         associated_subscriptions_error: Это расписание не может быть удалено, потому что оно имеет связанные подписки
+    vouchers:
+      new:
+        back: Назад
+        save: Сохранить
+        voucher_amount: Количество
     controllers:
       enterprises:
         stripe_connect_cancelled: "Подключение к Stripe было отменено"

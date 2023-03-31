@@ -621,7 +621,6 @@ es:
       seo:
         product_search_keywords: "Palabras clave de búsqueda de productos"
         product_search_tip: "Escriba palabras para ayudar a buscar sus productos en las tiendas. Use espacio para separar cada palabra clave."
-        SEO_keywords: "Palabras clave de SEO"
         seo_tip: "Escriba palabras para ayudar a buscar sus productos en la web. Use espacio para separar cada palabra clave."
       search: "Buscar"
       properties:
@@ -1020,6 +1019,9 @@ es:
           add_unregistered_user: "Agregar un usuario no registrado"
           email_confirmed: "Correo electrónico confirmado"
           email_not_confirmed: "Correo electrónico no confirmado"
+        vouchers:
+          rate: Impuesto
+          customers: Consumidora
       actions:
         edit_profile: Configuración
         properties: Propiedades
@@ -1431,6 +1433,11 @@ es:
     schedules:
       destroy:
         associated_subscriptions_error: Este horario no se puede eliminar porque tiene suscripciones asociadas
+    vouchers:
+      new:
+        back: Atrás
+        save: Guardar
+        voucher_amount: Cantidad
     controllers:
       enterprises:
         stripe_connect_cancelled: "Se ha cancelado la conexión a Stripe"

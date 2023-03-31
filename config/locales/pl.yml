@@ -488,7 +488,6 @@ pl:
       seo:
         product_search_keywords: "Słowa kluczowe wyszukiwania produktów"
         product_search_tip: "Wpisz słowa, które ułatwią wyszukiwanie produktów w sklepach. Użyj spacji, aby oddzielić każde słowo kluczowe."
-        SEO_keywords: "Słowa kluczowe SEO"
         seo_tip: "Wpisz słowa, które pomogą wyszukiwać produkty w sieci. Użyj spacji, aby oddzielić każde słowo kluczowe."
       search: "Szukaj"
       properties:
@@ -849,6 +848,8 @@ pl:
           add_unregistered_user: "Dodaj niezarejestrowanego użytkownika"
           email_confirmed: "E-mail potwierdzony"
           email_not_confirmed: "Adres e-mail nie został potwierdzony"
+        vouchers:
+          customers: Klient
       actions:
         edit_profile: Ustawienia
         properties: Właściwości
@@ -1219,6 +1220,11 @@ pl:
     schedules:
       destroy:
         associated_subscriptions_error: Tego harmonogramu nie można usunąć, ponieważ ma powiązane subskrypcje
+    vouchers:
+      new:
+        back: Wstecz
+        save: Zapisz
+        voucher_amount: Kwota
     controllers:
       enterprises:
         stripe_connect_cancelled: "Połączenie ze Stripe zostało anulowane"

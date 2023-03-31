@@ -628,7 +628,6 @@ uk:
       seo:
         product_search_keywords: "Ключові слова пошуку продукту"
         product_search_tip: "Введіть слова, які допоможуть шукати ваші товари в магазинах. Використовуйте пробіл, щоб розділити кожне ключове слово."
-        SEO_keywords: "Ключові слова SEO"
         seo_tip: "Введіть слова, які допоможуть шукати ваші продукти в Інтернеті. Використовуйте пробіл, щоб розділити кожне ключове слово."
       search: "Пошук"
       properties:
@@ -1043,6 +1042,9 @@ uk:
           add_unregistered_user: "Додайте незареєстрованого користувача"
           email_confirmed: "Електронна адреса підтверджена"
           email_not_confirmed: "Електронна пошта не підтверджена"
+        vouchers:
+          rate: Оцінка
+          customers: Замовник
       actions:
         edit_profile: Налаштування
         properties: Властивості
@@ -1466,6 +1468,11 @@ uk:
     schedules:
       destroy:
         associated_subscriptions_error: Цей розклад неможливо видалити, оскільки він має пов’язані підписки
+    vouchers:
+      new:
+        back: Назад
+        save: Зберегти
+        voucher_amount: Кількість
     controllers:
       enterprises:
         stripe_connect_cancelled: "Підключення до Stripe скасовано"

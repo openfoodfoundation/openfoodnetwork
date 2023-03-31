@@ -634,7 +634,6 @@ ca:
       seo:
         product_search_keywords: "Paraules clau de cerca de producte"
         product_search_tip: "Escriviu paraules per ajudar-vos a cercar els vostres productes a les botigues. Utilitzeu espai per separar cada paraula clau."
-        SEO_keywords: "Paraules clau de SEO"
         seo_tip: "Escriviu paraules per ajudar-vos a cercar els vostres productes a la web. Utilitzeu espai per separar cada paraula clau."
       search: "Cerca"
       properties:
@@ -1049,6 +1048,9 @@ ca:
           add_unregistered_user: "Afegeix un usuari no registrat"
           email_confirmed: "S'ha confirmat el correu electrònic"
           email_not_confirmed: "Correu electrònic no confirmat"
+        vouchers:
+          rate: Taxa
+          customers: Consumidora
       actions:
         edit_profile: Configuració
         properties: Propietats
@@ -1464,6 +1466,11 @@ ca:
     schedules:
       destroy:
         associated_subscriptions_error: Aquesta programació no es pot suprimir perquè té subscripcions associades
+    vouchers:
+      new:
+        back: Enrere
+        save: Desa
+        voucher_amount: Quantitat
     controllers:
       enterprises:
         stripe_connect_cancelled: "S'ha cancel·lat la connexió a Stripe"

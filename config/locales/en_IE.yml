@@ -6,9 +6,22 @@ en_IE:
       spree/shipping_method: Shipping Method
     attributes:
       spree/order/ship_address:
+        address1: "Shipping address (Street + House number)"
+        address2: "Shipping address line 2"
+        city: "Shipping address city"
+        country: "Shipping address country"
         phone: "Phone number"
         firstname: "First name"
         lastname: "Last name"
+        zipcode: "Shipping address Eircode"
+      spree/order/bill_address:
+        address1: "Billing address (Street + House number)"
+        zipcode: "Billing address Eircode"
+        city: "Billing address city"
+        country: "Billing address country"
+        firstname: "Billing address first name"
+        lastname: "Billing address last name"
+        phone: Customer phone
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
@@ -34,6 +47,7 @@ en_IE:
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+        unit_value: "Unit value"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -184,6 +198,8 @@ en_IE:
         updated_not_active: "Your password has been reset, but your email has not been confirmed yet."
         updated: "Your password was changed successfully. You are now signed in."
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+    oidc:
+      failure: "Could not sign in: %{error}"
   home_page_alert_html: "Home page alert HTML"
   hub_signup_case_studies_html: "Hub signup case studies HTML"
   hub_signup_detail_html: "Hub signup detail HTML"
@@ -405,8 +421,11 @@ en_IE:
       filters:
         categories:
           title: Categories
+          selected_categories: "%{count} categories selected"
         producers:
           title: Producers
+          selected_producers: "%{count} producers selected"
+        per_page: "%{count} items per page"
         colums: Columns
       columns:
         name: Name
@@ -631,7 +650,6 @@ en_IE:
       seo:
         product_search_keywords: "Product Search Keywords"
         product_search_tip: "Type words to help search your products in the shops. Use space to separate each keyword."
-        SEO_keywords: "SEO Keywords"
         seo_tip: "Type words to help search your products in the web. Use space to separate each keyword."
       search: "Search"
       properties:
@@ -660,7 +678,9 @@ en_IE:
         conditional_blank: can't be blank if unit_type is blank
         no_product: did not match any products in the database
         not_found: not found in database
+        category_not_found: doesn't match allowed categories. See the correct categories to choose from on the product import page, or check that there's no misspelling.
         not_updatable: cannot be updated on existing products via product import
+        values_must_be_same: must be the same for products with the same name
         blank: can't be blank
         products_no_permission: you do not have permission to manage products for this enterprise
         inventory_no_permission: you do not have permission to create inventory for this producer
@@ -835,6 +855,7 @@ en_IE:
           legend: "Address"
         business_details:
           legend: "Business Details"
+          upload: 'upload'
           abn: Company Number
           abn_placeholder: eg. 99 123 456 789
           acn: Charity Number
@@ -1045,6 +1066,9 @@ en_IE:
           add_unregistered_user: "Add an unregistered user"
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
+        vouchers:
+          rate: Rate
+          customers: Customer
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1156,7 +1180,10 @@ en_IE:
       checkout_options:
         back_end: "Back office only"
         cancel: "Cancel"
+        checkout_options: "Checkout options"
         distributor: "Distributor"
+        no_payment_methods: Each distributor on this order cycle requires at least one payment method.
+        no_shipping_methods: Each distributor on this order cycle requires at least one shipping method.
         payment_methods: "Payment Methods"
         save: "Save"
         save_and_back_to_list: "Save and Back to List"
@@ -1166,6 +1193,7 @@ en_IE:
         edit: "1. General Settings"
         incoming: "2. Incoming Products"
         outgoing: "3. Outgoing Products"
+        checkout_options: "4. Checkout Options"
       exchange_form:
         pickup_time_tip: When orders from this OC will be ready for the customer
         pickup_instructions_placeholder: "Pick-up instructions"
@@ -1298,6 +1326,7 @@ en_IE:
       total_by_customer: Total By Customer
       total_by_supplier: Total By Supplier
       supplier_totals: Order Cycle Supplier Totals
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Order Cycle Supplier Totals by Distributor
       totals_by_supplier: Order Cycle Distributor Totals by Supplier
       customer_totals: Order Cycle Customer Totals
@@ -1308,6 +1337,8 @@ en_IE:
       addresses: Addresses
       payment_methods: Payment Methods Report
       delivery: Delivery Report
+      sales_tax_totals_by_producer: Sales Tax Totals By Producer
+      sales_tax_totals_by_order: Sales Tax Totals By Order
       tax_types: Tax Types
       tax_rates: Tax Rates
       pack_by_customer: Pack By Customer
@@ -1376,6 +1407,15 @@ en_IE:
         formatted_data: Formatted Data
       packing:
         name: "Packing Reports"
+    oidc_settings:
+      index:
+        title: "OIDC Settings"
+        connect: "Connect Your Account"
+        already_connected: "Your account is already linked to this DFC authorization account:"
+        les_communs_link: "Les Communs Open ID server"
+        link_your_account: "You need first to link your account with the authorization provider used by DFC (Les Communs Open ID Connect)."
+        link_account_button: "Link your Les Communs OIDC Account"
+        view_account: "To view your account, see:"
     subscriptions:
       index:
         title: "Subscriptions"
@@ -1471,6 +1511,11 @@ en_IE:
     schedules:
       destroy:
         associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
+    vouchers:
+      new:
+        back: Back
+        save: Save
+        voucher_amount: Amount
     controllers:
       enterprises:
         stripe_connect_cancelled: "Connection to Stripe has been cancelled"
@@ -1478,6 +1523,12 @@ en_IE:
         stripe_connect_fail: Sorry, the connection of your Stripe account failed
       stripe_connect_settings:
         resource: Stripe Connect configuration
+    resend_confirmation_emails_feedback:
+      one: "Confirmation email sent for 1 order."
+      other: "Confirmation emails sent for %{count} orders."
+    send_invoice_feedback:
+      one: "Invoice email sent for 1 order."
+      other: "Invoice emails sent for %{count} orders."
   api:
     unknown_error: "Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
@@ -1494,6 +1545,10 @@ en_IE:
       destroy_attachment_does_not_exist: "Terms and Conditions file does not exist"
     orders:
       failed_to_update: "Failed to update order"
+    query_param:
+      error:
+        title: Invalid query parameter
+        extra_fields: "Unsupported fields: %{fields}"
   checkout:
     already_ordered:
       cart: "cart"
@@ -1788,6 +1843,7 @@ en_IE:
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     step1:
       contact_information:
+        title: Contact information
         email:
           label: Email
         phone:
@@ -1841,10 +1897,13 @@ en_IE:
         title: Delivery details
         edit: Edit
         address: Delivery address
+        instructions: Instructions
       payment_method:
         title: Payment method
         edit: Edit
+        instructions: Instructions
       order:
+        title: Order details
         edit: Edit
       terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link}."
@@ -1857,6 +1916,7 @@ en_IE:
       submit: Complete order
       cancel: Back to Payment method
     errors:
+      saving_failed: "Saving failed, please update the highlighted fields. %{messages}"
       terms_not_accepted: Please accept Terms and Conditions
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
@@ -2595,7 +2655,17 @@ en_IE:
   report_header_to_hub: To Hub
   report_header_hub_code: Hub Code
   report_header_hub_id: Hub ID
+  report_header_hub_business_number: "Hub Business Number"
+  report_header_hub_legal_name: "Hub Legal Name"
+  report_header_hub_contact_name: "Hub Contact Name"
+  report_header_hub_email: "Hub Public Email"
   report_header_hub_owner_email: Hub Owner Email
+  report_header_hub_phone: "Hub Phone Number"
+  report_header_hub_address_line1: "Hub Address Line 1"
+  report_header_hub_address_line2: "Hub Address Line 2"
+  report_header_hub_address_city: "Hub Town"
+  report_header_hub_address_zipcode: "Hub Eircode"
+  report_header_hub_address_state_name: "Hub State"
   report_header_code: Code
   report_header_paid: Paid?
   report_header_delivery: Delivery?
@@ -2629,14 +2699,18 @@ en_IE:
   report_header_tax_on_delivery: "Tax on Delivery (%{currency_symbol})"
   report_header_tax_on_fees: "Tax on Fees (%{currency_symbol})"
   report_header_tax_category: "Tax Category"
+  report_header_tax_rate_name: "Tax Rate Name"
+  report_header_tax_rate: "Tax Rate"
   report_header_total_tax: "Total Tax (%{currency_symbol})"
   report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
   report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
+  report_header_total_orders: "Total Number of Orders"
   report_header_enterprise: Enterprise
   report_header_customer: Customer
   report_header_customer_code: Customer Code
   report_header_product: Product
   report_header_product_properties: Product Properties
+  report_header_product_tax_category: Product Tax Category
   report_header_quantity: Quantity
   report_header_max_quantity: Max Quantity
   report_header_variant: Variant
@@ -2649,6 +2723,8 @@ en_IE:
   report_header_supplier: Supplier
   report_header_producer: Producer
   report_header_producer_suburb: Producer Town
+  report_header_producer_tax_status: Producer Tax Status
+  report_header_producer_charges_sales_tax?: VAT Registered
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity
   report_header_cost: Cost
@@ -2664,10 +2740,12 @@ en_IE:
   report_header_distributor_address: Distributor address
   report_header_distributor_city: Distributor city
   report_header_distributor_postcode: Distributor eircode
+  report_header_distributor_tax_status: Distributor Tax Status
   report_header_delivery_address: Delivery Address
   report_header_delivery_postcode: Delivery Eircode
   report_header_bulk_unit_size: Bulk Unit Size
   report_header_weight: Weight
+  report_header_final_weight_volume: Final (Weight/Volume)
   report_header_height: Height
   report_header_width: Width
   report_header_depth: Depth
@@ -2760,6 +2838,7 @@ en_IE:
   action_required: "Action required"
   tag_rules: "Tag Rules"
   enterprise_fee_whole_order: Whole order
+  enterprise_fee_by_name: "%{name} fee by %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^That relationship is already established."
   validation_msg_at_least_one_hub: "^At least one hub must be selected"
   validation_msg_tax_category_cant_be_blank: "^Tax Category can't be blank"
@@ -2843,6 +2922,7 @@ en_IE:
       deleting_item_will_cancel_order: "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
       modals:
         got_it: "Got it"
+        confirm: "Confirm"
         close: "Close"
         continue: "Continue"
         cancel: "Cancel"
@@ -3041,6 +3121,9 @@ en_IE:
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
         restock_item: "Restock Items: return this item to stock"
         restock_items: "Restock Items: return all items to stock"
+        delete_line_items_html:
+          one: "This will delete one line item from the order.<br />Are you sure you want to proceed?"
+          other: "This will delete %{count} line items from the order.<br />Are you sure you want to proceed?"
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -3332,6 +3415,13 @@ en_IE:
   first: "First"
   previous: "Previous"
   last: "Last"
+  webhook_endpoints:
+    create:
+      success: Webhook endpoint successfully created
+      error: Webhook endpoint failed to create
+    destroy:
+      success: Webhook endpoint successfully deleted
+      error: Webhook endpoint failed to delete
   spree:
     add_country: "Add country"
     add_state: "Add state"
@@ -3372,6 +3462,8 @@ en_IE:
     server_error: "Server error"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Pick-up at the farm"
+      delivery: "Signed, sealed, delivered"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     taxonomy_edit: "Taxonomy edit"
@@ -3456,6 +3548,7 @@ en_IE:
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
     mail_method_settings: "Mail Method Settings"
+    mail_settings_notice_html: "<b>Changes made here will be temporary</b> for debugging only, and may get reverted in the future. <br>Permanent changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details."
     general: "General"
     enable_mail_delivery: "Enable Mail Delivery"
     send_mails_as: "Send Mails As"
@@ -3578,6 +3671,7 @@ en_IE:
       messages:
         included_price_validation: "cannot be selected unless you have set a Default Tax Zone"
         blank: "can't be blank"
+        invalid_instagram_url: "Must be user name only eg. the_prof"
     layouts:
       admin:
         login_nav:
@@ -3686,7 +3780,11 @@ en_IE:
           results_found: "%{number} Results found."
           viewing: "Viewing %{start} to %{end}."
           print_invoices: "Print Invoices"
+          cancel_orders: "Cancel Orders"
           resend_confirmation: "Resend Confirmation"
+          resend_confirmation_confirm_html: "This will resend the confirmation email to the customer.<br />Are you sure you want to proceed?"
+          send_invoice: "Send Invoices"
+          send_invoice_confirm_html: "This will email customer invoices for all selected complete orders. <br>Are you sure you want to proceed?"
           selected:
             zero: "No order selected"
             one: "1 order selected"
@@ -3835,6 +3933,7 @@ en_IE:
           title: "New Product"
           new_product: "New Product"
           supplier: "Supplier"
+          supplier_select_placeholder: "Select a supplier"
           product_name: "Product Name"
           units: "Unit Size"
           value: "Value"
@@ -3880,6 +3979,9 @@ en_IE:
           select_and_search: "Select filters and click on %{option} to access your data."
         customer_names_message:
           customer_names_tip: "If customer names are hidden for orders you have supplied, you can contact the distributor and ask if they can update their shop preferences to allow their suppliers to view customer names."
+        products_and_inventory:
+          all_products:
+            message: "Note that stock levels reported are from supplier product lists only. If you are using Inventory to manage your stock quantities these values will be ignored in this report."
       users:
         index:
           listing_users: "Listing Users"
@@ -4048,6 +4150,8 @@ en_IE:
         thanks: "Thank you for your order with us."
         track_information: "Tracking Information: %{tracking}"
         track_link: "Tracking Link: %{url}"
+        picked_up_instructions: "Your order from %{distributor} has been picked-up"
+        picked_up_subject: "Pick up Notification"
     test_mailer:
       test_email:
         greeting: "Congratulations!"
@@ -4096,6 +4200,16 @@ en_IE:
       api_keys:
         regenerate_key: "Regenerate Key"
         title: API key
+      webhook_endpoints:
+        title: Webhook Endpoints
+        description: Events in the system may trigger webhooks to external systems.
+        event_types:
+          order_cycle_opened: Order Cycle Opened
+        event_type:
+          header: Event type
+        url:
+          header: Endpoint URL
+          create_placeholder: Enter the URL of the remote webhook endpoint
       developer_settings:
         title: Developer Settings
       form:
@@ -4222,9 +4336,12 @@ en_IE:
       title: "The change you wanted was rejected (422)"
       message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to. <br><h3><a href='/' >Return home</a></h3> </p>"
   components:
+    multiple_checked_select:
+      filter_placeholder: "Filter options"
     search_input:
       placeholder: Search
     selector_with_filter:
+      selected_items: "%{count} selected"
       search_placeholder: Search
     pagination:
       next: Next

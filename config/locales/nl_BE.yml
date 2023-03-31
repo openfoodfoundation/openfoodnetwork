@@ -503,7 +503,6 @@ nl_BE:
       seo:
         product_search_keywords: "Product Zoeken op Trefwoorden"
         product_search_tip: " Typ woorden om te helpen bij het zoeken naar uw producten in de winkels. Gebruik ruimte om elk trefwoord te scheiden."
-        SEO_keywords: "SEO Trefwoorden"
         seo_tip: "Typ woorden om te helpen bij het zoeken naar uw producten op het web. Gebruik ruimte om elk trefwoord te scheiden."
       search: "Zoeken"
       properties:
@@ -883,6 +882,9 @@ nl_BE:
           add_unregistered_user: "Voeg een ongeregistreerde gebruiker toe"
           email_confirmed: "E-mail bevestigd"
           email_not_confirmed: "E-mail niet bevestigd"
+        vouchers:
+          rate: Percentage
+          customers: Klant
       actions:
         edit_profile: Instellingen
         properties: Eigenschappen
@@ -1282,6 +1284,11 @@ nl_BE:
     schedules:
       destroy:
         associated_subscriptions_error: Deze planning kan niet verwijderd worden omdat er abonnementen aan verbonden zijn.
+    vouchers:
+      new:
+        back: achterstevoren
+        save: Save
+        voucher_amount: Bedrag
     controllers:
       enterprises:
         stripe_connect_cancelled: "Koppelen met Stripe werd geannuleerd."

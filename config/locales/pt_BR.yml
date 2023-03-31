@@ -563,7 +563,6 @@ pt_BR:
       seo:
         product_search_keywords: "Palavras-chave da pesquisa de produto"
         product_search_tip: "Digite palavras para ajudar a pesquisar seus produtos nas lojas. Use espaço para separar cada palavra-chave."
-        SEO_keywords: "SEO Palavras-chave"
         seo_tip: "Digite palavras para ajudar a pesquisar seus produtos na web. Use espaço para separar cada palavra-chave."
       search: "Buscar"
       properties:
@@ -946,6 +945,8 @@ pt_BR:
           add_unregistered_user: "Adicionar um usuário não registrado"
           email_confirmed: "Email confirmado"
           email_not_confirmed: "Email não confirmado"
+        vouchers:
+          customers: Consumidor
       actions:
         edit_profile: Configurações
         properties: Propriedades
@@ -1344,6 +1345,11 @@ pt_BR:
     schedules:
       destroy:
         associated_subscriptions_error: Esta lista não pode ser excluída porque possui assinaturas associadas.
+    vouchers:
+      new:
+        back: Voltar
+        save: Salvar
+        voucher_amount: Montante
     controllers:
       enterprises:
         stripe_connect_cancelled: "Conexão com o Stripe foi cancelada"

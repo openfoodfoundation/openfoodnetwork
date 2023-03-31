@@ -624,7 +624,6 @@ de_CH:
       seo:
         product_search_keywords: "Stichwörter für die Produktsuche"
         product_search_tip: "Geben Sie Stichwörter ein, damit Ihre Produkte in den Läden besser gefunden werden. Trennen Sie mehrere Stichwörter voneinander mit Leerzeichen."
-        SEO_keywords: "Stichwörter für die Suche im Internet"
         seo_tip: "Geben Sie Stichwörter ein, damit Ihre Produkte im Internet besser gefunden werden. Trennen Sie mehrere Stichwörter voneinander mit Leerzeichen."
       search: "Suche"
       properties:
@@ -1034,6 +1033,9 @@ de_CH:
           add_unregistered_user: "Laden Sie einen nicht registrierten Benutzer ein"
           email_confirmed: "E-Mail-Adresse bestätigt"
           email_not_confirmed: "E-Mail-Adresse nicht bestätigt"
+        vouchers:
+          rate: Steuersatz
+          customers: Kunde
       actions:
         edit_profile: Einstellungen
         properties: Eigenschaften
@@ -1454,6 +1456,11 @@ de_CH:
     schedules:
       destroy:
         associated_subscriptions_error: Dieser Zeitplan kann nicht gelöscht werden, da ihm Abonnements zugeordnet sind.
+    vouchers:
+      new:
+        back: Zurück
+        save: Speichern
+        voucher_amount: Betrag
     controllers:
       enterprises:
         stripe_connect_cancelled: "Die Verbindung zu Stripe wurde abgebrochen."

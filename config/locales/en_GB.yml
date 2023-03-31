@@ -6,12 +6,22 @@ en_GB:
       spree/shipping_method: Shipping Method
     attributes:
       spree/order/ship_address:
+        address1: "Shipping address (Street + House number)"
         address2: "Shipping address line 2"
+        city: "Shipping address city"
         country: "Shipping address country"
         phone: "Phone number"
         firstname: "First name"
         lastname: "Last name"
         zipcode: "Shipping address postcode"
+      spree/order/bill_address:
+        address1: "Billing address (Street + House number)"
+        zipcode: "Billing address postcode"
+        city: "Billing address city"
+        country: "Billing address country"
+        firstname: "Billing address first name"
+        lastname: "Billing address last name"
+        phone: Customer phone
       spree/user:
         password: "Password"
         password_confirmation: "Password confirmation"
@@ -640,7 +650,6 @@ en_GB:
       seo:
         product_search_keywords: "Product Search Keywords"
         product_search_tip: "Type words to help search your products in the shops. Use space to separate each keyword."
-        SEO_keywords: "SEO Keywords"
         seo_tip: "Type words to help search your products in the web. Use space to separate each keyword."
       search: "Search"
       properties:
@@ -846,6 +855,7 @@ en_GB:
           legend: "Address"
         business_details:
           legend: "Business Details"
+          upload: 'upload'
           abn: Company Number
           abn_placeholder: eg. 99 123 456 789
           acn: Charity Number
@@ -1056,6 +1066,9 @@ en_GB:
           add_unregistered_user: "Add an unregistered user"
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
+        vouchers:
+          rate: Rate
+          customers: Customer
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1325,6 +1338,7 @@ en_GB:
       payment_methods: Payment Methods Report
       delivery: Delivery Report
       sales_tax_totals_by_producer: Sales Tax Totals By Producer
+      sales_tax_totals_by_order: Sales Tax Totals By Order
       tax_types: Tax Types
       tax_rates: Tax Rates
       pack_by_customer: Pack By Customer
@@ -1497,6 +1511,11 @@ en_GB:
     schedules:
       destroy:
         associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
+    vouchers:
+      new:
+        back: Back
+        save: Save
+        voucher_amount: Amount
     controllers:
       enterprises:
         stripe_connect_cancelled: "Connection to Stripe has been cancelled"
@@ -1520,6 +1539,10 @@ en_GB:
       destroy_attachment_does_not_exist: "Terms and Conditions file does not exist"
     orders:
       failed_to_update: "Failed to update order"
+    query_param:
+      error:
+        title: Invalid query parameter
+        extra_fields: "Unsupported fields: %{fields}"
   checkout:
     already_ordered:
       cart: "cart"
@@ -3383,6 +3406,13 @@ en_GB:
   first: "First"
   previous: "Previous"
   last: "Last"
+  webhook_endpoints:
+    create:
+      success: Webhook endpoint successfully created
+      error: Webhook endpoint failed to create
+    destroy:
+      success: Webhook endpoint successfully deleted
+      error: Webhook endpoint failed to delete
   spree:
     add_country: "Add country"
     add_state: "Add county"
@@ -3744,6 +3774,8 @@ en_GB:
           cancel_orders: "Cancel Orders"
           resend_confirmation: "Resend Confirmation"
           resend_confirmation_confirm_html: "This will resend the confirmation email to the customer.<br />Are you sure you want to proceed?"
+          send_invoice: "Send Invoices"
+          send_invoice_confirm_html: "This will email customer invoices for all selected complete orders. <br>Are you sure you want to proceed?"
           selected:
             zero: "No order selected"
             one: "1 order selected"
@@ -4159,6 +4191,16 @@ en_GB:
       api_keys:
         regenerate_key: "Regenerate Key"
         title: API key
+      webhook_endpoints:
+        title: Webhook Endpoints
+        description: Events in the system may trigger webhooks to external systems.
+        event_types:
+          order_cycle_opened: Order Cycle Opened
+        event_type:
+          header: Event type
+        url:
+          header: Endpoint URL
+          create_placeholder: Enter the URL of the remote webhook endpoint
       developer_settings:
         title: Developer Settings
       form:

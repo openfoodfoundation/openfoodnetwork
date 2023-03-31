@@ -70,7 +70,10 @@ fr_BE:
     error_code:
       incorrect_number: "Le numéro de carte est incorrect."
       invalid_number: "Le numéro de carte bancaire n'est pas un numéro valide."
+      authentication_required: "Le paiement a été refusé car la transaction nécessite une authentification."
       approve_with_id: "Le paiement ne peut pas être autorisé."
+      offline_pin_required: "La carte bancaire a été refusée car elle nécessite un code PIN."
+      online_or_offline_pin_required: "La carte bancaire a été refusée car elle nécessite un code PIN."
   activemodel:
     errors:
       messages:
@@ -406,6 +409,7 @@ fr_BE:
         title: "Paramètres de facturation"
         enable_invoices?: "Permettre les factures ?"
         invoice_style2?: "Utiliser le modèle de facture alternatif qui détaille le montant de TVA agrégé par taux et l'information du taux de TVA par produit (pas adapté pour les instances affichant les prix HT)"
+        enterprise_number_required_on_invoices?: "Le SIRET est obligatoire pour générer une facture ?"
     stripe_connect_settings:
       edit:
         title: "connexion Stripe"
@@ -510,7 +514,6 @@ fr_BE:
       seo:
         product_search_keywords: "Mots-clés de recherche produits"
         product_search_tip: "Saisissez des mots qui peuvent simplifier la recherche de vos produits dans les comptoirs. Laissez un espace entre chaque mot-clé."
-        SEO_keywords: "Mot-clés de référencement web"
         seo_tip: "Saisissez des mots qui peuvent simplifier la recherche de vos produits sur le web. Laissez un espace entre chaque mot-clé."
       search: "Rechercher"
       properties:
@@ -909,6 +912,9 @@ fr_BE:
           add_unregistered_user: "Ajouter un nouvel utilisateur"
           email_confirmed: "Email confirmé"
           email_not_confirmed: "Email non confirmé"
+        vouchers:
+          rate: 'Taux '
+          customers: Acheteur·euse
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1020,7 +1026,10 @@ fr_BE:
       checkout_options:
         back_end: "Seulement back office"
         cancel: "Annuler"
+        checkout_options: "Options de commande"
         distributor: "Comptoir"
+        no_payment_methods: Chaque boutique de ce cycle de vente a besoin d'au moins une méthode de paiement.
+        no_shipping_methods: Chaque boutique de ce cycle de vente a besoin d'au moins une méthode de livraison.
         payment_methods: "Méthodes de paiement"
         save: "Sauvergarder"
         save_and_back_to_list: "Sauver et retour à la liste"
@@ -1030,6 +1039,7 @@ fr_BE:
         edit: "1. Paramètres généraux"
         incoming: "2. Produits entrants"
         outgoing: "3. Produits sortants"
+        checkout_options: "4. Options de commande"
       exchange_form:
         pickup_time_tip: Quand des commandes liées à ce cycle de vente seront prêtes à être soumises à la personne qui achète
         pickup_instructions_placeholder: "Modalités de retrait/livraison"
@@ -1171,6 +1181,9 @@ fr_BE:
       pack_by_customer: Préparation des commandes par Acheteur·euse
       pack_by_supplier: Préparation des commandes par Producteur·trice
       pack_by_product: Préparation des commandes par produit
+      revenues_by_hub:
+        name: CA par comptoir
+        description: CA par comptoir
       orders_and_distributors:
         name: Commandes et Comptoir
         description: Liste des Commandes avec les détails des Comptoirs
@@ -1320,6 +1333,11 @@ fr_BE:
     schedules:
       destroy:
         associated_subscriptions_error: Ce rythme d'abonnement ne peut pas être supprimé car il est associé à des abonnements.
+    vouchers:
+      new:
+        back: Retour
+        save: Sauvergarder
+        voucher_amount: Quantité
     controllers:
       enterprises:
         stripe_connect_cancelled: "La connexion avec Stripe a été annulée"
@@ -1330,6 +1348,7 @@ fr_BE:
   api:
     invalid_api_key: "Clé API invalide (%{key}) spécifiée."
     unauthorized: "Vous n'êtes pas autorisé à effectuer cette action."
+    missing_parameter: "Un paramètre nécessaire est manquant ou vide : %{param}"
     invalid_resource: "Ressource non valable. Veuillez corriger les erreurs et réessayer."
     resource_not_found: "La ressource que vous cherchiez n'a pas pu être trouvée."
     enterprise_logo:
@@ -2369,6 +2388,16 @@ fr_BE:
   report_header_hub_address: Adresse du comptoir
   report_header_to_hub: Comptoir
   report_header_hub_code: Code du comptoir
+  report_header_hub_legal_name: "Nom légal du comptoir"
+  report_header_hub_contact_name: "Nom du contact du comptoir"
+  report_header_hub_email: "Email public"
+  report_header_hub_owner_email: Email gestionnaire principal
+  report_header_hub_phone: "Numéro de téléphone"
+  report_header_hub_address_line1: "Adresse ligne 1"
+  report_header_hub_address_line2: "Adresse ligne 2"
+  report_header_hub_address_city: "Ville"
+  report_header_hub_address_zipcode: "Code postal"
+  report_header_hub_address_state_name: "Province"
   report_header_code: Code
   report_header_paid: Payé ?
   report_header_delivery: Livré ?

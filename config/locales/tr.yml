@@ -565,7 +565,6 @@ tr:
       seo:
         product_search_keywords: "Ürün araması için anahtar kelimeler"
         product_search_tip: "Pazaryerinde ürünlerinizin aranmasına yardımcı olacak kelimeler yazın. Her bir anahtar kelimeyi ayırmak için boşluk kullanın."
-        SEO_keywords: "Arama Motoru Anahtar Kelimeleri"
         seo_tip: "Ürünlerinizi internet üzerinde  aramanıza yardımcı olacak kelimeler yazın. Her bir anahtar kelimeyi ayırmak için boşluk kullanın."
       search: "Ara"
       properties:
@@ -952,6 +951,9 @@ tr:
           add_unregistered_user: "Kayıtlı olmayan bir kullanıcı ekle"
           email_confirmed: "E-posta onaylandı"
           email_not_confirmed: "E-posta onaylanmadı"
+        vouchers:
+          rate: oran
+          customers: Müşteri
       actions:
         edit_profile: Ayarlar
         properties: ÖZELLİKLER
@@ -1353,6 +1355,11 @@ tr:
     schedules:
       destroy:
         associated_subscriptions_error: Bağlantılı üyelikler olduğu için bu takvim silinemiyor
+    vouchers:
+      new:
+        back: Geri
+        save: Kaydet
+        voucher_amount: Tutar
     controllers:
       enterprises:
         stripe_connect_cancelled: "Iyzico bağlantısı iptal edildi"
