@@ -80,12 +80,7 @@ module Api
       end
 
       def visible_customers
-        Customer.of(managed_enterprise_ids)
-      end
-
-      def managed_enterprise_ids
-        @managed_enterprise_ids ||= Enterprise.managed_by(current_api_user).
-          select('enterprises.id')
+        Customer.managed_by(current_api_user)
       end
 
       def customer_params

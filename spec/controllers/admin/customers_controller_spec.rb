@@ -30,6 +30,8 @@ module Admin
           end
 
           context "and enterprise_id is given in params" do
+            let(:user){ enterprise.users.first }
+            let(:customers){ Customer.managed_by(user).where(enterprise_id: enterprise.id) }
             let(:params) { { format: :json, enterprise_id: enterprise.id } }
 
             it "scopes @collection to customers of that enterprise" do
@@ -45,7 +47,7 @@ module Admin
             it 'calls CustomersWithBalance' do
               customers_with_balance = instance_double(CustomersWithBalance)
               allow(CustomersWithBalance)
-                .to receive(:new).with(Customer.of(enterprise)) { customers_with_balance }
+                .to receive(:new).with(customers) { customers_with_balance }
 
               expect(customers_with_balance).to receive(:query) { Customer.none }
 

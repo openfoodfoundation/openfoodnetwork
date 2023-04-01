@@ -69,4 +69,42 @@ describe Customer, type: :model do
       expect(c.user).to eq user2
     end
   end
+
+  describe 'scopes' do
+    context 'managed_by' do
+      let!(:admin) { create(:admin_user) }
+      let!(:user) { create(:user) }
+      let!(:enterprise) { create(:enterprise, owner: user) }
+      let!(:customer) { create(:customer, enterprise: enterprise, user: user) }
+      let!(:customer1) { create(:customer, enterprise: enterprise) }
+
+      let!(:user1) { create(:user) }
+      let!(:enterprise1) { create(:enterprise, owner: user1) }
+      let!(:customer2) { create(:customer, enterprise: enterprise1, user: user1) }
+
+      # manager of enterprise1
+      let!(:user2) { create(:user) }
+
+      # user who has edit profile permission on enterprise1
+      let!(:user3) { create(:user) }
+      let!(:enterprise2) { create(:enterprise, owner: user3) }
+
+      it 'returns customers managed by the user' do
+        EnterpriseRelationship.create!(parent: enterprise2, child: enterprise,
+                                       permissions_list: [:edit_profile])
+        expect(Customer.managed_by(user)).to match_array [customer, customer1]
+        expect(Customer.managed_by(user1)).to match_array(customer2)
+        expect(Customer.managed_by(user3)).to match_array([])
+      end
+
+      it 'returns customers of managed enterprises' do
+        EnterpriseRole.create!(user: user2, enterprise: enterprise)
+        expect(Customer.managed_by(user2)).to match_array [customer, customer1]
+      end
+
+      it 'returns all customers if the user is an admin' do
+        expect(Customer.managed_by(admin)).to match_array [customer, customer1, customer2]
+      end
+    end
+  end
 end

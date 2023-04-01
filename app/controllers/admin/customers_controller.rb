@@ -2,6 +2,7 @@
 
 require 'open_food_network/address_finder'
 
+# rubocop:disable Metrics/ClassLength
 module Admin
   class CustomersController < Admin::ResourceController
     before_action :load_managed_shops, only: :index, if: :html_request?
@@ -67,7 +68,7 @@ module Admin
 
     def collection
       if json_request? && params[:enterprise_id].present?
-        CustomersWithBalance.new(Customer.of(managed_enterprise_id)).query.
+        CustomersWithBalance.new(customers).query.
           includes(
             :enterprise,
             { bill_address: [:state, :country] },
@@ -77,6 +78,15 @@ module Admin
       else
         Customer.where('1=0')
       end
+    end
+
+    def customers
+      return @customers if @customers.present?
+
+      @customers = Customer.managed_by(spree_current_user)
+      return @customers if params[:enterprise_id].blank?
+
+      @customers = @customers.where(enterprise_id: params[:enterprise_id])
     end
 
     def managed_enterprise_id
@@ -120,3 +130,4 @@ module Admin
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
