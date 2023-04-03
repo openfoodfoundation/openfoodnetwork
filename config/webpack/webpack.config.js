@@ -1,4 +1,9 @@
-const path    = require("path")
+// Extracts CSS into .css file
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// Removes exported JavaScript files from CSS-only entries
+// in this example, entry.custom will create a corresponding empty custom.js file
+const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
+const path = require("path")
 const webpack = require("webpack")
 
 module.exports = {
@@ -19,11 +24,25 @@ module.exports = {
   ],
   module: {
     rules: [
+      // js loader
       {
         test: /\.(js)$/,
         exclude: /node_modules/,
         use: ["babel-loader"],
       },
+      // Add CSS/SASS/SCSS rule with loaders
+      {
+        test: /\.(?:sa|sc|c)ss$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+      },
     ],
   },
+  resolve: {
+    extensions: ['.js', '.scss', '.css'],
+  },
+  plugins: [
+    // Include plugins
+    new RemoveEmptyScriptsPlugin(),
+    new MiniCssExtractPlugin(),
+  ],
 };
