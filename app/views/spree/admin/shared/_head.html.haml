@@ -15,16 +15,16 @@
 %link{:href => "https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600,700&subset=latin,cyrillic,greek,vietnamese", :rel => "stylesheet", :type => "text/css"}
 
 - if feature?(:admin_style_v2, spree_current_user)
-  = stylesheet_pack_tag 'admin-styles-v2', media: "screen, print"
+  = stylesheet_link_tag 'admin-styles-v2', media: "screen, print"
 - else
-  = stylesheet_pack_tag 'admin-styles', media: "screen, print"
+  = stylesheet_link_tag 'admin-styles', media: "screen, print"
 = render "layouts/bugsnag_js"
 = javascript_include_tag 'admin/all'
 
 = render "spree/admin/shared/translations"
 = render "spree/admin/shared/routes"
 
-= javascript_pack_tag "admin", "data-turbo-track": "reload"
+= javascript_include_tag "admin", "data-turbo-track": "reload"
 
 %script
   = raw "var AUTH_TOKEN = \"#{form_authenticity_token}\";"

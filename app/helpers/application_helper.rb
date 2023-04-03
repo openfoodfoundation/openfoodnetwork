@@ -60,12 +60,12 @@ module ApplicationHelper
     classes << @shopfront_layout
   end
 
-  def pdf_stylesheet_pack_tag(source)
+  def pdf_stylesheet_link_tag(source)
     if running_in_development?
       options = { media: "all", host: "#{Webpacker.dev_server.host}:#{Webpacker.dev_server.port}" }
-      stylesheet_pack_tag(source, **options)
+      stylesheet_link_tag(source, **options)
     else
-      wicked_pdf_stylesheet_pack_tag(source)
+      wicked_pdf_stylesheet_link_tag(source)
     end
   end
 end

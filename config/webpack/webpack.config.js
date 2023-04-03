@@ -12,6 +12,10 @@ module.exports = {
   entry: {
     application: "./app/javascript/application.js",
     admin: "./app/javascript/admin.js",
+    mail: "./app/css/mail.scss",
+    darkswarm: "./app/css/darkswarm.scss",
+    "admin-styles": "./app/css/admin-styles.scss",
+    "admin-styles-v2": "./app/css/admin-styles-v2.scss",
     images: "./app/javascript/images/images.js",
   },
   output: {

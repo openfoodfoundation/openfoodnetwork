@@ -12,13 +12,13 @@
     = render "layouts/matomo_tag"
     = language_meta_tags
 
-    = stylesheet_pack_tag "darkswarm"
+    = stylesheet_link_tag "darkswarm"
     = javascript_include_tag "darkswarm/all"
-    = javascript_pack_tag "application"
+    = javascript_include_tag "application"
 
     = csrf_meta_tags
 
-  %body.off-canvas{ style: "background-image: url(#{image_pack_path('tile-wide.png')})", "data-turbo": "false" }
+  %body.off-canvas{ style: "background-image: url(#{image_path('tile-wide.png')})", "data-turbo": "false" }
     .off-canvas-wrap{offcanvas: true}
       .inner-wrap
 
