@@ -23,7 +23,6 @@
     "@babel/preset-env": "^7.18.2",
     "@floating-ui/dom": "^1.2.5",
     "@hotwired/turbo": "^7.3.0",
-    "@rails/webpacker": "5.4.4",
     "babel-loader": "^8.2.3",
     "cable_ready": "5.0.0-pre10",
     "debounced": "^0.0.5",
@@ -36,12 +35,11 @@
     "select2": "^4.0.13",
     "shortcut-buttons-flatpickr": "^0.4.0",
     "stimulus": "^3.0.1",
-    "stimulus_reflex": "3.5.0-pre9",
     "stimulus-flatpickr": "^1.4.0",
+    "stimulus_reflex": "3.5.0-pre9",
     "tom-select": "^2.0.0",
     "webpack": "^5.77.0",
-    "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "~4"
+    "webpack-cli": "^5.0.1"
   },
   "devDependencies": {
     "husky": "^8.0.0",

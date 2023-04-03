@@ -19,7 +19,6 @@ gem 'angular-rails-templates', '>= 0.3.0'
 gem 'awesome_nested_set'
 gem 'ransack', '~> 2.6.0'
 gem 'responders'
-gem 'webpacker', '~> 5'
 
 gem 'jsbundling-rails'
 
