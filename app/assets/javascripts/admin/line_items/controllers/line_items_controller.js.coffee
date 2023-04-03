@@ -17,6 +17,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   ]
   $scope.page = 1
   $scope.per_page = $scope.per_page_options[0].id
+  $scope.filterByVariantId = null
   searchThrough = ["order_distributor_name",
     "order_bill_address_phone",
     "order_bill_address_firstname",
@@ -36,6 +37,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.query = ''
     $scope.startDate = undefined
     $scope.endDate = undefined
+    $scope.filterByVariantId = null
     event = new CustomEvent('flatpickr:clear')
     window.dispatchEvent(event)
 
@@ -68,6 +70,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
 
     RequestMonitor.load LineItems.index(
       "q[#{searchThrough}]": $scope.query,
+      "q[variant_id_eq]": $scope.filterByVariantId if $scope.filterByVariantId,
       "q[order_state_not_eq]": "canceled",
       "q[order_shipment_state_not_eq]": "shipped",
       "q[order_completed_at_not_null]": "true",
@@ -176,6 +179,9 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.setSelectedUnitsVariant = (unitsProduct,unitsVariant) ->
     $scope.selectedUnitsProduct = unitsProduct
     $scope.selectedUnitsVariant = unitsVariant
+    $scope.filterByVariantId = unitsVariant.id
+    $scope.page = 1
+    $scope.refreshData()
 
   $scope.getLineItemScale = (lineItem) ->
     if lineItem.units_product && lineItem.units_variant && (lineItem.units_product.variant_unit == "weight" || lineItem.units_product.variant_unit == "volume") 
