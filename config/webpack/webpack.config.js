@@ -12,6 +12,7 @@ module.exports = {
   entry: {
     application: "./app/javascript/application.js",
     admin: "./app/javascript/admin.js",
+    images: "./app/javascript/images/images.js",
   },
   output: {
     filename: "[name].js",
