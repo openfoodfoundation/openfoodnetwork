@@ -17,27 +17,18 @@ YELLOW='\033[0;33m'
 RED='\033[0;31m'
 NO_COLOR='\033[0m'
 
-RUBY_VERSION=$(cat .ruby-version)
-
 # Check ruby version
-if ! ruby --version | grep $RUBY_VERSION > /dev/null; then
-  printf "${RED}Open Food Network requires ruby ${RUBY_VERSION}${NO_COLOR}. Have a look at: https://github.com/rbenv/rbenv\n"
+RUBY_VERSION=$(cat .ruby-version)
+if command -v rbenv > /dev/null; then
+  ./script/rbenv-install.sh
+elif ! ruby --version | grep $RUBY_VERSION > /dev/null; then
+  printf "${RED}Open Food Network requires ruby ${RUBY_VERSION}${NO_COLOR}. "
+  printf "Have a look at: https://github.com/rbenv/rbenv\n"
   exit 1
 fi
 
-# Set up Ruby dependencies via Bundler
-if ! command -v bundle > /dev/null; then
-  ./script/install-bundler
-fi
-
-# Install all dependencies
-bundle check || bundle install
-yarn install
-
-# Set up the database for both development and test
-# Confirming the default user and password
-printf '\n\n' | bundle exec rake db:setup db:test:prepare
-printf '\n'
+# Install dependencies, prepare database and tidy
+./bin/setup
 
 # Load some default data for your environment
 bundle exec rake ofn:sample_data
