@@ -26,10 +26,12 @@
   },
   "dependencies": {
     "@babel/core": "^7.18.2",
+    "@babel/plugin-transform-runtime": "^7.21.4",
     "@babel/preset-env": "^7.18.2",
     "@floating-ui/dom": "^1.2.5",
     "@hotwired/turbo": "^7.3.0",
     "babel-loader": "^8.2.3",
+    "babel-plugin-macros": "^3.1.0",
     "cable_ready": "5.0.0-pre10",
     "css-loader": "^6.7.3",
     "debounced": "^0.0.5",
