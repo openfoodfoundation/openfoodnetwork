@@ -584,5 +584,46 @@ describe '
         end
       end
     end
+
+    context "white label settings" do
+      context "when the feature is enabled" do
+        before do
+          Flipper.enable(:white_label)
+          visit edit_admin_enterprise_path(distributor1)
+
+          within(".side_menu") do
+            click_link "White Label"
+          end
+        end
+
+        it "set the hide_ofn_navigation preference for the current shop" do
+          check "Hide OFN navigation"
+          click_button 'Update'
+          expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(distributor1.reload.hide_ofn_navigation).to be true
+
+          visit edit_admin_enterprise_path(distributor1)
+          within(".side_menu") do
+            click_link "White Label"
+          end
+
+          uncheck "Hide OFN navigation"
+          click_button 'Update'
+          expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(distributor1.reload.hide_ofn_navigation).to be false
+        end
+      end
+
+      context "when the feature is disabled" do
+        before do
+          Flipper.disable(:white_label)
+          visit edit_admin_enterprise_path(distributor1)
+        end
+
+        it "does not show the white label settings" do
+          expect(page).not_to have_link "White Label"
+        end
+      end
+    end
   end
 end

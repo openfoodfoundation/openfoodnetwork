@@ -5,6 +5,7 @@ module Spree
     include OrderCyclesHelper
     include Rails.application.routes.url_helpers
     include CablecarResponses
+    include WhiteLabel
 
     layout 'darkswarm'
 
@@ -14,7 +15,8 @@ module Spree
     respond_to :html, :json
 
     before_action :check_authorization
-    before_action :set_current_order, only: :update
+    before_action :set_order_from_params, only: :show
+    before_action :set_current_order, only: [:edit, :update]
     before_action :filter_order_params, only: :update
 
     prepend_before_action :require_order_authentication, only: :show
@@ -23,9 +25,11 @@ module Spree
     before_action :check_hub_ready_for_checkout, only: :edit
     before_action :check_at_least_one_line_item, only: :update
 
-    def show
-      @order = Spree::Order.find_by!(number: params[:id])
+    before_action only: [:show, :edit] do
+      hide_ofn_navigation(@order.distributor)
     end
+
+    def show; end
 
     def empty
       if @order = current_order
@@ -37,7 +41,6 @@ module Spree
 
     # Patching to redirect to shop if order is empty
     def edit
-      @order = current_order(true)
       @insufficient_stock_lines = @order.insufficient_stock_lines
       @unavailable_order_variants = OrderCycleDistributedVariants.
         new(current_order_cycle, current_distributor).unavailable_order_variants(@order)
@@ -105,6 +108,10 @@ module Spree
     end
 
     private
+
+    def set_order_from_params
+      @order = Spree::Order.find_by!(number: params[:id])
+    end
 
     def set_current_order
       @order = current_order(true)

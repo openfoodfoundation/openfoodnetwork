@@ -10,6 +10,7 @@ class SplitCheckoutController < ::BaseController
   include CheckoutCallbacks
   include OrderCompletion
   include CablecarResponses
+  include WhiteLabel
 
   helper 'terms_and_conditions'
   helper 'checkout'
@@ -18,6 +19,7 @@ class SplitCheckoutController < ::BaseController
   helper OrderHelper
 
   before_action :set_checkout_redirect
+  before_action :hide_ofn_navigation, only: [:edit, :update]
 
   def edit
     redirect_to_step_based_on_order unless params[:step]

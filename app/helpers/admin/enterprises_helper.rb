@@ -23,6 +23,14 @@ module Admin
       show_enterprise_fees = can?(:manage_enterprise_fees,
                                   enterprise) && (is_shop || enterprise.is_primary_producer)
 
+      build_enterprise_side_menu_items(is_shop, show_properties, show_shipping_methods,
+                                       show_payment_methods, show_enterprise_fees)
+    end
+
+    private
+
+    def build_enterprise_side_menu_items(is_shop, show_properties, show_shipping_methods,
+                                         show_payment_methods, show_enterprise_fees)
       [
         { name: 'primary_details', icon_class: "icon-home", show: true, selected: 'selected' },
         { name: 'address', icon_class: "icon-map-marker", show: true },
@@ -41,8 +49,14 @@ module Admin
         { name: 'inventory_settings', icon_class: "icon-list-ol", show: is_shop },
         { name: 'tag_rules', icon_class: "icon-random", show: is_shop },
         { name: 'shop_preferences', icon_class: "icon-shopping-cart", show: is_shop },
-        { name: 'users', icon_class: "icon-user", show: true }
-      ]
+        { name: 'users', icon_class: "icon-user", show: true },
+      ] + [add_white_label_if_feature_activated].compact
+    end
+
+    def add_white_label_if_feature_activated
+      return nil unless OpenFoodNetwork::FeatureToggle.enabled?(:white_label)
+
+      { name: 'white_label', icon_class: "icon-leaf", show: true }
     end
     # rubocop:enable Metrics/MethodLength
   end

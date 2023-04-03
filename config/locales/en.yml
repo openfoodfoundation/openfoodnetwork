@@ -1155,6 +1155,9 @@ en:
           net_value: Net Value
           add_new: Add New
           no_voucher_yet: No Vouchers yet
+        white_label:
+          legend: "White Label"
+          hide_ofn_navigation: "Hide OFN navigation"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1394,6 +1397,7 @@ en:
           shop_preferences: "Shop Preferences"
           users: "Users"
           vouchers: Vouchers
+          white_label: "White Label"
         enterprise_group:
           primary_details: "Primary Details"
           users: "Users"
