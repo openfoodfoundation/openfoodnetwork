@@ -54,7 +54,7 @@ RUN sh -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-
     apt-get install -yqq --no-install-recommends postgresql-client-10 libpq-dev
 
 # Install NodeJs and yarn
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_17.x | bash - \
     && apt-get install --no-install-recommends -y nodejs \
     && npm install -g yarn
 
