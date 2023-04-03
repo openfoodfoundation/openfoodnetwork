@@ -28,8 +28,9 @@ RUN apt-get update && apt-get install -y \
   gnupg
 
 # Setup ENV variables
-ENV PATH /usr/local/src/rbenv/shims:/usr/local/src/rbenv/bin:$PATH
+ENV PATH /usr/local/src/rbenv/shims:/usr/local/src/rbenv/bin:/usr/local/src/nodenv/shims:/usr/local/src/nodenv/bin:$PATH
 ENV RBENV_ROOT /usr/local/src/rbenv
+ENV NODENV_ROOT /usr/local/src/nodenv
 ENV CONFIGURE_OPTS --disable-install-doc
 ENV BUNDLE_PATH /bundles
 ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so
@@ -53,10 +54,19 @@ RUN sh -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-
     apt-get update && \
     apt-get install -yqq --no-install-recommends postgresql-client-10 libpq-dev
 
-# Install NodeJs and yarn
-RUN curl -sL https://deb.nodesource.com/setup_17.x | bash - \
-    && apt-get install --no-install-recommends -y nodejs \
-    && npm install -g yarn
+
+# trim spaces and line return from .node-version file
+COPY .node-version .node-version.raw
+RUN cat .node-version.raw | tr -d '\r\t ' > .node-version
+
+# Install Node and Yarn with Nodenv
+RUN git clone --depth 1 https://github.com/nodenv/nodenv.git ${NODENV_ROOT} && \
+    git clone --depth 1 https://github.com/nodenv/node-build.git ${NODENV_ROOT}/plugins/node-build && \
+    git clone --depth 1 https://github.com/pine/nodenv-yarn-install.git ${NODENV_ROOT}/plugins/nodenv-yarn-install && \
+    git clone --depth 1 https://github.com/nodenv/nodenv-package-rehash.git ${NODENV_ROOT}/plugins/nodenv-package-rehash && \
+    echo 'eval "$(nodenv init -)"' >> /etc/profile.d/nodenv.sh && \
+    nodenv install $(cat .node-version) && \
+    nodenv global $(cat .node-version)
 
 # Install Chrome
 RUN wget --quiet -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
