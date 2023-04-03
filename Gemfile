@@ -21,6 +21,8 @@ gem 'ransack', '~> 2.6.0'
 gem 'responders'
 gem 'webpacker', '~> 5'
 
+gem 'jsbundling-rails'
+
 gem 'i18n'
 gem 'i18n-js', '~> 3.9.0'
 gem 'rails-i18n'

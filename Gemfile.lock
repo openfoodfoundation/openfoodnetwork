@@ -360,6 +360,8 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
+    jsbundling-rails (1.1.1)
+      railties (>= 6.0.0)
     json (2.6.3)
     json-jwt (1.16.3)
       activesupport (>= 4.2)
@@ -833,6 +835,7 @@ DEPENDENCIES
   immigrant
   jquery-rails (= 4.4.0)
   jquery-ui-rails (~> 4.2)
+  jsbundling-rails
   json
   json_spec (~> 1.1.4)
   jsonapi-serializer
@@ -912,4 +915,4 @@ RUBY VERSION
    ruby 3.0.3p157
 
 BUNDLED WITH
-   2.4.3
+   2.4.4
