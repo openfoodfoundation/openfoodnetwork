@@ -137,7 +137,7 @@ GEM
       activerecord (>= 6.0, < 7.1)
     acts_as_list (1.0.4)
       activerecord (>= 4.2)
-    addressable (2.8.1)
+    addressable (2.8.2)
       public_suffix (>= 2.0.2, < 6.0)
     aes_key_wrap (1.1.0)
     afm (0.2.2)
@@ -193,7 +193,7 @@ GEM
       railties (>= 5.2)
       thread-local (>= 1.1.0)
     cancancan (1.15.0)
-    capybara (3.38.0)
+    capybara (3.39.0)
       addressable
       matrix
       mini_mime (>= 0.1.3)
