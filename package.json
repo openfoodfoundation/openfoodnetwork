@@ -8,7 +8,8 @@
   "license": "AGPL-3.0",
   "scripts": {
     "prepare": "husky install",
-    "pretty-quick": "pretty-quick"
+    "pretty-quick": "pretty-quick",
+    "build": "webpack --config ./config/webpack/webpack.config.js"
   },
   "jest": {
     "testRegex": [
@@ -35,11 +36,11 @@
     "select2": "^4.0.13",
     "shortcut-buttons-flatpickr": "^0.4.0",
     "stimulus": "^3.0.1",
-    "stimulus-flatpickr": "^1.4.0",
     "stimulus_reflex": "3.5.0-pre9",
+    "stimulus-flatpickr": "^1.4.0",
     "tom-select": "^2.0.0",
-    "webpack": "~4",
-    "webpack-cli": "~4",
+    "webpack": "^5.77.0",
+    "webpack-cli": "^5.0.1",
     "webpack-dev-server": "~4"
   },
   "devDependencies": {
