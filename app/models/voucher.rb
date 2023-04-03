@@ -94,8 +94,6 @@ class Voucher < ApplicationRecord
   def create_adjustment(label, order, mandatory = false, _state = "open", tax_category = nil)
     amount = compute_amount(order)
 
-    return if amount.zero? && !mandatory
-
     adjustment_attributes = {
       amount: amount,
       originator: self,
