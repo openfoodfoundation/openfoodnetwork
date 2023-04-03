@@ -35,6 +35,11 @@ module.exports = {
         test: /\.(?:sa|sc|c)ss$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
+      // images and fonts
+      {
+        test: /\.(png|jpg|jpeg|gif|svg|eot|ttf|woff|woff2|otf)$/i,
+        use: 'file-loader',
+      },
     ],
   },
   resolve: {
