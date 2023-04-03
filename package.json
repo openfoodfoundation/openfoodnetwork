@@ -9,7 +9,7 @@
   "scripts": {
     "prepare": "husky install",
     "pretty-quick": "pretty-quick",
-    "build": "webpack --config ./config/webpack/webpack.config.js"
+    "build": "NODE_OPTIONS='--openssl-legacy-provider' webpack --config ./config/webpack/webpack.config.js"
   },
   "jest": {
     "testRegex": [
