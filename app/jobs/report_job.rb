@@ -1,15 +1,29 @@
 # frozen_string_literal: true
 
-# Renders a report and saves it to a temporary file.
+# Renders a report and stores it in a given blob.
 class ReportJob < ApplicationJob
-  def perform(report_class, user, params, format)
+  def self.create_blob!
+    # ActiveStorage discourages modifying a blob later but we need a blob
+    # before we know anything about the report file. It enables us to use the
+    # same blob in the controller to read the result.
+    ActiveStorage::Blob.create_before_direct_upload!(
+      filename: "tbd",
+      byte_size: 0,
+      checksum: "0",
+      content_type: "application/octet-stream",
+    ).tap do |blob|
+      ActiveStorage::PurgeJob.set(wait: 1.month).perform_later(blob)
+    end
+  end
+
+  def perform(report_class, user, params, format, blob)
     report = report_class.new(user, params, render: true)
     result = report.render_as(format)
-    write(result)
+    write(result, blob)
   end
 
   def done?
-    @done ||= File.file?(filename)
+    @done ||= blob.reload.checksum != "0"
   end
 
   def result
@@ -18,17 +32,17 @@ class ReportJob < ApplicationJob
 
   private
 
-  def write(result)
-    File.write(filename, result, mode: "wb")
+  def write(result, blob)
+    io = StringIO.new(result)
+    blob.upload(io, identify: false)
+    blob.save!
   end
 
   def read_result
-    File.read(filename)
-  ensure
-    File.unlink(filename)
+    blob.download
   end
 
-  def filename
-    Rails.root.join("tmp/report-#{job_id}")
+  def blob
+    arguments[4]
   end
 end

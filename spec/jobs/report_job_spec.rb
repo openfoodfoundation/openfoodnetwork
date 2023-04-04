@@ -3,12 +3,13 @@
 require 'spec_helper'
 
 describe ReportJob do
-  let(:report_args) { [report_class, user, params, format] }
+  let(:report_args) { [report_class, user, params, format, blob] }
   let(:report_class) { Reporting::Reports::UsersAndEnterprises::Base }
   let(:user) { enterprise.owner }
   let(:enterprise) { create(:enterprise) }
   let(:params) { {} }
   let(:format) { :csv }
+  let(:blob) { ReportJob.create_blob! }
 
   it "generates a report" do
     job = perform_enqueued_jobs(only: ReportJob) do
