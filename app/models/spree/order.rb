@@ -62,7 +62,11 @@ module Spree
     has_many :line_item_adjustments, through: :line_items, source: :adjustments
     has_many :shipment_adjustments, through: :shipments, source: :adjustments
     has_many :all_adjustments, class_name: 'Spree::Adjustment', dependent: :destroy
-    has_many :vouchers, -> { where(originator_type: 'Voucher') },
+    has_many :vouchers,
+             -> {
+               where(originator_type: 'Voucher')
+                 .order("#{Spree::Adjustment.table_name}.created_at ASC")
+             },
              class_name: 'Spree::Adjustment',
              dependent: :destroy
 
