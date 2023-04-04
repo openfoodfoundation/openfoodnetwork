@@ -1115,6 +1115,8 @@ describe "As a consumer, I want to checkout my order" do
         before do
           # Add voucher to the order
           voucher.create_adjustment(voucher.code, order)
+          # Update order so voucher adjustment is properly taken into account
+          order.update_order!
 
           visit checkout_step_path(:summary)
         end

@@ -275,7 +275,7 @@ describe SplitCheckoutController, type: :controller do
           context "when adding fails" do
             it "returns 422 and an error message" do
               # Makes adding the voucher fails
-              allow(voucher).to receive(:compute_amount).and_return(0)
+              allow(voucher).to receive(:create_adjustment).and_return(nil)
               allow(Voucher).to receive(:find_by).and_return(voucher)
 
               put :update, params: params
