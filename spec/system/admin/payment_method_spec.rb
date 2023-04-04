@@ -403,17 +403,14 @@ describe '
       Spree::Preferences::Store.instance.persistence = false
     end
 
-    it "displays the number of errors" do
+    it "displays error details" do
       expect(page).to have_content("3 errors")
-    end
 
-    it "displays error messages" do
       expect(page).to have_content("Name can't be blank")
       expect(page).to have_content("At least one hub must be selected")
       expect(page).to have_content("Amount: Invalid input. Please use only numbers.")
-    end
 
-    it "highlights invalid fields" do
+      # Highlighting invalid fields
       within '.calculator-settings .field .field_with_errors' do
         expect(page).to have_field "Amount"
       end
