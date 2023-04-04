@@ -7,7 +7,8 @@ class Voucher < ApplicationRecord
 
   belongs_to :enterprise
 
-  has_many :adjustments, as: :originator, class_name: 'Spree::Adjustment'
+  has_many :adjustments, as: :originator, class_name: 'Spree::Adjustment', inverse_of: :voucher,
+           dependent: :nullify
 
   validates :code, presence: true, uniqueness: { scope: :enterprise_id }
 
@@ -91,6 +92,8 @@ class Voucher < ApplicationRecord
   # override the one from CalculatedAdjustments
   # Create an "open" adjustment which will be updated later once tax and other fees have
   # been applied to the order
+  #
+  # rubocop:disable Style/OptionalBooleanParameter
   def create_adjustment(label, order, mandatory = false, _state = "open", tax_category = nil)
     amount = compute_amount(order)
 
@@ -106,11 +109,13 @@ class Voucher < ApplicationRecord
 
     order.adjustments.create(adjustment_attributes)
   end
+  # rubocop:enable Style/OptionalBooleanParameter
 
   # override the one from CalculatedAdjustments so we limit adjustment to the maximum amount
   # needed to cover the order, ie if the voucher covers more than the order.total we only need
   # to create an adjustment covering the order.total
   # Doesn't work with taxes for now
+  # TODO move this to a calculator
   def compute_amount(order)
     amount = calculator.compute(order)
 

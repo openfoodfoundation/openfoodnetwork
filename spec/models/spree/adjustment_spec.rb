@@ -18,6 +18,7 @@ module Spree
       it { is_expected.to belong_to(:order) }
       it { is_expected.to belong_to(:tax_category) }
       it { is_expected.to belong_to(:tax_rate) }
+      it { is_expected.to belong_to(:voucher) }
     end
 
     describe "scopes" do

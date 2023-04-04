@@ -44,6 +44,8 @@ module Spree
 
     belongs_to :tax_rate, -> { where spree_adjustments: { originator_type: 'Spree::TaxRate' } },
                foreign_key: 'originator_id'
+    belongs_to :voucher, -> { where spree_adjustments: { originator_type: 'Spree::Voucher' } },
+               foreign_key: 'originator_id', inverse_of: :adjustments
 
     validates :label, presence: true
     validates :amount, numericality: true
