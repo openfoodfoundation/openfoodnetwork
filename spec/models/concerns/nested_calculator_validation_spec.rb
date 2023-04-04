@@ -15,7 +15,7 @@ shared_examples "a parent model that has a Calculator" do |parent_name|
 
   context "when the associated Calculator is invalid" do
     let(:invalid_parent) do
-      build(parent_name, calculator: Calculator::FlatRate.new(preferred_amount: "invalid"))
+      build(parent_name, calculator: Calculator::FlexiRate.new(preferred_first_item: "invalid"))
     end
 
     before do
@@ -28,7 +28,7 @@ shared_examples "a parent model that has a Calculator" do |parent_name|
 
     it "adds custom error messages to base" do
       error_messages = invalid_parent.errors.full_messages
-      expect(error_messages).to include(/^Calculator Amount has an invalid input./)
+      expect(error_messages).to include(/^Calculator First Item has an invalid input./)
     end
 
     it "has the correct number of errors messages" do
@@ -44,6 +44,27 @@ shared_examples "a parent model that has a Calculator" do |parent_name|
     it "does not include error message that begins with 'Calculator preferred'" do
       error_messages = invalid_parent.errors.full_messages
       expect(error_messages).not_to include(/^Calculator preferred/)
+    end
+
+    context "with multiple errors" do
+      let(:invalid_parent) do
+        build(parent_name,
+          calculator: Calculator::FlexiRate.new(
+            preferred_first_item: "invalid",
+            preferred_additional_item: "invalid",
+          ))
+      end
+
+      it "adds custom error messages to base" do
+        error_messages = invalid_parent.errors.full_messages
+        expect(error_messages[0]).to match(/^Calculator Additional Item Cost has an invalid input./)
+        expect(error_messages[1]).to match(/^Calculator First Item has an invalid input./)
+      end
+
+      it "has the correct number of errors messages" do
+        error_messages = invalid_parent.errors.full_messages
+        expect(error_messages.count).to eq 2
+      end
     end
   end
 
