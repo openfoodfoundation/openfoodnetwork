@@ -183,6 +183,14 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.page = 1
     $scope.refreshData()
 
+  $scope.resetSelectedUnitsVariant = ->
+    $scope.selectedUnitsProduct = { }
+    $scope.selectedUnitsVariant = { }
+    $scope.filterByVariantId = null
+    $scope.sharedResource = false
+    $scope.page = 1
+    $scope.refreshData()
+
   $scope.getLineItemScale = (lineItem) ->
     if lineItem.units_product && lineItem.units_variant && (lineItem.units_product.variant_unit == "weight" || lineItem.units_product.variant_unit == "volume") 
       lineItem.units_product.variant_unit_scale
