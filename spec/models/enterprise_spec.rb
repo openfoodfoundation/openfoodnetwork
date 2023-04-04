@@ -792,7 +792,8 @@ describe Enterprise do
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
       permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
-      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      create(:enterprise_relationship, parent: distributor,
+                                       child: supplier, permissions: [permission])
       expect(Enterprise.parents_of_one_union_others(supplier, nil)).to include(distributor)
     end
 
@@ -801,15 +802,19 @@ describe Enterprise do
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
       permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
-      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
-      expect(Enterprise.parents_of_one_union_others(supplier, another_enterprise)).to include(another_enterprise)
+      create(:enterprise_relationship, parent: distributor,
+                                       child: supplier, permissions: [permission])
+      expect(
+        Enterprise.parents_of_one_union_others(supplier, another_enterprise)
+      ).to include(another_enterprise)
     end
 
     it "does not find child in the relationship" do
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
       permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
-      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      create(:enterprise_relationship, parent: distributor,
+                                       child: supplier, permissions: [permission])
       expect(Enterprise.parents_of_one_union_others(distributor, nil)).not_to include(supplier)
     end
   end
@@ -839,7 +844,8 @@ describe Enterprise do
         suppliers: [supplier],
         variants: [product.master]
       )
-      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      create(:enterprise_relationship, parent: distributor,
+                                       child: supplier, permissions: [permission])
       expect(distributor.plus_parents_and_order_cycle_producers(order_cycle)).to include(supplier)
     end
 
@@ -847,7 +853,8 @@ describe Enterprise do
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
       permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
-      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      create(:enterprise_relationship, parent: distributor,
+                                       child: supplier, permissions: [permission])
       product = create(:product)
       order_cycle = create(
         :simple_order_cycle,
@@ -864,7 +871,8 @@ describe Enterprise do
       sender = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
       permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
-      create(:enterprise_relationship, parent: distributor, child: supplier, permissions: [permission])
+      create(:enterprise_relationship, parent: distributor, child: supplier, 
+permissions: [permission])
       product = create(:product)
       order_cycle = create(
         :simple_order_cycle,

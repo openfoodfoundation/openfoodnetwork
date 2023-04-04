@@ -86,7 +86,9 @@ describe 'Enterprises Index' do
             click_button "Update"
 
             expect(flash_message).to eq('Update failed')
-            expect(page).to have_content "#{manager.email} is not permitted to own any more enterprises (limit is 1)."
+            expect(page).to have_content(
+              "#{manager.email} is not permitted to own any more enterprises (limit is 1)."
+            )
             second_distributor.reload
           }.to_not change { second_distributor.owner }
 
@@ -150,7 +152,8 @@ describe 'Enterprises Index' do
         expect(find('.js-admin-section-header')).to have_link "New Enterprise"
       end
 
-      it "does not give me an option to change or update the package and producer properties of enterprises I manage" do
+      it "does not give me an option to change or update the package and "\
+         "producer properties of enterprises I manage" do
         visit admin_enterprises_path
 
         within("tbody#e_#{distributor1.id}") do
@@ -180,7 +183,8 @@ describe 'Enterprises Index' do
     end
 
     context "listing enterprises" do
-      it "allows me to change or update the package and producer properties of enterprises I manage" do
+      it "allows me to change or update the package and "\
+         "producer properties of enterprises I manage" do
         visit admin_enterprises_path
 
         within("tbody#e_#{owned_distributor.id}") do

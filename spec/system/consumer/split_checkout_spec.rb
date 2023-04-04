@@ -33,10 +33,12 @@ describe "As a consumer, I want to checkout my order" do
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: fee_tax_category) }
 
   let(:free_shipping_with_required_address) {
-    create(:shipping_method, require_ship_address: true, name: "A Free Shipping with required address")
+    create(:shipping_method, require_ship_address: true, 
+                             name: "A Free Shipping with required address")
   }
   let(:free_shipping) {
-    create(:shipping_method, require_ship_address: false, name: "free Shipping", description: "yellow",
+    create(:shipping_method, require_ship_address: false, name: "free Shipping",
+                             description: "yellow",
                              calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
   let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, zone: zone, included_in_price: true) }
@@ -47,7 +49,8 @@ describe "As a consumer, I want to checkout my order" do
                              calculator: Calculator::FlatRate.new(preferred_amount: 4.56))
   }
   let(:free_shipping_without_required_address) {
-    create(:shipping_method, require_ship_address: false, name: "Z Free Shipping without required address")
+    create(:shipping_method, require_ship_address: false,
+                             name: "Z Free Shipping without required address")
   }
   let(:tagged_shipping) {
     create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local")
@@ -58,10 +61,12 @@ describe "As a consumer, I want to checkout my order" do
                             calculator: Calculator::FlatRate.new(preferred_amount: 1.23))
   }
   let(:shipping_backoffice_only) {
-    create(:shipping_method, require_ship_address: true, name: "Shipping Backoffice Only", display_on: "back_end")
+    create(:shipping_method, require_ship_address: true, name: "Shipping Backoffice Only",
+                             display_on: "back_end")
   }
   let(:shipping_methods) {
-    [free_shipping_with_required_address, free_shipping, shipping_with_fee, free_shipping_without_required_address, tagged_shipping]
+    [free_shipping_with_required_address, free_shipping, shipping_with_fee,
+     free_shipping_without_required_address, tagged_shipping]
   }
 
   before do
@@ -154,7 +159,10 @@ describe "As a consumer, I want to checkout my order" do
                preferred_matched_shipping_methods_visibility: 'hidden')
 
         visit checkout_path
-        expect(page).to have_content "Checkout is not possible due to absence of shipping options. Please contact the shop owner."
+        expect(page).to have_content(
+          "Checkout is not possible due to absence of shipping options. "\
+          "Please contact the shop owner."
+        )
       end
     end
 
@@ -211,7 +219,13 @@ describe "As a consumer, I want to checkout my order" do
           end
 
           it "should display error message in the right order" do
-            expect(page).to have_content "Customer E-Mail can't be blank, Customer E-Mail is invalid, Customer phone can't be blank, Billing address first name can't be blank, Billing address last name can't be blank, Billing address (Street + House number) can't be blank, Billing address city can't be blank, Billing address postcode can't be blank, and Shipping method Select a shipping method"
+            expect(page).to have_content(
+              "Customer E-Mail can't be blank, Customer E-Mail is invalid, Customer phone can't "\
+              "be blank, Billing address first name can't be blank, Billing address last name "\
+              "can't be blank, Billing address (Street + House number) can't be blank, Billing "\
+              "address city can't be blank, Billing address postcode can't be blank, and "\
+              "Shipping method Select a shipping method"
+            )
           end
         end
       end
@@ -231,8 +245,12 @@ describe "As a consumer, I want to checkout my order" do
       end
 
       it 'display shipping methods alphabetically' do
-        shipping_methods = page.all(:field, "shipping_method_id").map { |field| field.sibling("label") }.map(&:text)
-        expect(shipping_methods).to eq ["A Free Shipping with required address", "free Shipping", "Local", "Shipping with Fee", "Z Free Shipping without required address"]
+        shipping_methods = page.all(:field, "shipping_method_id")
+          .map { |field| field.sibling("label") }.map(&:text)
+        expect(shipping_methods).to eq [
+          "A Free Shipping with required address", "free Shipping",
+          "Local", "Shipping with Fee", "Z Free Shipping without required address"
+        ]
       end
 
       it_behaves_like "when I have an out of stock product in my cart"
@@ -327,7 +345,8 @@ describe "As a consumer, I want to checkout my order" do
 
     context "details step" do
       context "when form is submitted but invalid" do
-        it "display the checkbox about shipping address same as billing address when selecting a shipping method that requires ship address" do
+        it "display the checkbox about shipping address same as billing address "\
+           "when selecting a shipping method that requires ship address" do
           choose free_shipping_with_required_address.name
           check "Shipping address same as billing address?"
           expect(page).to have_content "Save as default shipping address"
@@ -623,7 +642,9 @@ describe "As a consumer, I want to checkout my order" do
 
         it "pre-fills address details" do
           visit checkout_path
-          expect(page).to have_select "order_bill_address_attributes_state_id", selected: "Testville"
+          expect(page).to have_select(
+            "order_bill_address_attributes_state_id", selected: "Testville"
+          )
           expect(page).to have_field "order_bill_address_attributes_zipcode", with: "TST01"
         end
       end
@@ -838,7 +859,8 @@ describe "As a consumer, I want to checkout my order" do
 
           click_link "Payment method"
 
-          expect(page).to have_content "You can review and confirm your order in the next step which includes the final costs."
+          expect(page).to have_content("You can review and confirm your order in the next step "\
+                                       "which includes the final costs.")
         end
       end
 
@@ -961,7 +983,7 @@ describe "As a consumer, I want to checkout my order" do
           expect(page).to have_current_path checkout_step_path(:summary)
         end
 
-        it "handle the navigation between each step by clicking on tab or button to submit the form" do
+        it "handle the navigation between each step by clicking tabs/buttons to submit the form" do
           visit checkout_step_path(:summary)
 
           click_on "Your details"
@@ -1013,7 +1035,10 @@ describe "As a consumer, I want to checkout my order" do
         it "show a link to /cart#bought-products page" do
           expect(page).to have_link("cart", href: "/cart#bought-products")
           click_on "cart"
-          expect(page).to have_text "#{prev_order.line_items.length} additional items already confirmed for this order cycle"
+          expect(page).to have_text(
+            "#{prev_order.line_items.length} "\
+            "additional items already confirmed for this order cycle"
+          )
         end
       end
 

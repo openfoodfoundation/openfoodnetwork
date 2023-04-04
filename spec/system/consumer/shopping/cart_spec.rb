@@ -16,13 +16,16 @@ describe "full-page cart" do
     let(:supplier) { create(:supplier_enterprise) }
     let!(:order_cycle) {
       create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor],
-                                  coordinator: create(:distributor_enterprise), variants: [product_with_tax.variants.first, product_with_fee.variants.first])
+                                  coordinator: create(:distributor_enterprise),
+                                  variants: [product_with_tax.variants.first,
+                                    product_with_fee.variants.first])
     }
     let(:enterprise_fee) {
       create(:enterprise_fee, amount: 11.00, tax_category: product_with_tax.tax_category)
     }
     let(:product_with_tax) {
-      create(:taxed_product, supplier: supplier, zone: zone, price: 110.00, tax_rate_amount: 0.1, included_in_price: true)
+      create(:taxed_product, supplier: supplier, zone: zone, price: 110.00, tax_rate_amount: 0.1,
+                             included_in_price: true)
     }
     let(:product_with_fee) {
       create(:simple_product, supplier: supplier, price: 0.86, on_hand: 100)
@@ -108,14 +111,16 @@ describe "full-page cart" do
 
         it "shows enterprise fees row row" do
           expect(page).to have_selector('#cart-detail')
-          expect(page).to have_content("Whole order - #{handling_fee.name} fee by distributor #{order_cycle.coordinator.name}")
+          expect(page).to have_content("Whole order - #{handling_fee.name} fee by distributor "\
+                                       "#{order_cycle.coordinator.name}")
           expect(page).to have_selector '.cart-item-price',
                                         text: with_currency(0.86)
           expect(page).to have_selector '.order-total.item-total',
                                         text: with_currency(2.58)
           expect(page).to have_selector '.order-adjustment .total',
                                         text: with_currency(1.00)
-          expect(page).to have_selector '.order-total.grand-total', text: with_currency(3.58) # price * 3 + 1
+          expect(page).to have_selector '.order-total.grand-total',
+                                        text: with_currency(3.58) # price * 3 + 1
         end
       end
 
@@ -128,8 +133,9 @@ describe "full-page cart" do
         it "hides admin and handlings row" do
           expect(page).to have_selector('#cart-detail')
           expect(page).to have_no_content('Admin & Handling')
-          expect(page).to have_selector '.cart-item-price',         text: with_currency(0.86)
-          expect(page).to have_selector '.order-total.grand-total', text: with_currency(1.72) # price * 3
+          expect(page).to have_selector '.cart-item-price', text: with_currency(0.86)
+          expect(page).to have_selector '.order-total.grand-total',
+                                        text: with_currency(1.72) # price * 3
         end
       end
     end
@@ -137,7 +143,8 @@ describe "full-page cart" do
     describe "admin weight calculated fees" do
       context "order with 2 line items" do
         let(:admin_fee) {
-          create(:enterprise_fee, calculator: Calculator::Weight.new(preferred_per_unit: 1, preferred_unit_from_list: "kg"),
+          create(:enterprise_fee, calculator: Calculator::Weight.new(preferred_per_unit: 1,
+                                  preferred_unit_from_list: "kg"),
                                   enterprise: order_cycle.coordinator, fee_type: 'admin')
         }
 
@@ -157,9 +164,12 @@ describe "full-page cart" do
 
         it "shows the correct weight calculations" do
           expect(page).to have_selector('#cart-detail')
-          expect(page).to have_selector '.cart-item-price',                 text: with_currency(2.86) # price + (1eur * 2kg)
-          expect(page).to have_selector '.cart-item-price',                 text: with_currency(115.0) # price + (1eur * 5kg)
-          expect(page).to have_selector '.order-total.grand-total',         text: with_currency(353.58) # above * 3 items
+          expect(page).to have_selector '.cart-item-price',
+                                        text: with_currency(2.86) # price + (1eur * 2kg)
+          expect(page).to have_selector '.cart-item-price',
+                                        text: with_currency(115.0) # price + (1eur * 5kg)
+          expect(page).to have_selector '.order-total.grand-total',
+                                        text: with_currency(353.58) # above * 3 items
         end
       end
     end
@@ -239,7 +249,8 @@ describe "full-page cart" do
 
             # shows a relevant Flash message
             expect(page).to have_selector ".alert-box",
-                                          text: 'An item in your cart has become unavailable. Please update the selected quantities.'
+                                          text: 'An item in your cart has become unavailable. '\
+                                          'Please update the selected quantities.'
 
             # "Continue Shopping" and "Checkout" buttons are disabled
             expect(page).to have_selector "a.continue-shopping[disabled=disabled]"
@@ -251,8 +262,11 @@ describe "full-page cart" do
 
             fill_in "order_line_items_attributes_0_quantity", with: 4
 
-            # Quantity field not marked as invalid and "Update" button is highlighted after correction
-            expect(page).to_not have_selector "#order_line_items_attributes_0_quantity.ng-invalid-stock"
+            # Quantity field not marked as invalid and "Update" button is
+            # highlighted after correction
+            expect(page).to_not have_selector(
+              "#order_line_items_attributes_0_quantity.ng-invalid-stock"
+            )
             expect(page).to have_selector "#update-button.alert"
 
             click_button 'Update'

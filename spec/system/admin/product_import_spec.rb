@@ -60,7 +60,8 @@ describe "Product Import" do
     end
     after { File.delete('/tmp/test.csv') }
 
-    it "validates entries and saves them if they are all valid and allows viewing new items in Bulk Products" do
+    it "validates entries and saves them if they are all valid and allows viewing new items "\
+       "in Bulk Products" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
                 "shipping_category_id"]
@@ -138,10 +139,12 @@ describe "Product Import" do
 
     it "displays info about inconsistent variant unit names, within the same product" do
       csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type", "variant_unit_name",
-                "shipping_category_id"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "50", "3.20", "250", "", "Bag", shipping_category_id_str]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "50", "6.40", "500", "", "Big-Bag", shipping_category_id_str]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "variant_unit_name", "shipping_category_id"]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "50", "3.20", "250", "", "Bag",
+                shipping_category_id_str]
+        csv << ["Carrots", "User Enterprise", "Vegetables", "50", "6.40", "500", "", "Big-Bag",
+                shipping_category_id_str]
       end
       File.write('/tmp/test.csv', csv_data)
 
@@ -153,7 +156,8 @@ describe "Product Import" do
 
       proceed_to_validation
       find('div.header-description', text: 'Items contain errors').click
-      expect(page).to have_content "Variant_unit_name must be the same for products with the same name"
+      expect(page).to have_content "Variant_unit_name must be the same for products "\
+                                   "with the same name"
       expect(page).to have_content "Imported file contains invalid entries"
 
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
@@ -268,7 +272,8 @@ describe "Product Import" do
       expect(Spree::Product.find_by(name: 'Beans').on_hand).to eq 0
     end
 
-    it "can save a new product and variant of that product at the same time, add variant to existing product" do
+    it "can save a new product and variant of that product at the same time, "\
+       "add variant to existing product" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
                 "display_name", "shipping_category_id"]
@@ -399,16 +404,21 @@ describe "Product Import" do
       visit main_app.admin_inventory_path
 
       expect(page).to have_content "Beets"
-      expect(page).to have_select "variant-overrides-#{Spree::Product.find_by(name: 'Beets').variants.first.id}-on_demand",
-                                  selected: "Yes"
-      expect(page).to have_input "variant-overrides-#{Spree::Product.find_by(name: 'Beets').variants.first.id}-price",
-                                 with: "3.2"
+      expect(page).to have_select(
+        "variant-overrides-#{Spree::Product.find_by(name: 'Beets').variants.first.id}-on_demand",
+        selected: "Yes"
+      )
+      expect(page).to have_input(
+        "variant-overrides-#{Spree::Product.find_by(name: 'Beets').variants.first.id}-price",
+        with: "3.2"
+      )
     end
 
     describe "Item type products" do
       let!(:product) {
         create(:simple_product, supplier: enterprise, on_hand: nil, name: 'Aubergine',
-                                unit_value: '1', variant_unit_scale: nil, variant_unit: "items", variant_unit_name: "Bag")
+                                unit_value: '1', variant_unit_scale: nil, variant_unit: "items",
+                                variant_unit_name: "Bag")
       }
       it "are sucessfully imported to inventory" do
         csv_data = CSV.generate do |csv|
@@ -434,10 +444,14 @@ describe "Product Import" do
         visit main_app.admin_inventory_path
 
         expect(page).to have_content "Aubergine"
-        expect(page).to have_select "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}-on_demand",
-                                    selected: "Yes"
-        expect(page).to have_input "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}-price",
-                                   with: "3.3"
+        expect(page).to have_select(
+          "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}"\
+          "-on_demand", selected: "Yes"
+        )
+        expect(page).to have_input(
+          "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}"\
+          "-price", with: "3.3"
+        )
       end
 
       it "displays the appropriate error message, when variant unit names are inconsistent" do
@@ -458,7 +472,8 @@ describe "Product Import" do
         proceed_to_validation
 
         find('div.header-description', text: 'Items contain errors').click
-        expect(page).to have_content "Variant_unit_name must be the same for products with the same name"
+        expect(page).to have_content "Variant_unit_name must be the same for products "\
+                                     "with the same name"
         expect(page).to have_content "Imported file contains invalid entries"
         expect(page).to have_no_selector 'input[type=submit][value="Save"]'
 
@@ -655,7 +670,8 @@ describe "Product Import" do
                               'price', 'on_hand', 'shipping_category', 'name']
 
           product_headings.each do |heading|
-            expect(page).to have_content I18n.t("admin.product_import.product_headings.#{heading}").upcase
+            expect(page).to have_content 
+              I18n.t("admin.product_import.product_headings.#{heading}").upcase
           end
         end
       end
@@ -701,7 +717,8 @@ describe "Product Import" do
 
     it "handles cases where files contain malformed data" do
       csv_data = "name,producer,category,on_hand,price,units,unit_type,shipping_category\n"
-      csv_data += "Malformed \rBrocolli,#{enterprise.name},Vegetables,8,2.50,200,g,#{shipping_category.name}\n"
+      csv_data += "Malformed \rBrocolli,#{enterprise.name},Vegetables,8,2.50,200,g,"\
+                  "#{shipping_category.name}\n"
 
       File.write('/tmp/test.csv', csv_data)
 

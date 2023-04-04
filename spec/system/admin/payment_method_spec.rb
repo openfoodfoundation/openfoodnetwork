@@ -57,7 +57,8 @@ describe '
         allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
         Stripe.api_key = "sk_test_12345"
         stub_request(:get,
-                     "https://api.stripe.com/v1/accounts/acc_connected123").to_return(body: JSON.generate(stripe_account_mock))
+                     "https://api.stripe.com/v1/accounts/acc_connected123")
+                     .to_return(body: JSON.generate(stripe_account_mock))
         stub_request(:get,
                      "https://api.stripe.com/v1/accounts/acc_revoked123").to_return(status: 404)
       end
@@ -78,7 +79,8 @@ describe '
 
         select2_select "Revoked", from: "payment_method_preferred_enterprise_id"
         expect(page).to have_selector "#stripe-account-status .alert-box.error",
-                                      text: 'Access to this Stripe account has been revoked, please reconnect your account.'
+                                      text: 'Access to this Stripe account has been revoked, '\
+                                      'please reconnect your account.'
 
         select2_select "Connected", from: "payment_method_preferred_enterprise_id"
         expect(page).to have_selector "#stripe-account-status .status", text: "Status: Connected"

@@ -50,12 +50,13 @@ describe '
     expect(page).to have_selector "input[value='Hello!']"
 
     # When I fill in the calculator fields and click update
-    fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_flat_percent',
-            with: '12.34'
+    fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes'\
+            '_preferred_flat_percent', with: '12.34'
     click_button 'Update'
 
     # Then I should see the correct values in my calculator fields
-    expect(page).to have_selector "#sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_flat_percent[value='12.34']"
+    expect(page).to have_selector("#sets_enterprise_fee_set_collection_attributes_0_calculator"\
+                                  "_attributes_preferred_flat_percent[value='12.34']")
   end
 
   it "creating an enterprise fee with invalid amount shows error flash message" do
@@ -78,8 +79,10 @@ describe '
     expect(page).to have_selector "input[value='Hello!']"
 
     # When I fill in the calculator fields and click update
-    fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_flat_percent',
-            with: "\'20.0'"
+    fill_in(
+      'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_'\
+      'preferred_flat_percent', with: "\'20.0'"
+    )
     click_button 'Update'
 
     # Then I should see the flash error message
@@ -98,7 +101,8 @@ describe '
       select 'Foo', from: 'sets_enterprise_fee_set_collection_attributes_0_enterprise_id'
       select 'Admin', from: 'sets_enterprise_fee_set_collection_attributes_0_fee_type'
       fill_in 'sets_enterprise_fee_set_collection_attributes_0_name', with: 'Greetings!'
-      select 'Inherit From Product', from: 'sets_enterprise_fee_set_collection_attributes_0_tax_category_id'
+      select 'Inherit From Product', 
+        from: 'sets_enterprise_fee_set_collection_attributes_0_tax_category_id'
       select 'Flat Percent', from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
       click_button 'Update'
     end
@@ -126,10 +130,12 @@ describe '
     end
 
     it "handle when updating calculator type for Weight to Flat Rate" do
-      select 'Weight (per kg or lb)', from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
+      select 'Weight (per kg or lb)', 
+        from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
       click_button 'Update'
 
-      select 'Flat Rate (per item)', from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
+      select 'Flat Rate (per item)', 
+        from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
       click_button 'Update'
 
       expect(fee.reload.calculator_type).to eq("Calculator::PerItem")
@@ -137,12 +143,15 @@ describe '
 
     it 'shows error flash when updating fee amount with invalid values' do
       # When I fill in the calculator fields and click update
-      fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_flat_percent',
-              with: "\'20.0'"
+      fill_in(
+        'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_'\
+        'preferred_flat_percent', with: "\'20.0'"
+      )
       click_button 'Update'
 
       # Then I should see the flash error message
-      expect(flash_message).to eq('Invalid input. Please use only numbers. For example: 10, 5.5, -20')
+      expect(flash_message)
+        .to eq('Invalid input. Please use only numbers. For example: 10, 5.5, -20')
     end
   end
 
@@ -193,8 +202,9 @@ describe '
       expect(flash_message).to eq('Your enterprise fees have been updated.')
 
       # After saving, we should be redirected to the fees for our chosen enterprise
-      expect(page).not_to have_select 'sets_enterprise_fee_set_collection_attributes_1_enterprise_id',
-                                      selected: 'Second Distributor'
+      expect(page)
+        .not_to have_select 'sets_enterprise_fee_set_collection_attributes_1_enterprise_id',
+                            selected: 'Second Distributor'
 
       enterprise_fee = EnterpriseFee.find_by name: 'foo'
       expect(enterprise_fee.enterprise).to eq(distributor1)

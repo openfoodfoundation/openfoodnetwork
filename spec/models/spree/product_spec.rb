@@ -218,14 +218,28 @@ module Spree
     end
 
     describe ".with_properties scope" do
-      let!(:product_without_wanted_property_on_supplier) { create(:product, supplier: supplier_without_wanted_property) }
-      let!(:product_with_wanted_property_on_supplier) { create(:product, supplier: supplier_with_wanted_property) }
+      let!(:product_without_wanted_property_on_supplier) {
+        create(:product, supplier: supplier_without_wanted_property)
+      }
+      let!(:product_with_wanted_property_on_supplier) {
+        create(:product, supplier: supplier_with_wanted_property)
+      }
       let!(:product_with_wanted_property) { create(:product, properties: [wanted_property]) }
-      let!(:product_without_wanted_property_property) { create(:product, properties: [unwanted_property]) }
-      let!(:product_with_wanted_property_and_on_supplier) { create(:product, properties: [wanted_property], supplier: supplier_with_wanted_property) }
-      let!(:product_ignoring_property) { create(:product, supplier: supplier_with_wanted_property, inherits_properties: false) }
-      let(:supplier_with_wanted_property) { create(:supplier_enterprise, properties: [wanted_property]) }
-      let(:supplier_without_wanted_property) { create(:supplier_enterprise, properties: [unwanted_property]) }
+      let!(:product_without_wanted_property_property) {
+        create(:product, properties: [unwanted_property])
+      }
+      let!(:product_with_wanted_property_and_on_supplier) {
+        create(:product, properties: [wanted_property], supplier: supplier_with_wanted_property)
+      }
+      let!(:product_ignoring_property) {
+        create(:product, supplier: supplier_with_wanted_property, inherits_properties: false)
+      }
+      let(:supplier_with_wanted_property) {
+        create(:supplier_enterprise, properties: [wanted_property])
+      }
+      let(:supplier_without_wanted_property) {
+        create(:supplier_enterprise, properties: [unwanted_property])
+      }
       let(:wanted_property) { create(:property, presentation: 'Certified Organic') }
       let(:unwanted_property) { create(:property, presentation: 'Latest Hype') }
 

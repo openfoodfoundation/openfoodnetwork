@@ -22,15 +22,30 @@ describe '
   let(:billing_address4) { create(:address, :randomized) }
   let(:billing_address5) { create(:address, :randomized) }
   let(:product) { create(:simple_product) }
-  let(:distributor) { create(:distributor_enterprise, owner: owner, with_payment_and_shipping: true, charges_sales_tax: true) }
+  let(:distributor) {
+    create(:distributor_enterprise, owner: owner, with_payment_and_shipping: true,
+                                    charges_sales_tax: true)
+  }
   let(:distributor2) { create(:distributor_enterprise_with_tax, owner: owner) }
-  let(:distributor3) { create(:distributor_enterprise, owner: owner, with_payment_and_shipping: true, charges_sales_tax: true) }
-  let(:distributor4) { create(:distributor_enterprise, owner: owner, with_payment_and_shipping: true, charges_sales_tax: true) }
+  let(:distributor3) {
+    create(:distributor_enterprise, owner: owner, with_payment_and_shipping: true,
+                                    charges_sales_tax: true)
+  }
+  let(:distributor4) {
+    create(:distributor_enterprise, owner: owner, with_payment_and_shipping: true,
+                                    charges_sales_tax: true)
+  }
   let(:distributor5) { create(:distributor_enterprise, owner: owner2, charges_sales_tax: true) }
-  let!(:shipping_method) { create(:shipping_method_with, :pickup, name: "pick_up", distributors: [distributor, distributor2, distributor3]) }
-  let!(:shipping_method2) { create(:shipping_method_with, :pickup, name: "delivery", distributors: [distributor4, distributor5]) }
+  let!(:shipping_method) {
+    create(:shipping_method_with, :pickup, name: "pick_up",
+                                           distributors: [distributor, distributor2, distributor3])
+  }
+  let!(:shipping_method2) {
+ create(:shipping_method_with, :pickup, name: "delivery",
+distributors: [distributor4, distributor5]) }
   let(:order_cycle) do
-    create(:simple_order_cycle, name: 'One', distributors: [distributor, distributor2, distributor3, distributor4],
+    create(:simple_order_cycle, name: 'One', distributors: [distributor, distributor2,
+                                distributor3, distributor4],
                                 variants: [product.variants.first])
   end
 
@@ -52,8 +67,8 @@ describe '
       create(:simple_order_cycle, name: 'Four', orders_close_at: 4.weeks.from_now)
     }
     let!(:order_cycle5) do
-      create(:simple_order_cycle, name: 'Five', coordinator: distributor5, distributors: [distributor5],
-                                  variants: [product.variants.first])
+      create(:simple_order_cycle, name: 'Five', coordinator: distributor5,
+                                  distributors: [distributor5], variants: [product.variants.first])
     end
 
     let!(:order2) {
@@ -118,7 +133,8 @@ describe '
 
         it "filter by complete date" do
           find("input.datepicker").click
-          select_dates_from_daterangepicker(order3.completed_at.yesterday, order4.completed_at.tomorrow)
+          select_dates_from_daterangepicker(order3.completed_at.yesterday,
+                                            order4.completed_at.tomorrow)
 
           page.find('.filter-actions .button.icon-search').click
 
@@ -225,9 +241,13 @@ describe '
           end
           it "orders by completion date" do
             find("a", text: 'COMPLETED AT').click # sets ascending ordering
-            expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+            expect(page).to have_content(
+              /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
+            )
             find("a", text: 'COMPLETED AT').click # sets descending ordering
-            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
+            expect(page).to have_content(
+              /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
+            )
           end
         end
 
@@ -242,9 +262,13 @@ describe '
 
           it "orders by order number" do
             find("a", text: 'NUMBER').click # sets ascending ordering
-            expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+            expect(page).to have_content(
+              /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
+            )
             find("a", text: 'NUMBER').click # sets descending ordering
-            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
+            expect(page).to have_content(
+              /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
+            )
           end
         end
 
@@ -261,9 +285,13 @@ describe '
 
           it "orders by order state" do
             find("a", text: 'STATE').click # sets ascending ordering
-            expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+            expect(page).to have_content(
+              /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
+            )
             find("a", text: 'STATE').click # sets descending ordering
-            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
+            expect(page).to have_content(
+              /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
+            )
           end
         end
 
@@ -311,9 +339,13 @@ describe '
 
           it "orders by customer email" do
             find("a", text: 'EMAIL').click # sets ascending ordering
-            expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+            expect(page).to have_content(
+              /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
+            )
             find("a", text: 'EMAIL').click # sets descending ordering
-            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
+            expect(page).to have_content(
+              /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
+            )
           end
         end
 
@@ -328,9 +360,13 @@ describe '
 
           it "orders by last name" do
             find("a", text: 'NAME').click # sets ascending ordering
-            expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+            expect(page).to have_content(
+              /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
+            )
             find("a", text: 'NAME').click # sets descending ordering
-            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
+            expect(page).to have_content(
+              /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
+            )
           end
         end
 
@@ -349,9 +385,13 @@ describe '
 
           it "orders by order total" do
             find("a", text: 'TOTAL').click # sets ascending ordering
-            expect(page).to have_content(/#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+            expect(page).to have_content(
+              /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
+            )
             find("a", text: 'TOTAL').click # sets descending ordering
-            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m)
+            expect(page).to have_content(
+              /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
+            )
           end
         end
       end
@@ -365,13 +405,17 @@ describe '
       it "by clicking on the checkbox in the table header" do
         # select all orders
         page.find("#listing_orders thead th:first-child input[type=checkbox]").click
-        expect(page.find("#listing_orders tbody tr td:first-child input[type=checkbox]")).to be_checked
+        expect(page.find(
+          "#listing_orders tbody tr td:first-child input[type=checkbox]")
+        ).to be_checked
         # enables print invoices button
         page.find("span.icon-reorder", text: "ACTIONS").click
         expect(page).to have_content "Print Invoices"
         # unselect all orders
         page.find("#listing_orders thead th:first-child input[type=checkbox]").click
-        expect(page.find("#listing_orders tbody tr td:first-child input[type=checkbox]")).to_not be_checked
+        expect(page.find(
+          "#listing_orders tbody tr td:first-child input[type=checkbox]")
+        ).to_not be_checked
         # disables print invoices button
         page.find("span.icon-reorder", text: "ACTIONS").click
         expect(page).to_not have_content "Print Invoices"
@@ -411,7 +455,8 @@ describe '
                 page.find("span", text: "Send Invoices").click
               end
 
-              expect(page).to have_content "This will email customer invoices for all selected complete orders."
+              expect(page).to have_content "This will email customer invoices "\
+                                           "for all selected complete orders."
               expect(page).to have_content "Are you sure you want to proceed?"
 
               within ".reveal-modal" do
@@ -455,7 +500,8 @@ describe '
           end
 
           expect(page).to have_content "Compiling Invoices"
-          expect(page).to have_content "Please wait until the PDF is ready before closing this modal."
+          expect(page).to have_content "Please wait until the PDF is ready "\
+                                       "before closing this modal."
           # an error 422 is generated in the console
         end
 
@@ -509,7 +555,9 @@ describe '
         it "cannot send emails to orders if permission have been revoked in the meantime" do
           page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
           # Find the clicked order
-          order = Spree::Order.find_by(id: page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").value)
+          order = Spree::Order.find_by(
+            id: page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").value
+          )
           # Revoke permission for the current user on that specific order by changing its owners
           order.update_attribute(:distributor, distributor)
           order.update_attribute(:order_cycle, order_cycle)
@@ -588,7 +636,8 @@ describe '
   context "with incomplete order" do
     it "can edit order" do
       incomplete_order = create(:order_with_line_items, distributor: distributor,
-                                                        order_cycle: order_cycle, line_items_count: 1)
+                                                        order_cycle: order_cycle,
+                                                        line_items_count: 1)
 
       login_as_admin_and_visit spree.admin_orders_path
       uncheck 'Only show complete orders'
@@ -603,7 +652,8 @@ describe '
   context "test the 'Only show the complete orders' checkbox" do
     it "display or not incomplete order" do
       incomplete_order = create(:order_with_line_items, distributor: distributor,
-                                                        order_cycle: order_cycle, line_items_count: 1)
+                                                        order_cycle: order_cycle,
+                                                        line_items_count: 1)
       complete_order = create(
         :order_with_line_items,
         distributor: distributor,
@@ -690,7 +740,9 @@ describe '
       expect(find_field("Email").value).to eq user.email
       expect(find_field("First name begins with").value).to eq "J"
       expect(find_field("Last name begins with").value).to eq "D"
-      expect(find("input.datepicker").value).to eq "#{1.week.ago.strftime('%Y-%m-%d')} to #{Time.zone.now.tomorrow.strftime('%Y-%m-%d')}"
+      expect(find("input.datepicker").value).to eq(
+        "#{1.week.ago.strftime('%Y-%m-%d')} to #{Time.zone.now.tomorrow.strftime('%Y-%m-%d')}"
+      )
     end
 
     it "and clear filters" do

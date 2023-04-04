@@ -12,7 +12,8 @@ describe '
   context "as an enterprise user" do
     before do
       @enterprise_user = create(:user)
-      allow_any_instance_of(Spree::Admin::OverviewController).to receive(:spree_current_user).and_return @enterprise_user
+      allow_any_instance_of(Spree::Admin::OverviewController).to receive(:spree_current_user)
+                                                             .and_return @enterprise_user
       login_as @enterprise_user
     end
 
@@ -39,7 +40,8 @@ describe '
         it "displays a message telling how to set visibility" do
           visit '/admin'
           expect(page).to have_selector ".alert-box",
-                                        text: "To allow people to find you, turn on your visibility under Manage #{d1.name}."
+                                        text: "To allow people to find you, turn on your "\
+                                        "visibility under Manage #{d1.name}."
         end
       end
 

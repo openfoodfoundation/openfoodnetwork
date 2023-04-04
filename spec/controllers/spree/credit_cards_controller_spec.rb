@@ -92,7 +92,9 @@ describe Spree::CreditCardsController, type: :controller do
       end
 
       context "when the request to store the customer/card with Stripe fails" do
-        let(:response_mock) { { status: 402, body: JSON.generate(error: { message: "Bup-bow..." }) } }
+        let(:response_mock) {
+          { status: 402, body: JSON.generate(error: { message: "Bup-bow..." }) }
+        }
         it "doesn't save the card locally, and renders a flash error" do
           expect{ spree_post :new_from_token, params }.to_not change(Spree::CreditCard, :count)
 
@@ -244,7 +246,8 @@ describe Spree::CreditCardsController, type: :controller do
 
               context "when has any other saved cards" do
                 let!(:second_card) {
-                  create(:stored_credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_AZNMJ')
+                  create(:stored_credit_card, user_id: user.id, 
+                                              gateway_customer_profile_id: 'cus_AZNMJ')
                 }
 
                 it "should assign the second one as the default one" do

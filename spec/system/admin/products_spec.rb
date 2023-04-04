@@ -131,7 +131,8 @@ describe '
       fill_in 'product_on_hand', with: 0
       check 'product_on_demand'
       select 'Test Tax Category', from: 'product_tax_category_id'
-      page.find("div[id^='taTextElement']").native.send_keys('In demand, and on_demand! The hottest cakes in town.')
+      page.find("div[id^='taTextElement']").native
+        .send_keys('In demand, and on_demand! The hottest cakes in town.')
 
       click_button 'Create'
 
@@ -156,7 +157,8 @@ describe '
       fill_in 'product_on_hand', with: 0
       check 'product_on_demand'
       select 'Test Tax Category', from: 'product_tax_category_id'
-      find("div[id^='taTextElement']").native.send_keys('In demand, and on_demand! The hottest cakes in town.')
+      find("div[id^='taTextElement']").native
+        .send_keys('In demand, and on_demand! The hottest cakes in town.')
 
       click_button 'Create'
 
@@ -311,7 +313,8 @@ describe '
       expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
 
       # Link back to the bulk product update page should include the filters
-      expected_admin_product_url = Regexp.new(Regexp.escape("#{spree.admin_products_path}#?#{filter.to_query}"))
+      expected_admin_product_url =
+        Regexp.new(Regexp.escape("#{spree.admin_products_path}#?#{filter.to_query}"))
       expect(page).to have_link('Back to products list',
                                 href: expected_admin_product_url)
       expect(page).to have_link('Cancel', href: expected_admin_product_url)
@@ -334,15 +337,15 @@ describe '
       expect(page).to have_link('Variants',
                                 href: expected_product_variant_url)
 
-      expected_product_properties_url = Regexp.new(Regexp.escape(spree.admin_product_product_properties_path(
-                                                                   product.permalink, filter
-                                                                 )))
+      expected_product_properties_url =
+        Regexp.new(Regexp.escape(spree.admin_product_product_properties_path(
+                                   product.permalink, filter)))
       expect(page).to have_link('Product Properties',
                                 href: expected_product_properties_url)
 
-      expected_product_group_buy_option_url = Regexp.new(Regexp.escape(spree.group_buy_options_admin_product_path(
-                                                                         product.permalink, filter
-                                                                       )))
+      expected_product_group_buy_option_url =
+        Regexp.new(Regexp.escape(spree.group_buy_options_admin_product_path(
+                                   product.permalink, filter)))
       expect(page).to have_link('Group Buy Options',
                                 href: expected_product_group_buy_option_url)
 
@@ -559,15 +562,16 @@ describe '
       product = create(:simple_product, supplier: @supplier2)
       image = white_logo_file
       image_object = Spree::Image.create(viewable_id: product.master.id,
-                                         viewable_type: 'Spree::Variant', alt: "position 1", attachment: image, position: 1)
+                                         viewable_type: 'Spree::Variant', alt: "position 1",
+                                         attachment: image, position: 1)
 
       visit spree.admin_product_images_path(product, filter)
 
       page.find("a.icon-edit").click
 
       uri = URI.parse(current_url)
-      expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_image_path(product,
-                                                                                   image_object, filter)
+      expect("#{uri.path}?#{uri.query}")
+        .to eq spree.edit_admin_product_image_path(product, image_object, filter)
 
       expected_cancel_link = Regexp.new(Regexp.escape(spree.admin_product_images_path(product,
                                                                                       filter)))
@@ -579,7 +583,8 @@ describe '
       product = create(:simple_product, supplier: @supplier2)
       image = white_logo_file
       image_object = Spree::Image.create(viewable_id: product.master.id,
-                                         viewable_type: 'Spree::Variant', alt: "position 1", attachment: image, position: 1)
+                                         viewable_type: 'Spree::Variant', alt: "position 1",
+                                         attachment: image, position: 1)
 
       file_path = Rails.root + "spec/support/fixtures/thinking-cat.jpg"
 
@@ -656,7 +661,8 @@ describe '
         visit spree.edit_admin_product_path product
       end
 
-      shared_examples 'selecting a unit from dropdown' do |dropdown_option, var_unit:, var_unit_scale:|
+      shared_examples 'selecting a unit from dropdown' do |dropdown_option,
+                                                           var_unit:, var_unit_scale:|
         it 'checks if the dropdown selection is persistent' do
           select dropdown_option, from: 'product_variant_unit_with_scale'
           click_button 'Update'

@@ -28,7 +28,8 @@ describe 'Multilingual' do
 
     visit spree.admin_dashboard_path(locale: 'es')
     expect(get_i18n_locale).to eq 'es'
-    expect(get_i18n_translation('spree_admin_overview_enterprises_header')).to eq 'Mis Organizaciones'
+    expect(get_i18n_translation('spree_admin_overview_enterprises_header'))
+      .to eq 'Mis Organizaciones'
     expect(page).to have_content 'Mis Organizaciones'
     admin_user.reload
     expect(admin_user.locale).to eq 'es'

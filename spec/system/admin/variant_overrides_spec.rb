@@ -41,7 +41,8 @@ describe "
         click_link 'Products'
         click_link 'Inventory'
 
-        expect(page).to have_select2 'hub_id', options: [hub.name] # Selects the hub automatically when only one is available
+        # Selects the hub automatically when only one is available
+        expect(page).to have_select2 'hub_id', options: [hub.name]
       end
     end
 
@@ -214,14 +215,17 @@ describe "
             expect(page).to have_content "Changes to one override remain unsaved."
 
             # Set a user without suficient permissions
-            allow_any_instance_of(Spree::Admin::BaseController).to receive(:current_spree_user).and_return(build(:user))
+            allow_any_instance_of(Spree::Admin::BaseController).to receive(:current_spree_user)
+                                                               .and_return(build(:user))
 
             expect do
               click_button 'Save Changes'
 
-              # We need to wait_until because the save action is not fast enough for the have_content matcher
+              # We need to wait_until because the save action is not fast enough
+              # for the have_content matcher
               wait_until { page.find("#status-message").text != "Saving..." }
-              expect(page).to have_content "I couldn't get authorisation to save those changes, so they remain unsaved."
+              expect(page).to have_content "I couldn't get authorisation to save those changes, "\
+                                           "so they remain unsaved."
             end.to change(VariantOverride, :count).by(0)
           end
 
@@ -234,7 +238,8 @@ describe "
 
             expect do
               click_button 'Save Changes'
-              expect(page).to have_content "I couldn't get authorisation to save those changes, so they remain unsaved."
+              expect(page).to have_content "I couldn't get authorisation to save those changes, "\
+                                           "so they remain unsaved."
             end.to change(VariantOverride, :count).by(0)
           end
         end
@@ -242,7 +247,8 @@ describe "
         context "with overrides" do
           let!(:vo) {
             create(:variant_override, :on_demand, variant: variant, hub: hub, price: 77.77,
-                                                  default_stock: 1000, resettable: true, tag_list: ["tag1", "tag2", "tag3"])
+                                                  default_stock: 1000, resettable: true,
+                                                  tag_list: ["tag1", "tag2", "tag3"])
           }
           let!(:vo_no_auth) {
             create(:variant_override, variant: variant, hub: hub2, price: 1, count_on_hand: 2)
@@ -263,8 +269,8 @@ describe "
             create(:variant, product: product, unit_value: 2, price: 5.00, on_hand: 6)
           }
           let!(:vo3) {
-            create(:variant_override, variant: variant3, hub: hub, price: 6, count_on_hand: 7, sku: "SOMESKU",
-                                      default_stock: 100, resettable: false)
+            create(:variant_override, variant: variant3, hub: hub, price: 6, count_on_hand: 7,
+                                      sku: "SOMESKU", default_stock: 100, resettable: false)
           }
           let!(:inventory_item3) { create(:inventory_item, enterprise: hub, variant: variant3) }
 
@@ -274,10 +280,10 @@ describe "
           end
 
           it "product values are affected by overrides" do
-            expect(page).to have_input "variant-overrides-#{variant.id}-price", with: '77.77',
-                                                                                placeholder: '1.23'
-            expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand", with: "",
-                                                                                        placeholder: 'On demand'
+            expect(page).to have_input "variant-overrides-#{variant.id}-price",
+                                       with: '77.77', placeholder: '1.23'
+            expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand",
+                                       with: "", placeholder: 'On demand'
             expect(page).to have_select "variant-overrides-#{variant.id}-on_demand",
                                         selected: 'Yes'
 
@@ -414,7 +420,8 @@ describe "
               expect(vo.on_demand).to be_nil
             end
 
-            it "provides explanation when attempting to save variant override with incompatible stock settings" do
+            it "provides explanation when attempting to save variant override with incompatible "\
+               "stock settings" do
               # Successfully change stock settings.
               select_on_demand variant, :no
               fill_in "variant-overrides-#{variant.id}-count_on_hand", with: "1111"
@@ -476,12 +483,14 @@ describe "
           select2_select hub.name, from: 'hub_id'
         end
 
-        it "alerts the user to the presence of new products, and allows them to be added or hidden" do
+        it "alerts the user to the presence of new products, and allows them to be added "\
+           "or hidden" do
           expect(page).to have_no_selector "table#variant-overrides tr#v_#{variant1.id}"
           expect(page).to have_no_selector "table#variant-overrides tr#v_#{variant2.id}"
 
           expect(page).to have_selector '.alert-row span.message',
-                                        text: "There are 1 new products available to add to your inventory."
+                                        text: "There are 1 new products available to add to your "\
+                                              "inventory."
           click_button "Review Now"
 
           expect(page).to have_table_row ['PRODUCER', 'PRODUCT', 'VARIANT', 'ADD', 'HIDE']

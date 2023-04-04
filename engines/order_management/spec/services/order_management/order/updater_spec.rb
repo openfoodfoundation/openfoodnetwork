@@ -359,8 +359,11 @@ module OrderManagement
         end
       end
 
-      context "when unused payments records exist which require authorization, but the order is fully paid" do
-        let!(:cash_payment) { build(:payment, state: "completed", amount: order.new_outstanding_balance) }
+      context "when unused payments records exist which require authorization, "\
+              "but the order is fully paid" do
+        let!(:cash_payment) {
+          build(:payment, state: "completed", amount: order.new_outstanding_balance)
+        }
         let!(:stripe_payment) { build(:payment, state: "requires_authorization") }
         before do
           order.payments << cash_payment

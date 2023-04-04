@@ -34,7 +34,8 @@ describe "shopping with variant overrides defined" do
   let(:product4_variant1) { create(:variant, product: product4, price: 77.77, unit_value: 7) }
   let!(:product1_variant1_override) {
     create(:variant_override, :use_producer_stock_settings, hub: hub, variant: product1_variant1,
-                                                            price: 55.55, count_on_hand: nil, default_stock: nil, resettable: false)
+                                                            price: 55.55, count_on_hand: nil,
+                                                            default_stock: nil, resettable: false)
   }
   let!(:product1_variant2_override) {
     create(:variant_override, hub: hub, variant: product1_variant2, count_on_hand: 0,
@@ -58,7 +59,8 @@ describe "shopping with variant overrides defined" do
   }
   let(:enterprise_fee) {
     create(:enterprise_fee, enterprise: hub, fee_type: 'packing', name: "Packing fee",
-                            calculator: Calculator::FlatPercentPerItem.new(preferred_flat_percent: 10))
+                            calculator:
+                            Calculator::FlatPercentPerItem.new(preferred_flat_percent: 10))
   }
   let!(:product4_variant1_override) {
     create(:variant_override, hub: hub, variant: product4_variant1, count_on_hand: nil,
@@ -67,7 +69,8 @@ describe "shopping with variant overrides defined" do
 
   before do
     outgoing_exchange.variants = [product1_variant1, product1_variant2, product2_variant1,
-                                  product1_variant3, product3_variant1, product3_variant2, product4_variant1]
+                                  product1_variant3, product3_variant1, product3_variant2,
+                                  product4_variant1]
     outgoing_exchange.enterprise_fees << enterprise_fee
     sm.calculator.preferred_amount = 0
     visit enterprise_shop_path(hub)
@@ -75,8 +78,10 @@ describe "shopping with variant overrides defined" do
 
   describe "viewing products" do
     it "shows price and stock from the override" do
-      expect(page).to have_price with_currency(61.11) # product1_variant1_override.price ($55.55) + 10% fee
-      expect(page).not_to have_price with_currency(12.22) # product1_variant1.price ($11.11) + 10% fee
+      # product1_variant1_override.price ($55.55) + 10% fee
+      expect(page).to have_price with_currency(61.11)
+      # product1_variant1.price ($11.11) + 10% fee
+      expect(page).not_to have_price with_currency(12.22)
 
       # Product should appear but one of the variants is out of stock
       expect(page).not_to have_content product1_variant2.options_text

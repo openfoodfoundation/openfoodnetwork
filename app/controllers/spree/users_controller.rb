@@ -33,7 +33,8 @@ module Spree
         render status: :ok, operations: cable_car.
           inner_html(
             "#login-feedback",
-            partial("layouts/alert", locals: { type: "alert", message: t('devise.failure.already_registered') })
+            partial("layouts/alert", 
+              locals: { type: "alert", message: t('devise.failure.already_registered') })
           ).
           dispatch_event(name: "login:modal:open")
       else
@@ -47,7 +48,9 @@ module Spree
       if @user.save
         render operations: cable_car.inner_html(
           "#signup-feedback",
-          partial("layouts/alert", locals: { type: "success", message: t('devise.user_registrations.spree_user.signed_up_but_unconfirmed') })
+          partial("layouts/alert", 
+            locals: { type: "success",
+            message: t('devise.user_registrations.spree_user.signed_up_but_unconfirmed') })
         )
       else
         render status: :unprocessable_entity, operations: cable_car.morph(

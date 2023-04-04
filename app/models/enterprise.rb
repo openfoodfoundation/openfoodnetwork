@@ -101,7 +101,11 @@ class Enterprise < ApplicationRecord
   validate :shopfront_taxons
   validate :shopfront_producers
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
-  validates :instagram, format: { with: VALID_INSTAGRAM_REGEX, message: Spree.t('errors.messages.invalid_instagram_url') }, allow_blank: true
+  validates :instagram, 
+    format: {
+      with: VALID_INSTAGRAM_REGEX,
+      message: Spree.t('errors.messages.invalid_instagram_url')
+    }, allow_blank: true
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :set_unused_address_fields
@@ -263,7 +267,8 @@ class Enterprise < ApplicationRecord
 
   def plus_parents_and_order_cycle_producers(order_cycles)
     oc_producer_ids = Exchange.in_order_cycle(order_cycles).incoming.pluck :sender_id
-    Enterprise.not_hidden.is_primary_producer.parents_of_one_union_others(id, oc_producer_ids | [id])
+    Enterprise.not_hidden.is_primary_producer
+      .parents_of_one_union_others(id, oc_producer_ids | [id])
   end
 
   def relatives_including_self

@@ -39,7 +39,9 @@ describe "Managing enterprise images" do
         attach_file "enterprise[logo]", white_logo_path
         click_button "Update"
 
-        expect(page).to have_content("Enterprise \"#{distributor.name}\" has been successfully updated!")
+        expect(page).to have_content(
+          "Enterprise \"#{distributor.name}\" has been successfully updated!"
+        )
 
         go_to_images
         within ".page-admin-enterprises-form__logo-field-group" do
@@ -50,7 +52,9 @@ describe "Managing enterprise images" do
         attach_file "enterprise[logo]", black_logo_path
         click_button "Update"
 
-        expect(page).to have_content("Enterprise \"#{distributor.name}\" has been successfully updated!")
+        expect(page).to have_content(
+          "Enterprise \"#{distributor.name}\" has been successfully updated!"
+        )
 
         go_to_images
         within ".page-admin-enterprises-form__logo-field-group" do
@@ -76,7 +80,9 @@ describe "Managing enterprise images" do
         attach_file "enterprise[promo_image]", white_logo_path
         click_button "Update"
 
-        expect(page).to have_content("Enterprise \"#{distributor.name}\" has been successfully updated!")
+        expect(page).to have_content(
+          "Enterprise \"#{distributor.name}\" has been successfully updated!"
+        )
 
         go_to_images
         within ".page-admin-enterprises-form__promo-image-field-group" do
@@ -87,7 +93,9 @@ describe "Managing enterprise images" do
         attach_file "enterprise[promo_image]", black_logo_path
         click_button "Update"
 
-        expect(page).to have_content("Enterprise \"#{distributor.name}\" has been successfully updated!")
+        expect(page).to have_content(
+          "Enterprise \"#{distributor.name}\" has been successfully updated!"
+        )
 
         go_to_images
         within ".page-admin-enterprises-form__promo-image-field-group" do

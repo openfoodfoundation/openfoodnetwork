@@ -140,7 +140,9 @@ module Api
           get :index, params: { q: { completed_at_not_null: true, s: 'bill_address_lastname ASC' } },
                       as: :json
 
-          expect(json_response['orders'].map{ |o| o[:id] }).to eq serialized_orders([order2, order3, order1, order4]).map{ |o| o["id"] }
+          expect(json_response['orders']
+            .map{ |o| o[:id] }).to eq serialized_orders([order2, order3, order1, order4])
+            .map{ |o| o["id"] }
         end
       end
 

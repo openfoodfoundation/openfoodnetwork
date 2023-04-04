@@ -111,19 +111,27 @@ module OpenFoodNetwork
       describe "calculating fees by type" do
         let!(:ef_admin) { create(:enterprise_fee, fee_type: 'admin', amount: 1.23, name: "Admin") }
         let!(:ef_sales) { create(:enterprise_fee, fee_type: 'sales', amount: 4.56, name: "Sales") }
-        let!(:ef_packing) { create(:enterprise_fee, fee_type: 'packing', amount: 7.89, name: "Packing") }
-        let!(:ef_transport) { create(:enterprise_fee, fee_type: 'transport', amount: 0.12, name: "Transport") }
-        let!(:ef_fundraising) { create(:enterprise_fee, fee_type: 'fundraising', amount: 3.45, name: "Fundraising") }
+        let!(:ef_packing) {
+          create(:enterprise_fee, fee_type: 'packing', amount: 7.89, name: "Packing") }
+        let!(:ef_transport) {
+          create(:enterprise_fee, fee_type: 'transport', amount: 0.12, name: "Transport") }
+        let!(:ef_fundraising) {
+          create(:enterprise_fee, fee_type: 'fundraising', amount: 3.45, name: "Fundraising") }
         let!(:exchange) {
           create(:exchange, order_cycle: order_cycle,
                             sender: coordinator, receiver: distributor, incoming: false,
-                            enterprise_fees: [ef_admin, ef_sales, ef_packing, ef_transport, ef_fundraising],
+                            enterprise_fees: [
+                              ef_admin, ef_sales, ef_packing, ef_transport, ef_fundraising
+                            ],
                             variants: [product1.master])
         }
 
         describe "regular computation" do
           it "returns the fees names" do
-            expect(EnterpriseFeeCalculator.new(distributor, order_cycle).fees_name_by_type_for(product1.master)).to eq({ admin: "Admin", fundraising: "Fundraising", packing: "Packing", sales: "Sales", transport: "Transport" })
+            expect(EnterpriseFeeCalculator
+              .new(distributor, order_cycle).fees_name_by_type_for(product1.master))
+              .to eq({ admin: "Admin", fundraising: "Fundraising", packing: "Packing",
+                       sales: "Sales", transport: "Transport" })
           end
 
           it "returns a breakdown of fees" do
