@@ -17,7 +17,7 @@ describe ReportJob do
     expect_csv_report(job)
   end
 
-  it "enqueues a job for asynch processing" do
+  it "enqueues a job for async processing" do
     job = ReportJob.perform_later(*report_args)
     expect(job.done?).to eq false
 
