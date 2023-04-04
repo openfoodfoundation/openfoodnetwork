@@ -7,6 +7,19 @@ module Spree
     let(:order) { build(:order) }
     let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5) }
 
+    describe "associations" do
+      it { is_expected.to have_one(:metadata) }
+      it { is_expected.to have_many(:adjustments) }
+
+      it { is_expected.to belong_to(:adjustable) }
+
+      it { is_expected.to belong_to(:adjustable) }
+      it { is_expected.to belong_to(:originator) }
+      it { is_expected.to belong_to(:order) }
+      it { is_expected.to belong_to(:tax_category) }
+      it { is_expected.to belong_to(:tax_rate) }
+    end
+
     describe "scopes" do
       let!(:arbitrary_adjustment) { create(:adjustment, label: "Arbitrary") }
       let!(:return_authorization_adjustment) {
