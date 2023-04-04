@@ -11,8 +11,9 @@ describe ReportJob do
   let(:format) { :csv }
 
   it "generates a report" do
-    job = ReportJob.new
-    job.perform(*report_args)
+    job = perform_enqueued_jobs(only: ReportJob) do
+      ReportJob.perform_later(*report_args)
+    end
     expect_csv_report(job)
   end
 
@@ -20,10 +21,7 @@ describe ReportJob do
     job = ReportJob.perform_later(*report_args)
     expect(job.done?).to eq false
 
-    # This performs the job in the same process but that's good enought for
-    # testing the job code. I hope that we can rely on the job worker.
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
-    job.retry_job
+    perform_enqueued_jobs(only: ReportJob)
 
     expect(job.done?).to eq true
     expect_csv_report(job)
