@@ -55,7 +55,7 @@ describe '
 
       click_button "Go"
 
-      expect(page).to have_content "This report is taking longer to process."
+      expect(page).to have_content "this report took too long"
     end
   end
 
