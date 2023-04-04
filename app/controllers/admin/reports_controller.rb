@@ -57,7 +57,9 @@ module Admin
 
     def render_report_as(format)
       if OpenFoodNetwork::FeatureToggle.enabled?(:background_reports, spree_current_user)
-        blob = ReportBlob.create_for_upload_later!
+        filename = report_filename
+        filename = "#{filename}html" if report_format.blank?
+        blob = ReportBlob.create_for_upload_later!(filename)
         ReportJob.perform_later(
           report_class, spree_current_user, params, format, blob
         )

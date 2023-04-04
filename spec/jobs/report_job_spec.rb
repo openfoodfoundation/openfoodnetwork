@@ -9,7 +9,7 @@ describe ReportJob do
   let(:enterprise) { create(:enterprise) }
   let(:params) { {} }
   let(:format) { :csv }
-  let(:blob) { ReportBlob.create_for_upload_later! }
+  let(:blob) { ReportBlob.create_for_upload_later!("report.csv") }
 
   it "generates a report" do
     job = perform_enqueued_jobs(only: ReportJob) do
@@ -29,6 +29,10 @@ describe ReportJob do
   end
 
   def expect_csv_report
+    blob.reload
+    expect(blob.filename.to_s).to eq "report.csv"
+    expect(blob.content_type).to eq "text/csv"
+
     table = CSV.parse(blob.result)
     expect(table[0][1]).to eq "Relationship"
     expect(table[1][1]).to eq "owns"

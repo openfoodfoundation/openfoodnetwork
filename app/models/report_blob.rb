@@ -2,18 +2,22 @@
 
 # Stores a generated report.
 class ReportBlob < ActiveStorage::Blob
-  def self.create_for_upload_later!
+  def self.create_for_upload_later!(filename)
     # ActiveStorage discourages modifying a blob later but we need a blob
     # before we know anything about the report file. It enables us to use the
     # same blob in the controller to read the result.
     create_before_direct_upload!(
-      filename: "tbd",
+      filename: filename,
       byte_size: 0,
       checksum: "0",
-      content_type: "application/octet-stream",
+      content_type: content_type(filename),
     ).tap do |blob|
       ActiveStorage::PurgeJob.set(wait: 1.month).perform_later(blob)
     end
+  end
+
+  def self.content_type(filename)
+    MIME::Types.of(filename).first&.to_s || "application/octet-stream"
   end
 
   def store(content)
