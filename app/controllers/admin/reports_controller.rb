@@ -57,16 +57,16 @@ module Admin
 
     def render_report_as(format)
       if OpenFoodNetwork::FeatureToggle.enabled?(:background_reports, spree_current_user)
-        blob = ReportJob.create_blob!
-        job = ReportJob.perform_later(
+        blob = ReportBlob.create_for_upload_later!
+        ReportJob.perform_later(
           report_class, spree_current_user, params, format, blob
         )
         Timeout.timeout(max_wait_time) do
-          sleep 1 until job.done?
+          sleep 1 until blob.content_stored?
         end
 
         # This result has been rendered by Rails in safe mode already.
-        job.result.html_safe # rubocop:disable Rails/OutputSafety
+        blob.result.html_safe # rubocop:disable Rails/OutputSafety
       else
         @report.render_as(format)
       end
