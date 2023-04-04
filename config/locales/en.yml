@@ -3791,6 +3791,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
+    editing_shipping_category: "Editing Shipping Category"
 
     name: "Name"
     description: "Description"
