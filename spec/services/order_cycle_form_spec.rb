@@ -240,9 +240,9 @@ describe OrderCycleForm do
               order_cycle.coordinator.users.first
             )
 
-            expect{ form.save }.to change{ order_cycle.distributor_payment_methods.pluck(:id) }
+            expect{ form.save }.to change{ order_cycle.distributor_payment_methods.pluck(:id).sort }
               .from([distributor_payment_method, distributor_payment_method2])
-              .to([distributor_payment_method])
+              .to([distributor_payment_method].sort)
           end
         end
 
@@ -291,7 +291,7 @@ describe OrderCycleForm do
               expect{ form.save }.to change{
                                        order_cycle.distributor_payment_methods.pluck(:id).sort
                                      }
-                .from([distributor_payment_method, distributor_payment_method2].sort)
+                .from([distributor_payment_method, distributor_payment_method2])
                 .to([distributor_payment_method])
             end
           end
@@ -365,7 +365,7 @@ describe OrderCycleForm do
             expect{ form.save }.to change{
                                      order_cycle.distributor_shipping_methods.pluck(:id).sort
                                    }
-              .from([distributor_shipping_method, distributor_shipping_method2].sort)
+              .from([distributor_shipping_method, distributor_shipping_method2])
               .to([distributor_shipping_method])
           end
         end
@@ -382,7 +382,7 @@ describe OrderCycleForm do
 
             expect{ form.save }.not_to change{
               order_cycle.distributor_shipping_methods.pluck(:id).sort
-            }.from([distributor_shipping_method, distributor_shipping_method2].sort)
+            }.from([distributor_shipping_method, distributor_shipping_method2])
           end
         end
         context "submitter is an admin" do
@@ -398,7 +398,7 @@ describe OrderCycleForm do
             expect{ form.save }.to change{
                                      order_cycle.distributor_shipping_methods.pluck(:id).sort
                                    }
-              .from([distributor_shipping_method, distributor_shipping_method2].sort)
+              .from([distributor_shipping_method, distributor_shipping_method2])
               .to([distributor_shipping_method])
           end
         end
@@ -415,7 +415,7 @@ describe OrderCycleForm do
 
               expect{ form.save }.to change{
                 order_cycle.distributor_shipping_methods.pluck(:id).sort
-              }.from([distributor_shipping_method, distributor_shipping_method2].sort)
+              }.from([distributor_shipping_method, distributor_shipping_method2])
                 .to([distributor_shipping_method])
             end
           end
@@ -440,7 +440,7 @@ describe OrderCycleForm do
               }.from [
                 distributor_shipping_method, distributor_shipping_method2,
                 distributor_shipping_method3
-              ].sort
+              ]
             end
           end
         end
