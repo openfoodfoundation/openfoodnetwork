@@ -13,6 +13,7 @@ class EnterpriseRelationship < ApplicationRecord
 
   after_save :update_permissions_of_child_variant_overrides
   before_destroy :revoke_all_child_variant_overrides
+  before_destroy :destroy_related_exchanges
 
   scope :with_enterprises, -> {
     joins("
@@ -100,6 +101,10 @@ class EnterpriseRelationship < ApplicationRecord
 
   def revoke_all_child_variant_overrides
     child_variant_overrides.update_all(permission_revoked_at: Time.zone.now)
+  end
+
+  def destroy_related_exchanges
+    Exchange.where(sender: parent, receiver: child, incoming: true).destroy_all
   end
 
   def child_variant_overrides
