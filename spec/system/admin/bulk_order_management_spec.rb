@@ -85,13 +85,29 @@ describe '
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
                                         completed_at: Time.zone.now )
       }
+      let!(:o3) {
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.now )
+      }
+      let!(:product) {
+        create(:simple_product)
+      }
+      let!(:var1) {
+        create(:variant, product_id: product.id, display_name: "Little Fish")
+      }
+      let!(:var2) {
+        create(:variant, product_id: product.id, display_name: "Big Fish")
+      }
 
       before do
-        15.times {
-          create(:line_item_with_shipment, order: o1)
+        10.times {
+          create(:line_item_with_shipment, variant: var1, order: o2)
         }
         5.times {
-          create(:line_item_with_shipment, order: o2)
+          create(:line_item_with_shipment, variant: var2, order: o1)
+        }
+        5.times {
+          create(:line_item_with_shipment, variant: var1, order: o3)
         }
       end
 
@@ -124,6 +140,20 @@ describe '
         expect(page).to have_button("Last »", disabled: true)
         select2_select "100 per page", from: "autogen4" # should display all 20 line items
         expect(page).to have_content "20 Results found. Viewing 1 to 20."
+      end
+
+      it "clicking the product variant" do
+        visit_bulk_order_management
+        expect(page).to have_content "Little Fish", count: 10
+        expect(page).to have_content "Big Fish", count: 5
+        click_on("Little Fish") # opens BOM box
+        within "#listing_orders" do
+          expect(page).to have_content "Little Fish", count: 15
+          expect(page).not_to have_content "Big Fish"
+        end
+        find("a", text: "Clear").click # closes BOM box
+        expect(page).to have_content "Little Fish", count: 10
+        expect(page).to have_content "Big Fish", count: 5
       end
     end
 
