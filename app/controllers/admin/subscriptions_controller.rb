@@ -28,7 +28,8 @@ module Admin
         end
         format.json {
           render_as_json @collection, ams_prefix: params[:ams_prefix],
-          payment_method_tags: payment_method_tags_by_id }
+                                      payment_method_tags: payment_method_tags_by_id
+        }
       end
     end
 

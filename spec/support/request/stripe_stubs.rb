@@ -169,11 +169,14 @@ module StripeStubs
   def get_customer_payment_methods_response_mock(options)
     payment_method = options[:payment_method] || "pm_456"
     fingerprint = options[:fingerprint] || "7890"
-    { status: options[:code] || 200,
+    { 
+      status: options[:code] || 200,
       body: JSON.generate(
-        object: "list", has_more: false, data: [{ id: payment_method, 
-        card: { fingerprint: fingerprint } }]
-      ) }
+        object: "list", 
+        has_more: false, 
+        data: [{ id: payment_method, card: { fingerprint: fingerprint } }],
+      ),
+    }
   end
 
   def add_metadata_response_mock(options)
