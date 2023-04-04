@@ -70,7 +70,7 @@
       %h6.text-center{ 'ng-hide' => 'sharedResource' } {{ selectedUnitsVariant.full_name }}
     .three.columns
       %h6.text-right
-        %a{ :href => '#', 'ng-click' => 'selectedUnitsVariant = {};selectedUnitsProduct = {};sharedResource=false;' }= t('admin.clear')
+        %a{ :href => '#', 'ng-click' => 'resetSelectedUnitsVariant()' }= t('admin.clear')
     %hr
     .row
       .one.columns.alpha
