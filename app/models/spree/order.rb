@@ -62,6 +62,9 @@ module Spree
     has_many :line_item_adjustments, through: :line_items, source: :adjustments
     has_many :shipment_adjustments, through: :shipments, source: :adjustments
     has_many :all_adjustments, class_name: 'Spree::Adjustment', dependent: :destroy
+    has_many :vouchers, -> { where(originator_type: 'Voucher') },
+             class_name: 'Spree::Adjustment',
+             dependent: :destroy
 
     belongs_to :order_cycle
     belongs_to :distributor, class_name: 'Enterprise'
@@ -616,10 +619,6 @@ module Spree
       else
         line_items.sort_by { |li| [li.product.name] }
       end
-    end
-
-    def vouchers
-      adjustments.where(originator_type: 'Voucher')
     end
 
     private
