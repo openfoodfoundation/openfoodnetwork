@@ -7,7 +7,10 @@ class Voucher < ApplicationRecord
 
   belongs_to :enterprise
 
-  has_many :adjustments, as: :originator, class_name: 'Spree::Adjustment', inverse_of: :voucher,
+  has_many :adjustments,
+           as: :originator,
+           class_name: 'Spree::Adjustment',
+           inverse_of: :voucher,
            dependent: :nullify
 
   validates :code, presence: true, uniqueness: { scope: :enterprise_id }
