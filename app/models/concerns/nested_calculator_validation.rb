@@ -4,18 +4,12 @@ module NestedCalculatorValidation
   extend ActiveSupport::Concern
 
   included do
-    validate :associated_calculator
+    validates_associated :calculator
+    after_validation :remove_calculator_error
   end
 
-  def associated_calculator
-    # Calculator errors have already been added, don't know why.
-    errors.each do |error|
-      errors.delete(error.attribute) if error.attribute.match? /^calculator./
-    end
-    # Copy errors from associated calculator to the base object, prepending "calculator." to the attribute name.
-    # wait a minute, that's what the messages were before! we just needed to get the translate keys right!
-    calculator.tap(&:valid?).errors.each do |error|
-      errors.import error, attribute: [:calculator, error.attribute].join('.')
-    end
+  def remove_calculator_error
+    # Remove generic calculator message, in favour of messages provided by validates_associated
+    errors.delete(:calculator) if errors.key?(:calculator)
   end
 end

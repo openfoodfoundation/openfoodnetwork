@@ -408,7 +408,7 @@ describe '
 
       expect(page).to have_content("Name can't be blank")
       expect(page).to have_content("At least one hub must be selected")
-      expect(page).to have_content("Amount: Invalid input. Please use only numbers.")
+      expect(page).to have_content("Calculator Amount: Invalid input. Please use only numbers.")
 
       # Highlighting invalid fields
       within '.calculator-settings .field .field_with_errors' do
