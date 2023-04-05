@@ -104,7 +104,7 @@ module Spree
         flash[:error] = I18n.t(:orders_could_not_cancel)
       end
       render status: :found,
-             operations: cable_car.redirect_to(url: request.referer || main_app.order_path(@order))
+             cable_ready: cable_car.redirect_to(url: request.referer || main_app.order_path(@order))
     end
 
     private

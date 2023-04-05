@@ -43,7 +43,7 @@ class SplitCheckoutController < ::BaseController
   rescue Spree::Core::GatewayError => e
     flash[:error] = I18n.t(:spree_gateway_error_flash_for_checkout, error: e.message)
     @order.update_column(:state, "payment")
-    render operations: cable_car.redirect_to(url: checkout_step_path(:payment))
+    render cable_ready: cable_car.redirect_to(url: checkout_step_path(:payment))
   end
 
   private
@@ -54,7 +54,7 @@ class SplitCheckoutController < ::BaseController
       messages: order_error_messages
     )
 
-    render status: :unprocessable_entity, operations: cable_car.
+    render status: :unprocessable_entity, cable_ready: cable_car.
       replace("#checkout", partial("split_checkout/checkout")).
       replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
   end
@@ -132,7 +132,7 @@ class SplitCheckoutController < ::BaseController
     return unless selected_payment_method&.external_gateway?
     return unless (redirect_url = selected_payment_method.external_payment_url(order: @order))
 
-    render operations: cable_car.redirect_to(url: redirect_url)
+    render cable_ready: cable_car.redirect_to(url: redirect_url)
     true
   end
 
