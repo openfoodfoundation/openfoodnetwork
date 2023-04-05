@@ -33,9 +33,11 @@ angular.module("admin.orderCycles").controller "OrderCyclesCtrl", ($scope, $q, C
     StatusMessage.display 'notice', "You have unsaved changes" if newVal
 
   $scope.showMore = (days) ->
+    orderCycles = OrderCycles.index(ams_prefix: "index", 
+    "q[orders_close_at_gt]": "#{daysFromToday($scope.ordersCloseAtLimit - days)}", 
+    "q[orders_close_at_lteq]": "#{daysFromToday($scope.ordersCloseAtLimit)}"
+    )
     $scope.ordersCloseAtLimit -= days
-    existingIDs = Object.keys(OrderCycles.byID)
-    orderCycles = OrderCycles.index(ams_prefix: "index", "q[orders_close_at_gt]": "#{daysFromToday($scope.ordersCloseAtLimit)}", "q[id_not_in][]": existingIDs)
     orderCycles.$promise.then ->
       $scope.orderCycles.push(orderCycle) for orderCycle in orderCycles
       compileData()
