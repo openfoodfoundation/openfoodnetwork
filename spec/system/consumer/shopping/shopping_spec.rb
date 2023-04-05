@@ -14,11 +14,13 @@ describe "As a consumer I want to shop with a distributor" do
     let(:supplier) { create(:supplier_enterprise) }
     let(:oc1) {
       create(:simple_order_cycle, distributors: [distributor],
-                                  coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now)
+                                  coordinator: create(:distributor_enterprise),
+                                  orders_close_at: 2.days.from_now)
     }
     let(:oc2) {
       create(:simple_order_cycle, distributors: [distributor],
-                                  coordinator: create(:distributor_enterprise), orders_close_at: 3.days.from_now)
+                                  coordinator: create(:distributor_enterprise),
+                                  orders_close_at: 3.days.from_now)
     }
     let(:product) { create(:simple_product, supplier: supplier, meta_keywords: "Domestic") }
     let(:variant) { product.variants.first }
@@ -277,7 +279,9 @@ describe "As a consumer I want to shop with a distributor" do
           expect(page).to have_content product2.name
           expect(page).to have_content product3.name
 
-          expect(page).to have_selector ".sticky-shop-filters-container .property-selectors span", text: "certified"
+          expect(page).to have_selector(
+            ".sticky-shop-filters-container .property-selectors span", text: "certified"
+          )
           find(".sticky-shop-filters-container .property-selectors span", text: 'certified').click
           expect(page).to have_content "Results for certified"
 
@@ -286,7 +290,8 @@ describe "As a consumer I want to shop with a distributor" do
         end
       end
 
-      it "returns search results for products where the search term matches one of the product's variant names" do
+      it "returns search results for products where the search term matches one of the product's "\
+         "variant names" do
         visit shop_path
         fill_in "search", with: "Badg" # For variant with display_name "Badgers"
 
@@ -313,7 +318,8 @@ describe "As a consumer I want to shop with a distributor" do
 
           # Try to go to cart
           visit main_app.cart_path
-          expect(page).to have_content "The hub you have selected is temporarily closed for orders. Please try again later."
+          expect(page).to have_content "The hub you have selected is temporarily closed for "\
+                                       "orders. Please try again later."
         end
       end
     end
@@ -396,7 +402,8 @@ describe "As a consumer I want to shop with a distributor" do
         end
       end
 
-      it "shows quantity of remaining stock for products with quantity less < 3 when product_stock_display is true" do
+      it "shows quantity of remaining stock for products with quantity less < 3 when "\
+         "product_stock_display is true" do
         distributor.set_preference(:product_low_stock_display, true)
         variant.update on_hand: 2
         visit shop_path
@@ -428,8 +435,10 @@ describe "As a consumer I want to shop with a distributor" do
           click_add_to_cart variant
 
           within(".out-of-stock-modal") do
-            expect(page).to have_content "stock levels for one or more of the products in your cart have reduced"
-            expect(page).to have_content "#{product.name} - #{variant.unit_to_display} is now out of stock."
+            expect(page).to have_content "stock levels for one or more of the products "\
+                                         "in your cart have reduced"
+            expect(page).to have_content "#{product.name} - #{variant.unit_to_display} "\
+                                         "is now out of stock."
           end
 
           # -- Page updates
@@ -473,8 +482,10 @@ describe "As a consumer I want to shop with a distributor" do
             wait_for_cart
 
             within(".out-of-stock-modal") do
-              expect(page).to have_content "stock levels for one or more of the products in your cart have reduced"
-              expect(page).to have_content "#{product.name} - #{variant.unit_to_display} is now out of stock."
+              expect(page).to have_content "stock levels for one or more of the products "\
+                                           "in your cart have reduced"
+              expect(page).to have_content "#{product.name} - #{variant.unit_to_display} "\
+                                           "is now out of stock."
             end
 
             # -- Page updates
@@ -499,8 +510,10 @@ describe "As a consumer I want to shop with a distributor" do
             click_add_to_cart variant2
 
             within(".out-of-stock-modal") do
-              expect(page).to have_content "stock levels for one or more of the products in your cart have reduced"
-              expect(page).to have_content "#{product.name} - #{variant.unit_to_display} now only has 1 remaining"
+              expect(page).to have_content("stock levels for one or more of the products "\
+                                           "in your cart have reduced")
+              expect(page).to have_content("#{product.name} - #{variant.unit_to_display} "\
+                                           "now only has 1 remaining")
             end
           end
 
@@ -517,8 +530,10 @@ describe "As a consumer I want to shop with a distributor" do
               click_add_bulk_to_cart variant2
 
               within(".out-of-stock-modal") do
-                expect(page).to have_content "stock levels for one or more of the products in your cart have reduced"
-                expect(page).to have_content "#{product.name} - #{variant.unit_to_display} now only has 1 remaining"
+                expect(page).to have_content "stock levels for one or more of the products "\
+                                             "in your cart have reduced"
+                expect(page).to have_content "#{product.name} - #{variant.unit_to_display} "\
+                                             "now only has 1 remaining"
               end
 
               within_variant(variant) do
@@ -568,7 +583,8 @@ describe "As a consumer I want to shop with a distributor" do
       end
 
       it "shows the last order cycle" do
-        oc1 = create(:simple_order_cycle, distributors: [distributor], orders_open_at: 17.days.ago,
+        oc1 = create(:simple_order_cycle, distributors: [distributor],
+                                          orders_open_at: 17.days.ago,
                                           orders_close_at: 10.days.ago)
         visit shop_path
         expect(page).to have_content "The last cycle closed 10 days ago"
@@ -576,7 +592,8 @@ describe "As a consumer I want to shop with a distributor" do
 
       it "shows the next order cycle" do
         oc1 = create(:simple_order_cycle, distributors: [distributor],
-                                          orders_open_at: 10.days.from_now, orders_close_at: 17.days.from_now)
+                                          orders_open_at: 10.days.from_now,
+                                          orders_close_at: 17.days.from_now)
         visit shop_path
         expect(page).to have_content "The next cycle opens in 10 days"
       end
@@ -677,7 +694,9 @@ describe "As a consumer I want to shop with a distributor" do
   def expect_out_of_stock_behavior
     # Shows an "out of stock" modal, with helpful user feedback
     within(".out-of-stock-modal") do
-      expect(page).to have_content 'While you\'ve been shopping, the stock levels for one or more of the products in your cart have reduced. Here\'s what\'s changed:'
+      expect(page).to have_content 'While you\'ve been shopping, the stock levels for one or more '\
+                                   'of the products in your cart have reduced. Here\'s what\'s '\
+                                   'changed:'
     end
 
     # Removes the item from the client-side cart and marks the variant as unavailable

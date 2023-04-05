@@ -18,8 +18,8 @@ describe "
   it "fills in a setting shows the result on the home page" do
     fill_in "footer_facebook_url", with: ""
     fill_in "footer_twitter_url", with: "http://twitter.com/me"
-    fill_in "footer_links_md", with: \
-    "[markdown link](/:/?#@!$&'()*+,;=0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ)"
+    fill_in "footer_links_md", with: "[markdown link](/:/?#@!$&'()*+,;=0123456789"\
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ)"
     click_button "Update"
     expect(page).to have_content "Your content has been successfully updated!"
 

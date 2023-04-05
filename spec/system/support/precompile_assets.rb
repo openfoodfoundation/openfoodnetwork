@@ -7,7 +7,10 @@ RSpec.configure do |config|
   #    rspec --tag ~type:system
   #
   # In this case, we don't need to precompile assets.
-  next if config.filter.opposite.rules[:type] == "system" || config.exclude_pattern.match?(%r{spec/system})
+  next if (
+    config.filter.opposite.rules[:type] == "system" ||
+    config.exclude_pattern.match?(%r{spec/system})
+  )
 
   config.before(:suite) do
     # We can use webpack-dev-server for tests, too!

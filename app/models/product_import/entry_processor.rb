@@ -10,7 +10,8 @@ module ProductImport
                 :variants_created, :variants_updated, :enterprise_products,
                 :total_enterprise_products, :products_reset_count
 
-    def initialize(importer, validator, import_settings, spreadsheet_data, editable_enterprises, import_time, updated_ids)
+    def initialize(importer, validator, import_settings, spreadsheet_data,
+                   editable_enterprises, import_time, updated_ids)
       @importer = importer
       @validator = validator
       @settings = Settings.new(import_settings)

@@ -44,7 +44,8 @@ describe UserConfirmationsController, type: :controller do
       end
 
       it "redirects to previous url on /register path" do
-        session[:confirmation_return_url] = registration_path(anchor: "#/signup", after_login: "/register")
+        session[:confirmation_return_url] = 
+          registration_path(anchor: "#/signup", after_login: "/register")
         spree_get :show, confirmation_token: unconfirmed_user.confirmation_token
         expect(response).
           to redirect_to registration_path(anchor: "#/signup",

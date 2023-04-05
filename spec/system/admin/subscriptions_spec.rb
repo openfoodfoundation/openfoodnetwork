@@ -109,7 +109,8 @@ describe 'Subscriptions' do
         within "#subscription-line-items" do
           expect(page).to have_selector "span#order_subtotal", text: "$15.00" # 3 x $5 items
           expect(page).to have_selector "span#order_fees", text: "$3.50" # $3.5 shipping
-          expect(page).to have_selector "span#order_form_total", text: "$18.50" # 3 x $5 items + $3.5 shipping
+          # 3 x $5 items + $3.5 shipping
+          expect(page).to have_selector "span#order_form_total", text: "$18.50"
         end
 
         # Viewing Orders
@@ -199,8 +200,8 @@ describe 'Subscriptions' do
       let(:address) { create(:address) }
       let!(:customer_user) { create(:user) }
       let!(:credit_card1) {
-        create(:stored_credit_card, user: customer_user, cc_type: 'visa', last_digits: 1111, month: 10,
-                                    year: 2030)
+        create(:stored_credit_card, user: customer_user, cc_type: 'visa', last_digits: 1111,
+                                    month: 10, year: 2030)
       }
       let!(:customer) {
         create(:customer, enterprise: shop, bill_address: address, user: customer_user,
@@ -220,7 +221,8 @@ describe 'Subscriptions' do
                                     orders_close_at: 7.days.from_now)
       }
       let!(:outgoing_exchange) {
-        order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [test_variant, shop_variant],
+        order_cycle.exchanges.create(sender: shop, receiver: shop,
+                                     variants: [test_variant, shop_variant],
                                      enterprise_fees: [enterprise_fee])
       }
       let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
@@ -403,7 +405,8 @@ describe 'Subscriptions' do
                payment_method: payment_method,
                shipping_method: shipping_method,
                subscription_line_items: [create(:subscription_line_item, variant: variant1,
-                                                                         quantity: 2, price_estimate: 13.75)],
+                                                                         quantity: 2,
+                                                                         price_estimate: 13.75)],
                with_proxy_orders: true)
       }
 
@@ -504,7 +507,10 @@ describe 'Subscriptions' do
           expect(page).to have_content 'Saved'
 
           expect(page).to have_selector "#order_update_issues_dialog .message",
-                                        text: 'Some orders could not be automatically updated, this is most likely because they have been manually edited. Please review the issues listed below and make any adjustments to individual orders if required.'
+                                        text: 'Some orders could not be automatically updated, '\
+                                        'this is most likely because they have been manually '\
+                                        'edited. Please review the issues listed below and make '\
+                                        'any adjustments to individual orders if required.'
         end
       end
     end
@@ -724,7 +730,9 @@ describe 'Subscriptions' do
 
   def add_variant_to_subscription(variant, quantity)
     row_count = all("#subscription-line-items .item").length
-    variant_name = variant.full_name.present? ? "#{variant.name} - #{variant.full_name}" : variant.name
+    variant_name = variant.full_name.present? ?
+                   "#{variant.name} - #{variant.full_name}" :
+                   variant.name
     select2_select variant.name, from: "add_variant_id", search: true, select_text: variant_name
     fill_in "add_quantity", with: quantity
     click_link "Add"

@@ -53,7 +53,8 @@ create(:enterprise)
       # Wait for row to appear since have_relationship doesn't wait
       expect(page).to have_selector 'tr', count: 2
       expect_relationship_with_permissions e1, e2,
-                                           ['to add to order cycle', 'to add products to inventory', 'to edit profile']
+                                           ['to add to order cycle',
+                                            'to add products to inventory', 'to edit profile']
       er = EnterpriseRelationship.where(parent_id: e1, child_id: e2).first
       expect(er).to be_present
       expect(er.permissions.map(&:name)).to match_array ['add_to_order_cycle', 'edit_profile',

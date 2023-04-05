@@ -106,7 +106,8 @@ describe '
     end
     fill_in 'enterprise_description', with: 'Connecting farmers and eaters'
 
-    description_input = page.find("text-angular#enterprise_long_description div[id^='taTextElement']")
+    description_input =
+      page.find("text-angular#enterprise_long_description div[id^='taTextElement']")
     description_input.native.send_keys('This is an interesting long description')
 
     # Check StimulusJs switching of sidebar elements
@@ -193,17 +194,22 @@ describe '
     accept_alert do
       click_link "Shop Preferences"
     end
-    shop_message_input = page.find("text-angular#enterprise_preferred_shopfront_message div[id^='taTextElement']")
+    shop_message_input =
+      page.find("text-angular#enterprise_preferred_shopfront_message div[id^='taTextElement']")
     shop_message_input.native.send_keys('This is my shopfront message.')
-    expect(page).to have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_close_at"
+    expect(page)
+      .to have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_close_at"
     #using "find" as fields outside of the screen and are not visible
-    find(:xpath, '//*[@id="enterprise_preferred_shopfront_order_cycle_order_orders_open_at"]').trigger("click")
+    find(:xpath, '//*[@id="enterprise_preferred_shopfront_order_cycle_order_orders_open_at"]')
+      .trigger("click")
     find(:xpath, '//*[@id="enterprise_enable_subscriptions_true"]').trigger("click")
 
     accept_alert do
       click_link "Inventory Settings"
     end
-    expect(page).to have_checked_field "enterprise_preferred_product_selection_from_inventory_only_false"
+    expect(page).to have_checked_field(
+      "enterprise_preferred_product_selection_from_inventory_only_false"
+    )
 
     click_button 'Update'
 
@@ -230,7 +236,9 @@ describe '
 
     click_link "Shop Preferences"
     expect(page).to have_content 'This is my shopfront message.'
-    expect(page).to have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
+    expect(page).to have_checked_field(
+      "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
+    )
     expect(page).to have_checked_field "enterprise_require_login_true"
     expect(page).to have_checked_field "enterprise_enable_subscriptions_true"
 
@@ -388,7 +396,8 @@ describe '
 
           # Then it should show me an error
           expect(page).to have_no_content 'Enterprise "zzz" has been successfully created!'
-          expect(page).to have_content "#{enterprise_user.email} is not permitted to own any more enterprises (limit is 1)."
+          expect(page).to have_content "#{enterprise_user.email} is not permitted "\
+                                       "to own any more enterprises (limit is 1)."
         end
       end
     end
@@ -424,7 +433,8 @@ describe '
         expect(distributor3.reload.name).to eq('Eaterprises')
       end
 
-      it "does not show links to manage shipping methods, payment methods or enterprise fees on the edit page" do
+      it "does not show links to manage shipping methods, payment methods or "\
+         "enterprise fees on the edit page" do
         visit admin_enterprises_path
         within("tbody#e_#{distributor3.id}") { click_link 'Settings' }
 
@@ -476,10 +486,12 @@ describe '
       let(:user) { create(:user, enterprise_limit: 1) }
       let(:oc1) {
         create(:simple_order_cycle, distributors: [distributor1],
-                                    coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now)
+                                    coordinator: create(:distributor_enterprise),
+                                    orders_close_at: 2.days.from_now)
       }
       let(:product) {
-        create(:simple_product, supplier: supplier1, primary_taxon: taxon, properties: [property], name: "Beans")
+        create(:simple_product, supplier: supplier1, primary_taxon: taxon,
+                                properties: [property], name: "Beans")
       }
       let(:variant) { product.variants.first }
       let(:exchange1) { oc1.exchanges.to_enterprises(distributor1).outgoing.first }
@@ -502,7 +514,8 @@ describe '
           find("#s2id_enterprise_preferred_shopfront_taxon_order").click
           find(".select2-result-label", text: "Tricky Taxon").click
           click_button 'Update'
-          expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(flash_message)
+            .to eq('Enterprise "First Distributor" has been successfully updated!')
         end
 
         it "sets the preference correctly" do
@@ -523,7 +536,8 @@ describe '
           find("#s2id_enterprise_preferred_shopfront_producer_order").click
           find(".select2-result-label", text: "First Supplier").click
           click_button 'Update'
-          expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(flash_message)
+            .to eq('Enterprise "First Distributor" has been successfully updated!')
         end
 
         it "sets the preference correctly" do
@@ -578,7 +592,8 @@ describe '
 
             expect do
               click_button "Invite"
-              expect(page).to have_content "email@email.com has been invited to manage this enterprise"
+              expect(page)
+                .to have_content "email@email.com has been invited to manage this enterprise"
             end.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
           end
         end

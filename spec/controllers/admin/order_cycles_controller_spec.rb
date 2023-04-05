@@ -227,7 +227,9 @@ module Admin
                               incoming: false, variants: [v])
           }
           let!(:subscription) { create(:subscription, shop: coordinator, schedule: schedule) }
-          let!(:subscription_line_item) { create(:subscription_line_item, subscription: subscription, variant: v) }
+          let!(:subscription_line_item) {
+            create(:subscription_line_item, subscription: subscription, variant: v)
+          }
 
           before do
             allow(form_mock).to receive(:save) { true }

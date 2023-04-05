@@ -190,8 +190,8 @@ describe SubscriptionConfirmJob do
         end
 
         it "authorizes the payment with Stripe" do
-          allow(order).to receive_message_chain(:subscription, :payment_method) { stripe_sca_payment_method }
-
+          allow(order)
+            .to receive_message_chain(:subscription, :payment_method) { stripe_sca_payment_method }
           expect(OrderManagement::Order::StripeScaPaymentAuthorize).
             to receive_message_chain(:new, :call!) { true }
 

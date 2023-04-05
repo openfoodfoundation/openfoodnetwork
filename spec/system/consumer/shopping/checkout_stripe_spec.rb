@@ -106,8 +106,10 @@ describe "Check out with Stripe" do
           it "completes checkout successfully" do
             checkout_with_stripe
 
-            # We make stripe return stripe_redirect_url (which is already sending the user back to the checkout) as if the authorization was done
-            # We can then control the actual authorization or failure of the payment through the mock stub_successful_capture_request
+            # We make stripe return stripe_redirect_url (which is already sending the user back
+            # to the checkout) as if the authorization was done. We can then control the actual
+            # authorization or failure of the payment through the mock
+            # stub_successful_capture_request
 
             expect(page).to have_content "Confirmed"
             expect(order.reload.completed?).to eq true
@@ -123,9 +125,9 @@ describe "Check out with Stripe" do
           it "shows an error message from the Stripe response" do
             checkout_with_stripe
 
-            # We make stripe return stripe_redirect_url (which is already sending the user back to the checkout) as if the authorization was done
-            # We can then control the actual authorization or failure of the payment through the mock stub_failed_capture_request
-
+            # We make stripe return stripe_redirect_url (which is already sending the user back to
+            # the checkout) as if the authorization was done. We can then control the actual
+            # authorization or failure of the payment through the mock stub_failed_capture_request
             expect(page).to have_content error_message
             expect(order.reload.state).to eq "cart"
             expect(order.payments.first.state).to eq "failed"
@@ -173,8 +175,10 @@ describe "Check out with Stripe" do
           stub_list_customers_request(email: order.user.email, response: {})
           stub_get_customer_payment_methods_request(customer: "cus_A456", response: {})
           stub_get_customer_payment_methods_request(customer: "cus_A123", response: {})
-          stub_payment_methods_post_request request: { payment_method: "pm_123", customer: "cus_A123" },
-                                            response: { pm_id: "pm_123" }
+          stub_payment_methods_post_request(
+            request: { payment_method: "pm_123", customer: "cus_A123" },
+            response: { pm_id: "pm_123" }
+          )
           stub_add_metadata_request(payment_method: "pm_123", response: {})
           stub_payment_intents_post_request order: order
           stub_successful_capture_request order: order
@@ -197,7 +201,8 @@ describe "Check out with Stripe" do
 
           # Prepare a second order
           new_order = create(:order, user: user, order_cycle: order_cycle,
-                                     distributor: distributor, bill_address_id: nil, ship_address_id: nil)
+                                     distributor: distributor, bill_address_id: nil,
+                                     ship_address_id: nil)
           set_order(new_order)
           add_product_to_cart(new_order, product, quantity: 10)
           stub_payment_intents_post_request order: new_order

@@ -38,7 +38,9 @@ describe "Business Address" do
         fill_in 'enterprise_business_address_attributes_phone', with: '0123456789'
 
         click_button "Update"
-        expect(page).to have_content("Enterprise \"First Distributor\" has been successfully updated!")
+        expect(page).to have_content(
+          "Enterprise \"First Distributor\" has been successfully updated!"
+        )
 
         click_link "Business Details"
         expect(page).to have_content "France"
@@ -123,7 +125,9 @@ describe "Business Address" do
         go_to_business_details
 
         click_button "Reset Form"
-        expect(page).to have_content("Enterprise \"First Distributor\" has been successfully updated!")
+        expect(page).to have_content(
+          "Enterprise \"First Distributor\" has been successfully updated!"
+        )
       end
 
       it 'clears form when all fields  are empty' do
@@ -146,7 +150,9 @@ describe "Business Address" do
         fill_in 'enterprise_business_address_attributes_phone', with: ''
 
         click_button "Update"
-        expect(page).to have_content("Enterprise \"First Distributor\" has been successfully updated!")
+        expect(page).to have_content(
+          "Enterprise \"First Distributor\" has been successfully updated!"
+        )
       end
     end
   end

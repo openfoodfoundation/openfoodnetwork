@@ -139,9 +139,15 @@ describe '
       }
       let!(:s1) { create(:supplier_enterprise) }
       let!(:s2) { create(:supplier_enterprise) }
-      let!(:li1) { create(:line_item_with_shipment, order: o1, product: create(:product, supplier: s1)) }
-      let!(:li2) { create(:line_item_with_shipment, order: o2, product: create(:product, supplier: s2)) }
-      let!(:li3) { create(:line_item_with_shipment, order: o2, product: create(:product, supplier: s2)) }
+      let!(:li1) {
+        create(:line_item_with_shipment, order: o1, product: create(:product, supplier: s1))
+      }
+      let!(:li2) {
+        create(:line_item_with_shipment, order: o2, product: create(:product, supplier: s2))
+      }
+      let!(:li3) {
+        create(:line_item_with_shipment, order: o2, product: create(:product, supplier: s2))
+      }
 
       before :each do
         visit_bulk_order_management
@@ -526,7 +532,8 @@ describe '
           visit_bulk_order_management
         end
 
-        it "displays a select box for distributors, which filters line items by the selected distributor", retry: 3 do
+        it "displays a select box for distributors, which filters line items "\
+           "by the selected distributor", retry: 3 do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           find("#s2id_distributor_filter .select2-chosen").click
@@ -588,7 +595,8 @@ describe '
           visit_bulk_order_management
         end
 
-        it "displays a select box for order cycles, which filters line items by the selected order cycle", retry: 3 do
+        it "displays a select box for order cycles, which filters line items "\
+           "by the selected order cycle", retry: 3 do
           displays_default_orders
           expect(page).to have_select2 'order_cycle_filter',
                                        with_options: OrderCycle.pluck(:name).unshift("All")
@@ -711,7 +719,8 @@ describe '
         expect(page).to have_selector "tr#li_#{li4.id}"
       end
 
-      it "displays only line items whose orders meet the date restriction criteria, when changed", retry: 3 do
+      it "displays only line items whose orders meet the date restriction criteria, when changed", 
+        retry: 3 do
         from = today - 8.days
         to = today + 1.day
 

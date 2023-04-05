@@ -13,12 +13,14 @@ describe '
   it "listing and filtering order cycles" do
     # Given some order cycles (created in an arbitrary order)
     oc4 = create(:simple_order_cycle, name: 'oc4',
-                                      orders_open_at: 2.days.from_now, orders_close_at: 1.month.from_now)
+                                      orders_open_at: 2.days.from_now,
+                                      orders_close_at: 1.month.from_now)
     oc2 = create(:simple_order_cycle, name: 'oc2', orders_close_at: 1.month.from_now)
     oc6 = create(:simple_order_cycle, name: 'oc6',
                                       orders_open_at: 1.month.ago, orders_close_at: 3.weeks.ago)
     oc3 = create(:simple_order_cycle, name: 'oc3',
-                                      orders_open_at: 1.day.from_now, orders_close_at: 1.month.from_now)
+                                      orders_open_at: 1.day.from_now,
+                                      orders_close_at: 1.month.from_now)
     oc5 = create(:simple_order_cycle, name: 'oc5',
                                       orders_open_at: 1.month.ago, orders_close_at: 2.weeks.ago)
     oc1 = create(:order_cycle, name: 'oc1')
@@ -36,7 +38,8 @@ describe '
     expect(page).to have_selector "#listing_order_cycles tr td:first-child", count: 7
 
     order_cycle_names = ["oc0", "oc1", "oc2", "oc3", "oc4", "oc5", "oc6"]
-    expect(all("#listing_order_cycles tr td:first-child input").map(&:value)).to eq order_cycle_names
+    expect(all("#listing_order_cycles tr td:first-child input").map(&:value))
+      .to eq order_cycle_names
 
     # And the rows should have the correct classes
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}.undated"
@@ -123,7 +126,10 @@ describe '
   describe 'listing order cycles with other locales' do
     oc_open_at = Time.zone.now - 2.weeks
     oc_close_at = Time.zone.now + 2.weeks
-    let!(:oc_pt) { create(:simple_order_cycle, name: 'oc', orders_open_at: oc_open_at, orders_close_at: oc_close_at) }
+    let!(:oc_pt) {
+      create(:simple_order_cycle, name: 'oc', orders_open_at: oc_open_at,
+                                  orders_close_at: oc_close_at)
+    }
 
     around(:each) do |spec|
       I18n.locale = :pt
@@ -136,22 +142,26 @@ describe '
         login_as_admin_and_visit admin_order_cycles_path
 
         within("tr.order-cycle-#{oc_pt.id}") do
-          expect(find('input.datetimepicker', match: :first).value).to start_with oc_open_at.strftime("%Y-%m-%d %H:%M")
+          expect(find('input.datetimepicker', 
+match: :first).value).to start_with oc_open_at.strftime("%Y-%m-%d %H:%M")
           find('input.datetimepicker', match: :first).click
         end
 
         within(".flatpickr-calendar.open") do
-          date_picker_selection = oc_open_at.strftime("%d").to_i.to_s # we need to strip leading zeros, ex.: 09 -> 9
+          # we need to strip leading zeros, ex.: 09 -> 9
+          date_picker_selection = oc_open_at.strftime("%d").to_i.to_s
           expect(page).to have_selector '.flatpickr-day.selected', text: date_picker_selection
           find('.dayContainer .flatpickr-day', text: "13").click
         end
 
         within("tr.order-cycle-#{oc_pt.id}") do
-          expect(find('input.datetimepicker', match: :first).value).to eq oc_open_at.strftime("%Y-%m-13 %H:%M")
+          expect(find('input.datetimepicker', 
+match: :first).value).to eq oc_open_at.strftime("%Y-%m-13 %H:%M")
         end
       end
 
-      it "correctly opens the datetimepicker and closes it using the last button (the 'Close' one)" do
+      it "correctly opens the datetimepicker and closes it using the last button "\
+         "(the 'Close' one)" do
         login_as_admin_and_visit admin_order_cycles_path
         test_value = Time.zone.now
 
@@ -172,7 +182,8 @@ describe '
 
         # Check the value is correct
         within("tr.order-cycle-#{oc_pt.id}") do
-          expect(find('input.datetimepicker', match: :first).value).to eq test_value.to_datetime.strftime("%Y-%m-%d %H:%M")
+          expect(find('input.datetimepicker', 
+match: :first).value).to eq test_value.to_datetime.strftime("%Y-%m-%d %H:%M")
         end
 
       end
@@ -191,6 +202,8 @@ describe '
   end
 
   def date_warning_msg(nbr = 1)
-    "This order cycle is linked to %d open subscription orders. Changing this date now will not affect any orders which have already been placed, but should be avoided if possible. Are you sure you want to proceed?" % nbr
+    "This order cycle is linked to %d open subscription orders. Changing this date now will not "\
+    "affect any orders which have already been placed, but should be avoided if possible. "\
+    "Are you sure you want to proceed?" % nbr
   end
 end

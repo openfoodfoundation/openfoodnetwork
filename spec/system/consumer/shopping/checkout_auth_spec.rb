@@ -14,7 +14,8 @@ describe "As a consumer I want to check out my cart" do
     let(:supplier) { create(:supplier_enterprise) }
     let!(:order_cycle) {
       create(:simple_order_cycle, distributors: [distributor],
-                                  coordinator: create(:distributor_enterprise), variants: [product.variants.first])
+                                  coordinator: create(:distributor_enterprise),
+                                  variants: [product.variants.first])
     }
     let(:product) { create(:simple_product, supplier: supplier) }
     let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
@@ -58,14 +59,16 @@ describe "As a consumer I want to check out my cart" do
             within(".login-modal") { click_button 'Login' }
           end
 
-          context "and populating user details on (#{checkout_type})", if: checkout_type.eql?("legacy_checkout") do
+          context "and populating user details on (#{checkout_type})",
+            if: checkout_type.eql?("legacy_checkout") do
             it "toggles the Details section" do
               expect(page).to have_content "Your details"
               page.find(:css, "i.ofn-i_052-point-down").click
             end
           end
 
-          context "and populating user details on (#{checkout_type})", if: checkout_type.eql?("split_checkout") do
+          context "and populating user details on (#{checkout_type})",
+            if: checkout_type.eql?("split_checkout") do
             it "should allow proceeding to the next step" do
               expect(page).to have_content("Logged in successfully")
               click_button "Next - Payment method"
@@ -110,7 +113,8 @@ describe "As a consumer I want to check out my cart" do
         end
 
         expect(page).to have_selector 'div.login-modal'
-        expect(page).to have_content 'This email address is already registered. Please log in to continue, or go back and use another email address.'
+        expect(page).to have_content 'This email address is already registered. Please log in '\
+                                     'to continue, or go back and use another email address.'
       end
     end
   end

@@ -71,7 +71,8 @@ describe "Managing users" do
           fill_in "Email", with: "newemail@example.org"
           click_button "Update"
 
-          expect(page).to have_content("The account will be updated once the new email is confirmed.")
+          expect(page).to have_content("The account will be updated once "\
+                                       "the new email is confirmed.")
         end
 
         it "should allow to generate, regenarate and clear the user api key" do

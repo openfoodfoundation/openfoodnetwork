@@ -79,7 +79,10 @@ describe '
     expect(page).to have_content 'ADD PRODUCT'
     select2_select product.name, from: 'add_variant_id', search: true
     find('button.add_variant').click
-    page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS
+    # Wait for JS
+    page.has_selector?(
+      "table.index tbody[data-hook='admin_order_form_line_items'] tr"
+    )
     expect(page).to have_selector 'td', text: product.name
 
     click_button 'Update'
@@ -91,7 +94,10 @@ describe '
     select2_select product.name, from: 'add_variant_id', search: true
 
     find('button.add_variant').click
-    page.has_selector? "table.index tbody[data-hook='admin_order_form_line_items'] tr" # Wait for JS    
+    # Wait for JS
+    page.has_selector?(
+      "table.index tbody[data-hook='admin_order_form_line_items'] tr"
+    )
     expect(page).to have_selector 'td', text: product.name
     expect(order.line_items.reload.map(&:product)).to include product
   end
@@ -191,7 +197,8 @@ describe '
             end.to_not have_enqueued_mail(Spree::OrderMailer, :cancel_email)
           end
 
-          it "and check the checkbox to send an email to the customer about its order cancellation" do
+          it "and check the checkbox to send an email to the customer "\
+             "about its order cancellation" do
             expect do
               within(".modal") do
                 click_on("OK")
@@ -420,7 +427,8 @@ describe '
 
     describe "viewing the edit page" do
       let!(:shipping_method_for_distributor1) do
-        create(:shipping_method_with, :flat_rate, name: "Normal", amount: 12, distributors: [distributor1])
+        create(:shipping_method_with, :flat_rate, name: "Normal", amount: 12,
+                                                  distributors: [distributor1])
       end
       let!(:order) do
         create(:order_with_taxes, distributor: distributor1, ship_address: create(:address),
@@ -534,13 +542,15 @@ describe '
               message = accept_prompt do
                 click_link "Print Invoice"
               end
-              expect(message).to eq "#{distributor1.name} must have a valid ABN before invoices can be sent."
+              expect(message)
+                .to eq "#{distributor1.name} must have a valid ABN before invoices can be sent."
 
               find("#links-dropdown .ofn-drop-down").click
               message = accept_prompt do
                 click_link "Send Invoice"
               end
-              expect(message).to eq "#{distributor1.name} must have a valid ABN before invoices can be sent."
+              expect(message)
+                .to eq "#{distributor1.name} must have a valid ABN before invoices can be sent."
             end
           end
         end
@@ -548,7 +558,8 @@ describe '
 
       context "with different shipping methods" do
         let!(:different_shipping_method_for_distributor1) do
-          create(:shipping_method_with, :flat_rate, name: "Different", amount: 15, distributors: [distributor1])
+          create(:shipping_method_with, :flat_rate, name: "Different", amount: 15,
+distributors: [distributor1])
         end
         let!(:shipping_method_for_distributor2) do
           create(:shipping_method, name: "Other", distributors: [distributor2])
@@ -560,25 +571,29 @@ describe '
           expect(page).to_not have_content different_shipping_method_for_distributor1.name
 
           find('.edit-method').click
-          expect(page).to have_select2 'selected_shipping_rate_id',
+          expect(page).to have_select2('selected_shipping_rate_id',
                                        with_options: [
                                          shipping_method_for_distributor1.name,
                                          different_shipping_method_for_distributor1.name
-                                       ], without_options: [shipping_method_for_distributor2.name]
-          select2_select different_shipping_method_for_distributor1.name,
-                         from: 'selected_shipping_rate_id'
+                                       ], without_options: [shipping_method_for_distributor2.name])
+          select2_select(different_shipping_method_for_distributor1.name,
+                         from: 'selected_shipping_rate_id')
           find('.save-method').click
 
-          expect(page).to have_content "Shipping: #{different_shipping_method_for_distributor1.name}"
+          expect(page).to have_content(
+            "Shipping: #{different_shipping_method_for_distributor1.name}"
+          )
 
           within "#order-total" do 
             expect(page).to have_content "$175.00"
           end
         end
 
-        context "when the distributor unsupport a shipping method that's selected in an existing order " do
+        context "when the distributor unsupport a shipping method that's selected "\
+                "in an existing order " do
           before do
-            distributor1.shipping_methods = [shipping_method_for_distributor1, different_shipping_method_for_distributor1]
+            distributor1.shipping_methods = [shipping_method_for_distributor1,
+different_shipping_method_for_distributor1]
             order.shipments.each(&:refresh_rates)
             order.shipment.adjustments.first.open
             order.select_shipping_method(different_shipping_method_for_distributor1)
@@ -592,7 +607,9 @@ describe '
 
             it "should not change the shipping method" do
               visit spree.edit_admin_order_path(order)
-              expect(page).to have_content "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
+              expect(page).to have_content(
+                "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
+              )
 
               within "#order-total" do 
                 expect(page).to have_content "$160.00"
@@ -601,12 +618,14 @@ describe '
 
             context "when shipping rate is updated" do
               before do
-                different_shipping_method_for_distributor1.shipping_rates.first.update!(cost: 16)              
+                different_shipping_method_for_distributor1.shipping_rates.first.update!(cost: 16)
               end
 
               it "should not update the shipping cost" do
                 visit spree.edit_admin_order_path(order)
-                expect(page).to have_content "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
+                expect(page).to have_content(
+                  "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
+                )
 
                 within "#order-total" do 
                   expect(page).to have_content "$160.00"
@@ -622,7 +641,9 @@ describe '
 
             it "should not replace the selected shipment method" do
               visit spree.edit_admin_order_path(order)
-              expect(page).to have_content "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
+              expect(page).to have_content(
+                "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
+              )
 
               within "#order-total" do 
                 expect(page).to have_content "$160.00"
@@ -631,13 +652,15 @@ describe '
 
             context "when shipping rate is updated" do
               before do
-                different_shipping_method_for_distributor1.shipping_rates.first.update!(cost: 16)             
+                different_shipping_method_for_distributor1.shipping_rates.first.update!(cost: 16)
               end
 
               it "should not update the shipping cost" do
                 # Since the order is completed, the price is not supposed to be updated 
                 visit spree.edit_admin_order_path(order)
-                expect(page).to have_content "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
+                expect(page).to have_content(
+                  "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
+                )
 
                 within "#order-total" do 
                   expect(page).to have_content "$160.00"

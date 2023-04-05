@@ -33,8 +33,9 @@ describe "spree/admin/payment_methods/index.html.haml" do
       it "shows only the providers of the existing payment methods" do
         render
 
-        expect(rendered).to have_content "Cash/EFT/etc. (payments for which automatic validation is not required)",
-                                         count: 2
+        expect(rendered).to have_content(
+          "Cash/EFT/etc. (payments for which automatic validation is not required)", count: 2
+        )
       end
 
       it "does not show Enviroment column" do
@@ -58,8 +59,9 @@ describe "spree/admin/payment_methods/index.html.haml" do
       it "shows only the providers of the existing payment methods" do
         render
 
-        expect(rendered).to have_content "Cash/EFT/etc. (payments for which automatic validation is not required)",
-                                         count: 2
+        expect(rendered).to have_content(
+          "Cash/EFT/etc. (payments for which automatic validation is not required)", count: 2
+        )
       end
 
       it "shows the Enviroment column" do

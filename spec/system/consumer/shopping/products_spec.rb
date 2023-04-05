@@ -14,17 +14,23 @@ describe "As a consumer I want to view products" do
     let(:taxon2) { create(:taxon, name: "Delicious Dandelion") }
     let(:property2) { create(:property, presentation: "Berry Bio") }
     let(:user) { create(:user, enterprise_limit: 1) }
-    let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true, owner: user, name: "Testing Farm") }
+    let(:distributor) {
+      create(:distributor_enterprise, with_payment_and_shipping: true, owner: user,
+                                      name: "Testing Farm")
+    }
     let(:supplier) { create(:supplier_enterprise) }
     let(:oc1) {
       create(:simple_order_cycle, distributors: [distributor],
-                                  coordinator: create(:distributor_enterprise), orders_close_at: 2.days.from_now)
+                                  coordinator: create(:distributor_enterprise),
+                                  orders_close_at: 2.days.from_now)
     }
     let(:product) {
-      create(:simple_product, supplier: supplier, primary_taxon: taxon, properties: [property], name: "Beans")
+      create(:simple_product, supplier: supplier, primary_taxon: taxon, properties: [property],
+                              name: "Beans")
     }
     let(:product2) {
-      create(:product, supplier: supplier, primary_taxon: taxon2, properties: [property2], name: "Chickpeas")
+      create(:product, supplier: supplier, primary_taxon: taxon2, properties: [property2],
+                       name: "Chickpeas")
     }
     let(:variant) { product.variants.first }
     let(:variant2) { product2.variants.first }
@@ -42,7 +48,10 @@ describe "As a consumer I want to view products" do
       end
 
       it "shows HTML product description" do
-        product.description = '<p><b>Formatted</b> product description.</p> Link to an <a href="http://google.fr" target="_blank">external site</a><img src="https://www.openfoodnetwork.org/wp-content/uploads/2019/05/logo-ofn-global-web@2x.png" alt="open food network logo" />'
+        product.description = '<p><b>Formatted</b> product description.</p> Link to an '\
+                              '<a href="http://google.fr" target="_blank">external site</a>'\
+                              '<img src="https://www.openfoodnetwork.org/wp-content/uploads/2019/'\
+                              '05/logo-ofn-global-web@2x.png" alt="open food network logo" />'
         product.save!
 
         visit shop_path
@@ -58,7 +67,8 @@ describe "As a consumer I want to view products" do
         visit shop_path
         expect(page).to have_content product.name
 
-        expect_product_description_html_to_be_displayed(product, "<p>Safe</p>", "<script>alert('Dangerous!');</script>")
+        expect_product_description_html_to_be_displayed(product, "<p>Safe</p>",
+          "<script>alert('Dangerous!');</script>")
       end
     end
 

@@ -16,7 +16,8 @@ module Admin
       respond_to do |format|
         format.html do
           if view_context.subscriptions_setup_complete?(@shops)
-            @order_cycles = OrderCycle.joins(:schedules).managed_by(spree_current_user).includes([:distributors, :cached_incoming_exchanges])
+            @order_cycles = OrderCycle.joins(:schedules).managed_by(spree_current_user)
+              .includes([:distributors, :cached_incoming_exchanges])
             @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user).includes(:taggings)
             @payment_method_tags = payment_method_tags_by_id
             @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user)
@@ -25,7 +26,10 @@ module Admin
             render :setup_explanation
           end
         end
-        format.json { render_as_json @collection, ams_prefix: params[:ams_prefix], payment_method_tags: payment_method_tags_by_id }
+        format.json {
+          render_as_json @collection, ams_prefix: params[:ams_prefix],
+                                      payment_method_tags: payment_method_tags_by_id
+        }
       end
     end
 

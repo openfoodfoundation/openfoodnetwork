@@ -139,8 +139,8 @@ module CheckoutHelper
   def stripe_card_options(cards)
     cards.map do |cc|
       [
-        "#{cc.brand} #{cc.last_digits} #{I18n.t(:card_expiry_abbreviation)}:#{cc.month.to_s.rjust(2, '0')}/#{cc.year}",
-        cc.id
+        "#{cc.brand} #{cc.last_digits} #{I18n.t(:card_expiry_abbreviation)}:"\
+        "#{cc.month.to_s.rjust(2, '0')}/#{cc.year}", cc.id
       ]
     end
   end

@@ -94,12 +94,20 @@ describe '
 
       it "displays a warning on the dashboard" do
         login_to_admin_section
-        expect(page).to have_content "The hub #{hub.name} is listed in an active order cycle, but does not have valid shipping and payment methods. Until you set these up, customers will not be able to shop at this hub."
+        expect(page).to have_content(
+          "The hub #{hub.name} is listed in an active order cycle, but does not have valid "\
+          "shipping and payment methods. Until you set these up, customers will not be able "\
+          "to shop at this hub."
+        )
       end
 
       it "displays a warning on the order cycles screen" do
         login_as_admin_and_visit admin_order_cycles_path
-        expect(page).to have_content "The hub #{hub.name} is listed in an active order cycle, but does not have valid shipping and payment methods. Until you set these up, customers will not be able to shop at this hub."
+        expect(page).to have_content(
+          "The hub #{hub.name} is listed in an active order cycle, "\
+          "but does not have valid shipping and payment methods. Until you set these up, "\
+          "customers will not be able to shop at this hub."
+        )
       end
     end
 
@@ -141,16 +149,21 @@ describe '
     let!(:variant_permitted) { product_permitted.variants.first }
     let!(:schedule) {
       create(:schedule, name: 'Schedule1',
-                        order_cycles: [create(:simple_order_cycle, coordinator: distributor_managed)])
+                        order_cycles: [
+                          create(:simple_order_cycle, coordinator: distributor_managed)
+                        ])
     }
     let!(:schedule_of_other_managed_distributor) {
       create(:schedule, name: 'Other Schedule',
-                        order_cycles: [create(:simple_order_cycle, coordinator: other_distributor_managed)])
+                        order_cycles: [
+                          create(:simple_order_cycle, coordinator: other_distributor_managed)
+                        ])
     }
 
     before do
       # Relationships required for interface to work
-      # Both suppliers allow both managed distributor to distribute their products (and add them to the order cycle)
+      # Both suppliers allow both managed distributor to distribute their products
+      # (and add them to the order cycle)
       create(:enterprise_relationship, parent: supplier_managed, child: distributor_managed,
                                        permissions_list: [:add_to_order_cycle])
       create(:enterprise_relationship, parent: supplier_permitted, child: distributor_managed,
@@ -179,7 +192,10 @@ describe '
 
       it "viewing a list of order cycles I am coordinating" do
         oc_user_coordinating = create(:simple_order_cycle,
-                                      suppliers: [supplier_managed, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_unmanaged], name: 'Order Cycle 1' )
+                                      suppliers: [supplier_managed, supplier_unmanaged],
+                                      coordinator: distributor_managed,
+                                      distributors: [distributor_managed, distributor_unmanaged],
+                                      name: 'Order Cycle 1')
         oc_for_other_user = create(:simple_order_cycle, coordinator: supplier_unmanaged,
                                                         name: 'Order Cycle 2' )
 
@@ -281,7 +297,8 @@ describe '
 
         expect(order_cycle.suppliers).to match_array [supplier_managed, supplier_permitted]
         expect(order_cycle.coordinator).to eq(distributor_managed)
-        expect(order_cycle.distributors).to match_array [distributor_managed, distributor_permitted]
+        expect(order_cycle.distributors)
+          .to match_array [distributor_managed, distributor_permitted]
         expect(order_cycle.schedules).to eq([schedule])
         exchange = order_cycle.exchanges.outgoing.to_enterprise(distributor_managed).first
         expect(exchange.tag_list).to eq(["wholesale"])
@@ -295,9 +312,15 @@ describe '
 
       context "editing an order cycle" do
         let(:oc) do
-          create(:simple_order_cycle, suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged],
+          create(:simple_order_cycle, suppliers: [
+                                        supplier_managed, supplier_permitted, supplier_unmanaged
+                                      ],
                                       coordinator: distributor_managed,
-                                      distributors: [distributor_managed, distributor_permitted, distributor_unmanaged],
+                                      distributors: [
+                                        distributor_managed,
+                                        distributor_permitted,
+                                        distributor_unmanaged
+                                      ],
                                       name: 'Order Cycle 1' )
         end
 
@@ -317,7 +340,7 @@ describe '
           expect(page).to have_field 'order_cycle_name', with: oc.name
           select2_select schedule.name, from: 'schedule_ids'
           expect(page).not_to have_select2 'schedule_ids',
-                                           with_options: [schedule_of_other_managed_distributor.name]
+            with_options: [schedule_of_other_managed_distributor.name]
 
           click_button 'Save and Next'
 
@@ -366,7 +389,12 @@ describe '
 
       it "editing an order cycle" do
         oc = create(:simple_order_cycle,
-                    suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
+                    suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged],
+                    coordinator: distributor_managed, distributors: [
+                      distributor_managed,
+                      distributor_permitted,
+                      distributor_unmanaged
+                    ], name: 'Order Cycle 1')
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
         v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
 
@@ -405,15 +433,17 @@ describe '
         end
 
         # I should be able to see and toggle v1
-        expect(page).to have_checked_field "order_cycle_outgoing_exchange_0_variants_#{v1.id}",
-                                           disabled: false
+        expect(page).to have_checked_field("order_cycle_outgoing_exchange_0_variants_#{v1.id}",
+                                           disabled: false)
         uncheck "order_cycle_outgoing_exchange_0_variants_#{v1.id}"
 
         # I should be able to see but not toggle v2, because I don't have permission
-        expect(page).to have_checked_field "order_cycle_outgoing_exchange_0_variants_#{v2.id}",
-                                           disabled: true
+        expect(page).to have_checked_field("order_cycle_outgoing_exchange_0_variants_#{v2.id}",
+                                           disabled: true)
 
-        expect(page).not_to have_selector "table.exchanges tr.distributor-#{distributor_managed.id} td.tags"
+        expect(page).not_to have_selector( 
+          "table.exchanges tr.distributor-#{distributor_managed.id} td.tags"
+        )
 
         # When I save, any exchanges that I can't manage remain
         click_button 'Save'
@@ -442,7 +472,13 @@ describe '
 
       it "editing an order cycle" do
         oc = create(:simple_order_cycle,
-                    suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged], coordinator: distributor_managed, distributors: [my_distributor, distributor_managed, distributor_permitted, distributor_unmanaged], name: 'Order Cycle 1' )
+                    suppliers: [supplier_managed, supplier_permitted, supplier_unmanaged],
+                    coordinator: distributor_managed, distributors: [
+                      my_distributor,
+                      distributor_managed,
+                      distributor_permitted,
+                      distributor_unmanaged
+                    ], name: 'Order Cycle 1')
         v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
         v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
 
@@ -463,7 +499,8 @@ describe '
           { supplier_managed.id.to_s => [v1.id] }
         end
 
-        # I should see exchanges for my_distributor, and the incoming exchanges supplying the variants in it
+        # I should see exchanges for my_distributor,
+        # and the incoming exchanges supplying the variants in it
         visit admin_order_cycle_outgoing_path(oc)
         expect(page).to have_selector "tr.distributor-#{my_distributor.id}"
         expect(page).to have_selector 'tr.distributor', count: 1
@@ -579,9 +616,9 @@ describe '
 
       expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
       expect(page).to have_input "oc#{oc.id}[orders_open_at]",
-                                 value: Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0).strftime("%F %T %z"), visible: false
+        value: Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0).strftime("%F %T %z"), visible: false
       expect(page).to have_input "oc#{oc.id}[orders_close_at]",
-                                 value: Time.zone.local(2040, 10, 24, 17, 0o0, 0o0).strftime("%F %T %z"), visible: false
+        value: Time.zone.local(2040, 10, 24, 17, 0o0, 0o0).strftime("%F %T %z"), visible: false
 
       # And it should have some variants selected
       expect(oc.exchanges.incoming.first.variants.count).to eq(2)
@@ -600,7 +637,8 @@ describe '
       # Given an order cycle with pickup time and instructions
       fee = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
       oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise,
-                                       distributors: [enterprise], variants: [v1], coordinator_fees: [fee])
+                                       distributors: [enterprise], variants: [v1],
+                                       coordinator_fees: [fee])
       ex = oc.exchanges.outgoing.first
       ex.update! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
@@ -636,7 +674,8 @@ describe '
       fee1 = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
       fee2 = create(:enterprise_fee, name: 'that fee', enterprise: enterprise)
       oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise,
-                                       distributors: [enterprise], variants: [v1], coordinator_fees: [fee1])
+                                       distributors: [enterprise], variants: [v1],
+                                       coordinator_fees: [fee1])
       ex = oc.exchanges.outgoing.first
       ex.update! pickup_time: 'pickup time', pickup_instructions: 'pickup instructions'
 
@@ -685,9 +724,9 @@ describe '
 
       expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
       expect(page).to have_input "oc#{oc.id}[orders_open_at]",
-                                 value: Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0).strftime("%F %T %z"), visible: false
+        value: Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0).strftime("%F %T %z"), visible: false
       expect(page).to have_input "oc#{oc.id}[orders_close_at]",
-                                 value: Time.zone.local(2040, 10, 24, 17, 0o0, 0o0).strftime("%F %T %z"), visible: false
+        value: Time.zone.local(2040, 10, 24, 17, 0o0, 0o0).strftime("%F %T %z"), visible: false
 
       # And it should have a variant selected
       expect(oc.exchanges.incoming.first.variants).to eq([v2])
@@ -706,7 +745,9 @@ describe '
     end
   end
 
-  it "modify the minute of a order cycle with the keyboard, check that the modifications are taken into account", retry: 3 do
+  it "modify the minute of a order cycle with the keyboard, "\
+     "check that the modifications are taken into account", 
+     retry: 3 do
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
     login_as_admin_and_visit admin_order_cycles_path
     find("#oc#{order_cycle.id}_orders_close_at").click
@@ -733,17 +774,15 @@ describe '
 
   def expect_payment_methods_to_be_checked_for(distributor)
     distributor.distributor_payment_method_ids.each do |distributor_payment_method_id|
-      expect(page).to have_checked_field(
+      expect(page).to have_checked_field
         "order_cycle_selected_distributor_payment_method_ids_#{distributor_payment_method_id}"
-      )
     end
   end
 
   def expect_shipping_methods_to_be_checked_for(distributor)
     distributor.distributor_shipping_method_ids.each do |distributor_shipping_method_id|
-      expect(page).to have_checked_field(
+      expect(page).to have_checked_field
         "order_cycle_selected_distributor_shipping_method_ids_#{distributor_shipping_method_id}"
-      )
     end
   end
 

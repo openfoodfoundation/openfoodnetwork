@@ -553,7 +553,8 @@ describe OrderCycle do
 
   describe "opened_at " do
     let!(:oc) {
-      create(:simple_order_cycle, orders_open_at: 2.days.ago, orders_close_at: 1.day.ago, opened_at: 1.week.ago)
+      create(:simple_order_cycle, orders_open_at: 2.days.ago,
+                                  orders_close_at: 1.day.ago, opened_at: 1.week.ago)
     }
 
     it "reset opened_at if open date change in future" do
@@ -574,7 +575,8 @@ describe OrderCycle do
 
   describe "processed_at " do
     let!(:oc) {
-      create(:simple_order_cycle, orders_open_at: 1.week.ago, orders_close_at: 1.day.ago, processed_at: 1.hour.ago)
+      create(:simple_order_cycle, orders_open_at: 1.week.ago,
+                                  orders_close_at: 1.day.ago, processed_at: 1.hour.ago)
     }
 
     it "reset processed_at if close date change in future" do
@@ -685,7 +687,9 @@ describe OrderCycle do
 
       context "with multiple distributors" do
         let(:other_distributor) { create(:distributor_enterprise) }
-        let(:oc) { create(:distributor_order_cycle, distributors: [distributor, other_distributor]) }
+        let(:oc) {
+          create(:distributor_order_cycle, distributors: [distributor, other_distributor])
+        }
 
         it "returns all attachable distributor payment methods for a distributor if no distributor
             payment methods have been selected specifically for that distributor, even if
@@ -759,7 +763,9 @@ describe OrderCycle do
 
       context "with multiple distributors" do
         let(:other_distributor) { create(:distributor_enterprise) }
-        let(:oc) { create(:distributor_order_cycle, distributors: [distributor, other_distributor]) }
+        let(:oc) {
+          create(:distributor_order_cycle, distributors: [distributor, other_distributor])
+        }
 
         it "returns all attachable distributor shipping methods for a distributor if no distributor
             shipping methods have been selected specifically for that distributor, even if

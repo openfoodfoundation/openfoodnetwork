@@ -16,7 +16,8 @@ describe "routing for Stripe return URLS", type: :routing do
 
     it "routes /checkout?payment_intent=pm_123 to payment_gateways/stripe#confirm" do
       expect(get: "/checkout?payment_intent=pm_123").
-        to route_to(controller: "payment_gateways/stripe", action: "confirm", payment_intent: "pm_123")
+        to route_to(controller: "payment_gateways/stripe",
+                    action: "confirm", payment_intent: "pm_123")
     end
   end
 

@@ -21,7 +21,8 @@ describe "As a consumer I want to check out my cart" do
   let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone: zone, included_in_price: true) }
   let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
   let(:product) {
-    create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1, included_in_price: true)
+    create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1,
+                           included_in_price: true)
   }
   let(:variant) { product.variants.first }
   let(:order) {
@@ -365,7 +366,8 @@ describe "As a consumer I want to check out my cart" do
 
     it "shows all shipping methods in order by name" do
       within '#shipping' do
-        expect(page).to have_selector "label", count: 4 # Three shipping methods + instructions label
+        # Three shipping methods + instructions label
+        expect(page).to have_selector "label", count: 4
         labels = page.all('label').map(&:text)
         expect(labels[0]).to start_with("Donkeys") # shipping_with_fee
         expect(labels[1]).to start_with("Frogs") # free_shipping
@@ -493,7 +495,8 @@ describe "As a consumer I want to check out my cart" do
           check "Shipping address same as billing address?"
         end
 
-        it "takes us to the order confirmation page when submitted with 'same as billing address' checked" do
+        it "takes us to the order confirmation page when submitted with 'same as billing address' "\
+           "checked" do
           place_order
           expect(page).to have_content "Your order has been processed successfully"
 
@@ -502,7 +505,8 @@ describe "As a consumer I want to check out my cart" do
           expect(order.shipment_state).to eq "pending"
         end
 
-        it "takes us to the cart page with an error when a product becomes out of stock just before we purchase" do
+        it "takes us to the cart page with an error when a product becomes out of stock just "\
+           "before we purchase" do
           variant.on_demand = false
           variant.on_hand = 0
           variant.save!
@@ -561,7 +565,8 @@ describe "As a consumer I want to check out my cart" do
                                         type: gateway_type)
               }
 
-              it "takes us to the order confirmation page when submitted with a valid credit card" do
+              it "takes us to the order confirmation page when submitted "\
+                 "with a valid credit card" do
                 fill_in 'Card Number', with: "4111111111111111"
                 select 'February', from: 'secrets.card_month'
                 select (Date.current.year + 1).to_s, from: 'secrets.card_year'
@@ -577,7 +582,8 @@ describe "As a consumer I want to check out my cart" do
                 expect(order.shipment_state).to eq "ready"
               end
 
-              it "shows the payment processing failed message when submitted with an invalid credit card" do
+              it "shows the payment processing failed message when submitted "\
+                 "with an invalid credit card" do
                 fill_in 'Card Number', with: "9999999988887777"
                 select 'February', from: 'secrets.card_month'
                 select (Date.current.year + 1).to_s, from: 'secrets.card_year'

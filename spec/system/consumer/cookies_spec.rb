@@ -25,7 +25,8 @@ describe "Cookies" do
         expect_not_visible_cookies_banner
       end
 
-      scenario "banner contains cookies policy link that opens coookies policy page and closes banner" do
+      scenario "banner contains cookies policy link that opens coookies policy page and "\
+               "closes banner" do
         click_banner_cookies_policy_link_and_wait
         expect_visible_cookies_policy_page
         expect_not_visible_cookies_banner
@@ -34,7 +35,8 @@ describe "Cookies" do
         expect_visible_cookies_banner
       end
 
-      scenario "does not show after cookies are accepted, and policy page is opened through the footer, and closed again (bug #2599)" do
+      scenario "does not show after cookies are accepted, and policy page is opened through the "\
+               "footer, and closed again (bug #2599)" do
         accept_cookies_and_wait
         expect_not_visible_cookies_banner
 
@@ -62,7 +64,9 @@ describe "Cookies" do
       scenario "it is not showing" do
         Spree::Config[:cookies_consent_banner_toggle] = false
         visit root_path
-        expect(page).to have_no_content 'This site uses cookies in order to make your navigation frictionless and secure, and to help us understand how you use it in order to improve the features we offer.'
+        expect(page).to have_no_content 'This site uses cookies in order to make your navigation '\
+                                        'frictionless and secure, and to help us understand how '\
+                                        'you use it in order to improve the features we offer.'
       end
     end
   end
@@ -173,6 +177,7 @@ describe "Cookies" do
   end
 
   def matomo_opt_out_iframe
-    'Do you want to opt-out of Matomo analytics? We don’t collect any personal data, and Matomo helps us to improve our service, but we respect your choice :-)'
+    'Do you want to opt-out of Matomo analytics? We don’t collect any personal data, and Matomo '\
+    'helps us to improve our service, but we respect your choice :-)'
   end
 end

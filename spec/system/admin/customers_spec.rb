@@ -15,7 +15,8 @@ describe 'Customers' do
 
     describe "using the customers index" do
       let!(:customer1) {
-        create(:customer, first_name: 'John', last_name: 'Doe', enterprise: managed_distributor1, code: nil)
+        create(:customer, first_name: 'John', last_name: 'Doe', enterprise: managed_distributor1, 
+code: nil)
       }
       let!(:customer2) { create(:customer, enterprise: managed_distributor1, code: nil) }
       let!(:customer3) { create(:customer, enterprise: unmanaged_distributor) }
@@ -28,8 +29,9 @@ describe 'Customers' do
 
       it "passes the smoke test" do
         # Prompts for a hub for a list of my managed enterprises
-        expect(page).to have_select2 "shop_id",
-                                     with_options: [managed_distributor1.name, managed_distributor2.name], without_options: [unmanaged_distributor.name]
+        expect(page)
+          .to have_select2 "shop_id", with_options: [managed_distributor1.name,
+            managed_distributor2.name], without_options: [unmanaged_distributor.name]
 
         select2_select managed_distributor2.name, from: "shop_id"
 
@@ -89,7 +91,8 @@ describe 'Customers' do
             end
           end
           expect(page).to have_selector "#info-dialog .text",
-                                        text: 'Delete failed: This customer has active subscriptions. Cancel them first.'
+                                        text: 'Delete failed: This customer has '\
+                                        'active subscriptions. Cancel them first.'
           click_button "OK"
         }.to_not change{ Customer.count }
 
@@ -355,7 +358,7 @@ describe 'Customers' do
                                             text: "Please enter a valid email address"
             }.to_not change{ Customer.of(managed_distributor1).count }
 
-            # When an invalid email with domain is used it is checked by the "valid_email2" gem #7886
+            # When an invalid email with domain is used it's checked by "valid_email2" gem #7886
             expect{
               fill_in 'email', with: "invalid_email_with_no_complete_domain@incomplete"
               click_button 'Add Customer'

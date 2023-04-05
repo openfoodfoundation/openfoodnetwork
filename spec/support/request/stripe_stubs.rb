@@ -14,7 +14,8 @@ module StripeStubs
       .to_return(payment_intent_redirect_response_mock(redirect_url))
   end
 
-  def stub_payment_intent_get_request(response: {}, stripe_account_header: true, payment_intent_id: "pi_123")
+  def stub_payment_intent_get_request(response: {}, stripe_account_header: true, 
+                                      payment_intent_id: "pi_123")
     stub = stub_request(:get, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}")
     stub = stub.with(headers: { 'Stripe-Account' => 'abc123' }) if stripe_account_header
     stub.to_return(payment_intent_authorize_response_mock(response))
@@ -168,10 +169,14 @@ module StripeStubs
   def get_customer_payment_methods_response_mock(options)
     payment_method = options[:payment_method] || "pm_456"
     fingerprint = options[:fingerprint] || "7890"
-    { status: options[:code] || 200,
+    { 
+      status: options[:code] || 200,
       body: JSON.generate(
-        object: "list", has_more: false, data: [{ id: payment_method, card: { fingerprint: fingerprint } }]
-      ) }
+        object: "list", 
+        has_more: false, 
+        data: [{ id: payment_method, card: { fingerprint: fingerprint } }],
+      ),
+    }
   end
 
   def add_metadata_response_mock(options)
