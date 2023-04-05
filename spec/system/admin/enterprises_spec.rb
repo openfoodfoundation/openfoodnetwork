@@ -661,7 +661,8 @@ describe '
           expect(page).not_to have_content "LOGO USED IN SHOPFRONT"
           check "Hide OFN navigation"
           click_button 'Update'
-          expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(flash_message)
+            .to eq('Enterprise "First Distributor" has been successfully updated!')
           expect(distributor1.reload.hide_ofn_navigation).to be true
 
           visit edit_admin_enterprise_path(distributor1)
@@ -672,7 +673,8 @@ describe '
           expect(page).to have_content "LOGO USED IN SHOPFRONT"
           uncheck "Hide OFN navigation"
           click_button 'Update'
-          expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(flash_message)
+            .to eq('Enterprise "First Distributor" has been successfully updated!')
           expect(distributor1.reload.hide_ofn_navigation).to be false
         end
 
@@ -689,7 +691,8 @@ describe '
           it "can updload the white label logo for the current shop" do
             attach_file "enterprise_white_label_logo", white_logo_path
             click_button 'Update'
-            expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
+            expect(flash_message)
+              .to eq('Enterprise "First Distributor" has been successfully updated!')
             expect(distributor1.reload.white_label_logo_blob.filename).to eq("logo-white.png")
           end
 
