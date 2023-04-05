@@ -149,6 +149,15 @@
             text-overflow: ellipsis;
             margin-bottom: 0.75rem;
             cursor: pointer;
+            // Force product description to be on one line
+            // and truncate with ellipsis
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden; 
+            // line-clamp is not supported in Safari
+            line-height: 1rem;
+            height: 1.75rem;
           }
 
           .product-properties {
