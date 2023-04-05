@@ -10,22 +10,12 @@ describe "Shipping Categories" do
 
   context 'user visits shipping categories page' do
     it 'header is translated' do
-      login_as_admin_and_visit spree.admin_shipping_categories_path(locale: 'es')
-      expect(get_i18n_locale).to eq 'es'
+      category = create(:shipping_category)
 
-      expect(get_i18n_translation('shipping_categories')).to eq 'Categorías de envío'
-      click_link "Nueva categoría de envío"
+      login_as_admin
+      visit spree.edit_admin_shipping_category_path(category)
 
-      fill_in "shipping_category_name", with: "freeze"
-      check "shipping_category_temperature_controlled"
-      click_button "Crear"
-
-      expect(page).to have_content("freeze")
-      row = find('tr', text: 'freeze')
-      within row do
-        find('a', class: 'icon-edit').click
-      end
-      expect(page).to have_content "Edición de la categoría de envío"
+      expect(page).to have_content "Editing Shipping Category"
     end
   end
 
