@@ -45,7 +45,7 @@ describe '
       expect(page).to have_content "EMAIL FIRST NAME"
     end
 
-    it "displays a friendly timeout message" do
+    it "displays a friendly timeout message and offers download" do
       ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
       login_as_admin_and_visit admin_report_path(
         report_type: :customers, report_subtype: :mailing_list
@@ -55,7 +55,16 @@ describe '
 
       click_button "Go"
 
-      expect(page).to have_content "this report took too long"
+      expect(page).to have_content "report is taking longer"
+
+      perform_enqueued_jobs(only: ReportJob)
+
+      click_link "Download report"
+
+      expect(downloaded_filename).to match /customers_[0-9]+\.html/
+
+      content = File.read(downloaded_filename)
+      expect(content).to match "<th>\nFirst Name\n</th>"
     end
   end
 

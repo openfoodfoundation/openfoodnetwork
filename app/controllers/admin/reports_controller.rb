@@ -2,6 +2,7 @@
 
 module Admin
   class ReportsController < Spree::Admin::BaseController
+    include ActiveStorage::SetCurrent
     include ReportsActions
     helper ReportsHelper
 
@@ -59,16 +60,16 @@ module Admin
       if OpenFoodNetwork::FeatureToggle.enabled?(:background_reports, spree_current_user)
         filename = report_filename
         filename = "#{filename}html" if report_format.blank?
-        blob = ReportBlob.create_for_upload_later!(filename)
+        @blob = ReportBlob.create_for_upload_later!(filename)
         ReportJob.perform_later(
-          report_class, spree_current_user, params, format, blob
+          report_class, spree_current_user, params, format, @blob
         )
         Timeout.timeout(max_wait_time) do
-          sleep 1 until blob.content_stored?
+          sleep 1 until @blob.content_stored?
         end
 
         # This result has been rendered by Rails in safe mode already.
-        blob.result.html_safe # rubocop:disable Rails/OutputSafety
+        @blob.result.html_safe # rubocop:disable Rails/OutputSafety
       else
         @report.render_as(format)
       end
@@ -76,7 +77,13 @@ module Admin
 
     def render_timeout_error
       assign_view_data
-      @error = ".report_taking_longer"
+      if @blob
+        @error = ".report_taking_longer_html"
+        @error_url = @blob.url
+      else
+        @error = ".report_taking_longer"
+        @error_url = ""
+      end
       render "show"
     end
 

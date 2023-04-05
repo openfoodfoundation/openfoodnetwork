@@ -21,5 +21,5 @@
   - if request.post? && !@error
     %button.btn-print.icon-print{ onclick: "window.print()"}= t(:report_print)
 
-= t(@error) if @error
+= t(@error, link: link_to(t(".report_link_label"), @error_url)) if @error
 = @table
