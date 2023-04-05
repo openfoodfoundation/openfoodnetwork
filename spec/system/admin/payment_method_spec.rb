@@ -441,7 +441,7 @@ describe '
       expect(page).to have_field 'Amount', with: '10.0'
       expect(page).not_to have_field 'payment_method_name', with: ''
       expect(page).not_to have_field 'payment_method_description', with: 'Edited description'
-      expect(page).not_to have_unchecked_field "payment_method_distributor_ids_#{@distributors[0].id}"
+      expect(page).to have_checked_field "payment_method_distributor_ids_#{@distributors[0].id}"
     end
   end
 
@@ -508,7 +508,7 @@ describe '
       expect(page).to have_field 'Amount', with: '10.0'
       expect(page).not_to have_field 'payment_method_name', with: ''
       expect(page).not_to have_field 'payment_method_description', with: 'Edited description'
-      expect(page).not_to have_unchecked_field "payment_method_distributor_ids_#{@distributors[0].id}"
+      expect(page).to have_checked_field "payment_method_distributor_ids_#{@distributors[0].id}"
     end
   end
 end
