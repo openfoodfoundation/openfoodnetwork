@@ -395,6 +395,7 @@ describe '
       fill_in "payment_method_name", with: ""
       fill_in "payment_method_description", with: "Edited description"
       uncheck "payment_method_distributor_ids_#{@distributors[0].id}"
+      # Although text is not permitted by input[type=number], let's see what happens
       fill_in "Amount", with: 'invalid'
       click_button 'Update'
     end
@@ -404,17 +405,12 @@ describe '
     end
 
     it "displays error details" do
-      expect(page).to have_content("3 errors")
+      expect(page).to have_content("2 errors")
 
       expect(page).to have_content("Name can't be blank")
       expect(page).to have_content("At least one hub must be selected")
-      expect(page).to have_content("Calculator Amount: Invalid input. Please use only numbers.")
 
       # Highlighting invalid fields
-      within '.calculator-settings .field .field_with_errors' do
-        expect(page).to have_field "Amount"
-      end
-
       within '.field_with_errors:has(#payment_method_name)' do
         expect(page).to have_field "payment_method_name"
       end
@@ -425,7 +421,6 @@ describe '
     end
 
     it "keeps information that was just edited, even after multiple unsuccessful updates" do
-      expect(page).to have_field "Amount", with: "invalid"
       expect(page).to have_field "payment_method_name", with: ''
       expect(page).to have_field "payment_method_description", with: "Edited description"
       expect(page).to have_unchecked_field "payment_method_distributor_ids_#{@distributors[0].id}"
@@ -435,7 +430,6 @@ describe '
       click_button 'Update'
 
       expect(page).to have_field "payment_method_name", with: 'Test name'
-      expect(page).to have_field "Amount", with: "invalid string"
       expect(page).to have_field "payment_method_description", with: "Edited description"
       expect(page).to have_unchecked_field "payment_method_distributor_ids_#{@distributors[0].id}"
     end
@@ -503,7 +497,6 @@ describe '
       click_button 'Update'
 
       expect(page).to have_field 'payment_method_name', with: 'Test name'
-      expect(page).to have_field 'Flat Percent', with: 'invalid string'
       expect(page).to have_field 'payment_method_description', with: 'Edited description'
       expect(page).to have_unchecked_field "payment_method_distributor_ids_#{@distributors[0].id}"
     end

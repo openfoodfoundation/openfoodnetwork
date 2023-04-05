@@ -17,7 +17,7 @@ module Spree
 
     validates :name, presence: true
     validate :distributor_validation
-    include NestedCalculatorValidation
+    validates_associated :calculator
 
     after_initialize :init
 

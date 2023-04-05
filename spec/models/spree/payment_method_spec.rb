@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require './spec/models/concerns/nested_calculator_validation_spec'
 
 class Spree::Gateway::Test < Spree::Gateway
 end
 
 describe Spree::PaymentMethod do
-  it_behaves_like "a parent model that has a Calculator", :payment_method
-
   describe "#available" do
     let(:enterprise) { create(:enterprise) }
 

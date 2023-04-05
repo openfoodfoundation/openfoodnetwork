@@ -29,8 +29,8 @@ module Spree
 
       def preference_field_tag(name, value, options)
         case options[:type]
-        when :integer
-          text_field_tag(name, value, preference_field_options(options))
+        when :integer, :decimal
+          number_field_tag(name, value, preference_field_options(options))
         when :boolean
           hidden_field_tag(name, 0) +
             check_box_tag(name, 1, value, preference_field_options(options))
@@ -49,8 +49,8 @@ module Spree
 
       def preference_field_for(form, field, options, object)
         case options[:type]
-        when :integer
-          form.text_field(field, preference_field_options(options))
+        when :integer, :decimal
+          form.number_field(field, preference_field_options(options))
         when :boolean
           form.check_box(field, preference_field_options(options))
         when :string
@@ -82,8 +82,17 @@ module Spree
       def preference_field_options(options)
         field_options = case options[:type]
                         when :integer
-                          { size: 10,
-                            class: 'input_integer' }
+                          {
+                            size: 10,
+                            class: 'input_integer',
+                            step: 1,
+                          }
+                        when :decimal
+                          {
+                            size: 10,
+                            class: 'input_integer',
+                            step: :any, # Allow any number of decimal places
+                          }
                         when :boolean
                           {}
                         when :string
