@@ -4,6 +4,20 @@ require 'system_helper'
 
 describe "Shipping Categories" do
   include AuthenticationHelper
+  include WebHelper
+  let(:admin_role) { Spree::Role.find_or_create_by!(name: 'admin') }
+  let(:admin_user) { create(:user) }
+
+  context 'user visits shipping categories page' do
+    it 'header is translated' do
+      category = create(:shipping_category)
+
+      login_as_admin
+      visit spree.edit_admin_shipping_category_path(category)
+
+      expect(page).to have_content "Editing Shipping Category"
+    end
+  end
 
   context 'user adds a new shipping category with temperature control' do
     it 'user sees new shipping category with temperature control' do
