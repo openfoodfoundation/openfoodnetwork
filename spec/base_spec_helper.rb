@@ -142,6 +142,9 @@ RSpec.configure do |config|
 
   config.infer_spec_type_from_file_location!
 
+  # You can use `rspec -n` to run only failed specs.
+  config.example_status_persistence_file_path = "tmp/rspec-status.txt"
+
   # Helpers
   config.include FactoryBot::Syntax::Methods
   config.include JsonSpec::Helpers
