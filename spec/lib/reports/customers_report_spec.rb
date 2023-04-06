@@ -32,6 +32,31 @@ module Reporting
                                                  "test@test.com", "Firsty", "Lasty", "Suburbia"
                                                ]])
             end
+
+            context "when there are multiple orders for the same customer" do
+              let!(:address) {
+                create(:bill_address, firstname: "Firsty",
+                                      lastname: "Lasty", city: "Suburbia")
+              }
+              let!(:order1) {
+                create(:order_with_totals_and_distribution, :completed, bill_address: address)
+              }
+              let!(:order2) {
+                create(:order_with_totals_and_distribution, :completed, bill_address: address)
+              }
+              before do
+                [order1, order2].each do |order|
+                  order.update!(email: "test@test.com")
+                end
+              end
+              it "returns only one row per customer" do
+                expect(subject.query_result).to match_array [order1]
+                expect(subject.table_rows.size).to eq(1)
+                expect(subject.table_rows).to eq([[
+                                                   "test@test.com", "Firsty", "Lasty", "Suburbia"
+                                                 ]])
+              end
+            end
           end
 
           describe "addresses report" do
