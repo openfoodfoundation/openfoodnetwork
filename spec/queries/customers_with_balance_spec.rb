@@ -23,7 +23,7 @@ describe CustomersWithBalance do
         it 'returns balance' do
           customers = create_pair(:customer)
           query = described_class.new(Customer.where(id: customers)).query
-          expect(query.pluck(:id)).to eq([customers.first.id, customers.second.id])
+          expect(query.pluck(:id).sort).to eq([customers.first.id, customers.second.id].sort)
           expect(query.map(&:balance_value)).to eq([0, 0])
         end
       end
