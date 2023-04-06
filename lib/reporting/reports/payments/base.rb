@@ -11,6 +11,12 @@ module Reporting
         def query_result
           search.result.group_by { |order| [order.payment_state, order.distributor] }.values
         end
+
+        protected
+
+        def payment_state(order)
+          order.payment_state
+        end
       end
     end
   end
