@@ -18,7 +18,6 @@ angular.module('admin.orderCycles')
 
     $scope.submit = ($event, destination) ->
       $event.preventDefault()
-      NavigationCheck.clear()
       StatusMessage.display 'progress', t('js.saving')
       OrderCycle.update(destination, $scope.order_cycle_form)
 
