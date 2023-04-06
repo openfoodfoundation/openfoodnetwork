@@ -15,7 +15,7 @@ module Reporting
         protected
 
         def payment_state(order)
-          order.payment_state
+          I18n.t "spree.payment_states.#{order.payment_state}"
         end
       end
     end
