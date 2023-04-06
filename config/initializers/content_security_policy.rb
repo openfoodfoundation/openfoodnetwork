@@ -8,6 +8,7 @@ Rails.application.config.content_security_policy do |policy|
   policy.default_src :self, :https
   policy.font_src :self, :https, :data, "fonts.gstatic.com"
   policy.img_src :self, :https, :data, "*.s3.amazonaws.com"
+  policy.img_src :self, :http, :data, ENV["SITE_URL"] if Rails.env.development?
   policy.object_src :none
   policy.frame_ancestors :none
   policy.script_src :self, :https, :unsafe_inline, :unsafe_eval, "*.stripe.com", "openfoodnetwork.innocraft.cloud",
