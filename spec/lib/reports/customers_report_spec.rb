@@ -57,6 +57,89 @@ module Reporting
                                                  o.shipping_method.name
                                                ]])
             end
+
+            context "when there are multiple orders for the same customer" do
+              let!(:a) { create(:bill_address) }
+              let!(:d){ create(:distributor_enterprise) }
+              let!(:sm) { create(:shipping_method, distributors: [d]) }
+              let!(:o1) {
+                create(:order_with_totals_and_distribution, :completed, distributor: d, bill_address: a, shipping_method: sm)
+              }
+              let!(:o2) {
+                create(:order_with_totals_and_distribution, :completed, distributor: d, bill_address: a, shipping_method: sm)
+              }
+              before do
+                [o1, o2].each do |order|
+                  order.update!(email: "test@test.com")
+                end
+              end
+
+              it "returns only one row per customer" do
+                expect(subject.query_result).to match_array [o1]
+                expect(subject.table_rows.size).to eq(1)
+                expect(subject.table_rows).to eq([[
+                                                   a.firstname, a.lastname,
+                                                   [a.address1, a.address2, a.city].join(" "),
+                                                   o1.email, a.phone, d.name,
+                                                   [d.address.address1, d.address.address2, d.address.city].join(" "),
+                                                   o1.shipping_method.name
+                                                 ]])
+              end
+
+              context "orders from different hubs" do
+                let!(:d2) { create(:distributor_enterprise) }
+                let!(:sm2) { create(:shipping_method, distributors: [d2]) }
+                let!(:o2) {
+                  create(:order_with_totals_and_distribution, :completed, distributor: d2, bill_address: a, shipping_method: sm2)
+                }
+
+                it "returns one row per customer per hub" do
+                  expect(subject.query_result.size).to eq(2)
+                  expect(subject.table_rows.size).to eq(2)
+                  expect(subject.table_rows).to eq([[
+                                                     a.firstname, a.lastname,
+                                                     [a.address1, a.address2, a.city].join(" "),
+                                                     o1.email, a.phone, d.name,
+                                                     [d.address.address1, d.address.address2, d.address.city].join(" "),
+                                                     o1.shipping_method.name
+                                                   ], [
+                                                     a.firstname, a.lastname,
+                                                     [a.address1, a.address2, a.city].join(" "),
+                                                     o2.email, a.phone, d2.name,
+                                                     [d2.address.address1, d2.address.address2, d2.address.city].join(" "),
+                                                     o2.shipping_method.name
+                                                   ]])
+                end
+              end
+
+              context "orders with different shipping methods" do
+                let!(:sm2) { create(:shipping_method, distributors: [d]) }
+                let!(:o2) {
+                  create(:order_with_totals_and_distribution, :completed, distributor: d, bill_address: a, shipping_method: sm2)
+                }
+                before do
+                  o2.select_shipping_method(sm2.id)
+                end
+
+                it "returns one row per customer per shipping method" do
+                  expect(subject.query_result.size).to eq(2)
+                  expect(subject.table_rows.size).to eq(2)
+                  expect(subject.table_rows).to eq([[
+                                                     a.firstname, a.lastname,
+                                                     [a.address1, a.address2, a.city].join(" "),
+                                                     o1.email, a.phone, d.name,
+                                                     [d.address.address1, d.address.address2, d.address.city].join(" "),
+                                                     o1.shipping_method.name
+                                                   ], [
+                                                     a.firstname, a.lastname,
+                                                     [a.address1, a.address2, a.city].join(" "),
+                                                     o2.email, a.phone, d.name,
+                                                     [d.address.address1, d.address.address2, d.address.city].join(" "),
+                                                     sm2.name
+                                                   ]])
+                end
+              end
+            end
           end
 
           describe "fetching orders" do
