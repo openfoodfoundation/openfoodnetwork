@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.18.2",
-    "@floating-ui/dom": "^1.2.5",
+    "@floating-ui/dom": "^1.2.6",
     "@hotwired/turbo": "^7.3.0",
     "@rails/webpacker": "5.4.4",
     "babel-loader": "^8.2.3",
