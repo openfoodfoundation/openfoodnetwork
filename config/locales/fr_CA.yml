@@ -880,6 +880,8 @@ fr_CA:
           address2: Adresse (suite)
           legal_phone_number: Numéro de téléphone
           phone_placeholder: "98 123 4565"
+          select_country: "Choisir le pays"
+          select_state: "Choisir la Région:"
         contact:
           legend: "Contact"
           name: Nom

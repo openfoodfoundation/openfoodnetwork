@@ -772,6 +772,8 @@ pt_BR:
           uploaded_on: "upload feito em"
         business_address:
           address2: Complemento
+          select_country: "Selecione país"
+          select_state: "Selecione estado"
         contact:
           legend: "Contato"
           name: Nome

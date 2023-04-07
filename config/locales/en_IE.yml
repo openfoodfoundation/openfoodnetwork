@@ -880,6 +880,8 @@ en_IE:
           address2: Address (contd.)
           legal_phone_number: Legal phone number
           phone_placeholder: "08x 123 4567"
+          select_country: "Select Country"
+          select_state: "Select County"
         contact:
           legend: "Contact"
           name: Name

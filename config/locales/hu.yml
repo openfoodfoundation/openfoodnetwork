@@ -858,6 +858,8 @@ hu:
           address2: Cím (folyt.)
           legal_phone_number: Jogi telefonszám
           phone_placeholder: "98 123 4565"
+          select_country: "Válassz országot"
+          select_state: "Válaszd az Állam lehetőséget"
         contact:
           legend: "Kapcsolat"
           name: Név
@@ -893,7 +895,7 @@ hu:
           remove_promo_image: "Kép eltávolítása"
         inventory_settings:
           legend: "Készletbeállítások"
-          text1: Dönthet úgy, hogy a készletszinteket és az árakat a sajátján keresztül kezeli
+          text1: 'Dönthetsz úgy, hogy a készletszinteket és az árakat a sajátján keresztül kezeled: '
           inventory: leltár
           text2: >
               Ha a leltár eszközt használod, kiválaszthatod, hogy a beszállítók által

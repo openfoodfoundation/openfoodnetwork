@@ -858,6 +858,8 @@ nb:
           address2: Adresse (forts.)
           legal_phone_number: Juridisk telefonnummer
           phone_placeholder: "98 123 4565"
+          select_country: "Velg Land"
+          select_state: "Velg Fylke"
         contact:
           legend: "Kontakt"
           name: Navn

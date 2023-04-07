@@ -848,6 +848,8 @@ fr_CH:
           address2: Adresse (suite)
           legal_phone_number: Numéro de téléphone
           phone_placeholder: "09 00 00 00 00"
+          select_country: "Choisir le pays"
+          select_state: "Choisir le département"
         contact:
           legend: "Contact"
           name: Nom

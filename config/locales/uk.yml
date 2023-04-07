@@ -855,6 +855,8 @@ uk:
           address2: Адреса (продовження)
           legal_phone_number: Юридичний номер телефону
           phone_placeholder: "98 123 4565"
+          select_country: "Виберіть країну"
+          select_state: "Виберіть Область"
         contact:
           legend: "Контакти"
           name: Ім&#39;я

@@ -720,6 +720,8 @@ es_CO:
           invoice_text: Añadir texto personalizado al final de las facturas
         business_address:
           address2: Dirección (continuación)
+          select_country: "Selecciona País"
+          select_state: "Selecciona Departamento"
         contact:
           legend: "Contacto"
           name: Nombre

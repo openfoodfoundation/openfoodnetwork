@@ -774,6 +774,8 @@ tr:
           uploaded_on: "yüklendi"
         business_address:
           address2: Adres (devam)
+          select_country: "Ülke Seçin"
+          select_state: "Şehir Seçin"
         contact:
           legend: "İLETİŞİM"
           name: Ad

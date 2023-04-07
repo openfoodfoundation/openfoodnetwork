@@ -880,6 +880,8 @@ en_GB:
           address2: Address (contd.)
           legal_phone_number: Legal phone number
           phone_placeholder: "01632 123 456"
+          select_country: "Select Country"
+          select_state: "Select County"
         contact:
           legend: "Contact"
           name: Name
@@ -1067,8 +1069,20 @@ en_GB:
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
         vouchers:
+          legend: Vouchers
+          voucher_code: Voucher Code
           rate: Rate
+          label: Label
+          purpose: Purpose
+          expiry: Expiry
+          use_limit: Use/Limit
           customers: Customer
+          net_value: Net Value
+          add_new: Add New
+          no_voucher_yet: No Vouchers yet
+        white_label:
+          legend: "White Label"
+          hide_ofn_navigation: "Hide OFN navigation"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1304,6 +1318,8 @@ en_GB:
           tag_rules: "Tag Rules"
           shop_preferences: "Shop Preferences"
           users: "Users"
+          vouchers: Vouchers
+          white_label: "White Label"
         enterprise_group:
           primary_details: "Primary Details"
           users: "Users"
@@ -1513,8 +1529,10 @@ en_GB:
         associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
     vouchers:
       new:
+        legend: New Voucher
         back: Back
         save: Save
+        voucher_code: Voucher Code
         voucher_amount: Amount
     controllers:
       enterprises:
@@ -1523,6 +1541,12 @@ en_GB:
         stripe_connect_fail: Sorry, the connection of your Stripe account failed
       stripe_connect_settings:
         resource: Stripe Connect configuration
+    resend_confirmation_emails_feedback:
+      one: "Confirmation email sent for 1 order."
+      other: "Confirmation emails set for %{count} orders."
+    send_invoice_feedback:
+      one: "Invoice email sent for 1 order."
+      other: "Invoice emails sent for %{count} orders."
   api:
     unknown_error: "Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
@@ -3115,6 +3139,9 @@ en_GB:
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
         restock_item: "Restock Items: return this item to stock"
         restock_items: "Restock Items: return all items to stock"
+        delete_line_items_html:
+          one: "This will delete one line item from the order. <br />Are you sure you want to proceed?"
+          other: "This will delete %{count} line items from the order. <br />Are you sure you want to proceed?"
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."

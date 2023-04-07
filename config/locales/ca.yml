@@ -861,6 +861,7 @@ ca:
           address2: Adreça (continua)
           legal_phone_number: 'Telèfon administratiu '
           phone_placeholder: "912 345 678"
+          select_country: "Selecciona país"
         contact:
           legend: "Contacte"
           name: Nom

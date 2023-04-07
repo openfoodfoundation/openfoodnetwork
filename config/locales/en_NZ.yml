@@ -852,6 +852,8 @@ en_NZ:
           address2: Address (contd.)
           legal_phone_number: Legal phone number
           phone_placeholder: "98 123 4565"
+          select_country: "Select Country"
+          select_state: "Select State"
         contact:
           legend: "Contact"
           name: Name

@@ -855,6 +855,7 @@ ar:
           legend: "عنوان"
         business_details:
           legend: "تفاصيل العمل"
+          upload: 'تحميل'
           abn: ABN
           abn_placeholder: على سبيل المثال. 99 123 456 789
           acn: ACN
@@ -879,6 +880,8 @@ ar:
           address2: العنوان (تابع)
           legal_phone_number: رقم الهاتف القانوني
           phone_placeholder: "98123 4565"
+          select_country: "اختر الدولة"
+          select_state: "اختر ولايه"
         contact:
           legend: "اتصل"
           name: اسم
@@ -1065,8 +1068,17 @@ ar:
           email_confirmed: "تأكيد البريد الإلكتروني"
           email_not_confirmed: "البريد الإلكتروني غير مؤكد"
         vouchers:
+          legend: القسائم
+          voucher_code: رمز القسيمة
           rate: معدل
+          label: ملصق
+          purpose: الهدف
+          expiry: انتهاء
+          use_limit: استخدام / تحديد
           customers: عميل
+          net_value: صافي القيمة
+          add_new: اضف جديد
+          no_voucher_yet: لا قسائم حتى الآن
       actions:
         edit_profile: الإعدادات
         properties: الخصائص
@@ -1302,6 +1314,7 @@ ar:
           tag_rules: "قواعد الوسم"
           shop_preferences: "تفضيلات المتجر"
           users: "المستخدمين"
+          vouchers: القسائم
         enterprise_group:
           primary_details: "التفاصيل الأساسية"
           users: "المستخدمين"
@@ -1336,6 +1349,7 @@ ar:
       payment_methods: تقرير طرق الدفع
       delivery: إشعار بالإستلام
       sales_tax_totals_by_producer: إجمالي ضريبة المبيعات حسب المنتج
+      sales_tax_totals_by_order: إجماليات ضريبة المبيعات حسب الطلب
       tax_types: أنواع الضرائب
       tax_rates: معدلات الضريبة
       pack_by_customer: تم التعبئة من العملاء
@@ -1510,8 +1524,10 @@ ar:
         associated_subscriptions_error: لا يمكن حذف هذا الجدول لأنه يحتوي على اشتراكات مقترنة
     vouchers:
       new:
+        legend: قسيمة جديدة
         back: عودة
         save: حفظ
+        voucher_code: رمز القسيمة
         voucher_amount: القيمة
     controllers:
       enterprises:
@@ -1527,6 +1543,13 @@ ar:
       few: "تم إرسال رسائل التأكيد عبر البريد الإلكتروني لطلبات %{count}."
       many: "تم إرسال رسائل التأكيد عبر البريد الإلكتروني لطلبات %{count}."
       other: "تم إرسال رسائل التأكيد عبر البريد الإلكتروني لطلبات %{count}."
+    send_invoice_feedback:
+      zero: "تم إرسال رسائل البريد الإلكتروني للفواتير لأوامر %{count}."
+      one: "تم إرسال الفاتورة عبر البريد الإلكتروني لطلب واحد."
+      two: "تم إرسال رسائل البريد الإلكتروني للفواتير لأوامر %{count}."
+      few: "تم إرسال رسائل البريد الإلكتروني للفواتير لأوامر %{count}."
+      many: "تم إرسال رسائل البريد الإلكتروني للفواتير لأوامر %{count}."
+      other: "تم إرسال رسائل البريد الإلكتروني لفواتير الطلبات%{count}."
   api:
     unknown_error: "هناك خطأ ما. تم إخطار فريقنا."
     invalid_api_key: "مفتاح API المحدد غير صالح (%{key})."
@@ -1543,6 +1566,10 @@ ar:
       destroy_attachment_does_not_exist: "ملف الشروط والأحكام غير موجود"
     orders:
       failed_to_update: "فشل في تحديث الطلب"
+    query_param:
+      error:
+        title: معامل طلب البحث غير صالح
+        extra_fields: "حقول غير المدعومة: %{fields}"
   checkout:
     already_ordered:
       cart: "سلة التسوق"
@@ -1640,13 +1667,13 @@ ar:
   order_number: "رقم الفاتورة:"
   date_of_transaction: "تاريخ المعاملة:"
   menu_1_title: "متاجر"
-  menu_1_url: "/shops"
+  menu_1_url: "shops/"
   menu_2_title: "خريطة"
-  menu_2_url: "/map"
+  menu_2_url: "map/"
   menu_3_title: "المنتجين"
-  menu_3_url: "/producers"
+  menu_3_url: "producers/"
   menu_4_title: "مجموعات"
-  menu_4_url: "/groups"
+  menu_4_url: "groups/"
   menu_5_title: "حول"
   menu_5_url: "https://about.flaha.org"
   menu_6_title: "الاتصال"
@@ -3102,6 +3129,13 @@ ar:
         cancel_the_order_send_cancelation_email: "إرسال بريد إلكتروني للإلغاء إلى العميل"
         restock_item: "إعادة تخزين المواد: إعادة هذه المادة إلى المخزون"
         restock_items: "إعادة تخزين المواد : إعادة جميع المواد إلى المخزون"
+        delete_line_items_html:
+          zero: "سيؤدي هذا إلى حذف بنود سطر %{count} من الأمر.<br /> هل انت متأكد انك تريد المتابعة؟"
+          one: "سيؤدي هذا إلى حذف عنصر سطر واحد من الطلب.<br /> هل انت متأكد انك تريد المتابعة؟"
+          two: "سيؤدي هذا إلى حذف بنود سطر %{count} من الأمر.<br /> هل انت متأكد انك تريد المتابعة؟"
+          few: "سيؤدي هذا إلى حذف بنود سطر %{count} من الأمر.<br /> هل انت متأكد انك تريد المتابعة؟"
+          many: "سيؤدي هذا إلى حذف بنود سطر %{count} من الأمر.<br /> هل انت متأكد انك تريد المتابعة؟"
+          other: "سيؤدي هذا إلى حذف بنود سطر %{count} من الأمر.<br /> هل أنت متأكد انك تريد المتابعة؟"
       resend_user_email_confirmation:
         resend: "إعادة إرسال"
         sending: "إعادة إرسال..."
@@ -3489,6 +3523,13 @@ ar:
   first: "أول"
   previous: "السابق"
   last: "الاخير"
+  webhook_endpoints:
+    create:
+      success: تم إنشاء نقطة نهاية Webhook بنجاح
+      error: فشل إنشاء نقطة نهاية Webhook
+    destroy:
+      success: تم حذف نقطة نهاية Webhook بنجاح
+      error: فشل حذف نقطة نهاية Webhook
   spree:
     add_country: "أضف دولة"
     add_state: "أضف المدينة"
@@ -3850,6 +3891,8 @@ ar:
           cancel_orders: "إلغاء الطلبات"
           resend_confirmation: "أعد إرسال التأكيد"
           resend_confirmation_confirm_html: "سيؤدي هذا إلى إعادة إرسال البريد الإلكتروني للتأكيد إلى العميل.<br /> هل انت متأكد انك تريد المتابعة؟"
+          send_invoice: "إرسال الفواتير"
+          send_invoice_confirm_html: "سيؤدي هذا إلى إرسال فواتير العملاء عبر البريد الإلكتروني لجميع الطلبات الكاملة المحددة.<br> هل انت متأكد انك تريد المتابعة؟"
           selected:
             zero: "لم يتم اختيار أي طلب"
             one: "طلب واحد تم اختياره"
@@ -4265,6 +4308,16 @@ ar:
       api_keys:
         regenerate_key: "انشاء مفتاح"
         title: مفتاح API
+      webhook_endpoints:
+        title: نقاط نهاية Webhook
+        description: قد تؤدي الأحداث في النظام إلى تشغيل webhooks للأنظمة الخارجية.
+        event_types:
+          order_cycle_opened: تم فتح دورة الطلب
+        event_type:
+          header: نوع الحدث
+        url:
+          header: عنوان URL لنقطة النهاية
+          create_placeholder: 'أدخل عنوان URL لنقطة نهاية webhook '
       developer_settings:
         title: إعدادات المطور
       form:

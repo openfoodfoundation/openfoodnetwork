@@ -370,6 +370,8 @@ sv:
           invoice_text: Lägg till anpassad text i slutet av faktura
         business_address:
           address2: Adress (fortgående)
+          select_country: "Välj land"
+          select_state: "Välj län"
         contact:
           legend: "Kontakt"
           name: Namn

@@ -880,6 +880,8 @@ fr:
           address2: Adresse (suite)
           legal_phone_number: Numéro de téléphone
           phone_placeholder: "09 00 00 00 00"
+          select_country: "Choisir le pays"
+          select_state: "Choisir le département"
         contact:
           legend: "Contact"
           name: Nom
@@ -1068,8 +1070,20 @@ fr:
           email_confirmed: "Email confirmé"
           email_not_confirmed: "Email non confirmé"
         vouchers:
+          legend: Bon de réduction
+          voucher_code: Code promo
           rate: Taux
+          label: Nom
+          purpose: Raison
+          expiry: Date d'expiration
+          use_limit: Date limite
           customers: Acheteur
+          net_value: Valeur nette
+          add_new: Ajouter nouveau
+          no_voucher_yet: Pas encore de bons de réduction
+        white_label:
+          legend: "Marque blanche"
+          hide_ofn_navigation: "Masquer la navigation du site"
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1305,6 +1319,8 @@ fr:
           tag_rules: "Règles de tag"
           shop_preferences: "Préférences boutique"
           users: "Gestionnaires"
+          vouchers: Bon de réduction
+          white_label: "Marque blanche"
         enterprise_group:
           primary_details: "Informations de base"
           users: "Gestionnaires"
@@ -1514,8 +1530,10 @@ fr:
         associated_subscriptions_error: Ce rythme d'abonnement ne peut pas être supprimé car il est associé à des abonnements.
     vouchers:
       new:
+        legend: Nouveau bon de réduction
         back: Retour
         save: Sauvegarder
+        voucher_code: Code promo
         voucher_amount: Montant
     controllers:
       enterprises:

@@ -688,6 +688,9 @@ pl:
           invoice_text: Dodaj własny tekst na końcu faktur
           terms_and_conditions: "Regulamin"
           remove_terms_and_conditions: "Usuń plik"
+        business_address:
+          select_country: "Wybierz kraj"
+          select_state: "Wybierz rejon"
         contact:
           name: Nazwisko
           name_placeholder: np. Jan Śliwa

@@ -879,6 +879,8 @@ en_CA:
           address2: Address (contd.)
           legal_phone_number: Legal phone number
           phone_placeholder: "98 123 4565"
+          select_country: "Select Country"
+          select_state: "Select Province"
         contact:
           legend: "Contact"
           name: Name

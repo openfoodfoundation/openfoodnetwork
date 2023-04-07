@@ -870,6 +870,8 @@ cy:
           address2: Cyfeiriad (parhad.)
           legal_phone_number: Rhif ffôn cyfreithiol
           phone_placeholder: "01875 123 456"
+          select_country: "Dewis Gwlad"
+          select_state: "Dewiswch Sir"
         contact:
           legend: "Cysylltu"
           name: Enw

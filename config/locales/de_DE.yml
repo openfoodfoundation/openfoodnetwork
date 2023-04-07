@@ -869,6 +869,8 @@ de_DE:
           address2: Adresszusatz (optional)
           legal_phone_number: Telefonnummer
           phone_placeholder: "z. B. +49 40 123 456"
+          select_country: "Land wählen"
+          select_state: "Bundesland wählen"
         contact:
           legend: "Kontaktdaten"
           name: Name

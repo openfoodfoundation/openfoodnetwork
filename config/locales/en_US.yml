@@ -845,6 +845,8 @@ en_US:
           address2: Address (contd.)
           legal_phone_number: Business phone number
           phone_placeholder: "777 555-1212"
+          select_country: "Select Country"
+          select_state: "Select State"
         contact:
           legend: "Contact"
           name: Name

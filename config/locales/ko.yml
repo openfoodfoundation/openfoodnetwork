@@ -849,6 +849,8 @@ ko:
           address2: 주소 (계속)
           legal_phone_number: 법적 전화번호
           phone_placeholder: "98 123 4565"
+          select_country: "국가 선택"
+          select_state: "주 선택"
         contact:
           legend: "연락처"
           name: 이름

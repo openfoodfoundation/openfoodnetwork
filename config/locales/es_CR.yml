@@ -857,6 +857,8 @@ es_CR:
           address2: Dirección (continuación)
           legal_phone_number: Número de teléfono legal
           phone_placeholder: "98 123 4565"
+          select_country: "Selecciona país"
+          select_state: "Selecciona provincia"
         contact:
           legend: "Contacto"
           name: Nombre

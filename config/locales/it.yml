@@ -879,6 +879,8 @@ it:
           address2: Indirizzo (continua)
           legal_phone_number: Numero di telefono del rappresentante legale
           phone_placeholder: "333 123123"
+          select_country: "Seleziona il paese"
+          select_state: "Seleziona la provincia"
         contact:
           legend: "Contatti"
           name: Nome

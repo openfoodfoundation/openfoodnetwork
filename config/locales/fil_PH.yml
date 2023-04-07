@@ -692,6 +692,8 @@ fil_PH:
           invoice_text: magdagdag ng sariling mensahe sa dulo ng mga invoice
         business_address:
           address2: address (pinagpatuloy)
+          select_country: "Piliin ang bansa"
+          select_state: "pumili ng Lalawigan"
         contact:
           legend: "Makipag-usap"
           name: pangalan

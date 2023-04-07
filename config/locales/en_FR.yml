@@ -855,6 +855,7 @@ en_FR:
           legend: "Address"
         business_details:
           legend: "Business Details"
+          upload: 'upload'
           abn: ABN
           abn_placeholder: eg. 99 123 456 789
           acn: ACN
@@ -879,6 +880,8 @@ en_FR:
           address2: Address (contd.)
           legal_phone_number: Legal phone number
           phone_placeholder: "98 123 4565"
+          select_country: "Select Country"
+          select_state: "Select State"
         contact:
           legend: "Contact"
           name: Name
@@ -1066,8 +1069,20 @@ en_FR:
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
         vouchers:
+          legend: Vouchers
+          voucher_code: Voucher Code
           rate: Rate
+          label: Label
+          purpose: Purpose
+          expiry: Expiry
+          use_limit: Use/Limit
           customers: Customer
+          net_value: Net Value
+          add_new: Add New
+          no_voucher_yet: No Vouchers yet
+        white_label:
+          legend: "White Label"
+          hide_ofn_navigation: "Hide website navigation"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1303,6 +1318,8 @@ en_FR:
           tag_rules: "Tag Rules"
           shop_preferences: "Shop Preferences"
           users: "Users"
+          vouchers: Vouchers
+          white_label: "White Label"
         enterprise_group:
           primary_details: "Primary Details"
           users: "Users"
@@ -1512,8 +1529,10 @@ en_FR:
         associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
     vouchers:
       new:
+        legend: New Voucher
         back: Back
         save: Save
+        voucher_code: Voucher Code
         voucher_amount: Amount
     controllers:
       enterprises:
@@ -1525,6 +1544,9 @@ en_FR:
     resend_confirmation_emails_feedback:
       one: "Confirmation email sent for 1 order."
       other: "Confirmation emails sent for %{count} orders."
+    send_invoice_feedback:
+      one: "Invoice email sent for 1 order."
+      other: "Invoice emails sent for %{count} orders."
   api:
     unknown_error: "Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
@@ -1541,6 +1563,10 @@ en_FR:
       destroy_attachment_does_not_exist: "Terms and Conditions file does not exist"
     orders:
       failed_to_update: "Failed to update order"
+    query_param:
+      error:
+        title: Invalid query parameter
+        extra_fields: "Unsupported fields: %{fields}"
   checkout:
     already_ordered:
       cart: "cart"
@@ -3107,6 +3133,9 @@ en_FR:
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
         restock_item: "Restock Items: return this item to stock"
         restock_items: "Restock Items: return all items to stock"
+        delete_line_items_html:
+          one: "This will delete one line item from the order.<br />Are you sure you want to proceed?"
+          other: "This will delete %{count} line items from the order.<br />Are you sure you want to proceed?"
       resend_user_email_confirmation:
         resend: "Resend"
         sending: "Resend..."
@@ -3398,6 +3427,13 @@ en_FR:
   first: "First"
   previous: "Previous"
   last: "Last"
+  webhook_endpoints:
+    create:
+      success: Webhook endpoint successfully created
+      error: Webhook endpoint failed to create
+    destroy:
+      success: Webhook endpoint successfully deleted
+      error: Webhook endpoint failed to delete
   spree:
     add_country: "Add country"
     add_state: "Add state"
@@ -3759,6 +3795,8 @@ en_FR:
           cancel_orders: "Cancel Orders"
           resend_confirmation: "Resend Confirmation"
           resend_confirmation_confirm_html: "This will resend the confirmation email to the customer. <br /> Are you sure you want to proceed?"
+          send_invoice: "Send Invoices"
+          send_invoice_confirm_html: "This will email customer invoices for all selected complete orders. <br>Are you sure you want to proceed?"
           selected:
             zero: "No order selected"
             one: "1 order selected"
@@ -4174,6 +4212,16 @@ en_FR:
       api_keys:
         regenerate_key: "Regenerate Key"
         title: API key
+      webhook_endpoints:
+        title: Webhook Endpoints
+        description: Events in the system may trigger webhooks to external systems.
+        event_types:
+          order_cycle_opened: Order Cycle Opened
+        event_type:
+          header: Event type
+        url:
+          header: Endpoint URL
+          create_placeholder: Enter the URL of the remote webhook endpoint
       developer_settings:
         title: Developer Settings
       form:

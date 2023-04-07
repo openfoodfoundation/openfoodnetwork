@@ -706,6 +706,8 @@ nl_BE:
           invoice_text: Voeg aangepaste tekst toe op het einde van de factuur
         business_address:
           address2: Adres (vervolg)
+          select_country: "Selecteer land"
+          select_state: "Selecteer Provincie"
         contact:
           legend: "Contact"
           name: Naam

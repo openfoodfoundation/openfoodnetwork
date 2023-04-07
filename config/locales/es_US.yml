@@ -843,6 +843,8 @@ es_US:
           address2: Dirección (cont.)
           legal_phone_number: Número de teléfono legal
           phone_placeholder: "98 123 4565"
+          select_country: "Selecciona país"
+          select_state: "Selecciona Provincia"
         contact:
           legend: "Contacto"
           name: Nombre

@@ -863,6 +863,8 @@ ru:
           address2: Адрес (продолжение)
           legal_phone_number: Официальный номер телефона
           phone_placeholder: "+7 123 456 7890"
+          select_country: "Выберите Страну"
+          select_state: "Выберите Область"
         contact:
           legend: "Контакт"
           name: Имя

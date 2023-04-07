@@ -672,6 +672,8 @@ en_BE:
           invoice_text: Add customized text at the end of invoices
         business_address:
           address2: Address (contd.)
+          select_country: "Select Country"
+          select_state: "Select State"
         contact:
           legend: "Contact"
           name: Name

@@ -728,6 +728,8 @@ fr_BE:
           address1: Adresse du siège social
           address2: Adresse (suite)
           legal_phone_number: Numéro de téléphone
+          select_country: "Choisir le pays"
+          select_state: "Choisir la Province"
         contact:
           legend: "Contact"
           name: Nom

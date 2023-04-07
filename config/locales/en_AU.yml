@@ -719,6 +719,8 @@ en_AU:
           uploaded_on: "uploaded on"
         business_address:
           address2: Address (contd.)
+          select_country: "Select Country"
+          select_state: "Select State"
         contact:
           legend: "Contact"
           name: Name

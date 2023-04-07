@@ -6,9 +6,16 @@ es:
       spree/shipping_method: Método de envío
     attributes:
       spree/order/ship_address:
+        address1: "Dirección de envío (calle y número)"
+        address2: "Dirección de envío linea 2"
+        city: "Dirección de envío ciudad"
+        country: "Dirección de envío país"
         phone: "Número de teléfono"
         firstname: "Nombre"
         lastname: "Apellido"
+        zipcode: "Dirección de envío código postal"
+      spree/order/bill_address:
+        phone: Teléfono de la Consumidora
       spree/user:
         password: "Contraseña"
         password_confirmation: "confirmación de contraseña"
@@ -147,6 +154,7 @@ es:
   cardholder_name: "Nombre del titular de la tarjeta"
   community_forum_url: "URL del foro de la comunidad"
   customer_instructions: "Instrucciones del Consumidor"
+  additional_information: "Información adicional"
   devise:
     passwords:
       spree_user:
@@ -167,6 +175,7 @@ es:
         signed_up_but_unconfirmed: "Se ha enviado un mensaje con un enlace de confirmación a tu dirección de correo electrónico. Abre el enlace para activar tu cuenta."
         unknown_error: "Algo salió mal al crear tu cuenta. Comprueba tu dirección de correo electrónico y vuelve a intentarlo."
     failure:
+      disabled: "Su cuenta ha sido desactivada. Contacte una administradora para resolver este problema"
       invalid: |
           Correo o contraseña inválidos.
           ¿Has sido invitada? Tal vez necesites crear una cuenta o recuperar tu contraseña.
@@ -174,6 +183,9 @@ es:
       already_registered: "Esta dirección de correo electrónico ya está registrada. Inicie sesión para continuar, o vuelva atrás y use otra dirección de correo electrónico."
     success:
       logged_in_succesfully: "Sesión iniciada con éxito"
+    sessions:
+      signed_out: "La sesión se cerró correctamente "
+      already_signed_out: "La sesión se cerró correctamente "
     user_passwords:
       spree_user:
         updated_not_active: "Su contraseña ha sido restablecida, pero su correo electrónico aún no ha sido confirmado."
@@ -507,6 +519,8 @@ es:
         terms_of_service: "Términos de servicio"
         delete: "Eliminar archivo"
         confirm_delete: "¿Está seguro de que desea eliminar el archivo de Condiciones de servicio actual?"
+        attachment: "Adjunto"
+        create_terms_of_service: "Crear archivo de condiciones de servicio"
     number_localization:
       number_localization_settings: "Number Localization Settings"
       enable_localized_number: "Usar la logica internacional separador miles/decimales"
@@ -515,6 +529,7 @@ es:
         title: "Configuración de Factura"
         enable_invoices?: "Habilitar facturas?"
         invoice_style2?: "Utiliza el modelo de factura alternativo que incluye el desglose fiscal total por tipo de interés y tasa de impuestos por artículo (todavía no es adecuado para países que muestran los precios sin impuestos)"
+        enterprise_number_required_on_invoices?: "¿Requiere un ABN para generar una factura?"
     stripe_connect_settings:
       edit:
         title: "Stripe Connect"
@@ -598,7 +613,7 @@ es:
       form_images:
         images: "Imágenes"
       form_address:
-        contact: "Conacto"
+        contact: "Contacto"
       form_web:
         web: "Recursos Web"
     enterprise_roles:
@@ -799,6 +814,9 @@ es:
         variants_without_unit_value: "CUIDADO: Algunas variedades no tienen un valor unitario "
         all: "Todos"
       select_variant: "Seleccione una variante"
+      note:
+        note_label: "Nota:"
+        no_note_present: "No se proporcionó nota."
     enterprise:
       select_outgoing_oc_products_from: Selecciona los productos OC que salgan de
     enterprises:
@@ -820,6 +838,7 @@ es:
           legend: "Dirección"
         business_details:
           legend: "Detalles de la Organización"
+          upload: 'subir'
           abn: NIF
           abn_placeholder: ej. 99 123 456 789
           acn: ACN
@@ -831,6 +850,11 @@ es:
           uploaded_on: "Subido en"
           reset_form: "Reestablecer formulario"
           business_address_legend: "Dirección de Negocios"
+          invoice_item_sorting_legend: "Clasificación de artículos de factura"
+          sort_items_by_supplier?: ¿Ordenar artículos por proveedor?
+          sort_items_by_supplier_tip: "Cuando está habilitado, los artículos se ordenarán por nombre de proveedor."
+          enabled: Habilitar
+          disabled: Deshabilitar
         business_address:
           company_legal_name: Razón social de la empresa
           company_placeholder: 'Ejemplo S.A. '
@@ -839,6 +863,8 @@ es:
           address2: Dirección (cont.)
           legal_phone_number: Número telefónico legal
           phone_placeholder: "98 123 4565"
+          select_country: "Selecciona país"
+          select_state: "Selecciona Provincia"
         contact:
           legend: "Conacto"
           name: Nombre
@@ -848,6 +874,7 @@ es:
           email_address_tip: "Esta dirección de correo electrónico se mostrará en su perfil público"
           phone: Teléfono
           phone_placeholder: ej. 98 7654 3210
+          whatsapp_phone: Número de teléfono WhatsApp
           website: Website
           website_placeholder: ej. www.truffles.com
         enterprise_fees:
@@ -906,6 +933,8 @@ es:
           sells_tip: "Ninguno - La organización no vende directamente a los consumidores.<br />Popios - La organización vende sus propios productos a los consumidores.<br />Cualquiera -  La organización vende sus propios productos o de otros.<br />"
           visible_in_search: ¿Visible en la búsqueda?
           visible: Pública
+          not_visible: Oculto
+          hidden: Ocultar todas las referencias
         properties:
           legend: "Propiedades"
         permalink:
@@ -969,6 +998,7 @@ es:
           shopfront_sort_by_producer: "Por productora"
           shopfront_sort_by_category_placeholder: "Categoría"
           shopfront_sort_by_producer_placeholder: "Productora"
+          display_remaining_stock_tip: "Informe a los compradores cuando solo queden 3 artículos o menos."
           enabled: "Habilitado"
           disabled: "Deshabilitado"
         social:
@@ -1020,8 +1050,13 @@ es:
           email_confirmed: "Correo electrónico confirmado"
           email_not_confirmed: "Correo electrónico no confirmado"
         vouchers:
+          legend: Bonos
           rate: Impuesto
           customers: Consumidora
+          net_value: Valor neto
+          add_new: Añadir nuevo
+        white_label:
+          hide_ofn_navigation: "Ocultar la navegación de OFN"
       actions:
         edit_profile: Configuración
         properties: Propiedades
@@ -1133,6 +1168,7 @@ es:
       checkout_options:
         back_end: "Solo en Administración"
         cancel: "Cancelar"
+        checkout_options: "Validar opciones"
         distributor: "Distribuidora"
         payment_methods: "Métodos de Pago"
         save: "Guardar"
@@ -1143,6 +1179,7 @@ es:
         edit: "1. Configuración general"
         incoming: "2. Productos entrantes"
         outgoing: "3. Productos salientes"
+        checkout_options: "4. Validar opciones"
       exchange_form:
         pickup_time_tip: Cuando los pedidos de este ciclo de pedido estarán listos para la consumidora
         pickup_instructions_placeholder: "Instrucciones de recogida"
@@ -1216,6 +1253,8 @@ es:
         cancel: Cancelar
         proceed: Proceder
       status:
+        upcoming: Próxima
+        open: abierto
         closed: cerrado
     producer_properties:
       index:
@@ -1250,6 +1289,7 @@ es:
           tag_rules: "Reglas de las Etiquetas"
           shop_preferences: "Configuración de la tienda"
           users: "Usuarias"
+          vouchers: Bonos
         enterprise_group:
           primary_details: "Detalles Principales"
           users: "Usuarias"
@@ -1269,6 +1309,8 @@ es:
       unitsize: UNIDAD DE MEDIDA
       total: TOTAL
       total_items: ARTÍCULOS TOTALES
+      total_by_customer: Total por cliente
+      total_by_supplier: Total por proveedor
       supplier_totals: Totales de proveedores del Ciclo de Pedido
       supplier_totals_by_distributor: Totales de proveedores por Distribuidor del Ciclo de pedidos
       totals_by_supplier: Totales del distribuidor por proveedor del Ciclos de Pedido 
@@ -1284,6 +1326,7 @@ es:
       tax_rates: '% Impuestos'
       pack_by_customer: Pack por Consumidor
       pack_by_supplier: Pack por proveedor
+      pack_by_product: Empaquetar por producto
       orders_and_distributors:
         name: Pedidos y Distribuidores
         description: Pedidos con detalles de distribuidor
@@ -1334,10 +1377,20 @@ es:
           temp_controlled: "¿Control de Temperatura?"
           price: "Precio"
       rendering_options:
+        generate_report: "Generar informe"
         on_screen: "En pantalla"
+        spreadsheet: "Hoja de cálculo (Excel, OpenOffice..)"
         display: Mostrar
+        summary_row: ' Fila de resumen'
+        header_row: Fila de encabezado
+        raw_data: Datos sin procesar
+        formatted_data: Datos formateados
       packing:
         name: "Informes de empaquetado"
+    oidc_settings:
+      index:
+        connect: "Conecta tu cuenta"
+        view_account: "Para ver tu cuenta, ver:"
     subscriptions:
       index:
         title: "Suscripciones"
@@ -1435,6 +1488,7 @@ es:
         associated_subscriptions_error: Este horario no se puede eliminar porque tiene suscripciones asociadas
     vouchers:
       new:
+        legend: Nuevo bono
         back: Atrás
         save: Guardar
         voucher_amount: Cantidad
@@ -1458,6 +1512,10 @@ es:
       destroy_attachment_does_not_exist: "El archivo de términos y condiciones no existe"
     orders:
       failed_to_update: "Error al actualizar pedido"
+    query_param:
+      error:
+        title: Parámetro de consulta erróneo
+        extra_fields: "Campos no soportados: %{fields}"
   checkout:
     already_ordered:
       cart: "carrito"
@@ -1472,6 +1530,7 @@ es:
       terms_and_conditions: "Términos y Condiciones"
     failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
     payment_cancelled_due_to_stock: "Pago cancelado: no se pudo completar el pago debido a problemas de stock."
+    order_not_loaded: "No se encontró un pedido válido para procesar el pago"
   shops:
     hubs:
       show_closed_shops: "Mostrar tiendas cerradas"
@@ -1750,6 +1809,7 @@ es:
       message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
     step1:
       contact_information:
+        title: Información de contacto
         email:
           label: Email
         phone:
@@ -1803,10 +1863,13 @@ es:
         title: Detalles de entrega
         edit: Editar
         address: Dirección de entrega
+        instructions: Instrucciones
       payment_method:
         title: Método de pago
         edit: Editar
+        instructions: Instrucciones
       order:
+        title: Detalles de pedido
         edit: Editar
       terms_and_conditions:
         message_html: "Acepto el %{terms_and_conditions_link} del vendedor."
@@ -1843,6 +1906,7 @@ es:
   order_hub_info: Información del Grupo
   order_back_to_store: Volver a la Tienda
   order_back_to_cart: Volver al Carrito
+  order_back_to_website: Volver al sitio web
   bom_tip: "Usa esta página para alterar la cantidad del producto en varios pedidos a la vez. Los productos pueden ser eliminados de los pedidos si es necesario. "
   unsaved_changes_warning: "Hay cambios no guardados, se perderán si continúas."
   unsaved_changes_error: "Los campos con bordes rojos contienen errores."
@@ -2237,6 +2301,7 @@ es:
         contact_field_placeholder: "Nombre de contacto"
         contact_field_required: "Debes introducir un contacto principal."
         phone_field: "Número de teléfono"
+        whatsapp_phone_field: "Número de teléfono WhatsApp"
         phone_field_placeholder: "p.ej. 93 250 16 45"
       type:
         title: "Tipo"
@@ -2525,12 +2590,16 @@ es:
   report_payment_totals: 'Pagos Totales'
   report_all: 'Todo'
   report_order_cycle: "Ciclo de Pedido"
+  report_hide_columns: Columnas para ocultar
   report_columns: Columnas
   report_enterprises: "Organizaciones"
   report_enterprise_fee: "Nombres de las comisiones"
   report_users: "Usuarias"
   report_tax_rates: Porcentajes de los Impuestos
   report_tax_types: Tipos de Impuestos
+  report_filters: Filtros de informe
+  report_print: Imprimir informe
+  report_render_options: Opciones de renderizado 
   report_header_order_cycle: Ciclo de Pedido
   report_header_user: Usuaria
   report_header_email: Email
@@ -2547,6 +2616,12 @@ es:
   report_header_hub_address: Dirección del Grupo
   report_header_to_hub: Al Grupo
   report_header_hub_code: Código de Grupo
+  report_header_hub_id: ID del Grupo
+  report_header_hub_business_number: "Número del grupo"
+  report_header_hub_legal_name: "Razón social del grupo"
+  report_header_hub_contact_name: "Nombre de contacto del grupo"
+  report_header_hub_email: "Correo electrónico público del grupo"
+  report_header_hub_owner_email: Correo electrónico del responsable de grupo
   report_header_code: Código
   report_header_paid: ¿Pagado?
   report_header_delivery: ¿Entregado?
@@ -2580,10 +2655,12 @@ es:
   report_header_tax_on_delivery: "Impuestos sobre la entrega (%{currency_symbol})"
   report_header_tax_on_fees: "Impuesto sobre las comisiones (%{currency_symbol})"
   report_header_tax_category: "Categoría de impuestos"
+  report_header_tax_rate_name: "IVA registrado"
   report_header_tax_rate: "Porcentaje del Impuesto"
   report_header_total_tax: "Total Impuestos (%{currency_symbol})"
   report_header_total_excl_tax: "Total Impuestos excl. (%{currency_symbol})"
   report_header_total_incl_tax: "Total Impuestos incl. (%{currency_symbol})"
+  report_header_total_orders: "Número total de pedidos"
   report_header_enterprise: Organización
   report_header_customer: Consumidora
   report_header_customer_code: Código de consumidora
@@ -2620,6 +2697,7 @@ es:
   report_header_delivery_postcode: Código postal de entrega
   report_header_bulk_unit_size: Tamaño de la unidad a granel
   report_header_weight: Peso
+  report_header_final_weight_volume: Final (Peso/Volumen)
   report_header_height: Altura
   report_header_width: Anchura
   report_header_depth: Profundidad
@@ -2673,6 +2751,7 @@ es:
   report_header_transaction_fee: Comisión por transacción (sin impuestos)
   report_header_total_untaxable_admin: Total de ajustes administrativos no tributables (sin impuestos)
   report_header_total_taxable_admin: Total de ajustes tributarios de administración (impuestos incluidos)
+  due_date: "Fecha de vencimiento"
   equals: "Iguales"
   contains: "Contiene"
   discount: "Descuento"
@@ -2789,6 +2868,7 @@ es:
       enterprise_limit_reached: "Has alcanzado el límite estándar de organizaciones por cuenta. Escriba a %{contact_email} si necesita aumentarlo."
       modals:
         got_it: "Lo entiendo"
+        confirm: "Confirmar"
         close: "Cerrar"
         continue: "Continuar"
         cancel: "Cancelar"
@@ -3333,6 +3413,7 @@ es:
     server_error: "Error del Servidor"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Recoger en la granja"
     start_date: "Fecha de inicio"
     successfully_removed: "Eliminado con éxito"
     taxonomy_edit: "editar taxonomía"
@@ -3366,6 +3447,7 @@ es:
     tracking: "Seguimiento"
     tracking_number: "Número de seguimiento"
     order_total: "Total del pedido"
+    order_updated: "Pedido actualizado"
     customer_details: "Detalles de la consumidora"
     customer_details_updated: "Datos de la consumidora actualizados"
     customer_search: "Búsqueda de consumidores"
@@ -3645,7 +3727,11 @@ es:
           results_found: "%{number} Resultados encontrados."
           viewing: "Viendo de %{start}a %{end}."
           print_invoices: "Imprimir facturas"
+          cancel_orders: "Cancelar pedidos"
           resend_confirmation: "Reenviar confirmación"
+          selected:
+            zero: "Ningún pedido seleccionado"
+            one: "1 pedido seleccionado"
         sortable_header:
           payment_state: "Estado del pago"
           shipment_state: "Estado del envío"
@@ -3660,6 +3746,9 @@ es:
           from: "De"
           to: "Facturar a"
           shipping: "envío"
+        note:
+          note_label: "Nota:"
+          no_note_present: "No se proporcionó nota."
         form:
           distribution_fields:
             title: "Distribución"
@@ -4045,6 +4134,9 @@ es:
     users:
       api_keys:
         regenerate_key: "Regenerar llave"
+      webhook_endpoints:
+        event_types:
+          order_cycle_opened: Ciclo de pedidos abierto
       form:
         account_settings: Configuración de la cuenta
       show:
