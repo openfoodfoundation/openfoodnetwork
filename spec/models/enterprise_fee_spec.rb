@@ -10,17 +10,46 @@ describe EnterpriseFee do
   describe "validations" do
     it { is_expected.to validate_presence_of(:name) }
 
-    it "requires a per-item calculator to inherit tax" do
-      subject = build(
-        :enterprise_fee,
-        inherits_tax_category: true,
-        calculator: Calculator::FlatRate.new
-      )
+    describe "requires a per-item calculator to inherit tax" do
+      let(:per_order_calculators){
+        [
+          Calculator::FlatRate,
+          Calculator::FlexiRate,
+          Calculator::PriceSack,
+        ]
+      }
 
-      expect(subject.save).to eq false
-      expect(subject.errors.full_messages.first).to eq(
-        "Inheriting the tax categeory requires a per-item calculator."
-      )
+      let(:per_item_calculators){
+        [
+          Calculator::PerItem,
+          Calculator::FlatPercentPerItem
+        ]
+      }
+
+      it "is valid when inheriting tax and using a per-item calculator" do
+        per_item_calculators.each do |calculator|
+          subject = build(
+            :enterprise_fee,
+            inherits_tax_category: true,
+            calculator: calculator.new
+          )
+          expect(subject.save).to eq true
+        end
+      end
+
+      it "is invalid when inheriting tax and using a per-order calculator" do
+        per_order_calculators.each do |calculator|
+          subject = build(
+            :enterprise_fee,
+            inherits_tax_category: true,
+            calculator: calculator.new
+          )
+          expect(subject.save).to eq false
+          expect(subject.errors.full_messages.first).to eq(
+            "Inheriting the tax categeory requires a per-item calculator."
+          )
+        end
+      end
     end
   end
 

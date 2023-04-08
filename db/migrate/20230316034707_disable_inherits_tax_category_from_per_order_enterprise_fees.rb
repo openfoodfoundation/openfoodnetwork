@@ -2,10 +2,10 @@
 
 class DisableInheritsTaxCategoryFromPerOrderEnterpriseFees < ActiveRecord::Migration[6.1]
   class EnterpriseFee < ApplicationRecord
-    has_one :calculator, as: :calculable, class_name: "Spree::Calculator", dependent: :destroy
+    has_many :calculator, class_name: "Spree::Calculator", foreign_key: :calculable_id
   end
 
-  class Spree
+  module Spree
     class Calculator < ApplicationRecord
       self.table_name = 'spree_calculators'
     end
@@ -18,7 +18,7 @@ class DisableInheritsTaxCategoryFromPerOrderEnterpriseFees < ActiveRecord::Migra
   end
 
   def calculators
-    Spree::Calculator.where(type: per_order_calculators)
+    Spree::Calculator.where(type: per_order_calculators, calculable_type: 'EnterpriseFee')
   end
 
   def per_order_calculators
