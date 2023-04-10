@@ -11,8 +11,10 @@
       .field
         = label_tag :unit_value_human, "#{t('admin.'+@product.variant_unit)} ({{unitName(#{@product.variant_unit_scale}, '#{@product.variant_unit}')}})"
         = hidden_field_tag 'product_variant_unit_scale', @product.variant_unit_scale
-        = text_field_tag :unit_value_human, nil, {class: "fullwidth", 'ng-model' => 'unit_value_human', 'ng-change' => 'updateValue()'}
-        = f.text_field :unit_value, {hidden: true, 'ng-value' => 'unit_value'}
+        -# CHANGED LINE
+        = number_field_tag :unit_value_human, nil, {class: "fullwidth", step: 0.01, 'ng-model' => 'unit_value_human', 'ng-change' => 'updateValue()'}
+        -# CHANGED LINE
+        = f.number_field :unit_value, {hidden: true, 'ng-value' => 'unit_value'}
 
     .field
       = f.label :unit_description, t(:spree_admin_unit_description)
@@ -65,8 +67,8 @@
   - if @product.variant_unit != 'weight'
     .field
       = f.label 'weight', t(:weight)+' (kg)'
-      - value = number_with_precision(@variant.weight, precision: 2)
-      = f.number_field 'weight', value: value, class: 'fullwidth', step: 0.01
+      - value = number_with_precision(@variant.weight, precision: 3)
+      = f.number_field 'weight', value: value, class: 'fullwidth', step: 0.001
 
   - [:height, :width, :depth].each do |field|
     .field

@@ -45,6 +45,22 @@ describe '
       )
       expect(page).to have_link('Cancel', href: expected_cancel_url)
     end
+
+    it "creating a new variant with non-weight unit type" do
+      # Given a product with a unit-related option type
+      product = create(:simple_product, variant_unit: "volume", variant_unit_scale: "1")
+
+      # When I create a variant on the product
+      login_as_admin_and_visit spree.admin_product_variants_path product
+      click_link 'New Variant'
+
+      # Expect variant_weight to accept 3 decimal places
+      fill_in 'variant_weight', with: '1.234'
+      click_button 'Create'
+
+      # Then the variant should have been created
+      expect(page).to have_content "Variant \"#{product.name}\" has been successfully created!"
+    end
   end
 
   describe "viewing product variant" do
@@ -138,9 +154,11 @@ describe '
       login_as_admin_and_visit spree.edit_admin_product_variant_path(product, variant)
 
       expect(page).to_not have_field "unit_value_human"
+      expect(page).to have_field "variant_weight"
       expect(page).to have_field "variant_unit_description", with: "foo"
 
       fill_in "variant_unit_description", with: "bar"
+      fill_in "variant_weight", with: "1.234"
       click_button 'Update'
       expect(page).to have_content %(Variant "#{product.name}" has been successfully updated!)
       expect(variant.reload.unit_description).to eq('bar')
@@ -225,5 +243,30 @@ describe '
     # Then the displayed values should have been saved
     expect(variant.reload.display_name).to eq("Display Name")
     expect(variant.display_as).to eq("Display As This")
+  end
+
+  it "editing weight for a variant" do
+    product = create(:simple_product)
+    variant = product.variants.first
+
+    # When I view the variant
+    login_as_admin_and_visit spree.admin_product_variants_path product
+    page.find('table.index .icon-edit').click
+
+    # It should allow the weight to be changed
+    expect(page).to have_field "unit_value_human"
+
+
+    # When I update the fields and save the variant with invalid value
+    fill_in "unit_value_human", with: "1.234"
+    click_button 'Update'
+    expect(page).not_to have_content %(Variant "#{product.name}" has been successfully updated!)
+
+    fill_in "unit_value_human", with: "1.23"
+    click_button 'Update'
+    expect(page).not_to have_content %(Variant "#{product.name}" has been successfully updated!)
+
+    # Then the displayed values should have been saved
+    expect(variant.reload.unit_value).to eq(1.23)
   end
 end
