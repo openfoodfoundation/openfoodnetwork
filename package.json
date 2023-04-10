@@ -19,7 +19,9 @@
     ]
   },
   "dependencies": {
-    "@babel/preset-env": "^7.18.2",
+    "@babel/core": "^7.21.4",
+    "@babel/plugin-transform-runtime": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
     "@floating-ui/dom": "^1.2.6",
     "@hotwired/turbo": "^7.3.0",
     "@rails/webpacker": "5.4.4",
