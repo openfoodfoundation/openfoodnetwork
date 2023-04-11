@@ -9,7 +9,11 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v1
+
       - uses: ruby/setup-ruby@v1
+
+      - run: git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
+
       - name: rubocop
         uses: reviewdog/action-rubocop@v2
         with:
@@ -31,6 +35,8 @@ jobs:
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
+
+      - run: git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
 
       - name: prettier
         uses: EPMatt/reviewdog-action-prettier@v1
