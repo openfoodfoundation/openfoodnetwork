@@ -124,6 +124,7 @@ RSpec.configure do |config|
 
   config.infer_spec_type_from_file_location!
 
+  # Helpers
   config.include FactoryBot::Syntax::Methods
   config.include JsonSpec::Helpers
 
@@ -140,6 +141,13 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::PerformanceHelper
   config.include ActiveJob::TestHelper
   config.include ReportsHelper
+
+  config.include ViewComponent::TestHelpers, type: :component
+
+  config.include ControllerRequestsHelper, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include OpenFoodNetwork::ApiHelper, type: :controller
+  config.include OpenFoodNetwork::ControllerHelper, type: :controller
 
   config.include Features::DatepickerHelper, type: :system
   config.include DownloadsHelper, type: :system

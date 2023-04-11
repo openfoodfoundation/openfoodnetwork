@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 require 'base_spec_helper'
-
 require 'database_cleaner'
-require 'view_component/test_helpers'
 
 RSpec.configure do |config|
   # DatabaseCleaner
@@ -33,11 +31,4 @@ RSpec.configure do |config|
 
   # You can use `rspec -n` to run only failed specs.
   config.example_status_persistence_file_path = "tmp/rspec-status.txt"
-
-  # Helpers
-  config.include ViewComponent::TestHelpers, type: :component
-  config.include ControllerRequestsHelper, type: :controller
-  config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include OpenFoodNetwork::ApiHelper, type: :controller
-  config.include OpenFoodNetwork::ControllerHelper, type: :controller
 end
