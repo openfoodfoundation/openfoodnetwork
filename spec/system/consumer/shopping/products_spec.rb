@@ -47,8 +47,11 @@ describe "As a consumer I want to view products" do
         add_variant_to_order_cycle(exchange1, variant)
       end
 
-      it "shows HTML product description" do
-        product.description = '<p><b>Formatted</b> product description.</p> Link to an '\
+      it "shows HTML product description and truncates it correctly" do
+        pending "#10685"
+        product.description = '<p><b>Formatted</b> product description: Lorem ipsum dolor sit amet,
+                              consectetur adipiscing elit. Morbi venenatis metus diam,
+                               eget scelerisque nibh auctor non. </p> Link to an '\
                               '<a href="http://google.fr" target="_blank">external site</a>'\
                               '<img src="https://www.openfoodnetwork.org/wp-content/uploads/2019/'\
                               '05/logo-ofn-global-web@2x.png" alt="open food network logo" />'
@@ -56,7 +59,6 @@ describe "As a consumer I want to view products" do
 
         visit shop_path
         expect(page).to have_content product.name
-
         expect_product_description_html_to_be_displayed(product, product.description)
       end
 
@@ -120,6 +122,7 @@ describe "As a consumer I want to view products" do
     within "#product-#{product.id} .product-description" do
       expect(html).to include(html)
       expect(html).not_to include(not_include) if not_include
+      expect(page).to have_content "..." # it truncates a long product description
     end
 
     # check in product description modal
