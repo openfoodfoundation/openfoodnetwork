@@ -44,6 +44,19 @@ describe '
       click_button "Go"
       expect(page).to have_content "EMAIL FIRST NAME"
     end
+
+    it "displays a friendly timeout message" do
+      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
+      login_as_admin_and_visit admin_report_path(
+        report_type: :customers, report_subtype: :mailing_list
+      )
+      expect(ENV).to receive(:fetch).with("RACK_TIMEOUT_SERVICE_TIMEOUT", "15")
+        .and_return("-1") # Negative values time out immediately.
+
+      click_button "Go"
+
+      expect(page).to have_content "this report took too long"
+    end
   end
 
   describe "Can access Customers reports and generate customers report" do

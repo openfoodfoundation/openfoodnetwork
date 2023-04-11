@@ -92,6 +92,7 @@ gem 'gmaps4rails'
 gem 'mimemagic', '> 0.3.5'
 gem 'paper_trail', '~> 12.1'
 gem 'rack-rewrite'
+gem 'rack-timeout'
 gem 'roadie-rails'
 
 gem 'hiredis'
@@ -141,7 +142,6 @@ gem "private_address_check"
 
 group :production, :staging do
   gem 'ddtrace'
-  gem 'rack-timeout'
   gem 'sd_notify' # For better Systemd process management. Used by Puma.
 end
 

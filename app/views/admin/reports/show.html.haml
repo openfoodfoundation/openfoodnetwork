@@ -18,7 +18,8 @@
 .report__header.print-hidden
   - if @report.message.present?
     %p.report__message= @report.message
-  - if request.post?
+  - if request.post? && !@error
     %button.btn-print.icon-print{ onclick: "window.print()"}= t(:report_print)
 
+= t(@error) if @error
 = @table

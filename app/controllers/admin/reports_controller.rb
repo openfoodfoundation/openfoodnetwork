@@ -26,6 +26,8 @@ module Admin
       else
         show_report
       end
+    rescue Timeout::Error
+      render_timeout_error
     end
 
     private
@@ -36,6 +38,7 @@ module Admin
 
     def show_report
       assign_view_data
+      @table = render_report_as(:html) if render_data?
       render "show"
     end
 
@@ -45,7 +48,6 @@ module Admin
       @report_subtype = report_subtype
       @report_title = report_title
       @rendering_options = rendering_options
-      @table = render_report_as(:html) if render_data?
       @data = Reporting::FrontendData.new(spree_current_user)
     end
 
@@ -58,13 +60,33 @@ module Admin
         job = ReportJob.perform_later(
           report_class, spree_current_user, params, format
         )
-        sleep 1 until job.done?
+        Timeout.timeout(max_wait_time) do
+          sleep 1 until job.done?
+        end
 
         # This result has been rendered by Rails in safe mode already.
         job.result.html_safe # rubocop:disable Rails/OutputSafety
       else
         @report.render_as(format)
       end
+    end
+
+    def render_timeout_error
+      assign_view_data
+      @error = ".report_taking_longer"
+      render "show"
+    end
+
+    def max_wait_time
+      # This value is used by rack-timeout and nginx, usually 30 seconds in
+      # staging and production:
+      server_timeout = ENV.fetch("RACK_TIMEOUT_SERVICE_TIMEOUT", "15").to_f
+
+      # Zero disables the timeout:
+      return 0 if server_timeout.zero?
+
+      # We want to time out earlier than nginx:
+      server_timeout - 2.seconds
     end
   end
 end
