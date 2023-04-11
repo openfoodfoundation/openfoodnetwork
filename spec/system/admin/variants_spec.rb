@@ -256,7 +256,6 @@ describe '
     # It should allow the weight to be changed
     expect(page).to have_field "unit_value_human"
 
-
     # When I update the fields and save the variant with invalid value
     fill_in "unit_value_human", with: "1.234"
     click_button 'Update'
