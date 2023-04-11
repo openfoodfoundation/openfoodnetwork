@@ -1,0 +1,22 @@
+%div#voucher-section
+  = form_with url: checkout_update_path(:payment), model: order, method: :put, data: { remote: "true" } do |f|
+    - if order.distributor.vouchers.present?
+      .checkout-title
+        = t("split_checkout.step2.voucher.apply_voucher")
+
+      .checkout-input
+        .two-columns-inputs.voucher
+          - if voucher_adjustment.present?
+            %span.button.voucher-added
+              %i.ofn-i_051-check-big
+                = "#{voucher_adjustment.originator.display_value} #{t("split_checkout.step2.voucher.voucher")}"
+            = link_to t("split_checkout.step2.voucher.remove_code"), checkout_destroy_path(adjustment_id: voucher_adjustment.id), method: "delete", data: { confirm: t("split_checkout.step2.voucher.confirm_delete") }
+            - # TODO: this might not be true, ie payment method include fee which wouldn't be covered by voucher, tax implication raise total to be bigger than voucher other ?
+            - if voucher_adjustment.originator.value > order.total
+              .checkout-input
+                %span.formError.standalone
+                  = t("split_checkout.step2.voucher.warning_forfeit_remaining_amount")
+          - else
+            = f.text_field :voucher_code, { placeholder: t("split_checkout.step2.voucher.placeholder"), class: "voucher" }
+            - # TODO: enable button when code entered
+            = f.submit t("split_checkout.step2.voucher.apply"), class: "button cancel voucher", disabled: false 

@@ -251,7 +251,7 @@ describe SplitCheckoutController, type: :controller do
           it "adds a voucher to the order" do
             put :update, params: params
 
-            expect(response).to redirect_to checkout_step_path(:payment)
+            expect(response.status).to eq(200)
             expect(order.reload.vouchers.length).to eq(1)
           end
 
@@ -292,7 +292,7 @@ describe SplitCheckoutController, type: :controller do
 
             delete :destroy, params: { adjustment_id: adjustment.id }
 
-            expect(response).to redirect_to checkout_step_path(:payment)
+            expect(response.status).to eq(200)
             expect(order.reload.vouchers.length).to eq(0)
           end
         end
