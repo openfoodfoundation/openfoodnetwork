@@ -50,8 +50,8 @@ describe '
       login_as_admin_and_visit admin_report_path(
         report_type: :customers, report_subtype: :mailing_list
       )
-      expect_any_instance_of(Admin::ReportsController).to receive(:sleep).
-        and_raise(Rack::Timeout::RequestTimeoutException.new(nil))
+      expect(ENV).to receive(:fetch).with("RACK_TIMEOUT_SERVICE_TIMEOUT", "15")
+        .and_return("-1") # Negative values time out immediately.
 
       click_button "Go"
 
