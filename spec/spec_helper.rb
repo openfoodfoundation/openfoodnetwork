@@ -40,6 +40,4 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include OpenFoodNetwork::ApiHelper, type: :controller
   config.include OpenFoodNetwork::ControllerHelper, type: :controller
-  config.include Features::DatepickerHelper, type: :feature
-  config.include DownloadsHelper, type: :feature
 end
