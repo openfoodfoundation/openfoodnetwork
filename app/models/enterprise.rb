@@ -267,8 +267,7 @@ class Enterprise < ApplicationRecord
 
   def plus_parents_and_order_cycle_producers(order_cycles)
     oc_producer_ids = Exchange.in_order_cycle(order_cycles).incoming.pluck :sender_id
-    Enterprise.not_hidden.is_primary_producer
-      .parents_of_one_union_others(id, oc_producer_ids | [id])
+    Enterprise.is_primary_producer.parents_of_one_union_others(id, oc_producer_ids | [id])
   end
 
   def relatives_including_self
