@@ -12,7 +12,6 @@ class EnterpriseMailer < Spree::BaseMailer
                   enterprise: @enterprise.name,
                   sitename: Spree::Config[:site_name])
       mail(to: enterprise.contact.email,
-           from: from_address,
            subject: subject)
     end
   end
@@ -20,12 +19,10 @@ class EnterpriseMailer < Spree::BaseMailer
   def manager_invitation(enterprise, user)
     @enterprise = enterprise
     @instance = Spree::Config[:site_name]
-    @instance_email = from_address
 
     I18n.with_locale valid_locale(@enterprise.owner) do
       subject = t('enterprise_mailer.invite_manager.subject', enterprise: @enterprise.name)
       mail(to: user.email,
-           from: from_address,
            subject: subject)
     end
   end

@@ -7,11 +7,8 @@ module Spree
 
     helper TermsAndConditionsHelper
 
+    default from: -> { Spree::Config[:mails_from] }
     layout 'mailer'
-
-    def from_address
-      Spree::Config[:mails_from]
-    end
 
     def money(amount)
       Spree::Money.new(amount).to_s

@@ -6,7 +6,7 @@ module Spree
       @shipment = shipment.respond_to?(:id) ? shipment : Spree::Shipment.find(shipment)
       @delivery = delivery
       subject = base_subject
-      mail(to: @shipment.order.email, from: from_address, subject: subject)
+      mail(to: @shipment.order.email, subject: subject)
     end
 
     private
