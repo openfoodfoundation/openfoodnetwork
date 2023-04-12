@@ -147,7 +147,7 @@ describe EnterpriseRelationship do
   end
 
   describe "callbacks" do
-    context "updating variant override permissions" do
+    describe "updating variant override permissions" do
       let(:hub) { create(:distributor_enterprise) }
       let(:producer) { create(:supplier_enterprise) }
       let(:some_other_producer) { create(:supplier_enterprise) }
@@ -251,6 +251,102 @@ describe EnterpriseRelationship do
             expect(vo1.reload.permission_revoked_at).to_not be_nil
             expect(vo2.reload.permission_revoked_at).to_not be_nil
             expect(vo3.reload.permission_revoked_at).to_not be_nil
+          end
+        end
+      end
+    end
+    describe "updating order cycles" do
+      let(:hub) { create(:distributor_enterprise) }
+      let(:producer) { create(:supplier_enterprise) }
+      let(:order_cycle) { create(:simple_order_cycle) }
+      let(:some_other_producer) { create(:supplier_enterprise) }
+
+      context "when order_cycle permission is present" do
+        let!(:er) {
+          create(:enterprise_relationship, child: hub, parent: producer,
+                                           permissions_list: [
+                                             :add_to_order_cycle,
+                                             :create_variant_overrides
+                                           ] )
+        }
+        let!(:incoming_external_exchange) {
+          order_cycle.exchanges.create! sender: producer, receiver: hub, incoming: true
+        }
+        let!(:other_external_exchange) {
+          order_cycle.exchanges.create! sender: some_other_producer, receiver: hub, incoming: true
+        }
+        let!(:incoming_internal_exchange) {
+          order_cycle.exchanges.create! sender: hub, receiver: hub, incoming: true
+        }
+        let!(:outgoing_internal_exchange) {
+          order_cycle.exchanges.create! sender: hub, receiver: hub, incoming: false
+        }
+        let!(:variant) { create(:variant) }
+        let!(:some_other_variant) { create(:variant) }
+        let!(:incoming_external_variant) {
+          incoming_external_exchange.exchange_variants.create!(
+            exchange: incoming_external_exchange, variant: variant
+          )
+        }
+        let!(:incoming_internal_only_variant) {
+          incoming_internal_exchange.exchange_variants.create!(
+            exchange: incoming_internal_exchange, variant: some_other_variant
+          )
+        }
+        let!(:outgoing_internal_variant) {
+          outgoing_internal_exchange.exchange_variants.create!(
+            exchange: outgoing_internal_exchange, variant: variant
+          )
+        }
+        let!(:outgoing_internal_only_variant) {
+          outgoing_internal_exchange.exchange_variants.create!(
+            exchange: outgoing_internal_exchange, variant: some_other_variant
+          )
+        }
+
+        # We need to destroy the exchange variants on all order cycles related to the ER if
+        # 'add_to_order_cycle' permission is removed. If they are left on the order cycle, the
+        # Taxons of the variants will still appear on the /shops page, despite the hub not
+        # actually offering the variants anymore.
+        context "removing exchanges and exchange variants" do
+          context "when the enterprise relationship is destroyed" do
+            before { er.destroy }
+            it "should destroy all exchanges and exchange variants related to ER" do
+              expect(Exchange.exists?(incoming_external_exchange.id)).to be false
+              expect(Exchange.exists?(other_external_exchange.id)).to be true
+              expect(ExchangeVariant.exists?(incoming_external_variant.id)).to be false
+              expect(ExchangeVariant.exists?(outgoing_internal_variant.id)).to be false
+              expect(ExchangeVariant.exists?(incoming_internal_only_variant.id)).to be true
+              expect(ExchangeVariant.exists?(outgoing_internal_only_variant.id)).to be true
+            end
+          end
+        end
+
+        context "and is then removed" do
+          before { er.permissions_list = [:create_variant_overrides]; er.save! }
+          it "should destroy all exchanges and exchange variants related to ER" do
+            expect(Exchange.exists?(incoming_external_exchange.id)).to be false
+            expect(Exchange.exists?(other_external_exchange.id)).to be true
+            expect(ExchangeVariant.exists?(incoming_external_variant.id)).to be false
+            expect(ExchangeVariant.exists?(outgoing_internal_variant.id)).to be false
+            expect(ExchangeVariant.exists?(incoming_internal_only_variant.id)).to be true
+            expect(ExchangeVariant.exists?(outgoing_internal_only_variant.id)).to be true
+          end
+
+          it "should not affect other exchanges or order cycles" do
+            expect(Exchange.exists?(outgoing_internal_exchange.id)).to be true
+          end
+        end
+
+        context "and then some other permission is removed" do
+          before { er.permissions_list = [:add_to_order_cycle]; er.save! }
+          it "should have no effect on existing exchanges" do
+            expect(Exchange.exists?(incoming_external_exchange.id)).to be true
+            expect(Exchange.exists?(other_external_exchange.id)).to be true
+            expect(ExchangeVariant.exists?(incoming_external_variant.id)).to be true
+            expect(ExchangeVariant.exists?(outgoing_internal_variant.id)).to be true
+            expect(ExchangeVariant.exists?(incoming_internal_only_variant.id)).to be true
+            expect(ExchangeVariant.exists?(outgoing_internal_only_variant.id)).to be true
           end
         end
       end
