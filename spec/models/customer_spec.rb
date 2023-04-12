@@ -85,7 +85,7 @@ describe Customer, type: :model do
       # manager of enterprise1
       let!(:user2) { create(:user) }
 
-      # user who has edit profile permission on enterprise1
+      # user who has edit profile permission on enterprise via enterprise2
       let!(:user3) { create(:user) }
       let!(:enterprise2) { create(:enterprise, owner: user3) }
 
