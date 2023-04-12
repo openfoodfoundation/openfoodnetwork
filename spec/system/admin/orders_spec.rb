@@ -92,307 +92,306 @@ distributors: [distributor4, distributor5]) }
                                    bill_address_id: billing_address5.id)
     }
 
-    context "logging as superadmin and visiting the orders page" do
+    describe "filters" do
       before do
-        order2.select_shipping_method(shipping_method.id)
-        order4.select_shipping_method(shipping_method2.id)
         login_as_admin_and_visit spree.admin_orders_path
       end
 
-      context "fiters" do
-        it "order cycles appear in descending order by close date on orders page" do
-          open_select2('#s2id_q_order_cycle_id_in')
+      it "order cycles appear in descending order by close date on orders page" do
+        open_select2('#s2id_q_order_cycle_id_in')
 
-          expect(find('#q_order_cycle_id_in',
-                      visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two.*Five/m)
+        expect(find('#q_order_cycle_id_in',
+                    visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two.*Five/m)
+      end
+
+      it "filter by multiple order cycles" do
+        select2_select 'Two', from: 'q_order_cycle_id_in'
+        select2_select 'Three', from: 'q_order_cycle_id_in'
+
+        page.find('.filter-actions .button.icon-search').click
+
+        # Order 2 and 3 should show, but not 4
+        expect(page).to have_content order2.number
+        expect(page).to have_content order3.number
+        expect(page).to_not have_content order4.number
+      end
+
+      it "filter by distributors" do
+        select2_select distributor2.name.to_s, from: 'q_distributor_id_in'
+        select2_select distributor4.name.to_s, from: 'q_distributor_id_in'
+
+        page.find('.filter-actions .button.icon-search').click
+
+        # Order 2 and 4 should show, but not 3
+        expect(page).to have_content order2.number
+        expect(page).to_not have_content order3.number
+        expect(page).to have_content order4.number
+      end
+
+      it "filter by complete date" do
+        find("input.datepicker").click
+        select_dates_from_daterangepicker(order3.completed_at.yesterday,
+                                          order4.completed_at.tomorrow)
+
+        page.find('.filter-actions .button.icon-search').click
+
+        # Order 3 and 4 should show, but not 2
+        expect(page).to_not have_content order2.number
+        expect(page).to have_content order3.number
+        expect(page).to have_content order4.number
+      end
+
+      it "filter by email" do
+        fill_in "Email", with: customer3.email
+
+        page.find('.filter-actions .button.icon-search').click
+
+        # Order 3 should show, but not 2 and 4
+        expect(page).to_not have_content order2.number
+        expect(page).to have_content order3.number
+        expect(page).to_not have_content order4.number
+      end
+
+      it "filter by customer first and last names" do
+        # NOTE: this field refers to the name given in billing addresses and not to customer name
+        # filtering by first name
+        fill_in "First name begins with", with: billing_address2.firstname
+        page.find('.filter-actions .button.icon-search').click
+        # Order 3 should show, but not 2 and 4
+        expect(page).to have_content order2.number
+        expect(page).to_not have_content order3.number
+        expect(page).to_not have_content order4.number
+
+        find("a#clear_filters_button").click
+        # filtering by last name
+
+        fill_in "Last name begins with", with: billing_address4.lastname
+        page.find('.filter-actions .button.icon-search').click
+        # Order 4 should show, but not 2 and 3
+        expect(page).to_not have_content order2.number
+        expect(page).to_not have_content order3.number
+        expect(page).to have_content order4.number
+      end
+
+      it "filter by shipping methods" do
+        order2.select_shipping_method(shipping_method.id)
+        order4.select_shipping_method(shipping_method2.id)
+
+        select2_select "Pick-up at the farm", from: 'q_shipping_method_id'
+        page.find('.filter-actions .button.icon-search').click
+        # Order 2 should show, but not 3 and 5
+        expect(page).to have_content order2.number
+        expect(page).to_not have_content order3.number
+        expect(page).to_not have_content order4.number
+
+        find("a#clear_filters_button").click
+
+        select2_select "Signed, sealed, delivered", from: 'q_shipping_method_id'
+        page.find('.filter-actions .button.icon-search').click
+        # Order 4 should show, but not 2 and 3
+        expect(page).to_not have_content order2.number
+        expect(page).to_not have_content order3.number
+        expect(page).to have_content order4.number
+      end
+
+      it "filter by invoice number" do
+        fill_in "Invoice number:", with: order2.number
+
+        page.find('.filter-actions .button.icon-search').click
+
+        # Order 2 should show, but not 3 and 4
+        expect(page).to have_content order2.number
+        expect(page).to_not have_content order3.number
+        expect(page).to_not have_content order4.number
+      end
+
+      it "filter by order state" do
+        order.update(state: "payment")
+
+        uncheck 'Only show complete orders'
+        page.find('.filter-actions .button.icon-search').click
+
+        expect(page).to have_content order.number
+        expect(page).to have_content order2.number
+        expect(page).to have_content order3.number
+        expect(page).to have_content order4.number
+        expect(page).to have_content order5.number
+
+        select2_select "payment", from: 'q_state_eq'
+
+        page.find('.filter-actions .button.icon-search').click
+
+        # Order 2 should show, but not 3 and 4
+        expect(page).to have_content order.number
+        expect(page).to_not have_content order2.number
+        expect(page).to_not have_content order3.number
+        expect(page).to_not have_content order4.number
+        expect(page).to_not have_content order5.number
+      end
+    end
+
+    describe "ordering" do
+      context "orders with different completion dates" do
+        before do
+          order2.update!(completed_at: Time.zone.now - 2.weeks)
+          order3.update!(completed_at: Time.zone.now - 3.weeks)
+          order4.update!(completed_at: Time.zone.now - 4.weeks)
+          order5.update!(completed_at: Time.zone.now - 5.weeks)
+          login_as_admin_and_visit spree.admin_orders_path
         end
-
-        it "filter by multiple order cycles" do
-          select2_select 'Two', from: 'q_order_cycle_id_in'
-          select2_select 'Three', from: 'q_order_cycle_id_in'
-
-          page.find('.filter-actions .button.icon-search').click
-
-          # Order 2 and 3 should show, but not 4
-          expect(page).to have_content order2.number
-          expect(page).to have_content order3.number
-          expect(page).to_not have_content order4.number
-        end
-
-        it "filter by distributors" do
-          select2_select distributor2.name.to_s, from: 'q_distributor_id_in'
-          select2_select distributor4.name.to_s, from: 'q_distributor_id_in'
-
-          page.find('.filter-actions .button.icon-search').click
-
-          # Order 2 and 4 should show, but not 3
-          expect(page).to have_content order2.number
-          expect(page).to_not have_content order3.number
-          expect(page).to have_content order4.number
-        end
-
-        it "filter by complete date" do
-          find("input.datepicker").click
-          select_dates_from_daterangepicker(order3.completed_at.yesterday,
-                                            order4.completed_at.tomorrow)
-
-          page.find('.filter-actions .button.icon-search').click
-
-          # Order 3 and 4 should show, but not 2
-          expect(page).to_not have_content order2.number
-          expect(page).to have_content order3.number
-          expect(page).to have_content order4.number
-        end
-
-        it "filter by email" do
-          fill_in "Email", with: customer3.email
-
-          page.find('.filter-actions .button.icon-search').click
-
-          # Order 3 should show, but not 2 and 4
-          expect(page).to_not have_content order2.number
-          expect(page).to have_content order3.number
-          expect(page).to_not have_content order4.number
-        end
-
-        it "filter by customer first and last names" do
-          # NOTE: this field refers to the name given in billing addresses and not to customer name
-          # filtering by first name
-          fill_in "First name begins with", with: billing_address2.firstname
-          page.find('.filter-actions .button.icon-search').click
-          # Order 3 should show, but not 2 and 4
-          expect(page).to have_content order2.number
-          expect(page).to_not have_content order3.number
-          expect(page).to_not have_content order4.number
-
-          find("a#clear_filters_button").click
-          # filtering by last name
-
-          fill_in "Last name begins with", with: billing_address4.lastname
-          page.find('.filter-actions .button.icon-search').click
-          # Order 4 should show, but not 2 and 3
-          expect(page).to_not have_content order2.number
-          expect(page).to_not have_content order3.number
-          expect(page).to have_content order4.number
-        end
-
-        it "filter by shipping methods" do
-          select2_select "Pick-up at the farm", from: 'q_shipping_method_id'
-          page.find('.filter-actions .button.icon-search').click
-          # Order 2 should show, but not 3 and 5
-          expect(page).to have_content order2.number
-          expect(page).to_not have_content order3.number
-          expect(page).to_not have_content order4.number
-
-          find("a#clear_filters_button").click
-
-          select2_select "Signed, sealed, delivered", from: 'q_shipping_method_id'
-          page.find('.filter-actions .button.icon-search').click
-          # Order 4 should show, but not 2 and 3
-          expect(page).to_not have_content order2.number
-          expect(page).to_not have_content order3.number
-          expect(page).to have_content order4.number
-        end
-
-        it "filter by invoice number" do
-          fill_in "Invoice number:", with: order2.number
-
-          page.find('.filter-actions .button.icon-search').click
-
-          # Order 2 should show, but not 3 and 4
-          expect(page).to have_content order2.number
-          expect(page).to_not have_content order3.number
-          expect(page).to_not have_content order4.number
-        end
-
-        it "filter by order state" do
-          order.update(state: "payment")
-
-          uncheck 'Only show complete orders'
-          page.find('.filter-actions .button.icon-search').click
-
-          expect(page).to have_content order.number
-          expect(page).to have_content order2.number
-          expect(page).to have_content order3.number
-          expect(page).to have_content order4.number
-          expect(page).to have_content order5.number
-
-          select2_select "payment", from: 'q_state_eq'
-
-          page.find('.filter-actions .button.icon-search').click
-
-          # Order 2 should show, but not 3 and 4
-          expect(page).to have_content order.number
-          expect(page).to_not have_content order2.number
-          expect(page).to_not have_content order3.number
-          expect(page).to_not have_content order4.number
-          expect(page).to_not have_content order5.number
+        it "orders by completion date" do
+          find("a", text: 'COMPLETED AT').click # sets ascending ordering
+          expect(page).to have_content(
+            /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
+          )
+          find("a", text: 'COMPLETED AT').click # sets descending ordering
+          expect(page).to have_content(
+            /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
+          )
         end
       end
 
-      context "ordering" do
-        context "orders with different completion dates" do
-          before do
-            order2.update!(completed_at: Time.zone.now - 2.weeks)
-            order3.update!(completed_at: Time.zone.now - 3.weeks)
-            order4.update!(completed_at: Time.zone.now - 4.weeks)
-            order5.update!(completed_at: Time.zone.now - 5.weeks)
-            login_as_admin_and_visit spree.admin_orders_path
-          end
-          it "orders by completion date" do
-            find("a", text: 'COMPLETED AT').click # sets ascending ordering
-            expect(page).to have_content(
-              /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
-            )
-            find("a", text: 'COMPLETED AT').click # sets descending ordering
-            expect(page).to have_content(
-              /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
-            )
-          end
+      context "orders with different order numbers" do
+        before do
+          order2.update!(number: "R555555555")
+          order3.update!(number: "R444444444")
+          order4.update!(number: "R333333333")
+          order5.update!(number: "R222222222")
+          login_as_admin_and_visit spree.admin_orders_path
         end
 
-        context "orders with different order numbers" do
-          before do
-            order2.update!(number: "R555555555")
-            order3.update!(number: "R444444444")
-            order4.update!(number: "R333333333")
-            order5.update!(number: "R222222222")
-            login_as_admin_and_visit spree.admin_orders_path
-          end
+        it "orders by order number" do
+          find("a", text: 'NUMBER').click # sets ascending ordering
+          expect(page).to have_content(
+            /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
+          )
+          find("a", text: 'NUMBER').click # sets descending ordering
+          expect(page).to have_content(
+            /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
+          )
+        end
+      end
 
-          it "orders by order number" do
-            find("a", text: 'NUMBER').click # sets ascending ordering
-            expect(page).to have_content(
-              /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
-            )
-            find("a", text: 'NUMBER').click # sets descending ordering
-            expect(page).to have_content(
-              /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
-            )
-          end
+      context "orders with different states" do
+        before do
+          order2.update!(state: "payment")
+          order3.update!(state: "complete")
+          order4.update!(state: "cart")
+          order5.cancel
+          login_as_admin_and_visit spree.admin_orders_path
+          uncheck 'Only show complete orders'
+          page.find('.filter-actions .button.icon-search').click
         end
 
-        context "orders with different states" do
-          before do
-            order2.update!(state: "payment")
-            order3.update!(state: "complete")
-            order4.update!(state: "cart")
-            order5.cancel
-            login_as_admin_and_visit spree.admin_orders_path
-            uncheck 'Only show complete orders'
-            page.find('.filter-actions .button.icon-search').click
-          end
+        it "orders by order state" do
+          find("a", text: 'STATE').click # sets ascending ordering
+          expect(page).to have_content(
+            /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
+          )
+          find("a", text: 'STATE').click # sets descending ordering
+          expect(page).to have_content(
+            /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
+          )
+        end
+      end
 
-          it "orders by order state" do
-            find("a", text: 'STATE').click # sets ascending ordering
-            expect(page).to have_content(
-              /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
-            )
-            find("a", text: 'STATE').click # sets descending ordering
-            expect(page).to have_content(
-              /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
-            )
-          end
+      context "orders with different payment states" do
+        before do
+          Spree::Payment.where(order_id: order2.id).first.update!(amount: 50.0)
+          Spree::Payment.where(order_id: order3.id).first.update!(amount: 100.0)
+          Spree::Payment.where(order_id: order4.id).first.update!(amount: 10.0)
+          login_as_admin_and_visit spree.admin_orders_path
         end
 
-        context "orders with different payment states" do
-          before do
-            Spree::Payment.where(order_id: order2.id).first.update!(amount: 50.0)
-            Spree::Payment.where(order_id: order3.id).first.update!(amount: 100.0)
-            Spree::Payment.where(order_id: order4.id).first.update!(amount: 10.0)
-            login_as_admin_and_visit spree.admin_orders_path
-          end
+        it "orders by payment state" do
+          find("a", text: 'PAYMENT STATE').click # sets ascending ordering
+          expect(page).to have_content(/#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+          find("a", text: 'PAYMENT STATE').click # sets descending ordering
+          expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}/m)
+        end
+      end
 
-          it "orders by payment state" do
-            find("a", text: 'PAYMENT STATE').click # sets ascending ordering
-            expect(page).to have_content(/#{order4.number}.*#{order3.number}.*#{order2.number}/m)
-            find("a", text: 'PAYMENT STATE').click # sets descending ordering
-            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}/m)
-          end
+      context "orders with different shipment states" do
+        before do
+          Spree::Payment.where(order_id: order2.id).first.update!(amount: 50.0)
+          Spree::Payment.where(order_id: order3.id).first.update!(amount: 100.0)
+          Spree::Payment.where(order_id: order4.id).first.update!(amount: 10.0)
+          order2.ship
+          login_as_admin_and_visit spree.admin_orders_path
         end
 
-        context "orders with different shipment states" do
-          before do
-            Spree::Payment.where(order_id: order2.id).first.update!(amount: 50.0)
-            Spree::Payment.where(order_id: order3.id).first.update!(amount: 100.0)
-            Spree::Payment.where(order_id: order4.id).first.update!(amount: 10.0)
-            order2.ship
-            login_as_admin_and_visit spree.admin_orders_path
-          end
+        it "orders by shipment state" do
+          find("a", text: 'SHIPMENT STATE').click # sets ascending ordering
+          expect(page).to have_content(/#{order4.number}.*#{order3.number}.*#{order2.number}/m)
+          find("a", text: 'SHIPMENT STATE').click # sets descending ordering
+          expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}/m)
+        end
+      end
 
-          it "orders by shipment state" do
-            find("a", text: 'SHIPMENT STATE').click # sets ascending ordering
-            expect(page).to have_content(/#{order4.number}.*#{order3.number}.*#{order2.number}/m)
-            find("a", text: 'SHIPMENT STATE').click # sets descending ordering
-            expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}/m)
-          end
+      context "orders from different customers" do
+        before do
+          order2.update!(email: "jkl@jkl.com")
+          order3.update!(email: "ghi@ghi.com")
+          order4.update!(email: "def@def.com")
+          order5.update!(email: "abc@abc.com")
+          login_as_admin_and_visit spree.admin_orders_path
         end
 
-        context "orders from different customers" do
-          before do
-            order2.update!(email: "jkl@jkl.com")
-            order3.update!(email: "ghi@ghi.com")
-            order4.update!(email: "def@def.com")
-            order5.update!(email: "abc@abc.com")
-            login_as_admin_and_visit spree.admin_orders_path
-          end
+        it "orders by customer email" do
+          find("a", text: 'EMAIL').click # sets ascending ordering
+          expect(page).to have_content(
+            /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
+          )
+          find("a", text: 'EMAIL').click # sets descending ordering
+          expect(page).to have_content(
+            /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
+          )
+        end
+      end
 
-          it "orders by customer email" do
-            find("a", text: 'EMAIL').click # sets ascending ordering
-            expect(page).to have_content(
-              /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
-            )
-            find("a", text: 'EMAIL').click # sets descending ordering
-            expect(page).to have_content(
-              /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
-            )
-          end
+      context "orders with different billing addresses" do
+        before do
+          billing_address2.update!(lastname: "Mad Hatter")
+          billing_address3.update!(lastname: "Duchess")
+          billing_address4.update!(lastname: "Cheshire Cat")
+          billing_address5.update!(lastname: "Alice")
+          login_as_admin_and_visit spree.admin_orders_path
         end
 
-        context "orders with different billing addresses" do
-          before do
-            billing_address2.update!(lastname: "Mad Hatter")
-            billing_address3.update!(lastname: "Duchess")
-            billing_address4.update!(lastname: "Cheshire Cat")
-            billing_address5.update!(lastname: "Alice")
-            login_as_admin_and_visit spree.admin_orders_path
-          end
+        it "orders by last name" do
+          find("a", text: 'NAME').click # sets ascending ordering
+          expect(page).to have_content(
+            /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
+          )
+          find("a", text: 'NAME').click # sets descending ordering
+          expect(page).to have_content(
+            /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
+          )
+        end
+      end
 
-          it "orders by last name" do
-            find("a", text: 'NAME').click # sets ascending ordering
-            expect(page).to have_content(
-              /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
-            )
-            find("a", text: 'NAME').click # sets descending ordering
-            expect(page).to have_content(
-              /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
-            )
-          end
+      context "orders with different order totals" do
+        before do
+          Spree::LineItem.where(order_id: order2.id).first.update!(quantity: 5)
+          Spree::LineItem.where(order_id: order3.id).first.update!(quantity: 4)
+          Spree::LineItem.where(order_id: order4.id).first.update!(quantity: 3)
+          Spree::LineItem.where(order_id: order5.id).first.update!(quantity: 2)
+          order2.save
+          order3.save
+          order4.save
+          order5.save
+          login_as_admin_and_visit spree.admin_orders_path
         end
 
-        context "orders with different order totals" do
-          before do
-            Spree::LineItem.where(order_id: order2.id).first.update!(quantity: 5)
-            Spree::LineItem.where(order_id: order3.id).first.update!(quantity: 4)
-            Spree::LineItem.where(order_id: order4.id).first.update!(quantity: 3)
-            Spree::LineItem.where(order_id: order5.id).first.update!(quantity: 2)
-            order2.save
-            order3.save
-            order4.save
-            order5.save
-            login_as_admin_and_visit spree.admin_orders_path
-          end
-
-          it "orders by order total" do
-            find("a", text: 'TOTAL').click # sets ascending ordering
-            expect(page).to have_content(
-              /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
-            )
-            find("a", text: 'TOTAL').click # sets descending ordering
-            expect(page).to have_content(
-              /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
-            )
-          end
+        it "orders by order total" do
+          find("a", text: 'TOTAL').click # sets ascending ordering
+          expect(page).to have_content(
+            /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
+          )
+          find("a", text: 'TOTAL').click # sets descending ordering
+          expect(page).to have_content(
+            /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
+          )
         end
       end
     end

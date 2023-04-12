@@ -3,8 +3,10 @@
 module Api
   module Admin
     class OrderSerializer < ActiveModel::Serializer
-      attributes :id, :number, :user_id, :full_name, :email, :phone, :completed_at,
-                 :completed_at_utc_iso8601, :display_total,
+      include AddressDisplay
+
+      attributes :id, :number, :user_id, :full_name, :full_name_for_sorting, :email, :phone,
+                 :completed_at, :completed_at_utc_iso8601, :display_total,
                  :edit_path, :state, :payment_state, :shipment_state,
                  :payments_path, :ready_to_ship, :ready_to_capture, :created_at,
                  :distributor_name, :special_instructions, :display_outstanding_balance,
@@ -15,6 +17,14 @@ module Api
 
       def full_name
         object.billing_address.nil? ? "" : ( object.billing_address.full_name || "" )
+      end
+
+      def first_name
+        object.billing_address&.first_name || ""
+      end
+
+      def last_name
+        object.billing_address&.last_name || ""
       end
 
       def distributor_name
