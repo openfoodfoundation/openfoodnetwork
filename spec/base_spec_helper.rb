@@ -70,7 +70,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :deletion, { except: ['spree_countries', 'spree_states'] }
     DatabaseCleaner.start
   end
-  config.after(:each, concurrency: true) do
+  config.append_after(:each, concurrency: true) do
     DatabaseCleaner.clean
     config.use_transactional_fixtures = true
   end
