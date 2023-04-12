@@ -176,8 +176,8 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
             # DB check
             order_within_zone.reload
-            voucher_adjustment = order_within_zone.vouchers.first
-            voucher_tax_adjustment = order_within_zone.vouchers.second
+            voucher_adjustment = order_within_zone.voucher_adjustments.first
+            voucher_tax_adjustment = order_within_zone.voucher_adjustments.second
 
             expect(voucher_adjustment.amount.to_f).to eq(-8.85)
             expect(voucher_tax_adjustment.amount.to_f).to eq(-1.15)

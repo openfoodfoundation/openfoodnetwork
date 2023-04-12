@@ -739,6 +739,7 @@ describe "As a consumer, I want to checkout my order" do
 
               it "adds a voucher to the order" do
                 expect(page).to have_content("$10.00 Voucher")
+                expect(order.reload.voucher_adjustments.length).to eq(1)
               end
             end
 
@@ -787,6 +788,7 @@ describe "As a consumer, I want to checkout my order" do
               within '.voucher' do
                 expect(page).to have_button("Apply")
               end
+              expect(order.voucher_adjustments.length).to eq(0)
             end
           end
         end

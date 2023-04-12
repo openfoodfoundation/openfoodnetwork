@@ -80,7 +80,7 @@ class SplitCheckoutController < ::BaseController
         "#voucher-section",
         partial(
           "split_checkout/voucher_section",
-          locals: { order: @order, voucher_adjustment: @order.vouchers.first }
+          locals: { order: @order, voucher_adjustment: @order.voucher_adjustments.first }
         )
       )
     )
@@ -305,7 +305,7 @@ class SplitCheckoutController < ::BaseController
     @order.create_tax_charge!
     @order.update_order!
 
-    apply_voucher if @order.vouchers.present?
+    apply_voucher if @order.voucher_adjustments.present?
   end
 
   def apply_voucher

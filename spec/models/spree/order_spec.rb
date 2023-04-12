@@ -1431,12 +1431,12 @@ describe Spree::Order do
     end
   end
 
-  describe "#vouchers" do
+  describe "#voucher_adjustments" do
     let(:voucher) { Voucher.create(code: 'new_code', enterprise: order.distributor) }
 
     context "when no voucher adjustment" do
       it 'returns an empty array' do
-        expect(order.vouchers).to eq([])
+        expect(order.voucher_adjustments).to eq([])
       end
     end
 
@@ -1444,7 +1444,7 @@ describe Spree::Order do
       order.save!
       expected_adjustments = Array.new(2) { voucher.create_adjustment(voucher.code, order) }
 
-      expect(order.vouchers).to eq(expected_adjustments)
+      expect(order.voucher_adjustments).to eq(expected_adjustments)
     end
   end
 end

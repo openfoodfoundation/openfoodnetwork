@@ -252,7 +252,7 @@ describe SplitCheckoutController, type: :controller do
             put :update, params: params
 
             expect(response.status).to eq(200)
-            expect(order.reload.vouchers.length).to eq(1)
+            expect(order.reload.voucher_adjustments.length).to eq(1)
           end
 
           context "when voucher doesn't exist" do
@@ -293,7 +293,7 @@ describe SplitCheckoutController, type: :controller do
             delete :destroy, params: { adjustment_id: adjustment.id }
 
             expect(response.status).to eq(200)
-            expect(order.reload.vouchers.length).to eq(0)
+            expect(order.reload.voucher_adjustments.length).to eq(0)
           end
         end
       end

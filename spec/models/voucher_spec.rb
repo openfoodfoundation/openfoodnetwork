@@ -33,7 +33,7 @@ describe Voucher do
     let(:voucher) { Voucher.create(code: 'new_code', enterprise: enterprise) }
 
     context 'when voucher covers the order total' do
-      subject { order.vouchers.first }
+      subject { order.voucher_adjustments.first }
 
       let(:order) { create(:order_with_totals) }
 
@@ -50,7 +50,7 @@ describe Voucher do
     end
 
     context 'with price included in order price' do
-      subject { order.vouchers.first }
+      subject { order.voucher_adjustments.first }
 
       let(:order) do
         create(
@@ -115,7 +115,7 @@ describe Voucher do
       end
 
       it 'includes amount withou tax' do
-        adjustment = order.vouchers.first
+        adjustment = order.voucher_adjustments.first
         # voucher_rate = amount / order.total
         # -10 / 161 = -0.062111801
         # amount = voucher_rate * (order.total - order.additional_tax_total)
@@ -128,13 +128,13 @@ describe Voucher do
         # -10 / 161 = -0.062111801
         # amount = voucher_rate * order.additional_tax_total
         # -0.0585 * 11 = -0.68
-        tax_adjustment = order.vouchers.second
+        tax_adjustment = order.voucher_adjustments.second
         expect(tax_adjustment.amount.to_f).to eq(-0.68)
         expect(tax_adjustment.label).to match("Tax")
       end
 
       it 'moves the adjustment state to closed' do
-        adjustment = order.vouchers.first
+        adjustment = order.voucher_adjustments.first
         expect(adjustment.state).to eq('closed')
       end
     end

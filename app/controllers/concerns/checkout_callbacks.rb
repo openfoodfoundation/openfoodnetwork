@@ -30,7 +30,7 @@ module CheckoutCallbacks
     @order.manual_shipping_selection = true
     @order.checkout_processing = true
 
-    @voucher_adjustment = @order.vouchers.first
+    @voucher_adjustment = @order.voucher_adjustments.first
 
     redirect_to(main_app.shop_path) && return if redirect_to_shop?
     redirect_to_cart_path && return unless valid_order_line_items?

@@ -21,10 +21,10 @@ class Voucher < ApplicationRecord
     return if order.nil?
 
     # Find open Voucher Adjustment
-    return if order.vouchers.empty?
+    return if order.voucher_adjustments.empty?
 
-    # We only support one voucher per order right now, we could just loop on vouchers
-    adjustment = order.vouchers.first
+    # We only support one voucher per order right now, we could just loop on voucher_adjustments
+    adjustment = order.voucher_adjustments.first
 
     # Recalculate value
     amount = adjustment.originator.compute_amount(order)
@@ -46,7 +46,7 @@ class Voucher < ApplicationRecord
     # Adding the voucher tax part
     tax_amount = voucher_rate * order.additional_tax_total
 
-    adjustment = order.vouchers.first
+    adjustment = order.voucher_adjustments.first
     adjustment_attributes = {
       amount: tax_amount,
       originator: adjustment.originator,
@@ -73,7 +73,7 @@ class Voucher < ApplicationRecord
     included_tax = voucher_rate * order.included_tax_total
 
     # Update Adjustment
-    adjustment = order.vouchers.first
+    adjustment = order.voucher_adjustments.first
 
     return unless amount != adjustment.amount || included_tax != 0
 
