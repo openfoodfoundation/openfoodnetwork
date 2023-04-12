@@ -31,7 +31,7 @@ class SplitCheckoutController < ::BaseController
 
   def update
     if add_voucher
-      return render_voucher_section
+      return render_voucher_section_or_redirect
     elsif @order.errors.present?
       return render_error
     end
@@ -52,13 +52,6 @@ class SplitCheckoutController < ::BaseController
     render cable_ready: cable_car.redirect_to(url: checkout_step_path(:payment))
   end
 
-  def destroy
-    adjustment = Spree::Adjustment.find_by(id: params[:adjustment_id])
-    adjustment.destroy
-
-    render_voucher_section
-  end
-
   private
 
   def render_error
@@ -72,11 +65,18 @@ class SplitCheckoutController < ::BaseController
       replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
   end
 
+  def render_voucher_section_or_redirect
+    respond_to do |format|
+      format.cable_ready { render_voucher_section }
+      format.html { redirect_to checkout_step_path(:payment) }
+    end
+  end
+
   # Using the power of cable_car we replace only the #voucher_section instead of reloading the page
   def render_voucher_section
     render(
       status: :ok,
-      operations: cable_car.replace(
+      cable_ready: cable_car.replace(
         "#voucher-section",
         partial(
           "split_checkout/voucher_section",

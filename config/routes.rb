@@ -92,8 +92,6 @@ Openfoodnetwork::Application.routes.draw do
       put '/checkout/:step', to: 'split_checkout#update', as: :checkout_update
     end
 
-    delete '/checkout/payment', to: 'split_checkout#destroy', as: :checkout_destroy
-
     # Redirects to the new checkout for any other 'step' (ie. /checkout/cart from the legacy checkout)
     get '/checkout/:other', to: redirect('/checkout')
   end
@@ -122,6 +120,8 @@ Openfoodnetwork::Application.routes.draw do
   end
   get '/:id/shop', to: 'enterprises#shop', as: 'enterprise_shop'
   get "/enterprises/:permalink", to: redirect("/") # Legacy enterprise URL
+
+  resources :voucher_adjustments, only: [:destroy]
 
   get 'sitemap.xml', to: 'sitemap#index', defaults: { format: 'xml' }
 

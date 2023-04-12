@@ -1,6 +1,6 @@
 .medium-6
   %div.checkout-substep{"data-controller": "paymentmethod"}
-    = render "split_checkout/voucher_section", { order: @order, voucher_adjustment: @voucher_adjustment }
+    = render partial: "split_checkout/voucher_section", formats: [:cable_ready], locals: { order: @order, voucher_adjustment: @voucher_adjustment }
         
     %div.checkout-title
       = t("split_checkout.step2.payment_method.title")

@@ -249,6 +249,9 @@ describe SplitCheckoutController, type: :controller do
           end
 
           it "adds a voucher to the order" do
+            # Set the headers to simulate a cable_ready request
+            request.headers["accept"] = "text/vnd.cable-ready.json"
+
             put :update, params: params
 
             expect(response.status).to eq(200)
@@ -284,16 +287,13 @@ describe SplitCheckoutController, type: :controller do
               expect(flash[:error]).to match "There was an error while adding the voucher"
             end
           end
-        end
 
-        describe "removing a voucher" do
-          it "removes the voucher" do
-            adjustment = voucher.create_adjustment(voucher.code, order)
+          context "with an html request" do
+            it "redirects to the payment step" do
+              put :update, params: params
 
-            delete :destroy, params: { adjustment_id: adjustment.id }
-
-            expect(response.status).to eq(200)
-            expect(order.reload.voucher_adjustments.length).to eq(0)
+              expect(response).to redirect_to(checkout_step_path(:payment))
+            end
           end
         end
       end
