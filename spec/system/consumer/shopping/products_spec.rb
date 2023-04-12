@@ -41,6 +41,30 @@ describe "As a consumer I want to view products" do
       set_order order
     end
 
+    describe "supplier's name is displayed" do
+      before do
+        exchange1.update_attribute :pickup_time, "monday"
+        add_variant_to_order_cycle(exchange1, variant)
+      end
+
+      it "shows supplier's name" do
+        visit shop_path
+        expect(page).to have_content supplier.name
+        page.find("span", text: supplier.name).click
+        assert_selector ".reveal-modal"
+      end
+
+      it "shows supplier's name even when supplier's visibility is hidden" do
+        supplier.visible = 'hidden'
+        supplier.save
+        visit shop_path
+        expect(page).to have_content supplier.name
+        # Does not open the modal though
+        page.find("span", text: supplier.name).click
+        assert_no_selector ".reveal-modal"
+      end
+    end
+
     describe "viewing HTML product descriptions" do
       before do
         exchange1.update_attribute :pickup_time, "monday"

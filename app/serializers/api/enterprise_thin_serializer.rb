@@ -2,7 +2,7 @@
 
 module Api
   class EnterpriseThinSerializer < ActiveModel::Serializer
-    attributes :name, :id, :active, :path
+    attributes :name, :id, :active, :path, :visible
 
     has_one :address, serializer: Api::AddressSerializer
 

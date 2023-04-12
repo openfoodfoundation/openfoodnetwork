@@ -6,6 +6,9 @@
           = t :shopping_producers_of_hub, hub: '{{ shopfront.name }}'
         %ul.small-block-grid-1.medium-block-grid-2.large-block-grid-3
           %li{"ng-repeat" => "enterprise in shopfront.producers"}
-            %enterprise-modal
+            %enterprise-modal{"ng-if": "enterprise.visible != 'hidden'"}
+              %i.ofn-i_036-producers
+              {{ enterprise.name }}
+            %span{"ng-if": "enterprise.visible == 'hidden'"}
               %i.ofn-i_036-producers
               {{ enterprise.name }}
