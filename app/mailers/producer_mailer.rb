@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProducerMailer < Spree::BaseMailer
+class ProducerMailer < ApplicationMailer
   include I18nHelper
 
   def order_cycle_report(producer, order_cycle)

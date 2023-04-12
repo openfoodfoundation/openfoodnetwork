@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class OrderMailer < BaseMailer
+  class OrderMailer < ApplicationMailer
     helper 'checkout'
     helper SpreeCurrencyHelper
     helper Spree::PaymentMethodsHelper

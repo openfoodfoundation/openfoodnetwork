@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'devise/mailers/helpers'
-class EnterpriseMailer < Spree::BaseMailer
+class EnterpriseMailer < ApplicationMailer
   include Devise::Mailers::Helpers
   include I18nHelper
 

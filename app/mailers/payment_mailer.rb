@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PaymentMailer < Spree::BaseMailer
+class PaymentMailer < ApplicationMailer
   include I18nHelper
 
   def authorize_payment(payment)

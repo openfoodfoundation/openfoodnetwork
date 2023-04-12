@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class ShipmentMailer < BaseMailer
+  class ShipmentMailer < ApplicationMailer
     def shipped_email(shipment, delivery:)
       @shipment = shipment.respond_to?(:id) ? shipment : Spree::Shipment.find(shipment)
       @delivery = delivery
