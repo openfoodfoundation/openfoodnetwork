@@ -86,7 +86,7 @@ describe "Payments Reports" do
       ].join(" ").upcase)
 
       expect(page.find("table.report__table tbody tr").text).to have_content([
-        order.payment_state,
+        "credit owed",
         order.distributor.name,
         order.item_total.to_f + other_order.item_total.to_f,
         order.ship_total.to_f + other_order.ship_total.to_f,
