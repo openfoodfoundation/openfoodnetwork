@@ -59,7 +59,8 @@ describe "As a consumer I want to view products" do
 
         visit shop_path
         expect(page).to have_content product.name
-        expect_product_description_html_to_be_displayed(product, product.description)
+        expect_product_description_html_to_be_displayed(product, product.description, nil,
+                                                        truncate: true)
       end
 
       it "does not show unsecure HTML" do
@@ -70,7 +71,7 @@ describe "As a consumer I want to view products" do
         expect(page).to have_content product.name
 
         expect_product_description_html_to_be_displayed(product, "<p>Safe</p>",
-          "<script>alert('Dangerous!');</script>")
+          "<script>alert('Dangerous!');</script>", truncate: false)
       end
     end
 
@@ -117,12 +118,13 @@ describe "As a consumer I want to view products" do
     end
   end
 
-  def expect_product_description_html_to_be_displayed(product, html, not_include = nil)
+  def expect_product_description_html_to_be_displayed(product, html, not_include = nil,
+                                                      truncate: false)
     # check inside list of products
     within "#product-#{product.id} .product-description" do
       expect(html).to include(html)
       expect(html).not_to include(not_include) if not_include
-      expect(page).to have_content "..." # it truncates a long product description
+      expect(page).to have_content "..." if truncate # it truncates a long product description
     end
 
     # check in product description modal
