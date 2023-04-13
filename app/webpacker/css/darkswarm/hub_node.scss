@@ -60,6 +60,10 @@
     //Hub Name
     span.hub-name-listing {
       font-weight: 700;
+      // Ellipsis
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
       &:after {
         content: ">>";

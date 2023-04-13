@@ -2,7 +2,7 @@
   .columns.small-12.medium-5.large-5.skinny-head
     %a.hub{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub", "data-is-link" => "true"}
       %i{ng: {class: "::hub.icon_font"}}
-      %span.margin-top.hub-name-listing{"ng-bind" => "::hub.name | truncate:40"}
+      %span.margin-top.hub-name-listing{"ng-bind" => "::hub.name"}
 
   .columns.small-4.medium-2.large-2
     %span.margin-top{"ng-bind" => "::hub.address.city"}
@@ -34,7 +34,7 @@
   .columns.small-12.medium-6.large-5.skinny-head
     %a.hub{"ng-click" => "openModal(hub)", "ng-class" => "{primary: hub.active, secondary: !hub.active}"}
       %i{ng: {class: "hub.icon_font"}}
-      %span.margin-top.hub-name-listing{"ng-bind" => "::hub.name | truncate:40"}
+      %span.margin-top.hub-name-listing{"ng-bind" => "::hub.name"}
 
   .columns.small-4.medium-2.large-2
     %span.margin-top{"ng-bind" => "::hub.address.city"}
