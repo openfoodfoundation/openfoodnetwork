@@ -51,8 +51,8 @@
     //Closed & Open column
     .open_closed {
       i {
-        font-size: 1.75rem;
         float: right;
+        margin-top: 2px;
         margin-left: 0.5rem;
       }
     }
@@ -282,7 +282,7 @@ hub {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    justify-content: space-around;
+    justify-content: space-between;
     gap: 20px;
     padding-left: 10px;
     padding-right: 10px;
