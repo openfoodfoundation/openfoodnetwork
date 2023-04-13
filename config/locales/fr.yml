@@ -1361,6 +1361,11 @@ fr:
       pack_by_customer: Préparation des commandes par Acheteur
       pack_by_supplier: Préparation des commandes par Producteur
       pack_by_product: Préparation des commandes par Produit
+      show:
+        report_taking_longer: >
+            Désolée, ce rapport met trop de temps à se charger, probablement parce
+            qu'il contient une grande quantité de données ou que d'autres rapports
+            sont en cours de téléchargement. Merci de réessayer plus tard.
       revenues_by_hub:
         name: CA par boutique
         description: CA par boutique
@@ -3664,6 +3669,7 @@ fr:
     shipping_categories: "Conditions de transport"
     new_shipping_category: "Nouvelle condition de transport"
     back_to_shipping_categories: "Retour aux conditions de transport"
+    editing_shipping_category: "Modifier condition de transport"
     name: "Produit/Variante"
     description: "Description"
     type: "Catégorie"

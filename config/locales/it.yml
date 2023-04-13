@@ -363,7 +363,7 @@ it:
   supplier_only: Solo Fornitore
   has_shopfront: Ha una Vetrina
   weight: Peso
-  volume: Volume
+  volume: Acquisto di gruppo
   items: Prodotti
   summary: Sommario
   detailed: Dettaglio
@@ -487,7 +487,7 @@ it:
     tags: Etichetta
     variant: Variante
     weight: Peso
-    volume: Volume
+    volume: Acquisto di gruppo
     items: Prodotti
     select_all: Seleziona tutto
     quick_search: Ricerca veloce
