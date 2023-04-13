@@ -13,7 +13,7 @@ default: &default
   additional_paths: [
     'vendor',
     'app/webpacker/css',
-    'app/webpacker/fonts',
+    'app/assets/fonts',
     'app/webpacker/images',
     'engines/web/app/assets/stylesheets',
     'app/components'
