@@ -275,3 +275,32 @@
     }
   }
 }
+
+hub {
+  // Localization + link to shop
+  .hub-localization {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+    gap: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    .hub-localization-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      &.with-gap {
+        gap: 0.5rem;
+      }
+
+      > span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+      }
+    }
+  }
+}
