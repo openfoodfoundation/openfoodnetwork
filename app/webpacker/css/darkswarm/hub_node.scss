@@ -26,7 +26,7 @@
         }
 
         a.hub {
-          display: inline-block;
+          display: flex;
         }
       }
     }
@@ -63,11 +63,15 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      position: relative;
+      padding-right: 20px;
 
       &:after {
         content: ">>";
         display: inline-block;
         margin-left: 5px;
+        position: absolute;
+        right: 0;
       }
     }
 
