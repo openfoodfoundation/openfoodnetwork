@@ -54,7 +54,7 @@ module Admin
     end
 
     def add_white_label_if_feature_activated
-      return nil unless OpenFoodNetwork::FeatureToggle.enabled?(:white_label)
+      return nil unless OpenFoodNetwork::FeatureToggle.enabled?(:white_label, spree_current_user)
 
       { name: 'white_label', icon_class: "icon-leaf", show: true }
     end
