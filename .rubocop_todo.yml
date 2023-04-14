@@ -1334,12 +1334,6 @@ Rails/TimeZone:
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/services/customer_order_cancellation_spec.rb'
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/ToSWithArgument:
-  Exclude:
-    - 'app/helpers/reports_helper.rb'
-
 # Offense count: 1
 Rails/TransactionExitStatement:
   Exclude:
