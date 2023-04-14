@@ -22,7 +22,7 @@ module Admin
     def show
       @report = report_class.new(spree_current_user, params, render: render_data?)
 
-      if report_format.present?
+      if params[:report_format].present?
         export_report
       else
         show_report
@@ -58,9 +58,7 @@ module Admin
 
     def render_report_as(format)
       if OpenFoodNetwork::FeatureToggle.enabled?(:background_reports, spree_current_user)
-        filename = report_filename
-        filename = "#{filename}html" if report_format.blank?
-        @blob = ReportBlob.create_for_upload_later!(filename)
+        @blob = ReportBlob.create_for_upload_later!(report_filename)
         ReportJob.perform_later(
           report_class, spree_current_user, params, format, @blob
         )

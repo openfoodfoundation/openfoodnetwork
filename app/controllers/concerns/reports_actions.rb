@@ -56,7 +56,7 @@ module ReportsActions
   end
 
   def report_format
-    params[:report_format]
+    params[:report_format].presence || "html"
   end
 
   def report_filename
