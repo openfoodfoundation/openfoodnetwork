@@ -17,7 +17,19 @@ function hotfixPostcssLoaderConfig (subloader) {
   }
 }
 
+function addQuietDepsToSassLoader (subloader) {
+  if (subloader.loader === 'sass-loader') {
+    subloader.options.sassOptions = {
+      ...subloader.options.sassOptions,
+      quietDeps: true
+    }
+  }
+}
+
 environment.loaders.keys().forEach(loaderName => {
   const loader = environment.loaders.get(loaderName);
+  if (loaderName === 'sass') {
+    loader.use.forEach(addQuietDepsToSassLoader);
+  }
   loader.use.forEach(hotfixPostcssLoaderConfig);
 });
