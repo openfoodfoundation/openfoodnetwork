@@ -13,6 +13,18 @@
 
     .active_table_row {
       line-height: 1rem;
+      overflow: hidden;
+
+      a.hub {
+        display: flex;
+        align-items: center;
+        padding-left: 15px;
+        padding-right: 15px;
+        max-width: 36%;
+        @include breakpoint(phablet) {
+          max-width: 100%;
+        }
+      }
 
       @include breakpoint(phablet) {
         display: inline-block;
@@ -23,10 +35,6 @@
           .columns:last-child {
             padding-left: 0;
           }
-        }
-
-        a.hub {
-          display: flex;
         }
       }
     }
@@ -45,15 +53,17 @@
       font-size: 2rem;
       display: inline-block;
       margin-right: 0.25rem;
-      float: left;
     }
 
     //Closed & Open column
     .open_closed {
+      position: relative;
+      margin-right: 20px;
+      display: flex;
       i {
-        float: right;
         margin-top: 2px;
         margin-left: 0.5rem;
+        font-size: 25px;
       }
     }
 
@@ -277,29 +287,34 @@
 }
 
 hub {
-  // Localization + link to shop
-  .hub-localization {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+  .hub-container {
     justify-content: space-between;
-    gap: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-top: 16px;
 
-    .hub-localization-item {
+   // Localization + link to shop
+    .hub-localization {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      
-      &.with-gap {
-        gap: 0.5rem;
-      }
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      padding-left: 10px;
+      padding-right: 10px;
 
-      > span {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-align: center;
+      .hub-localization-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        &.with-gap {
+          gap: 0.5rem;
+        }
+
+        > span {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          text-align: center;
+        }
       }
     }
   }

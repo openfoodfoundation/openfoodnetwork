@@ -1,10 +1,7 @@
-.row.active_table_row{"ng-if" => "hub.is_distributor", "ng-click" => "toggle($event)", "ng-class" => "{'closed' : !open(), 'is_distributor' : producer.is_distributor}"}
-  .columns.small-12.medium-5.large-5.skinny-head
-    %a.hub{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub", "data-is-link" => "true"}
-      %i{ng: {class: "::hub.icon_font"}}
-      %span.margin-top.hub-name-listing{"ng-bind" => "::hub.name"}
-
-  %div{style: "clear: both;"}
+.hub-container.active_table_row{"ng-if" => "hub.is_distributor", "ng-click" => "toggle($event)", "ng-class" => "{'closed' : !open(), 'is_distributor' : producer.is_distributor}"}
+  %a.hub.skinny-head{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub", "data-is-link" => "true"}
+    %i{ng: {class: "::hub.icon_font"}}
+    %span.hub-name-listing{"ng-bind" => "::hub.name"}
 
   .hub-localization
     .hub-localization-item.with-gap
@@ -12,31 +9,28 @@
       %span.margin-top{"ng-bind" => "::hub.address.state_name"}
       %span.margin-top{"ng-if" => "hub.distance != null && hub.distance > 0"} ({{ hub.distance / 1000 | number:0 }} km)
 
-    %div{"ng-if" => "::hub.active"}
-      %a.hub.open_closed{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
-        %i.ofn-i_068-shop-reversed.show-for-medium-up
+    .hub-localization-item{"ng-if" => "::hub.active"}
+      %a.open_closed{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
         %span.margin-top{ ng: { if: "::current()" } }
           %em= t :hubs_shopping_here
         %span.margin-top{ ng: { if: "::!current()" } }
           %span{"ng-bind" => "::hub.orders_close_at | sensible_timeframe"}
-        %span.margin-top
-          %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
+        %i.ofn-i_068-shop-reversed.show-for-medium-up
+      %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
 
-    %div{"ng-if" => "::!hub.active"}
-      %a.hub.open_closed{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
+    .hub-localization-item{"ng-if" => "::!hub.active"}
+      %a.open_closed{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
         %span.margin-top{ ng: { if: "::current()" } }
           %em= t :hubs_shopping_here
         %span.margin-top{ ng: { if: "::!current()" } }
           = t :hubs_orders_closed
         %i.ofn-i_068-shop-reversed.show-for-medium-up
-        %span.margin-top
-          %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
+      %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
 
-.row.active_table_row{"ng-if" => "!hub.is_distributor", "ng-class" => "closed"}
-  .columns.small-12.medium-6.large-5.skinny-head
-    %a.hub{"ng-click" => "openModal(hub)", "ng-class" => "{primary: hub.active, secondary: !hub.active}"}
-      %i{ng: {class: "hub.icon_font"}}
-      %span.margin-top.hub-name-listing{"ng-bind" => "::hub.name"}
+.hub-container.active_table_row{"ng-if" => "!hub.is_distributor", "ng-class" => "closed"}
+  %a.hub.skinny-head{"ng-click" => "openModal(hub)", "ng-class" => "{primary: hub.active, secondary: !hub.active}"}
+    %i{ng: {class: "hub.icon_font"}}
+    %span.hub-name-listing{"ng-bind" => "::hub.name"}
 
   %div{style: "clear: both;"}
 
