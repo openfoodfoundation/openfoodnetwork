@@ -1334,16 +1334,6 @@ Rails/TimeZone:
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/services/customer_order_cancellation_spec.rb'
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: to_fs, to_formatted_s
-Rails/ToFormattedS:
-  Exclude:
-    - 'app/controllers/admin/variant_overrides_controller.rb'
-    - 'app/controllers/spree/admin/products_controller.rb'
-    - 'spec/system/admin/product_import_spec.rb'
-
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/ToSWithArgument:

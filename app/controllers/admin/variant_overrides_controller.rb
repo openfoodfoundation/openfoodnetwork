@@ -63,7 +63,7 @@ module Admin
 
       options = [{ id: '0', name: 'All' }]
       import_dates.collect(&:import_date).map { |i|
-        options.push(id: i.to_date, name: i.to_date.to_formatted_s(:long))
+        options.push(id: i.to_date, name: i.to_date.to_fs(:long))
       }
 
       options

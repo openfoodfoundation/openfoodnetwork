@@ -177,7 +177,7 @@ module Spree
       def product_import_dates
         options = [{ id: '0', name: '' }]
         product_import_dates_query.collect(&:import_date).
-          map { |i| options.push(id: i.to_date, name: i.to_date.to_formatted_s(:long)) }
+          map { |i| options.push(id: i.to_date, name: i.to_date.to_fs(:long)) }
 
         options
       end
