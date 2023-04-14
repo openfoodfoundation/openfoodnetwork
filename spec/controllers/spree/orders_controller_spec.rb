@@ -97,6 +97,7 @@ describe Spree::OrdersController, type: :controller do
       allow(order).to receive_message_chain(:line_items, :empty?).and_return true
       allow(order).to receive(:insufficient_stock_lines).and_return []
       allow(order).to receive(:line_item_variants).and_return []
+      allow(order).to receive(:distributor).and_return(distributor)
       allow(order_cycle).to receive(:variants_distributed_by).and_return []
 
       session[:access_token] = order.token
