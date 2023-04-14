@@ -865,6 +865,8 @@ describe "As a consumer, I want to checkout my order" do
       end
 
       describe "terms and conditions" do
+        let(:customer) { create(:customer, enterprise: order.distributor, user: user) }
+        let(:tos_url) { "https://example.org/tos" }
         let(:system_terms_path) { Rails.root.join("public/Terms-of-service.pdf") }
         let(:shop_terms_path) { Rails.root.join("public/Terms-of-ServiceUK.pdf") }
         let(:system_terms) {
@@ -901,7 +903,6 @@ describe "As a consumer, I want to checkout my order" do
 
           describe "when customer has already accepted T&Cs before" do
             before do
-              customer = create(:customer, enterprise: order.distributor, user: user)
               customer.update terms_and_conditions_accepted_at: Time.zone.now
             end
 
@@ -922,7 +923,6 @@ describe "As a consumer, I want to checkout my order" do
         end
 
         context "when the platform's terms of service have to be accepted" do
-          let(:tos_url) { "https://example.org/tos" }
 
           before do
             allow(Spree::Config).to receive(:shoppers_require_tos).and_return(true)
@@ -938,26 +938,43 @@ describe "As a consumer, I want to checkout my order" do
           end
 
           context "when the terms have been accepted in the past" do
-            before do
-              TermsOfServiceFile.create!(
-                attachment: system_terms,
-                updated_at: 1.day.ago,
-              )
-              customer = create(:customer, enterprise: order.distributor, user: user)
-              customer.update(terms_and_conditions_accepted_at: Time.zone.now)
+            
+
+            context "with a dedicated ToS file" do
+              before do
+                TermsOfServiceFile.create!(
+                  attachment: system_terms,
+                  updated_at: 1.day.ago,
+                )
+                customer.update(terms_and_conditions_accepted_at: Time.zone.now)
+              end
+
+              it "remembers the selection" do
+                visit checkout_step_path(:summary)
+
+                expect(page).to have_link("Terms of service", href: /Terms-of-service.pdf/)
+                expect(page).to have_field "order_accept_terms", checked: true
+              end
             end
 
-            it "remembers the selection" do
-              visit checkout_step_path(:summary)
+            context "with the default ToS file" do
+              before do
+                customer.update(terms_and_conditions_accepted_at: Time.zone.now)
+              end
 
-              expect(page).to have_link "Terms of service"
-              expect(page).to have_field "order_accept_terms", checked: true
+              it "remembers the selection" do
+                pending "#10675"
+
+                visit checkout_step_path(:summary)
+
+                expect(page).to have_link("Terms of service", href: tos_url)
+                expect(page).to have_field "order_accept_terms", checked: true
+              end
             end
           end
         end
 
         context "when the seller's terms and the platform's terms have to be accepted" do
-          let(:tos_url) { "https://example.org/tos" }
 
           before do
             order.distributor.update!(terms_and_conditions: shop_terms)
