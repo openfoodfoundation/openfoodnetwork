@@ -614,7 +614,8 @@ describe '
         it "set the hide_ofn_navigation preference for the current shop" do
           check "Hide OFN navigation"
           click_button 'Update'
-          expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
+          success_message = 'Enterprise "First Distributor" has been successfully updated!'
+          expect(flash_message).to eq success_message
           expect(distributor1.reload.hide_ofn_navigation).to be true
 
           visit edit_admin_enterprise_path(distributor1)
@@ -624,7 +625,7 @@ describe '
 
           uncheck "Hide OFN navigation"
           click_button 'Update'
-          expect(flash_message).to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(flash_message).to eq success_message
           expect(distributor1.reload.hide_ofn_navigation).to be false
         end
       end
