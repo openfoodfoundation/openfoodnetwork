@@ -3,8 +3,6 @@
 class Voucher < ApplicationRecord
   acts_as_paranoid
 
-  include CalculatedAdjustments
-
   belongs_to :enterprise
 
   has_many :adjustments,
@@ -14,8 +12,6 @@ class Voucher < ApplicationRecord
            dependent: :nullify
 
   validates :code, presence: true, uniqueness: { scope: :enterprise_id }
-
-  before_validation :add_calculator
 
   def self.adjust!(order)
     return if order.nil?
@@ -29,6 +25,10 @@ class Voucher < ApplicationRecord
     # Recalculate value
     amount = adjustment.originator.compute_amount(order)
 
+    # It is quite possible to have an order with both tax included in and tax excluded from price.
+    # We should be able to caculate the relevant amount apply the current calculation.
+    #
+    # For now we just assume it is either all tax included in price or all tax excluded from price.
     if order.additional_tax_total.positive?
       handle_tax_excluded_from_price(order, amount)
     else
@@ -42,7 +42,6 @@ class Voucher < ApplicationRecord
   def self.handle_tax_excluded_from_price(order, amount)
     voucher_rate = amount / order.total
 
-    # TODO: might need to use VoucherTax has originator (sub class of Voucher)
     # Adding the voucher tax part
     tax_amount = voucher_rate * order.additional_tax_total
 
@@ -92,12 +91,12 @@ class Voucher < ApplicationRecord
     Spree::Money.new(value)
   end
 
-  # override the one from CalculatedAdjustments
-  # Create an "open" adjustment which will be updated later once tax and other fees have
-  # been applied to the order
+  # Ideally we would use `include CalculatedAdjustments` to be consistent with other adjustments,
+  # but vouchers have complicated calculation so we can't easily use Spree::Calculator. We keep
+  # the same method to stay as consistent as possible.
   #
-  # rubocop:disable Style/OptionalBooleanParameter
-  def create_adjustment(label, order, mandatory = false, _state = "open", tax_category = nil)
+  # Creates a new voucher adjustment for the given order
+  def create_adjustment(label, order)
     amount = compute_amount(order)
 
     adjustment_attributes = {
@@ -105,32 +104,17 @@ class Voucher < ApplicationRecord
       originator: self,
       order: order,
       label: label,
-      mandatory: mandatory,
+      mandatory: false,
       state: "open",
-      tax_category: tax_category
+      tax_category: nil
     }
 
     order.adjustments.create(adjustment_attributes)
   end
-  # rubocop:enable Style/OptionalBooleanParameter
 
-  # override the one from CalculatedAdjustments so we limit adjustment to the maximum amount
-  # needed to cover the order, ie if the voucher covers more than the order.total we only need
-  # to create an adjustment covering the order.total
-  # Doesn't work with taxes for now
-  # TODO move this to a calculator
+  # We limit adjustment to the maximum amount needed to cover the order, ie if the voucher
+  # covers more than the order.total we only need to create an adjustment covering the order.total
   def compute_amount(order)
-    amount = calculator.compute(order)
-
-    return -order.total if amount.abs > order.total
-
-    amount
-  end
-
-  private
-
-  # For now voucher are only flat rate of 10
-  def add_calculator
-    self.calculator = Calculator::FlatRate.new(preferred_amount: -value)
+    -value.clamp(0, order.total)
   end
 end

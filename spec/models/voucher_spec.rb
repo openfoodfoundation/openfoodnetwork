@@ -17,18 +17,6 @@ describe Voucher do
     it { is_expected.to validate_uniqueness_of(:code).scoped_to(:enterprise_id) }
   end
 
-  describe 'after_save' do
-    subject { Voucher.create(code: 'new_code', enterprise: enterprise) }
-
-    it 'adds a FlateRate calculator' do
-      expect(subject.calculator.instance_of?(Calculator::FlatRate)).to be(true)
-    end
-
-    it 'has a preferred_amount of -10' do
-      expect(subject.calculator.preferred_amount.to_f).to eq(-10)
-    end
-  end
-
   describe '.adjust!' do
     let(:voucher) { Voucher.create(code: 'new_code', enterprise: enterprise) }
 
