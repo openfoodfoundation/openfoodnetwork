@@ -4,7 +4,6 @@
 AllCops:
   NewCops: disable
   SuggestExtensions: false
-  TargetRailsVersion: 5.0
   Exclude:
     - 'bin/**/*'
     - 'db/**/*'
