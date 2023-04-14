@@ -12,9 +12,8 @@ default: &default
   # ['app/assets', 'engine/foo/app/assets']
   additional_paths: [
     'vendor',
+    'app/assets',
     'app/webpacker/css',
-    'app/assets/fonts',
-    'app/assets/images',
     'engines/web/app/assets/stylesheets',
     'app/components'
   ]
