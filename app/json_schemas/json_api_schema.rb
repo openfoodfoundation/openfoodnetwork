@@ -37,7 +37,7 @@ class JsonApiSchema
     end
 
     def relationship_properties
-      relationships.to_h { |name| [name, relationship_schema(name)] }
+      relationships.index_with { |name| relationship_schema(name) }
     end
 
     # Example

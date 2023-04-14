@@ -15,7 +15,7 @@ module Reporting
         end
 
         def custom_headers
-          data_attributes.map { |attr| [attr, I18n.t("header.#{attr}", scope: i18n_scope)] }.to_h
+          data_attributes.index_with { |attr| I18n.t("header.#{attr}", scope: i18n_scope) }
         end
 
         def i18n_scope
