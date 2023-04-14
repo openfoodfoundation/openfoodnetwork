@@ -57,6 +57,7 @@ TL;DR:
 * Maintain a clean commit history
 * Use a style consistent with the rest of the codebase
 * Before submitting, [rebase your work][rebase] on the current master branch
+* After submitting, be sure to check the [CI test results](ci). Click on a ❌ result to view the logged results and investigate.
 
 From here, your pull request will progress through the [Review, Test, Merge & Deploy process][process].
 
@@ -71,3 +72,4 @@ From here, your pull request will progress through the [Review, Test, Merge & De
 [ofn-transifex]: https://www.transifex.com/open-food-foundation/open-food-network/
 [i18n]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Internationalisation-%28i18n%29
 [welcome-dev]: https://github.com/orgs/openfoodfoundation/projects/2
+[ci]: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Continuous-Integration

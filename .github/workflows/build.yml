@@ -68,7 +68,6 @@ jobs:
           bundle exec rake db:schema:load
 
       - name: Run tests
-
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: 864ef557d85ea8e603e086c0387d5154
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
@@ -82,8 +81,8 @@ jobs:
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/controllers/**/*_spec.rb}" 
-        
         run: |
+          git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
           bundle exec rake knapsack_pro:rspec
 
   knapsack_rspec_models:

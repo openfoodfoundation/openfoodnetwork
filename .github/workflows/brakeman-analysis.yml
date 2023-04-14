@@ -41,6 +41,7 @@ jobs:
     - name: Scan
       continue-on-error: true
       run: |
+        git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
         brakeman -f sarif -o output.sarif.json .
 
     # Upload the SARIF file generated in the previous step
