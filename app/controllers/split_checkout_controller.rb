@@ -309,7 +309,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def apply_voucher
-    Voucher.adjust!(@order)
+    VoucherAdjustmentsService.calculate(@order)
 
     # update order to take into account the voucher we applied
     @order.update_order!
