@@ -1,11 +1,13 @@
 // Grid Calculations
 // Adjust $col-gutter (space between columns, as percentage) to adjust everything else automatically
 
+@use "sass:math";
+
 $col-gutter: 2;
 $total-gutter: $col-gutter * 15;
 $total-colspace: 100 - $total-gutter;
-$gutter-width: $col-gutter / 100;
-$col-width: ($total-colspace / 16) / 100;
+$gutter-width: $col-gutter * 0.01;
+$col-width: math.div($total-colspace, 16) * 0.01;
 
 $col-1: $col-width;
 $col-2: ($col-width * 2) + $gutter-width;
