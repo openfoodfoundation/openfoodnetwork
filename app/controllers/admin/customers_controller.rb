@@ -37,6 +37,7 @@ module Admin
 
     def create
       @customer = Customer.new(customer_params)
+      @customer.created_manually = true
       if user_can_create_customer?
         if @customer.save
           tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: @customer.enterprise))
@@ -83,7 +84,7 @@ module Admin
     def customers
       return @customers if @customers.present?
 
-      @customers = Customer.managed_by(spree_current_user)
+      @customers = Customer.visible.managed_by(spree_current_user)
       return @customers if params[:enterprise_id].blank?
 
       @customers = @customers.where(enterprise_id: params[:enterprise_id])

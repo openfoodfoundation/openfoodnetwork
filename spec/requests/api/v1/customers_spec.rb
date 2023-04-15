@@ -11,13 +11,14 @@ describe "Customers", type: :request do
     create(
       :customer,
       enterprise: enterprise1,
+      created_manually: true,
       terms_and_conditions_accepted_at: Time.zone.parse("2000-01-01"),
       tag_list: ["long-term"],
       ship_address: create(:address),
     )
   }
-  let!(:customer2) { create(:customer, enterprise: enterprise1) }
-  let!(:customer3) { create(:customer, enterprise: enterprise2) }
+  let!(:customer2) { create(:customer, enterprise: enterprise1, created_manually: true,) }
+  let!(:customer3) { create(:customer, enterprise: enterprise2, created_manually: true,) }
 
   before do
     Flipper.enable(:api_v1)

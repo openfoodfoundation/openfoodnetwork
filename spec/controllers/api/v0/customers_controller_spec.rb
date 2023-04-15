@@ -10,8 +10,8 @@ module Api
     let(:user) { create(:user) }
 
     describe "index" do
-      let!(:customer1) { create(:customer) }
-      let!(:customer2) { create(:customer) }
+      let!(:customer1) { create(:customer, created_manually: true) }
+      let!(:customer2) { create(:customer, created_manually: true) }
 
       before do
         user.customers << customer1

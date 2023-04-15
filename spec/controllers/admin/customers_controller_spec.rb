@@ -22,7 +22,7 @@ module Admin
       end
 
       context "json" do
-        let!(:customer) { create(:customer, enterprise: enterprise) }
+        let!(:customer) { create(:customer, enterprise: enterprise, created_manually: true) }
 
         context "where I manage the enterprise" do
           before do
@@ -31,7 +31,7 @@ module Admin
 
           context "and enterprise_id is given in params" do
             let(:user){ enterprise.users.first }
-            let(:customers){ Customer.managed_by(user).where(enterprise_id: enterprise.id) }
+            let(:customers){ Customer.visible.managed_by(user).where(enterprise_id: enterprise.id) }
             let(:params) { { format: :json, enterprise_id: enterprise.id } }
 
             it "scopes @collection to customers of that enterprise" do

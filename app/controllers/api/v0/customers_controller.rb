@@ -6,7 +6,7 @@ module Api
       skip_authorization_check only: :index
 
       def index
-        @customers = current_api_user.customers
+        @customers = current_api_user.customers.visible
         render json: @customers, each_serializer: CustomerSerializer
       end
 

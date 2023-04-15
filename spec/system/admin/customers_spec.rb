@@ -16,11 +16,17 @@ describe 'Customers' do
     describe "using the customers index" do
       let!(:customer1) {
         create(:customer, first_name: 'John', last_name: 'Doe', enterprise: managed_distributor1, 
-code: nil)
+code: nil, created_manually: true)
       }
-      let!(:customer2) { create(:customer, enterprise: managed_distributor1, code: nil) }
-      let!(:customer3) { create(:customer, enterprise: unmanaged_distributor) }
-      let!(:customer4) { create(:customer, enterprise: managed_distributor2) }
+      let!(:customer2) {
+        create(:customer, enterprise: managed_distributor1, created_manually: true, code: nil)
+      }
+      let!(:customer3) {
+        create(:customer, enterprise: unmanaged_distributor, created_manually: true,)
+      }
+      let!(:customer4) {
+        create(:customer, enterprise: managed_distributor2, created_manually: true,)
+      }
 
       before do
         login_as user

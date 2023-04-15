@@ -80,7 +80,7 @@ module Api
       end
 
       def visible_customers
-        Customer.managed_by(current_api_user)
+        Customer.visible.managed_by(current_api_user)
       end
 
       def customer_params
@@ -96,6 +96,7 @@ module Api
           ]
         ).to_h
 
+        attributes.merge!(created_manually: true)
         attributes.merge!(tag_list: params[:tags]) if params.key?(:tags)
 
         transform_address!(attributes, :billing_address, :bill_address)
