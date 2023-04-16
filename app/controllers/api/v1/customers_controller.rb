@@ -80,9 +80,7 @@ module Api
       end
 
       def visible_customers
-        current_api_user.customers.or(
-          Customer.where(enterprise_id: editable_enterprises)
-        )
+        Customer.managed_by(current_api_user)
       end
 
       def customer_params
@@ -104,10 +102,6 @@ module Api
         transform_address!(attributes, :shipping_address, :ship_address)
 
         attributes
-      end
-
-      def editable_enterprises
-        OpenFoodNetwork::Permissions.new(current_api_user).editable_enterprises.select(:id)
       end
 
       def include_options

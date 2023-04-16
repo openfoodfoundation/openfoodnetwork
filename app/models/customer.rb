@@ -35,6 +35,7 @@ class Customer < ApplicationRecord
                     uniqueness: { scope: :enterprise_id, message: I18n.t('validation_msg_is_associated_with_an_exising_customer') }
 
   scope :of, ->(enterprise) { where(enterprise_id: enterprise) }
+  scope :managed_by, ->(user) { user&.persisted? ? where(user: user).or(of(Enterprise.managed_by(user))) : none }
 
   before_create :associate_user
 
