@@ -1,3 +1,4 @@
 class Invoice::DataPresenter::PaymentMethod < Invoice::DataPresenter::Base
-  attributes :name, :description
+  attributes :id,:name, :description
+  invoice_generation_attributes :id
 end

@@ -3,51 +3,87 @@
 require 'spec_helper'
 
 describe OrderInvoiceComparator do
-  describe '#equal?' do
+  describe '#can_generate_new_invoice?' do
     let!(:order) { create(:completed_order_with_fees) }
-    let(:current_state_invoice){ order.current_state_invoice }
     let!(:invoice){ create(:invoice, order: order) }
+    let(:current_state_invoice){ order.current_state_invoice }
+    let(:subject) {
+      OrderInvoiceComparator.new.can_generate_new_invoice?(current_state_invoice, invoice)
+    }
 
     context "changes on the order object" do
       it "returns true if the order didn't change" do
-        expect(OrderInvoiceComparator.new.equal?(current_state_invoice, invoice)).to be true
+        expect(subject).to be false
       end
-  
+
       it "returns true if a relevant attribute changes" do
-        order.update!(note: 'THIS IS AN UPDATE')
-  
-        expect(OrderInvoiceComparator.new.equal?(current_state_invoice, invoice)).to be false
+        Spree::Order.where(id: order.id).update_all(payment_total: order.payment_total + 10)
+        order.reload
+        expect(subject).to be true
       end
-  
+
       it "returns true if a non-relevant attribute changes" do
-        order.update!(last_ip_address: "192.168.172.165")
-  
-        expect(OrderInvoiceComparator.new.equal?(current_state_invoice, invoice)).to be true
+        order.update!(note: "THIS IS A NEW NOTE")
+        expect(subject).to be false
       end
     end
 
-    context "change on associate objects (belong_to)" do
+    context "a non-relevant associated model is updated" do
       let(:distributor){ order.distributor }
-
-      it "returns false if the distributor change relavant attribute" do
-        distributor.update!(name: 'THIS IS A NEW NAME')
-  
-        expect(OrderInvoiceComparator.new.equal?(current_state_invoice, invoice)).to be false
-      end
-
-      it "returns true if the distributor change non-relavant attribute" do
-        distributor.update!(description: 'THIS IS A NEW DESCRIPTION')
-  
-        expect(OrderInvoiceComparator.new.equal?(current_state_invoice, invoice)).to be true
+      it "returns false" do
+        distributor.update!(name: 'THIS IS A NEW NAME', abn: 'This is a new ABN')
+        expect(subject).to be false
       end
     end
 
-    context "changes on associate objects (has_many)" do
+    context "a relevant associated object is updated" do
       let(:line_item){ order.line_items.first }
-      it "return true if relavant attribute change" do
+      it "return true" do
         line_item.update!(quantity: line_item.quantity + 1)
-  
-        expect(OrderInvoiceComparator.new.equal?(current_state_invoice, invoice)).to be false
+        expect(subject).to be true
+      end
+    end
+  end
+
+  describe '#can_update_latest_invoice?' do
+    let!(:order) { create(:completed_order_with_fees) }
+    let!(:invoice){ create(:invoice, order: order) }
+    let(:current_state_invoice){ order.current_state_invoice }
+    let(:subject) {
+      OrderInvoiceComparator.new.can_update_latest_invoice?(current_state_invoice, invoice)
+    }
+
+    context "changes on the order object" do
+      it "returns true if the order didn't change" do
+        expect(subject).to be false
+      end
+
+      it "returns true if a relevant attribute changes" do
+        order.update!(note: "THIS IS A NEW NOTE")
+        expect(subject).to be true
+      end
+
+      it "returns false if a non-relevant attribute changes" do
+        Spree::Order.where(id: order.id).update_all(payment_total: order.payment_total + 10)
+        order.reload
+        expect(subject).to be false
+      end
+    end
+
+    context "a non-relevant associated model is updated" do
+      let(:distributor){ order.distributor }
+      it "returns false" do
+        distributor.update!(name: 'THIS IS A NEW NAME', abn: 'This is a new ABN')
+        expect(subject).to be false
+      end
+    end
+
+    context "a relevant associated object is updated" do
+      let(:payment){ order.payments.first }
+      it "return true" do
+        expect(payment.state).to_not eq 'completed'
+        payment.update!(state: 'completed')
+        expect(subject).to be true
       end
     end
   end

@@ -1,5 +1,5 @@
 class Invoice::PaymentSerializer < ActiveModel::Serializer
-  attributes :state, :created_at, :amount, :currency
+  attributes :state, :created_at, :amount, :currency, :payment_method_id
   has_one :payment_method, serializer: Invoice::PaymentMethodSerializer
 
   def created_at

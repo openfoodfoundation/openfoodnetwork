@@ -1,7 +1,9 @@
-class Invoice::DataPresenter::LineItem  < Invoice::DataPresenter::Base
-  attributes :quantity, :price_with_adjustments, :added_tax, :included_tax, :currency
+class Invoice::DataPresenter::LineItem < Invoice::DataPresenter::Base
+  attributes :added_tax, :currency, :included_tax, :price_with_adjustments, :quantity, :variant_id
   attributes_with_presenter :variant
-  relevant_attributes :quantity
+  invoice_generation_attributes :added_tax, :included_tax, :price_with_adjustments,
+                      :quantity, :variant_id
+
   delegate :name_to_display, :options_text, to: :variant
 
   def display_amount_with_adjustments

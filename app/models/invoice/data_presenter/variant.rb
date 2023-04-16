@@ -1,5 +1,5 @@
 class Invoice::DataPresenter::Variant < Invoice::DataPresenter::Base
-  attributes :display_name, :options_text
+  attributes :id, :display_name, :options_text
   attributes_with_presenter :product
 
   def name_to_display

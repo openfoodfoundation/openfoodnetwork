@@ -1,6 +1,7 @@
 class Invoice::OrderSerializer < ActiveModel::Serializer
   attributes :number, :special_instructions, :note, :payment_state, :total, :payment_total, :state,
-             :currency, :additional_tax_total, :included_tax_total, :completed_at, :has_taxes_included
+             :currency, :additional_tax_total, :included_tax_total, :completed_at, :has_taxes_included,
+             :shipping_method_id
   has_one :order_cycle, serializer: Invoice::OrderCycleSerializer
   has_one :customer, serializer: Invoice::CustomerSerializer
   has_one :distributor, serializer: Invoice::EnterpriseSerializer
@@ -18,5 +19,9 @@ class Invoice::OrderSerializer < ActiveModel::Serializer
 
   def completed_at
     object.completed_at.to_s
+  end
+
+  def shipping_method_id
+    object.shipping_method&.id
   end
 end

@@ -1,3 +1,4 @@
 class Invoice::DataPresenter::ShippingMethod < Invoice::DataPresenter::Base
-  attributes :name, :require_ship_address
+  attributes :id, :name, :require_ship_address
+  invoice_generation_attributes :id
 end
