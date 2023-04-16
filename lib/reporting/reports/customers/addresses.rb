@@ -4,6 +4,20 @@ module Reporting
   module Reports
     module Customers
       class Addresses < Base
+        def query_result
+          super.group_by do |order|
+            {
+              first_name: order.billing_address.firstname,
+              last_name: order.billing_address.lastname,
+              billing_address: order.billing_address.address_and_city,
+              email: order.email,
+              phone: order.billing_address.phone,
+              hub_id: order.distributor_id,
+              shipping_method_id: order.shipping_method&.id,
+            }
+          end.values.map(&:first)
+        end
+
         def columns
           {
             first_name: proc { |order| order.billing_address.firstname },
