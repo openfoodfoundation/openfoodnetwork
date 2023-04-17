@@ -33,9 +33,6 @@ RSpec.configure do |config|
 
   config.prepend_before(:each, type: :system) { driven_by :cuprite }
 
-  # System tests use transactional fixtures instead of DatabaseCleaner
-  config.use_transactional_fixtures = true
-
   # Make sure url helpers in mailers use the Capybara server host.
   config.around(:each, type: :system) do |example|
     original_host = Rails.application.default_url_options[:host]

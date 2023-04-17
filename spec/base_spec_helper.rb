@@ -57,6 +57,24 @@ RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
+  # If you're not using ActiveRecord, or you'd prefer not to run each of your
+  # examples within a transaction, remove the following line or assign false
+  # instead of true.
+  #
+  # Setting this to true keeps the database clean by rolling back any changes.
+  config.use_transactional_fixtures = true
+
+  # Some tests don't work within a transaction. Then we use DatabaseCleaner.
+  config.before(:each, concurrency: true) do
+    config.use_transactional_fixtures = false
+    DatabaseCleaner.strategy = :deletion, { except: ['spree_countries', 'spree_states'] }
+    DatabaseCleaner.start
+  end
+  config.append_after(:each, concurrency: true) do
+    DatabaseCleaner.clean
+    config.use_transactional_fixtures = true
+  end
+
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
@@ -124,6 +142,7 @@ RSpec.configure do |config|
 
   config.infer_spec_type_from_file_location!
 
+  # Helpers
   config.include FactoryBot::Syntax::Methods
   config.include JsonSpec::Helpers
 
@@ -140,6 +159,13 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::PerformanceHelper
   config.include ActiveJob::TestHelper
   config.include ReportsHelper
+
+  config.include ViewComponent::TestHelpers, type: :component
+
+  config.include ControllerRequestsHelper, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include OpenFoodNetwork::ApiHelper, type: :controller
+  config.include OpenFoodNetwork::ControllerHelper, type: :controller
 
   config.include Features::DatepickerHelper, type: :system
   config.include DownloadsHelper, type: :system
