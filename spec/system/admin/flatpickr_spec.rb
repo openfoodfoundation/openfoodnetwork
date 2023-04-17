@@ -8,7 +8,8 @@ describe "Test Flatpickr" do
 
   context "orders" do
     it "opens the datepicker and closes it using the 'CLOSE' button" do
-      login_as_admin_and_visit 'admin/orders'
+      login_as_admin
+      visit 'admin/orders'
       open_datepicker('.datepicker')
       # Looks for the close button and click it
       within(".flatpickr-calendar.open") do
@@ -20,7 +21,8 @@ describe "Test Flatpickr" do
     end
     
     it "opens the datepicker and closes it by clicking outside" do
-      login_as_admin_and_visit 'admin/orders'
+      login_as_admin
+      visit 'admin/orders'
       open_datepicker('.datepicker')
       find("#admin-menu").click       
       # Should no more have opened flatpickr

@@ -16,8 +16,8 @@ describe '
       end
 
       it "does not show super admin only report" do
-        login_to_admin_as user
-        click_link "Reports"
+        login_as user
+        visit admin_reports_path
         expect(page).not_to have_content "Users & Enterprises"
       end
     end
@@ -38,7 +38,8 @@ describe '
     end
 
     it "can run the customers report" do
-      login_as_admin_and_visit admin_report_path(
+      login_as_admin
+      visit admin_report_path(
         report_type: :customers, report_subtype: :mailing_list
       )
       click_button "Go"
@@ -47,7 +48,8 @@ describe '
 
     it "displays a friendly timeout message" do
       ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
-      login_as_admin_and_visit admin_report_path(
+      login_as_admin
+      visit admin_report_path(
         report_type: :customers, report_subtype: :mailing_list
       )
       expect(ENV).to receive(:fetch).with("RACK_TIMEOUT_SERVICE_TIMEOUT", "15")
@@ -61,7 +63,8 @@ describe '
 
   describe "Can access Customers reports and generate customers report" do
     before do
-      login_as_admin_and_visit admin_reports_path
+      login_as_admin
+      visit admin_reports_path
     end
 
     it "customers report" do
@@ -90,7 +93,8 @@ describe '
 
   describe "Order cycle management report" do
     before do
-      login_as_admin_and_visit admin_reports_path
+      login_as_admin
+      visit admin_reports_path
     end
 
     it "payment method report" do
@@ -121,7 +125,8 @@ describe '
     let!(:ready_to_ship_order) { create(:order_ready_to_ship) }
 
     before do
-      login_as_admin_and_visit admin_reports_path
+      login_as_admin
+      visit admin_reports_path
     end
 
     it "generates the orders and distributors report" do
@@ -245,7 +250,8 @@ describe '
                        payment_method: create(:payment_method, distributors: [distributor1]))
       break unless order1.next! until order1.complete?
 
-      login_as_admin_and_visit admin_reports_path
+      login_as_admin
+      visit admin_reports_path
     end
 
     it "generate Tax Types reports" do
@@ -322,7 +328,8 @@ describe '
     end
 
     it "shows products and inventory report" do
-      login_as_admin_and_visit admin_reports_path
+      login_as_admin
+      visit admin_reports_path
 
       expect(page).to have_content "All products"
       expect(page).to have_content "Inventory (on hand)"
@@ -350,7 +357,8 @@ describe '
     end
 
     it "shows the LettuceShare report" do
-      login_as_admin_and_visit admin_reports_path
+      login_as_admin
+      visit admin_reports_path
       click_link 'LettuceShare'
       click_button "Go"
 
@@ -370,7 +378,8 @@ describe '
     before do
       enterprise3.enterprise_roles.build( user: enterprise1.owner ).save
 
-      login_as_admin_and_visit admin_reports_path
+      login_as_admin
+      visit admin_reports_path
 
       click_link 'Users & Enterprises'
     end
@@ -411,7 +420,8 @@ describe '
 
   describe 'bulk coop report' do
     before do
-      login_as_admin_and_visit admin_reports_path
+      login_as_admin
+      visit admin_reports_path
     end
 
     it "generating Bulk Co-op Supplier Report" do
@@ -576,7 +586,8 @@ describe '
 
       context "summary report" do
         before do
-          login_as_admin_and_visit admin_reports_path
+          login_as_admin
+          visit admin_reports_path
           click_link "Summary"
           click_button 'Go'
         end
@@ -635,13 +646,15 @@ describe '
 
       context "detailed report" do
         before do
-          login_as_admin_and_visit admin_reports_path
+          login_as_admin
+          visit admin_reports_path
           click_link "Detailed"
           click_button 'Go'
         end
 
         it "generates a detailed report" do
-          login_as_admin_and_visit admin_reports_path
+          login_as_admin
+          visit admin_reports_path
           click_link "Detailed"
           click_button 'Go'
 

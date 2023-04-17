@@ -4,22 +4,11 @@ module AuthenticationHelper
   include Warden::Test::Helpers
 
   def login_as_admin
-    admin_user = create(:admin_user)
-    login_as admin_user
-    admin_user
-  end
-
-  def login_as_admin_and_visit(path_visit)
-    login_as_admin
-    visit path_visit
+    login_as create(:admin_user)
   end
 
   def login_to_admin_section
-    login_as_admin_and_visit(spree.admin_dashboard_path)
-  end
-
-  def login_to_admin_as(user)
-    login_as user
+    login_as_admin
     visit spree.admin_dashboard_path
   end
 

@@ -43,7 +43,8 @@ describe '
     distributor_disabled = create(:distributor_enterprise)
     create(:simple_order_cycle, name: 'Two')
 
-    login_as_admin_and_visit spree.admin_orders_path
+    login_as_admin
+    visit spree.admin_orders_path
     click_link 'New Order'
 
     # Distributors without an order cycle should be shown as disabled
@@ -89,7 +90,8 @@ describe '
   end
 
   it "can add a product to an existing order" do
-    login_as_admin_and_visit spree.edit_admin_order_path(order)
+    login_as_admin
+    visit spree.edit_admin_order_path(order)
 
     select2_select product.name, from: 'add_variant_id', search: true
 
@@ -114,7 +116,8 @@ describe '
     order.user = nil
     order.save
 
-    login_as_admin_and_visit spree.edit_admin_order_path(order)
+    login_as_admin
+    visit spree.edit_admin_order_path(order)
 
     expect(page).to have_select2 "order_distributor_id", with_options: [d.name]
     select2_select d.name, from: 'order_distributor_id'
@@ -128,7 +131,8 @@ describe '
   it "can't add products to an order outside the order's hub and order cycle" do
     product = create(:simple_product)
 
-    login_as_admin_and_visit spree.edit_admin_order_path(order)
+    login_as_admin
+    visit spree.edit_admin_order_path(order)
 
     expect(page).not_to have_select2 "add_variant_id", with_options: [product.name]
   end
@@ -139,7 +143,8 @@ describe '
 
       before do
         order.line_items << line_item
-        login_as_admin_and_visit spree.edit_admin_order_path(order)
+        login_as_admin
+        visit spree.edit_admin_order_path(order)
         find("a.delete-item").click
         expect(page).to have_content "Are you sure?"        
       end
@@ -168,7 +173,8 @@ describe '
       before do
         # specify that order has only one line item
         order.line_items = [order.line_items.first]
-        login_as_admin_and_visit spree.edit_admin_order_path(order)
+        login_as_admin
+        visit spree.edit_admin_order_path(order)
         find("a.delete-item").click 
       end
 
@@ -229,7 +235,8 @@ describe '
     order.state = 'cart'
     order.completed_at = nil
 
-    login_as_admin_and_visit spree.edit_admin_order_path(order)
+    login_as_admin
+    visit spree.edit_admin_order_path(order)
 
     quantity = order.line_items.first.quantity
     max_quantity = 0
@@ -257,7 +264,8 @@ describe '
     order.completed_at = nil
     order.line_items.first.variant.update_attribute(:on_demand, true)
 
-    login_as_admin_and_visit spree.edit_admin_order_path(order)
+    login_as_admin
+    visit spree.edit_admin_order_path(order)
 
     within("tr.stock-item", text: order.products.first.name) do
       find("a.edit-item").click
@@ -353,7 +361,8 @@ describe '
   end
 
   it "can't change distributor or order cycle once order has been finalized" do
-    login_as_admin_and_visit spree.edit_admin_order_path(order)
+    login_as_admin
+    visit spree.edit_admin_order_path(order)
 
     expect(page).not_to have_select2 'order_distributor_id'
     expect(page).not_to have_select2 'order_order_cycle_id'

@@ -15,7 +15,8 @@ describe '
       product = create(:simple_product, variant_unit: "weight", variant_unit_scale: "1")
 
       # When I create a variant on the product
-      login_as_admin_and_visit spree.admin_product_variants_path product
+      login_as_admin
+      visit spree.admin_product_variants_path product
       click_link 'New Variant'
 
       fill_in 'unit_value_human', with: '1'
@@ -32,7 +33,8 @@ describe '
       filter = { producerFilter: 2 }
 
       # When I create a variant on the product
-      login_as_admin_and_visit spree.admin_product_variants_path(product, filter)
+      login_as_admin
+      visit spree.admin_product_variants_path(product, filter)
 
       click_link 'New Variant'
 
@@ -54,7 +56,8 @@ describe '
       filter = { producerFilter: 2 }
 
       # When I create a variant on the product
-      login_as_admin_and_visit spree.admin_product_variants_path(product, filter)
+      login_as_admin
+      visit spree.admin_product_variants_path(product, filter)
 
       visit spree.admin_product_variants_path(product, filter)
 
@@ -89,7 +92,8 @@ describe '
       filter = { producerFilter: 2 }
 
       # When I create a variant on the product
-      login_as_admin_and_visit spree.admin_product_variants_path(product, filter)
+      login_as_admin
+      visit spree.admin_product_variants_path(product, filter)
       page.find('table.index .icon-edit').click
 
       # Cancel link should include product filter
@@ -109,7 +113,8 @@ describe '
       product.option_types << variant.option_values.first.option_type
 
       # When I view the variant
-      login_as_admin_and_visit spree.admin_product_variants_path product
+      login_as_admin
+      visit spree.admin_product_variants_path product
       page.find('table.index .icon-edit').click
 
       # Then I should not see a traditional option value field for the unit-related option value
@@ -135,7 +140,8 @@ describe '
       variant = product.variants.first
       variant.update(unit_description: 'foo')
 
-      login_as_admin_and_visit spree.edit_admin_product_variant_path(product, variant)
+      login_as_admin
+      visit spree.edit_admin_product_variant_path(product, variant)
 
       expect(page).to_not have_field "unit_value_human"
       expect(page).to have_field "variant_unit_description", with: "foo"
@@ -192,7 +198,8 @@ describe '
     product = create(:simple_product)
     variant = create(:variant, product: product)
 
-    login_as_admin_and_visit spree.admin_product_variants_path product
+    login_as_admin
+    visit spree.admin_product_variants_path product
 
     within "tr#spree_variant_#{variant.id}" do
       accept_alert do
@@ -209,7 +216,8 @@ describe '
     variant = product.variants.first
 
     # When I view the variant
-    login_as_admin_and_visit spree.admin_product_variants_path product
+    login_as_admin
+    visit spree.admin_product_variants_path product
     page.find('table.index .icon-edit').click
 
     # It should allow the display name to be changed

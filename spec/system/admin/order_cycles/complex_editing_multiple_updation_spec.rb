@@ -11,7 +11,8 @@ describe '
 
   it "Alerts for unsaved changes on general settings (/edit) page" do
     oc = create(:order_cycle)
-    login_as_admin_and_visit edit_admin_order_cycle_path(oc)
+    login_as_admin
+    visit edit_admin_order_cycle_path(oc)
 
     # Expect correct values
     expect(page).to have_field('order_cycle_name', with: oc.name)
@@ -81,7 +82,8 @@ describe '
   it "Alerts for unsaved changes on /incoming step" do
     oc = create(:order_cycle)
     oc.suppliers.first.update_attribute :name, 'farmer'
-    login_as_admin_and_visit edit_admin_order_cycle_path(oc)
+    login_as_admin
+    visit edit_admin_order_cycle_path(oc)
 
     # Go to incoming step
     click_button 'Next'
@@ -149,7 +151,8 @@ describe '
   it "Alerts for unsaved changes on /outgoing step" do
     oc = create(:order_cycle)
     oc.distributors.first.update_attribute :name, 'store'
-    login_as_admin_and_visit edit_admin_order_cycle_path(oc)
+    login_as_admin
+    visit edit_admin_order_cycle_path(oc)
 
     # Go to incoming step
     click_button 'Next'

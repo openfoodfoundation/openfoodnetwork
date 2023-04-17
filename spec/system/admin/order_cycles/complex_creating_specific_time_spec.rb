@@ -52,7 +52,8 @@ describe '
   xit "creating an order cycle with full interface", retry: 3 do
     # pending issue #10042, see below
     ## CREATE
-    login_as_admin_and_visit admin_order_cycles_path
+    login_as_admin
+    visit admin_order_cycles_path
     click_link 'New Order Cycle'
 
     # Select a coordinator since there are two available

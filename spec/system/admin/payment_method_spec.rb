@@ -15,7 +15,8 @@ describe '
 
   describe "creating a payment method" do
     it "assigning a distributor to the payment method" do
-      login_as_admin_and_visit spree.edit_admin_general_settings_path
+      login_as_admin
+      visit spree.edit_admin_general_settings_path
       click_link 'Payment Methods'
       click_link 'New Payment Method'
 
@@ -95,13 +96,15 @@ describe '
 
     it "checking a single distributor is checked by default" do
       2.times.each { Enterprise.last.destroy }
-      login_as_admin_and_visit spree.new_admin_payment_method_path
+      login_as_admin
+      visit spree.new_admin_payment_method_path
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}",
                                  checked: true
     end
 
     it "checking more than a distributor displays no default choice" do
-      login_as_admin_and_visit spree.new_admin_payment_method_path
+      login_as_admin
+      visit spree.new_admin_payment_method_path
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}",
                                  checked: false
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[1].id}",
@@ -114,7 +117,8 @@ describe '
   it "updating a payment method" do
     payment_method = create(:payment_method, distributors: [@distributors[0]],
                                              calculator: build(:calculator_flat_rate))
-    login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method
+    login_as_admin
+    visit spree.edit_admin_payment_method_path payment_method
 
     fill_in 'payment_method_name', with: 'New PM Name'
     find(:css, "tags-input .tags input").set "member\n"
@@ -250,7 +254,11 @@ describe '
 
   describe "Setting transaction fees" do
     let!(:payment_method) { create(:payment_method) }
-    before { login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method }
+
+    before {
+      login_as_admin
+      visit spree.edit_admin_payment_method_path payment_method
+    }
 
     it "set by default 'None' as calculator" do
       expect(page).to have_select "calc_type", selected: "None"

@@ -5,7 +5,10 @@ require 'system_helper'
 describe "Mail Methods" do
   include AuthenticationHelper
 
-  before { login_as_admin_and_visit spree.edit_admin_general_settings_path }
+  before do
+    login_as_admin
+    visit spree.edit_admin_general_settings_path
+  end
 
   context "edit" do
     before { click_link "Mail Method Settings" }

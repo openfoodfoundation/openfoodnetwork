@@ -208,7 +208,8 @@ describe '
     shipping_category = create(:shipping_category)
     taxon = create(:taxon)
 
-    login_as_admin_and_visit spree.admin_products_path
+    login_as_admin
+    visit spree.admin_products_path
 
     find("a", text: "NEW PRODUCT").click
     expect(page).to have_content 'NEW PRODUCT'
@@ -528,7 +529,8 @@ describe '
     p1 = FactoryBot.create(:simple_product, name: "product1", supplier: s1)
     p2 = FactoryBot.create(:simple_product, name: "product2", supplier: s2)
 
-    login_as_admin_and_visit spree.admin_products_path
+    login_as_admin
+    visit spree.admin_products_path
 
     select2_select s1.name, from: "producer_filter"
     apply_filters
@@ -605,7 +607,8 @@ describe '
       let!(:v2) { p2.variants.first }
 
       before do
-        login_as_admin_and_visit spree.admin_products_path
+        login_as_admin
+        visit spree.admin_products_path
       end
 
       it "shows an edit button for products, which takes the user to the standard edit page for that product" do
@@ -678,7 +681,8 @@ describe '
         p2 = FactoryBot.create(:product, name: "P2")
         p3 = FactoryBot.create(:product, name: "P3")
 
-        login_as_admin_and_visit spree.admin_products_path
+        login_as_admin
+        visit spree.admin_products_path
 
         expect(page).to have_selector "a.clone-product", count: 3
 
@@ -702,7 +706,8 @@ describe '
     describe "using column display dropdown" do
       it "shows a column display dropdown, which shows a list of columns when clicked" do
         FactoryBot.create(:simple_product)
-        login_as_admin_and_visit spree.admin_products_path
+        login_as_admin
+        visit spree.admin_products_path
 
         toggle_columns "Available On"
 
@@ -729,7 +734,8 @@ describe '
         p1 = FactoryBot.create(:simple_product, name: "product1", supplier: s1)
         p2 = FactoryBot.create(:simple_product, name: "product2", supplier: s2)
 
-        login_as_admin_and_visit spree.admin_products_path
+        login_as_admin
+        visit spree.admin_products_path
 
         # Page shows the filter controls
         expect(page).to have_select "producer_filter", visible: false
@@ -785,7 +791,7 @@ describe '
       @enterprise_user.enterprise_roles.build(enterprise: supplier_managed2).save
       @enterprise_user.enterprise_roles.build(enterprise: distributor_managed).save
 
-      login_to_admin_as @enterprise_user
+      login_as @enterprise_user
     end
 
     it "shows only products that I supply" do
@@ -888,7 +894,8 @@ describe '
     let!(:product) { create(:simple_product, name: "Carrots") }
 
     it "displays product images and image upload modal" do
-      login_as_admin_and_visit spree.admin_products_path
+      login_as_admin
+      visit spree.admin_products_path
 
       within "table#listing_products tr#p_#{product.id}" do
         # Displays product images

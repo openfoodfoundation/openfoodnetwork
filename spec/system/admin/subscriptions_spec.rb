@@ -693,7 +693,8 @@ describe 'Subscriptions' do
         expect(page).to have_selector "#subscription-line-items .item", count: 4
 
         # Delete an existing product
-        login_as_admin_and_visit spree.admin_products_path
+        login_as_admin
+        visit spree.admin_products_path
         within "#p_#{shop_product2.id}" do
           accept_alert { page.find("[data-powertip=Remove]").click }
         end

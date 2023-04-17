@@ -21,7 +21,8 @@ describe "Shipping Categories" do
 
   context 'user adds a new shipping category with temperature control' do
     it 'user sees new shipping category with temperature control' do
-      login_as_admin_and_visit spree.admin_shipping_categories_path
+      login_as_admin
+      visit spree.admin_shipping_categories_path
       click_link "New Shipping Category"
 
       fill_in "shipping_category_name", with: "freeze"

@@ -20,7 +20,8 @@ describe '
     oc_outgoing = create(:simple_order_cycle, coordinator: c, distributors: [c])
 
     # When I edit the first order cycle, the exchange should appear as incoming
-    login_as_admin_and_visit admin_order_cycle_incoming_path(oc_incoming)
+    login_as_admin
+    visit admin_order_cycle_incoming_path(oc_incoming)
     expect(page).to have_selector 'table.exchanges tr.supplier'
     visit admin_order_cycle_outgoing_path(oc_incoming)
     expect(page).not_to have_selector 'table.exchanges tr.distributor'

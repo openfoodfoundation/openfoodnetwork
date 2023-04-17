@@ -6,7 +6,8 @@ describe "General Settings" do
   include AuthenticationHelper
 
   before do
-    login_as_admin_and_visit spree.admin_dashboard_path
+    login_as_admin
+    visit spree.admin_dashboard_path
     click_link "Configuration"
     click_link "General Settings"
   end

@@ -94,7 +94,8 @@ distributors: [distributor4, distributor5]) }
 
     describe "filters" do
       before do
-        login_as_admin_and_visit spree.admin_orders_path
+        login_as_admin
+        visit spree.admin_orders_path
       end
 
       it "order cycles appear in descending order by close date on orders page" do
@@ -237,7 +238,8 @@ distributors: [distributor4, distributor5]) }
           order3.update!(completed_at: Time.zone.now - 3.weeks)
           order4.update!(completed_at: Time.zone.now - 4.weeks)
           order5.update!(completed_at: Time.zone.now - 5.weeks)
-          login_as_admin_and_visit spree.admin_orders_path
+          login_as_admin
+          visit spree.admin_orders_path
         end
         it "orders by completion date" do
           find("a", text: 'COMPLETED AT').click # sets ascending ordering
@@ -257,7 +259,8 @@ distributors: [distributor4, distributor5]) }
           order3.update!(number: "R444444444")
           order4.update!(number: "R333333333")
           order5.update!(number: "R222222222")
-          login_as_admin_and_visit spree.admin_orders_path
+          login_as_admin
+          visit spree.admin_orders_path
         end
 
         it "orders by order number" do
@@ -278,7 +281,8 @@ distributors: [distributor4, distributor5]) }
           order3.update!(state: "complete")
           order4.update!(state: "cart")
           order5.cancel
-          login_as_admin_and_visit spree.admin_orders_path
+          login_as_admin
+          visit spree.admin_orders_path
           uncheck 'Only show complete orders'
           page.find('.filter-actions .button.icon-search').click
         end
@@ -300,7 +304,8 @@ distributors: [distributor4, distributor5]) }
           Spree::Payment.where(order_id: order2.id).first.update!(amount: 50.0)
           Spree::Payment.where(order_id: order3.id).first.update!(amount: 100.0)
           Spree::Payment.where(order_id: order4.id).first.update!(amount: 10.0)
-          login_as_admin_and_visit spree.admin_orders_path
+          login_as_admin
+          visit spree.admin_orders_path
         end
 
         it "orders by payment state" do
@@ -317,7 +322,8 @@ distributors: [distributor4, distributor5]) }
           Spree::Payment.where(order_id: order3.id).first.update!(amount: 100.0)
           Spree::Payment.where(order_id: order4.id).first.update!(amount: 10.0)
           order2.ship
-          login_as_admin_and_visit spree.admin_orders_path
+          login_as_admin
+          visit spree.admin_orders_path
         end
 
         it "orders by shipment state" do
@@ -334,7 +340,8 @@ distributors: [distributor4, distributor5]) }
           order3.update!(email: "ghi@ghi.com")
           order4.update!(email: "def@def.com")
           order5.update!(email: "abc@abc.com")
-          login_as_admin_and_visit spree.admin_orders_path
+          login_as_admin
+          visit spree.admin_orders_path
         end
 
         it "orders by customer email" do
@@ -355,7 +362,8 @@ distributors: [distributor4, distributor5]) }
           billing_address3.update!(lastname: "Duchess")
           billing_address4.update!(lastname: "Cheshire Cat")
           billing_address5.update!(lastname: "Alice")
-          login_as_admin_and_visit spree.admin_orders_path
+          login_as_admin
+          visit spree.admin_orders_path
         end
 
         it "orders by last name" do
@@ -380,7 +388,8 @@ distributors: [distributor4, distributor5]) }
           order3.save
           order4.save
           order5.save
-          login_as_admin_and_visit spree.admin_orders_path
+          login_as_admin
+          visit spree.admin_orders_path
         end
 
         it "orders by order total" do
@@ -398,7 +407,8 @@ distributors: [distributor4, distributor5]) }
 
     context "select/unselect all orders" do
       before do
-        login_as_admin_and_visit spree.admin_orders_path
+        login_as_admin
+        visit spree.admin_orders_path
       end
 
       it "by clicking on the checkbox in the table header" do
@@ -424,7 +434,8 @@ distributors: [distributor4, distributor5]) }
     context "bulk actions" do
       context "as a super admin" do
         before do
-          login_as_admin_and_visit spree.admin_orders_path
+          login_as_admin
+          visit spree.admin_orders_path
         end
 
         context "bulk print invoices" do
@@ -539,7 +550,7 @@ distributors: [distributor4, distributor5]) }
 
       context "for a hub manager" do
         before do
-          login_to_admin_as owner2
+          login_as owner2
           visit spree.admin_orders_path
         end
 
@@ -579,7 +590,8 @@ distributors: [distributor4, distributor5]) }
 
     context "pagination" do
       before do
-        login_as_admin_and_visit spree.admin_orders_path
+        login_as_admin
+        visit spree.admin_orders_path
       end
 
       it "displays pagination options" do
@@ -603,7 +615,8 @@ distributors: [distributor4, distributor5]) }
       end
 
       it "capture payment" do
-        login_as_admin_and_visit spree.admin_orders_path
+        login_as_admin
+        visit spree.admin_orders_path
         expect(page).to have_current_path spree.admin_orders_path
 
         # click the 'capture' link for the order
@@ -621,7 +634,8 @@ distributors: [distributor4, distributor5]) }
 
       it "ship order from the orders index page" do
         order.payments.first.capture!
-        login_as_admin_and_visit spree.admin_orders_path
+        login_as_admin
+        visit spree.admin_orders_path
 
         page.find("[data-powertip=Ship]").click
 
@@ -638,7 +652,8 @@ distributors: [distributor4, distributor5]) }
                                                         order_cycle: order_cycle,
                                                         line_items_count: 1)
 
-      login_as_admin_and_visit spree.admin_orders_path
+      login_as_admin
+      visit spree.admin_orders_path
       uncheck 'Only show complete orders'
       page.find('a.icon-search').click
 
@@ -677,7 +692,8 @@ distributors: [distributor4, distributor5]) }
 
       empty_order = create(:order, distributor: distributor, order_cycle: order_cycle)
 
-      login_as_admin_and_visit spree.admin_orders_path
+      login_as_admin
+      visit spree.admin_orders_path
       expect(page).to have_content complete_order.number
       expect(page).to have_content empty_complete_order.number
       expect(page).to have_no_content incomplete_order.number
@@ -708,7 +724,8 @@ distributors: [distributor4, distributor5]) }
       )
     end
     before :each do
-      login_as_admin_and_visit spree.admin_orders_path
+      login_as_admin
+      visit spree.admin_orders_path
 
       # Specify each filters
       uncheck 'Only show complete orders'

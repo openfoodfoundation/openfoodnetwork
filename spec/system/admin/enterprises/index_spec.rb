@@ -11,7 +11,8 @@ describe 'Enterprises Index' do
       s = create(:supplier_enterprise)
       d = create(:distributor_enterprise)
 
-      login_as_admin_and_visit admin_enterprises_path
+      login_as_admin
+      visit admin_enterprises_path
 
       within("tr.enterprise-#{s.id}") do
         expect(page).to have_content s.name
@@ -46,7 +47,8 @@ describe 'Enterprises Index' do
 
       context "without violating rules" do
         before do
-          login_as_admin_and_visit admin_enterprises_path
+          login_as_admin
+          visit admin_enterprises_path
         end
 
         it "updates the enterprises" do
@@ -75,7 +77,8 @@ describe 'Enterprises Index' do
         before do
           second_distributor.users << manager
 
-          login_as_admin_and_visit admin_enterprises_path
+          login_as_admin
+          visit admin_enterprises_path
         end
 
         it "does not update the enterprises and displays errors" do

@@ -7,7 +7,8 @@ describe "Tax Categories" do
   include WebHelper
 
   before(:each) do
-    login_as_admin_and_visit spree.edit_admin_general_settings_path
+    login_as_admin
+    visit spree.edit_admin_general_settings_path
   end
 
   context "admin visiting tax categories list" do

@@ -22,6 +22,7 @@ describe '
   end
 
   it "creating a new enterprise" do
+    admin = create(:admin_user)
     eg1 = create(:enterprise_group, name: 'eg1')
     eg2 = create(:enterprise_group, name: 'eg2')
     payment_method = create(:payment_method)
@@ -29,7 +30,7 @@ describe '
     enterprise_fee = create(:enterprise_fee)
 
     # Navigating
-    admin = login_as_admin
+    login_as admin
     visit '/admin/enterprises'
     click_link 'New Enterprise'
 
@@ -255,7 +256,8 @@ describe '
       s = create(:supplier_enterprise)
 
       # When I go to its properties page
-      login_as_admin_and_visit admin_enterprises_path
+      login_as_admin
+      visit admin_enterprises_path
       within(".enterprise-#{s.id}") { click_link 'Properties' }
 
       # And I create a property
@@ -278,7 +280,8 @@ describe '
       s.producer_properties.create! property_name: 'Certified Organic', value: 'NASAA 12345'
 
       # When I go to its properties page
-      login_as_admin_and_visit main_app.admin_enterprise_producer_properties_path(s)
+      login_as_admin
+      visit main_app.admin_enterprise_producer_properties_path(s)
 
       # And I update the property
       fill_in 'enterprise_producer_properties_attributes_0_property_name', with: "Biodynamic"
@@ -300,7 +303,8 @@ describe '
       pp = s.producer_properties.create! property_name: 'Certified Organic', value: 'NASAA 12345'
 
       # When I go to its properties page
-      login_as_admin_and_visit main_app.admin_enterprise_producer_properties_path(s)
+      login_as_admin
+      visit main_app.admin_enterprise_producer_properties_path(s)
 
       # And I remove the property
       expect(page).to have_field 'enterprise_producer_properties_attributes_0_property_name',
@@ -549,7 +553,8 @@ describe '
 
     describe "check users tab" do
       before do
-        login_as_admin_and_visit edit_admin_enterprise_path(distributor1)
+        login_as_admin
+        visit edit_admin_enterprise_path(distributor1)
         within ".side_menu" do
           click_link 'Users'
         end

@@ -10,7 +10,7 @@ describe "Orders And Fulfillment" do
     let(:current_user) { create(:admin_user) }
 
     before do
-      login_to_admin_as(current_user)
+      login_as(current_user)
       visit admin_reports_path
     end
 
@@ -553,7 +553,7 @@ describe "Orders And Fulfillment" do
             click_button 'Go'
 
             logout
-            login_to_admin_as(current_user)
+            login_as(current_user)
             visit admin_reports_path
 
             click_link report_title
@@ -573,7 +573,7 @@ describe "Orders And Fulfillment" do
             click_button 'Go'
 
             logout
-            login_to_admin_as(current_user)
+            login_as(current_user)
             visit admin_reports_path
 
             click_link "Report"

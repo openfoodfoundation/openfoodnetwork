@@ -48,7 +48,8 @@ xdescribe '
     distributor_fee2 = create(:enterprise_fee, enterprise: distributor, name: 'Distributor fee 2')
 
     # When I go to its edit page
-    login_as_admin_and_visit admin_order_cycles_path
+    login_as_admin
+    visit admin_order_cycles_path
     within "tr.order-cycle-#{oc.id}" do
       find("a.edit-order-cycle").click
     end

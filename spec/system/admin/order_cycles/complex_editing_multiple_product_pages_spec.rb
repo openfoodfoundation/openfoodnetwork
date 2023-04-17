@@ -18,7 +18,8 @@ describe '
     before do
       stub_const("#{Api::V0::ExchangeProductsController}::DEFAULT_PER_PAGE", 1)
 
-      login_as_admin_and_visit admin_order_cycle_incoming_path(order_cycle)
+      login_as_admin
+      visit admin_order_cycle_incoming_path(order_cycle)
       expect(page).to have_content "1 / 2 selected"
 
       page.find("tr.supplier-#{supplier_enterprise.id} td.products").click

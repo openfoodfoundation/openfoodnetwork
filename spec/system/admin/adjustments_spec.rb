@@ -26,7 +26,8 @@ describe '
   before do
     order.finalize!
     create(:check_payment, order: order, amount: order.total)
-    login_as_admin_and_visit spree.admin_orders_path
+    login_as_admin
+    visit spree.admin_orders_path
   end
 
   it "adding taxed adjustments to an order" do
@@ -97,7 +98,8 @@ describe '
     }
     before do
       order.cancel!
-      login_as_admin_and_visit spree.edit_admin_order_path(order)
+      login_as_admin
+      visit spree.edit_admin_order_path(order)
     end
 
     it "displays adjustments" do

@@ -12,7 +12,8 @@ describe '
 
   describe "payments/new" do
     it "displays the order balance as the default payment amount" do
-      login_as_admin_and_visit spree.new_admin_order_payment_path order
+      login_as_admin
+      visit spree.new_admin_order_payment_path order
 
       expect(page).to have_content 'New Payment'
       expect(page).to have_field(:payment_amount, with: order.outstanding_balance.to_f)
@@ -30,7 +31,8 @@ describe '
     end
 
     it "renders the new payment page" do
-      login_as_admin_and_visit spree.new_admin_order_payment_path order
+      login_as_admin
+      visit spree.new_admin_order_payment_path order
 
       expect(page).to have_content 'New Payment'
     end
@@ -47,7 +49,8 @@ describe '
     end
 
     it "creates the payment, completes the order, and updates payment and shipping states" do
-      login_as_admin_and_visit spree.new_admin_order_payment_path order
+      login_as_admin
+      visit spree.new_admin_order_payment_path order
 
       expect(page).to have_content "New Payment"
 
