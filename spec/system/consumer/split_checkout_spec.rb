@@ -782,7 +782,7 @@ describe "As a consumer, I want to checkout my order" do
             end
 
             it "removes voucher" do
-              accept_confirm "Are you sure you want to remove the voucher ?" do
+              accept_confirm "Are you sure you want to remove the voucher?" do
                 click_on "Remove code"
               end
 
