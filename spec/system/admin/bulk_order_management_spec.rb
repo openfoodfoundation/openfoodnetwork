@@ -1082,6 +1082,7 @@ describe '
           expect(page).to have_no_selector "tr#li_#{li2.id}"
           expect(page).to have_selector "tr#li_#{li3.id}"
           expect(page).to have_selector "tr#li_#{li4.id}"
+          expect(page).to have_css("table#listing_orders tbody tr", count: 2)
         end
       end
 
@@ -1098,6 +1099,32 @@ describe '
           expect(page).to have_selector "tr#li_#{li2.id}"
           expect(page).to have_selector "tr#li_#{li3.id}"
           expect(page).to have_selector "tr#li_#{li4.id}"
+        end 
+      end
+
+      context "when filtering" do
+        before do
+          fill_in "quick_filter", with: li3.order.email
+          page.find('.filter-actions .button.icon-search').click
+        end
+
+        it "shows only variant filtering by email" do
+          expect(page).to have_no_selector "tr#li_#{li1.id}"
+          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).to have_selector "tr#li_#{li3.id}"
+          expect(page).to have_no_selector "tr#li_#{li4.id}"
+        end
+
+        context "clicking 'Clear Filters' button" do
+          before :each do
+            page.find('.filter-actions #clear_filters_button').click
+          end
+
+          it_behaves_like "display only group by information for selected variant"
+
+          it "but actually clears the filters" do
+            expect(page.find("input[name='quick_filter']").value).to eq("")
+          end
         end
       end
     end

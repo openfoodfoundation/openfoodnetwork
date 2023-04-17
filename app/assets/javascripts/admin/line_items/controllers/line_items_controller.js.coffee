@@ -37,7 +37,6 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.query = ''
     $scope.startDate = undefined
     $scope.endDate = undefined
-    $scope.filterByVariantId = null
     event = new CustomEvent('flatpickr:clear')
     window.dispatchEvent(event)
 
