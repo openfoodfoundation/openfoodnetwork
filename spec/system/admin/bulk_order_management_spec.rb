@@ -1054,34 +1054,38 @@ describe '
         end
       end
 
-      it "displays group buy calc box" do
-        expect(page).to have_selector "div#group_buy_calculation"
+      shared_examples "display only group by information for selected variant" do          
+        it "displays group buy calc box" do
+          expect(page).to have_selector "div#group_buy_calculation"
 
-        within "div#group_buy_calculation" do
-          expect(page).to have_text "Group Buy Unit Size"
-          expect(page).to have_text "5000 g"
-          expect(page).to have_text "Total Quantity Ordered"
-          expect(page).to have_text "4000 g"
-          expect(page).to have_text "Max Quantity Ordered"
-          expect(page).to have_text "9000 g"
-          expect(page).to have_text "Current Fulfilled Units"
-          expect(page).to have_text "0.8"
-          expect(page).to have_text "Max Fulfilled Units"
-          expect(page).to have_text "1.8"
-          expect(page).to have_selector "div.shared_resource"
-          within "div.shared_resource" do
-            expect(page).to have_selector "span", text: "Shared Resource?"
-            expect(page).to have_selector "input#shared_resource"
+          within "div#group_buy_calculation" do
+            expect(page).to have_text "Group Buy Unit Size"
+            expect(page).to have_text "5000 g"
+            expect(page).to have_text "Total Quantity Ordered"
+            expect(page).to have_text "4000 g"
+            expect(page).to have_text "Max Quantity Ordered"
+            expect(page).to have_text "9000 g"
+            expect(page).to have_text "Current Fulfilled Units"
+            expect(page).to have_text "0.8"
+            expect(page).to have_text "Max Fulfilled Units"
+            expect(page).to have_text "1.8"
+            expect(page).to have_selector "div.shared_resource"
+            within "div.shared_resource" do
+              expect(page).to have_selector "span", text: "Shared Resource?"
+              expect(page).to have_selector "input#shared_resource"
+            end
           end
+        end
+  
+        it "all line items of the same variant" do
+          expect(page).to have_no_selector "tr#li_#{li1.id}"
+          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).to have_selector "tr#li_#{li3.id}"
+          expect(page).to have_selector "tr#li_#{li4.id}"
         end
       end
 
-      it "all line items of the same variant" do
-        expect(page).to have_no_selector "tr#li_#{li1.id}"
-        expect(page).to have_no_selector "tr#li_#{li2.id}"
-        expect(page).to have_selector "tr#li_#{li3.id}"
-        expect(page).to have_selector "tr#li_#{li4.id}"
-      end
+      it_behaves_like "display only group by information for selected variant"
 
       context "clicking 'Clear' in group buy box" do
         before :each do
