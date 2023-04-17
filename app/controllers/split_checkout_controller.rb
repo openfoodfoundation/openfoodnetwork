@@ -207,7 +207,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def add_voucher
-    return unless payment_step? && params[:order] && params[:order][:voucher_code].present?
+    return unless payment_step? && params.dig(:order, :voucher_code).present?
 
     # Fetch Voucher
     voucher = Voucher.find_by(code: params[:order][:voucher_code], enterprise: @order.distributor)
