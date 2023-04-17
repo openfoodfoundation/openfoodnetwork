@@ -9,8 +9,8 @@ module Spree
       helper CheckoutHelper
 
       before_action :load_order, only: [:edit, :update, :fire, :resend,
-                                        :invoice, :print]
-      before_action :load_distribution_choices, only: [:new, :edit, :update]
+                                        :invoice, :print, :set_distribution]
+      before_action :load_distribution_choices, only: [:new, :edit, :update, :set_distribution]
 
       # Ensure that the distributor is set for an order when
       before_action :ensure_distribution, only: :new
@@ -21,9 +21,12 @@ module Spree
       def new
         @order = Order.create
         @order.created_by = spree_current_user
+        @order.generate_order_number
         @order.save
-        redirect_to spree.edit_admin_order_url(@order)
+        redirect_to spree.distribution_admin_order_path(@order)
       end
+
+      def set_distribution; end
 
       def edit
         @order.shipments.map(&:refresh_rates)
