@@ -33,7 +33,7 @@ describe "As a consumer, I want to checkout my order" do
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: fee_tax_category) }
 
   let(:free_shipping_with_required_address) {
-    create(:shipping_method, require_ship_address: true, 
+    create(:shipping_method, require_ship_address: true,
                              name: "A Free Shipping with required address")
   }
   let(:free_shipping) {
@@ -758,7 +758,8 @@ describe "As a consumer, I want to checkout my order" do
                 click_button("Apply")
 
                 expect(page).to have_content(
-                  "Your voucher value is more than your order. By using this voucher you are forfeiting the remaining value."
+                  "Your voucher value is more than your order. " \
+                  "By using this voucher you are forfeiting the remaining value."
                 )
               end
             end
