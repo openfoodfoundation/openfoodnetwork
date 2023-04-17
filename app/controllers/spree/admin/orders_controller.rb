@@ -12,8 +12,6 @@ module Spree
                                         :invoice, :print, :set_distribution]
       before_action :load_distribution_choices, only: [:new, :edit, :update, :set_distribution]
 
-      # Ensure that the distributor is set for an order when
-      before_action :ensure_distribution, only: :new
       before_action :require_distributor_abn, only: :invoice
 
       respond_to :html, :json
@@ -144,17 +142,6 @@ module Spree
                         ocs.soonest_opening +
                         ocs.closed +
                         ocs.undated
-      end
-
-      def ensure_distribution
-        unless @order
-          @order = Spree::Order.new
-          @order.generate_order_number
-          @order.save!
-        end
-        return if @order.distribution_set?
-
-        render 'set_distribution', locals: { order: @order }
       end
     end
   end
