@@ -22,6 +22,9 @@ class SplitCheckoutController < ::BaseController
   before_action :hide_ofn_navigation, only: [:edit, :update]
 
   def edit
+    #  TODO Calculate percent amount covered by the voucher for display purposes
+    @voucher_adjustment = @order.vouchers.first
+
     redirect_to_step_based_on_order unless params[:step]
     check_step if params[:step]
     recalculate_tax if params[:step] == "summary"
@@ -30,6 +33,8 @@ class SplitCheckoutController < ::BaseController
   end
 
   def update
+    return add_voucher if payment_step? and params[:order][:voucher_code]
+
     if confirm_order || update_order
       return if performed?
 
@@ -179,8 +184,28 @@ class SplitCheckoutController < ::BaseController
     selected_shipping_method.first.require_ship_address == false
   end
 
+  def add_voucher
+    # Fetch Voucher
+    voucher = Voucher.find_by(code: params[:order][:voucher_code], enterprise: @order.distributor)
+
+    if voucher.nil?
+      @order.errors.add(:voucher, I18n.t('split_checkout.errors.voucher_not_found'))
+      return render_error
+    end
+
+    # Create adjustment
+    # TODO add tax part of adjustement
+    voucher.create_adjustment(voucher.code, @order)
+
+    redirect_to checkout_step_path(:payment)
+  end
+
   def summary_step?
     params[:step] == "summary"
+  end
+
+  def payment_step?
+    params[:step] == "payment"
   end
 
   def advance_order_state

@@ -6,9 +6,12 @@
 
       .checkout-input.voucher
         .two-columns-inputs.voucher
-          = f.text_field :voucher_code, { placeholder: t("split_checkout.step2.voucher.placeholder"), class: "voucher" }
-          - # TODO: enable button when code entered
-          = f.submit t("split_checkout.step2.voucher.apply"), class: "button cancel voucher", disabled: true 
+          -if @voucher_adjustment.present?
+            = "Voucher used: #{@voucher_adjustment.label}"
+          - else
+            = f.text_field :voucher_code, { placeholder: t("split_checkout.step2.voucher.placeholder"), class: "voucher" }
+            - # TODO: enable button when code entered
+            = f.submit t("split_checkout.step2.voucher.apply"), class: "button cancel voucher", disabled: false 
         
     %div.checkout-title
       = t("split_checkout.step2.payment_method.title")

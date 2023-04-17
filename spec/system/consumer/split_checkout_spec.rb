@@ -729,6 +729,24 @@ describe "As a consumer, I want to checkout my order" do
           it "shows voucher input" do
             expect(page).to have_content "Apply voucher"
           end
+
+          describe "adding voucher to the order" do
+            context "voucher doesn't exist" do
+              it "show an error" do
+                fill_in "Enter voucher code", with: "non_code"
+                click_button("Apply")
+
+                expect(page).to have_content("Voucher Not found")
+              end
+            end
+
+            it "adds a voucher to the order" do
+              fill_in "Enter voucher code", with: voucher.code
+              click_button("Apply")
+
+              expect(page).to have_content("Voucher used: some_code")
+            end
+          end
         end
       end
 
