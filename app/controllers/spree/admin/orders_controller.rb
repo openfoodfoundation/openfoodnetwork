@@ -104,10 +104,10 @@ module Spree
       def on_update
         @order.recreate_all_fees!
 
-        unless @order.cart?
-          @order.create_tax_charge!
-          @order.update_order!
-        end
+        return if @order.cart?
+
+        @order.create_tax_charge!
+        @order.update_order!
       end
 
       def order_params
