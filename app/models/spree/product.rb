@@ -114,6 +114,7 @@ module Spree
               presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
     validates :variant_unit_name,
               presence: { if: ->(p) { p.variant_unit == 'items' } }
+    validate :validate_image_for_master
 
     attr_accessor :option_values_hash
 
@@ -473,6 +474,12 @@ module Spree
 
       requested = permalink.presence || permalink_was.presence || name.presence || 'product'
       self.permalink = create_unique_permalink(requested.parameterize)
+    end
+
+    def validate_image_for_master
+      return if master.images.all?(&:valid?)
+
+      errors.add(:base, I18n.t('spree.admin.products.image_not_processable'))
     end
   end
 end

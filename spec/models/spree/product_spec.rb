@@ -460,6 +460,25 @@ module Spree
           expect(product).not_to be_valid
         end
       end
+
+      describe "#validate_image_for_master" do
+        let(:product) { build_stubbed(:simple_product) }
+
+        context "when the image attached to the master variant is invalid" do
+          before { product.master.images.new.errors.add(:image_not_processable, "invalid") }
+
+          it "adds an error message to the base object" do
+            expect(product).not_to be_valid
+            expect(product.errors[:base]).to include('Image attachment is not a valid image.')
+          end
+        end
+
+        context "when master variant is valid" do
+          it "returns true" do
+            expect(product).to be_valid
+          end
+        end
+      end
     end
 
     describe "callbacks" do
