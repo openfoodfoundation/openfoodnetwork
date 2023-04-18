@@ -34,12 +34,7 @@ module Spree
       end
 
       def update
-        @order.recreate_all_fees!
-
-        unless @order.cart?
-          @order.create_tax_charge!
-          @order.update_order!
-        end
+        on_update
 
         if params[:set_distribution_step] && @order.update(order_params)
           return redirect_to spree.admin_order_customer_path(@order)
@@ -105,6 +100,15 @@ module Spree
       end
 
       private
+
+      def on_update
+        @order.recreate_all_fees!
+
+        unless @order.cart?
+          @order.create_tax_charge!
+          @order.update_order!
+        end
+      end
 
       def order_params
         return params[:order] if params[:order].blank?
