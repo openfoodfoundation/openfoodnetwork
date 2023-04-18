@@ -70,7 +70,7 @@
       %h6.text-center{ 'ng-hide' => 'sharedResource' } {{ selectedUnitsVariant.full_name }}
     .three.columns
       %h6.text-right
-        %a{ :href => '#', 'ng-click' => 'selectedUnitsVariant = {};selectedUnitsProduct = {};sharedResource=false;' }= t('admin.clear')
+        %a{ :href => '#', 'ng-click' => 'resetSelectedUnitsVariant()' }= t('admin.clear')
     %hr
     .row
       .one.columns.alpha
@@ -166,7 +166,7 @@
               = "#{t('admin.price')} (#{Spree::Money.currency_symbol})"
             %th.actions
 
-        %tr.line_item{ ng: { repeat: "line_item in filteredLineItems = ( line_items | variantFilter:selectedUnitsProduct:selectedUnitsVariant:sharedResource | orderBy:sorting.predicate:sorting.reverse )", 'class-even' => "'even'", 'class-odd' => "'odd'", attr: { id: "li_{{line_item.id}}" } } }
+        %tr.line_item{ ng: { repeat: "line_item in filteredLineItems = ( line_items | orderBy:sorting.predicate:sorting.reverse )", 'class-even' => "'even'", 'class-odd' => "'odd'", attr: { id: "li_{{line_item.id}}" } } }
           %td.bulk
             %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'line_item.checked', 'ignore-dirty' => true }
           %td.order_no{ 'ng-show' => 'columns.order_no.visible' } {{ line_item.order.number }}

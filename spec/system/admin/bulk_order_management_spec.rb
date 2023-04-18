@@ -85,13 +85,29 @@ describe '
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
                                         completed_at: Time.zone.now )
       }
+      let!(:o3) {
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.now )
+      }
+      let!(:product) {
+        create(:simple_product)
+      }
+      let!(:var1) {
+        create(:variant, product_id: product.id, display_name: "Little Fish")
+      }
+      let!(:var2) {
+        create(:variant, product_id: product.id, display_name: "Big Fish")
+      }
 
       before do
-        15.times {
-          create(:line_item_with_shipment, order: o1)
+        10.times {
+          create(:line_item_with_shipment, variant: var1, order: o2)
         }
         5.times {
-          create(:line_item_with_shipment, order: o2)
+          create(:line_item_with_shipment, variant: var2, order: o1)
+        }
+        5.times {
+          create(:line_item_with_shipment, variant: var1, order: o3)
         }
       end
 
@@ -124,6 +140,20 @@ describe '
         expect(page).to have_button("Last »", disabled: true)
         select2_select "100 per page", from: "autogen4" # should display all 20 line items
         expect(page).to have_content "20 Results found. Viewing 1 to 20."
+      end
+
+      it "clicking the product variant" do
+        visit_bulk_order_management
+        expect(page).to have_content "Little Fish", count: 10
+        expect(page).to have_content "Big Fish", count: 5
+        click_on("Little Fish") # opens BOM box
+        within "#listing_orders" do
+          expect(page).to have_content "Little Fish", count: 15
+          expect(page).not_to have_content "Big Fish"
+        end
+        find("a", text: "Clear").click # closes BOM box
+        expect(page).to have_content "Little Fish", count: 10
+        expect(page).to have_content "Big Fish", count: 5
       end
     end
 
@@ -1047,34 +1077,39 @@ describe '
         end
       end
 
-      it "displays group buy calc box" do
-        expect(page).to have_selector "div#group_buy_calculation"
+      shared_examples "display only group by information for selected variant" do          
+        it "displays group buy calc box" do
+          expect(page).to have_selector "div#group_buy_calculation"
 
-        within "div#group_buy_calculation" do
-          expect(page).to have_text "Group Buy Unit Size"
-          expect(page).to have_text "5000 g"
-          expect(page).to have_text "Total Quantity Ordered"
-          expect(page).to have_text "4000 g"
-          expect(page).to have_text "Max Quantity Ordered"
-          expect(page).to have_text "9000 g"
-          expect(page).to have_text "Current Fulfilled Units"
-          expect(page).to have_text "0.8"
-          expect(page).to have_text "Max Fulfilled Units"
-          expect(page).to have_text "1.8"
-          expect(page).to have_selector "div.shared_resource"
-          within "div.shared_resource" do
-            expect(page).to have_selector "span", text: "Shared Resource?"
-            expect(page).to have_selector "input#shared_resource"
+          within "div#group_buy_calculation" do
+            expect(page).to have_text "Group Buy Unit Size"
+            expect(page).to have_text "5000 g"
+            expect(page).to have_text "Total Quantity Ordered"
+            expect(page).to have_text "4000 g"
+            expect(page).to have_text "Max Quantity Ordered"
+            expect(page).to have_text "9000 g"
+            expect(page).to have_text "Current Fulfilled Units"
+            expect(page).to have_text "0.8"
+            expect(page).to have_text "Max Fulfilled Units"
+            expect(page).to have_text "1.8"
+            expect(page).to have_selector "div.shared_resource"
+            within "div.shared_resource" do
+              expect(page).to have_selector "span", text: "Shared Resource?"
+              expect(page).to have_selector "input#shared_resource"
+            end
           end
+        end
+  
+        it "all line items of the same variant" do
+          expect(page).to have_no_selector "tr#li_#{li1.id}"
+          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).to have_selector "tr#li_#{li3.id}"
+          expect(page).to have_selector "tr#li_#{li4.id}"
+          expect(page).to have_css("table#listing_orders tbody tr", count: 2)
         end
       end
 
-      it "all line items of the same variant" do
-        expect(page).to have_no_selector "tr#li_#{li1.id}"
-        expect(page).to have_no_selector "tr#li_#{li2.id}"
-        expect(page).to have_selector "tr#li_#{li3.id}"
-        expect(page).to have_selector "tr#li_#{li4.id}"
-      end
+      it_behaves_like "display only group by information for selected variant"
 
       context "clicking 'Clear' in group buy box" do
         before :each do
@@ -1087,6 +1122,32 @@ describe '
           expect(page).to have_selector "tr#li_#{li2.id}"
           expect(page).to have_selector "tr#li_#{li3.id}"
           expect(page).to have_selector "tr#li_#{li4.id}"
+        end 
+      end
+
+      context "when filtering" do
+        before do
+          fill_in "quick_filter", with: li3.order.email
+          page.find('.filter-actions .button.icon-search').click
+        end
+
+        it "shows only variant filtering by email" do
+          expect(page).to have_no_selector "tr#li_#{li1.id}"
+          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).to have_selector "tr#li_#{li3.id}"
+          expect(page).to have_no_selector "tr#li_#{li4.id}"
+        end
+
+        context "clicking 'Clear Filters' button" do
+          before :each do
+            page.find('.filter-actions #clear_filters_button').click
+          end
+
+          it_behaves_like "display only group by information for selected variant"
+
+          it "but actually clears the filters" do
+            expect(page.find("input[name='quick_filter']").value).to eq("")
+          end
         end
       end
     end
