@@ -3,13 +3,13 @@
     %i{ng: {class: "::hub.icon_font"}}
     %span.hub-name-listing{"ng-bind" => "::hub.name"}
 
-  .hub-localization
-    .hub-localization-item.with-gap
+  .hu-info
+    .hu-info-item.with-gap
       %span.margin-top{"ng-bind" => "::hub.address.city"}
       %span.margin-top{"ng-bind" => "::hub.address.state_name"}
       %span.margin-top{"ng-if" => "hub.distance != null && hub.distance > 0"} ({{ hub.distance / 1000 | number:0 }} km)
 
-    .hub-localization-item{"ng-if" => "::hub.active"}
+    .hu-info-item{"ng-if" => "::hub.active"}
       %a.open_closed{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
         %span.margin-top{ ng: { if: "::current()" } }
           %em= t :hubs_shopping_here
@@ -18,7 +18,7 @@
         %i.ofn-i_068-shop-reversed.show-for-medium-up
       %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
 
-    .hub-localization-item{"ng-if" => "::!hub.active"}
+    .hu-info-item{"ng-if" => "::!hub.active"}
       %a.open_closed{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
         %span.margin-top{ ng: { if: "::current()" } }
           %em= t :hubs_shopping_here
@@ -34,11 +34,11 @@
 
   %div{style: "clear: both;"}
 
-  .hub-localization
-    .hub-localization-item.with-gap
+  .hu-info
+    .hu-info-item.with-gap
       %span.margin-top{"ng-bind" => "::hub.address.city"}
       %span.margin-top{"ng-bind" => "::hub.address.state_name"}
 
-    .hub-localization-item
+    .hu-info-item
       %span.margin-top{ ng: { if: "::!current()" } }
         %em= t :hubs_profile_only
