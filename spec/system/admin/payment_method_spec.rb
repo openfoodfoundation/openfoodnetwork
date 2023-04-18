@@ -114,7 +114,8 @@ describe '
     end
 
     it "retains and displays data that was just submitted" do
-      login_as_admin_and_visit spree.edit_admin_general_settings_path
+      login_as_admin
+      visit spree.edit_admin_general_settings_path
       click_link 'Payment Methods'
       click_link 'New Payment Method'
 
@@ -391,7 +392,8 @@ describe '
     # they are fetched from the database and displayed correctly
     before do
       Spree::Preferences::Store.instance.persistence = true
-      login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method
+      login_as_admin
+      visit spree.edit_admin_payment_method_path payment_method
       fill_in "payment_method_name", with: ""
       fill_in "payment_method_description", with: "Edited description"
       uncheck "payment_method_distributor_ids_#{@distributors[0].id}"
@@ -452,7 +454,8 @@ describe '
     # they are fetched from the database and displayed correctly
     before do
       Spree::Preferences::Store.instance.persistence = true
-      login_as_admin_and_visit spree.edit_admin_payment_method_path payment_method
+      login_as_admin
+      visit spree.edit_admin_payment_method_path payment_method
       fill_in 'payment_method_name', with: ''
       fill_in 'payment_method_description', with: 'Edited description'
       uncheck "payment_method_distributor_ids_#{@distributors[0].id}"
