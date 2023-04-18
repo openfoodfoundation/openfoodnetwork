@@ -26,11 +26,11 @@ module Admin
     private
 
     def load_enterprise
-      @enterprise = Enterprise.find_by permalink: params[:enterprise_id]
+      @enterprise = Enterprise.find_by(permalink: params[:enterprise_id])
     end
 
     def permitted_resource_params
-      params.require(:voucher).permit(:code)
+      params.require(:voucher).permit(:code, :amount)
     end
   end
 end

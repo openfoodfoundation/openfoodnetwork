@@ -11,6 +11,7 @@ describe '
 
   let(:enterprise) { create(:supplier_enterprise, name: 'Feedme') }
   let(:voucher_code) { 'awesomevoucher' }
+  let(:amount) { 25 }
   let(:enterprise_user) { create(:user, enterprise_limit: 1) }
 
   before do
@@ -22,7 +23,7 @@ describe '
 
   it 'lists enterprise vouchers' do
     # Given an enterprise with vouchers
-    Voucher.create!(enterprise: enterprise, code: voucher_code)
+    Voucher.create!(enterprise: enterprise, code: voucher_code, amount: amount)
 
     # When I go to the enterprise voucher tab
     visit edit_admin_enterprise_path(enterprise)
@@ -31,7 +32,7 @@ describe '
 
     # Then I see a list of vouchers
     expect(page).to have_content voucher_code
-    expect(page).to have_content "10"
+    expect(page).to have_content amount
   end
 
   it 'creates a voucher' do
@@ -46,12 +47,13 @@ describe '
 
     # And I fill in the fields for a new voucher click save
     fill_in 'voucher_code', with: voucher_code
+    fill_in 'voucher_amount', with: amount
     click_button 'Save'
 
     # Then I should get redirect to the entreprise voucher tab and see the created voucher
     expect(page).to have_selector '.success', text: 'Voucher has been successfully created!'
     expect(page).to have_content voucher_code
-    expect(page).to have_content "10"
+    expect(page).to have_content amount
 
     voucher = Voucher.where(enterprise: enterprise, code: voucher_code).first
 
