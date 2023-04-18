@@ -13,7 +13,7 @@ $brand-colour: #f27052;
 
 // Topbar
 $topbar-height: rem-calc(64);
-$topbar-link-padding: $topbar-height / 4;
+$topbar-link-padding: $topbar-height * 0.25;
 $topbar-arrows: false;
 
 $topbar-bg: $white;

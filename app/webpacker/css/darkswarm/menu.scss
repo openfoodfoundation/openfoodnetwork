@@ -281,7 +281,7 @@ nav.top-bar {
   nav .top-bar-section {
     ul li a,
     .has-dropdown > a {
-      padding: 0 ($topbar-height / 8) !important;
+      padding: 0 ($topbar-height * 0.125) !important;
     }
   }
 }
