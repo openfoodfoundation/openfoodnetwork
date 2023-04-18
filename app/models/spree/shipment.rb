@@ -246,7 +246,7 @@ module Spree
       @tracking_url ||= shipping_method.build_tracking_url(tracking)
     end
 
-    def include?(variant)
+    def contains?(variant)
       inventory_units_for(variant).present?
     end
 

@@ -24,7 +24,7 @@ module Spree
       # do nothing - just here to satisfy the form
     end
 
-    def include?(address)
+    def contains_address?(address)
       return false unless address
 
       members.any? do |zone_member|
@@ -44,7 +44,7 @@ module Spree
     def self.match(address)
       return unless matches = includes(:zone_members).
         order('zone_members_count', 'created_at').
-        select { |zone| zone.include? address }
+        select { |zone| zone.contains_address? address }
 
       ['state', 'country'].each do |zone_kind|
         if match = matches.detect { |zone| zone_kind == zone.kind }

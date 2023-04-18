@@ -69,7 +69,8 @@ module Spree
       return 0 unless category
 
       address ||= Address.new(country_id: DefaultCountry.id)
-      rate = category.tax_rates.detect { |tax_rate| tax_rate.zone.include? address }.try(:amount)
+      rate = category.tax_rates
+        .detect { |tax_rate| tax_rate.zone.contains_address? address }.try(:amount)
 
       rate || 0
     end

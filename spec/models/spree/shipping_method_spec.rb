@@ -106,20 +106,20 @@ module Spree
       end
     end
 
-    describe "#include?" do
+    describe "#delivers_to?" do
       let(:shipping_method) { build_stubbed(:shipping_method) }
 
-      it "does not include a nil address" do
-        expect(shipping_method.include?(nil)).to be false
+      it "does not deliver to a nil address" do
+        expect(shipping_method.delivers_to?(nil)).to be false
       end
 
       it "includes an address that is not included in the zones of the shipping method" do
         address = create(:address)
         zone_mock = instance_double(Spree::Zone)
-        allow(zone_mock).to receive(:include?).with(address).and_return(false)
+        allow(zone_mock).to receive(:contains?).with(address).and_return(false)
         allow(shipping_method).to receive(:zones) { [zone_mock] }
 
-        expect(shipping_method.include?(address)).to be true
+        expect(shipping_method.delivers_to?(address)).to be true
       end
     end
 

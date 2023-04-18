@@ -53,7 +53,7 @@ module OrderManagement
       def shipping_methods(package)
         shipping_methods = package.shipping_methods
         shipping_methods.delete_if { |ship_method| !ship_method.calculator.available?(package) }
-        shipping_methods.delete_if { |ship_method| !ship_method.include?(order.ship_address) }
+        shipping_methods.delete_if { |ship_method| !ship_method.delivers_to?(order.ship_address) }
         shipping_methods.delete_if { |ship_method|
           !(ship_method.calculator.preferences[:currency].nil? ||
             ship_method.calculator.preferences[:currency] == currency)
