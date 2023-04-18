@@ -24,7 +24,15 @@ module Spree
         redirect_to spree.distribution_admin_order_path(@order)
       end
 
-      def set_distribution; end
+      def set_distribution
+        return if order_params.blank?
+
+        on_update
+
+        @order.update(order_params)
+        @order.save
+        redirect_to spree.admin_order_customer_path(@order)
+      end
 
       def edit
         @order.shipments.map(&:refresh_rates)
