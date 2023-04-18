@@ -97,6 +97,8 @@ module Spree
     validates :email, presence: true,
                       format: /\A([\w.%+\-']+)@([\w\-]+\.)+(\w{2,})\z/i,
                       if: :require_email
+    validates :order_cycle, presence: true, on: :set_distribution_step
+    validates :distributor, presence: true, on: :set_distribution_step
 
     make_permalink field: :number
 

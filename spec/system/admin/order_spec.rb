@@ -89,6 +89,28 @@ describe '
     click_button 'Update'
   end
 
+  context "can't create an order without selecting a distributor nor an order cycle" do
+    before do
+      login_as_admin
+      visit spree.admin_orders_path
+      click_link 'New Order'
+    end
+    
+    it 'shows error when distributor is not selected' do
+      click_button 'Next'
+
+      expect(page).to have_content "Order cycle can't be blank"
+      expect(page).to have_content "Distributor can't be blank"
+    end
+
+    it 'shows error when order cycle is not selected' do
+      select2_select distributor.name, from: 'order_distributor_id'
+      click_button 'Next'
+
+      expect(page).to have_content "Order cycle can't be blank"
+    end
+  end
+
   it "can add a product to an existing order" do
     login_as_admin
     visit spree.edit_admin_order_path(order)
