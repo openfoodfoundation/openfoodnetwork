@@ -14,7 +14,6 @@ Gem::Specification.new do |spec|
                      'specifications'
 
   spec.files = Dir["{app,config,lib}/**/*"] + ['README.md']
-  spec.test_files = Dir['spec/**/*']
 
   spec.add_dependency 'active_model_serializers', '~> 0.8.4'
   spec.add_dependency 'jwt', '~> 2.2'
