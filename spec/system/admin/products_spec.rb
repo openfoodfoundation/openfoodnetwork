@@ -618,7 +618,7 @@ describe '
       click_button "Create"
 
       expect(page).to have_text "Attachment has an invalid content type"
-      expect(page).to have_text "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
+      expect(page).to have_text "Attachment is not a valid image"
     end
 
     it "deleting product images" do
