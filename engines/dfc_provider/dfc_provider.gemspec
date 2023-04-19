@@ -18,4 +18,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'active_model_serializers', '~> 0.8.4'
   spec.add_dependency 'jwt', '~> 2.2'
   spec.add_dependency 'rspec', '~> 3.9'
+  spec.metadata['rubygems_mfa_required'] = 'true'
 end
