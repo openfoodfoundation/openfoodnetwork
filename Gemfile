@@ -14,11 +14,11 @@ gem "aws-sdk-s3", require: false
 gem "image_processing"
 
 gem 'activemerchant', '>= 1.78.0'
-gem 'rexml'
 gem 'angular-rails-templates', '>= 0.3.0'
 gem 'awesome_nested_set'
 gem 'ransack', '~> 2.6.0'
 gem 'responders'
+gem 'rexml'
 gem 'webpacker', '~> 5'
 
 gem 'i18n'
@@ -70,8 +70,8 @@ gem 'rswag-api'
 gem 'rswag-ui'
 
 gem 'omniauth_openid_connect'
-gem 'openid_connect', '~> 1.3'
 gem 'omniauth-rails_csrf_protection'
+gem 'openid_connect', '~> 1.3'
 
 gem 'angularjs-rails', '1.8.0'
 gem 'bugsnag'
@@ -150,6 +150,7 @@ group :test, :development do
   gem 'capybara'
   gem 'cuprite'
   gem 'database_cleaner', require: false
+  gem 'debug', '>= 1.0.0'
   gem "factory_bot_rails", '6.2.0', require: false
   gem 'fuubar', '~> 2.5.1'
   gem 'json_spec', '~> 1.1.4'
@@ -160,7 +161,6 @@ group :test, :development do
   gem 'rswag-specs'
   gem 'shoulda-matchers'
   gem 'timecop'
-  gem 'debug', '>= 1.0.0'
 end
 
 group :test do
@@ -175,10 +175,10 @@ end
 
 group :development do
   gem 'debugger-linecache'
-  gem 'rails-erd'
   gem 'foreman'
   gem 'listen'
   gem 'pry', '~> 0.13.0'
+  gem 'rails-erd'
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'spring'
