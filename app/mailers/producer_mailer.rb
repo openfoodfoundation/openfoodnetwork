@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProducerMailer < Spree::BaseMailer
+class ProducerMailer < ApplicationMailer
   include I18nHelper
 
   def order_cycle_report(producer, order_cycle)
@@ -14,7 +14,6 @@ class ProducerMailer < Spree::BaseMailer
 
       mail(
         to: @producer.contact.email,
-        from: from_address,
         subject: subject,
         reply_to: @coordinator.contact.email,
         cc: @coordinator.contact.email

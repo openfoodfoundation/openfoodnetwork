@@ -3,7 +3,7 @@
 # This mailer is configured to be the Devise mailer
 # Some methods here override Devise::Mailer methods
 module Spree
-  class UserMailer < BaseMailer
+  class UserMailer < ApplicationMailer
     include I18nHelper
 
     helper MailerHelper
@@ -16,7 +16,7 @@ module Spree
         "#{I18n.t('spree.user_mailer.reset_password_instructions.subject')}"
 
       I18n.with_locale valid_locale(user) do
-        mail(to: user.email, from: from_address, subject: subject)
+        mail(to: user.email, subject: subject)
       end
     end
 
@@ -24,7 +24,7 @@ module Spree
     def signup_confirmation(user)
       @user = user
       I18n.with_locale valid_locale(@user) do
-        mail(to: user.email, from: from_address,
+        mail(to: user.email,
              subject: t(:welcome_to) + ' ' + Spree::Config[:site_name])
       end
     end
@@ -39,7 +39,6 @@ module Spree
       I18n.with_locale valid_locale(@user) do
         subject = t('spree.user_mailer.confirmation_instructions.subject')
         mail(to: confirmation_email_address,
-             from: from_address,
              subject: subject)
       end
     end
