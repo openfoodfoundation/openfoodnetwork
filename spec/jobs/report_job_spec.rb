@@ -3,34 +3,37 @@
 require 'spec_helper'
 
 describe ReportJob do
-  let(:report_args) { [report_class, user, params, format] }
+  let(:report_args) { [report_class, user, params, format, blob] }
   let(:report_class) { Reporting::Reports::UsersAndEnterprises::Base }
   let(:user) { enterprise.owner }
   let(:enterprise) { create(:enterprise) }
   let(:params) { {} }
   let(:format) { :csv }
+  let(:blob) { ReportBlob.create_for_upload_later!("report.csv") }
 
   it "generates a report" do
-    job = ReportJob.new
-    job.perform(*report_args)
-    expect_csv_report(job)
+    job = perform_enqueued_jobs(only: ReportJob) do
+      ReportJob.perform_later(*report_args)
+    end
+    expect_csv_report
   end
 
-  it "enqueues a job for asynch processing" do
+  it "enqueues a job for async processing" do
     job = ReportJob.perform_later(*report_args)
-    expect(job.done?).to eq false
+    expect(blob.content_stored?).to eq false
 
-    # This performs the job in the same process but that's good enought for
-    # testing the job code. I hope that we can rely on the job worker.
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
-    job.retry_job
+    perform_enqueued_jobs(only: ReportJob)
 
-    expect(job.done?).to eq true
-    expect_csv_report(job)
+    expect(blob.content_stored?).to eq true
+    expect_csv_report
   end
 
-  def expect_csv_report(job)
-    table = CSV.parse(job.result)
+  def expect_csv_report
+    blob.reload
+    expect(blob.filename.to_s).to eq "report.csv"
+    expect(blob.content_type).to eq "text/csv"
+
+    table = CSV.parse(blob.result)
     expect(table[0][1]).to eq "Relationship"
     expect(table[1][1]).to eq "owns"
   end
