@@ -677,7 +677,7 @@ describe ProductImport::ProductImporter do
       let(:csv_data) {
         CSV.generate do |csv|
           csv << ["name", "display_name", "distributor", "producer", "on_hand", "price", "units"]
-          csv << ["Oats", "Porridge Oats", enterprise2.name, enterprise.name, "900", "", "500"]
+          csv << ["Oats", "Porridge Oats", enterprise2.name, enterprise.name, "900", "1.0", "500"]
         end
       }
       let(:importer) { import_data csv_data, import_into: 'inventories' }
@@ -705,7 +705,7 @@ describe ProductImport::ProductImporter do
         CSV.generate do |csv|
           csv << ["name", "distributor", "producer", "on_hand", "price", "units",
                   "variant_unit_name"]
-          csv << ["Cabbage", enterprise2.name, enterprise.name, "900", "", "1", "Whole"]
+          csv << ["Cabbage", enterprise2.name, enterprise.name, "900", "1.0", "1", "Whole"]
         end
       }
       let(:importer) { import_data csv_data, import_into: 'inventories' }

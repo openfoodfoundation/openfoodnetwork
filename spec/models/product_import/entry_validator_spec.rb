@@ -37,7 +37,9 @@ describe ProductImport::EntryValidator do
       enterprise_id: enterprise.id,
       producer: enterprise,
       producer_id: enterprise.id,
-      distributor: enterprise
+      distributor: enterprise,
+      price: "1.0",
+      on_hand: "1"
     )
   end
 
@@ -51,7 +53,9 @@ describe ProductImport::EntryValidator do
       enterprise_id: enterprise.id,
       producer: enterprise,
       producer_id: enterprise.id,
-      distributor: enterprise
+      distributor: enterprise,
+      price: "1.0",
+      on_hand: "1"
     )
   end
 
@@ -99,7 +103,7 @@ describe ProductImport::EntryValidator do
     it "validates a product" do
       entries = [potato_variant]
       entry_validator.validate_all(entries)
-      expect(potato_variant.errors.count).to eq 1
+      expect(potato_variant.errors.count).to eq 4
     end
   end
 
