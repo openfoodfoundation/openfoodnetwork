@@ -89,8 +89,8 @@ Spree::Core::Engine.routes.draw do
         post :resend
         get :invoice
         get :print
-        get :distribution, to: 'orders#set_distribution'
-        put :distribution, to: 'orders#set_distribution'
+        get :distribution
+        put :distribution
       end
 
       collection do

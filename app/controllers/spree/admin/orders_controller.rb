@@ -9,8 +9,8 @@ module Spree
       helper CheckoutHelper
 
       before_action :load_order, only: [:edit, :update, :fire, :resend,
-                                        :invoice, :print, :set_distribution]
-      before_action :load_distribution_choices, only: [:new, :edit, :update, :set_distribution]
+                                        :invoice, :print, :distribution]
+      before_action :load_distribution_choices, only: [:new, :edit, :update, :distribution]
 
       before_action :require_distributor_abn, only: :invoice
 
@@ -24,7 +24,7 @@ module Spree
         redirect_to spree.distribution_admin_order_path(@order)
       end
 
-      def set_distribution
+      def distribution
         return if order_params.blank?
 
         on_update

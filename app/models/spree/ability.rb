@@ -274,7 +274,7 @@ module Spree
           # Enterprise User can access orders that are placed inside a OC they coordinate
           order.order_cycle&.coordinated_by?(user)
       end
-      can [:admin, :bulk_management, :managed, :set_distribution], Spree::Order do
+      can [:admin, :bulk_management, :managed, :distribution], Spree::Order do
         user.admin? || user.enterprises.any?(&:is_distributor)
       end
       can [:admin, :create, :show, :poll], :invoice
