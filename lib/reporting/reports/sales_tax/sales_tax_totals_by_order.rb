@@ -137,7 +137,7 @@ module Reporting
           order(query_result_row).all_adjustments
             .tax
             .where(originator_id: tax_rate_id(query_result_row))
-            .pluck('sum(amount)').first || 0
+            .pick('sum(amount)') || 0
         end
 
         def total_incl_tax(query_result_row)

@@ -923,7 +923,6 @@ describe "As a consumer, I want to checkout my order" do
         end
 
         context "when the platform's terms of service have to be accepted" do
-
           before do
             allow(Spree::Config).to receive(:shoppers_require_tos).and_return(true)
             allow(Spree::Config).to receive(:footer_tos_url).and_return(tos_url)
@@ -975,7 +974,6 @@ describe "As a consumer, I want to checkout my order" do
         end
 
         context "when the seller's terms and the platform's terms have to be accepted" do
-
           before do
             order.distributor.update!(terms_and_conditions: shop_terms)
 

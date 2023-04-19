@@ -2,9 +2,8 @@
 #
 # These are the rules we agreed upon and we work towards.
 AllCops:
-  NewCops: disable
+  NewCops: enable
   SuggestExtensions: false
-  TargetRailsVersion: 5.0
   Exclude:
     - 'bin/**/*'
     - 'db/**/*'

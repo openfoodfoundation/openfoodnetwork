@@ -233,7 +233,7 @@ describe "Product Import" do
       end
 
       expect(page).to have_selector 'div#s2id_import_date_filter'
-      import_time = carrots.import_date.to_date.to_formatted_s(:long).gsub('  ', ' ')
+      import_time = carrots.import_date.to_date.to_fs(:long).gsub('  ', ' ')
       select2_select import_time, from: "import_date_filter"
       page.find('.button.icon-search').click
 

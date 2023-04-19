@@ -14,7 +14,6 @@ module Admin
       producers.size == 1 ? producers.first.id : nil
     end
 
-    # rubocop:disable Metrics/MethodLength
     def enterprise_side_menu_items(enterprise)
       is_shop = enterprise.sells != "none"
       show_properties = !!enterprise.is_primary_producer
@@ -58,6 +57,5 @@ module Admin
 
       { name: 'white_label', icon_class: "icon-leaf", show: true }
     end
-    # rubocop:enable Metrics/MethodLength
   end
 end
