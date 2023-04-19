@@ -29,10 +29,9 @@ module Spree
 
         on_update
 
-        @order.update(order_params)
-        return unless @order.valid?(:set_distribution_step)
+        @order.assign_attributes(order_params)
+        return unless @order.save(context: :set_distribution_step)
 
-        @order.save
         redirect_to spree.admin_order_customer_path(@order)
       end
 
