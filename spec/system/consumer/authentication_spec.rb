@@ -125,7 +125,6 @@ describe "Authentication" do
 
         describe "forgetting passwords" do
           before do
-            ActionMailer::Base.deliveries.clear
             select_login_tab "Forgot Password?"
           end
 

@@ -5,14 +5,6 @@ require 'spec_helper'
 describe Spree::UserMailer do
   let(:user) { build(:user) }
 
-  after do
-    ActionMailer::Base.deliveries.clear
-  end
-
-  before do
-    ActionMailer::Base.deliveries = []
-  end
-
   describe '#signup_confirmation' do
     it "sends email when given a user" do
       Spree::UserMailer.signup_confirmation(user).deliver_now

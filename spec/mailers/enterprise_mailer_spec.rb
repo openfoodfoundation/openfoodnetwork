@@ -6,10 +6,6 @@ describe EnterpriseMailer do
   let!(:enterprise) { create(:enterprise) }
   let!(:user) { create(:user) }
 
-  before do
-    ActionMailer::Base.deliveries = []
-  end
-
   describe "#welcome" do
     it "sends a welcome email when given an enterprise" do
       EnterpriseMailer.welcome(enterprise).deliver_now

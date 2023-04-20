@@ -153,14 +153,6 @@ describe Spree::OrderMailer do
                                      special_instructions: shipping_instructions)
     }
 
-    after do
-      ActionMailer::Base.deliveries.clear
-    end
-
-    before do
-      ActionMailer::Base.deliveries = []
-    end
-
     describe "for customers" do
       it "should send an email to the customer when given an order" do
         Spree::OrderMailer.confirm_email_for_customer(order.id).deliver_now
