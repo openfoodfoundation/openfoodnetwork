@@ -2,6 +2,7 @@
   text-transform: uppercase;
   font-size: 80%;
   font-weight: 600;
+  white-space: nowrap;
 
   &:before {
     content: '';
