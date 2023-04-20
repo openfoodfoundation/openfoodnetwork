@@ -6,7 +6,10 @@
   %section.left
     .ofn-logo
       %a{href: main_app.root_path}
-        %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}
+        - if @white_label_logo&.variable?
+          = image_tag @white_label_distributor.white_label_logo_url(:mobile)
+        - else
+          %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}
 
   %section.right{"ng-cloak" => true}
     %span.cart-span{"ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}

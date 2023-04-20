@@ -1161,6 +1161,10 @@ en:
         white_label:
           legend: "White Label"
           hide_ofn_navigation: "Hide OFN navigation"
+          upload_logo: "Logo used in shopfront"
+          remove_logo: "Remove logo"
+          remove_logo_confirm: "Are you sure you want to remove this logo?"
+          remove_logo_success: "Logo removed"
       actions:
         edit_profile: Settings
         properties: Properties

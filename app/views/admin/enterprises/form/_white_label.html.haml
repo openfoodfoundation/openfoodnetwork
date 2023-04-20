@@ -1,6 +1,23 @@
+- @object ||= enterprise
+
 .row
   .three.columns.alpha
     = f.label :hide_ofn_navigation, t('.hide_ofn_navigation')
   .three.columns
-    = f.check_box :hide_ofn_navigation
+    = f.check_box :hide_ofn_navigation, { "data-controller": "checkbox-display", "data-checkbox-display-target-id-value": "white_label_logo" }
     
+.row{id: "white_label_logo"}
+  .three.columns.alpha
+    = f.label :white_label_logo, t('.upload_logo')
+  .three.columns
+    = image_tag @object.white_label_logo_url if @object.white_label_logo.present?
+    = f.file_field :white_label_logo, accept: "image/*"
+    - if @object.white_label_logo.variable?
+      %button.button.small{ type: "button", "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "remove_logo" }
+        = t('.remove_logo')
+    
+
+- if @object.white_label_logo.variable?
+  = render ConfirmModalComponent.new(id: "remove_logo", confirm_reflexes: "click->WhiteLabel#remove_logo" ) do
+    .margin-bottom-30
+      = t('.remove_logo_confirm')
