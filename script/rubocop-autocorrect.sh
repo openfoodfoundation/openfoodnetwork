@@ -1,7 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Fixes safe cops automatically and creates a commit for each.
 #
+# Usage:
+#     ./script/rubocop-autocorrect.sh [-n 7]
+#
+# The optional parameter is passed to `head` to limit the number of iterations.
+# Use `-n -0` to remove the limit.
 
 if git add --dry-run --all | grep --quiet .; then
   echo "Dirty working tree. Please start on a fresh branch."
@@ -15,6 +20,7 @@ git commit --all --message "Regenerate Rubocop's TODO file"
 # Iterate over all safe cops:
 grep "This cop supports safe autocorrection" -A 5 .rubocop_todo.yml\
   | grep '^[A-Z]'\
+  | head "${@:1}"\
   | tr -d :\
   | while read cop; do
       echo "Trying to autocorrect safely: $cop"
