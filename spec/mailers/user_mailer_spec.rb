@@ -10,7 +10,6 @@ describe Spree::UserMailer do
   end
 
   before do
-    ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.deliveries = []
   end
 

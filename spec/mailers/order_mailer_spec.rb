@@ -158,7 +158,6 @@ describe Spree::OrderMailer do
     end
 
     before do
-      ActionMailer::Base.delivery_method = :test
       ActionMailer::Base.deliveries = []
     end
 

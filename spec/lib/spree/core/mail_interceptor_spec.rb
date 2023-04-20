@@ -15,10 +15,6 @@ describe Spree::OrderMailer do
   end
 
   context "#deliver" do
-    before do
-      ActionMailer::Base.delivery_method = :test
-    end
-
     after { ActionMailer::Base.deliveries.clear }
 
     it "should use the from address specified in the preference" do
