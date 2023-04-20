@@ -156,6 +156,33 @@ describe '
     end
   end
 
+  context "cancelling an order" do
+    let(:line_item) { create(:line_item) }
+
+    before do
+      order.line_items << line_item
+      login_as_admin  
+      visit spree.edit_admin_order_path(order)
+    end
+
+    context "when using the cancel button" do
+      before do 
+        find("#cancel_order_form").click
+      end
+
+      it_should_behave_like "Cancelling the order"
+    end
+
+    context "when using the cancel option in the dropdown" do  
+      before do 
+        find("#links-dropdown .ofn-drop-down").click
+        find('a[href$="cancel"]').click
+      end
+
+      it_should_behave_like "Cancelling the order"
+    end
+  end
+
   it "displays error when incorrect distribution for products is chosen" do
     d = create(:distributor_enterprise)
     oc = create(:simple_order_cycle, distributors: [d])
