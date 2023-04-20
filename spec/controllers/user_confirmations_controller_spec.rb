@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe UserConfirmationsController, type: :controller do
-  include OpenFoodNetwork::EmailHelper
-
   let!(:user) { create(:user) }
   let!(:confirmed_user) { create(:user, confirmed_at: nil) }
   let!(:unconfirmed_user) { create(:user, confirmed_at: nil) }
@@ -70,13 +68,11 @@ describe UserConfirmationsController, type: :controller do
     end
 
     it "sends the confirmation email" do
-      performing_deliveries do
-        expect do
-          spree_post :create, spree_user: { email: unconfirmed_user.email }
-        end.to enqueue_job ActionMailer::MailDeliveryJob
+      expect do
+        spree_post :create, spree_user: { email: unconfirmed_user.email }
+      end.to enqueue_job ActionMailer::MailDeliveryJob
 
-        expect(enqueued_jobs.last.to_s).to match "confirmation_instructions"
-      end
+      expect(enqueued_jobs.last.to_s).to match "confirmation_instructions"
     end
   end
 end

@@ -4,7 +4,6 @@ require "system_helper"
 
 describe "Managing users" do
   include AuthenticationHelper
-  include OpenFoodNetwork::EmailHelper
 
   context "as super-admin" do
     before do
@@ -152,10 +151,6 @@ describe "Managing users" do
 
     describe "resending confirmation email" do
       let(:user) { create :user, confirmed_at: nil }
-
-      around do |example|
-        performing_deliveries { example.run }
-      end
 
       it "displays success" do
         visit spree.edit_admin_user_path user

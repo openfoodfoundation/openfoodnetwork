@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe SubscriptionConfirmJob do
-  include OpenFoodNetwork::EmailHelper
-
   let(:job) { SubscriptionConfirmJob.new }
 
   describe "finding proxy_orders that are ready to be confirmed" do
@@ -239,10 +237,6 @@ describe SubscriptionConfirmJob do
         end
 
         context "when payments are processed without error" do
-          around do |example|
-            performing_deliveries { example.run }
-          end
-
           before do
             expect(payment).to receive(:process_offline!) { true }
             expect(payment).to receive(:completed?) { true }

@@ -11,7 +11,6 @@ describe Spree::OrderMailer do
   let(:message) { Spree::OrderMailer.confirm_email_for_shop(order) }
 
   before(:all) do
-    ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries.clear
   end
 
