@@ -15,7 +15,6 @@ describe "Account Settings" do
     end
 
     before do
-      setup_email
       login_as user
       visit "/account"
       find("a", text: /Account Settings/i).click

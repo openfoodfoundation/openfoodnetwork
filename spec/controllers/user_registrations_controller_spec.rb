@@ -3,12 +3,6 @@
 require 'spec_helper'
 
 describe UserRegistrationsController, type: :controller do
-  include OpenFoodNetwork::EmailHelper
-
-  before(:all) do
-    setup_email
-  end
-
   before do
     @request.env["devise.mapping"] = Devise.mappings[:spree_user]
   end

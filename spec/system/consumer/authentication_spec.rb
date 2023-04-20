@@ -5,7 +5,6 @@ require 'system_helper'
 describe "Authentication" do
   include AuthenticationHelper
   include UIComponentHelper
-  include OpenFoodNetwork::EmailHelper
 
   describe "login" do
     let(:user) { create(:user, password: "password", password_confirmation: "password") }

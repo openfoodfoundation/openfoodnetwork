@@ -84,8 +84,6 @@ describe Spree::User do
 
   context "#create" do
     it "should send a confirmation email" do
-      setup_email
-
       performing_deliveries do
         expect do
           create(:user, email: 'new_user@example.com', confirmation_sent_at: nil, confirmed_at: nil)
@@ -118,8 +116,6 @@ describe Spree::User do
 
   context "confirming email" do
     it "should send a welcome email" do
-      setup_email
-
       expect do
         create(:user, confirmed_at: nil).confirm
       end.to enqueue_job ActionMailer::MailDeliveryJob

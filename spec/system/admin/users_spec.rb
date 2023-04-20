@@ -8,7 +8,6 @@ describe "Managing users" do
 
   context "as super-admin" do
     before do
-      setup_email
       login_as_admin
     end
 

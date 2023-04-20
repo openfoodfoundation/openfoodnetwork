@@ -4,9 +4,6 @@ require 'spec_helper'
 
 describe SubscriptionMailer, type: :mailer do
   include ActionView::Helpers::SanitizeHelper
-  include OpenFoodNetwork::EmailHelper
-
-  before { setup_email }
 
   describe '#placement_email' do
     subject(:email) { SubscriptionMailer.placement_email(order, changes) }

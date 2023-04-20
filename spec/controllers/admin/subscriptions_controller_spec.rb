@@ -4,7 +4,6 @@ require 'spec_helper'
 
 describe Admin::SubscriptionsController, type: :controller do
   include AuthenticationHelper
-  include OpenFoodNetwork::EmailHelper
 
   describe 'index' do
     let!(:user) { create(:user, enterprise_limit: 10) }
@@ -676,7 +675,6 @@ describe Admin::SubscriptionsController, type: :controller do
 
             context "when at least one associate orders is 'canceled'" do
               before do
-                setup_email
                 proxy_order.cancel
               end
 

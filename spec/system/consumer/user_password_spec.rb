@@ -4,7 +4,6 @@ require "system_helper"
 
 describe "User password confirm/reset page" do
   include UIComponentHelper
-  include OpenFoodNetwork::EmailHelper
 
   let(:email) { "test@example.org" }
   let(:user) { Spree::User.create(email: email, unconfirmed_email: email, password: "secret") }

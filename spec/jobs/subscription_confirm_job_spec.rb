@@ -76,7 +76,6 @@ describe SubscriptionConfirmJob do
     end
 
     it "ignores orders that have been cancelled" do
-      setup_email
       proxy_order.order.cancel!
       expect(proxy_orders).to_not include proxy_order
     end
@@ -145,7 +144,6 @@ describe SubscriptionConfirmJob do
       OrderWorkflow.new(order).complete!
       allow(job).to receive(:send_confirmation_email).and_call_original
       allow(job).to receive(:send_payment_authorization_emails).and_call_original
-      setup_email
       expect(job).to receive(:record_order)
     end
 

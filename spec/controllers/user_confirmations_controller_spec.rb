@@ -63,8 +63,6 @@ describe UserConfirmationsController, type: :controller do
   end
 
   context "requesting confirmation instructions to be resent" do
-    before { setup_email }
-
     it "redirects the user to login" do
       spree_post :create, spree_user: { email: unconfirmed_user.email }
       expect(response).to redirect_to login_path

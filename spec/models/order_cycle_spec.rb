@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe OrderCycle do
-  include OpenFoodNetwork::EmailHelper
-
   it "should be valid when built from factory" do
     expect(build(:simple_order_cycle)).to be_valid
   end
@@ -448,9 +446,6 @@ describe OrderCycle do
       create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: oc)
     }
 
-    before do
-      setup_email
-    end
     before { order_cancelled.cancel }
 
     it "only returns items from non-cancelled orders in the OC, placed by the user at the shop" do
