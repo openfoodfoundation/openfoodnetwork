@@ -26,7 +26,8 @@ grep "This cop supports safe autocorrection" -A 5 .rubocop_todo.yml\
       echo "Trying to autocorrect safely: $cop"
       bundle exec rubocop --regenerate-todo --except "$cop"
 
-      echo "Safely autocorrect $cop\n" > .git/COMMIT_EDITMSG
+      echo "Safely autocorrect $cop" > .git/COMMIT_EDITMSG
+      echo "" >> .git/COMMIT_EDITMSG
       bundle exec rubocop --autocorrect >> .git/COMMIT_EDITMSG
       git add --all
       git commit --file .git/COMMIT_EDITMSG
