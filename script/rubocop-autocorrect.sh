@@ -9,7 +9,7 @@ if git add --dry-run --all | grep --quiet .; then
 fi
 
 # Refresh todo file so that following commits include only related changes:
-bundle exec rubocop --regenerate-todo
+bundle exec rubocop --regenerate-todo --no-auto-gen-timestamp
 git commit --all --message "Regenerate Rubocop's TODO file"
 
 # Iterate over all safe cops:
