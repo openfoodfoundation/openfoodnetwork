@@ -5,7 +5,7 @@ require 'spec_helper'
 describe OrderInvoiceComparator do
   describe '#can_generate_new_invoice?' do
     let!(:order) { create(:completed_order_with_fees) }
-    let!(:invoice){ create(:invoice, order: order) }
+    let!(:invoice){ create(:invoice, order: order, data: order.serialize_for_invoice) }
     let(:current_state_invoice){ order.current_state_invoice }
     let(:subject) {
       OrderInvoiceComparator.new.can_generate_new_invoice?(current_state_invoice, invoice)
@@ -47,7 +47,7 @@ describe OrderInvoiceComparator do
 
   describe '#can_update_latest_invoice?' do
     let!(:order) { create(:completed_order_with_fees) }
-    let!(:invoice){ create(:invoice, order: order) }
+    let!(:invoice){ create(:invoice, order: order, data: order.serialize_for_invoice) }
     let(:current_state_invoice){ order.current_state_invoice }
     let(:subject) {
       OrderInvoiceComparator.new.can_update_latest_invoice?(current_state_invoice, invoice)
