@@ -1,0 +1,82 @@
+= pdf_stylesheet_pack_tag "mail"
+
+%table{:width => "100%"}
+  %tbody
+    %tr{ valign: "top" }
+      %td{ :align => "left", colspan: 3 }
+        %h6
+          = "#{t('spree.admin.orders.invoice.issued_on')}: "
+          = l @invoice_presenter.invoice_date
+    %tr{ valign: "top" }
+      %td{ :align => "left" }
+        %h4
+          = "#{t('spree.admin.orders.invoice.tax_invoice')}: "
+          = "#{@invoice_presenter.order_number}"
+      %td{width: "10%" }
+        &nbsp;
+      %td{ :align => "right" }
+        %h4= @invoice_presenter.order_cycle.name
+    %tr{ valign: "top" }
+      %td{ align: "left", colspan: 3 }
+        - if @invoice_presenter.distributor.business_address.blank?
+          %strong= "#{t('spree.admin.orders.invoice.from')}: #{@invoice_presenter.distributor.name}"
+        - else 
+          %strong= "#{t('spree.admin.orders.invoice.from')}: #{@invoice_presenter.distributor.business_address.company}"
+        - if @invoice_presenter.distributor.abn.present?
+          %br
+          = "#{t(:abn)} #{@invoice_presenter.distributor.abn}"
+        %br
+        - if @invoice_presenter.distributor.business_address.blank?
+          = @invoice_presenter.distributor.address.full_address
+        - else
+          = @invoice_presenter.distributor.business_address.full_address
+        %br
+        = @invoice_presenter.distributor.contact.email
+    %tr{ valign: "top" }
+      %td{ colspan: 3 }
+        &nbsp;
+    %tr{ valign: "top" }
+      %td{ align: "left" }
+        %strong= "#{t('spree.admin.orders.invoice.to')}:"
+        %br
+        - if @invoice_presenter.bill_address
+          = @invoice_presenter.bill_address.full_name
+        - if @invoice_presenter.customer.code.present?
+          %br
+          = "#{t('spree.admin.orders.invoice.code')}: #{@invoice_presenter.customer.code}"
+        %br
+        - if @invoice_presenter.bill_address
+          = @invoice_presenter.bill_address.full_address
+        %br
+        - if @invoice_presenter.customer.email.present?
+          = "#{@invoice_presenter.customer.email},"
+        - if @invoice_presenter.bill_address
+          = "#{@invoice_presenter.bill_address.phone}"
+      %td
+        &nbsp;
+      %td{ align: "left", style: "border-left: .1em solid black; padding-left: 1em" }
+        %strong= "#{t('spree.admin.orders.invoice.shipping')}: #{@invoice_presenter.shipping_method.name}"
+        - if @invoice_presenter.shipping_method.require_ship_address
+          %br
+          = @invoice_presenter.ship_address.full_name
+          %br
+          = @invoice_presenter.ship_address.full_address
+          %br
+          = @invoice_presenter.ship_address.phone
+        - if @invoice_presenter.order_special_instructions.present?
+          %br
+          %br
+            %strong= t :customer_instructions
+          = @invoice_presenter.order_special_instructions
+
+
+= render 'spree/admin/orders/invoice_table3'
+
+- if @invoice_presenter.distributor.invoice_text.present?
+  %p
+    = @invoice_presenter.distributor.invoice_text
+
+= render 'spree/admin/orders/_invoice/payment'
+
+- if @invoice_presenter.order_note.present?
+  = render partial: 'spree/admin/orders/_invoice/order_note'

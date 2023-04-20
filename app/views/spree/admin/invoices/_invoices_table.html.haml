@@ -16,9 +16,9 @@
         %td.align-center.label
           = invoice.number
         %td.align-center.label
-          = invoice.data['order']['total']
+          = invoice.presenter.total
         %td.align-center.label
           = t(invoice.status)
         %td.align-center.label
-          =link_to(t(:download),invoice.status)
+          =link_to(t(:download),print_admin_order_path(@order,invoice_id: invoice.id),target: "_blank")
 

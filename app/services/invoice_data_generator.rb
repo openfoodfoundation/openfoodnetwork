@@ -59,6 +59,6 @@ class InvoiceDataGenerator
   end
 
   def old_data
-    @old_data ||= order.invoices&.last.data
+    @old_data ||= order.invoices&.last&.data
   end
 end

@@ -100,7 +100,10 @@ Spree::Core::Engine.routes.draw do
       end
 
       resources :adjustments
-      resources :invoices
+      resources :invoices, only: [:index]
+      resource :invoices, only: [] do
+        post :generate, to: :generate
+      end
 
       resources :payments do
         member do

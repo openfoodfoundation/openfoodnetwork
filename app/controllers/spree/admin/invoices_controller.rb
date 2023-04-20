@@ -7,7 +7,7 @@ module Spree
       authorize_resource class: false
 
       def index
-        @order = Spree::Order.find_by_number(params[:order_id])
+        @order = Spree::Order.find_by(number: params[:order_id])
       end
 
       def create
@@ -15,6 +15,23 @@ module Spree
         invoice_service.start_pdf_job(params[:order_ids])
 
         render json: invoice_service.id, status: :ok
+      end
+
+      def generate
+        @order = Order.find_by(number: params[:order_id])
+        if @order.can_generate_new_invoice?
+          @order.invoices.create!(
+            date: Time.zone.today,
+            number: @order.next_invoice_number,
+            data: invoice_data
+          )
+        elsif @order.can_update_latest_invoice?
+          @order.invoices.last.update!(
+            date: Time.zone.today,
+            data: invoice_data
+          )
+        end
+        redirect_back(fallback_location: spree.admin_dashboard_path)
       end
 
       def show
@@ -32,6 +49,12 @@ module Spree
         else
           render json: { created: false }, status: :unprocessable_entity
         end
+      end
+
+      protected
+
+      def invoice_data
+        @invoice_data ||= InvoiceDataGenerator.new(@order).generate
       end
     end
   end

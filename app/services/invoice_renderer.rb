@@ -24,10 +24,20 @@ class InvoiceRenderer
   attr_reader :renderer
 
   def invoice_template
-    if Spree::Config.invoice_style2?
+    if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+      invoice_presenter_template
+    elsif Spree::Config.invoice_style2?
       "spree/admin/orders/invoice2"
     else
       "spree/admin/orders/invoice"
+    end
+  end
+
+  def invoice_presenter_template
+    if Spree::Config.invoice_style2?
+      "spree/admin/orders/invoice4"
+    else
+      "spree/admin/orders/invoice3"
     end
   end
 end

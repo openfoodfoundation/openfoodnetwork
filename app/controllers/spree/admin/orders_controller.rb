@@ -99,11 +99,10 @@ module Spree
       end
 
       def print
-        # This is for testing on realtime
-        # I'll replace it later
-        data = Invoice::OrderSerializer.new(@order).serializable_hash
-        @invoice=Invoice.new(order: @order, data: data, date: Time.now.to_date)
-        @invoice_presenter= @invoice.presenter
+        if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+          @invoice = @order.invoices.find(params[:invoice_id])
+          @invoice_presenter = @invoice.presenter
+        end
         render_with_wicked_pdf InvoiceRenderer.new.args(@order)
       end
 
