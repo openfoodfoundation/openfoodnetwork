@@ -6,9 +6,22 @@ ru:
       spree/shipping_method: Способ Доставки
     attributes:
       spree/order/ship_address:
+        address1: "Адрес доставки (Улица + Номер дома)"
+        address2: "2 строка адреса доставки"
+        city: "Город адреса доставки "
+        country: "Страна доставки"
         phone: "Номер телефона"
         firstname: "Имя"
         lastname: "Фамилия"
+        zipcode: "Почтовый индекс адреса доставки"
+      spree/order/bill_address:
+        address1: "Платежный адрес (Улица + Номер дома)"
+        zipcode: "Почтовый индекс платежного адреса"
+        city: "Город адреса платежа"
+        country: "Страна платежного адреса"
+        firstname: "Имя платежного адреса"
+        lastname: "Фамилия платежного адреса"
+        phone: Телефон клиента
       spree/user:
         password: "Пароль"
         password_confirmation: "Подтверждение пароля"
@@ -409,8 +422,11 @@ ru:
       filters:
         categories:
           title: Категории
+          selected_categories: "выбрано категории %{count}"
         producers:
           title: Производители
+          selected_producers: "%{count} выбраны производители"
+        per_page: "%{count} элементов на странице"
         colums: Колонки
       columns:
         name: Название
@@ -665,6 +681,7 @@ ru:
         not_found: не найден в базе данных
         category_not_found: не соответствует разрешенным категориям. Посмотрите, какие категории выбрать на странице импорта продуктов, или проверьте, нет ли орфографических ошибок.
         not_updatable: невозможно обновить существующие товары с помощью импорта товаров
+        values_must_be_same: должно быть одинаковым для товаров с одинаковым названием
         blank: не может быть пустым
         products_no_permission: у Вас нет разрешения на управление товарами этого предприятия
         inventory_no_permission: у Вас нет разрешения на создание товарной номенклатуры этого производителя
@@ -839,6 +856,7 @@ ru:
           legend: "Адрес"
         business_details:
           legend: "Юридическая Информация"
+          upload: 'загрузить'
           abn: ИНН
           abn_placeholder: напр. 0123456789
           acn: Полное юридическое наименование
@@ -1053,8 +1071,20 @@ ru:
           email_confirmed: "Email подтверждён"
           email_not_confirmed: "Email не подтверждён"
         vouchers:
+          legend: Купоны
+          voucher_code: Код Купона
           rate: Ставка
+          label: Этикетка
+          purpose: Цель
+          expiry: Срок действия
+          use_limit: Использование/Ограничение
           customers: Клиент
+          net_value: Чистая стоимость
+          add_new: Добавить новое
+          no_voucher_yet: Купонов пока нет
+        white_label:
+          legend: "Белая Этикетка"
+          hide_ofn_navigation: "Скрыть навигацию ОСП"
       actions:
         edit_profile: Настройки
         properties: Свойства
@@ -1290,6 +1320,8 @@ ru:
           tag_rules: "Правила Меток"
           shop_preferences: "Параметры Магазина"
           users: "Пользователи"
+          vouchers: Купоны
+          white_label: "Белая Этикетка"
         enterprise_group:
           primary_details: "Основная Информация"
           users: "Пользователи"
@@ -1312,6 +1344,7 @@ ru:
       total_by_customer: Итого По Клиентам
       total_by_supplier: Всего По Поставщику
       supplier_totals: Итоговые данные Поставщика Цикла Заказа
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Итоговые данные Поставщика Цикла Заказа по Дистрибьюторам
       totals_by_supplier: Итоговые данные Дистрибьютора за Цикл Заказов по Поставщикам
       customer_totals: Итоги по Клиентам Цикла Заказа
@@ -1322,11 +1355,18 @@ ru:
       addresses: Адреса
       payment_methods: Отчет О Способах Оплаты
       delivery: Отчет О Доставке
+      sales_tax_totals_by_producer: Итоговые Суммы Налога с Продаж по Производителям
+      sales_tax_totals_by_order: Сумма Налога с Продаж по Заказу
       tax_types: Типы Налогов
       tax_rates: Налоговые Ставки
       pack_by_customer: Выборка по Клиенту
       pack_by_supplier: Выборка по Поставщику
       pack_by_product: Пакет По Продукту
+      show:
+        report_taking_longer: >
+            К сожалению, обработка этого отчета заняла слишком много времени. Он может
+            содержать много данных или мы заняты другими отчетами. Вы можете повторить
+            попытку позже.
       revenues_by_hub:
         name: Доходы По Центрам
         description: Доходы по центрам
@@ -1497,8 +1537,10 @@ ru:
         associated_subscriptions_error: Это расписание не может быть удалено, потому что оно имеет связанные подписки
     vouchers:
       new:
+        legend: Новый Купон
         back: Назад
         save: Сохранить
+        voucher_code: Код Купона
         voucher_amount: Количество
     controllers:
       enterprises:
@@ -1507,6 +1549,16 @@ ru:
         stripe_connect_fail: К сожалению, не удалось подключиться к вашей учетной записи Stripe
       stripe_connect_settings:
         resource: Конфигурация Stripe Connect
+    resend_confirmation_emails_feedback:
+      one: "Письмо с подтверждением отправлено для 1 заказа."
+      few: "Электронные письма с подтверждением отправлены для заказов %{count}."
+      many: "Электронные письма с подтверждением отправлены для заказов %{count}."
+      other: "Электронные письма с подтверждением отправлены для заказов %{count}."
+    send_invoice_feedback:
+      one: "Электронный счет-фактура отправлен за 1 заказ."
+      few: "Электронные счета-фактуры отправлены для заказов %{count}."
+      many: "Электронные счета-фактуры отправлены для заказов %{count}."
+      other: "Электронные счета-фактуры отправлены для %{count} заказов ."
   api:
     unknown_error: "Что-то пошло не так. Наша команда уже уведомлена."
     invalid_api_key: "Указан неверный API ключ (%{key})."
@@ -1523,6 +1575,10 @@ ru:
       destroy_attachment_does_not_exist: "Файл Условий и Положений не существует"
     orders:
       failed_to_update: "Не удалось обновить заказ"
+    query_param:
+      error:
+        title: Неверный параметр запроса
+        extra_fields: "Не поддерживаемые поля: %{fields}"
   checkout:
     already_ordered:
       cart: "корзина"
@@ -1817,6 +1873,7 @@ ru:
       message_html: "У вас уже есть заказ для этого цикла заказов. Проверьте %{cart}, чтобы увидеть товары, которые вы заказали ранее. Вы также можете отменять позиции, пока открыт цикл заказа."
     step1:
       contact_information:
+        title: Контактная информация
         email:
           label: Email
         phone:
@@ -1870,10 +1927,13 @@ ru:
         title: Подробности доставки
         edit: Изменить
         address: Адрес доставки
+        instructions: Инструкции
       payment_method:
         title: Способ оплаты
         edit: Изменить
+        instructions: Инструкции
       order:
+        title: Информация по заказу
         edit: Изменить
       terms_and_conditions:
         message_html: "Согласен на %{terms_and_conditions_link} продавца."
@@ -1886,6 +1946,7 @@ ru:
       submit: Завершить заказ
       cancel: Вернуться к Способу оплаты
     errors:
+      saving_failed: "Не удалось сохранить. Обновите выделенные поля. %{messages}"
       terms_not_accepted: Пожалуйста, примите Условия использования
       required: Поле не может быть пустым
       invalid_number: "Пожалуйста, введите действующий номер телефона"
@@ -2668,6 +2729,8 @@ ru:
   report_header_tax_on_delivery: "Налог на доставку (%{currency_symbol})"
   report_header_tax_on_fees: "Налог на сборы (%{currency_symbol})"
   report_header_tax_category: "Налоговая Категория"
+  report_header_tax_rate_name: "Название Налоговой Ставки"
+  report_header_tax_rate: "Ставка Налога"
   report_header_total_tax: "Общий налог (%{currency_symbol})"
   report_header_total_excl_tax: "Итого искл. налог (%{currency_symbol})"
   report_header_total_incl_tax: "Итого, вкл. налог (%{currency_symbol})"
@@ -2677,6 +2740,7 @@ ru:
   report_header_customer_code: Код Клиента
   report_header_product: Товар
   report_header_product_properties: Свойства Товара
+  report_header_product_tax_category: Категория Налога на Товар
   report_header_quantity: Количество
   report_header_max_quantity: Max Количество
   report_header_variant: Вариант
@@ -2689,6 +2753,8 @@ ru:
   report_header_supplier: Поставщик
   report_header_producer: Производитель
   report_header_producer_suburb: Город Производителя
+  report_header_producer_tax_status: Налоговый Статус Производителя
+  report_header_producer_charges_sales_tax?: Зарегистрирован НДС
   report_header_unit: Единица измерения
   report_header_group_buy_unit_quantity: Группа покупает количество единиц
   report_header_cost: Стоимость
@@ -2704,10 +2770,12 @@ ru:
   report_header_distributor_address: Адрес Дистрибьютора
   report_header_distributor_city: Город Дистрибьютора
   report_header_distributor_postcode: Почтовый индекс Дистрибьютора
+  report_header_distributor_tax_status: Налоговый Статус Дистрибьютора
   report_header_delivery_address: Адрес Доставки
   report_header_delivery_postcode: Почтовый индекс Доставки
   report_header_bulk_unit_size: Размер оптовой единицы
   report_header_weight: Вес
+  report_header_final_weight_volume: Окончательный (Вес/Объем)
   report_header_height: Высота
   report_header_width: Ширина
   report_header_depth: Глубина
@@ -2884,6 +2952,7 @@ ru:
       deleting_item_will_cancel_order: "Эта операция приведет к созданию одного или нескольких пустых заказов, которые будут отменены. Вы хотите продолжить?"
       modals:
         got_it: "Понятно"
+        confirm: "Подтвердить"
         close: "Закрыть"
         continue: "Продолжить"
         cancel: "Выход"
@@ -3081,6 +3150,11 @@ ru:
         cancel_the_order_send_cancelation_email: "Отправить клиенту электронное письмо об отмене"
         restock_item: "Restock Items: вернуть этот товар на склад"
         restock_items: "Restock Items: вернуть все товары на склад"
+        delete_line_items_html:
+          one: "Это приведет к удалению одной позиции из заказа.<br /> Вы уверены, что хотите продолжить?"
+          few: "Это приведет к удалению позиций %{count} из заказа.<br /> Вы уверены, что хотите продолжить?"
+          many: "Это приведет к удалению позиций %{count} из заказа.<br /> Вы уверены, что хотите продолжить?"
+          other: "Это приведет к удалению позиций %{count} из заказа.<br /> Вы уверены, что хотите продолжить?"
       resend_user_email_confirmation:
         resend: "Повторно отправить"
         sending: "Повторная Отправка..."
@@ -3420,6 +3494,13 @@ ru:
   first: "Первый"
   previous: "Предыдущий"
   last: "Последний"
+  webhook_endpoints:
+    create:
+      success: Конечная точка веб-хука успешно создана
+      error: Не удалось создать конечную точку веб-хука
+    destroy:
+      success: Конечная точка веб-хука успешно удалена
+      error: Не удалось удалить конечную точку веб-хука.
   spree:
     add_country: "Добавить страну"
     add_state: "Добавить область"
@@ -3460,6 +3541,8 @@ ru:
     server_error: "Ошибка сервера"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Самовывоз на ферме"
+      delivery: "Подписано, запечатано, доставлено"
     start_date: "Дата начала"
     successfully_removed: "Успешно удалено"
     taxonomy_edit: "Изменить таксономию"
@@ -3544,6 +3627,7 @@ ru:
     display_currency: "Показывать валюту"
     choose_currency: "Выбор валюты"
     mail_method_settings: "Почтовые Настройки"
+    mail_settings_notice_html: "<b>Внесенные здесь изменения будут временными</b> только для отладки и могут быть отменены в будущем.<br> Постоянные изменения можно внести, обновив секреты экземпляра и предоставив их с помощью <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . Свяжитесь с глобальной командой ОСП для получения дополнительной информации."
     general: "Основные"
     enable_mail_delivery: "Включить отправку почты"
     send_mails_as: "Отправлять Почту Как"
@@ -3592,6 +3676,7 @@ ru:
     shipping_categories: "Категории Доставки"
     new_shipping_category: "Новая Категория Доставки"
     back_to_shipping_categories: "Назад в Категории Доставки"
+    editing_shipping_category: "Редактирование Категории Доставки"
     name: "Имя"
     description: "Описание"
     type: "Тип"
@@ -3666,6 +3751,7 @@ ru:
       messages:
         included_price_validation: "не может быть выбран, если вы не установили Налоговую Зону по Умолчанию"
         blank: "не может быть пустым"
+        invalid_instagram_url: "Должно быть только имя пользователя, например the_prof"
     layouts:
       admin:
         login_nav:
@@ -3776,6 +3862,9 @@ ru:
           print_invoices: "Печать Счетов"
           cancel_orders: "Отменить Заказы"
           resend_confirmation: "Подтверждение Заказа"
+          resend_confirmation_confirm_html: "Это приведет к повторной отправке письма с подтверждением клиенту.<br /> Вы уверены, что хотите продолжить?"
+          send_invoice: "Отправить Счета"
+          send_invoice_confirm_html: "Счета клиентов будут отправлены по электронной почте для всех выбранных полных заказов.<br> Вы уверены, что хотите продолжить?"
           selected:
             zero: "Заказ не выбран"
             one: "1 заказ выбран"
@@ -3924,6 +4013,7 @@ ru:
           title: "Новый Товар"
           new_product: "Новый Товар"
           supplier: "Поставщик"
+          supplier_select_placeholder: "Выберите поставщика"
           product_name: "Название Товара"
           units: "Единица измерения"
           value: "Значение"
@@ -3969,6 +4059,9 @@ ru:
           select_and_search: "Для получения данных, выберите фильры и нажмите на %{option}."
         customer_names_message:
           customer_names_tip: "Если имена клиентов скрыты для заказов, которые вы предоставили, вы можете связаться с дистрибьютором и спросить, могут ли они обновить настройки своего магазина, чтобы их поставщики могли просматривать имена клиентов."
+        products_and_inventory:
+          all_products:
+            message: "Обратите внимание, что указанные уровни запасов взяты только из списков продуктов поставщиков. Если вы используете Товарную Номенклатуру для управления запасами, эти значения будут игнорироваться в этом отчете."
       users:
         index:
           listing_users: "Список Пользователей"
@@ -4188,6 +4281,16 @@ ru:
       api_keys:
         regenerate_key: "Пересоздать Ключ"
         title: Ключ API
+      webhook_endpoints:
+        title: Конечные точки веб-хука
+        description: События в системе могут запускать веб-хуки к внешним системам.
+        event_types:
+          order_cycle_opened: Цикл Заказа Открыт
+        event_type:
+          header: Тип события
+        url:
+          header: URL-адрес конечной точки
+          create_placeholder: Введите URL-адрес конечной точки удаленного веб-хука.
       developer_settings:
         title: Настройки Разработчика
       form:
@@ -4345,6 +4448,7 @@ ru:
     search_input:
       placeholder: Поиск
     selector_with_filter:
+      selected_items: "выбрано %{count}"
       search_placeholder: Поиск
     pagination:
       next: Следующий
