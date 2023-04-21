@@ -267,4 +267,26 @@
       }
     }
   }
+
+  .ellipsed {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+
+  .no-wrap {
+    white-space: nowrap;
+  }
+
+  .flex {
+    display: flex;
+
+    &.align-center {
+      align-items: center;
+    }
+
+    &.justify-end {
+      justify-content: flex-end;
+    }
+  }
 }
