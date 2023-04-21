@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class VoucherAdjustmentsController < ::BaseController
+class VoucherAdjustmentsController < BaseController
   include CablecarResponses
 
   def destroy
