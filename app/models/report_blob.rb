@@ -33,4 +33,8 @@ class ReportBlob < ActiveStorage::Blob
   def result
     @result ||= download
   end
+
+  def expiring_service_url
+    url(expires_in: 1.month)
+  end
 end
