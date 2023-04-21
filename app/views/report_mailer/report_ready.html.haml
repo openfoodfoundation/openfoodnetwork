@@ -1,1 +1,5 @@
-%h3 TBC
+%h3= t(".heading")
+%p
+  = t(".intro")
+%ul
+  %li= link_to(t(".link_label", name: @blob.filename), @blob.url)

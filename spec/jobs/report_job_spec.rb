@@ -40,7 +40,13 @@ describe ReportJob do
       # rspec-rails: https://github.com/rspec/rspec-rails/issues/2668
       ReportJob.perform_later(*report_args)
       perform_enqueued_jobs(only: ReportJob)
-    }.to enqueue_mail(ReportMailer, :report_ready)
+    }.to enqueue_mail(ReportMailer, :report_ready).with(
+      params: {
+        to: user.email,
+        blob: blob,
+      },
+      args: [],
+    )
   end
 
   it "triggers no email when the report is done quickly" do

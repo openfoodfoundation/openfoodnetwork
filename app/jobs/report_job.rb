@@ -13,10 +13,13 @@ class ReportJob < ApplicationJob
 
     execution_time = Time.zone.now - start_time
 
-    email_result if execution_time > NOTIFICATION_TIME
+    email_result(user, blob) if execution_time > NOTIFICATION_TIME
   end
 
-  def email_result
-    ReportMailer.report_ready.deliver_later
+  def email_result(user, blob)
+    ReportMailer.with(
+      to: user.email,
+      blob: blob,
+    ).report_ready.deliver_later
   end
 end
