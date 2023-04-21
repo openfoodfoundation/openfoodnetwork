@@ -17,10 +17,8 @@ permissions:
   contents: read
 
 jobs:
-  env:
-    runs_on: ubuntu-22.04
   knapsack_rspec_controllers:
-    runs-on: $runs_on
+    runs-on: ubuntu-22.04
     services:
       postgres:
         image: postgres:10
@@ -89,7 +87,7 @@ jobs:
           bundle exec rake knapsack_pro:rspec
 
   knapsack_rspec_models:
-    runs-on: $runs_on
+    runs-on: ubuntu-22.04
     services:
       postgres:
         image: postgres:10
@@ -158,7 +156,7 @@ jobs:
           bundle exec rake knapsack_pro:rspec
 
   knapsack_rspec_system_admin:
-    runs-on: $runs_on
+    runs-on: ubuntu-22.04
     services:
       postgres:
         image: postgres:10
@@ -236,7 +234,7 @@ jobs:
           if-no-files-found: ignore
 
   knapsack_rspec_system_consumer:
-    runs-on: $runs_on
+    runs-on: ubuntu-22.04
     services:
       postgres:
         image: postgres:10
@@ -314,7 +312,7 @@ jobs:
           if-no-files-found: ignore
 
   knapsack_rspec_engines:
-    runs-on: $runs_on
+    runs-on: ubuntu-22.04
     services:
       postgres:
         image: postgres:10
@@ -392,7 +390,7 @@ jobs:
           if-no-files-found: ignore
 
   knapsack_rspec_test_the_rest:
-    runs-on: $runs_on
+    runs-on: ubuntu-22.04
     services:
       postgres:
         image: postgres:10
@@ -462,7 +460,7 @@ jobs:
           bundle exec rake knapsack_pro:rspec
 
   non_knapsack_jest_karma:
-    runs-on: $runs_on
+    runs-on: ubuntu-22.04
     services:
       postgres:
         image: postgres:10
