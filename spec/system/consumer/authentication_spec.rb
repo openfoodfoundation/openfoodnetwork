@@ -5,7 +5,6 @@ require 'system_helper'
 describe "Authentication" do
   include AuthenticationHelper
   include UIComponentHelper
-  include OpenFoodNetwork::EmailHelper
 
   describe "login" do
     let(:user) { create(:user, password: "password", password_confirmation: "password") }
@@ -126,7 +125,6 @@ describe "Authentication" do
 
         describe "forgetting passwords" do
           before do
-            ActionMailer::Base.deliveries.clear
             select_login_tab "Forgot Password?"
           end
 

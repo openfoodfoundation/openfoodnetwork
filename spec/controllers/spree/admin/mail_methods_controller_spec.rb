@@ -24,7 +24,6 @@ describe Spree::Admin::MailMethodsController do
                                     has_spree_role?: true,
                                     locale: nil)
     allow(controller).to receive_messages(spree_current_user: user)
-    ActionMailer::Base.perform_deliveries = true
 
     expect {
       spree_post :testmail

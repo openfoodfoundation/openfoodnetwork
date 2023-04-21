@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe SubscriptionConfirmJob do
-  include OpenFoodNetwork::EmailHelper
-
   let(:job) { SubscriptionConfirmJob.new }
 
   describe "finding proxy_orders that are ready to be confirmed" do
@@ -76,7 +74,6 @@ describe SubscriptionConfirmJob do
     end
 
     it "ignores orders that have been cancelled" do
-      setup_email
       proxy_order.order.cancel!
       expect(proxy_orders).to_not include proxy_order
     end
@@ -145,7 +142,6 @@ describe SubscriptionConfirmJob do
       OrderWorkflow.new(order).complete!
       allow(job).to receive(:send_confirmation_email).and_call_original
       allow(job).to receive(:send_payment_authorization_emails).and_call_original
-      setup_email
       expect(job).to receive(:record_order)
     end
 
@@ -241,10 +237,6 @@ describe SubscriptionConfirmJob do
         end
 
         context "when payments are processed without error" do
-          around do |example|
-            performing_deliveries { example.run }
-          end
-
           before do
             expect(payment).to receive(:process_offline!) { true }
             expect(payment).to receive(:completed?) { true }

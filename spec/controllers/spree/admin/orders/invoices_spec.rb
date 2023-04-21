@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe Spree::Admin::OrdersController, type: :controller do
-  include OpenFoodNetwork::EmailHelper
-
   describe "#invoice" do
     let!(:user) { create(:user) }
     let!(:enterprise_user) { create(:user) }
@@ -54,7 +52,6 @@ describe Spree::Admin::OrdersController, type: :controller do
           before do
             allow(Spree::OrderMailer).to receive(:invoice_email) { mail_mock }
             distributor.update_attribute(:abn, "123")
-            setup_email
           end
 
           it "should allow me to send order invoices" do

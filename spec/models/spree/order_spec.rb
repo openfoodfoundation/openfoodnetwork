@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe Spree::Order do
-  include OpenFoodNetwork::EmailHelper
-
   let(:user) { build(:user, email: "spree@example.com") }
   let(:order) { build(:order, user: user) }
 
@@ -909,10 +907,6 @@ describe Spree::Order do
 
   describe "scopes" do
     describe "not_state" do
-      before do
-        setup_email
-      end
-
       it "finds only orders not in specified state" do
         o = FactoryBot.create(:completed_order_with_totals,
                               distributor: create(:distributor_enterprise))

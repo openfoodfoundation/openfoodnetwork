@@ -4,7 +4,6 @@ require 'system_helper'
 
 describe "Account Settings" do
   include AuthenticationHelper
-  include OpenFoodNetwork::EmailHelper
 
   describe "as a logged in user" do
     let(:user) do
@@ -15,7 +14,6 @@ describe "Account Settings" do
     end
 
     before do
-      setup_email
       login_as user
       visit "/account"
       find("a", text: /Account Settings/i).click
@@ -25,11 +23,9 @@ describe "Account Settings" do
     it "allows the user to update their email address" do
       fill_in 'user_email', with: 'new@email.com'
 
-      performing_deliveries do
-        expect do
-          click_button 'Update'
-        end.to enqueue_job ActionMailer::MailDeliveryJob
-      end
+      expect do
+        click_button 'Update'
+      end.to enqueue_job ActionMailer::MailDeliveryJob
 
       expect(enqueued_jobs.last.to_s).to match "new@email.com"
 

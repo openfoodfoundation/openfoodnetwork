@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe Spree::Admin::OrdersController, type: :controller do
-  include OpenFoodNetwork::EmailHelper
-
   describe "#edit" do
     let!(:order) { create(:order_with_totals_and_distribution, ship_address: create(:address)) }
 

@@ -10,18 +10,7 @@ describe Spree::OrderMailer do
   end
   let(:message) { Spree::OrderMailer.confirm_email_for_shop(order) }
 
-  before(:all) do
-    ActionMailer::Base.perform_deliveries = true
-    ActionMailer::Base.deliveries.clear
-  end
-
   context "#deliver" do
-    before do
-      ActionMailer::Base.delivery_method = :test
-    end
-
-    after { ActionMailer::Base.deliveries.clear }
-
     it "should use the from address specified in the preference" do
       Spree::Config[:mails_from] = "no-reply@foobar.com"
       message.deliver_now

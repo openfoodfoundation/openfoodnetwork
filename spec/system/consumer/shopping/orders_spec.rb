@@ -4,7 +4,6 @@ require 'system_helper'
 
 describe "Order Management" do
   include AuthenticationHelper
-  include OpenFoodNetwork::EmailHelper
 
   describe "viewing a completed order" do
     let!(:distributor) { create(:distributor_enterprise) }
@@ -148,9 +147,6 @@ describe "Order Management" do
     end
 
     context "when the distributor allows changes to be made to orders" do
-      before do
-        setup_email
-      end
       before do
         order.distributor.update(allow_order_changes: true)
       end

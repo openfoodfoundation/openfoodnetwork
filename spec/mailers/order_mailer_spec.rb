@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe Spree::OrderMailer do
-  include OpenFoodNetwork::EmailHelper
-
   describe '#confirm_email_for_customer' do
     subject(:email) { described_class.confirm_email_for_customer(order) }
 
@@ -154,17 +152,6 @@ describe Spree::OrderMailer do
       create(:order_with_line_items, distributor: distributor, bill_address: bill_address, ship_address: ship_address,
                                      special_instructions: shipping_instructions)
     }
-
-    after do
-      ActionMailer::Base.deliveries.clear
-    end
-
-    before do
-      setup_email
-      ActionMailer::Base.delivery_method = :test
-      ActionMailer::Base.perform_deliveries = true
-      ActionMailer::Base.deliveries = []
-    end
 
     describe "for customers" do
       it "should send an email to the customer when given an order" do

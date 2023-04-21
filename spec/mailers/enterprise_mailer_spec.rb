@@ -3,15 +3,8 @@
 require 'spec_helper'
 
 describe EnterpriseMailer do
-  include OpenFoodNetwork::EmailHelper
-
   let!(:enterprise) { create(:enterprise) }
   let!(:user) { create(:user) }
-
-  before do
-    ActionMailer::Base.deliveries = []
-    setup_email
-  end
 
   describe "#welcome" do
     it "sends a welcome email when given an enterprise" do

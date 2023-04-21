@@ -8,7 +8,6 @@ describe '
 ' do
   include AuthenticationHelper
   include WebHelper
-  include OpenFoodNetwork::EmailHelper
 
   context "as a site administrator" do
     before { login_to_admin_section }
@@ -150,7 +149,6 @@ create(:enterprise)
       end
 
       xit "can invite unregistered users to be managers" do
-        setup_email
         find('a.button.help-modal').click
         expect(page).to have_css '#invite-manager-modal'
 
