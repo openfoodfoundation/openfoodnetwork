@@ -88,7 +88,7 @@ describe Spree::Zone do
     end
   end
 
-  context "#include?" do
+  context "#contains_address?" do
     let(:state) { create(:state) }
     let(:country) { state.country }
     let(:address) { create(:address, country: country, state: state) }
@@ -98,7 +98,7 @@ describe Spree::Zone do
       before { country_zone.members.create(zoneable: country) }
 
       it "should be true" do
-        expect(country_zone.include?(address)).to be_truthy
+        expect(country_zone.contains_address?(address)).to be_truthy
       end
     end
 
@@ -107,7 +107,7 @@ describe Spree::Zone do
       before { state_zone.members.create(zoneable: state) }
 
       it "should be true" do
-        expect(state_zone.include?(address)).to be_truthy
+        expect(state_zone.contains_address?(address)).to be_truthy
       end
     end
   end
