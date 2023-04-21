@@ -77,7 +77,7 @@ module Admin
       assign_view_data
       if @blob
         @error = ".report_taking_longer_html"
-        @error_url = @blob.url
+        @error_url = @blob.expiring_service_url
       else
         @error = ".report_taking_longer"
         @error_url = ""

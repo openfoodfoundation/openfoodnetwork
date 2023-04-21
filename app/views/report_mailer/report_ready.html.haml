@@ -2,4 +2,4 @@
 %p
   = t(".intro")
 %ul
-  %li= link_to(t(".link_label", name: @blob.filename), @blob.url)
+  %li= link_to(t(".link_label", name: @blob.filename), @blob.expiring_service_url)
