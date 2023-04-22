@@ -3277,6 +3277,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           pending: "pending"
           resumed: "resumed"
           returned: "returned"
+          confirmation: "confirmation"
         shipment_states:
           backorder: "backorder"
           partial: "partial"
