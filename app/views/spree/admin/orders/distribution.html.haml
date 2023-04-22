@@ -17,7 +17,7 @@
   = render 'spree/shared/error_messages', :target => @order
 
 %div{"ng-app" => "admin.orders", "ng-controller" => "orderCtrl"}
-  = form_for @order, url: admin_order_url(@order), method: :put do |f|
+  = form_for @order, url: distribution_admin_order_path(@order), method: :put do |f|
     = render 'spree/admin/orders/_form/distribution_fields'
     -# This param passed to stop validation error in next page due to no line items in order yet:
     = hidden_field_tag 'suppress_error_msg', "true"

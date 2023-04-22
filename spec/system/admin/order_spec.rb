@@ -89,6 +89,62 @@ describe '
     click_button 'Update'
   end
 
+  context "can't create an order without selecting a distributor nor an order cycle" do
+    before do
+      login_as_admin
+      visit spree.admin_orders_path
+      click_link 'New Order'
+    end
+    
+    it 'shows error when distributor is not selected' do
+      click_button 'Next'
+
+      expect(page).to have_content "Order cycle can't be blank"
+      expect(page).to have_content "Distributor can't be blank"
+    end
+
+    it 'shows error when order cycle is not selected' do
+      select2_select distributor.name, from: 'order_distributor_id'
+      click_button 'Next'
+
+      expect(page).to have_content "Order cycle can't be blank"
+    end
+
+    it "doesn't show links to other steps" do
+      expect(page).not_to have_content "CUSTOMER DETAILS"
+      expect(page).not_to have_content "ORDER DETAILS"
+      expect(page).not_to have_content "PAYMENTS"
+      expect(page).not_to have_content "ADJUSTMENTS"
+    end
+  end
+
+  context "when order has a distributor and order cycle" do
+    before do
+      order.distributor = distributor
+      order.order_cycle = order_cycle
+      order.save!
+      login_as_admin
+      visit spree.distribution_admin_order_path(order)
+    end
+
+    it "can access the `/distribution` step" do
+      expect(current_path).to eq spree.distribution_admin_order_path(order)
+      expect(page).to have_content "DISTRIBUTION"
+    end
+
+    it "shows the distributor and order cycle" do
+      expect(page).to have_content distributor.name
+      expect(page).to have_content order_cycle.name
+    end
+
+    it "shows links to other steps" do
+      expect(page).to have_content "CUSTOMER DETAILS"
+      expect(page).to have_content "ORDER DETAILS"
+      expect(page).to have_content "PAYMENTS"
+      expect(page).to have_content "ADJUSTMENTS"
+    end
+  end
+
   it "can add a product to an existing order" do
     login_as_admin
     visit spree.edit_admin_order_path(order)

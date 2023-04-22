@@ -9,11 +9,9 @@ module Spree
       helper CheckoutHelper
 
       before_action :load_order, only: [:edit, :update, :fire, :resend,
-                                        :invoice, :print]
-      before_action :load_distribution_choices, only: [:new, :edit, :update]
+                                        :invoice, :print, :distribution]
+      before_action :load_distribution_choices, only: [:new, :edit, :update, :distribution]
 
-      # Ensure that the distributor is set for an order when
-      before_action :ensure_distribution, only: :new
       before_action :require_distributor_abn, only: :invoice
 
       respond_to :html, :json
@@ -21,8 +19,20 @@ module Spree
       def new
         @order = Order.create
         @order.created_by = spree_current_user
+        @order.generate_order_number
         @order.save
-        redirect_to spree.edit_admin_order_url(@order)
+        redirect_to spree.distribution_admin_order_path(@order)
+      end
+
+      def distribution
+        return if order_params.blank?
+
+        on_update
+
+        @order.assign_attributes(order_params)
+        return unless @order.save(context: :set_distribution_step)
+
+        redirect_to spree.admin_order_customer_path(@order)
       end
 
       def edit
@@ -33,12 +43,7 @@ module Spree
       end
 
       def update
-        @order.recreate_all_fees!
-
-        unless @order.cart?
-          @order.create_tax_charge!
-          @order.update_order!
-        end
+        on_update
 
         if params[:set_distribution_step] && @order.update(order_params)
           return redirect_to spree.admin_order_customer_path(@order)
@@ -105,6 +110,15 @@ module Spree
 
       private
 
+      def on_update
+        @order.recreate_all_fees!
+
+        return if @order.cart?
+
+        @order.create_tax_charge!
+        @order.update_order!
+      end
+
       def order_params
         return params[:order] if params[:order].blank?
 
@@ -141,17 +155,6 @@ module Spree
                         ocs.soonest_opening +
                         ocs.closed +
                         ocs.undated
-      end
-
-      def ensure_distribution
-        unless @order
-          @order = Spree::Order.new
-          @order.generate_order_number
-          @order.save!
-        end
-        return if @order.distribution_set?
-
-        render 'set_distribution', locals: { order: @order }
       end
     end
   end
