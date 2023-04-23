@@ -17,7 +17,12 @@ fi
 bundle exec rubocop --regenerate-todo --no-auto-gen-timestamp
 git commit --all --message "Regenerate Rubocop's TODO file"
 
-# Iterate over all safe cops:
+# Iterate over all safe cops.
+# Looking at the 5 lines following the autocorrection comment works for our
+# current todo file. If cops start to add more comment lines in the future then
+# this may break and not find those cops.
+# Alternatives include using `sed` for parsing or running rubocop in fail-fast
+# mode to find the next failing cop.
 grep "This cop supports safe autocorrection" -A 5 .rubocop_todo.yml\
   | grep '^[A-Z]'\
   | head "${@:1}"\
