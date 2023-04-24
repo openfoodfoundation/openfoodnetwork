@@ -11,5 +11,5 @@ Gem::Specification.new do |s|
   s.summary     = "Order Management domain of the OFN solution."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE.txt", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["spec/**/*"]
+  s.metadata['rubygems_mfa_required'] = 'true'
 end
