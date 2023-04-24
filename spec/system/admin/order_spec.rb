@@ -123,6 +123,7 @@ describe '
       let(:shipment) { order.shipments.first }
 
       it "and by default an Email is sent and the items are restocked" do
+        expect_any_instance_of(Spree::StockLocation).to receive(:restock).at_least(1).times
         expect do
           within(".modal") do
             click_on("OK")
@@ -133,6 +134,7 @@ describe '
       end
 
       it "and then the order is cancelled and email is not sent when unchecked" do
+        expect_any_instance_of(Spree::StockLocation).to receive(:restock).at_least(1).times
         expect do
           within(".modal") do 
             uncheck("send_cancellation_email")
@@ -144,6 +146,7 @@ describe '
       end
 
       it "and the items are not restocked when the user uncheck the checkbox to restock items" do
+        expect_any_instance_of(Spree::StockLocation).not_to receive(:restock)
         expect do
           within(".modal") do
             uncheck("restock_items")
