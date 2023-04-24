@@ -543,7 +543,10 @@ describe '
           end
 
           it 'can send invoices' do
-            click_link "Send Invoice"
+            accept_alert "An invoice for this order will be sent to the customer. "\
+                         "Are you sure you want to continue?" do
+              click_link "Send Invoice"
+            end
             expect(page).to have_content "Invoice email has been sent"
           end
         end
