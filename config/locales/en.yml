@@ -1472,7 +1472,7 @@ en:
         report_taking_longer_html: >
           This report is taking longer to process.
           It may contain a lot of data or we are busy with other reports.
-          Once it's finished, you can download it: %{link}
+          Once it's finished, we'll notify you via email.
         report_link_label: Download report (when available)
       revenues_by_hub:
         name: Revenues By Hub

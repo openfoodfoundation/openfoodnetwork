@@ -88,23 +88,6 @@ describe '
 
       perform_enqueued_jobs(only: ReportJob)
 
-      click_link "Download report"
-
-      expect(downloaded_filename).to match /customers_[0-9]+\.html/
-
-      content = File.read(downloaded_filename)
-      expect(content).to match "<th>\nFirst Name\n</th>"
-
-      # ActiveStorage links usually expire after 5 minutes.
-      # We need a longer expiry for a better user experience.
-      # Let's test if the link still works after a few hours.
-      Timecop.travel(3.hours.from_now) do
-        expect do
-          File.delete(downloaded_filename)
-          click_link "Download report"
-        end.to_not change { downloaded_filename }
-      end
-
       # We also get an email.
       perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
       email = ActionMailer::Base.deliveries.last
@@ -113,7 +96,8 @@ describe '
         href: %r"^http://test\.host/rails/active_storage/disk/.*/customers_[0-9]+\.html$"
       )
 
-      # We want to check that the emailed link works as well:
+      # ActiveStorage links usually expire after 5 minutes.
+      # But we want a longer expiry in emailed links.
       parsed_email = Capybara::Node::Simple.new(email.body.to_s)
       email_link_href = parsed_email.find(:link, "customers")[:href]
       report_link = email_link_href.sub("test.host", Rails.application.default_url_options[:host])
