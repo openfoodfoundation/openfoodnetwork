@@ -157,6 +157,36 @@ describe 'White label setting' do
 
       it_behaves_like "does not hide the OFN navigation"
     end
+
+    context "manage hide_groups_tab preference when distributor belongs to a group" do
+      let(:group) { create(:enterprise_group) }
+
+      before do
+        distributor.groups << group
+      end
+
+      context "when the preference is set to true" do
+        before do
+          distributor.update_attribute(:hide_groups_tab, true)
+        end
+
+        it "hides the groups tab" do
+          visit main_app.enterprise_shop_path(distributor)
+          expect(page).to have_no_selector "a[href='#groups']"
+        end
+      end
+
+      context "when the preference is set to false" do
+        before do
+          distributor.update_attribute(:hide_groups_tab, false)
+        end
+
+        it "shows the groups tab" do
+          visit main_app.enterprise_shop_path(distributor)
+          expect(page).to have_selector "a[href='#groups']"
+        end
+      end
+    end
   end
 
   context "manage the white_label_logo preference" do
