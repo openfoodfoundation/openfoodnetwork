@@ -53,7 +53,9 @@ describe '
       product = create(:simple_product, variant_unit: "volume", variant_unit_scale: "1")
 
       # When I create a variant on the product
-      login_as_admin_and_visit spree.admin_product_variants_path product
+      login_as_admin
+      visit spree.admin_product_variants_path product
+
       click_link 'New Variant'
 
       # Expect variant_weight to accept 3 decimal places
@@ -131,6 +133,7 @@ describe '
       # When I view the variant
       login_as_admin
       visit spree.admin_product_variants_path product
+
       page.find('table.index .icon-edit').click
 
       # Then I should not see a traditional option value field for the unit-related option value
@@ -258,7 +261,9 @@ describe '
     variant = product.variants.first
 
     # When I view the variant
-    login_as_admin_and_visit spree.admin_product_variants_path product
+    login_as_admin
+    visit spree.admin_product_variants_path product
+
     page.find('table.index .icon-edit').click
 
     # It should allow the weight to be changed
