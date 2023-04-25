@@ -7,19 +7,20 @@
       = Spree::Config[:site_name]
     = stylesheet_pack_tag 'mail'
   %body{:bgcolor => "#FFFFFF" }
-    %table.head-wrap{:bgcolor => "#f2f2f2"}
-      %tr
-        %td
-        %td.header.container
-          .content
-            %table{:bgcolor => "#f2f2f2"}
-              %tr
-                %td
-                  %img{src: ContentConfig.url_for(:footer_logo), width: "144", height: "50"}/
-                %td{:align => "right"}
-                  %h6.collapse
-                    = Spree::Config[:site_name]
-        %td
+    - unless @hide_ofn_navigation
+      %table.head-wrap{:bgcolor => "#f2f2f2"}
+        %tr
+          %td
+          %td.header.container
+            .content
+              %table{:bgcolor => "#f2f2f2"}
+                %tr
+                  %td
+                    %img{src: ContentConfig.url_for(:footer_logo), width: "144", height: "50"}/
+                  %td{:align => "right"}
+                    %h6.collapse
+                      = Spree::Config[:site_name]
+          %td
 
     %table.body-wrap
       %tr

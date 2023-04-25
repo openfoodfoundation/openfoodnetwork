@@ -11,6 +11,7 @@ class SubscriptionMailer < ApplicationMailer
   def confirmation_email(order)
     @type = 'confirmation'
     @order = order
+    @hide_ofn_navigation = @order.distributor.hide_ofn_navigation
     send_mail(order)
   end
 

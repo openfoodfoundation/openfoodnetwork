@@ -117,6 +117,10 @@ describe SubscriptionMailer, type: :mailer do
       expect(body).to include "This order was automatically placed for you"
     end
 
+    it "display the OFN header by default" do
+      expect(email.body).to include(ContentConfig.url_for(:footer_logo))
+    end
+
     describe "linking to order page" do
       let(:order_link_href) { "href=\"#{order_url(order)}\"" }
 
@@ -150,6 +154,16 @@ describe SubscriptionMailer, type: :mailer do
 
       it 'displays the payment status' do
         expect(email.body).to include('NOT PAID')
+      end
+    end
+
+    context 'when hide OFN navigation is enabled for the distributor of the order' do
+      before do
+        allow(order.distributor).to receive(:hide_ofn_navigation).and_return(true)
+      end
+
+      it 'does not display the OFN navigation' do
+        expect(email.body).to_not include(ContentConfig.url_for(:footer_logo))
       end
     end
   end
