@@ -706,6 +706,25 @@ describe '
             expect(distributor1.reload.white_label_logo_link).to eq("https://www.openfoodnetwork.org")
           end
         end
+
+        it "can check/uncheck the hide_groups_tab attribute" do
+          check "Hide groups tab in shopfront"
+          click_button 'Update'
+          expect(flash_message)
+            .to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(distributor1.reload.hide_groups_tab).to be true
+
+          visit edit_admin_enterprise_path(distributor1)
+          within(".side_menu") do
+            click_link "White Label"
+          end
+
+          uncheck "Hide groups tab in shopfront"
+          click_button 'Update'
+          expect(flash_message)
+            .to eq('Enterprise "First Distributor" has been successfully updated!')
+          expect(distributor1.reload.hide_groups_tab).to be false
+        end
       end
     end
   end
