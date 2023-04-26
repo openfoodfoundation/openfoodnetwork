@@ -63,7 +63,9 @@ table thead tr th.actions,
 table tbody tr td.actions {
   // Special for icons in the actions column
   [class*="icon-"],
-  button[class*="icon-"]:not(.disabled):not([disabled]):not(.secondary):not(.cancel) {
+  button[class*="icon-"]:not(.disabled):not([disabled]):not(.secondary):not(
+      .cancel
+    ) {
     color: $v2-blue;
     display: flex;
     justify-content: center;
