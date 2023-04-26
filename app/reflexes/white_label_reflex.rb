@@ -6,6 +6,8 @@ class WhiteLabelReflex < ApplicationReflex
 
   def remove_logo
     @enterprise.update!(white_label_logo: nil)
+    # delete the white_label_logo_link attribute as well since it has no meaning without the logo
+    @enterprise.update!(white_label_logo_link: "")
 
     f = ActionView::Helpers::FormBuilder.new(:enterprise, @enterprise, view_context, {})
 

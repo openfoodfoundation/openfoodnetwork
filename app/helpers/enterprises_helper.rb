@@ -87,4 +87,10 @@ module EnterprisesHelper
       main_app.producers_url
     end
   end
+
+  def main_logo_link(enterprise)
+    return enterprise.white_label_logo_link if enterprise&.white_label_logo_link.present?
+
+    main_app.root_path
+  end
 end

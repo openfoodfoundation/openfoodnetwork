@@ -228,6 +228,11 @@ describe 'White label setting' do
           it "does not show the OFN logo on shop page" do
             expect(page).not_to have_selector "img[src*='/default_images/ofn-logo.png']"
           end
+          it "links the logo to the default URL" do
+            within ".nav-logo .ofn-logo" do
+              expect(page).to have_selector "a[href='/']"
+            end
+          end
         end
 
         context "on shop page" do
@@ -266,6 +271,59 @@ describe 'White label setting' do
           end
 
           it_behaves_like "shows/hide the right logos"
+        end
+
+        context "and a link on this logo" do
+          before do
+            distributor.update_attribute(:white_label_logo_link, "https://www.example.com")
+          end
+
+          shared_examples "shows the right link on the logo" do
+            it "shows the white label logo link" do
+              within ".nav-logo .ofn-logo" do
+                expect(page).to_not have_selector "a[href='/']"
+                expect(page).to have_selector "a[href*='https://www.example.com']"
+              end
+            end
+          end
+
+          context "on shop page" do
+            before do
+              visit main_app.enterprise_shop_path(distributor)
+            end
+
+            it_behaves_like "shows the right link on the logo"
+          end
+
+          context "on cart page" do
+            before do
+              order.update_attribute(:state, 'cart')
+              order.line_items << create(:line_item, variant: product.variants.first)
+              set_order(order)
+              visit main_app.cart_path
+            end
+
+            it_behaves_like "shows the right link on the logo"
+          end
+
+          context "on checkout page" do
+            before do
+              order.update_attribute(:state, 'cart')
+              order.line_items << create(:line_item, variant: product.variants.first)
+              set_order(order)
+              visit checkout_path
+            end
+
+            it_behaves_like "shows the right link on the logo"
+          end
+
+          context "on order confirmation page" do
+            before do
+              visit order_path(complete_order, order_token: complete_order.token)
+            end
+
+            it_behaves_like "shows the right link on the logo"
+          end
         end
       end
     end

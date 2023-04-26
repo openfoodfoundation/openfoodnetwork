@@ -1165,6 +1165,7 @@ en:
           remove_logo: "Remove logo"
           remove_logo_confirm: "Are you sure you want to remove this logo?"
           remove_logo_success: "Logo removed"
+          white_label_logo_link_label: "Link for the logo used in shopfront"
       actions:
         edit_profile: Settings
         properties: Properties
