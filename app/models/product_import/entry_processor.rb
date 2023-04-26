@@ -90,7 +90,8 @@ module ProductImport
     end
 
     def total_saved_count
-      @products_created + @variants_created + @variants_updated + @inventory_created + @inventory_updated
+      [@products_created, @variants_created, @variants_updated,
+       @inventory_created, @inventory_updated].sum
     end
 
     def permission_by_id?(enterprise_id)
