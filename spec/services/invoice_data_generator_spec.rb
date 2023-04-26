@@ -61,7 +61,9 @@ describe InvoiceDataGenerator do
         old_variant_name = line_item.variant.display_name
         line_item.variant.update!(display_name: "NEW NAME")
 
-        expect(new_invoice_presenter.sorted_line_items.first.variant.display_name).to eq(old_variant_name)
+        expect(
+          new_invoice_presenter.sorted_line_items.first.variant.display_name
+        ).to eq(old_variant_name)
       end
     end
 

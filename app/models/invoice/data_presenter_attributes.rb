@@ -6,7 +6,7 @@ class Invoice
 
     def attributes(*attributes, prefix: nil)
       attributes.each do |attribute|
-        define_method([prefix, attribute].reject(&:blank?).join("_")) do
+        define_method([prefix, attribute].compact_blank.join("_")) do
           data&.[](attribute)
         end
       end

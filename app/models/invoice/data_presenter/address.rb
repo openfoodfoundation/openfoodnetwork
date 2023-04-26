@@ -1,27 +1,34 @@
-class Invoice::DataPresenter::Address  < Invoice::DataPresenter::Base
-  attributes :firstname, :lastname, :address1, :address2, :city, :zipcode, :company, :phone
-  attributes_with_presenter :state
-  invoice_generation_attributes :firstname, :lastname, :address1, :address2, :city, :zipcode, :company, :phone
+# frozen_string_literal: false
 
-  def full_name
-    "#{firstname} #{lastname}".strip
-  end
+class Invoice
+  class DataPresenter
+    class Address < Invoice::DataPresenter::Base
+      attributes :firstname, :lastname, :address1, :address2, :city, :zipcode, :company, :phone
+      attributes_with_presenter :state
+      invoice_generation_attributes :firstname, :lastname, :address1, :address2, :city, :zipcode,
+                                    :company, :phone
 
-  def address_part1
-    render_address([address1, address2])
-  end
+      def full_name
+        "#{firstname} #{lastname}".strip
+      end
 
-  def address_part2
-    render_address([city, zipcode, state&.name])
-  end
+      def address_part1
+        render_address([address1, address2])
+      end
 
-  def full_address
-    render_address([address1, address2, city, zipcode, state&.name])
-  end
+      def address_part2
+        render_address([city, zipcode, state&.name])
+      end
 
-  private
+      def full_address
+        render_address([address1, address2, city, zipcode, state&.name])
+      end
 
-  def render_address(address_parts)
-    address_parts.reject(&:blank?).join(', ')
+      private
+
+      def render_address(address_parts)
+        address_parts.compact_blank.join(', ')
+      end
+    end
   end
 end

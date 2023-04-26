@@ -597,9 +597,9 @@ module Spree
 
     def current_state_invoice
       Invoice.new(
-        order: self, 
-        data: serialize_for_invoice, 
-        date: Time.now.to_date,
+        order: self,
+        data: serialize_for_invoice,
+        date: Time.zone.today,
         number: invoices.count + 1
       )
     end
