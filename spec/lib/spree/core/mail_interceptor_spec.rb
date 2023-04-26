@@ -34,38 +34,5 @@ describe Spree::OrderMailer do
       @email = ActionMailer::Base.deliveries.first
       expect(@email.bcc).to eq ["bcc-foo@foobar.com"]
     end
-
-    context "when intercept_email is provided" do
-      it "should strip the bcc recipients" do
-        expect(message.bcc).to be_blank
-      end
-
-      it "should strip the cc recipients" do
-        expect(message.cc).to be_blank
-      end
-
-      it "should replace the receipient with the specified address" do
-        Spree::Config[:intercept_email] = "intercept@foobar.com"
-        message.deliver_now
-        @email = ActionMailer::Base.deliveries.first
-        expect(@email.to).to eq ["intercept@foobar.com"]
-      end
-
-      it "should modify the subject to include the original email" do
-        Spree::Config[:intercept_email] = "intercept@foobar.com"
-        message.deliver_now
-        @email = ActionMailer::Base.deliveries.first
-        expect(@email.subject).to include order.distributor.contact.email
-      end
-    end
-
-    context "when intercept_mode is not provided" do
-      it "should not modify the recipient" do
-        Spree::Config[:intercept_email] = ""
-        message.deliver_now
-        @email = ActionMailer::Base.deliveries.first
-        expect(@email.to).to eq [order.distributor.contact.email]
-      end
-    end
   end
 end

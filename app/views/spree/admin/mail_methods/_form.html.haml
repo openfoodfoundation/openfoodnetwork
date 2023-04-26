@@ -18,10 +18,3 @@
         %br/
         %span.info
           = t("spree.smtp_send_copy_to_this_addresses")
-      .field
-        = label_tag :intercept_email, t("spree.intercept_email_address")
-        %br/
-        = text_field_tag :intercept_email, Spree::Config[:intercept_email], disabled: true, class: 'fullwidth'
-        %br/
-        %span.info
-          = t("spree.intercept_email_instructions")

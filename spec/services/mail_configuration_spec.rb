@@ -21,7 +21,6 @@ describe MailConfiguration do
       expect(Spree::Config).to have_received(:[]=).with(:secure_connection_type, "None")
       expect(Spree::Config).to have_received(:[]=).with(:mails_from, "no-reply@example.com")
       expect(Spree::Config).to have_received(:[]=).with(:mail_bcc, "")
-      expect(Spree::Config).to have_received(:[]=).with(:intercept_email, "")
     end
 
     it 'initializes the mail settings' do

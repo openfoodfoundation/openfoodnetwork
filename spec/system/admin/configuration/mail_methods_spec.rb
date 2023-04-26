@@ -16,7 +16,6 @@ describe "Mail Methods" do
     it "only allows changing the mails_from setting" do
       fill_in 'mails_from', with: 'ofn@example.com'
       fill_in 'mail_bcc', with: 'bcc@example.com'
-      expect(page).to have_field('intercept_email', disabled: true)
 
       click_button 'Update'
       expect(page).to have_content('successfully updated!')
