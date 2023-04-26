@@ -27,8 +27,6 @@ module Admin
       else
         show_report
       end
-    rescue Timeout::Error
-      render_timeout_error
     end
 
     private
@@ -71,18 +69,6 @@ module Admin
       else
         @report.render_as(format)
       end
-    end
-
-    def render_timeout_error
-      assign_view_data
-      if @blob
-        @error = ".report_taking_longer_html"
-        @error_url = @blob.expiring_service_url
-      else
-        @error = ".report_taking_longer"
-        @error_url = ""
-      end
-      render "show"
     end
 
     def max_wait_time
