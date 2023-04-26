@@ -40,8 +40,11 @@ module Admin
     def index
       respond_to do |format|
         format.json do
-          render_as_json @collection, ams_prefix: params[:ams_prefix],
-                                      editable_schedule_ids: permissions.editable_schedules.pluck(:id)
+          render_as_json(
+            @collection,
+            ams_prefix: params[:ams_prefix],
+            editable_schedule_ids: permissions.editable_schedules.pluck(:id)
+          )
         end
       end
     end
@@ -119,7 +122,8 @@ module Admin
         .pluck(:id)
       result = @existing_order_cycle_ids
       result |= (requested & permitted) # add any requested & permitted ids
-      result -= ((result & permitted) - requested) # remove any existing and permitted ids that were not specifically requested
+      # remove any existing and permitted ids that were not specifically requested
+      result -= ((result & permitted) - requested)
       result
     end
 
