@@ -10,8 +10,8 @@
     %span.margin-top.ellipsed{"ng-bind" => "::hub.address.state_name"}
     %span.margin-top{"ng-if" => "hub.distance != null && hub.distance > 0"} ({{ hub.distance / 1000 | number:0 }} km)
 
-  .columns.small-5.medium-3.large-3.text-right.no-wrap.flex.align-center.justify-end{"ng-if" => "::hub.active"}
-    %a.hub.open_closed.flex.align-center{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
+  .columns.small-5.medium-3.large-3.text-right.no-wrap.flex.flex-align-center.flex-justify-end{"ng-if" => "::hub.active"}
+    %a.hub.open_closed.flex.flex-align-center{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
       %span{ ng: { if: "::current()" } }
         %em= t :hubs_shopping_here
       %span{ ng: { if: "::!current()" } }
@@ -20,7 +20,7 @@
     %span{style: "margin-left: 0.5rem;"}
       %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
 
-  .columns.small-5.medium-3.large-3.text-right.no-wrap.flex.align-center.justify-end{"ng-if" => "::!hub.active"}
+  .columns.small-5.medium-3.large-3.text-right.no-wrap.flex.flex-align-center.flex-justify-end{"ng-if" => "::!hub.active"}
     %a.hub.open_closed.flex{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
       %span{ ng: { if: "::current()" } }
         %em= t :hubs_shopping_here
@@ -41,6 +41,6 @@
   .columns.small-2.medium-1.large-1
     %span.ellipsed{"ng-bind" => "::hub.address.state_name"}
 
-  .columns.small-6.medium-3.large-4.text-right.no-wrap.flex.align-center.justify-end
+  .columns.small-6.medium-3.large-4.text-right.no-wrap.flex.flex-align-center.flex-justify-end
     %span{ ng: { if: "::!current()" } }
       %em= t :hubs_profile_only

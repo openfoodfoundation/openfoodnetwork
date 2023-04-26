@@ -11,11 +11,11 @@
 .flex {
   display: flex;
 
-  &.align-center {
+  &.flex-align-center {
     align-items: center;
   }
 
-  &.justify-end {
+  &.flex-justify-end {
     justify-content: flex-end;
   }
 }
