@@ -3125,6 +3125,7 @@ ru:
           pending: "в ожидании"
           resumed: "возобновлён"
           returned: "возвращён"
+          confirmation: "подтверждение"
         shipment_states:
           backorder: "отложен"
           partial: "частично"

@@ -2864,6 +2864,7 @@ tr:
           pending: "Bekliyor"
           resumed: "devam ettirildi"
           returned: "iade"
+          confirmation: "onay"
         shipment_states:
           backorder: "bekleyen sipariş"
           partial: "kısmi"

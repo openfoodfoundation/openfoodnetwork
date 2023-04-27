@@ -2968,6 +2968,7 @@ ko:
           pending: "보류"
           resumed: "재개됨"
           returned: "반송됨"
+          confirmation: "확인"
         shipment_states:
           backorder: "일시 품절"
           partial: "불완전힘"

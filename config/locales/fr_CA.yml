@@ -3097,6 +3097,7 @@ fr_CA:
           pending: "en attente"
           resumed: "recommencé"
           returned: "retourné"
+          confirmation: "Sélectionner une méthode de paiement"
         shipment_states:
           backorder: "réapprovisionnement"
           partial: "partiel"

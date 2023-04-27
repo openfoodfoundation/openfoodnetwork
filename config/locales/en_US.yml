@@ -2966,6 +2966,7 @@ en_US:
           pending: "pending"
           resumed: "resumed"
           returned: "returned"
+          confirmation: "confirmation"
         shipment_states:
           backorder: "backorder"
           partial: "partial"

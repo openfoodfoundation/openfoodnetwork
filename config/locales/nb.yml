@@ -3024,6 +3024,7 @@ nb:
           pending: "i påvente av"
           resumed: "gjenopptatt"
           returned: "returnert"
+          confirmation: "bekreftelse"
         shipment_states:
           backorder: "restordre"
           partial: "delvis"

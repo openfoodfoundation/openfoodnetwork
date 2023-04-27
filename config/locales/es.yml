@@ -3040,6 +3040,7 @@ es:
           pending: "pendiente"
           resumed: "resumido"
           returned: "devuelto"
+          confirmation: "confirmación"
         shipment_states:
           backorder: "orden pendiente"
           partial: "parcial"

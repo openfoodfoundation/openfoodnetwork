@@ -3104,6 +3104,7 @@ ar:
           pending: "قيد الانتظار"
           resumed: "متابعة"
           returned: "العودة"
+          confirmation: "التأكيد"
         shipment_states:
           backorder: "المؤجل"
           partial: "جزئي"

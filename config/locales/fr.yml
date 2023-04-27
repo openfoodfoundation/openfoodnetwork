@@ -3142,6 +3142,7 @@ fr:
           pending: "en attente"
           resumed: "recommencé"
           returned: "retourné"
+          confirmation: "confirmation"
         shipment_states:
           backorder: "réapprovisionnement"
           partial: "partiel"

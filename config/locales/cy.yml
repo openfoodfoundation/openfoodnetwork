@@ -3076,6 +3076,7 @@ cy:
           pending: "yn yr arfaeth"
           resumed: "ailddechrau"
           returned: "wedi ei ddychwelyd"
+          confirmation: "cadarnhad"
         shipment_states:
           backorder: "ôl-archeb"
           partial: "rhannol"

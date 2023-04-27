@@ -3012,6 +3012,7 @@ uk:
           pending: "в очікуванні"
           resumed: "відновлено"
           returned: "повернуто"
+          confirmation: "підтвердження"
         shipment_states:
           backorder: "незавершене замовлення"
           partial: "частковий"

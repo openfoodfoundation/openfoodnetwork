@@ -2976,6 +2976,7 @@ it_CH:
           pending: "in sospeso"
           resumed: "ripreso"
           returned: "restituito"
+          confirmation: "conferma"
         shipment_states:
           backorder: "ordine arretrato"
           partial: "parziale"

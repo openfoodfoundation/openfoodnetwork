@@ -3004,6 +3004,7 @@ de_CH:
           pending: "ausstehend"
           resumed: "wiederaufgenommen"
           returned: "zurückgegeben"
+          confirmation: "Bestätigung"
         shipment_states:
           backorder: "Lieferrückstand"
           partial: "Teillieferung"
