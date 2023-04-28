@@ -178,6 +178,7 @@ group :development do
   gem 'foreman'
   gem 'listen'
   gem 'pry', '~> 0.13.0'
+  gem 'query_count'
   gem 'rails-erd'
   gem 'rubocop'
   gem 'rubocop-rails'
