@@ -14,5 +14,7 @@ StimulusReflex.initialize(application, { controller, isolate: true });
 StimulusReflex.debug = process.env.RAILS_ENV === "development";
 CableReady.initialize({ consumer });
 
+import ReportChannel from "../channels/report_channel";
+
 import debounced from "debounced";
 debounced.initialize({ input: { wait: 300 } });
