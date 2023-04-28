@@ -1,18 +1,11 @@
 # frozen_string_literal: false
 
-require 'spree/localized_number'
-
 module Calculator
   class FlatPercentItemTotal < Spree::Calculator
-    extend Spree::LocalizedNumber
-
     preference :flat_percent, :decimal, default: 0
 
-    localize_number :preferred_flat_percent
-
     validates :preferred_flat_percent,
-              numericality: { message: :calculator_preferred_value_error },
-              unless: -> { Spree::Config.enable_localized_number? }
+              numericality: { message: :calculator_preferred_value_error }
 
     def self.description
       Spree.t(:flat_percent)

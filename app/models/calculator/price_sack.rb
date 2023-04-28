@@ -1,24 +1,15 @@
 # frozen_string_literal: false
 
-require 'spree/localized_number'
-
 module Calculator
   class PriceSack < Spree::Calculator
-    extend Spree::LocalizedNumber
-
     preference :minimal_amount, :decimal, default: 0
     preference :normal_amount, :decimal, default: 0
     preference :discount_amount, :decimal, default: 0
 
-    localize_number :preferred_minimal_amount,
-                    :preferred_normal_amount,
-                    :preferred_discount_amount
-
     validates :preferred_minimal_amount,
               :preferred_normal_amount,
               :preferred_discount_amount,
-              numericality: { message: :calculator_preferred_value_error },
-              unless: -> { Spree::Config.enable_localized_number? }
+              numericality: { message: :calculator_preferred_value_error }
 
     def self.description
       I18n.t(:price_sack)

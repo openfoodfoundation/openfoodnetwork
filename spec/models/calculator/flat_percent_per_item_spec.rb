@@ -19,10 +19,4 @@ describe Calculator::FlatPercentPerItem do
     line_item = Spree::LineItem.new price: 0.86, quantity: 8
     expect(calculator.compute(line_item)).to eq 1.36
   end
-
-  context "extends LocalizedNumber" do
-    it_behaves_like "a model using the LocalizedNumber module", [:preferred_flat_percent]
-    it_behaves_like "a Spree Calculator model using the LocalizedNumber module",
-                    [:preferred_flat_percent]
-  end
 end
