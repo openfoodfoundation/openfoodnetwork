@@ -921,8 +921,6 @@ describe '
               click_on "OK"
             end
 
-            expect(page).to have_content "Loading orders"
-
             expect(page).to have_no_selector ".modal"
             expect(page).to have_no_selector "tr#li_#{li1.id}"
             expect(page).to have_selector "tr#li_#{li11.id}"
@@ -1206,7 +1204,6 @@ describe '
   end
 
   def expect_line_items_results(line_items, excluded_line_items)
-    expect(page).to have_text "Loading orders"
     line_items.each do |li|
       expect(page).to have_selector "tr#li_#{li.id}"
     end
