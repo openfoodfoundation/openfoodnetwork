@@ -34,15 +34,6 @@ end
 
 module Openfoodnetwork
   class Application < Rails::Application
-    config.middleware.insert_before(
-      ActionDispatch::Cookies,
-      SessionCookieUpgrader, {
-        old_key: "_session_id",
-        new_key: "_ofn_session_id",
-        domain: ".#{ENV['SITE_URL'].gsub(/^(www\.)|^(app\.)|^(staging\.)|^(stg\.)/, '')}"
-      }
-    ) if Rails.env.staging? || Rails.env.production?
-
     config.after_initialize do
       # We need this here because the test env file loads before the Spree engine is loaded
       Spree::Core::Engine.routes.default_url_options[:host] = ENV["SITE_URL"] if Rails.env == 'test'
