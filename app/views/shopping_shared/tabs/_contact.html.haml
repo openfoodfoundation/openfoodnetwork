@@ -28,7 +28,7 @@
                 %br
               - if current_distributor.whatsapp_phone.present?
                 %a{href: current_distributor.whatsapp_url, target: "_blank" }
-                  %img{ src: image_pack_path("social-logos/whatsapp.svg") }
+                  %img{ src: image_path("social-logos/whatsapp.svg") }
                   = current_distributor.whatsapp_phone
                   %br
               - if current_distributor.website.present?

@@ -10,10 +10,10 @@ module FileHelper
   end
 
   def black_logo_path
-    Rails.root.join('app/webpacker/images/logo-black.png')
+    Rails.root.join('app/assets/images/logo-black.png')
   end
 
   def white_logo_path
-    Rails.root.join('app/webpacker/images/logo-white.png')
+    Rails.root.join('app/assets/images/logo-white.png')
   end
 end
