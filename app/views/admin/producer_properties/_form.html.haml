@@ -1,12 +1,12 @@
 %fieldset.no-border-top
-  .add_producer_properties{"data-hook" => "add_producer_properties"}
+  .add_producer_properties
   = image_pack_tag 'spinner.gif', :plugin => 'spree', :style => 'display:none;', :id => 'busy_indicator'
-  %table.index.sortable{"data-hook" => "", "data-sortable-link" => main_app.update_positions_admin_enterprise_producer_properties_url(@enterprise)}
+  %table.index.sortable{"data-sortable-link" => main_app.update_positions_admin_enterprise_producer_properties_url(@enterprise)}
     %thead
-      %tr{"data-hook" => "producer_properties_header"}
+      %tr
         %th{colspan: "2"}= t('admin.products.properties.property_name')
         %th= t('admin.description')
         %th.actions
-    %tbody#producer_properties{"data-hook" => ""}
+    %tbody#producer_properties
       = f.fields_for :producer_properties do |pp_form|
         = render 'admin/producer_properties/producer_property_fields', f: pp_form

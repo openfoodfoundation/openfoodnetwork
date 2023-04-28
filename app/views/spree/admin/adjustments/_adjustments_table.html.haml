@@ -1,5 +1,5 @@
-%table.index{"data-hook" => "adjustments"}
-  %thead{"data-hook" => "adjustmment_head"}
+%table.index
+  %thead
     %tr
       %th= "#{t('spree.date')}/#{t('spree.time')}"
       %th= t(:description)
@@ -15,7 +15,7 @@
       - taxable = adjustment.adjustable_type == "Spree::Shipment" ? adjustment.adjustable : adjustment
       - tr_class = cycle('odd', 'even')
       - tr_id = spree_dom_id(adjustment)
-      %tr{:class => tr_class, "data-hook" => "adjustment_row", :id => tr_id}
+      %tr{:class => tr_class, :id => tr_id}
         %td.align-center.created_at
           = pretty_time(adjustment.created_at)
         %td.align-center.label

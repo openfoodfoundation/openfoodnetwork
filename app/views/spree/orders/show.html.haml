@@ -7,7 +7,7 @@
 .darkswarm
   = render "shopping_shared/header" if current_distributor.present?
 
-  %fieldset#order_summary.footer-pad{"data-hook" => ""}
+  %fieldset#order_summary.footer-pad
     .row
       .columns.large-12.text-center
         %h2
@@ -21,7 +21,7 @@
               = t(:orders_show_confirmed)
               %i.ofn-i_051-check-big
 
-    #order{"data-hook" => ""}
+    #order
       - if params.has_key? :checkout_complete
         %h1= t(:thank_you_for_your_order)
 

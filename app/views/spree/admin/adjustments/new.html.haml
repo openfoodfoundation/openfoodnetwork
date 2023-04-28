@@ -13,6 +13,6 @@
 = form_for @adjustment, :url => admin_order_adjustments_path do |f|
   %fieldset.no-border-top
     = render :partial => 'form', :locals => { :f => f }
-    .filter-actions.actions{"data-hook" => "buttons"}
+    .filter-actions.actions
       = button Spree.t(:continue), 'icon-arrow-right'
       = button_link_to Spree.t('actions.cancel'), admin_order_adjustments_url(@order), :icon => 'icon-remove'

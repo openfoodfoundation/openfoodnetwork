@@ -1,6 +1,6 @@
 %div{ :id => "shipment_#{shipment.id}" }
   %fieldset.no-border-bottom
-    %legend.stock-location{ :align => "center", "data-hook" => "stock-location" }
+    %legend.stock-location{ :align => "center" }
       %span.shipment-number
         = shipment.number
       = "-"
@@ -10,7 +10,7 @@
         = "-"
         = link_to t(:ship), '#', :class => 'ship button icon-arrow-right', :data => { 'shipment-number' => shipment.number }
 
-  %table.stock-contents.index{ "data-hook" => "stock-contents" }
+  %table.stock-contents.index
     %colgroup
       %col{ :style => "width: 10%;" }
       %col{ :style => "width: 30%;" }
@@ -28,7 +28,7 @@
         = Spree.t(:quantity)
       %th.force-rounded-right
         = Spree.t(:total)
-      %th.orders-actions.actions{ "data-hook" => "admin_order_form_line_items_header_actions" }
+      %th.orders-actions.actions
 
     %tbody{ "data-shipment-number" => "#{shipment.number}", "data-order-number" => "#{order.number}" }
       = render 'spree/admin/orders/shipment_manifest', order: order, shipment: shipment

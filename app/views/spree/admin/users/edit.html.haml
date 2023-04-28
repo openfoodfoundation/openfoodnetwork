@@ -3,15 +3,15 @@
 - content_for :page_actions do
   %li
     = button_link_to t(".back_to_users_list"), spree.admin_users_path, icon: "icon-arrow-left"
-%fieldset.alpha.ten.columns{"data-hook" => "admin_user_edit_general_settings"}
+%fieldset.alpha.ten.columns
   %legend= t(".general_settings")
-  %div{"data-hook" => "admin_user_edit_form_header"}
+  %div
     = render partial: "spree/shared/error_messages", locals: { target: @user }
-  %div{"data-hook" => "admin_user_edit_form"}
+  %div
     = form_for [:admin, @user] do |f|
       = render "email_confirmation" unless @user.confirmed?
       = render partial: "form", locals: { f: f }
-      %div{"data-hook" => "admin_user_edit_form_button"}
+      %div
         = render partial: "spree/admin/shared/edit_resource_links"
 
 = render partial: 'spree/admin/users/api_fields'

@@ -27,16 +27,16 @@
 
   #cart-container
     - if @order.line_items.empty?
-      %div.row{"data-hook" => "empty_cart"}
+      %div.row
         %p= t(:your_cart_is_empty)
         %p= link_to t(:continue_shopping), current_shop_products_path, :class => 'button continue'
 
     - else
-      %div{"data-hook" => "outside_cart_form"}
+      %div
         = form_for @order, :url => main_app.update_cart_path,
           :html => {id: 'update-cart', name: "form", "ng-controller"=> 'CartFormCtrl'} do |order_form|
-          %div{"data-hook" => "inside_cart_form"}
-            %div{"data-hook" => "cart_items"}
+          %div
+            %div
               .row
                 = render :partial => 'form', :locals => { :order_form => order_form }
 

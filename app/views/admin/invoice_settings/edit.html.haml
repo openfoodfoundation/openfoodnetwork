@@ -20,5 +20,5 @@
     = check_box_tag 'preferences[enterprise_number_required_on_invoices?]', '1',  Spree::Config[:enterprise_number_required_on_invoices?]
     = label_tag nil, t('.enterprise_number_required_on_invoices?')
 
-  .form-buttons{"data-hook" => "buttons"}
+  .form-buttons
     = button t(:update), 'icon-refresh'

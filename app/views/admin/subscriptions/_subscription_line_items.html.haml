@@ -25,7 +25,7 @@
       %td.total.align-center {{ (item.price_estimate * item.quantity) | localizeCurrency }}
       %td.actions
         %a.delete-item.icon-trash.no-text{ ng: { click: 'removeSubscriptionLineItem(item)'}, :href => "javascript:void(0)" }
-  %tbody#subtotal.no-border-top{"data-hook" => "admin_order_form_subtotal"}
+  %tbody#subtotal.no-border-top
     %tr#subtotal-row
       %td{:colspan => "3"}
         %b
@@ -43,7 +43,7 @@
       %td.total.align-center
         %span#order_fees {{ subscription.estimatedFees() | localizeCurrency }}
       %td.actions
-  %tbody#order-total.grand-total.no-border-top{"data-hook" => "admin_order_form_total"}
+  %tbody#order-total.grand-total.no-border-top
     %tr
       %td{:colspan => "3"}
         %b

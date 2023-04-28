@@ -1,9 +1,9 @@
 - variant = line_item.variant
 = order_form.fields_for :line_items, line_item do |item_form|
   %tr.line-item{class: "variant-#{variant.id}"}
-    %td.cart-item-description{'data-hook' => "cart_item_description"}
+    %td.cart-item-description
 
-      %div.item-thumb-image{"data-hook" => "cart_item_image"}
+      %div.item-thumb-image
         = render 'spree/shared/variant_thumbnail', variant: variant
 
       = render 'spree/shared/line_item_name', line_item: line_item
@@ -18,21 +18,21 @@
           = t(".unavailable_item")
           %br/
 
-    %td.text-right.cart-item-price{"data-hook" => "cart_item_price"}
+    %td.text-right.cart-item-price
       = line_item.single_display_amount_with_adjustments.to_html
       %br
       %span.unit-price
         = line_item.unit_price_price_and_unit
-    %td.text-center.cart-item-quantity{"data-hook" => "cart_item_quantity"}
+    %td.text-center.cart-item-quantity
       - finalized_quantity = @order.completed? ? line_item.quantity : 0
       = item_form.number_field :quantity,
         :min => 0, "ofn-on-hand" => "#{variant.on_demand && 9999 || variant.on_hand}",
         "finalizedquantity" => finalized_quantity, :class => "line_item_quantity", :size => 5,
         "ng-model" => "line_item_#{line_item.id}",
         "validate-stock-quantity" => true
-    %td.cart-item-total.text-right{"data-hook" => "cart_item_total"}
+    %td.cart-item-total.text-right
       = line_item.display_amount_with_adjustments.to_html unless line_item.quantity.nil?
 
-    %td.cart-item-delete.text-center{"data-hook" => "cart_item_delete"}
+    %td.cart-item-delete.text-center
       %a.delete{href: "#", id: "delete_#{dom_id(line_item)}"}
         %i.delete.ofn-i_026-trash
