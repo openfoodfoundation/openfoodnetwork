@@ -12,20 +12,9 @@ describe Calculator::PriceSack do
   end
   let(:line_item) { build_stubbed(:line_item, price: price, quantity: 2) }
 
-  it do
-    should validate_numericality_of(:preferred_minimal_amount).
-      with_message("Invalid input. Please use only numbers. For example: 10, 5.5, -20")
-  end
-
-  it do
-    should validate_numericality_of(:preferred_normal_amount).
-      with_message("Invalid input. Please use only numbers. For example: 10, 5.5, -20")
-  end
-
-  it do
-    should validate_numericality_of(:preferred_discount_amount).
-      with_message("Invalid input. Please use only numbers. For example: 10, 5.5, -20")
-  end
+  it { is_expected.to validate_numericality_of(:preferred_minimal_amount) }
+  it { is_expected.to validate_numericality_of(:preferred_normal_amount) }
+  it { is_expected.to validate_numericality_of(:preferred_discount_amount) }
 
   context 'when the order amount is below preferred minimal' do
     let(:price) { 2 }

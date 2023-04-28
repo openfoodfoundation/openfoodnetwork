@@ -8,10 +8,7 @@ describe Calculator::FlatPercentItemTotal do
 
   before { allow(calculator).to receive_messages preferred_flat_percent: 10 }
 
-  it do
-    should validate_numericality_of(:preferred_flat_percent).
-      with_message("Invalid input. Please use only numbers. For example: 10, 5.5, -20")
-  end
+  it { is_expected.to validate_numericality_of(:preferred_flat_percent) }
 
   it "computes amount correctly for a single line item" do
     expect(calculator.compute(line_item)).to eq(1.0)

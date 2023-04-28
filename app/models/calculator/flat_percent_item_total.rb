@@ -5,7 +5,7 @@ module Calculator
     preference :flat_percent, :decimal, default: 0
 
     validates :preferred_flat_percent,
-              numericality: { message: :calculator_preferred_value_error }
+              numericality: true
 
     def self.description
       Spree.t(:flat_percent)

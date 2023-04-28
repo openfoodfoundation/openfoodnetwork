@@ -9,7 +9,7 @@ class Calculator::FlatPercentPerItem < Spree::Calculator
   preference :flat_percent, :decimal, default: 0
 
   validates :preferred_flat_percent,
-            numericality: { message: :calculator_preferred_value_error }
+            numericality: true
 
   def self.description
     I18n.t(:flat_percent_per_item)

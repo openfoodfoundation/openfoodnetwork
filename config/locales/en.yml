@@ -91,8 +91,6 @@ en:
         preferred_unit_from_list: "Calculator Unit From List:"
         preferred_per_unit: "Calculator Per Unit:"
     errors:
-      messages:
-        calculator_preferred_value_error: "Invalid input. Please use only numbers. For example: 10, 5.5, -20"
       models:
         spree/user:
           attributes:

@@ -12,15 +12,8 @@ describe Calculator::FlexiRate do
     )
   end
 
-  it do
-    should validate_numericality_of(:preferred_first_item).
-      with_message("Invalid input. Please use only numbers. For example: 10, 5.5, -20")
-  end
-
-  it do
-    should validate_numericality_of(:preferred_additional_item).
-      with_message("Invalid input. Please use only numbers. For example: 10, 5.5, -20")
-  end
+  it { is_expected.to validate_numericality_of(:preferred_first_item) }
+  it { is_expected.to validate_numericality_of(:preferred_additional_item) }
 
   context 'when nb of items ordered is above preferred max' do
     let(:quantity) { 4.0 }
