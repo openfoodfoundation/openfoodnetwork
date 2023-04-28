@@ -22,7 +22,6 @@ class MailConfiguration
       secure_connection_type: ENV.fetch('MAIL_SECURE_CONNECTION', 'None'),
       mails_from: ENV.fetch('MAILS_FROM', "no-reply@#{ENV.fetch('MAIL_DOMAIN')}"),
       mail_bcc: ENV.fetch('MAIL_BCC', ''),
-      intercept_email: ''
     }
   end
 

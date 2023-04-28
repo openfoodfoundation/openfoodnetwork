@@ -88,7 +88,6 @@ module Spree
     # Default mail headers settings
     preference :mails_from, :string, default: 'ofn@example.com'
     preference :mail_bcc, :string, default: 'ofn@example.com'
-    preference :intercept_email, :string, default: nil
 
     # Default smtp settings
     preference :mail_host, :string, default: 'localhost'

@@ -3760,8 +3760,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     smtp_send_all_emails_as_from_following_address: "Send all mails as from the following address."
     send_copy_of_all_mails_to: "Send Copy of All Mails To"
     smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
-    intercept_email_address: "Intercept Email Address"
-    intercept_email_instructions: "Override email recipient and replace with this address."
 
     tax_categories: "Tax Categories"
     listing_tax_categories: "Listing Tax Categories"
