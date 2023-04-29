@@ -68,4 +68,20 @@ module ApplicationHelper
       wicked_pdf_stylesheet_pack_tag(source)
     end
   end
+
+  def cache_with_locale(key = nil, options = {}, &block)
+    cache(cache_key_with_locale(key, I18n.locale), options) do
+      yield(block)
+    end
+  end
+
+  def cache_key_with_locale(key, locale)
+    Array.wrap(key) + [locale.to_s, locale_digest(locale)]
+  end
+
+  private
+
+  def locale_digest(locale)
+    Rails.application.config.x.i18n_digests[locale]
+  end
 end

@@ -184,6 +184,12 @@ module Openfoodnetwork
     config.i18n.available_locales = OpenFoodNetwork::I18nConfig.available_locales
     I18n.locale = config.i18n.locale = config.i18n.default_locale
 
+    # Calculate digests for locale files so we can know when they change
+    config.i18n.available_locales.each do |locale|
+      (config.x.i18n_digests ||= {})[locale.to_sym] =
+        Digest::MD5.hexdigest(File.read(Rails.root.join("config/locales/#{locale}.yml")))
+    end
+
     # Setting this to true causes a performance regression in Rails 3.2.17
     # When we're on a version with the fix below, we can set it to true
     # https://github.com/svenfuchs/i18n/issues/230
