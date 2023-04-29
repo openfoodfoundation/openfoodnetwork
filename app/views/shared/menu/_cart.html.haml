@@ -1,8 +1,9 @@
-%span.cart-span{"ng-controller" => "CartCtrl", "ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}
-  %a#cart.icon{"ng-click" => "toggleCartSidebar()"}
-    %span
-      = t '.cart'
-    %span.count
-      %img{ src: image_pack_path("menu/icn-cart.svg") }
+= cache_with_locale do
+  %span.cart-span{"ng-controller" => "CartCtrl", "ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}
+    %a#cart.icon{"ng-click" => "toggleCartSidebar()"}
       %span
-        {{ Cart.total_item_count() }}
+        = t '.cart'
+      %span.count
+        %img{ src: image_pack_path("menu/icn-cart.svg") }
+        %span
+          {{ Cart.total_item_count() }}

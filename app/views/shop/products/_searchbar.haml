@@ -1,17 +1,18 @@
-.shop-searchbar
-  .row
-    .small-12.large-5.columns.flex
-      %div.search-wrap
-        %input#search.text{"ng-model" => "query",
-              type: 'search',
-              placeholder: t(:products_search),
-              "ng-debounce" => "200",
-              "disable-enter-with-blur" => true}
-        %a.clear{type: 'button', ng: {show: 'query', click: 'clearQuery()'}, 'focus-search' => true}
-          = image_pack_tag "icn-close.png"
+= cache_with_locale do
+  .shop-searchbar
+    .row
+      .small-12.large-5.columns.flex
+        %div.search-wrap
+          %input#search.text{"ng-model" => "query",
+                type: 'search',
+                placeholder: t(:products_search),
+                "ng-debounce" => "200",
+                "disable-enter-with-blur" => true}
+          %a.clear{type: 'button', ng: {show: 'query', click: 'clearQuery()'}, 'focus-search' => true}
+            = image_pack_tag "icn-close.png"
 
-      .hide-for-large-up
-        %button{type: 'button', ng: {click: 'toggleFilterSidebar()'}}
-          = t(:products_filter_heading)
-          %span{ng: {show: 'filtersCount()' }}
-            ({{ filtersCount() }})
+        .hide-for-large-up
+          %button{type: 'button', ng: {click: 'toggleFilterSidebar()'}}
+            = t(:products_filter_heading)
+            %span{ng: {show: 'filtersCount()' }}
+              ({{ filtersCount() }})

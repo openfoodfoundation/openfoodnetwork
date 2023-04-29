@@ -1,115 +1,119 @@
 %footer
   .footer-global
-    .row
-      .small-12.columns.text-center
-        .logo
-          %img{src: image_pack_path("logo-white-notext.png") }
-    .row
-      .small-12.medium-8.medium-offset-2.columns.text-center
-        .alert-box
-          = render 'shared/register_call'
+    = cache_with_locale "global" do
+      .row
+        .small-12.columns.text-center
+          .logo
+            %img{src: image_pack_path("logo-white-notext.png") }
+      .row
+        .small-12.medium-8.medium-offset-2.columns.text-center
+          .alert-box
+            = render 'shared/register_call'
 
   .footer-local
-    .row
-      .small-12.medium-2.medium-offset-2.columns.text-center
-        %p.secure-icon
-          %i.ofn-i_017-locked
-      .small-12.medium-6.columns.text-center
-        %p.text-big.secure-text
-          = t '.footer_secure'
-        %p.secure-text
-          = t '.footer_secure_text'
-      .small-12.medium-2.columns
+    = cache_with_locale "local" do
+      .row
+        .small-12.medium-2.medium-offset-2.columns.text-center
+          %p.secure-icon
+            %i.ofn-i_017-locked
+        .small-12.medium-6.columns.text-center
+          %p.text-big.secure-text
+            = t '.footer_secure'
+          %p.secure-text
+            = t '.footer_secure_text'
+        .small-12.medium-2.columns
 
-    .row
-      .small-12.medium-8.medium-offset-2.columns.text-center
-        %hr.hr-light
-        %br
+      .row
+        .small-12.medium-8.medium-offset-2.columns.text-center
+          %hr.hr-light
+          %br
 
-    .row
-      .small-6.medium-3.medium-offset-2.columns.text-left
-        // This is the instance-managed set of links:
-        %h4
-          = t '.footer_contact_headline'
-        - if show_social_icons?
-          %p.social-icons
-            - if ContentConfig.footer_facebook_url.present?
-              %a{href: ContentConfig.footer_facebook_url}
-                %i.ofn-i_044-facebook
-            - if ContentConfig.footer_twitter_url.present?
-              %a{href: ContentConfig.footer_twitter_url}
-                %i.ofn-i_041-twitter
-            - if ContentConfig.footer_instagram_url.present?
-              %a{href: ContentConfig.footer_instagram_url}
-                %i.ofn-i_043-instagram
-            - if ContentConfig.footer_linkedin_url.present?
-              %a{href: ContentConfig.footer_linkedin_url}
-                %i.ofn-i_042-linkedin
-            - if ContentConfig.footer_googleplus_url.present?
-              %a{href: ContentConfig.footer_googleplus_url}
-                %i.ofn-i_046-g
-            - if ContentConfig.footer_pinterest_url.present?
-              %a{href: ContentConfig.footer_pinterest_url}
-                %i.ofn-i_045-pintrest
-        - if ContentConfig.footer_email.present?
+    = cache_with_locale ContentConfig.cache_key do
+      .row
+        .small-6.medium-3.medium-offset-2.columns.text-left
+          // This is the instance-managed set of links:
+          %h4
+            = t '.footer_contact_headline'
+          - if show_social_icons?
+            %p.social-icons
+              - if ContentConfig.footer_facebook_url.present?
+                %a{href: ContentConfig.footer_facebook_url}
+                  %i.ofn-i_044-facebook
+              - if ContentConfig.footer_twitter_url.present?
+                %a{href: ContentConfig.footer_twitter_url}
+                  %i.ofn-i_041-twitter
+              - if ContentConfig.footer_instagram_url.present?
+                %a{href: ContentConfig.footer_instagram_url}
+                  %i.ofn-i_043-instagram
+              - if ContentConfig.footer_linkedin_url.present?
+                %a{href: ContentConfig.footer_linkedin_url}
+                  %i.ofn-i_042-linkedin
+              - if ContentConfig.footer_googleplus_url.present?
+                %a{href: ContentConfig.footer_googleplus_url}
+                  %i.ofn-i_046-g
+              - if ContentConfig.footer_pinterest_url.present?
+                %a{href: ContentConfig.footer_pinterest_url}
+                  %i.ofn-i_045-pintrest
+          - if ContentConfig.footer_email.present?
+            %p
+              %a{href: ContentConfig.footer_email.reverse, mailto: true, target: '_blank'}
+                = t '.footer_contact_email'
+          = render_markdown(ContentConfig.footer_links_md).html_safe
+
+
+        .small-6.medium-3.columns.text-left
+          %h4
+            = t '.footer_nav_headline'
           %p
-            %a{href: ContentConfig.footer_email.reverse, mailto: true, target: '_blank'}
-              = t '.footer_contact_email'
-        = render_markdown(ContentConfig.footer_links_md).html_safe
+            %a{href: "/shops"}
+              = t :label_shops
+          %p
+            %a{href: "/map"}
+              = t :label_map
+          %p
+            %a{href: "/producers"}
+              = t :label_producers
+          %p
+            %a{href: "/groups"}
+              = t :label_groups
+          %p
+            %a{href: ContentConfig.footer_about_url}
+              = t :label_about
 
+        .small-12.medium-2.columns.text-left
+          %h4
+            = t '.footer_join_headline'
+          %p
+            = t '.footer_join_body'
+            %a{href:  "/sell"}
+              = t '.footer_join_cta'
 
-      .small-6.medium-3.columns.text-left
-        %h4
-          = t '.footer_nav_headline'
-        %p
-          %a{href: "/shops"}
-            = t :label_shops
-        %p
-          %a{href: "/map"}
-            = t :label_map
-        %p
-          %a{href: "/producers"}
-            = t :label_producers
-        %p
-          %a{href: "/groups"}
-            = t :label_groups
-        %p
-          %a{href: ContentConfig.footer_about_url}
-            = t :label_about
+        .medium-2.columns.text-center
+          / Placeholder
 
-      .small-12.medium-2.columns.text-left
-        %h4
-          = t '.footer_join_headline'
-        %p
-          = t '.footer_join_body'
-          %a{href:  "/sell"}
-            = t '.footer_join_cta'
+      .row
+        .small-12.medium-8.medium-offset-2.columns.text-center
+          %hr.hr-light
+          %br
 
-      .medium-2.columns.text-center
-        / Placeholder
-
-    .row
-      .small-12.medium-8.medium-offset-2.columns.text-center
-        %hr.hr-light
-        %br
-
-    .row.legal
-      .small-12.medium-3.medium-offset-2.columns.text-left
-        %a{href: main_app.root_path}
-          %img{src: ContentConfig.url_for(:footer_logo), width: "220"}
-      .small-12.medium-5.columns.text-left
-        %p.text-small
-          = t '.footer_legal_call'
-          = link_to_platform_terms
-          &#124;
-          = t '.footer_legal_visit'
-          %a{href:"https://github.com/openfoodfoundation/openfoodnetwork", target: "_blank"} GitHub
-        %p.text-small
-          = t('.footer_legal_text_html', content_license: link_to('CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'), code_license: link_to('AGPL 3', 'https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)' ))
-        %p.text-small
-          - if Spree::Config.privacy_policy_url.present?
-            = t('.footer_data_text_with_privacy_policy_html', cookies_policy: cookies_policy_link.html_safe, privacy_policy: privacy_policy_link.html_safe)
-          - else
-            = t('.footer_data_text_without_privacy_policy_html', cookies_policy: cookies_policy_link.html_safe)
-      .medium-2.columns.text-center
-        / Placeholder
+    = cache_with_locale [ContentConfig.cache_key, TermsOfServiceFile.current_url, Spree::Config.privacy_policy_url] do
+      .row.legal
+        .small-12.medium-3.medium-offset-2.columns.text-left
+          %a{href: main_app.root_path}
+            %img{src: ContentConfig.url_for(:footer_logo), width: "220"}
+        .small-12.medium-5.columns.text-left
+          %p.text-small
+            = t '.footer_legal_call'
+            = link_to_platform_terms
+            &#124;
+            = t '.footer_legal_visit'
+            %a{href:"https://github.com/openfoodfoundation/openfoodnetwork", target: "_blank"} GitHub
+          %p.text-small
+            = t('.footer_legal_text_html', content_license: link_to('CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'), code_license: link_to('AGPL 3', 'https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)' ))
+          %p.text-small
+            - if Spree::Config.privacy_policy_url.present?
+              = t('.footer_data_text_with_privacy_policy_html', cookies_policy: cookies_policy_link.html_safe, privacy_policy: privacy_policy_link.html_safe)
+            - else
+              = t('.footer_data_text_without_privacy_policy_html', cookies_policy: cookies_policy_link.html_safe)
+        .medium-2.columns.text-center
+          / Placeholder

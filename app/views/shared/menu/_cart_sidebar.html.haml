@@ -1,38 +1,40 @@
 .expanding-sidebar.cart-sidebar{ng: {controller: 'CartCtrl', class: "{'shown': showCartSidebar}"}}
   .background{ng: {click: 'toggleCartSidebar()'}}
   .sidebar
-    .cart-header
-      %span.title{"ng-show" => "Cart.line_items.length == 1"}
-        = t('.items_in_cart_singular', num: "{{ Cart.total_item_count() }}")
-      %span.title{"ng-show" => "Cart.line_items.length > 1"}
-        = t('.items_in_cart_plural', num: "{{ Cart.total_item_count() }}")
-      %a.close{ng: {click: 'toggleCartSidebar()'}}
-        = t('.close')
-        %i.ofn-i_009-close
+    = cache_with_locale "cart-header" do
+      .cart-header
+        %span.title{"ng-show" => "Cart.line_items.length == 1"}
+          = t('.items_in_cart_singular', num: "{{ Cart.total_item_count() }}")
+        %span.title{"ng-show" => "Cart.line_items.length > 1"}
+          = t('.items_in_cart_plural', num: "{{ Cart.total_item_count() }}")
+        %a.close{ng: {click: 'toggleCartSidebar()'}}
+          = t('.close')
+          %i.ofn-i_009-close
 
     .cart-content
-      %table
-        %tr.product-cart{"ng-repeat" => "line_item in Cart.line_items", "id" => "cart-variant-{{ line_item.variant.id }}"}
-          %td.image
-            %img{'ng-src' => '{{ line_item.variant.thumb_url }}'}
-          %td
-            %span {{ line_item.variant.extended_name | truncate: max_characters }}
-            %br
-            %span.options-text {{ line_item.variant.options_text | truncate: max_characters }}
-          %td.text-right
-            %span.quantity {{ line_item.quantity }}
-          %td
-            .total-price.text-right {{ line_item.total_price | localizeCurrency }}
-            .unit-price
-              %div{:style => "margin-right: 5px"}
-                %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
-                "question-mark-with-tooltip-append-to-body" => "true",
-                "question-mark-with-tooltip-placement" => "top",
-                "question-mark-with-tooltip-animation" => true,
-                key: "'js.shopfront.unit_price_tooltip'",
-                context: "'cart-sidebar'"}
-              .options-text
-                {{ line_item.variant.unit_price_price | localizeCurrency }}&nbsp;/&nbsp;{{ line_item.variant.unit_price_unit }}
+      = cache_with_locale "cart-table" do
+        %table
+          %tr.product-cart{"ng-repeat" => "line_item in Cart.line_items", "id" => "cart-variant-{{ line_item.variant.id }}"}
+            %td.image
+              %img{'ng-src' => '{{ line_item.variant.thumb_url }}'}
+            %td
+              %span {{ line_item.variant.extended_name | truncate: max_characters }}
+              %br
+              %span.options-text {{ line_item.variant.options_text | truncate: max_characters }}
+            %td.text-right
+              %span.quantity {{ line_item.quantity }}
+            %td
+              .total-price.text-right {{ line_item.total_price | localizeCurrency }}
+              .unit-price
+                %div{:style => "margin-right: 5px"}
+                  %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
+                  "question-mark-with-tooltip-append-to-body" => "true",
+                  "question-mark-with-tooltip-placement" => "top",
+                  "question-mark-with-tooltip-animation" => true,
+                  key: "'js.shopfront.unit_price_tooltip'",
+                  context: "'cart-sidebar'"}
+                .options-text
+                  {{ line_item.variant.unit_price_price | localizeCurrency }}&nbsp;/&nbsp;{{ line_item.variant.unit_price_unit }}
 
       .cart-empty{"ng-show" => "Cart.line_items.length == 0"}
         %p
@@ -42,15 +44,16 @@
           = t('.take_me_shopping')
 
   .sidebar-footer{"ng-show" => "Cart.line_items.length > 0"}
-    %p.cart-total
-      %strong
-        = t 'total'
-        {{ Cart.total()  | localizeCurrency }}
+    = cache_with_locale "cart-footer" do
+      %p.cart-total
+        %strong
+          = t 'total'
+          {{ Cart.total()  | localizeCurrency }}
 
-    %div.fullwidth
-      %a.edit-cart.button.large.dark.left{href: main_app.cart_path, "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }"}
-        %div{ ng: { if: "Cart.dirty" } }= t(:cart_updating)
-        %div{ ng: { if: "!Cart.dirty && Cart.empty()" } }= t(:cart_empty)
-        %div{ ng: { if: "!Cart.dirty && !Cart.empty()" } }= t('.edit_cart')
-      %a.checkout.button.large.bright.right{href: main_app.checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}
-        = t '.checkout'
+      %div.fullwidth
+        %a.edit-cart.button.large.dark.left{href: main_app.cart_path, "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }"}
+          %div{ ng: { if: "Cart.dirty" } }= t(:cart_updating)
+          %div{ ng: { if: "!Cart.dirty && Cart.empty()" } }= t(:cart_empty)
+          %div{ ng: { if: "!Cart.dirty && !Cart.empty()" } }= t('.edit_cart')
+        %a.checkout.button.large.bright.right{href: main_app.checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}
+          = t '.checkout'

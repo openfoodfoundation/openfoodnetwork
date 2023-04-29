@@ -1,41 +1,43 @@
-%nav.top-bar.show-for-large-up
-  %section.top-bar-section
-    %ul.nav-logo
-      %li.ofn-logo
-        %a{href: main_logo_link(@white_label_distributor)}
-          - if @white_label_logo&.variable?
-            = image_tag @white_label_distributor.white_label_logo_url(:default)
-          - else
-            %img{src: ContentConfig.url_for(:logo)}
-      %li.powered-by
-        %img{src: '/favicon.ico'}
-        %span
-          = t 'powered_by'
-          %a{href: '/'}
-            = t 'title'
-    - unless @hide_ofn_navigation
-      %ul.nav-main-menu
-        - [*1..7].each do |menu_number|
-          - menu_name = "menu_#{menu_number}"
-          - if ContentConfig[menu_name].present?
-            %li
-              %a{href: t("#{menu_name}_url") }
-                %span.nav-primary
-                  = t "#{menu_name}_title"
-    %ul.nav-icons-menu
-      - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
-        = render 'shared/menu/language_selector'
+= cache_with_locale [@white_label_distributor, ContentConfig.cache_key] do
+  %nav.top-bar.show-for-large-up
+    %section.top-bar-section
+      %ul.nav-logo
+        %li.ofn-logo
+          %a{href: main_logo_link(@white_label_distributor)}
+            - if @white_label_logo&.variable?
+              = image_tag @white_label_distributor.white_label_logo_url(:default)
+            - else
+              %img{src: ContentConfig.url_for(:logo)}
+        %li.powered-by
+          %img{src: '/favicon.ico'}
+          %span
+            = t 'powered_by'
+            %a{href: '/'}
+              = t 'title'
 
-      - if spree_current_user.nil?
-        = render 'shared/menu/signed_out'
-      - else
-        = render 'shared/menu/signed_in'
+      - unless @hide_ofn_navigation
+        %ul.nav-main-menu
+          - [*1..7].each do |menu_number|
+            - menu_name = "menu_#{menu_number}"
+            - if ContentConfig[menu_name].present?
+              %li
+                %a{href: t("#{menu_name}_url") }
+                  %span.nav-primary
+                    = t "#{menu_name}_title"
+      %ul.nav-icons-menu
+        - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
+          = render 'shared/menu/language_selector'
 
-      %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.hub.id", "ng-cloak" => true}
-        %a{href: main_app.shop_path}
-          %span{ class: "top-bar--current-hub-prefix" }
-            = t 'label_shopping'
-            = '@'
-          %span{ class: "top-bar--current-hub-name" } {{ CurrentHub.hub.name | truncate:25 }}
-      %li.cart{"ng-cloak" => true}
-        = render partial: "shared/menu/cart"
+        - if spree_current_user.nil?
+          = render 'shared/menu/signed_out'
+        - else
+          = render 'shared/menu/signed_in'
+
+        %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.hub.id", "ng-cloak" => true}
+          %a{href: main_app.shop_path}
+            %span{ class: "top-bar--current-hub-prefix" }
+              = t 'label_shopping'
+              = '@'
+            %span{ class: "top-bar--current-hub-name" } {{ CurrentHub.hub.name | truncate:25 }}
+        %li.cart{"ng-cloak" => true}
+          = render partial: "shared/menu/cart"

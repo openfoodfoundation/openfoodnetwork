@@ -1,8 +1,9 @@
-%li.language-switcher.has-dropdown.not-click
-  %a{href: '#', class: "top-bar--menu-item-with-icon"}
-    %i.ofn-i_071-globe
-    %span= t 'language_name'
-  %ul.dropdown
-    - OpenFoodNetwork::I18nConfig.locale_options.each do |l|
-      %li
-        = link_to t('language_name', locale: l), main_app.locale_path(l.to_s)
+= cache_with_locale OpenFoodNetwork::I18nConfig.locale_options do
+  %li.language-switcher.has-dropdown.not-click
+    %a{href: '#', class: "top-bar--menu-item-with-icon"}
+      %i.ofn-i_071-globe
+      %span= t 'language_name'
+    %ul.dropdown
+      - OpenFoodNetwork::I18nConfig.locale_options.each do |l|
+        %li
+          = link_to t('language_name', locale: l), main_app.locale_path(l.to_s)
