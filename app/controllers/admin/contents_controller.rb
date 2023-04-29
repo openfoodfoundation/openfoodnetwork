@@ -18,6 +18,8 @@ module Admin
         end
       end
 
+      ContentConfig.updated_at = Time.zone.now
+
       flash[:success] =
         t(:successfully_updated, resource: I18n.t('admin.contents.edit.your_content'))
 
