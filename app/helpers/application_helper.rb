@@ -76,12 +76,6 @@ module ApplicationHelper
   end
 
   def cache_key_with_locale(key, locale)
-    Array.wrap(key) + [locale.to_s, locale_digest(locale)]
-  end
-
-  private
-
-  def locale_digest(locale)
-    Rails.application.config.x.i18n_digests[locale]
+    Array.wrap(key) + [locale.to_s, I18nDigests.for_locale(locale)]
   end
 end

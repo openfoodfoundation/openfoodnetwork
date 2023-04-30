@@ -23,6 +23,7 @@ end
 require_relative "../lib/open_food_network/i18n_config"
 require_relative '../lib/spree/core/environment'
 require_relative '../lib/spree/core/mail_interceptor'
+require_relative "../lib/i18n_digests"
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -185,10 +186,7 @@ module Openfoodnetwork
     I18n.locale = config.i18n.locale = config.i18n.default_locale
 
     # Calculate digests for locale files so we can know when they change
-    config.i18n.available_locales.each do |locale|
-      (config.x.i18n_digests ||= {})[locale.to_sym] =
-        Digest::MD5.hexdigest(File.read(Rails.root.join("config/locales/#{locale}.yml")))
-    end
+    I18nDigests.build_digests config.i18n.available_locales
 
     # Setting this to true causes a performance regression in Rails 3.2.17
     # When we're on a version with the fix below, we can set it to true
