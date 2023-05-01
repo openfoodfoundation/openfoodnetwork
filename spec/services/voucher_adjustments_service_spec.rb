@@ -5,7 +5,7 @@ require 'spec_helper'
 describe VoucherAdjustmentsService do
   describe '.calculate' do
     let(:enterprise) { build(:enterprise) }
-    let(:voucher) { Voucher.create(code: 'new_code', enterprise: enterprise) }
+    let(:voucher) { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 10) }
 
     context 'when voucher covers the order total' do
       subject { order.voucher_adjustments.first }

@@ -720,8 +720,9 @@ describe "As a consumer, I want to checkout my order" do
         end
 
         context "with voucher available" do
-          let!(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor, amount: amount) }
-          let(:amount) { 15 }
+          let!(:voucher) do
+            create(:voucher, code: 'some_code', enterprise: distributor, amount: 15)
+          end
 
           before do
             visit checkout_step_path(:payment)
@@ -1112,7 +1113,7 @@ describe "As a consumer, I want to checkout my order" do
       end
 
       describe "vouchers" do
-        let(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor, amount: 6) }
+        let(:voucher) { create(:voucher, code: 'some_code', enterprise: distributor, amount: 6) }
 
         before do
           # Add voucher to the order

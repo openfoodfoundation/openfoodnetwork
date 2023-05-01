@@ -23,7 +23,7 @@ describe '
 
   it 'lists enterprise vouchers' do
     # Given an enterprise with vouchers
-    Voucher.create!(enterprise: enterprise, code: voucher_code, amount: amount)
+    create(:voucher, enterprise: enterprise, code: voucher_code, amount: amount)
 
     # When I go to the enterprise voucher tab
     visit edit_admin_enterprise_path(enterprise)

@@ -11,7 +11,7 @@ describe Voucher do
   end
 
   describe 'validations' do
-    subject { Voucher.new(code: 'new_code', enterprise: enterprise) }
+    subject { build(:voucher, code: 'new_code', enterprise: enterprise) }
 
     it { is_expected.to validate_presence_of(:code) }
     it { is_expected.to validate_uniqueness_of(:code).scoped_to(:enterprise_id) }
@@ -20,7 +20,7 @@ describe Voucher do
   end
 
   describe '#compute_amount' do
-    subject { Voucher.create(code: 'new_code', enterprise: enterprise, amount: 10) }
+    subject { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 10) }
 
     let(:order) { create(:order_with_totals) }
 
@@ -41,7 +41,7 @@ describe Voucher do
   describe '#create_adjustment' do
     subject(:adjustment) { voucher.create_adjustment(voucher.code, order) }
 
-    let(:voucher) { Voucher.create(code: 'new_code', enterprise: enterprise, amount: 25) }
+    let(:voucher) { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 25) }
     let(:order) { create(:order_with_line_items, line_items_count: 3, distributor: enterprise) }
 
     it 'includes the full voucher amount' do
