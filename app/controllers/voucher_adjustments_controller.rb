@@ -6,7 +6,6 @@ class VoucherAdjustmentsController < BaseController
   def destroy
     @order = current_order
 
-    # TODO: do we need to check the user can delete voucher_adjustment
     @order.voucher_adjustments.find_by(id: params[:id])&.destroy
 
     respond_to do |format|

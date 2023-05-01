@@ -11,7 +11,7 @@
               %i.ofn-i_051-check-big
                 = t("split_checkout.step2.voucher.voucher", voucher_amount: voucher_adjustment.originator.display_value)
             = link_to t("split_checkout.step2.voucher.remove_code"), voucher_adjustment_path(id: voucher_adjustment.id), method: "delete", data: { confirm: t("split_checkout.step2.voucher.confirm_delete") }
-            - # TODO: this might not be true, ie payment method include fee which wouldn't be covered by voucher, tax implication raise total to be bigger than voucher other ?
+            - # This might not be true, ie payment method including a fee which wouldn't be covered by voucher or tax implication raising total to be bigger than the voucher amount ?
             - if voucher_adjustment.originator.value > order.total
               .checkout-input
                 %span.formError.standalone
