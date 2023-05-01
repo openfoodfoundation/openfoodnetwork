@@ -21,7 +21,7 @@ class OrderFeesHandler
       create_order_fees!
     end
 
-    tax_enterprise_fees!
+    tax_enterprise_fees! unless order.state.in?(["cart", "address", "delivery"])
     order.update_order!
   end
 

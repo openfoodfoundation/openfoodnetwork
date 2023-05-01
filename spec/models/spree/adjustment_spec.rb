@@ -355,6 +355,7 @@ module Spree
 
         context "when enterprise fees have a fixed tax_category" do
           before do
+            order.update(state: "payment")
             order.recreate_all_fees!
           end
 
@@ -440,6 +441,11 @@ module Spree
                                       calculator: ::Calculator::FlatRate.new(preferred_amount: 50.0))
             }
 
+            before do
+              order.update(state: "payment")
+              order.create_tax_charge!
+            end
+
             describe "when the tax rate includes the tax in the price" do
               it "records no tax on the enterprise fee adjustments" do
                 # EnterpriseFee tax category is nil and inheritance only applies to per item fees
@@ -453,7 +459,7 @@ module Spree
             describe "when the tax rate does not include the tax in the price" do
               before do
                 product_tax_rate.update_attribute :included_in_price, false
-                order.reload.recreate_all_fees!
+                order.recreate_all_fees!
               end
 
               it "records the no tax on TaxRate adjustment on the order" do
@@ -470,6 +476,11 @@ module Spree
               create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: true,
                                       calculator: ::Calculator::PerItem.new(preferred_amount: 50.0))
             }
+
+            before do
+              order.update(state: "payment")
+              order.create_tax_charge!
+            end
 
             describe "when the tax rate includes the tax in the price" do
               it "records the correct amount in a tax adjustment" do
