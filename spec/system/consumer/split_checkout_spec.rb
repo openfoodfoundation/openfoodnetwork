@@ -787,7 +787,7 @@ describe "As a consumer, I want to checkout my order" do
               end
 
               within '.voucher' do
-                expect(page).to have_button("Apply")
+                expect(page).to have_button("Apply", disabled: true)
               end
               expect(order.voucher_adjustments.length).to eq(0)
             end
@@ -1024,7 +1024,7 @@ describe "As a consumer, I want to checkout my order" do
           end
 
           context "when the terms have been accepted in the past" do
-            
+
 
             context "with a dedicated ToS file" do
               before do

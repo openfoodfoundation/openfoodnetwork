@@ -5,7 +5,7 @@
         = t("split_checkout.step2.voucher.apply_voucher")
 
       .checkout-input
-        .two-columns-inputs.voucher
+        .two-columns-inputs.voucher{"data-controller": "toggle-button-disabled"}
           - if voucher_adjustment.present?
             %span.button.voucher-added
               %i.ofn-i_051-check-big
@@ -17,6 +17,5 @@
                 %span.formError.standalone
                   = t("split_checkout.step2.voucher.warning_forfeit_remaining_amount")
           - else
-            = f.text_field :voucher_code, { placeholder: t("split_checkout.step2.voucher.placeholder"), class: "voucher" }
-            - # TODO: enable button when code entered
-            = f.submit t("split_checkout.step2.voucher.apply"), class: "button cancel voucher", disabled: false
+            = f.text_field :voucher_code, data: { action: "input->toggle-button-disabled#inputIsChanged", }, placeholder: t("split_checkout.step2.voucher.placeholder") , class: "voucher"
+            = f.submit t("split_checkout.step2.voucher.apply"), disabled: true, class: "button cancel voucher",  data: { "toggle-button-disabled-target": "button" }
