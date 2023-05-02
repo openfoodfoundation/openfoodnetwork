@@ -6,6 +6,8 @@
 - options = @background_reports ? { data: { remote: "true" } } : {}
 
 = form_for @report.search, { url: url_for }.merge(options) do |f|
+  = hidden_field_tag "uuid", request.uuid
+
   %fieldset.no-border-bottom.print-hidden
     %legend{ align: 'center'}= t(:report_filters)
     = render partial: "admin/reports/filters/#{@report_type}", locals: { f: f }
@@ -27,5 +29,5 @@
 
 = t(@error, link: link_to(t(".report_link_label"), @error_url)) if @error
 
-#report-table
+#report-table{ data: { controller: "scoped-channel", "scoped-channel-id-value": request.uuid } }
   = @table

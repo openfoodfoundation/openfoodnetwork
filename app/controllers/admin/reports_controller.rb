@@ -67,7 +67,7 @@ module Admin
       @blob = ReportBlob.create_for_upload_later!(report_filename)
 
       ReportJob.perform_later(
-        report_class, spree_current_user, params, format, @blob, SessionChannel.for_request(request)
+        report_class, spree_current_user, params, format, @blob, ScopedChannel.for_id(params[:uuid])
       )
 
       render cable_ready: cable_car.
