@@ -1,13 +1,5 @@
 @import "variables.scss";
-@import "shared/typography.scss";
 
 body.admin.admin-v2 {
   @import "navigation.scss";
-  @import "plugins/select2.scss";
-  @import "plugins/powertip.scss";
-  @import "plugins/flatpickr-customization.scss";
-  @import "shared/forms.scss";
-  @import "components/buttons.scss";
-  @import "components/tables.scss";
-  @import "components/progress.scss";
 }
