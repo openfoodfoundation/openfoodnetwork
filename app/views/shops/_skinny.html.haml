@@ -5,42 +5,42 @@
       %span.margin-top.hub-name-listing{"ng-bind" => "::hub.name | truncate:40"}
 
   .columns.small-4.medium-2.large-2
-    %span.margin-top{"ng-bind" => "::hub.address.city"}
-  .columns.small-2.medium-1.large-1
-    %span.margin-top{"ng-bind" => "::hub.address.state_name"}
+    %span.margin-top.ellipsed{"ng-bind" => "::hub.address.city"}
+  .columns.small-3.medium-2.large-2
+    %span.margin-top.ellipsed{"ng-bind" => "::hub.address.state_name"}
     %span.margin-top{"ng-if" => "hub.distance != null && hub.distance > 0"} ({{ hub.distance / 1000 | number:0 }} km)
 
-  .columns.small-5.medium-3.large-3.text-right{"ng-if" => "::hub.active"}
-    %a.hub.open_closed{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
-      %i.ofn-i_068-shop-reversed.show-for-medium-up
-      %span.margin-top{ ng: { if: "::current()" } }
+  .columns.small-5.medium-3.large-3.text-right.no-wrap.flex.flex-align-center.flex-justify-end{"ng-if" => "::hub.active"}
+    %a.hub.open_closed.flex.flex-align-center{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
+      %span{ ng: { if: "::current()" } }
         %em= t :hubs_shopping_here
-      %span.margin-top{ ng: { if: "::!current()" } }
+      %span{ ng: { if: "::!current()" } }
         %span{"ng-bind" => "::hub.orders_close_at | sensible_timeframe"}
+      %i.ofn-i_068-shop-reversed.show-for-medium-up
+    %span{style: "margin-left: 0.5rem;"}
+      %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
 
-  .columns.small-5.medium-3.large-3.text-right{"ng-if" => "::!hub.active"}
-    %a.hub.open_closed{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
-      %span.margin-top{ ng: { if: "::current()" } }
+  .columns.small-5.medium-3.large-3.text-right.no-wrap.flex.flex-align-center.flex-justify-end{"ng-if" => "::!hub.active"}
+    %a.hub.open_closed.flex{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
+      %span{ ng: { if: "::current()" } }
         %em= t :hubs_shopping_here
-      %span.margin-top{ ng: { if: "::!current()" } }
+      %span{ ng: { if: "::!current()" } }
         = t :hubs_orders_closed
       %i.ofn-i_068-shop-reversed.show-for-medium-up
-
-  .columns.small-1.medium-1.large-1.text-right
-    %span.margin-top
+    %span{style: "margin-left: 0.5rem;"}
       %i{"ng-class" => "{'ofn-i_005-caret-down' : !open(), 'ofn-i_006-caret-up' : open()}"}
 
 .row.active_table_row{"ng-if" => "!hub.is_distributor", "ng-class" => "closed"}
   .columns.small-12.medium-6.large-5.skinny-head
     %a.hub{"ng-click" => "openModal(hub)", "ng-class" => "{primary: hub.active, secondary: !hub.active}"}
       %i{ng: {class: "hub.icon_font"}}
-      %span.margin-top.hub-name-listing{"ng-bind" => "::hub.name | truncate:40"}
+      %span.hub-name-listing{"ng-bind" => "::hub.name | truncate:40"}
 
   .columns.small-4.medium-2.large-2
-    %span.margin-top{"ng-bind" => "::hub.address.city"}
+    %span.ellipsed{"ng-bind" => "::hub.address.city"}
   .columns.small-2.medium-1.large-1
-    %span.margin-top{"ng-bind" => "::hub.address.state_name"}
+    %span.ellipsed{"ng-bind" => "::hub.address.state_name"}
 
-  .columns.small-6.medium-3.large-4.text-right
-    %span.margin-top{ ng: { if: "::!current()" } }
+  .columns.small-6.medium-3.large-4.text-right.no-wrap.flex.flex-align-center.flex-justify-end
+    %span{ ng: { if: "::!current()" } }
       %em= t :hubs_profile_only
