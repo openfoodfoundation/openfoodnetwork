@@ -100,6 +100,7 @@ adjustItems = function(shipment_number, variant_id, quantity, restock_item){
         doAdjustItems(shipment_number, variant_id, quantity, inventory_units, restock_item, () => {
           var redirectTo = new URL(Spree.routes.cancel_order.toString());
           redirectTo.searchParams.append("send_cancellation_email", sendEmailCancellation);
+          redirectTo.searchParams.append("restock_item", restock_item);
           window.location.href = redirectTo.toString();
         });
       }
