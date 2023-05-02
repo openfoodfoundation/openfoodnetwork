@@ -8,7 +8,10 @@ Openfoodnetwork::Application.routes.draw do
 
     constraints FeatureToggleConstraint.new(:dfc_provider) do
       # Mount DFC API endpoints
-      mount DfcProvider::Engine, at: '/dfc-v1.6/'
+      #
+      # The DFC API version depends on the version of the
+      # datafoodconsortium-connector gem.
+      mount DfcProvider::Engine, at: '/dfc-v1.7/'
     end
 
     namespace :v0 do

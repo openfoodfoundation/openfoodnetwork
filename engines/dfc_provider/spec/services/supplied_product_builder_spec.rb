@@ -12,7 +12,7 @@ describe DfcBuilder do
       product = DfcBuilder.supplied_product(variant)
 
       expect(product.semanticId).to eq(
-        "http://test.host/api/dfc-v1.6/enterprises/7/supplied_products/5"
+        "http://test.host/api/dfc-v1.7/enterprises/7/supplied_products/5"
       )
     end
 
