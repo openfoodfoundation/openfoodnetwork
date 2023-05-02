@@ -8,6 +8,8 @@ module Spree
       back_end: "back_end"
     }.freeze
 
+    self.belongs_to_required_by_default = true
+
     acts_as_paranoid
     acts_as_taggable
 
@@ -25,7 +27,7 @@ module Spree
     has_and_belongs_to_many :zones, join_table: 'spree_shipping_methods_zones',
                                     class_name: 'Spree::Zone'
 
-    belongs_to :tax_category, class_name: 'Spree::TaxCategory'
+    belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
 
     validates :name, presence: true
     validate :distributor_validation
