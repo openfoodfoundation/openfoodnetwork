@@ -5,11 +5,11 @@
   white-space: nowrap;
 
   &:before {
-    content: '';
+    content: "";
     position: relative;
     display: inline-block;
     margin-right: 3px;
-    border-radius: $body-font-size*0.5;
+    border-radius: $body-font-size * 0.5;
     width: $body-font-size - 4px;
     height: $body-font-size - 4px;
   }
@@ -29,7 +29,13 @@ table tbody tr {
   &[class*="state"] td:first-child {
     border-left-width: 3px;
   }
-  &.state-complete td:first-child { border-left-color: $color-success }
-  &.state-cart     td:first-child { border-left-color: very-light($color-notice, 6) }
-  &.state-canceled td:first-child { border-left-color: $color-error }
+  &.state-complete td:first-child {
+    border-left-color: $color-success;
+  }
+  &.state-cart td:first-child {
+    border-left-color: very-light($color-notice, 6);
+  }
+  &.state-canceled td:first-child {
+    border-left-color: $color-error;
+  }
 }

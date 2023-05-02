@@ -1,4 +1,7 @@
-input[type="submit"], input[type="button"], button, .button {
+input[type="submit"],
+input[type="button"],
+button,
+.button {
   position: relative;
   cursor: pointer;
   font-size: 85%;
@@ -15,7 +18,11 @@ input[type="submit"], input[type="button"], button, .button {
     font-weight: normal !important;
   }
 
-  &:visited, &:active, &:focus { color: $color-btn-text }
+  &:visited,
+  &:active,
+  &:focus {
+    color: $color-btn-text;
+  }
 
   &:hover {
     background-color: $color-btn-hover-bg;
@@ -36,7 +43,9 @@ input[type="submit"], input[type="button"], button, .button {
     border: 1px solid $color-btn-bg;
     color: $color-btn-bg;
 
-    &:hover, &:active, &:focus {
+    &:hover,
+    &:active,
+    &:focus {
       background-color: #ebf3fb;
     }
 
@@ -55,9 +64,15 @@ input[type="submit"], input[type="button"], button, .button {
     padding: 0px 5px;
     border-radius: 3px;
 
-    &:before { padding: 0 }
+    &:before {
+      padding: 0;
+    }
 
-    &.danger { background-color: $warning-red; }
-    &.success { background-color: $spree-green; }
+    &.danger {
+      background-color: $warning-red;
+    }
+    &.success {
+      background-color: $spree-green;
+    }
   }
 }

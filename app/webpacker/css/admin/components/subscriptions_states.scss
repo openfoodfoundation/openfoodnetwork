@@ -14,26 +14,41 @@
 
   &.active {
     background-color: $spree-green;
-    &, a { color: #ffffff; }
+    &,
+    a {
+      color: #ffffff;
+    }
   }
 
   &.paused {
     background-color: #ff9300;
-    &, a { color: #ffffff; }
+    &,
+    a {
+      color: #ffffff;
+    }
   }
 
   &.canceled {
     background-color: #c60f13;
-    &, a { color: #ffffff; }
+    &,
+    a {
+      color: #ffffff;
+    }
   }
 
   &.ended {
     background-color: #7a7a7a;
-    &, a { color: #ffffff; }
+    &,
+    a {
+      color: #ffffff;
+    }
   }
 
   &.pending {
     background-color: #7a7a7a;
-    &, a { color: #ffffff; }
+    &,
+    a {
+      color: #ffffff;
+    }
   }
 }

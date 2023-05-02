@@ -8,10 +8,10 @@
   transform: translateX(-50%);
   z-index: 1000;
   background-color: $spree-blue;
-  color: #FFFFFF;
-  opacity: .8;
+  color: #ffffff;
+  opacity: 0.8;
   font-size: 1rem;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   font-weight: bold;
   text-align: center;
   text-transform: uppercase;
@@ -37,6 +37,6 @@
   }
   h1 {
     margin-top: 20px;
-    color: inherit;    
+    color: inherit;
   }
 }

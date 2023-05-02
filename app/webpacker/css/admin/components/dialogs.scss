@@ -1,8 +1,10 @@
-#info-dialog, #confirm-dialog {
+#info-dialog,
+#confirm-dialog {
   .message {
-    .text, .icon {
+    .text,
+    .icon {
       position: relative;
-      float:left;
+      float: left;
       display: inline;
     }
 
