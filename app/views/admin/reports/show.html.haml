@@ -3,7 +3,9 @@
 
 - content_for :minimal_js, true if @background_reports
 
-= form_for @report.search, :url => url_for do |f|
+- options = @background_reports ? { data: { remote: "true" } } : {}
+
+= form_for @report.search, { url: url_for }.merge(options) do |f|
   %fieldset.no-border-bottom.print-hidden
     %legend{ align: 'center'}= t(:report_filters)
     = render partial: "admin/reports/filters/#{@report_type}", locals: { f: f }
@@ -24,4 +26,6 @@
     %button.btn-print.icon-print{ onclick: "window.print()"}= t(:report_print)
 
 = t(@error, link: link_to(t(".report_link_label"), @error_url)) if @error
-= @table
+
+#report-table
+  = @table

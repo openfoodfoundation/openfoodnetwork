@@ -22,6 +22,13 @@ module Admin
     def show
       @report = report_class.new(spree_current_user, params, render: render_data?)
 
+      @background_reports = OpenFoodNetwork::FeatureToggle
+                              .enabled?(:background_reports, spree_current_user)
+
+      if @background_reports && request.post?
+        return background(report_format)
+      end
+
       if params[:report_format].present?
         export_report
       else
@@ -34,12 +41,12 @@ module Admin
     private
 
     def export_report
-      send_data render_report_as(report_format), filename: report_filename
+      send_data @report.render_as(report_format), filename: report_filename
     end
 
     def show_report
       assign_view_data
-      @table = render_report_as(:html) if render_data?
+      @table = @report.render_as(:html) if render_data?
       render "show"
     end
 
@@ -56,21 +63,21 @@ module Admin
       request.post?
     end
 
-    def render_report_as(format)
-      if OpenFoodNetwork::FeatureToggle.enabled?(:background_reports, spree_current_user)
-        @blob = ReportBlob.create_for_upload_later!(report_filename)
-        ReportJob.perform_later(
-          report_class, spree_current_user, params, format, @blob
-        )
-        Timeout.timeout(max_wait_time) do
-          sleep 1 until @blob.content_stored?
-        end
+    def background(format)
+      @blob = ReportBlob.create_for_upload_later!(report_filename)
 
-        # This result has been rendered by Rails in safe mode already.
-        @blob.result.html_safe # rubocop:disable Rails/OutputSafety
-      else
-        @report.render_as(format)
-      end
+      ReportJob.perform_later(
+        report_class, spree_current_user, params, format, @blob, SessionChannel.for_request(request)
+      )
+
+      render cable_ready: cable_car.
+        inner_html(
+          selector: "#report-table",
+          html: render_to_string(partial: "admin/reports/loading")
+        ).scroll_into_view(
+          selector: "#report-table",
+          block: "start"
+        )
     end
 
     def render_timeout_error
@@ -83,18 +90,6 @@ module Admin
         @error_url = ""
       end
       render "show"
-    end
-
-    def max_wait_time
-      # This value is used by rack-timeout and nginx, usually 30 seconds in
-      # staging and production:
-      server_timeout = ENV.fetch("RACK_TIMEOUT_SERVICE_TIMEOUT", "15").to_f
-
-      # Zero disables the timeout:
-      return 0 if server_timeout.zero?
-
-      # We want to time out earlier than nginx:
-      server_timeout - 2.seconds
     end
   end
 end

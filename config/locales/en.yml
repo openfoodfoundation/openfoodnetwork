@@ -1469,6 +1469,8 @@ en:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      download:
+        button: "Download Report"
       show:
         report_taking_longer: >
           Sorry, this report took too long to process.

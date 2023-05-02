@@ -60,3 +60,24 @@ table.report__table {
   margin: 0 !important;
   width: 120px;
 }
+
+#report-table {
+  margin-bottom: 4em;
+
+  .loading, .download {
+    text-align: center;
+    height: 2em;
+    padding: 4em;
+    width: 100%;
+
+    .spinner {
+      font-size: 4em;
+      color: $spree-blue;
+      opacity: 0.3;
+    }
+
+    .button {
+      font-size: 1.25em;
+    }
+  }
+}
