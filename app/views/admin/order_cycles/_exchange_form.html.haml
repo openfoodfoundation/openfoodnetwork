@@ -26,16 +26,15 @@
 
     = f.submit t('.add_fee'), 'ng-click' => 'addExchangeFee($event, exchange)', 'ng-hide' => '!enterprises[exchange.enterprise_id].managed && !order_cycle.viewing_as_coordinator'
   %td.actions
-    .flex
-      %a{'ng-click' => 'removeExchange($event, exchange)', :class => "icon-trash no-text remove-exchange"}
+    %a{'ng-click' => 'removeExchange($event, exchange)', :class => "icon-trash no-text remove-exchange"}
 
 - if type == 'supplier'
   %tr.panel-row{ object: "exchange",
     panels: "{products: 'exchange_products_supplied'}",
     locals: "$index,exchangeTotalVariants,order_cycle,exchange,enterprises,setExchangeVariants,selectAllVariants,suppliedVariants,removeDistributionOfVariant,initializeExchangeProductsPanel,loadMoreExchangeProducts,loadAllExchangeProducts,productsLoading",
-    colspan: if feature?(:admin_style_v2, spree_current_user) then 5 else 4 end }
+    colspan: 4 }
 - if type == 'distributor'
   %tr.panel-row{ object: "exchange",
     panels: "{products: 'exchange_products_distributed', tags: 'exchange_tags'}",
     locals: "$index,exchangeTotalVariants,order_cycle,exchange,enterprises,setExchangeVariants,incomingExchangeVariantsFor,variantSuppliedToOrderCycle,initializeExchangeProductsPanel,loadMoreExchangeProducts,loadAllExchangeProducts,productsLoading",
-    colspan: if feature?(:admin_style_v2, spree_current_user) then 6 else 5 end }
+    colspan: 5 }

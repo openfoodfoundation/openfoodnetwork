@@ -7,7 +7,7 @@
     color: $v2-medium-grey !important;
     padding-left: 5px;
     font-size: 13px;
-    height: 35px;
+    padding-top: 3px;
 
     .select2-arrow {
       color: $v2-medium-grey;
@@ -17,7 +17,7 @@
   &.select2-container-active,
   &:hover {
     .select2-choice {
-      background-color: white !important;
+      background-color: transparent !important;
       border-color: $v2-medium-grey !important;
     }
   }
@@ -45,26 +45,14 @@
   }
   .select2-choices {
     border-color: $v2-medium-grey !important;
-    min-height: 35px;
     .select2-search-choice {
       background-color: $v2-blue-light;
-    }
-  }
-  &.select2-drop-above {
-    .select2-choices {
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-      border-bottom-left-radius: 3px;
-      border-bottom-right-radius: 3px;
     }
   }
 }
 
 .select2-drop {
   border-color: $v2-medium-grey;
-  &.select2-drop-above.select2-drop-active {
-    border-color: $v2-medium-grey;
-  }
 }
 
 .select2-search {
