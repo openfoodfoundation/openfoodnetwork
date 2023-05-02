@@ -12,14 +12,14 @@
     %col{:style => "width: 85%"}/
     %col{:style => "width: 15%"}/
   %thead
-    %tr{"data-hook" => "categories_header"}
+    %tr
       %th= Spree.t(:name)
       %th
         = t(:temperature_controlled)
       %th.actions
   %tbody
     - @shipping_categories.each do |shipping_category|
-      %tr{:class => "#{cycle('odd', 'even')}", "data-hook" => "category_row", :id => "#{spree_dom_id shipping_category}"}
+      %tr{:class => "#{cycle('odd', 'even')}", :id => "#{spree_dom_id shipping_category}"}
         %td{:style => "width:350px;"}= shipping_category.name
         %td.align-center
           = shipping_category.temperature_controlled ? t(:yes) : t(:no)

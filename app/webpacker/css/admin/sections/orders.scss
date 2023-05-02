@@ -1,5 +1,5 @@
 // Customize orders filter
-[data-hook="admin_orders_index_search"] {
+.admin-orders-index-search {
   select[data-placeholder="Status"] {
     width: 100%;
   }
@@ -10,7 +10,7 @@
 }
 
 // Order-total
-[data-hook="order_details_total"]{
+.order-details-total {
   text-align: center;
 
   .order-total {
@@ -20,7 +20,7 @@
   }
 }
 
-[data-hook="admin_order_form_fields"] {
+.admin-order-form-fields {
   legend.stock-location {
     color: $color-body-text;
 

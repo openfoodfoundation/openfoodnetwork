@@ -15,7 +15,7 @@
 = render partial: "spree/admin/shared/order_page_title"
 = render partial: "spree/admin/shared/order_tabs", locals: { current: 'Order Details' }
 
-%div{"data-hook" => "admin_order_edit_header"}
+%div
   -# Suppress errors when manually creating a new order - needs to proceed to edit page
   -# without having line items (which otherwise gives a validation error)
   - unless params["suppress_error_msg"]
@@ -31,5 +31,5 @@
       .no-objects-found
         = Spree.t(:your_order_is_empty_add_product)
 
-    %div{"data-hook" => "admin_order_edit_form"}
+    %div.admin-order-edit-form
       = render :partial => 'form', :locals => { :order => @order }

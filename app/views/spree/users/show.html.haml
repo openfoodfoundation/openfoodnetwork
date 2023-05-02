@@ -13,7 +13,7 @@
     .small-12.columns.pad-top
       %h2
         = accurate_title
-        %span.account-summary{"data-hook" => "account_summary"}
+        %span.account-summary
           = @user.email
 
     = render 'orders'

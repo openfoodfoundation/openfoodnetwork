@@ -35,7 +35,7 @@ nav.menu {
   }
 }
 
-[data-hook="admin_login_navigation_bar"] {
+.admin-login-navigation-bar {
   ul {
     text-align: right;
 
@@ -46,7 +46,7 @@ nav.menu {
       color: $color-link;
       margin-top: 8px;
 
-      &[data-hook="user-logged-in-as"] {
+      &.user-logged-in-as {
         width: 50%;
         color: $color-body-text;
       }

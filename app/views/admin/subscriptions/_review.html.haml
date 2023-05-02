@@ -77,7 +77,7 @@
               %td.price.align-center {{ item.price_estimate | localizeCurrency }}
               %td.quantity {{ item.quantity }}
               %td.total.align-center {{ (item.price_estimate * item.quantity) | localizeCurrency }}
-          %tbody#subtotal.no-border-top{"data-hook" => "admin_order_form_subtotal"}
+          %tbody#subtotal.no-border-top
             %tr#subtotal-row
               %td{:colspan => "3"}
                 %b
@@ -85,7 +85,7 @@
                   \:
               %td.total.align-center
                 %span {{ subscription.estimatedSubtotal() | localizeCurrency }}
-          %tbody#order-total.grand-total.no-border-top{"data-hook" => "admin_order_form_total"}
+          %tbody#order-total.grand-total.no-border-top
             %tr
               %td{:colspan => "3"}
                 %b

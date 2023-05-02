@@ -1,4 +1,4 @@
-%div{"data-hook" => "admin_orders_index_search"}
+%div.admin-orders-index-search
   = form_tag spree.admin_orders_url, {name: "orders_form", "ng-submit" => "fetchResults()"} do
     .field-block.alpha.four.columns
       .date-range-filter.field

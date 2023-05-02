@@ -17,7 +17,7 @@
       %td.item-total.align-center
         = line_item_shipment_price(line_item, item.quantity)
 
-      %td.cart-item-delete.actions{ "data-hook" => "cart_item_delete" }
+      %td.cart-item-delete.actions
         - if shipment.can_modify? && can?(:update, shipment)
           .flex
             = link_to '', '#', :class => 'save-item icon_link icon-ok no-text with-tip', :data => {'shipment-number' => shipment.number, 'variant-id' => item.variant.id, :action => 'save'}, :title => t('actions.save'), :style => 'display: none'

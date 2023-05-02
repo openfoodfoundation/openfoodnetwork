@@ -136,9 +136,6 @@ describe '
 
       page.find('table.index .icon-edit').click
 
-      # Then I should not see a traditional option value field for the unit-related option value
-      expect(page).to have_no_selector "div[data-hook='presentation'] input"
-
       # And I should see unit value and description fields for the unit-related option value
       expect(page).to have_field "unit_value_human", with: "1"
       expect(page).to have_field "variant_unit_description", with: "foo"

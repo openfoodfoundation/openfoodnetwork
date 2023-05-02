@@ -1,7 +1,7 @@
 %html{ lang: "en", "ng-csp": "no-unsafe-eval" }
-  %head{"data-hook" => "admin_inside_head"}= render :partial => 'spree/admin/shared/head'
+  %head= render :partial => 'spree/admin/shared/head'
   %body.admin{"data-ajax-root-path" => main_app.root_path}
-    #wrapper{"data-hook" => ""}
+    #wrapper
       - if flash[:error]
         .flash.error= flash[:error]
       - if notice
@@ -10,16 +10,16 @@
         .flash.success= flash[:success]
       = render partial: "spree/layouts/admin/progress_spinner"
 
-      %header#header{"data-hook" => ""}
+      %header#header
         .container
-          %figure.columns.five{"data-hook" => "logo-wrapper"}
+          %figure.columns.five
             = link_to image_tag(Spree::Config[:admin_interface_logo], id: 'logo'), spree.admin_dashboard_path
-          %nav.columns.eleven{"data-hook" => "admin_login_navigation_bar"}
+          %nav.columns.eleven.admin-login-navigation-bar
             = render partial: "spree/layouts/admin/login_nav"
 
       .container
         .row
-          #content{"data-hook" => ""}
+          #content
             %div{:class => "sixteen columns"}
               = yield
-    %div{"data-hook" => "admin_footer_scripts"}
+    %div

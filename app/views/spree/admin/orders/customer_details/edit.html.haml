@@ -12,7 +12,7 @@
   %li= button_link_to Spree.t(:back_to_orders_list), admin_orders_path, :icon => 'icon-arrow-left'
 
 - if @order.cart? || @order.address?
-  #select-customer{"data-hook" => ""}
+  #select-customer
     %fieldset.no-border-bottom
       %legend{:align => "center"}= Spree.t(:customer_search)
       - content_for :main_ng_app_name do

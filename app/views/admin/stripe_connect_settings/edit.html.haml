@@ -14,7 +14,7 @@
           = f.label :stripe_connect_enabled, t('.stripe_connect_enabled')
           = f.check_box :stripe_connect_enabled, disabled: disabled
     .row
-      .twelve.columns.alpha.omega.form-buttons{"data-hook" => "buttons"}
+      .twelve.columns.alpha.omega.form-buttons
         = button t(:update), 'icon-refresh', value: "update"
 
 %fieldset.no-border-bottom

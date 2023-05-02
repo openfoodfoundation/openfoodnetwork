@@ -5,7 +5,7 @@
   = Spree.t(:general_settings)
 
 = form_tag admin_general_settings_path, :method => :put do
-  #preferences{"data-hook" => ""}
+  #preferences
 
     %fieldset.general.no-border-top
       - @preferences_general.each do |key|
@@ -85,6 +85,6 @@
                 = preference_field_tag("available_units[#{unit}]", selected, { type: :boolean, selected: selected })
                 = label_tag(unit, unit.downcase) + tag(:br)
 
-      .form-buttons.filter-actions.actions{"data-hook" => "buttons"}
+      .form-buttons.filter-actions.actions
         = button Spree.t('actions.update'), 'icon-refresh'
         = link_to_with_icon 'icon-remove', Spree.t('actions.cancel'), edit_admin_general_settings_url, :class => 'button'

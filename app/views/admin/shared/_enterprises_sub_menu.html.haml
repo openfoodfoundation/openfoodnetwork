@@ -1,5 +1,5 @@
 - content_for :sub_menu do
-  %ul#sub_nav.inline-menu{"data-hook" => "admin_enterprise_sub_tabs"}
+  %ul#sub_nav.inline-menu
     = tab :enterprises, url: main_app.admin_enterprises_path
     = tab :enterprise_relationships, url: main_app.admin_enterprise_relationships_path
     - if ENV["OPENID_APP_ID"].present? && ENV["OPENID_APP_SECRET"].present?

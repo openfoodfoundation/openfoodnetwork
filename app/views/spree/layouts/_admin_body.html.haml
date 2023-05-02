@@ -2,7 +2,7 @@
 = render "layouts/i18n_script"
 = yield :stripe_js
 
-#wrapper{ data: { hook: '' } }
+#wrapper
   .flash-container
     - if flash[:error]
       .flash.error= flash[:error]
@@ -15,27 +15,27 @@
 
   = render partial: "spree/layouts/admin/progress_spinner"
 
-  %header#header{"data-hook" => ""}
+  %header#header
     .container
-      %figure.columns.five{"data-hook" => "logo-wrapper"}
+      %figure.columns.five
         = link_to image_tag(Spree::Config[:admin_interface_logo], :id => 'logo'), spree.admin_dashboard_path
-      %nav.columns.eleven{"data-hook" => "admin_login_navigation_bar"}
+      %nav.columns.eleven.admin-login-navigation-bar
         = render :partial => 'spree/layouts/admin/login_nav'
 
-  %nav#admin-menu{ data: { hook: '' }}
+  %nav#admin-menu
     .container.no-gutter
       .sixteen.columns.main-menu-wrapper
-        %ul.inline-menu{"data-hook" => "admin_tabs"}
+        %ul.inline-menu
           = render :partial => 'spree/admin/shared/tabs'
 
   - if content_for?(:sub_menu)
-    %nav#sub-menu{ data: { hook: ''} }
+    %nav#sub-menu
       .container
         .sixteen.columns
           = yield :sub_menu
 
   - if content_for?(:page_title) || content_for?(:page_actions)
-    .js-admin-section-header.admin__section-header{ data: { hook: '' } }
+    .js-admin-section-header.admin__section-header
       .container
         .sixteen.columns
           .admin__section-header__content
@@ -44,16 +44,16 @@
                 %h1.js-admin-page-title= yield :page_title
 
             - if content_for?(:page_actions)
-              %ul.admin__section-header__actions{ data: { hook: 'toolbar' } }
+              %ul.admin__section-header__actions
                 = yield :page_actions
 
   .container
     .row
       - content_class = content_for?(:sidebar) ? "with-sidebar" : ""
-      #content{:class => content_class, "data-hook" => ""}
+      #content{:class => content_class}
         - if content_for?(:table_filter)
           - table_filter_class = content_for?(:sidebar) ? 'twelve columns' : 'sixteen columns'
-          #table-filter{:class => table_filter_class, "data-hook" => ""}
+          #table-filter{:class => table_filter_class}
             %fieldset
               %legend{:align => "center"}= yield :table_filter_title
               = yield :table_filter
@@ -61,13 +61,11 @@
         %div{:class => div_class}
           = yield
         - if content_for?(:sidebar)
-          %aside#sidebar.four.columns{"data-hook" => ""}
+          %aside#sidebar.four.columns
             - if content_for?(:sidebar_title)
               %h5.sidebar-title
                 %span= yield :sidebar_title
             = yield :sidebar
-
-%div{"data-hook" => "admin_footer_scripts"}
 
 %script
   = raw "Spree.api_key = \"#{spree_current_user.try(:spree_api_key).to_s}\";"

@@ -3,7 +3,7 @@
 = admin_inject_available_units
 
 = form_for [:admin, @product, @variant], :url => admin_product_variants_path(@product, @url_filters) do |f|
-  %fieldset{'data-hook' => "admin_variant_new_form"}
+  %fieldset
     %legend{align: "center"}= t('.new_variant')
     = render partial: 'form', locals: { f: f }
 
