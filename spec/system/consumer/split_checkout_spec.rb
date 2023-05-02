@@ -1024,8 +1024,6 @@ describe "As a consumer, I want to checkout my order" do
           end
 
           context "when the terms have been accepted in the past" do
-
-
             context "with a dedicated ToS file" do
               before do
                 TermsOfServiceFile.create!(
