@@ -52,7 +52,7 @@
       .actions.filter-actions
         %a.button.icon-search{'ng-click' => 'refreshData()'}
           = t(:filter_results)
-        %a.button{'ng-click' => 'resetSelectFilters()', "id": "clear_filters_button", "class": ("secondary" if feature?(:admin_style_v2, spree_current_user)) }
+        %a.button{'ng-click' => 'resetSelectFilters()', "id": "clear_filters_button" }
           =  t(:clear_filters)
 
   %hr.divider.sixteen.columns.alpha.omega{ ng: { show: 'unitsVariantSelected()' } }
