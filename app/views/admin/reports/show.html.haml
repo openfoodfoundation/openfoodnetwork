@@ -1,6 +1,8 @@
 - content_for :page_title do
   = @report_title
 
+- content_for :minimal_js, true if @background_reports
+
 = form_for @report.search, :url => url_for do |f|
   %fieldset.no-border-bottom.print-hidden
     %legend{ align: 'center'}= t(:report_filters)
