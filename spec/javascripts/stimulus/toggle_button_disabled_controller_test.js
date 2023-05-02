@@ -9,22 +9,24 @@ describe("ButtonEnableToggleController", () => {
   beforeAll(() => {
     const application = Application.start()
     application.register("toggle-button-disabled", toggle_button_disabled_controller)
-    jest.useFakeTimers()
   })
 
   beforeEach(() => {
     document.body.innerHTML = `
       <form id="test-form" data-controller="toggle-button-disabled">
         <input id="test-input" type="input" data-action="input->toggle-button-disabled#inputIsChanged" />
-        <input id="test-submit" type="submit" data-toggle-button-disabled-target="button"/>
+        <input 
+          id="test-submit" 
+          type="submit" 
+          data-disable-with="false" 
+          data-toggle-button-disabled-target="button"
+        />
       </form>
     `
   })
 
   describe("#connect", () => {
     it("disables the target submit button", () => {
-      jest.runAllTimers();
-
       const submit = document.getElementById("test-submit")
       expect(submit.disabled).toBe(true)
     })  
@@ -41,9 +43,7 @@ describe("ButtonEnableToggleController", () => {
       // I am not sure if it's possible to manually trigger the loading/connect of the controller to 
       // try catch the error, so leaving as this. It will break if the missing target isn't handled
       // properly
-      it("doesn't break", () => {
-        jest.runAllTimers()
-      })  
+      it("doesn't break", () => {})  
     })  
   })
 
@@ -52,7 +52,6 @@ describe("ButtonEnableToggleController", () => {
     let submit 
 
     beforeEach(() => {
-      jest.runAllTimers()
       input = document.getElementById("test-input")
       submit = document.getElementById("test-submit")
     })

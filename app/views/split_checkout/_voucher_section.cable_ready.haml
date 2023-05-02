@@ -18,4 +18,4 @@
                   = t("split_checkout.step2.voucher.warning_forfeit_remaining_amount")
           - else
             = f.text_field :voucher_code, data: { action: "input->toggle-button-disabled#inputIsChanged", }, placeholder: t("split_checkout.step2.voucher.placeholder") , class: "voucher"
-            = f.submit t("split_checkout.step2.voucher.apply"), disabled: true, class: "button cancel voucher",  data: { "toggle-button-disabled-target": "button" }
+            = f.submit t("split_checkout.step2.voucher.apply"), disabled: true, class: "button cancel voucher", "data-disable-with": false,  data: { "toggle-button-disabled-target": "button" }
