@@ -22,7 +22,7 @@ module Spree
       go_to_state :delivery
       go_to_state :payment, if: ->(order) {
         order.update_totals
-        order.payment_required?
+        !order.skip_payment_for_subscription?
       }
       go_to_state :confirmation, if: ->(order) {
         OpenFoodNetwork::FeatureToggle.enabled? :split_checkout, order.created_by
@@ -206,6 +206,10 @@ module Spree
     #   be completed to draw from stock levels and trigger emails.
     def payment_required?
       total.to_f > 0.0 && !skip_payment_for_subscription?
+    end
+
+    def skip_payment_for_subscription?
+      subscription.present? && order_cycle.orders_close_at&.>(Time.zone.now)
     end
 
     # Returns the relevant zone (if any) to be used for taxation purposes.
@@ -699,10 +703,6 @@ module Spree
 
     def adjustments_fetcher
       @adjustments_fetcher ||= OrderAdjustmentsFetcher.new(self)
-    end
-
-    def skip_payment_for_subscription?
-      subscription.present? && order_cycle.orders_close_at&.>(Time.zone.now)
     end
 
     def require_customer?

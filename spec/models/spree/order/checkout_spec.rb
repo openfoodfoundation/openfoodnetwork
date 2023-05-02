@@ -34,7 +34,7 @@ describe Spree::Order::Checkout do
 
     context "#checkout_steps" do
       context "when payment not required" do
-        before { allow(order).to receive_messages payment_required?: false }
+        before { allow(order).to receive_messages skip_payment_for_subscription?: true }
         specify do
           expect(order.checkout_steps).to eq %w(address delivery complete)
         end
@@ -109,7 +109,7 @@ describe Spree::Order::Checkout do
 
       context "without payment required" do
         before do
-          allow(order).to receive_messages payment_required?: false
+          allow(order).to receive_messages skip_payment_for_subscription?: true
         end
 
         it "transitions to complete" do
