@@ -221,6 +221,9 @@ module Openfoodnetwork
     config.assets.precompile += ['shared/*']
     config.assets.precompile += ['*.jpg', '*.jpeg', '*.png', '*.gif' '*.svg']
 
+    # Highlight code that triggered database queries in logs.
+    config.active_record.verbose_query_logs = ENV.fetch("VERBOSE_QUERY_LOGS", false)
+
     # Apply framework defaults. New recommended defaults are successively added with each Rails version and
     # include the defaults from previous versions. For more info see:
     # https://guides.rubyonrails.org/configuring.html#results-of-config-load-defaults
