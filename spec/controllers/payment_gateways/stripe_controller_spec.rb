@@ -89,8 +89,6 @@ Please try again!"
 
         context "using split checkout" do
           before do
-            Flipper.enable(:split_checkout)
-
             order.update_attribute :state, "confirmation"
           end
 

@@ -65,8 +65,6 @@ class CheckoutController < ::BaseController
   end
 
   def handle_invalid_stock
-    reset_order_to_cart
-
     respond_to do |format|
       format.html do
         redirect_to main_app.cart_path

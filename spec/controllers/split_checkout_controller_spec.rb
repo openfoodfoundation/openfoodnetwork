@@ -16,8 +16,6 @@ describe SplitCheckoutController, type: :controller do
   let(:shipping_method) { distributor.shipping_methods.first }
 
   before do
-    Flipper.enable(:split_checkout)
-
     exchange.variants << order.line_items.first.variant
     allow(controller).to receive(:current_order) { order }
     allow(controller).to receive(:spree_current_user) { user }

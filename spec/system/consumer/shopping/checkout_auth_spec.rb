@@ -85,9 +85,6 @@ describe "As a consumer I want to check out my cart" do
       end
 
       context "split checkout" do
-        before do
-          Flipper.enable(:split_checkout)
-        end
         include_examples "with different checkout types", "split_checkout"
       end
     end

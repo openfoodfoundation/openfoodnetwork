@@ -46,11 +46,6 @@ describe 'checkout endpoints', type: :request do
     end
 
     context "using the split checkout" do
-      before do
-        # feature toggle is enabled
-        Flipper.enable(:split_checkout)
-      end
-
       it "redirect to the split checkout" do
         get path
         expect(response.status).to redirect_to("/checkout")

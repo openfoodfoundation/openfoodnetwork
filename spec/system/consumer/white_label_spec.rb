@@ -96,17 +96,7 @@ describe 'White label setting' do
             end
           end
 
-          context "when the split checkout is disabled" do
-            it_behaves_like "hides the OFN navigation when needed only for the checkout"
-          end
-
-          context "when the split checkout is enabled" do
-            before do
-              Flipper.enable(:split_checkout)
-            end
-
-            it_behaves_like "hides the OFN navigation when needed only for the checkout"
-          end
+          it_behaves_like "hides the OFN navigation when needed only for the checkout"
         end
 
         context "when the user has a complete order" do

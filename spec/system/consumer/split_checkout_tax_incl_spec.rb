@@ -111,8 +111,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
       context "on split-checkout" do
         before do
-          Flipper.enable(:split_checkout)
-
           set_order order_within_zone
           login_as(user_within_zone)
         end
@@ -168,8 +166,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
       context "on split-checkout" do
         before do
-          Flipper.enable(:split_checkout)
-
           set_order order_outside_zone
           login_as(user_outside_zone)
         end
