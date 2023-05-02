@@ -242,6 +242,7 @@ describe SplitCheckoutController, type: :controller do
         describe "adding a voucher" do
           let(:checkout_params) do
             {
+              apply_voucher: "true",
               order: {
                 voucher_code: voucher.code
               }
@@ -261,6 +262,7 @@ describe SplitCheckoutController, type: :controller do
           context "when voucher doesn't exist" do
             let(:checkout_params) do
               {
+                apply_voucher: "true",
                 order: {
                   voucher_code: "non_voucher"
                 }

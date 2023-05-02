@@ -30,11 +30,7 @@ class SplitCheckoutController < ::BaseController
   end
 
   def update
-    if add_voucher
-      return render_voucher_section_or_redirect
-    elsif @order.errors.present?
-      return render_error
-    end
+    return process_voucher if params[:apply_voucher].present?
 
     if confirm_order || update_order
       return if performed?
@@ -206,8 +202,19 @@ class SplitCheckoutController < ::BaseController
     selected_shipping_method.first.require_ship_address == false
   end
 
+  def process_voucher
+    if add_voucher
+      render_voucher_section_or_redirect
+    elsif @order.errors.present?
+      render_error
+    end
+  end
+
   def add_voucher
-    return unless payment_step? && params.dig(:order, :voucher_code).present?
+    if params.dig(:order, :voucher_code).blank?
+      @order.errors.add(:voucher, I18n.t('split_checkout.errors.voucher_not_found'))
+      return false
+    end
 
     # Fetch Voucher
     voucher = Voucher.find_by(code: params[:order][:voucher_code], enterprise: @order.distributor)
