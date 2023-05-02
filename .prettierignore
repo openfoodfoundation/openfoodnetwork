@@ -9,9 +9,6 @@
 babel.config.js
 postcss.config.js
 
-/app/webpacker/css/admin/
-# Except v2
-!/app/webpacker/css/admin/v2/**/*.scss
 /app/webpacker/css/darkswarm/
 /app/webpacker/css/mail/
 /app/webpacker/css/shared/
