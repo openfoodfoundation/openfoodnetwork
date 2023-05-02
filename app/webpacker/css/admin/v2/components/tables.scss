@@ -1,17 +1,5 @@
 /* Overide tables.scss app/webpacker/css/admin/components/tables.scss */
 
-table {
-  background-color: white;
-}
-
-table thead tr:first-child th:first-child {
-  border-top-left-radius: 3px;
-}
-
-table thead tr:first-child th:last-child,
-table thead th.force-rounded-right {
-  border-top-right-radius: 3px;
-}
 table thead th {
   background-color: $v2-medium-light-grey;
   border: none;
@@ -25,23 +13,24 @@ table thead th {
   }
 }
 
-table tr:not([class*="state"]) {
-  th:first-child,
-  td:first-child {
-    border-left: none;
-  }
-}
-
 table tbody tr {
   &:first-child th,
   &:first-child td {
     border-top: none; // Don't show the top border of the first row
   }
+  td:not(:first-child) {
+    border-left: none; // Only show left border on the first cells, as it indicates the order state by its color
+  }
 
   td {
-    border: none;
-    border-bottom: 2px solid $v2-medium-light-grey;
+    border-bottom: none; // By default, do not show the border of the cells
+    border-right: none;
+    border-top: none;
 
+    border-bottom: 2px solid $v2-medium-light-grey;
+    &.actions {
+      border-bottom: 2px solid $v2-medium-light-grey !important; // needs to be important because of already defined with important
+    }
     > .flex {
       column-gap: 10px;
     }
@@ -54,31 +43,18 @@ table tbody tr {
   }
 }
 
-table thead tr th.actions,
-table tbody tr td.actions {
-  background-color: $v2-body-bg !important;
+table th.actions,
+table td.actions {
   // Special for icons in the actions column
-  [class*="icon-"],
-  button[class*="icon-"]:not(.disabled):not([disabled]):not(.secondary):not(
-      .cancel
-    ) {
+  [class*="icon-"] {
     color: $v2-blue;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &:before {
-      width: auto;
-      padding: 0;
-    }
-
     &.no-text {
       border: 2px solid $v2-blue-light;
-      display: flex; // Be sure that display: flex; is applied
-      padding-top: 0;
+      background-color: $v2-blue-lightest;
 
       &:hover {
         border-color: $v2-blue;
+        background-color: $v2-blue-light;
         box-shadow: $v2-box-shadow;
 
         &:before {
@@ -87,35 +63,13 @@ table tbody tr td.actions {
       }
     }
   }
-  .icon-edit:hover,
-  .icon-capture:hover,
-  .icon-ok:hover,
-  .icon-plus:hover,
-  .icon-road:hover {
-    background-color: $v2-blue;
-    color: $color-1;
-  }
 }
 
-table#listing_orders {
-  thead th.actions,
-  thead td.actions {
-    background-color: $v2-medium-light-grey !important;
-  }
-  tbody tr td.actions {
-    background-color: white !important;
-  }
-  td {
-    // When the table is the listing of orders, we need to increase the height of the cells
-    padding: 20px 0;
+table#listing_orders td {
+  // When the table is the listing of orders, we need to increase the height of the cells
+  padding: 20px 0;
 
-    &.actions {
-      padding-left: 20px;
-      border-bottom: 2px solid $v2-medium-light-grey !important; // needs to be important because of already defined with important
-    }
-
-    &:not(:first-child) {
-      border-left: none; // Only show left border on the first cells, as it indicates the order state by its color
-    }
+  &.actions {
+    padding-left: 20px;
   }
 }
