@@ -3037,8 +3037,6 @@ fil_PH:
     smtp_send_all_emails_as_from_following_address: "ipadala lahat ng mga sulat bilang galing sa mga sumusunod na address."
     send_copy_of_all_mails_to: "magpadala ng kopya ng lahat ng sulat sa"
     smtp_send_copy_to_this_addresses: "nagpapadala ng kopya ng lahat ng lumalabas na mga sulat sa address na ito, para sa maraming address, paghiwalayin gamit ang kuwit."
-    intercept_email_address: "harangin ang email address"
-    intercept_email_instructions: "pawalang halaga ang tatanggap ng email at palitan ng address na ito"
     tax_categories: "kategorya ng tax"
     listing_tax_categories: "kategorya ng nakalistang tax"
     back_to_tax_categories_list: "bumalik sa listahan ng kategorya ng tax"

@@ -3302,8 +3302,6 @@ tr:
     smtp_send_all_emails_as_from_following_address: "Tüm postaları aşağıdaki adresten gönder."
     send_copy_of_all_mails_to: "Tüm Postaların Kopyasını Gönder"
     smtp_send_copy_to_this_addresses: "Tüm giden postaların bir kopyasını bu adrese gönderir. Birden çok adres için virgülle ayırın."
-    intercept_email_address: "Durdurma E-posta Adresi"
-    intercept_email_instructions: "E-posta alıcısını geçersiz kılın ve bu adresle değiştirin."
     tax_categories: "Vergi Kategorileri"
     listing_tax_categories: "Vergi Kategorileri Listeleniyor"
     back_to_tax_categories_list: "Vergi Kategorileri Listesine Geri Dön"

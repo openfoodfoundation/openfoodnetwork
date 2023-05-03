@@ -1083,6 +1083,11 @@ en_FR:
         white_label:
           legend: "White Label"
           hide_ofn_navigation: "Hide website navigation"
+          upload_logo: "Logo used in shopfront"
+          remove_logo: "Remove logo"
+          remove_logo_confirm: "Are you sure you want to remove this logo?"
+          remove_logo_success: "Logo removed"
+          white_label_logo_link_label: "Link for the logo used in shopfront"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1364,6 +1369,11 @@ en_FR:
         report_taking_longer: >
             Sorry, this report took too long to process. It may contain a lot of data
             or we are busy with other reports. You can try again later.
+        report_taking_longer_html: >
+            This report is taking longer to process. It may contain a lot of data
+            or we are busy with other reports. Once it's finished, you can download
+            it: %{link}
+        report_link_label: Download report (when available)
       revenues_by_hub:
         name: Revenues By Hub
         description: Revenues by hub
@@ -3572,8 +3582,6 @@ en_FR:
     smtp_send_all_emails_as_from_following_address: "Send all mails as from the following address."
     send_copy_of_all_mails_to: "Send Copy of All Mails To"
     smtp_send_copy_to_this_addresses: "Sends a copy of all outgoing mails to this address. For multiple addresses, separate with commas."
-    intercept_email_address: "Intercept Email Address"
-    intercept_email_instructions: "Override email recipient and replace with this address."
     tax_categories: "Tax Categories"
     listing_tax_categories: "Listing Tax Categories"
     back_to_tax_categories_list: "Back To Tax Categories List"
@@ -3947,6 +3955,7 @@ en_FR:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
+        image_not_processable: "Image attachment is not a valid image."
         new:
           title: "New Product"
           new_product: "New Product"

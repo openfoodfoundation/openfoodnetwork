@@ -3468,8 +3468,6 @@ nb:
     smtp_send_all_emails_as_from_following_address: "Send alle epostene fra følgende adresse."
     send_copy_of_all_mails_to: "Send kopi av alle epostene til"
     smtp_send_copy_to_this_addresses: "Sender en kopi av alle utgående eposter til denne adressen. For flere adresser, skill med komma."
-    intercept_email_address: "Avskjær epostadresse"
-    intercept_email_instructions: "Overstyr epost mottaker og erstatt med denne adressen."
     tax_categories: "Avgiftskategorier"
     listing_tax_categories: "Oppføring av Avgiftskategorier"
     back_to_tax_categories_list: "Tilbake til Avgiftskategorier Liste"

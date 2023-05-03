@@ -3445,8 +3445,6 @@ it_CH:
     smtp_send_all_emails_as_from_following_address: "Invia tutte le email come dal seguente indirizzo."
     send_copy_of_all_mails_to: "Invia copia di tutti i messaggi a"
     smtp_send_copy_to_this_addresses: "Invia una copia di tutti i messaggi in uscita a questo indirizzo. Per più indirizzi, separare con virgole."
-    intercept_email_address: "Intercettare l'indirizzo email"
-    intercept_email_instructions: "Sostituire il destinatario della posta elettronica con questo indirizzo."
     tax_categories: "Categorie imposte"
     listing_tax_categories: "Elenco delle categorie fiscali"
     back_to_tax_categories_list: "Torna all'elenco delle categorie fiscali"

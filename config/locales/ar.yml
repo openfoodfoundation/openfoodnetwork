@@ -3664,8 +3664,6 @@ ar:
     smtp_send_all_emails_as_from_following_address: "إرسال جميع الرسائل اعتبارا من العنوان التالي."
     send_copy_of_all_mails_to: "إرسال نسخة من جميع الرسائل إلى"
     smtp_send_copy_to_this_addresses: "يرسل نسخة من جميع الرسائل الصادرة إلى هذا العنوان. لعناوين متعددة ، افصل بينها بفواصل."
-    intercept_email_address: "اعتراض عنوان البريد الإلكتروني"
-    intercept_email_instructions: "تجاوز مستلم البريد الإلكتروني واستبداله بهذا العنوان."
     tax_categories: "فئات الضرائب"
     listing_tax_categories: "قائمة فئات الضرائب"
     back_to_tax_categories_list: "العودة إلى قائمة فئات الضرائب"

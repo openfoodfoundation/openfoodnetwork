@@ -3532,8 +3532,6 @@ de_DE:
     smtp_send_all_emails_as_from_following_address: "Senden Sie alle E-Mails von der folgenden Adresse aus."
     send_copy_of_all_mails_to: "Kopie aller E-Mails senden an"
     smtp_send_copy_to_this_addresses: "Sendet eine Kopie aller ausgehenden E-Mails an diese Adresse. Bei mehreren Adressen trennen Sie diese durch Kommas."
-    intercept_email_address: "E-Mail-Adresse abfangen"
-    intercept_email_instructions: "Überschreiben Sie den E-Mail-Empfänger und ersetzen Sie ihn mit dieser Adresse."
     tax_categories: "Steuerkategorien"
     listing_tax_categories: "Steuerkategorien"
     back_to_tax_categories_list: "Zurück zur Liste der Steuerkategorien"

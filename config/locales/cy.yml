@@ -3581,8 +3581,6 @@ cy:
     smtp_send_all_emails_as_from_following_address: "Anfonwch bob post o'r cyfeiriad canlynol."
     send_copy_of_all_mails_to: "Anfon Copi o'r Holl Bostiau at"
     smtp_send_copy_to_this_addresses: "Yn anfon copi o'r holl negeseuon sy'n mynd allan i'r cyfeiriad hwn. Ar gyfer cyfeiriadau lluosog, dylid eu gwahanu gyda choma."
-    intercept_email_address: "Codi Cyfeiriad E-bost"
-    intercept_email_instructions: "Diystyru derbynnydd e-bost a rhoi cyfeiriad arall yn ei le."
     tax_categories: "Categorïau Treth"
     listing_tax_categories: "Yn rhestru Categorïau Treth"
     back_to_tax_categories_list: "Yn ôl i'r Rhestr Categorïau Treth"

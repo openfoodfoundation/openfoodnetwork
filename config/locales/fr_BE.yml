@@ -1387,7 +1387,7 @@ fr_BE:
         items_in_cart_plural: "%{num}Articles dans le panier"
         close: "Ferme"
         cart_empty: "Votre panier est vide"
-        take_me_shopping: "Emmenez moi vaire le magazin"
+        take_me_shopping: "Pour passer votre commande, cliquez ici!"
       signed_in:
         profile: "Profil"
       mobile_menu:
@@ -3119,8 +3119,6 @@ fr_BE:
     smtp_send_all_emails_as_from_following_address: "Envoyer tous les mails comme de l'adresse suivante."
     send_copy_of_all_mails_to: "Envoyez une copie de tous les mails à "
     smtp_send_copy_to_this_addresses: "Envoit une copie de tous les mails sortants vers cette adresse. En cas de plusieurs adresses, séparer par une virgule."
-    intercept_email_address: "Intercepter les adresses mail"
-    intercept_email_instructions: "Ignorer le destinataire et le remplacer par cette adresse."
     tax_categories: "TVA applicable"
     listing_tax_categories: "Liste catégories TVA"
     back_to_tax_categories_list: "Retour à la liste des catégories de TVA"

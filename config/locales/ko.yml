@@ -3389,8 +3389,6 @@ ko:
     smtp_send_all_emails_as_from_following_address: "다음 주소로 모든 메일을 보내기"
     send_copy_of_all_mails_to: "모든 메일의 복사본 보내기 대상"
     smtp_send_copy_to_this_addresses: "모든 발신 메일의 복사본을 이 주소로 보냅니다. 주소가 여러 개인 경우 쉼표로 구분합니다."
-    intercept_email_address: "이메일 주소 가로채기"
-    intercept_email_instructions: "전자 메일 수신자를 재정의하고 이 주소로 대체합니다."
     tax_categories: "세금 카테고리"
     listing_tax_categories: "세금 카테고리 정렬하기"
     back_to_tax_categories_list: "세금 카테고리 리스트로 돌아가기"

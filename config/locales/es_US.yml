@@ -3356,8 +3356,6 @@ es_US:
     smtp_send_all_emails_as_from_following_address: "Enviar todos los correos a partir de la siguiente dirección."
     send_copy_of_all_mails_to: "Enviar copia de todos los correos a"
     smtp_send_copy_to_this_addresses: "Envía una copia de todos los correos salientes a esta dirección. Para direcciones múltiples, sepárelas con comas."
-    intercept_email_address: "Interceptar la dirección de correo electrónico"
-    intercept_email_instructions: "Anular destinatario de correo electrónico y reemplazar con esta dirección."
     tax_categories: "Categorías de impuestos"
     listing_tax_categories: "Listado de categorías de impuestos"
     back_to_tax_categories_list: "Volver a la lista de categorías de impuestos"

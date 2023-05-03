@@ -3285,8 +3285,6 @@ pt_BR:
     smtp_send_all_emails_as_from_following_address: "Envie todos os correios a partir do seguinte endereço."
     send_copy_of_all_mails_to: "Enviar cópia de todos os correios para"
     smtp_send_copy_to_this_addresses: "Envia uma cópia de todos os correios enviados para este endereço. Para vários endereços, separe com vírgulas."
-    intercept_email_address: "Interceptar endereço de email"
-    intercept_email_instructions: "Substitua o destinatário do email e substitua por este endereço."
     tax_categories: "Categorias fiscais"
     listing_tax_categories: "Listando categorias de impostos"
     back_to_tax_categories_list: "Voltar à lista de categorias de impostos"

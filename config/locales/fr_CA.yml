@@ -3572,8 +3572,6 @@ fr_CA:
     smtp_send_all_emails_as_from_following_address: "Envoyer tous les mails depuis l'adresse suivante."
     send_copy_of_all_mails_to: "Envoyer une copie de tous les mails à"
     smtp_send_copy_to_this_addresses: "Envoyer une copie de tous les mails sortants à cette adresse. Si plusieurs adresses, les séparer par une virgule."
-    intercept_email_address: "Adresse email d'interception"
-    intercept_email_instructions: "Modifier l'email destinataire et le remplacer avec cette adresse."
     tax_categories: "Taxe applicable"
     listing_tax_categories: "Catégories de taxe en cours d'affichage"
     back_to_tax_categories_list: "Retour à la liste des catégories de taxe"

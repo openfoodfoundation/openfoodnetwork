@@ -1084,6 +1084,11 @@ fr:
         white_label:
           legend: "Marque blanche"
           hide_ofn_navigation: "Masquer la navigation du site"
+          upload_logo: "logo utilisé pour la boutique"
+          remove_logo: "Supprimer le logo"
+          remove_logo_confirm: "Etes-vous certain.e de vouloir supprimer le logo?"
+          remove_logo_success: "logo supprimé"
+          white_label_logo_link_label: "Lien vers le logo utilisé pour la boutique"
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1366,6 +1371,14 @@ fr:
             Désolée, ce rapport met trop de temps à se charger, probablement parce
             qu'il contient une grande quantité de données ou que d'autres rapports
             sont en cours de téléchargement. Merci de réessayer plus tard.
+        report_taking_longer_html: >
+            62% match
+
+            Désolée, ce rapport met trop de temps à se charger, probablement parce
+            qu'il contient une grande quantité de données ou que d'autres rapports
+            sont en cours de téléchargement. Merci de réessayer une fois que le téléchargement
+            précédent est terminé.
+        report_link_label: Télécharger le rapport (quand disponible)
       revenues_by_hub:
         name: CA par boutique
         description: CA par boutique
@@ -3628,8 +3641,6 @@ fr:
     smtp_send_all_emails_as_from_following_address: "Envoyer tous les mails depuis l'adresse suivante."
     send_copy_of_all_mails_to: "Envoyer une copie de tous les mails à"
     smtp_send_copy_to_this_addresses: "Envoyer une copie de tous les mails sortants à cette adresse. Si plusieurs adresses, les séparer par une virgule."
-    intercept_email_address: "Adresse email d'interception"
-    intercept_email_instructions: "Modifier l'email destinataire et le remplacer avec cette adresse."
     tax_categories: "TVA applicable"
     listing_tax_categories: "Catégories de taxe en cours d'affichage"
     back_to_tax_categories_list: "Retour à la liste des catégories de taxe"
@@ -4003,6 +4014,7 @@ fr:
             no_payment_via_admin_backend: 'Il n''est pas encore possible de payer avec Paypal via l''administration. '
       products:
         image_upload_error: "Veuillez utiliser une image au format JPG, PNG, GIF, SVG ou WEBP format."
+        image_not_processable: "L'image n'est pas valide"
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"

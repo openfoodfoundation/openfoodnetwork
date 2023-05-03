@@ -3401,8 +3401,6 @@ ca:
     smtp_send_all_emails_as_from_following_address: "Envieu tots els correus com a la següent adreça."
     send_copy_of_all_mails_to: "Enviar còpia de tots els missatges a"
     smtp_send_copy_to_this_addresses: "Envia una còpia de tots els correus sortints a aquesta adreça. Per a diverses adreces, separeu amb comes."
-    intercept_email_address: "Intercepta adreça de correu"
-    intercept_email_instructions: "Invalida el destinatari de correu electrònic i reemplaça amb aquesta adreça."
     tax_categories: "Tipus d'impostos"
     listing_tax_categories: "Llista de categories d'impostos"
     back_to_tax_categories_list: "Tornar a la llista de categories d'impostos"

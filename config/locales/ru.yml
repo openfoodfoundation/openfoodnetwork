@@ -3635,8 +3635,6 @@ ru:
     smtp_send_all_emails_as_from_following_address: "Отправлять все письма от имени этого адреса."
     send_copy_of_all_mails_to: "Отправлять Копии Всех Писем На"
     smtp_send_copy_to_this_addresses: "Копии всех исходящих писем отправляются на этот адрес. Для указания нескольких адресов, разделяйте запятыми"
-    intercept_email_address: "Перехватить адрес электронной почты"
-    intercept_email_instructions: "Переопределить получателя электронной почты и заменить его на этот адрес."
     tax_categories: "Налоговые Категории"
     listing_tax_categories: "Список Налоговых Категорий"
     back_to_tax_categories_list: "Назад К Списку Налоговых Категорий"

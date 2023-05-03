@@ -3504,8 +3504,6 @@ uk:
     smtp_send_all_emails_as_from_following_address: "Надсилайте всі листи з наступної адреси."
     send_copy_of_all_mails_to: "Надсилати копії всіх листів на адресу"
     smtp_send_copy_to_this_addresses: "Надсилає копії всіх вихідних повідомлень на цю адресу. Для кількох адрес розділяйте їх комами."
-    intercept_email_address: "Перехопити адресу електронної пошти"
-    intercept_email_instructions: "Замінити одержувача електронної пошти та замінити цією адресою."
     tax_categories: "Податкові категорії"
     listing_tax_categories: "Перелік категорій податків"
     back_to_tax_categories_list: "Назад до списку категорій податків"

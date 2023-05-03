@@ -2216,7 +2216,7 @@ nl_BE:
   review: "Beoordeling"
   save_changes: "Bewaar Veranderingen"
   order_saved: "Bestelling opgeslagen"
-  no_products: Geen produkten
+  no_products: Geen producten
   spree_admin_overview_enterprises_header: "Mijn bedrijven"
   spree_admin_overview_enterprises_footer: "BEHEER MIJN ONDERNEMINGEN"
   spree_admin_enterprises_hubs_name: "Naam"
@@ -2226,8 +2226,8 @@ nl_BE:
   spree_admin_enterprises_none_create_a_new_enterprise: "MAAK EEN NIEUW BEDRIJF"
   spree_admin_enterprises_none_text: "Je hebt nog geen ondernemingen"
   spree_admin_enterprises_tabs_hubs: "HUBS"
-  spree_admin_enterprises_producers_manage_products: "BEHEER PRODUKTEN"
-  spree_admin_enterprises_create_new_product: "MAAK EEN  NIEUW PRODUKT"
+  spree_admin_enterprises_producers_manage_products: "BEHEER PRODUCTEN"
+  spree_admin_enterprises_create_new_product: "MAAK EEN  NIEUW PRODUCT"
   spree_admin_single_enterprise_alert_mail_confirmation: "Gelieve het e-mailadres te bevestigen voor"
   spree_admin_single_enterprise_alert_mail_sent: "We hebben je een E-mail verzonden"
   spree_admin_overview_action_required: "Actie Vereist"
@@ -3025,8 +3025,6 @@ nl_BE:
     smtp_send_all_emails_as_from_following_address: "Stuur alle mails als van het volgend adres"
     send_copy_of_all_mails_to: "Stuur kopie van alle mails naar"
     smtp_send_copy_to_this_addresses: "Stuurt een kopie van alle uitgaande mails naar dit adres. In geval van meerdere adressen, die met een comma scheiden."
-    intercept_email_address: "Email adres onderscheppen"
-    intercept_email_instructions: "De mailontvanger omzeilen en door dit adres vervangen. "
     tax_categories: "Belastingcategorieën"
     listing_tax_categories: "Lijst BTW categoriëen "
     back_to_tax_categories_list: "Terug naar de lijst BTW categoriëen "

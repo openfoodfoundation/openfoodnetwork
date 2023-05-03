@@ -3039,8 +3039,6 @@ pl:
     smtp_send_all_emails_as_from_following_address: "Wysyłaj wszystkie maile z następującego adresu."
     send_copy_of_all_mails_to: "Wyślij kopię wszystkich wiadomości do"
     smtp_send_copy_to_this_addresses: "Wysyła kopię wszystkich wychodzących wiadomości na ten adres. W przypadku wielu adresów, oddziel je przecinkami."
-    intercept_email_address: "Przechwyć adres e-mail"
-    intercept_email_instructions: "Zastąp adresata wiadomości e-mail i zastąp tym adresem."
     tax_categories: "Kategorie podatków"
     listing_tax_categories: "Lista kategorii podatkowych"
     back_to_tax_categories_list: "Powrót do listy kategorii podatkowych"

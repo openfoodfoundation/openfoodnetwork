@@ -3496,8 +3496,6 @@ hu:
     smtp_send_all_emails_as_from_following_address: "Az összes levelet a következő címről küldje el."
     send_copy_of_all_mails_to: "Az összes levél másolatának elküldése a címre"
     smtp_send_copy_to_this_addresses: "Minden kimenő levél másolatát elküldi erre a címre. Több cím esetén vesszővel válaszd el."
-    intercept_email_address: "Elfogja az e-mail címet"
-    intercept_email_instructions: "Az e-mail címzettjének felülbírálása és cseréje erre a címre."
     tax_categories: "Adókategóriák"
     listing_tax_categories: "Adókategóriák listázása"
     back_to_tax_categories_list: "Vissza az adókategóriák listájához"
