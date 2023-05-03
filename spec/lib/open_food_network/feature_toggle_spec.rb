@@ -2,17 +2,17 @@
 
 require 'spec_helper'
 
-module OpenFoodNetwork
-  describe FeatureToggle do
-    context 'when users are not specified' do
-      it "returns false when feature is undefined" do
-        expect(FeatureToggle.enabled?(:foo)).to be false
-      end
+describe OpenFoodNetwork::FeatureToggle do
+  subject(:feature_toggle) { OpenFoodNetwork::FeatureToggle }
 
-      it "uses Flipper configuration" do
-        Flipper.enable(:foo)
-        expect(FeatureToggle.enabled?(:foo)).to be true
-      end
+  context 'when users are not specified' do
+    it "returns false when feature is undefined" do
+      expect(feature_toggle.enabled?(:foo)).to be false
+    end
+
+    it "uses Flipper configuration" do
+      Flipper.enable(:foo)
+      expect(feature_toggle.enabled?(:foo)).to be true
     end
   end
 end
