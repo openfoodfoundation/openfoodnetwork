@@ -44,8 +44,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_120633) do
   end
 
   create_table "adjustment_metadata", id: :serial, force: :cascade do |t|
-    t.integer "adjustment_id"
-    t.integer "enterprise_id"
+    t.integer "adjustment_id", null: false
+    t.integer "enterprise_id", null: false
     t.string "fee_name", limit: 255
     t.string "fee_type", limit: 255
     t.string "enterprise_role", limit: 255
