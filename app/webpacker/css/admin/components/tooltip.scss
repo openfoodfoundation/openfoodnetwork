@@ -10,7 +10,7 @@
   left: 0;
   font-size: 13px;
   pointer-events: none;
-  background-color: #5498da;
+  background-color: $color-3;
   padding: 5px 15px;
   border-radius: 3px;
   color: #fff;
@@ -19,7 +19,7 @@
 }
 
 .arrow {
-  background-color: #5498da;
+  background-color: $color-3;
   position: absolute;
   width: 8px;
   height: 8px;
