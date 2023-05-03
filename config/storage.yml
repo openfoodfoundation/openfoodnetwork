@@ -19,3 +19,11 @@ amazon:
   secret_access_key: <%= ENV["S3_SECRET"] %>
   bucket: <%= ENV["S3_BUCKET"] %>
   region: <%= ENV.fetch("S3_REGION", "us-east-1") %>
+
+amazon_public:
+  service: S3
+  public: true
+  access_key_id: <%= ENV["S3_ACCESS_KEY"] %>
+  secret_access_key: <%= ENV["S3_SECRET"] %>
+  bucket: <%= ENV["S3_BUCKET"] %>
+  region: <%= ENV.fetch("S3_REGION", "us-east-1") %>

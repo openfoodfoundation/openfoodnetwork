@@ -9,7 +9,7 @@ module Spree
       large: { resize_to_limit: [600, 600] },
     }.freeze
 
-    has_one_attached :attachment
+    has_one_attached :attachment, service: image_service
 
     validates :attachment,
               attached: true,

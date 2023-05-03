@@ -25,8 +25,8 @@ class EnterpriseGroup < ApplicationRecord
 
   delegate :phone, :address1, :address2, :city, :zipcode, :state, :country, to: :address
 
-  has_one_attached :logo
-  has_one_attached :promo_image
+  has_one_attached :logo, service: image_service
+  has_one_attached :promo_image, service: image_service
 
   validates :logo,
             processable_image: true,

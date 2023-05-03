@@ -10,4 +10,8 @@ class ApplicationRecord < ActiveRecord::Base
   include ArelHelpers::JoinAssociation
 
   self.abstract_class = true
+
+  def self.image_service
+    ENV["S3_BUCKET"].present? ? :amazon_public : :local
+  end
 end

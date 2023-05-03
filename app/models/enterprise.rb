@@ -87,10 +87,10 @@ class Enterprise < ApplicationRecord
                                             }
   accepts_nested_attributes_for :custom_tab
 
-  has_one_attached :logo
-  has_one_attached :promo_image
+  has_one_attached :logo, service: image_service
+  has_one_attached :promo_image, service: image_service
   has_one_attached :terms_and_conditions
-  has_one_attached :white_label_logo
+  has_one_attached :white_label_logo, service: image_service
 
   validates :logo,
             processable_image: true,
