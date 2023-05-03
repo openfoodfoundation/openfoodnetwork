@@ -254,8 +254,7 @@ module Reporting
             .where(included: true)
             .where(adjustable_type: 'Spree::Adjustment')
             .where(adjustable_id: enterprise_fee_adjustment_ids_for_orders(order_ids))
-            .pluck("sum(amount)")
-            .first || 0
+            .pick("sum(amount)") || 0
         end
 
         def tax_for_order_ids(order_ids)
@@ -263,8 +262,7 @@ module Reporting
             .where(order: order_ids)
             .where(adjustable_type: 'Spree::Adjustment')
             .where(adjustable_id: enterprise_fee_adjustment_ids_for_orders(order_ids))
-            .pluck("sum(amount)")
-            .first || 0
+            .pick("sum(amount)") || 0
         end
 
         def enterprise_fee_adjustment_ids_for_orders(order_ids)
@@ -272,7 +270,7 @@ module Reporting
         end
 
         def enterprise_fees_amount_for_orders(order_ids)
-          enterprise_fees_for_orders(order_ids).pluck("sum(amount)").first || 0
+          enterprise_fees_for_orders(order_ids).pick("sum(amount)") || 0
         end
 
         def enterprise_fees_for_orders(order_ids)
@@ -294,7 +292,7 @@ module Reporting
         end
 
         def producer_tax_status(query_result_row)
-          Enterprise.where(id: supplier_id(query_result_row)).pluck(:charges_sales_tax).first
+          Enterprise.where(id: supplier_id(query_result_row)).pick(:charges_sales_tax)
         end
 
         def order_cycle(query_result_row)
@@ -331,8 +329,7 @@ module Reporting
           amount = Spree::Adjustment.enterprise_fee
             .where(order_id: order_ids)
             .where(originator_id: enterprise_fee_id)
-            .pluck("sum(amount)")
-            .first
+            .pick("sum(amount)")
           amount - tax(query_result_row, all: true, included: true)
         end
 
