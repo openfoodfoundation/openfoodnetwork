@@ -31,5 +31,14 @@ describe OpenFoodNetwork::FeatureToggle do
       expect { feature_toggle.setup! }
         .to change { Flipper.features }.by([feature])
     end
+
+    it "removes unknown features" do
+      feature = Flipper.feature(:foo)
+      feature.enable
+
+      expect { feature_toggle.setup! }
+        .to change { Flipper.features.count }.by(-1)
+        .and change { feature.exist? }.to(false)
+    end
   end
 end
