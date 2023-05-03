@@ -22,5 +22,20 @@ describe DfcBuilder do
       expect(product.quantity.value).to eq 1.0
       expect(product.quantity.unit.semanticId).to eq "dfc-m:Gram"
     end
+
+    it "assigns the product name by default" do
+      variant.product.name = "Apple"
+      product = DfcBuilder.supplied_product(variant)
+
+      expect(product.name).to eq "Apple"
+    end
+
+    it "assigns the variant name if present" do
+      variant.product.name = "Apple"
+      variant.display_name = "Granny Smith"
+      product = DfcBuilder.supplied_product(variant)
+
+      expect(product.name).to eq "Granny Smith"
+    end
   end
 end
