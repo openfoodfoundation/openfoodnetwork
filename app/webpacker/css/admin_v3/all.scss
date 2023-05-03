@@ -18,7 +18,7 @@
 @import "~shortcut-buttons-flatpickr/dist/themes/light";
 
 @import "../admin/globals/functions";
-@import "../admin/globals/palette";
+@import "globals/palette"; // admin_v3
 @import "../admin/globals/variables";
 @import "../admin/variables";
 @import "../admin/globals/mixins";
