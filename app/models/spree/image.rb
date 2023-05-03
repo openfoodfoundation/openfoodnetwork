@@ -2,14 +2,12 @@
 
 module Spree
   class Image < Asset
-    SIZES = {
-      mini: { resize_to_fill: [48, 48] },
-      small: { resize_to_fill: [227, 227] },
-      product: { resize_to_limit: [240, 240] },
-      large: { resize_to_limit: [600, 600] },
-    }.freeze
-
-    has_one_attached :attachment, service: image_service
+    has_one_attached :attachment, service: image_service do |attachment|
+      attachment.variant :mini, resize_to_fill: [48, 48]
+      attachment.variant :small, resize_to_fill: [227, 227]
+      attachment.variant :product, resize_to_limit: [240, 240]
+      attachment.variant :large, resize_to_limit: [600, 600]
+    end
 
     validates :attachment,
               attached: true,
@@ -19,7 +17,7 @@ module Spree
 
     def variant(name)
       if attachment.variable?
-        attachment.variant(SIZES[name])
+        attachment.variant(name)
       else
         attachment
       end

@@ -5,20 +5,9 @@ class Enterprise < ApplicationRecord
   ENTERPRISE_SEARCH_RADIUS = 100
   # The next Rails version will have named variants but we need to store them
   # ourselves for now.
-  LOGO_SIZES = {
-    thumb: { gravity: "Center", resize: "100x100^", crop: '100x100+0+0' },
-    small: { gravity: "Center", resize: "180x180^", crop: '180x180+0+0' },
-    medium: { gravity: "Center", resize: "300x300^", crop: '300x300+0+0' },
-  }.freeze
-  PROMO_IMAGE_SIZES = {
-    thumb: { resize_to_limit: [100, 100] },
-    medium: { resize_to_fill: [720, 156] },
-    large: { resize_to_fill: [1200, 260] },
-  }.freeze
-  WHITE_LABEL_LOGO_SIZES = {
-    default: { gravity: "Center", resize_to_fill: [217, 44] },
-    mobile: { gravity: "Center", resize_to_fill: [75, 26] },
-  }.freeze
+  LOGO_SIZES = [:thumb, :small, :medium].freeze
+  PROMO_IMAGE_SIZES = [:thumb, :medium, :large].freeze
+  WHITE_LABEL_LOGO_SIZES = [:default, :mobile].freeze
   VALID_INSTAGRAM_REGEX = %r{\A[a-zA-Z0-9._]{1,30}([^/-]*)\z}
 
   searchable_attributes :sells, :is_primary_producer, :name
@@ -87,10 +76,21 @@ class Enterprise < ApplicationRecord
                                             }
   accepts_nested_attributes_for :custom_tab
 
-  has_one_attached :logo, service: image_service
-  has_one_attached :promo_image, service: image_service
   has_one_attached :terms_and_conditions
-  has_one_attached :white_label_logo, service: image_service
+  has_one_attached :logo, service: image_service do |attachment|
+    attachment.variant :thumb, resize_to_fill: [100, 100], crop: [0, 0, 100, 100]
+    attachment.variant :small, resize_to_fill: [180, 180], crop: [0, 0, 180, 180]
+    attachment.variant :medium, resize_to_fill: [300, 300], crop: [0, 0, 300, 300]
+  end
+  has_one_attached :promo_image, service: image_service do |attachment|
+    attachment.variant :thumb, resize_to_limit: [100, 100]
+    attachment.variant :medium, resize_to_fill: [720, 156]
+    attachment.variant :large, resize_to_fill: [1200, 260]
+  end
+  has_one_attached :white_label_logo, service: image_service do |attachment|
+    attachment.variant :default, resize_to_fill: [217, 44]
+    attachment.variant :mobile,  resize_to_fill: [75, 26]
+  end
 
   validates :logo,
             processable_image: true,
@@ -298,7 +298,7 @@ class Enterprise < ApplicationRecord
     return unless logo.variable?
 
     Rails.application.routes.url_helpers.url_for(
-      logo.variant(LOGO_SIZES[name])
+      logo.variant(name)
     )
   end
 
@@ -306,7 +306,7 @@ class Enterprise < ApplicationRecord
     return unless promo_image.variable?
 
     Rails.application.routes.url_helpers.url_for(
-      promo_image.variant(PROMO_IMAGE_SIZES[name])
+      promo_image.variant(name)
     )
   end
 
@@ -314,7 +314,7 @@ class Enterprise < ApplicationRecord
     return unless white_label_logo.variable?
 
     Rails.application.routes.url_helpers.url_for(
-      white_label_logo.variant(WHITE_LABEL_LOGO_SIZES[name])
+      white_label_logo.variant(name)
     )
   end
 
