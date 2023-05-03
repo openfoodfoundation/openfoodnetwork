@@ -112,6 +112,45 @@ describe '
       expect(page).to have_field "payment_method_distributor_ids_#{@distributors[2].id}",
                                  checked: false
     end
+
+    it "retains and displays data that was just submitted" do
+      login_as_admin
+      visit spree.edit_admin_general_settings_path
+      click_link 'Payment Methods'
+      click_link 'New Payment Method'
+
+      fill_in "payment_method_name", with: 'Cheque payment method'
+      fill_in "payment_method_description", with: "Payment description"
+      select2_select "PayPal Express", from: "payment_method_type"
+      select2_select "Flat Percent", from: 'calc_type'
+
+      click_button 'Create'
+
+      expect(page).to have_field "payment_method_name", with: "Cheque payment method"
+      expect(page).to have_field "payment_method_description", with: "Payment description"
+      expect(page).to have_select("payment_method_type", selected: "PayPal Express")
+      expect(page).to have_select("calc_type", selected: "Flat Percent")
+
+      select2_select "Price Sack", from: 'calc_type'
+
+      click_button 'Create'
+
+      expect(page).to have_select("calc_type", selected: "Price Sack")
+      expect(page).to have_field "payment_method_name", with: "Cheque payment method"
+      expect(page).to have_field "payment_method_description", with: "Payment description"
+      expect(page).to have_select("payment_method_type", selected: "PayPal Express")
+
+      check "payment_method_distributor_ids_#{@distributors[0].id}"
+
+      click_button 'Create'
+
+      expect(page).to have_field "payment_method_distributor_ids_#{@distributors[0].id}",
+                                 checked: true
+      expect(page).to have_select("calc_type", selected: "Price Sack")
+      expect(page).to have_field "payment_method_name", with: "Cheque payment method"
+      expect(page).to have_field "payment_method_description", with: "Payment description"
+      expect(page).to have_select("payment_method_type", selected: "PayPal Express")
+    end
   end
 
   it "updating a payment method" do
@@ -343,6 +382,136 @@ describe '
         expect(page).to have_field "Normal Amount", with: '2.1'
         expect(page).to have_field "Discount Amount", with: '1.1'
       end
+    end
+  end
+
+  context "when updating a payment method with invalid data" do
+    let(:payment_method) { create(:payment_method, :flat_rate, amount: 10) }
+
+    # Persist preferences to test that when preferred values are not found in the cache,
+    # they are fetched from the database and displayed correctly
+    before do
+      Spree::Preferences::Store.instance.persistence = true
+      login_as_admin
+      visit spree.edit_admin_payment_method_path payment_method
+      fill_in "payment_method_name", with: ""
+      fill_in "payment_method_description", with: "Edited description"
+      uncheck "payment_method_distributor_ids_#{@distributors[0].id}"
+      # Although text is not permitted by input[type=number], let's see what happens
+      fill_in "Amount", with: 'invalid'
+      click_button 'Update'
+    end
+
+    after do
+      Spree::Preferences::Store.instance.persistence = false
+    end
+
+    it "displays error details" do
+      expect(page).to have_content("2 errors")
+
+      expect(page).to have_content("Name can't be blank")
+      expect(page).to have_content("At least one hub must be selected")
+
+      # Highlighting invalid fields
+      within '.field_with_errors:has(#payment_method_name)' do
+        expect(page).to have_field "payment_method_name"
+      end
+
+      within '#hubs' do
+        expect(page).to have_selector(".red")
+      end
+    end
+
+    it "keeps information that was just edited, even after multiple unsuccessful updates" do
+      expect(page).to have_field "payment_method_name", with: ''
+      expect(page).to have_field "payment_method_description", with: "Edited description"
+      expect(page).to have_unchecked_field "payment_method_distributor_ids_#{@distributors[0].id}"
+
+      fill_in "payment_method_name", with: "Test name"
+      fill_in "Amount", with: 'invalid string'
+      click_button 'Update'
+
+      expect(page).to have_field "payment_method_name", with: 'Test name'
+      expect(page).to have_field "payment_method_description", with: "Edited description"
+      expect(page).to have_unchecked_field "payment_method_distributor_ids_#{@distributors[0].id}"
+    end
+
+    it 'displays data fetched from the database after navigating away from the page' do
+      click_link 'Back To Payment Methods List'
+      click_link href: /#{spree.edit_admin_payment_method_path(payment_method)}/
+
+      expect(page).to have_field 'Amount', with: '10.0'
+      expect(page).not_to have_field 'payment_method_name', with: ''
+      expect(page).not_to have_field 'payment_method_description', with: 'Edited description'
+      expect(page).to have_checked_field "payment_method_distributor_ids_#{@distributors[0].id}"
+    end
+  end
+
+  context 'when updating payment method with invalid data and changing calculator type' do
+    let(:payment_method) { create(:payment_method, :flat_rate, amount: 10) }
+
+    # Persist preferences to test that when preferred values are not found in the cache,
+    # they are fetched from the database and displayed correctly
+    before do
+      Spree::Preferences::Store.instance.persistence = true
+      login_as_admin
+      visit spree.edit_admin_payment_method_path payment_method
+      fill_in 'payment_method_name', with: ''
+      fill_in 'payment_method_description', with: 'Edited description'
+      uncheck "payment_method_distributor_ids_#{@distributors[0].id}"
+      select2_select 'Flat Percent', from: 'calc_type'
+      click_button 'Update'
+    end
+
+    after do
+      Spree::Preferences::Store.instance.persistence = false
+    end
+
+    it 'displays the number of errors' do
+      expect(page).to have_content('2 errors')
+    end
+
+    it 'displays error messages' do
+      expect(page).to have_content("Name can't be blank")
+      expect(page).to have_content('At least one hub must be selected')
+    end
+
+    it 'displays the new calculator fields' do
+      expect(page).to have_field 'Flat Percent'
+    end
+
+    it 'highlights invalid fields' do
+      within '.field_with_errors:has(#payment_method_name)' do
+        expect(page).to have_field 'payment_method_name'
+      end
+
+      within '#hubs' do
+        expect(page).to have_selector('.red')
+      end
+    end
+
+    it 'keeps information that was just edited, even after multiple unsuccessful updates' do
+      expect(page).to have_field 'payment_method_name', with: ''
+      expect(page).to have_field 'payment_method_description', with: 'Edited description'
+      expect(page).to have_unchecked_field "payment_method_distributor_ids_#{@distributors[0].id}"
+
+      fill_in 'payment_method_name', with: 'Test name'
+      fill_in 'Flat Percent', with: 'invalid string'
+      click_button 'Update'
+
+      expect(page).to have_field 'payment_method_name', with: 'Test name'
+      expect(page).to have_field 'payment_method_description', with: 'Edited description'
+      expect(page).to have_unchecked_field "payment_method_distributor_ids_#{@distributors[0].id}"
+    end
+
+    it 'displays data fetched from the database after navigating away from the page' do
+      click_link 'Back To Payment Methods List'
+      click_link href: /#{spree.edit_admin_payment_method_path(payment_method)}/
+
+      expect(page).to have_field 'Amount', with: '10.0'
+      expect(page).not_to have_field 'payment_method_name', with: ''
+      expect(page).not_to have_field 'payment_method_description', with: 'Edited description'
+      expect(page).to have_checked_field "payment_method_distributor_ids_#{@distributors[0].id}"
     end
   end
 end

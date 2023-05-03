@@ -1,17 +1,14 @@
 # frozen_string_literal: false
 
-require 'spree/localized_number'
-
 module Calculator
   class FlexiRate < Spree::Calculator
-    extend Spree::LocalizedNumber
-
     preference :first_item,      :decimal, default: 0.0
     preference :additional_item, :decimal, default: 0.0
     preference :max_items,       :integer, default: 0
 
-    localize_number :preferred_first_item,
-                    :preferred_additional_item
+    validates :preferred_first_item,
+              :preferred_additional_item,
+              numericality: true
 
     def self.description
       I18n.t(:flexible_rate)

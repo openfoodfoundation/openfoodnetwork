@@ -17,6 +17,7 @@ module Spree
 
     validates :name, presence: true
     validate :distributor_validation
+    validates_associated :calculator
 
     after_initialize :init
 
@@ -40,9 +41,8 @@ module Spree
       where(id: non_unique_matches.map(&:id))
     }
 
-    scope :for_distributor, lambda { |distributor|
-      joins(:distributors).
-        where('enterprises.id = ?', distributor)
+    scope :for_distributor, ->(distributor) {
+      joins(:distributors).where('enterprises.id = ?', distributor)
     }
 
     scope :for_subscriptions, -> { where(type: Subscription::ALLOWED_PAYMENT_METHOD_TYPES) }

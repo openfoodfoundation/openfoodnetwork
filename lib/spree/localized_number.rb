@@ -21,7 +21,7 @@ module Spree
           elsif Spree::Config.enable_localized_number?
             @invalid_localized_number ||= []
             @invalid_localized_number << attribute
-            number = nil
+            number = nil unless is_a?(Spree::Calculator)
           end
           if has_attribute?(attribute)
             # In this case it's a regular AR attribute with standard setters
@@ -44,7 +44,8 @@ module Spree
 
     def self.valid_localizable_number?(number)
       return true unless number.is_a?(String) || number.respond_to?(:to_d)
-      return false if number.to_s =~ /[.,]\d{2}[.,]/
+      # Invalid if only two digits between dividers, or if any non-number characters
+      return false if number.to_s =~ /[.,]\d{2}[.,]/ || number.to_s =~ /[^0-9,.]+/
 
       true
     end

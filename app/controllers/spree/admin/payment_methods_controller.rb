@@ -7,7 +7,6 @@ module Spree
       before_action :load_data
       before_action :validate_payment_method_provider, only: [:create]
       before_action :load_hubs, only: [:new, :edit, :update]
-      before_action :validate_calculator_preferred_value, only: [:update]
 
       respond_to :html
 
@@ -16,6 +15,10 @@ module Spree
 
         @payment_method = payment_method_class.constantize.new(base_params)
         @object = @payment_method
+
+        if !base_params["calculator_type"] && gateway_params["calculator_type"]
+          @payment_method.calculator_type = gateway_params["calculator_type"]
+        end
 
         load_hubs
 
@@ -44,6 +47,7 @@ module Spree
           redirect_to spree.edit_admin_payment_method_path(@payment_method)
         else
           respond_with(@payment_method)
+          clear_preference_cache
         end
       end
 
@@ -182,33 +186,23 @@ module Spree
             end
           end
 
+          # Ensure the calculator to be updated is the correct type
+          if params_for_update["calculator_type"] && params_for_update["calculator_attributes"]
+            add_type_to_calculator_attributes(params_for_update)
+          end
+
           params_for_update
         end
       end
 
-      def validate_calculator_preferred_value
-        return if calculator_preferred_values.all? do |value|
-          preferred_value_from_params = gateway_params.dig(:calculator_attributes, value)
-          preferred_value_from_params.nil? || Float(preferred_value_from_params,
-                                                    exception: false)
+      def clear_preference_cache
+        @payment_method.calculator.preferences.each_key do |key|
+          Rails.cache.delete(@payment_method.calculator.preference_cache_key(key))
         end
-
-        flash[:error] = I18n.t(:calculator_preferred_value_error)
-        redirect_to spree.edit_admin_payment_method_path(@payment_method)
       end
 
-      def calculator_preferred_values
-        [
-          :preferred_amount,
-          :preferred_flat_percent,
-          :preferred_flat_percent,
-          :preferred_first_item,
-          :preferred_additional_item,
-          :preferred_max_items,
-          :preferred_normal_amount,
-          :preferred_discount_amount,
-          :preferred_minimal_amount
-        ]
+      def add_type_to_calculator_attributes(hash)
+        hash["calculator_attributes"]["type"] = hash["calculator_type"]
       end
     end
   end

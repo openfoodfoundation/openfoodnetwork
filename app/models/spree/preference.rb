@@ -22,7 +22,8 @@ module Spree
         when :password
           self[:value].to_s
         when :decimal
-          BigDecimal(self[:value].to_s).round(2, BigDecimal::ROUND_HALF_UP)
+          BigDecimal(self[:value].to_s, exception: false)&.round(2, BigDecimal::ROUND_HALF_UP) ||
+            self[:value]
         when :integer
           self[:value].to_i
         when :boolean

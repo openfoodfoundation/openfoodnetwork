@@ -1,18 +1,15 @@
 # frozen_string_literal: true
 
-require 'spree/localized_number'
-
 class Calculator::FlatPercentPerItem < Spree::Calculator
   # Spree's FlatPercentItemTotal calculator sums all amounts, and then calculates a percentage
   # on them.
   # In the cart, we display line item individual amounts rounded, so to have consistent
   # calculations we do the same internally. Here, we round adjustments at the individual
   # item level first, then multiply by the item quantity.
-  extend Spree::LocalizedNumber
-
   preference :flat_percent, :decimal, default: 0
 
-  localize_number :preferred_flat_percent
+  validates :preferred_flat_percent,
+            numericality: true
 
   def self.description
     I18n.t(:flat_percent_per_item)

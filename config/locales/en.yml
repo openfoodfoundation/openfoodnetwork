@@ -79,6 +79,17 @@ en:
         orders_close_at: Close date
       variant_override:
         count_on_hand: "On Hand"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Calculator Flat Percent:"
+        preferred_amount: "Calculator Amount:"
+        preferred_first_item: "Calculator First Item:"
+        preferred_additional_item: "Calculator Additional Item Cost:"
+        preferred_max_items: "Calculator Max Items:"
+        preferred_minimal_amount: "Calculator Minimal Amount:"
+        preferred_normal_amount: "Calculator Normal Amount:"
+        preferred_discount_amount: "Calculator Discount Amount:"
+        preferred_unit_from_list: "Calculator Unit From List:"
+        preferred_per_unit: "Calculator Per Unit:"
     errors:
       models:
         spree/user:

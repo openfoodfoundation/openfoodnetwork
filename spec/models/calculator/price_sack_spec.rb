@@ -12,6 +12,10 @@ describe Calculator::PriceSack do
   end
   let(:line_item) { build_stubbed(:line_item, price: price, quantity: 2) }
 
+  it { is_expected.to validate_numericality_of(:preferred_minimal_amount) }
+  it { is_expected.to validate_numericality_of(:preferred_normal_amount) }
+  it { is_expected.to validate_numericality_of(:preferred_discount_amount) }
+
   context 'when the order amount is below preferred minimal' do
     let(:price) { 2 }
 
@@ -74,11 +78,5 @@ describe Calculator::PriceSack do
         expect(calculator.compute(line_item)).to eq(1)
       end
     end
-  end
-
-  context "extends LocalizedNumber" do
-    it_behaves_like "a model using the LocalizedNumber module",
-                    [:preferred_minimal_amount, :preferred_normal_amount,
-                     :preferred_discount_amount]
   end
 end

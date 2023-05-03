@@ -29,8 +29,8 @@ module Spree
 
       def preference_field_tag(name, value, options)
         case options[:type]
-        when :integer
-          text_field_tag(name, value, preference_field_options(options))
+        when :integer, :decimal
+          number_field_tag(name, value, preference_field_options(options))
         when :boolean
           hidden_field_tag(name, 0) +
             check_box_tag(name, 1, value, preference_field_options(options))
@@ -49,8 +49,8 @@ module Spree
 
       def preference_field_for(form, field, options, object)
         case options[:type]
-        when :integer
-          form.text_field(field, preference_field_options(options))
+        when :integer, :decimal
+          form.number_field(field, preference_field_options(options))
         when :boolean
           form.check_box(field, preference_field_options(options))
         when :string
@@ -80,26 +80,24 @@ module Spree
       end
 
       def preference_field_options(options)
-        field_options = case options[:type]
-                        when :integer
-                          { size: 10,
-                            class: 'input_integer' }
-                        when :boolean
-                          {}
-                        when :string
-                          { size: 10,
-                            class: 'input_string fullwidth' }
-                        when :password
-                          { size: 10,
-                            class: 'password_string fullwidth' }
-                        when :text
-                          { rows: 15,
-                            cols: 85,
-                            class: 'fullwidth' }
-                        else
-                          { size: 10,
-                            class: 'input_string fullwidth' }
-                        end
+        field_options =
+          case options[:type]
+          when :integer
+            { size: 10, class: 'input_integer', step: 1 }
+          when :decimal
+            # Allow any number of decimal places
+            { size: 10, class: 'input_integer', step: :any }
+          when :boolean
+            {}
+          when :string
+            { size: 10, class: 'input_string fullwidth' }
+          when :password
+            { size: 10, class: 'password_string fullwidth' }
+          when :text
+            { rows: 15, cols: 85, class: 'fullwidth' }
+          else
+            { size: 10, class: 'input_string fullwidth' }
+          end
 
         field_options.merge!(
           readonly: options[:readonly],

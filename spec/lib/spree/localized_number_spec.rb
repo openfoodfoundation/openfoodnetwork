@@ -59,5 +59,11 @@ describe Spree::LocalizedNumber do
         expect(described_class.valid_localizable_number?(1599.99)).to eql true
       end
     end
+
+    context "with letters" do
+      it "returns false" do
+        expect(described_class.valid_localizable_number?('invalid')).to eql false
+      end
+    end
   end
 end

@@ -12,7 +12,4 @@ RSpec.configure do |config|
 
   # Fix encoding issue in Rails 5.0; allows passing empty arrays or hashes as params.
   config.before(:each, type: :controller) { @request.env["CONTENT_TYPE"] = 'application/json' }
-
-  # You can use `rspec -n` to run only failed specs.
-  config.example_status_persistence_file_path = "tmp/rspec-status.txt"
 end

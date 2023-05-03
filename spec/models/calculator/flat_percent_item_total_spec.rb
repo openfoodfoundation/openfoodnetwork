@@ -8,12 +8,10 @@ describe Calculator::FlatPercentItemTotal do
 
   before { allow(calculator).to receive_messages preferred_flat_percent: 10 }
 
+  it { is_expected.to validate_numericality_of(:preferred_flat_percent) }
+
   it "computes amount correctly for a single line item" do
     expect(calculator.compute(line_item)).to eq(1.0)
-  end
-
-  context "extends LocalizedNumber" do
-    it_behaves_like "a model using the LocalizedNumber module", [:preferred_flat_percent]
   end
 
   it "computes amount correctly for a given OrderManagement::Stock::Package" do

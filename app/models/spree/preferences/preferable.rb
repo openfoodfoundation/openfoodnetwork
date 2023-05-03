@@ -117,7 +117,7 @@ module Spree
           value.to_s
         when :decimal
           value = 0 if value.blank?
-          BigDecimal(value.to_s).round(2, BigDecimal::ROUND_HALF_UP)
+          BigDecimal(value.to_s, exception: false)&.round(2, BigDecimal::ROUND_HALF_UP) || value
         when :integer
           value.to_i
         when :boolean
