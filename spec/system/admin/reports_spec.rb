@@ -46,6 +46,31 @@ describe '
       expect(page).to have_content "EMAIL FIRST NAME"
     end
 
+    it "renders UTF-8 characters" do
+      # We had a problem when UTF-8 was in the page and the report because
+      # ActiveStorage read ASCII.
+      # - https://github.com/openfoodfoundation/openfoodnetwork/issues/10758
+      #
+      # Create order to inject special characters:
+      order = create(:completed_order_with_totals)
+
+      # Render special characters in the page (filter option):
+      order.distributor.update!(name: "Späti")
+
+      # Render special character within the report:
+      order.billing_address.update!(lastname: "Müller")
+
+      # Run the report:
+      login_as_admin
+      visit admin_report_path(
+        report_type: :customers, report_subtype: :mailing_list
+      )
+      click_button "Go"
+      expect(page).to have_content "Späti"
+      expect(page).to have_content "EMAIL FIRST NAME"
+      expect(page).to have_content "Müller"
+    end
+
     it "displays a friendly timeout message and offers download" do
       ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
       login_as_admin

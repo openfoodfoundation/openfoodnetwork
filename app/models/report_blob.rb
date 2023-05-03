@@ -31,6 +31,6 @@ class ReportBlob < ActiveStorage::Blob
   end
 
   def result
-    @result ||= download
+    @result ||= download.force_encoding(Encoding::UTF_8)
   end
 end
