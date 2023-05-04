@@ -25,6 +25,7 @@ module Spree
 
     def url(size)
       return unless attachment.attached?
+      return variant(size).processed.url if attachment.service.name == :amazon_public
 
       url_for(variant(size))
     end
