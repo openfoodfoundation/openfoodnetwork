@@ -76,7 +76,7 @@ module Spree
     before_save :convert_variant_weight_to_decimal
 
     after_save :save_default_price
-    after_save :update_units, if: ->(variant) {
+    after_save :update_name_and_units, if: ->(variant) {
       variant.previously_new_record? ||
         variant.previous_changes.keys.intersection(NAME_FIELDS).any?
     }
@@ -205,6 +205,11 @@ module Spree
     end
 
     private
+
+    def update_name_and_units
+      update_units
+      update_columns(full_name: generate_full_name)
+    end
 
     # Ensures a new variant takes the product master price when price is not supplied
     def check_price

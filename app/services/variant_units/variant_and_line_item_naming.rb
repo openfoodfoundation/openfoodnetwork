@@ -52,7 +52,7 @@ module VariantUnits
     #     Bread - Spelt Sourdough, 1kg    # if display_name is "Spelt Sourdough, 1kg"
     #     Bread - 1kg Spelt Sourdough     # if unit_to_display is "1kg Spelt Sourdough"
     #     Bread - Spelt Sourdough (1kg)   # if display_name is "Spelt Sourdough" and unit_to_display is "1kg"
-    def full_name
+    def generate_full_name
       return unit_to_display if display_name.blank?
       return display_name    if display_name.downcase.include? unit_to_display.downcase
       return unit_to_display if unit_to_display.downcase.include? display_name.downcase

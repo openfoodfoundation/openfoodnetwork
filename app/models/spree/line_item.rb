@@ -47,7 +47,7 @@ module Spree
     before_destroy :update_inventory_before_destroy
     after_destroy :update_order
 
-    delegate :product, :unit_description, :display_name, to: :variant
+    delegate :product, :unit_description, :display_name, :full_name, to: :variant
 
     attr_accessor :skip_stock_check, :target_shipment # Allows manual skipping of Stock::AvailabilityValidator
 
