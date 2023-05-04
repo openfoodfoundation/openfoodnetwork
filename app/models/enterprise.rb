@@ -297,25 +297,19 @@ class Enterprise < ApplicationRecord
   def logo_url(name)
     return unless logo.variable?
 
-    Rails.application.routes.url_helpers.url_for(
-      logo.variant(name)
-    )
+    url_for(logo.variant(name))
   end
 
   def promo_image_url(name)
     return unless promo_image.variable?
 
-    Rails.application.routes.url_helpers.url_for(
-      promo_image.variant(name)
-    )
+    url_for(promo_image.variant(name))
   end
 
   def white_label_logo_url(name = :default)
     return unless white_label_logo.variable?
 
-    Rails.application.routes.url_helpers.url_for(
-      white_label_logo.variant(name)
-    )
+    url_for(white_label_logo.variant(name))
   end
 
   def website

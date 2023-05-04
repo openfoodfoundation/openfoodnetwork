@@ -26,7 +26,7 @@ module Spree
     def url(size)
       return unless attachment.attached?
 
-      Rails.application.routes.url_helpers.url_for(variant(size))
+      url_for(variant(size))
     end
 
     # if there are errors from the plugin, then add a more meaningful message
