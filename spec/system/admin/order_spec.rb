@@ -143,6 +143,37 @@ describe '
     end
   end
 
+  context "when creating an order with a customer-only" do
+    let(:customer2) { create(:customer, enterprise: distributor) }
+    let(:customer3) { create(:customer, enterprise: distributor) }
+
+    before do
+      login_as_admin
+      visit spree.new_admin_order_path
+      select2_select distributor.name, from: 'order_distributor_id'
+      select2_select order_cycle.name, from: 'order_order_cycle_id'
+      click_button 'Next'
+      expect(Spree::Order.last.customer_id).to be_nil
+      tomselect_search_and_select customer2.email, from: 'customer_search_override'
+      check 'order_use_billing'
+      click_button 'Update'
+      expect(page).to have_content 'Customer Details updated'
+    end
+
+    it "set the right customer attached to the order" do
+      expect(Spree::Order.last.reload.customer).to eq customer2
+    end
+
+    it "when changing the attached customer,"\
+       "it should update the order customer (not only its details)" do
+      tomselect_search_and_select customer3.email, from: 'customer_search_override'
+      expect do
+        click_button 'Update'
+        expect(page).to have_field 'order_email', with: customer3.email
+      end.to change { Spree::Order.last.reload.customer }.from(customer2).to(customer3)
+    end
+  end
+
   it "can add a product to an existing order" do
     login_as_admin
     visit spree.edit_admin_order_path(order)

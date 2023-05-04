@@ -53,6 +53,7 @@ export default class extends TomSelectController {
     });
     $("#order_email").val(customer.email);
     $("#user_id").val(customer.user_id);
+    $("#customer_id").val(customer.id);
   }
 
   setValueOnTomSelectController = (element, value) => {
