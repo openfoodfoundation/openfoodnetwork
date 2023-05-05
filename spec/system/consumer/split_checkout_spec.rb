@@ -720,7 +720,8 @@ describe "As a consumer, I want to checkout my order" do
         end
 
         context "with voucher available" do
-          let!(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor) }
+          let!(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor, amount: amount) }
+          let(:amount) { 15 }
 
           before do
             visit checkout_step_path(:payment)
@@ -738,7 +739,7 @@ describe "As a consumer, I want to checkout my order" do
               end
 
               it "adds a voucher to the order" do
-                expect(page).to have_content("$10.00 Voucher")
+                expect(page).to have_content("$15.00 Voucher")
                 expect(order.reload.voucher_adjustments.length).to eq(1)
               end
             end
@@ -1111,13 +1112,15 @@ describe "As a consumer, I want to checkout my order" do
       end
 
       describe "vouchers" do
-        let(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor) }
+        let(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor, amount: 6) }
 
         before do
           # Add voucher to the order
           voucher.create_adjustment(voucher.code, order)
+
           # Update order so voucher adjustment is properly taken into account
           order.update_order!
+          VoucherAdjustmentsService.calculate(order)
 
           visit checkout_step_path(:summary)
         end
@@ -1125,6 +1128,7 @@ describe "As a consumer, I want to checkout my order" do
         it "shows the applied voucher" do
           within ".summary-right" do
             expect(page).to have_content "some_code"
+            expect(page).to have_content "-6"
           end
         end
       end

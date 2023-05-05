@@ -136,7 +136,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
         end
 
         context "when using a voucher" do
-          let!(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor) }
+          let!(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor, amount: 10) }
 
           it "will include a tax included amount on the voucher adjustment" do
             visit checkout_step_path(:details)
@@ -149,7 +149,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
             fill_in "Enter voucher code", with: voucher.code
             click_button("Apply")
 
-            # Choose payment ??
+            # Choose payment
             click_on "Next - Order summary"
             click_on "Complete order"
 
