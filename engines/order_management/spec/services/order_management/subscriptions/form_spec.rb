@@ -12,14 +12,14 @@ module OrderManagement
         let!(:product2) { create(:product, supplier: shop) }
         let!(:product3) { create(:product, supplier: shop) }
         let!(:variant1) {
-          create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: [])
+          create(:variant, product: product1, unit_value: '100', price: 12.00)
         }
         let!(:variant2) {
-          create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: [])
+          create(:variant, product: product2, unit_value: '1000', price: 6.00)
         }
         let!(:variant3) {
           create(:variant, product: product2, unit_value: '1000',
-                           price: 2.50, option_values: [], on_hand: 1)
+                           price: 2.50, on_hand: 1)
         }
         let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
         let!(:order_cycle1) {

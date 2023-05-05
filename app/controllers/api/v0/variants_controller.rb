@@ -9,12 +9,12 @@ module Api
       before_action :product
 
       def index
-        @variants = scope.includes(option_values: :option_type).ransack(params[:q]).result
+        @variants = scope.ransack(params[:q]).result
         render json: @variants, each_serializer: Api::VariantSerializer
       end
 
       def show
-        @variant = scope.includes(option_values: :option_type).find(params[:id])
+        @variant = scope.find(params[:id])
         render json: @variant, serializer: Api::VariantSerializer
       end
 

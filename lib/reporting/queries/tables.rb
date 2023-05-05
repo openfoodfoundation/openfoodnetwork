@@ -39,10 +39,6 @@ module Reporting
         Spree::Order.arel_table.alias(:managed_orders)
       end
 
-      def option_value_table
-        Spree::OptionValue.arel_table
-      end
-
       def shipping_category_table
         Spree::ShippingCategory.arel_table
       end

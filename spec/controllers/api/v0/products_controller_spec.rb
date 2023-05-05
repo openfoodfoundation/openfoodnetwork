@@ -61,7 +61,7 @@ describe Api::V0::ProductsController, type: :controller do
         api_get :show, id: product.to_param
 
         expect(json_response["permalink_live"]).to match(/and-1-ways/)
-        product.destroy
+        product.reload.destroy
 
         api_get :show, id: other_product.id
         expect(json_response["permalink_live"]).to match(/droids/)

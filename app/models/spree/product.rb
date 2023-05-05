@@ -11,7 +11,6 @@ require 'concerns/product_stock'
 #
 # MASTER VARIANT
 # Every product has one master variant, which stores master price and sku, size and weight, etc.
-# The master variant does not have option values associated with it.
 # Price, SKU, size, weight, etc. are all delegated to the master variant.
 # Contains on_hand inventory levels only when there are no variants for the product.
 #
@@ -33,11 +32,6 @@ module Spree
     searchable_associations :supplier, :properties, :primary_taxon, :variants, :master
     searchable_scopes :active, :with_properties
 
-    has_many :product_option_types, dependent: :destroy
-    # We have an after_destroy callback on Spree::ProductOptionType. However, if we
-    # don't specify dependent => destroy on this association, it is not called. See:
-    # https://github.com/rails/rails/issues/7618
-    has_many :option_types, through: :product_option_types, dependent: :destroy
     has_many :product_properties, dependent: :destroy
     has_many :properties, through: :product_properties
 

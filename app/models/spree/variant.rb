@@ -14,7 +14,7 @@ module Spree
     acts_as_paranoid
 
     searchable_attributes :sku, :display_as, :display_name
-    searchable_associations :product, :option_values, :default_price
+    searchable_associations :product, :default_price
     searchable_scopes :active, :deleted
 
     NAME_FIELDS = ["display_name", "display_as", "weight", "unit_value", "unit_description"].freeze
@@ -31,9 +31,6 @@ module Spree
     has_many :stock_items, dependent: :destroy, inverse_of: :variant
     has_many :stock_locations, through: :stock_items
     has_many :stock_movements
-
-    has_and_belongs_to_many :option_values, join_table: :spree_option_values_variants
-
     has_many :images, -> { order(:position) }, as: :viewable,
                                                dependent: :destroy,
                                                class_name: "Spree::Image"
@@ -179,10 +176,6 @@ module Spree
     def fees_name_by_type_for(distributor, order_cycle)
       OpenFoodNetwork::EnterpriseFeeCalculator.new(distributor,
                                                    order_cycle).fees_name_by_type_for self
-    end
-
-    def option_value(opt_name)
-      option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
     end
 
     def price_in(currency)

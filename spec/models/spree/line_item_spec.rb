@@ -178,12 +178,12 @@ module Spree
 
         before do
           li1
-          li2
+          li2.reload
           li1.adjustments << adjustment1
         end
 
         it "finds line items with tax" do
-          expect(LineItem.with_tax).to eq([li1])
+          expect(LineItem.with_tax.to_a).to eq([li1])
         end
 
         it "finds line items without tax" do
@@ -708,47 +708,41 @@ module Spree
         end
       end
 
-      context "when the line_item already has a final_weight_volume set (and all required option values do not exist)" do
+      context "when the line_item has a final_weight_volume set" do
         let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
         let!(:v) { create(:variant, product: p0, unit_value: 10, unit_description: 'bar') }
 
         let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
         let!(:li) { create(:line_item, product: p, final_weight_volume: 5) }
 
-        it "removes the old option value and assigns the new one" do
-          ov_orig = li.option_values.last
-          ov_var  = v.option_values.last
+        it "assigns the new value" do
+          expect(li.unit_presentation).to eq "5g"
+          expect(v.unit_presentation).to eq "10g bar"
+
           allow(li).to receive(:unit_description) { 'foo' }
 
-          expect {
-            li.update_attribute(:final_weight_volume, 10)
-          }.to change(Spree::OptionValue, :count).by(1)
+          li.update_attribute(:final_weight_volume, 10)
 
-          expect(li.option_values).not_to include ov_orig
-          expect(li.option_values).not_to include ov_var
-          ov = li.option_values.last
-          expect(ov.name).to eq("10g foo")
+          expect(li.unit_presentation).to eq "10g foo"
         end
       end
 
-      context "when the variant already has a value set (and all required option values exist)" do
+      context "when the variant already has a value set" do
         let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
         let!(:v) { create(:variant, product: p0, unit_value: 10, unit_description: 'bar') }
 
         let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
         let!(:li) { create(:line_item, product: p, final_weight_volume: 5) }
 
-        it "removes the old option value and assigns the new one" do
-          ov_orig = li.option_values.last
-          ov_new  = v.option_values.last
+        it "assigns the new value" do
+          expect(li.unit_presentation).to eq "5g"
+          expect(v.unit_presentation).to eq "10g bar"
+
           allow(li).to receive(:unit_description) { 'bar' }
 
-          expect {
-            li.update_attribute(:final_weight_volume, 10)
-          }.to change(Spree::OptionValue, :count).by(0)
+          li.update_attribute(:final_weight_volume, 10)
 
-          expect(li.option_values).not_to include ov_orig
-          expect(li.option_values).to     include ov_new
+          expect(li.unit_presentation).to eq "10g bar"
         end
       end
 
@@ -789,24 +783,6 @@ module Spree
             expect(li.unit_value).to eq 10
           end
         end
-      end
-    end
-
-    describe "deleting unit option values" do
-      let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-      let!(:ot) { Spree::OptionType.find_by name: 'unit_weight' }
-      let!(:li) { create(:line_item, product: p) }
-
-      it "removes option value associations for unit option types" do
-        expect {
-          li.delete_unit_option_values
-        }.to change(li.option_values, :count).by(-1)
-      end
-
-      it "does not delete option values" do
-        expect {
-          li.delete_unit_option_values
-        }.to change(Spree::OptionValue, :count).by(0)
       end
     end
 

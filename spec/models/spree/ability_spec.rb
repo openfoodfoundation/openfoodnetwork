@@ -71,20 +71,6 @@ describe Spree::Ability do
       end
     end
 
-    context 'for OptionType' do
-      let(:resource) { Spree::OptionType.new }
-      context 'requested by any user' do
-        it_should_behave_like 'read only'
-      end
-    end
-
-    context 'for OptionValue' do
-      let(:resource) { Spree::OptionType.new }
-      context 'requested by any user' do
-        it_should_behave_like 'read only'
-      end
-    end
-
     context 'for Order' do
       let(:resource) { Spree::Order.new }
 

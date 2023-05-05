@@ -18,15 +18,6 @@
     = f.text_field :unit_description, class: "fullwidth", placeholder: t('admin.products.unit_name_placeholder')
 
   %div
-    - @product.option_types.each do |option_type|
-      - unless variant_unit_option_type?(option_type)
-        .field
-          = label :new_variant, option_type.presentation
-          - if @variant.new_record?
-            = select(:new_variant, option_type.presentation, option_type.option_values.collect {|ov| [ ov.presentation, ov.id ] }, {}, {class: 'select2 fullwidth'})
-          - else
-            - if opt = @variant.option_values.detect {|o| o.option_type == option_type }.try(:presentation)
-              = text_field(:new_variant, option_type.presentation, value: opt, disabled: 'disabled', class: 'fullwidth')
     .field
       = f.label :sku, t('.sku')
       = f.text_field :sku, class: 'fullwidth'

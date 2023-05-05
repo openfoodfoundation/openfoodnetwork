@@ -113,8 +113,7 @@ describe '
       expect(product.shipping_category).to eq(shipping_category)
       expect(product.description).to eq("<p>A description...</p>")
       expect(product.group_buy).to be_falsey
-      expect(product.master.option_values.map(&:name)).to eq(['5kg'])
-      expect(product.master.options_text).to eq("5kg")
+      expect(product.master.unit_presentation).to eq("5kg")
     end
 
     it "creating an on-demand product" do

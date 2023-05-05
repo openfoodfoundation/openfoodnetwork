@@ -69,7 +69,7 @@ module VariantUnits
     end
 
     def weight_from_unit_value
-      (unit_value || 0) / 1000 if variant_unit == 'weight'
+      (unit_value || 0) / 1000 if product.variant_unit == 'weight'
     end
 
     private

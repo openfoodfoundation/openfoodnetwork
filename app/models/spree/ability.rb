@@ -22,8 +22,6 @@ module Spree
         can :manage, :all
       else
         can [:index, :read], Country
-        can [:index, :read], OptionType
-        can [:index, :read], OptionValue
         can :create, Order
         can :read, Order do |order, token|
           order.user == user || order.token && token == order.token

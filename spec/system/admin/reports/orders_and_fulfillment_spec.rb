@@ -237,12 +237,12 @@ describe "Orders And Fulfillment" do
               table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
 
               expect(table).to include [
-                "Supplier Name", "Baked Beans", "1g Big, S",
+                "Supplier Name", "Baked Beans", "1g Big",
                 "3", "0.003", "10.0", "30.0"
               ]
 
               expect(table).to include [
-                "Supplier Name", "Baked Beans", "1g Small, S",
+                "Supplier Name", "Baked Beans", "1g Small",
                 "7", "0.007", "10.0", "70.0"
               ]
               expect(table[2]).to eq [

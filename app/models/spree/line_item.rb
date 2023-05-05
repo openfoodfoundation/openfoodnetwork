@@ -9,7 +9,7 @@ module Spree
     include LineItemStockChanges
 
     searchable_attributes :price, :quantity, :order_id, :variant_id, :tax_category_id
-    searchable_associations :order, :order_cycle, :variant, :product, :supplier, :tax_category, :option_values
+    searchable_associations :order, :order_cycle, :variant, :product, :supplier, :tax_category
     searchable_scopes :with_tax, :without_tax
 
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items
@@ -21,9 +21,6 @@ module Spree
     belongs_to :tax_category, class_name: "Spree::TaxCategory"
 
     has_many :adjustments, as: :adjustable, dependent: :destroy
-
-    has_and_belongs_to_many :option_values, join_table: 'spree_option_values_line_items',
-                                            class_name: 'Spree::OptionValue'
 
     before_validation :adjust_quantity
     before_validation :copy_price

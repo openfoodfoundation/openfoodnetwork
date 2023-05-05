@@ -6,34 +6,35 @@ module VariantUnits
   describe OptionValueNamer do
     describe "generating option value name" do
       let(:v) { Spree::Variant.new }
-      let(:subject) { OptionValueNamer.new }
+      let(:p) { Spree::Product.new }
+      let(:subject) { OptionValueNamer.new(v) }
 
       it "when description is blank" do
         allow(v).to receive(:unit_description) { nil }
         allow(subject).to receive(:value_scaled?) { true }
         allow(subject).to receive(:option_value_value_unit) { %w(value unit) }
-        expect(subject.name(v)).to eq("valueunit")
+        expect(subject.name).to eq("valueunit")
       end
 
       it "when description is present" do
         allow(v).to receive(:unit_description) { 'desc' }
         allow(subject).to receive(:option_value_value_unit) { %w(value unit) }
         allow(subject).to receive(:value_scaled?) { true }
-        expect(subject.name(v)).to eq("valueunit desc")
+        expect(subject.name).to eq("valueunit desc")
       end
 
       it "when value is blank and description is present" do
         allow(v).to receive(:unit_description) { 'desc' }
         allow(subject).to receive(:option_value_value_unit) { [nil, nil] }
         allow(subject).to receive(:value_scaled?) { true }
-        expect(subject.name(v)).to eq("desc")
+        expect(subject.name).to eq("desc")
       end
 
       it "spaces value and unit when value is unscaled" do
         allow(v).to receive(:unit_description) { nil }
         allow(subject).to receive(:option_value_value_unit) { %w(value unit) }
         allow(subject).to receive(:value_scaled?) { false }
-        expect(subject.name(v)).to eq("value unit")
+        expect(subject.name).to eq("value unit")
       end
     end
 

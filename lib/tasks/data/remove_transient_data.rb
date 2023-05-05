@@ -27,11 +27,9 @@ class RemoveTransientData
       merge(orders_without_payments)
 
     old_cart_line_items = Spree::LineItem.where(order_id: old_carts)
-    old_line_item_options = Spree::OptionValuesLineItem.where(line_item_id: old_cart_line_items)
     old_cart_adjustments = Spree::Adjustment.where(order_id: old_carts)
 
     old_cart_adjustments.delete_all
-    old_line_item_options.delete_all
     old_cart_line_items.delete_all
     old_carts.delete_all
   end

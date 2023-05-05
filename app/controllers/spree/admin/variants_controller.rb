@@ -5,7 +5,6 @@ require 'open_food_network/scope_variants_for_search'
 module Spree
   module Admin
     class VariantsController < ::Admin::ResourceController
-      helper 'spree/products'
       belongs_to 'spree/product', find_by: :permalink
 
       before_action :assign_default_attributes, only: :new
@@ -81,8 +80,6 @@ module Spree
       end
 
       def create_before
-        option_values = params[:new_variant]
-        option_values&.each_value { |id| @object.option_values << OptionValue.find(id) }
         @object.save
       end
 
