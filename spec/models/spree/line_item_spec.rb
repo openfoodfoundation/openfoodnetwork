@@ -620,7 +620,7 @@ module Spree
           end
 
           it "returns unit_to_display" do
-            expect(li.full_name).to eq('unit_to_display')
+            expect(li.generate_full_name).to eq('unit_to_display')
           end
         end
 
@@ -631,7 +631,7 @@ module Spree
           end
 
           it "returns unit_to_display" do
-            expect(li.full_name).to eq('1kg Jar')
+            expect(li.generate_full_name).to eq('1kg Jar')
           end
         end
 
@@ -642,7 +642,7 @@ module Spree
           end
 
           it "returns display_name" do
-            expect(li.full_name).to eq('10kg Box')
+            expect(li.generate_full_name).to eq('10kg Box')
           end
         end
 
@@ -653,7 +653,16 @@ module Spree
           end
 
           it "returns unit_to_display" do
-            expect(li.full_name).to eq('Spelt Sourdough (1 Loaf)')
+            expect(li.generate_full_name).to eq('Spelt Sourdough (1 Loaf)')
+          end
+        end
+
+        context "when persisted" do
+          let(:variant) { create(:variant, display_name: "Spelt Sourdough") }
+          let!(:line_item) { create(:line_item, variant: variant) }
+
+          it "returns the full name of the variant" do
+            expect(line_item.full_name).to eq "Spelt Sourdough (#{variant.options_text})"
           end
         end
       end

@@ -570,31 +570,31 @@ module Spree
 
         it "returns unit_to_display when display_name is blank" do
           allow(v).to receive(:display_name) { '' }
-          expect(v.full_name).to eq('unit_to_display')
+          expect(v.generate_full_name).to eq('unit_to_display')
         end
 
         it "returns display_name when it contains unit_to_display" do
           allow(v).to receive(:display_name) { 'DiSpLaY_name' }
           allow(v).to receive(:unit_to_display) { 'name' }
-          expect(v.full_name).to eq('DiSpLaY_name')
+          expect(v.generate_full_name).to eq('DiSpLaY_name')
         end
 
         it "returns unit_to_display when it contains display_name" do
           allow(v).to receive(:display_name) { '_to_' }
           allow(v).to receive(:unit_to_display) { 'unit_TO_display' }
-          expect(v.full_name).to eq('unit_TO_display')
+          expect(v.generate_full_name).to eq('unit_TO_display')
         end
 
         it "returns a combination otherwise" do
           allow(v).to receive(:display_name) { 'display_name' }
           allow(v).to receive(:unit_to_display) { 'unit_to_display' }
-          expect(v.full_name).to eq('display_name (unit_to_display)')
+          expect(v.generate_full_name).to eq('display_name (unit_to_display)')
         end
 
         it "is resilient to regex chars" do
           v = Variant.new display_name: ")))"
           allow(v).to receive(:unit_to_display) { ")))" }
-          expect(v.full_name).to eq(")))")
+          expect(v.generate_full_name).to eq(")))")
         end
       end
 

@@ -359,6 +359,8 @@ describe '
       variant3.update!(sku: "")
       variant1.option_values = [create(:option_value, presentation: "Test")]
       variant2.option_values = [create(:option_value, presentation: "Something")]
+      variant1.update_columns(full_name: variant1.generate_full_name)
+      variant2.update_columns(full_name: variant2.generate_full_name)
     end
 
     it "shows products and inventory report" do
