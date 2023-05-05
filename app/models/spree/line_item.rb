@@ -42,12 +42,16 @@ module Spree
     before_save :update_inventory
     before_save :calculate_final_weight_volume, if: :quantity_changed?,
                                                 unless: :final_weight_volume_changed?
-    after_save :update_order
-    after_save :update_units
-    before_destroy :update_inventory_before_destroy
-    after_destroy :update_order
+    before_save :assign_units, if: ->(line_item) {
+      line_item.new_record? || line_item.changed_attributes.keys.include?("final_weight_volume")
+    }
 
-    delegate :product, :unit_description, :display_name, to: :variant
+    before_destroy :update_inventory_before_destroy
+
+    after_destroy :update_order
+    after_save :update_order
+
+    delegate :product, :variant_unit, :unit_description, :display_name, :display_as, to: :variant
 
     attr_accessor :skip_stock_check, :target_shipment # Allows manual skipping of Stock::AvailabilityValidator
 

@@ -17,6 +17,8 @@ module Spree
     searchable_associations :product, :option_values, :default_price
     searchable_scopes :active, :deleted
 
+    NAME_FIELDS = ["display_name", "display_as", "weight", "unit_value", "unit_description"].freeze
+
     belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product'
 
     delegate_belongs_to :product, :name, :description, :permalink, :available_on,
@@ -73,13 +75,15 @@ module Spree
     before_validation :ensure_unit_value
     before_validation :update_weight_from_unit_value, if: ->(v) { v.product.present? }
 
+    before_save :convert_variant_weight_to_decimal
+    before_save :assign_units, if: ->(variant) {
+      variant.new_record? || variant.changed_attributes.keys.intersection(NAME_FIELDS).any?
+    }
+
     after_save :save_default_price
-    after_save :update_units
 
     after_create :create_stock_items
     after_create :set_position
-
-    before_save :convert_variant_weight_to_decimal
 
     around_destroy :destruction
 
