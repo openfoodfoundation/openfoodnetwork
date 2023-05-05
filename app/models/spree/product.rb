@@ -362,10 +362,6 @@ module Spree
                                   presentation: option_type_presentation)
     end
 
-    def self.all_variant_unit_option_types
-      Spree::OptionType.where('name LIKE ?', 'unit_%%')
-    end
-
     def destroy
       transaction do
         touch_distributors

@@ -931,15 +931,6 @@ module Spree
           expect(p.master.option_values.map(&:name).include?("1g")).to eq(false)
         end
       end
-
-      it "finds all variant unit option types" do
-        ot1 = create(:option_type, name: 'unit_weight', presentation: 'Weight')
-        ot2 = create(:option_type, name: 'unit_volume', presentation: 'Volume')
-        ot3 = create(:option_type, name: 'unit_items', presentation: 'Items')
-        ot4 = create(:option_type, name: 'foo_unit_bar', presentation: 'Foo')
-
-        expect(Spree::Product.all_variant_unit_option_types).to match_array [ot1, ot2, ot3]
-      end
     end
 
     describe "option types" do
