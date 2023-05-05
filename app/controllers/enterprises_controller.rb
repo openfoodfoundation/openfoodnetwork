@@ -4,7 +4,6 @@ require 'open_food_network/enterprise_injection_data'
 
 class EnterprisesController < BaseController
   layout "darkswarm"
-  helper Spree::ProductsHelper
   include OrderCyclesHelper
   include SerializerHelper
   include WhiteLabel

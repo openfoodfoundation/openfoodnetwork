@@ -34,7 +34,6 @@ module Reporting
         def child_variants
           Spree::Variant.
             where(is_master: false).
-            includes(option_values: :option_type).
             joins(:product).
             merge(visible_products).
             order('spree_products.name')

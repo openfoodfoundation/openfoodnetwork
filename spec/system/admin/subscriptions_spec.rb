@@ -209,11 +209,11 @@ describe 'Subscriptions' do
       }
       let!(:test_product) { create(:product, supplier: shop) }
       let!(:test_variant) {
-        create(:variant, product: test_product, unit_value: "100", price: 12.00, option_values: [])
+        create(:variant, product: test_product, unit_value: "100", price: 12.00)
       }
       let!(:shop_product) { create(:product, supplier: shop) }
       let!(:shop_variant) {
-        create(:variant, product: shop_product, unit_value: "1000", price: 6.00, option_values: [])
+        create(:variant, product: shop_product, unit_value: "1000", price: 6.00)
       }
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
       let!(:order_cycle) {
@@ -367,13 +367,13 @@ describe 'Subscriptions' do
       let!(:product2) { create(:product, supplier: shop) }
       let!(:product3) { create(:product, supplier: shop) }
       let!(:variant1) {
-        create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: [])
+        create(:variant, product: product1, unit_value: '100', price: 12.00)
       }
       let!(:variant2) {
-        create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: [])
+        create(:variant, product: product2, unit_value: '1000', price: 6.00)
       }
       let!(:variant3) {
-        create(:variant, product: product3, unit_value: '10000', price: 22.00, option_values: [])
+        create(:variant, product: product3, unit_value: '10000', price: 22.00)
       }
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
       let!(:order_cycle) {
@@ -520,10 +520,10 @@ describe 'Subscriptions' do
       let!(:product1) { create(:product, supplier: shop) }
       let!(:product2) { create(:product, supplier: shop) }
       let!(:variant1) {
-        create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: [])
+        create(:variant, product: product1, unit_value: '100', price: 12.00)
       }
       let!(:variant2) {
-        create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: [])
+        create(:variant, product: product2, unit_value: '1000', price: 6.00)
       }
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
       let!(:order_cycle) {

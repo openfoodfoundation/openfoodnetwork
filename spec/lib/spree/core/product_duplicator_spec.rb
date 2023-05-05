@@ -9,8 +9,7 @@ describe Spree::Core::ProductDuplicator do
            taxons: [],
            product_properties: [property],
            master: master_variant,
-           variants: [variant],
-           option_types: []
+           variants: [variant]
   end
 
   let(:new_product) do
@@ -89,7 +88,6 @@ describe Spree::Core::ProductDuplicator do
     expect(new_product).to receive(:updated_at=).with(nil)
     expect(new_product).to receive(:deleted_at=).with(nil)
     expect(new_product).to receive(:master=).with(new_master_variant)
-    expect(new_product).to receive(:option_types=).with([])
     expect(new_product).to receive(:variants=).with([new_variant])
 
     expect(new_master_variant).to receive(:sku=).with("")

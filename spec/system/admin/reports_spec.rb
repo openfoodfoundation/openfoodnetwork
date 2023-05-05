@@ -357,8 +357,6 @@ describe '
       variant2.update!(sku: "sku2")
       variant3.on_hand = 9
       variant3.update!(sku: "")
-      variant1.option_values = [create(:option_value, presentation: "Test")]
-      variant2.option_values = [create(:option_value, presentation: "Something")]
     end
 
     it "shows products and inventory report" do
@@ -376,12 +374,12 @@ describe '
       expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city,
                                       "Product Name",
                                       product1.properties.map(&:presentation).join(", "),
-                                      product1.primary_taxon.name, "Test", "100.0",
+                                      product1.primary_taxon.name, "1g", "100.0",
                                       "none", "", "sku1"]
       expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city,
                                       "Product Name",
                                       product1.properties.map(&:presentation).join(", "),
-                                      product1.primary_taxon.name, "Something", "80.0",
+                                      product1.primary_taxon.name, "1g", "80.0",
                                       "none", "", "sku2"]
       expect(page).to have_table_row [product2.supplier.name, product1.supplier.address.city,
                                       "Product 2",

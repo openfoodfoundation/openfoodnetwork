@@ -36,7 +36,7 @@ module Reporting
         end
 
         def line_item_includes
-          [{ variant: [{ option_values: :option_type }, { product: :supplier }] }]
+          [{ variant: { product: :supplier } }]
         end
 
         def query_result

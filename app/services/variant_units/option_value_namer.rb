@@ -36,7 +36,7 @@ module VariantUnits
     end
 
     def option_value_value_unit
-      if @nameable.unit_value.present?
+      if @nameable.unit_value.present? && @nameable.product.persisted?
         if %w(weight volume).include? @nameable.product.variant_unit
           value, unit_name = option_value_value_unit_scaled
         else

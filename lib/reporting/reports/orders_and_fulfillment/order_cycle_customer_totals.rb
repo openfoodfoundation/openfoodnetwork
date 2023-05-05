@@ -91,7 +91,7 @@ module Reporting
         end
 
         def line_item_includes
-          [{ variant: [{ option_values: :option_type }, { product: :supplier }],
+          [{ variant: { product: :supplier },
              order: [:bill_address, :ship_address, :order_cycle, :adjustments, :payments,
                      :user, :distributor, :shipments] }]
         end

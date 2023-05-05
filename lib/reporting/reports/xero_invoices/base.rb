@@ -62,7 +62,7 @@ module Reporting
 
         def line_item_includes
           [:bill_address, :adjustments,
-           { line_items: { variant: [{ option_values: :option_type }, { product: :supplier }] } }]
+           { line_items: { variant: { product: :supplier } } }]
         end
 
         def detail_rows_for_order(order, invoice_number, opts)

@@ -29,7 +29,6 @@ module Admin
 
     after_action  :geocode_address_if_use_geocoder, only: [:create, :update]
 
-    helper 'spree/products'
     include OrderCyclesHelper
 
     def index
@@ -179,7 +178,7 @@ module Admin
         if enterprises.present?
           enterprises.includes(
             supplied_products:
-              [:supplier, { master: [:images], variants: { option_values: :option_type } }]
+              [:supplier, :variants, { master: [:images] }]
           )
         end
       when :index

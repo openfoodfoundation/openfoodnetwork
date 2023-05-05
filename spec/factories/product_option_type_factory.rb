@@ -1,8 +1,0 @@
-# frozen_string_literal: true
-
-FactoryBot.define do
-  factory :product_option_type, class: Spree::ProductOptionType do
-    product
-    option_type
-  end
-end

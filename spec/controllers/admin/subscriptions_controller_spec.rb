@@ -262,7 +262,7 @@ describe Admin::SubscriptionsController, type: :controller do
     let!(:customer) { create(:customer, enterprise: shop) }
     let!(:product1) { create(:product, supplier: shop) }
     let!(:variant1) {
-      create(:variant, product: product1, unit_value: '100', price: 12.00, option_values: [])
+      create(:variant, product: product1, unit_value: '100', price: 12.00)
     }
     let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
     let!(:order_cycle) {
@@ -373,7 +373,7 @@ describe Admin::SubscriptionsController, type: :controller do
         context 'with subscription_line_items params' do
           let!(:product2) { create(:product) }
           let!(:variant2) {
-            create(:variant, product: product2, unit_value: '1000', price: 6.00, option_values: [])
+            create(:variant, product: product2, unit_value: '1000', price: 6.00)
           }
 
           before do

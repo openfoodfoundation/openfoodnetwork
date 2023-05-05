@@ -249,7 +249,7 @@ describe '
       }
       let!(:li1) { create(:line_item_with_shipment, order: o1) }
       let!(:li2) {
-        create(:line_item_with_shipment, order: o2, product: create(:product_with_option_types) )
+        create(:line_item_with_shipment, order: o2, product: create(:product) )
       }
 
       before :each do
@@ -428,8 +428,8 @@ describe '
     end
 
     let!(:p1) {
-      create(:product_with_option_types, group_buy: true, group_buy_unit_size: 5000,
-                                         variant_unit: "weight", variants: [create(:variant, unit_value: 1000)] )
+      create(:product, group_buy: true, group_buy_unit_size: 5000,
+                       variant_unit: "weight", variants: [create(:variant, unit_value: 1000)] )
     }
     let!(:v1) { p1.variants.first }
     let!(:o1) {
@@ -1068,8 +1068,8 @@ describe '
       let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
       let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
       let!(:p3) {
-        create(:product_with_option_types, group_buy: true, group_buy_unit_size: 5000,
-                                           variant_unit: "weight", variants: [create(:variant, unit_value: 1000)] )
+        create(:product, group_buy: true, group_buy_unit_size: 5000,
+                         variant_unit: "weight", variants: [create(:variant, unit_value: 1000)] )
       }
       let!(:v3) { p3.variants.first }
       let!(:o3) {

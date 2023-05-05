@@ -34,10 +34,7 @@ FactoryBot.define do
       after(:create) do |product, evaluator|
         product.master.on_hand = evaluator.on_hand
         product.variants.first.on_hand = evaluator.on_hand
-      end
-
-      factory :product_with_option_types do
-        after(:create) { |product| create(:product_option_type, product: product) }
+        product.reload
       end
     end
   end
@@ -60,6 +57,7 @@ FactoryBot.define do
       product.master.on_hand = evaluator.on_hand
       product.variants.first.on_demand = evaluator.on_demand
       product.variants.first.on_hand = evaluator.on_hand
+      product.reload
     end
   end
 

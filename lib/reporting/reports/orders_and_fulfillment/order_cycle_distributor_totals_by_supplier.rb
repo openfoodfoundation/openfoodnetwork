@@ -40,7 +40,7 @@ module Reporting
               :adjustments,
               { shipments: { shipping_rates: :shipping_method } }
             ],
-            variant: [{ option_values: :option_type }, { product: :supplier }]
+            variant: { product: :supplier }
           }]
         end
       end

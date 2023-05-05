@@ -567,8 +567,7 @@ describe Spree::Variant do
   end
 
   describe "unit value/description" do
-    let(:v) { Spree::Variant.new(option_values: [option_value]) }
-    let(:option_value) { build(:option_value, presentation: "small") }
+    let(:v) { Spree::Variant.new(unit_presentation: "small" ) }
 
     describe "generating the full name" do
       it "returns unit_to_display when display_name is blank" do
@@ -583,7 +582,7 @@ describe Spree::Variant do
 
       it "returns unit_to_display when it contains display_name" do
         v.display_name = "small"
-        v.option_values[0].presentation = "small size"
+        v.unit_presentation = "small size"
         expect(v.full_name).to eq "small size"
       end
 
@@ -594,7 +593,7 @@ describe Spree::Variant do
 
       it "is resilient to regex chars" do
         v.display_name = ")))"
-        v.option_values[0].presentation = ")))"
+        v.unit_presentation = ")))"
         expect(v.full_name).to eq(")))")
       end
     end
@@ -665,38 +664,16 @@ describe Spree::Variant do
       end
     end
 
-    context "when the variant already has a value set (and all required option values do not exist)" do
+    context "when the variant already has a value set" do
       let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
       let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar') }
 
-      it "removes the old option value and assigns the new one" do
-        ov_orig = v.option_values.last
+      it "assigns the new option value" do
+        expect(v.unit_presentation).to eq "5g bar"
 
-        expect {
-          v.update!(unit_value: 10, unit_description: 'foo')
-        }.to change(Spree::OptionValue, :count).by(1)
+        v.update!(unit_value: 10, unit_description: 'foo')
 
-        expect(v.option_values).not_to include ov_orig
-      end
-    end
-
-    context "when the variant already has a value set (and all required option values exist)" do
-      let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-      let!(:v0) { create(:variant, product: p0, unit_value: 10, unit_description: 'foo') }
-
-      let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-      let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar') }
-
-      it "removes the old option value and assigns the new one" do
-        ov_orig = v.option_values.last
-        ov_new  = v0.option_values.last
-
-        expect {
-          v.update!(unit_value: 10, unit_description: 'foo')
-        }.to change(Spree::OptionValue, :count).by(0)
-
-        expect(v.option_values).not_to include ov_orig
-        expect(v.option_values).to     include ov_new
+        expect(v.unit_presentation).to eq "10g foo"
       end
     end
 
@@ -706,11 +683,10 @@ describe Spree::Variant do
         create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: '')
       }
 
-      it "requests the name of the new option_value from OptionValueName" do
+      it "requests the new value from OptionValueName" do
         expect_any_instance_of(VariantUnits::OptionValueNamer).to receive(:name).exactly(1).times.and_call_original
         v.update(unit_value: 10, unit_description: 'foo')
-        ov = v.option_values.last
-        expect(ov.name).to eq("10g foo")
+        expect(v.unit_presentation).to eq "10g foo"
       end
     end
 
@@ -720,32 +696,11 @@ describe Spree::Variant do
         create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: 'FOOS!')
       }
 
-      it "does not request the name of the new option_value from OptionValueName" do
+      it "does not request the new value from OptionValueName" do
         expect_any_instance_of(VariantUnits::OptionValueNamer).not_to receive(:name)
         v.update!(unit_value: 10, unit_description: 'foo')
-        ov = v.option_values.last
-        expect(ov.name).to eq("FOOS!")
+        expect(v.unit_presentation).to eq("FOOS!")
       end
-    end
-  end
-
-  describe "deleting unit option values" do
-    before do
-      p = create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1)
-      ot = Spree::OptionType.find_by name: 'unit_weight'
-      @v = create(:variant, product: p)
-    end
-
-    it "removes option value associations for unit option types" do
-      expect {
-        @v.delete_unit_option_values
-      }.to change(@v.option_values, :count).by(-1)
-    end
-
-    it "does not delete option values" do
-      expect {
-        @v.delete_unit_option_values
-      }.to change(Spree::OptionValue, :count).by(0)
     end
   end
 
