@@ -8,8 +8,7 @@ module VariantUnits
       @variant = variant
     end
 
-    def name(obj = nil)
-      @variant = obj unless obj.nil?
+    def name
       value, unit = option_value_value_unit
       separator = value_scaled? ? '' : ' '
 
