@@ -18,8 +18,8 @@ describe OpenFoodNetwork::FeatureToggle do
 
   describe ".setup!" do
     it "created all current features at boot time" do
-      expect(Flipper.features.count)
-        .to eq feature_toggle::CURRENT_FEATURES.count
+      expect(Flipper.features.map(&:name))
+        .to match_array feature_toggle::CURRENT_FEATURES.keys
     end
 
     it "adds any missing features" do
