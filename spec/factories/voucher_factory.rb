@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :voucher do
-    enterprise { create(:distributor_enterprise) }
+    enterprise { build(:distributor_enterprise) }
     amount { rand(200.0) }
   end
 end
