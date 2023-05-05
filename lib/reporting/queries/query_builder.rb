@@ -62,20 +62,6 @@ module Reporting
         reflect query.distinct_on(fields)
       end
 
-      def variant_full_name
-        display_name = variant_table[:display_name]
-        display_as = variant_table[:display_as]
-        options_text = option_value_table[:presentation]
-
-        unit_to_display = coalesce(nullify_empty_strings(display_as), options_text)
-        combined_description = sql_concat(display_name, raw("' ('"), unit_to_display, raw("')'"))
-
-        Case.new.
-          when(nullify_empty_strings(display_name).eq(nil)).then(unit_to_display).
-          when(nullify_empty_strings(unit_to_display).not_eq(nil)).then(combined_description).
-          else(display_name)
-      end
-
       private
 
       def default_mask_rule

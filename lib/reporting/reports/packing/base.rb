@@ -48,7 +48,7 @@ module Reporting
               phone: masked(bill_address_alias[:phone]),
               supplier: supplier_alias[:name],
               product: product_table[:name],
-              variant: variant_full_name,
+              variant: variant_table[:full_name],
               weight: line_item_table[:weight],
               height: line_item_table[:height],
               width: line_item_table[:width],
