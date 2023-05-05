@@ -6,17 +6,16 @@
     = f.label :display_as, t('.display_as')
     = f.text_field :display_as, class: "fullwidth", placeholder: t('.display_as_placeholder')
 
-  - if product_has_variant_unit_option_type?(@product)
-    - if @product.variant_unit != 'items'
-      .field
-        = label_tag :unit_value_human, "#{t('admin.'+@product.variant_unit)} ({{unitName(#{@product.variant_unit_scale}, '#{@product.variant_unit}')}})"
-        = hidden_field_tag 'product_variant_unit_scale', @product.variant_unit_scale
-        = number_field_tag :unit_value_human, nil, {class: "fullwidth", step: 0.01, 'ng-model' => 'unit_value_human', 'ng-change' => 'updateValue()'}
-        = f.number_field :unit_value, {hidden: true, 'ng-value' => 'unit_value'}
-
+  - if @product.variant_unit != 'items'
     .field
-      = f.label :unit_description, t(:spree_admin_unit_description)
-      = f.text_field :unit_description, class: "fullwidth", placeholder: t('admin.products.unit_name_placeholder')
+      = label_tag :unit_value_human, "#{t('admin.'+@product.variant_unit)} ({{unitName(#{@product.variant_unit_scale}, '#{@product.variant_unit}')}})"
+      = hidden_field_tag 'product_variant_unit_scale', @product.variant_unit_scale
+      = number_field_tag :unit_value_human, nil, {class: "fullwidth", step: 0.01, 'ng-model' => 'unit_value_human', 'ng-change' => 'updateValue()'}
+      = f.number_field :unit_value, {hidden: true, 'ng-value' => 'unit_value'}
+
+  .field
+    = f.label :unit_description, t(:spree_admin_unit_description)
+    = f.text_field :unit_description, class: "fullwidth", placeholder: t('admin.products.unit_name_placeholder')
 
   %div
     - @product.option_types.each do |option_type|
