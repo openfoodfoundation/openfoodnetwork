@@ -324,7 +324,7 @@ en:
       subject: "Report ready"
       heading: "Report ready for download"
       intro: |
-        The link below will expire after one month.
+        The link below will expire after one week.
       link_label: "%{name}"
   shipment_mailer:
     shipped_email:
