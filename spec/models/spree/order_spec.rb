@@ -1432,6 +1432,8 @@ describe Spree::Order do
   end
 
   describe "#voucher_adjustments" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { create(:order, user: user, distributor: distributor) }
     let(:voucher) { create(:voucher, code: 'new_code', enterprise: order.distributor) }
 
     context "when no voucher adjustment" do
@@ -1441,7 +1443,6 @@ describe Spree::Order do
     end
 
     it "returns an array of voucher adjusment" do
-      order.save!
       expected_adjustments = Array.new(2) { voucher.create_adjustment(voucher.code, order) }
 
       expect(order.voucher_adjustments).to eq(expected_adjustments)

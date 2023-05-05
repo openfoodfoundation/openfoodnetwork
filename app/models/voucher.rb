@@ -3,7 +3,7 @@
 class Voucher < ApplicationRecord
   acts_as_paranoid
 
-  belongs_to :enterprise
+  belongs_to :enterprise, optional: false
 
   has_many :adjustments,
            as: :originator,

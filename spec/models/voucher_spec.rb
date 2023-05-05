@@ -6,7 +6,7 @@ describe Voucher do
   let(:enterprise) { build(:enterprise) }
 
   describe 'associations' do
-    it { is_expected.to belong_to(:enterprise) }
+    it { is_expected.to belong_to(:enterprise).required }
     it { is_expected.to have_many(:adjustments) }
   end
 
