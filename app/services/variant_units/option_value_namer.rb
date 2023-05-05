@@ -4,8 +4,9 @@ require "open_food_network/i18n_inflections"
 
 module VariantUnits
   class OptionValueNamer
-    def initialize(variant = nil)
-      @variant = variant
+    # nameable can be either a Spree::LineItem or a Spree::Variant
+    def initialize(nameable = nil)
+      @nameable = nameable
     end
 
     def name
@@ -14,7 +15,7 @@ module VariantUnits
 
       name_fields = []
       name_fields << "#{value}#{separator}#{unit}" if value.present? && unit.present?
-      name_fields << @variant.unit_description if @variant.unit_description.present?
+      name_fields << @nameable.unit_description if @nameable.unit_description.present?
       name_fields.join ' '
     end
 
@@ -31,16 +32,16 @@ module VariantUnits
     private
 
     def value_scaled?
-      @variant.product.variant_unit_scale.present?
+      @nameable.product.variant_unit_scale.present?
     end
 
     def option_value_value_unit
-      if @variant.unit_value.present?
-        if %w(weight volume).include? @variant.product.variant_unit
+      if @nameable.unit_value.present?
+        if %w(weight volume).include? @nameable.product.variant_unit
           value, unit_name = option_value_value_unit_scaled
         else
-          value = @variant.unit_value
-          unit_name = pluralize(@variant.product.variant_unit_name, value)
+          value = @nameable.unit_value
+          unit_name = pluralize(@nameable.product.variant_unit_name, value)
         end
 
         value = value.to_i if value == value.to_i
@@ -55,13 +56,13 @@ module VariantUnits
     def option_value_value_unit_scaled
       unit_scale, unit_name = scale_for_unit_value
 
-      value = (@variant.unit_value / unit_scale).to_d.truncate(2)
+      value = (@nameable.unit_value / unit_scale).to_d.truncate(2)
 
       [value, unit_name]
     end
 
     def scale_for_unit_value
-      WeightsAndMeasures.new(@variant).scale_for_unit_value
+      WeightsAndMeasures.new(@nameable).scale_for_unit_value
     end
 
     def pluralize(unit_name, count)
