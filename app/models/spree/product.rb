@@ -326,17 +326,6 @@ module Spree
       variants.map(&:import_date).compact.max
     end
 
-    def variant_unit_option_type
-      return if variant_unit.blank?
-
-      option_type_name = "unit_#{variant_unit}"
-      option_type_presentation = variant_unit.capitalize
-
-      Spree::OptionType.find_by(name: option_type_name) ||
-        Spree::OptionType.create!(name: option_type_name,
-                                  presentation: option_type_presentation)
-    end
-
     def destroy
       transaction do
         touch_distributors
@@ -396,8 +385,6 @@ module Spree
     def update_units
       return unless saved_change_to_variant_unit? || saved_change_to_variant_unit_name?
 
-      option_types.delete self.class.all_variant_unit_option_types
-      option_types << variant_unit_option_type if variant_unit.present?
       variants_including_master.each(&:update_units)
     end
 
