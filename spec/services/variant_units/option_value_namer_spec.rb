@@ -65,6 +65,7 @@ module VariantUnits
       it "generates simple values" do
         p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)
         allow(v).to receive(:product) { p }
+        allow(p).to receive(:persisted?) { true }
         allow(v).to receive(:unit_value) { 100 }
 
         expect(subject.send(:option_value_value_unit)).to eq [100, 'g']
@@ -73,6 +74,7 @@ module VariantUnits
       it "generates values when unit value is non-integer" do
         p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)
         allow(v).to receive(:product) { p }
+        allow(p).to receive(:persisted?) { true }
         allow(v).to receive(:unit_value) { 123.45 }
 
         expect(subject.send(:option_value_value_unit)).to eq [123.45, 'g']
@@ -81,6 +83,7 @@ module VariantUnits
       it "returns a value of 1 when unit value equals the scale" do
         p = double(:product, variant_unit: 'weight', variant_unit_scale: 1000.0)
         allow(v).to receive(:product) { p }
+        allow(p).to receive(:persisted?) { true }
         allow(v).to receive(:unit_value) { 1000.0 }
 
         expect(subject.send(:option_value_value_unit)).to eq [1, 'kg']
@@ -89,6 +92,7 @@ module VariantUnits
       it "returns only values that are in the same measurement systems" do
         p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)
         allow(v).to receive(:product) { p }
+        allow(p).to receive(:persisted?) { true }
         allow(v).to receive(:unit_value) { 500 }
         # 500g would convert to > 1 pound, but we don't want the namer to use
         # pounds since it's in a different measurement system.
@@ -100,6 +104,7 @@ module VariantUnits
          [1_000_000.0, 'T']].each do |scale, unit|
           p = double(:product, variant_unit: 'weight', variant_unit_scale: scale)
           allow(v).to receive(:product) { p }
+          allow(p).to receive(:persisted?) { true }
           allow(v).to receive(:unit_value) { 10.0 * scale }
           expect(subject.send(:option_value_value_unit)).to eq [10, unit]
         end
@@ -109,6 +114,7 @@ module VariantUnits
         [[0.001, 'mL'], [1.0, 'L'], [1000.0, 'kL']].each do |scale, unit|
           p = double(:product, variant_unit: 'volume', variant_unit_scale: scale)
           allow(v).to receive(:product) { p }
+          allow(p).to receive(:persisted?) { true }
           allow(v).to receive(:unit_value) { 100 * scale }
           expect(subject.send(:option_value_value_unit)).to eq [100, unit]
         end
@@ -117,6 +123,7 @@ module VariantUnits
       it "chooses the correct scale when value is very small" do
         p = double(:product, variant_unit: 'volume', variant_unit_scale: 0.001)
         allow(v).to receive(:product) { p }
+        allow(p).to receive(:persisted?) { true }
         allow(v).to receive(:unit_value) { 0.0001 }
         expect(subject.send(:option_value_value_unit)).to eq [0.1, 'mL']
       end
@@ -126,6 +133,7 @@ module VariantUnits
           p = double(:product, variant_unit: 'items', variant_unit_scale: nil,
                                variant_unit_name: unit)
           allow(v).to receive(:product) { p }
+          allow(p).to receive(:persisted?) { true }
           allow(v).to receive(:unit_value) { 100 }
           expect(subject.send(:option_value_value_unit)).to eq [100, unit.pluralize]
         end
@@ -135,6 +143,7 @@ module VariantUnits
         p = double(:product, variant_unit: 'items', variant_unit_scale: nil,
                              variant_unit_name: 'packet')
         allow(v).to receive(:product) { p }
+        allow(p).to receive(:persisted?) { true }
         allow(v).to receive(:unit_value) { 1 }
         expect(subject.send(:option_value_value_unit)).to eq [1, 'packet']
       end
@@ -151,6 +160,7 @@ module VariantUnits
         oz_scale = 28.35
         p = double(:product, variant_unit: 'weight', variant_unit_scale: oz_scale)
         allow(v).to receive(:product) { p }
+        allow(p).to receive(:persisted?) { true }
         # The unit_value is stored rounded to 2 decimals
         allow(v).to receive(:unit_value) { (12.5 * oz_scale).round(2) }
         expect(subject.send(:option_value_value_unit)).to eq [BigDecimal(12.5, 6), 'oz']
