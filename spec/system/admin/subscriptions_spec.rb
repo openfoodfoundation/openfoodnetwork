@@ -196,7 +196,7 @@ describe 'Subscriptions' do
       end
     end
 
-    context 'creating a new subscription' do
+    context 'when creating a new subscription' do
       let(:address) { create(:address) }
       let!(:customer_user) { create(:user) }
       let!(:credit_card1) {
@@ -236,6 +236,20 @@ describe 'Subscriptions' do
         page.find("#new-subscription").click
         tomselect_search_and_select shop.name, from: "subscription[shop_id]"
         click_button "Continue"
+      end
+
+      context 'and no field is filled' do
+        it 'counts a can not be blank content once' do
+          select2_select customer.email, from: 'customer_id'
+          select2_select schedule.name, from: 'schedule_id'
+          select2_select payment_method.name, from: 'payment_method_id'
+          select2_select shipping_method.name, from: 'shipping_method_id'
+
+          click_button('Next')
+
+          expect(page).to have_content 'can\'t be blank', count: 1
+          expect(page).to have_content 'Oops! Please fill in all of the required fields...'
+        end
       end
 
       it "passes the smoke test" do
