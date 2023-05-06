@@ -34,19 +34,29 @@
 
   .flash {
     padding: 18px;
-    text-align: center;  
+    text-align: center;
     font-size: 120%;
     color: $color-1;
     font-weight: 600;
     margin-top: 0;
-  
-    &.notice  { background-color: rgba($color-notice,  0.8) }
-    &.success { background-color: rgba($color-success, 0.8) }
-    &.error   { background-color: rgba($color-error,   0.8) }
+
+    &.notice {
+      background-color: rgba($color-notice, 0.8);
+    }
+    &.success {
+      background-color: rgba($color-success, 0.8);
+    }
+    &.error {
+      background-color: rgba($color-error, 0.8);
+    }
 
     // Adjust heights to fit main layout dimension (header, navbar...)
-    &:nth-child(2) { padding: 24px; }
-    &:nth-child(3) { padding: 20px; }
+    &:nth-child(2) {
+      padding: 24px;
+    }
+    &:nth-child(3) {
+      padding: 20px;
+    }
   }
 }
 

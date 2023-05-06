@@ -1,8 +1,5 @@
 # Basically, ignore everythings expect app/webpacker/controllers/*.js and app/webpacker/packs/*.js
-*.css
-*.scss
-# Except v2
-!/app/webpacker/css/admin/v2/**/*.scss
+
 *.md
 *.yml
 *.yaml
@@ -11,6 +8,10 @@
 
 babel.config.js
 postcss.config.js
+
+/app/webpacker/css/darkswarm/
+/app/webpacker/css/mail/
+/app/webpacker/css/shared/
 
 /app/assets/
 /config/

@@ -87,7 +87,7 @@ nav.menu {
         background-color: $color-2;
 
         &:after {
-          content: '';
+          content: "";
           position: absolute;
           border-left: 10px solid transparent;
           border-right: 10px solid transparent;
@@ -146,9 +146,10 @@ nav.menu {
       font-size: 85%;
     }
 
-    &.selected a, a:hover {
+    &.selected a,
+    a:hover {
       &:after {
-        content: '';
+        content: "";
         position: absolute;
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
