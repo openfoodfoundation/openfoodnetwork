@@ -55,6 +55,10 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
   let!(:order_cycle){
     create(:simple_order_cycle, distributors: [distributor], name: "oc1")
   }
+  let!(:order_cycle2){
+    create(:simple_order_cycle, distributors: [distributor], name: "oc2")
+  }
+
   let!(:enterprise_relationship1) {
     create(:enterprise_relationship, parent: supplier, child: distributor,
                                      permissions_list: [:add_to_order_cycle])
@@ -91,19 +95,34 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
                                         tax_category: tax_category)
   }
 
+  # creates exchanges for oc1
   let!(:incoming_exchange1) {
     order_cycle.exchanges.create! sender: supplier, receiver: distributor, incoming: true
   }
-
   let!(:incoming_exchange2) {
     order_cycle.exchanges.create! sender: supplier2, receiver: distributor, incoming: true
   }
-  let(:outgoing_exchange) {
+  let(:outgoing_exchange1) {
     order_cycle.exchanges.create! sender: distributor, receiver: distributor, incoming: false
   }
 
-  let!(:order){ create(:order_with_distributor, distributor: distributor) }
+  # sets exchanges for oc2
+  let!(:incoming_exchange3) {
+    order_cycle2.exchanges.create! sender: supplier, receiver: distributor, incoming: true
+  }
+  let!(:incoming_exchange4) {
+    order_cycle2.exchanges.create! sender: supplier2, receiver: distributor, incoming: true
+  }
+  let(:outgoing_exchange2) {
+    order_cycle2.exchanges.create! sender: distributor, receiver: distributor, incoming: false
+  }
+
+  # creates orders for for oc1 and oc2
+  let!(:order) { create(:order_with_distributor, distributor: distributor) }
+  let!(:order2) { create(:order_with_distributor, distributor: distributor) }
+
   before do
+    # adds variants to exchanges on oc1
     order_cycle.coordinator_fees << coordinator_fees
     order_cycle.exchanges.incoming.first.exchange_fees.create!(enterprise_fee: supplier_fees)
     order_cycle.exchanges.incoming.first.exchange_variants.create!(variant: variant)
@@ -112,6 +131,16 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     order_cycle.exchanges.outgoing.first.exchange_fees.create!(enterprise_fee: distributor_fee)
     order_cycle.exchanges.outgoing.first.exchange_variants.create!(variant: variant)
     order_cycle.exchanges.outgoing.first.exchange_variants.create!(variant: variant2)
+
+    # adds variants to exchanges on oc2
+    order_cycle2.coordinator_fees << coordinator_fees
+    order_cycle2.exchanges.incoming.first.exchange_fees.create!(enterprise_fee: supplier_fees)
+    order_cycle2.exchanges.incoming.first.exchange_variants.create!(variant: variant)
+    order_cycle2.exchanges.incoming.second.exchange_fees.create!(enterprise_fee: supplier_fees2)
+    order_cycle2.exchanges.incoming.second.exchange_variants.create!(variant: variant2)
+    order_cycle2.exchanges.outgoing.first.exchange_fees.create!(enterprise_fee: distributor_fee)
+    order_cycle2.exchanges.outgoing.first.exchange_variants.create!(variant: variant)
+    order_cycle2.exchanges.outgoing.first.exchange_variants.create!(variant: variant2)
 
     distributor.shipping_methods << shipping_method
     distributor.payment_methods << payment_method
@@ -133,54 +162,71 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     #     - outgoing exchange (10) 1.5% = 0.15, 2.5% = 0.25
     #     - line items        (50) 1.5% = 0.75, 2.5% = 1.25
 
-    context "an order with line items from a single supplier (1)" do
-      before do
-        order.line_items.create({ variant: variant, quantity: 1, price: 100 })
-        order.update!({
-                        order_cycle_id: order_cycle.id,
-                        ship_address_id: ship_address.id
-                      })
-        # This will load the enterprise fees from the order cycle.
-        # This is needed because the order instance was created
-        # independently of the order_cycle.
-        order.recreate_all_fees!
-        while !order.completed?
-          break unless order.next!
-        end
+    before do
+      # adds a line items to the order on oc1
+      order.line_items.create({ variant: variant, quantity: 1, price: 100 })
+      order.update!({
+                      order_cycle_id: order_cycle.id,
+                      ship_address_id: ship_address.id
+                    })
+      # This will load the enterprise fees from the order cycle.
+      # This is needed because the order instance was created
+      # independently of the order_cycle.
+      order.recreate_all_fees!
+      while !order.completed?
+        break unless order.next!
       end
 
-      let(:coordinator_state_tax){
+      # adds a line items to the order on oc2
+      order2.line_items.create({ variant: variant2, quantity: 1, price: 50 })
+      order2.update!({
+                       order_cycle_id: order_cycle2.id,
+                       ship_address_id: ship_address.id
+                     })
+      # This will load the enterprise fees from the order cycle.
+      # This is needed because the order instance was created
+      # independently of the order_cycle.
+      order2.recreate_all_fees!
+      while !order2.completed?
+        break unless order2.next!
+      end
+    end
+
+    describe "orders" do
+      # for supplier 1, oc1
+
+      let(:coordinator_state_tax_1){
         ["Distributor", "Supplier", "Yes", "oc1", "Adminstration", "admin", "Distributor",
          "tax_category", "State", "0.015", "20.0", "0.3", "20.3"].join(" ")
       }
-      let(:coordinator_country_tax){
+      let(:coordinator_country_tax_1){
         ["Distributor", "Supplier", "Yes", "oc1", "Adminstration", "admin", "Distributor",
          "tax_category", "Country", "0.025", "20.0", "0.5", "20.5"].join(" ")
       }
 
-      let(:supplier_state_tax){
+      let(:supplier_state_tax_1){
         ["Distributor", "Supplier", "Yes", "oc1", "Transport", "transport", "Supplier",
          "tax_category", "State", "0.015", "15.0", "0.23", "15.23"].join(" ")
       }
-      let(:supplier_country_tax){
+      let(:supplier_country_tax_1){
         ["Distributor", "Supplier", "Yes", "oc1", "Transport", "transport", "Supplier",
          "tax_category", "Country", "0.025", "15.0", "0.38", "15.38"].join(" ")
       }
 
-      let(:distributor_state_tax){
+      let(:distributor_state_tax_1){
         ["Distributor", "Supplier", "Yes", "oc1", "Packing", "packing", "Distributor",
          "tax_category", "State", "0.015", "10.0", "0.15", "10.15"].join(" ")
       }
-      let(:distributor_country_tax){
+      let(:distributor_country_tax_1){
         ["Distributor", "Supplier", "Yes", "oc1", "Packing", "packing", "Distributor",
          "tax_category", "Country", "0.025", "10.0", "0.25", "10.25"].join(" ")
       }
 
-      let(:cost_of_produce){
+      let(:cost_of_produce_1){
         ["Distributor", "Supplier", "Yes", "oc1", "Cost of produce", "line items", "Supplier",
          "100.0", "4.0", "104.0"].join(" ")
       }
-      let(:summary_row){
+      let(:summary_row_1){
         [
           "TOTAL", # Fees and line items
           "145.0", # Tax excl: 20 + 15 + 10 + 100
@@ -189,137 +235,39 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         ].join(" ")
       }
 
-      it 'generates the report and displays fees for the respective supplier' do
-        login_as distributor_owner
-        visit admin_reports_path
-        click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
-
-        expect(page).to have_button("Go")
-        click_on "Go"
-        expect(page.find("table.report__table thead tr")).to have_content(table_header)
-
-        table = page.find("table.report__table tbody")
-        expect(table).to have_content(supplier_state_tax)
-        expect(table).to have_content(supplier_country_tax)
-        expect(table).to have_content(distributor_state_tax)
-        expect(table).to have_content(distributor_country_tax)
-        expect(table).to have_content(coordinator_state_tax)
-        expect(table).to have_content(coordinator_country_tax)
-        expect(table).to have_content(cost_of_produce)
-        expect(table).to have_content(summary_row)
-      end
-
-      context "filtering" do
-        let(:fee_name_selector){ "#s2id_q_enterprise_fee_id_in" }
-        let(:fee_owner_selector){ "#s2id_q_enterprise_fee_owner_id_in" }
-
-        let(:summary_row_after_filtering_by_fee_name){
-          ["TOTAL", "120.0", "4.8", "124.8"].join(" ")
-        }
-
-        let(:summary_row_after_filtering_by_fee_owner){
-          ["TOTAL", "115.0", "4.61", "119.61"].join(" ")
-        }
-
-        it "should filter by fee name" do
-          login_as distributor.owner
-          visit admin_reports_path
-          click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
-
-          page.find(fee_name_selector).click
-          find('li', text: coordinator_fees.name).click
-
-          expect(page).to have_button("Go")
-          click_on "Go"
-
-          expect(page.find("table.report__table thead tr")).to have_content(table_header)
-
-          table = page.find("table.report__table tbody")
-          expect(table).to_not have_content(supplier_state_tax)
-          expect(table).to_not have_content(supplier_country_tax)
-          expect(table).to_not have_content(distributor_state_tax)
-          expect(table).to_not have_content(distributor_country_tax)
-          expect(table).to have_content(coordinator_state_tax)
-          expect(table).to have_content(coordinator_country_tax)
-          expect(table).to have_content(cost_of_produce)
-          expect(table).to have_content(summary_row_after_filtering_by_fee_name)
-        end
-
-        it "should filter by fee owner" do
-          login_as distributor.owner
-          visit admin_reports_path
-          click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
-
-          page.find(fee_owner_selector).click
-          find('li', text: supplier.name).click
-
-          expect(page).to have_button("Go")
-          click_on "Go"
-
-          expect(page.find("table.report__table thead tr")).to have_content(table_header)
-
-          table = page.find("table.report__table tbody")
-          expect(table).to have_content(supplier_state_tax)
-          expect(table).to have_content(supplier_country_tax)
-          expect(table).to_not have_content(distributor_state_tax)
-          expect(table).to_not have_content(distributor_country_tax)
-          expect(table).to_not have_content(coordinator_state_tax)
-          expect(table).to_not have_content(coordinator_country_tax)
-          expect(table).to have_content(cost_of_produce)
-          expect(table).to have_content(summary_row_after_filtering_by_fee_owner)
-        end
-      end
-
-    end
-
-    context "an order with line items from a single supplier (2)" do
-      before do
-        order.line_items.create({ variant: variant2, quantity: 1, price: 50 })
-        order.update!({
-                        order_cycle_id: order_cycle.id,
-                        ship_address_id: ship_address.id
-                      })
-        # This will load the enterprise fees from the order cycle.
-        # This is needed because the order instance was created
-        # independently of the order_cycle.
-        order.recreate_all_fees!
-        while !order.completed?
-          break unless order.next!
-        end
-      end
-
-      let(:coordinator_state_tax){
-        ["Distributor", "Supplier2", "Yes", "oc1", "Adminstration", "admin", "Distributor",
+      # for supplier 2, oc2
+      let(:coordinator_state_tax_2){
+        ["Distributor", "Supplier2", "Yes", "oc2", "Adminstration", "admin", "Distributor",
          "tax_category", "State", "0.015", "20.0", "0.3", "20.3"].join(" ")
       }
-      let(:coordinator_country_tax){
-        ["Distributor", "Supplier2", "Yes", "oc1", "Adminstration", "admin", "Distributor",
+      let(:coordinator_country_tax_2){
+        ["Distributor", "Supplier2", "Yes", "oc2", "Adminstration", "admin", "Distributor",
          "tax_category", "Country", "0.025", "20.0", "0.5", "20.5"].join(" ")
       }
 
-      let(:supplier_state_tax){
-        ["Distributor", "Supplier2", "Yes", "oc1", "Sales", "sales", "Supplier2",
+      let(:supplier_state_tax_2){
+        ["Distributor", "Supplier2", "Yes", "oc2", "Sales", "sales", "Supplier2",
          "tax_category", "State", "0.015", "25.0", "0.38", "25.38"].join(" ")
       }
-      let(:supplier_country_tax){
-        ["Distributor", "Supplier2", "Yes", "oc1", "Sales", "sales", "Supplier2",
+      let(:supplier_country_tax_2){
+        ["Distributor", "Supplier2", "Yes", "oc2", "Sales", "sales", "Supplier2",
          "tax_category", "Country", "0.025", "25.0", "0.63", "25.63"].join(" ")
       }
 
-      let(:distributor_state_tax){
-        ["Distributor", "Supplier2", "Yes", "oc1", "Packing", "packing", "Distributor",
+      let(:distributor_state_tax_2){
+        ["Distributor", "Supplier2", "Yes", "oc2", "Packing", "packing", "Distributor",
          "tax_category", "State", "0.015", "10.0", "0.15", "10.15"].join(" ")
       }
-      let(:distributor_country_tax){
-        ["Distributor", "Supplier2", "Yes", "oc1", "Packing", "packing", "Distributor",
+      let(:distributor_country_tax_2){
+        ["Distributor", "Supplier2", "Yes", "oc2", "Packing", "packing", "Distributor",
          "tax_category", "Country", "0.025", "10.0", "0.25", "10.25"].join(" ")
       }
 
-      let(:cost_of_produce){
-        ["Distributor", "Supplier2", "Yes", "oc1", "Cost of produce", "line items", "Supplier2",
+      let(:cost_of_produce_2){
+        ["Distributor", "Supplier2", "Yes", "oc2", "Cost of produce", "line items", "Supplier2",
          "50.0", "2.0", "52.0"].join(" ")
       }
-      let(:summary_row){
+      let(:summary_row_2){
         [
           "TOTAL", # Fees and line items
           "105.0", # Tax excl: 20 + 25 + 10 + 50
@@ -328,24 +276,322 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         ].join(" ")
       }
 
-      it 'generates the report and displays fees for the respective supplier' do
-        login_as distributor_owner
-        visit admin_reports_path
-        click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
+      context "with line items from a single supplier (1)" do
+        it 'generates the report and displays fees for the respective supplier' do
+          login_as distributor_owner
+          visit admin_reports_path
+          click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
+          expect(page).to have_button("Go")
+          click_on "Go"
 
-        expect(page).to have_button("Go")
-        click_on "Go"
-        expect(page.find("table.report__table thead tr")).to have_content(table_header)
+          expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
-        table = page.find("table.report__table tbody")
-        expect(table).to have_content(supplier_state_tax)
-        expect(table).to have_content(supplier_country_tax)
-        expect(table).to have_content(distributor_state_tax)
-        expect(table).to have_content(distributor_country_tax)
-        expect(table).to have_content(coordinator_state_tax)
-        expect(table).to have_content(coordinator_country_tax)
-        expect(table).to have_content(cost_of_produce)
-        expect(table).to have_content(summary_row)
+          table = page.find("table.report__table tbody")
+          expect(table).to have_content(supplier_state_tax_1)
+          expect(table).to have_content(supplier_country_tax_1)
+          expect(table).to have_content(distributor_state_tax_1)
+          expect(table).to have_content(distributor_country_tax_1)
+          expect(table).to have_content(coordinator_state_tax_1)
+          expect(table).to have_content(coordinator_country_tax_1)
+          expect(table).to have_content(cost_of_produce_1)
+          expect(table).to have_content(summary_row_1)
+        end
+      end
+
+      context "with line items from a single supplier (2)" do
+        it 'generates the report and displays fees for the respective supplier' do
+          login_as distributor_owner
+          visit admin_reports_path
+          click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
+
+          expect(page).to have_button("Go")
+          click_on "Go"
+          expect(page.find("table.report__table thead tr")).to have_content(table_header)
+
+          table = page.find("table.report__table tbody")
+          expect(table).to have_content(supplier_state_tax_2)
+          expect(table).to have_content(supplier_country_tax_2)
+          expect(table).to have_content(distributor_state_tax_2)
+          expect(table).to have_content(distributor_country_tax_2)
+          expect(table).to have_content(coordinator_state_tax_2)
+          expect(table).to have_content(coordinator_country_tax_2)
+          expect(table).to have_content(cost_of_produce_2)
+          expect(table).to have_content(summary_row_2)
+        end
+      end
+
+      context "with line items from several suppliers" do
+        # creates oc3 and order
+        let!(:order_cycle3){
+          create(:simple_order_cycle, distributors: [distributor], name: "oc3")
+        }
+        let!(:order3) { create(:order_with_distributor, distributor: distributor) }
+
+        # creates exchanges on oc3
+        let!(:incoming_exchange5) {
+          order_cycle3.exchanges.create! sender: supplier, receiver: distributor, incoming: true
+        }
+        let!(:incoming_exchange6) {
+          order_cycle3.exchanges.create! sender: supplier2, receiver: distributor, incoming: true
+        }
+        let(:outgoing_exchange3) {
+          order_cycle3.exchanges.create! sender: distributor, receiver: distributor,
+                                         incoming: false
+        }
+
+        before do
+          # adds variants to exchanges on oc3
+          order_cycle3.coordinator_fees << coordinator_fees
+          order_cycle3.exchanges.incoming.first.exchange_fees.create!(enterprise_fee: supplier_fees)
+          order_cycle3.exchanges.incoming.first.exchange_variants.create!(variant: variant)
+          order_cycle3.exchanges.incoming.second.exchange_fees.create!(enterprise_fee: supplier_fees2)
+          order_cycle3.exchanges.incoming.second.exchange_variants.create!(variant: variant2)
+          order_cycle3.exchanges.outgoing.first.exchange_fees.create!(enterprise_fee: distributor_fee)
+          order_cycle3.exchanges.outgoing.first.exchange_variants.create!(variant: variant)
+          order_cycle3.exchanges.outgoing.first.exchange_variants.create!(variant: variant2)
+
+          # adds line items to the order on oc3
+          order3.line_items.create({ variant: variant, quantity: 1, price: 100 })
+          order3.line_items.create({ variant: variant2, quantity: 1, price: 50 })
+          order3.update!({
+                           order_cycle_id: order_cycle3.id,
+                           ship_address_id: ship_address.id
+                         })
+          # This will load the enterprise fees from the order cycle.
+          # This is needed because the order instance was created
+          # independently of the order_cycle.
+          order3.recreate_all_fees!
+          while !order3.completed?
+            break unless order3.next!
+          end
+        end
+
+        # table lines for supplier1
+
+        let(:coordinator_state_tax_3){
+          ["Distributor", "Supplier", "Yes", "oc3", "Adminstration", "admin", "Distributor",
+           "tax_category", "State", "0.015", "20.0", "0.3", "20.3"].join(" ")
+        }
+        let(:coordinator_country_tax_3){
+          ["Distributor", "Supplier", "Yes", "oc3", "Adminstration", "admin", "Distributor",
+           "tax_category", "Country", "0.025", "20.0", "0.5", "20.5"].join(" ")
+        }
+
+        let(:supplier_state_tax_3){
+          ["Distributor", "Supplier", "Yes", "oc3", "Transport", "transport", "Supplier",
+           "tax_category", "State", "0.015", "15.0", "0.23", "15.23"].join(" ")
+        }
+        let(:supplier_country_tax_3){
+          ["Distributor", "Supplier", "Yes", "oc3", "Transport", "transport", "Supplier",
+           "tax_category", "Country", "0.025", "15.0", "0.38", "15.38"].join(" ")
+        }
+
+        let(:distributor_state_tax_3){
+          ["Distributor", "Supplier", "Yes", "oc3", "Packing", "packing", "Distributor",
+           "tax_category", "State", "0.015", "10.0", "0.15", "10.15"].join(" ")
+        }
+        let(:distributor_country_tax_3){
+          ["Distributor", "Supplier", "Yes", "oc3", "Packing", "packing", "Distributor",
+           "tax_category", "Country", "0.025", "10.0", "0.25", "10.25"].join(" ")
+        }
+
+        let(:cost_of_produce_3){
+          ["Distributor", "Supplier", "Yes", "oc3", "Cost of produce", "line items", "Supplier",
+           "100.0", "4.0", "104.0"].join(" ")
+        }
+        let(:summary_row_3){
+          [
+            "TOTAL", # Fees and line items
+            "145.0", # Tax excl: 20 + 15 + 10 + 100
+            "5.81",  # Tax     : (0.30 + 0.50) + (0.23 + 0.38) + (0.15 + 0.25) + (1.50 + 2.50)
+            "150.81" # Tax incl: 145.00 + 5.81
+          ].join(" ")
+        }
+
+        # table lines for supplier2
+
+        let(:coordinator_state_tax_4){
+          ["Distributor", "Supplier2", "Yes", "oc3", "Adminstration", "admin", "Distributor",
+           "tax_category", "State", "0.015", "20.0", "0.3", "20.3"].join(" ")
+        }
+        let(:coordinator_country_tax_4){
+          ["Distributor", "Supplier2", "Yes", "oc3", "Adminstration", "admin", "Distributor",
+           "tax_category", "Country", "0.025", "20.0", "0.5", "20.5"].join(" ")
+        }
+
+        let(:supplier_state_tax_4){
+          ["Distributor", "Supplier2", "Yes", "oc3", "Sales", "sales", "Supplier2",
+           "tax_category", "State", "0.015", "25.0", "0.38", "25.38"].join(" ")
+        }
+        let(:supplier_country_tax_4){
+          ["Distributor", "Supplier2", "Yes", "oc3", "Sales", "sales", "Supplier2",
+           "tax_category", "Country", "0.025", "25.0", "0.63", "25.63"].join(" ")
+        }
+
+        let(:distributor_state_tax_4){
+          ["Distributor", "Supplier2", "Yes", "oc3", "Packing", "packing", "Distributor",
+           "tax_category", "State", "0.015", "10.0", "0.15", "10.15"].join(" ")
+        }
+        let(:distributor_country_tax_4){
+          ["Distributor", "Supplier2", "Yes", "oc3", "Packing", "packing", "Distributor",
+           "tax_category", "Country", "0.025", "10.0", "0.25", "10.25"].join(" ")
+        }
+
+        let(:cost_of_produce_4){
+          ["Distributor", "Supplier2", "Yes", "oc3", "Cost of produce", "line items", "Supplier2",
+           "50.0", "2.0", "52.0"].join(" ")
+        }
+        let(:summary_row_4){
+          [
+            "TOTAL", # Fees and line items
+            "105.0", # Tax excl: 20 + 25 + 10 + 50
+            "4.21",  # Tax     : (0.30 + 0.50) + (0.38 + 0.63) + (0.15 + 0.25) + 2
+            "109.21" # Tax incl: 105 + 4.21
+          ].join(" ")
+        }
+
+        it 'generates the report and displays fees for the respective supplier' do
+          pending("test case (1), see #10797")
+
+          login_as distributor_owner
+          visit admin_reports_path
+          click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
+
+          expect(page).to have_button("Go")
+          click_on "Go"
+          expect(page.find("table.report__table thead tr")).to have_content(table_header)
+
+          table = page.find("table.report__table tbody")
+          expect(table).to have_content(supplier_state_tax_3)
+          expect(table).to have_content(supplier_country_tax_3)
+          expect(table).to have_content(distributor_state_tax_3)
+          expect(table).to have_content(distributor_country_tax_3)
+          expect(table).to have_content(coordinator_state_tax_3)
+          expect(table).to have_content(coordinator_country_tax_3)
+          expect(table).to have_content(cost_of_produce_3)
+          expect(table).to have_content(summary_row_3)
+
+          expect(table).to have_content(supplier_state_tax_4)
+          expect(table).to have_content(supplier_country_tax_4)
+          expect(table).to have_content(distributor_state_tax_4)
+          expect(table).to have_content(distributor_country_tax_4)
+          expect(table).to have_content(coordinator_state_tax_4)
+          expect(table).to have_content(coordinator_country_tax_4)
+          expect(table).to have_content(cost_of_produce_4)
+          expect(table).to have_content(summary_row_4)
+        end
+
+        context "filtering" do
+          let(:fee_name_selector){ "#s2id_q_enterprise_fee_id_in" }
+          let(:fee_owner_selector){ "#s2id_q_enterprise_fee_owner_id_in" }
+
+          let(:summary_row_after_filtering_by_fee_name){
+            ["TOTAL", "120.0", "4.8", "124.8"].join(" ")
+          }
+
+          let(:summary_row_after_filtering_by_fee_owner){
+            ["TOTAL", "115.0", "4.61", "119.61"].join(" ")
+          }
+
+          before do
+            login_as distributor_owner
+            visit admin_reports_path
+            click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
+          end
+
+          it "should filter by distributor and order cycle" do
+            page.find("#s2id_autogen1").click
+            find('li', text: distributor.name).click # selects Distributor
+
+            page.find("#s2id_q_order_cycle_id_in").click
+            find('li', text: order_cycle2.name).click
+
+            expect(page).to have_button("Go")
+            click_on "Go"
+            expect(page.find("table.report__table thead tr")).to have_content(table_header)
+
+            table = page.find("table.report__table tbody")
+            expect(table).to have_content(supplier_state_tax_2)
+            expect(table).to have_content(supplier_country_tax_2)
+            expect(table).to have_content(distributor_state_tax_2)
+            expect(table).to have_content(distributor_country_tax_2)
+            expect(table).to have_content(coordinator_state_tax_2)
+            expect(table).to have_content(coordinator_country_tax_2)
+            expect(table).to have_content(cost_of_produce_2)
+            expect(table).to have_content(summary_row_2)
+          end
+
+          it "should filter by producer" do
+            pending("test case (2), see #10797")
+
+            page.find("#s2id_supplier_id_in").click
+            find('li', text: supplier2.name).click
+
+            expect(page).to have_button("Go")
+            click_on "Go"
+            expect(page.find("table.report__table thead tr")).to have_content(table_header)
+
+            table = page.find("table.report__table tbody")
+
+            expect(table).to have_content(supplier_state_tax_2)
+            expect(table).to have_content(supplier_country_tax_2)
+            expect(table).to have_content(distributor_state_tax_2)
+            expect(table).to have_content(distributor_country_tax_2)
+            expect(table).to have_content(coordinator_state_tax_2)
+            expect(table).to have_content(coordinator_country_tax_2)
+            expect(table).to have_content(cost_of_produce_2)
+            expect(table).to have_content(summary_row_2)
+
+            expect(table).to_not have_content(supplier_state_tax_1)
+            expect(table).to_not have_content(supplier_country_tax_1)
+            expect(table).to_not have_content(distributor_state_tax_1)
+            expect(table).to_not have_content(distributor_country_tax_1)
+            expect(table).to_not have_content(coordinator_state_tax_1)
+            expect(table).to_not have_content(coordinator_country_tax_1)
+            expect(table).to_not have_content(cost_of_produce_1)
+            expect(table).to_not have_content(summary_row_1)
+          end
+
+          it "should filter by fee name" do
+            page.find(fee_name_selector).click
+            find('li', text: coordinator_fees.name).click
+
+            expect(page).to have_button("Go")
+            click_on "Go"
+
+            expect(page.find("table.report__table thead tr")).to have_content(table_header)
+
+            table = page.find("table.report__table tbody")
+
+            expect(table).to_not have_content(supplier_state_tax_1)
+            expect(table).to_not have_content(supplier_country_tax_1)
+            expect(table).to_not have_content(distributor_state_tax_1)
+            expect(table).to_not have_content(distributor_country_tax_1)
+            expect(table).to have_content(coordinator_state_tax_1)
+            expect(table).to have_content(coordinator_country_tax_1)
+            expect(table).to have_content(cost_of_produce_1)
+            expect(table).to have_content(summary_row_after_filtering_by_fee_name)
+          end
+
+          it "should filter by fee owner" do
+            page.find(fee_owner_selector).click
+            find('li', text: supplier.name).click
+
+            expect(page).to have_button("Go")
+            click_on "Go"
+            expect(page.find("table.report__table thead tr")).to have_content(table_header)
+
+            table = page.find("table.report__table tbody")
+            expect(table).to have_content(supplier_state_tax_1)
+            expect(table).to have_content(supplier_country_tax_1)
+            expect(table).to_not have_content(distributor_state_tax_1)
+            expect(table).to_not have_content(distributor_country_tax_1)
+            expect(table).to_not have_content(coordinator_state_tax_1)
+            expect(table).to_not have_content(coordinator_country_tax_1)
+            expect(table).to have_content(cost_of_produce_1)
+            expect(table).to have_content(summary_row_after_filtering_by_fee_owner)
+          end
+        end
       end
     end
   end
