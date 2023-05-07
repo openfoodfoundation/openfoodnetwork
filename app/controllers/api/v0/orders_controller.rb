@@ -47,17 +47,15 @@ module Api
       def capture
         authorize! :admin, order
 
-        pending_payment = order.pending_payments.first
+        payment_capture = OrderCaptureService.new(order)
 
-        return payment_capture_failed unless order.payment_required? && pending_payment
-
-        if pending_payment.capture!
+        if payment_capture.call
           render json: order.reload, serializer: Api::Admin::OrderSerializer, status: :ok
+        elsif payment_capture.gateway_error.present?
+          error_during_processing(payment_capture.gateway_error)
         else
           payment_capture_failed
         end
-      rescue Spree::Core::GatewayError => e
-        error_during_processing(e)
       end
 
       private
