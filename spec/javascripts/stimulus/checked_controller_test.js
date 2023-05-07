@@ -3,32 +3,32 @@
  */
 
 import { Application } from "stimulus";
-import select_all_controller from "../../../app/webpacker/controllers/select_all_controller";
+import checked_controller from "../../../app/webpacker/controllers/checked_controller";
 
-describe("SelectAllController", () => {
+describe("CheckedController", () => {
   beforeAll(() => {
     const application = Application.start();
-    application.register("select-all", select_all_controller);
+    application.register("checked", checked_controller);
   });
 
   beforeEach(() => {
     document.body.innerHTML = `
-      <div data-controller="select-all">
+      <div data-controller="checked">
         <input
           id="selectAllCheckbox"
           type="checkbox"
-          data-action="change->select-all#toggleAll"
-          data-select-all-target="all">
+          data-action="change->checked#toggleAll"
+          data-checked-target="all">
         <input
           id="checkboxA"
           type="checkbox"
-          data-action="change->select-all#toggleCheckbox"
-          data-select-all-target="checkbox">
+          data-action="change->checked#toggleCheckbox"
+          data-checked-target="checkbox">
         <input
           id="checkboxB"
           type="checkbox"
-          data-action="change->select-all#toggleCheckbox"
-          data-select-all-target="checkbox">
+          data-action="change->checked#toggleCheckbox"
+          data-checked-target="checkbox">
       </div>
     `;
   });
@@ -83,23 +83,23 @@ describe("SelectAllController", () => {
   describe("#connect", () => {
     beforeEach(() => {
       document.body.innerHTML = `
-        <div data-controller="select-all">
+        <div data-controller="checked">
           <input
             id="selectAllCheckbox"
             type="checkbox"
-            data-action="change->select-all#toggleAll"
-            data-select-all-target="all">
+            data-action="change->checked#toggleAll"
+            data-checked-target="all">
           <input
             id="checkboxA"
             type="checkbox"
-            data-action="change->select-all#toggleCheckbox"
-            data-select-all-target="checkbox"
+            data-action="change->checked#toggleCheckbox"
+            data-checked-target="checkbox"
             checked="checked">
           <input
             id="checkboxB"
             type="checkbox"
-            data-action="change->select-all#toggleCheckbox"
-            data-select-all-target="checkbox"
+            data-action="change->checked#toggleCheckbox"
+            data-checked-target="checkbox"
             checked="checked">
         </div>
       `;
