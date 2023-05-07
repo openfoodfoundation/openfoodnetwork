@@ -3,8 +3,6 @@
 = csrf_meta_tags
 = action_cable_meta_tag
 
-= action_cable_meta_tag
-
 %title
   - if content_for? :html_title
     = yield :html_title
@@ -16,7 +14,11 @@
 
 = stylesheet_pack_tag 'admin-styles', media: "screen, print"
 = render "layouts/bugsnag_js"
-= javascript_include_tag 'admin/all'
+
+- if content_for? :minimal_js
+  = javascript_include_tag 'admin_minimal'
+- else
+  = javascript_include_tag 'admin/all'
 
 = render "spree/admin/shared/translations"
 = render "spree/admin/shared/routes"

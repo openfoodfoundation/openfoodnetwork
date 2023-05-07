@@ -1,6 +1,8 @@
 - content_for :page_title do
   = t('.listing_orders')
 
+- content_for :minimal_js, true
+
 - content_for :page_actions do
   %li
     = button_link_to t('.new_order'), spree.new_admin_order_url, icon: 'icon-plus', id: 'admin_new_order'
@@ -42,7 +44,7 @@
           %div.menu_item
             %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "cancel_orders" }
               = t('.cancel_orders')
-    
+
     = render partial: 'admin/shared/angular_per_page_controls', locals: { position: "right", model: "orders" }
 
 %table#listing_orders.index.responsive{width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
