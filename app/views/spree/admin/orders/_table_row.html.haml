@@ -45,4 +45,4 @@
       - if order.ready_to_ship?
         %button.icon-road.icon_link.with-tip.no-text{rel: 'nofollow', 'ofn-with-tip' => t('spree.admin.orders.index.ship')}
       - if order.payment_required? && order.pending_payments.reject(&:requires_authorization?).any?
-        %button.icon-capture.icon_link.no-text{rel: 'nofollow', 'ofn-with-tip' => t('spree.admin.orders.index.capture')}
+        %button.icon-capture.icon_link.no-text{"data-reflex": "click->Admin::OrdersReflex#capture", "data-id": order.id.to_s, 'ofn-with-tip' => t('spree.admin.orders.index.capture')}
