@@ -2,7 +2,7 @@
 
 class BulkActionsInOrdersListReflex < ApplicationReflex
   def resend_confirmation_email(order_ids)
-    orders(order_ids).find_each do |o|
+    editable_orders.where(id: order_ids).find_each do |o|
       Spree::OrderMailer.confirm_email_for_customer(o.id, true).deliver_later if can? :resend, o
     end
 
@@ -11,7 +11,7 @@ class BulkActionsInOrdersListReflex < ApplicationReflex
 
   def send_invoice(order_ids)
     count = 0
-    orders(order_ids).find_each do |o|
+    editable_orders.where(id: order_ids).find_each do |o|
       next unless o.distributor.can_invoice? && (o.resumed? || o.complete?)
 
       Spree::OrderMailer.invoice_email(o.id).deliver_later
@@ -29,7 +29,7 @@ class BulkActionsInOrdersListReflex < ApplicationReflex
     morph "#flashes", render(partial: "shared/flashes", locals: { flashes: flash })
   end
 
-  def orders(order_ids)
-    Spree::Order.where(id: order_ids)
+  def editable_orders
+    Permissions::Order.new(current_user).editable_orders
   end
 end
