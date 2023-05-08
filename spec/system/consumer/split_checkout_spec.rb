@@ -696,7 +696,7 @@ describe "As a consumer, I want to checkout my order" do
 
         context "with voucher available" do
           let!(:voucher) do
-            create(:voucher, code: 'some_code', enterprise: distributor, amount: 15)
+            create(:voucher_flat_rate, code: 'some_code', enterprise: distributor, amount: 15)
           end
 
           it "shows voucher input" do
@@ -1150,7 +1150,9 @@ describe "As a consumer, I want to checkout my order" do
       end
 
       describe "vouchers" do
-        let(:voucher) { create(:voucher, code: 'some_code', enterprise: distributor, amount: 6) }
+        let(:voucher) do
+          create(:voucher_flat_rate, code: 'some_code', enterprise: distributor, amount: 6)
+        end
 
         before do
           add_voucher_to_order(voucher, order)

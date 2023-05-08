@@ -11,7 +11,20 @@ class Voucher < ApplicationRecord
            dependent: :nullify
 
   validates :code, presence: true, uniqueness: { scope: :enterprise_id }
-  validates :amount, presence: true, numericality: { greater_than: 0 }
+  validates :amount,
+            presence: true,
+            numericality: { greater_than: 0 },
+            if: ->(v) { v.voucher_type == FLAT_RATE }
+  validates :amount,
+            presence: true,
+            numericality: { greater_than: 0, less_than_or_equal_to: 100 },
+            if: ->(v) { v.voucher_type == PERCENTAGE_RATE }
+
+  FLAT_RATE = 'flat'.freeze
+  PERCENTAGE_RATE = 'percentage'.freeze
+  TYPES = [FLAT_RATE, PERCENTAGE_RATE].freeze
+
+  validates :voucher_type, inclusion: TYPES
 
   def code=(value)
     super(value.to_s.strip)

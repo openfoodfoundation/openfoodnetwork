@@ -19,15 +19,31 @@ describe Voucher do
   end
 
   describe 'validations' do
-    subject { build(:voucher, code: 'new_code', enterprise: enterprise) }
+    subject { build(:voucher_flat_rate, code: 'new_code', enterprise: enterprise) }
 
     it { is_expected.to validate_presence_of(:code) }
     it { is_expected.to validate_uniqueness_of(:code).scoped_to(:enterprise_id) }
     it { is_expected.to validate_presence_of(:amount) }
-    it { is_expected.to validate_numericality_of(:amount).is_greater_than(0) }
+    it { is_expected.to validate_inclusion_of(:voucher_type).in_array(Voucher::TYPES) }
+
+    context "when voucher_type is flat rate" do
+      it { is_expected.to validate_numericality_of(:amount).is_greater_than(0) }
+    end
+
+    context "when voucher_type is percentage rate" do
+      subject { build(:voucher_percentage, code: 'new_code', enterprise: enterprise) }
+
+      it do
+        is_expected.to validate_numericality_of(:amount)
+          .is_greater_than(0)
+          .is_less_than_or_equal_to(100)
+      end
+    end
   end
 
   describe '#compute_amount' do
+    subject { create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 10) }
+
     let(:order) { create(:order_with_totals) }
 
     context 'when order total is more than the voucher' do
@@ -50,7 +66,9 @@ describe Voucher do
   describe '#create_adjustment' do
     subject(:adjustment) { voucher.create_adjustment(voucher.code, order) }
 
-    let(:voucher) { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 25) }
+    let(:voucher) do
+      create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 25)
+    end
     let(:order) { create(:order_with_line_items, line_items_count: 3, distributor: enterprise) }
 
     it 'includes an amount of 0' do
