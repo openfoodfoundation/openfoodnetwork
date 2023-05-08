@@ -40,7 +40,7 @@ module Spree
     before_save :calculate_final_weight_volume, if: :quantity_changed?,
                                                 unless: :final_weight_volume_changed?
     before_save :assign_units, if: ->(line_item) {
-      line_item.new_record? || line_item.changed_attributes.keys.include?("final_weight_volume")
+      line_item.new_record? || line_item.final_weight_volume_changed?
     }
 
     before_destroy :update_inventory_before_destroy
