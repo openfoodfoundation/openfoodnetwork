@@ -9,11 +9,14 @@ class OrdersBulkCancelService
   end
 
   def call
+    updated = []
     editable_orders.where(id: @order_ids).find_each do |order|
       order.send_cancellation_email = @send_cancellation_email
       order.restock_items = @restock_items
       order.cancel
+      updated << order
     end
+    updated
   end
 
   private

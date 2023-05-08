@@ -1,27 +1,27 @@
-import ApplicationController from "./application_controller";
+import BulkActionsController from "./bulk_actions_controller";
 
-export default class extends ApplicationController {
+export default class extends BulkActionsController {
+  static targets = ["extraParams"]
+
   connect() {
     super.connect();
   }
 
   confirm() {
-    const send_cancellation_email = document.querySelector("#send_cancellation_email").checked;
-    const restock_items = document.querySelector("#restock_items").checked;
-    const order_ids = [];
+    let data = { order_ids: super.getOrdersIds() };
 
-    document
-      .querySelectorAll("#listing_orders input[name='order_ids[]']:checked")
-      .forEach((checkbox) => {
-        order_ids.push(checkbox.value);
-      });
+    if (this.hasExtraParamsTarget) {
+      Object.assign(data, this.extraFormData())
+    }
 
-    const params = {
-      order_ids: order_ids,
-      send_cancellation_email: send_cancellation_email,
-      restock_items: restock_items,
-    };
+    this.stimulate("CancelOrdersReflex#confirm", data);
+  }
 
-    this.stimulate("CancelOrdersReflex#confirm", params);
+  // private
+
+  extraFormData() {
+    if (this.extraParamsTarget.constructor.name !== "HTMLFormElement") { return {} }
+
+    return Object.fromEntries(new FormData(this.extraParamsTarget).entries())
   }
 }
