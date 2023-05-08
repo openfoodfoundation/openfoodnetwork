@@ -9,6 +9,7 @@ module OpenFoodNetwork
   module FeatureToggle
     # Please add your new feature here to appear in the Flipper UI.
     # We way move this to a YAML file when it becomes too awkward.
+    # **WARNING:** Features not in this list will be removed.
     CURRENT_FEATURES = {
       "admin_style_v2" => <<~DESC,
         Change some colour and layout in the backend to a newer version.
@@ -45,23 +46,14 @@ module OpenFoodNetwork
       DESC
     }.freeze
 
-    # Move your feature entry from CURRENT_FEATURES to RETIRED_FEATURES when
-    # you remove it from the code. It will then be deleted from the database.
-    #
-    # We may delete this field one day and regard all features not listed in
-    # CURRENT_FEATURES as unsupported and remove them. But until this approach
-    # is accepted we delete only the features listed here.
-    RETIRED_FEATURES = {}.freeze
-
     def self.setup!
       CURRENT_FEATURES.each_key do |name|
         feature = Flipper.feature(name)
         feature.add unless feature.exist?
       end
 
-      RETIRED_FEATURES.each_key do |name|
-        feature = Flipper.feature(name)
-        feature.remove if feature.exist?
+      Flipper.features.each do |feature|
+        feature.remove unless CURRENT_FEATURES.key?(feature.name)
       end
     end
 
