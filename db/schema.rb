@@ -1190,22 +1190,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_24_141213) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  create_table "vouchers", force: :cascade do |t|
+    t.string "code", limit: 255, null: false
+    t.datetime "expiry_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "enterprise_id"
+    t.index ["code", "enterprise_id"], name: "index_vouchers_on_code_and_enterprise_id", unique: true
+    t.index ["enterprise_id"], name: "index_vouchers_on_enterprise_id"
+  end
+
   create_table "webhook_endpoints", force: :cascade do |t|
     t.string "url", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", default: 0, null: false
     t.index ["user_id"], name: "index_webhook_endpoints_on_user_id"
-  end
-
-  create_table "vouchers", force: :cascade do |t|
-    t.string "code", limit: 255, null: false
-    t.datetime "expiry_date"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "enterprise_id"
-    t.index ["code", "enterprise_id"], name: "index_vouchers_on_code_and_enterprise_id", unique: true
-    t.index ["enterprise_id"], name: "index_vouchers_on_enterprise_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -1312,6 +1312,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_24_141213) do
   add_foreign_key "subscriptions", "spree_shipping_methods", column: "shipping_method_id", name: "subscriptions_shipping_method_id_fk"
   add_foreign_key "variant_overrides", "enterprises", column: "hub_id", name: "variant_overrides_hub_id_fk"
   add_foreign_key "variant_overrides", "spree_variants", column: "variant_id", name: "variant_overrides_variant_id_fk"
-  add_foreign_key "webhook_endpoints", "spree_users", column: "user_id"
   add_foreign_key "vouchers", "enterprises"
+  add_foreign_key "webhook_endpoints", "spree_users", column: "user_id"
 end
