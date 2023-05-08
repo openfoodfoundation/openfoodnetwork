@@ -64,7 +64,7 @@ module VariantUnits
 
     def unit_value_attributes
       units = { unit_presentation: option_value_name }
-      units.merge!({ variant_unit: product.variant_unit }) if has_attribute?(:variant_unit)
+      units.merge!(variant_unit: product.variant_unit) if has_attribute?(:variant_unit)
       units
     end
 
