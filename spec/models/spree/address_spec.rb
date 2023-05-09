@@ -187,4 +187,19 @@ describe Spree::Address do
       specify { expect(address.state_text).to eq 'virginia' }
     end
   end
+
+  describe "ransacker :full_name" do
+    it "searches for records with matching full names" do
+      address1 = create(:address, firstname: 'John', lastname: 'Doe')
+      address2 = create(:address, firstname: 'Jane', lastname: 'Smith')
+
+      result1 = described_class.ransack(full_name_cont: 'John Doe').result
+      expect(result1).to include(address1)
+      expect(result1).not_to include(address2)
+
+      result2 = described_class.ransack(full_name_cont: 'Jane Smith').result
+      expect(result2).to include(address2)
+      expect(result2).not_to include(address1)
+    end
+  end
 end
