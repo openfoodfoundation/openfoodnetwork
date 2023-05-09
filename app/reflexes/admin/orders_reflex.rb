@@ -40,10 +40,58 @@ class Admin::OrdersReflex < ApplicationReflex
     morph :nothing
   end
 
+  def cancel_orders(params)
+    cancelled_orders = OrdersBulkCancelService.new(params, current_user).call
+
+    cable_ready.dispatch_event(name: "modal:close")
+
+    cancelled_orders.each do |order|
+      cable_ready.replace(
+        selector: dom_id(order),
+        html: render(partial: "spree/admin/orders/table_row", locals: { order: order })
+      )
+    end
+
+    cable_ready.broadcast
+    morph :nothing
+  end
+
+  def resend_confirmation_emails(params)
+    editable_orders.where(id: params[:bulk_ids]).find_each do |order|
+      next unless can? :resend, order
+
+      Spree::OrderMailer.confirm_email_for_customer(order.id, true).deliver_later
+    end
+
+    success("admin.resend_confirmation_emails_feedback", params[:bulk_ids].count)
+  end
+
+  def send_invoices(params)
+    count = 0
+    editable_orders.where(id: params[:bulk_ids]).find_each do |o|
+      next unless o.distributor.can_invoice? && (o.resumed? || o.complete?)
+
+      Spree::OrderMailer.invoice_email(o.id).deliver_later
+      count += 1
+    end
+
+    success("admin.send_invoice_feedback", count)
+  end
+
   private
 
   def authorize_order
     @order = Spree::Order.find_by(id: element.dataset[:id])
     authorize! :admin, @order
+  end
+
+  def success(i18n_key, count)
+    flash[:success] = with_locale { I18n.t(i18n_key, count: count) }
+    cable_ready.dispatch_event(name: "modal:close")
+    morph_admin_flashes
+  end
+
+  def editable_orders
+    Permissions::Order.new(current_user).editable_orders
   end
 end

@@ -20,14 +20,14 @@
 
 = render 'spree/admin/shared/custom-confirm'
 
-= render ConfirmModalComponent.new(id: "resend_confirmation", confirm_actions: "click->bulk-actions#perform", controller: "bulk-actions", reflex: "BulkActionsInOrdersList#resend_confirmation_email") do
+= render ConfirmModalComponent.new(id: "resend_confirmation", confirm_actions: "click->bulk-actions#perform", controller: "bulk-actions", reflex: "Admin::Orders#resend_confirmation_emails") do
   .margin-bottom-30
     = t('.resend_confirmation_confirm_html')
 
-= render ConfirmModalComponent.new(id: "send_invoice", confirm_actions: "click->bulk-actions#perform", controller: "bulk-actions", reflex: "BulkActionsInOrdersList#send_invoice") do
+= render ConfirmModalComponent.new(id: "send_invoice", confirm_actions: "click->bulk-actions#perform", controller: "bulk-actions", reflex: "Admin::Orders#send_invoices") do
   .margin-bottom-30
     = t('.send_invoice_confirm_html')
 
-= render ConfirmModalComponent.new(id: "cancel_orders", confirm_actions: "click->bulk-actions#perform", controller: "bulk-actions", reflex: "CancelOrders#confirm", message: "spree/admin/orders/messages/cancel_orders") do
+= render ConfirmModalComponent.new(id: "cancel_orders", confirm_actions: "click->bulk-actions#perform", controller: "bulk-actions", reflex: "Admin::Orders#cancel_orders", message: "spree/admin/orders/messages/cancel_orders") do
   .margin-bottom-30
     = t("js.admin.orders.cancel_the_order_html")
