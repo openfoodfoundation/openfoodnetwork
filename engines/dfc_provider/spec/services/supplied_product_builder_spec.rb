@@ -37,5 +37,12 @@ describe DfcBuilder do
 
       expect(product.name).to eq "Granny Smith"
     end
+
+    it "assigns a product type" do
+      product = DfcBuilder.supplied_product(variant)
+      vegetable = DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE
+
+      expect(product.productType).to eq vegetable
+    end
   end
 end

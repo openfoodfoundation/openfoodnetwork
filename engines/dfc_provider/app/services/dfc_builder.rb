@@ -26,6 +26,7 @@ class DfcBuilder
       id,
       name: variant.name_to_display,
       description: variant.description,
+      productType: product_type,
       quantity: QuantitativeValueBuilder.quantity(variant),
     )
   end
@@ -49,6 +50,12 @@ class DfcBuilder
   # http://static.datafoodconsortium.org/conception/DFC%20-%20Business%20rules.pdf
   def self.stock_limitation(variant)
     variant.on_demand ? nil : variant.total_on_hand
+  end
+
+  # OFN product categories (taxons) are currently not standardised.
+  # This is just a dummy value for demos.
+  def self.product_type
+    DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE
   end
 
   def self.urls
