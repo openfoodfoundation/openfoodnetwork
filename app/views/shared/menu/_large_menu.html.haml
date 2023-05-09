@@ -1,7 +1,7 @@
-= cache_with_locale [@white_label_distributor, ContentConfig.cache_key] do
-  %nav.top-bar.show-for-large-up
-    %section.top-bar-section
-      %ul.nav-logo
+%nav.top-bar.show-for-large-up
+  %section.top-bar-section
+    %ul.nav-logo
+      = cache_with_locale [@white_label_distributor, ContentConfig.cache_key] do
         %li.ofn-logo
           %a{href: main_logo_link(@white_label_distributor)}
             - if @white_label_logo&.variable?
@@ -15,7 +15,8 @@
             %a{href: '/'}
               = t 'title'
 
-      - unless @hide_ofn_navigation
+    - unless @hide_ofn_navigation
+      = cache_with_locale ContentConfig.cache_key do
         %ul.nav-main-menu
           - [*1..7].each do |menu_number|
             - menu_name = "menu_#{menu_number}"
@@ -24,15 +25,16 @@
                 %a{href: t("#{menu_name}_url") }
                   %span.nav-primary
                     = t "#{menu_name}_title"
-      %ul.nav-icons-menu
-        - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
-          = render 'shared/menu/language_selector'
+    %ul.nav-icons-menu
+      - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
+        = render 'shared/menu/language_selector'
 
-        - if spree_current_user.nil?
-          = render 'shared/menu/signed_out'
-        - else
-          = render 'shared/menu/signed_in'
+      - if spree_current_user.nil?
+        = render 'shared/menu/signed_out'
+      - else
+        = render 'shared/menu/signed_in'
 
+      = cache_with_locale "cart" do
         %li.current_hub{"ng-controller" => "CurrentHubCtrl", "ng-show" => "CurrentHub.hub.id", "ng-cloak" => true}
           %a{href: main_app.shop_path}
             %span{ class: "top-bar--current-hub-prefix" }
