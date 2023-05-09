@@ -62,6 +62,9 @@ class Voucher < ApplicationRecord
   # We limit adjustment to the maximum amount needed to cover the order, ie if the voucher
   # covers more than the order.total we only need to create an adjustment covering the order.total
   def compute_amount(order)
-    -amount.clamp(0, order.pre_discount_total)
+    return -amount.clamp(0, order.pre_discount_total) if voucher_type == FLAT_RATE
+
+    percentage = amount / 100
+    -percentage * order.pre_discount_total
   end
 end

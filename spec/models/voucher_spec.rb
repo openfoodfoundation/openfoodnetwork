@@ -42,12 +42,10 @@ describe Voucher do
   end
 
   describe '#compute_amount' do
-    subject { create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 10) }
-
     let(:order) { create(:order_with_totals) }
 
     context 'when order total is more than the voucher' do
-      subject { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 5) }
+      subject { create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 5) }
 
       it 'uses the voucher total' do
         expect(subject.compute_amount(order).to_f).to eq(-5)
@@ -55,10 +53,20 @@ describe Voucher do
     end
 
     context 'when order total is less than the voucher' do
-      subject { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 20) }
+      subject { create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 20) }
 
       it 'matches the order total' do
         expect(subject.compute_amount(order).to_f).to eq(-10)
+      end
+    end
+
+    context "with percentage rate voucher" do
+      subject { create(:voucher_percentage, code: 'new_code', enterprise: enterprise, amount: 10) }
+
+      it 'returns calculated anount based on the percentage' do
+        # -0.1 (10%)  * $10 = $1
+        expected_amount = -0.1 * order.total
+        expect(subject.compute_amount(order).to_f).to eq(expected_amount.to_f)
       end
     end
   end

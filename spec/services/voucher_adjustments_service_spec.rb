@@ -117,6 +117,8 @@ describe VoucherAdjustmentsService do
           order.create_tax_charge!
           order.update_shipping_fees!
           order.update_order!
+
+          VoucherAdjustmentsService.new(order).update
         end
 
         it 'includes amount without tax' do
@@ -206,7 +208,7 @@ describe VoucherAdjustmentsService do
             ship_address: create(:address),
             product_price: 110,
             tax_rate_amount: 0.10,
-            included_in_price: false,
+            included_in_price: true,
             tax_rate_name: "Tax 1"
           )
         end
