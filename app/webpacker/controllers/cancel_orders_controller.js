@@ -8,7 +8,7 @@ export default class extends BulkActionsController {
   }
 
   confirm() {
-    let data = { order_ids: super.getOrdersIds() };
+    let data = { bulk_ids: super.getSelectedIds() };
 
     if (this.hasExtraParamsTarget) {
       Object.assign(data, this.extraFormData())

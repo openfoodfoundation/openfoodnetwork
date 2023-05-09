@@ -32,7 +32,7 @@ class Admin::OrdersReflex < ApplicationReflex
     ).broadcast
 
     BulkInvoiceJob.perform_later(
-      params[:order_ids],
+      params[:bulk_ids],
       "tmp/invoices/#{Time.zone.now.to_i}-#{SecureRandom.hex(2)}.pdf",
       channel: SessionChannel.for_request(request)
     )

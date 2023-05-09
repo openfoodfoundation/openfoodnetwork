@@ -7,13 +7,13 @@ export default class extends ApplicationController {
 
   // abstract
   confirm(action) {
-    this.stimulate(action, this.getOrdersIds());
+    this.stimulate(action, this.getSelectedIds());
   }
 
   // private
-  getOrdersIds() {
+  getSelectedIds() {
     const checkboxes = document.querySelectorAll(
-      "#listing_orders input[name='order_ids[]']:checked"
+      "table input[name='bulk_ids[]']:checked"
     );
     return Array.from(checkboxes).map((checkbox) => checkbox.value);
   }

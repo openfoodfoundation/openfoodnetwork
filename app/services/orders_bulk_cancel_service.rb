@@ -2,7 +2,7 @@
 
 class OrdersBulkCancelService
   def initialize(params, current_user)
-    @order_ids = params[:order_ids]
+    @order_ids = params[:bulk_ids]
     @current_user = current_user
     @send_cancellation_email = params[:send_cancellation_email]
     @restock_items = params[:restock_items]

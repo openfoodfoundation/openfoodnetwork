@@ -6,6 +6,6 @@ export default class extends BulkActionsController {
   }
 
   generate() {
-    this.stimulate("Admin::OrdersReflex#bulk_invoice", { order_ids: super.getOrdersIds() });
+    this.stimulate("Admin::OrdersReflex#bulk_invoice", { bulk_ids: super.getSelectedIds() });
   }
 }

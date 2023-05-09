@@ -465,10 +465,10 @@ distributors: [distributor4, distributor5]) }
 
             it "can bulk print invoices but only for the 'complete' or 'resumed' ones" do
               within "#listing_orders" do
-                page.find("input[name='order_ids[]'][value='#{order2.id}']").click
-                page.find("input[name='order_ids[]'][value='#{order3.id}']").click
-                page.find("input[name='order_ids[]'][value='#{order4.id}']").click
-                page.find("input[name='order_ids[]'][value='#{order5.id}']").click
+                page.find("input[name='bulk_ids[]'][value='#{order2.id}']").click
+                page.find("input[name='bulk_ids[]'][value='#{order3.id}']").click
+                page.find("input[name='bulk_ids[]'][value='#{order4.id}']").click
+                page.find("input[name='bulk_ids[]'][value='#{order5.id}']").click
               end
 
               page.find("span.icon-reorder", text: "ACTIONS").click
@@ -492,8 +492,8 @@ distributors: [distributor4, distributor5]) }
         end
 
         it "can bulk send email to 2 orders" do
-          page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
-          page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
 
           page.find("span.icon-reorder", text: "ACTIONS").click
           within ".ofn-drop-down-with-prepend .menu" do
@@ -512,8 +512,8 @@ distributors: [distributor4, distributor5]) }
         end
 
         it "can bulk print invoices from 2 orders" do
-          page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
-          page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
 
           page.find("span.icon-reorder", text: "ACTIONS").click
           within ".ofn-drop-down-with-prepend .menu" do
@@ -527,8 +527,8 @@ distributors: [distributor4, distributor5]) }
         end
 
         it "can bulk cancel 2 orders" do
-          page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
-          page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
 
           page.find("span.icon-reorder", text: "ACTIONS").click
           within ".ofn-drop-down-with-prepend .menu" do
@@ -574,10 +574,10 @@ distributors: [distributor4, distributor5]) }
         end
 
         it "cannot send emails to orders if permission have been revoked in the meantime" do
-          page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
           # Find the clicked order
           order = Spree::Order.find_by(
-            id: page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").value
+            id: page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").value
           )
           # Revoke permission for the current user on that specific order by changing its owners
           order.update_attribute(:distributor, distributor)
