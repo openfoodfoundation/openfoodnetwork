@@ -607,80 +607,78 @@ describe '
     end
 
     context "white label settings" do
-      context "when the feature is enabled" do
-        before do
-          Flipper.enable(:white_label)
-          visit edit_admin_enterprise_path(distributor1)
+      before do
+        visit edit_admin_enterprise_path(distributor1)
 
-          within(".side_menu") do
-            click_link "White Label"
-          end
-        end
-
-        it "set the hide_ofn_navigation preference for the current shop" do
-          check "Hide OFN navigation"
-          click_button 'Update'
-          success_message = 'Enterprise "First Distributor" has been successfully updated!'
-          expect(flash_message).to eq success_message
-          expect(distributor1.reload.hide_ofn_navigation).to be true
-
-          visit edit_admin_enterprise_path(distributor1)
-          within(".side_menu") do
-            click_link "White Label"
-          end
-
-          uncheck "Hide OFN navigation"
-          click_button 'Update'
-          expect(flash_message).to eq success_message
-          expect(distributor1.reload.hide_ofn_navigation).to be false
+        within(".side_menu") do
+          click_link "White Label"
         end
       end
 
-      context "when the feature is disabled" do
-        before do
-          Flipper.disable(:white_label)
-          visit edit_admin_enterprise_path(distributor1)
+      it "set the hide_ofn_navigation preference for the current shop" do
+        check "Hide OFN navigation"
+        click_button 'Update'
+        success_message = 'Enterprise "First Distributor" has been successfully updated!'
+        expect(flash_message).to eq success_message
+        expect(distributor1.reload.hide_ofn_navigation).to be true
+
+        visit edit_admin_enterprise_path(distributor1)
+        within(".side_menu") do
+          click_link "White Label"
         end
 
-        it "does not show the white label settings" do
-          expect(page).not_to have_link "White Label"
-        end
+        uncheck "Hide OFN navigation"
+        click_button 'Update'
+        expect(flash_message).to eq success_message
+        expect(distributor1.reload.hide_ofn_navigation).to be false
       end
 
-      context "when the feature is enabled" do
+      it "set the hide_ofn_navigation preference for the current shop" do
+        expect(page).not_to have_content "LOGO USED IN SHOPFRONT"
+        check "Hide OFN navigation"
+        click_button 'Update'
+        expect(flash_message)
+          .to eq('Enterprise "First Distributor" has been successfully updated!')
+        expect(distributor1.reload.hide_ofn_navigation).to be true
+
+        visit edit_admin_enterprise_path(distributor1)
+        within(".side_menu") do
+          click_link "White Label"
+        end
+
+        expect(page).to have_content "LOGO USED IN SHOPFRONT"
+        uncheck "Hide OFN navigation"
+        click_button 'Update'
+        expect(flash_message)
+          .to eq('Enterprise "First Distributor" has been successfully updated!')
+        expect(distributor1.reload.hide_ofn_navigation).to be false
+      end
+
+      context "when white label is active via `hide_ofn_navigation`" do
         before do
-          Flipper.enable(:white_label)
-          visit edit_admin_enterprise_path(distributor1)
-
-          within(".side_menu") do
-            click_link "White Label"
-          end
-        end
-
-        it "set the hide_ofn_navigation preference for the current shop" do
-          expect(page).not_to have_content "LOGO USED IN SHOPFRONT"
-          check "Hide OFN navigation"
-          click_button 'Update'
-          expect(flash_message)
-            .to eq('Enterprise "First Distributor" has been successfully updated!')
-          expect(distributor1.reload.hide_ofn_navigation).to be true
+          distributor1.update_attribute(:hide_ofn_navigation, true)
 
           visit edit_admin_enterprise_path(distributor1)
           within(".side_menu") do
             click_link "White Label"
           end
+        end
 
-          expect(page).to have_content "LOGO USED IN SHOPFRONT"
-          uncheck "Hide OFN navigation"
+        it "can updload the white label logo for the current shop" do
+          attach_file "enterprise_white_label_logo", white_logo_path
           click_button 'Update'
           expect(flash_message)
             .to eq('Enterprise "First Distributor" has been successfully updated!')
-          expect(distributor1.reload.hide_ofn_navigation).to be false
+          expect(distributor1.reload.white_label_logo_blob.filename).to eq("logo-white.png")
         end
 
-        context "when white label is active via `hide_ofn_navigation`" do
+        it "does not show the white label logo link field" do
+          expect(page).not_to have_field "white_label_logo_link"
+        end
+
+        context "when enterprise has a white label logo" do
           before do
-            distributor1.update_attribute(:hide_ofn_navigation, true)
+            distributor1.update white_label_logo: white_logo_file
 
             visit edit_admin_enterprise_path(distributor1)
             within(".side_menu") do
@@ -688,47 +686,24 @@ describe '
             end
           end
 
-          it "can updload the white label logo for the current shop" do
-            attach_file "enterprise_white_label_logo", white_logo_path
+          it "can remove the white label logo for the current shop" do
+            expect(page).to have_selector("img[src*='logo-white.png']")
+            expect(distributor1.white_label_logo).to be_attached
+            click_button "Remove"
+            within ".reveal-modal" do
+              click_button "Confirm"
+            end
+            expect(flash_message).to match(/Logo removed/)
+            distributor1.reload
+            expect(distributor1.white_label_logo).to_not be_attached
+          end
+
+          it "can edit the text field white_label_logo_link" do
+            fill_in "enterprise_white_label_logo_link", with: "https://www.openfoodnetwork.org"
             click_button 'Update'
             expect(flash_message)
               .to eq('Enterprise "First Distributor" has been successfully updated!')
-            expect(distributor1.reload.white_label_logo_blob.filename).to eq("logo-white.png")
-          end
-
-          it "does not show the white label logo link field" do
-            expect(page).not_to have_field "white_label_logo_link"
-          end
-
-          context "when enterprise has a white label logo" do
-            before do
-              distributor1.update white_label_logo: white_logo_file
-
-              visit edit_admin_enterprise_path(distributor1)
-              within(".side_menu") do
-                click_link "White Label"
-              end
-            end
-
-            it "can remove the white label logo for the current shop" do
-              expect(page).to have_selector("img[src*='logo-white.png']")
-              expect(distributor1.white_label_logo).to be_attached
-              click_button "Remove"
-              within ".reveal-modal" do
-                click_button "Confirm"
-              end
-              expect(flash_message).to match(/Logo removed/)
-              distributor1.reload
-              expect(distributor1.white_label_logo).to_not be_attached
-            end
-
-            it "can edit the text field white_label_logo_link" do
-              fill_in "enterprise_white_label_logo_link", with: "https://www.openfoodnetwork.org"
-              click_button 'Update'
-              expect(flash_message)
-                .to eq('Enterprise "First Distributor" has been successfully updated!')
-              expect(distributor1.reload.white_label_logo_link).to eq("https://www.openfoodnetwork.org")
-            end
+            expect(distributor1.reload.white_label_logo_link).to eq("https://www.openfoodnetwork.org")
           end
         end
       end

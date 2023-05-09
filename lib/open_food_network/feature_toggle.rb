@@ -41,9 +41,6 @@ module OpenFoodNetwork
       "vouchers" => <<~DESC,
         Add voucher functionality. Voucher can be managed via Enterprise settings.
       DESC
-      "white_label" => <<~DESC,
-        Customize shopfront (shop, cart, checkout) and emails without OFN branding.
-      DESC
     }.freeze
 
     def self.setup!
