@@ -23,7 +23,7 @@ module Spree
         if @comparator.can_generate_new_invoice?
           @order.invoices.create!(
             date: Time.zone.today,
-            number: @order.next_invoice_number,
+            number: @order.invoices.count + 1,
             data: invoice_data
           )
         elsif @comparator.can_update_latest_invoice?

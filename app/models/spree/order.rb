@@ -575,10 +575,6 @@ module Spree
       end
     end
 
-    def next_invoice_number
-      invoices.count + 1
-    end
-
     private
 
     def deliver_order_confirmation_email
