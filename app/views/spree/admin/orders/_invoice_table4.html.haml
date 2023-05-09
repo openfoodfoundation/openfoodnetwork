@@ -30,7 +30,7 @@
           %td{:align => "right"}
             = display_line_item_tax_rates(item)
 
-    - checkout_adjustments_for(@invoice_presenter, exclude: [:line_item]).reverse_each do |adjustment|
+    - @invoice_presenter.checkout_adjustments(exclude: [:line_item]).reverse_each do |adjustment|
       %tr
         %td
           %strong= "#{raw(adjustment.label)}"
