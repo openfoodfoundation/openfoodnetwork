@@ -13,14 +13,13 @@ class OrderInvoiceComparator
     # We'll use a recursive BFS algorithm to find if the invoice is outdated
     # the root will be the order
     # On each node, we'll a list of relevant attributes that will be used on the comparison
-    different?(current_state_invoice.presenter, latest_invoice.presenter,
-               invoice_generation_selector)
+    different?(current_state_invoice, latest_invoice, invoice_generation_selector)
   end
 
   def can_update_latest_invoice?
     return false if invoices.empty?
 
-    different?(current_state_invoice.presenter, latest_invoice.presenter, invoice_update_selector)
+    different?(current_state_invoice, latest_invoice, invoice_update_selector)
   end
 
   def different?(node1, node2, attributes_selector)
@@ -65,12 +64,12 @@ class OrderInvoiceComparator
   private
 
   def current_state_invoice
-    Invoice.new(
+    @current_state_invoice ||= Invoice.new(
       order: order,
       data: serialize_for_invoice,
       date: Time.zone.today,
       number: invoices.count + 1
-    )
+    ).presenter
   end
 
   def invoices
@@ -78,7 +77,7 @@ class OrderInvoiceComparator
   end
 
   def latest_invoice
-    invoices.last
+    @latest_invoice ||= invoices.last.presenter
   end
 
   def serialize_for_invoice
