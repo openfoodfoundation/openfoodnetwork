@@ -11,6 +11,7 @@ class DfcBuilder
     DataFoodConsortium::Connector::CatalogItem.new(
       id, product: product,
           sku: variant.sku,
+          stockLimitation: stock_limitation(variant),
           offers: [offer(variant)],
     )
   end
@@ -37,15 +38,17 @@ class DfcBuilder
     id = "#{enterprise_url}/offers/#{variant.id}"
     offered_to = []
 
-    # The DFC sees "empty" stock as unlimited.
-    # http://static.datafoodconsortium.org/conception/DFC%20-%20Business%20rules.pdf
-    stock = variant.on_demand ? nil : variant.total_on_hand
-
     DataFoodConsortium::Connector::Offer.new(
       id, offeredTo: offered_to,
           price: variant.price.to_f,
-          stockLimitation: stock,
+          stockLimitation: stock_limitation(variant),
     )
+  end
+
+  # The DFC sees "empty" stock as unlimited.
+  # http://static.datafoodconsortium.org/conception/DFC%20-%20Business%20rules.pdf
+  def self.stock_limitation(variant)
+    variant.on_demand ? nil : variant.total_on_hand
   end
 
   def self.urls
