@@ -19,13 +19,14 @@ module Spree
 
       def generate
         @order = Order.find_by(number: params[:order_id])
-        if @order.can_generate_new_invoice?
+        @comparator = OrderInvoiceComparator.new(@order)
+        if @comparator.can_generate_new_invoice?
           @order.invoices.create!(
             date: Time.zone.today,
             number: @order.next_invoice_number,
             data: invoice_data
           )
-        elsif @order.can_update_latest_invoice?
+        elsif @comparator.can_update_latest_invoice?
           @order.invoices.last.update!(
             date: Time.zone.today,
             data: invoice_data

@@ -575,37 +575,8 @@ module Spree
       end
     end
 
-    def can_generate_new_invoice?
-      return true if invoices.empty?
-
-      invoice_comparator.can_generate_new_invoice? current_state_invoice, invoices.last
-    end
-
-    def can_update_latest_invoice?
-      return false if invoices.empty?
-
-      invoice_comparator.can_update_latest_invoice? current_state_invoice, invoices.last
-    end
-
     def next_invoice_number
       invoices.count + 1
-    end
-
-    def invoice_comparator
-      @invoice_comparator ||= OrderInvoiceComparator.new
-    end
-
-    def current_state_invoice
-      Invoice.new(
-        order: self,
-        data: serialize_for_invoice,
-        date: Time.zone.today,
-        number: invoices.count + 1
-      )
-    end
-
-    def serialize_for_invoice
-      Invoice::OrderSerializer.new(self).serializable_hash
     end
 
     private

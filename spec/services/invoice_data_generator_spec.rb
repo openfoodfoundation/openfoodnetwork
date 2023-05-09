@@ -5,7 +5,12 @@ require 'spec_helper'
 describe InvoiceDataGenerator do
   describe '#generate' do
     let!(:order) { create(:completed_order_with_fees) }
-    let!(:latest_invoice){ create(:invoice, order: order, data: order.serialize_for_invoice) }
+    let!(:invoice_data_generator){ InvoiceDataGenerator.new(order) }
+    let!(:latest_invoice){
+      create(:invoice,
+             order: order,
+             data: invoice_data_generator.serialize_for_invoice)
+    }
     let(:new_invoice_data) {
       InvoiceDataGenerator.new(order).generate
     }
@@ -74,7 +79,7 @@ describe InvoiceDataGenerator do
       }
 
       it "should generate a new invoice" do
-        expect(new_invoice_data).to eql order.serialize_for_invoice
+        expect(new_invoice_data).to eql InvoiceDataGenerator.new(order).serialize_for_invoice
       end
     end
   end

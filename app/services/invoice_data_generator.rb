@@ -22,6 +22,10 @@ class InvoiceDataGenerator
     new_data
   end
 
+  def serialize_for_invoice
+    Invoice::OrderSerializer.new(order).serializable_hash
+  end
+
   private
 
   def update_order_attributes
@@ -57,7 +61,7 @@ class InvoiceDataGenerator
   end
 
   def new_data
-    @new_data ||= order.serialize_for_invoice
+    @new_data ||= serialize_for_invoice
   end
 
   def old_data

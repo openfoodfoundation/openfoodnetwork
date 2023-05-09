@@ -10,7 +10,12 @@ module OrderHelper
   end
 
   def show_generate_invoice_button?(order)
-    order.can_generate_new_invoice? ||
-      order.can_update_latest_invoice?
+    comparator = order_comparator(order)
+    comparator.can_generate_new_invoice? ||
+      comparator.can_update_latest_invoice?
+  end
+
+  def order_comparator(order)
+    OrderInvoiceComparator.new(order)
   end
 end

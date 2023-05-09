@@ -1,7 +1,15 @@
 # frozen_string_literal: true
 
 class OrderInvoiceComparator
-  def can_generate_new_invoice?(current_state_invoice, latest_invoice)
+  attr :order
+
+  def initialize(order)
+    @order = order
+  end
+
+  def can_generate_new_invoice?
+    return true if invoices.empty?
+
     # We'll use a recursive BFS algorithm to find if the invoice is outdated
     # the root will be the order
     # On each node, we'll a list of relevant attributes that will be used on the comparison
@@ -9,7 +17,9 @@ class OrderInvoiceComparator
                invoice_generation_selector)
   end
 
-  def can_update_latest_invoice?(current_state_invoice, latest_invoice)
+  def can_update_latest_invoice?
+    return false if invoices.empty?
+
     different?(current_state_invoice.presenter, latest_invoice.presenter, invoice_update_selector)
   end
 
@@ -50,5 +60,28 @@ class OrderInvoiceComparator
         :simple
       end
     end
+  end
+
+  private
+
+  def current_state_invoice
+    Invoice.new(
+      order: order,
+      data: serialize_for_invoice,
+      date: Time.zone.today,
+      number: invoices.count + 1
+    )
+  end
+
+  def invoices
+    order.invoices
+  end
+
+  def latest_invoice
+    invoices.last
+  end
+
+  def serialize_for_invoice
+    InvoiceDataGenerator.new(order).serialize_for_invoice
   end
 end
