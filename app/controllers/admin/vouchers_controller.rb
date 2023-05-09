@@ -30,7 +30,7 @@ module Admin
     end
 
     def permitted_resource_params
-      params.require(:voucher).permit(:code, :amount)
+      params.require(:voucher).permit(:code, :amount, :voucher_type)
     end
   end
 end

@@ -28,12 +28,14 @@ describe Admin::VouchersController, type: :request do
       {
         voucher: {
           code: code,
-          amount: amount
+          amount: amount,
+          voucher_type: type
         }
       }
     end
     let(:code) { "new_code" }
     let(:amount) { 15 }
+    let(:type) { "percentage" }
 
     it "creates a new voucher" do
       expect { create_voucher }.to change(Voucher, :count).by(1)
@@ -41,6 +43,7 @@ describe Admin::VouchersController, type: :request do
       voucher = Voucher.last
       expect(voucher.code).to eq(code)
       expect(voucher.amount).to eq(amount)
+      expect(voucher.voucher_type).to eq(type)
     end
 
     it "redirects to admin enterprise setting page, voucher panel" do

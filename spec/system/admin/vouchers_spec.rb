@@ -23,7 +23,7 @@ describe '
 
   it 'lists enterprise vouchers' do
     # Given an enterprise with vouchers
-    create(:voucher, enterprise: enterprise, code: voucher_code, amount: amount)
+    create(:voucher_flat_rate, enterprise: enterprise, code: voucher_code, amount: amount)
 
     # When I go to the enterprise voucher tab
     visit edit_admin_enterprise_path(enterprise)
@@ -35,46 +35,73 @@ describe '
     expect(page).to have_content amount
   end
 
-  it 'creates a voucher' do
-    # Given an enterprise
-    # When I go to the enterprise voucher tab and click new
-    visit edit_admin_enterprise_path(enterprise)
+  describe "adding voucher" do
+    before do
+      # Given an enterprise
+      # When I go to the enterprise voucher tab and click new
+      visit edit_admin_enterprise_path(enterprise)
 
-    click_link 'Vouchers'
-    within "#vouchers_panel" do
-      click_link 'Add New'
+      click_link 'Vouchers'
+      within "#vouchers_panel" do
+        click_link 'Add New'
+      end
     end
 
-    # And I fill in the fields for a new voucher click save
-    fill_in 'voucher_code', with: voucher_code
-    fill_in 'voucher_amount', with: amount
-    click_button 'Save'
+    context "with a flat rate voucher" do
+      it 'creates a voucher' do
+        # And I fill in the fields for a new voucher click save
+        fill_in 'voucher_code', with: voucher_code
+        select "Flat", from: "voucher_voucher_type"
+        fill_in 'voucher_amount', with: amount
+        click_button 'Save'
 
-    # Then I should get redirect to the entreprise voucher tab and see the created voucher
+        # Then I should get redirect to the entreprise voucher tab and see the created voucher
+        expect_to_be_redirected_to_enterprise_voucher_tab(page, voucher_code, amount)
+        expect_voucher_to_be_created(enterprise, voucher_code)
+      end
+    end
+
+    context "with a percentage rate voucher" do
+      it 'creates a voucher' do
+        # And I fill in the fields for a new voucher click save
+        fill_in 'voucher_code', with: voucher_code
+        select "Percentage (%)", from:  "voucher_voucher_type"
+        fill_in 'voucher_amount', with: amount
+        click_button 'Save'
+
+        # Then I should get redirect to the entreprise voucher tab and see the created voucher
+        expect_to_be_redirected_to_enterprise_voucher_tab(page, voucher_code, amount)
+        expect_voucher_to_be_created(enterprise, voucher_code)
+      end
+    end
+
+    context 'when entering invalid data' do
+      it 'shows an error flash message' do
+        # Given an enterprise
+        # When I go to the new voucher page
+        visit new_admin_enterprise_voucher_path(enterprise)
+
+        # And I fill in fields with invalid data and click save
+        click_button 'Save'
+
+        # Then I should see an error flash message
+        expect(page).to have_selector '.error', text: "Code can't be blank"
+
+        vouchers = Voucher.where(enterprise: enterprise)
+
+        expect(vouchers).to be_empty
+      end
+    end
+  end
+
+  def expect_to_be_redirected_to_enterprise_voucher_tab(page, voucher_code, amount)
     expect(page).to have_selector '.success', text: 'Voucher has been successfully created!'
     expect(page).to have_content voucher_code
     expect(page).to have_content amount
-
-    voucher = Voucher.where(enterprise: enterprise, code: voucher_code).first
-
-    expect(voucher).not_to be(nil)
   end
 
-  context 'when entering invalid data' do
-    it 'shows an error flash message' do
-      # Given an enterprise
-      # When I go to the new voucher page
-      visit new_admin_enterprise_voucher_path(enterprise)
-
-      # And I fill in fields with invalid data and click save
-      click_button 'Save'
-
-      # Then I should see an error flash message
-      expect(page).to have_selector '.error', text: "Code can't be blank"
-
-      vouchers = Voucher.where(enterprise: enterprise)
-
-      expect(vouchers).to be_empty
-    end
+  def expect_voucher_to_be_created(enterprise, voucher_code)
+    voucher = Voucher.where(enterprise: enterprise, code: voucher_code).first
+    expect(voucher).not_to be(nil)
   end
 end

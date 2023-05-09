@@ -31,7 +31,12 @@ class Voucher < ApplicationRecord
   end
 
   def display_value
-    Spree::Money.new(amount)
+    case voucher_type
+    when FLAT_RATE
+      Spree::Money.new(amount)
+    when PERCENTAGE_RATE
+      I18n.t(:voucher_percentage, amount: amount)
+    end
   end
 
   # Ideally we would use `include CalculatedAdjustments` to be consistent with other adjustments,
