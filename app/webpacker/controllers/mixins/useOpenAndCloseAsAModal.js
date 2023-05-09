@@ -11,7 +11,7 @@ export const useOpenAndCloseAsAModal = (controller) => {
       });
     }.bind(controller),
 
-    close: function () {
+    close: function (_event, remove = false) {
       this.modalTarget.classList.remove("in");
       this.backgroundTarget.classList.remove("in");
       document.querySelector("body").classList.remove("modal-open");
@@ -19,6 +19,7 @@ export const useOpenAndCloseAsAModal = (controller) => {
       setTimeout(() => {
         this.backgroundTarget.style.display = "none";
         this.modalTarget.style.display = "none";
+        if (remove) { this.element.remove() }
       }, 200);
     }.bind(controller),
 
