@@ -10,6 +10,6 @@ class Invoice < ApplicationRecord
   end
 
   def serialize_order
-    self.data ||= order.serialize_for_invoice
+    self.data ||= Invoice::OrderSerializer.new(order).serializable_hash
   end
 end
