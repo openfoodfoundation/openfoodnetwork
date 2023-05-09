@@ -13,7 +13,7 @@
         %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "send_invoice" }
           = t('spree.admin.orders.index.send_invoice')
       %div.menu_item
-        %span.name.invoices-modal{'ng-controller' => 'bulkInvoiceCtrl', 'ng-click' => 'createBulkInvoice()' }
+        %span.name{ "data-controller": "bulk-invoice", "data-action": "click->bulk-invoice#generate" }
           = t('spree.admin.orders.index.print_invoices')
     %div.menu_item
       %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "cancel_orders" }

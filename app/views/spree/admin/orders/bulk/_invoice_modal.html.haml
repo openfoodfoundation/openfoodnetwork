@@ -1,0 +1,15 @@
+%div{ id: "bulk_invoices_modal", "data-controller": "modal", "data-modal-instant-value": true, "data-action": "keyup@document->modal#closeIfEscapeKey" }
+  .reveal-modal-bg.fade{ "data-modal-target": "background", "data-action": "click->modal#remove" }
+  .reveal-modal.fade.tiny.help-modal{ "data-modal-target": "modal" }
+    %div.fullwidth.align-center
+      %h4.modal-title
+        = t('js.admin.orders.index.compiling_invoices')
+        %br
+        %br
+      .modal-content
+        .modal-loading
+          %img.spinner{ src: image_path("/spinning-circles.svg") }
+          %br
+          %br
+          %p= t('js.admin.orders.index.please_wait')
+          %br

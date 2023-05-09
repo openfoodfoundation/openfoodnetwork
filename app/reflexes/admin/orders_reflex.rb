@@ -25,6 +25,21 @@ class Admin::OrdersReflex < ApplicationReflex
     end
   end
 
+  def bulk_invoice(params)
+    cable_ready.append(
+      selector: "#orders-index",
+      html: render(partial: "spree/admin/orders/bulk/invoice_modal")
+    ).broadcast
+
+    BulkInvoiceJob.perform_later(
+      params[:order_ids],
+      "tmp/invoices/#{Time.zone.now.to_i}-#{SecureRandom.hex(2)}.pdf",
+      channel: SessionChannel.for_request(request)
+    )
+
+    morph :nothing
+  end
+
   private
 
   def authorize_order
