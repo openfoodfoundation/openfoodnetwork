@@ -13,10 +13,10 @@
         %th{:align => "right", :width => "15%"}
           %h5= t(:invoice_column_tax_rate)
   %tbody
-    - @order.sorted_line_items.each do |item|
+    - @invoice_presenter.sorted_line_items.each do |item|
       %tr
         %td
-          = render 'spree/shared/line_item_name', line_item: item
+          = render 'spree/admin/orders/_invoice/line_item_name', line_item: item
           %br
           %small
             %em= raw(item.variant.product.supplier.name)
@@ -26,11 +26,11 @@
           = item.single_display_amount_with_adjustments
         %td{:align => "right"}
           = item.display_amount_with_adjustments
-        - if @order.total_tax > 0
+        - if @invoice_presenter.total_tax > 0
           %td{:align => "right"}
             = display_line_item_tax_rates(item)
 
-    - checkout_adjustments_for(@order, exclude: [:line_item]).reverse_each do |adjustment|
+    - checkout_adjustments_for(@invoice_presenter, exclude: [:line_item]).reverse_each do |adjustment|
       %tr
         %td
           %strong= "#{raw(adjustment.label)}"
@@ -38,7 +38,7 @@
         %td{:align => "right"}
         %td{:align => "right"}
           = adjustment.display_amount
-        - if @order.total_tax > 0
+        - if @invoice_presenter.total_tax > 0
           %td{:align => "right"}
             = display_adjustment_tax_rates(adjustment)
   %tfoot
@@ -47,7 +47,7 @@
         %strong= @invoice_presenter.has_taxes_included ? t(:total_incl_tax) : t(:total_excl_tax)
       %td{:align => "right", :colspan => "2"}
         %strong= @invoice_presenter.has_taxes_included ? @invoice_presenter.display_total : @invoice_presenter.display_checkout_total_less_tax
-    - display_checkout_taxes_hash(@order).each do |tax|
+    - display_checkout_taxes_hash(@invoice_presenter).each do |tax|
       %tr
         %td{:align => "right", :colspan => "3"}
           = t(:tax_total, rate: tax[:percentage])
