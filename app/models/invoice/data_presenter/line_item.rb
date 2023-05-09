@@ -12,6 +12,10 @@ class Invoice
       delegate :name_to_display, :options_text, to: :variant
 
       def display_amount_with_adjustments
+        Spree::Money.new((price_with_adjustments * quantity), currency: currency)
+      end
+
+      def single_display_amount_with_adjustments
         Spree::Money.new(price_with_adjustments, currency: currency)
       end
 
