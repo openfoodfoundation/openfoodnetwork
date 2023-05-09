@@ -50,6 +50,8 @@ class Invoice
     def checkout_adjustments(exclude: [], reject_zero_amount: true)
       adjustments = all_eligible_adjustments
 
+      adjustments.reject! { |a| a.originator_type == 'Spree::TaxRate' }
+
       if exclude.include? :line_item
         adjustments.reject! { |a|
           a.adjustable_type == 'Spree::LineItem'
@@ -61,6 +63,10 @@ class Invoice
       end
 
       adjustments
+    end
+
+    def all_tax_adjustments
+      all_eligible_adjustments.select { |a| a.originator_type == 'Spree::TaxRate' }
     end
 
     def invoice_date

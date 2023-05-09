@@ -4,10 +4,11 @@ class Invoice
   class DataPresenter
     class Adjustment < Invoice::DataPresenter::Base
       attributes :additional_tax_total, :adjustable_type, :amount, :currency, :included_tax_total,
-                 :label
+                 :label, :originator_type
       invoice_generation_attributes :additional_tax_total, :adjustable_type, :amount,
                                     :included_tax_total
       invoice_update_attributes :label
+
       def display_amount
         Spree::Money.new(amount, currency: currency)
       end
