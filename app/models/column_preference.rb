@@ -5,6 +5,8 @@ require 'open_food_network/column_preference_defaults'
 class ColumnPreference < ApplicationRecord
   extend OpenFoodNetwork::ColumnPreferenceDefaults
 
+  self.belongs_to_required_by_default = true
+
   # Non-persisted attributes that only have one
   # setting (ie. the default) for a given column
   attr_accessor :name

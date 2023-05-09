@@ -3,19 +3,27 @@
 require 'spec_helper'
 
 describe ColumnPreference, type: :model do
+  subject {
+    ColumnPreference.new(
+      user: user, action_name: :customers_index, column_name: :email
+    )
+  }
+  let(:user) { build(:user) }
+
+  it { is_expected.to belong_to(:user).required }
+
   describe "finding stored preferences for a user and action" do
     before do
       allow(ColumnPreference).to receive(:known_actions) { ['some_action'] }
       allow(ColumnPreference).to receive(:valid_columns_for) { ['col1', 'col2', 'col3'] }
     end
 
-    let(:user) { create(:user) }
     let!(:col1_pref) {
-      ColumnPreference.create(user_id: user.id, action_name: 'some_action', column_name: 'col1',
+      ColumnPreference.create(user: user, action_name: 'some_action', column_name: 'col1',
                               visible: true)
     }
     let!(:col2_pref) {
-      ColumnPreference.create(user_id: user.id, action_name: 'some_action', column_name: 'col2',
+      ColumnPreference.create(user: user, action_name: 'some_action', column_name: 'col2',
                               visible: false)
     }
     let(:defaults) {
