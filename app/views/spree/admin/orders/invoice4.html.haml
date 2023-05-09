@@ -51,7 +51,7 @@
         = l @invoice_presenter.order_completed_at.to_date
         %br
         = t :order_number
-        = @invoice_presenter.order_number
+        = @invoice_presenter.number
       %td{ :align => "right" }
         = t :invoice_billing_address
         %br
@@ -75,12 +75,12 @@
 
 = render 'spree/admin/orders/invoice_table4'
 
-- if @invoice_presenter.order_special_instructions.present?
+- if @invoice_presenter.special_instructions.present?
   %p.callout
     %strong
       = t :customer_instructions
   %p
-    %em= @invoice_presenter.order_special_instructions
+    %em= @invoice_presenter.special_instructions
   %p
     &nbsp;
 
@@ -90,5 +90,5 @@
 
 = render 'spree/admin/orders/_invoice/payment'
 
-- if @invoice_presenter.order_note.present?
+- if @invoice_presenter.note.present?
   = render partial: 'spree/admin/orders/_invoice/order_note'

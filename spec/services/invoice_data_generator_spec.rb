@@ -22,7 +22,7 @@ describe InvoiceDataGenerator do
         new_note = "This is an updated note"
         order.update!(note: new_note)
 
-        expect(new_invoice_presenter.order_note).to eq(new_note)
+        expect(new_invoice_presenter.note).to eq(new_note)
       end
     end
 

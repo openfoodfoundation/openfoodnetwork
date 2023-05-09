@@ -11,7 +11,7 @@
       %td{ :align => "left" }
         %h4
           = "#{t('spree.admin.orders.invoice.tax_invoice')}: "
-          = "#{@invoice_presenter.order_number}"
+          = "#{@invoice_presenter.number}"
       %td{width: "10%" }
         &nbsp;
       %td{ :align => "right" }
@@ -63,11 +63,11 @@
           = @invoice_presenter.ship_address.full_address
           %br
           = @invoice_presenter.ship_address.phone
-        - if @invoice_presenter.order_special_instructions.present?
+        - if @invoice_presenter.special_instructions.present?
           %br
           %br
             %strong= t :customer_instructions
-          = @invoice_presenter.order_special_instructions
+          = @invoice_presenter.special_instructions
 
 
 = render 'spree/admin/orders/invoice_table3'
@@ -78,5 +78,5 @@
 
 = render 'spree/admin/orders/_invoice/payment'
 
-- if @invoice_presenter.order_note.present?
+- if @invoice_presenter.note.present?
   = render partial: 'spree/admin/orders/_invoice/order_note'

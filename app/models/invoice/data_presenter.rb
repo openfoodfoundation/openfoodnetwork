@@ -11,8 +11,8 @@ class Invoice
     extend Invoice::DataPresenterAttributes
 
     attributes :additional_tax_total, :currency, :included_tax_total, :payment_total,
-               :shipping_method_id, :state, :total
-    attributes :number, :note, :special_instructions, prefix: :order
+               :shipping_method_id, :state, :total, :number, :note, :special_instructions
+
     attributes_with_presenter :bill_address, :customer, :distributor, :ship_address,
                               :shipping_method, :order_cycle
 
@@ -26,7 +26,7 @@ class Invoice
                                   :shipping_method_id, :sorted_line_items, :total
 
     # if any of the following attributes is updated, the latest invoice should be updated
-    invoice_update_attributes :order_note, :order_special_instructions, :state,
+    invoice_update_attributes :note, :special_instructions, :state,
                               :all_eligible_adjustments, :payments
 
     def initialize(invoice)
