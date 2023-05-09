@@ -22,6 +22,8 @@ class OrderInvoiceComparator
     different?(current_state_invoice, latest_invoice, invoice_update_selector)
   end
 
+  private
+
   def different?(node1, node2, attributes_selector)
     simple_values1, presenters1 = attributes_selector.call(node1)
     simple_values2, presenters2 = attributes_selector.call(node2)
@@ -60,8 +62,6 @@ class OrderInvoiceComparator
       end
     end
   end
-
-  private
 
   def current_state_invoice
     @current_state_invoice ||= Invoice.new(
