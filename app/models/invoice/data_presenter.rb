@@ -65,6 +65,18 @@ class Invoice
       adjustments
     end
 
+    def display_checkout_taxes_hash
+      totals = OrderTaxAdjustmentsFetcher.new(nil).totals(all_tax_adjustments)
+
+      totals.map do |tax_rate, tax_amount|
+        {
+          amount: Spree::Money.new(tax_amount, currency: order.currency),
+          percentage: number_to_percentage(tax_rate.amount * 100, precision: 1),
+          rate_amount: tax_rate.amount,
+        }
+      end.sort_by { |tax| tax[:rate_amount] }
+    end
+
     def all_tax_adjustments
       all_eligible_adjustments.select { |a| a.originator_type == 'Spree::TaxRate' }
     end

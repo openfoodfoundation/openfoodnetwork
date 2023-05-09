@@ -7,8 +7,8 @@ class OrderTaxAdjustmentsFetcher
     @order = order
   end
 
-  def totals
-    order.all_adjustments.tax.each_with_object({}) do |adjustment, hash|
+  def totals(tax_adjustments = nil)
+    (tax_adjustments ||= order.all_adjustments.tax).each_with_object({}) do |adjustment, hash|
       tax_rate = adjustment.originator
       hash[tax_rate] = hash[tax_rate].to_f + adjustment.amount
     end
