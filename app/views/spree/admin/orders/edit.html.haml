@@ -8,8 +8,8 @@
     %li= event_links
   = render partial: 'spree/admin/shared/order_links'
   - if can?(:admin, Spree::Order)
-    %li{"ng-controller" => "ordersCtrl"}
-      %a.button.icon-arrow-left{icon:  'icon-arrow-left', ng: { href: admin_orders_path }}
+    %li
+      %a.button.icon-arrow-left{icon: 'icon-arrow-left', href: admin_orders_path }
         = t(:back_to_orders_list)
 
 = render partial: "spree/admin/shared/order_page_title"
