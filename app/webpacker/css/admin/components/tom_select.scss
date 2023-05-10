@@ -2,6 +2,23 @@
   min-height: initial;
 }
 
+.ts-wrapper.multi .ts-control [data-value] {
+  text-shadow: none;
+  background-image: none;
+  background-repeat: initial;
+  box-shadow: none;
+  background-color: $spree-blue;
+}
+
+.ts-wrapper.multi .ts-control > div {
+  border: none;
+  background-color: $spree-blue;
+}
+
+.ts-wrapper.plugin-remove_button .item .remove {
+  font-weight: bold;
+}
+
 .ts-dropdown {
   margin-top: 0;
 
