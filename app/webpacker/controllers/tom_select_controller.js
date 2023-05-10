@@ -8,6 +8,7 @@ export default class extends Controller {
     maxOptions: null,
     plugins: ["dropdown_input"],
     allowEmptyOption: true,
+    closeAfterSelect: true,
     onItemAdd: function () {
       this.setTextboxValue("");
     },
@@ -34,7 +35,6 @@ export default class extends Controller {
 
   #placeholder() {
     const optionsArray = [...this.element.options];
-    return optionsArray.find((option) => [null, ""].includes(option.value))
-      ?.text;
+    return optionsArray.find((option) => [null, ""].includes(option.value))?.text;
   }
 }
