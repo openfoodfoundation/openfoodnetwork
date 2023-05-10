@@ -179,9 +179,9 @@ describe '
     visit spree.edit_admin_order_path(order)
 
     select2_select product.name, from: 'add_variant_id', search: true
-
     find('button.add_variant').click
     # Wait for JS
+    sleep(1)
     page.has_selector?("table.index tbody tr td")
     expect(page).to have_selector 'td', text: product.name
     expect(order.line_items.reload.map(&:product)).to include product
