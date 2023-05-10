@@ -1,0 +1,22 @@
+- link = pagy_link_proc(pagy)
+
+.pagination{ "data-controller": "search" }
+  - if pagy.prev
+    %button{ data: { action: 'click->search#changePage', page: pagy.prev } }!= pagy_t('pagy.nav.prev')
+  - else
+    %button.disabled{disabled: "disabled"}!= pagy_t('pagy.nav.prev')
+
+  - pagy.series.each do |item|                      # series example: [1, :gap, 7, 8, "9", 10, 11, :gap, 36]
+    - if item.is_a?(Integer)                        # page link
+      %button{ data: { action: 'click->search#changePage', page: item } }= item
+
+    - elsif item.is_a?(String)                      # current page
+      %button.active= item
+
+    - elsif item == :gap                            # page gap
+      %span.pagination-ellipsis!= pagy_t('pagy.nav.gap')
+
+  - if pagy.next
+    %button{ data: { action: 'click->search#changePage', page: pagy.next } }!= pagy_t('pagy.nav.next')
+  - else
+    %button.disabled.pagination-next{disabled: "disabled"}!= pagy_t('pagy.nav.next')

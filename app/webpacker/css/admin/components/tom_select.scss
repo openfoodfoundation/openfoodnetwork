@@ -1,5 +1,14 @@
+.ts-wrapper {
+  min-height: initial;
+}
+
 .ts-dropdown {
   margin-top: 0;
+
+  .option {
+    min-height: 2.25em;
+    display: block;
+  }
 }
 
 .ts-wrapper.single .ts-control,
@@ -43,6 +52,10 @@
   &:after {
     border-color: $white transparent transparent transparent;
   }
+}
+
+.ts-wrapper .select-multiple {
+  cursor: pointer;
 }
 
 .ts-wrapper.dropdown-active.primary .ts-control {

@@ -1,0 +1,8 @@
+%th
+  %a{ "data-action": "click->search#changeSorting", "data-column": "#{column}", "data-current": sorted.to_s }
+    = t("spree.admin.shared.sortable_header.#{column.to_s}")
+
+    - if sorted == "#{column} asc" || sorted.blank? && local_assigns[:default] == "#{column} asc"
+      = "&#x25B2;".html_safe
+    - if sorted == "#{column} desc" || sorted.blank? && local_assigns[:default] == "#{column} desc"
+      = "&#x25BC;".html_safe

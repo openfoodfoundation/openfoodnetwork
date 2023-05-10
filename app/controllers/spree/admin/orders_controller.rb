@@ -5,6 +5,7 @@ require 'open_food_network/spree_api_key_loader'
 module Spree
   module Admin
     class OrdersController < Spree::Admin::BaseController
+      include CablecarResponses
       include OpenFoodNetwork::SpreeApiKeyLoader
       helper CheckoutHelper
 
@@ -15,6 +16,13 @@ module Spree
       before_action :require_distributor_abn, only: :invoice
 
       respond_to :html, :json
+
+      def index
+        orders = SearchOrders.new(search_params, spree_current_user).orders
+        @pagy, @orders = pagy(orders, items: params[:per_page] || 15)
+
+        update_search_results if searching?
+      end
 
       def new
         @order = Order.create
@@ -109,6 +117,25 @@ module Spree
       end
 
       private
+
+      def update_search_results
+        render cable_ready: cable_car.inner_html(
+          "#orders-index",
+          partial("spree/admin/orders/table", locals: { pagy: @pagy, orders: @orders })
+        )
+      end
+
+      def searching?
+        params[:q].present? && request.format.symbol == :cable_ready
+      end
+
+      def search_params
+        search_defaults.deep_merge(params.permit!).to_h.with_indifferent_access
+      end
+
+      def search_defaults
+        { q: { completed_at_not_null: 1, s: "completed_at desc" } }
+      end
 
       def on_update
         @order.recreate_all_fees!

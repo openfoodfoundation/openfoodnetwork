@@ -1,0 +1,30 @@
+.row.index-controls
+  %div{ style: "display: flex; justify-content: space-between;" }
+    = render partial: "bulk_actions"
+    .per-page.right
+      = render partial: 'admin/shared/stimulus_page_controls', locals: { pagy: pagy }
+
+%table#listing_orders.index.responsive{width: "100%" }
+  %colgroup
+    %col{style: "width: 3%"}
+  %thead
+    %tr
+      %th
+        %input#selectAll{ type: 'checkbox', data: { "checked-target": "all", action: "change->checked#toggleAll" } }
+      %th
+        = t(:products_distributor)
+
+      - columns = ['completed_at', 'number', 'state', 'payment_state', 'shipment_state', 'email', 'bill_address_lastname', 'total']
+
+      = render partial: "spree/admin/shared/stimulus_sortable_header", collection: columns, as: :column,
+        locals: { sorted: params.dig(:q, :s), default: "completed_at desc" }
+
+      %th.actions
+  %tbody
+    = render partial: "table_row", collection: orders, as: :order
+
+
+- if pagy&.count&.positive?
+  = render partial: "admin/shared/stimulus_pagination", locals: { pagy: pagy }
+- else
+  .no-objects-found= t('spree.admin.orders.index.no_orders_found')

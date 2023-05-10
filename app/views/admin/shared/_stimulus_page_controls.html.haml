@@ -1,0 +1,8 @@
+= select_tag :per_page,
+  options_for_select([15, 50, 100].collect{|num| [t('js.admin.orders.index.per_page', results: num), num] }, params[:per_page]),
+  { class: "no-search primary per-page-dropdown", data: { controller: "tom-select search", action: "change->search#changePerPage" } }
+
+- if pagy
+  %span.per-page-feedback
+    = t("spree.admin.orders.index.results_found", number: pagy.count)
+    = t("spree.admin.orders.index.viewing", start: pagy.from, end: pagy.to )

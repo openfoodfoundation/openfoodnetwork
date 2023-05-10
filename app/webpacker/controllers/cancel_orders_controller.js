@@ -6,9 +6,7 @@ export default class extends ApplicationController {
   }
 
   confirm() {
-    const send_cancellation_email = document.querySelector(
-      "#send_cancellation_email"
-    ).checked;
+    const send_cancellation_email = document.querySelector("#send_cancellation_email").checked;
     const restock_items = document.querySelector("#restock_items").checked;
     const order_ids = [];
 
@@ -23,8 +21,7 @@ export default class extends ApplicationController {
       send_cancellation_email: send_cancellation_email,
       restock_items: restock_items,
     };
-    this.stimulate("CancelOrdersReflex#confirm", params).then(() =>
-      window.location.reload()
-    );
+
+    this.stimulate("CancelOrdersReflex#confirm", params);
   }
 }

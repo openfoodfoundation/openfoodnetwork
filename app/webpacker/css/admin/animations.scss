@@ -10,6 +10,16 @@
   }
 }
 
+@keyframes fade-out-hide {
+  0%   {opacity: 1; visibility: visible;}
+  99%  {opacity: 0; visibility: visible;}
+  100% {opacity: 0; visibility: hidden;}
+}
+
+.animate-hide-500 {
+  animation: fade-out-hide 0.5s;
+}
+
 // @-webkit-keyframes slideOutDown
 //   0%
 //     -webkit-transform: translateY(0)

@@ -9,120 +9,14 @@
 
 = render partial: 'spree/admin/shared/order_sub_menu'
 
-- content_for :main_ng_app_name do
-  = "ofn.admin"
-
-- content_for :main_ng_ctrl_name do
-  = "ordersCtrl"
-
 - content_for :table_filter_title do
   = t(:search)
 
 - content_for :table_filter do
   = render partial: 'filters'
 
-.row.index-controls{'ng-show' => '!RequestMonitor.loading && orders.length > 0'}
-  %div{style: "display: flex; justify-content: space-between;"}
-    .ofn-drop-down-with-prepend
-      .ofn-drop-down-prepend{"ng-class": "selected_orders.length == 0 ? 'disabled' : ''"}
-        {{ "spree.admin.orders.index.selected" | t:{count: selected_orders.length} }}
-      .ofn-drop-down{"ng-class": "selected_orders.length == 0 ? 'disabled' : ''"}
-        %span{ :class => 'icon-reorder' }
-          ="#{t('admin.actions')}".html_safe
-        %span{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
-        %div.menu{ 'ng-show' => "expanded" }
-          %div.menu_item
-            %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "resend_confirmation" }
-              = t('.resend_confirmation')
-          - if Spree::Config[:enable_invoices?]
-            %div.menu_item
-              %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "send_invoice" }
-                = t('.send_invoice')
-            %div.menu_item
-              %span.name.invoices-modal{'ng-controller' => 'bulkInvoiceCtrl', 'ng-click' => 'createBulkInvoice()' }
-                = t('.print_invoices')
-          %div.menu_item
-            %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "cancel_orders" }
-              = t('.cancel_orders')
-
-    = render partial: 'admin/shared/angular_per_page_controls', locals: { position: "right", model: "orders" }
-
-%table#listing_orders.index.responsive{width: "100%", 'ng-init' => 'initialise()', 'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
-  %colgroup
-    %col{style: "width: 3%"}
-  %thead
-    %tr
-      %th
-        %input#selectAll{type: 'checkbox', 'ng-change' => 'toggleAll()', 'ng-model' => 'select_all'}
-      %th
-        = t(:products_distributor)
-        %th
-          %a{'ng-click' => "sortOptions.toggle('completed_at')"}
-            = t(:completed_at, scope: 'activerecord.attributes.spree/order')
-            %span{'ng-show' => "sorting == 'completed_at asc'"}= "&#x25B2;".html_safe
-            %span{'ng-show' => "sorting == 'completed_at desc' || sorting === undefined"}= "&#x25BC;".html_safe
-
-      - ['number', 'state', 'payment_state', 'shipment_state', 'email', 'bill_address_lastname', 'total'].each do |column_name|
-        %th
-          = render partial: 'spree/admin/shared/sortable_header', locals: {column_name: column_name}
-
-      %th.actions
-  %tbody
-    %tr{ng: {repeat: 'order in orders track by order.id', class: {even: "'even'", odd: "'odd'"}}, 'ng-class' => "{'state-{{order.state}}': true, 'row-loading': rowStatus[order.id] == 'loading'}"}
-      %td.align-center
-        %input{type: 'checkbox', 'ng-model' => 'checkboxes[order.id]', 'ng-change' => 'toggleSelection(order.id)', value: '{{order.id}}', name: 'order_ids[]'}
-      %td.align-center
-        {{order.distributor_name}}
-      %td.align-center
-        {{order.completed_at}}
-      %td
-        %a{'ng-href' => '{{order.edit_path}}'}
-          {{order.number}}
-        %div{'ng-if' => 'order.special_instructions'}
-          %br
-          %span.icon-warning-sign{'ofn-with-tip' => "{{order.special_instructions}}"}
-            = t('.note')
-      %td.align-center
-        %span.state{'ng-class' => 'order.state'}
-          {{'js.admin.orders.order_state.' + order.state | t}}
-      %td.align-center
-        %span.state{'ng-class' => 'order.payment_state', 'ng-if' => 'order.payment_state'}
-          %a{'ng-href' => '{{order.payments_path}}' }
-            {{'js.admin.orders.payment_states.' + order.payment_state | t}}
-            %span{'ng-if' => 'order.display_outstanding_balance'}
-              ({{order.display_outstanding_balance}})
-      %td.align-center
-        %span.state{'ng-class' => 'order.shipment_state', 'ng-if' => 'order.shipment_state'}
-          {{'js.admin.orders.shipment_states.' + order.shipment_state | t}}
-      %td
-        %a{ ng: { href: "mailto:{{order.email}}" } }
-          {{order.email}}
-      %td
-        {{order.full_name}}
-      %td.align-center
-        %span{'ng-bind-html' => 'order.display_total'}
-      %td.actions
-        %div.row-loading-icons
-          %div{ng: {show: 'rowStatus[order.id] == "loading"', cloak: true}, style: "width: 30px; height: 30px;"}
-            = render partial: "components/spinner"
-          %i.success.icon-ok-sign{ng: {show: 'rowStatus[order.id] == "success"'} }
-          %i.error.icon-remove-sign.with-tip{ng: {show: 'rowStatus[order.id] == "error"'}, 'ofn-with-tip' => t('.order_not_updated')}
-        %a.icon_link.with-tip.icon-edit.no-text{'ng-href' => '{{order.edit_path}}', 'data-action' => 'edit', 'ofn-with-tip' => t('.edit')}
-        %div{'ng-if' => 'order.ready_to_ship'}
-          %button.icon-road.icon_link.with-tip.no-text{'ng-click' => 'shipOrder(order)', rel: 'nofollow', 'ofn-with-tip' => t('.ship')}
-        %div{'ng-if' => 'order.ready_to_capture'}
-          %button.icon-capture.icon_link.no-text{'ng-click' => 'capturePayment(order)', rel: 'nofollow', 'ofn-with-tip' => t('.capture')}
-
-.sixteen.columns.alpha#loading{ 'ng-show' => 'RequestMonitor.loading' }
-  = render partial: "components/admin_spinner"
-  %h1
-    = t('.loading')
-
-%div{'ng-show' => "!RequestMonitor.loading && orders.length > 0" }
-  = render partial: 'admin/shared/angular_pagination'
-
-.no-objects-found{'ng-show' => "!RequestMonitor.loading && orders.length == 0"}
-  = t('.no_orders_found')
+#orders-index{"data-controller": "search checked"}
+  = render partial: "table", locals: { pagy: @pagy, orders: @orders }
 
 = render 'spree/admin/shared/custom-confirm'
 

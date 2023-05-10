@@ -1,0 +1,48 @@
+%tr{ id: dom_id(order), class: "state-#{order.state}" }
+  %td.align-center
+    %input{type: 'checkbox', value: order.id, name: 'order_ids[]', "data-checked-target": "checkbox", "data-action": "change->checked#toggleCheckbox" }
+  %td.align-center
+    = order.distributor.name
+  %td.align-center
+    = I18n.l(order.completed_at, format: '%B %d, %Y') if order.completed_at
+  %td
+    %a{ href: edit_admin_order_path(order) }
+      = order.number
+    - if order.special_instructions
+      %div
+        %br
+        %span.icon-warning-sign{'ofn-with-tip' => order.special_instructions.to_s }
+          = t('spree.admin.orders.index.note')
+  %td.align-center
+    %span.state{ class: order.state.to_s }
+      = t('js.admin.orders.order_state.' + order.state.to_s)
+  %td.align-center
+    - if order.payment_state
+      %span.state{class: 'order.payment_state'}
+        %a{href: spree.admin_order_payments_path(order) }
+          = t('js.admin.orders.payment_states.' + order.payment_state.to_s)
+          - if order.display_outstanding_balance
+            %span
+              = "(#{order.display_outstanding_balance})"
+  %td.align-center
+    - if order.shipment_state
+      %span.state{class: order.shipment_state.to_s}
+        = t('js.admin.orders.shipment_states.' + order.shipment_state.to_s)
+  %td
+    %a{ href: "mailto:#{order.email}", target: "_blank" }
+      = order.email
+  %td
+    = order.bill_address.full_name
+  %td.align-center
+    %span
+      = order.display_total
+  %td.actions
+    .flex
+      %div.row-loading-icons
+        - if local_assigns[:success]
+          %i.success.icon-ok-sign{"data-controller": "ephemeral"}
+      %a.icon_link.with-tip.icon-edit.no-text{href: edit_admin_order_path(order), 'ofn-with-tip' => t('spree.admin.orders.index.edit')}
+      - if order.ready_to_ship?
+        %button.icon-road.icon_link.with-tip.no-text{rel: 'nofollow', 'ofn-with-tip' => t('spree.admin.orders.index.ship')}
+      - if order.payment_required? && order.pending_payments.reject(&:requires_authorization?).any?
+        %button.icon-capture.icon_link.no-text{rel: 'nofollow', 'ofn-with-tip' => t('spree.admin.orders.index.capture')}
