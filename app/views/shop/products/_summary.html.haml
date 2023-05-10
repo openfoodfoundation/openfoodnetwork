@@ -1,21 +1,22 @@
-.product-thumb
-  %a{"ng-click" => "triggerProductModal()"}
-    %span.product-thumb__bulk-label{"ng-if" => "::product.group_buy"}
-      = t(".bulk")
-    %img{"ng-src" => "{{::product.primaryImageOrMissing}}"}
+= cache_with_locale do
+  .product-thumb
+    %a{"ng-click" => "triggerProductModal()"}
+      %span.product-thumb__bulk-label{"ng-if" => "::product.group_buy"}
+        = t(".bulk")
+      %img{"ng-src" => "{{::product.primaryImageOrMissing}}"}
 
-.summary
-  .summary-header
-    %h3
-      %a{"ng-click" => "triggerProductModal()", href: 'javascript:void(0)'}
-        %span{"ng-bind" => "::product.name"}
-    .product-description{ng: {"bind-html": "::product.description_html", click: "triggerProductModal()", show: "product.description_html.length"}}
-    %div{ "ng-switch" => "enterprise.visible" }
-      .product-producer
-        = t :products_from
-        %span{ "ng-switch-when": "hidden", "ng-bind" => "::enterprise.name"}
-        %span{ "ng-switch-default": true }
-          %enterprise-modal{"ng-bind" => "::enterprise.name"}
+  .summary
+    .summary-header
+      %h3
+        %a{"ng-click" => "triggerProductModal()", href: 'javascript:void(0)'}
+          %span{"ng-bind" => "::product.name"}
+      .product-description{ng: {"bind-html": "::product.description_html", click: "triggerProductModal()", show: "product.description_html.length"}}
+      %div{ "ng-switch" => "enterprise.visible" }
+        .product-producer
+          = t :products_from
+          %span{ "ng-switch-when": "hidden", "ng-bind" => "::enterprise.name"}
+          %span{ "ng-switch-default": true }
+            %enterprise-modal{"ng-bind" => "::enterprise.name"}
 
-    .product-properties.filter-shopfront.property-selectors
-      %filter-selector{ 'selector-set' => "productPropertySelectors", objects: "[product] | propertiesWithValuesOf" }
+      .product-properties.filter-shopfront.property-selectors
+        %filter-selector{ 'selector-set' => "productPropertySelectors", objects: "[product] | propertiesWithValuesOf" }

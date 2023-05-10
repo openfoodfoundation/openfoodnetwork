@@ -42,4 +42,51 @@ describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe "#cache_with_locale" do
+    let(:available_locales) { ["en", "es"] }
+    let(:current_locale) { "es" }
+    let(:locale_digest) { "8a7s5dfy28u0as9du" }
+    let(:options) { { expires_in: 10.seconds } }
+
+    before do
+      allow(I18n).to receive(:available_locales) { available_locales }
+      allow(I18n).to receive(:locale) { current_locale }
+      allow(I18nDigests).to receive(:for_locale) { locale_digest }
+    end
+
+    it "passes key, options, and block to #cache method with locale and locale digest appended" do
+      expect(helper).to receive(:cache_key_with_locale).
+        with("test-key", current_locale).and_return(["test-key", current_locale, locale_digest])
+
+      expect(helper).to receive(:cache).
+        with(["test-key", current_locale, locale_digest], options) do |&block|
+          expect(block.call).to eq("cached content")
+        end
+
+      helper.cache_with_locale "test-key", options do
+        "cached content"
+      end
+    end
+  end
+
+  describe "#cache_key_with_locale" do
+    let(:en_digest) { "asd689asy0239" }
+    let(:es_digest) { "9d8tu23oirhad" }
+
+    before { allow(I18nDigests).to receive(:for_locale).with("en") { en_digest } }
+    before { allow(I18nDigests).to receive(:for_locale).with("es") { es_digest } }
+
+    it "appends locale and digest to a single key" do
+      expect(
+        helper.cache_key_with_locale("single-key", "en")
+      ).to eq(["single-key", "en", en_digest])
+    end
+
+    it "appends locale and digest to multiple keys" do
+      expect(
+        helper.cache_key_with_locale(["array", "of", "keys"], "es")
+      ).to eq(["array", "of", "keys", "es", es_digest])
+    end
+  end
 end

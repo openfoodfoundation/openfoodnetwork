@@ -1,25 +1,26 @@
-%nav.tab-bar.show-for-medium-down
-  %section.left
-    %a.left-off-canvas-toggle.menu-icon
-      = image_pack_tag "menu/btn-menu-mobile.png"
+= cache_with_locale [@white_label_distributor, ContentConfig.cache_key] do
+  %nav.tab-bar.show-for-medium-down
+    %section.left
+      %a.left-off-canvas-toggle.menu-icon
+        = image_pack_tag "menu/btn-menu-mobile.png"
 
-  %section.left
-    .ofn-logo
-      %a{href: main_app.root_path}
-        - if @white_label_logo&.variable?
-          = image_tag @white_label_distributor.white_label_logo_url(:mobile)
-        - else
-          %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}
+    %section.left
+      .ofn-logo
+        %a{href: main_app.root_path}
+          - if @white_label_logo&.variable?
+            = image_tag @white_label_distributor.white_label_logo_url(:mobile)
+          - else
+            %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}
 
-  %section.right{"ng-cloak" => true}
-    %span.cart-span{"ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}
-      %a.icon{ng: {click: 'toggleCartSidebar()'}}
-        %span
-          = t '.cart'
-        %span.count
-          = image_pack_tag "menu/icn-cart.svg"
-          %span
-            {{ Cart.total_item_count() }}
+      %section.right{"ng-cloak" => true}
+        %span.cart-span{"ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}
+          %a.icon{ng: {click: 'toggleCartSidebar()'}}
+            %span
+              = t '.cart'
+            %span.count
+              = image_pack_tag "menu/icn-cart.svg"
+              %span
+                {{ Cart.total_item_count() }}
 
-    %a{href: main_app.shop_path}
-      {{ CurrentHub.hub.name }}
+      %a{href: main_app.shop_path}
+        {{ CurrentHub.hub.name }}

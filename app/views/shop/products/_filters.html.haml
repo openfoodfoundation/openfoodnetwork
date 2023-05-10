@@ -1,5 +1,6 @@
-.filter-shopfront.taxon-selectors{ng: {show: 'supplied_taxons != null'}}
-  %filter-selector{ 'selector-set' => "taxonSelectors", objects: "supplied_taxons", "active-selectors" => "activeTaxons"}
+= cache_with_locale do
+  .filter-shopfront.taxon-selectors{ng: {show: 'supplied_taxons != null'}}
+    %filter-selector{ 'selector-set' => "taxonSelectors", objects: "supplied_taxons", "active-selectors" => "activeTaxons"}
 
-.filter-shopfront.property-selectors{ng: {show: 'supplied_properties != null'}}
-  %filter-selector{ 'selector-set' => "propertySelectors", objects: "supplied_properties", "active-selectors" => "activeProperties"}
+  .filter-shopfront.property-selectors{ng: {show: 'supplied_properties != null'}}
+    %filter-selector{ 'selector-set' => "propertySelectors", objects: "supplied_properties", "active-selectors" => "activeProperties"}

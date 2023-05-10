@@ -1,16 +1,18 @@
 %aside.left-off-canvas-menu.show-for-medium-down{ ng: { controller: "OffcanvasCtrl" } }
   %ul.off-canvas-list
-    %li.ofn-logo
-      %a{href: main_app.root_path}
-        %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}
-    - [*1..7].each do |menu_number|
-      - menu_name = "menu_#{menu_number}"
-      - if ContentConfig[menu_name].present?
-        %li.li-menu
-          %a{href: t("#{menu_name}_url") }
-            %span.nav-primary
-              %i{class: ContentConfig["#{menu_name}_icon_name"]}
-              = t "#{menu_name}_title"
+    = cache_with_locale ContentConfig.cache_key do
+      %li.ofn-logo
+        %a{href: main_app.root_path}
+          %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}
+      - [*1..7].each do |menu_number|
+        - menu_name = "menu_#{menu_number}"
+        - if ContentConfig[menu_name].present?
+          %li.li-menu
+            %a{href: t("#{menu_name}_url") }
+              %span.nav-primary
+                %i{class: ContentConfig["#{menu_name}_icon_name"]}
+                = t "#{menu_name}_title"
+
     - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
       %li.language-switcher.li-menu
         %a

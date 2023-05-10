@@ -1,12 +1,13 @@
-.alert-cta
-  %h6
-    -# Please forgive the hard-coded link:
-    -# The more elegant 'registration_path' resolves to /signup due to spree_auth_device > config > routes.rb
-    -# This is one of several possible fixes. Long-term, we'd like to bring the accounts page into OFN.
-    -# View the discussion here: https://github.com/openfoodfoundation/openfoodnetwork/pull/3174
-    %a{href: "/register", target: "_blank"}
-      = t '.selling_on_ofn'
-      &nbsp;
-      %strong
-        = t '.register'
-        %i.ofn-i_054-point-right
+= cache_with_locale do
+  .alert-cta
+    %h6
+      -# Please forgive the hard-coded link:
+      -# The more elegant 'registration_path' resolves to /signup due to spree_auth_device > config > routes.rb
+      -# This is one of several possible fixes. Long-term, we'd like to bring the accounts page into OFN.
+      -# View the discussion here: https://github.com/openfoodfoundation/openfoodnetwork/pull/3174
+      %a{href: "/register", target: "_blank"}
+        = t '.selling_on_ofn'
+        &nbsp;
+        %strong
+          = t '.register'
+          %i.ofn-i_054-point-right
