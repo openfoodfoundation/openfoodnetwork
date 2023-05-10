@@ -241,7 +241,7 @@ GEM
       libddwaf (~> 1.8.2.0.0)
       msgpack
     debase-ruby_core_source (3.2.0)
-    debug (1.7.2)
+    debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
     debugger-linecache (1.2.0)
@@ -349,7 +349,7 @@ GEM
       activerecord (>= 3.0)
     io-console (0.6.0)
     ipaddress (0.8.3)
-    irb (1.6.3)
+    irb (1.6.4)
       reline (>= 0.3.0)
     jmespath (1.6.2)
     jquery-rails (4.4.0)
