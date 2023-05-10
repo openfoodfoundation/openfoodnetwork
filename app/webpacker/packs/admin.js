@@ -1,18 +1,14 @@
-import { Application } from "stimulus";
-import { definitionsFromContext } from "stimulus/webpack-helpers";
+import "controllers";
+import "channels";
 
-const application = Application.start();
-const context = require.context("controllers", true, /.js$/);
-application.load(definitionsFromContext(context));
+import "@hotwired/turbo";
+import CableReady from "cable_ready";
+import mrujs from "mrujs";
+import { CableCar } from "mrujs/plugins";
 
-import StimulusReflex from "stimulus_reflex";
-import consumer from "../channels/consumer";
-import controller from "../controllers/application_controller";
-
-application.consumer = consumer;
-StimulusReflex.initialize(application, { controller, isolate: true });
-StimulusReflex.debug = process.env.RAILS_ENV === "development";
-CableReady.initialize({ consumer });
+mrujs.start({
+  plugins: [new CableCar(CableReady, { mimeType: "text/vnd.cable-ready.json" })],
+});
 
 import debounced from "debounced";
 debounced.initialize({ input: { wait: 300 } });
