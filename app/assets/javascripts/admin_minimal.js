@@ -32,13 +32,3 @@
 //= require js-big-decimal/dist/web/js-big-decimal.min.js
 
 window.angular = { module: function(noop){ return { value: function(){} } } }
-
-document.addEventListener("ajax:beforeSend", (event) => {
-  window.Turbo.navigator.adapter.progressBar.setValue(0)
-  window.Turbo.navigator.adapter.progressBar.show()
-})
-
-document.addEventListener("ajax:complete", (event) => {
-  window.Turbo.navigator.adapter.progressBar.setValue(100)
-  window.Turbo.navigator.adapter.progressBar.hide()
-})
