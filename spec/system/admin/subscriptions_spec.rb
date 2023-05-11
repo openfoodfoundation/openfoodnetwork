@@ -238,7 +238,7 @@ describe 'Subscriptions' do
         click_button "Continue"
       end
 
-      context 'and no field is filled' do
+      context 'and date field is not filled' do
         it 'counts a can not be blank content once' do
           select2_select customer.email, from: 'customer_id'
           select2_select schedule.name, from: 'schedule_id'
