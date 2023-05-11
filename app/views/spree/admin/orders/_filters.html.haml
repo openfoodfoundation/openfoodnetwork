@@ -1,4 +1,4 @@
-%div.admin-orders-index-search{ "data-controller": "search" }
+%div.admin-orders-index-search{ "data-controller": "search", "data-search-restore-value": @stored_query }
   = form_with url: spree.admin_orders_url, id: "orders_form", method: :get, data: { remote: true, "search-target": "form" } do
     = hidden_field_tag :page, 1, class: "page"
     = hidden_field_tag :per_page, 15, class: "per-page"

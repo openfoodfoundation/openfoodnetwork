@@ -12,8 +12,8 @@ module Spree
       before_action :load_order, only: [:edit, :update, :fire, :resend,
                                         :invoice, :print, :distribution]
       before_action :load_distribution_choices, only: [:new, :edit, :update, :distribution]
-
       before_action :require_distributor_abn, only: :invoice
+      before_action :restore_saved_query!, only: :index
 
       respond_to :html, :json
 
@@ -119,6 +119,8 @@ module Spree
       private
 
       def update_search_results
+        session[:admin_orders_search] = search_params
+
         render cable_ready: cable_car.inner_html(
           "#orders-index",
           partial("spree/admin/orders/table", locals: { pagy: @pagy, orders: @orders })
@@ -135,6 +137,13 @@ module Spree
 
       def search_defaults
         { q: { completed_at_not_null: 1, s: "completed_at desc" } }
+      end
+
+      def restore_saved_query!
+        return unless request.format.html?
+
+        @_params = ActionController::Parameters.new(session[:admin_orders_search] || {})
+        @stored_query = search_params.to_query
       end
 
       def on_update
