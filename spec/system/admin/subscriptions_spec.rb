@@ -296,8 +296,8 @@ describe 'Subscriptions' do
             expect(page).to have_content 'can\'t be blank', count: 6
           end
 
-          context 're-setting the billing address' do
-            it 'has input with ship address values' do
+          context 'and re-setting the billing address' do
+            before do
               fill_in "bill_address_firstname", with: 'Freda'
               fill_in "bill_address_lastname", with: 'Figapple'
               fill_in "bill_address_address1", with: '7 Tempany Lane'
@@ -306,7 +306,9 @@ describe 'Subscriptions' do
               fill_in "bill_address_phone", with: '0400 123 456'
               select2_select "Australia", from: "bill_address_country_id"
               select2_select "Victoria", from: "bill_address_state_id"
+            end
 
+            it 'has input with ship address values' do
               # Use copy button to fill in ship address
               click_link "Copy"
               expect(page).to have_input "ship_address_firstname", with: 'Freda'
