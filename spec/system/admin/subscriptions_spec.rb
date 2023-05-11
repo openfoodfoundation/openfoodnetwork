@@ -252,6 +252,25 @@ describe 'Subscriptions' do
         end
       end
 
+      context 'and date field is filled' do
+        it 'goes to the next page' do
+          select2_select customer.email, from: 'customer_id'
+          select2_select schedule.name, from: 'schedule_id'
+          select2_select payment_method.name, from: 'payment_method_id'
+          select2_select shipping_method.name, from: 'shipping_method_id'
+
+          find_field('begins_at').click
+          choose_today_from_datepicker
+          click_button('Next')
+
+          expect(page).to have_content 'BILLING ADDRESS'
+          # Customer bill address has been pre-loaded
+          expect(page).to have_input "bill_address_firstname", with: address.firstname
+          expect(page).to have_input "bill_address_lastname", with: address.lastname
+          expect(page).to have_input "bill_address_address1", with: address.address1
+        end
+      end
+
       it "passes the smoke test" do
         select2_select customer.email, from: 'customer_id'
         select2_select schedule.name, from: 'schedule_id'
