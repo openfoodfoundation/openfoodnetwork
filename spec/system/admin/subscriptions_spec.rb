@@ -270,7 +270,7 @@ describe 'Subscriptions' do
       end
 
       context 'on second page' do
-        it 'counts 6 can not be blank messages' do
+        before do
           select2_select customer.email, from: 'customer_id'
           select2_select schedule.name, from: 'schedule_id'
           select2_select payment_method.name, from: 'payment_method_id'
@@ -278,15 +278,23 @@ describe 'Subscriptions' do
           find_field('begins_at').click
           choose_today_from_datepicker
           click_button('Next')
-          # Clear some elements of bill address
-          fill_in "bill_address_firstname", with: ''
-          fill_in "bill_address_lastname", with: ''
-          fill_in "bill_address_address1", with: ''
-          fill_in "bill_address_city", with: ''
-          fill_in "bill_address_zipcode", with: ''
-          fill_in "bill_address_phone", with: ''
-          click_button('Next')
-          expect(page).to have_content 'can\'t be blank', count: 6
+        end
+
+        context 'when clearing some elements of bill address' do
+          before do
+            # Clear some elements of bill address
+            fill_in "bill_address_firstname", with: ''
+            fill_in "bill_address_lastname", with: ''
+            fill_in "bill_address_address1", with: ''
+            fill_in "bill_address_city", with: ''
+            fill_in "bill_address_zipcode", with: ''
+            fill_in "bill_address_phone", with: ''
+          end
+
+          it 'counts 6 can not be blank messages' do
+            click_button('Next')
+            expect(page).to have_content 'can\'t be blank', count: 6
+          end
         end
       end
 
