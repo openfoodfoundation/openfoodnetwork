@@ -269,6 +269,27 @@ describe 'Subscriptions' do
         end
       end
 
+      context 'on second page' do
+        it 'counts 6 can not be blank messages' do
+          select2_select customer.email, from: 'customer_id'
+          select2_select schedule.name, from: 'schedule_id'
+          select2_select payment_method.name, from: 'payment_method_id'
+          select2_select shipping_method.name, from: 'shipping_method_id'
+          find_field('begins_at').click
+          choose_today_from_datepicker
+          click_button('Next')
+          # Clear some elements of bill address
+          fill_in "bill_address_firstname", with: ''
+          fill_in "bill_address_lastname", with: ''
+          fill_in "bill_address_address1", with: ''
+          fill_in "bill_address_city", with: ''
+          fill_in "bill_address_zipcode", with: ''
+          fill_in "bill_address_phone", with: ''
+          click_button('Next')
+          expect(page).to have_content 'can\'t be blank', count: 6
+        end
+      end
+
       it "passes the smoke test" do
         select2_select customer.email, from: 'customer_id'
         select2_select schedule.name, from: 'schedule_id'
