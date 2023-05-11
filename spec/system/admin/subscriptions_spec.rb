@@ -308,13 +308,16 @@ describe 'Subscriptions' do
               select2_select "Victoria", from: "bill_address_state_id"
             end
 
-            it 'has input with ship address values' do
-              # Use copy button to fill in ship address
-              click_link "Copy"
-              expect(page).to have_input "ship_address_firstname", with: 'Freda'
-              expect(page).to have_input "ship_address_lastname", with: 'Figapple'
-              expect(page).to have_input "ship_address_address1", with: '7 Tempany Lane'
+            context 'and using copy button to fill in ship address' do
+              before { click_link "Copy" }
+
+              it 'has input with ship address values' do
+                expect(page).to have_input "ship_address_firstname", with: 'Freda'
+                expect(page).to have_input "ship_address_lastname", with: 'Figapple'
+                expect(page).to have_input "ship_address_address1", with: '7 Tempany Lane'
+              end
             end
+
           end
         end
       end
