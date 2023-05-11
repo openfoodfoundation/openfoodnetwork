@@ -80,17 +80,13 @@ export default class extends Flatpickr {
   }
 
   onChangeEvent = (e) => {
-    if (
-      this.modeValue === "range" &&
-      this.hasStartTarget &&
-      this.hasEndTarget &&
-      e.detail.startDate &&
-      e.detail.endDate
-    ) {
+    if (this.modeValue === "range" && this.hasStartTarget && this.hasEndTarget) {
       // date range mode
-      this.startTarget.value = e.detail.startDate;
-      this.endTarget.value = e.detail.endDate;
-      this.fp.setDate([e.detail.startDate, e.detail.endDate]);
+      if (e.detail) {
+        this.startTarget.value = e.detail.startDate;
+        this.endTarget.value = e.detail.endDate;
+      }
+      this.fp.setDate([this.startTarget.value, this.endTarget.value]);
     } else if (e.detail.date) {
       // single date mode
       this.fp.setDate(e.detail.date);
