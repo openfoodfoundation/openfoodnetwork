@@ -295,6 +295,25 @@ describe 'Subscriptions' do
             click_button('Next')
             expect(page).to have_content 'can\'t be blank', count: 6
           end
+
+          context 're-setting the billing address' do
+            it 'has input with ship address values' do
+              fill_in "bill_address_firstname", with: 'Freda'
+              fill_in "bill_address_lastname", with: 'Figapple'
+              fill_in "bill_address_address1", with: '7 Tempany Lane'
+              fill_in "bill_address_city", with: 'Natte Yallock'
+              fill_in "bill_address_zipcode", with: '3465'
+              fill_in "bill_address_phone", with: '0400 123 456'
+              select2_select "Australia", from: "bill_address_country_id"
+              select2_select "Victoria", from: "bill_address_state_id"
+
+              # Use copy button to fill in ship address
+              click_link "Copy"
+              expect(page).to have_input "ship_address_firstname", with: 'Freda'
+              expect(page).to have_input "ship_address_lastname", with: 'Figapple'
+              expect(page).to have_input "ship_address_address1", with: '7 Tempany Lane'
+            end
+          end
         end
       end
 
