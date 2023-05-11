@@ -39,8 +39,8 @@ export default class extends Flatpickr {
   };
 
   initialize() {
-    const datetimepicker = this.enableTimeValue == true;
-    const mode = this.modeValue == "range" ? "range" : "single";
+    const datetimepicker = this.enableTimeValue === true;
+    const mode = this.modeValue === "range" ? "range" : "single";
     // sets your language (you can also set some global setting for all time pickers)
     this.config = {
       altInput: true,
@@ -54,13 +54,23 @@ export default class extends Flatpickr {
       plugins: this.plugins(mode, datetimepicker),
       mode,
     };
-    window.addEventListener("flatpickr:change", this.onChangeEvent.bind(this));
-    window.addEventListener("flatpickr:clear", this.clear.bind(this));
   }
 
-  clear(e) {
-    this.fp.setDate(null);
+  connect() {
+    super.connect();
+    window.addEventListener("flatpickr:change", this.onChangeEvent);
+    window.addEventListener("flatpickr:clear", this.clear);
   }
+
+  disconnect() {
+    super.disconnect();
+    window.removeEventListener("flatpickr:change", this.onChangeEvent);
+    window.removeEventListener("flatpickr:clear", this.clear);
+  }
+
+  clear = (e) => {
+    this.fp.setDate(null);
+  };
 
   open() {
     this.fp.element.dispatchEvent(new Event("focus"));
@@ -68,9 +78,10 @@ export default class extends Flatpickr {
       this.setDefaultDateValue();
     }
   }
-  onChangeEvent(e) {
+
+  onChangeEvent = (e) => {
     if (
-      this.modeValue == "range" &&
+      this.modeValue === "range" &&
       this.hasStartTarget &&
       this.hasEndTarget &&
       e.detail.startDate &&
@@ -84,10 +95,10 @@ export default class extends Flatpickr {
       // single date mode
       this.fp.setDate(e.detail.date);
     }
-  }
+  };
 
   change(selectedDates, dateStr, instance) {
-    if (this.hasStartTarget && this.hasEndTarget && this.modeValue == "range") {
+    if (this.hasStartTarget && this.hasEndTarget && this.modeValue === "range") {
       this.startTarget.value = selectedDates[0]
         ? this.fp.formatDate(selectedDates[0], this.config.dateFormat)
         : "";
@@ -112,11 +123,9 @@ export default class extends Flatpickr {
 
   plugins = (mode, datetimepicker) => {
     const buttons = [{ label: Spree.translations.close }];
-    if (mode == "single") {
+    if (mode === "single") {
       buttons.unshift({
-        label: datetimepicker
-          ? Spree.translations.now
-          : Spree.translations.today,
+        label: datetimepicker ? Spree.translations.now : Spree.translations.today,
       });
     }
     return [
@@ -132,8 +141,8 @@ export default class extends Flatpickr {
     // Memorize index used for the 'Close' and 'Today|Now' buttons
     // it has index of 1 in case of single mode (ie. can set Today or Now date)
     // it has index of 0 in case of range mode (no Today or Now button)
-    const closeButtonIndex = this.modeValue == "range" ? 0 : 1;
-    const todayButtonIndex = this.modeValue == "range" ? null : 0;
+    const closeButtonIndex = this.modeValue === "range" ? 0 : 1;
+    const todayButtonIndex = this.modeValue === "range" ? null : 0;
     switch (index) {
       case todayButtonIndex:
         fp.setDate(new Date(), true);
