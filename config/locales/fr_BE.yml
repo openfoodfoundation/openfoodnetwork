@@ -3496,6 +3496,9 @@ fr_BE:
           select_and_search: "Sélectionnez les filtres et cliquez sur %{option} pour accéder à vos données."
         customer_names_message:
           customer_names_tip: "Si le nom des client est cacher pour des commande que vous avez faite, vous pouvez contacter le distributeur est leur demander de changer les préférence pour savoir laisser leur fournisseur voire les nom des client. "
+        products_and_inventory:
+          all_products:
+            message: "Notez que les niveaux de stock indiqués proviennent uniquement des listes de produits des fournisseurs. Si vous utilisez le \"catalogue magasin\" pour gérer vos stocks, ces valeurs seront ignorées dans ce rapport."
       users:
         index:
           listing_users: "Utilisateur·trice d'annonces"

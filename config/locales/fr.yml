@@ -331,7 +331,7 @@ fr:
   bill_address: Adresse de facturation
   ship_address: Adresse de livraison
   sort_order_cycles_on_shopfront_by: "Trier les cycles de vente par"
-  required_fields: Les champs obligatoires sont indiqués par un astérisque
+  required_fields: 'Les champs obligatoires sont indiqués par un astérisque. '
   select_continue: Choisir et continuer
   remove: Supprimer
   collapse_all: Tout masquer
