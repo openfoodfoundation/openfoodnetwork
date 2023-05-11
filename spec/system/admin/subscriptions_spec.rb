@@ -238,36 +238,34 @@ describe 'Subscriptions' do
         click_button "Continue"
       end
 
-      context 'and date field is not filled' do
-        it 'counts a can not be blank content once' do
+      context 'on first page' do
+        before do
           select2_select customer.email, from: 'customer_id'
           select2_select schedule.name, from: 'schedule_id'
           select2_select payment_method.name, from: 'payment_method_id'
           select2_select shipping_method.name, from: 'shipping_method_id'
-
-          click_button('Next')
-
-          expect(page).to have_content 'can\'t be blank', count: 1
-          expect(page).to have_content 'Oops! Please fill in all of the required fields...'
         end
-      end
 
-      context 'and date field is filled' do
-        it 'goes to the next page' do
-          select2_select customer.email, from: 'customer_id'
-          select2_select schedule.name, from: 'schedule_id'
-          select2_select payment_method.name, from: 'payment_method_id'
-          select2_select shipping_method.name, from: 'shipping_method_id'
+        context 'and date field is not filled' do
+          it 'counts a can not be blank content once' do
+            click_button('Next')
 
-          find_field('begins_at').click
-          choose_today_from_datepicker
-          click_button('Next')
+            expect(page).to have_content 'can\'t be blank', count: 1
+            expect(page).to have_content 'Oops! Please fill in all of the required fields...'
+          end
+        end
 
-          expect(page).to have_content 'BILLING ADDRESS'
-          # Customer bill address has been pre-loaded
-          expect(page).to have_input "bill_address_firstname", with: address.firstname
-          expect(page).to have_input "bill_address_lastname", with: address.lastname
-          expect(page).to have_input "bill_address_address1", with: address.address1
+        context 'and date field is filled' do
+          it 'goes to the next page and preload customer bill address' do
+            find_field('begins_at').click
+            choose_today_from_datepicker
+            click_button('Next')
+
+            expect(page).to have_content 'BILLING ADDRESS'
+            expect(page).to have_input "bill_address_firstname", with: address.firstname
+            expect(page).to have_input "bill_address_lastname", with: address.lastname
+            expect(page).to have_input "bill_address_address1", with: address.address1
+          end
         end
       end
 
