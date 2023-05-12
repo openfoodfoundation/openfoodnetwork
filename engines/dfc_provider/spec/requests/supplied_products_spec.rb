@@ -40,7 +40,7 @@ describe "SuppliedProducts", type: :request do
 
     it "updates a variant's name" do
       params = { enterprise_id: enterprise.id, id: variant.id }
-      request_body = DfcProvider::Engine.root.join("spec/support/patch_product.json").read
+      request_body = DfcProvider::Engine.root.join("spec/support/patch_supplied_product.json").read
 
       expect {
         put(
