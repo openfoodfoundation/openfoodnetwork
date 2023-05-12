@@ -94,4 +94,22 @@ describe "CatalogItems", type: :request do
       expect(response).to have_http_status :not_found
     end
   end
+
+  describe :update do
+    it "updates a variant's attributes" do
+      params = { enterprise_id: enterprise.id, id: variant.id }
+      request_body = DfcProvider::Engine.root.join("spec/support/patch_catalog_item.json").read
+
+      expect {
+        put(
+          enterprise_catalog_item_path(params),
+          params: request_body,
+          headers: auth_header(user.uid)
+        )
+        expect(response).to have_http_status :success
+        variant.reload
+      }.to change { variant.on_hand }.to(3)
+        .and change { variant.sku }.to("new-sku")
+    end
+  end
 end
