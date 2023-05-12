@@ -317,7 +317,6 @@ describe 'Subscriptions' do
                 expect(page).to have_input "ship_address_address1", with: '7 Tempany Lane'
               end
             end
-
           end
         end
       end
@@ -343,6 +342,20 @@ describe 'Subscriptions' do
 
           it 'has content Please add at least one product' do
             expect(page).to have_content 'Please add at least one product'
+          end
+        end
+
+        context 'and adding a product' do
+          before { add_variant_to_subscription test_variant, 2 }
+
+          it 'has description, price estimates, quantity and total' do
+            within 'table#subscription-line-items tr.item', match: :first do
+              expect(page).to have_selector '.description',
+                                            text: "#{test_product.name} - #{test_variant.full_name}"
+              expect(page).to have_selector 'td.price', text: "$13.75"
+              expect(page).to have_input 'quantity', with: "2"
+              expect(page).to have_selector 'td.total', text: "$27.50"
+            end
           end
         end
       end
