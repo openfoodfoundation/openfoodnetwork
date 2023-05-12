@@ -322,6 +322,23 @@ describe 'Subscriptions' do
         end
       end
 
+      context 'on third page' do
+        before do
+          select2_select customer.email, from: 'customer_id'
+          select2_select schedule.name, from: 'schedule_id'
+          select2_select payment_method.name, from: 'payment_method_id'
+          select2_select shipping_method.name, from: 'shipping_method_id'
+          find_field('begins_at').click
+          choose_today_from_datepicker
+          click_button('Next')
+          click_button('Next')
+        end
+
+        it 'has content NAME OR SKU' do
+          expect(page).to have_content 'NAME OR SKU'
+        end
+      end
+
       it "passes the smoke test" do
         select2_select customer.email, from: 'customer_id'
         select2_select schedule.name, from: 'schedule_id'
