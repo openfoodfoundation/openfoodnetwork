@@ -58,6 +58,12 @@ describe Spree::LocalizedNumber do
       it "returns true" do
         expect(described_class.valid_localizable_number?(1599.99)).to eql true
       end
+
+      context "with a negative number" do
+        it "returns true" do
+          expect(described_class.valid_localizable_number?(-1599.99)).to eql true
+        end
+      end
     end
 
     context "with letters" do
