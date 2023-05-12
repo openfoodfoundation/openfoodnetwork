@@ -409,23 +409,27 @@ describe Spree::Variant do
   end
 
   describe "generating the product and variant name" do
-    let(:v) { Spree::Variant.new }
-    let(:p) { double(:product, name: 'product') }
-    before { allow(v).to receive(:product) { p } }
+    let(:product) { variant.product }
 
     context "when full_name starts with the product name" do
-      before { allow(v).to receive(:full_name) { p.name + " - something" } }
+      before do
+        product.name = "Apple"
+        variant.display_as = "Apple Pink Lady"
+      end
 
       it "does not show the product name twice" do
-        expect(v.product_and_full_name).to eq('product - something')
+        expect(variant.product_and_full_name).to eq "Apple Pink Lady"
       end
     end
 
     context "when full_name does not start with the product name" do
-      before { allow(v).to receive(:full_name) { "display_name (unit)" } }
+      before do
+        product.name = "Apple"
+        variant.display_as = "Pink Lady"
+      end
 
       it "prepends the product name to the full name" do
-        expect(v.product_and_full_name).to eq('product - display_name (unit)')
+        expect(variant.product_and_full_name).to eq "Apple - Pink Lady"
       end
     end
   end
