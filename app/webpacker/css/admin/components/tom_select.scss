@@ -2,17 +2,28 @@
   min-height: initial;
 }
 
-.ts-wrapper.multi .ts-control [data-value] {
-  text-shadow: none;
-  background-image: none;
-  background-repeat: initial;
-  box-shadow: none;
-  background-color: $spree-blue;
-}
+.ts-wrapper.multi {
+  .ts-control {
+    box-shadow: none;
+    border-color: $pale-blue;
 
-.ts-wrapper.multi .ts-control > div {
-  border: none;
-  background-color: $spree-blue;
+    &:focus {
+      border-color: $spree-green;
+    }
+
+    [data-value] {
+      text-shadow: none;
+      background-image: none;
+      background-repeat: initial;
+      box-shadow: none;
+      background-color: $spree-blue;
+    }
+  }
+
+  .ts-control > div {
+    border: none;
+    background-color: $spree-blue;
+  }
 }
 
 .ts-wrapper.plugin-remove_button .item .remove {
