@@ -51,10 +51,11 @@
         options_for_select(OrderCycle.managed_by(spree_current_user).where('order_cycles.orders_close_at is not null').order('order_cycles.orders_close_at DESC').map {|oc| [oc.name, oc.id]}, params[:order_cycle_ids]),
         { class: "fullwidth", multiple: true, data: { controller: "tom-select", "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil } }})
     .clearfix
-    .actions.filter-actions
-      %button{type: "submit", class: "button"}
-        %i.icon-search
-        = t(:filter_results)
-      %button{"id": "clear_filters_button", type: "button", "data-controller": "search", "data-action": "click->search#reset" }
-        =  t(:clear_filters)
-          
+    .actions.filter-actions{ style: "column-gap: 0" }
+      .eight.columns.alpha
+        %button.float-right.mr-0{type: "submit", class: "button"}
+          %i.icon-search
+          = t(:filter_results)
+      .eight.columns.omega
+        %button.float-left{"id": "clear_filters_button", type: "button", "data-controller": "search", "data-action": "click->search#reset" }
+          =  t(:clear_filters)

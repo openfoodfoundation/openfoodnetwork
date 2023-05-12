@@ -2,8 +2,8 @@
 //---------------------------------------------------
 * {
   -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .admin {
@@ -68,6 +68,23 @@
 .hidden {
   display: none;
 }
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
+.mr-0 {
+  margin-right: 0 !important;
+}
+
+.ml-0 {
+  margin-left: 0 !important;
+}
+
 @media print {
   .print-hidden {
     display: none !important;
@@ -81,7 +98,9 @@
   padding: 5px 0;
 }
 
-#logo { height: 40px }
+#logo {
+  height: 40px;
+}
 
 .page-title {
   i {
@@ -108,7 +127,8 @@
 }
 
 @media print {
-  header, nav {
-    display:none;
+  header,
+  nav {
+    display: none;
   }
 }
