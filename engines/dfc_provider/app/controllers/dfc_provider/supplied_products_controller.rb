@@ -18,6 +18,11 @@ module DfcProvider
       variant.product.update!(
         description: dfc_request["dfc-b:description"],
       )
+
+      # This input is DFC v1.6 currently sent by the DFC Prototype.
+      variant.update!(
+        unit_value: dfc_request["dfc-b:quantity"],
+      )
     end
 
     private

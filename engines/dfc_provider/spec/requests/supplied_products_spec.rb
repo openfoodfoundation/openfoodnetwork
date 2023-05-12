@@ -51,6 +51,7 @@ describe "SuppliedProducts", type: :request do
         expect(response).to have_http_status :success
         variant.reload
       }.to change { variant.description }.to("DFC-Pesto updated")
+        .and change { variant.unit_value }.to(17)
     end
   end
 end
