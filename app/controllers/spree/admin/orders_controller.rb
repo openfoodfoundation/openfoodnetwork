@@ -132,10 +132,12 @@ module Spree
       end
 
       def search_params
-        search_defaults.deep_merge(params.permit!).to_h.with_indifferent_access
+        default_filters.deep_merge(
+          params.permit(:page, :per_page, :shipping_method_id, q: {})
+        ).to_h.with_indifferent_access
       end
 
-      def search_defaults
+      def default_filters
         { q: { completed_at_not_null: 1, s: "completed_at desc" } }
       end
 
