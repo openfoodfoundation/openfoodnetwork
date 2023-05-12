@@ -279,14 +279,17 @@ describe SplitCheckoutController, type: :controller do
 
           context "when adding fails" do
             it "returns 422 and an error message" do
-              # Makes adding the voucher fails
-              allow(voucher).to receive(:create_adjustment).and_return(nil)
+              # Create a non valid adjustment
+              adjustment = build(:adjustment, label: nil)
+              allow(voucher).to receive(:create_adjustment).and_return(adjustment)
               allow(Voucher).to receive(:find_by).and_return(voucher)
 
               put :update, params: params
 
               expect(response.status).to eq 422
-              expect(flash[:error]).to match "There was an error while adding the voucher"
+              expect(flash[:error]).to match(
+                "There was an error while adding the voucher and Label can't be blank"
+              )
             end
           end
 
