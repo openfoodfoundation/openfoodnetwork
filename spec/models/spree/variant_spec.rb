@@ -5,7 +5,7 @@ require 'variant_units/option_value_namer'
 require 'spree/localized_number'
 
 describe Spree::Variant do
-  subject(:variant) { create(:variant) }
+  subject(:variant) { build(:variant) }
 
   context "validations" do
     it "should validate price is greater than 0" do
@@ -64,6 +64,7 @@ describe Spree::Variant do
 
   context "#currency" do
     it "returns the globally configured currency" do
+      variant.save!
       expect(variant.currency).to eq Spree::Config[:currency]
     end
   end
@@ -158,6 +159,9 @@ describe Spree::Variant do
   end
 
   describe '#in_stock?' do
+    # Stock data can only be stored against a persisted variant.
+    subject(:variant) { create(:variant) }
+
     context 'when stock_items are not backorderable' do
       before do
         allow_any_instance_of(Spree::StockItem).to receive_messages(backorderable: false)
