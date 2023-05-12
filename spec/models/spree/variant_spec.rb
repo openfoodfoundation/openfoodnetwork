@@ -567,71 +567,66 @@ describe Spree::Variant do
   end
 
   describe "unit value/description" do
+    let(:v) { Spree::Variant.new(option_values: [option_value]) }
+    let(:option_value) { build(:option_value, presentation: "small") }
+
     describe "generating the full name" do
-      let(:v) { Spree::Variant.new }
-
-      before do
-        allow(v).to receive(:display_name) { 'display_name' }
-        allow(v).to receive(:unit_to_display) { 'unit_to_display' }
-      end
-
       it "returns unit_to_display when display_name is blank" do
-        allow(v).to receive(:display_name) { '' }
-        expect(v.full_name).to eq('unit_to_display')
+        v.display_name = ""
+        expect(v.full_name).to eq("small")
       end
 
       it "returns display_name when it contains unit_to_display" do
-        allow(v).to receive(:display_name) { 'DiSpLaY_name' }
-        allow(v).to receive(:unit_to_display) { 'name' }
-        expect(v.full_name).to eq('DiSpLaY_name')
+        v.display_name = "a small apple"
+        expect(v.full_name).to eq "a small apple"
       end
 
       it "returns unit_to_display when it contains display_name" do
-        allow(v).to receive(:display_name) { '_to_' }
-        allow(v).to receive(:unit_to_display) { 'unit_TO_display' }
-        expect(v.full_name).to eq('unit_TO_display')
+        v.display_name = "small"
+        v.option_values[0].presentation = "small size"
+        expect(v.full_name).to eq "small size"
       end
 
       it "returns a combination otherwise" do
-        allow(v).to receive(:display_name) { 'display_name' }
-        allow(v).to receive(:unit_to_display) { 'unit_to_display' }
-        expect(v.full_name).to eq('display_name (unit_to_display)')
+        v.display_name = "apple"
+        expect(v.full_name).to eq "apple (small)"
       end
 
       it "is resilient to regex chars" do
-        v = Spree::Variant.new display_name: ")))"
-        allow(v).to receive(:unit_to_display) { ")))" }
+        v.display_name = ")))"
+        v.option_values[0].presentation = ")))"
         expect(v.full_name).to eq(")))")
       end
     end
 
     describe "getting name for display" do
       it "returns display_name if present" do
-        v = build_stubbed(:variant, display_name: "foo")
+        v.display_name = "foo"
         expect(v.name_to_display).to eq("foo")
       end
 
       it "returns product name if display_name is empty" do
-        v = build_stubbed(:variant)
-        expect(v.name_to_display).to eq(v.product.name)
-        v1 = build_stubbed(:variant, display_name: "")
-        expect(v1.name_to_display).to eq(v1.product.name)
+        v.product = Spree::Product.new(name: "Apple")
+        v.display_name = nil
+        expect(v.name_to_display).to eq "Apple"
+
+        v.display_name = ""
+        expect(v.name_to_display).to eq "Apple"
       end
     end
 
     describe "getting unit for display" do
       it "returns display_as if present" do
-        v = build_stubbed(:variant, display_as: "foo")
+        v.display_as = "foo"
         expect(v.unit_to_display).to eq("foo")
       end
 
       it "returns options_text if display_as is blank" do
-        v = build_stubbed(:variant)
-        v1 = build_stubbed(:variant, display_as: "")
-        allow(v).to receive(:options_text).and_return "ponies"
-        allow(v1).to receive(:options_text).and_return "ponies"
-        expect(v.unit_to_display).to eq("ponies")
-        expect(v1.unit_to_display).to eq("ponies")
+        v.display_as = nil
+        expect(v.unit_to_display).to eq("small")
+
+        v.display_as = ""
+        expect(v.unit_to_display).to eq("small")
       end
     end
 
