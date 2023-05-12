@@ -31,7 +31,7 @@
         = label_tag "q_bill_address_lastname_start", t(:last_name_begins_with)
         = text_field_tag "q[bill_address_lastname_start]", nil, size: 25
     .omega.four.columns
-      .field.checkbox
+      .field.checkbox.inline-checkbox
         %label
           = check_box_tag "q[completed_at_not_null]", 1, true
           = t(:show_only_complete_orders)
