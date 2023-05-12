@@ -337,6 +337,14 @@ describe 'Subscriptions' do
         it 'has content NAME OR SKU' do
           expect(page).to have_content 'NAME OR SKU'
         end
+
+        context 'and click next button without adding at least one product' do
+          before { click_button('Next') }
+
+          it 'has content Please add at least one product' do
+            expect(page).to have_content 'Please add at least one product'
+          end
+        end
       end
 
       it "passes the smoke test" do
