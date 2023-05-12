@@ -38,7 +38,7 @@ describe "SuppliedProducts", type: :request do
       expect(response).to have_http_status :unauthorized
     end
 
-    it "updates a variant's name" do
+    it "updates a variant's attributes" do
       params = { enterprise_id: enterprise.id, id: variant.id }
       request_body = DfcProvider::Engine.root.join("spec/support/patch_supplied_product.json").read
 
@@ -50,9 +50,7 @@ describe "SuppliedProducts", type: :request do
         )
         expect(response).to have_http_status :success
         variant.reload
-      }.to change {
-        variant.name
-      }
+      }.to change { variant.description }.to("DFC-Pesto updated")
     end
   end
 end
