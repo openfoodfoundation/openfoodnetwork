@@ -12,15 +12,15 @@
           - else
             %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}
 
-      %section.right{"ng-cloak" => true}
-        %span.cart-span{"ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}
-          %a.icon{ng: {click: 'toggleCartSidebar()'}}
+    %section.right{"ng-cloak" => true}
+      %span.cart-span{"ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}
+        %a.icon{ng: {click: 'toggleCartSidebar()'}}
+          %span
+            = t '.cart'
+          %span.count
+            = image_pack_tag "menu/icn-cart.svg"
             %span
-              = t '.cart'
-            %span.count
-              = image_pack_tag "menu/icn-cart.svg"
-              %span
-                {{ Cart.total_item_count() }}
+              {{ Cart.total_item_count() }}
 
       %a{href: main_app.shop_path}
         {{ CurrentHub.hub.name }}
