@@ -345,7 +345,7 @@ describe 'Subscriptions' do
           end
         end
 
-        context 'and adding a product' do
+        context 'with a product' do
           before { add_variant_to_subscription test_variant, 2 }
 
           it 'has description, price estimates, quantity and total' do
@@ -355,6 +355,23 @@ describe 'Subscriptions' do
               expect(page).to have_selector 'td.price', text: "$13.75"
               expect(page).to have_input 'quantity', with: "2"
               expect(page).to have_selector 'td.total', text: "$27.50"
+            end
+          end
+
+          context 'and deleting the existing product' do
+            before do
+              within 'table#subscription-line-items tr.item', match: :first do
+                find("a.delete-item").click
+              end
+            end
+
+            it 'has content Please add at least one product and subscription does not change' do
+              click_button('Next')
+
+              expect{
+                click_button('Create Subscription')
+                expect(page).to have_content 'Please add at least one product'
+              }.to_not change(Subscription, :count)
             end
           end
         end
