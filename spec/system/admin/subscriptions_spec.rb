@@ -373,6 +373,24 @@ describe 'Subscriptions' do
                 expect(page).to have_content 'Please add at least one product'
               }.to_not change(Subscription, :count)
             end
+
+            context 'and adding a new product' do
+              before do
+                click_button('Next')
+                click_button('edit-products')
+                add_variant_to_subscription shop_variant, 3
+              end
+
+              it 'has selectors for description, price, quantity and total' do
+                within 'table#subscription-line-items tr.item', match: :first do
+                  expect(page).to have_selector '.description',
+                                                text: "#{shop_product.name} - #{shop_variant.full_name}"
+                  expect(page).to have_selector 'td.price', text: "$7.75"
+                  expect(page).to have_input 'quantity', with: "3"
+                  expect(page).to have_selector 'td.total', text: "$23.25"
+                end
+              end
+            end
           end
         end
       end
