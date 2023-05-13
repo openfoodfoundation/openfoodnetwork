@@ -390,6 +390,17 @@ describe 'Subscriptions' do
                   expect(page).to have_selector 'td.total', text: "$23.25"
                 end
               end
+
+              context 'and click next button' do
+                before { click_button('Next') }
+
+                it 'has current path as admin_subscriptions_path and counts by one subscription' do
+                  expect{
+                    click_button('Create Subscription')
+                    expect(page).to have_current_path admin_subscriptions_path
+                  }.to change(Subscription, :count).by(1)
+                end
+              end
             end
           end
         end
