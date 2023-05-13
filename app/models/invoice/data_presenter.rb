@@ -11,7 +11,8 @@ class Invoice
     extend Invoice::DataPresenterAttributes
 
     attributes :additional_tax_total, :currency, :included_tax_total, :payment_total,
-               :shipping_method_id, :state, :total, :number, :note, :special_instructions, :completed_at
+               :shipping_method_id, :state, :total, :number, :note, :special_instructions,
+               :completed_at
 
     attributes_with_presenter :bill_address, :customer, :distributor, :ship_address,
                               :shipping_method, :order_cycle
