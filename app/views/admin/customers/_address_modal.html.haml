@@ -45,7 +45,7 @@
 
         %tr
           %td
-            = af.label :zipcode, raw(t(:zipcode) + content_tag(:span, ' *', :class => 'required'))
+            = af.label :zipcode, raw(t(:postcode) + content_tag(:span, ' *', :class => 'required'))
           %td
             = af.text_field :zipcode, :class => 'fullwidth title'
 
@@ -53,14 +53,14 @@
           %td
             = af.label :country_id, raw(t(:country) + content_tag(:span, ' *', :class => 'required'))
           %td
-            = af.select :country_id, options_for_select(available_countries.map { |c| [c.name, c.id] }, @address.country_id), { include_blank: t(".select_country") }, { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
+            = af.select :country_id, options_for_select(available_countries.map { |c| [c.name, c.id] }, @address.country_id), { include_blank: t("admin.customers.index.select_country") }, { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
 
         %tr
           %td
             = af.label :state_id, raw(t(:state) + content_tag(:span, ' *', :class => 'required'))
           %td
             - states = @address.country.present? ? @address.country&.states&.map { |s| [s.name, s.id] } : []
-            = af.select :state_id, states, { include_blank: t(".select_state") }, { disabled: @address.country_id.nil?, "data-controller": "tom-select", "data-dependent-select-target": "select", class: "primary" }
+            = af.select :state_id, states, { include_blank: t("admin.customers.index.select_state") }, { disabled: @address.country_id.nil?, "data-controller": "tom-select", "data-dependent-select-target": "select", class: "primary" }
 
         %tr
           %td
