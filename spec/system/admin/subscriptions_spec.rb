@@ -382,9 +382,11 @@ describe 'Subscriptions' do
               end
 
               it 'has selectors for description, price, quantity and total' do
+                description = "#{shop_product.name} - #{shop_variant.full_name}"
+
                 within 'table#subscription-line-items tr.item', match: :first do
                   expect(page).to have_selector '.description',
-                                                text: "#{shop_product.name} - #{shop_variant.full_name}"
+                                                text: description
                   expect(page).to have_selector 'td.price', text: "$7.75"
                   expect(page).to have_input 'quantity', with: "3"
                   expect(page).to have_selector 'td.total', text: "$23.25"
