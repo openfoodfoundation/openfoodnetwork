@@ -80,7 +80,12 @@ Openfoodnetwork::Application.routes.draw do
 
     resources :inventory_items, only: [:create, :update]
 
-    resources :customers, only: [:index, :create, :update, :destroy, :show]
+    resources :customers, only: [:index, :create, :update, :destroy, :show] do
+      scope module: :customers do
+        resource :bill_address, only: [:show, :update]
+        resource :ship_address, only: [:show, :update]
+      end
+    end
 
     resources :tag_rules, only: [], format: :json do
       get :map_by_tag, on: :collection

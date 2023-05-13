@@ -1,0 +1,72 @@
+= render ModalComponent.new(id: "address-modal", close_button: false) do
+  = form_for @customer, method: :patch, url: [:admin, @customer, address_type], data: { controller: 'cable-form' } do |f|
+    %h2
+      = address_type == :bill_address ?  t('admin.customers.index.edit_bill_address') : t('admin.customers.index.edit_ship_address')
+
+    .row
+      = t('admin.customers.index.required_fileds')
+      (
+      %span.required *
+      )
+
+    = render 'spree/shared/error_messages', target: @customer
+
+    = f.fields_for address_type do |af|
+      %table.no-borders{"data-controller": "dependent-select", "data-dependent-select-options-value": countries_with_states }
+        %tr
+          %td
+            = af.label :firstname, raw(t(:first_name) + content_tag(:span, ' *', :class => 'required'))
+          %td
+            = af.text_field :firstname, :class => 'fullwidth title'
+
+        %tr
+          %td
+            = af.label :lastname, raw(t(:last_name) + content_tag(:span, ' *', :class => 'required'))
+          %td
+            = af.text_field :lastname, :class => 'fullwidth title'
+
+        %tr
+          %td
+            = af.label :address1, raw(t(:address) + content_tag(:span, ' *', :class => 'required'))
+          %td
+            = af.text_field :address1, :class => 'fullwidth title'
+
+        %tr
+          %td
+            = af.label :address2, t(:address2)
+          %td
+            = af.text_field :address2, :class => 'fullwidth title'
+
+        %tr
+          %td
+            = af.label :city, raw(t(:city) + content_tag(:span, ' *', :class => 'required'))
+          %td
+            = af.text_field :city, :class => 'fullwidth title'
+
+        %tr
+          %td
+            = af.label :zipcode, raw(t(:zipcode) + content_tag(:span, ' *', :class => 'required'))
+          %td
+            = af.text_field :zipcode, :class => 'fullwidth title'
+
+        %tr
+          %td
+            = af.label :country_id, raw(t(:country) + content_tag(:span, ' *', :class => 'required'))
+          %td
+            = af.select :country_id, options_for_select(available_countries.map { |c| [c.name, c.id] }, @address.country_id), { include_blank: t(".select_country") }, { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
+
+        %tr
+          %td
+            = af.label :state_id, raw(t(:state) + content_tag(:span, ' *', :class => 'required'))
+          %td
+            - states = @address.country.present? ? @address.country&.states&.map { |s| [s.name, s.id] } : []
+            = af.select :state_id, states, { include_blank: t(".select_state") }, { disabled: @address.country_id.nil?, "data-controller": "tom-select", "data-dependent-select-target": "select", class: "primary" }
+
+        %tr
+          %td
+            = af.label :phone, raw(t(:phone) + content_tag(:span, ' *', :class => 'required'))
+          %td
+            = af.text_field :phone, :class => 'fullwidth title'
+
+    .text-center
+      = f.submit t('admin.customers.index.update_address'), class: "button red icon-plus"

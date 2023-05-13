@@ -93,9 +93,9 @@
               .tag_watcher{ 'obj-for-update' => "customer", "attr-for-update" => "tag_list"}
                 %tags_with_translation{ object: 'customer', 'find-tags' => 'findTags(query)' }
             %td.bill_address{ 'ng-show' => 'columns.bill_address.visible' }
-              %a{ id: 'bill-address-link', href: 'javascript:void(0)', "ng-bind" => "customer.bill_address ? customer.bill_address.address1 : '#{t('admin.customers.index.edit')}' | limitTo: 15", 'edit-address-dialog' => true }
+              %a{ id: 'customer-{{customer.id}}-bill-address-link', href: '/admin/customers/{{customer.id}}/bill_address', data: { controller: "cable-link" }, "ng-bind" => "customer.bill_address ? customer.bill_address.address1 : '#{t('admin.customers.index.edit')}' | limitTo: 15" }
             %td.ship_address{ 'ng-show' => 'columns.ship_address.visible' }
-              %a{ id: 'ship-address-link', href: 'javascript:void(0)', "ng-bind" => "customer.ship_address ? customer.ship_address.address1 : '#{t('admin.customers.index.edit')}' | limitTo: 15", 'edit-address-dialog' => true }
+              %a{ id: 'customer-{{customer.id}}-ship-address-link', href: '/admin/customers/{{customer.id}}/ship_address', data: { controller: "cable-link" }, "ng-bind" => "customer.ship_address ? customer.ship_address.address1 : '#{t('admin.customers.index.edit')}' | limitTo: 15" }
             %td.balance.align-center{ 'ng-show' => 'columns.balance.visible'}
               %span.state.white-space-nowrap{ 'ng-class' => 'customer.balance_status', 'ng-bind' => 'displayBalanceStatus(customer)' }
               %span{ 'ng-bind' => '::customer.balance' }
@@ -105,3 +105,5 @@
       %div.text-center{ ng: { show: "filteredCustomers.length > customerLimit" } }
         %input{ type: 'button', value: t(:show_more), ng: { click: 'customerLimit = customerLimit + 20' } }
         %input{ type: 'button', value: t(:show_all_with_more, num: '{{ filteredCustomers.length - customerLimit }}'), ng: { click: 'customerLimit = filteredCustomers.length' } }
+
+%div#cable-frame
