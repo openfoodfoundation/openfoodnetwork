@@ -26,4 +26,18 @@ describe "Authentication" do
     click_link "Account"
     expect(page).to have_current_path spree.account_path
   end
+
+  context "logged in" do
+    before do
+      login_as user
+      visit root_path
+    end
+
+    it "logs out" do
+      page.find("li", class: "user-menu").click
+      click_on "Logout"
+      expect(page).to have_content "Signed out successfully."
+      expect(page).to have_content "Login"
+    end
+  end
 end
