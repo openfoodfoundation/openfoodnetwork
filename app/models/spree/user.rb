@@ -48,6 +48,7 @@ module Spree
 
     after_create :associate_customers, :associate_orders
 
+    validates :email, 'valid_email_2/email': true, if: :email_changed?
     validate :limit_owned_enterprises
     validates :uid, uniqueness: true, if: lambda { uid.present? }
     validates_email :uid, if: lambda { uid.present? }

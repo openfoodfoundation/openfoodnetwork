@@ -92,7 +92,7 @@ describe Spree::User do
       expect(user.errors.messages[:email]).to include "is invalid"
     end
 
-    pending "detects backslashes at the end" do
+    it "detects backslashes at the end" do
       user.email = "example@gmail.com\\\\"
       expect(user).to_not be_valid
     end
