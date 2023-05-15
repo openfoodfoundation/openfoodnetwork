@@ -102,7 +102,10 @@ describe Spree::User do
       expect(user).to be_valid
     end
 
-    pending "detects typos in the domain" do
+    it "detects typos in the domain" do
+      # We mock this validation in all other tests because our test data is not
+      # valid, the network requests slow down tests and could make them flaky.
+      expect_any_instance_of(ValidEmail2::Address).to receive(:valid_mx?).and_call_original
       user.email = "example@ho020tmail.com"
       expect(user).to_not be_valid
     end
