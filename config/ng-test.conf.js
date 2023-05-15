@@ -6,6 +6,10 @@ module.exports = function(config) {
 
     files: [
       APPLICATION_SPEC,
+      {
+        pattern: 'app/assets/**/*.js.erb',
+        type: 'js'
+      },
       'app/assets/javascripts/shared/angular-local-storage.js',
       'app/assets/javascripts/shared/ng-infinite-scroll.min.js',
       'app/assets/javascripts/shared/angular-slideables.js',
