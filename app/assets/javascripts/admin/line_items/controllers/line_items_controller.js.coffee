@@ -121,16 +121,16 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     else
       StatusMessage.display 'failure', t "unsaved_changes_error"
 
-  $scope.cancelOrder = (order, sendEmailCancellation) ->
+  $scope.cancelOrder = (order, sendEmailCancellation, restock_items) ->
     return $http(
       method: 'GET'
-      url: "/admin/orders/#{order.number}/fire?e=cancel&send_cancellation_email=#{sendEmailCancellation}")
+      url: "/admin/orders/#{order.number}/fire?e=cancel&send_cancellation_email=#{sendEmailCancellation}&restock_items=#{restock_items}")
   
   $scope.deleteLineItem = (lineItem) ->
     if lineItem.order.item_count == 1
-      ofnCancelOrderAlert((confirm, sendEmailCancellation) ->
+      ofnCancelOrderAlert((confirm, sendEmailCancellation, restock_items) ->
         if confirm
-          $scope.cancelOrder(lineItem.order, sendEmailCancellation).then(->
+          $scope.cancelOrder(lineItem.order, sendEmailCancellation, restock_items).then(->
             $scope.refreshData()
           )
         else
@@ -152,11 +152,11 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       willCancelOrders = true if (order.item_count == itemsPerOrder.get(order).length)
 
     if willCancelOrders
-      ofnCancelOrderAlert((confirm, sendEmailCancellation) ->
+      ofnCancelOrderAlert((confirm, sendEmailCancellation, restock_items) ->
         if confirm
           itemsPerOrder.forEach (items, order) =>
             if order.item_count == items.length
-              $scope.cancelOrder(order, sendEmailCancellation).then(-> $scope.refreshData())
+              $scope.cancelOrder(order, sendEmailCancellation, restock_items).then(-> $scope.refreshData())
             else
               Promise.all(LineItems.delete(item) for item in items).then(-> $scope.refreshData())
       , "js.admin.deleting_item_will_cancel_order")   
