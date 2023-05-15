@@ -170,6 +170,8 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::ApiHelper, type: :controller
   config.include OpenFoodNetwork::ControllerHelper, type: :controller
 
+  config.include Devise::Test::IntegrationHelpers, type: :request
+
   config.include Features::DatepickerHelper, type: :system
   config.include DownloadsHelper, type: :system
 end

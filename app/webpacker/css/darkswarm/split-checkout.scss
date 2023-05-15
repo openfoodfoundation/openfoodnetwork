@@ -332,6 +332,10 @@
       padding-left: 20px;
       padding-right: 20px;
       border-right: 1px solid #DDD;
+
+      .voucher {
+        color: $teal-500
+      }
     }
   }
 }
@@ -404,6 +408,48 @@
   gap: 1rem;
   justify-content: space-between;
 
+  &.voucher {
+    justify-content: normal;
+    align-items: center;
+
+    input {
+      width: 50%;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .button {
+      &.cancel {
+        width: 30%;
+        border-radius: 0.5em;
+        padding:0;
+        height: 2.5em;
+        background-color: $teal-400
+      }
+    }
+  }
+  
+  .voucher-added {
+    padding: 10px;
+    background-color: $teal-300;
+    color: $teal-500;
+    margin: 0;
+    cursor: default;
+
+    i.ofn-i_051-check-big:before {
+      background-color: $teal-500;
+      color: $teal-300;
+      border-radius: 50%;
+      font-style: normal;
+    }
+
+    i.ofn-i_051-check-big {
+      font-style: italic;
+    }
+  }
+
   > .checkout-input {
     flex: 1;
   }
@@ -417,6 +463,11 @@
     gap: 0;
     &:last-child > .checkout-input {
       margin-bottom: 1.5rem;
+    }
+
+    &.voucher {
+      flex-direction: row;
+      gap: 1rem;
     }
   }
 }

@@ -42,9 +42,6 @@ module Spree
     belongs_to :order, class_name: "Spree::Order"
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
 
-    belongs_to :tax_rate, -> { where spree_adjustments: { originator_type: 'Spree::TaxRate' } },
-               foreign_key: 'originator_id'
-
     validates :label, presence: true
     validates :amount, numericality: true
 

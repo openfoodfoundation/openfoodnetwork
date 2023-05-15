@@ -74,7 +74,7 @@ Openfoodnetwork::Application.routes.draw do
     match "/checkout", via: :get, controller: "payment_gateways/stripe", action: "confirm"
     match "/orders/:order_number", via: :get, controller: "payment_gateways/stripe", action: "authorize"
   end
-  
+
   namespace :payment_gateways do
     get "/paypal", to: "paypal#express", as: :paypal_express
     get "/paypal/confirm", to: "paypal#confirm", as: :confirm_paypal
@@ -120,6 +120,8 @@ Openfoodnetwork::Application.routes.draw do
   end
   get '/:id/shop', to: 'enterprises#shop', as: 'enterprise_shop'
   get "/enterprises/:permalink", to: redirect("/") # Legacy enterprise URL
+
+  resources :voucher_adjustments, only: [:destroy]
 
   get 'sitemap.xml', to: 'sitemap#index', defaults: { format: 'xml' }
 

@@ -33,7 +33,7 @@ describe "As a consumer, I want to checkout my order" do
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: fee_tax_category) }
 
   let(:free_shipping_with_required_address) {
-    create(:shipping_method, require_ship_address: true, 
+    create(:shipping_method, require_ship_address: true,
                              name: "A Free Shipping with required address")
   }
   let(:free_shipping) {
@@ -708,6 +708,93 @@ describe "As a consumer, I want to checkout my order" do
         end
       end
 
+      describe "vouchers" do
+        context "with no voucher available" do
+          before do
+            visit checkout_step_path(:payment)
+          end
+
+          it "doesn't show voucher input" do
+            expect(page).not_to have_content "Apply voucher"
+          end
+        end
+
+        context "with voucher available" do
+          let!(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor) }
+
+          before do
+            visit checkout_step_path(:payment)
+          end
+
+          it "shows voucher input" do
+            expect(page).to have_content "Apply voucher"
+          end
+
+          describe "adding voucher to the order" do
+            shared_examples "adding voucher to the order" do
+              before do
+                fill_in "Enter voucher code", with: voucher.code
+                click_button("Apply")
+              end
+
+              it "adds a voucher to the order" do
+                expect(page).to have_content("$10.00 Voucher")
+                expect(order.reload.voucher_adjustments.length).to eq(1)
+              end
+            end
+
+            it_behaves_like "adding voucher to the order"
+
+            context "when voucher covers more then the order total" do
+              before do
+                order.total = 6
+                order.save!
+              end
+
+              it_behaves_like "adding voucher to the order"
+
+              it "shows a warning message" do
+                fill_in "Enter voucher code", with: voucher.code
+                click_button("Apply")
+
+                expect(page).to have_content(
+                  "Your voucher value is more than your order. " \
+                  "By using this voucher you are forfeiting the remaining value."
+                )
+              end
+            end
+
+            context "voucher doesn't exist" do
+              it "show an error" do
+                fill_in "Enter voucher code", with: "non_code"
+                click_button("Apply")
+
+                expect(page).to have_content("Voucher Not found")
+              end
+            end
+          end
+
+          describe "removing voucher from order" do
+            before do
+              voucher.create_adjustment(voucher.code, order)
+              # Reload the page so we pickup the voucher
+              visit checkout_step_path(:payment)
+            end
+
+            it "removes voucher" do
+              accept_confirm "Are you sure you want to remove the voucher?" do
+                click_on "Remove code"
+              end
+
+              within '.voucher' do
+                expect(page).to have_button("Apply", disabled: true)
+              end
+              expect(order.voucher_adjustments.length).to eq(0)
+            end
+          end
+        end
+      end
+
       describe "choosing" do
         shared_examples "different payment methods" do |pay_method|
           context "checking out with #{pay_method}", if: pay_method.eql?("Stripe SCA") == false do
@@ -937,8 +1024,6 @@ describe "As a consumer, I want to checkout my order" do
           end
 
           context "when the terms have been accepted in the past" do
-            
-
             context "with a dedicated ToS file" do
               before do
                 TermsOfServiceFile.create!(
@@ -1022,6 +1107,25 @@ describe "As a consumer, I want to checkout my order" do
             find('#clear_cart_link').click
             expect(page).to have_current_path enterprise_shop_path(distributor)
           }.to change { order.reload.state }.from("confirmation").to("address")
+        end
+      end
+
+      describe "vouchers" do
+        let(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor) }
+
+        before do
+          # Add voucher to the order
+          voucher.create_adjustment(voucher.code, order)
+          # Update order so voucher adjustment is properly taken into account
+          order.update_order!
+
+          visit checkout_step_path(:summary)
+        end
+
+        it "shows the applied voucher" do
+          within ".summary-right" do
+            expect(page).to have_content "some_code"
+          end
         end
       end
     end
