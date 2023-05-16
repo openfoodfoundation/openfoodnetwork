@@ -82,7 +82,7 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals do
       expect(report_table[2][4]).to eq 0.601 # summary
     end
 
-    pending "is blank in summary when one line item misses a unit and another not" do
+    it "is blank in summary when one line item misses a unit and another not" do
       expect(report).to receive(:display_summary_row?).and_return(true)
 
       # This is not possible with the current code but was possible years ago.

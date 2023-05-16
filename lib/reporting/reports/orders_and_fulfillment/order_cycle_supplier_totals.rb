@@ -25,9 +25,15 @@ module Reporting
               group_by: :producer,
               header: true,
               summary_row: proc do |_key, _items, rows|
+                total_units = rows.map(&:total_units)
+                summary_total_units = if total_units.all?(&:present?)
+                                        rows.sum(&:total_units)
+                                      else
+                                        " "
+                                      end
                 {
                   quantity: rows.sum(&:quantity),
-                  total_units: rows.sum(&:total_units),
+                  total_units: summary_total_units,
                   total_cost: rows.sum(&:total_cost)
                 }
               end
