@@ -43,6 +43,8 @@ describe '
         report_type: :customers, report_subtype: :mailing_list
       )
       click_button "Go"
+
+      expect(page).to have_selector "#report-table"
       expect(page).to have_content "EMAIL FIRST NAME"
     end
 
@@ -695,13 +697,6 @@ describe '
       end
 
       context "detailed report" do
-        before do
-          login_as_admin
-          visit admin_reports_path
-          click_link "Detailed"
-          click_button 'Go'
-        end
-
         it "generates a detailed report" do
           login_as_admin
           visit admin_reports_path
