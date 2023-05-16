@@ -125,8 +125,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_120633) do
   end
 
   create_table "distributors_shipping_methods", id: :serial, force: :cascade do |t|
-    t.integer "distributor_id"
-    t.integer "shipping_method_id"
+    t.integer "distributor_id", null: false
+    t.integer "shipping_method_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["distributor_id"], name: "index_distributors_shipping_methods_on_distributor_id"
