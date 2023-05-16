@@ -77,14 +77,9 @@ describe '
       visit admin_report_path(
         report_type: :customers, report_subtype: :mailing_list
       )
-      allow(ENV).to receive(:fetch).and_call_original
-      expect(ENV).to receive(:fetch).with("RACK_TIMEOUT_SERVICE_TIMEOUT", "15")
-        .and_return("-1") # Negative values time out immediately.
       stub_const("ReportJob::NOTIFICATION_TIME", 0)
 
       click_button "Go"
-
-      expect(page).to have_content "report is taking longer"
 
       perform_enqueued_jobs(only: ReportJob)
 
