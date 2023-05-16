@@ -64,8 +64,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_120633) do
   end
 
   create_table "coordinator_fees", id: :serial, force: :cascade do |t|
-    t.integer "order_cycle_id"
-    t.integer "enterprise_fee_id"
+    t.integer "order_cycle_id", null: false
+    t.integer "enterprise_fee_id", null: false
     t.index ["enterprise_fee_id"], name: "index_coordinator_fees_on_enterprise_fee_id"
     t.index ["order_cycle_id"], name: "index_coordinator_fees_on_order_cycle_id"
   end
