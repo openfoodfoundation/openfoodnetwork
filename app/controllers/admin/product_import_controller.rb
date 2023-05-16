@@ -118,9 +118,7 @@ module Admin
     end
 
     def sanitize_file_path(file_path)
-      pathname = Pathname.new(file_path)
-      raise_invalid_file_path unless pathname.file?
-      pathname.realpath
+      FilePathSanitizer.new.sanitize(file_path, on_error: method(:raise_invalid_file_path))
     end
 
     def validate_file_path(file_path)
