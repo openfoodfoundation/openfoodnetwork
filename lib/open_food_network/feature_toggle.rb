@@ -21,9 +21,6 @@ module OpenFoodNetwork
       "background_reports" => <<~DESC,
         Generate reports in a background process to limit memory consumption.
       DESC
-      "dfc_provider" => <<~DESC,
-        Enable the DFC compatible endpoint at <code>/api/dfc-*</code>.
-      DESC
       "match_shipping_categories" => <<~DESC,
         During checkout, show only shipping methods that support <em>all</em>
         shipping categories. Activating this feature for an enterprise owner
