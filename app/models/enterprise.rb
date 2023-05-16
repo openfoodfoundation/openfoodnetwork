@@ -61,7 +61,8 @@ class Enterprise < ApplicationRecord
   has_many :users, through: :enterprise_roles
   belongs_to :owner, class_name: 'Spree::User',
                      inverse_of: :owned_enterprises
-  has_many :distributor_payment_methods, foreign_key: :distributor_id
+  has_many :distributor_payment_methods,
+    inverse_of: :distributor, foreign_key: :distributor_id
   has_many :distributor_shipping_methods, foreign_key: :distributor_id
   has_many :payment_methods, through: :distributor_payment_methods
   has_many :shipping_methods, through: :distributor_shipping_methods

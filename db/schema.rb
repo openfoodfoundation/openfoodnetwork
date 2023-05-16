@@ -116,8 +116,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_120633) do
   end
 
   create_table "distributors_payment_methods", force: :cascade do |t|
-    t.integer "distributor_id"
-    t.integer "payment_method_id"
+    t.integer "distributor_id", null: false
+    t.integer "payment_method_id", null: false
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.index ["distributor_id"], name: "index_distributors_payment_methods_on_distributor_id"
