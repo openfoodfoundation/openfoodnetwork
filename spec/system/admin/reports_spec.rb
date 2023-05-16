@@ -77,8 +77,10 @@ describe '
       visit admin_report_path(
         report_type: :customers, report_subtype: :mailing_list
       )
+      allow(ENV).to receive(:fetch).and_call_original
       expect(ENV).to receive(:fetch).with("RACK_TIMEOUT_SERVICE_TIMEOUT", "15")
         .and_return("-1") # Negative values time out immediately.
+      stub_const("ReportJob::NOTIFICATION_TIME", 0)
 
       click_button "Go"
 
@@ -86,12 +88,33 @@ describe '
 
       perform_enqueued_jobs(only: ReportJob)
 
-      click_link "Download report"
+      # We also get an email.
+      perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
+      email = ActionMailer::Base.deliveries.last
+      expect(email.body).to have_link(
+        "customers",
+        href: %r"^http://test\.host/rails/active_storage/disk/.*/customers_[0-9]+\.html$"
+      )
 
-      expect(downloaded_filename).to match /customers_[0-9]+\.html/
-
-      content = File.read(downloaded_filename)
+      # ActiveStorage links usually expire after 5 minutes.
+      # But we want a longer expiry in emailed links.
+      parsed_email = Capybara::Node::Simple.new(email.body.to_s)
+      email_link_href = parsed_email.find(:link, "customers")[:href]
+      report_link = email_link_href.sub("test.host", Rails.application.default_url_options[:host])
+      content = URI.parse(report_link).read
       expect(content).to match "<th>\nFirst Name\n</th>"
+
+      # Let's also check the expiry of the emailed link:
+      Timecop.travel(3.days.from_now) do
+        content = URI.parse(report_link).read
+        expect(content).to match "<th>\nFirst Name\n</th>"
+      end
+
+      # The link should still expire though:
+      Timecop.travel(3.months.from_now) do
+        expect { URI.parse(report_link).read }
+          .to raise_error OpenURI::HTTPError, "404 Not Found"
+      end
     end
   end
 
