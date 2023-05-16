@@ -49,13 +49,8 @@ module Admin
         { name: 'tag_rules', icon_class: "icon-random", show: is_shop },
         { name: 'shop_preferences', icon_class: "icon-shopping-cart", show: is_shop },
         { name: 'users', icon_class: "icon-user", show: true },
-      ] + [add_white_label_if_feature_activated].compact
-    end
-
-    def add_white_label_if_feature_activated
-      return nil unless OpenFoodNetwork::FeatureToggle.enabled?(:white_label)
-
-      { name: 'white_label', icon_class: "icon-leaf", show: true }
+        { name: 'white_label', icon_class: "icon-leaf", show: true },
+      ]
     end
   end
 end

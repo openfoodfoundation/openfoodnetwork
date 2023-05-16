@@ -46,294 +46,280 @@ describe 'White label setting' do
     end
   end
 
-  context "when the white label feature is activated" do
-    before do
-      Flipper.enable(:white_label)
-    end
+  context "manage the hide_ofn_navigation preference" do
+    context "when the preference is set to true" do
+      before do
+        distributor.update_attribute(:hide_ofn_navigation, true)
+      end
 
-    context "manage the hide_ofn_navigation preference" do
-      context "when the preference is set to true" do
-        before do
-          distributor.update_attribute(:hide_ofn_navigation, true)
+      shared_examples "hides the OFN navigation when needed only" do
+        it "hides the OFN navigation when visiting the shop" do
+          visit main_app.enterprise_shop_path(distributor)
+          expect(page).to have_no_selector ofn_navigation
         end
 
-        shared_examples "hides the OFN navigation when needed only" do
-          it "hides the OFN navigation when visiting the shop" do
-            visit main_app.enterprise_shop_path(distributor)
+        it "does not hide the OFN navigation when visiting root path" do
+          visit main_app.root_path
+          expect(page).to have_selector ofn_navigation
+        end
+      end
+
+      context "without order or current distributor" do
+        it_behaves_like "hides the OFN navigation when needed only"
+      end
+
+      context "when the user has an order ready to checkout" do
+        before do
+          order.update_attribute(:state, 'cart')
+          order.line_items << create(:line_item, variant: product.variants.first)
+          set_order(order)
+        end
+
+        shared_examples "hides the OFN navigation when needed only for the checkout" do
+          it_behaves_like "hides the OFN navigation when needed only"
+
+          it "hides the OFN navigation when visiting cart path" do
+            visit main_app.cart_path
             expect(page).to have_no_selector ofn_navigation
           end
 
-          it "does not hide the OFN navigation when visiting root path" do
-            visit main_app.root_path
-            expect(page).to have_selector ofn_navigation
+          it "hides the OFN navigation when visiting checkout path" do
+            visit checkout_path
+            expect(page).to have_content "Checkout now"
+            expect(page).to have_content "Order ready for "
+            expect(page).to have_no_selector ofn_navigation
           end
         end
 
-        context "without order or current distributor" do
-          it_behaves_like "hides the OFN navigation when needed only"
+        context "when the split checkout is disabled" do
+          it_behaves_like "hides the OFN navigation when needed only for the checkout"
         end
 
-        context "when the user has an order ready to checkout" do
+        context "when the split checkout is enabled" do
           before do
-            order.update_attribute(:state, 'cart')
-            order.line_items << create(:line_item, variant: product.variants.first)
-            set_order(order)
+            Flipper.enable(:split_checkout)
           end
 
-          shared_examples "hides the OFN navigation when needed only for the checkout" do
-            it_behaves_like "hides the OFN navigation when needed only"
+          it_behaves_like "hides the OFN navigation when needed only for the checkout"
+        end
+      end
 
-            it "hides the OFN navigation when visiting cart path" do
-              visit main_app.cart_path
-              expect(page).to have_no_selector ofn_navigation
-            end
+      context "when the user has a complete order" do
+        before do
+          set_order(complete_order)
+        end
 
-            it "hides the OFN navigation when visiting checkout path" do
-              visit checkout_path
-              expect(page).to have_content "Checkout now"
-              expect(page).to have_content "Order ready for "
-              expect(page).to have_no_selector ofn_navigation
-            end
-          end
-
-          context "when the split checkout is disabled" do
-            it_behaves_like "hides the OFN navigation when needed only for the checkout"
-          end
-
-          context "when the split checkout is enabled" do
-            before do
-              Flipper.enable(:split_checkout)
-            end
-
-            it_behaves_like "hides the OFN navigation when needed only for the checkout"
+        shared_examples "hides the OFN navigation when needed only for the order confirmation" do
+          it "hides" do
+            visit order_path(complete_order, order_token: complete_order.token)
+            expect(page).to have_no_selector ofn_navigation
           end
         end
 
-        context "when the user has a complete order" do
-          before do
-            set_order(complete_order)
-          end
-
-          shared_examples "hides the OFN navigation when needed only for the order confirmation" do
-            it "hides" do
-              visit order_path(complete_order, order_token: complete_order.token)
-              expect(page).to have_no_selector ofn_navigation
-            end
-          end
-
-          context "when the current distributor is the distributor of the order" do
-            before do
-              allow_any_instance_of(EnterprisesHelper).to receive(:current_distributor).
-                and_return(distributor)
-            end
-
-            it_behaves_like "hides the OFN navigation when needed only for the order confirmation"
-          end
-
-          context "when the user has a current distributor that is not the distributor's order" do
-            let!(:another_distributor) { create(:distributor_enterprise) }
-            before do
-              another_distributor.update_attribute(:hide_ofn_navigation, false)
-              allow_any_instance_of(EnterprisesHelper).to receive(:current_distributor).
-                and_return(another_distributor)
-            end
-
-            it_behaves_like "hides the OFN navigation when needed only for the order confirmation"
-          end
-        end
-
-        context "when the user has a current distributor" do
+        context "when the current distributor is the distributor of the order" do
           before do
             allow_any_instance_of(EnterprisesHelper).to receive(:current_distributor).
               and_return(distributor)
           end
 
-          it_behaves_like "hides the OFN navigation when needed only"
+          it_behaves_like "hides the OFN navigation when needed only for the order confirmation"
+        end
+
+        context "when the user has a current distributor that is not the distributor's order" do
+          let!(:another_distributor) { create(:distributor_enterprise) }
+          before do
+            another_distributor.update_attribute(:hide_ofn_navigation, false)
+            allow_any_instance_of(EnterprisesHelper).to receive(:current_distributor).
+              and_return(another_distributor)
+          end
+
+          it_behaves_like "hides the OFN navigation when needed only for the order confirmation"
         end
       end
 
-      context "when the preference is set to false" do
+      context "when the user has a current distributor" do
         before do
-          distributor.update_attribute(:hide_ofn_navigation, false)
-          set_order(order)
           allow_any_instance_of(EnterprisesHelper).to receive(:current_distributor).
             and_return(distributor)
         end
 
-        it_behaves_like "does not hide the OFN navigation"
+        it_behaves_like "hides the OFN navigation when needed only"
       end
     end
 
-    context "manage the white_label_logo preference" do
-      context "when the distributor has no logo" do
-        before do
-          distributor.update_attribute(:hide_ofn_navigation, true)
-        end
-
-        shared_examples "shows/hide the right logos" do
-          it "shows the OFN logo on shop page" do
-            expect(page).to have_selector "img[src*='/default_images/ofn-logo.png']"
-          end
-        end
-
-        context "on shop page" do
-          before do
-            visit main_app.enterprise_shop_path(distributor)
-          end
-
-          it_behaves_like "shows/hide the right logos"
-        end
-
-        context "on cart page" do
-          before do
-            order.update_attribute(:state, 'cart')
-            order.line_items << create(:line_item, variant: product.variants.first)
-            set_order(order)
-            visit main_app.cart_path
-          end
-
-          it_behaves_like "shows/hide the right logos"
-        end
-
-        context "on checkout page" do
-          before do
-            order.update_attribute(:state, 'cart')
-            order.line_items << create(:line_item, variant: product.variants.first)
-            set_order(order)
-            visit checkout_path
-          end
-
-          it_behaves_like "shows/hide the right logos"
-        end
-
-        context "on order confirmation page" do
-          before do
-            visit order_path(complete_order, order_token: complete_order.token)
-          end
-
-          it_behaves_like "shows/hide the right logos"
-        end
+    context "when the preference is set to false" do
+      before do
+        distributor.update_attribute(:hide_ofn_navigation, false)
+        set_order(order)
+        allow_any_instance_of(EnterprisesHelper).to receive(:current_distributor).
+          and_return(distributor)
       end
 
-      context "when the distributor has a logo" do
-        before do
-          distributor.update_attribute(:hide_ofn_navigation, true)
-          distributor.update white_label_logo: white_logo_file
-        end
-
-        shared_examples "shows/hide the right logos" do
-          it "shows the white label logo on shop page" do
-            expect(page).to have_selector "img[src*='/logo-white.png']"
-          end
-          it "does not show the OFN logo on shop page" do
-            expect(page).not_to have_selector "img[src*='/default_images/ofn-logo.png']"
-          end
-          it "links the logo to the default URL" do
-            within ".nav-logo .ofn-logo" do
-              expect(page).to have_selector "a[href='/']"
-            end
-          end
-        end
-
-        context "on shop page" do
-          before do
-            visit main_app.enterprise_shop_path(distributor)
-          end
-
-          it_behaves_like "shows/hide the right logos"
-        end
-
-        context "on cart page" do
-          before do
-            order.update_attribute(:state, 'cart')
-            order.line_items << create(:line_item, variant: product.variants.first)
-            set_order(order)
-            visit main_app.cart_path
-          end
-
-          it_behaves_like "shows/hide the right logos"
-        end
-
-        context "on checkout page" do
-          before do
-            order.update_attribute(:state, 'cart')
-            order.line_items << create(:line_item, variant: product.variants.first)
-            set_order(order)
-            visit checkout_path
-          end
-
-          it_behaves_like "shows/hide the right logos"
-        end
-
-        context "on order confirmation page" do
-          before do
-            visit order_path(complete_order, order_token: complete_order.token)
-          end
-
-          it_behaves_like "shows/hide the right logos"
-        end
-
-        context "and a link on this logo" do
-          before do
-            distributor.update_attribute(:white_label_logo_link, "https://www.example.com")
-          end
-
-          shared_examples "shows the right link on the logo" do
-            it "shows the white label logo link" do
-              within ".nav-logo .ofn-logo" do
-                expect(page).to_not have_selector "a[href='/']"
-                expect(page).to have_selector "a[href*='https://www.example.com']"
-              end
-            end
-          end
-
-          context "on shop page" do
-            before do
-              visit main_app.enterprise_shop_path(distributor)
-            end
-
-            it_behaves_like "shows the right link on the logo"
-          end
-
-          context "on cart page" do
-            before do
-              order.update_attribute(:state, 'cart')
-              order.line_items << create(:line_item, variant: product.variants.first)
-              set_order(order)
-              visit main_app.cart_path
-            end
-
-            it_behaves_like "shows the right link on the logo"
-          end
-
-          context "on checkout page" do
-            before do
-              order.update_attribute(:state, 'cart')
-              order.line_items << create(:line_item, variant: product.variants.first)
-              set_order(order)
-              visit checkout_path
-            end
-
-            it_behaves_like "shows the right link on the logo"
-          end
-
-          context "on order confirmation page" do
-            before do
-              visit order_path(complete_order, order_token: complete_order.token)
-            end
-
-            it_behaves_like "shows the right link on the logo"
-          end
-        end
-      end
+      it_behaves_like "does not hide the OFN navigation"
     end
   end
 
-  context "when the white label feature is deactivated" do
-    before do
-      Flipper.disable(:white_label)
+  context "manage the white_label_logo preference" do
+    context "when the distributor has no logo" do
+      before do
+        distributor.update_attribute(:hide_ofn_navigation, true)
+      end
+
+      shared_examples "shows/hide the right logos" do
+        it "shows the OFN logo on shop page" do
+          expect(page).to have_selector "img[src*='/default_images/ofn-logo.png']"
+        end
+      end
+
+      context "on shop page" do
+        before do
+          visit main_app.enterprise_shop_path(distributor)
+        end
+
+        it_behaves_like "shows/hide the right logos"
+      end
+
+      context "on cart page" do
+        before do
+          order.update_attribute(:state, 'cart')
+          order.line_items << create(:line_item, variant: product.variants.first)
+          set_order(order)
+          visit main_app.cart_path
+        end
+
+        it_behaves_like "shows/hide the right logos"
+      end
+
+      context "on checkout page" do
+        before do
+          order.update_attribute(:state, 'cart')
+          order.line_items << create(:line_item, variant: product.variants.first)
+          set_order(order)
+          visit checkout_path
+        end
+
+        it_behaves_like "shows/hide the right logos"
+      end
+
+      context "on order confirmation page" do
+        before do
+          visit order_path(complete_order, order_token: complete_order.token)
+        end
+
+        it_behaves_like "shows/hide the right logos"
+      end
     end
 
-    it_behaves_like "does not hide the OFN navigation"
+    context "when the distributor has a logo" do
+      before do
+        distributor.update_attribute(:hide_ofn_navigation, true)
+        distributor.update white_label_logo: white_logo_file
+      end
+
+      shared_examples "shows/hide the right logos" do
+        it "shows the white label logo on shop page" do
+          expect(page).to have_selector "img[src*='/logo-white.png']"
+        end
+        it "does not show the OFN logo on shop page" do
+          expect(page).not_to have_selector "img[src*='/default_images/ofn-logo.png']"
+        end
+        it "links the logo to the default URL" do
+          within ".nav-logo .ofn-logo" do
+            expect(page).to have_selector "a[href='/']"
+          end
+        end
+      end
+
+      context "on shop page" do
+        before do
+          visit main_app.enterprise_shop_path(distributor)
+        end
+
+        it_behaves_like "shows/hide the right logos"
+      end
+
+      context "on cart page" do
+        before do
+          order.update_attribute(:state, 'cart')
+          order.line_items << create(:line_item, variant: product.variants.first)
+          set_order(order)
+          visit main_app.cart_path
+        end
+
+        it_behaves_like "shows/hide the right logos"
+      end
+
+      context "on checkout page" do
+        before do
+          order.update_attribute(:state, 'cart')
+          order.line_items << create(:line_item, variant: product.variants.first)
+          set_order(order)
+          visit checkout_path
+        end
+
+        it_behaves_like "shows/hide the right logos"
+      end
+
+      context "on order confirmation page" do
+        before do
+          visit order_path(complete_order, order_token: complete_order.token)
+        end
+
+        it_behaves_like "shows/hide the right logos"
+      end
+
+      context "and a link on this logo" do
+        before do
+          distributor.update_attribute(:white_label_logo_link, "https://www.example.com")
+        end
+
+        shared_examples "shows the right link on the logo" do
+          it "shows the white label logo link" do
+            within ".nav-logo .ofn-logo" do
+              expect(page).to_not have_selector "a[href='/']"
+              expect(page).to have_selector "a[href*='https://www.example.com']"
+            end
+          end
+        end
+
+        context "on shop page" do
+          before do
+            visit main_app.enterprise_shop_path(distributor)
+          end
+
+          it_behaves_like "shows the right link on the logo"
+        end
+
+        context "on cart page" do
+          before do
+            order.update_attribute(:state, 'cart')
+            order.line_items << create(:line_item, variant: product.variants.first)
+            set_order(order)
+            visit main_app.cart_path
+          end
+
+          it_behaves_like "shows the right link on the logo"
+        end
+
+        context "on checkout page" do
+          before do
+            order.update_attribute(:state, 'cart')
+            order.line_items << create(:line_item, variant: product.variants.first)
+            set_order(order)
+            visit checkout_path
+          end
+
+          it_behaves_like "shows the right link on the logo"
+        end
+
+        context "on order confirmation page" do
+          before do
+            visit order_path(complete_order, order_token: complete_order.token)
+          end
+
+          it_behaves_like "shows the right link on the logo"
+        end
+      end
+    end
   end
 end
