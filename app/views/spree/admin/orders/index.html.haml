@@ -100,17 +100,17 @@
       %td.align-center
         %span{'ng-bind-html' => 'order.display_total'}
       %td.actions
-        .flex
-          %div.row-loading-icons
-            %div{ng: {show: 'rowStatus[order.id] == "loading"', cloak: true}, style: "width: 30px; height: 30px;"}
-              = render partial: "components/spinner"
-            %i.success.icon-ok-sign{ng: {show: 'rowStatus[order.id] == "success"'} }
-            %i.error.icon-remove-sign.with-tip{ng: {show: 'rowStatus[order.id] == "error"'}, 'ofn-with-tip' => t('.order_not_updated')}
-          %a.icon_link.with-tip.icon-edit.no-text{'ng-href' => '{{order.edit_path}}', 'data-action' => 'edit', 'ofn-with-tip' => t('.edit')}
-          %div{'ng-if' => 'order.ready_to_ship'}
-            %button.icon-road.icon_link.with-tip.no-text{'ng-click' => 'shipOrder(order)', rel: 'nofollow', 'ofn-with-tip' => t('.ship')}
-          %div{'ng-if' => 'order.ready_to_capture'}
-            %button.icon-capture.icon_link.no-text{'ng-click' => 'capturePayment(order)', rel: 'nofollow', 'ofn-with-tip' => t('.capture')}
+        %div.row-loading-icons
+          %div{ng: {show: 'rowStatus[order.id] == "loading"', cloak: true}, style: "width: 30px; height: 30px;"}
+            = render partial: "components/spinner"
+          %i.success.icon-ok-sign{ng: {show: 'rowStatus[order.id] == "success"'} }
+          %i.error.icon-remove-sign.with-tip{ng: {show: 'rowStatus[order.id] == "error"'}, 'ofn-with-tip' => t('.order_not_updated')}
+        %a.icon_link.with-tip.icon-edit.no-text{'ng-href' => '{{order.edit_path}}', 'data-action' => 'edit', 'ofn-with-tip' => t('.edit')}
+        %div{'ng-if' => 'order.ready_to_ship'}
+          %button.icon-road.icon_link.with-tip.no-text{'ng-click' => 'shipOrder(order)', rel: 'nofollow', 'ofn-with-tip' => t('.ship')}
+        %div{'ng-if' => 'order.ready_to_capture'}
+          %button.icon-capture.icon_link.no-text{'ng-click' => 'capturePayment(order)', rel: 'nofollow', 'ofn-with-tip' => t('.capture')}
+
 .sixteen.columns.alpha#loading{ 'ng-show' => 'RequestMonitor.loading' }
   = render partial: "components/admin_spinner"
   %h1

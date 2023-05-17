@@ -34,7 +34,6 @@ module Spree
           link = link_to_with_icon(options[:icon], titleized_label, destination_url)
           css_classes << 'tab-with-icon'
         else
-          titleized_label = raw("<span class='text'>#{titleized_label}</span>")
           link = link_to(titleized_label, destination_url)
         end
 
