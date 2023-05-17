@@ -2,7 +2,7 @@
 
 class CancelOrdersReflex < ApplicationReflex
   def confirm(params)
-    OrdersBulkCancelService.new(params).call
+    OrdersBulkCancelService.new(params, current_user).call
     cable_ready.dispatch_event(name: "modal:close")
     # flash[:success] = Spree.t(:order_updated)
   end
