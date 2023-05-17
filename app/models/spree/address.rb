@@ -4,7 +4,7 @@ module Spree
   class Address < ApplicationRecord
     include AddressDisplay
 
-    searchable_attributes :firstname, :lastname, :phone
+    searchable_attributes :firstname, :lastname, :phone, :full_name
     searchable_associations :country, :state
 
     belongs_to :country, class_name: "Spree::Country"
@@ -27,6 +27,12 @@ module Spree
     alias_attribute :first_name, :firstname
     alias_attribute :last_name, :lastname
     delegate :name, to: :state, prefix: true, allow_nil: true
+
+    ransacker :full_name, formatter: proc { |value| value.to_s } do |parent|
+      Arel::Nodes::SqlLiteral.new(
+        "CONCAT(#{parent.table_name}.firstname, ' ', #{parent.table_name}.lastname)"
+      )
+    end
 
     def self.default
       new(country: DefaultCountry.country)

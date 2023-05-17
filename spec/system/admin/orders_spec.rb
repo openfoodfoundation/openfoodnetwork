@@ -158,7 +158,7 @@ distributors: [distributor4, distributor5]) }
         # filtering by first name
         fill_in "First name begins with", with: billing_address2.firstname
         page.find('.filter-actions .button.icon-search').click
-        # Order 3 should show, but not 2 and 4
+        # Order 2 should show, but not 3 and 4
         expect(page).to have_content order2.number
         expect(page).to_not have_content order3.number
         expect(page).to_not have_content order4.number
@@ -172,6 +172,17 @@ distributors: [distributor4, distributor5]) }
         expect(page).to_not have_content order2.number
         expect(page).to_not have_content order3.number
         expect(page).to have_content order4.number
+
+        find("a#clear_filters_button").click
+        # filtering by first and last name together
+
+        fill_in "First name begins with", with: billing_address3.firstname
+        fill_in "Last name begins with", with: billing_address3.lastname
+        page.find('.filter-actions .button.icon-search').click
+        # Order 3 should show, but not 2 and 4
+        expect(page).not_to have_content order2.number
+        expect(page).to have_content order3.number
+        expect(page).not_to have_content order4.number
       end
 
       it "filter by shipping methods" do
