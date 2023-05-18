@@ -402,6 +402,15 @@ describe 'Subscriptions' do
                     expect(page).to have_current_path admin_subscriptions_path
                   }.to change(Subscription, :count).by(1)
                 end
+
+                context 'and click Create Subscription button' do
+                  it 'has selector td.items.panel-toggle' do
+                    click_button('Create Subscription')
+
+                    select2_select shop.name, from: "shop_id"
+                    expect(page).to have_selector "td.items.panel-toggle"
+                  end
+                end
               end
             end
           end
