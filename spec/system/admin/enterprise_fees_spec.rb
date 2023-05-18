@@ -157,6 +157,23 @@ describe '
       expect(flash_message)
         .to eq('Invalid input. Please use only numbers. For example: 10, 5.5, -20')
     end
+
+    it "does not allow editing to an invalid combination" do
+      pending "10512"
+      
+      # starting with a valid tax category / calculator combination
+      expect(page).to have_select 'sets_enterprise_fee_set_collection_attributes_0_tax_category_id',
+                                  selected: 'Inherit From Product'
+      expect(page).to have_selector "option[selected]", text: 'Flat Percent (per item)'
+      
+      # editing to an invalid combination
+      select 'Flat Rate (per order)', 
+        from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
+      expect{
+        click_button 'Update'
+      }.to_not change { fee.reload.calculator_type }
+      expect(page).to have_content "Inheriting the tax categeory requires a per-item calculator."
+    end
   end
 
   it "deleting an enterprise fee" do
@@ -205,16 +222,20 @@ describe '
                    from: 'sets_enterprise_fee_set_collection_attributes_0_enterprise_id'
             select 'Packing', from: 'sets_enterprise_fee_set_collection_attributes_0_fee_type'
             fill_in 'sets_enterprise_fee_set_collection_attributes_0_name', with: 'foo'
-            select tax_category, from: 'sets_enterprise_fee_set_collection_attributes_0_tax_category_id'
-            select calculator, from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
+            select tax_category, 
+from: 'sets_enterprise_fee_set_collection_attributes_0_tax_category_id'
+            select calculator, 
+from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
             click_button 'Update'
 
             # The correct flash message should be displayed
             expect(page).to have_content(flash_message)
 
             # After saving, we should be redirected to the fees for our chosen enterprise
-            expect(page).not_to have_select 'sets_enterprise_fee_set_collection_attributes_1_enterprise_id',
-                                            selected: 'Second Distributor'
+            expect(page).
+              not_to have_select 'sets_enterprise_fee_set_collection_attributes_1_enterprise_id',
+            selected: 'Second Distributor'
+            
             # A new enterprise fee is created
             expect(EnterpriseFee.count).to eq(fee_count)
           end
@@ -224,7 +245,8 @@ describe '
       xcontext "an error message is displayed" do
         # pending "#10348"
         message = 'Inheriting the tax categeory requires a per-item calculator.'
-        it_behaves_like "shared example", 'Inherit From Product', 'Flat Rate (per order)', message, 0
+        it_behaves_like "shared example", 'Inherit From Product', 'Flat Rate (per order)', message, 
+0
       end
 
       context "an success message is displayed" do
