@@ -404,16 +404,16 @@ describe 'Subscriptions' do
                 end
 
                 context 'and click Create Subscription button' do
-                  it 'has selector td.items.panel-toggle' do
+                  before do
                     click_button('Create Subscription')
-
                     select2_select shop.name, from: "shop_id"
+                  end
+
+                  it 'has selector td.items.panel-toggle' do
                     expect(page).to have_selector "td.items.panel-toggle"
                   end
 
                   it 'has selector for price, input for quantity and selector for total price' do
-                    click_button('Create Subscription')
-                    select2_select shop.name, from: "shop_id"
                     first("td.items.panel-toggle").click
 
                     within 'table#subscription-line-items tr.item', match: :first do
