@@ -414,11 +414,12 @@ describe 'Subscriptions' do
                   end
 
                   it 'has selector for price, input for quantity and selector for total price' do
+                    description = "#{shop_product.name} - #{shop_variant.full_name}"
                     first("td.items.panel-toggle").click
 
                     within 'table#subscription-line-items tr.item', match: :first do
                       expect(page).to have_selector '.description',
-                                                    text: "#{shop_product.name} - #{shop_variant.full_name}"
+                                                    text: description
                       expect(page).to have_selector 'td.price', text: "$7.75"
                       expect(page).to have_input 'quantity', with: "3"
                       expect(page).to have_selector 'td.total', text: "$23.25"
@@ -427,6 +428,7 @@ describe 'Subscriptions' do
 
                   it 'sets basic properties of subscription' do
                     subscription = Subscription.last
+
                     expect(subscription.customer).to eq customer
                     expect(subscription.schedule).to eq schedule
                     expect(subscription.payment_method).to eq payment_method
