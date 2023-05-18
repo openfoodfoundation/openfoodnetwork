@@ -86,9 +86,9 @@ class Exchange < ApplicationRecord
     exchange = dup
     exchange.order_cycle = new_order_cycle
     exchange.enterprise_fee_ids = enterprise_fee_ids
-    exchange.variant_ids = variant_ids
     exchange.tag_ids = tag_ids
     exchange.save!
+    clone_all_exchange_variants(exchange.id)
     exchange
   end
 
@@ -104,5 +104,18 @@ class Exchange < ApplicationRecord
     return unless receiver&.persisted?
 
     receiver.touch_later
+  end
+
+  private
+
+  # An Order Cycle can have thousands of ExchangeVariants.
+  # It's a simple association without any callbacks on creation. So we can
+  # insert in bulk and improve the performance tenfold for large order cycles.
+  def clone_all_exchange_variants(exchange_id)
+    return unless variant_ids.any?
+
+    ExchangeVariant.insert_all( # rubocop:disable Rails/SkipsModelValidations
+      variant_ids.map{ |variant_id| { variant_id: variant_id, exchange_id: exchange_id } }
+    )
   end
 end
