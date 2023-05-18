@@ -410,6 +410,20 @@ describe 'Subscriptions' do
                     select2_select shop.name, from: "shop_id"
                     expect(page).to have_selector "td.items.panel-toggle"
                   end
+
+                  it 'has selector for price, input for quantity and selector for total price' do
+                    click_button('Create Subscription')
+                    select2_select shop.name, from: "shop_id"
+                    first("td.items.panel-toggle").click
+
+                    within 'table#subscription-line-items tr.item', match: :first do
+                      expect(page).to have_selector '.description',
+                                                    text: "#{shop_product.name} - #{shop_variant.full_name}"
+                      expect(page).to have_selector 'td.price', text: "$7.75"
+                      expect(page).to have_input 'quantity', with: "3"
+                      expect(page).to have_selector 'td.total', text: "$23.25"
+                    end
+                  end
                 end
               end
             end
