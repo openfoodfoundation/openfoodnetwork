@@ -424,6 +424,16 @@ describe 'Subscriptions' do
                       expect(page).to have_selector 'td.total', text: "$23.25"
                     end
                   end
+
+                  it 'sets basic properties of subscription' do
+                    subscription = Subscription.last
+                    expect(subscription.customer).to eq customer
+                    expect(subscription.schedule).to eq schedule
+                    expect(subscription.payment_method).to eq payment_method
+                    expect(subscription.shipping_method).to eq shipping_method
+                    expect(subscription.bill_address.firstname).to eq 'John'
+                    expect(subscription.ship_address.firstname).to eq 'John'
+                  end
                 end
               end
             end
