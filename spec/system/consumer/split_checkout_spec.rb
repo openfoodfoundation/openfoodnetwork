@@ -758,8 +758,8 @@ describe "As a consumer, I want to checkout my order" do
                 click_button("Apply")
 
                 expect(page).to have_content(
-                  "Your voucher value is more than your order. " \
-                  "By using this voucher you are forfeiting the remaining value."
+                  "Note: if your order total is less than your voucher " \
+                  "you may not be able to spend the remaining value." 
                 )
               end
             end
