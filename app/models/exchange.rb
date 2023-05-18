@@ -16,7 +16,7 @@ class Exchange < ApplicationRecord
   belongs_to :sender, class_name: 'Enterprise'
   belongs_to :receiver, class_name: 'Enterprise'
 
-  has_many :exchange_variants, dependent: :destroy
+  has_many :exchange_variants, dependent: :delete_all
   has_many :variants, through: :exchange_variants
 
   has_many :exchange_fees, dependent: :destroy
@@ -24,6 +24,8 @@ class Exchange < ApplicationRecord
 
   validates :order_cycle, :sender, :receiver, presence: true
   validates :sender_id, uniqueness: { scope: [:order_cycle_id, :receiver_id, :incoming] }
+
+  before_destroy :delete_related_exchange_variants, prepend: true
 
   after_save :touch_receiver
 
@@ -117,5 +119,12 @@ class Exchange < ApplicationRecord
     ExchangeVariant.insert_all( # rubocop:disable Rails/SkipsModelValidations
       variant_ids.map{ |variant_id| { variant_id: variant_id, exchange_id: exchange_id } }
     )
+  end
+
+  def delete_related_exchange_variants
+    ExchangeVariant.where(variant_id: variant_ids).
+      joins(:exchange).
+      where(exchanges: { order_cycle: order_cycle, incoming: false }).
+      delete_all
   end
 end
