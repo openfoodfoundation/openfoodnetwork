@@ -434,6 +434,15 @@ describe 'Subscriptions' do
                     expect(subscription.bill_address.firstname).to eq 'John'
                     expect(subscription.ship_address.firstname).to eq 'John'
                   end
+
+                  it 'creates standing line items' do
+                    subscription = Subscription.last
+                    subscription_line_item = subscription.subscription_line_items.first
+
+                    expect(subscription.subscription_line_items.count).to eq 1
+                    expect(subscription_line_item.variant).to eq shop_variant
+                    expect(subscription_line_item.quantity).to eq 3
+                  end
                 end
               end
             end
