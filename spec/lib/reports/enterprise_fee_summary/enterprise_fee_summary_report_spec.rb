@@ -319,9 +319,9 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
                                             amount: 15)
       end
       let!(:coordinator_fee_inheriting_product_tax_category) do
-        create(:enterprise_fee, :flat_rate, name: "Coordinator Fee B", enterprise: coordinator,
-                                            fee_type: "admin", inherits_tax_category: true,
-                                            amount: 20)
+        create(:enterprise_fee, :per_item, name: "Coordinator Fee B", enterprise: coordinator,
+                                           fee_type: "admin", inherits_tax_category: true,
+                                           amount: 20)
       end
       let!(:coordinator_fee_without_tax) do
         create(:enterprise_fee, :flat_rate, name: "Coordinator Fee C", enterprise: coordinator,

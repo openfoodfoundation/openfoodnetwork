@@ -58,6 +58,12 @@ class EnterpriseFee < ApplicationRecord
     elsif inherits_tax_category_changed?
       self.tax_category_id = nil if inherits_tax_category?
     end
+
+    if inherits_tax_category? && PER_ORDER_CALCULATORS.include?(calculator_type)
+      errors.add(:base, :inherit_tax_requires_per_item_calculator)
+      throw :abort
+    end
+
     true
   end
 end
