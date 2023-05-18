@@ -159,7 +159,6 @@ describe '
     end
 
     it "does not allow editing to an invalid combination" do
-      pending "10512"
       
       # starting with a valid tax category / calculator combination
       expect(page).to have_select 'sets_enterprise_fee_set_collection_attributes_0_tax_category_id',
@@ -242,11 +241,10 @@ from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
         end
       end
 
-      xcontext "an error message is displayed" do
-        # pending "#10348"
+      context "an error message is displayed" do
         message = 'Inheriting the tax categeory requires a per-item calculator.'
-        it_behaves_like "shared example", 'Inherit From Product', 'Flat Rate (per order)', message, 
-0
+        it_behaves_like "shared example", 'Inherit From Product',
+                                          'Flat Rate (per order)', message, 0
       end
 
       context "an success message is displayed" do
