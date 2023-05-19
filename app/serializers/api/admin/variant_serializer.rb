@@ -33,7 +33,7 @@ module Api
       end
 
       def image
-        object.product.images.first&.url(:mini)
+        options[:image] || object.product.images.first&.url(:mini)
       end
 
       def in_stock
@@ -43,13 +43,13 @@ module Api
       def stock_location_id
         return if object.stock_items.empty?
 
-        object.stock_items.first.stock_location.id
+        options[:stock_location]&.id || object.stock_items.first.stock_location.id
       end
 
       def stock_location_name
         return if object.stock_items.empty?
 
-        object.stock_items.first.stock_location.name
+        options[:stock_location]&.name || object.stock_items.first.stock_location.name
       end
 
       def variant_overrides_count
