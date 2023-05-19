@@ -416,6 +416,9 @@ describe 'Subscriptions' do
 
                   it 'has selector for price, input for quantity and selector for total price' do
                     description = "#{shop_product.name} - #{shop_variant.full_name}"
+                    subscription = Subscription.last
+                    subscription_line_item = subscription.subscription_line_items.first
+
                     first("td.items.panel-toggle").click
 
                     within 'table#subscription-line-items tr.item', match: :first do
@@ -425,10 +428,6 @@ describe 'Subscriptions' do
                       expect(page).to have_input 'quantity', with: "3"
                       expect(page).to have_selector 'td.total', text: "$23.25"
                     end
-                  end
-
-                  it 'sets basic properties of subscription' do
-                    subscription = Subscription.last
 
                     expect(subscription.customer).to eq customer
                     expect(subscription.schedule).to eq schedule
@@ -436,12 +435,6 @@ describe 'Subscriptions' do
                     expect(subscription.shipping_method).to eq shipping_method
                     expect(subscription.bill_address.firstname).to eq 'John'
                     expect(subscription.ship_address.firstname).to eq 'John'
-                  end
-
-                  it 'creates standing line items' do
-                    subscription = Subscription.last
-                    subscription_line_item = subscription.subscription_line_items.first
-
                     expect(subscription.subscription_line_items.count).to eq 1
                     expect(subscription_line_item.variant).to eq shop_variant
                     expect(subscription_line_item.quantity).to eq 3
