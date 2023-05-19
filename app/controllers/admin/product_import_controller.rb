@@ -37,7 +37,7 @@ module Admin
     end
 
     def reset_absent_products
-      @importer = ProductImport::ProductImporter.new(File.new(params[:filepath]),
+      @importer = ProductImport::ProductImporter.new(File.new(file_path),
                                                      spree_current_user, import_into: params[:import_into], enterprises_to_reset: params[:enterprises_to_reset], updated_ids: params[:updated_ids], settings: params[:settings])
 
       if params.key?(:enterprises_to_reset) && params.key?(:updated_ids)
@@ -56,7 +56,7 @@ module Admin
     end
 
     def process_data(method)
-      @importer = ProductImport::ProductImporter.new(File.new(params[:filepath]),
+      @importer = ProductImport::ProductImporter.new(File.new(file_path),
                                                      spree_current_user, start: params[:start], end: params[:end], settings: params[:settings])
 
       begin
@@ -112,5 +112,25 @@ module Admin
     def model_class
       ProductImport::ProductImporter
     end
+
+    def file_path
+      @file_path ||= validate_file_path(sanitize_file_path(params[:filepath]))
+    end
+
+    def sanitize_file_path(file_path)
+      FilePathSanitizer.new.sanitize(file_path, on_error: method(:raise_invalid_file_path))
+    end
+
+    def validate_file_path(file_path)
+      return file_path if file_path.to_s.match?(TEMP_FILE_PATH_REGEX)
+
+      raise_invalid_file_path
+    end
+
+    def raise_invalid_file_path
+      redirect_to '/admin/product_import', notice: I18n.t(:product_import_no_data_in_spreadsheet_notice)
+      raise 'Invalid File Path'
+    end
+    TEMP_FILE_PATH_REGEX = %r{^/tmp/product_import[A-Za-z0-9-]*/import\.csv$}
   end
 end
