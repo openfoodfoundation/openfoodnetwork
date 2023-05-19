@@ -1867,6 +1867,7 @@ uk:
       invalid_email: "Будь ласка, введіть дійсну адресу електронної пошти"
       select_a_shipping_method: Виберіть спосіб доставки
       select_a_payment_method: Виберіть спосіб оплати
+      voucher_not_found: Не знайдено
   order_paid: ОПЛАЧЕНО
   order_not_paid: НЕ ОПЛАЧЕНО
   order_total: Замовлено всього

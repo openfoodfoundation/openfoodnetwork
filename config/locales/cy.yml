@@ -1908,6 +1908,7 @@ cy:
       select_a_shipping_method: Dewiswch ddull cludo
       select_a_payment_method: Dewiswch ddull talu
       no_shipping_methods_available: Nid yw'n bosibl talu oherwydd diffyg opsiynau cludo. Cysylltwch â pherchennog y siop.
+      voucher_not_found: Heb ei ganfod
   order_paid: TALWYD
   order_not_paid: HEB EI DALU
   order_total: Cyfanswm archeb

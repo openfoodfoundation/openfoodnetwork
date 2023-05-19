@@ -1874,6 +1874,7 @@ hu:
       select_a_shipping_method: Válasszon szállítási módot
       select_a_payment_method: Válassz fizetési módot
       no_shipping_methods_available: Szállítási lehetőségek hiánya miatt a fizetés nem lehetséges. Kérjük, lépjen kapcsolatba az üzlet tulajdonosával.
+      voucher_not_found: Nem található
   order_paid: FIZETETT
   order_not_paid: NEM FIZETETT
   order_total: Fizetendő összeg

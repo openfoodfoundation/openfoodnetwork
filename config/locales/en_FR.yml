@@ -270,6 +270,13 @@ en_FR:
     order_cycle:
       subject: "Order cycle report for %{producer}"
   provider_settings: "Provider settings"
+  report_mailer:
+    report_ready:
+      subject: "Report ready"
+      heading: "Report ready for download"
+      intro: |
+          The link below will expire after one week.
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "Dear Customer,"
@@ -1382,8 +1389,8 @@ en_FR:
             or we are busy with other reports. You can try again later.
         report_taking_longer_html: >
             This report is taking longer to process. It may contain a lot of data
-            or we are busy with other reports. Once it's finished, you can download
-            it: %{link}
+            or we are busy with other reports. Once it's finished, we'll notify you
+            via email.
         report_link_label: Download report (when available)
       revenues_by_hub:
         name: Revenues By Hub
@@ -1935,6 +1942,14 @@ en_FR:
       explaination: You can review and confirm your order in the next step.
       submit: Next - Order summary
       cancel: Back to Your details
+      voucher:
+        voucher: "%{voucher_amount} Voucher"
+        apply_voucher: Apply voucher
+        apply: Apply
+        placeholder: Enter voucher code
+        remove_code: Remove code
+        confirm_delete: Are you sure you want to remove the voucher?
+        warning_forfeit_remaining_amount: Your voucher value is more than your order. By using this voucher you are forfeiting the remaining value.
     step3:
       delivery_details:
         title: Delivery details
@@ -1967,6 +1982,8 @@ en_FR:
       select_a_shipping_method: Select a shipping method
       select_a_payment_method: Select a payment method
       no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
+      voucher_not_found: Not found
+      add_voucher_error: There was an error while adding the voucher
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order

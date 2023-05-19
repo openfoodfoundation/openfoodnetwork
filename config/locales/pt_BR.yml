@@ -1709,6 +1709,7 @@ pt_BR:
         terms_and_conditions: "Termos e Condições"
     errors:
       invalid_email: "Por favor use um endereço de e-mail válido"
+      voucher_not_found: Não encontrado
   order_paid: PAGO
   order_not_paid: NÃO PAGO
   order_total: Total do pedido

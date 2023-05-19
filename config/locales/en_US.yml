@@ -1753,7 +1753,7 @@ en_US:
   split_checkout:
     your_details_without_number: Your details
     payment_method_without_number: Payment method
-    order_summary_without_number: Order summary
+    order_summary_without_number: Confirm Order
     already_ordered:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
@@ -1805,7 +1805,7 @@ en_US:
           save_card: Save card for future use
           create_new_card: or enter new card details below
       explaination: You can review and confirm your order in the next step which includes the final costs.
-      submit: Next - Order summary
+      submit: Next - Order confirmation
       cancel: Back to your details
     step3:
       delivery_details:
@@ -1825,7 +1825,7 @@ en_US:
       all_terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
         terms_and_conditions: "Terms and Conditions"
-      submit: Complete order
+      submit: Click to confirm
       cancel: Back to Payment method
     errors:
       terms_not_accepted: Please accept Terms and Conditions
@@ -1834,6 +1834,7 @@ en_US:
       invalid_email: "Please enter a valid email address"
       select_a_shipping_method: Select a shipping method
       select_a_payment_method: Select a payment method
+      voucher_not_found: Not found
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
@@ -2198,7 +2199,7 @@ en_US:
     steps:
       introduction:
         registration_greeting: "Hi there!"
-        registration_intro: "You can now create a profile for your Producer or Hub"
+        registration_intro: "Have you checked out your options at https://about.openfoodnetwork.net/?page_id=114 ? Great! Let's get you signed up!"
         registration_checklist: "What do I need?"
         registration_time: "5-10 minutes"
         registration_enterprise_address: "Address"
@@ -2830,7 +2831,7 @@ en_US:
           message_1: "All your buyers will have to agree to them once at checkout. If you update the file, all your buyers will have to agree to them again at checkout."
           message_2: "For buyers with subscriptions, you need to email them the Terms and Conditions (or the changes to them) for now, nothing will notify them about these new Terms and Conditions."
         business_address_info:
-          message: "Company Legal Name, Legal Address and Legal Phone number are used for businesses that invoice from a legal entity registered with different details to their public trading information. These details will ONLY be used on invoices. If these details are blank your public Name, Address and Phone Number will be used on invoices."
+          message: "These details will ONLY be used on invoices. If you prefer not to enter these, your public Name, Address and Phone Number will be used on invoices."
       panels:
         save: SAVE
         saved: SAVED

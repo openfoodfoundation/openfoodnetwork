@@ -1913,6 +1913,7 @@ it:
       select_a_shipping_method: Seleziona un metodo di consegna
       select_a_payment_method: Seleziona un metodo di pagamento
       no_shipping_methods_available: La conferma ordine non è possibile perchè mancano le opzioni di consegna. Per favore contatta il gestore del negozio.
+      voucher_not_found: Non trovato
   order_paid: PAGATO
   order_not_paid: NON PAGATO
   order_total: Importo totale

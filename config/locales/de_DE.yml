@@ -6,12 +6,22 @@ de_DE:
       spree/shipping_method: Lieferoption
     attributes:
       spree/order/ship_address:
+        address1: "Lieferadresse Straße + Hausnummer"
         address2: "Lieferadresse Adresszusatz"
+        city: "Lieferadresse Ort"
         country: "Lieferadresse Land"
         phone: "Telefonnummer"
         firstname: "Vorname"
         lastname: "Nachname"
         zipcode: "Lieferadresse Postleitzahl"
+      spree/order/bill_address:
+        address1: "Rechnungsadresse Straße + Hausnummer"
+        zipcode: "Rechnungsadresse Postleitzahl"
+        city: "Rechnungsadresse Ort"
+        country: "Rechnungsadresse Land"
+        firstname: "Rechnungsadresse Vorname"
+        lastname: "Rechnungsadresse Nachname"
+        phone: Rechnungsadresse Telefonnummer
       spree/user:
         password: "Passwort"
         password_confirmation: "Passwort erneut eingeben"
@@ -48,8 +58,21 @@ de_DE:
         orders_close_at: Schließzeitpunkt
       variant_override:
         count_on_hand: "Verfügbar"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Berechnung (Fester Prozentsatz):"
+        preferred_amount: "Berechnung (Betrag):"
+        preferred_first_item: "Berechnung (Gebühr erster Artikel):"
+        preferred_additional_item: "Berechnung (Gebühr weitere Artikel):"
+        preferred_max_items: "Berechnung (Gebührenfrei bei mehr als x Artikeln):"
+        preferred_minimal_amount: "Berechnung (Mengenrabatt ab):"
+        preferred_normal_amount: "Berechnung (Gebühr unterhalb):"
+        preferred_discount_amount: "Berechnung (Gebühr oberhalb):"
+        preferred_unit_from_list: "Berechnung (Einheit):"
+        preferred_per_unit: "Berechnung (Pro Einheit):"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Um die Steuerkategorie des Produkts zu übernehmen, muss in der Spalte \"Berechnung\" eine Auswahl mit Zusatz \"pro Artikel\" verwendet werden."
         spree/user:
           attributes:
             email:
@@ -249,6 +272,13 @@ de_DE:
     order_cycle:
       subject: "Bestellzyklusbericht für %{producer}"
   provider_settings: "Anbietereinstellungen"
+  report_mailer:
+    report_ready:
+      subject: "Ihr Bericht ist fertiggestellt"
+      heading: "Ihr Bericht ist nun zum Download verfügbar"
+      intro: |
+          Der folgende Link steht Ihnen eine Woche lang zur Verfügung.
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "Liebe Kundin, lieber Kunde,"
@@ -845,6 +875,7 @@ de_DE:
           legend: "Adresse"
         business_details:
           legend: "Geschäftsdetails"
+          upload: 'Hochladen'
           abn: USt-IdNr.
           abn_placeholder: z. B. DE999999999
           acn: St.-Nr.
@@ -1060,8 +1091,24 @@ de_DE:
           email_confirmed: "E-Mail-Adresse bestätigt"
           email_not_confirmed: "E-Mail-Adresse nicht bestätigt"
         vouchers:
+          legend: Gutscheine
+          voucher_code: Gutschein-Code
           rate: Steuersatz
+          label: Bezeichnung
+          purpose: Zweck
+          expiry: Gültigkeit
           customers: Kunde
+          net_value: Nettowert
+          add_new: Neuer Gutschein
+          no_voucher_yet: Noch keine Gutscheine vorhanden.
+        white_label:
+          legend: "OFN verbergen"
+          hide_ofn_navigation: "OFN Navigation ausblenden"
+          upload_logo: "Logo des Online-Shops"
+          remove_logo: "Logo löschen"
+          remove_logo_confirm: "Möchten Sie das Logo wirklich löschen?"
+          remove_logo_success: "Das Logo wurde gelöscht."
+          white_label_logo_link_label: "Verlinkungsziel des Logos im Online-Shop"
       actions:
         edit_profile: Einstellungen
         properties: Eigenschaften
@@ -1297,6 +1344,8 @@ de_DE:
           tag_rules: "Stichwortregeln"
           shop_preferences: "Laden"
           users: "Benutzer"
+          vouchers: Gutscheine
+          white_label: "OFN verbergen"
         enterprise_group:
           primary_details: "Unternehmen"
           users: "Benutzer"
@@ -1331,11 +1380,22 @@ de_DE:
       payment_methods: Zahlungsarten
       delivery: Lieferungen
       sales_tax_totals_by_producer: Umsatzsteuer nach Produzenten
+      sales_tax_totals_by_order: Umsatzsteuer nach Bestellungen
       tax_types: Steuerarten
       tax_rates: Steuersätze
       pack_by_customer: Packliste nach Kunden
       pack_by_supplier: Packliste nach Lieferanten
       pack_by_product: Packliste nach Produkten
+      show:
+        report_taking_longer: >
+            Die Bearbeitung dieses Berichts hat leider zu lange gedauert. Er enthält
+            möglicherweise sehr viele Daten oder wir sind mit anderen Berichten beschäftigt.
+            Sie können es später noch einmal versuchen.
+        report_taking_longer_html: >
+            Die Bearbeitung dieses Berichts dauert länger. Er enthält möglicherweise
+            sehr viele Daten oder wir sind mit anderen Berichten beschäftigt. Sobald
+            der Bericht fertiggestellt ist, benachrichtigen wir Sie per E-Mail.
+        report_link_label: Bericht herunterladen (sobald verfügbar)
       revenues_by_hub:
         name: Umsätze
         description: Umsätze nach Läden/Händlern/Hubs
@@ -1505,8 +1565,10 @@ de_DE:
         associated_subscriptions_error: Dieser Zeitplan kann nicht gelöscht werden, da ihm Abonnements zugeordnet sind.
     vouchers:
       new:
+        legend: Neuer Gutschein
         back: Zurück
         save: Speichern
+        voucher_code: Gutschein-Code
         voucher_amount: Summe
     controllers:
       enterprises:
@@ -1518,6 +1580,9 @@ de_DE:
     resend_confirmation_emails_feedback:
       one: "Bestätigungs-E-Mail für 1 Bestellung gesendet."
       other: "E-Mail-Bestätigung wurde für %{count} Bestellungen gesendet."
+    send_invoice_feedback:
+      one: "Rechnungs-E-Mail für 1 Bestellung gesendet."
+      other: "Rechnungen für %{count} Bestellungen wurden per E-Mail verschickt."
   api:
     unknown_error: "Etwas ist schief gelaufen. Unser Team wurde benachrichtigt."
     invalid_api_key: "Ungültiger API-Schlüssel (%{key}) angegeben."
@@ -1534,6 +1599,10 @@ de_DE:
       destroy_attachment_does_not_exist: "AGB-Datei existiert nicht."
     orders:
       failed_to_update: "Bestellung konnte nicht aktualisiert werden."
+    query_param:
+      error:
+        title: Ungültiger Abfrageparameter
+        extra_fields: "Nicht unterstützte Felder: %{fields}"
   checkout:
     already_ordered:
       cart: "Warenkorb"
@@ -1877,6 +1946,14 @@ de_DE:
       explaination: Sie können Ihre Bestellung im nächsten Schritt überprüfen und die endgültigen Kosten bestätigen.
       submit: Weiter - Bestellabschluss
       cancel: Zurück - Ihre Daten
+      voucher:
+        voucher: "%{voucher_amount} Gutschein"
+        apply_voucher: Gutschein anwenden
+        apply: Anwenden
+        placeholder: Gutschein-Code eingeben
+        remove_code: Gutschein-Code entfernen
+        confirm_delete: Möchten Sie den Gutschein wirklich entfernen?
+        warning_forfeit_remaining_amount: Ihr Gutscheinwert ist höher als Ihre Bestellung. Durch die Verwendung dieses Gutscheins verfällt der Restwert.
     step3:
       delivery_details:
         title: Lieferdetails
@@ -1909,6 +1986,8 @@ de_DE:
       select_a_shipping_method: Bitte wählen Sie eine Lieferoption aus.
       select_a_payment_method: Bitte wählen Sie eine Zahlungsart aus.
       no_shipping_methods_available: 'Ein Bestellabschluss ist aufgrund fehlender Lieferoptionen nicht möglich. Bitte wenden Sie sich an den Betreiber des Ladens. '
+      voucher_not_found: Nicht gefunden
+      add_voucher_error: Beim Anwenden des Gutscheins ist ein Fehler aufgetreten.
   order_paid: BEZAHLT
   order_not_paid: NICHT BEZAHLT
   order_total: 'Gesamtsumme:'
@@ -2229,7 +2308,7 @@ de_DE:
   failed_to_create_enterprise: "Fehler beim Erstellen Ihres Unternehmens."
   failed_to_create_enterprise_unknown: "Fehler beim Erstellen Ihres Unternehmens.\nBitte vergewissern Sie sich, dass alle Felder vollständig ausgefüllt sind."
   failed_to_update_enterprise_unknown: "Fehler beim Aktualisieren Ihres Unternehmens.\nBitte vergewissern Sie sich, dass alle Felder vollständig ausgefüllt sind."
-  enterprise_confirm_delete_message: "Dadurch wird auch das von diesem Unternehmen bereitgestellte %{product} gelöscht. Sind Sie sicher, dass Sie das möchten?"
+  enterprise_confirm_delete_message: "Es wird auch das von diesem Unternehmen bereitgestellte %{product} gelöscht. Sind Sie sicher, dass Sie fortfahren möchten?"
   order_not_saved_yet: "Ihre Bestellung wurde noch nicht gespeichert. Geben Sie uns ein paar Sekunden, um dies abzuschließen!"
   filter_by: "Filtern nach"
   hide_filters: "Filter ausblenden"
@@ -2657,18 +2736,18 @@ de_DE:
   report_header_shipping: Lieferung
   report_header_shipping_method: Lieferoption
   report_header_shipping_instructions: Informationen zur Lieferung
-  report_header_ship_street: Lieferstraße
-  report_header_ship_street_2: Lieferadresszusatz
-  report_header_ship_city: Lieferstadt
-  report_header_ship_postcode: Lieferpostleitzahl
-  report_header_ship_state: Lieferbundesland
-  report_header_billing_street: Rechnungsstraße
-  report_header_billing_street_2: Rechnungsadresszusatz
-  report_header_billing_street_3: Rechnungsstraße 3
-  report_header_billing_street_4: Rechnungsstraße 4
-  report_header_billing_city: Rechnungsstadt
-  report_header_billing_postcode: Rechnungspostleitzahl
-  report_header_billing_state: Rechnungsbundesland
+  report_header_ship_street: Lieferadresse Straße
+  report_header_ship_street_2: Lieferadresse Adresszusatz
+  report_header_ship_city: Lieferadresse Ort
+  report_header_ship_postcode: Lieferadresse Postleitzahl
+  report_header_ship_state: Lieferadresse Bundesland
+  report_header_billing_street: Rechnungsadresse Straße + Hausnummer
+  report_header_billing_street_2: Rechnungsadresse Adresszusatz
+  report_header_billing_street_3: Rechnungsadresse Straße 3
+  report_header_billing_street_4: Rechnungsadresse Straße 4
+  report_header_billing_city: Rechnungsadresse Ort
+  report_header_billing_postcode: Rechnungsadresse Postleitzahl
+  report_header_billing_state: Rechnungsadresse Bundesland
   report_header_incoming_transport: Eingehender Transport
   report_header_special_instructions: Besondere Hinweise
   report_header_order_number: Bestell-Nummer
@@ -2727,7 +2806,7 @@ de_DE:
   report_header_distributor_postcode: Verteilstellen-Postleitzahl
   report_header_distributor_tax_status: Verteilstelle berechnet Steuern
   report_header_delivery_address: Lieferadresse
-  report_header_delivery_postcode: Lieferpostleitzahl
+  report_header_delivery_postcode: Lieferadresse Postleitzahl
   report_header_bulk_unit_size: Gruppenkauf-Einheit
   report_header_weight: Gewicht
   report_header_final_weight_volume: Tatsächliche Menge
@@ -3109,6 +3188,9 @@ de_DE:
         cancel_the_order_send_cancelation_email: "Bestätigung der Stornierung per E-Mail an den Kunden senden"
         restock_item: "Artikel zurückbuchen: Fügen Sie diesen Artikel wieder dem Lagerbestand hinzu"
         restock_items: "Artikel zurückbuchen: Fügen Sie diesen Artikel wieder dem Lagerbestand hinzu"
+        delete_line_items_html:
+          one: "Dadurch wird eine Position aus der Bestellung gelöscht.<br /> Sind Sie sicher, dass Sie fortfahren möchten?"
+          other: "Es werden %{count} Artikel aus der Bestellung gelöscht.<br /> Sind Sie sicher, dass Sie fortfahren möchten?"
       resend_user_email_confirmation:
         resend: "Erneut senden"
         sending: "Wird erneut gesendet ..."
@@ -3399,6 +3481,13 @@ de_DE:
   first: "Erste"
   previous: "Vorherige"
   last: "Letzte"
+  webhook_endpoints:
+    create:
+      success: Webhook-Endpunkt erfolgreich erstellt
+      error: Webhook-Endpunkt konnte nicht erstellt werden
+    destroy:
+      success: Webhook-Endpunkt erfolgreich gelöscht
+      error: Webhook-Endpunkt konnte nicht gelöscht werden
   spree:
     add_country: "Neues Land"
     add_state: "Neues Bundesland"
@@ -3572,6 +3661,7 @@ de_DE:
     shipping_categories: "Lieferkategorien"
     new_shipping_category: "Neue Lieferkategorie"
     back_to_shipping_categories: "Zurück zu den Lieferkategorien"
+    editing_shipping_category: "Lieferkategorie bearbeiten"
     name: "Name"
     description: "Beschreibung"
     type: "Art"
@@ -3758,6 +3848,8 @@ de_DE:
           cancel_orders: "Bestellungen stornieren"
           resend_confirmation: "Bestätigung erneut senden"
           resend_confirmation_confirm_html: "Sind Sie sicher, dass Sie die E-Mail-Bestätigungen erneut senden wollen?"
+          send_invoice: "Rechnungen senden"
+          send_invoice_confirm_html: "Es werden Rechnungen für alle ausgewählten abgeschlossenen Bestellungen per E-Mail verschickt.<br> Sind Sie sicher, dass Sie fortfahren möchten?"
           selected:
             zero: "Keine Bestellung ausgewählt"
             one: "1 Bestellung ausgewählt"
@@ -3902,6 +3994,7 @@ de_DE:
             no_payment_via_admin_backend: Paypal-Zahlungen können nicht im Backoffice erfasst werden.
       products:
         image_upload_error: "Bitte laden Sie ein Bild im JPG-, PNG-, GIF-, SVG- oder WEBP-Format hoch."
+        image_not_processable: "Die ausgewählte Datei ist kein gültiges Bild."
         new:
           title: "Neues Produkt"
           new_product: "Neues Produkt"
@@ -4172,6 +4265,16 @@ de_DE:
       api_keys:
         regenerate_key: "Schlüssel neu generieren"
         title: API-Schlüssel
+      webhook_endpoints:
+        title: Webhook-Endpunkte
+        description: Ereignisse im System können Webhooks zu externen Systemen auslösen.
+        event_types:
+          order_cycle_opened: Bestellzyklus eröffnet
+        event_type:
+          header: Ereignistyp
+        url:
+          header: Endpunkt-URL
+          create_placeholder: Geben Sie die URL des Remote-Webhook-Endpunkts ein
       developer_settings:
         title: Entwicklereinstellungen
       form:

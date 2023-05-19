@@ -1787,6 +1787,7 @@ fr_CM:
       invalid_email: "Veuillez entrer un email valide"
       select_a_shipping_method: Sélectionner une méthode de livraison
       select_a_payment_method: Sélectionner une méthode de paiement
+      voucher_not_found: Non trouvé
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande

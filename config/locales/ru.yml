@@ -1954,6 +1954,7 @@ ru:
       select_a_shipping_method: Выберите способ доставки
       select_a_payment_method: Выберите способ оплаты
       no_shipping_methods_available: Оформить заказ невозможно из-за отсутствия возможности доставки. Пожалуйста, свяжитесь с владельцем магазина.
+      voucher_not_found: Не найден
   order_paid: ОПЛАЧЕН
   order_not_paid: НЕ ОПЛАЧЕН
   order_total: Весь заказ

@@ -1371,13 +1371,6 @@ fr:
             Désolée, ce rapport met trop de temps à se charger, probablement parce
             qu'il contient une grande quantité de données ou que d'autres rapports
             sont en cours de téléchargement. Merci de réessayer plus tard.
-        report_taking_longer_html: >
-            62% match
-
-            Désolée, ce rapport met trop de temps à se charger, probablement parce
-            qu'il contient une grande quantité de données ou que d'autres rapports
-            sont en cours de téléchargement. Merci de réessayer une fois que le téléchargement
-            précédent est terminé.
         report_link_label: Télécharger le rapport (quand disponible)
       revenues_by_hub:
         name: CA par boutique
@@ -1963,6 +1956,7 @@ fr:
       select_a_shipping_method: Sélectionner une méthode de livraison
       select_a_payment_method: Sélectionner une méthode de paiement
       no_shipping_methods_available: Il n'est pas possible de passer commande car il n'y a pas d'options de livraison / récupération de commande. Veuillez contacter le gestionnaire de la boutique.
+      voucher_not_found: Non trouvé
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande

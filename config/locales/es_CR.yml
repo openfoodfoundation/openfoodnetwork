@@ -1869,6 +1869,7 @@ es_CR:
       invalid_email: "Introduce un correo electrónico válido"
       select_a_shipping_method: Seleccione un método de envío
       select_a_payment_method: Seleccione un método de pago
+      voucher_not_found: No encontrado
   order_paid: PAGADO
   order_not_paid: NO PAGADO
   order_total: Pedido total

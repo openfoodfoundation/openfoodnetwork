@@ -1830,6 +1830,7 @@ ca:
         terms_and_conditions: "Termes i condicions"
     errors:
       invalid_email: "siusplau, introduïu una adreça de correu electrònic vàlida"
+      voucher_not_found: No trobat
   order_paid: PAGAT
   order_not_paid: NO PAGAT
   order_total: Total de la comanda

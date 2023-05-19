@@ -1926,6 +1926,7 @@ en_IE:
       select_a_shipping_method: Select a shipping method
       select_a_payment_method: Select a payment method
       no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
+      voucher_not_found: Not found
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order

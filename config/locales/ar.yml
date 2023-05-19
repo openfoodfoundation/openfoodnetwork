@@ -1945,6 +1945,7 @@ ar:
       select_a_shipping_method: حدد طريقة الشحن
       select_a_payment_method: اختر طريقة الدفع
       no_shipping_methods_available: الخروج غير ممكن بسبب عدم وجود خيارات الشحن. يرجى الاتصال بصاحب المحل.
+      voucher_not_found: غير موجود
   order_paid: دفع
   order_not_paid: لم يتم الدفع
   order_total: اجمالي الطلب

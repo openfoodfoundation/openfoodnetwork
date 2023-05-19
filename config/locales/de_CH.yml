@@ -1855,6 +1855,7 @@ de_CH:
       invalid_email: "Bitte geben Sie eine gültige E-Mail-Adresse ein."
       select_a_shipping_method: Bitte wählen Sie eine Lieferoption aus.
       select_a_payment_method: Bitte wählen Sie eine Zahlungsart aus.
+      voucher_not_found: Nicht gefunden
   order_paid: BEZAHLT
   order_not_paid: NICHT BEZAHLT
   order_total: 'Gesamtsumme:'
