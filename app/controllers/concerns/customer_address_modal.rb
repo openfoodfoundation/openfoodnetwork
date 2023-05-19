@@ -5,12 +5,12 @@ module CustomerAddressModal
   STIMULUS_WAIT = 200
 
   def show
-    load_customer_and_address
+    load_address
     show_address_modal
   end
 
   def update
-    load_customer_and_address
+    load_address
     if @customer.update(customer_params)
       hide_address_modal
     else
@@ -45,13 +45,20 @@ module CustomerAddressModal
     )
   end
 
-  def load_customer_and_address
-    @customer = Customer.find(params[:customer_id])
+  def load_address
     @address = @customer.public_send(address_type) || @customer.public_send("build_#{address_type}")
+  end
+
+  def load_resource_instance
+    Customer.find(params[:customer_id])
   end
 
   def model_class
     Customer
+  end
+
+  def object_name
+    "customer"
   end
 
   def show_address_modal
