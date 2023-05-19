@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :voucher do
     enterprise { build(:distributor_enterprise) }
-    amount { rand(200.0) }
+    amount { 15 }
   end
 end
