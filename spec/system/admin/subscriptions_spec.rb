@@ -262,6 +262,7 @@ describe 'Subscriptions' do
             click_button('Next')
 
             expect(page).to have_content 'BILLING ADDRESS'
+            # Customer bill address has been pre-loaded
             expect(page).to have_input "bill_address_firstname", with: address.firstname
             expect(page).to have_input "bill_address_lastname", with: address.lastname
             expect(page).to have_input "bill_address_address1", with: address.address1
