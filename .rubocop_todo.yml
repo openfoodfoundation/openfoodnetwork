@@ -614,7 +614,7 @@ Metrics/AbcSize:
     - 'lib/tasks/enterprises.rake'
     - 'spec/services/order_checkout_restart_spec.rb'
 
-# Offense count: 41
+# Offense count: 42
 # Configuration parameters: CountComments, Max, CountAsOne, AllowedMethods, AllowedPatterns.
 # AllowedMethods: refine
 Metrics/BlockLength:
@@ -642,6 +642,7 @@ Metrics/BlockLength:
     - 'spec/support/cancan_helper.rb'
     - 'spec/support/matchers/select2_matchers.rb'
     - 'spec/support/matchers/table_matchers.rb'
+    - 'spec/support/matchers/tom_select_matchers.rb'
     - 'spec/swagger_helper.rb'
     - 'spec/system/consumer/shopping/checkout_spec.rb'
 
