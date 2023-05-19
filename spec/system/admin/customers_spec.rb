@@ -269,26 +269,28 @@ code: nil)
 
         it 'updates the existing billing address' do
           expect(page).to have_content 'BILLING ADDRESS'
-          first('#bill-address-link').click
+          first("#customer-#{customer4.id}-bill-address-link").click
           wait_for_modal_fade_in
 
           expect(page).to have_content 'Edit Billing Address'
-          expect(page).to have_select2 'country_id', selected: 'Australia'
-          expect(page).to have_select2 'state_id', selected: 'Victoria'
+          expect(page).to have_tom_select '#customer_bill_address_attributes_country_id',
+                                          selected: 'Australia'
+          expect(page).to have_tom_select '#customer_bill_address_attributes_state_id',
+                                          selected: 'Victoria'
 
-          fill_in 'address1', with: ""
+          fill_in 'Address', with: ""
           click_button 'Update Address'
 
           expect(page).to have_content 'Please input all of the required fields'
 
-          fill_in 'address1', with: "New Address1"
+          fill_in 'Address', with: "New Address1"
           click_button 'Update Address'
 
           expect(page).to have_content 'Address updated successfully.'
           expect(page).to have_link 'New Address1'
           expect(customer4.reload.bill_address.address1).to eq 'New Address1'
 
-          first('#bill-address-link').click
+          first("#customer-#{customer4.id}-bill-address-link").click
 
           expect(page).to have_content 'Edit Billing Address'
           expect(page).to_not have_content 'Please input all of the required fields'
@@ -297,19 +299,19 @@ code: nil)
         it 'creates a new shipping address' do
           expect(page).to have_content 'SHIPPING ADDRESS'
 
-          first('#ship-address-link').click
+          first("#customer-#{customer4.id}-ship-address-link").click
           wait_for_modal_fade_in
           expect(page).to have_content 'Edit Shipping Address'
 
-          fill_in 'firstname', with: "First"
-          fill_in 'lastname', with: "Last"
-          fill_in 'address1', with: "New Address1"
-          fill_in 'phone', with: "12345678"
-          fill_in 'city', with: "Melbourne"
-          fill_in 'zipcode', with: "3000"
+          fill_in 'First Name', with: "First"
+          fill_in 'Last Name', with: "Last"
+          fill_in 'Address', with: "New Address1"
+          fill_in 'Phone', with: "12345678"
+          fill_in 'City', with: "Melbourne"
+          fill_in 'Postcode', with: "3000"
 
-          select2_select 'Australia', from: 'country_id'
-          select2_select 'Victoria', from: 'state_id'
+          tomselect_search_and_select 'Australia', from: 'customer[ship_address_attributes][country_id]'
+          tomselect_search_and_select 'Victoria', from: 'customer[ship_address_attributes][state_id]'
           click_button 'Update Address'
 
           expect(page).to have_content 'Address updated successfully.'
