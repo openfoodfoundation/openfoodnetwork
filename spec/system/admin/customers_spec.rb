@@ -310,8 +310,10 @@ code: nil)
           fill_in 'City', with: "Melbourne"
           fill_in 'Postcode', with: "3000"
 
-          tomselect_search_and_select 'Australia', from: 'customer[ship_address_attributes][country_id]'
-          tomselect_search_and_select 'Victoria', from: 'customer[ship_address_attributes][state_id]'
+          tomselect_search_and_select 'Australia',
+                                      from: 'customer[ship_address_attributes][country_id]'
+          tomselect_search_and_select 'Victoria',
+                                      from: 'customer[ship_address_attributes][state_id]'
           click_button 'Update Address'
 
           expect(page).to have_content 'Address updated successfully.'
