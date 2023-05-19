@@ -9,7 +9,8 @@
       %span.required *
       )
 
-    = render 'spree/shared/error_messages', target: @customer
+    - if @customer.errors.any?
+      %div.error= t('admin.customers.index.update_address_error')
 
     = f.fields_for address_type do |af|
       %table.no-borders{"data-controller": "dependent-select", "data-dependent-select-options-value": countries_with_states }
