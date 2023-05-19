@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+dst="`dirname $0`/../vendor"
+mkdir -p "$dst"
+
+curl 'http://static.datafoodconsortium.org/data/facets.json' > "$dst/facets.json"
+curl 'http://static.datafoodconsortium.org/data/measures.json' > "$dst/measures.json"
+curl 'http://static.datafoodconsortium.org/data/productTypes.json' > "$dst/productTypes.json"

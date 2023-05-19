@@ -7,15 +7,20 @@ module DfcProvider
     before_action :check_enterprise
 
     def index
-      # CatalogItem is nested into an entreprise which is also nested into
-      # an user on the DFC specifications, as defined here:
-      # https://datafoodconsortium.gitbook.io/dfc-standard-documentation
-      #  /technical-specification/api-examples
-      render json: current_user, serializer: DfcProvider::PersonSerializer
+      person = PersonBuilder.person(current_user)
+      render json: DfcLoader.connector.export(
+        person,
+        *person.affiliatedOrganizations,
+        *person.affiliatedOrganizations.flat_map(&:catalogItems),
+        *person.affiliatedOrganizations.flat_map(&:catalogItems).map(&:product),
+        *person.affiliatedOrganizations.flat_map(&:catalogItems).flat_map(&:offers),
+      )
     end
 
     def show
-      render json: variant, serializer: DfcProvider::CatalogItemSerializer
+      catalog_item = DfcBuilder.catalog_item(variant)
+      offers = catalog_item.offers
+      render json: DfcLoader.connector.export(catalog_item, *offers)
     end
 
     private

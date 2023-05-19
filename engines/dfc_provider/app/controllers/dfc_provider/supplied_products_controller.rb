@@ -7,7 +7,8 @@ module DfcProvider
     before_action :check_enterprise
 
     def show
-      render json: variant, serializer: DfcProvider::SuppliedProductSerializer
+      product = DfcBuilder.supplied_product(variant)
+      render json: DfcLoader.connector.export(product)
     end
 
     def update

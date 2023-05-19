@@ -6,7 +6,8 @@ module DfcProvider
     before_action :check_user_accessibility
 
     def show
-      render json: user, serializer: DfcProvider::PersonSerializer
+      person = PersonBuilder.person(user)
+      render json: DfcLoader.connector.export(person)
     end
 
     private
