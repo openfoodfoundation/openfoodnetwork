@@ -3,7 +3,7 @@
 class Voucher < ApplicationRecord
   acts_as_paranoid
 
-  belongs_to :enterprise
+  belongs_to :enterprise, optional: false
 
   has_many :adjustments,
            as: :originator,
@@ -11,13 +11,10 @@ class Voucher < ApplicationRecord
            dependent: :nullify
 
   validates :code, presence: true, uniqueness: { scope: :enterprise_id }
-
-  def value
-    10
-  end
+  validates :amount, presence: true, numericality: { greater_than: 0 }
 
   def display_value
-    Spree::Money.new(value)
+    Spree::Money.new(amount)
   end
 
   # Ideally we would use `include CalculatedAdjustments` to be consistent with other adjustments,
@@ -44,6 +41,6 @@ class Voucher < ApplicationRecord
   # We limit adjustment to the maximum amount needed to cover the order, ie if the voucher
   # covers more than the order.total we only need to create an adjustment covering the order.total
   def compute_amount(order)
-    -value.clamp(0, order.total)
+    -amount.clamp(0, order.total)
   end
 end

@@ -6,19 +6,21 @@ describe Voucher do
   let(:enterprise) { build(:enterprise) }
 
   describe 'associations' do
-    it { is_expected.to belong_to(:enterprise) }
+    it { is_expected.to belong_to(:enterprise).required }
     it { is_expected.to have_many(:adjustments) }
   end
 
   describe 'validations' do
-    subject { Voucher.new(code: 'new_code', enterprise: enterprise) }
+    subject { build(:voucher, code: 'new_code', enterprise: enterprise) }
 
     it { is_expected.to validate_presence_of(:code) }
     it { is_expected.to validate_uniqueness_of(:code).scoped_to(:enterprise_id) }
+    it { is_expected.to validate_presence_of(:amount) }
+    it { is_expected.to validate_numericality_of(:amount).is_greater_than(0) }
   end
 
   describe '#compute_amount' do
-    subject { Voucher.create(code: 'new_code', enterprise: enterprise) }
+    subject { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 10) }
 
     let(:order) { create(:order_with_totals) }
 
@@ -39,11 +41,11 @@ describe Voucher do
   describe '#create_adjustment' do
     subject(:adjustment) { voucher.create_adjustment(voucher.code, order) }
 
-    let(:voucher) { Voucher.create(code: 'new_code', enterprise: enterprise) }
-    let(:order) { create(:order_with_line_items, line_items_count: 1, distributor: enterprise) }
+    let(:voucher) { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 25) }
+    let(:order) { create(:order_with_line_items, line_items_count: 3, distributor: enterprise) }
 
     it 'includes the full voucher amount' do
-      expect(adjustment.amount.to_f).to eq(-10.0)
+      expect(adjustment.amount.to_f).to eq(-25.0)
     end
 
     it 'has no included_tax' do

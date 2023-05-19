@@ -1197,6 +1197,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_24_141213) do
     t.datetime "updated_at", null: false
     t.bigint "enterprise_id"
     t.datetime "deleted_at", precision: nil
+    t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
     t.index ["code", "enterprise_id"], name: "index_vouchers_on_code_and_enterprise_id", unique: true
     t.index ["deleted_at"], name: "index_vouchers_on_deleted_at"
     t.index ["enterprise_id"], name: "index_vouchers_on_enterprise_id"

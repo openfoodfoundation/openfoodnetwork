@@ -6,7 +6,7 @@ describe VoucherAdjustmentsController, type: :request do
   let(:user) { order.user }
   let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let(:order) { create( :order_with_line_items, line_items_count: 1, distributor: distributor) }
-  let(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor) }
+  let(:voucher) { create(:voucher, code: 'some_code', enterprise: distributor) }
   let!(:adjustment) { voucher.create_adjustment(voucher.code, order) }
 
   before do

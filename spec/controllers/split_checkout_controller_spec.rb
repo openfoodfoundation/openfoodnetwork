@@ -237,7 +237,7 @@ describe SplitCheckoutController, type: :controller do
       end
 
       describe "Vouchers" do
-        let(:voucher) { Voucher.create(code: 'some_code', enterprise: distributor) }
+        let(:voucher) { create(:voucher, code: 'some_code', enterprise: distributor) }
 
         describe "adding a voucher" do
           let(:checkout_params) do
