@@ -20,11 +20,17 @@ class ApplicationReflex < StimulusReflex::Reflex
 
   delegate :current_user, to: :connection
 
+  private
+
   def current_ability
     Spree::Ability.new(current_user)
   end
 
   def with_locale(&block)
     I18n.with_locale(current_user.locale, &block)
+  end
+
+  def morph_admin_flashes
+    morph "#flashes", render(partial: "admin/shared/flashes", locals: { flashes: flash })
   end
 end

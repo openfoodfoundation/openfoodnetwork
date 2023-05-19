@@ -2,12 +2,8 @@
   %head= render :partial => 'spree/admin/shared/head'
   %body.admin{"data-turbo": "false", "data-ajax-root-path": main_app.root_path}
     #wrapper
-      - if flash[:error]
-        .flash.error= flash[:error]
-      - if notice
-        .flash.notice= notice
-      - if flash[:success]
-        .flash.success= flash[:success]
+      = render partial: "admin/shared/flashes", locals: { flashes: flash }
+
       = render partial: "spree/layouts/admin/progress_spinner"
 
       %header#header

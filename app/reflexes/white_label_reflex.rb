@@ -21,6 +21,6 @@ class WhiteLabelReflex < ApplicationReflex
       I18n.t("admin.enterprises.form.white_label.remove_logo_success")
     }
     cable_ready.dispatch_event(name: "modal:close")
-    morph "#flashes", render(partial: "shared/flashes", locals: { flashes: flash })
+    morph_admin_flashes
   end
 end

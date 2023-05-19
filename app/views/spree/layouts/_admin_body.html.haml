@@ -4,14 +4,7 @@
 
 #wrapper
   .flash-container
-    - if flash[:error]
-      .flash.error= flash[:error]
-    - if notice
-      .flash.notice= notice
-    - if flash[:success]
-      .flash.success= flash[:success]
-
-    = render partial: "shared/flashes"
+    = render partial: "admin/shared/flashes", locals: { flashes: flash }
 
   = render partial: "spree/layouts/admin/progress_spinner"
 
