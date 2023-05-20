@@ -4,7 +4,8 @@
     .row
       = t('.stripe_account_connected')
     .row
-      =link_to t('.disconnect'), main_app.admin_stripe_account_path(@stripe_account), method: :delete, class: 'button'
+
+      =link_to t('.disconnect'), main_app.admin_stripe_account_path(@stripe_account), data: { method: :delete, "ujs-navigate": "false"}, class: 'button'
 - else
   .row.stripe-info
     .six.columns.alpha

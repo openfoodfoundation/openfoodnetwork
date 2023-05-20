@@ -1,10 +1,12 @@
 - content_for :page_actions do
   %li
     - if @return_authorization.can_receive?
-      = button_link_to t('.receive'), fire_admin_order_return_authorization_url(@order, @return_authorization, e: 'receive'), method: :put, data: { confirm: t('.are_you_sure') }, icon: 'icon-download-alt'
+      = button_link_to t('.receive'), fire_admin_order_return_authorization_url(@order, @return_authorization, e: 'receive'),
+      data: { method: :put, "ujs-navigate": "false", confirm: t('.are_you_sure') }, icon: 'icon-download-alt'
   %li
     - if @return_authorization.can_cancel?
-      = button_link_to t('actions.cancel'), fire_admin_order_return_authorization_url(@order, @return_authorization, e: 'cancel'), method: :put, data: { confirm: t('.are_you_sure') }, icon: 'icon-remove'
+      = button_link_to t('actions.cancel'), fire_admin_order_return_authorization_url(@order, @return_authorization, e: 'cancel'),
+      data: { method: :put, "ujs-navigate": "false", confirm: t('.are_you_sure') }, icon: 'icon-remove'
 
 = render partial: 'spree/admin/shared/order_page_title'
 = render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Return Authorizations' }

@@ -4,7 +4,16 @@
     {{ 'admin.actions' | t }}
     %i{ 'ng-class' => "expanded && 'icon-caret-up' || !expanded && 'icon-caret-down'" }
   %div.menu{ 'ng-show' => "expanded" }
-    %a.menu_item{ 'ng-repeat' => "link in links", href: '{{link.url}}', target: "{{link.target || '_self'}}", data: { method: "{{ link.method || 'get' }}", confirm: "{{link.confirm}}" } }
-      %span
-        %i{ ng: { class: "link.icon" } }
-      %span {{ link.name }}
+    %div{ 'ng-repeat' => "link in links" }
+      %a.menu_item{ 'ng-if': "link.method", href: '{{link.url}}', target: "{{link.target || '_self'}}", data: { method: "{{ link.method }}", "ujs-navigate": "false", confirm: "{{link.confirm}}" } }
+        %span
+          %i{ ng: { class: "link.icon" } }
+        %span {{ link.name }}
+      %a.menu_item{ 'ng-if': "link.confirm && !link.method", href: '{{link.url}}', target: "{{link.target || '_self'}}", "data-confirm": "{{link.confirm}}" }
+        %span
+          %i{ ng: { class: "link.icon" } }
+        %span {{ link.name }}
+      %a.menu_item{ 'ng-if': "!link.confirm && !link.method", href: '{{link.url}}', target: "{{link.target || '_self'}}" }
+        %span
+          %i{ ng: { class: "link.icon" } }
+        %span {{ link.name }}
