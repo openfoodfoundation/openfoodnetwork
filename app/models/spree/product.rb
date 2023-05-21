@@ -76,11 +76,11 @@ module Spree
     }
 
     delegate_belongs_to :master, :images, :sku, :unit_value, :unit_description
-    delegate :images_attributes=, :display_as=, to: :master
+    delegate :images_attributes=, to: :master
 
-    # Transient attribute used temporarily when creating a new product,
-    # this value is persisted on the product's variant
-    attr_accessor :price
+    # Transient attributes used temporarily when creating a new product,
+    # these values are persisted on the product's variant
+    attr_accessor :price, :display_as
 
     after_create :set_master_variant_defaults
     after_save :save_master
@@ -395,6 +395,7 @@ module Spree
       variant.product = self
       variant.is_master = false
       variant.price = price
+      variant.display_as = display_as
       variants << variant
     end
 
