@@ -103,8 +103,8 @@ describe '
       expect(product.supplier).to eq(@supplier)
       expect(product.variant_unit).to eq('weight')
       expect(product.variant_unit_scale).to eq(1000)
-      expect(product.unit_value).to eq(5000)
-      expect(product.unit_description).to eq("")
+      expect(product.variants.first.unit_value).to eq(5000)
+      expect(product.variants.first.unit_description).to eq("")
       expect(product.variant_unit_name).to eq("")
       expect(product.primary_taxon_id).to eq(taxon.id)
       expect(product.variants.first.price.to_s).to eq('19.99')
@@ -113,7 +113,7 @@ describe '
       expect(product.shipping_category).to eq(shipping_category)
       expect(product.description).to eq("<p>A description...</p>")
       expect(product.group_buy).to be_falsey
-      expect(product.master.unit_presentation).to eq("5kg")
+      expect(product.variants.first.unit_presentation).to eq("5kg")
     end
 
     it "creating an on-demand product" do

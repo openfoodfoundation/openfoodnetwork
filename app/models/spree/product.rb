@@ -75,12 +75,12 @@ module Spree
         )
     }
 
-    delegate_belongs_to :master, :images, :sku, :unit_value, :unit_description
+    delegate_belongs_to :master, :images, :sku
     delegate :images_attributes=, to: :master
 
     # Transient attributes used temporarily when creating a new product,
     # these values are persisted on the product's variant
-    attr_accessor :price, :display_as
+    attr_accessor :price, :display_as, :unit_value, :unit_description
 
     after_create :set_master_variant_defaults
     after_save :save_master
@@ -100,7 +100,8 @@ module Spree
                              if: proc { Spree::Config[:products_require_tax_category] }
 
     validates :variant_unit, presence: true
-    validates :unit_value, presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
+    validates :unit_value, presence:
+      { if: ->(p) { %w(weight volume).include?(p.variant_unit) && new_record? } }
     validates :variant_unit_scale,
               presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
     validates :variant_unit_name,
@@ -396,6 +397,8 @@ module Spree
       variant.is_master = false
       variant.price = price
       variant.display_as = display_as
+      variant.unit_value = unit_value
+      variant.unit_description = unit_description
       variants << variant
     end
 

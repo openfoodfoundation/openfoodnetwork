@@ -151,51 +151,51 @@ describe ProductImport::ProductImporter do
       carrots = Spree::Product.find_by(name: 'Carrots')
       expect(carrots.supplier).to eq enterprise
       expect(carrots.on_hand).to eq 5
-      expect(carrots.price).to eq 3.20
-      expect(carrots.unit_value).to eq 500
+      expect(carrots.variants.first.price).to eq 3.20
+      expect(carrots.variants.first.unit_value).to eq 500
       expect(carrots.variant_unit).to eq 'weight'
       expect(carrots.variant_unit_scale).to eq 1
-      expect(carrots.on_demand).to_not eq true
+      expect(carrots.variants.first.on_demand).to_not eq true
       expect(carrots.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       potatoes = Spree::Product.find_by(name: 'Potatoes')
       expect(potatoes.supplier).to eq enterprise
       expect(potatoes.on_hand).to eq 6
-      expect(potatoes.price).to eq 6.50
-      expect(potatoes.unit_value).to eq 2000
+      expect(potatoes.variants.first.price).to eq 6.50
+      expect(potatoes.variants.first.unit_value).to eq 2000
       expect(potatoes.variant_unit).to eq 'weight'
       expect(potatoes.variant_unit_scale).to eq 1000
-      expect(potatoes.on_demand).to_not eq true
+      expect(potatoes.variants.first.on_demand).to_not eq true
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       pea_soup = Spree::Product.find_by(name: 'Pea Soup')
       expect(pea_soup.supplier).to eq enterprise
       expect(pea_soup.on_hand).to eq 8
-      expect(pea_soup.price).to eq 5.50
-      expect(pea_soup.unit_value).to eq 0.75
+      expect(pea_soup.variants.first.price).to eq 5.50
+      expect(pea_soup.variants.first.unit_value).to eq 0.75
       expect(pea_soup.variant_unit).to eq 'volume'
       expect(pea_soup.variant_unit_scale).to eq 0.001
-      expect(pea_soup.on_demand).to_not eq true
+      expect(pea_soup.variants.first.on_demand).to_not eq true
       expect(pea_soup.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       salad = Spree::Product.find_by(name: 'Salad')
       expect(salad.supplier).to eq enterprise
       expect(salad.on_hand).to eq 7
-      expect(salad.price).to eq 4.50
-      expect(salad.unit_value).to eq 1
+      expect(salad.variants.first.price).to eq 4.50
+      expect(salad.variants.first.unit_value).to eq 1
       expect(salad.variant_unit).to eq 'items'
       expect(salad.variant_unit_scale).to eq nil
-      expect(salad.on_demand).to_not eq true
+      expect(salad.variants.first.on_demand).to_not eq true
       expect(salad.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       buns = Spree::Product.find_by(name: 'Hot Cross Buns')
       expect(buns.supplier).to eq enterprise
       expect(buns.on_hand).to eq 7
-      expect(buns.price).to eq 3.50
-      expect(buns.unit_value).to eq 1
+      expect(buns.variants.first.price).to eq 3.50
+      expect(buns.variants.first.unit_value).to eq 1
       expect(buns.variant_unit).to eq 'items'
       expect(buns.variant_unit_scale).to eq nil
-      expect(buns.on_demand).to eq true
+      expect(buns.variants.first.on_demand).to eq true
       expect(buns.variants.first.import_date).to be_within(1.minute).of Time.zone.now
     end
   end

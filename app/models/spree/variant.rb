@@ -59,13 +59,13 @@ module Spree
                       if: proc { !is_master }
 
     validates :unit_value, presence: true, if: ->(variant) {
-      %w(weight volume).include?(variant.product&.variant_unit)
+      %w(weight volume).include?(variant.product&.variant_unit) && !variant.is_master
     }
 
-    validates :unit_value, numericality: { greater_than: 0 }
+    validates :unit_value, numericality: { greater_than: 0 }, if: proc { !is_master }
 
     validates :unit_description, presence: true, if: ->(variant) {
-      variant.product&.variant_unit.present? && variant.unit_value.nil?
+      variant.product&.variant_unit.present? && variant.unit_value.nil? && !variant.is_master
     }
 
     before_validation :set_cost_currency

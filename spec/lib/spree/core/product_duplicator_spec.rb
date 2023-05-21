@@ -85,6 +85,7 @@ describe Spree::Core::ProductDuplicator do
     expect(new_product).to receive(:taxons=).with([])
     expect(new_product).to receive(:product_properties=).with([new_property])
     expect(new_product).to receive(:created_at=).with(nil)
+    expect(new_product).to receive(:unit_value=).with(true)
     expect(new_product).to receive(:updated_at=).with(nil)
     expect(new_product).to receive(:deleted_at=).with(nil)
     expect(new_product).to receive(:master=).with(new_master_variant)
