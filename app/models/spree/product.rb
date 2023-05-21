@@ -75,8 +75,7 @@ module Spree
         )
     }
 
-    delegate_belongs_to :master, :sku, :price, :currency, :display_amount, :display_price, :weight,
-                        :height, :width, :depth, :is_master, :cost_currency,
+    delegate_belongs_to :master, :sku, :price, :currency, :display_amount, :display_price,
                         :price_in, :amount_in, :unit_value, :unit_description
     delegate :images_attributes=, :display_as=, to: :master
 
