@@ -611,6 +611,24 @@ describe '
                                     href: spree.fire_admin_order_path(order, e: 'cancel')
         end
       end
+
+      context "Resending confirmation email" do
+        before do
+          visit spree.edit_admin_order_path(order)
+          find("#links-dropdown .ofn-drop-down").click
+        end
+
+        it "shows the link" do
+          expect(page).to have_link "Resend Confirmation", href: spree.resend_admin_order_path(order)
+        end
+
+        it "resends the confirmation email" do
+          accept_alert "Are you sure you want to resend the order confirmation email?" do
+            click_link "Resend Confirmation"
+          end
+          expect(page).to have_content "Order email has been resent"
+        end
+      end
       
       context "Check send/print invoice links" do
         

@@ -86,7 +86,7 @@ Spree::Core::Engine.routes.draw do
       member do
         put :fire
         get :fire
-        post :resend
+        get :resend
         get :invoice
         get :print
         get :distribution
