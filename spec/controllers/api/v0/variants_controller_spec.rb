@@ -5,10 +5,10 @@ require 'spec_helper'
 describe Api::V0::VariantsController, type: :controller do
   render_views
 
-  let(:supplier) { FactoryBot.create(:supplier_enterprise) }
-  let!(:variant1) { FactoryBot.create(:variant) }
-  let!(:variant2) { FactoryBot.create(:variant) }
-  let!(:variant3) { FactoryBot.create(:variant) }
+  let(:supplier) { create(:supplier_enterprise) }
+  let!(:variant1) { create(:variant) }
+  let!(:variant2) { create(:variant) }
+  let!(:variant3) { create(:variant) }
   let(:attributes) {
     [:id, :options_text, :price, :on_hand, :unit_value, :unit_description, :on_demand, :display_as,
      :display_name]
@@ -22,10 +22,7 @@ describe Api::V0::VariantsController, type: :controller do
     let(:current_api_user) { build(:user) }
 
     let!(:product) { create(:product) }
-    let!(:variant) do
-      variant = product.master
-      variant
-    end
+    let!(:variant) { product.variants.first }
 
     it "retrieves a list of variants with appropriate attributes" do
       get :index, format: :json
@@ -45,18 +42,18 @@ describe Api::V0::VariantsController, type: :controller do
     # Regression test for spree#2141
     context "a deleted variant" do
       before do
-        expect(Spree::Variant.count).to eq 11
+        expect(Spree::Variant.not_master.count).to eq 7
         variant.update_column(:deleted_at, Time.zone.now)
       end
 
       it "is not returned in the results" do
         api_get :index
-        expect(json_response.count).to eq(10)
+        expect(json_response.count).to eq(6)
       end
 
       it "is not returned even when show_deleted is passed" do
         api_get :index, show_deleted: true
-        expect(json_response.count).to eq(10)
+        expect(json_response.count).to eq(6)
       end
     end
 
@@ -91,25 +88,37 @@ describe Api::V0::VariantsController, type: :controller do
   context "as an enterprise user" do
     let(:current_api_user) { create(:user, enterprises: [supplier]) }
     let(:supplier_other) { create(:supplier_enterprise) }
-    let(:product) { create(:product, supplier: supplier) }
-    let(:variant) { product.master }
+    let!(:product) { create(:product, supplier: supplier) }
+    let(:variant) { product.variants.first }
     let(:product_other) { create(:product, supplier: supplier_other) }
-    let(:variant_other) { product_other.master }
+    let(:variant_other) { product_other.variants.first }
 
-    it "deletes a variant" do
-      api_delete :destroy, id: variant.to_param
+    context "with a single remaining variant" do
+      it "does not delete the variant" do
+        api_delete :destroy, id: variant.id
 
-      expect(response.status).to eq(204)
-      expect { variant.reload }.not_to raise_error
-      expect(variant.deleted_at).to be_present
+        expect(variant.reload.deleted_at).to be_nil
+      end
     end
 
-    it "is denied access to soft deleting another enterprises' variant" do
-      api_delete :destroy, id: variant_other.to_param
+    context "with more than one variants" do
+      let(:variant_to_delete) { create(:variant, product: product) }
 
-      assert_unauthorized!
-      expect { variant_other.reload }.not_to raise_error
-      expect(variant_other.deleted_at).to be_nil
+      it "deletes a variant" do
+        api_delete :destroy, id: variant_to_delete.id
+
+        expect(response.status).to eq(204)
+        expect { variant_to_delete.reload }.not_to raise_error
+        expect(variant_to_delete.deleted_at).to be_present
+      end
+
+      it "is denied access to soft deleting another enterprises' variant" do
+        api_delete :destroy, id: variant_other.to_param
+
+        assert_unauthorized!
+        expect { variant_other.reload }.not_to raise_error
+        expect(variant_other.deleted_at).to be_nil
+      end
     end
   end
 
@@ -117,7 +126,8 @@ describe Api::V0::VariantsController, type: :controller do
     let(:current_api_user) { create(:admin_user) }
 
     let(:product) { create(:product) }
-    let(:variant) { product.master }
+    let(:variant) { product.variants.first }
+    let!(:variant2) { create(:variant, product: product) }
 
     context "deleted variants" do
       before do
