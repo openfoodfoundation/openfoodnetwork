@@ -107,7 +107,7 @@ describe '
       expect(product.unit_description).to eq("")
       expect(product.variant_unit_name).to eq("")
       expect(product.primary_taxon_id).to eq(taxon.id)
-      expect(product.price.to_s).to eq('19.99')
+      expect(product.variants.first.price.to_s).to eq('19.99')
       expect(product.on_hand).to eq(5)
       expect(product.tax_category_id).to eq(tax_category.id)
       expect(product.shipping_category).to eq(shipping_category)

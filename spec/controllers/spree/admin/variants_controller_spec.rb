@@ -11,7 +11,7 @@ module Spree
         describe "deleted variants" do
           let(:product) { create(:product, name: 'Product A') }
           let(:deleted_variant) do
-            deleted_variant = product.variants.create(unit_value: "2")
+            deleted_variant = product.variants.create(unit_value: "2", price: 1)
             deleted_variant.delete
             deleted_variant
           end
