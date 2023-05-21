@@ -94,7 +94,7 @@ describe "Product Import" do
       potatoes = Spree::Product.find_by(name: 'Potatoes')
       expect(potatoes.supplier).to eq enterprise
       expect(potatoes.on_hand).to eq 6
-      expect(potatoes.price).to eq 6.50
+      expect(potatoes.variants.first.price).to eq 6.50
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       wait_until { page.find("a.button.view").present? }
