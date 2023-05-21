@@ -45,46 +45,6 @@ module Spree
         end
       end
 
-      context "#price" do
-        # Regression test for Spree #1173
-        it 'strips non-price characters' do
-          product.price = "$10"
-          expect(product.price).to eq 10.0
-        end
-      end
-
-      context "#display_price" do
-        before { product.price = 10.55 }
-
-        context "with display_currency set to true" do
-          before { Spree::Config[:display_currency] = true }
-
-          it "shows the currency" do
-            expect(product.display_price.to_s).to eq "$10.55 #{Spree::Config[:currency]}"
-          end
-        end
-
-        context "with display_currency set to false" do
-          before { Spree::Config[:display_currency] = false }
-
-          it "does not include the currency" do
-            expect(product.display_price.to_s).to eq "$10.55"
-          end
-        end
-
-        context "with currency set to JPY" do
-          before do
-            product.master.default_price.currency = 'JPY'
-            product.master.default_price.save!
-            Spree::Config[:currency] = 'JPY'
-          end
-
-          it "displays the currency in yen" do
-            expect(product.display_price.to_s).to eq "¥11"
-          end
-        end
-      end
-
       describe 'Variants sorting' do
         context 'without master variant' do
           it 'sorts variants by position' do
@@ -414,7 +374,7 @@ module Spree
           it "copies the properties on master variant to the first standard variant" do
             expect(product.variants.reload.length).to eq 1
             standard_variant = product.variants.reload.first
-            expect(standard_variant.price).to eq product.master.price
+            expect(standard_variant.price).to eq 4.27
           end
 
           it "only duplicates master with after_save when no standard variants exist" do

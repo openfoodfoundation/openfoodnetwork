@@ -14,10 +14,7 @@ describe Api::V0::ProductsController, type: :controller do
   }
   let(:product_other_supplier) { create(:product, supplier: supplier2) }
   let(:product_with_image) { create(:product_with_image, supplier: supplier) }
-  let(:attributes) {
-    ["id", "name", "supplier", "price", "on_hand", "available_on", "permalink_live"]
-  }
-  let(:all_attributes) { ["id", "name", "price", "available_on", "variants"] }
+  let(:all_attributes) { ["id", "name", "available_on", "variants"] }
   let(:variants_attributes) {
     ["id", "options_text", "unit_value", "unit_description", "unit_to_display", "on_demand",
      "display_as", "display_name", "name_to_display", "sku", "on_hand", "price"]
@@ -37,7 +34,7 @@ describe Api::V0::ProductsController, type: :controller do
 
     it "gets a single product" do
       product.master.images.create!(attachment: image("thinking-cat.jpg"))
-      product.variants.create!(unit_value: "1", unit_description: "thing")
+      product.variants.create!(unit_value: "1", unit_description: "thing", price: 1)
       product.variants.first.images.create!(attachment: image("thinking-cat.jpg"))
       product.set_property("spree", "rocks")
       api_get :show, id: product.to_param
@@ -115,7 +112,7 @@ describe Api::V0::ProductsController, type: :controller do
 
     it "can create a new product" do
       api_post :create, product: { name: "The Other Product",
-                                   price: 19.99,
+                                   price: 123.45,
                                    shipping_category_id: create(:shipping_category).id,
                                    supplier_id: supplier.id,
                                    primary_taxon_id: FactoryBot.create(:taxon).id,
@@ -125,6 +122,7 @@ describe Api::V0::ProductsController, type: :controller do
 
       expect(all_attributes.all?{ |attr| json_response.keys.include? attr }).to eq(true)
       expect(response.status).to eq(201)
+      expect(Spree::Product.last.variants.first.price).to eq 123.45
     end
 
     it "cannot create a new product with invalid attributes" do
@@ -133,7 +131,7 @@ describe Api::V0::ProductsController, type: :controller do
       expect(response.status).to eq(422)
       expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
       errors = json_response["errors"]
-      expect(errors.keys).to match_array(["name", "price", "primary_taxon", "shipping_category",
+      expect(errors.keys).to match_array(["name", "primary_taxon", "shipping_category",
                                           "supplier", "variant_unit"])
     end
 
@@ -212,8 +210,8 @@ describe Api::V0::ProductsController, type: :controller do
       end
 
       # price info: it does not consider price changes; it considers the price set upon product creation
-      it '(does not) clone price which was updated' do
-        product.update_attribute(:price, 2.22)
+      it '(does not) clone master price which was updated' do
+        product.master.update_attribute(:price, 2.22)
         spree_post :clone, product_id: product.id, format: :json
         expect(json_response['price']).not_to eq(2.22)
       end

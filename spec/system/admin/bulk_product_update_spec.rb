@@ -146,15 +146,14 @@ describe '
     end
 
     it "displays a price input (for each variant) for each product" do
-      p1 = FactoryBot.create(:product, price: 2.0)
-      v1 = FactoryBot.create(:variant, product: p1, is_master: false, price: 12.75)
-      v2 = FactoryBot.create(:variant, product: p1, is_master: false, price: 2.50)
+      p1 = create(:product, price: 2.0)
+      v1 = create(:variant, product: p1, is_master: false, price: 12.75)
+      v2 = create(:variant, product: p1, is_master: false, price: 2.50)
 
       visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
       all("a.view-variants").each(&:click)
 
-      expect(page).to have_field "price", with: "2.0", visible: false
       expect(page).to have_field "variant_price", with: "12.75"
       expect(page).to have_field "variant_price", with: "2.5"
     end
@@ -401,10 +400,10 @@ describe '
   end
 
   it "updating a product with variants" do
-    s1 = FactoryBot.create(:supplier_enterprise)
-    s2 = FactoryBot.create(:supplier_enterprise)
-    p = FactoryBot.create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 0.001,
-                                    price: 3.0, unit_value: 0.25, unit_description: '(bottle)' )
+    s1 = create(:supplier_enterprise)
+    s2 = create(:supplier_enterprise)
+    p = create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 0.001,
+                         price: 3.0, unit_value: 0.25, unit_description: '(bottle)' )
     v = p.variants.first
     v.update_attribute(:sku, "VARIANTSKU")
     v.update_attribute(:on_demand, false)

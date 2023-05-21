@@ -75,9 +75,12 @@ module Spree
         )
     }
 
-    delegate_belongs_to :master, :images, :sku, :price, :currency, :display_amount, :display_price,
-                        :price_in, :amount_in, :unit_value, :unit_description
+    delegate_belongs_to :master, :images, :sku, :unit_value, :unit_description
     delegate :images_attributes=, :display_as=, to: :master
+
+    # Transient attribute used temporarily when creating a new product,
+    # this value is persisted on the product's variant
+    attr_accessor :price
 
     after_create :set_master_variant_defaults
     after_save :save_master
@@ -89,7 +92,6 @@ module Spree
 
     validates :name, presence: true
     validates :permalink, presence: true
-    validates :price, presence: true, if: proc { Spree::Config[:require_master_price] }
     validates :shipping_category, presence: true
 
     validates :supplier, presence: true
@@ -338,13 +340,7 @@ module Spree
     # Here we rescue errors when saving master variants (without the need for a
     #   validates_associated on master) and we get more specific data about the errors
     def save_master
-      if master && (
-          master.changed? || master.new_record? || (
-            master.default_price && (
-              master.default_price.changed? || master.default_price.new_record?
-            )
-          )
-        )
+      if master && (master.changed? || master.new_record?)
         master.save!
       end
 
@@ -398,6 +394,7 @@ module Spree
       variant = master.dup
       variant.product = self
       variant.is_master = false
+      variant.price = price
       variants << variant
     end
 
