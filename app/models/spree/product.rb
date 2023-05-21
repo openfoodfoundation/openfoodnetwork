@@ -75,15 +75,12 @@ module Spree
         )
     }
 
-    delegate_belongs_to :master, :sku, :price, :currency, :display_amount, :display_price,
+    delegate_belongs_to :master, :images, :sku, :price, :currency, :display_amount, :display_price,
                         :price_in, :amount_in, :unit_value, :unit_description
     delegate :images_attributes=, :display_as=, to: :master
 
     after_create :set_master_variant_defaults
     after_save :save_master
-
-    delegate :images, to: :master, prefix: true
-    alias_method :images, :master_images
 
     has_many :variant_images, -> { order(:position) }, source: :images,
                                                        through: :variants_including_master
