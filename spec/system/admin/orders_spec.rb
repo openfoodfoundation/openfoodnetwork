@@ -389,6 +389,21 @@ distributors: [distributor4, distributor5]) }
         end
       end
 
+      context "displaying order special instructions" do
+        before do
+          order3.update(special_instructions: "Leave it next to the porch. Thanks!")
+          login_as_admin
+          visit spree.admin_orders_path
+        end
+
+        it "displays a note with order instructions" do
+          within "tr#order_#{order3.id}" do
+            expect(page).to have_content I18n.t('spree.admin.orders.index.note')
+            expect(page).to have_css "[data-tooltip-tip-value='#{order3.special_instructions}']"
+          end
+        end
+      end
+
       context "orders with different order totals" do
         before do
           Spree::LineItem.where(order_id: order2.id).first.update!(quantity: 5)

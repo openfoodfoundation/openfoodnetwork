@@ -8,11 +8,12 @@
   %td
     %a{ href: edit_admin_order_path(order) }
       = order.number
-    - if order.special_instructions
+    - if order.special_instructions.present?
       %div
         %br
-        %span.icon-warning-sign{'ofn-with-tip' => order.special_instructions.to_s }
-          = t('spree.admin.orders.index.note')
+        %div{ "data-controller": "tooltip", "data-tooltip-tip-value": order.special_instructions.to_s }
+          %span.icon-warning-sign{ "data-tooltip-target": "element" }
+            = t('spree.admin.orders.index.note')
   %td.align-center
     %span.state{ class: order.state.to_s }
       = t('js.admin.orders.order_state.' + order.state.to_s)
