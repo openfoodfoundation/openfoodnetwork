@@ -32,12 +32,6 @@ module Spree
     searchable_associations :supplier, :properties, :primary_taxon, :variants
     searchable_scopes :active, :with_properties
 
-    has_many :product_properties, dependent: :destroy
-    has_many :properties, through: :product_properties
-
-    has_many :classifications, dependent: :delete_all
-    has_many :taxons, through: :classifications
-
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory'
     belongs_to :supplier, class_name: 'Enterprise', touch: true
@@ -45,6 +39,10 @@ module Spree
 
     has_one :image, class_name: "Spree::Image", as: :viewable, dependent: :destroy
 
+    has_many :product_properties, dependent: :destroy
+    has_many :properties, through: :product_properties
+    has_many :classifications, dependent: :delete_all
+    has_many :taxons, through: :classifications
     has_many :variants, -> {
       where(is_master: false).order("spree_variants.position ASC")
     }, class_name: 'Spree::Variant', dependent: :destroy
@@ -54,28 +52,9 @@ module Spree
     }, through: :variants
 
     has_many :stock_items, through: :variants
-
     has_many :supplier_properties, through: :supplier, source: :properties
-
-    scope :with_properties, ->(*property_ids) {
-      left_outer_joins(:product_properties).
-        left_outer_joins(:supplier_properties).
-        where(inherits_properties: true).
-        where(producer_properties: { property_id: property_ids }).
-        or(
-          where(spree_product_properties: { property_id: property_ids })
-        )
-    }
-
-    # Transient attributes used temporarily when creating a new product,
-    # these values are persisted on the product's variant
-    attr_accessor :price, :display_as, :unit_value, :unit_description
-
     has_many :variant_images, -> { order(:position) }, source: :images,
                                                        through: :variants
-
-    accepts_nested_attributes_for :variants, allow_destroy: true
-    accepts_nested_attributes_for :image
 
     validates :name, presence: true
     validates :permalink, presence: true
@@ -95,23 +74,39 @@ module Spree
               presence: { if: ->(p) { p.variant_unit == 'items' } }
     validate :validate_image
 
+    accepts_nested_attributes_for :variants, allow_destroy: true
+    accepts_nested_attributes_for :image
     accepts_nested_attributes_for :product_properties,
                                   allow_destroy: true,
                                   reject_if: lambda { |pp| pp[:property_name].blank? }
+
+    # Transient attributes used temporarily when creating a new product,
+    # these values are persisted on the product's variant
+    attr_accessor :price, :display_as, :unit_value, :unit_description
 
     make_permalink order: :name
 
     after_initialize :set_available_on_to_now, if: :new_record?
 
     before_validation :sanitize_permalink
+
     before_save :add_primary_taxon_to_taxons
+    before_destroy :punch_permalink
+
     after_save :remove_previous_primary_taxon_from_taxons
     after_create :ensure_standard_variant
     after_save :update_units
 
-    before_destroy :punch_permalink
+    scope :with_properties, ->(*property_ids) {
+      left_outer_joins(:product_properties).
+        left_outer_joins(:supplier_properties).
+        where(inherits_properties: true).
+        where(producer_properties: { property_id: property_ids }).
+        or(
+          where(spree_product_properties: { property_id: property_ids })
+        )
+    }
 
-    # -- Joins
     scope :with_order_cycles_outer, -> {
       joins("
         LEFT OUTER JOIN spree_variants AS o_spree_variants
