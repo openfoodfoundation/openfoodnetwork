@@ -202,8 +202,8 @@ describe '
         click_link "Create One Now"
       end
 
-      shared_examples "shared example" do |tax_category, calculator, flash_message, fee_count|
-        context "setting it up as #{tax_category}, with a #{calculator} calculator" do
+      shared_examples "setting it up" do |tax_category, calculator, flash_message, fee_count|
+        context "as #{tax_category}, with a #{calculator} calculator" do
           it "triggers the expected message" do
             select distributor1.name, from: "#{prefix}_enterprise_id"
             select 'Packing', from: "#{prefix}_fee_type"
@@ -228,23 +228,23 @@ describe '
 
       context "an error message is displayed" do
         message = 'Inheriting the tax categeory requires a per-item calculator.'
-        it_behaves_like "shared example", 'Inherit From Product',
+        it_behaves_like "setting it up", 'Inherit From Product',
                                           'Flat Rate (per order)', message, 0
       end
 
       context "an success message is displayed" do
         message = 'Your enterprise fees have been updated.'
-        it_behaves_like "shared example", 'Inherit From Product', 'Flat Rate (per item)', message, 1
+        it_behaves_like "setting it up", 'Inherit From Product', 'Flat Rate (per item)', message, 1
       end
 
       context "an success message is displayed" do
         message = 'Your enterprise fees have been updated.'
-        it_behaves_like "shared example", 'GST', 'Flat Rate (per order)', message, 1
+        it_behaves_like "setting it up", 'GST', 'Flat Rate (per order)', message, 1
       end
 
       context "an success message is displayed" do
         message = 'Your enterprise fees have been updated.'
-        it_behaves_like "shared example", 'GST', 'Flat Rate (per item)', message, 1
+        it_behaves_like "setting it up", 'GST', 'Flat Rate (per item)', message, 1
       end
     end
 
