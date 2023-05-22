@@ -25,6 +25,7 @@ module Spree
         set_viewable
 
         @object.attributes = permitted_resource_params
+
         if @object.save
           flash[:success] = flash_message_for(@object, :successfully_created)
           redirect_to spree.admin_product_images_url(params[:product_id], @url_filters)
@@ -62,6 +63,18 @@ module Spree
 
       private
 
+      def collection
+        parent.image
+      end
+
+      def find_resource
+        parent.image
+      end
+
+      def build_resource
+        Spree::Image.new(viewable: parent)
+      end
+
       def location_after_save
         spree.admin_product_images_url(@product)
       end
@@ -75,7 +88,7 @@ module Spree
       end
 
       def set_viewable
-        @image.viewable_type = 'Spree::Variant'
+        @image.viewable_type = 'Spree::Product'
         @image.viewable_id = params[:image][:viewable_id]
       end
 

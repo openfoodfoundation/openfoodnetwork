@@ -25,7 +25,7 @@ describe Api::V0::ProductImagesController, type: :controller do
       }
 
       expect(response.status).to eq 201
-      expect(product_without_image.reload.images.first.id).to eq json_response['id']
+      expect(product_without_image.reload.image.id).to eq json_response['id']
     end
 
     it "updates an existing product image" do
@@ -34,7 +34,7 @@ describe Api::V0::ProductImagesController, type: :controller do
       }
 
       expect(response.status).to eq 200
-      expect(product_with_image.reload.images.first.id).to eq json_response['id']
+      expect(product_with_image.reload.image.id).to eq json_response['id']
     end
 
     it "reports errors when saving fails" do
@@ -43,7 +43,7 @@ describe Api::V0::ProductImagesController, type: :controller do
       }
 
       expect(response.status).to eq 422
-      expect(product_without_image.images.count).to eq 0
+      expect(product_without_image.image).to be_nil
       expect(json_response["id"]).to eq nil
       expect(json_response["errors"]).to include "Attachment has an invalid content type"
     end

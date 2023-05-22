@@ -12,7 +12,7 @@ class Api::ProductSerializer < ActiveModel::Serializer
   has_one :primary_taxon, serializer: Api::TaxonSerializer
   has_many :taxons, serializer: Api::IdSerializer
 
-  has_many :images, serializer: Api::ImageSerializer
+  has_one :image, serializer: Api::ImageSerializer
   has_one :supplier, serializer: Api::IdSerializer
 
   # return an unformatted descripton

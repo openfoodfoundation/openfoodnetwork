@@ -121,8 +121,8 @@ module Spree
       end
 
       def product_includes
-        [{ variants: [:images] },
-         { master: [:images, :default_price] }]
+        [:image, { variants: [:images] },
+         { master: [:default_price] }]
       end
 
       def collection_actions

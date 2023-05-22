@@ -33,7 +33,7 @@ describe Api::V0::ProductsController, type: :controller do
     end
 
     it "gets a single product" do
-      product.master.images.create!(attachment: image("thinking-cat.jpg"))
+      product.create_image!(attachment: image("thinking-cat.jpg"))
       product.variants.create!(unit_value: "1", unit_description: "thing", price: 1)
       product.variants.first.images.create!(attachment: image("thinking-cat.jpg"))
       product.set_property("spree", "rocks")

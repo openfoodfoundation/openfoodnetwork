@@ -101,7 +101,7 @@
       .row
         = image_tag Spree::Image.default_image_url(:product), class: "four columns alpha"
       .row
-        = f.fields_for 'images_attributes[]', f.object.images.build do |image_fields|
+        = f.fields_for 'image_attributes[]', f.object.build_image do |image_fields|
           = image_fields.file_field :attachment
   .sixteen.columns.alpha
     .form-buttons.filter-actions.actions

@@ -43,6 +43,8 @@ module Spree
     belongs_to :supplier, class_name: 'Enterprise', touch: true
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true
 
+    has_one :image, class_name: "Spree::Image", as: :viewable, dependent: :destroy
+
     has_one :master,
             -> { where is_master: true },
             class_name: 'Spree::Variant',
@@ -75,9 +77,6 @@ module Spree
         )
     }
 
-    delegate_belongs_to :master, :images
-    delegate :images_attributes=, to: :master
-
     # Transient attributes used temporarily when creating a new product,
     # these values are persisted on the product's variant
     attr_accessor :price, :display_as, :unit_value, :unit_description
@@ -89,6 +88,7 @@ module Spree
                                                        through: :variants_including_master
 
     accepts_nested_attributes_for :variants, allow_destroy: true
+    accepts_nested_attributes_for :image
 
     validates :name, presence: true
     validates :permalink, presence: true
@@ -106,7 +106,7 @@ module Spree
               presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
     validates :variant_unit_name,
               presence: { if: ->(p) { p.variant_unit == 'items' } }
-    validate :validate_image_for_master
+    validate :validate_image
 
     accepts_nested_attributes_for :product_properties,
                                   allow_destroy: true,
@@ -410,8 +410,8 @@ module Spree
       self.permalink = create_unique_permalink(requested.parameterize)
     end
 
-    def validate_image_for_master
-      return if master.images.all?(&:valid?)
+    def validate_image
+      return if image.blank? || image.valid?
 
       errors.add(:base, I18n.t('spree.admin.products.image_not_processable'))
     end

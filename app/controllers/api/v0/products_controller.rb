@@ -116,7 +116,7 @@ module Api
 
       def product_query_includes
         [
-          master: { images: { attachment_attachment: :blob } },
+          image: { attachment_attachment: :blob },
           variants: [:default_price, :stock_locations, :stock_items, :variant_overrides]
         ]
       end

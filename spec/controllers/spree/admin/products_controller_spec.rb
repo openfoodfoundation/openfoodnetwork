@@ -158,8 +158,8 @@ describe Spree::Admin::ProductsController, type: :controller do
           tempfile: Tempfile.new('unsupported_image_format.exr')
         )
         product_attrs_with_image = product_attrs.merge(
-          images_attributes: {
-            '0' => { attachment: product_image }
+          image_attributes: {
+            attachment: product_image
           }
         )
 
