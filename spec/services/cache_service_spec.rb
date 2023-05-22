@@ -20,7 +20,7 @@ describe CacheService do
   end
 
   describe "#cached_data_by_class" do
-    let(:timestamp) { Time.now.to_i }
+    let(:timestamp) { Time.now.to_f }
 
     before do
       allow(rails_cache).to receive(:fetch)
@@ -42,10 +42,12 @@ describe CacheService do
 
     it "gets the :updated_at value of the last record for a given class and returns a timestamp" do
       taxon1.touch
-      expect(CacheService.latest_timestamp_by_class(Spree::Taxon)).to eq taxon1.updated_at.to_i
+      expect(CacheService.latest_timestamp_by_class(Spree::Taxon)).
+        to eq taxon1.reload.updated_at.to_f
 
       taxon2.touch
-      expect(CacheService.latest_timestamp_by_class(Spree::Taxon)).to eq taxon2.updated_at.to_i
+      expect(CacheService.latest_timestamp_by_class(Spree::Taxon)).
+        to eq taxon2.reload.updated_at.to_f
     end
   end
 end
