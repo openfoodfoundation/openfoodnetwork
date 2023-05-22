@@ -75,7 +75,7 @@ module Spree
         )
     }
 
-    delegate_belongs_to :master, :images, :sku
+    delegate_belongs_to :master, :images
     delegate :images_attributes=, to: :master
 
     # Transient attributes used temporarily when creating a new product,

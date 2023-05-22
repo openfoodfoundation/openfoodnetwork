@@ -745,6 +745,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_120633) do
     t.text "notes"
     t.integer "primary_taxon_id", null: false
     t.boolean "inherits_properties", default: true, null: false
+    t.string "sku", limit: 255, default: "", null: false
     t.index ["available_on"], name: "index_products_on_available_on"
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
     t.index ["name"], name: "index_products_on_name"
