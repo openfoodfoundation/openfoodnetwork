@@ -43,6 +43,7 @@ module Spree
           flash[:success] = flash_message_for(@object, :successfully_created)
           redirect_to spree.admin_product_variants_url(params[:product_id], @url_filters)
         else
+          flash[:error] = @object.errors.full_messages.to_sentence if @object.errors.any?
           redirect_to spree.new_admin_product_variant_url(params[:product_id], @url_filters)
         end
 
