@@ -19,7 +19,7 @@ class CacheService
   # Gets the :updated_at value of the most recently updated record for a given class, and returns
   # it as a timestamp, eg: `1583836069`.
   def self.latest_timestamp_by_class(cached_class)
-    cached_class.maximum(:updated_at).to_i
+    cached_class.maximum(:updated_at).to_f
   end
 
   def self.home_stats(statistic, &block)
