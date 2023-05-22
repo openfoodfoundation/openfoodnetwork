@@ -55,16 +55,21 @@ module DataFoodConsortium
 
       def apply_statement(statement)
         subject = subject_of(statement)
-
-        return unless subject.hasSemanticProperty?(statement.predicate.value)
-
-        prop_name = statement.predicate.fragment
-        setter_name = "#{prop_name}="
-
-        return unless subject.respond_to?(setter_name)
-
+        property_id = statement.predicate.value
         value = statement.object.object
-        subject.public_send(setter_name, value)
+
+        return unless subject.hasSemanticProperty?(property_id)
+
+        property = subject.__send__(:findSemanticProperty, property_id)
+
+        # Some properties have a one-to-one match to the method name.
+        setter_name = "#{statement.predicate.fragment}="
+
+        if property.value.is_a?(Enumerable)
+          property.value << value
+        elsif subject.respond_to?(setter_name)
+          subject.public_send(setter_name, value)
+        end
       end
 
       def subject_of(statement)

@@ -5,6 +5,12 @@ require Rails.root.join('lib/data_food_consortium/connector/connector')
 
 describe DataFoodConsortium::Connector::Importer, vcr: true do
   let(:connector) { DataFoodConsortium::Connector::Connector.instance }
+  let(:enterprise) do
+    DataFoodConsortium::Connector::Enterprise.new(
+      "https://example.net/foo-food-inc",
+      suppliedProducts: [product, second_product],
+    )
+  end
   let(:catalog_item) do
     DataFoodConsortium::Connector::CatalogItem.new(
       "https://example.net/tomatoItem",
@@ -17,6 +23,12 @@ describe DataFoodConsortium::Connector::Importer, vcr: true do
       name: "Tomato",
       description: "Awesome tomato",
       totalTheoreticalStock: 3,
+    )
+  end
+  let(:second_product) do
+    DataFoodConsortium::Connector::SuppliedProduct.new(
+      "https://example.net/ocra",
+      name: "Ocra",
     )
   end
 
@@ -45,6 +57,21 @@ describe DataFoodConsortium::Connector::Importer, vcr: true do
     expect(tomato.name).to eq "Tomato"
     expect(tomato.description).to eq "Awesome tomato"
     expect(tomato.totalTheoreticalStock).to eq 3
+  end
+
+  it "imports properties with lists" do
+    result = import(enterprise, product, second_product)
+
+    expect(result.size).to eq 3
+
+    enterprise, tomato, ocra = result
+
+    # Work in progress, we get only the URLs as hashes:
+    expect(enterprise.suppliedProducts[0][:path]).to eq "/tomato"
+    expect(enterprise.suppliedProducts[1][:path]).to eq "/ocra"
+
+    # We would actually like to resolve the objects:
+    #expect(enterprise.suppliedProducts).to eq [tomato, ocra]
   end
 
   def import(*args)
