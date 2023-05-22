@@ -23,6 +23,7 @@ module DataFoodConsortium
         @subjects = {}
 
         graph = parse_rdf(json_string)
+        build_subjects(graph)
         apply_statements(graph)
 
         if @subjects.size > 1
@@ -37,6 +38,12 @@ module DataFoodConsortium
       def parse_rdf(json_string)
         json_file = StringIO.new(json_string)
         RDF::Graph.new << JSON::LD::API.toRdf(json_file)
+      end
+
+      def build_subjects(graph)
+        graph.query({ predicate: RDF.type }).each do |statement|
+          @subjects[statement.subject] = build_subject(statement)
+        end
       end
 
       def build_subject(type_statement)
@@ -56,7 +63,7 @@ module DataFoodConsortium
       def apply_statement(statement)
         subject = subject_of(statement)
         property_id = statement.predicate.value
-        value = statement.object.object
+        value = resolve_object(statement.object)
 
         return unless subject.hasSemanticProperty?(property_id)
 
@@ -73,7 +80,11 @@ module DataFoodConsortium
       end
 
       def subject_of(statement)
-        @subjects[statement.subject] ||= build_subject(statement)
+        @subjects[statement.subject]
+      end
+
+      def resolve_object(object)
+        @subjects[object] || object.object
       end
     end
   end

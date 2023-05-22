@@ -66,12 +66,7 @@ describe DataFoodConsortium::Connector::Importer, vcr: true do
 
     enterprise, tomato, ocra = result
 
-    # Work in progress, we get only the URLs as hashes:
-    expect(enterprise.suppliedProducts[0][:path]).to eq "/tomato"
-    expect(enterprise.suppliedProducts[1][:path]).to eq "/ocra"
-
-    # We would actually like to resolve the objects:
-    #expect(enterprise.suppliedProducts).to eq [tomato, ocra]
+    expect(enterprise.suppliedProducts).to eq [tomato, ocra]
   end
 
   def import(*args)
