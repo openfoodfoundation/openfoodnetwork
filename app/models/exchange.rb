@@ -122,6 +122,8 @@ class Exchange < ApplicationRecord
   end
 
   def delete_related_exchange_variants
+    return unless incoming?
+
     ExchangeVariant.where(variant_id: variant_ids).
       joins(:exchange).
       where(exchanges: { order_cycle: order_cycle, incoming: false }).

@@ -7,6 +7,8 @@ class ExchangeVariant < ApplicationRecord
   after_destroy :delete_related_outgoing_variants
 
   def delete_related_outgoing_variants
+    return unless exchange.incoming?
+
     ExchangeVariant.where(variant_id: variant_id).
       joins(:exchange).
       where(exchanges: { order_cycle: exchange.order_cycle, incoming: false }).
