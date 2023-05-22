@@ -20,11 +20,16 @@ module DataFoodConsortium
       end
 
       def import(json_string)
+        @subjects = {}
+
         graph = parse_rdf(json_string)
-        head, *tail = graph.to_a
-        subject = build_subject(head)
-        apply_statements(subject, tail)
-        subject
+        apply_statements(graph)
+
+        if @subjects.size > 1
+          @subjects.values
+        else
+          @subjects.values.first
+        end
       end
 
       private
@@ -42,13 +47,15 @@ module DataFoodConsortium
         clazz.new(id)
       end
 
-      def apply_statements(subject, statements)
+      def apply_statements(statements)
         statements.each do |statement|
-          apply_statement(subject, statement)
+          apply_statement(statement)
         end
       end
 
-      def apply_statement(subject, statement)
+      def apply_statement(statement)
+        subject = subject_of(statement)
+
         return unless subject.hasSemanticProperty?(statement.predicate.value)
 
         prop_name = statement.predicate.fragment
@@ -58,6 +65,10 @@ module DataFoodConsortium
 
         value = statement.object.object
         subject.public_send(setter_name, value)
+      end
+
+      def subject_of(statement)
+        @subjects[statement.subject] ||= build_subject(statement)
       end
     end
   end
