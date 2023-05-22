@@ -6,7 +6,7 @@
 
 #images
 
-- unless @product.images.any? || @product.variant_images.any?
+- unless @product.image.present?
   .no-objects-found
     = t('spree.no_images_found')
     \.
@@ -25,7 +25,7 @@
         %th= t('spree.alt_text')
         %th.actions
     %tbody
-      - (@product.variant_images).each do |image|
+      - ([@product.image]).each do |image|
         - tr_class = cycle('odd', 'even')
         - tr_id = spree_dom_id(image)
         %tr{class: tr_class, id: tr_id }

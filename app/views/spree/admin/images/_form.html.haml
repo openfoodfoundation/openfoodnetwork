@@ -1,13 +1,11 @@
 %div
+  = f.hidden_field :viewable_id, value: @product.id
+
   .four.columns.alpha
     .field
       = f.label t('spree.filename')
       %br/
       = f.file_field :attachment
-    .field
-      = f.label Spree::Variant.model_name.human
-      %br/
-      = f.select :viewable_id, @variants, {}, {class: 'select2 fullwidth'}
   .field.omega.five.columns
     = f.label t('spree.alt_text')
     %br/

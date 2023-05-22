@@ -11,7 +11,7 @@ module Api
         end
 
         def image_url
-          object.images.first&.url(:mini)
+          object.image&.url(:mini)
         end
 
         def master_id

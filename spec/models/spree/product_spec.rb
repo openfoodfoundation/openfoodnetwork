@@ -17,7 +17,7 @@ module Spree
           clone = product.duplicate
           expect(clone.name).to eq 'COPY OF ' + product.name
           expect(clone.master.sku).to eq ''
-          expect(clone.images.size).to eq product.images.size
+          expect(clone.image).to eq product.image
         end
       end
 
@@ -421,11 +421,11 @@ module Spree
         end
       end
 
-      describe "#validate_image_for_master" do
-        let(:product) { build_stubbed(:simple_product) }
+      describe "#validate_image" do
+        let(:product) { create(:product_with_image) }
 
-        context "when the image attached to the master variant is invalid" do
-          before { product.master.images.new.errors.add(:image_not_processable, "invalid") }
+        context "when the image is invalid" do
+          before { expect(product.image).to receive(:valid?).and_return(false) }
 
           it "adds an error message to the base object" do
             expect(product).not_to be_valid

@@ -168,7 +168,7 @@ class ProductsTableComponent < ViewComponentReflex::Component
 
   def product_query_includes
     [
-      master: [:images],
+      :image,
       variants: [
         :default_price,
         :stock_locations,

@@ -42,8 +42,8 @@ FactoryBot.define do
   factory :product_with_image, parent: :product do
     after(:create) do |product|
       Spree::Image.create(attachment: white_logo_file,
-                          viewable_id: product.master.id,
-                          viewable_type: 'Spree::Variant')
+                          viewable_id: product.id,
+                          viewable_type: 'Spree::Product')
     end
   end
 

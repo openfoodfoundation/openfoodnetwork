@@ -527,10 +527,6 @@ describe '
 
       page.find('a#new_image_link').click
 
-      uri = URI.parse(current_url)
-      # we stay on the same url as the new image content is loaded via an ajax call
-      expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
-
       expected_cancel_link = Regexp.new(Regexp.escape(spree.admin_product_images_path(product,
                                                                                       filter)))
       expect(page).to have_link('Cancel', href: expected_cancel_link)
@@ -628,14 +624,14 @@ describe '
 
       visit spree.admin_product_images_path(product)
       expect(page).to have_selector "table.index td img"
-      expect(product.reload.images.count).to eq 1
+      expect(product.reload.image).to_not be_nil
 
       accept_alert do
         page.find('a.delete-resource').click
       end
 
       expect(page).to_not have_selector "table.index td img"
-      expect(product.reload.images.count).to eq 0
+      expect(product.reload.image).to be_nil
     end
 
     it "deleting product image including url filter" do

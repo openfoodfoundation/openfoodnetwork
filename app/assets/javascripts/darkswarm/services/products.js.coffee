@@ -33,9 +33,9 @@ angular.module('Darkswarm').factory 'Products', (OrderCycleResource, OrderCycle,
           prices = (v.price for v in product.variants)
           product.price = Math.min.apply(null, prices)
         product.hasVariants = product.variants?.length > 0
-        product.primaryImage = product.images[0]?.small_url if product.images
+        product.primaryImage = product.image?.small_url if product.image
         product.primaryImageOrMissing = product.primaryImage || "/noimage/small.png"
-        product.largeImage = product.images[0]?.large_url if product.images
+        product.largeImage = product.image?.large_url if product.image
 
     dereference: ->
       for product in @fetched_products

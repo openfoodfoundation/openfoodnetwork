@@ -8,8 +8,8 @@ class ImageImporter
 
     Spree::Image.create(
       attachment: { io: file, filename: filename },
-      viewable_id: product.master.id,
-      viewable_type: Spree::Variant,
+      viewable_id: product.id,
+      viewable_type: Spree::Product,
     )
   end
 end
