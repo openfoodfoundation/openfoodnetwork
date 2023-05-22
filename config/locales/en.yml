@@ -1186,6 +1186,9 @@ en:
           remove_logo_success: "Logo removed"
           white_label_logo_link_label: "Link for the logo used in shopfront"
           hide_groups_tab: "Hide groups tab in shopfront"
+          create_custom_tab: "Create custom tab in shopfront"
+          custom_tab_title: "Title for custom tab"
+          custom_tab_content: "Content for custom tab"
       actions:
         edit_profile: Settings
         properties: Properties

@@ -18,7 +18,8 @@ module PermittedAttributes
         shipping_method_ids: [], payment_method_ids: [],
         address_attributes: PermittedAttributes::Address.attributes,
         business_address_attributes: PermittedAttributes::BusinessAddress.attributes,
-        producer_properties_attributes: [:id, :property_name, :value, :_destroy]
+        producer_properties_attributes: [:id, :property_name, :value, :_destroy],
+        custom_tab_attributes: PermittedAttributes::CustomTab.attributes,
       ]
     end
 

@@ -47,6 +47,7 @@ module Admin
     def edit
       @object = Enterprise.where(permalink: params[:id]).
         includes(users: [:ship_address, :bill_address]).first
+      @object.build_custom_tab if @object.custom_tab.nil?
       if params[:stimulus]
         @enterprise.is_primary_producer = params[:is_primary_producer]
         @enterprise.sells = params[:enterprise_sells]

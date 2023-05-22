@@ -37,3 +37,22 @@
     = f.label :hide_groups_tab, t('.hide_groups_tab')
   .three.columns
     = f.check_box :hide_groups_tab
+
+.row
+  .three.columns.alpha
+    = label_tag :custom_tab, t('.create_custom_tab')
+  .three.columns
+    = check_box_tag :custom_tab, true, @object.custom_tab&.title.present?, { "data-controller": "checkbox-display", "data-checkbox-display-target-id-value": "custom_tab_form" }
+
+%div{id: "custom_tab_form"}
+  = f.fields_for :custom_tab, @object.custom_tab do |custom_tab_form|  
+    .row
+      .three.columns.alpha
+        = custom_tab_form.label :title, t('.custom_tab_title')
+      .eight.columns
+        = custom_tab_form.text_field :title
+    .row
+      .three.columns.alpha
+        = custom_tab_form.label :content, t('.custom_tab_content')
+      .eight.columns
+        = custom_tab_form.text_area :content, rows: 5

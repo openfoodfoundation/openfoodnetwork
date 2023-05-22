@@ -85,6 +85,7 @@ class Enterprise < ApplicationRecord
                                             reject_if: lambda { |tag_rule|
                                               tag_rule[:preferred_customer_tags].blank?
                                             }
+  accepts_nested_attributes_for :custom_tab
 
   has_one_attached :logo
   has_one_attached :promo_image
