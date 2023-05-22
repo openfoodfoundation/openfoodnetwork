@@ -45,7 +45,7 @@ describe "Packing Reports" do
 
       create(:line_item_with_shipment, variant: variant1, quantity: 1, order: order1)
       create(:line_item_with_shipment, variant: variant2, quantity: 3, order: order1)
-      create(:line_item_with_shipment, variant: product2.master, quantity: 3, order: order2)
+      create(:line_item_with_shipment, variant: product2.variants.first, quantity: 3, order: order2)
     end
 
     describe "Pack By Customer" do

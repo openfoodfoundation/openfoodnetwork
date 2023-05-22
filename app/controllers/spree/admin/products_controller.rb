@@ -121,8 +121,7 @@ module Spree
       end
 
       def product_includes
-        [:image, { variants: [:images] },
-         { master: [:default_price] }]
+        [:image, { variants: [:images] }]
       end
 
       def collection_actions
@@ -229,11 +228,9 @@ module Spree
       end
 
       def product_variant(product)
-        if product.variants.any?
-          product.variants.first
-        else
-          product.master
-        end
+        return unless product.variants.any?
+
+        product.variants.first
       end
 
       def set_product_master_variant_price_to_zero

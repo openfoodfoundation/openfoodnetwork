@@ -7,8 +7,6 @@ module Spree
     class VariantsController < ::Admin::ResourceController
       belongs_to 'spree/product', find_by: :permalink
 
-      before_action :assign_default_attributes, only: :new
-
       def index
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
@@ -81,11 +79,6 @@ module Spree
 
       def create_before
         @object.save
-      end
-
-      def assign_default_attributes
-        @object.attributes = @object.product.master.
-          attributes.except('id', 'created_at', 'deleted_at', 'sku', 'is_master')
       end
 
       def collection

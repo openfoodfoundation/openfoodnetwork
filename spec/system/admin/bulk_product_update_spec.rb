@@ -228,9 +228,9 @@ describe '
   end
 
   context "creating new variants" do
+    let!(:product) { create(:product, variant_unit: 'weight', variant_unit_scale: 1000) }
+
     before do
-      # Given a product without variants or a unit
-      p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
       login_as_admin
       visit spree.admin_products_path
 
@@ -278,18 +278,19 @@ describe '
     end
 
     context "handle the 'on_demand' variant case creation" do
+      let(:v1) { create(:variant, product: product, on_hand: 4) }
+      let(:v2) { create(:variant, product: product, on_demand: true) }
+
       before do
-        p = Spree::Product.first
-        p.master.update_attribute(:on_hand, 5)
-        p.save
-        v1 = FactoryBot.create(:variant, product: p, is_master: false, on_hand: 4)
-        v2 = FactoryBot.create(:variant, product: p, is_master: false, on_demand: true)
-        p.variants << v1
-        p.variants << v2
+        product.variants << v1
+        product.variants << v2
+
+        visit spree.admin_products_path
+        page.find('a.view-variants').click
       end
 
       it "when variant unit value is: '120'" do
-        within "tr#v_#{Spree::Variant.second.id}" do
+        within "tr#v_#{v2.id}" do
           page.find(".add-variant").click
         end
 
@@ -303,7 +304,7 @@ describe '
       end
 
       it "creating a variant with unit value is: '120g' and 'on_hand' filled" do
-        within "tr#v_#{Spree::Variant.second.id}" do
+        within "tr#v_#{v2.id}" do
           page.find(".add-variant").click
         end
 
@@ -318,7 +319,7 @@ describe '
       end
 
       it "creating a variant with unit value is: '120g' and 'on_demand' checked" do
-        within "tr#v_#{Spree::Variant.second.id}" do
+        within "tr#v_#{v2.id}" do
           page.find(".add-variant").trigger("click")
         end
 

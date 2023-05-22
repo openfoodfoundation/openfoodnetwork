@@ -27,8 +27,8 @@ FactoryBot.define do
         product_1 = create(:product)
         product_2 = create(:product)
 
-        stock_location.stock_items.where(variant_id: product_1.master.id).first.adjust_count_on_hand(10)
-        stock_location.stock_items.where(variant_id: product_2.master.id).first.adjust_count_on_hand(20)
+        stock_location.stock_items.where(variant_id: product_1.variants.first.id).first.adjust_count_on_hand(10)
+        stock_location.stock_items.where(variant_id: product_2.variants.first.id).first.adjust_count_on_hand(20)
       end
     end
   end

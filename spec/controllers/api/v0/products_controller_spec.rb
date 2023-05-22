@@ -208,13 +208,6 @@ describe Api::V0::ProductsController, type: :controller do
         spree_post :clone, product_id: product.id, format: :json
         expect(Spree::Product.second.variants.count).not_to eq Spree::Product.first.variants.count
       end
-
-      # price info: it does not consider price changes; it considers the price set upon product creation
-      it '(does not) clone master price which was updated' do
-        product.master.update_attribute(:price, 2.22)
-        spree_post :clone, product_id: product.id, format: :json
-        expect(json_response['price']).not_to eq(2.22)
-      end
     end
 
     context 'as an administrator' do

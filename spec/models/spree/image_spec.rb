@@ -9,7 +9,7 @@ module Spree
     subject {
       Spree::Image.create!(
         attachment: black_logo_file,
-        viewable: product.master,
+        viewable: product,
       )
     }
     let(:product) { create(:product) }

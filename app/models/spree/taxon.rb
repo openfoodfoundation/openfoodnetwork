@@ -79,7 +79,7 @@ module Spree
 
       taxons = Spree::Taxon
         .select("DISTINCT spree_taxons.id, ents_and_vars.enterprise_id")
-        .joins(products: :variants_including_master)
+        .joins(products: :variants)
         .joins("
           INNER JOIN (#{ents_and_vars.to_sql}) AS ents_and_vars
           ON spree_variants.id = ents_and_vars.variant_id")

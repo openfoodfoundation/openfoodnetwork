@@ -232,7 +232,7 @@ describe ProductImport::ProductImporter do
       carrots = Spree::Product.find_by(name: 'Good Carrots')
       expect(carrots.supplier).to eq enterprise
       expect(carrots.on_hand).to eq 5
-      expect(carrots.price).to eq 3.20
+      expect(carrots.variants.first.price).to eq 3.20
       expect(carrots.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       expect(Spree::Product.find_by(name: 'Bad Potatoes')).to eq nil
@@ -275,7 +275,7 @@ describe ProductImport::ProductImporter do
 
       carrots = Spree::Product.find_by(name: 'Good Carrots')
       expect(carrots.on_hand).to eq 5
-      expect(carrots.price).to eq 3.20
+      expect(carrots.variants.first.price).to eq 3.20
       expect(carrots.primary_taxon.name).to eq "Vegetables"
       expect(carrots.shipping_category).to eq shipping_category
       expect(carrots.supplier).to eq enterprise

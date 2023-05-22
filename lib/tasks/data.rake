@@ -46,7 +46,7 @@ namespace :ofn do
           end
 
           # For each variant in the exchange
-          products = Spree::Product.joins(:variants_including_master).where(
+          products = Spree::Product.joins(:variants).where(
             'spree_variants.id IN (?)', exchange.variants
           ).pluck(:id).uniq
           producers = Enterprise.joins(:supplied_products).where("spree_products.id IN (?)",

@@ -29,7 +29,7 @@ module Spree
     acts_as_paranoid
 
     searchable_attributes :supplier_id, :primary_taxon_id, :meta_keywords
-    searchable_associations :supplier, :properties, :primary_taxon, :variants, :master
+    searchable_associations :supplier, :properties, :primary_taxon, :variants
     searchable_scopes :active, :with_properties
 
     has_many :product_properties, dependent: :destroy
@@ -45,19 +45,9 @@ module Spree
 
     has_one :image, class_name: "Spree::Image", as: :viewable, dependent: :destroy
 
-    has_one :master,
-            -> { where is_master: true },
-            class_name: 'Spree::Variant',
-            dependent: :destroy
-
     has_many :variants, -> {
       where(is_master: false).order("spree_variants.position ASC")
-    }, class_name: 'Spree::Variant'
-
-    has_many :variants_including_master,
-             -> { order("spree_variants.position ASC") },
-             class_name: 'Spree::Variant',
-             dependent: :destroy
+    }, class_name: 'Spree::Variant', dependent: :destroy
 
     has_many :prices, -> {
       order('spree_variants.position, spree_variants.id, currency')
@@ -81,11 +71,8 @@ module Spree
     # these values are persisted on the product's variant
     attr_accessor :price, :display_as, :unit_value, :unit_description
 
-    after_create :set_master_variant_defaults
-    after_save :save_master
-
     has_many :variant_images, -> { order(:position) }, source: :images,
-                                                       through: :variants_including_master
+                                                       through: :variants
 
     accepts_nested_attributes_for :variants, allow_destroy: true
     accepts_nested_attributes_for :image
@@ -114,13 +101,12 @@ module Spree
 
     make_permalink order: :name
 
-    after_initialize :ensure_master
     after_initialize :set_available_on_to_now, if: :new_record?
 
     before_validation :sanitize_permalink
     before_save :add_primary_taxon_to_taxons
     after_save :remove_previous_primary_taxon_from_taxons
-    after_save :ensure_standard_variant
+    after_create :ensure_standard_variant
     after_save :update_units
 
     before_destroy :punch_permalink
@@ -149,7 +135,7 @@ module Spree
     }
 
     scope :with_order_cycles_inner, -> {
-      joins(variants_including_master: { exchanges: :order_cycle })
+      joins(variants: { exchanges: :order_cycle })
     }
 
     scope :visible_for, lambda { |enterprise|
@@ -282,13 +268,6 @@ module Spree
       stock_items.sum(&:count_on_hand)
     end
 
-    # Master variant may be deleted (i.e. when the product is deleted)
-    # which would make AR's default finder return nil.
-    # This is a stopgap for that little problem.
-    def master
-      super || variants_including_master.with_deleted.find_by(is_master: true)
-    end
-
     def properties_including_inherited
       # Product properties override producer properties
       ps = product_properties.all
@@ -324,7 +303,7 @@ module Spree
         touch_distributors
 
         ExchangeVariant.
-          where('exchange_variants.variant_id IN (?)', variants_including_master.with_deleted.
+          where('exchange_variants.variant_id IN (?)', variants.with_deleted.
           select(:id)).destroy_all
 
         super
@@ -332,33 +311,6 @@ module Spree
     end
 
     private
-
-    # ensures the master variant is flagged as such
-    def set_master_variant_defaults
-      master.is_master = true
-    end
-
-    # Here we rescue errors when saving master variants (without the need for a
-    #   validates_associated on master) and we get more specific data about the errors
-    def save_master
-      if master && (master.changed? || master.new_record?)
-        master.save!
-      end
-
-      # If the master cannot be saved, the Product object will get its errors
-      # and will be destroyed
-    rescue ActiveRecord::RecordInvalid
-      master.errors.each do |error|
-        errors.add error.attribute, error.message
-      end
-      raise
-    end
-
-    def ensure_master
-      return unless new_record?
-
-      self.master ||= Variant.new
-    end
 
     def punch_permalink
       # Punch permalink with date prefix
@@ -372,7 +324,7 @@ module Spree
     def update_units
       return unless saved_change_to_variant_unit? || saved_change_to_variant_unit_name?
 
-      variants_including_master.each(&:update_units)
+      variants.each(&:update_units)
     end
 
     def touch_distributors
@@ -390,11 +342,10 @@ module Spree
     end
 
     def ensure_standard_variant
-      return unless master.valid? && variants.empty?
+      return unless variants.empty?
 
-      variant = master.dup
+      variant = Spree::Variant.new
       variant.product = self
-      variant.is_master = false
       variant.price = price
       variant.display_as = display_as
       variant.unit_value = unit_value

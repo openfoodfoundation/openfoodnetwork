@@ -13,7 +13,7 @@ describe "Enterprises", type: :request do
 
       expect(response).to have_http_status :ok
       expect(response.body).to include(product.name)
-      expect(response.body).to include(product.sku)
+      expect(response.body).to include(product.variants.first.sku)
       expect(response.body).to include("offers/#{product.variants.first.id}")
     end
 

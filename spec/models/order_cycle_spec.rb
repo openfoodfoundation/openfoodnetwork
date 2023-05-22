@@ -153,10 +153,10 @@ describe OrderCycle do
   it "checks for variants" do
     p1 = create(:simple_product)
     p2 = create(:simple_product)
-    oc = create(:simple_order_cycle, suppliers: [p1.supplier], variants: [p1.master])
+    oc = create(:simple_order_cycle, suppliers: [p1.supplier], variants: [p1.variants.first])
 
-    expect(oc).to have_variant(p1.master)
-    expect(oc).not_to have_variant(p2.master)
+    expect(oc).to have_variant(p1.variants.first)
+    expect(oc).not_to have_variant(p2.variants.first)
   end
 
   describe "product exchanges" do
@@ -193,18 +193,18 @@ describe OrderCycle do
       p1_v_deleted.deleted_at = Time.zone.now
       p1_v_deleted.save
 
-      e0.variants << p0.master
-      e1.variants << p1.master
-      e1.variants << p2.master
+      e0.variants << p0.variants.first
+      e1.variants << p1.variants.first
+      e1.variants << p2.variants.first
       e1.variants << p2_v
-      e2.variants << p1.master
+      e2.variants << p1.variants.first
       e2.variants << p1_v_deleted
       e2.variants << p1_v_visible
       e2.variants << p1_v_hidden
     end
 
     it "reports on the variants exchanged" do
-      expect(oc.variants).to match_array [p0.master, p1.master, p2.master, p2_v, p1_v_visible,
+      expect(oc.variants).to match_array [p0.variants.first, p1.variants.first, p2.variants.first, p2_v, p1_v_visible,
                                           p1_v_hidden]
     end
 
@@ -213,11 +213,11 @@ describe OrderCycle do
     end
 
     it "reports on the variants supplied" do
-      expect(oc.supplied_variants).to match_array [p0.master]
+      expect(oc.supplied_variants).to match_array [p0.variants.first]
     end
 
     it "reports on the variants distributed" do
-      expect(oc.distributed_variants).to match_array [p1.master, p2.master, p2_v, p1_v_visible,
+      expect(oc.distributed_variants).to match_array [p1.variants.first, p2.variants.first, p2_v, p1_v_visible,
                                                       p1_v_hidden]
     end
 
@@ -236,7 +236,7 @@ describe OrderCycle do
         end
 
         it "returns all variants in the outgoing exchange for the distributor provided" do
-          expect(oc.variants_distributed_by(d2)).to include p1.master, p1_v_visible
+          expect(oc.variants_distributed_by(d2)).to include p1.variants.first, p1_v_visible
           expect(oc.variants_distributed_by(d2)).not_to include p1_v_hidden, p1_v_deleted
           expect(oc.variants_distributed_by(d1)).to include p2_v
         end
