@@ -561,8 +561,8 @@ describe '
     it "loading edit product image page including url filter" do
       product = create(:simple_product, supplier: @supplier2)
       image = white_logo_file
-      image_object = Spree::Image.create(viewable_id: product.master.id,
-                                         viewable_type: 'Spree::Variant', alt: "position 1",
+      image_object = Spree::Image.create(viewable_id: product.id,
+                                         viewable_type: 'Spree::Product', alt: "position 1",
                                          attachment: image, position: 1)
 
       visit spree.admin_product_images_path(product, filter)
@@ -582,8 +582,8 @@ describe '
     it "updating a product image including url filter" do
       product = create(:simple_product, supplier: @supplier2)
       image = white_logo_file
-      image_object = Spree::Image.create(viewable_id: product.master.id,
-                                         viewable_type: 'Spree::Variant', alt: "position 1",
+      image_object = Spree::Image.create(viewable_id: product.id,
+                                         viewable_type: 'Spree::Product', alt: "position 1",
                                          attachment: image, position: 1)
 
       file_path = Rails.root + "spec/support/fixtures/thinking-cat.jpg"
@@ -604,7 +604,7 @@ describe '
       product = create(:simple_product, supplier: @supplier2)
 
       image = white_logo_file
-      Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant',
+      Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
                           alt: "position 1", attachment: image, position: 1)
 
       visit spree.admin_product_images_path(product)
@@ -619,7 +619,7 @@ describe '
     it "deleting product images" do
       product = create(:simple_product, supplier: @supplier2)
       image = white_logo_file
-      Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant',
+      Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
                           alt: "position 1", attachment: image, position: 1)
 
       visit spree.admin_product_images_path(product)
@@ -637,7 +637,7 @@ describe '
     it "deleting product image including url filter" do
       product = create(:simple_product, supplier: @supplier2)
       image = white_logo_file
-      Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant',
+      Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
                           alt: "position 1", attachment: image, position: 1)
 
       visit spree.admin_product_images_path(product, filter)

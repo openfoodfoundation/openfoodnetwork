@@ -33,6 +33,4 @@ angular.module('admin.orderCycles').factory('Enterprise', ($resource) ->
     variantsOf: (product) ->
       if product.variants.length > 0
         variant.id for variant in product.variants
-      else
-        [product.master_id]
   })

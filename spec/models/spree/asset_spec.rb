@@ -6,7 +6,7 @@ describe Spree::Asset do
   describe "#viewable" do
     it "touches association" do
       product = create(:product)
-      asset = Spree::Asset.create! { |a| a.viewable = product.master }
+      asset = Spree::Asset.create! { |a| a.viewable = product }
 
       product.update_column(:updated_at, 1.day.ago)
 

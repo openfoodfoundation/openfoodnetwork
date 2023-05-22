@@ -568,7 +568,7 @@ describe '
     let(:order_cycle) {
       create(:simple_order_cycle, coordinator: distributor1,
                                   coordinator_fees: [enterprise_fee1, enterprise_fee2],
-                                  distributors: [distributor1], variants: [product1.master])
+                                  distributors: [distributor1], variants: [product1.variants.first])
     }
 
     let!(:zone) { create(:zone_with_member) }

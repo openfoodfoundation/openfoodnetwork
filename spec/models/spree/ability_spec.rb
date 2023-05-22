@@ -337,7 +337,7 @@ describe Spree::Ability do
         is_expected.to have_ability([:admin, :read, :update, :bulk_update, :clone, :destroy],
                                     for: p1)
         is_expected.to have_ability(
-          [:admin, :index, :read, :edit, :update, :search, :destroy, :delete], for: p1.master
+          [:admin, :index, :read, :edit, :update, :search, :destroy, :delete], for: p1.variants.first
         )
       end
 
@@ -346,7 +346,7 @@ describe Spree::Ability do
         is_expected.to have_ability([:admin, :read, :update, :bulk_update, :clone, :destroy],
                                     for: p_related)
         is_expected.to have_ability(
-          [:admin, :index, :read, :edit, :update, :search, :destroy, :delete], for: p_related.master
+          [:admin, :index, :read, :edit, :update, :search, :destroy, :delete], for: p_related.variants.first
         )
       end
 
@@ -354,7 +354,7 @@ describe Spree::Ability do
         is_expected.not_to have_ability([:admin, :read, :update, :bulk_update, :clone, :destroy],
                                         for: p2)
         is_expected.not_to have_ability([:admin, :index, :read, :edit, :update, :search, :destroy],
-                                        for: p2.master)
+                                        for: p2.variants.first)
       end
 
       it "should not be able to access admin actions on orders" do
@@ -369,13 +369,13 @@ describe Spree::Ability do
         is_expected.to have_ability([:create], for: Spree::Variant)
         is_expected.to have_ability(
           [:admin, :index, :read, :create, :edit, :search, :update, :destroy,
-           :delete], for: p1.master
+           :delete], for: p1.variants.first
         )
       end
 
       it "should not be able to read/write other enterprises' product variants" do
         is_expected.not_to have_ability(
-          [:admin, :index, :read, :create, :edit, :search, :update, :destroy], for: p2.master
+          [:admin, :index, :read, :create, :edit, :search, :update, :destroy], for: p2.variants.first
         )
       end
 
@@ -554,10 +554,10 @@ describe Spree::Ability do
       end
 
       describe "variant overrides" do
-        let(:vo1) { create(:variant_override, hub: d1, variant: p1.master) }
-        let(:vo2) { create(:variant_override, hub: d1, variant: p2.master) }
-        let(:vo3) { create(:variant_override, hub: d2, variant: p1.master) }
-        let(:vo4) { create(:variant_override, hub: d2, variant: p2.master) }
+        let(:vo1) { create(:variant_override, hub: d1, variant: p1.variants.first) }
+        let(:vo2) { create(:variant_override, hub: d1, variant: p2.variants.first) }
+        let(:vo3) { create(:variant_override, hub: d2, variant: p1.variants.first) }
+        let(:vo4) { create(:variant_override, hub: d2, variant: p2.variants.first) }
 
         let!(:er1) {
           create(:enterprise_relationship, parent: s1, child: d1,

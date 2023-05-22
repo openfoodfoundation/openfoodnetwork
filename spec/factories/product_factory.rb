@@ -32,7 +32,6 @@ FactoryBot.define do
       tax_category { |r| Spree::TaxCategory.first || r.association(:tax_category) }
 
       after(:create) do |product, evaluator|
-        product.master.on_hand = evaluator.on_hand
         product.variants.first.on_hand = evaluator.on_hand
         product.reload
       end
@@ -53,8 +52,6 @@ FactoryBot.define do
       on_hand { 5 }
     end
     after(:create) do |product, evaluator|
-      product.master.on_demand = evaluator.on_demand
-      product.master.on_hand = evaluator.on_hand
       product.variants.first.on_demand = evaluator.on_demand
       product.variants.first.on_hand = evaluator.on_hand
       product.reload

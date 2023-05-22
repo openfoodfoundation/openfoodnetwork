@@ -38,7 +38,7 @@ describe Exchange do
     e = create(:exchange)
     p = create(:product)
 
-    e.exchange_variants.create(variant: p.master)
+    e.exchange_variants.create(variant: p.variants.first)
     expect(e.variants.count).to eq(1)
   end
 
@@ -243,16 +243,7 @@ describe Exchange do
       expect(Exchange.with_any_variant([v1.id, v2.id, v3.id])).to eq([ex])
     end
 
-    it "finds exchanges with a particular product's master variant" do
-      p = create(:simple_product)
-      ex = create(:exchange)
-      ex.variants << p.master
-      p.reload
-
-      expect(Exchange.with_product(p)).to eq([ex])
-    end
-
-    it "finds exchanges with a particular product's non-master variant" do
+    it "finds exchanges with a particular product's variant" do
       p = create(:simple_product)
       v = create(:variant, product: p)
       ex = create(:exchange)

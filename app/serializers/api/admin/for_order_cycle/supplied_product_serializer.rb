@@ -4,7 +4,7 @@ module Api
   module Admin
     module ForOrderCycle
       class SuppliedProductSerializer < ActiveModel::Serializer
-        attributes :name, :supplier_name, :image_url, :master_id, :variants
+        attributes :name, :supplier_name, :image_url, :variants
 
         def supplier_name
           object.supplier&.name
@@ -12,10 +12,6 @@ module Api
 
         def image_url
           object.image&.url(:mini)
-        end
-
-        def master_id
-          object.master.id
         end
 
         def variants

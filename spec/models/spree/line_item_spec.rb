@@ -477,7 +477,7 @@ module Spree
       describe "inheriting units" do
         let!(:p) {
           create(:product, variant_unit: "weight", variant_unit_scale: 1,
-                           master: create(:variant, unit_value: 1000 ))
+                           unit_value: 1000 )
         }
         let!(:v) { p.variants.first }
         let!(:o) { create(:order) }

@@ -232,16 +232,16 @@ describe Spree::Variant do
       let!(:d2) { create(:distributor_enterprise) }
       let!(:p1) { create(:simple_product) }
       let!(:p2) { create(:simple_product) }
-      let!(:oc1) { create(:simple_order_cycle, distributors: [d1], variants: [p1.master]) }
-      let!(:oc2) { create(:simple_order_cycle, distributors: [d2], variants: [p2.master]) }
+      let!(:oc1) { create(:simple_order_cycle, distributors: [d1], variants: [p1.variants.first]) }
+      let!(:oc2) { create(:simple_order_cycle, distributors: [d2], variants: [p2.variants.first]) }
 
       it "shows variants in an order cycle distribution" do
-        expect(Spree::Variant.in_distributor(d1)).to eq([p1.master])
+        expect(Spree::Variant.in_distributor(d1)).to eq([p1.variants.first])
       end
 
       it "doesn't show duplicates" do
-        oc_dup = create(:simple_order_cycle, distributors: [d1], variants: [p1.master])
-        expect(Spree::Variant.in_distributor(d1)).to eq([p1.master])
+        oc_dup = create(:simple_order_cycle, distributors: [d1], variants: [p1.variants.first])
+        expect(Spree::Variant.in_distributor(d1)).to eq([p1.variants.first])
       end
     end
 
@@ -250,18 +250,18 @@ describe Spree::Variant do
       let!(:d2) { create(:distributor_enterprise) }
       let!(:p1) { create(:product) }
       let!(:p2) { create(:product) }
-      let!(:oc1) { create(:simple_order_cycle, distributors: [d1], variants: [p1.master]) }
-      let!(:oc2) { create(:simple_order_cycle, distributors: [d2], variants: [p2.master]) }
+      let!(:oc1) { create(:simple_order_cycle, distributors: [d1], variants: [p1.variants.first]) }
+      let!(:oc2) { create(:simple_order_cycle, distributors: [d2], variants: [p2.variants.first]) }
 
       it "shows variants in an order cycle" do
-        expect(Spree::Variant.in_order_cycle(oc1)).to eq([p1.master])
+        expect(Spree::Variant.in_order_cycle(oc1)).to eq([p1.variants.first])
       end
 
       it "doesn't show duplicates" do
         ex = create(:exchange, order_cycle: oc1, sender: oc1.coordinator, receiver: d2)
-        ex.variants << p1.master
+        ex.variants << p1.variants.first
 
-        expect(Spree::Variant.in_order_cycle(oc1)).to eq([p1.master])
+        expect(Spree::Variant.in_order_cycle(oc1)).to eq([p1.variants.first])
       end
     end
 
@@ -520,10 +520,6 @@ describe Spree::Variant do
           variant.unit_value = nil
           expect(variant).not_to be_valid
         end
-
-        it "has a valid master variant" do
-          expect(product.master).to be_valid
-        end
       end
     end
 
@@ -551,10 +547,6 @@ describe Spree::Variant do
         variant.unit_description = nil
         expect(variant).to be_valid
         expect(variant.unit_value).to eq 1.0
-      end
-
-      it "has a valid master variant" do
-        expect(product.master).to be_valid
       end
     end
 

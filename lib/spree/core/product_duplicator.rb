@@ -25,15 +25,9 @@ module Spree
           new_product.deleted_at = nil
           new_product.updated_at = nil
           new_product.product_properties = reset_properties
-          new_product.master = duplicate_master
-          new_product.image = duplicate_image(product.image) if product.image&.attached?
+          new_product.image = duplicate_image(product.image) if product.image
           new_product.variants = duplicate_variants
         end
-      end
-
-      def duplicate_master
-        master = product.master
-        duplicate_variant(master)
       end
 
       def duplicate_variants
