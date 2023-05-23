@@ -1,6 +1,7 @@
 tags-input {
   &.limit-reached {
-    input, span.input {
+    input,
+    span.input {
       display: none;
     }
   }
@@ -19,7 +20,8 @@ tags-input {
   }
 }
 
-.customer_tag, .default_rules {
+.customer_tag,
+.default_rules {
   background-color: #ffffff;
   border: 1px solid $pale-blue;
   margin-bottom: 40px;
@@ -86,8 +88,9 @@ tags-input {
   }
 }
 
-#new-tag-rule-dialog{
-  .select2-chosen, .select2-result-label{
+#new-tag-rule-dialog {
+  .select2-chosen,
+  .select2-result-label {
     font-size: 1rem;
     font-weight: lighter;
   }

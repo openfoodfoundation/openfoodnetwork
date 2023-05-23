@@ -8,14 +8,16 @@ form.order_cycle {
 
     tr {
       &:hover {
-        td { background: none; }
+        td {
+          background: none;
+        }
       }
 
       td {
         border: none;
       }
 
-      #add-remove-buttons{
+      #add-remove-buttons {
         width: 10%;
         height: 200px;
         max-height: 300px;
@@ -28,7 +30,8 @@ form.order_cycle {
           font-size: 1em;
         }
       }
-      #available-order-cycles, #selected-order-cycles {
+      #available-order-cycles,
+      #selected-order-cycles {
         text-align: left;
         width: 40%;
         height: 200px;

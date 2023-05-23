@@ -2,12 +2,13 @@ table tbody tr:hover td {
   background-color: inherit;
 }
 
-table tbody tr:hover >td {
+table tbody tr:hover > td {
   background-color: #e9f3fc;
 }
 
 table.layout {
-  tr, tr:hover {
+  tr,
+  tr:hover {
     td {
       background-color: transparent;
     }

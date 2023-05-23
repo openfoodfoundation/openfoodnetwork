@@ -9,12 +9,14 @@
   }
 }
 
-table#enterprise-relationships, table#enterprise-roles {
+table#enterprise-relationships,
+table#enterprise-roles {
   ul {
     list-style-type: none;
   }
 
-  th.actions, td.actions {
+  th.actions,
+  td.actions {
     width: 16%;
 
     .errors {

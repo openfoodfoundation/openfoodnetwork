@@ -165,7 +165,8 @@ div.dashboard_item {
       border: solid $warning-red;
     }
 
-    &.orange, &.red {
+    &.orange,
+    &.red {
       border-width: 0px 3px 0px 3px;
     }
 
@@ -177,7 +178,8 @@ div.dashboard_item {
       background-color: $spree-light-blue;
     }
 
-    &.even, &.odd {
+    &.even,
+    &.odd {
       &:hover {
         color: #ffffff;
         background-color: $spree-green;

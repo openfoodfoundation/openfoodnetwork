@@ -57,7 +57,6 @@ div.panel-section {
     div.header-description {
       width: auto;
     }
-
   }
 
   div.panel-header:hover {
@@ -67,7 +66,7 @@ div.panel-section {
 
   div.panel-header.active {
     background-color: #efefef;
-    text-shadow: 1px 1px 0px rgba(255,255,255,0.75);
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.75);
   }
 
   div.panel-content {
@@ -87,13 +86,14 @@ div.panel-section {
     table {
       background-color: white;
       margin-bottom: 0;
-      td, th {
+      td,
+      th {
         white-space: nowrap;
       }
 
       tr {
         &.error {
-          color: #c84C4c;
+          color: #c84c4c;
         }
 
         &:hover td.invalid {
@@ -137,7 +137,6 @@ br.panels.clearfix {
 }
 
 .panel-section.import-settings {
-
   .header-description {
     padding-left: 1em;
   }
@@ -189,18 +188,21 @@ br.panels.clearfix {
   }
 }
 
-form.product-import, div.post-save-results, div.import-wrapper {
+form.product-import,
+div.post-save-results,
+div.import-wrapper {
   input[type="submit"] {
     margin-right: 0.5em;
   }
-  input[type="submit"], button, a.button {
+  input[type="submit"],
+  button,
+  a.button {
     min-width: 8em;
     text-align: center;
   }
 }
 
 div.import-wrapper {
-
   .alert-box {
     margin: 0 0 1.75em;
   }
@@ -215,17 +217,20 @@ div.import-wrapper {
     left: -9999px;
   }
 
-  .ng-hide-add, .ng-hide-remove, .ng-hide-animate {
-    transition: all .4s ease-in-out;
+  .ng-hide-add,
+  .ng-hide-remove,
+  .ng-hide-animate {
+    transition: all 0.4s ease-in-out;
   }
 
-  form.product-import, div.save-results {
-    transition: all .4s ease-in-out;
+  form.product-import,
+  div.save-results {
+    transition: all 0.4s ease-in-out;
   }
 
   div.progress-interface {
     text-align: center;
-    transition: all .4s ease-in-out;
+    transition: all 0.4s ease-in-out;
 
     button:disabled {
       background: #ccc !important;
@@ -233,7 +238,7 @@ div.import-wrapper {
   }
 
   .post-save-results {
-    a.button{
+    a.button {
       float: left;
       margin-right: 0.5em;
     }
@@ -250,13 +255,13 @@ div.progress-bar {
   border-radius: 0.3em;
   border: 1px solid #eee;
 
-  span.progress-track{
+  span.progress-track {
     display: block;
     background: lighten($pi-green, 10%);
     height: 100%;
     border-radius: 0.3em;
-    box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
-    transition: width .3s ease-in-out;
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+    transition: width 0.3s ease-in-out;
   }
 }
 
@@ -267,7 +272,10 @@ div.progress-bar {
   width: 50%;
   padding: 0 1.5em 1.5em;
 
-  h4, h5, h6, p {
+  h4,
+  h5,
+  h6,
+  p {
     margin: 1.25em 0 1em;
   }
 

@@ -32,7 +32,8 @@ div.sidebar_item {
         border: solid $warning-red;
         border-width: 0px 3px 0px 3px;
 
-        a.alpha, span.alpha {
+        a.alpha,
+        span.alpha {
           margin-left: -3px;
         }
 
@@ -60,7 +61,8 @@ div.sidebar_item {
     border: solid $spree-blue;
     border-width: 0px 1px 0px 1px;
 
-    a.alpha, span.alpha {
+    a.alpha,
+    span.alpha {
       font-weight: bold;
       margin-left: -1px;
       padding: 10px 2px 10px 5%;
@@ -87,7 +89,8 @@ div.sidebar_item {
       background-color: $spree-light-blue;
     }
 
-    &.even, &.odd {
+    &.even,
+    &.odd {
       &:hover {
         color: #ffffff;
         background-color: $spree-green;
