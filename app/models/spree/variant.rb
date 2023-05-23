@@ -55,17 +55,16 @@ module Spree
 
     validate :check_currency
     validates :price, numericality: { greater_than_or_equal_to: 0 },
-                      presence: true,
-                      if: proc { !is_master }
+                      presence: true
 
     validates :unit_value, presence: true, if: ->(variant) {
-      %w(weight volume).include?(variant.product&.variant_unit) && !variant.is_master
+      %w(weight volume).include?(variant.product&.variant_unit)
     }
 
-    validates :unit_value, numericality: { greater_than: 0 }, if: proc { !is_master }
+    validates :unit_value, numericality: { greater_than: 0 }
 
     validates :unit_description, presence: true, if: ->(variant) {
-      variant.product&.variant_unit.present? && variant.unit_value.nil? && !variant.is_master
+      variant.product&.variant_unit.present? && variant.unit_value.nil?
     }
 
     before_validation :set_cost_currency
