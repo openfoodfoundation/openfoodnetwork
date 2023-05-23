@@ -36,7 +36,7 @@ describe ShopHelper, type: :helper do
       end
 
       it "should show the home tab" do
-        expect(helper.shop_tabs).to include(name: "home", show: true, title: "Home")
+        expect(helper.shop_tabs).to include(name: "home", show: true, title: "Home", default: true)
       end
     end
   end
