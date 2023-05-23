@@ -1,6 +1,7 @@
 import "controllers";
 import "@hotwired/turbo";
 import "../js/mrujs";
+import "../js/matomo";
 import "../js/moment";
 
 require.context("../fonts", true);

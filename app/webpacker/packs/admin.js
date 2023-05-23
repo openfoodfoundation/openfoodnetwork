@@ -2,6 +2,7 @@ import "controllers";
 import "channels";
 import "@hotwired/turbo";
 import "../js/mrujs";
+import "../js/matomo";
 import "../js/moment";
 
 import bigDecimal from "js-big-decimal";
