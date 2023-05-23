@@ -56,13 +56,13 @@
         padding: 0.35em 0 0.65em 0;
         font-size: 0.875em;
       }
-    }
 
-    &.selected {
-      border-bottom: 4px solid $teal-500;
+      &.selected {
+        border-bottom: 4px solid $teal-500;
 
-      a {
-        color: $teal-500;
+        a {
+          color: $teal-500;
+        }
       }
     }
 

@@ -1,15 +1,15 @@
 - if (@order&.distributor || current_distributor) == current_distributor
 
-  - shop_tabs.each do |tab|
-    = render "shopping_shared/tabs/#{tab[:name]}"
-
-  #shop-tabs{ ng: { controller: "PageSelectionCtrl", init: "whitelistPages(#{shop_tab_names.to_json})", cloak: true } }
+  #shop-tabs{"data-controller": "tabs-and-panels", "data-tabs-and-panels-class-name-value": "selected"}
     .tab-buttons
       .flex.row
         .columns.small-12.large-8
           - shop_tabs.each do |tab|
-            .page{ "ng-class" => "{ selected: selectedPage() == '#{tab[:name]}' }" }
-              %a{ href: "##{tab[:name]}" }=tab[:title]
+            .page
+              %a{ id: tab[:name], href: "##{tab[:name]}", data: { action: "tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab", "tabs-and-panels-target": "tab" }, class: ("selected" if tab[:name] == "shop") }=tab[:title]
         .columns.large-4.show-for-large-up
           = render partial: "shopping_shared/order_cycles"
-    .page-view{ ng: {include: "'shop/' + selectedPage() + '.html'" } }
+    - shop_tabs.each do |tab|
+      %div{id: "#{tab[:name]}_panel", "data-tabs-and-panels-target": "panel #{'default' if tab[:name] === "shop"}" } 
+        .page-view
+          = render "shopping_shared/tabs/#{tab[:name]}"

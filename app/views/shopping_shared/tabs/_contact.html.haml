@@ -1,67 +1,66 @@
-%script{ type: "text/ng-template", id: "shop/contact.html" }
-  .content#contact
-    .row
-      .small-12.large-4.columns
-        - if current_distributor.address.address1 || current_distributor.address.address2 || current_distributor.address.city || current_distributor.address.state || current_distributor.address.zipcode
-          %div.center
-            .header
-              = t :shopping_contact_address
-            %span= current_distributor.name
-            %p
-              = current_distributor.address.address1
-              - unless current_distributor.address.address2.blank?
-                %br
-                = current_distributor.address.address2
+.content#contact
+  .row
+    .small-12.large-4.columns
+      - if current_distributor.address.address1 || current_distributor.address.address2 || current_distributor.address.city || current_distributor.address.state || current_distributor.address.zipcode
+        %div.center
+          .header
+            = t :shopping_contact_address
+          %span= current_distributor.name
+          %p
+            = current_distributor.address.address1
+            - unless current_distributor.address.address2.blank?
               %br
-              = current_distributor.address.city
-              = current_distributor.address.state
-              = current_distributor.address.zipcode
+              = current_distributor.address.address2
+            %br
+            = current_distributor.address.city
+            = current_distributor.address.state
+            = current_distributor.address.zipcode
 
-      .small-12.large-4.columns
-        - if current_distributor.website || current_distributor.email_address || current_distributor.phone || current_distributor.whatsapp_phone
-          %div.center
-            .header
-              = t :shopping_contact_web
-            %p
-              - if current_distributor.phone.present?
-                = current_distributor.phone
+    .small-12.large-4.columns
+      - if current_distributor.website || current_distributor.email_address || current_distributor.phone || current_distributor.whatsapp_phone
+        %div.center
+          .header
+            = t :shopping_contact_web
+          %p
+            - if current_distributor.phone.present?
+              = current_distributor.phone
+              %br
+            - if current_distributor.whatsapp_phone.present?
+              %a{href: current_distributor.whatsapp_url, target: "_blank" }
+                %img{ src: image_pack_path("social-logos/whatsapp.svg") }
+                = current_distributor.whatsapp_phone
                 %br
-              - if current_distributor.whatsapp_phone.present?
-                %a{href: current_distributor.whatsapp_url, target: "_blank" }
-                  %img{ src: image_pack_path("social-logos/whatsapp.svg") }
-                  = current_distributor.whatsapp_phone
-                  %br
-              - if current_distributor.website.present?
-                %a{href: "http://#{current_distributor.website}", target: "_blank" }
-                  = current_distributor.website
-                  %br
-              - if current_distributor.email_address.present?
-                %a{href: current_distributor.email_address.reverse, mailto: true}
-                  %span.obfuscatedEmail.email
-                    = current_distributor.email_address.reverse
+            - if current_distributor.website.present?
+              %a{href: "http://#{current_distributor.website}", target: "_blank" }
+                = current_distributor.website
+                %br
+            - if current_distributor.email_address.present?
+              %a{href: current_distributor.email_address.reverse, mailto: true}
+                %span.obfuscatedEmail.email
+                  = current_distributor.email_address.reverse
 
-      .small-12.large-4.columns
-        - if current_distributor.twitter.present? || current_distributor.facebook.present? || current_distributor.linkedin.present? || current_distributor.instagram.present?
-          %div.center
-            .header
-              = t :shopping_contact_social
-            %div.follow-icons
-              - if current_distributor.twitter.present?
-                %span
-                  %a{href: "http://twitter.com/#{current_distributor.twitter}", target: "_blank" }
-                    %i.twitter.ofn-i_041-twitter
+    .small-12.large-4.columns
+      - if current_distributor.twitter.present? || current_distributor.facebook.present? || current_distributor.linkedin.present? || current_distributor.instagram.present?
+        %div.center
+          .header
+            = t :shopping_contact_social
+          %div.follow-icons
+            - if current_distributor.twitter.present?
+              %span
+                %a{href: "http://twitter.com/#{current_distributor.twitter}", target: "_blank" }
+                  %i.twitter.ofn-i_041-twitter
 
-              - if current_distributor.facebook.present?
-                %span
-                  %a{href: "http://#{current_distributor.facebook}", target: "_blank" }
-                    %i.facebook.ofn-i_044-facebook
+            - if current_distributor.facebook.present?
+              %span
+                %a{href: "http://#{current_distributor.facebook}", target: "_blank" }
+                  %i.facebook.ofn-i_044-facebook
 
-              - if current_distributor.linkedin.present?
-                %span
-                  %a{href: "http://#{current_distributor.linkedin}", target: "_blank" }
-                    %i.linkedin.ofn-i_042-linkedin
+            - if current_distributor.linkedin.present?
+              %span
+                %a{href: "http://#{current_distributor.linkedin}", target: "_blank" }
+                  %i.linkedin.ofn-i_042-linkedin
 
-              - if current_distributor.instagram.present?
-                %span
-                  %a{href: "http://instagram.com/#{current_distributor.instagram}", target: "_blank" }
-                    %i.instagram.ofn-i_043-instagram
+            - if current_distributor.instagram.present?
+              %span
+                %a{href: "http://instagram.com/#{current_distributor.instagram}", target: "_blank" }
+                  %i.instagram.ofn-i_043-instagram

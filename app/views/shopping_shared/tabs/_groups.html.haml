@@ -1,13 +1,12 @@
-%script{ type: "text/ng-template", id: "shop/groups.html" }
-  .content
-    .row
-      .small-12.columns
-        - if current_distributor.groups.length > 0
-          %h5
-            =current_distributor.name
-            = t :shopping_groups_part_of
-          %ul.bullet-list.small-block-grid-1.medium-block-grid-2.large-block-grid-3
-            - for group in current_distributor.groups
-              %li
-                %a{href: main_app.groups_path + "/#{group.permalink}"}
-                  = group.name
+.content
+  .row
+    .small-12.columns
+      - if current_distributor.groups.length > 0
+        %h5
+          =current_distributor.name
+          = t :shopping_groups_part_of
+        %ul.bullet-list.small-block-grid-1.medium-block-grid-2.large-block-grid-3
+          - for group in current_distributor.groups
+            %li
+              %a{href: main_app.groups_path + "/#{group.permalink}"}
+                = group.name
