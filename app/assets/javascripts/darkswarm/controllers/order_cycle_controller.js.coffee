@@ -25,6 +25,8 @@ angular.module('Darkswarm').controller "OrderCycleChangeCtrl", ($scope, $rootSco
     Cart.reloadFinalisedLineItems()
     ChangeableOrdersAlert.reload()
     $rootScope.$broadcast 'orderCycleSelected'
+    event = new CustomEvent('orderCycleSelected')
+    window.dispatchEvent(event)
 
   $scope.closesInLessThan3Months = () ->
     moment().diff(moment(OrderCycle.orders_close_at(),  "YYYY-MM-DD HH:mm:SS Z"), 'days') > -75
