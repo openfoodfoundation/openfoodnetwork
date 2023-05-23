@@ -30,6 +30,15 @@ export default class extends Controller {
       const tab_id = anchor.split("_panel").shift();
       this.updateActiveTab(tab_id);
     }
+
+    window.addEventListener("tabs-and-panels:click", (event) => {
+      this.simulateClick(event.detail.tab, event.detail.panel);
+    });
+  }
+
+  simulateClick(tab, panel) {
+    this.updateActiveTab(tab);
+    this.updateActivePanel(panel);
   }
 
   changeActivePanel(event) {
