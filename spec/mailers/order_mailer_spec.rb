@@ -44,6 +44,20 @@ describe Spree::OrderMailer do
         described_class.confirm_email_for_customer(order.id).deliver_now
       }.to_not raise_error
     end
+
+    it "display the OFN header by default" do
+      expect(email.body).to include(ContentConfig.url_for(:footer_logo))
+    end
+
+    context 'when hide OFN navigation is enabled for the distributor of the order' do
+      before do
+        allow(order.distributor).to receive(:hide_ofn_navigation).and_return(true)
+      end
+
+      it 'does not display the OFN navigation' do
+        expect(email.body).to_not include(ContentConfig.url_for(:footer_logo))
+      end
+    end
   end
 
   describe '#confirm_email_for_shop' do
