@@ -26,12 +26,12 @@
 /* FONT PATH
  * -------------------------- */
 @font-face {
-  font-family: 'FontAwesome';
-  src: url('../fonts/fontawesome-webfont.eot?v=3.2.1');
-  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=3.2.1') format('embedded-opentype'),
-      url('../fonts/fontawesome-webfont.woff?v=3.2.1') format('woff'),
-      url('../fonts/fontawesome-webfont.ttf?v=3.2.1') format('truetype'),
-      url('../fonts/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1') format('svg');
+  font-family: "FontAwesome";
+  src: url("../fonts/fontawesome-webfont.eot?v=3.2.1");
+  src: url("../fonts/fontawesome-webfont.eot?#iefix&v=3.2.1") format("embedded-opentype"),
+    url("../fonts/fontawesome-webfont.woff?v=3.2.1") format("woff"),
+    url("../fonts/fontawesome-webfont.ttf?v=3.2.1") format("truetype"),
+    url("../fonts/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -44,7 +44,7 @@
   text-decoration: inherit;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  *margin-right: .3em;
+  *margin-right: 0.3em;
 }
 [class^="icon-"]:before,
 [class*=" icon-"]:before {
@@ -104,7 +104,7 @@ a [class*=" icon-"] {
 }
 .icon-border {
   border: solid 1px #eeeeee;
-  padding: .2em .25em .15em;
+  padding: 0.2em 0.25em 0.15em;
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
@@ -148,11 +148,11 @@ a [class*=" icon-"] {
 }
 [class^="icon-"].pull-left,
 [class*=" icon-"].pull-left {
-  margin-right: .3em;
+  margin-right: 0.3em;
 }
 [class^="icon-"].pull-right,
 [class*=" icon-"].pull-right {
-  margin-left: .3em;
+  margin-left: 0.3em;
 }
 /* BOOTSTRAP SPECIFIC CLASSES
  * -------------------------- */
@@ -190,7 +190,7 @@ a [class*=" icon-"] {
 .nav [class^="icon-"].icon-large,
 .btn [class*=" icon-"].icon-large,
 .nav [class*=" icon-"].icon-large {
-  line-height: .9em;
+  line-height: 0.9em;
 }
 .btn [class^="icon-"].icon-spin,
 .nav [class^="icon-"].icon-spin,
@@ -206,23 +206,23 @@ a [class*=" icon-"] {
 .nav-pills [class^="icon-"].icon-large,
 .nav-tabs [class*=" icon-"].icon-large,
 .nav-pills [class*=" icon-"].icon-large {
-  line-height: .9em;
+  line-height: 0.9em;
 }
 .btn [class^="icon-"].pull-left.icon-2x,
 .btn [class*=" icon-"].pull-left.icon-2x,
 .btn [class^="icon-"].pull-right.icon-2x,
 .btn [class*=" icon-"].pull-right.icon-2x {
-  margin-top: .18em;
+  margin-top: 0.18em;
 }
 .btn [class^="icon-"].icon-spin.icon-large,
 .btn [class*=" icon-"].icon-spin.icon-large {
-  line-height: .8em;
+  line-height: 0.8em;
 }
 .btn.btn-small [class^="icon-"].pull-left.icon-2x,
 .btn.btn-small [class*=" icon-"].pull-left.icon-2x,
 .btn.btn-small [class^="icon-"].pull-right.icon-2x,
 .btn.btn-small [class*=" icon-"].pull-right.icon-2x {
-  margin-top: .25em;
+  margin-top: 0.25em;
 }
 .btn.btn-large [class^="icon-"],
 .btn.btn-large [class*=" icon-"] {
@@ -232,15 +232,15 @@ a [class*=" icon-"] {
 .btn.btn-large [class*=" icon-"].pull-left.icon-2x,
 .btn.btn-large [class^="icon-"].pull-right.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-right.icon-2x {
-  margin-top: .05em;
+  margin-top: 0.05em;
 }
 .btn.btn-large [class^="icon-"].pull-left.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-left.icon-2x {
-  margin-right: .2em;
+  margin-right: 0.2em;
 }
 .btn.btn-large [class^="icon-"].pull-right.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-right.icon-2x {
-  margin-left: .2em;
+  margin-left: 0.2em;
 }
 /* Fixes alignment in nav lists */
 .nav-list [class^="icon-"],
