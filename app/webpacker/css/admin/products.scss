@@ -3,24 +3,55 @@
 }
 
 tbody.odd {
-	tr.product { td { background-color: white; } }
-	tr.variant.odd { td { background-color: lighten($spree-light-blue, 3); } }
-	tr.variant.even { td { background-color: white; } }
+  tr.product {
+    td {
+      background-color: white;
+    }
+  }
+  tr.variant.odd {
+    td {
+      background-color: lighten($spree-light-blue, 3);
+    }
+  }
+  tr.variant.even {
+    td {
+      background-color: white;
+    }
+  }
 }
 tbody.even {
-	tr.product { td { background-color: darken($spree-light-blue, 1); } }
-	tr.variant.odd { td { background-color: lighten($spree-light-blue, 2); } }
-	tr.variant.even { td { background-color: darken($spree-light-blue, 1); } }
+  tr.product {
+    td {
+      background-color: darken($spree-light-blue, 1);
+    }
+  }
+  tr.variant.odd {
+    td {
+      background-color: lighten($spree-light-blue, 2);
+    }
+  }
+  tr.variant.even {
+    td {
+      background-color: darken($spree-light-blue, 1);
+    }
+  }
 }
 
-tbody tr.product td.actions { background-color: transparent; }
-tbody tr.variant td.actions { background-color: transparent; }
-tbody tr.variant td { padding: 5px 10px; }
+tbody tr.product td.actions {
+  background-color: transparent;
+}
+tbody tr.variant td.actions {
+  background-color: transparent;
+}
+tbody tr.variant td {
+  padding: 5px 10px;
+}
 
-th.left-actions, td.left-actions {
-	background-color: transparent !important;
-	border: none !important;
-	border-right: 1px solid $pale-blue !important;
+th.left-actions,
+td.left-actions {
+  background-color: transparent !important;
+  border: none !important;
+  border-right: 1px solid $pale-blue !important;
 }
 
 #status-message {
@@ -81,13 +112,15 @@ table#listing_products.bulk {
   }
 
   td.unit {
-    input, select {
+    input,
+    select {
       width: 100%;
     }
   }
 
   td.left-actions {
-    a.view-variants, a.add-variant {
+    a.view-variants,
+    a.add-variant {
       cursor: pointer;
     }
   }

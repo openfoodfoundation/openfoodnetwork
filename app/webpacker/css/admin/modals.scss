@@ -10,7 +10,8 @@
   left: 0;
 }
 
-.reveal-modal, dialog {
+.reveal-modal,
+dialog {
   visibility: hidden;
   display: none;
   position: absolute;
@@ -26,20 +27,26 @@
   padding: 1.875rem;
 }
 
-.reveal-modal .column, dialog .column, .reveal-modal .columns, dialog .columns {
+.reveal-modal .column,
+dialog .column,
+.reveal-modal .columns,
+dialog .columns {
   min-width: 0;
 }
 
-.reveal-modal > :first-child, dialog > :first-child {
+.reveal-modal > :first-child,
+dialog > :first-child {
   margin-top: 0;
 }
 
-.reveal-modal > :last-child, dialog > :last-child {
+.reveal-modal > :last-child,
+dialog > :last-child {
   margin-bottom: 0;
 }
 
 @media only screen and (min-width: 40.063em) {
-  .reveal-modal, dialog {
+  .reveal-modal,
+  dialog {
     width: 80%;
     max-width: 62.5rem;
     left: 0;
@@ -48,19 +55,23 @@
   }
 }
 
-.reveal-modal.radius, dialog.radius {
+.reveal-modal.radius,
+dialog.radius {
   border-radius: 3px;
 }
 
-.reveal-modal.round, dialog.round {
+.reveal-modal.round,
+dialog.round {
   border-radius: 1000px;
 }
 
-.reveal-modal.collapse, dialog.collapse {
+.reveal-modal.collapse,
+dialog.collapse {
   padding: 0;
 }
 
-.reveal-modal.full, dialog.full {
+.reveal-modal.full,
+dialog.full {
   top: 0;
   left: 0;
   height: 100%;
@@ -70,7 +81,8 @@
   margin-left: 0 !important;
 }
 
-.reveal-modal .close-reveal-modal, dialog .close-reveal-modal {
+.reveal-modal .close-reveal-modal,
+dialog .close-reveal-modal {
   font-size: 2.5rem;
   line-height: 1;
   position: absolute;
@@ -81,7 +93,8 @@
   cursor: pointer;
 }
 
-dialog::backdrop, dialog + .backdrop {
+dialog::backdrop,
+dialog + .backdrop {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -99,7 +112,9 @@ dialog[open] {
 }
 
 @media print {
-  dialog, .reveal-modal, dialog {
+  dialog,
+  .reveal-modal,
+  dialog {
     display: none;
     background: white !important;
   }
@@ -144,51 +159,59 @@ dialog[open] {
 }
 
 @media only screen and (max-width: 40em) {
-  .reveal-modal, dialog {
+  .reveal-modal,
+  dialog {
     min-height: 100vh;
   }
 }
 
 @media only screen and (min-width: 40.063em) {
-  .reveal-modal, dialog {
+  .reveal-modal,
+  dialog {
     top: 6.25rem;
   }
-  .reveal-modal.tiny, dialog.tiny {
+  .reveal-modal.tiny,
+  dialog.tiny {
     width: 30%;
     max-width: 62.5rem;
     left: 0;
     right: 0;
     margin: 0 auto;
   }
-  .reveal-modal.small, dialog.small {
+  .reveal-modal.small,
+  dialog.small {
     width: 40%;
     max-width: 62.5rem;
     left: 0;
     right: 0;
     margin: 0 auto;
   }
-  .reveal-modal.medium, dialog.medium {
+  .reveal-modal.medium,
+  dialog.medium {
     width: 60%;
     max-width: 62.5rem;
     left: 0;
     right: 0;
     margin: 0 auto;
   }
-  .reveal-modal.large, dialog.large {
+  .reveal-modal.large,
+  dialog.large {
     width: 70%;
     max-width: 62.5rem;
     left: 0;
     right: 0;
     margin: 0 auto;
   }
-  .reveal-modal.xlarge, dialog.xlarge {
+  .reveal-modal.xlarge,
+  dialog.xlarge {
     width: 95%;
     max-width: 62.5rem;
     left: 0;
     right: 0;
     margin: 0 auto;
   }
-  .reveal-modal.full, dialog.full {
+  .reveal-modal.full,
+  dialog.full {
     width: 100vw;
     max-width: 62.5rem;
     left: 0;
