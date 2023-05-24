@@ -1,4 +1,4 @@
-# Basically, ignore everythings expect app/webpacker/controllers/*.js and app/webpacker/packs/*.js
+# Ignore a lot of things, but we should enable where it can be helpful.
 
 *.md
 *.yml
@@ -6,13 +6,20 @@
 *.json
 *.html
 
+# JS
+# Enabled: app/webpacker/controllers/*.js and app/webpacker/packs/*.js
 babel.config.js
 postcss.config.js
 
+# SCSS
+# Enabled: most of admin
+/app/webpacker/css/admin/globals/
+/app/webpacker/css/admin/shared/
 /app/webpacker/css/darkswarm/
 /app/webpacker/css/mail/
 /app/webpacker/css/shared/
 
+# More
 /app/assets/
 /config/
 /coverage/
