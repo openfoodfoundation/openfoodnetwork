@@ -196,7 +196,7 @@ describe 'Subscriptions' do
       end
     end
 
-    context 'creating a new subscription' do
+    context 'when creating a new subscription' do
       let(:address) { create(:address) }
       let!(:customer_user) { create(:user) }
       let!(:credit_card1) {
@@ -238,126 +238,212 @@ describe 'Subscriptions' do
         click_button "Continue"
       end
 
-      it "passes the smoke test" do
-        select2_select customer.email, from: 'customer_id'
-        select2_select schedule.name, from: 'schedule_id'
-        select2_select payment_method.name, from: 'payment_method_id'
-        select2_select shipping_method.name, from: 'shipping_method_id'
-
-        # No date, so error returned
-        click_button('Next')
-        expect(page).to have_content 'can\'t be blank', count: 1
-        expect(page).to have_content 'Oops! Please fill in all of the required fields...'
-        find_field('begins_at').click
-        choose_today_from_datepicker
-
-        click_button('Next')
-        expect(page).to have_content 'BILLING ADDRESS'
-        # Customer bill address has been pre-loaded
-        expect(page).to have_input "bill_address_firstname", with: address.firstname
-        expect(page).to have_input "bill_address_lastname", with: address.lastname
-        expect(page).to have_input "bill_address_address1", with: address.address1
-
-        # Clear some elements of bill address
-        fill_in "bill_address_firstname", with: ''
-        fill_in "bill_address_lastname", with: ''
-        fill_in "bill_address_address1", with: ''
-        fill_in "bill_address_city", with: ''
-        fill_in "bill_address_zipcode", with: ''
-        fill_in "bill_address_phone", with: ''
-        click_button('Next')
-        expect(page).to have_content 'can\'t be blank', count: 6
-
-        # Re-setting the billing address
-        fill_in "bill_address_firstname", with: 'Freda'
-        fill_in "bill_address_lastname", with: 'Figapple'
-        fill_in "bill_address_address1", with: '7 Tempany Lane'
-        fill_in "bill_address_city", with: 'Natte Yallock'
-        fill_in "bill_address_zipcode", with: '3465'
-        fill_in "bill_address_phone", with: '0400 123 456'
-        select2_select "Australia", from: "bill_address_country_id"
-        select2_select "Victoria", from: "bill_address_state_id"
-
-        # Use copy button to fill in ship address
-        click_link "Copy"
-        expect(page).to have_input "ship_address_firstname", with: 'Freda'
-        expect(page).to have_input "ship_address_lastname", with: 'Figapple'
-        expect(page).to have_input "ship_address_address1", with: '7 Tempany Lane'
-
-        click_button('Next')
-        expect(page).to have_content 'NAME OR SKU'
-        click_button('Next')
-        expect(page).to have_content 'Please add at least one product'
-
-        # Adding a product and getting a price estimate
-        add_variant_to_subscription test_variant, 2
-        within 'table#subscription-line-items tr.item', match: :first do
-          expect(page).to have_selector '.description',
-                                        text: "#{test_product.name} - #{test_variant.full_name}"
-          expect(page).to have_selector 'td.price', text: "$13.75"
-          expect(page).to have_input 'quantity', with: "2"
-          expect(page).to have_selector 'td.total', text: "$27.50"
+      context 'on first page' do
+        before do
+          select2_select customer.email, from: 'customer_id'
+          select2_select schedule.name, from: 'schedule_id'
+          select2_select payment_method.name, from: 'payment_method_id'
+          select2_select shipping_method.name, from: 'shipping_method_id'
         end
 
-        # Deleting the existing product
-        within 'table#subscription-line-items tr.item', match: :first do
-          find("a.delete-item").click
+        context 'and date field is not filled' do
+          it 'counts a can not be blank content once' do
+            click_button('Next')
+
+            expect(page).to have_content 'can\'t be blank', count: 1
+            expect(page).to have_content 'Oops! Please fill in all of the required fields...'
+          end
         end
 
-        click_button('Next')
+        context 'and date field is filled' do
+          it 'goes to the next page and preload customer bill address' do
+            find_field('begins_at').click
+            choose_today_from_datepicker
+            click_button('Next')
 
-        # Attempting to submit without a product
-        expect{
-          click_button('Create Subscription')
-          expect(page).to have_content 'Please add at least one product'
-        }.to_not change(Subscription, :count)
+            expect(page).to have_content 'BILLING ADDRESS'
+            # Customer bill address has been pre-loaded
+            expect(page).to have_input "bill_address_firstname", with: address.firstname
+            expect(page).to have_input "bill_address_lastname", with: address.lastname
+            expect(page).to have_input "bill_address_address1", with: address.address1
+          end
+        end
+      end
 
-        click_button('edit-products')
-
-        # Adding a new product
-        add_variant_to_subscription shop_variant, 3
-        within 'table#subscription-line-items tr.item', match: :first do
-          expect(page).to have_selector '.description',
-                                        text: "#{shop_product.name} - #{shop_variant.full_name}"
-          expect(page).to have_selector 'td.price', text: "$7.75"
-          expect(page).to have_input 'quantity', with: "3"
-          expect(page).to have_selector 'td.total', text: "$23.25"
+      context 'on second page' do
+        before do
+          select2_select customer.email, from: 'customer_id'
+          select2_select schedule.name, from: 'schedule_id'
+          select2_select payment_method.name, from: 'payment_method_id'
+          select2_select shipping_method.name, from: 'shipping_method_id'
+          find_field('begins_at').click
+          choose_today_from_datepicker
+          click_button('Next')
         end
 
-        click_button('Next')
+        context 'when clearing some elements of bill address' do
+          before do
+            # Clear some elements of bill address
+            fill_in "bill_address_firstname", with: ''
+            fill_in "bill_address_lastname", with: ''
+            fill_in "bill_address_address1", with: ''
+            fill_in "bill_address_city", with: ''
+            fill_in "bill_address_zipcode", with: ''
+            fill_in "bill_address_phone", with: ''
+          end
 
-        expect{
-          click_button('Create Subscription')
-          expect(page).to have_current_path admin_subscriptions_path
-        }.to change(Subscription, :count).by(1)
+          it 'counts 6 can not be blank messages' do
+            click_button('Next')
+            expect(page).to have_content 'can\'t be blank', count: 6
+          end
 
-        select2_select shop.name, from: "shop_id"
-        expect(page).to have_selector "td.items.panel-toggle"
-        first("td.items.panel-toggle").click
+          context 'and re-setting the billing address' do
+            before do
+              fill_in "bill_address_firstname", with: 'Freda'
+              fill_in "bill_address_lastname", with: 'Figapple'
+              fill_in "bill_address_address1", with: '7 Tempany Lane'
+              fill_in "bill_address_city", with: 'Natte Yallock'
+              fill_in "bill_address_zipcode", with: '3465'
+              fill_in "bill_address_phone", with: '0400 123 456'
+              select2_select "Australia", from: "bill_address_country_id"
+              select2_select "Victoria", from: "bill_address_state_id"
+            end
 
-        # Prices are shown in the index
-        within 'table#subscription-line-items tr.item', match: :first do
-          expect(page).to have_selector '.description',
-                                        text: "#{shop_product.name} - #{shop_variant.full_name}"
-          expect(page).to have_selector 'td.price', text: "$7.75"
-          expect(page).to have_input 'quantity', with: "3"
-          expect(page).to have_selector 'td.total', text: "$23.25"
+            context 'and using copy button to fill in ship address' do
+              before { click_link "Copy" }
+
+              it 'has input with ship address values' do
+                expect(page).to have_input "ship_address_firstname", with: 'Freda'
+                expect(page).to have_input "ship_address_lastname", with: 'Figapple'
+                expect(page).to have_input "ship_address_address1", with: '7 Tempany Lane'
+              end
+            end
+          end
+        end
+      end
+
+      context 'on third page' do
+        before do
+          select2_select customer.email, from: 'customer_id'
+          select2_select schedule.name, from: 'schedule_id'
+          select2_select payment_method.name, from: 'payment_method_id'
+          select2_select shipping_method.name, from: 'shipping_method_id'
+          find_field('begins_at').click
+          choose_today_from_datepicker
+          click_button('Next')
+          click_button('Next')
         end
 
-        # Basic properties of subscription are set
-        subscription = Subscription.last
-        expect(subscription.customer).to eq customer
-        expect(subscription.schedule).to eq schedule
-        expect(subscription.payment_method).to eq payment_method
-        expect(subscription.shipping_method).to eq shipping_method
-        expect(subscription.bill_address.firstname).to eq 'Freda'
-        expect(subscription.ship_address.firstname).to eq 'Freda'
+        it 'has content NAME OR SKU' do
+          expect(page).to have_content 'NAME OR SKU'
+        end
 
-        # Standing Line Items are created
-        expect(subscription.subscription_line_items.count).to eq 1
-        subscription_line_item = subscription.subscription_line_items.first
-        expect(subscription_line_item.variant).to eq shop_variant
-        expect(subscription_line_item.quantity).to eq 3
+        context 'and click next button without adding at least one product' do
+          before { click_button('Next') }
+
+          it 'has content Please add at least one product' do
+            expect(page).to have_content 'Please add at least one product'
+          end
+        end
+
+        context 'with a product' do
+          before { add_variant_to_subscription test_variant, 2 }
+
+          it 'has description, price estimates, quantity and total' do
+            within 'table#subscription-line-items tr.item', match: :first do
+              expect(page).to have_selector '.description',
+                                            text: "#{test_product.name} - #{test_variant.full_name}"
+              expect(page).to have_selector 'td.price', text: "$13.75"
+              expect(page).to have_input 'quantity', with: "2"
+              expect(page).to have_selector 'td.total', text: "$27.50"
+            end
+          end
+
+          context 'and deleting the existing product' do
+            before do
+              within 'table#subscription-line-items tr.item', match: :first do
+                find("a.delete-item").click
+              end
+            end
+
+            it 'has content Please add at least one product and subscription does not change' do
+              click_button('Next')
+
+              expect{
+                click_button('Create Subscription')
+                expect(page).to have_content 'Please add at least one product'
+              }.to_not change(Subscription, :count)
+            end
+
+            context 'and adding a new product' do
+              before do
+                click_button('Next')
+                click_button('edit-products')
+                add_variant_to_subscription shop_variant, 3
+              end
+
+              it 'has selectors for description, price, quantity and total' do
+                description = "#{shop_product.name} - #{shop_variant.full_name}"
+
+                within 'table#subscription-line-items tr.item', match: :first do
+                  expect(page).to have_selector '.description',
+                                                text: description
+                  expect(page).to have_selector 'td.price', text: "$7.75"
+                  expect(page).to have_input 'quantity', with: "3"
+                  expect(page).to have_selector 'td.total', text: "$23.25"
+                end
+              end
+
+              context 'and click next button' do
+                before { click_button('Next') }
+
+                it 'has current path as admin_subscriptions_path and counts by one subscription' do
+                  expect{
+                    click_button('Create Subscription')
+                    expect(page).to have_current_path admin_subscriptions_path
+                  }.to change(Subscription, :count).by(1)
+                end
+
+                context 'and click Create Subscription button' do
+                  before do
+                    click_button('Create Subscription')
+                    select2_select shop.name, from: "shop_id"
+                  end
+
+                  it 'has selector td.items.panel-toggle' do
+                    expect(page).to have_selector "td.items.panel-toggle"
+                  end
+
+                  it 'has selector for price, input for quantity and selector for total price' do
+                    description = "#{shop_product.name} - #{shop_variant.full_name}"
+                    subscription = Subscription.last
+                    subscription_line_item = subscription.subscription_line_items.first
+
+                    first("td.items.panel-toggle").click
+
+                    within 'table#subscription-line-items tr.item', match: :first do
+                      expect(page).to have_selector '.description',
+                                                    text: description
+                      expect(page).to have_selector 'td.price', text: "$7.75"
+                      expect(page).to have_input 'quantity', with: "3"
+                      expect(page).to have_selector 'td.total', text: "$23.25"
+                    end
+
+                    expect(subscription.customer).to eq customer
+                    expect(subscription.schedule).to eq schedule
+                    expect(subscription.payment_method).to eq payment_method
+                    expect(subscription.shipping_method).to eq shipping_method
+                    expect(subscription.bill_address.firstname).to eq 'John'
+                    expect(subscription.ship_address.firstname).to eq 'John'
+                    expect(subscription.subscription_line_items.count).to eq 1
+                    expect(subscription_line_item.variant).to eq shop_variant
+                    expect(subscription_line_item.quantity).to eq 3
+                  end
+                end
+              end
+            end
+          end
+        end
       end
     end
 
