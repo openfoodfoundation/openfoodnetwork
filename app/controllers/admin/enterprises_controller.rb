@@ -65,6 +65,8 @@ module Admin
       update_tag_rules(tag_rules_attributes) if tag_rules_attributes.present?
       update_enterprise_notifications
 
+      delete_custom_tab if params[:custom_tab] == 'false'
+
       if @object.update(enterprise_params)
         flash[:success] = flash_message_for(@object, :successfully_updated)
         respond_with(@object) do |format|
@@ -136,6 +138,11 @@ module Admin
     end
 
     protected
+
+    def delete_custom_tab
+      @object.custom_tab.destroy if @object.custom_tab.present?
+      enterprise_params.delete(:custom_tab_attributes)
+    end
 
     def build_resource
       enterprise = super

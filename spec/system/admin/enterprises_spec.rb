@@ -770,6 +770,14 @@ describe '
               expect(page).
                 to have_field "enterprise_custom_tab_attributes_content", with: custom_tab.content
             end
+
+            it "can delete custom tab if uncheck the checkbox" do
+              uncheck "Create custom tab in shopfront"
+              click_button 'Update'
+              expect(flash_message)
+                .to eq('Enterprise "First Distributor" has been successfully updated!')
+              expect(distributor1.reload.custom_tab).to be_nil
+            end
           end
         end
       end
