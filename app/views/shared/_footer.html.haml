@@ -96,7 +96,7 @@
           %hr.hr-light
           %br
 
-    = cache_with_locale [ContentConfig.cache_key, TermsOfServiceFile.current_url, Spree::Config.privacy_policy_url] do
+    = cache_with_locale [ContentConfig.cache_key, TermsOfServiceFile.current_url, Spree::Config.privacy_policy_url, Spree::Config.cookies_consent_banner_toggle, Web::CookiesConsent.new(cookies, request.host)] do
       .row.legal
         .small-12.medium-3.medium-offset-2.columns.text-left
           %a{href: main_app.root_path}
