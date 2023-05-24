@@ -36,6 +36,7 @@
     "stimulus-flatpickr": "^1.4.0",
     "stimulus_reflex": "3.5.0-rc2",
     "tom-select": "^2.0.0",
+    "trix": "^2.0.5",
     "webpack": "~4"
   },
   "devDependencies": {
