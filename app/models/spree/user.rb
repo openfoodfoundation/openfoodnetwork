@@ -48,9 +48,13 @@ module Spree
 
     after_create :associate_customers, :associate_orders
 
+    validates :email, 'valid_email_2/email': { mx: true }, if: :email_changed?
     validate :limit_owned_enterprises
     validates :uid, uniqueness: true, if: lambda { uid.present? }
-    validates_email :uid, if: lambda { uid.present? }
+
+    # Same validation as in the openid_connect gem.
+    # This validator is totally outdated but we indirectly depend on it.
+    validates :uid, email: true, if: lambda { uid.present? }
 
     class DestroyWithOrdersError < StandardError; end
 

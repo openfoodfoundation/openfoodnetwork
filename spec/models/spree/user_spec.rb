@@ -80,6 +80,37 @@ describe Spree::User do
     end
   end
 
+  describe "validations" do
+    subject(:user) { build(:user) }
+
+    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
+
+    it "detects emails without @" do
+      user.email = "examplemail.com"
+      expect(user).to_not be_valid
+      expect(user.errors.messages[:email]).to include "is invalid"
+    end
+
+    it "detects backslashes at the end" do
+      user.email = "example@gmail.com\\\\"
+      expect(user).to_not be_valid
+    end
+
+    it "is okay with numbers before the @" do
+      user.email = "example.42@posteo.de"
+      expect(user).to be_valid
+    end
+
+    it "detects typos in the domain" do
+      # We mock this validation in all other tests because our test data is not
+      # valid, the network requests slow down tests and could make them flaky.
+      expect_any_instance_of(ValidEmail2::Address).to receive(:valid_mx?).and_call_original
+      user.email = "example@ho020tmail.com"
+      expect(user).to_not be_valid
+    end
+  end
+
   context "#create" do
     it "should send a confirmation email" do
       expect do

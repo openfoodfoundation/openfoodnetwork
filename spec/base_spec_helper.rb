@@ -127,6 +127,15 @@ RSpec.configure do |config|
     end
   end
 
+  # Don't validate our invalid test data with expensive network requests.
+  config.before(:each) do
+    allow_any_instance_of(ValidEmail2::Address).to receive_messages(
+      valid_mx?: true,
+      valid_strict_mx?: true,
+      mx_server_is_in?: false
+    )
+  end
+
   # Webmock raises errors that inherit directly from Exception (not StandardError).
   # The messages contain useful information for debugging stubbed requests to external
   # services (in tests), but they normally don't appear in the test output.
