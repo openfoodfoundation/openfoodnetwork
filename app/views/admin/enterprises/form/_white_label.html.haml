@@ -29,3 +29,11 @@
   = render ConfirmModalComponent.new(id: "remove_logo", confirm_reflexes: "click->WhiteLabel#remove_logo" ) do
     .margin-bottom-30
       = t('.remove_logo_confirm')
+
+// Hide groups tab boolean attribute
+
+.row
+  .three.columns.alpha
+    = f.label :hide_groups_tab, t('.hide_groups_tab')
+  .three.columns
+    = f.check_box :hide_groups_tab

@@ -24,7 +24,7 @@ module ShopHelper
       { name: 'about', title: t(:shopping_tabs_about), show: true },
       { name: 'producers', title: t(:shopping_tabs_producers), show: true },
       { name: 'contact', title: t(:shopping_tabs_contact), show: true },
-      { name: 'groups', title: t(:shopping_tabs_groups), show: current_distributor.groups.any? },
+      { name: 'groups', title: t(:shopping_tabs_groups), show: show_groups_tabs? },
     ].select{ |tab| tab[:show] }
   end
 
@@ -51,5 +51,11 @@ module ShopHelper
                     current_page?(main_app.enterprise_shop_path(current_distributor))
 
     true
+  end
+
+  private
+
+  def show_groups_tabs?
+    !current_distributor.hide_groups_tab? && current_distributor.groups.any?
   end
 end
