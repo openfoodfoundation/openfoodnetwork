@@ -31,6 +31,18 @@ describe DataFoodConsortium::Connector::Importer, vcr: true do
       name: "Ocra",
     )
   end
+  let(:quantity) do
+    DataFoodConsortium::Connector::QuantitativeValue.new(
+      unit: piece,
+      value: 5,
+    )
+  end
+  let(:piece) do
+    unless connector.MEASURES.respond_to?(:UNIT)
+      connector.loadMeasures(read_file("measures"))
+    end
+    connector.MEASURES.UNIT.QUANTITYUNIT.PIECE
+  end
 
   it "imports a single object with simple properties" do
     result = import(product)
@@ -59,6 +71,18 @@ describe DataFoodConsortium::Connector::Importer, vcr: true do
     expect(tomato.totalTheoreticalStock).to eq 3
   end
 
+  it "imports a graph including anonymous objects" do
+    product.quantity = quantity
+
+    tomato, items = import(product)
+
+    expect(tomato.name).to eq "Tomato"
+    expect(items.value).to eq 5
+
+    # Pending matching concepts:
+    #expect(items.unit).to eq piece
+  end
+
   it "imports properties with lists" do
     result = import(enterprise, product, second_product)
 
@@ -72,5 +96,11 @@ describe DataFoodConsortium::Connector::Importer, vcr: true do
   def import(*args)
     json = connector.export(*args)
     connector.import(json)
+  end
+
+  def read_file(name)
+    JSON.parse(
+      Rails.root.join("engines/dfc_provider/vendor/#{name}.json").read
+    )
   end
 end

@@ -14,7 +14,11 @@ module DataFoodConsortium
 
       def self.type_map
         @type_map ||= TYPES.each_with_object({}) do |clazz, result|
-          type_uri = clazz.new(nil).semanticType
+          # Methods with variable arguments have a negative arity of -n-1
+          # where n is the number of required arguments.
+          number_of_required_args = -1 * (clazz.instance_method(:initialize).arity + 1)
+          args = Array.new(number_of_required_args)
+          type_uri = clazz.new(*args).semanticType
           result[type_uri] = clazz
         end
       end
@@ -48,11 +52,12 @@ module DataFoodConsortium
       end
 
       def build_subject(type_statement)
-        id = type_statement.subject.value
+        # Not all subjects have an id, some are anonymous.
+        id = type_statement.subject.try(:value)
         type = type_statement.object.value
         clazz = self.class.type_map[type]
 
-        clazz.new(id)
+        clazz.new(*[id].compact)
       end
 
       def apply_statements(statements)
