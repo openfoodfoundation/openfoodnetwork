@@ -26,4 +26,15 @@ describe DataFoodConsortium::Connector::Connector, vcr: true do
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"
   end
+
+  it "imports from IO like Rails supplies it" do
+    json = connector.export(product)
+    io = StringIO.new(json)
+    result = connector.import(io)
+
+    expect(result.class).to eq product.class
+    expect(result.semanticType).to eq product.semanticType
+    expect(result.semanticId).to eq "https://example.net/tomato"
+    expect(result.name).to eq "Tomato"
+  end
 end

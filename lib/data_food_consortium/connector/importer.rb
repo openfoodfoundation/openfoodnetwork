@@ -19,10 +19,10 @@ module DataFoodConsortium
         end
       end
 
-      def import(json_string)
+      def import(json_string_or_io)
         @subjects = {}
 
-        graph = parse_rdf(json_string)
+        graph = parse_rdf(json_string_or_io)
         build_subjects(graph)
         apply_statements(graph)
 
@@ -35,9 +35,10 @@ module DataFoodConsortium
 
       private
 
-      def parse_rdf(json_string)
-        json_file = StringIO.new(json_string)
-        RDF::Graph.new << JSON::LD::API.toRdf(json_file)
+      # The `io` parameter can be a String or an IO instance.
+      def parse_rdf(io)
+        io = StringIO.new(io) if io.is_a?(String)
+        RDF::Graph.new << JSON::LD::API.toRdf(io)
       end
 
       def build_subjects(graph)
