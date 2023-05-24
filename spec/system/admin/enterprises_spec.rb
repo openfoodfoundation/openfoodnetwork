@@ -737,19 +737,17 @@ describe '
 
           it "display a form with the custom tab fields: title and content" do
             expect(page).to have_content "TITLE FOR CUSTOM TAB"
-            expect(page).to have_field "enterprise_custom_tab_attributes_title"
             expect(page).to have_content "CONTENT FOR CUSTOM TAB"
-            expect(page).to have_field "enterprise_custom_tab_attributes_content"
           end
 
           it "can save custom tab fields" do
             fill_in "enterprise_custom_tab_attributes_title", with: "Custom tab title"
-            fill_in "enterprise_custom_tab_attributes_content", with: "Custom tab content"
+            fill_in_trix_editor "custom_tab_content", with: "Custom tab content"
             click_button 'Update'
             expect(flash_message)
               .to eq('Enterprise "First Distributor" has been successfully updated!')
             expect(distributor1.reload.custom_tab.title).to eq("Custom tab title")
-            expect(distributor1.reload.custom_tab.content).to eq("Custom tab content")
+            expect(distributor1.reload.custom_tab.content).to eq("<div>Custom tab content</div>")
           end
 
           context "when custom tab is already created" do
@@ -767,8 +765,7 @@ describe '
               expect(page).to have_checked_field "Create custom tab in shopfront"
               expect(page).
                 to have_field "enterprise_custom_tab_attributes_title", with: custom_tab.title
-              expect(page).
-                to have_field "enterprise_custom_tab_attributes_content", with: custom_tab.content
+              expect(page).to have_content(custom_tab.content)
             end
 
             it "can delete custom tab if uncheck the checkbox" do

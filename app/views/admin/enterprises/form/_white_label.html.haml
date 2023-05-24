@@ -56,4 +56,5 @@
       .three.columns.alpha
         = custom_tab_form.label :content, t('.custom_tab_content')
       .eight.columns
-        = custom_tab_form.text_area :content, rows: 5
+        = custom_tab_form.hidden_field :content, id: "custom_tab_content"
+        %trix-editor{ input: "custom_tab_content" }
