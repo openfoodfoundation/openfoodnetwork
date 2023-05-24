@@ -23,7 +23,10 @@ export default class extends Controller {
       if (anchor[0] == "/") {
         anchor = anchor.slice(1);
       }
-
+      // Add _panel to the anchor to match the panel id if needed
+      if (!anchor.includes("_panel")) {
+        anchor = `${anchor}_panel`;
+      }
       this.updateActivePanel(anchor);
 
       // tab

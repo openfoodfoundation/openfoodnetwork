@@ -183,7 +183,7 @@ describe 'White label setting' do
 
         it "shows the groups tab" do
           visit main_app.enterprise_shop_path(distributor)
-          expect(page).to have_selector "a[href='#groups']"
+          expect(page).to have_selector "a[href='#groups_panel']"
         end
       end
     end
