@@ -12,4 +12,7 @@
     - shop_tabs.each do |tab|
       %div{id: "#{tab[:name]}_panel", "data-tabs-and-panels-target": "panel #{'default' if tab[:default]}" } 
         .page-view
-          = render "shopping_shared/tabs/#{tab[:name]}"
+          - if tab[:custom]
+            = render "shopping_shared/tabs/custom", order: @order
+          - else
+            = render "shopping_shared/tabs/#{tab[:name]}"

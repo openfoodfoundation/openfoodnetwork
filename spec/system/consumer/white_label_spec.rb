@@ -352,4 +352,32 @@ describe 'White label setting' do
       end
     end
   end
+
+  context "manage the custom tab preference" do
+    context "when the distributor has a custom tab" do
+      let(:custom_tab) { create(:custom_tab) }
+
+      before do
+        distributor.update(custom_tab: custom_tab)
+        visit main_app.enterprise_shop_path(distributor)
+      end
+
+      it "shows the custom tab on shop page" do
+        expect(page).to have_selector(".tab-buttons .page", count: 5)
+        expect(page).to have_content custom_tab.title
+      end
+
+      it "shows the custom tab content when clicking on tab title" do
+        click_link custom_tab.title
+        expect(page).to have_content custom_tab.content
+      end
+    end
+
+    context "when the distributor has no custom tab" do
+      it "does not show the custom tab on shop page" do
+        visit main_app.enterprise_shop_path(distributor)
+        expect(page).to have_selector(".tab-buttons .page", count: 4)
+      end
+    end
+  end
 end
