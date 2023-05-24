@@ -9,7 +9,7 @@ class ReportJob < ApplicationJob
 
   NOTIFICATION_TIME = 5.seconds
 
-  def perform(report_class, user, params, format, blob, channel = nil)
+  def perform(report_class:, user:, params:, format:, blob:, channel: nil)
     start_time = Time.zone.now
 
     report = report_class.new(user, params, render: true)

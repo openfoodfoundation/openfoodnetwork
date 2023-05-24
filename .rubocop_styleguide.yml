@@ -44,6 +44,9 @@ Metrics/BlockLength:
     "xdescribe",
   ]
 
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+
 Rails/ApplicationRecord:
   Exclude:
     # Migrations should not contain application code:
