@@ -8,6 +8,40 @@ describe "SuppliedProducts", type: :request do
   let!(:product) { create(:simple_product, supplier: enterprise ) }
   let!(:variant) { product.variants.first }
 
+  describe :create do
+    let(:endpoint) do
+      enterprise_supplied_products_path(enterprise_id: enterprise.id)
+    end
+    let(:supplied_product) do
+      SuppliedProductBuilder.supplied_product(new_variant)
+    end
+    let(:new_variant) do
+      # We need an id to generate a URL as semantic id when exporting.
+      build(:variant, id: 0, name: "Apple", unit_value: 3)
+    end
+
+    it "flags a bad request" do
+      post endpoint, headers: auth_header(user.uid)
+
+      expect(response).to have_http_status :bad_request
+    end
+
+    it "creates a variant" do
+      request_body = DfcLoader.connector.export(supplied_product)
+
+      expect do
+        post endpoint,
+             params: request_body,
+             headers: auth_header(user.uid)
+      end
+        .to change { enterprise.supplied_products.count }.by(1)
+
+      variant = Spree::Variant.last
+      expect(variant.name).to eq "Apple"
+      expect(variant.unit_value).to eq 3
+    end
+  end
+
   describe :show do
     it "returns variants" do
       get enterprise_supplied_product_path(
