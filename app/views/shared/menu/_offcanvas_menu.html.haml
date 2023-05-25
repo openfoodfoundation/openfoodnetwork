@@ -1,9 +1,12 @@
 %aside.left-off-canvas-menu.show-for-medium-down{ ng: { controller: "OffcanvasCtrl" } }
   %ul.off-canvas-list
-    = cache_with_locale ContentConfig.cache_key do
+    = cache_with_locale [ContentConfig.cache_key, @white_label_logo] do
       %li.ofn-logo
         %a{href: main_app.root_path}
-          %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}
+          - if @white_label_logo&.variable?
+            = image_tag @white_label_distributor.white_label_logo_url(:mobile)
+          - else
+            %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}
       - [*1..7].each do |menu_number|
         - menu_name = "menu_#{menu_number}"
         - if ContentConfig[menu_name].present?
