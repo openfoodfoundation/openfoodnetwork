@@ -79,10 +79,7 @@ describe DataFoodConsortium::Connector::Importer, vcr: true do
     expect(tomato.name).to eq "Tomato"
     expect(tomato.quantity).to eq items
     expect(items.value).to eq 5
-    expect(items.unit[:fragment]).to eq "Piece"
-
-    # Pending matching concepts:
-    #expect(items.unit).to eq piece
+    expect(items.unit).to eq piece
   end
 
   it "imports properties with lists" do

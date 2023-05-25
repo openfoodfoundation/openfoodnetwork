@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "skos_parser"
+
 module DataFoodConsortium
   module Connector
     class Importer
@@ -88,7 +90,16 @@ module DataFoodConsortium
       end
 
       def resolve_object(object)
-        @subjects[object] || object.object
+        @subjects[object] || skos_concept(object) || object.object
+      end
+
+      def skos_concept(object)
+        return unless object.uri?
+
+        id = object.value.sub(
+          "http://static.datafoodconsortium.org/data/measures.rdf#", "dfc-m:"
+        )
+        SKOSParser.concepts[id]
       end
 
       def guess_setter_name(predicate)
