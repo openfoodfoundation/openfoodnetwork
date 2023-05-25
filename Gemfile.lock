@@ -720,7 +720,7 @@ GEM
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
     temple (0.8.2)
-    test-unit (3.5.8)
+    test-unit (3.5.9)
       power_assert
     thor (1.2.2)
     thread-local (1.1.0)
