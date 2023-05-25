@@ -3,7 +3,7 @@
 class CreateInvoices < ActiveRecord::Migration[6.1]
   def change
     create_table :invoices do |t|
-      t.references :order, foreign_key: true, foreign_key: { to_table: :spree_orders }
+      t.references :order, foreign_key: { to_table: :spree_orders }
       t.string :status
       t.integer :number
       t.jsonb :data
