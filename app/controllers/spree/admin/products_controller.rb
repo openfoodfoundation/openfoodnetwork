@@ -23,10 +23,6 @@ module Spree
 
       def create
         delete_stock_params_and_set_after do
-          if params[:product][:prototype_id].present?
-            @prototype = Spree::Prototype.find(params[:product][:prototype_id])
-          end
-
           @object.attributes = permitted_resource_params
           if @object.save
             flash[:success] = flash_message_for(@object, :successfully_created)
