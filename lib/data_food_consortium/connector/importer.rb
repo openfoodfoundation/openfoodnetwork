@@ -75,13 +75,11 @@ module DataFoodConsortium
 
         property = subject.__send__(:findSemanticProperty, property_id)
 
-        # Some properties have a one-to-one match to the method name.
-        setter_name = "#{statement.predicate.fragment}="
-
         if property.value.is_a?(Enumerable)
           property.value << value
-        elsif subject.respond_to?(setter_name)
-          subject.public_send(setter_name, value)
+        else
+          setter = guess_setter_name(statement.predicate)
+          subject.try(setter, value) if setter
         end
       end
 
@@ -91,6 +89,16 @@ module DataFoodConsortium
 
       def resolve_object(object)
         @subjects[object] || object.object
+      end
+
+      def guess_setter_name(predicate)
+        fragment = predicate.fragment
+
+        # Some predicates are named like `hasQuantity`
+        # but the attribute name would be `quantity`.
+        name = fragment.sub(/^has/, "").camelize(:lower)
+
+        "#{name}="
       end
     end
   end
