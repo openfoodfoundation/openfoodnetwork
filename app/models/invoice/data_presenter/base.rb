@@ -3,7 +3,7 @@
 class Invoice
   class DataPresenter
     class Base
-      attr :data
+      attr_reader :data
 
       def initialize(data)
         @data = data

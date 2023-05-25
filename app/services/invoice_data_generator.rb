@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class InvoiceDataGenerator
-  attr :order
+  attr_reader :order
 
   def initialize(order)
     @order = order
