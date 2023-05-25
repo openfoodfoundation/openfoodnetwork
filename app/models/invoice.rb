@@ -10,6 +10,8 @@ class Invoice < ApplicationRecord
   end
 
   def serialize_order
-    self.data ||= Invoice::OrderSerializer.new(order).serializable_hash
+    return data unless data.empty?
+
+    self.data = Invoice::OrderSerializer.new(order).serializable_hash
   end
 end
