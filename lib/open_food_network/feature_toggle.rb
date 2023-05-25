@@ -42,7 +42,7 @@ module OpenFoodNetwork
         Customize shopfront (shop, cart, checkout) and emails without OFN branding.
       DESC
       "invoices" => <<~DESC,
-        Enable invoices.
+        Preserve the state of generated invoices and enable multiple invoice numbers instead of only one live-updating invoice.
       DESC
     }.freeze
 
