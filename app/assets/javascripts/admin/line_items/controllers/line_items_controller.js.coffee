@@ -9,6 +9,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
   $scope.sharedResource = false
   $scope.columns = Columns.columns
   $scope.sorting = SortOptions
+  $scope.sorting.toggle("order_date")
   $scope.pagination = LineItems.pagination
   $scope.per_page_options = [
     {id: 15, name: t('js.admin.orders.index.per_page', results: 15)},
@@ -79,6 +80,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       "q[order_order_cycle_id_eq]": $scope.orderCycleFilter,
       "q[order_completed_at_gteq]": if formattedStartDate then formattedStartDate else undefined,
       "q[order_completed_at_lt]": if formattedEndDate then formattedEndDate else undefined,
+      "q[s]": "order_completed_at desc",
       "page": $scope.page,
       "per_page": $scope.per_page
     )

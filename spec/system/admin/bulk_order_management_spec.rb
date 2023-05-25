@@ -83,11 +83,11 @@ describe '
       }
       let!(:o2) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now )
+                                        completed_at: Time.zone.yesterday )
       }
       let!(:o3) {
         create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                        completed_at: Time.zone.now )
+                                        completed_at: Time.zone.yesterday - 1.day )
       }
       let!(:product) {
         create(:simple_product)

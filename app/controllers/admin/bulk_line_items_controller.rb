@@ -12,8 +12,7 @@ module Admin
       @line_items = order_permissions.
         editable_line_items.where(order_id: orders).
         includes(:variant).
-        ransack(params[:q]).result.
-        reorder('spree_line_items.order_id ASC, spree_line_items.id ASC')
+        ransack(params[:q]).result
 
       @pagy, @line_items = pagy(@line_items) if pagination_required?
 
