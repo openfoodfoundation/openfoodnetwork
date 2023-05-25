@@ -7,7 +7,7 @@ module DfcProvider
     before_action :check_enterprise
 
     def show
-      product = DfcBuilder.supplied_product(variant)
+      product = SuppliedProductBuilder.supplied_product(variant)
       render json: DfcLoader.connector.export(product)
     end
 
