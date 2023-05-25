@@ -1953,7 +1953,6 @@ de_DE:
         placeholder: Gutschein-Code eingeben
         remove_code: Gutschein-Code entfernen
         confirm_delete: Möchten Sie den Gutschein wirklich entfernen?
-        warning_forfeit_remaining_amount: Ihr Gutscheinwert ist höher als Ihre Bestellung. Durch die Verwendung dieses Gutscheins verfällt der Restwert.
     step3:
       delivery_details:
         title: Lieferdetails

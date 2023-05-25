@@ -2199,7 +2199,7 @@ en_US:
     steps:
       introduction:
         registration_greeting: "Hi there!"
-        registration_intro: "Have you checked out your options at https://about.openfoodnetwork.net/?page_id=114 ? Great! Let's get you signed up!"
+        registration_intro: "Have you checked out your options for contributing to OFN? Just click \"Pricing\" at the top of any page. You did it? Great! Let's get you signed up!"
         registration_checklist: "What do I need?"
         registration_time: "5-10 minutes"
         registration_enterprise_address: "Address"

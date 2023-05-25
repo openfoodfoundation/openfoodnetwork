@@ -6,9 +6,22 @@ fr_BE:
       spree/shipping_method: Méthode de Livraison
     attributes:
       spree/order/ship_address:
+        address1: "Adresse de livraison (Rue + Numéro de maison)"
+        address2: "Adresse de livraison ligne 2"
+        city: "Ville de l'adresse de livraison"
+        country: "Pays de l'adresse de livraison"
         phone: "Numéro de téléphone"
         firstname: "Prénom"
         lastname: "Nom de famille"
+        zipcode: "Code postal de l'adresse de livraison"
+      spree/order/bill_address:
+        address1: "Adresse de facturation (Rue + Numéro de maison)"
+        zipcode: "Code postal de l'adresse de facturation"
+        city: "Ville de l'adresse de facturation"
+        country: "Pays de l'adresse de facturation"
+        firstname: "Prénom à l'adresse de facturation"
+        lastname: "Nom de famille à l'adresse de facturation"
+        phone: Téléphone du client
       spree/user:
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
@@ -34,15 +47,19 @@ fr_BE:
         shipping_category_id: "Catégorie de livraison"
         variant_unit: "Unité de variante"
         variant_unit_name: "Nom de la variante"
+        unit_value: "Valeur unitaire"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
         month: "Mois"
+        verification_value: "Valeur de vérification"
         year: "Année"
       order_cycle:
         orders_close_at: Date de fermeture
       variant_override:
         count_on_hand: "En stock"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Calculateur à pourcentage fixe"
     errors:
       models:
         spree/user:
@@ -70,10 +87,35 @@ fr_BE:
     error_code:
       incorrect_number: "Le numéro de carte est incorrect."
       invalid_number: "Le numéro de carte bancaire n'est pas un numéro valide."
+      invalid_expiry_month: "Le mois d'expiration de la carte n'est pas valide."
+      invalid_expiry_year: "L'année d'expiration de la carte n'est pas valide."
+      invalid_cvc: "Le code de sécurité de la carte est invalide."
+      expired_card: "La carte a expiré."
+      incorrect_cvc: "Le code de sécurité de la carte est incorrect."
+      incorrect_zip: "Le code postal de la carte n'a pas été validé."
+      card_declined: "La carte a été refusée."
+      processing_error: "Une erreur s'est produite lors du traitement de la carte."
+      rate_limit: "Une erreur s'est produite en raison de requêtes atteignant l'API trop rapidement. Veuillez nous faire savoir si vous rencontrez constamment cette erreur."
       authentication_required: "Le paiement a été refusé car la transaction nécessite une authentification."
       approve_with_id: "Le paiement ne peut pas être autorisé."
+      call_issuer: "La carte a été refusée pour une raison inconnue."
+      card_not_supported: "La carte ne prend pas en charge ce type d'achat."
+      card_velocity_exceeded: "Le client a dépassé le solde ou la limite de crédit disponible sur sa carte."
+      currency_not_supported: "La carte ne prend pas en charge la devise spécifiée."
+      do_not_honor: "La carte a été refusée pour une raison inconnue."
+      do_not_try_again: "La carte a été refusée pour une raison inconnue."
+      generic_decline: "La carte a été refusée pour une raison inconnue."
+      no_action_taken: "La carte a été refusée pour une raison inconnue."
       offline_pin_required: "La carte bancaire a été refusée car elle nécessite un code PIN."
       online_or_offline_pin_required: "La carte bancaire a été refusée car elle nécessite un code PIN."
+      revocation_of_all_authorizations: "La carte a été refusée pour une raison inconnue."
+      revocation_of_authorization: "La carte a été refusée pour une raison inconnue."
+      security_violation: "La carte a été refusée pour une raison inconnue."
+      service_not_allowed: "La carte a été refusée pour une raison inconnue."
+      stop_payment_order: "La carte a été refusée pour une raison inconnue."
+      transaction_not_allowed: "La carte a été refusée pour une raison inconnue."
+      try_again_later: "La carte a été refusée pour une raison inconnue."
+      withdrawal_count_limit_exceeded: "Le client a dépassé le solde ou la limite de crédit disponible sur sa carte."
   activemodel:
     errors:
       messages:
@@ -99,6 +141,9 @@ fr_BE:
               not_available_to_shop: "n'est pas disponible pour %{shop}"
   customer_instructions: "Précisions pour la personne qui achète"
   devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "Le mot de passe utilisateur ne peut pas être vide. Veuillez entrer un mot de passe."
     confirmations:
       send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
       failed_to_send: "Une erreur est survenue lors de l'envoi de l'email de confirmation."
@@ -122,6 +167,9 @@ fr_BE:
       already_registered: "Cet email est déjà associé à un utilisateur et a déjà été validé. Veuillez vous connecter pour continuer, ou utiliser un autre email."
     success:
       logged_in_succesfully: "Connecté(e) avec succès"
+    sessions:
+      signed_out: "Déconnexion réussie."
+      already_signed_out: "Déconnexion réussie."
     user_passwords:
       spree_user:
         updated_not_active: "Votre mot de passe a bien été réinitialisé, mais votre email n'a pas encore été confirmé."
@@ -130,7 +178,9 @@ fr_BE:
   models:
     order_cycle:
       cloned_order_cycle_name: "Copie de %{order_cycle}"
+  resume_order: "Reprendre la commande"
   sku: "Référence produit"
+  subtotal: "Sous-total"
   tax_rate: "TVA applicable"
   validators:
     date_time_string_validator:
@@ -157,6 +207,10 @@ fr_BE:
   producer_mailer:
     order_cycle:
       subject: "Rapport de cycle de vente pour %{producer}"
+  report_mailer:
+    report_ready:
+      subject: "Rapport prêt"
+      heading: "Rapport prêt à télécharger"
   shipment_mailer:
     shipped_email:
       dear_customer: "Cher Client,"
@@ -278,6 +332,7 @@ fr_BE:
   processing_payment: "Paiement en cours..."
   no_pending_payments: "Aucun paiement en attente"
   filter_results: Filtrer les résultats
+  clear_filters: Effacer les filtres
   quantity: Quantité
   pick_up: Retrait
   copy: Copier
@@ -293,17 +348,20 @@ fr_BE:
   ship: "Expédier"
   shipping_category: "Catégorie de livraison"
   height: "Taille"
-  width: "largeur"
-  depth: "profondeur"
+  width: "Largeur"
+  depth: "Profondeur"
   actions:
     create_and_add_another: "Créer et ajouter un nouveau"
     create: "Créer"
     cancel: "Annuler"
+    resume: "Reprendre"
     save: "Sauvergarder"
     edit: "Modifier"
     update: "Mettre à jour"
     delete: "Supprimer"
     add: "Ajouter"
+    cut: "Couper"
+    paste: "Coller"
   admin:
     products_page:
       title: Produits
@@ -338,8 +396,12 @@ fr_BE:
         inherits_properties: "Hériter des propriétés?"
         available_on: "Disponible via"
         import_date: "Date d'import (si import)"
+    adjustments:
+      skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
     begins_on: Commence le
+    bill_address: "Adresse de facturation"
+    ship_address: "Adresse de livraison"
     customer: Acheteur
     date: Date
     email: Email
@@ -401,6 +463,9 @@ fr_BE:
       embedded_shopfront_settings: "Paramètres comptoir Intégrées"
       enable_embedded_shopfronts: "Autoriser l'intégration des comptoirs"
       embedded_shopfronts_whitelist: "Liste blanche des Domaines Externes"
+    terms_of_service_files:
+      show:
+        terms_of_service: "Conditions d'utilisation"
     number_localization:
       number_localization_settings: "Gestion localisation des nombres"
       enable_localized_number: "Utiliser le traitement international des séparateurs de milliers/centimes"
@@ -627,11 +692,13 @@ fr_BE:
         view_inventory: Aller à la page Catalogues Comptoir
       product_headings:
         producer: Producteur·trice
-        sku: Référence produit
+        sku: Référence produit (sku)
         name: Nom
         display_name: Nom d'affichage
         category: Catégorie
         description: Description
+        units: Unités
+        unit_type: Type d'unité
         variant_unit_name: Nom de la variante
         price: Prix
         on_hand: En stock
@@ -665,6 +732,8 @@ fr_BE:
       controls:
         back_to_my_inventory: Retour à mon catalogue magasin
     orders:
+      edit:
+        order_sure_want_to: Êtes-vous sûr de vouloir %{event} cette commande ?
       invoice_email_sent: 'L''email de facturation a bien été envoyé'
       order_email_resent: 'L''email de commande a de nouveau été envoyé'
       bulk_management:
@@ -726,6 +795,7 @@ fr_BE:
         business_address:
           company_legal_name: Nom légal d'entreprise
           address1: Adresse du siège social
+          address1_placeholder: 123, rue High.
           address2: Adresse (suite)
           legal_phone_number: Numéro de téléphone
           select_country: "Choisir le pays"
@@ -739,6 +809,8 @@ fr_BE:
           email_address_tip: "Cette adresse email sera affichée sur votre profil public"
           phone: n° téléphone
           phone_placeholder: 'ex: +32 (0) 000 00 00 00 '
+          whatsapp_phone: Numéro de téléphone Whatsapp
+          whatsapp_phone_tip: "Ce numéro sera affiché dans votre profil public pour être ouvert en tant que lien WhatsApp."
           website: Site internet
           website_placeholder: 'ex: www.maferme.org'
         enterprise_fees:
@@ -1183,6 +1255,11 @@ fr_BE:
       pack_by_customer: Préparation des commandes par Acheteur·euse
       pack_by_supplier: Préparation des commandes par Producteur·trice
       pack_by_product: Préparation des commandes par produit
+      show:
+        report_taking_longer: >
+            Désolé, ce rapport a pris trop de temps à traiter. Il peut contenir beaucoup
+            de données ou nous sommes occupés par d'autres rapports. Vous pouvez réessayer
+            plus tard.
       revenues_by_hub:
         name: CA par comptoir
         description: CA par comptoir
@@ -1368,6 +1445,8 @@ fr_BE:
     all_terms_and_conditions:
       terms_and_conditions: "Termes et conditions"
     failed: "La vente a échouée. Veuillez nous le faire savoir afin que nous puissions traiter votre commande."
+    payment_cancelled_due_to_stock: "Paiement annulé : la commande n'a pas pu être finalisée en raison d'un problème de stock."
+    order_not_loaded: "Aucune commande valide trouvée pour le traitement de la commande"
   shops:
     hubs:
       show_closed_shops: "Afficher les comptoirs fermés"
@@ -1635,11 +1714,14 @@ fr_BE:
   cost_currency: "Devise du Coût"
   split_checkout:
     your_details_without_number: Vos informations
+    payment_method_without_number: Mode de paiement
+    order_summary_without_number: Récapitulatif de la commande
     already_ordered:
       cart: "panier"
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
     step1:
       contact_information:
+        title: Coordonnées
         email:
           label: Email
         phone:
@@ -1651,6 +1733,10 @@ fr_BE:
         last_name:
           label: Nom de famille
       address:
+        address1:
+          label: Adresse (rue + numéro de maison)
+        address2:
+          label: Informations d'adresse supplémentaires (facultatif)
         city:
           label: Ville
         state_id:
@@ -1661,27 +1747,49 @@ fr_BE:
           label: Pays
       shipping_info:
         title: Informations de livraison
+      submit: Suivant - Mode de paiement
+      cancel: Retour à Modifier le panier
     step2:
+      payment_method:
+        title: Mode de paiement
       form:
+        card_number:
+          label: Numéro de carte
+        card_verification_value:
+          label: CVC
         card_month:
           label: Mois
         card_year:
           label: Année
+      explaination: Vous pouvez vérifier et confirmer votre commande à l'étape suivante qui comprend les coûts finaux.
+      submit: Suivant - Récapitulatif de la commande
+      cancel: Retour à Vos coordonnées
     step3:
       delivery_details:
         title: Détails de livraison
         edit: Modifier
         address: Adresse de livraison
       payment_method:
+        title: Mode de paiement
         edit: Modifier
       order:
+        title: Détails de la commande
         edit: Modifier
       terms_and_conditions:
         link_text: "Termes et conditions"
       all_terms_and_conditions:
         terms_and_conditions: "Termes et conditions"
+      submit: Complétez la commande
+      cancel: Retour à Mode de paiement
     errors:
+      saving_failed: "Échec de l'enregistrement, veuillez mettre à jour les champs en surbrillance. %{messages}"
+      terms_not_accepted: Veuillez accepter les termes et conditions
+      required: Le champ ne peut pas être vide
+      invalid_number: "s&#39;il vous plaît entrer un numéro de téléphone valide"
       invalid_email: "Veuillez entrer un email valide"
+      select_a_shipping_method: Sélectionnez une méthode d'expédition ou de retrait
+      select_a_payment_method: Choisissez une méthode de paiement
+      no_shipping_methods_available: Le paiement n'est pas possible en raison de l'absence d'options d'expédition. Veuillez contacter le propriétaire du magasin.
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
@@ -1832,7 +1940,7 @@ fr_BE:
   products_search: "Recherche..."
   products_filter_by: "Filtrer par"
   products_filter_selected: "sélectionné"
-  products_filter_heading: "Filtré"
+  products_filter_heading: "Filtres"
   products_filter_clear: "Annuler"
   products_filter_done: "Terminé"
   products_loading: "Produits en cours de chargement..."
@@ -2076,6 +2184,8 @@ fr_BE:
         state_field_error: "Veuillez saisir une Province"
         country_field: "Pays:"
         country_field_error: "Veuillez saisir une Pays"
+        locate_address: "Localiser l'adresse sur la carte"
+        drag_pin: "Faites glisser et déposez la broche à l'emplacement correct si elle n'est pas précise."
       contact:
         title: "Contact"
         who_is_managing_enterprise: "Qui gère %{enterprise}?"
@@ -2083,6 +2193,8 @@ fr_BE:
         contact_field_placeholder: "Nom du contact principal"
         contact_field_required: "Vous devez saisir une personne référente"
         phone_field: "Numéro de téléphone"
+        whatsapp_phone_field: "Numéro de téléphone Whatsapp"
+        whatsapp_phone_tooltip: "Ce numéro sera affiché dans votre profil public pour être ouvert en tant que lien WhatsApp."
         phone_field_placeholder: "ex : +32 (0) 000 00 00 00  "
       type:
         title: "Catégorie"
@@ -2253,6 +2365,7 @@ fr_BE:
   price_sack: "Montant variable selon total commande"
   new_order_cycles: "Nouveau cycle de vente"
   new_order_cycle: "Nouveau Cycle de Vente"
+  new_order_cycle_tooltip: "Ouvrir le magasin pendant une certaine période"
   select_a_coordinator_for_your_order_cycle: "Choisissez un coordinateur pour votre cycle de vente"
   notify_producers: 'Notifier les producteurs'
   edit_order_cycle: "Modifier le cycle de vente"
@@ -2308,6 +2421,7 @@ fr_BE:
   spree_classification_primary_taxon_error: "La catégorie %{taxon}est utilisée par %{product} et ne peut être supprimée"
   spree_order_availability_error: "Le distributeur ne peut fournir les produits de votre panier pour ce cycle de vente."
   spree_order_populator_error: "Le distributeur ne peut fournir tous les produits de votre panier pour ce cycle de vente. Merci de choisir un autre distributeur ou un autre cycle de vente."
+  spree_order_cycle_error: "Veuillez choisir un cycle de commande pour cette commande."
   spree_order_populator_availability_error: "Ce produit n'est pas disponible pour ce cycle de vente / distributeur."
   spree_distributors_error: "Veuillez sélectionner au moins un comptoir "
   spree_user_enterprise_limit_error: "^ %{email} ne peut pas créer de nouvelles entreprises (limite actuelle : %{enterprise_limit} entreprises )."
@@ -2636,6 +2750,7 @@ fr_BE:
     admin:
       unit_price_tooltip: "Le prix unitaire permet aux acheteurs de comparer les prix entre les produits et/ou les conditionnements. Attention, le prix final observé par l'acheteur peut être différent si des marges et/ou commissions sont appliquées."
       enterprise_limit_reached: "Vous avez atteint le nombre limite d'entreprises autorisées par défaut. Ecrivez à %{contact_email}si vous avez besoin d'augmenter cette limite."
+      deleting_item_will_cancel_order: "Cette opération se traduira par une ou plusieurs commandes vides, qui seront annulées. Voulez-vous continuer?"
       modals:
         got_it: "J'ai compris"
         close: "Fermer"
@@ -2831,8 +2946,16 @@ fr_BE:
           processing: "en traitement"
           void: "faire un avoir"
           invalid: "invalide"
+        quantity_adjusted: "Stock disponible insuffisant. Élément de campagne mis à jour avec la quantité maximale disponible."
+        quantity_unchanged: "Quantité inchangée par rapport au montant précédent."
+        cancel_the_order_html: "Cela annulera la commande en cours.<br /> Êtes-vous sur de vouloir continuer?"
+        cancel_the_order_send_cancelation_email: "Envoyer un e-mail d'annulation au client"
         restock_item: "Recharger le stock de ce produit"
         restock_items: "Recharger le stock de tous les produits"
+        delete_line_items_html:
+          one: "Cela supprimera un article de la commande.<br /> Êtes-vous sur de vouloir continuer?"
+          many: "Cela supprimera les éléments de ligne %{count} de la commande.<br /> Êtes-vous sur de vouloir continuer?"
+          other: "Cela supprimera les éléments de ligne %{count} de la commande.<br /> Êtes-vous sur de vouloir continuer?"
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoi...."
@@ -3037,6 +3160,7 @@ fr_BE:
   last: "Fin"
   spree:
     all: "Tous"
+    card_number: "Numéro de carte"
     category: "Catégorie"
     credit: "Crédit"
     more: "Plus"
@@ -3320,7 +3444,9 @@ fr_BE:
           results_found: "%{number} résultats trouvés"
           viewing: "Résultats %{start} à %{end} affichés."
           print_invoices: "Imprimer les factures"
+          cancel_orders: "Annuler les commandes"
           resend_confirmation: "Renvoyer la confirmation"
+          resend_confirmation_confirm_html: "Cela renverra l&#39;e-mail de confirmation au client.<br /> Êtes-vous sur de vouloir continuer?"
         sortable_header:
           payment_state: "Statut du Paiement"
           shipment_state: "Statut livraison"
@@ -3546,6 +3672,8 @@ fr_BE:
           producer_name: "Producteur·trice"
           unit: "Unité"
       shared:
+        configuration_menu:
+          terms_of_service: "Conditions d'utilisation"
         sortable_header:
           name: "Nom"
           number: "N° commande"
@@ -3560,7 +3688,8 @@ fr_BE:
           legal_settings: "Configuration légales"
           cookies_consent_banner_toggle: "Afficher la bannière de consentement à l'utilisation des cookies"
           privacy_policy_url: "URL de la politique de confidentialité"
-          enterprises_require_tos: "Les entreprises doivent accepter les Conditions Générales d'Utilisation"
+          enterprises_require_tos: "Les entreprises doivent accepter les conditions d'utilisation"
+          shoppers_require_tos: "Les acheteurs doivent accepter les conditions d'utilisation"
           cookies_policy_matomo_section: "Afficher la section Matomo sur la politique de cookies"
           footer_tos_url: "Conditions d'utilisation URL"
     checkout:
@@ -3637,6 +3766,7 @@ fr_BE:
         issue_text: |
             Si le lien ne fonctionne pas, essayez de le copier - coller dans la barre d'adresse de votre navigateur.
             Si le problème persiste, n'hésitez pas à nous contacter.
+        subject: "Instructions de réinitialisation du mot de passe"
       confirmation_instructions:
         subject: "Veuillez confirmer votre compte"
     shipment_mailer:
@@ -3737,6 +3867,8 @@ fr_BE:
         cannot_ready: "Impossible de préparer l'expédition."
       invalid_taxonomy_id: "Id taxonomique invalide."
   components:
+    multiple_checked_select:
+      filter_placeholder: "Options de filtre"
     search_input:
       placeholder: Rechercher
     selector_with_filter:

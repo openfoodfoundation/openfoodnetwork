@@ -1949,7 +1949,6 @@ en_FR:
         placeholder: Enter voucher code
         remove_code: Remove code
         confirm_delete: Are you sure you want to remove the voucher?
-        warning_forfeit_remaining_amount: Your voucher value is more than your order. By using this voucher you are forfeiting the remaining value.
     step3:
       delivery_details:
         title: Delivery details
