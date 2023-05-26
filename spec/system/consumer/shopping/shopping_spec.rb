@@ -42,6 +42,63 @@ describe "As a consumer I want to shop with a distributor" do
       expect(first("distributor img")['src']).to include "logo-white.png"
     end
 
+    describe "shop tabs for a distributor" do
+      default_tabs = ["Shop", "About", "Producers", "Contact"].freeze
+      all_tabs = (default_tabs + ["Groups", "Home"]).freeze
+
+      before do
+        visit shop_path
+      end
+
+      shared_examples_for "reveal all right tabs" do |tabs, default|
+        tabs.each do |tab|
+          it "shows the #{tab} tab" do
+            within ".tab-buttons" do
+              expect(page).to have_content tab
+            end
+          end
+        end
+
+        (all_tabs - tabs).each do |tab|
+          it "does not show the #{tab} tab" do
+            within ".tab-buttons" do
+              expect(page).to_not have_content tab
+            end
+          end
+        end
+
+        it "shows the #{default} tab by default" do
+          within ".tab-buttons" do
+            expect(page).to have_selector ".selected", text: default
+          end
+        end
+      end
+
+      context "default" do
+        it_behaves_like "reveal all right tabs", default_tabs, "Shop"
+      end
+
+      context "when the distributor has a shopfront message" do
+        before do
+          distributor.update_attribute(:preferred_shopfront_message, "Hello")
+          visit shop_path
+        end
+
+        it_behaves_like "reveal all right tabs", default_tabs + ["Home"], "Home"
+      end
+
+      context "when the distributor has a custom tab" do
+        let(:custom_tab) { create(:custom_tab, title: "Custom") }
+
+        before do
+          distributor.update(custom_tab: custom_tab)
+          visit shop_path
+        end
+
+        it_behaves_like "reveal all right tabs", default_tabs + ["Custom"], "Shop"
+      end
+    end
+
     describe "producers tab" do
       before do
         exchange = Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id)
