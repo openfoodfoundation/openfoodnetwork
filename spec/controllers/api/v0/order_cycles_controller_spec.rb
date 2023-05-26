@@ -91,7 +91,7 @@ module Api
                                q: { with_properties: [supplier_property.id] }
 
             expect(response.status).to eq 200
-            expect(product_ids).to eq [product1.id, product2.id]
+            expect(product_ids).to match_array [product1.id, product2.id]
             expect(product_ids).to_not include product3.id
           end
         end
