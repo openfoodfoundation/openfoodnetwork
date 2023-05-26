@@ -33,7 +33,7 @@ module ShopHelper
 
   def custom_tab
     {
-      name: current_distributor.custom_tab&.title&.parameterize,
+      name: "custom_#{current_distributor.custom_tab&.title&.parameterize}",
       title: current_distributor.custom_tab&.title,
       show: current_distributor.custom_tab.present?,
       custom: true,
