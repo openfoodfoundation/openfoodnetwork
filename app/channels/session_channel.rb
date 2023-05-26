@@ -11,4 +11,3 @@ class SessionChannel < ApplicationCable::Channel
     stream_from "SessionChannel:#{session_id}"
   end
 end
-
