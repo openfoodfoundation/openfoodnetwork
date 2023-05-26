@@ -13,6 +13,6 @@
       %div{id: "#{tab[:name]}_panel", "data-tabs-and-panels-target": "panel #{'default' if tab[:default]}" } 
         .page-view
           - if tab[:custom]
-            = render "shopping_shared/tabs/custom", order: @order
+            = render "shopping_shared/tabs/custom"
           - else
             = render "shopping_shared/tabs/#{tab[:name]}"
