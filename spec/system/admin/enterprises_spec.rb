@@ -751,7 +751,10 @@ describe '
           end
 
           context "when custom tab is already created" do
-            let(:custom_tab) { create(:custom_tab) }
+            let(:custom_tab) {
+              create(:custom_tab, title: "Custom tab title",
+                                  content: "Custom tab content")
+            }
 
             before do
               distributor1.update(custom_tab: custom_tab)
@@ -764,8 +767,8 @@ describe '
             it "display the custom tab fields with the current values" do
               expect(page).to have_checked_field "Create custom tab in shopfront"
               expect(page).
-                to have_field "enterprise_custom_tab_attributes_title", with: custom_tab.title
-              expect(page).to have_content(custom_tab.content)
+                to have_field "enterprise_custom_tab_attributes_title", with: "Custom tab title"
+              expect(page).to have_content("Custom tab content")
             end
 
             it "can delete custom tab if uncheck the checkbox" do
