@@ -9,6 +9,7 @@ require 'spree/core/controller_helpers/common'
 require 'open_food_network/referer_parser'
 
 class ApplicationController < ActionController::Base
+  include CablecarResponses
   include Pagy::Backend
   include RequestTimeouts
 
