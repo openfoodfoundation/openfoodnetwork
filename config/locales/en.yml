@@ -1402,6 +1402,10 @@ en:
       resume:
         could_not_resume_the_order: Could not resume the order
 
+    select2:
+      minimal_search_length: Please enter %{count} or more characters
+      searching: Searching...
+      no_matches: No matches found
     shared:
       user_guide_link:
         user_guide: User Guide
