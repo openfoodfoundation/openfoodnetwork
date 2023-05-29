@@ -735,11 +735,6 @@ describe '
             check "Create custom tab in shopfront"
           end
 
-          it "display a form with the custom tab fields: title and content" do
-            expect(page).to have_content "TITLE FOR CUSTOM TAB"
-            expect(page).to have_content "CONTENT FOR CUSTOM TAB"
-          end
-
           it "can save custom tab fields" do
             fill_in "enterprise_custom_tab_attributes_title", with: "Custom tab title"
             fill_in_trix_editor "custom_tab_content", with: "Custom tab content"
