@@ -751,15 +751,13 @@ describe '
   end
 
   it "modify the minute of a order cycle with the keyboard, "\
-     "check that the modifications are taken into account", 
-     retry: 3 do
+     "check that the modifications are taken into account" do
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
     login_as_admin
     visit admin_order_cycles_path
     find("#oc#{order_cycle.id}_orders_close_at").click
-    datetime = Time.zone.at(Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0))
     input = find(".flatpickr-calendar.open .flatpickr-minute")
-    input.send_keys datetime.strftime("%M").to_s.strip
+    input.send_keys :up
     input.send_keys :enter
     within "#save-bar" do
       expect(page).to have_content "You have unsaved changes"
