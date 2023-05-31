@@ -41,8 +41,8 @@ module OrderCompletion
     main_app.order_path(@order, order_token: @order.token)
   end
 
-  def order_failed_route
-    main_app.checkout_path
+  def order_failed_route(step: 'details')
+    main_app.checkout_step_path(step:)
   end
 
   def order_invalid_for_checkout?
@@ -61,7 +61,7 @@ module OrderCompletion
   def process_payment_completion!
     unless @order.process_payments!
       processing_failed
-      return redirect_to order_failed_route
+      return redirect_to order_failed_route(step: 'payment')
     end
 
     if OrderWorkflow.new(@order).next && @order.complete?
@@ -87,7 +87,6 @@ module OrderCompletion
       payload.add_metadata :order, @order
     end
     flash[:error] = order_processing_error if flash.blank?
-    Checkout::PostCheckoutActions.new(@order).failure
   end
 
   def order_processing_error
