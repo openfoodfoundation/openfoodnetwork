@@ -35,3 +35,10 @@ form[name="enterprise_form"] {
   margin-bottom: 1em;
   margin-top: 1em;
 }
+
+table .enterprise-actions {
+  .warning-icon {
+    color: $warning-red;
+    font-size: 16px;
+  }
+}

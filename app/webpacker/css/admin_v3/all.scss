@@ -1,0 +1,136 @@
+// Admin v3 styles
+// While in feature-toggle, we inherit all files from old admin design.
+// Individual files may be copied in order to replace the old files.
+
+@import "vendor/assets/stylesheets/normalize";
+@import "vendor/assets/stylesheets/responsive-tables";
+@import "vendor/assets/stylesheets/jquery.powertip";
+@import "~jquery-ui/themes/base/core";
+@import "~jquery-ui/themes/base/button";
+@import "~jquery-ui/themes/base/resizable";
+@import "vendor/assets/stylesheets/jquery-ui-theme";
+@import "~jquery-ui/themes/base/dialog";
+@import "../shared/textAngular";
+@import "../shared/ng-tags-input.min";
+@import "vendor/assets/stylesheets/select2.css.scss";
+@import "~flatpickr/dist/flatpickr";
+@import "~flatpickr/dist/themes/material_blue";
+@import "~shortcut-buttons-flatpickr/dist/themes/light";
+
+@import "../admin/globals/functions";
+@import "globals/palette"; // admin_v3
+@import "../admin/globals/variables";
+@import "../admin/variables";
+@import "../admin/globals/mixins";
+
+@import "../admin/plugins/font-awesome";
+
+@import "../shared/variables/layout";
+@import "../shared/variables/variables";
+@import "../shared/utilities";
+@import "../admin/shared/typography";
+@import "../admin/shared/tables";
+@import "../admin/shared/icons";
+@import "../admin/shared/forms";
+@import "../admin/shared/layout";
+@import "../admin/shared/scroll_bar";
+
+@import "../admin/plugins/flatpickr-customization";
+@import "../admin/plugins/powertip";
+@import "../admin/plugins/jstree";
+@import "../admin/plugins/select2";
+
+@import "../admin/sections/orders";
+@import "../admin/sections/products";
+
+@import "../admin/hacks/mozilla";
+@import "../admin/hacks/opera";
+@import "../admin/hacks/ie";
+
+@import "../admin/components/actions";
+@import "../admin/components/alert-box";
+@import "../admin/components/alert_row";
+@import "../admin/components/buttons";
+@import "../admin/components/date-picker";
+@import "../admin/components/dialogs";
+@import "../admin/components/input";
+@import "../admin/components/jquery_dialog";
+@import "../admin/components/messages";
+@import "../admin/components/navigation";
+@import "../admin/components/ng-cloak";
+@import "../admin/components/page_actions";
+@import "../admin/components/pagination";
+@import "../admin/components/per_page_controls";
+@import "../admin/components/product_autocomplete";
+@import "../admin/components/progress";
+@import "../admin/components/save_bar";
+@import "../admin/components/sidebar";
+@import "../admin/components/simple_modal";
+@import "../admin/components/states";
+@import "../admin/components/stripe_connect_button";
+@import "../admin/components/subscriptions_states";
+@import "../admin/components/table-filter";
+@import "../admin/components/table_loading";
+@import "../admin/components/timepicker";
+@import "../admin/components/todo";
+@import "../admin/components/tooltip";
+@import "../admin/components/wizard_progress";
+
+@import "../admin/pages/enterprise_form";
+@import "../admin/pages/subscription_form";
+@import "../admin/pages/subscription_line_items";
+@import "../admin/pages/subscription_review";
+
+@import "../admin/advanced_settings";
+@import "../admin/alert";
+@import "../admin/animations";
+@import "../admin/change_type_form";
+@import "../admin/customers";
+@import "../admin/dashboard_item";
+@import "../admin/dashboard-single-ent";
+@import "../admin/dialog";
+@import "../admin/disabled";
+@import "../admin/dropdown";
+@import "../admin/enterprise_index_panels";
+@import "../admin/enterprises";
+@import "../admin/filters_and_controls";
+@import "../admin/grid";
+@import "../admin/icons";
+@import "../admin/index_panel_buttons";
+@import "../admin/index_panels";
+@import "../admin/modals";
+@import "../admin/offsets";
+@import "../admin/openfoodnetwork";
+@import "../admin/order_cycles";
+@import "../admin/orders";
+@import "../admin/product_import";
+@import "../admin/products";
+@import "../admin/question-mark-tooltip";
+@import "../admin/relationships";
+@import "../admin/reports";
+@import "../admin/select2";
+@import "../admin/sidebar-item";
+@import "../admin/side_menu";
+@import "../admin/tables";
+@import "../admin/tag_rules";
+@import "../admin/terms_of_service_files";
+@import "../admin/validation";
+@import "../admin/variables";
+@import "../admin/variant_overrides";
+@import "../admin/welcome";
+
+@import "../shared/question-mark-icon";
+@import "../admin/question-mark-tooltip";
+
+@import "~tom-select/src/scss/tom-select.default";
+@import "../admin/components/tom_select";
+
+@import "app/components/help_modal_component/help_modal_component";
+@import "app/components/product_component/product_component";
+@import "app/components/selector_component/selector_component";
+@import "app/components/products_table_component/products_table_component";
+@import "app/components/selector_with_filter_component/selector_with_filter_component";
+@import "app/components/pagination_component/pagination_component";
+@import "app/components/table_header_component/table_header_component";
+@import "app/components/search_input_component/search_input_component";
+@import "app/components/confirm_modal_component/confirm_modal_component";

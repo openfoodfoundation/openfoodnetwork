@@ -11,6 +11,9 @@ module OpenFoodNetwork
     # We way move this to a YAML file when it becomes too awkward.
     # **WARNING:** Features not in this list will be removed.
     CURRENT_FEATURES = {
+      "admin_style_v3" => <<~DESC,
+        Test the work-in-progress design updates.
+      DESC
       "api_reports" => <<~DESC,
         An API endpoint for reports at
         <code>/api/v0/reports/:report_type(/:report_subtype)</code>

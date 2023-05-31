@@ -32,7 +32,7 @@
           %td= enterprise_form.check_box :visible, {}, 'public', 'hidden'
           - if spree_current_user.admin?
             %td= enterprise_form.select :owner_id, enterprise.users.map{ |e| [ e.email, e.id ] }, {}, class: "select2 fullwidth"
-          %td
+          %td.enterprise-actions
             = render 'actions', enterprise: enterprise
       - if @enterprises.empty?
         %tr

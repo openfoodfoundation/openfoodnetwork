@@ -3,7 +3,7 @@
     .seven.columns.alpha
       %h5#status-message{ ng: { show: "StatusMessage.invalidMessage == ''", style: 'StatusMessage.statusMessage.style' } }
         {{ StatusMessage.statusMessage.text || "&nbsp;" }}
-      %h5#status-message{ ng: { show: "StatusMessage.invalidMessage !== ''" }, style: 'color: #da5354' }
+      %h5#status-message{ ng: { show: "StatusMessage.invalidMessage !== ''" }, style: 'color: #C85136' }
         {{ StatusMessage.invalidMessage || "&nbsp;" }}
     .nine.columns.omega.text-right{ ng: { transclude: true } }
 

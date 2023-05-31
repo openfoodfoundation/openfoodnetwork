@@ -5,8 +5,8 @@ angular.module("admin.utils").factory "StatusMessage", ->
       alert:    {style: {color: 'grey'}}
       notice:   {style: {color: 'grey'}}
       success:  {style: {color: '#9fc820'}}
-      failure:  {style: {color: '#da5354'}}
-      error:   {style: {color: '#da5354'}}
+      failure:  {style: {color: '#C85136'}}
+      error:   {style: {color: '#C85136'}}
 
     statusMessage:
       text: ""
