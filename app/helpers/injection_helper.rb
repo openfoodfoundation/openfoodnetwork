@@ -89,16 +89,6 @@ module InjectionHelper
     render partial: "json/injection_ams", locals: { name: "orderCycleData", json: json }
   end
 
-  def inject_available_shipping_methods
-    inject_json_array "shippingMethods", available_shipping_methods,
-                      Api::ShippingMethodSerializer, current_order: current_order
-  end
-
-  def inject_available_payment_methods
-    inject_json_array "paymentMethods", available_payment_methods,
-                      Api::PaymentMethodSerializer, current_order: current_order
-  end
-
   def inject_taxons
     inject_json_array "taxons", Spree::Taxon.all.to_a, Api::TaxonSerializer
   end

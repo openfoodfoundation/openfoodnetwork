@@ -6,16 +6,6 @@ module TermsAndConditionsHelper
                                                                    rel: "noopener")
   end
 
-  def render_terms_and_conditions
-    if platform_terms_required? && distributor_terms_required?
-      render("checkout/all_terms_and_conditions")
-    elsif platform_terms_required?
-      render "checkout/platform_terms_of_service"
-    elsif distributor_terms_required?
-      render "checkout/terms_and_conditions"
-    end
-  end
-
   def any_terms_required?(distributor)
     TermsOfService.required?(distributor)
   end
