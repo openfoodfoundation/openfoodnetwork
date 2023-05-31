@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_25_081252) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_31_010957) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -95,6 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_081252) do
     t.string "last_name", default: "", null: false
     t.boolean "created_manually", default: false
     t.index ["bill_address_id"], name: "index_customers_on_bill_address_id"
+    t.index ["created_manually"], name: "index_customers_on_created_manually"
     t.index ["email"], name: "index_customers_on_email"
     t.index ["enterprise_id", "code"], name: "index_customers_on_enterprise_id_and_code", unique: true
     t.index ["ship_address_id"], name: "index_customers_on_ship_address_id"
