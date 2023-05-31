@@ -2,7 +2,7 @@
   %ul.off-canvas-list
     = cache_with_locale [ContentConfig.cache_key, @white_label_logo] do
       %li.ofn-logo
-        %a{href: main_app.root_path}
+        %a{href: main_logo_link(@white_label_distributor)}
           - if @white_label_logo&.variable?
             = image_tag @white_label_distributor.white_label_logo_url(:mobile)
           - else
