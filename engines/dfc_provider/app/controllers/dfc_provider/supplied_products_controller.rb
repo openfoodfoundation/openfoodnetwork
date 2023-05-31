@@ -15,7 +15,14 @@ module DfcProvider
       dfc_request = JSON.parse(request.body.read)
       return unless dfc_request.key?("dfc-b:description")
 
-      variant.product.update!(name: dfc_request["dfc-b:description"])
+      variant.product.update!(
+        description: dfc_request["dfc-b:description"],
+      )
+
+      # This input is DFC v1.6 currently sent by the DFC Prototype.
+      variant.update!(
+        unit_value: dfc_request["dfc-b:quantity"],
+      )
     end
 
     private

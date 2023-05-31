@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module AuthorizationHelper
-  def authorise(email)
+  def auth_header(email)
     token = allow_token_for(email: email)
-    request.headers["Authorization"] = "JWT #{token}"
+    { "Authorization" => "JWT #{token}" }
   end
 
   def allow_token_for(payload)

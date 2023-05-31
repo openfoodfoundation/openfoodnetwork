@@ -23,6 +23,14 @@ module DfcProvider
       render json: DfcLoader.connector.export(catalog_item, *offers)
     end
 
+    def update
+      dfc_request = JSON.parse(request.body.read)
+
+      variant.on_hand = dfc_request["dfc-b:stockLimitation"]
+      variant.sku = dfc_request["dfc-b:sku"]
+      variant.save!
+    end
+
     private
 
     def variant
