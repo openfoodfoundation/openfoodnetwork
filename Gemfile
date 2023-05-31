@@ -119,8 +119,6 @@ gem 'test-unit', '~> 3.5'
 
 gem 'coffee-rails', '~> 5.0.0'
 
-gem 'mini_racer'
-
 gem 'angular_rails_csrf'
 
 gem 'jquery-rails', '4.4.0'

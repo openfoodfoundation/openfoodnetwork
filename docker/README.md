@@ -120,11 +120,6 @@ You may also need to comment out stuff related to Chromedriver and Chrome. Chrom
 
 See [#8421](https://github.com/openfoodfoundation/openfoodnetwork/issues/8421) for more info
 
-2. `stack smashing detected ***: terminated`
-To fix this error on server startup, you need to bump `mini-racer` gem from `0.4.0` to `0.5.0`
-
-Based on [spree/spree_starter #984](https://github.com/spree/spree_starter/issues/984)
-
 ## Script Summary
 * docker/build(.ps1): This script builds the Docker containers specified for this app, seeds the database, and logs the screen output for these operations. After you use "git clone" to download this repository, run the docker/build script to start the setup process.
 * docker/server(.ps1): Use this script to run this app in the Rails server. This script executes the "docker-compose up" command and logs the results. If all goes well, you will be able to view this app on your local browser at http://localhost:3000/.
