@@ -84,24 +84,15 @@ Openfoodnetwork::Application.routes.draw do
     get "/stripe/authorize/:order_number", to: "stripe#authorize", as: :authorize_stripe
   end
 
-  constraints FeatureToggleConstraint.new(:split_checkout) do
-    get '/checkout', to: 'split_checkout#edit'
+  get '/checkout', to: 'split_checkout#edit'
 
-    constraints step: /(details|payment|summary)/ do
-      get '/checkout/:step', to: 'split_checkout#edit', as: :checkout_step
-      put '/checkout/:step', to: 'split_checkout#update', as: :checkout_update
-    end
-
-    # Redirects to the new checkout for any other 'step' (ie. /checkout/cart from the legacy checkout)
-    get '/checkout/:other', to: redirect('/checkout')
+  constraints step: /(details|payment|summary)/ do
+    get '/checkout/:step', to: 'split_checkout#edit', as: :checkout_step
+    put '/checkout/:step', to: 'split_checkout#update', as: :checkout_update
   end
 
-   # When the split_checkout feature is disabled for the current user, use the legacy checkout
-  constraints FeatureToggleConstraint.new(:split_checkout, negate: true) do
-    get '/checkout', to: 'checkout#edit'
-    put '/checkout', to: 'checkout#update', as: :update_checkout
-    get '/checkout/:state', to: 'checkout#edit', as: :checkout_state
-  end
+  # Redirects to the new checkout for any other 'step' (ie. /checkout/cart from the legacy checkout)
+  get '/checkout/:other', to: redirect('/checkout')
 
   get 'embedded_shopfront/shopfront_session', to: 'application#shopfront_session'
   post 'embedded_shopfront/enable', to: 'application#enable_embedded_styles'

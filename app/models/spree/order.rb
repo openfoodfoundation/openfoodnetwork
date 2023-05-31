@@ -25,9 +25,7 @@ module Spree
         order.update_totals
         order.payment_required?
       }
-      go_to_state :confirmation, if: ->(order) {
-        OpenFoodNetwork::FeatureToggle.enabled? :split_checkout, order.created_by
-      }
+      go_to_state :confirmation
       go_to_state :complete
     end
 
@@ -319,8 +317,7 @@ module Spree
     # Creates new tax charges if there are any applicable rates. If prices already
     # include taxes then price adjustments are created instead.
     def create_tax_charge!
-      return if state.in?(["cart", "address", "delivery"]) &&
-        OpenFoodNetwork::FeatureToggle.enabled?(:split_checkout)
+      return if state.in?(["cart", "address", "delivery"])
 
       clear_legacy_taxes!
 
