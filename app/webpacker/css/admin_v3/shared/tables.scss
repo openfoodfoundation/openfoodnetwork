@@ -6,9 +6,9 @@ table {
   th,
   td {
     padding: 7px 5px;
-    border-right: 1px solid $color-border;
-    border-bottom: 1px solid $color-border;
+    background: $color-tbl-cell-bg;
     vertical-align: middle;
+    text-align: left;
     text-overflow: ellipsis;
 
     img {
@@ -129,27 +129,17 @@ table {
   thead {
     th {
       padding: 10px;
-      border-top: 1px solid $color-border;
       border-bottom: none;
-      background-color: $color-tbl-thead;
-      text-transform: uppercase;
-      font-size: 85%;
+      background-color: $color-tbl-thead-bg;
+      font-size: 13px;
       font-weight: $font-weight-bold;
     }
   }
 
   tbody {
     tr {
-      &:first-child th,
-      &:first-child td {
-        border-top: 1px solid $color-border;
-      }
-      &.even td {
-        background-color: $color-tbl-even;
-
-        img {
-          border: 1px solid very-light($color-3, 6);
-        }
+      td {
+        border-top: 4px solid $color-border; // TODO: Let the table background colour come through, to enable drop shadows
       }
 
       &:hover td {
