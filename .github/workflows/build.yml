@@ -207,6 +207,7 @@ jobs:
       - name: Run tests
 
         env:
+          RSPEC_RETRY_RETRY_COUNT: 2
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: ff2456e64c9f2aa5157eb0daf711d3c3
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
           KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
@@ -285,6 +286,7 @@ jobs:
       - name: Run tests
 
         env:
+          RSPEC_RETRY_RETRY_COUNT: 2
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: e52bd4390c853e6c5bdfe4d0334586c1
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
           KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
