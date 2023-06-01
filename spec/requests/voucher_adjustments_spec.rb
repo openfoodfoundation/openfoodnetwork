@@ -83,7 +83,7 @@ describe VoucherAdjustmentsController, type: :request do
       expect(response).to be_successful
     end
 
-    context "when adjustment doesn't exits" do
+    context "when adjustment doesn't exist" do
       it "does nothing" do
         delete "/voucher_adjustments/-1"
 
