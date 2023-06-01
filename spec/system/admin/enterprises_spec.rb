@@ -725,6 +725,56 @@ describe '
             .to eq('Enterprise "First Distributor" has been successfully updated!')
           expect(distributor1.reload.hide_groups_tab).to be false
         end
+
+        context "creating custom tabs" do
+          before do
+            visit edit_admin_enterprise_path(distributor1)
+            within(".side_menu") do
+              click_link "White Label"
+            end
+            check "Create custom tab in shopfront"
+          end
+
+          it "can save custom tab fields" do
+            fill_in "enterprise_custom_tab_attributes_title", with: "Custom tab title"
+            fill_in_trix_editor "custom_tab_content", with: "Custom tab content"
+            click_button 'Update'
+            expect(flash_message)
+              .to eq('Enterprise "First Distributor" has been successfully updated!')
+            expect(distributor1.reload.custom_tab.title).to eq("Custom tab title")
+            expect(distributor1.reload.custom_tab.content).to eq("<div>Custom tab content</div>")
+          end
+
+          context "when custom tab is already created" do
+            let(:custom_tab) {
+              create(:custom_tab, title: "Custom tab title",
+                                  content: "Custom tab content")
+            }
+
+            before do
+              distributor1.update(custom_tab: custom_tab)
+              visit edit_admin_enterprise_path(distributor1)
+              within(".side_menu") do
+                click_link "White Label"
+              end
+            end
+
+            it "display the custom tab fields with the current values" do
+              expect(page).to have_checked_field "Create custom tab in shopfront"
+              expect(page).
+                to have_field "enterprise_custom_tab_attributes_title", with: "Custom tab title"
+              expect(page).to have_content("Custom tab content")
+            end
+
+            it "can delete custom tab if uncheck the checkbox" do
+              uncheck "Create custom tab in shopfront"
+              click_button 'Update'
+              expect(flash_message)
+                .to eq('Enterprise "First Distributor" has been successfully updated!')
+              expect(distributor1.reload.custom_tab).to be_nil
+            end
+          end
+        end
       end
     end
   end

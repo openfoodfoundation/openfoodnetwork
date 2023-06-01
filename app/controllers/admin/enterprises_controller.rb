@@ -47,6 +47,7 @@ module Admin
     def edit
       @object = Enterprise.where(permalink: params[:id]).
         includes(users: [:ship_address, :bill_address]).first
+      @object.build_custom_tab if @object.custom_tab.nil?
       if params[:stimulus]
         @enterprise.is_primary_producer = params[:is_primary_producer]
         @enterprise.sells = params[:enterprise_sells]
@@ -63,6 +64,8 @@ module Admin
       tag_rules_attributes = params[object_name].delete :tag_rules_attributes
       update_tag_rules(tag_rules_attributes) if tag_rules_attributes.present?
       update_enterprise_notifications
+
+      delete_custom_tab if params[:custom_tab] == 'false'
 
       if @object.update(enterprise_params)
         flash[:success] = flash_message_for(@object, :successfully_updated)
@@ -135,6 +138,11 @@ module Admin
     end
 
     protected
+
+    def delete_custom_tab
+      @object.custom_tab.destroy if @object.custom_tab.present?
+      enterprise_params.delete(:custom_tab_attributes)
+    end
 
     def build_resource
       enterprise = super

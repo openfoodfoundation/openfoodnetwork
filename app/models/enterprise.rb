@@ -70,6 +70,7 @@ class Enterprise < ApplicationRecord
   has_many :tag_rules
   has_one :stripe_account, dependent: :destroy
   has_many :vouchers
+  has_one :custom_tab, dependent: :destroy
 
   delegate :latitude, :longitude, :city, :state_name, to: :address
 
@@ -84,6 +85,7 @@ class Enterprise < ApplicationRecord
                                             reject_if: lambda { |tag_rule|
                                               tag_rule[:preferred_customer_tags].blank?
                                             }
+  accepts_nested_attributes_for :custom_tab
 
   has_one_attached :logo
   has_one_attached :promo_image

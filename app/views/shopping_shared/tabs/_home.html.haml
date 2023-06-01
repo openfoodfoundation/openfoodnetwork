@@ -1,13 +1,12 @@
-%script{ type: "text/ng-template", id: "shop/home.html" }
-  .order-cycle-bar.hide-for-large-up
-    = render partial: "shopping_shared/order_cycles"
+.order-cycle-bar.hide-for-large-up
+  = render partial: "shopping_shared/order_cycles"
 
-  - if require_customer?
-    = render partial: "shop/messages/customer_required"
+- if require_customer?
+  = render partial: "shop/messages/customer_required"
+
+- else
+  - if no_open_order_cycles?
+    = render partial: "shop/messages/closed_shop"
 
   - else
-    - if no_open_order_cycles?
-      = render partial: "shop/messages/closed_shop"
-
-    - else
-      = render partial: "shop/messages/open_shop"
+    = render partial: "shop/messages/open_shop"

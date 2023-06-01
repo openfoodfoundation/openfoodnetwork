@@ -182,5 +182,6 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
 
   config.include Features::DatepickerHelper, type: :system
+  config.include Features::TrixEditorHelper, type: :system
   config.include DownloadsHelper, type: :system
 end

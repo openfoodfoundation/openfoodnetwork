@@ -23,13 +23,25 @@ export default class extends Controller {
       if (anchor[0] == "/") {
         anchor = anchor.slice(1);
       }
-
+      // Add _panel to the anchor to match the panel id if needed
+      if (!anchor.includes("_panel")) {
+        anchor = `${anchor}_panel`;
+      }
       this.updateActivePanel(anchor);
 
       // tab
       const tab_id = anchor.split("_panel").shift();
       this.updateActiveTab(tab_id);
     }
+
+    window.addEventListener("tabs-and-panels:click", (event) => {
+      this.simulateClick(event.detail.tab, event.detail.panel);
+    });
+  }
+
+  simulateClick(tab, panel) {
+    this.updateActiveTab(tab);
+    this.updateActivePanel(panel);
   }
 
   changeActivePanel(event) {

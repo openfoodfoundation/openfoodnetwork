@@ -1,10 +1,9 @@
-%script{ type: "text/ng-template", id: "shop/about.html" }
-  #about{"ng-controller" => "AboutUsCtrl"}
-    %img.hero-img-small{"ng-src" => "{{::shopfront.promo_image}}", "ng-if" => "::shopfront.promo_image"}
+#about{"ng-controller" => "AboutUsCtrl"}
+  %img.hero-img-small{"ng-src" => "{{::shopfront.promo_image}}", "ng-if" => "::shopfront.promo_image"}
 
-    .content
-      .row
-        .small-12.columns
-          %p{"ng-bind-html" => "::shopfront.long_description"}
-        .small-12.large-4.columns
-          &nbsp;
+  .content
+    .row
+      .small-12.columns
+        %p{"ng-bind-html" => "::shopfront.long_description"}
+      .small-12.large-4.columns
+        &nbsp;

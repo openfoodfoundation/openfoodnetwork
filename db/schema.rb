@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_25_135232) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_22_120633) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -68,6 +68,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_135232) do
     t.integer "enterprise_fee_id"
     t.index ["enterprise_fee_id"], name: "index_coordinator_fees_on_enterprise_fee_id"
     t.index ["order_cycle_id"], name: "index_coordinator_fees_on_order_cycle_id"
+  end
+
+  create_table "custom_tabs", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "enterprise_id"
+    t.index ["enterprise_id"], name: "index_custom_tabs_on_enterprise_id"
   end
 
   create_table "customers", id: :serial, force: :cascade do |t|
@@ -1218,6 +1227,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_135232) do
   add_foreign_key "adjustment_metadata", "spree_adjustments", column: "adjustment_id", name: "adjustment_metadata_adjustment_id_fk", on_delete: :cascade
   add_foreign_key "coordinator_fees", "enterprise_fees", name: "coordinator_fees_enterprise_fee_id_fk"
   add_foreign_key "coordinator_fees", "order_cycles", name: "coordinator_fees_order_cycle_id_fk"
+  add_foreign_key "custom_tabs", "enterprises", on_delete: :cascade
   add_foreign_key "customers", "enterprises", name: "customers_enterprise_id_fk"
   add_foreign_key "customers", "spree_addresses", column: "bill_address_id", name: "customers_bill_address_id_fk"
   add_foreign_key "customers", "spree_addresses", column: "ship_address_id", name: "customers_ship_address_id_fk"
