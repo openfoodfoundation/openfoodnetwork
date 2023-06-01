@@ -65,7 +65,7 @@ module Reporting
       def variant_full_name
         display_name = variant_table[:display_name]
         display_as = variant_table[:display_as]
-        options_text = option_value_table[:presentation]
+        options_text = variant_table[:unit_presentation]
 
         unit_to_display = coalesce(nullify_empty_strings(display_as), options_text)
         combined_description = sql_concat(display_name, raw("' ('"), unit_to_display, raw("')'"))

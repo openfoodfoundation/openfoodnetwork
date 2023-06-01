@@ -74,11 +74,6 @@ describe "
 
       let!(:product_unrelated) { create(:simple_product, supplier: producer_unrelated) }
 
-      before do
-        # Remove 'S' option value
-        variant.option_values.first.destroy
-      end
-
       context "when a hub is selected" do
         before do
           visit '/admin/inventory'

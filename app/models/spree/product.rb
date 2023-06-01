@@ -11,7 +11,6 @@ require 'concerns/product_stock'
 #
 # MASTER VARIANT
 # Every product has one master variant, which stores master price and sku, size and weight, etc.
-# The master variant does not have option values associated with it.
 # Price, SKU, size, weight, etc. are all delegated to the master variant.
 # Contains on_hand inventory levels only when there are no variants for the product.
 #
@@ -33,11 +32,6 @@ module Spree
     searchable_associations :supplier, :properties, :primary_taxon, :variants, :master
     searchable_scopes :active, :with_properties
 
-    has_many :product_option_types, dependent: :destroy
-    # We have an after_destroy callback on Spree::ProductOptionType. However, if we
-    # don't specify dependent => destroy on this association, it is not called. See:
-    # https://github.com/rails/rails/issues/7618
-    has_many :option_types, through: :product_option_types, dependent: :destroy
     has_many :product_properties, dependent: :destroy
     has_many :properties, through: :product_properties
 
@@ -87,7 +81,6 @@ module Spree
     delegate :images_attributes=, :display_as=, to: :master
 
     after_create :set_master_variant_defaults
-    after_create :build_variants_from_option_values_hash, if: :option_values_hash
     after_save :save_master
 
     delegate :images, to: :master, prefix: true
@@ -116,15 +109,11 @@ module Spree
               presence: { if: ->(p) { p.variant_unit == 'items' } }
     validate :validate_image_for_master
 
-    attr_accessor :option_values_hash
-
     accepts_nested_attributes_for :product_properties,
                                   allow_destroy: true,
                                   reject_if: lambda { |pp| pp[:property_name].blank? }
 
     make_permalink order: :name
-
-    alias :options :product_option_types
 
     after_initialize :ensure_master
     after_initialize :set_available_on_to_now, if: :new_record?
@@ -260,30 +249,10 @@ module Spree
       end
     end
 
-    # Ensures option_types and product_option_types exist for keys in option_values_hash
-    def ensure_option_types_exist_for_values_hash
-      return if option_values_hash.nil?
-
-      option_values_hash.keys.map(&:to_i).each do |id|
-        option_type_ids << id unless option_type_ids.include?(id)
-        unless product_option_types.pluck(:option_type_id).include?(id)
-          product_option_types.create(option_type_id: id)
-        end
-      end
-    end
-
     # for adding products which are closely related to existing ones
     def duplicate
       duplicator = Spree::Core::ProductDuplicator.new(self)
       duplicator.duplicate
-    end
-
-    # split variants list into hash which shows mapping of opt value onto matching variants
-    # eg categorise_variants_from_option(color) => {"red" -> [...], "blue" -> [...]}
-    def categorise_variants_from_option(opt_type)
-      return {} unless option_types.include?(opt_type)
-
-      variants.active.group_by { |v| v.option_values.detect { |o| o.option_type == opt_type } }
     end
 
     def self.like_any(fields, values)
@@ -351,21 +320,6 @@ module Spree
       variants.map(&:import_date).compact.max
     end
 
-    def variant_unit_option_type
-      return if variant_unit.blank?
-
-      option_type_name = "unit_#{variant_unit}"
-      option_type_presentation = variant_unit.capitalize
-
-      Spree::OptionType.find_by(name: option_type_name) ||
-        Spree::OptionType.create!(name: option_type_name,
-                                  presentation: option_type_presentation)
-    end
-
-    def self.all_variant_unit_option_types
-      Spree::OptionType.where('name LIKE ?', 'unit_%%')
-    end
-
     def destroy
       transaction do
         touch_distributors
@@ -379,21 +333,6 @@ module Spree
     end
 
     private
-
-    # Builds variants from a hash of option types & values
-    def build_variants_from_option_values_hash
-      ensure_option_types_exist_for_values_hash
-      values = option_values_hash.values
-      values = values.inject(values.shift) { |memo, value| memo.product(value).map(&:flatten) }
-
-      values.each do |ids|
-        variants.create(
-          option_value_ids: ids,
-          price: master.price
-        )
-      end
-      save
-    end
 
     # ensures the master variant is flagged as such
     def set_master_variant_defaults
@@ -440,8 +379,6 @@ module Spree
     def update_units
       return unless saved_change_to_variant_unit? || saved_change_to_variant_unit_name?
 
-      option_types.delete self.class.all_variant_unit_option_types
-      option_types << variant_unit_option_type if variant_unit.present?
       variants_including_master.each(&:update_units)
     end
 

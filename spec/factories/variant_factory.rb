@@ -12,7 +12,6 @@ FactoryBot.define do
     depth  { generate(:random_float) }
 
     product { |p| p.association(:base_product) }
-    option_values { [create(:option_value)] }
 
     # ensure stock item will be created for this variant
     before(:create) { create(:stock_location) if Spree::StockLocation.count.zero? }

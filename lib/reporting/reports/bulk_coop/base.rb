@@ -22,9 +22,8 @@ module Reporting
           [
             {
               order: [:bill_address],
-              variant: [{ option_values: :option_type }, { product: :supplier }]
-            },
-            :option_values
+              variant: { product: :supplier }
+            }
           ]
         end
 

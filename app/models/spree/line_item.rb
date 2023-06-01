@@ -9,7 +9,7 @@ module Spree
     include LineItemStockChanges
 
     searchable_attributes :price, :quantity, :order_id, :variant_id, :tax_category_id
-    searchable_associations :order, :order_cycle, :variant, :product, :supplier, :tax_category, :option_values
+    searchable_associations :order, :order_cycle, :variant, :product, :supplier, :tax_category
     searchable_scopes :with_tax, :without_tax
 
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items
@@ -21,9 +21,6 @@ module Spree
     belongs_to :tax_category, class_name: "Spree::TaxCategory"
 
     has_many :adjustments, as: :adjustable, dependent: :destroy
-
-    has_and_belongs_to_many :option_values, join_table: 'spree_option_values_line_items',
-                                            class_name: 'Spree::OptionValue'
 
     before_validation :adjust_quantity
     before_validation :copy_price
@@ -42,12 +39,16 @@ module Spree
     before_save :update_inventory
     before_save :calculate_final_weight_volume, if: :quantity_changed?,
                                                 unless: :final_weight_volume_changed?
-    after_save :update_order
-    after_save :update_units
-    before_destroy :update_inventory_before_destroy
-    after_destroy :update_order
+    before_save :assign_units, if: ->(line_item) {
+      line_item.new_record? || line_item.final_weight_volume_changed?
+    }
 
-    delegate :product, :unit_description, :display_name, to: :variant
+    before_destroy :update_inventory_before_destroy
+
+    after_destroy :update_order
+    after_save :update_order
+
+    delegate :product, :variant_unit, :unit_description, :display_name, :display_as, to: :variant
 
     attr_accessor :skip_stock_check, :target_shipment # Allows manual skipping of Stock::AvailabilityValidator
 

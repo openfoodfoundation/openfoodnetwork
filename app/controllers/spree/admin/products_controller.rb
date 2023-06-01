@@ -7,7 +7,6 @@ require 'open_food_network/permissions'
 module Spree
   module Admin
     class ProductsController < ::Admin::ResourceController
-      helper 'spree/products'
       include OpenFoodNetwork::SpreeApiKeyLoader
       include OrderCyclesHelper
       include EnterprisesHelper
@@ -113,7 +112,6 @@ module Spree
 
       def load_data
         @taxons = Taxon.order(:name)
-        @option_types = OptionType.order(:name)
         @tax_categories = TaxCategory.order(:name)
         @shipping_categories = ShippingCategory.order(:name)
       end
@@ -123,7 +121,7 @@ module Spree
       end
 
       def product_includes
-        [{ variants: [:images, { option_values: :option_type }] },
+        [{ variants: [:images] },
          { master: [:images, :default_price] }]
       end
 

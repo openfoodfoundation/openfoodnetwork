@@ -24,7 +24,6 @@ describe Api::V0::VariantsController, type: :controller do
     let!(:product) { create(:product) }
     let!(:variant) do
       variant = product.master
-      variant.option_values << create(:option_value)
       variant
     end
 
@@ -46,17 +45,18 @@ describe Api::V0::VariantsController, type: :controller do
     # Regression test for spree#2141
     context "a deleted variant" do
       before do
+        expect(Spree::Variant.count).to eq 11
         variant.update_column(:deleted_at, Time.zone.now)
       end
 
       it "is not returned in the results" do
         api_get :index
-        expect(json_response.count).to eq(10) # there are 11 variants
+        expect(json_response.count).to eq(10)
       end
 
       it "is not returned even when show_deleted is passed" do
         api_get :index, show_deleted: true
-        expect(json_response.count).to eq(10) # there are 11 variants
+        expect(json_response.count).to eq(10)
       end
     end
 

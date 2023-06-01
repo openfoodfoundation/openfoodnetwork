@@ -549,6 +549,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_120633) do
     t.decimal "height", precision: 8, scale: 2
     t.decimal "width", precision: 8, scale: 2
     t.decimal "depth", precision: 8, scale: 2
+    t.string "unit_presentation"
     t.index ["order_id"], name: "index_line_items_on_order_id"
     t.index ["variant_id"], name: "index_line_items_on_variant_id"
   end
@@ -1076,6 +1077,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_120633) do
     t.string "display_name", limit: 255
     t.string "display_as", limit: 255
     t.datetime "import_date", precision: nil
+    t.string "variant_unit"
+    t.string "unit_presentation"
     t.index ["product_id"], name: "index_variants_on_product_id"
     t.index ["sku"], name: "index_spree_variants_on_sku"
     t.check_constraint "unit_value > 0::double precision", name: "positive_unit_value"

@@ -881,7 +881,7 @@ module Spree
     end
 
     describe "variant units" do
-      context "when the product already has a variant unit set (and all required option types exist)" do
+      context "when the product already has a variant unit set" do
         let!(:p) {
           create(:simple_product,
                  variant_unit: 'weight',
@@ -889,84 +889,27 @@ module Spree
                  variant_unit_name: nil)
         }
 
-        let!(:ot_volume) { create(:option_type, name: 'unit_volume', presentation: 'Volume') }
-
-        it "removes the old option type and assigns the new one" do
-          p.update!(variant_unit: 'volume', variant_unit_scale: 0.001)
-          expect(p.option_types).to eq([ot_volume])
-        end
-
-        it "does not remove and re-add the option type if it is not changed" do
-          expect(p.option_types).to receive(:delete).never
-          p.update!(name: 'foo')
-        end
-
-        it "removes the related option values from all its variants and replaces them" do
-          ot = Spree::OptionType.find_by name: 'unit_weight'
+        it "updates its variants unit values" do
           v = create(:variant, unit_value: 1, product: p)
           p.reload
 
-          expect(v.option_values.map(&:name).include?("1L")).to eq(false)
-          expect(v.option_values.map(&:name).include?("1g")).to eq(true)
-          expect {
-            p.update!(variant_unit: 'volume', variant_unit_scale: 0.001)
-          }.to change(p.master.option_values.reload, :count).by(0)
-          v.reload
-          expect(v.option_values.map(&:name).include?("1L")).to eq(true)
-          expect(v.option_values.map(&:name).include?("1g")).to eq(false)
+          expect(v.unit_presentation).to eq "1g"
+
+          p.update!(variant_unit: 'volume', variant_unit_scale: 0.001)
+
+          expect(v.reload.unit_presentation).to eq "1L"
         end
 
-        it "removes the related option values from its master variant and replaces them" do
-          ot = Spree::OptionType.find_by name: 'unit_weight'
+        it "updates its master variant's unit values" do
           p.master.update!(unit_value: 1)
           p.reload
 
-          expect(p.master.option_values.map(&:name).include?("1L")).to eq(false)
-          expect(p.master.option_values.map(&:name).include?("1g")).to eq(true)
-          expect {
-            p.update!(variant_unit: 'volume', variant_unit_scale: 0.001)
-          }.to change(p.master.option_values.reload, :count).by(0)
+          expect(p.master.unit_presentation).to eq "1g"
+
+          p.update!(variant_unit: 'volume', variant_unit_scale: 0.001)
           p.reload
-          expect(p.master.option_values.map(&:name).include?("1L")).to eq(true)
-          expect(p.master.option_values.map(&:name).include?("1g")).to eq(false)
-        end
-      end
 
-      it "finds all variant unit option types" do
-        ot1 = create(:option_type, name: 'unit_weight', presentation: 'Weight')
-        ot2 = create(:option_type, name: 'unit_volume', presentation: 'Volume')
-        ot3 = create(:option_type, name: 'unit_items', presentation: 'Items')
-        ot4 = create(:option_type, name: 'foo_unit_bar', presentation: 'Foo')
-
-        expect(Spree::Product.all_variant_unit_option_types).to match_array [ot1, ot2, ot3]
-      end
-    end
-
-    describe "option types" do
-      describe "removing an option type" do
-        it "removes the associated option values from all variants" do
-          # Given a product with a variant unit option type and values
-          p = create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1)
-          v1 = create(:variant, product: p, unit_value: 100, option_values: [])
-          v2 = create(:variant, product: p, unit_value: 200, option_values: [])
-
-          # And a custom option type and values
-          ot = create(:option_type, name: 'foo', presentation: 'foo')
-          p.option_types << ot
-          ov1 = create(:option_value, option_type: ot, name: 'One', presentation: 'One')
-          ov2 = create(:option_value, option_type: ot, name: 'Two', presentation: 'Two')
-          v1.option_values << ov1
-          v2.option_values << ov2
-
-          # When we remove the custom option type
-          p.option_type_ids = p.option_type_ids.reject { |id| id == ot.id }
-
-          # Then the associated option values should have been removed from the variants
-          expect(v1.option_values.reload).not_to include ov1
-          expect(v2.option_values.reload).not_to include ov2
-
-          # And the option values themselves should still exist
-          expect(Spree::OptionValue.where(id: [ov1.id, ov2.id]).count).to eq(2)
+          expect(p.master.unit_presentation).to eq "1L"
         end
       end
     end

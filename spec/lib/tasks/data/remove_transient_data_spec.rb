@@ -63,13 +63,6 @@ describe RemoveTransientData do
         expect{ old_line_item.reload }.to raise_error ActiveRecord::RecordNotFound
         expect{ old_adjustment.reload }.to raise_error ActiveRecord::RecordNotFound
       end
-
-      it "removes any defunct line item option value records" do
-        line_item.delete
-
-        expect{ RemoveTransientData.new.call }.
-          to change{ Spree::OptionValuesLineItem.count }.by(-1)
-      end
     end
   end
 end

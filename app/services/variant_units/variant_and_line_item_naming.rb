@@ -8,31 +8,12 @@ require 'variant_units/option_value_namer'
 
 module VariantUnits
   module VariantAndLineItemNaming
-    # Copied and modified from Spree::Variant
     def options_text
-      values = if option_values_eager_loaded?
-                 # Don't trigger N+1 queries if option_values are already eager-loaded.
-                 # For best results, use: `Spree::Variant.includes(option_values: :option_type)`
-                 # or: `Spree::Product.includes(variant: {option_values: :option_type})`
-                 option_values.sort_by{ |o| o.option_type.position }
-               else
-                 option_values.joins(:option_type).
-                   order("#{Spree::OptionType.table_name}.position asc")
-               end
-
-      values.map { |option_value|
-        presentation(option_value)
-      }.to_sentence(words_connector: ", ", two_words_connector: ", ")
-    end
-
-    def presentation(option_value)
-      return option_value.presentation unless option_value.option_type.name == "unit_weight"
-
+      return unit_presentation unless variant_unit == "weight"
       return display_as if has_attribute?(:display_as) && display_as.present?
-
       return variant.display_as if variant_display_as?
 
-      option_value.presentation
+      unit_presentation
     end
 
     def variant_display_as?
@@ -68,28 +49,23 @@ module VariantUnits
 
     def unit_to_display
       return display_as if has_attribute?(:display_as) && display_as.present?
-
       return variant.display_as if variant_display_as?
 
       options_text
     end
 
-    def update_units
-      delete_unit_option_values
-
-      option_type = product.variant_unit_option_type
-      if option_type
-        name = option_value_name
-        ov = Spree::OptionValue.where(option_type_id: option_type, name: name,
-                                      presentation: name).first ||
-             Spree::OptionValue.create!(option_type: option_type, name: name, presentation: name)
-        option_values << ov
-      end
+    def assign_units
+      assign_attributes(unit_value_attributes)
     end
 
-    def delete_unit_option_values
-      ovs = option_values.where(option_type_id: Spree::Product.all_variant_unit_option_types)
-      option_values.destroy ovs
+    def update_units
+      update_columns(unit_value_attributes)
+    end
+
+    def unit_value_attributes
+      units = { unit_presentation: option_value_name }
+      units.merge!(variant_unit: product.variant_unit) if has_attribute?(:variant_unit)
+      units
     end
 
     def weight_from_unit_value
@@ -98,17 +74,10 @@ module VariantUnits
 
     private
 
-    def option_values_eager_loaded?
-      option_values.loaded?
-    end
-
     def option_value_name
-      if has_attribute?(:display_as) && display_as.present?
-        display_as
-      else
-        option_value_namer = VariantUnits::OptionValueNamer.new self
-        option_value_namer.name
-      end
+      return display_as if has_attribute?(:display_as) && display_as.present?
+
+      VariantUnits::OptionValueNamer.new(self).name
     end
   end
 end

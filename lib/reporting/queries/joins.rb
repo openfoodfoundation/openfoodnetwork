@@ -40,13 +40,6 @@ module Reporting
       def joins_order_bill_address
         reflect query.join(association(Spree::Order, :bill_address, bill_address_alias))
       end
-
-      def join_line_item_option_values
-        reflect query.
-          join(association(Spree::LineItem, :option_values)).
-          join(association(Spree::OptionValuesLineItem, :option_value)
-        )
-      end
     end
   end
 end

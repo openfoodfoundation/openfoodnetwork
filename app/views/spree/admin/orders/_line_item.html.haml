@@ -1,7 +1,7 @@
 %tr{id: "#{spree_dom_id(f.object)}", class: "#{cycle('odd', 'even')}"}
   %td
     = f.object.variant.product.name
-    = "(#{f.object.full_name})" unless f.object.variant.option_values.empty?
+    = "(#{f.object.full_name})"
   %td.price.align-center
     = f.object.single_display_amount
   %td.qty
