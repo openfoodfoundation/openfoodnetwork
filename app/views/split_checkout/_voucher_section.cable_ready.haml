@@ -1,19 +1,18 @@
 %div#voucher-section
-  - if order.distributor.vouchers.present?
-    .checkout-title
-      = t("split_checkout.step2.voucher.apply_voucher")
-    .checkout-input
-      .two-columns-inputs.voucher{"data-controller": "toggle-button-disabled"}
-        - if voucher_adjustment.present?
-          %span.button.voucher-added
-            %i.ofn-i_051-check-big
-              = t("split_checkout.step2.voucher.voucher", voucher_amount: voucher_adjustment.originator.display_value)
-          = link_to t("split_checkout.step2.voucher.remove_code"), voucher_adjustment_path(id: voucher_adjustment.id), method: "delete", data: { confirm: t("split_checkout.step2.voucher.confirm_delete") }
-          - # This might not be true, ie payment method including a fee which wouldn't be covered by voucher or tax implication raising total to be bigger than the voucher amount ?
-          - if voucher_adjustment.originator.amount > order.total
-            .checkout-input
-              %span.formError.standalone
-                = t("split_checkout.step2.voucher.warning_forfeit_remaining_amount")
-        - else
-          = text_field_tag "[order][voucher_code]", params.dig(:order, :voucher_code), data: { action: "input->toggle-button-disabled#inputIsChanged", }, placeholder: t("split_checkout.step2.voucher.placeholder") , class: "voucher"
-          = submit_tag t("split_checkout.step2.voucher.apply"), name: "apply_voucher", disabled: true, class: "button cancel voucher", "data-disable-with": false, data: { "toggle-button-disabled-target": "button" }
+  .checkout-title
+    = t("split_checkout.step2.voucher.apply_voucher")
+  .checkout-input
+    .two-columns-inputs.voucher{"data-controller": "toggle-button-disabled"}
+      - if voucher_adjustment.present?
+        %span.button.voucher-added
+          %i.ofn-i_051-check-big
+            = t("split_checkout.step2.voucher.voucher", voucher_amount: voucher_adjustment.originator.display_value)
+        = link_to t("split_checkout.step2.voucher.remove_code"), voucher_adjustment_path(id: voucher_adjustment.id), method: "delete", data: { confirm: t("split_checkout.step2.voucher.confirm_delete") }
+        - # This might not be true, ie payment method including a fee which wouldn't be covered by voucher or tax implication raising total to be bigger than the voucher amount ?
+        - if voucher_adjustment.originator.amount > order.total
+          .checkout-input
+            %span.formError.standalone
+              = t("split_checkout.step2.voucher.warning_forfeit_remaining_amount")
+      - else
+        = text_field_tag "[order][voucher_code]", params.dig(:order, :voucher_code), data: { action: "input->toggle-button-disabled#inputIsChanged", }, placeholder: t("split_checkout.step2.voucher.placeholder") , class: "voucher"
+        = submit_tag t("split_checkout.step2.voucher.apply"), name: "apply_voucher", disabled: true, class: "button cancel voucher", "data-disable-with": false, data: { "toggle-button-disabled-target": "button" }
