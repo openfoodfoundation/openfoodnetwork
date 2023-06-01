@@ -59,7 +59,7 @@
 @import "../admin/components/navigation";
 @import "../admin/components/ng-cloak";
 @import "../admin/components/page_actions";
-@import "../admin/components/pagination";
+@import "components/pagination"; // admin_v3
 @import "../admin/components/per_page_controls";
 @import "../admin/components/product_autocomplete";
 @import "../admin/components/progress";
@@ -121,6 +121,8 @@
 
 @import "../shared/question-mark-icon";
 @import "../admin/question-mark-tooltip";
+
+@import "v3_overrides"; // admin_v3
 
 @import "~tom-select/src/scss/tom-select.default";
 @import "../admin/components/tom_select";

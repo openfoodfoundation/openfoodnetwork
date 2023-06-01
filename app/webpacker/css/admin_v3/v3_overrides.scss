@@ -1,0 +1,8 @@
+// Temporary location for some overrides, to avoid having to branch a whole file
+
+// Prevent uppercase
+fieldset legend,
+label,
+.button {
+  text-transform: inherit;
+}
