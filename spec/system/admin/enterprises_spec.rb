@@ -710,6 +710,8 @@ describe '
 
           context "can edit white label logo link" do
             it_behaves_like "edit link with", "https://www.openfoodnetwork.org", "https://www.openfoodnetwork.org"
+            it_behaves_like "edit link with", "www.openfoodnetwork.org", "http://www.openfoodnetwork.org"
+            it_behaves_like "edit link with", "openfoodnetwork.org", "http://openfoodnetwork.org"
           end
         end
 

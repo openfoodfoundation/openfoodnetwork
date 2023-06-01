@@ -317,6 +317,14 @@ class Enterprise < ApplicationRecord
     )
   end
 
+  def white_label_logo_link
+    return nil if self[:white_label_logo_link].blank?  
+
+    return self[:white_label_logo_link] if self[:white_label_logo_link].start_with?('http')
+
+    "http://#{self[:white_label_logo_link]}"
+  end
+
   def website
     strip_url self[:website]
   end
