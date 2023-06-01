@@ -578,7 +578,7 @@ describe '
     }
     let(:order1) {
       create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first,
-                     shipments: [shipment], bill_address: bill_address)
+                     shipments: [shipment], bill_address: bill_address, state: 'payment')
     }
     let(:product1) {
       create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0, sku: 'sku1')

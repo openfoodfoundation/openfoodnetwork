@@ -174,18 +174,6 @@ describe "full-page cart" do
       end
     end
 
-    describe "tax" do
-      before do
-        add_enterprise_fee enterprise_fee
-        add_product_to_cart order, product_with_tax
-        visit main_app.cart_path
-      end
-
-      it "shows the total tax for the order, including product tax and tax on fees" do
-        expect(page).to have_selector '.tax-total', text: '11.00' # 10 + 1
-      end
-    end
-
     describe "updating quantities" do
       let(:li) { order.line_items.reload.last }
       let(:variant) { product_with_tax.variants.first }

@@ -24,6 +24,8 @@ describe Spree::Order do
         before { allow(order).to receive_messages process_payments!: true }
 
         it "should finalize order when transitioning to complete state" do
+          order.next
+          expect(order.state).to eq "confirmation"
           expect(order).to receive(:finalize!)
           order.next!
         end
@@ -32,6 +34,8 @@ describe Spree::Order do
           before { allow(order).to receive_messages process_payments!: false }
 
           it "should still complete the order" do
+            order.next
+            expect(order.state).to eq "confirmation"
             order.next
             expect(order.state).to eq "complete"
           end
@@ -42,6 +46,8 @@ describe Spree::Order do
         before { allow(order).to receive_messages process_payments!: false }
 
         it "can transition to complete" do
+          order.next
+          expect(order.state).to eq "confirmation"
           order.next
           expect(order.state).to eq "complete"
         end

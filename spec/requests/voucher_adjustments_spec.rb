@@ -10,8 +10,6 @@ describe VoucherAdjustmentsController, type: :request do
   let!(:adjustment) { voucher.create_adjustment(voucher.code, order) }
 
   before do
-    Flipper.enable(:split_checkout)
-
     # Make sure the order is created by the order user, the factory doesn't set ip properly
     order.created_by = user
     order.save!

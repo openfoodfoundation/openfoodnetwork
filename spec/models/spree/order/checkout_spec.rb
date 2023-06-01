@@ -10,8 +10,9 @@ describe Spree::Order::Checkout do
       [
         { address: :delivery },
         { delivery: :payment },
-        { payment: :complete },
-        { delivery: :complete }
+        { delivery: :confirmation },
+        { payment: :confirmation },
+        { confirmation: :complete }
       ]
     end
 
@@ -36,14 +37,14 @@ describe Spree::Order::Checkout do
       context "when payment not required" do
         before { allow(order).to receive_messages payment_required?: false }
         specify do
-          expect(order.checkout_steps).to eq %w(address delivery complete)
+          expect(order.checkout_steps).to eq %w(address delivery confirmation complete)
         end
       end
 
       context "when payment required" do
         before { allow(order).to receive_messages payment_required?: true }
         specify do
-          expect(order.checkout_steps).to eq %w(address delivery payment complete)
+          expect(order.checkout_steps).to eq %w(address delivery payment confirmation complete)
         end
       end
     end
@@ -112,9 +113,9 @@ describe Spree::Order::Checkout do
           allow(order).to receive_messages payment_required?: false
         end
 
-        it "transitions to complete" do
+        it "transitions to confirmation" do
           order.next!
-          expect(order.state).to eq "complete"
+          expect(order.state).to eq 'confirmation'
         end
       end
     end

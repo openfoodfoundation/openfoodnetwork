@@ -690,6 +690,7 @@ describe Spree::Order do
 
       before do
         allow(order).to receive(:tax_zone) { shipping_tax_rate.zone }
+        order.update_attribute(:state, 'payment')
         order.reload
         order.create_tax_charge!
       end
@@ -1269,7 +1270,8 @@ describe Spree::Order do
         order.next!
         order.payments << create(:payment, order: order)
 
-        expect { order.next! }.to change { order.state }.from("payment").to("complete")
+        expect { order.next! }.to change { order.state }.from("payment").to("confirmation")
+        expect { order.next! }.to change { order.state }.from("confirmation").to("complete")
       end
     end
 
@@ -1303,7 +1305,8 @@ describe Spree::Order do
         it "skips the payment state" do
           advance_to_delivery_state(order)
 
-          expect { order.next! }.to change { order.state }.from("delivery").to("complete")
+          expect { order.next! }.to change { order.state }.from("delivery").to("confirmation")
+          expect { order.next! }.to change { order.state }.from("confirmation").to("complete")
         end
       end
     end

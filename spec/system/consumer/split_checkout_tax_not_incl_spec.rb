@@ -88,207 +88,141 @@ describe "As a consumer, I want to see adjustment breakdown" do
     end
 
     describe "for a customer with shipping address within the tax zone" do
-      context "on legacy checkout" do
-        before do
-          set_order order_within_zone
-          login_as(user_within_zone)
-        end
-
-        it "will be charged tax on the order" do
-          visit checkout_path
-
-          find(:xpath, '//*[@id="shipping"]/ng-form/dd').click
-          choose free_shipping.name.to_s
-
-          within "#payment" do
-            choose free_payment.name.to_s
-          end
-
-          click_on "Place order now"
-
-          # DB checks
-          order_within_zone.reload
-          expect(order_within_zone.additional_tax_total).to eq(1.3)
-
-          # UI checks
-          expect(page).to have_selector('#order_total', text: with_currency(11.30))
-          expect(page).to have_selector('#tax-row', text: with_currency(1.30))
-        end
+      before do
+        set_order order_within_zone
+        login_as(user_within_zone)
       end
 
-      context "on split-checkout" do
-        before do
-          Flipper.enable(:split_checkout)
+      it "will be charged tax on the order" do
+        visit checkout_step_path(:details)
 
-          set_order order_within_zone
-          login_as(user_within_zone)
+        choose "Delivery"
+
+        click_button "Next - Payment method"
+        click_on "Next - Order summary"
+        click_on "Complete order"
+
+        # DB checks
+        order_within_zone.reload
+        expect(order_within_zone.additional_tax_total).to eq(1.3)
+
+        # UI checks
+        expect(page).to have_content("Confirmed")
+        expect(page).to have_selector('#order_total', text: with_currency(11.30))
+        expect(page).to have_selector('#tax-row', text: with_currency(1.30))
+      end
+
+      context "when using a voucher" do
+        let!(:voucher) do
+          create(:voucher, code: 'some_code', enterprise: distributor, amount: 10)
         end
 
-        it "will be charged tax on the order" do
+        it "will include a tax included amount on the voucher adjustment" do
           visit checkout_step_path(:details)
 
           choose "Delivery"
 
           click_button "Next - Payment method"
+          # add Voucher
+          fill_in "Enter voucher code", with: voucher.code
+          click_button("Apply")
+
           click_on "Next - Order summary"
           click_on "Complete order"
 
-          # DB checks
-          order_within_zone.reload
-          expect(order_within_zone.additional_tax_total).to eq(1.3)
-
           # UI checks
           expect(page).to have_content("Confirmed")
-          expect(page).to have_selector('#order_total', text: with_currency(11.30))
+          expect(page).to have_selector('#order_total', text: with_currency(1.30))
           expect(page).to have_selector('#tax-row', text: with_currency(1.30))
-        end
 
-        context "when using a voucher" do
-          let!(:voucher) do
-            create(:voucher, code: 'some_code', enterprise: distributor, amount: 10)
+          # Voucher
+          within "#line-items" do
+            expect(page).to have_content(voucher.code)
+            expect(page).to have_content(with_currency(-8.85))
+
+            expect(page).to have_content("Tax #{voucher.code}")
+            expect(page).to have_content(with_currency(-1.15))
           end
 
-          it "will include a tax included amount on the voucher adjustment" do
-            visit checkout_step_path(:details)
+          # DB check
+          order_within_zone.reload
+          voucher_adjustment = order_within_zone.voucher_adjustments.first
+          voucher_tax_adjustment = order_within_zone.voucher_adjustments.second
 
-            choose "Delivery"
-
-            click_button "Next - Payment method"
-            # add Voucher
-            fill_in "Enter voucher code", with: voucher.code
-            click_button("Apply")
-
-            click_on "Next - Order summary"
-            click_on "Complete order"
-
-            # UI checks
-            expect(page).to have_content("Confirmed")
-            expect(page).to have_selector('#order_total', text: with_currency(1.30))
-            expect(page).to have_selector('#tax-row', text: with_currency(1.30))
-
-            # Voucher
-            within "#line-items" do
-              expect(page).to have_content(voucher.code)
-              expect(page).to have_content(with_currency(-8.85))
-
-              expect(page).to have_content("Tax #{voucher.code}")
-              expect(page).to have_content(with_currency(-1.15))
-            end
-
-            # DB check
-            order_within_zone.reload
-            voucher_adjustment = order_within_zone.voucher_adjustments.first
-            voucher_tax_adjustment = order_within_zone.voucher_adjustments.second
-
-            expect(voucher_adjustment.amount.to_f).to eq(-8.85)
-            expect(voucher_tax_adjustment.amount.to_f).to eq(-1.15)
-          end
+          expect(voucher_adjustment.amount.to_f).to eq(-8.85)
+          expect(voucher_tax_adjustment.amount.to_f).to eq(-1.15)
         end
       end
     end
 
     describe "for a customer with shipping address outside the tax zone" do
-      context "on legacy checkout" do
-        before do
-          set_order order_outside_zone
-          login_as(user_outside_zone)
-        end
-
-        it "will not be charged tax on the order" do
-          visit checkout_path
-
-          find(:xpath, '//*[@id="shipping"]/ng-form/dd').click
-          choose free_shipping.name.to_s
-
-          within "#payment" do
-            choose free_payment.name.to_s
-          end
-
-          click_on "Place order now"
-
-          # DB checks
-          order_outside_zone.reload
-          expect(order_outside_zone.included_tax_total).to eq(0.0)
-          expect(order_outside_zone.additional_tax_total).to eq(0.0)
-
-          # UI checks
-          expect(page).to have_content("Confirmed")
-          expect(page).to have_selector('#order_total', text: with_currency(10.00))
-          expect(page).not_to have_content("includes tax")
-        end
+      before do
+        set_order order_outside_zone
+        login_as(user_outside_zone)
       end
 
-      context "on split-checkout" do
+      it "will not be charged tax on the order" do
+        visit checkout_step_path(:details)
+
+        choose "Delivery"
+
+        click_button "Next - Payment method"
+        click_on "Next - Order summary"
+        click_on "Complete order"
+
+        # DB checks
+        order_outside_zone.reload
+        expect(order_outside_zone.included_tax_total).to eq(0.0)
+        expect(order_outside_zone.additional_tax_total).to eq(0.0)
+
+        # UI checks
+        expect(page).to have_content("Confirmed")
+        expect(page).to have_selector('#order_total', text: with_currency(10.00))
+        expect(page).not_to have_content("includes tax")
+      end
+
+      # reproducing bug #9153
+      context "changing the address on the /details step" do
         before do
-          Flipper.enable(:split_checkout)
-
-          set_order order_outside_zone
-          login_as(user_outside_zone)
-        end
-
-        it "will not be charged tax on the order" do
           visit checkout_step_path(:details)
-
           choose "Delivery"
 
           click_button "Next - Payment method"
           click_on "Next - Order summary"
+
+          expect(page).to have_selector('#order_total', text: with_currency(10.00))
+
+          # customer goes back from Summary to Details step, to change Delivery
+          click_on "Your details"
+        end
+
+        it "should re-calculate the tax accordingly" do
+          select "Victoria", from: "order_bill_address_attributes_state_id"
+
+          # it should not be necessary to save as new default bill address
+          check "order_save_bill_address"
+          check "ship_address_same_as_billing"
+
+          choose "Delivery"
+          click_button "Next - Payment method"
+
+          click_on "Next - Order summary"
+
+          # Summary step should reflect changes
+          expect(page).to have_selector('#order_total', text: with_currency(11.30))
+          expect(page).to have_selector('#tax-row', text: with_currency(1.30))
+
           click_on "Complete order"
 
           # DB checks
           order_outside_zone.reload
           expect(order_outside_zone.included_tax_total).to eq(0.0)
-          expect(order_outside_zone.additional_tax_total).to eq(0.0)
+          expect(order_outside_zone.additional_tax_total).to eq(1.3)
 
-          # UI checks
+          # UI checks - Order confirmation page should reflect changes
           expect(page).to have_content("Confirmed")
-          expect(page).to have_selector('#order_total', text: with_currency(10.00))
-          expect(page).not_to have_content("includes tax")
-        end
-
-        # reproducing bug #9153
-        context "changing the address on the /details step" do
-          before do
-            visit checkout_step_path(:details)
-            choose "Delivery"
-
-            click_button "Next - Payment method"
-            click_on "Next - Order summary"
-
-            expect(page).to have_selector('#order_total', text: with_currency(10.00))
-
-            # customer goes back from Summary to Details step, to change Delivery
-            click_on "Your details"
-          end
-
-          it "should re-calculate the tax accordingly" do
-            select "Victoria", from: "order_bill_address_attributes_state_id"
-
-            # it should not be necessary to save as new default bill address
-            check "order_save_bill_address"
-            check "ship_address_same_as_billing"
-
-            choose "Delivery"
-            click_button "Next - Payment method"
-
-            click_on "Next - Order summary"
-
-            # Summary step should reflect changes
-            expect(page).to have_selector('#order_total', text: with_currency(11.30))
-            expect(page).to have_selector('#tax-row', text: with_currency(1.30))
-
-            click_on "Complete order"
-
-            # DB checks
-            order_outside_zone.reload
-            expect(order_outside_zone.included_tax_total).to eq(0.0)
-            expect(order_outside_zone.additional_tax_total).to eq(1.3)
-
-            # UI checks - Order confirmation page should reflect changes
-            expect(page).to have_content("Confirmed")
-            expect(page).to have_selector('#order_total', text: with_currency(11.30))
-            expect(page).to have_selector('#tax-row', text: with_currency(1.30))
-          end
+          expect(page).to have_selector('#order_total', text: with_currency(11.30))
+          expect(page).to have_selector('#tax-row', text: with_currency(1.30))
         end
       end
     end

@@ -152,6 +152,10 @@ module Spree
                                 label: "legacy", originator_type: "Spree::TaxRate")
           }
 
+          before do
+            order.update(state: "payment")
+          end
+
           it "removes any legacy tax adjustments on order" do
             order.create_tax_charge!
 
