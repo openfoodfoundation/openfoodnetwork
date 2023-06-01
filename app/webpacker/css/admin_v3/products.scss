@@ -27,10 +27,12 @@ table#listing_products.bulk {
     }
     &.producer {
       width: 18%;
+      min-width: 10em;
     }
     &.name {
       width: 18%;
       font-weight: bold;
+      min-width: 15em;
     }
     &.unit {
       width: 14%;
@@ -46,6 +48,7 @@ table#listing_products.bulk {
     }
     &.category {
       width: 15%;
+      min-width: 10em;
     }
     &.available_on {
       width: 15%;

@@ -3,6 +3,11 @@ table {
   margin-bottom: 15px;
   border-collapse: separate;
 
+  // Enable side-scrolling when content is too wide to fit in window.
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+
   th,
   td {
     padding: 7px 5px;
