@@ -11,11 +11,15 @@
         %strong
           = order.display_total.to_html
     .pad
-      .text-big
-        = t :order_payment
-        %strong=  last_payment_method(order)&.name
-      %p.text-small.text-skinny.pre-line.word-wrap
-        %em= last_payment_method(order)&.description
+      - if (order_payment_method = last_payment_method(order))
+        .text-big
+          = t :order_payment
+          %strong= order_payment_method&.name
+        %p.text-small.text-skinny.pre-line.word-wrap
+          %em= order_payment_method&.description
+      - else
+        .text-big
+          = t(:no_payment_required)
 
     .order-summary.text-small
       %strong

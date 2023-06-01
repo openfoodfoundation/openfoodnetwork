@@ -23,7 +23,7 @@ module Spree
       go_to_state :delivery
       go_to_state :payment, if: ->(order) {
         order.update_totals
-        order.payment_required?
+        order.payment_required? || order.zero_priced_order?
       }
       go_to_state :confirmation
       go_to_state :complete
@@ -217,6 +217,12 @@ module Spree
     #   be completed to draw from stock levels and trigger emails.
     def payment_required?
       total.to_f > 0.0 && !skip_payment_for_subscription?
+    end
+
+    # There are items present in the order, but either the items have zero price,
+    # or the order's total has been modified (maybe discounted) to zero.
+    def zero_priced_order?
+      valid? && line_items.count.positive? && total.zero?
     end
 
     # Returns the relevant zone (if any) to be used for taxation purposes.
