@@ -19,7 +19,7 @@
 
 @import "../admin/globals/functions";
 @import "globals/palette"; // admin_v3
-@import "../admin/globals/variables";
+@import "globals/variables"; // admin_v3
 @import "../admin/variables";
 @import "../admin/globals/mixins";
 
@@ -29,7 +29,7 @@
 @import "../shared/variables/variables";
 @import "../shared/utilities";
 @import "../admin/shared/typography";
-@import "../admin/shared/tables";
+@import "shared/tables"; // admin_v3
 @import "../admin/shared/icons";
 @import "../admin/shared/forms";
 @import "shared/layout"; // admin_v3
