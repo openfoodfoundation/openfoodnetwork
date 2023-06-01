@@ -19,7 +19,7 @@
 
 @import "../admin/globals/functions";
 @import "globals/palette"; // admin_v3
-@import "../admin/globals/variables";
+@import "globals/variables"; // admin_v3
 @import "../admin/variables";
 @import "../admin/globals/mixins";
 
@@ -29,7 +29,7 @@
 @import "../shared/variables/variables";
 @import "../shared/utilities";
 @import "../admin/shared/typography";
-@import "../admin/shared/tables";
+@import "shared/tables"; // admin_v3
 @import "../admin/shared/icons";
 @import "../admin/shared/forms";
 @import "../admin/shared/layout";
@@ -104,7 +104,7 @@
 @import "../admin/order_cycles";
 @import "../admin/orders";
 @import "../admin/product_import";
-@import "../admin/products";
+@import "products"; // admin_v3
 @import "../admin/question-mark-tooltip";
 @import "../admin/relationships";
 @import "../admin/reports";

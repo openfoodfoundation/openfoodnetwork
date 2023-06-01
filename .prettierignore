@@ -9,6 +9,7 @@
 babel.config.js
 postcss.config.js
 
+/app/webpacker/css/admin_v3/globals/
 /app/webpacker/css/darkswarm/
 /app/webpacker/css/mail/
 /app/webpacker/css/shared/
