@@ -2,41 +2,6 @@
   display: block;
 }
 
-tbody.odd {
-  tr.product {
-    td {
-      background-color: white;
-    }
-  }
-  tr.variant.odd {
-    td {
-      background-color: lighten($spree-light-blue, 3);
-    }
-  }
-  tr.variant.even {
-    td {
-      background-color: white;
-    }
-  }
-}
-tbody.even {
-  tr.product {
-    td {
-      background-color: darken($spree-light-blue, 1);
-    }
-  }
-  tr.variant.odd {
-    td {
-      background-color: lighten($spree-light-blue, 2);
-    }
-  }
-  tr.variant.even {
-    td {
-      background-color: darken($spree-light-blue, 1);
-    }
-  }
-}
-
 tbody tr.product td.actions {
   background-color: transparent;
 }
@@ -45,13 +10,6 @@ tbody tr.variant td.actions {
 }
 tbody tr.variant td {
   padding: 5px 10px;
-}
-
-th.left-actions,
-td.left-actions {
-  background-color: transparent !important;
-  border: none !important;
-  border-right: 1px solid $pale-blue !important;
 }
 
 #status-message {
@@ -72,6 +30,7 @@ table#listing_products.bulk {
     }
     &.name {
       width: 18%;
+      font-weight: bold;
     }
     &.unit {
       width: 14%;
@@ -123,6 +82,16 @@ table#listing_products.bulk {
     a.add-variant {
       cursor: pointer;
     }
+  }
+
+  // Match font size of other content
+  input {
+    font-size: inherit;
+    font-weight: bold; // TODO: revisit this
+  }
+
+  .ts-wrapper.single .ts-control {
+    border-color: $color-txt-brd;
   }
 }
 

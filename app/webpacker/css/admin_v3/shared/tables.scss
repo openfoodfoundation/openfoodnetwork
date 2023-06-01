@@ -6,8 +6,9 @@ table {
   th,
   td {
     padding: 7px 5px;
-    border-right: 1px solid $color-border;
-    border-bottom: 1px solid $color-border;
+    // border-right: 1px solid $color-border;
+    // border-bottom: 1px solid $color-border;
+    background-color: $color-1;
     vertical-align: middle;
     text-overflow: ellipsis;
 
@@ -132,8 +133,7 @@ table {
       border-top: 1px solid $color-border;
       border-bottom: none;
       background-color: $color-tbl-thead;
-      text-transform: uppercase;
-      font-size: 85%;
+      font-size: 13px;
       font-weight: $font-weight-bold;
     }
   }
@@ -142,14 +142,7 @@ table {
     tr {
       &:first-child th,
       &:first-child td {
-        border-top: 1px solid $color-border;
-      }
-      &.even td {
-        background-color: $color-tbl-even;
-
-        img {
-          border: 1px solid very-light($color-3, 6);
-        }
+        border-top: 4px solid $color-7; // TODO: Let the table background colour come through
       }
 
       &:hover td {
