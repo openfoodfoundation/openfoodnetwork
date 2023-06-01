@@ -11,15 +11,6 @@ class VariantDeleter
     variant.destroy
   end
 
-  def destroy_related_outgoing_variants(variant_id, order_cycle)
-    internal_variants = ExchangeVariant.where(variant_id: variant_id).
-      joins(:exchange).
-      where(
-        exchanges: { order_cycle: order_cycle, incoming: false }
-      )
-    internal_variants.destroy_all
-  end
-
   private
 
   def only_variant_on_product?(variant)

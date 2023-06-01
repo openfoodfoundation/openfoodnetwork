@@ -3,9 +3,15 @@
 class ExchangeVariant < ApplicationRecord
   belongs_to :exchange
   belongs_to :variant, class_name: 'Spree::Variant'
-  after_destroy :destroy_related_outgoing_variants
 
-  def destroy_related_outgoing_variants
-    VariantDeleter.new.destroy_related_outgoing_variants(variant_id, exchange.order_cycle)
+  after_destroy :delete_related_outgoing_variants
+
+  def delete_related_outgoing_variants
+    return unless exchange.incoming?
+
+    ExchangeVariant.where(variant_id: variant_id).
+      joins(:exchange).
+      where(exchanges: { order_cycle: exchange.order_cycle, incoming: false }).
+      delete_all
   end
 end
