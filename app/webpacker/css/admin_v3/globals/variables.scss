@@ -14,7 +14,7 @@ $color-body-bg:                  $color-1 !default;
 $color-body-text:                $color-4 !default;
 $color-headers:                  $color-4 !default;
 $color-link:                     $color-3 !default;
-$color-link-hover:               $color-2 !default;
+$color-link-hover:               lighten($color-link, 2) !default;
 $color-link-active:              $color-2 !default;
 $color-link-focus:               $color-2 !default;
 $color-link-visited:             $color-3 !default;
@@ -32,7 +32,8 @@ $color-tbl-thead-bg:             $color-7 !default;
 // Button colors
 $color-btn-bg:                   $color-3 !default;
 $color-btn-text:                 $color-1 !default;
-$color-btn-hover-bg:             $color-2 !default;
+$color-btn-shadow:               0px 1px 0px rgba(0, 0, 0, 0.05), 0px 2px 2px rgba(0, 0, 0, 0.07) !default;
+$color-btn-hover-bg:             lighten($color-btn-bg, 2) !default;
 $color-btn-hover-text:           $color-1 !default;
 
 // Actions colors
@@ -56,7 +57,7 @@ $color-action-mail-brd:          very-light($color-success, 20 ) !default;
 // Select2 select field colors
 $color-sel-bg:                   $color-3 !default;
 $color-sel-text:                 $color-1 !default;
-$color-sel-hover-bg:             $color-2 !default;
+$color-sel-hover-bg:             lighten($color-sel-bg, 2) !default;
 $color-sel-hover-text:           $color-1 !default;
 
 // Text inputs colors

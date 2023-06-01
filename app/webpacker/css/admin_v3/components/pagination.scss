@@ -1,0 +1,38 @@
+.pagination {
+  text-align: center;
+  margin: 2em 0 1em;
+  padding: 10px 0;
+
+  background-color: $color-7;
+
+  .page {
+    padding: 5px 8px;
+    text-align: center;
+    display: inline-block;
+    text-align: center;
+
+    &.current {
+      background-color: $color-2;
+      border-radius: 3px;
+      color: $color-1;
+    }
+  }
+
+  button {
+    margin: 0 0.35em;
+
+    background-color: $color-1;
+    color: $color-8;
+    box-shadow: $color-btn-shadow;
+
+    &.active {
+      color: $color-1;
+      background-color: $color-5;
+      cursor: default;
+    }
+
+    &.disabled {
+      display: none;
+    }
+  }
+}
