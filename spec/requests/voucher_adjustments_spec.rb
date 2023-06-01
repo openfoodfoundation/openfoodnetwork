@@ -18,41 +18,29 @@ describe VoucherAdjustmentsController, type: :request do
   end
 
   describe "DELETE voucher_adjustments/:id" do
-    let(:cable_ready_header) { { accept: "text/vnd.cable-ready.json" } }
+    it "deletes the voucher adjustment" do
+      delete "/voucher_adjustments/#{adjustment.id}"
 
-    context "with a cable ready request" do
-      it "deletes the voucher adjustment" do
-        delete("/voucher_adjustments/#{adjustment.id}", headers: cable_ready_header)
+      expect(order.voucher_adjustments.length).to eq(0)
+    end
 
-        expect(order.voucher_adjustments.length).to eq(0)
+    it "render a succesful response" do
+      delete "/voucher_adjustments/#{adjustment.id}"
+
+      expect(response).to be_successful
+    end
+
+    context "when adjustment doesn't exits" do
+      it "does nothing" do
+        delete "/voucher_adjustments/-1"
+
+        expect(order.voucher_adjustments.length).to eq(1)
       end
 
       it "render a succesful response" do
-        delete("/voucher_adjustments/#{adjustment.id}", headers: cable_ready_header)
+        delete "/voucher_adjustments/-1"
 
         expect(response).to be_successful
-      end
-
-      context "when adjustment doesn't exits" do
-        it "does nothing" do
-          delete "/voucher_adjustments/-1", headers: cable_ready_header
-
-          expect(order.voucher_adjustments.length).to eq(1)
-        end
-
-        it "render a succesful response" do
-          delete "/voucher_adjustments/-1", headers: cable_ready_header
-
-          expect(response).to be_successful
-        end
-      end
-    end
-
-    context "with an html request" do
-      it "redirect to checkout payment step" do
-        delete "/voucher_adjustments/#{adjustment.id}"
-
-        expect(response).to redirect_to(checkout_step_path(:payment))
       end
     end
   end
