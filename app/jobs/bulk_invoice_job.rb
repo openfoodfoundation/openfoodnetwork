@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class BulkInvoiceJob < ApplicationJob
-  def perform(order_ids, filepath)
+  include CableReady::Broadcaster
+  delegate :render, to: ActionController::Base
+
+  def perform(order_ids, filepath, options = {})
     pdf = CombinePDF.new
 
     sorted_orders(order_ids).each do |order|
@@ -11,6 +14,8 @@ class BulkInvoiceJob < ApplicationJob
     end
 
     pdf.save filepath
+
+    broadcast(filepath, options[:channel]) if options[:channel]
   end
 
   private
@@ -18,10 +23,22 @@ class BulkInvoiceJob < ApplicationJob
   # Ensures the records are returned in the same order the ids were originally given in
   def sorted_orders(order_ids)
     orders_by_id = Spree::Order.where(id: order_ids).to_a.index_by(&:id)
-    order_ids.map { |id| orders_by_id[id] }
+    order_ids.map { |id| orders_by_id[id.to_i] }
   end
 
   def renderer
     @renderer ||= InvoiceRenderer.new
+  end
+
+  def broadcast(filepath, channel)
+    file_id = filepath.split("/").last.split(".").first
+
+    cable_ready[channel].
+      inner_html(
+        selector: "#bulk_invoices_modal .modal-content",
+        html: render(partial: "spree/admin/orders/bulk/invoice_link",
+                     locals: { invoice_url: "/admin/orders/invoices/#{file_id}" })
+      ).
+      broadcast
   end
 end

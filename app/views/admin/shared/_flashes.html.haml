@@ -1,0 +1,6 @@
+#flashes
+  - if defined? flashes
+    - flashes.each do |type, msg|
+      .animate-show{"data-controller": "flash"}
+        .flash{type: "#{type}", class: "#{type}"}
+          %span= msg

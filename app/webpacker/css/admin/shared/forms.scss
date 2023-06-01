@@ -1,12 +1,12 @@
-$text-inputs:
-  "input[type=text], input[type=password], input[type=email], input[type=url], input[type=tel]";
+$text-inputs: "input[type=text], input[type=password], input[type=email], input[type=url], input[type=tel]";
 
 #{$text-inputs},
 input[type="date"],
 input[type="datetime"],
 input[type="time"],
 input[type="number"],
-textarea, fieldset {
+textarea,
+fieldset {
   @include border-radius($border-radius);
   padding: 7px 10px;
   border: 1px solid $color-txt-brd;
@@ -48,7 +48,9 @@ label {
   }
 }
 
-.label-block label { display: block }
+.label-block label {
+  display: block;
+}
 
 span.info {
   font-style: italic;
@@ -63,7 +65,7 @@ span.info {
   padding: 10px 0;
 
   &.checkbox {
-    min-height: 73px;
+    min-height: 70px;
 
     input[type="checkbox"] {
       display: inline-block;
@@ -84,7 +86,6 @@ span.info {
     li {
       display: inline-block;
       padding-right: 10px;
-
 
       label {
         font-weight: normal;
@@ -171,14 +172,18 @@ fieldset {
       display: inline-block;
     }
 
-    button, .button, input[type="submit"], input[type="button"], span.or {
+    button,
+    .button,
+    input[type="submit"],
+    input[type="button"],
+    span.or {
       @include border-radius($border-radius);
 
       -webkit-box-shadow: 0 0 0 15px $color-1;
-         -moz-box-shadow: 0 0 0 15px $color-1;
-          -ms-box-shadow: 0 0 0 15px $color-1;
-           -o-box-shadow: 0 0 0 15px $color-1;
-              box-shadow: 0 0 0 15px $color-1;
+      -moz-box-shadow: 0 0 0 15px $color-1;
+      -ms-box-shadow: 0 0 0 15px $color-1;
+      -o-box-shadow: 0 0 0 15px $color-1;
+      box-shadow: 0 0 0 15px $color-1;
 
       &:hover {
         border-color: $color-1;
@@ -197,10 +202,10 @@ fieldset {
       position: relative;
 
       -webkit-box-shadow: 0 0 0 5px $color-1;
-         -moz-box-shadow: 0 0 0 5px $color-1;
-          -ms-box-shadow: 0 0 0 5px $color-1;
-           -o-box-shadow: 0 0 0 5px $color-1;
-              box-shadow: 0 0 0 5px $color-1;
+      -moz-box-shadow: 0 0 0 5px $color-1;
+      -ms-box-shadow: 0 0 0 5px $color-1;
+      -o-box-shadow: 0 0 0 5px $color-1;
+      box-shadow: 0 0 0 5px $color-1;
     }
   }
 
@@ -210,7 +215,8 @@ fieldset {
       display: table;
       width: 100%;
 
-      label, input {
+      label,
+      input {
         display: table-cell !important;
       }
       input {
@@ -219,7 +225,7 @@ fieldset {
 
       &.checkbox {
         input {
-          width: auto !important
+          width: auto !important;
         }
       }
     }
@@ -247,11 +253,12 @@ select {
   align-items: center;
   margin-top: 3px;
 
-  input, label {
+  input,
+  label {
     cursor: pointer;
   }
   label {
     margin: 0;
-    padding-left: .4rem;
+    padding-left: 0.4rem;
   }
 }

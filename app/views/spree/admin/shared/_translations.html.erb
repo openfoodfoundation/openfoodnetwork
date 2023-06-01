@@ -1,4 +1,7 @@
 <script>
+  if (Spree === undefined) {
+    var Spree = {}
+  }
   Spree.translations = <%==
   {:flatpickr_date_format    => Spree.t(:flatpickr_date_format,
                               :scope => 'date_picker',

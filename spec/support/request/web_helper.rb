@@ -84,6 +84,16 @@ module WebHelper
     find(:css, ".select2-result-label", text: options[:select_text] || value).click
   end
 
+  def tomselect_open(field_name)
+    page.find("##{field_name}-ts-control").click
+  end
+
+  def tomselect_multiselect(value, options)
+    tomselect_wrapper = page.find("[name='#{options[:from]}']").sibling(".ts-wrapper")
+    tomselect_wrapper.find(".ts-control").click
+    tomselect_wrapper.find(:css, '.ts-dropdown.multi .ts-dropdown-content .option', text: value).click
+  end
+
   def tomselect_search_and_select(value, options)
     tomselect_wrapper = page.find("[name='#{options[:from]}']").sibling(".ts-wrapper")
     tomselect_wrapper.find(".ts-control").click

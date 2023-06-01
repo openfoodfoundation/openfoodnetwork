@@ -29,9 +29,10 @@ describe '
       # Verify that the orders have a STATE of COMPLETE
       expect(page).to have_selector('span', text: 'COMPLETE', count: 2)
 
-      page.check('selectAll')
+      page.find('#selectAll').trigger('click')
       page.find("span.icon-reorder", text: "ACTIONS").click
-      within ".ofn-drop-down-with-prepend .menu" do
+      within ".ofn-drop-down .menu" do
+        expect(page).to have_selector("span", text: "Cancel Orders")
         page.find("span", text: "Cancel Orders").click
       end
 

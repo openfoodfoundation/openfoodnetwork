@@ -62,7 +62,6 @@ module Spree
         { name: t(:resend_confirmation),
           url: spree.resend_admin_order_path(@order),
           icon: 'icon-email',
-          method: 'post',
           confirm: t(:confirm_resend_order_confirmation) }
       end
 

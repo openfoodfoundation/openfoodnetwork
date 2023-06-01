@@ -7,7 +7,6 @@
 
 // jquery and angular
 //= require jquery2
-//= require jquery_ujs
 //= require jquery.ui.all
 //= require jquery.powertip
 //= require jquery.cookie

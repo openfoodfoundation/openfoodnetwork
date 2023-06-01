@@ -2,14 +2,14 @@
 
 class OrdersBulkCancelService
   def initialize(params, current_user)
-    @order_ids = params[:order_ids]
+    @order_ids = params[:bulk_ids]
     @current_user = current_user
     @send_cancellation_email = params[:send_cancellation_email]
     @restock_items = params[:restock_items]
   end
 
   def call
-    editable_orders.where(id: @order_ids).find_each do |order|
+    editable_orders.where(id: @order_ids).each do |order|
       order.send_cancellation_email = @send_cancellation_email
       order.restock_items = @restock_items
       order.cancel

@@ -99,17 +99,17 @@ distributors: [distributor4, distributor5]) }
       end
 
       it "order cycles appear in descending order by close date on orders page" do
-        open_select2('#s2id_q_order_cycle_id_in')
+        tomselect_open('q_order_cycle_id_in').click
 
         expect(find('#q_order_cycle_id_in',
                     visible: :all)[:innerHTML]).to have_content(/.*Four.*Three.*Two.*Five/m)
       end
 
       it "filter by multiple order cycles" do
-        select2_select 'Two', from: 'q_order_cycle_id_in'
-        select2_select 'Three', from: 'q_order_cycle_id_in'
+        tomselect_multiselect 'Two', from: 'q[order_cycle_id_in][]'
+        tomselect_multiselect 'Three', from: 'q[order_cycle_id_in][]'
 
-        page.find('.filter-actions .button.icon-search').click
+        page.find('.filter-actions .button[type=submit]').click
 
         # Order 2 and 3 should show, but not 4
         expect(page).to have_content order2.number
@@ -118,10 +118,10 @@ distributors: [distributor4, distributor5]) }
       end
 
       it "filter by distributors" do
-        select2_select distributor2.name.to_s, from: 'q_distributor_id_in'
-        select2_select distributor4.name.to_s, from: 'q_distributor_id_in'
+        tomselect_multiselect distributor2.name.to_s, from: 'q[distributor_id_in][]'
+        tomselect_multiselect distributor4.name.to_s, from: 'q[distributor_id_in][]'
 
-        page.find('.filter-actions .button.icon-search').click
+        page.find('.filter-actions .button[type=submit]').click
 
         # Order 2 and 4 should show, but not 3
         expect(page).to have_content order2.number
@@ -134,7 +134,7 @@ distributors: [distributor4, distributor5]) }
         select_dates_from_daterangepicker(order3.completed_at.yesterday,
                                           order4.completed_at.tomorrow)
 
-        page.find('.filter-actions .button.icon-search').click
+        page.find('.filter-actions .button[type=submit]').click
 
         # Order 3 and 4 should show, but not 2
         expect(page).to_not have_content order2.number
@@ -145,7 +145,7 @@ distributors: [distributor4, distributor5]) }
       it "filter by email" do
         fill_in "Email", with: customer3.email
 
-        page.find('.filter-actions .button.icon-search').click
+        page.find('.filter-actions .button[type=submit]').click
 
         # Order 3 should show, but not 2 and 4
         expect(page).to_not have_content order2.number
@@ -157,28 +157,28 @@ distributors: [distributor4, distributor5]) }
         # NOTE: this field refers to the name given in billing addresses and not to customer name
         # filtering by first name
         fill_in "First name begins with", with: billing_address2.firstname
-        page.find('.filter-actions .button.icon-search').click
+        page.find('.filter-actions .button[type=submit]').click
         # Order 2 should show, but not 3 and 4
         expect(page).to have_content order2.number
         expect(page).to_not have_content order3.number
         expect(page).to_not have_content order4.number
 
-        find("a#clear_filters_button").click
+        find("#clear_filters_button").click
         # filtering by last name
 
         fill_in "Last name begins with", with: billing_address4.lastname
-        page.find('.filter-actions .button.icon-search').click
+        page.find('.filter-actions .button[type=submit]').click
         # Order 4 should show, but not 2 and 3
         expect(page).to_not have_content order2.number
         expect(page).to_not have_content order3.number
         expect(page).to have_content order4.number
 
-        find("a#clear_filters_button").click
+        find("#clear_filters_button").click
         # filtering by first and last name together
 
         fill_in "First name begins with", with: billing_address3.firstname
         fill_in "Last name begins with", with: billing_address3.lastname
-        page.find('.filter-actions .button.icon-search').click
+        page.find('.filter-actions .button[type=submit]').click
         # Order 3 should show, but not 2 and 4
         expect(page).not_to have_content order2.number
         expect(page).to have_content order3.number
@@ -189,17 +189,17 @@ distributors: [distributor4, distributor5]) }
         order2.select_shipping_method(shipping_method.id)
         order4.select_shipping_method(shipping_method2.id)
 
-        select2_select "Pick-up at the farm", from: 'q_shipping_method_id'
-        page.find('.filter-actions .button.icon-search').click
+        tomselect_search_and_select "Pick-up at the farm", from: 'shipping_method_id'
+        page.find('.filter-actions .button[type=submit]').click
         # Order 2 should show, but not 3 and 5
         expect(page).to have_content order2.number
         expect(page).to_not have_content order3.number
         expect(page).to_not have_content order4.number
 
-        find("a#clear_filters_button").click
+        find("#clear_filters_button").click
 
-        select2_select "Signed, sealed, delivered", from: 'q_shipping_method_id'
-        page.find('.filter-actions .button.icon-search').click
+        tomselect_search_and_select "Signed, sealed, delivered", from: 'shipping_method_id'
+        page.find('.filter-actions .button[type=submit]').click
         # Order 4 should show, but not 2 and 3
         expect(page).to_not have_content order2.number
         expect(page).to_not have_content order3.number
@@ -209,7 +209,7 @@ distributors: [distributor4, distributor5]) }
       it "filter by invoice number" do
         fill_in "Invoice number:", with: order2.number
 
-        page.find('.filter-actions .button.icon-search').click
+        page.find('.filter-actions .button[type=submit]').click
 
         # Order 2 should show, but not 3 and 4
         expect(page).to have_content order2.number
@@ -221,7 +221,7 @@ distributors: [distributor4, distributor5]) }
         order.update(state: "payment")
 
         uncheck 'Only show complete orders'
-        page.find('.filter-actions .button.icon-search').click
+        page.find('.filter-actions .button[type=submit]').click
 
         expect(page).to have_content order.number
         expect(page).to have_content order2.number
@@ -229,9 +229,9 @@ distributors: [distributor4, distributor5]) }
         expect(page).to have_content order4.number
         expect(page).to have_content order5.number
 
-        select2_select "payment", from: 'q_state_eq'
+        tomselect_search_and_select "payment", from: 'q[state_eq]'
 
-        page.find('.filter-actions .button.icon-search').click
+        page.find('.filter-actions .button[type=submit]').click
 
         # Order 2 should show, but not 3 and 4
         expect(page).to have_content order.number
@@ -295,7 +295,7 @@ distributors: [distributor4, distributor5]) }
           login_as_admin
           visit spree.admin_orders_path
           uncheck 'Only show complete orders'
-          page.find('.filter-actions .button.icon-search').click
+          page.find('.filter-actions .button[type=submit]').click
         end
 
         it "orders by order state" do
@@ -389,6 +389,21 @@ distributors: [distributor4, distributor5]) }
         end
       end
 
+      context "displaying order special instructions" do
+        before do
+          order3.update(special_instructions: "Leave it next to the porch. Thanks!")
+          login_as_admin
+          visit spree.admin_orders_path
+        end
+
+        it "displays a note with order instructions" do
+          within "tr#order_#{order3.id}" do
+            expect(page).to have_content I18n.t('spree.admin.orders.index.note')
+            expect(page).to have_css "[data-tooltip-tip-value='#{order3.special_instructions}']"
+          end
+        end
+      end
+
       context "orders with different order totals" do
         before do
           Spree::LineItem.where(order_id: order2.id).first.update!(quantity: 5)
@@ -432,7 +447,7 @@ distributors: [distributor4, distributor5]) }
         page.find("span.icon-reorder", text: "ACTIONS").click
         expect(page).to have_content "Print Invoices"
         # unselect all orders
-        page.find("#listing_orders thead th:first-child input[type=checkbox]").click
+        page.find("#listing_orders thead th:first-child input[type=checkbox]").trigger("click")
         expect(page.find(
           "#listing_orders tbody tr td:first-child input[type=checkbox]")
         ).to_not be_checked
@@ -465,14 +480,14 @@ distributors: [distributor4, distributor5]) }
 
             it "can bulk print invoices but only for the 'complete' or 'resumed' ones" do
               within "#listing_orders" do
-                page.find("input[name='order_ids[]'][value='#{order2.id}']").click
-                page.find("input[name='order_ids[]'][value='#{order3.id}']").click
-                page.find("input[name='order_ids[]'][value='#{order4.id}']").click
-                page.find("input[name='order_ids[]'][value='#{order5.id}']").click
+                page.find("input[name='bulk_ids[]'][value='#{order2.id}']").click
+                page.find("input[name='bulk_ids[]'][value='#{order3.id}']").click
+                page.find("input[name='bulk_ids[]'][value='#{order4.id}']").click
+                page.find("input[name='bulk_ids[]'][value='#{order5.id}']").click
               end
 
               page.find("span.icon-reorder", text: "ACTIONS").click
-              within ".ofn-drop-down-with-prepend .menu" do
+              within ".ofn-drop-down .menu" do
                 page.find("span", text: "Send Invoices").click
               end
 
@@ -492,11 +507,11 @@ distributors: [distributor4, distributor5]) }
         end
 
         it "can bulk send email to 2 orders" do
-          page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
-          page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
 
           page.find("span.icon-reorder", text: "ACTIONS").click
-          within ".ofn-drop-down-with-prepend .menu" do
+          within ".ofn-drop-down .menu" do
             page.find("span", text: "Resend Confirmation").click
           end
 
@@ -512,11 +527,11 @@ distributors: [distributor4, distributor5]) }
         end
 
         it "can bulk print invoices from 2 orders" do
-          page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
-          page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
 
           page.find("span.icon-reorder", text: "ACTIONS").click
-          within ".ofn-drop-down-with-prepend .menu" do
+          within ".ofn-drop-down .menu" do
             page.find("span", text: "Print Invoices").click
           end
 
@@ -527,11 +542,11 @@ distributors: [distributor4, distributor5]) }
         end
 
         it "can bulk cancel 2 orders" do
-          page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
-          page.find("#listing_orders tbody tr:nth-child(2) input[name='order_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
 
           page.find("span.icon-reorder", text: "ACTIONS").click
-          within ".ofn-drop-down-with-prepend .menu" do
+          within ".ofn-drop-down .menu" do
             page.find("span", text: "Cancel Orders").click
           end
 
@@ -545,7 +560,7 @@ distributors: [distributor4, distributor5]) }
           end
 
           page.find("span.icon-reorder", text: "ACTIONS").click
-          within ".ofn-drop-down-with-prepend .menu" do
+          within ".ofn-drop-down .menu" do
             page.find("span", text: "Cancel Orders").click
           end
 
@@ -574,17 +589,17 @@ distributors: [distributor4, distributor5]) }
         end
 
         it "cannot send emails to orders if permission have been revoked in the meantime" do
-          page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").click
+          page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
           # Find the clicked order
           order = Spree::Order.find_by(
-            id: page.find("#listing_orders tbody tr:nth-child(1) input[name='order_ids[]']").value
+            id: page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").value
           )
           # Revoke permission for the current user on that specific order by changing its owners
           order.update_attribute(:distributor, distributor)
           order.update_attribute(:order_cycle, order_cycle)
 
           page.find("span.icon-reorder", text: "ACTIONS").click
-          within ".ofn-drop-down-with-prepend .menu" do
+          within ".ofn-drop-down .menu" do
             page.find("span", text: "Resend Confirmation").click
           end
 
@@ -608,11 +623,11 @@ distributors: [distributor4, distributor5]) }
       it "displays pagination options" do
         # displaying 4 orders (one order per table row)
         within('tbody') do
-          expect(page).to have_css('tr.ng-scope', count: 4)
+          expect(page).to have_css('tr', count: 4)
         end
         # pagination options also refer 4 order
         expect(page).to have_content "4 Results found. Viewing 1 to 4."
-        page.find(".per-page-select").click # toggling the pagination dropdown
+        page.find(".per-page-dropdown .ts-control .item").click # toggling the pagination dropdown
         expect(page).to have_content "15 per page"
         expect(page).to have_content "50 per page"
         expect(page).to have_content "100 per page"
@@ -631,7 +646,7 @@ distributors: [distributor4, distributor5]) }
         expect(page).to have_current_path spree.admin_orders_path
 
         # click the 'capture' link for the order
-        page.find("[data-powertip=Capture]").click
+        page.find("button.icon-capture").click
 
         expect(page).to have_css "i.success"
         expect(page).to have_css "button.icon-road"
@@ -648,7 +663,7 @@ distributors: [distributor4, distributor5]) }
         login_as_admin
         visit spree.admin_orders_path
 
-        page.find("[data-powertip=Ship]").click
+        page.find("button.icon-road").click
 
         expect(page).to have_css "i.success"
         expect(order.reload.shipments.any?(&:shipped?)).to be true
@@ -666,7 +681,7 @@ distributors: [distributor4, distributor5]) }
       login_as_admin
       visit spree.admin_orders_path
       uncheck 'Only show complete orders'
-      page.find('a.icon-search').click
+      page.find('button[type=submit]').click
 
       find(".icon-edit").click
 
@@ -711,7 +726,7 @@ distributors: [distributor4, distributor5]) }
       expect(page).to have_no_content empty_order.number
 
       uncheck 'Only show complete orders'
-      page.find('a.icon-search').click
+      page.find('button[type=submit]').click
 
       expect(page).to have_content complete_order.number
       expect(page).to have_content incomplete_order.number
@@ -741,17 +756,17 @@ distributors: [distributor4, distributor5]) }
       # Specify each filters
       uncheck 'Only show complete orders'
       fill_in "Invoice number", with: "R123456"
-      select2_select order_cycle.name, from: 'q_order_cycle_id_in'
-      select2_select distributor.name, from: 'q_distributor_id_in'
-      select2_select shipping_method.name, from: 'q_shipping_method_id'
-      select2_select "complete", from: 'q_state_eq'
+      tomselect_multiselect order_cycle.name, from: 'q[order_cycle_id_in][]'
+      tomselect_multiselect distributor.name, from: 'q[distributor_id_in][]'
+      tomselect_search_and_select shipping_method.name, from: 'shipping_method_id'
+      tomselect_search_and_select "complete", from: 'q[state_eq]'
       fill_in "Email", with: user.email
       fill_in "First name begins with", with: "J"
       fill_in "Last name begins with", with: "D"
       find("input.datepicker").click
       select_dates_from_daterangepicker(Time.zone.at(1.week.ago), Time.zone.now.tomorrow)
 
-      page.find('a.icon-search').click
+      page.find('.button[type=submit]').click
     end
 
     it "when reloading the page" do
@@ -760,10 +775,10 @@ distributors: [distributor4, distributor5]) }
       # Check every filters to be equal
       expect(find_field("Only show complete orders")).not_to be_checked
       expect(find_field("Invoice number").value).to eq "R123456"
-      expect(find("#s2id_q_shipping_method_id").text).to eq shipping_method.name
-      expect(find("#s2id_q_state_eq").text).to eq "complete"
-      expect(find("#s2id_q_distributor_id_in").text).to eq distributor.name
-      expect(find("#s2id_q_order_cycle_id_in").text).to eq order_cycle.name
+      expect(find("#shipping_method_id-ts-control .item").text).to eq shipping_method.name
+      expect(find("#q_state_eq-ts-control .item").text).to eq "complete"
+      expect(find("#q_distributor_id_in").value).to eq [distributor.id.to_s]
+      expect(find("#q_order_cycle_id_in").value).to eq [order_cycle.id.to_s]
       expect(find_field("Email").value).to eq user.email
       expect(find_field("First name begins with").value).to eq "J"
       expect(find_field("Last name begins with").value).to eq "D"
@@ -773,13 +788,13 @@ distributors: [distributor4, distributor5]) }
     end
 
     it "and clear filters" do
-      find("a#clear_filters_button").click
+      find("#clear_filters_button").click
       expect(find_field("Only show complete orders")).to be_checked
       expect(find_field("Invoice number").value).to eq ""
-      expect(find("#s2id_q_shipping_method_id").text).to be_empty
-      expect(find("#s2id_q_state_eq").text).to be_empty
-      expect(find("#s2id_q_distributor_id_in").text).to be_empty
-      expect(find("#s2id_q_order_cycle_id_in").text).to be_empty
+      expect(find("#shipping_method_id").value).to be_empty
+      expect(find("#q_state_eq").value).to be_empty
+      expect(find("#q_distributor_id_in").value).to be_empty
+      expect(find("#q_order_cycle_id_in").value).to be_empty
       expect(find_field("Email").value).to be_empty
       expect(find_field("First name begins with").value).to be_empty
       expect(find_field("Last name begins with").value).to be_empty

@@ -1,59 +1,61 @@
-%div.admin-orders-index-search
-  = form_tag spree.admin_orders_url, {name: "orders_form", "ng-submit" => "fetchResults()"} do
+%div.admin-orders-index-search{ "data-controller": "search", "data-search-restore-value": @stored_query }
+  = form_with url: spree.admin_orders_url, id: "orders_form", method: :get, data: { remote: true, "search-target": "form" } do
+    = hidden_field_tag :page, 1, class: "page"
+    = hidden_field_tag :per_page, 15, class: "per-page"
+    = hidden_field_tag "[q][s]", params.dig(:q, :s) || "completed_at desc", class: "sort", "data-default": "completed_at desc"
+
     .field-block.alpha.four.columns
       .date-range-filter.field
         = label_tag nil, t(:date_range)
-        .date-range-fields{ data: { controller: "flatpickr", "flatpickr-mode-value": "range", "flatpickr-default-date": "{{ [q.completed_at_gteq, q.completed_at_lteq] }}" } }
+        .date-range-fields{ data: { controller: "flatpickr", "flatpickr-mode-value": "range" } }
           = text_field_tag nil, nil, class: "datepicker", data: { "flatpickr-target": "instance", action: "flatpickr_clear@window->flatpickr#clear" }
           = text_field_tag "q[completed_at_gteq]", nil, "ng-model": "q.completed_at_gteq", data: { "flatpickr-target": "start" }, style: "display: none"
           = text_field_tag "q[completed_at_lteq]", nil, "ng-model": "q.completed_at_lteq", data: { "flatpickr-target": "end" }, style: "display: none"
       .field
         = label_tag nil, t(:status)
-        %select2-watch-ng-model{'ng-model': 'q.state_eq'}
-          = select_tag("q[state_eq]",
-              options_for_select(Spree::Order.state_machines[:state].states.collect {|s| [t("spree.order_state.#{s.name}"), s.value]}),
-              {include_blank: true, class: 'select2', 'ng-model' => 'q.state_eq'})
+        = select_tag("q[state_eq]",
+            options_for_select(Spree::Order.state_machines[:state].states.collect {|s| [t("spree.order_state.#{s.name}"), s.value]}),
+            { include_blank: true, class: "primary", "data-controller": "tom-select" })
     .four.columns
       .field
         = label_tag "q_number_cont", t(:order_number)
-        = text_field_tag "q[number_cont]", nil, "ng-model" => "q.number_cont", "ng-keypress" => "$event.keyCode === 13 && fetchResults()"
+        = text_field_tag "q[number_cont]", nil
       .field
         = label_tag "q_email_cont", t(:email)
-        = email_field_tag "q[email_cont]", nil, "ng-model" => "q.email_cont", "ng-keypress" => "$event.keyCode === 13 && fetchResults()"
+        = email_field_tag "q[email_cont]", nil
     .four.columns
       .field
         = label_tag "q_bill_address_firstname_start", t(:first_name_begins_with)
-        = text_field_tag "q[bill_address_firstname_start]", nil, size: 25, "ng-model" => "q.bill_address_firstname_start", "ng-keypress" => "$event.keyCode === 13 && fetchResults()"
+        = text_field_tag "q[bill_address_firstname_start]", nil, size: 25
       .field
         = label_tag "q_bill_address_lastname_start", t(:last_name_begins_with)
-        = text_field_tag "q[bill_address_lastname_start]", nil, size: 25, "ng-model" => "q.bill_address_lastname_start", "ng-keypress" => "$event.keyCode === 13 && fetchResults()"
+        = text_field_tag "q[bill_address_lastname_start]", nil, size: 25
     .omega.four.columns
-      .field.checkbox
+      .field.checkbox.inline-checkbox
         %label
-          = check_box_tag "q[completed_at_not_null]", 1, true, {'ng-model' => 'q.completed_at_not_null'}
+          = check_box_tag "q[completed_at_not_null]", 1, true
           = t(:show_only_complete_orders)
       .field
         = label_tag nil, t(:shipping_method)
-        %select2-watch-ng-model{'ng-model': 'q.shipping_method_id'}
-          = select_tag("q[shipping_method_id]",
-            options_for_select(Spree::ShippingMethod.managed_by(spree_current_user).collect {|s| [t("spree.shipping_method_names.#{s.name}"), s.id]}),
-            {include_blank: true, class: 'select2', 'ng-model': 'q.shipping_method_id'})
+        = select_tag(:shipping_method_id,
+          options_for_select(Spree::ShippingMethod.managed_by(spree_current_user).collect {|s| [t("spree.shipping_method_names.#{s.name}"), s.id]}),
+          { include_blank: true, class: "primary", "data-controller": "tom-select" })
     .field-block.alpha.eight.columns
       = label_tag nil, t(:distributors)
-      %select2-watch-ng-model{'ng-model': 'q.distributor_id_in'}
-        = select_tag("q[distributor_id_in]",
-            options_for_select(Enterprise.is_distributor.managed_by(spree_current_user).map {|e| [e.name, e.id]}, params[:distributor_ids]),
-            {class: "select2 fullwidth", multiple: true, 'ng-model' => 'q.distributor_id_in'})
+      = select_tag("q[distributor_id_in]",
+          options_for_select(Enterprise.is_distributor.managed_by(spree_current_user).map {|e| [e.name, e.id]}, params[:distributor_ids]),
+          { class: "fullwidth", multiple: true, data: { controller: "tom-select", "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil } }})
     .field-block.omega.eight.columns
       = label_tag nil, t(:order_cycles)
-      %select2-watch-ng-model{'ng-model': 'q.order_cycle_id_in'}
-        = select_tag("q[order_cycle_id_in]",
-            options_for_select(OrderCycle.managed_by(spree_current_user).where('order_cycles.orders_close_at is not null').order('order_cycles.orders_close_at DESC').map {|oc| [oc.name, oc.id]}, params[:order_cycle_ids]),
-            {class: "select2 fullwidth", multiple: true, 'ng-model' => 'q.order_cycle_id_in'})
+      = select_tag("q[order_cycle_id_in]",
+        options_for_select(OrderCycle.managed_by(spree_current_user).where('order_cycles.orders_close_at is not null').order('order_cycles.orders_close_at DESC').map {|oc| [oc.name, oc.id]}, params[:order_cycle_ids]),
+        { class: "fullwidth", multiple: true, data: { controller: "tom-select", "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil } }})
     .clearfix
-    .actions.filter-actions
-      %a.button.icon-search{'ng-click' => 'fetchResults()'}
-        = t(:filter_results)
-      %a.button{'ng-click' => 'clearFilters()', "id": "clear_filters_button"}
-        =  t(:clear_filters)
-          
+    .actions.filter-actions{ style: "column-gap: 0" }
+      .eight.columns.alpha
+        %button.float-right.mr-0{type: "submit", class: "button"}
+          %i.icon-search
+          = t(:filter_results)
+      .eight.columns.omega
+        %button.float-left{"id": "clear_filters_button", type: "button", "data-controller": "search", "data-action": "click->search#reset" }
+          =  t(:clear_filters)

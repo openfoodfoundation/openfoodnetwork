@@ -21,11 +21,11 @@
               = hidden_field_tag "order_cycle[selected_distributor_shipping_method_ids][]", ""
           - @order_cycle.distributors.each do |distributor|
             - distributor_shipping_methods = @order_cycle.attachable_distributor_shipping_methods.where("distributor_id = ?", distributor.id).includes(:shipping_method)
-            %tr{ class: "distributor-#{distributor.id}-shipping-methods", "data-controller": "select-all" }
+            %tr{ class: "distributor-#{distributor.id}-shipping-methods", "data-controller": "checked" }
               %td.text-center
                 - if distributor_shipping_methods.many?
                   %label
-                    = check_box_tag nil, nil, nil, { "data-action": "change->select-all#toggleAll", "data-select-all-target": "all" }
+                    = check_box_tag nil, nil, nil, { "data-action": "change->checked#toggleAll", "data-checked-target": "all" }
                     = t(".select_all")
               %td
                 %em= distributor.name
@@ -36,7 +36,7 @@
                           distributor_shipping_method.id,
                           @order_cycle.distributor_shipping_methods.include?(distributor_shipping_method),
                           id: "order_cycle_selected_distributor_shipping_method_ids_#{distributor_shipping_method.id}",
-                          data: ({ "action" => "change->select-all#toggleCheckbox", "select-all-target" => "checkbox" } if distributor_shipping_method.shipping_method.frontend?)
+                          data: ({ "action" => "change->checked#toggleCheckbox", "checked-target" => "checkbox" } if distributor_shipping_method.shipping_method.frontend?)
                       = distributor_shipping_method.shipping_method.name
                 - distributor.shipping_methods.backend.each do |shipping_method|
                   %label.disabled
@@ -52,11 +52,11 @@
               = hidden_field_tag "order_cycle[selected_distributor_payment_method_ids][]", ""
           - @order_cycle.distributors.each do |distributor|
             - distributor_payment_methods = @order_cycle.attachable_distributor_payment_methods.where("distributor_id = ?", distributor.id).includes(:payment_method)
-            %tr{ class: "distributor-#{distributor.id}-payment-methods", "data-controller": "select-all" }
+            %tr{ class: "distributor-#{distributor.id}-payment-methods", "data-controller": "checked" }
               %td.text-center
                 - if distributor_payment_methods.many?
                   %label
-                    = check_box_tag nil, nil, nil, { "data-action": "change->select-all#toggleAll", "data-select-all-target": "all" }
+                    = check_box_tag nil, nil, nil, { "data-action": "change->checked#toggleAll", "data-checked-target": "all" }
                     = t(".select_all")
               %td
                 %em= distributor.name
@@ -67,7 +67,7 @@
                           distributor_payment_method.id,
                           @order_cycle.distributor_payment_methods.include?(distributor_payment_method),
                           id: "order_cycle_selected_distributor_payment_method_ids_#{distributor_payment_method.id}",
-                          data: ({ "action" => "change->select-all#toggleCheckbox", "select-all-target" => "checkbox" } if distributor_payment_method.payment_method.frontend?)
+                          data: ({ "action" => "change->checked#toggleCheckbox", "checked-target" => "checkbox" } if distributor_payment_method.payment_method.frontend?)
                       = distributor_payment_method.payment_method.name
                 - distributor.payment_methods.inactive_or_backend.each do |payment_method|
                   %label.disabled

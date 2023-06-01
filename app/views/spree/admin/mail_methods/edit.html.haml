@@ -5,7 +5,8 @@
 
 - content_for :page_actions do
   %li
-    = link_to_with_icon 'icon-envelope-alt', t("spree.admin.mail_methods.send_testmail"), testmail_admin_mail_methods_path, method: :post, title: t("spree.admin.mail_methods.send_testmail"), class: 'send_mail button no-text'
+    = link_to_with_icon 'icon-envelope-alt', t("spree.admin.mail_methods.send_testmail"), testmail_admin_mail_methods_path,
+    data: { method: :post, "ujs-navigate": "false" }, title: t("spree.admin.mail_methods.send_testmail"), class: 'send_mail button no-text'
 
 = render partial: 'spree/shared/error_messages', locals: { target: @mail_method }
 

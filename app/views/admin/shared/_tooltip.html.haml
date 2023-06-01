@@ -1,5 +1,6 @@
 %div{"data-controller": "tooltip"}
-  %a{"data-tooltip-target": "element", "data-action": "mouseenter->tooltip#showTooltip mouseleave->tooltip#hideTooltip"}= t('admin.whats_this')
+  %a{"data-tooltip-target": "element"}
+    = t('admin.whats_this')
   .tooltip-container
     .tooltip{"data-tooltip-target": "tooltip"}
       = sanitize tooltip_text

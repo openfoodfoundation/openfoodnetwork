@@ -26,7 +26,7 @@ class SearchOrders
     base_query = ::Permissions::Order.new(current_user).editable_orders.not_empty
       .or(::Permissions::Order.new(current_user).editable_orders.finalized)
 
-    return base_query unless params[:shipping_method_id]
+    return base_query if params[:shipping_method_id].blank?
 
     base_query
       .joins(shipments: :shipping_rates)
