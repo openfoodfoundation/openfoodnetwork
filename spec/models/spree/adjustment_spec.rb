@@ -250,6 +250,7 @@ module Spree
           context "when the shipment has an inclusive tax rate" do
             it "calculates the shipment tax from the tax rate" do
               order.shipments = [shipment]
+              order.state = "payment"
               order.create_tax_charge!
               order.update_totals
 
@@ -274,6 +275,7 @@ module Spree
 
             it "records the tax on the shipment's adjustments" do
               order.shipments = [shipment]
+              order.state = "payment"
               order.create_tax_charge!
               order.update_totals
 
@@ -355,6 +357,7 @@ module Spree
 
         context "when enterprise fees have a fixed tax_category" do
           before do
+            order.update(state: "payment")
             order.recreate_all_fees!
           end
 
@@ -440,6 +443,11 @@ module Spree
                                       calculator: ::Calculator::FlatRate.new(preferred_amount: 50.0))
             }
 
+            before do
+              order.update(state: "payment")
+              order.create_tax_charge!
+            end
+
             describe "when the tax rate includes the tax in the price" do
               it "records no tax on the enterprise fee adjustments" do
                 # EnterpriseFee tax category is nil and inheritance only applies to per item fees
@@ -470,6 +478,11 @@ module Spree
               create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: true,
                                       calculator: ::Calculator::PerItem.new(preferred_amount: 50.0))
             }
+
+            before do
+              order.update(state: "payment")
+              order.create_tax_charge!
+            end
 
             describe "when the tax rate includes the tax in the price" do
               it "records the correct amount in a tax adjustment" do
@@ -522,6 +535,8 @@ module Spree
           tax_category.tax_rates << tax_rate
           allow(order).to receive(:tax_zone) { zone }
           order.line_items << create(:line_item, variant: variant, quantity: 5)
+          order.update(state: "payment")
+          order.create_tax_charge!
         end
 
         context "with included taxes" do
