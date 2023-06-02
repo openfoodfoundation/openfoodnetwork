@@ -21,7 +21,7 @@ class OrderFeesHandler
       create_order_fees!
     end
 
-    tax_enterprise_fees!
+    tax_enterprise_fees! unless order.before_payment_state?
     order.update_order!
   end
 
