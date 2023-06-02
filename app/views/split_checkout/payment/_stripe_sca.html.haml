@@ -1,15 +1,17 @@
+- saved_credit_cards = spree_current_user&.credit_cards&.with_payment_profile.to_a
+
 %div{"data-controller": "stripe-cards", "data-paymentmethod-id": "#{payment_method.id}" }
-  - if @saved_credit_cards.any?
+  - if saved_credit_cards.any?
     .checkout-input
       %label
         = t('split_checkout.step2.form.stripe.use_saved_card')
       = select_tag :existing_card_id,
-        options_for_select(stripe_card_options(@saved_credit_cards) + [[t('split_checkout.step2.form.stripe.create_new_card'), ""]], @selected_card),
+        options_for_select(stripe_card_options(saved_credit_cards) + [[t('split_checkout.step2.form.stripe.create_new_card'), ""]], nil),
         { "data-action": "change->stripe-cards#onSelectCard", "data-stripe-cards-target": "select" }
 
   %div{"data-stripe-cards-target": "stripeelements"}
     .checkout-input
-      - if @saved_credit_cards.none?
+      - if saved_credit_cards.none?
         %label
           = t('split_checkout.step2.form.stripe.use_new_card')
 
