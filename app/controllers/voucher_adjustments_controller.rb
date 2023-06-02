@@ -6,8 +6,9 @@ class VoucherAdjustmentsController < BaseController
   def create
     if add_voucher
       VoucherAdjustmentsService.calculate(@order)
+      @order.update_totals_and_states
 
-      render_voucher_section
+      update_payment_section
     elsif @order.errors.present?
       render_error
     end
@@ -16,7 +17,7 @@ class VoucherAdjustmentsController < BaseController
   def destroy
     @order.voucher_adjustments.find_by(id: params[:id])&.destroy
 
-    render_voucher_section
+    update_payment_section
   end
 
   private
@@ -49,13 +50,10 @@ class VoucherAdjustmentsController < BaseController
     true
   end
 
-  def render_voucher_section
+  def update_payment_section
     render cable_ready: cable_car.replace(
-      selector: "#voucher-section",
-      html: render_to_string(
-        partial: "split_checkout/voucher_section",
-        locals: { order: @order,voucher_adjustment: @order.voucher_adjustments.first }
-      )
+      selector: "#checkout-payment-methods",
+      html: render_to_string(partial: "split_checkout/payment", locals: { step: "payment" })
     )
   end
 
