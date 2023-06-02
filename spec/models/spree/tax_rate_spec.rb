@@ -301,7 +301,7 @@ module Spree
             tax_category: @category,
             zone: @zone
           )
-          @order       = Spree::Order.create!
+          @order       = Spree::Order.create!(state: 'payment')
           @taxable     = create(:product, tax_category: @category)
           @nontaxable  = create(:product, tax_category: @category2)
         end
