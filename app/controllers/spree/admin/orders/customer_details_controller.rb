@@ -56,8 +56,6 @@ module Spree
           # If the order's address has been changed, the tax zone could be different,
           # which means a different set of tax rates might be applicable.
           @order.create_tax_charge!
-          Spree::TaxRate.adjust(@order, @order.adjustments.admin)
-
           @order.update_totals_and_states
         end
 
