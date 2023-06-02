@@ -11,7 +11,9 @@
       %tr{class: "#{cycle('odd', 'even')}"}
         %td= pretty_time(payment.created_at)
         %td.align-center= payment.display_amount.to_html
-        %td.align-center= link_to payment_method_name(payment), spree.admin_order_payment_path(@order, payment)
+        %td.align-center
+          - if payment.payment_method_id
+            = link_to payment_method_name(payment), spree.admin_order_payment_path(@order, payment)
         %td.align-center
           %span{class: "state #{payment.state}"}= t(payment.state, scope: "spree.payment_states", default: payment.state.capitalize)
         %td.actions
