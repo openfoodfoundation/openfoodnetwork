@@ -108,6 +108,7 @@ module Spree
     before_save :update_payment_fees!, if: :complete?
 
     after_create :create_tax_charge!
+    after_save :reapply_tax_on_changed_address
 
     after_save_commit DefaultAddressUpdater
 
@@ -579,6 +580,14 @@ module Spree
     end
 
     private
+
+    def reapply_tax_on_changed_address
+      return if before_payment_state?
+      return unless tax_address&.saved_changes?
+
+      create_tax_charge!
+      update_totals_and_states
+    end
 
     def deliver_order_confirmation_email
       return if subscription.present?
