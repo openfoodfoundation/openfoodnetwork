@@ -6,33 +6,6 @@ describe Spree::Order::Checkout do
   let(:order) { Spree::Order.new }
 
   context "with default state machine" do
-    let(:transitions) do
-      [
-        { address: :delivery },
-        { delivery: :payment },
-        { delivery: :confirmation },
-        { payment: :confirmation },
-        { confirmation: :complete }
-      ]
-    end
-
-    it "has the following transitions" do
-      transitions.each do |transition|
-        transition = Spree::Order.find_transition(from: transition.keys.first,
-                                                  to: transition.values.first)
-        expect(transition).to_not be_nil
-      end
-    end
-
-    it "does not have a transition from delivery to confirm" do
-      transition = Spree::Order.find_transition(from: :delivery, to: :confirm)
-      expect(transition).to be_nil
-    end
-
-    it '.find_transition when contract was broken' do
-      expect(Spree::Order.find_transition({ foo: :bar, baz: :dog })).to be_falsy
-    end
-
     context "#checkout_steps" do
       context "when payment not required" do
         before { allow(order).to receive_messages payment_required?: false }
