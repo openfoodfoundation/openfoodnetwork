@@ -54,16 +54,21 @@
         %a.summary-edit{href: main_app.checkout_step_path(:payment)}
           = t("split_checkout.step3.payment_method.edit")
       .two-columns
+        - payment_method = last_payment_method(@order)
         %div
-          - payment_method = last_payment_method(@order)
-          = payment_method&.name
-          %em.fees=payment_or_shipping_price(payment_method, @order)
+          - if payment_method
+            = payment_method.name
+            %em.fees
+              = payment_or_shipping_price(payment_method, @order)
+          - elsif @order.zero_priced_order?
+            %h4= t(:no_payment_required)
+
         - if payment_method&.description.present?
           %div
             .summary-subtitle
               = t("split_checkout.step3.payment_method.instructions")
             %div
-              = last_payment_method(@order)&.description
+              = payment_method&.description
 
 
     %div.checkout-substep

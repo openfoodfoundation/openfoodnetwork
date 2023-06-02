@@ -621,6 +621,10 @@ module Spree
       raise Core::GatewayError, Spree.t(:no_pending_payments) if pending_payments.empty?
 
       pending_payments.each do |payment|
+        if payment.amount.zero? && zero_priced_order?
+          payment.update_columns(state: "completed", captured_at: Time.zone.now)
+        end
+
         break if payment_total >= total
 
         yield payment

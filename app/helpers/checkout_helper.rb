@@ -120,6 +120,8 @@ module CheckoutHelper
   end
 
   def payment_or_shipping_price(method, order)
+    return unless method
+
     price = method.compute_amount(order)
     if price.zero?
       t('checkout_method_free')
