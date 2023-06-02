@@ -19,8 +19,10 @@ class VoucherAdjustmentsService
     # For now we just assume it is either all tax included in price or all tax excluded from price.
     if order.additional_tax_total.positive?
       handle_tax_excluded_from_price(order, amount)
-    else
+    elsif order.included_tax_total.positive?
       handle_tax_included_in_price(order, amount)
+    else
+      adjustment.amount = amount
     end
 
     # Move to closed state
