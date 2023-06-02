@@ -135,7 +135,7 @@ gem 'flipper-ui'
 
 gem "view_component"
 gem 'view_component_reflex', '3.1.14.pre9'
-gem "polaris_view_components"
+gem "polaris_view_components", '~> 0.13.6'
 
 gem 'mini_portile2', '~> 2.8'
 

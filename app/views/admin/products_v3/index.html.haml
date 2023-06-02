@@ -5,4 +5,11 @@
 = render partial: 'spree/admin/shared/product_sub_menu'
 
 #products_v3_page
-  = render(TableComponent.new(columns: [:name, :sku, :on_hand], data: @products))
+  = polaris_card(sectioned: false) do
+    = polaris_data_table(@products) do |table|
+      - table.column("Product") do |row|
+        = row.name
+      - table.column("SKU Number", numeric: true) do |row|
+        = row.sku
+      - table.column("Net quantity", numeric: true) do |row|
+        = row.on_hand

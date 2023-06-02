@@ -490,9 +490,9 @@ GEM
       ruby-rc4
       ttfunk
     pg (1.2.3)
-    polaris_view_components (0.13.4)
+    polaris_view_components (0.13.6)
       rails (>= 5.0.0)
-      view_component (>= 2.0.0)
+      view_component (>= 2.0.0, < 3.0.0)
     power_assert (2.0.3)
     private_address_check (0.5.0)
     pry (0.13.1)
@@ -746,7 +746,7 @@ GEM
       activemodel (>= 3.0.0)
       public_suffix
     vcr (6.1.0)
-    view_component (3.0.0)
+    view_component (2.82.0)
       activesupport (>= 5.2.0, < 8.0)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
@@ -877,7 +877,7 @@ DEPENDENCIES
   paypal-sdk-merchant (= 1.117.2)
   pdf-reader
   pg (~> 1.2.3)
-  polaris_view_components
+  polaris_view_components (~> 0.13.6)
   private_address_check
   pry (~> 0.13.0)
   puma
