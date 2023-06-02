@@ -147,7 +147,7 @@ module Spree
           private
 
           def after_cancel
-            shipments.each(&:cancel!)
+            shipments.reject(&:canceled?).each(&:cancel!)
             payments.checkout.each(&:void!)
 
             OrderMailer.cancel_email(id).deliver_later if send_cancellation_email
