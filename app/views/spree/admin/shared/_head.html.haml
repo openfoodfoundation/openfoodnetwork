@@ -17,6 +17,8 @@
 - else
   = stylesheet_pack_tag 'admin-styles', media: "screen, print"
 
+= stylesheet_link_tag "polaris_view_components"
+
 = render "layouts/bugsnag_js"
 
 - if content_for? :minimal_js

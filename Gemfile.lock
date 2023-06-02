@@ -490,6 +490,9 @@ GEM
       ruby-rc4
       ttfunk
     pg (1.2.3)
+    polaris_view_components (0.13.4)
+      rails (>= 5.0.0)
+      view_component (>= 2.0.0)
     power_assert (2.0.3)
     private_address_check (0.5.0)
     pry (0.13.1)
@@ -874,6 +877,7 @@ DEPENDENCIES
   paypal-sdk-merchant (= 1.117.2)
   pdf-reader
   pg (~> 1.2.3)
+  polaris_view_components
   private_address_check
   pry (~> 0.13.0)
   puma

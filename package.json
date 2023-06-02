@@ -21,6 +21,7 @@
   "dependencies": {
     "@floating-ui/dom": "^1.2.9",
     "@hotwired/turbo": "^7.3.0",
+    "@rails/request.js": "^0.0.8",
     "@rails/webpacker": "5.4.4",
     "cable_ready": "5.0.0",
     "debounced": "^0.0.5",
@@ -30,6 +31,7 @@
     "js-big-decimal": "^1.4.1",
     "moment": "^2.29.1",
     "mrujs": "^1.0.0",
+    "polaris-view-components": "^0.13.0",
     "select2": "^4.0.13",
     "shortcut-buttons-flatpickr": "^0.4.0",
     "stimulus": "^3.0.1",
