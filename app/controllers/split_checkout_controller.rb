@@ -25,7 +25,9 @@ class SplitCheckoutController < ::BaseController
     redirect_to_step_based_on_order unless params[:step]
     check_step if params[:step]
 
-    flash_error_when_no_shipping_method_available if available_shipping_methods.none?
+    return if available_shipping_methods.any?
+
+    flash[:error] = I18n.t('split_checkout.errors.no_shipping_methods_available')
   end
 
   def update
@@ -100,10 +102,6 @@ class SplitCheckoutController < ::BaseController
     when /zipcode/i then 4
     else 5
     end
-  end
-
-  def flash_error_when_no_shipping_method_available
-    flash[:error] = I18n.t('split_checkout.errors.no_shipping_methods_available')
   end
 
   def check_payments_adjustments
