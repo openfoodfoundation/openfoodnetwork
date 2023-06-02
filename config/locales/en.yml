@@ -450,6 +450,7 @@ en:
   none: None
   notes: Notes
   error: Error
+  voucher: Voucher
   processing_payment: "Processing payment..."
   no_pending_payments: "No pending payments"
   invalid_payment_state: "Invalid payment state: %{state}"
