@@ -4049,6 +4049,7 @@ fr_CA:
         sortable_header:
           name: "Nom"
           number: "N° commande"
+          completed_at: "Passée à "
           state: "Département"
           payment_state: "Statut du Paiement"
           shipment_state: "Statut de la livraison"

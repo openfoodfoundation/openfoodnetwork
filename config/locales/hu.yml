@@ -3960,6 +3960,7 @@ hu:
         sortable_header:
           name: "Név"
           number: "Szám"
+          completed_at: "Elkészült:"
           state: "Állapot"
           payment_state: "Fizetési állapot"
           shipment_state: "Szállítási állapot"

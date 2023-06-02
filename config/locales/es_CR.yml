@@ -3873,6 +3873,7 @@ es_CR:
         sortable_header:
           name: "Nombre"
           number: "Número"
+          completed_at: "Completado en"
           state: "Provincia"
           payment_state: "Estado del pago"
           shipment_state: "Estado del envío"

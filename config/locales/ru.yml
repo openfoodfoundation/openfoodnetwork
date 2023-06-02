@@ -4115,6 +4115,7 @@ ru:
         sortable_header:
           name: "Имя"
           number: "Номер"
+          completed_at: "Завершено"
           state: "Статус"
           payment_state: "Статус Оплаты"
           shipment_state: "Статус Доставки"

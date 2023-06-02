@@ -3938,6 +3938,7 @@ nb:
         sortable_header:
           name: "Navn"
           number: "Antall"
+          completed_at: "Fullført på"
           state: "Tilstand"
           payment_state: "Betalingsstatus"
           shipment_state: "Leveringsstatus"

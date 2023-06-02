@@ -3973,6 +3973,7 @@ uk:
         sortable_header:
           name: "Ім'я"
           number: "Номер"
+          completed_at: "Завершено"
           state: "Стан"
           payment_state: "Стан платежу"
           shipment_state: "Стан відвантаження"

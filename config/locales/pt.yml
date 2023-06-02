@@ -3420,6 +3420,7 @@ pt:
         sortable_header:
           name: "Nome"
           number: "Número"
+          completed_at: "Concluído Em"
           state: "Estado"
           payment_state: "Estado do Pagamento"
           shipment_state: "Estado do envio"

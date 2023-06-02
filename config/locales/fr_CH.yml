@@ -3954,6 +3954,7 @@ fr_CH:
         sortable_header:
           name: "Produit/Variante"
           number: "N° commande"
+          completed_at: "terminé le "
           state: "Statut"
           payment_state: "Statut du Paiement"
           shipment_state: "Statut livraison"

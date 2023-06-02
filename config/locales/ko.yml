@@ -3850,6 +3850,7 @@ ko:
         sortable_header:
           name: "이름"
           number: "숫자"
+          completed_at: "완료 시간:"
           state: "상태"
           payment_state: "결제 상태"
           shipment_state: "배송 현황"

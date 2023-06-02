@@ -3582,6 +3582,7 @@ en_AU:
         sortable_header:
           name: "Name"
           number: "Number"
+          completed_at: "Completed At"
           state: "State"
           payment_state: "Payment State"
           shipment_state: "Shipment State"

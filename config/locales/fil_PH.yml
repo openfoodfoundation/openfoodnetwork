@@ -3440,6 +3440,7 @@ fil_PH:
         sortable_header:
           name: "Pangalan"
           number: "Bilang"
+          completed_at: "Nakumpleto"
           state: "province"
           payment_state: "status ng pagbabayad"
           shipment_state: "status ng kargamento"

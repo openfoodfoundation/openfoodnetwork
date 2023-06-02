@@ -3447,6 +3447,7 @@ pl:
         sortable_header:
           name: "Nazwa"
           number: "Liczba"
+          completed_at: "Zakończono o"
           state: "Status"
           payment_state: "Stan Płatności"
           shipment_state: "Status dostawy"

@@ -58,8 +58,21 @@ fr:
         orders_close_at: Date de fermeture
       variant_override:
         count_on_hand: "En stock"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Pourcentage net"
+        preferred_amount: "Montant"
+        preferred_first_item: "Premier article"
+        preferred_additional_item: "coût additionnel de l'article"
+        preferred_max_items: "Maximum articles"
+        preferred_minimal_amount: "Montant minimum"
+        preferred_normal_amount: "Montant normal"
+        preferred_discount_amount: "Montant du rabais"
+        preferred_unit_from_list: "A l'unité depuis la liste"
+        preferred_per_unit: "A l'unité"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Déterminer la catégorie de taxe requiert l'utilisation du calculateur par article. "
         spree/user:
           attributes:
             email:
@@ -259,6 +272,13 @@ fr:
     order_cycle:
       subject: "Rapport de cycle de vente pour %{producer}"
   provider_settings: "Paramètres fournisseur"
+  report_mailer:
+    report_ready:
+      subject: "Rapport prêt"
+      heading: "Rapport prêt à télécharger"
+      intro: |
+          Le lien ci-dessous sera expiré dans une semaine.
+      link_label: "1%"
   shipment_mailer:
     shipped_email:
       dear_customer: "Cher Acheteur,"
@@ -1089,6 +1109,10 @@ fr:
           remove_logo_confirm: "Etes-vous certain.e de vouloir supprimer le logo?"
           remove_logo_success: "logo supprimé"
           white_label_logo_link_label: "Lien vers le logo utilisé pour la boutique"
+          hide_groups_tab: "Cacher l'onglet groupes dans la boutique"
+          create_custom_tab: "Créer un onglet personnalisé dans la boutique"
+          custom_tab_title: "Titre de l'onglet personnalisé"
+          custom_tab_content: "Contenu de l'onglet personnalisé"
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1371,6 +1395,11 @@ fr:
             Désolée, ce rapport met trop de temps à se charger, probablement parce
             qu'il contient une grande quantité de données ou que d'autres rapports
             sont en cours de téléchargement. Merci de réessayer plus tard.
+        report_taking_longer_html: >
+            Désolée, ce rapport met trop de temps à se charger, probablement parce
+            qu'il contient une grande quantité de données ou que d'autres rapports
+            sont en cours de téléchargement. Une fois que le téléchargement précédent
+            sera terminé, vous recevrez une notification par mail.
         report_link_label: Télécharger le rapport (quand disponible)
       revenues_by_hub:
         name: CA par boutique
@@ -1924,6 +1953,14 @@ fr:
       explaination: Vous pourrez vérifier et confirmer votre commande à l'étape suivante.
       submit: Etape suivante - Récapitulatif de commande
       cancel: Retour à vos coordonnées
+      voucher:
+        voucher: "1%{montant de la réduction} Réduction"
+        apply_voucher: Appliquer réduction
+        apply: Appliquer
+        placeholder: Entrer code de réduction
+        remove_code: Supprimer code de réduction
+        confirm_delete: Êtes-vous sûr de vouloir supprimer la réduction?
+        warning_forfeit_remaining_amount: "Note : Si le total de votre commande est inférieur à votre réduction, vous êtes susceptible de ne pas pouvoir utiliser l'intégralité de votre réduction. "
     step3:
       delivery_details:
         title: Détails de livraison
@@ -1957,6 +1994,7 @@ fr:
       select_a_payment_method: Sélectionner une méthode de paiement
       no_shipping_methods_available: Il n'est pas possible de passer commande car il n'y a pas d'options de livraison / récupération de commande. Veuillez contacter le gestionnaire de la boutique.
       voucher_not_found: Non trouvé
+      add_voucher_error: Il y a eu une erreur lors de l'ajout de votre réduction.
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
@@ -4115,6 +4153,7 @@ fr:
         sortable_header:
           name: "Produit/Variante"
           number: "N° commande"
+          completed_at: "Date"
           state: "Statut"
           payment_state: "Statut du Paiement"
           shipment_state: "Statut livraison"

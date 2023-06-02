@@ -4143,6 +4143,7 @@ ar:
         sortable_header:
           name: "الاسم"
           number: "رقم "
+          completed_at: "تم الانتهاء عند "
           state: "ولاية"
           payment_state: "حالة الدفعة"
           shipment_state: "حالة الشحن"

@@ -105,7 +105,16 @@ fr_BE:
       do_not_honor: "La carte a été refusée pour une raison inconnue."
       do_not_try_again: "La carte a été refusée pour une raison inconnue."
       generic_decline: "La carte a été refusée pour une raison inconnue."
+      incorrect_pin: "Le code PIN saisi est incorrect. Ce code de refus s'applique uniquement aux paiements effectués avec un lecteur de carte."
+      invalid_account: "La carte ou le compte auquel la carte est connectée n'est pas valide."
+      invalid_amount: "Le montant du paiement n'est pas valide ou dépasse le montant autorisé."
+      invalid_pin: "Le code PIN saisi est incorrect. Ce code de refus s'applique uniquement aux paiements effectués avec un lecteur de carte."
+      issuer_not_available: "L'émetteur de la carte n'a pas pu être joint, le paiement n'a donc pas pu être autorisé."
+      lost_card: "Le paiement a été refusé car la carte est déclarée perdue."
+      merchant_blacklist: "Le paiement a été refusé car il correspond à une valeur de la liste de blocage de l'utilisateur Stripe."
+      new_account_information_available: "La carte ou le compte auquel la carte est connectée n'est pas valide."
       no_action_taken: "La carte a été refusée pour une raison inconnue."
+      not_permitted: "Le paiement n'est pas autorisé."
       offline_pin_required: "La carte bancaire a été refusée car elle nécessite un code PIN."
       online_or_offline_pin_required: "La carte bancaire a été refusée car elle nécessite un code PIN."
       revocation_of_all_authorizations: "La carte a été refusée pour une raison inconnue."
@@ -175,9 +184,11 @@ fr_BE:
         updated_not_active: "Votre mot de passe a bien été réinitialisé, mais votre email n'a pas encore été confirmé."
         updated: "Votre mot de passe a été changé avec succès. Vous êtes à présent connecté."
         send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
+  item_description: "Description de l'article"
   models:
     order_cycle:
       cloned_order_cycle_name: "Copie de %{order_cycle}"
+  open_street_map_enabled: "Open Street Map activé"
   resume_order: "Reprendre la commande"
   sku: "Référence produit"
   subtotal: "Sous-total"
@@ -362,14 +373,18 @@ fr_BE:
     add: "Ajouter"
     cut: "Couper"
     paste: "Coller"
+    rename: "Renommer"
   admin:
     products_page:
       title: Produits
       filters:
         categories:
           title: Les catégories
+          selected_categories: "%{count} catégories sélectionnées"
         producers:
           title: Producteur·trice·s
+          selected_producers: "%{count} producteurs sélectionnés"
+        per_page: "%{count} éléments par page"
         colums: Colonnes
       columns:
         name: Nom
@@ -459,13 +474,21 @@ fr_BE:
     has_n_rules: "a %{num} règle(s)"
     unsaved_confirm_leave: "Des modifications n'ont pas été sauvegardées et seront perdues si vous quittez la page. Souhaitez-vous quitter la page?"
     unsaved_changes: "Des modifications n'ont pas été sauvegardées."
+    available_units: "Unités disponibles"
     shopfront_settings:
       embedded_shopfront_settings: "Paramètres comptoir Intégrées"
       enable_embedded_shopfronts: "Autoriser l'intégration des comptoirs"
       embedded_shopfronts_whitelist: "Liste blanche des Domaines Externes"
     terms_of_service_files:
+      create:
+        select_file: "Veuillez d'abord sélectionner un fichier."
       show:
+        title: "Fichiers des conditions d'utilisation"
+        no_files: "Aucune condition d'utilisation n'a encore été téléchargée."
         terms_of_service: "Conditions d'utilisation"
+        delete: "Supprimer le fichier"
+        confirm_delete: "Voulez-vous vraiment supprimer le fichier actuel des conditions d'utilisation ?"
+        create_terms_of_service: "Créer un fichier de conditions d'utilisation"
     number_localization:
       number_localization_settings: "Gestion localisation des nombres"
       enable_localized_number: "Utiliser le traitement international des séparateurs de milliers/centimes"
@@ -520,6 +543,8 @@ fr_BE:
         search_by_email: "Recherche par email/code..."
         guest_label: "Commande en mode invité"
         credit_owed: "Crédit redevable"
+      destroy:
+        has_associated_subscriptions: "Échec de la suppression : ce client a des abonnements actifs. Annulez-les d'abord."
     contents:
       edit:
         title: Contenu
@@ -903,7 +928,7 @@ fr_BE:
           allow_order_changes_tip: "Permettre aux personnes qui achètent de modifier leur commande tant que le cycle de vente est ouvert."
           allow_order_changes_false: "Les commandes validées ne peuvent plus être modifiées / annulées"
           allow_order_changes_true: "Les acheteurs peuvent modifier / valider leurs commandes tant que le cycle de vente est ouvert"
-          enable_subscriptions: "commandes récurentes"
+          enable_subscriptions: "Abonnement / commande récurente"
           enable_subscriptions_tip: "Activer la fonction abonnements?"
           enable_subscriptions_false: "Désactivé"
           enable_subscriptions_true: "Activé"
@@ -1159,6 +1184,7 @@ fr_BE:
         schedule: Rythme d'abonnement
         schedules: Rythmes d'abonnement
         new_schedule: Nouveau rythme d'abonnement
+        new_schedule_tooltip: La fréquence à laquelle une commande d'abonnement est passée
       name_and_timing_form:
         name: Nom
         orders_open: Commandes à partir de
@@ -1239,6 +1265,8 @@ fr_BE:
       unitsize: Unité de mesure
       total: Total
       total_items: Nb Articles
+      total_by_customer: Total par client
+      total_by_supplier: Total par fournisseur
       supplier_totals: Totaux Cycle de Vente par Producteur
       supplier_totals_by_distributor: Totaux Cycle de Vente par Producteur pour chaque Comptoir
       totals_by_supplier: Totaux Cycle de Vente par Comptoir pour chaque Producteur
@@ -1250,6 +1278,8 @@ fr_BE:
       addresses: Adresses
       payment_methods: Rapport Méthodes de Paiement
       delivery: Rapport de Livraison
+      sales_tax_totals_by_producer: Totaux des taxes de vente par producteur
+      sales_tax_totals_by_order: Totaux des taxes de vente par commande
       tax_types: Par type de taxe
       tax_rates: Par taux de taxe
       pack_by_customer: Préparation des commandes par Acheteur·euse
@@ -1291,6 +1321,9 @@ fr_BE:
       enterprise_fee_summary:
         name: "Récapitulatif de la commission d'entreprise "
         description: "Récapitulatif des commissions d'entreprise perçues"
+      errors:
+        no_report_type: "Veuillez spécifier un type de rapport"
+        report_not_found: "Rapport introuvable"
       summary_row:
         total: "Total"
       table:
@@ -1779,7 +1812,7 @@ fr_BE:
         link_text: "Termes et conditions"
       all_terms_and_conditions:
         terms_and_conditions: "Termes et conditions"
-      submit: Complétez la commande
+      submit: Finaliser la commande
       cancel: Retour à Mode de paiement
     errors:
       saving_failed: "Échec de l'enregistrement, veuillez mettre à jour les champs en surbrillance. %{messages}"
@@ -1808,6 +1841,7 @@ fr_BE:
   order_hub_info: Comptoir Info
   order_back_to_store: Retour au comptoir
   order_back_to_cart: Retour au panier
+  order_back_to_website: Retour au site Web
   bom_tip: "Utilisez cette page pour modifier les quantités sur plusieurs commandes à la fois. Les produits peuvent aussi être supprimés des commandes si nécessaire."
   unsaved_changes_warning: "Des modifications n'ont pas été enregistrées et seront perdues si vous continuez."
   unsaved_changes_error: "Les champs entourés en rouge contiennent des erreurs."
@@ -1844,6 +1878,7 @@ fr_BE:
   email_order_summary_includes_tax: "(dont TVA)"
   email_payment_paid: RÉGLÉ
   email_payment_not_paid: NON RÉGLÉ
+  email_payment_description: Description du paiement à la caisse
   email_payment_summary: Résumé du paiement
   email_payment_method: "Payer via :"
   email_so_placement_intro_html: "Une nouvelle commande automatique a été passée pour vous chez <strong>%{distributor}</strong>"
@@ -1884,6 +1919,7 @@ fr_BE:
     set_a_password: "Vous serez ensuite invité(e) à choisir un mot de passe avant de pouvoir accéder et gérer le profil de l'entreprise."
     mistakenly_sent: "Vous ne savez pas pourquoi vous recevez cet email? Veuillez contacter %{owner_email} pour plus d'informations."
   producer_mail_greeting: "Cher(ère)"
+  producer_mail_text_before: "Veuillez trouver ci-dessous une mise à jour sur le cycle de commande prêt pour :"
   producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
   producer_mail_delivery_instructions: "Modalités de livraison des produits:"
   producer_mail_signoff: "Merci et belle fin de journée!"
@@ -2303,7 +2339,7 @@ fr_BE:
   ok: OK
   not_visible: invisible
   you_have_no_orders_yet: "Vous n'avez pas encore de commande"
-  show_only_complete_orders: "Montrer uniquement les commandes complètes "
+  show_only_complete_orders: "Montrer uniquement les commandes finalisées"
   successfully_created: '%{resource}est crée avec succès! '
   successfully_removed: '%{resource}est été supprimé avec succès! '
   successfully_updated: '%{resource}a été enregistrée avec succès'
@@ -2555,6 +2591,7 @@ fr_BE:
   report_header_customer_code: Code acheteur
   report_header_product: Produit
   report_header_product_properties: Propriétés / labels Produits
+  report_header_product_tax_category: Catégorie de taxe sur les produits
   report_header_quantity: Nb commandé
   report_header_max_quantity: Quantité Max
   report_header_variant: Variante
@@ -2780,6 +2817,7 @@ fr_BE:
           message_1: "Les CGV représentent le contrat entre vous, le vendeur, et l'acheteur. Ajouter un fichier ici permet à vos acheteurs de valider ce contrat lors de leur commande sous la forme d'une case à cocher avant la validation du paiement. Pour rappel, la mise en place de CGV est une obligation réglementaire."
         terms_and_conditions_warning:
           title: "Mise à jour des CGU & CGV"
+          message_2: "Pour les acheteurs abonnés, vous devez leur envoyer par e-mail les conditions générales (ou leurs modifications) pour le moment, rien ne les informera de ces nouvelles conditions générales."
         business_address_info:
           message: "Ces informations légales seront uniquement utilisées sur vos factures. Si vous ne renseignez pas ces champs, vos coordonnées publiques (présentes dans le menu Adresse) seront utilisées sur les factures."
       panels:
@@ -3079,6 +3117,12 @@ fr_BE:
       start_free_profile: "Commencez par créer votre profil entreprise, et présentez votre formule quand vous êtes prêt !"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          bulk_coop_allocation: "Allocation de coopérative en vrac"
+          bulk_coop_customer_payments: "Paiements groupés des clients coopératifs"
+          bulk_coop_packing_sheets: "Feuilles de préparation des commandes en vrac Co-op"
+          bulk_coop_supplier_report: "Rapport sur les fournisseurs de coopératives en vrac"
       enterprise_fee_summaries:
         filters:
           date_range: "Plage de dates"
@@ -3164,6 +3208,7 @@ fr_BE:
     category: "Catégorie"
     credit: "Crédit"
     more: "Plus"
+    new_order_completed: "Nouvelle commande terminée"
     no_pending_payments: "Aucun paiement en attente"
     none: "Aucun"
     updating: "Mettre à jour"
@@ -3357,7 +3402,7 @@ fr_BE:
         dashboard: "Tableau de bord"
         orders: "Commandes"
         bulk_order_management: "Gestion des commandes"
-        subscriptions: "commandes récurrantes"
+        subscriptions: "Abonnement /commande récurrente"
         products: "Produits"
         option_types: "Option Types "
         properties: "Labels / propriétés"
@@ -3447,6 +3492,7 @@ fr_BE:
           cancel_orders: "Annuler les commandes"
           resend_confirmation: "Renvoyer la confirmation"
           resend_confirmation_confirm_html: "Cela renverra l&#39;e-mail de confirmation au client.<br /> Êtes-vous sur de vouloir continuer?"
+          send_invoice_confirm_html: "Cela enverra par e-mail les factures des clients pour toutes les commandes finalisées sélectionnées.<br> Êtes-vous sur de vouloir continuer?"
         sortable_header:
           payment_state: "Statut du Paiement"
           shipment_state: "Statut livraison"
@@ -3472,6 +3518,8 @@ fr_BE:
       overview:
         enterprises_header:
           ofn_with_tip: Les Entreprises sont des Producteur·trice·s et/ou Comptoirs, et sont donc les organisations de base qui utilisent Open Food Network.
+        enterprise_row:
+          has_no_enterprise_fees: "n'a pas de marge / commission d'entreprise"
         products:
           active_products:
             zero: "Vous n'avez aucun produit actif."
@@ -3677,6 +3725,7 @@ fr_BE:
         sortable_header:
           name: "Nom"
           number: "N° commande"
+          completed_at: "Date"
           state: "Statut de la commande"
           payment_state: "Statut du Paiement"
           shipment_state: "Statut livraison"
@@ -3839,12 +3888,14 @@ fr_BE:
         total: Total
         paid?: Payé ?
         status: Statut
+        completed: Terminé
         cancelled: Annulée
       saved_cards:
         default?: Carte utilisée par défaut?
         delete?: Supprimer?
       cards:
         authorised_shops: Comptoirs autorisés.
+        authorised_shops_agreement: Voici la liste des comptoirs autorisés à débiter votre carte de crédit par défaut pour tout abonnement (c-à-d les commandes récurrentes) que vous pourriez avoir. Les détails de votre carte seront conservés en toute sécurité et ne seront pas partagés avec les propriétaires des comptoirs. Vous serez toujours averti lorsque vous serez débité. En cochant la case d'un comptoir, vous acceptez d'autoriser ce comptoir à envoyer des instructions à l'institution financière qui a émis votre carte pour accepter les paiements conformément aux conditions de tout abonnement que vous créez avec ce comptoir.
         saved_cards_popover: Voilà la liste des cartes de paiement que vous avez enregistrées. Votre carte par défaut sera automatiquement sélectionnée au moment de la finalisation d'une commande, et pourra être débitée par les comptoirs auxquels vous avez donné cette autorisation (voir à droite).
       authorised_shops:
         shop_name: "Nom du comptoir"

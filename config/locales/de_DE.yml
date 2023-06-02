@@ -4100,6 +4100,7 @@ de_DE:
         sortable_header:
           name: "Name"
           number: "Nummer"
+          completed_at: "Abgeschlossen am"
           state: "Status"
           payment_state: "Zahlungsstatus"
           shipment_state: "Lieferstatus"

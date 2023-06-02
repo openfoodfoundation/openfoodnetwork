@@ -3863,6 +3863,7 @@ ca:
         sortable_header:
           name: "Nom"
           number: "Número"
+          completed_at: "Completat a"
           state: "Estat"
           payment_state: "Estat del pagament"
           shipment_state: "Estat de la Tramesa"

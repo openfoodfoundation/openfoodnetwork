@@ -71,6 +71,8 @@ en_FR:
         preferred_per_unit: "Calculator Per Unit:"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Inheriting the tax categeory requires a per-item calculator."
         spree/user:
           attributes:
             email:
@@ -1106,6 +1108,10 @@ en_FR:
           remove_logo_confirm: "Are you sure you want to remove this logo?"
           remove_logo_success: "Logo removed"
           white_label_logo_link_label: "Link for the logo used in shopfront"
+          hide_groups_tab: "Hide groups tab in shopfront"
+          create_custom_tab: "Create custom tab in shopfront"
+          custom_tab_title: "Title for custom tab"
+          custom_tab_content: "Content for custom tab"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1949,6 +1955,7 @@ en_FR:
         placeholder: Enter voucher code
         remove_code: Remove code
         confirm_delete: Are you sure you want to remove the voucher?
+        warning_forfeit_remaining_amount: "Note: if your order total is less than your voucher you may not be able to spend the remaining value."
     step3:
       delivery_details:
         title: Delivery details
@@ -4089,6 +4096,7 @@ en_FR:
         sortable_header:
           name: "Name"
           number: "Number"
+          completed_at: "Completed At"
           state: "State"
           payment_state: "Payment State"
           shipment_state: "Shipment State"

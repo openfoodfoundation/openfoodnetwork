@@ -4032,6 +4032,7 @@ it:
         sortable_header:
           name: "Nome"
           number: "Numero"
+          completed_at: "Completato Al"
           state: "Provincia"
           payment_state: "Stato Pagamento"
           shipment_state: "Stato della spedizione"

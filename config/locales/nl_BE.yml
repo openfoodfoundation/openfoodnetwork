@@ -3447,6 +3447,7 @@ nl_BE:
         sortable_header:
           name: "Naam"
           number: "Nummer"
+          completed_at: "Voltooid op"
           state: "Staat"
           payment_state: "Status Betaling"
           shipment_state: "Status Verzending"
