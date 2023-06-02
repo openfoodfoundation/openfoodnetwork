@@ -29,11 +29,11 @@ module PaymentGateways
           flash[:error] =
             Spree.t('flash.generic_error', scope: 'paypal',
                                            reasons: pp_response.errors.map(&:long_message).join(" "))
-          redirect_to main_app.checkout_state_path(:payment)
+          redirect_to main_app.checkout_step_path(:payment)
         end
       rescue SocketError
         flash[:error] = Spree.t('flash.connection_failed', scope: 'paypal')
-        redirect_to main_app.checkout_state_path(:payment)
+        redirect_to main_app.checkout_step_path(:payment)
       end
     end
 

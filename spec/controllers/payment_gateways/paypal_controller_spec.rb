@@ -88,8 +88,8 @@ module PaymentGateways
       context "when processing fails" do
         let(:response) { false }
 
-        it "redirects to checkout_state_path with a flash error" do
-          expect(post(:express)).to redirect_to checkout_state_path(:payment)
+        it "redirects to checkout_step_path with a flash error" do
+          expect(post(:express)).to redirect_to checkout_step_path(:payment)
           expect(flash[:error]).to eq "PayPal failed. "
         end
       end
@@ -99,8 +99,8 @@ module PaymentGateways
           allow(response_mock).to receive(:success?).and_raise(SocketError)
         end
 
-        it "redirects to checkout_state_path with a flash error" do
-          expect(post(:express)).to redirect_to checkout_state_path(:payment)
+        it "redirects to checkout_step_path with a flash error" do
+          expect(post(:express)).to redirect_to checkout_step_path(:payment)
           expect(flash[:error]).to eq "Could not connect to PayPal."
         end
       end
