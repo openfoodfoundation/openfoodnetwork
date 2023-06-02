@@ -12,6 +12,8 @@
       %tr.total
         %td.text-right{:colspan => "3"}
           %strong
+            - if adjustment.originator_type == "Voucher"
+              = "#{t(:voucher)}:"
             = adjustment.label
         %td.text-right.total
           %span= adjustment.display_amount.to_html

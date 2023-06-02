@@ -91,10 +91,12 @@
 
     - checkout_adjustments_for(@order, exclude: [:line_item]).reverse_each do |adjustment|
       .summary-right-line
-        -if adjustment.originator_type == 'Voucher'
-          .summary-right-line-label.voucher= adjustment.label
+        - if adjustment.originator_type == 'Voucher'
+          .summary-right-line-label.voucher
+            = "#{t(:voucher)}:"
+            = adjustment.label
           .summary-right-line-value.voucher= adjustment.display_amount.to_html
-        -else
+        - else
           .summary-right-line-label= adjustment.label
           .summary-right-line-value= adjustment.display_amount.to_html
 
