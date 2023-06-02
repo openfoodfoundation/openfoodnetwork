@@ -322,6 +322,7 @@ module Spree
 
       Spree::TaxRate.adjust(self, line_items)
       Spree::TaxRate.adjust(self, shipments) if shipments.any?
+      Spree::TaxRate.adjust(self, adjustments.admin) if adjustments.admin.any?
       fee_handler.tax_enterprise_fees!
     end
 
