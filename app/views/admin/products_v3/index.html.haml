@@ -5,3 +5,4 @@
 = render partial: 'spree/admin/shared/product_sub_menu'
 
 #products_v3_page
+  = render(TableComponent.new(columns: [:name, :sku, :on_hand], data: @products))

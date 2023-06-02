@@ -1,5 +1,5 @@
 %table
-  - @data.each do |column|
+  - @data&.each do |object|
     %tr
-      - column.each do |cell|
-        %td= cell
+      - @columns.each do |column|
+        %td= object.send(column)
