@@ -86,15 +86,6 @@ module Spree
     delegate :create_line_item_fees!, :create_order_fees!, :update_order_fees!,
              :update_line_item_fees!, :recreate_all_fees!, to: :fee_handler
 
-    # Needs to happen before save_permalink is called
-    before_validation :set_currency
-    before_validation :generate_order_number, if: :new_record?
-    before_validation :clone_billing_address, if: :use_billing?
-    before_validation :ensure_customer
-
-    before_create :link_by_email
-    after_create :create_tax_charge!
-
     validates :customer, presence: true, if: :require_customer?
     validate :products_available_from_new_distribution, if: lambda {
       distributor_id_changed? || order_cycle_id_changed?
@@ -107,16 +98,24 @@ module Spree
     validates :order_cycle, presence: true, on: :require_distribution
     validates :distributor, presence: true, on: :require_distribution
 
-    make_permalink field: :number
+    before_validation :set_currency
+    before_validation :generate_order_number, if: :new_record?
+    before_validation :clone_billing_address, if: :use_billing?
+    before_validation :ensure_customer
 
+    before_create :link_by_email
     before_save :update_shipping_fees!, if: :complete?
     before_save :update_payment_fees!, if: :complete?
 
+    after_create :create_tax_charge!
+
     after_save_commit DefaultAddressUpdater
+
+    make_permalink field: :number
 
     attribute :send_cancellation_email, type: :boolean, default: true
     attribute :restock_items, type: :boolean, default: true
-    # -- Scopes
+
     scope :not_empty, -> {
       left_outer_joins(:line_items).where.not(spree_line_items: { id: nil })
     }
