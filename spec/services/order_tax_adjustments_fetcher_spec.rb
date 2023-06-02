@@ -72,7 +72,8 @@ describe OrderTaxAdjustmentsFetcher do
         line_items: [line_item1, line_item2],
         bill_address: create(:address),
         order_cycle: order_cycle,
-        distributor: coordinator
+        distributor: coordinator,
+        state: 'payment'
       )
     end
     let(:shipping_method) do
