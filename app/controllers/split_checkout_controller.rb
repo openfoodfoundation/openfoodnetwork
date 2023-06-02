@@ -203,6 +203,7 @@ class SplitCheckoutController < ::BaseController
 
   def validate_payment!
     return true if params.dig(:order, :payments_attributes, 0, :payment_method_id).present?
+    return true if @order.zero_priced_order?
 
     @order.errors.add :payment_method, I18n.t('split_checkout.errors.select_a_payment_method')
   end
