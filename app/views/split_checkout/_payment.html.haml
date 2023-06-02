@@ -1,9 +1,9 @@
-.medium-6
+.medium-6#checkout-payment-methods
   - if @order.distributor.vouchers.present?
     %div.checkout-substep
       = render partial: "split_checkout/voucher_section", locals: { order: @order, voucher_adjustment: @order.voucher_adjustments.first }
 
-  = form_with url: checkout_update_path(checkout_step), model: @order, method: :put, data: { remote: "true" } do |f|
+  = form_with url: checkout_update_path(local_assigns[:step] || checkout_step), model: @order, method: :put, data: { remote: "true" } do |f|
     %div.checkout-substep{"data-controller": "paymentmethod"}
       %div.checkout-title
         = t("split_checkout.step2.payment_method.title")
