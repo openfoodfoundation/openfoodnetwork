@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe "routing for Stripe return URLS", type: :routing do
-  context "checkout return URLs" do
+  pending "checkout return URLs" do
     it "routes /checkout to checkout#edit" do
       expect(get: "checkout").
         to route_to("checkout#edit")

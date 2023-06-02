@@ -88,34 +88,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
     end
 
     describe "for a customer with shipping address within the tax zone" do
-      context "on legacy checkout" do
-        before do
-          set_order order_within_zone
-          login_as(user_within_zone)
-        end
-
-        it "will be charged tax on the order" do
-          visit checkout_path
-
-          find(:xpath, '//*[@id="shipping"]/ng-form/dd').click
-          choose free_shipping.name.to_s
-
-          within "#payment" do
-            choose free_payment.name.to_s
-          end
-
-          click_on "Place order now"
-
-          # DB checks
-          order_within_zone.reload
-          expect(order_within_zone.additional_tax_total).to eq(1.3)
-
-          # UI checks
-          expect(page).to have_selector('#order_total', text: with_currency(11.30))
-          expect(page).to have_selector('#tax-row', text: with_currency(1.30))
-        end
-      end
-
       context "on split-checkout" do
         before do
           Flipper.enable(:split_checkout)
@@ -188,36 +160,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
     end
 
     describe "for a customer with shipping address outside the tax zone" do
-      context "on legacy checkout" do
-        before do
-          set_order order_outside_zone
-          login_as(user_outside_zone)
-        end
-
-        it "will not be charged tax on the order" do
-          visit checkout_path
-
-          find(:xpath, '//*[@id="shipping"]/ng-form/dd').click
-          choose free_shipping.name.to_s
-
-          within "#payment" do
-            choose free_payment.name.to_s
-          end
-
-          click_on "Place order now"
-
-          # DB checks
-          order_outside_zone.reload
-          expect(order_outside_zone.included_tax_total).to eq(0.0)
-          expect(order_outside_zone.additional_tax_total).to eq(0.0)
-
-          # UI checks
-          expect(page).to have_content("Confirmed")
-          expect(page).to have_selector('#order_total', text: with_currency(10.00))
-          expect(page).not_to have_content("includes tax")
-        end
-      end
-
       context "on split-checkout" do
         before do
           Flipper.enable(:split_checkout)

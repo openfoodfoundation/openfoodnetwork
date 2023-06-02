@@ -60,14 +60,6 @@ describe "As a consumer I want to check out my cart" do
           end
 
           context "and populating user details on (#{checkout_type})",
-            if: checkout_type.eql?("legacy_checkout") do
-            it "toggles the Details section" do
-              expect(page).to have_content "Your details"
-              page.find(:css, "i.ofn-i_052-point-down").click
-            end
-          end
-
-          context "and populating user details on (#{checkout_type})",
             if: checkout_type.eql?("split_checkout") do
             it "should allow proceeding to the next step" do
               expect(page).to have_content("Logged in successfully")
@@ -89,32 +81,6 @@ describe "As a consumer I want to check out my cart" do
           Flipper.enable(:split_checkout)
         end
         include_examples "with different checkout types", "split_checkout"
-      end
-    end
-
-    context "using the guest checkout" do
-      it "allows user to checkout as guest" do
-        visit checkout_path
-        checkout_as_guest
-        expect(page).to have_checkout_details
-      end
-
-      it "asks the user to log in if they are using a registered email" do
-        visit checkout_path
-        checkout_as_guest
-
-        fill_in 'First Name', with: 'Not'
-        fill_in 'Last Name', with: 'Guest'
-        fill_in 'Email', with: user.email
-        fill_in 'Phone', with: '098712736'
-
-        within '#details' do
-          click_button 'Next'
-        end
-
-        expect(page).to have_selector 'div.login-modal'
-        expect(page).to have_content 'This email address is already registered. Please log in '\
-                                     'to continue, or go back and use another email address.'
       end
     end
   end

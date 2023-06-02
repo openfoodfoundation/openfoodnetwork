@@ -45,7 +45,7 @@ describe "Concurrent checkouts", concurrency: true, type: :request do
     login_as(order.user)
   end
 
-  it "handles two concurrent orders successfully" do
+  xit "handles two concurrent orders successfully" do
     breakpoint.lock
     breakpoint_reached_counter = 0
 

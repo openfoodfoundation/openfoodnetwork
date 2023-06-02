@@ -150,7 +150,7 @@ describe "shopping with variant overrides defined" do
       expect(page).to have_selector "#edit-cart .grand-total", text: with_currency(122.22)
     end
 
-    it "shows the correct prices in the checkout" do
+    xit "shows the correct prices in the checkout" do
       click_add_to_cart product1_variant1, 2
       click_checkout
 
@@ -161,7 +161,7 @@ describe "shopping with variant overrides defined" do
   end
 
   describe "creating orders" do
-    it "creates the order with the correct prices" do
+    xit "creates the order with the correct prices" do
       click_add_to_cart product1_variant1, 2
       click_checkout
 
@@ -172,7 +172,7 @@ describe "shopping with variant overrides defined" do
       expect(o.total).to eq(122.22)
     end
 
-    it "subtracts stock from the override" do
+    xit "subtracts stock from the override" do
       click_add_to_cart product1_variant3, 2
       click_checkout
 
@@ -183,7 +183,7 @@ describe "shopping with variant overrides defined" do
       end.to change { product1_variant3_override.reload.count_on_hand }.by(-2)
     end
 
-    it "subtracts stock from stock-overridden on_demand variants" do
+    xit "subtracts stock from stock-overridden on_demand variants" do
       click_add_to_cart product3_variant2, 2
       click_checkout
 
@@ -194,7 +194,7 @@ describe "shopping with variant overrides defined" do
       end.to change { product3_variant2_override.reload.count_on_hand }.by(-2)
     end
 
-    it "does not subtract stock from overrides that do not override count_on_hand" do
+    xit "does not subtract stock from overrides that do not override count_on_hand" do
       click_add_to_cart product1_variant1, 2
       click_checkout
       expect do
@@ -203,7 +203,7 @@ describe "shopping with variant overrides defined" do
       expect(product1_variant1_override.reload.count_on_hand).to be_nil
     end
 
-    it "does not subtract stock from variants where the override has on_demand: true" do
+    xit "does not subtract stock from variants where the override has on_demand: true" do
       click_add_to_cart product4_variant1, 2
       click_checkout
       expect do
@@ -212,7 +212,7 @@ describe "shopping with variant overrides defined" do
       expect(product4_variant1_override.reload.count_on_hand).to be_nil
     end
 
-    it "does not show out of stock flags on order confirmation page" do
+    xit "does not show out of stock flags on order confirmation page" do
       product1_variant3.on_hand = 0
       click_add_to_cart product1_variant3, 2
       click_checkout

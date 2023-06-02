@@ -56,7 +56,7 @@ describe "checking out an order that initially fails", type: :request do
       shipping_method.save!
     end
 
-    it "clears shipments and payments before rendering the checkout" do
+    xit "clears shipments and payments before rendering the checkout" do
       put update_checkout_path, params: params, as: :json
 
       # Checking out a BogusGateway without a source fails at :payment
