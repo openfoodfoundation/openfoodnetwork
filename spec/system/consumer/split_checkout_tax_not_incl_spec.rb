@@ -99,12 +99,12 @@ describe "As a consumer, I want to see adjustment breakdown" do
         choose "Delivery"
 
         click_button "Next - Payment method"
-        click_on "Next - Order summary"
-        click_on "Complete order"
 
         # DB checks
-        order_within_zone.reload
-        expect(order_within_zone.additional_tax_total).to eq(1.3)
+        expect(order_within_zone.reload.additional_tax_total).to eq(1.3)
+
+        click_on "Next - Order summary"
+        click_on "Complete order"
 
         # UI checks
         expect(page).to have_content("Confirmed")

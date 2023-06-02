@@ -77,7 +77,10 @@ module Spree
               before_transition to: :delivery, do: :ensure_available_shipping_rates
               before_transition to: :confirmation, do: :validate_payment_method!
 
-              after_transition to: :payment, do: :create_tax_charge!
+              after_transition to: :payment do |order|
+                order.create_tax_charge!
+                order.update_totals_and_states
+              end
               after_transition to: :complete, do: :finalize!
               after_transition to: :resumed,  do: :after_resume
               after_transition to: :canceled, do: :after_cancel

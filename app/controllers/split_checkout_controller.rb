@@ -24,7 +24,7 @@ class SplitCheckoutController < ::BaseController
   def edit
     redirect_to_step_based_on_order unless params[:step]
     check_step if params[:step]
-    recalculate_tax if params[:step] == "summary"
+    apply_voucher if @order.voucher_adjustments.present?
 
     flash_error_when_no_shipping_method_available if available_shipping_methods.none?
   end
@@ -309,12 +309,6 @@ class SplitCheckoutController < ::BaseController
     end
   end
 
-  def recalculate_tax
-    @order.create_tax_charge!
-    @order.update_order!
-
-    apply_voucher if @order.voucher_adjustments.present?
-  end
 
   def apply_voucher
     VoucherAdjustmentsService.calculate(@order)
