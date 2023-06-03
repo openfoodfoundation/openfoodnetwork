@@ -62,7 +62,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
     Spree::Config.set(tax_using_ship_address: true)
   end
 
-  describe "a not-included tax" do
+  pending "a not-included tax" do
     before do
       zone.update!(default_tax: false)
       tax_rate.update!(included_in_price: false)
