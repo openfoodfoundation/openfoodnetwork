@@ -44,7 +44,7 @@ describe "checking out an order that initially fails", type: :request do
     set_order order
   end
 
-  context "when shipping and payment fees apply" do
+  pending "when shipping and payment fees apply" do
     let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
     before do

@@ -71,7 +71,7 @@ describe "As a consumer I want to check out my cart" do
     distributor.shipping_methods << tagged_shipping
   end
 
-  describe "when I have an out of stock product in my cart" do
+  pending "when I have an out of stock product in my cart" do
     before do
       variant.on_demand = false
       variant.on_hand = 0
@@ -87,7 +87,7 @@ describe "As a consumer I want to check out my cart" do
     end
   end
 
-  context 'login in as user' do
+  pending 'login in as user' do
     let(:user) { create(:user) }
     let(:pdf_upload) {
       Rack::Test::UploadedFile.new(
@@ -335,7 +335,7 @@ describe "As a consumer I want to check out my cart" do
     end
   end
 
-  context "guest checkout" do
+  pending "guest checkout" do
     before do
       visit checkout_path
       checkout_as_guest

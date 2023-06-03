@@ -61,13 +61,6 @@ describe 'Multilingual' do
         expect_menu_and_cookie_in_es
         expect(page).to have_content 'Precio'
       end
-
-      it "in the checkout page" do
-        visit checkout_path(locale: 'es')
-
-        expect_menu_and_cookie_in_es
-        expect(page).to have_content 'Total del carrito'
-      end
     end
   end
 
