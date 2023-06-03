@@ -718,7 +718,7 @@ describe Reporting::Reports::EnterpriseFeeSummary::Base do
   end
 
   def default_variant_options
-    { product: product, producer: producer, is_master: false, coordinator: coordinator,
+    { product: product, producer: producer, coordinator: coordinator,
       distributor: distributor, order_cycle: order_cycle }
   end
 

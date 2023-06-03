@@ -105,7 +105,7 @@ module Reporting
           end
 
           describe "Filtering variants" do
-            let(:variants) { Spree::Variant.where(nil).joins(:product).where(is_master: false) }
+            let(:variants) { Spree::Variant.where(nil).joins(:product) }
 
             describe "based on report type" do
               it "returns only variants on hand" do

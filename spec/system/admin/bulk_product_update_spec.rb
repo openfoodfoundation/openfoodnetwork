@@ -72,8 +72,8 @@ describe '
 
     it "displays 'on demand' for any variant that is available on demand" do
       p1 = FactoryBot.create(:product)
-      v1 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 4)
-      v2 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 0, on_demand: true)
+      v1 = FactoryBot.create(:variant, product: p1, on_hand: 4)
+      v2 = FactoryBot.create(:variant, product: p1, on_hand: 0, on_demand: true)
 
       visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
@@ -128,10 +128,10 @@ describe '
       p1 = FactoryBot.create(:product)
       v0 = p1.variants.first
       v0.update_attribute(:on_demand, false)
-      v1 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 15)
+      v1 = FactoryBot.create(:variant, product: p1, on_hand: 15)
       v1.update_attribute(:on_demand, false)
       p1.variants << v1
-      v2 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 6)
+      v2 = FactoryBot.create(:variant, product: p1, on_hand: 6)
       v2.update_attribute(:on_demand, false)
       p1.variants << v2
 
@@ -147,8 +147,8 @@ describe '
 
     it "displays a price input (for each variant) for each product" do
       p1 = create(:product, price: 2.0)
-      v1 = create(:variant, product: p1, is_master: false, price: 12.75)
-      v2 = create(:variant, product: p1, is_master: false, price: 2.50)
+      v1 = create(:variant, product: p1, price: 12.75)
+      v2 = create(:variant, product: p1, price: 2.50)
 
       visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
@@ -161,9 +161,9 @@ describe '
     it "displays a unit value field (for each variant) for each product" do
       p1 = FactoryBot.create(:product, price: 2.0, variant_unit: "weight",
                                        variant_unit_scale: "1000")
-      v1 = FactoryBot.create(:variant, product: p1, is_master: false, price: 12.75,
+      v1 = FactoryBot.create(:variant, product: p1, price: 12.75,
                                        unit_value: 1200, unit_description: "(small bag)", display_as: "bag")
-      v2 = FactoryBot.create(:variant, product: p1, is_master: false, price: 2.50,
+      v2 = FactoryBot.create(:variant, product: p1, price: 2.50,
                                        unit_value: 4800, unit_description: "(large bag)", display_as: "bin")
 
       visit spree.admin_products_path
