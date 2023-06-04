@@ -10,14 +10,15 @@
   .row
     .three.columns.alpha
       = f.label :white_label_logo, t('.upload_logo')
+      %br
+      217 x 44 pixels
     .thirteen.columns
       = image_tag @object.white_label_logo_url if @object.white_label_logo.present?
-      %div
-        = f.file_field :white_label_logo, accept: "image/*"
-      %div
-        - if @object.white_label_logo.present?
-          %button.button.small{ type: "button", "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "remove_logo" }
-            = t('.remove_logo')
+      %br
+      = f.file_field :white_label_logo, accept: "image/*"
+      - if @object.white_label_logo.present?
+        %button.button.small.red{ type: "button", "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "remove_logo" }
+          = t('.remove_logo')
 
   - if @object.white_label_logo.present?
     .row
