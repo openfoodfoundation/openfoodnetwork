@@ -167,7 +167,7 @@ module ProductImport
     def unit_fields_validation(entry)
       unit_types = ['g', 'oz', 'lb', 'kg', 't', 'ml', 'l', 'kl', '']
 
-      unless entry.units&.present?
+      if entry.units.blank?
         mark_as_invalid(entry, attribute: 'units',
                                error: I18n.t('admin.product_import.model.blank'))
       end
@@ -180,7 +180,7 @@ module ProductImport
       return if import_into_inventory?
 
       # unit_type must be valid type
-      if entry.unit_type&.present?
+      if entry.unit_type.present?
         unit_type = entry.unit_type.to_s.strip.downcase
         unless unit_types.include?(unit_type)
           mark_as_invalid(entry, attribute: 'unit_type',
@@ -190,7 +190,7 @@ module ProductImport
       end
 
       # variant_unit_name must be present if unit_type not present
-      return if entry.variant_unit_name&.present?
+      return if entry.variant_unit_name.present?
 
       mark_as_invalid(entry, attribute: 'variant_unit_name',
                              error: I18n.t('admin.product_import.model.conditional_blank'))
