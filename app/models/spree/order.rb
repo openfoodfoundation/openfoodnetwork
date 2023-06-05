@@ -426,19 +426,6 @@ module Spree
       restart_checkout_flow if state.in?(["payment", "confirmation"])
     end
 
-    def state_changed(name)
-      state = "#{name}_state"
-      return unless persisted?
-
-      old_state = __send__("#{state}_was")
-      state_changes.create(
-        previous_state: old_state,
-        next_state: __send__(state),
-        name: name,
-        user_id: user_id
-      )
-    end
-
     def shipped?
       %w(partial shipped).include?(shipment_state)
     end
