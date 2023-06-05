@@ -6,6 +6,7 @@ describe 'White label setting' do
   include AuthenticationHelper
   include ShopWorkflow
   include FileHelper
+  include UIComponentHelper
 
   let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let!(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
@@ -29,6 +30,29 @@ describe 'White label setting' do
 
   let(:ofn_navigation) { 'ul.nav-main-menu' }
 
+  shared_examples "does not hides the OFN navigation for mobile view as well" do
+    context "mobile view" do
+      before do
+        browser_as_small
+      end
+
+      after do
+        browse_as_default
+      end
+
+      it "does not hide OFN navigation" do
+        find("a.left-off-canvas-toggle").click
+        within "aside.left-off-canvas-menu" do
+          expect(page).to have_selector "a[href='#{main_app.shops_path}']"
+          expect(page).to have_selector "a[href='#{main_app.map_path}']"
+          expect(page).to have_selector "a[href='#{main_app.producers_path}']"
+          expect(page).to have_selector "a[href='#{main_app.groups_path}']"
+          expect(page).to have_selector "a[href='#{I18n.t('.menu_5_url')}']"
+        end
+      end
+    end
+  end
+
   shared_examples "does not hide the OFN navigation" do
     context "for shop path" do
       before do
@@ -38,6 +62,8 @@ describe 'White label setting' do
       it "does not hide the OFN navigation" do
         expect(page).to have_selector ofn_navigation
       end
+
+      it_behaves_like "does not hides the OFN navigation for mobile view as well"
     end
 
     context "for cart path" do
@@ -48,6 +74,8 @@ describe 'White label setting' do
       it "does not hide the OFN navigation" do
         expect(page).to have_selector ofn_navigation
       end
+
+      it_behaves_like "does not hides the OFN navigation for mobile view as well"
     end
 
     context "for root path" do
@@ -58,6 +86,8 @@ describe 'White label setting' do
       it "does not hide the OFN navigation" do
         expect(page).to have_selector ofn_navigation
       end
+
+      it_behaves_like "does not hides the OFN navigation for mobile view as well"
     end
   end
 
