@@ -7,14 +7,15 @@
             = image_tag @white_label_distributor.white_label_logo_url(:mobile)
           - else
             %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}
-      - [*1..7].each do |menu_number|
-        - menu_name = "menu_#{menu_number}"
-        - if ContentConfig[menu_name].present?
-          %li.li-menu
-            %a{href: t("#{menu_name}_url") }
-              %span.nav-primary
-                %i{class: ContentConfig["#{menu_name}_icon_name"]}
-                = t "#{menu_name}_title"
+      - unless @hide_ofn_navigation
+        - [*1..7].each do |menu_number|
+          - menu_name = "menu_#{menu_number}"
+          - if ContentConfig[menu_name].present?
+            %li.li-menu
+              %a{href: t("#{menu_name}_url") }
+                %span.nav-primary
+                  %i{class: ContentConfig["#{menu_name}_icon_name"]}
+                  = t "#{menu_name}_title"
 
     - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
       %li.language-switcher.li-menu

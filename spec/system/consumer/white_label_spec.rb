@@ -30,6 +30,29 @@ describe 'White label setting' do
 
   let(:ofn_navigation) { 'ul.nav-main-menu' }
 
+  shared_examples "hides the OFN navigation for mobile view as well" do
+    context "mobile view" do
+      before do
+        browser_as_small
+      end
+
+      after do
+        browse_as_default
+      end
+
+      it "hides OFN navigation" do
+        find("a.left-off-canvas-toggle").click
+        within "aside.left-off-canvas-menu" do
+          expect(page).not_to have_selector "a[href='#{main_app.shops_path}']"
+          expect(page).not_to have_selector "a[href='#{main_app.map_path}']"
+          expect(page).not_to have_selector "a[href='#{main_app.producers_path}']"
+          expect(page).not_to have_selector "a[href='#{main_app.groups_path}']"
+          expect(page).not_to have_selector "a[href='#{I18n.t('.menu_5_url')}']"
+        end
+      end
+    end
+  end
+
   shared_examples "does not hides the OFN navigation for mobile view as well" do
     context "mobile view" do
       before do
@@ -106,6 +129,8 @@ describe 'White label setting' do
           it "hides the OFN navigation" do
             expect(page).to have_no_selector ofn_navigation
           end
+
+          it_behaves_like "hides the OFN navigation for mobile view as well"
         end
 
         context "for root path" do
@@ -116,6 +141,8 @@ describe 'White label setting' do
           it "does not hide the OFN navigation when visiting root path" do
             expect(page).to have_selector ofn_navigation
           end
+
+          it_behaves_like "does not hides the OFN navigation for mobile view as well"
         end
       end
 
@@ -141,6 +168,8 @@ describe 'White label setting' do
             it "hides the OFN navigation" do
               expect(page).to have_no_selector ofn_navigation
             end
+
+            it_behaves_like "hides the OFN navigation for mobile view as well"
           end
 
           context "for checkout path" do
@@ -153,6 +182,8 @@ describe 'White label setting' do
               expect(page).to have_content "Order ready for "
               expect(page).to have_no_selector ofn_navigation
             end
+
+            it_behaves_like "hides the OFN navigation for mobile view as well"
           end
         end
 
