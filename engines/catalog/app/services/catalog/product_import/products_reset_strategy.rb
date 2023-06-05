@@ -24,7 +24,7 @@ module Catalog
           .joins(:product)
           .where(
             spree_products: { supplier_id: enterprise_ids },
-            spree_variants: { is_master: false, deleted_at: nil }
+            spree_variants: { deleted_at: nil }
           )
 
         return relation if excluded_items_ids.blank?

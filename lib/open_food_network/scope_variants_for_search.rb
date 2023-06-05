@@ -33,7 +33,7 @@ module OpenFoodNetwork
     end
 
     def query_scope
-      Spree::Variant.where(is_master: false).
+      Spree::Variant.
         ransack(search_params.merge(m: 'or')).
         result.
         order("spree_products.name, display_name, display_as, spree_products.variant_unit_name").

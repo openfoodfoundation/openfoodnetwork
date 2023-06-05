@@ -16,7 +16,7 @@ module OrderManagement
           variant_conditions << exchange_variant_ids
         end
 
-        Spree::Variant.joins(:product).where(is_master: false).where(*variant_conditions)
+        Spree::Variant.joins(:product).where(*variant_conditions)
       end
 
       def self.in_open_and_upcoming_order_cycles?(distributor, schedule, variant)
