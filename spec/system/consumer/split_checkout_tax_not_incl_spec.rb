@@ -115,7 +115,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
         expect(page).to have_selector('#tax-row', text: with_currency(1.30))
       end
 
-      pending "when using a voucher" do
+      context "when using a voucher" do
         let!(:voucher) do
           create(:voucher, code: 'some_code', enterprise: distributor, amount: 10)
         end
