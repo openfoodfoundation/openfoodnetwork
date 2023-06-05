@@ -117,6 +117,7 @@ class Enterprise < ApplicationRecord
       with: VALID_INSTAGRAM_REGEX,
       message: Spree.t('errors.messages.invalid_instagram_url')
     }, allow_blank: true
+  validate :validate_white_label_logo_link
 
   before_validation :initialize_permalink, if: lambda { permalink.nil? }
   before_validation :set_unused_address_fields
@@ -317,14 +318,6 @@ class Enterprise < ApplicationRecord
     )
   end
 
-  def white_label_logo_link
-    return nil if self[:white_label_logo_link].blank?  
-
-    return self[:white_label_logo_link] if self[:white_label_logo_link].start_with?('http')
-
-    "http://#{self[:white_label_logo_link]}"
-  end
-
   def website
     strip_url self[:website]
   end
@@ -461,6 +454,17 @@ class Enterprise < ApplicationRecord
   end
 
   private
+
+  def validate_white_label_logo_link
+    return if white_label_logo.blank?
+
+    return if white_label_logo_link.blank?
+
+    uri = URI(white_label_logo_link)
+    self.white_label_logo_link = "http://#{white_label_logo_link}" if uri.scheme.nil?
+  rescue URI::InvalidURIError
+    errors.add(:white_label_logo_link, I18n.t(:invalid_url))
+  end
 
   def current_exchange_variants
     ExchangeVariant.joins(exchange: :order_cycle)
