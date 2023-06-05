@@ -1,9 +1,19 @@
 # frozen_string_literal: true
 
 module UIComponentHelper
+  def browser_as_small
+    Capybara.current_session.current_window
+      .resize_to(640, 480)
+  end
+
   def browse_as_medium
     Capybara.current_session.current_window
       .resize_to(1024, 768)
+  end
+
+  def browse_as_default
+    Capybara.current_session.current_window
+      .resize_to(1200, 800)
   end
 
   def browse_as_large
