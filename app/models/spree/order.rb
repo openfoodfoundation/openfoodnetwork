@@ -83,7 +83,7 @@ module Spree
     accepts_nested_attributes_for :shipments
 
     delegate :admin_and_handling_total, :payment_fee, :ship_total, to: :adjustments_fetcher
-    delegate :update_totals, to: :updater
+    delegate :update_totals, :update_totals_and_states, to: :updater
     delegate :create_line_item_fees!, :create_order_fees!, :update_order_fees!,
              :update_line_item_fees!, :recreate_all_fees!, to: :fee_handler
 
@@ -712,7 +712,7 @@ module Spree
       return if adjustment.finalized?
 
       adjustment.update_adjustment!(force: true)
-      updater.update_totals_and_states
+      update_totals_and_states
     end
   end
 end

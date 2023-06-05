@@ -17,7 +17,7 @@ FactoryBot.define do
 
       after(:create) do |order|
         order.line_items << build(:line_item, order: order)
-        order.updater.update_totals_and_states
+        order.update_totals_and_states
 
         order.order_cycle.exchanges.outgoing.first.variants << order.line_items.first.variant
       end
@@ -49,7 +49,7 @@ FactoryBot.define do
       after(:create) do |order|
         create(:line_item, order: order)
         order.line_items.reload # to ensure order.line_items is accessible after
-        order.updater.update_totals_and_states
+        order.update_totals_and_states
       end
     end
 

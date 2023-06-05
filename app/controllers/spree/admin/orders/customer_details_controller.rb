@@ -58,7 +58,7 @@ module Spree
           @order.create_tax_charge!
           Spree::TaxRate.adjust(@order, @order.adjustments.admin)
 
-          @order.updater.update_totals_and_states
+          @order.update_totals_and_states
         end
 
         def order_params
