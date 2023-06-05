@@ -935,7 +935,7 @@ describe Spree::Order do
       expect(Spree::OrderMailer).to receive(:confirm_email_for_customer).and_return(mailer)
       expect(Spree::OrderMailer).to receive(:confirm_email_for_shop).and_return(mailer)
 
-      order.deliver_order_confirmation_email
+      order.__send__(:deliver_order_confirmation_email)
     end
 
     it "does not send confirmation emails when the order belongs to a subscription" do
@@ -944,7 +944,7 @@ describe Spree::Order do
       expect(Spree::OrderMailer).not_to receive(:confirm_email_for_customer)
       expect(Spree::OrderMailer).not_to receive(:confirm_email_for_shop)
 
-      order.deliver_order_confirmation_email
+      order.__send__(:deliver_order_confirmation_email)
     end
   end
 
