@@ -212,6 +212,8 @@ module Spree
     #   Subscriptions place orders at the beginning of an order cycle. They need to
     #   be completed to draw from stock levels and trigger emails.
     def payment_required?
+      return true if voucher_adjustments.present?
+
       total.to_f > 0.0 && !skip_payment_for_subscription?
     end
 

@@ -453,7 +453,8 @@ describe Spree::Order do
     end
   end
 
-  describe "#payment required?" do
+  # Test for subscripton order are define below under 'describe "payments"'
+  describe "#payment_required?" do
     let(:order) { Spree::Order.new }
 
     context "when total is zero" do
@@ -461,8 +462,24 @@ describe Spree::Order do
     end
 
     context "when total > zero" do
-      before { allow(order).to receive_messages(total: 1) }
+      let(:distributor) { create(:distributor_enterprise) }
+      let(:order) { create(:order_with_totals, user: user, distributor: distributor) }
+
       it { expect(order.payment_required?).to be_truthy }
+
+      context "when order has a voucher applied" do
+        let(:voucher) do
+          create(:voucher, code: 'new_code', enterprise: order.distributor, amount: order.total)
+        end
+
+        it "returns true" do
+          voucher.create_adjustment(voucher.code, order)
+          VoucherAdjustmentsService.calculate(order)
+          order.update_order!
+
+          expect(order.payment_required?).to be(true)
+        end
+      end
     end
   end
 
