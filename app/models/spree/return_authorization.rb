@@ -63,7 +63,7 @@ module Spree
     end
 
     def returnable_inventory
-      order.shipped_shipments.collect{ |s| s.inventory_units.to_a }.flatten
+      order.shipments.shipped.collect{ |s| s.inventory_units.to_a }.flatten
     end
 
     # Used when Adjustment#update_adjustment! wants to update the related adjustment
@@ -74,7 +74,7 @@ module Spree
     private
 
     def must_have_shipped_units
-      return unless order.nil? || order.shipped_shipments.none?
+      return unless order.nil? || order.shipments.shipped.none?
 
       errors.add(:order, Spree.t(:has_no_shipped_units))
     end

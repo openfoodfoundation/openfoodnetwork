@@ -301,10 +301,6 @@ module Spree
       number
     end
 
-    def shipped_shipments
-      shipments.shipped
-    end
-
     def contains?(variant)
       find_line_item_by_variant(variant).present?
     end
