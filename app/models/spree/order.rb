@@ -492,10 +492,6 @@ module Spree
       end
     end
 
-    def refresh_shipment_rates
-      shipments.map(&:refresh_rates)
-    end
-
     # After changing line items of a completed order
     def update_shipping_fees!
       shipments.each do |shipment|

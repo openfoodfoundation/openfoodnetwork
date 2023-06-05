@@ -76,7 +76,7 @@ FactoryBot.define do
 
         distributor { create(:distributor_enterprise) }
 
-        after(:create, &:refresh_shipment_rates)
+        after(:create) { |order, _evaluator| order.shipments.map(&:refresh_rates) }
 
         factory :order_ready_to_ship do
           payment_state { 'paid' }

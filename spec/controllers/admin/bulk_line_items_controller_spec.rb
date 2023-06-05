@@ -377,7 +377,7 @@ describe Admin::BulkLineItemsController, type: :controller do
       line_item1.product.update_columns(tax_category_id: tax_cat5.id)
       line_item2.product.update_columns(tax_category_id: tax_cat10.id)
 
-      order.refresh_shipment_rates
+      order.shipments.map(&:refresh_rates)
       order.select_shipping_method(shipping_method.id)
       order.finalize!
       order.recreate_all_fees!
