@@ -44,8 +44,6 @@ module Spree
 
       def edit
         @order.shipments.map(&:refresh_rates)
-
-        OrderWorkflow.new(@order).advance_to_payment
         @order.errors.clear
       end
 
@@ -53,6 +51,7 @@ module Spree
         on_update
 
         if params[:set_distribution_step] && @order.update(order_params)
+          OrderWorkflow.new(@order).advance_to_payment if @order.state.in? ["cart", "address", "delivery"]
           return redirect_to spree.admin_order_customer_path(@order)
         end
 
@@ -65,6 +64,7 @@ module Spree
           return redirect_to spree.edit_admin_order_path(@order)
         end
 
+        OrderWorkflow.new(@order).advance_to_payment if @order.state.in? ["cart", "address", "delivery"]
         if @order.complete?
           redirect_to spree.edit_admin_order_path(@order)
         else

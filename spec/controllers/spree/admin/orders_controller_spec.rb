@@ -8,12 +8,6 @@ describe Spree::Admin::OrdersController, type: :controller do
 
     before { controller_login_as_admin }
 
-    it "advances the order state" do
-      expect {
-        spree_get :edit, id: order
-      }.to change { order.reload.state }.from("cart").to("payment")
-    end
-
     describe "view" do
       render_views
 
@@ -229,9 +223,19 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
 
       context "with line items" do
+        let!(:distributor){ create(:distributor_enterprise) }
+        let!(:shipment){ create(:shipment) }
+        let!(:order_cycle){ create(:simple_order_cycle, distributors: [distributor], variants: [line_item.variant]) }
+
         before do
+          line_item.product.supplier = distributor
+          order.shipments << shipment
           order.line_items << line_item
-          order.save
+          distributor.shipping_methods << shipment.shipping_method
+          order.select_shipping_method(shipment.shipping_method.id)
+          order.save!
+          params[:order][:distributor_id] = distributor.id
+          params[:order][:order_cycle_id] = order_cycle.id
           params[:order][:line_items_attributes] =
             [{ id: line_item.id, quantity: line_item.quantity }]
         end
@@ -239,9 +243,11 @@ describe Spree::Admin::OrdersController, type: :controller do
         context "and no errors" do
           it "updates distribution charges and redirects to payments  page" do
             expect_any_instance_of(Spree::Order).to receive(:recreate_all_fees!)
+            allow_any_instance_of(Spree::Order).to receive(:ensure_available_shipping_rates).and_return(true)
 
-            spree_put :update, params
-
+            expect {
+              spree_put :update, params
+            }.to change { order.reload.state }.from("cart").to("payment")
             expect(response).to redirect_to spree.admin_order_payments_path(order)
           end
         end
