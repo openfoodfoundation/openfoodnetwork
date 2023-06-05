@@ -181,7 +181,6 @@ module Spree
           joins(:product).
           where('spree_products.supplier_id IN (?)', editable_enterprises.collect(&:id)).
           where('spree_variants.import_date IS NOT NULL').
-          where(spree_variants: { is_master: false }).
           where(spree_variants: { deleted_at: nil }).
           order('spree_variants.import_date DESC')
       end

@@ -42,7 +42,7 @@ describe Api::V0::VariantsController, type: :controller do
     # Regression test for spree#2141
     context "a deleted variant" do
       before do
-        expect(Spree::Variant.not_master.count).to eq 7
+        expect(Spree::Variant.count).to eq 7
         variant.update_column(:deleted_at, Time.zone.now)
       end
 

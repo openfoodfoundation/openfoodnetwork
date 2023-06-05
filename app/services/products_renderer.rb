@@ -97,7 +97,7 @@ class ProductsRenderer
   end
 
   def variants_for_shop_by_id
-    index_by_product_id variants_for_shop.reject(&:is_master)
+    index_by_product_id variants_for_shop
   end
 
   def index_by_product_id(variants)

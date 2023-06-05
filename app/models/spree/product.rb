@@ -43,9 +43,8 @@ module Spree
     has_many :properties, through: :product_properties
     has_many :classifications, dependent: :delete_all
     has_many :taxons, through: :classifications
-    has_many :variants, -> {
-      where(is_master: false).order("spree_variants.position ASC")
-    }, class_name: 'Spree::Variant', dependent: :destroy
+    has_many :variants, -> { order("spree_variants.position ASC") }, class_name: 'Spree::Variant',
+                                                                     dependent: :destroy
 
     has_many :prices, -> {
       order('spree_variants.position, spree_variants.id, currency')
