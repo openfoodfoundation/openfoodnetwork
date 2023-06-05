@@ -496,14 +496,6 @@ module Spree
       shipments.map(&:refresh_rates)
     end
 
-    # Check that line_items in the current order are available from a newly selected distribution
-    def products_available_from_new_distribution
-      return if OrderCycleDistributedVariants.new(order_cycle, distributor)
-        .distributes_order_variants?(self)
-
-      errors.add(:base, I18n.t(:spree_order_availability_error))
-    end
-
     # After changing line items of a completed order
     def update_shipping_fees!
       shipments.each do |shipment|
@@ -605,6 +597,14 @@ module Spree
       return unless using_guest_checkout? && registered_email?
 
       errors.add(:email, I18n.t('devise.failure.already_registered'))
+    end
+
+    # Check that line_items in the current order are available from a newly selected distribution
+    def products_available_from_new_distribution
+      return if OrderCycleDistributedVariants.new(order_cycle, distributor)
+        .distributes_order_variants?(self)
+
+      errors.add(:base, I18n.t(:spree_order_availability_error))
     end
 
     def deliver_order_confirmation_email
