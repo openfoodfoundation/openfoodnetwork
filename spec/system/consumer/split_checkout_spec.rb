@@ -761,7 +761,7 @@ describe "As a consumer, I want to checkout my order" do
 
                 expect(page).to have_content(
                   "Note: if your order total is less than your voucher " \
-                  "you may not be able to spend the remaining value." 
+                  "you may not be able to spend the remaining value."
                 )
               end
             end
