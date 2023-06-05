@@ -1188,8 +1188,6 @@ en:
           hide_groups_tab: "Hide groups tab in shopfront"
           create_custom_tab: "Create custom tab in shopfront"
           custom_tab_title: "Title for custom tab"
-          custom_tab_title_error:
-            blank: "Custom tab title can't be blank"
           custom_tab_content: "Content for custom tab"
       actions:
         edit_profile: Settings
