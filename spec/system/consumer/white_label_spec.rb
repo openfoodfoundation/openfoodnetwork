@@ -30,19 +30,34 @@ describe 'White label setting' do
   let(:ofn_navigation) { 'ul.nav-main-menu' }
 
   shared_examples "does not hide the OFN navigation" do
-    it "does not hide the OFN navigation when visiting the shop" do
-      visit main_app.enterprise_shop_path(distributor)
-      expect(page).to have_selector ofn_navigation
+    context "for shop path" do
+      before do
+        visit main_app.enterprise_shop_path(distributor)
+      end
+
+      it "does not hide the OFN navigation" do
+        expect(page).to have_selector ofn_navigation
+      end
     end
 
-    it "does not hide the OFN navigation when visiting root path" do
-      visit main_app.root_path
-      expect(page).to have_selector ofn_navigation
+    context "for cart path" do
+      before do
+        visit main_app.cart_path
+      end
+
+      it "does not hide the OFN navigation" do
+        expect(page).to have_selector ofn_navigation
+      end
     end
 
-    it "does not hide the OFN navigation when visiting cart path" do
-      visit main_app.cart_path
-      expect(page).to have_selector ofn_navigation
+    context "for root path" do
+      before do
+        visit main_app.root_path
+      end
+
+      it "does not hide the OFN navigation" do
+        expect(page).to have_selector ofn_navigation
+      end
     end
   end
 
