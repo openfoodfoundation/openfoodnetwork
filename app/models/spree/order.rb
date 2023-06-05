@@ -504,12 +504,6 @@ module Spree
       errors.add(:base, I18n.t(:spree_order_availability_error))
     end
 
-    def disallow_guest_order
-      return unless using_guest_checkout? && registered_email?
-
-      errors.add(:email, I18n.t('devise.failure.already_registered'))
-    end
-
     # After changing line items of a completed order
     def update_shipping_fees!
       shipments.each do |shipment|
@@ -606,6 +600,12 @@ module Spree
     end
 
     private
+
+    def disallow_guest_order
+      return unless using_guest_checkout? && registered_email?
+
+      errors.add(:email, I18n.t('devise.failure.already_registered'))
+    end
 
     def deliver_order_confirmation_email
       return if subscription.present?
