@@ -129,7 +129,8 @@ module Spree
                             @payment_methods.first
                           end
 
-        @previous_cards = @order.credit_cards.with_payment_profile
+        credit_card_ids = @order.payments.from_credit_card.pluck(:source_id).uniq
+        @previous_cards = CreditCard.where(id: credit_card_ids).with_payment_profile
       end
 
       # At this point admin should have passed through Customer Details step
