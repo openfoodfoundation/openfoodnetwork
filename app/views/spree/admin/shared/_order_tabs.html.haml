@@ -42,7 +42,7 @@
         %dd#date_complete
           = pretty_time(@order.completed_at)
 
-  - if @order.distribution_set?
+  - if @order.distributor && @order.order_cycle
     %nav.menu
       %ul
         - customer_details_classes = "active" if current == "Customer Details"

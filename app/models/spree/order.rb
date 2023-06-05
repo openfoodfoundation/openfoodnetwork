@@ -571,10 +571,6 @@ module Spree
       save!
     end
 
-    def distribution_set?
-      distributor && order_cycle
-    end
-
     def shipping_tax
       shipment_adjustments.reload.tax.sum(:amount)
     end
