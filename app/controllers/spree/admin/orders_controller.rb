@@ -44,16 +44,9 @@ module Spree
       def update
         on_update
 
-        if params[:set_distribution_step] && @order.update(order_params)
-          OrderWorkflow.new(@order).advance_to_payment if @order.state.in? ["cart", "address", "delivery"]
-          return redirect_to spree.admin_order_customer_path(@order)
-        end
+        order_updated = order_params.present? && @order.update(order_params)
 
-        unless order_params.present? && @order.update(order_params) && @order.line_items.present?
-          if @order.line_items.empty? && !params[:suppress_error_msg]
-            @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
-          end
-
+        unless order_updated && line_items_present?
           flash[:error] = @order.errors.full_messages.join(', ') if @order.errors.present?
           return redirect_to spree.edit_admin_order_path(@order)
         end
@@ -110,6 +103,13 @@ module Spree
       end
 
       private
+
+      def line_items_present?
+        return true if @order.line_items.any?
+
+        @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
+        false
+      end
 
       def update_search_results
         session[:admin_orders_search] = search_params
