@@ -5,7 +5,8 @@
   - if !@order.completed? && @order.insufficient_stock_lines.any?
     = render 'spree/admin/orders/insufficient_stock_lines', insufficient_stock_lines: @order.insufficient_stock_lines
 
-  = render :partial => "spree/admin/orders/shipment", :collection => @order.shipments, :locals => { :order => @order }
+  - if @order.shipments.any?
+    = render :partial => "spree/admin/orders/shipment", :collection => @order.shipments, :locals => { :order => @order }
 
   - if @order.line_items.exists?
     = render partial: "spree/admin/orders/note", locals: { order: @order }
