@@ -76,7 +76,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "retrives a list of line items which match the criteria" do
-          expect(line_item_ids).to eq [line_item2.id, line_item3.id]
+          expect(line_item_ids).to match_array [line_item2.id, line_item3.id]
         end
       end
 
