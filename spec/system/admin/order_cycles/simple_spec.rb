@@ -602,8 +602,9 @@ describe '
       uncheck "order_cycle_incoming_exchange_0_variants_#{v2.id}"
 
       # And I add a fee and save
-      scroll_to(page.find_button("Add coordinator fee"))
+      scroll_to(page.find("save-bar"))
       click_button 'Add coordinator fee'
+      scroll_to(page.find("save-bar"))
       click_button 'Add coordinator fee'
       click_link 'order_cycle_coordinator_fee_1_remove'
       expect(page).to     have_select 'order_cycle_coordinator_fee_0_id'
