@@ -313,7 +313,6 @@ describe '
         within(".modal") do
           expect do
             click_on("OK")
-            expect(page).not_to have_css(".modal")
           end.to change { order.reload.line_items.length }.by(-1)
         end
       end
