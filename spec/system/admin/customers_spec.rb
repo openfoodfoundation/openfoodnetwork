@@ -352,6 +352,7 @@ code: nil, created_manually: true)
         context "when a shop is selected" do
           before do
             select2_select managed_distributor1.name, from: "shop_id"
+            customer1.update!(created_manually: false)
           end
 
           it "creates customers when the email provided is valid" do
@@ -378,7 +379,8 @@ code: nil, created_manually: true)
               click_button 'Add Customer'
               expect(page).to have_selector "#new-customer-dialog .error",
                                             text: "Email is associated with an existing customer"
-            }.to_not change{ Customer.of(managed_distributor1).count }
+            }.to change{ customer1.reload.created_manually }.from(false).to(true)
+              .and change { Customer.of(managed_distributor1).count }.by(0)
 
             # When a new valid email is used
             expect{
@@ -386,6 +388,11 @@ code: nil, created_manually: true)
               click_button 'Add Customer'
               expect(page).not_to have_selector "#new-customer-dialog"
             }.to change{ Customer.of(managed_distributor1).count }.from(2).to(3)
+
+            expect(
+              Customer.of(managed_distributor1).reorder(:id)
+                .last.created_manually 
+            ).to be true
           end
         end
       end

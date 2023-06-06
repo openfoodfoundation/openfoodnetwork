@@ -36,9 +36,11 @@ module Admin
     end
 
     def create
-      @customer = Customer.new(customer_params)
-      @customer.created_manually = true
+      @customer = Customer.find_or_new(customer_params[:email], customer_params[:enterprise_id])
+      @customer.assign_attributes(customer_params)
+
       if user_can_create_customer?
+        @customer.set_created_manually_flag
         if @customer.save
           tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: @customer.enterprise))
           render_as_json @customer, tag_rule_mapping: tag_rule_mapping

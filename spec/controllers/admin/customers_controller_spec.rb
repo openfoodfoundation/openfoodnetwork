@@ -205,6 +205,7 @@ module Admin
 
           it "allows me to create the customer" do
             expect { create_customer enterprise }.to change(Customer, :count).by(1)
+            expect(Customer.reorder(:id).last.created_manually).to eq true
           end
         end
 

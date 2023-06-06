@@ -49,6 +49,20 @@ class Customer < ApplicationRecord
     "#{first_name} #{last_name}".strip
   end
 
+  def self.find_or_new(email, enterprise_id)
+    Customer.new(email: email, enterprise_id: enterprise_id) unless email.present? && enterprise_id.present?
+
+    Customer.find_by(email: email, enterprise_id: enterprise_id) ||
+      Customer.new(email: email, enterprise_id: enterprise_id)
+  end
+
+  def set_created_manually_flag
+    self.created_manually = true
+    return unless persisted?
+
+    update_attribute(:created_manually, true)
+  end
+
   private
 
   def downcase_email
