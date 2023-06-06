@@ -66,17 +66,13 @@ describe '
     expect(page).not_to have_content "Line items can't be blank"
 
     expect(page).to have_selector 'h1', text: 'Customer Details'
-    o = Spree::Order.last
-    expect(o.distributor).to eq(distributor)
-    expect(o.order_cycle).to eq(order_cycle)
+
+    order = Spree::Order.last
+    expect(order.distributor).to eq(distributor)
+    expect(order.order_cycle).to eq(order_cycle)
+    expect(order.line_items.count).to be_zero
 
     click_link "Order Details"
-    click_button "Update And Recalculate Fees"
-    expect(page).to have_selector '.flash.error'
-    expect(page).to have_content "Line items can't be blank"
-
-    # it suppresses validation errors when setting distribution
-    expect(page).not_to have_selector '#errorExplanation'
     expect(page).to have_content 'ADD PRODUCT'
     select2_select product.name, from: 'add_variant_id', search: true
     find('button.add_variant').click
@@ -84,7 +80,7 @@ describe '
     page.has_selector?("table.index tbody tr")
     expect(page).to have_selector 'td', text: product.name
 
-    click_button 'Update'
+    expect(order.reload.line_items.count).to be_positive
   end
 
   context "can't create an order without selecting a distributor nor an order cycle" do
