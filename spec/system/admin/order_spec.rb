@@ -409,14 +409,7 @@ describe '
       fill_in "order_bill_address_attributes_city", with: "Kansas"
       fill_in "order_bill_address_attributes_zipcode", with: "SP1 M11"
 
-      # The country is already selected and we avoid re-selecting it here
-      # because it would trigger an API call which we would need to wait for
-      # while we have no visual indicator for the wait.
-      #
-      # Ideally, we would implement a visual cue like disable the state field
-      # while the data is fetched from the API.
-      #
-      # select "Australia", from: "order_bill_address_attributes_country_id"
+      select "Australia", from: "order_bill_address_attributes_country_id"
       select "Victoria", from: "order_bill_address_attributes_state_id"
       fill_in "order_bill_address_attributes_phone", with: "111 1111 1111"
 
