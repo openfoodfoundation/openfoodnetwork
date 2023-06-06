@@ -25,7 +25,7 @@ module Spree
 
             refresh_shipment_rates
             recalculate_taxes
-            OrderWorkflow.new(@order).advance_to_payment
+            OrderWorkflow.new(@order).advance_to_payment if @order.state.in? ["cart", "address", "delivery"]
 
             flash[:success] = Spree.t('customer_details_updated')
             redirect_to spree.admin_order_customer_path(@order)
