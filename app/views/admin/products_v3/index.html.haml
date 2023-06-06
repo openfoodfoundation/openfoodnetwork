@@ -5,3 +5,42 @@
 = render partial: 'spree/admin/shared/product_sub_menu'
 
 #products_v3_page
+  %table
+    %col{ style: "min-width: 15em;" }
+    %col{ style: "min-width: 5em;" }
+    %col{ style: "min-width: 5em;" }
+    %col{ style: "min-width: 5em;" }
+    - # producer
+    %col{ style: "min-width: 10em;" }
+    %col{ style: "min-width: 10em;" }
+    %col{ style: "min-width: 5em;" }
+    %col{ style: "min-width: 5em;" }
+    %col{ style: "min-width: 8em;" }
+    %col{ style: "min-width: 8em;" }
+    %thead
+      %tr
+        %th.align-left= t('admin.product.name')
+        %th.align-right= t('admin.sku')
+        %th.align-right= t('admin.unit')
+        %th.align-right= t('admin.on_hand')
+        %th.align-left= t('admin.producer')
+        %th.align-left= t('admin.category')
+        %th.align-left= t('admin.tax_category')
+        %th.align-left= t('admin.inherits_properties')
+        %th.align-right= t('admin.available_on')
+        %th.align-right= t('admin.import_date')
+    %tbody
+      - @products.each do |product|
+        %tr
+          %th.align-left=  product.name
+          %td.align-right= product.sku
+          %td.align-right= "#{product.unit_value&.round(3)} #{product.variant_unit}"
+          %td.align-right= product.on_hand || 0
+          %td.align-left=  product.supplier.name
+          %td.align-left=  product.taxons.map(&:name).join(', ')
+          %td.align-left=  product.tax_category&.name
+          %td.align-left=  product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values
+          %td.align-right= product.available_on&.strftime('%F')
+          %td.align-right= product.import_date&.strftime('%F')
+
+  Limited to first 50 rows
