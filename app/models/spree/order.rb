@@ -89,7 +89,7 @@ module Spree
 
     # Needs to happen before save_permalink is called
     before_validation :set_currency
-    before_validation :generate_order_number, on: :create
+    before_validation :generate_order_number, if: :new_record?
     before_validation :clone_billing_address, if: :use_billing?
     before_validation :ensure_customer
 
@@ -291,8 +291,9 @@ module Spree
                                                    created_by_id: created_by_id)
     end
 
-    # FIXME refactor this method and implement validation using validates_* utilities
     def generate_order_number
+      return if number.present?
+
       record = true
       while record
         random = "R#{Array.new(9){ rand(9) }.join}"
