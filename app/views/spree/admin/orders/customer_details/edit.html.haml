@@ -22,6 +22,6 @@
 
 = render :partial => 'spree/shared/error_messages', :locals => { :target => @order }
 
-= form_for @order, :url => admin_order_customer_url(@order) do |f|
+= form_for @order, :url => admin_order_customer_path(@order) do |f|
   = render 'form', :f => f
   = f.hidden_field :customer_id, value: @order.customer_id, id: "customer_id"
