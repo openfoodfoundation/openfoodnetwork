@@ -21,11 +21,9 @@ module Api
         @shipment.refresh_rates
         @shipment.save!
 
-        if @order.line_items.any? && @order.state.in?(["cart", "address", "delivery"])
-          OrderWorkflow.new(@order).advance_to_payment
-        end
+        OrderWorkflow.new(@order).advance_to_payment if @order.line_items.any?
 
-        render json: @shipment.reload, serializer: Api::ShipmentSerializer, status: :ok
+        render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
       end
 
       def update

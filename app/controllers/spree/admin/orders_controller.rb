@@ -51,7 +51,8 @@ module Spree
           return redirect_to spree.edit_admin_order_path(@order)
         end
 
-        OrderWorkflow.new(@order).advance_to_payment if @order.state.in? ["cart", "address", "delivery"]
+        OrderWorkflow.new(@order).advance_to_payment
+
         if @order.complete?
           redirect_to spree.edit_admin_order_path(@order)
         else
