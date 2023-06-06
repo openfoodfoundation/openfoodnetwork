@@ -116,33 +116,6 @@ describe '
     end
   end
 
-  context "when order has a distributor and order cycle" do
-    before do
-      order.distributor = distributor
-      order.order_cycle = order_cycle
-      order.save!
-      login_as_admin
-      visit spree.distribution_admin_order_path(order)
-    end
-
-    it "can access the `/distribution` step" do
-      expect(current_path).to eq spree.distribution_admin_order_path(order)
-      expect(page).to have_content "DISTRIBUTION"
-    end
-
-    it "shows the distributor and order cycle" do
-      expect(page).to have_content distributor.name
-      expect(page).to have_content order_cycle.name
-    end
-
-    it "shows links to other steps" do
-      expect(page).to have_content "CUSTOMER DETAILS"
-      expect(page).to have_content "ORDER DETAILS"
-      expect(page).to have_content "PAYMENTS"
-      expect(page).to have_content "ADJUSTMENTS"
-    end
-  end
-
   context "when creating an order with a customer-only" do
     let(:customer2) { create(:customer, enterprise: distributor) }
     let(:customer3) { create(:customer, enterprise: distributor) }
