@@ -5,4 +5,23 @@
     //       or even better, create a switch that allows you to yield the page content without the surrounding content class. then you still have control to add the .content div where needed.
     max-width: none;
   }
+
+  table.products {
+    table-layout: fixed; // Column widths are based solely on col definitions (not content)
+
+    // Clip long content
+    th,
+    td {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    tbody {
+      // Don't allow wrapping in most cells (but it's ok in the thead)
+      th
+      td, {
+        white-space: nowrap;
+      }
+    }
+  }
 }
