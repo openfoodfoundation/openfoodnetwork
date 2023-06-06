@@ -114,6 +114,24 @@ describe VoucherAdjustmentsService do
       end
     end
 
+    context "when adjustment is closed" do
+      subject(:voucher_adjustment) { order.voucher_adjustments.first }
+
+      let(:order) { create(:order_with_totals) }
+
+      it "does nothing" do
+        voucher.create_adjustment(voucher.code, order)
+
+        # Apply the voucher, which will set the voucher adjustment to "closed"
+        VoucherAdjustmentsService.calculate(order)
+        order.update_order!
+
+        expect do
+          VoucherAdjustmentsService.calculate(order)
+        end.to_not change { voucher_adjustment.reload.updated_at }
+      end
+    end
+
     context 'when no order given' do
       it "doesn't blow up" do
         expect { VoucherAdjustmentsService.calculate(nil) }.to_not raise_error

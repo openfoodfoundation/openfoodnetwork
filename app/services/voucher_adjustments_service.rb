@@ -5,10 +5,11 @@ class VoucherAdjustmentsService
     return if order.nil?
 
     # Find open Voucher Adjustment
-    return if order.voucher_adjustments.empty?
-
     # We only support one voucher per order right now, we could just loop on voucher_adjustments
     adjustment = order.voucher_adjustments.first
+
+    # We don't recalculate an asjustment that has already been calculated (ie a "closed" adjustment)
+    return if adjustment.nil? || adjustment.immutable?
 
     # Recalculate value
     amount = adjustment.originator.compute_amount(order)
