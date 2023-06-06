@@ -40,10 +40,10 @@
               %ul.admin__section-header__actions
                 = yield :page_actions
 
-  .container
+  - content_class = content_for?(:sidebar) ? "with-sidebar" : ""
+  #content{class: content_class}
     .row
-      - content_class = content_for?(:sidebar) ? "with-sidebar" : ""
-      #content{:class => content_class}
+      .container
         - if content_for?(:table_filter)
           - table_filter_class = content_for?(:sidebar) ? 'twelve columns' : 'sixteen columns'
           #table-filter{:class => table_filter_class}

@@ -1,0 +1,8 @@
+.products_v3_page {
+  #content .container {
+    // Allow table to extend to full width of available screen space
+    // TODO: move this to a generic rule, eg body.full-width{}. Then it can be included on any page.
+    //       or even better, create a switch that allows you to yield the page content without the surrounding content class. then you still have control to add the .content div where needed.
+    max-width: none;
+  }
+}
