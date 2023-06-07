@@ -698,12 +698,20 @@ describe '
             expect(distributor1.white_label_logo).to_not be_attached
           end
 
-          it "can edit the text field white_label_logo_link" do
-            fill_in "enterprise_white_label_logo_link", with: "https://www.openfoodnetwork.org"
-            click_button 'Update'
-            expect(flash_message)
-              .to eq('Enterprise "First Distributor" has been successfully updated!')
-            expect(distributor1.reload.white_label_logo_link).to eq("https://www.openfoodnetwork.org")
+          shared_examples "edit link with" do |url, result|
+            it "url: #{url}" do
+              fill_in "enterprise_white_label_logo_link", with: url
+              click_button 'Update'
+              expect(flash_message)
+                .to eq('Enterprise "First Distributor" has been successfully updated!')
+              expect(distributor1.reload.white_label_logo_link).to eq(result)
+            end
+          end
+
+          context "can edit white label logo link" do
+            it_behaves_like "edit link with", "https://www.openfoodnetwork.org", "https://www.openfoodnetwork.org"
+            it_behaves_like "edit link with", "www.openfoodnetwork.org", "http://www.openfoodnetwork.org"
+            it_behaves_like "edit link with", "openfoodnetwork.org", "http://openfoodnetwork.org"
           end
         end
 

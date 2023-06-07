@@ -313,6 +313,36 @@ describe Enterprise do
         expect(enterprise).to be_invalid
       end
     end
+
+    describe "white label logo link" do
+      before do
+        # validate white_label_logo_link only if white_label_logo is present
+        allow_any_instance_of(Enterprise).to receive(:white_label_logo).and_return(true)
+      end
+
+      it "validates the white_label_logo_link attribute" do
+        e = build(:enterprise, white_label_logo_link: 'http://www.example.com')
+        expect(e).to be_valid
+        expect(e.white_label_logo_link).to eq "http://www.example.com"
+      end
+
+      it "adds http:// to the white_label_logo_link attribute if it is missing" do
+        e = build(:enterprise, white_label_logo_link: 'www.example.com')
+        expect(e).to be_valid
+        expect(e.white_label_logo_link).to eq "http://www.example.com"
+      end
+
+      it "ignores whitespace around the URL form copying and pasting" do
+        e = build(:enterprise, white_label_logo_link: ' www.example.com ')
+        expect(e).to be_valid
+        expect(e.white_label_logo_link).to eq "http://www.example.com"
+      end
+
+      it "does not validate if URL is invalid and can't be infered" do
+        e = build(:enterprise, white_label_logo_link: 'with spaces')
+        expect(e).to be_invalid
+      end
+    end
   end
 
   describe "callbacks" do
