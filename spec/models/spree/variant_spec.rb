@@ -433,17 +433,28 @@ describe Spree::Variant do
       end
     end
 
-    context "when related naming values are nil" do
-      before do
-        product.name = "Apples"
+    context "handling nil values for related naming attributes" do
+      it "returns empty string or product name" do
+        product.name = "Apple"
+        product.variant_unit = "items"
+        product.display_as = nil
+        variant.display_as = nil
+        variant.display_name = nil
+
+        expect(variant.full_name).to eq ""
+        expect(variant.product_and_full_name).to eq product.name
+      end
+
+      it "uses the display name correctly" do
+        product.name = "Apple"
+        product.variant_unit = "items"
         product.display_as = nil
         variant.display_as = nil
         variant.unit_presentation = nil
-      end
+        variant.display_name = "Green"
 
-      it "returns empty string or product name" do
-        expect(variant.full_name).to eq ""
-        expect(variant.product_and_full_name).to eq product.name
+        expect(variant.full_name).to eq "Green"
+        expect(variant.product_and_full_name).to eq "Apple - Green"
       end
     end
   end
