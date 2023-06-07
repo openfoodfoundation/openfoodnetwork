@@ -87,6 +87,7 @@ nav.menu {
       }
 
       &:hover {
+        color: $color-5 !important;
         &:after {
           content: "";
           position: absolute;
@@ -151,6 +152,7 @@ nav.menu {
 
     &.selected a,
     a:hover {
+      color: $color-5;
       &:after {
         content: "";
         position: absolute;
