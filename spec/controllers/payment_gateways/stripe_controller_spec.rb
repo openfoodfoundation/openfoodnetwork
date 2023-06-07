@@ -230,6 +230,16 @@ completed due to stock issues."
               expect(payment.state).to eq("completed")
               expect(payment.cvv_response_message).to be nil
             end
+
+            it "moves the order state to completed" do
+              expect(order).to receive(:process_payments!) do
+                payment.complete!
+              end
+
+              get :authorize, params: { order_number: order.number, payment_intent: payment_intent }
+
+              expect(order.reload.state).to eq "complete"
+            end
           end
 
           context "when the order is already completed" do
