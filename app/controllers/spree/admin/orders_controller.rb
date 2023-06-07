@@ -8,9 +8,8 @@ module Spree
       include OpenFoodNetwork::SpreeApiKeyLoader
       helper CheckoutHelper
 
-      before_action :load_order, only: [:edit, :update, :fire, :resend,
-                                        :invoice, :print, :distribution]
-      before_action :load_distribution_choices, only: [:new, :edit, :update, :distribution]
+      before_action :load_order, only: [:edit, :update, :fire, :resend, :invoice, :print]
+      before_action :load_distribution_choices, only: [:new, :create, :edit, :update]
       before_action :require_distributor_abn, only: :invoice
       before_action :restore_saved_query!, only: :index
 
@@ -24,47 +23,35 @@ module Spree
       end
 
       def new
-        @order = Order.create
-        @order.created_by = spree_current_user
-        @order.generate_order_number
-        @order.save
-        redirect_to spree.distribution_admin_order_path(@order)
-      end
-
-      def distribution
-        return if order_params.blank?
-
-        on_update
-
-        @order.assign_attributes(order_params)
-        return unless @order.save(context: :set_distribution_step)
-
-        redirect_to spree.admin_order_customer_path(@order)
+        @order = Spree::Order.new
       end
 
       def edit
         @order.shipments.map(&:refresh_rates)
-        @order.errors.clear
+      end
+
+      def create
+        @order = Spree::Order.new(order_params.merge(created_by: spree_current_user))
+
+        if @order.save(context: :require_distribution)
+          redirect_to spree.admin_order_customer_path(@order)
+        else
+          render :new
+        end
       end
 
       def update
         on_update
 
-        if params[:set_distribution_step] && @order.update(order_params)
-          OrderWorkflow.new(@order).advance_to_payment if @order.state.in? ["cart", "address", "delivery"]
-          return redirect_to spree.admin_order_customer_path(@order)
-        end
+        order_updated = order_params.present? && @order.update(order_params)
 
-        unless order_params.present? && @order.update(order_params) && @order.line_items.present?
-          if @order.line_items.empty? && !params[:suppress_error_msg]
-            @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
-          end
-
+        unless order_updated && line_items_present?
           flash[:error] = @order.errors.full_messages.join(', ') if @order.errors.present?
           return redirect_to spree.edit_admin_order_path(@order)
         end
 
-        OrderWorkflow.new(@order).advance_to_payment if @order.state.in? ["cart", "address", "delivery"]
+        OrderWorkflow.new(@order).advance_to_payment
+
         if @order.complete?
           redirect_to spree.edit_admin_order_path(@order)
         else
@@ -116,6 +103,13 @@ module Spree
       end
 
       private
+
+      def line_items_present?
+        return true if @order.line_items.any?
+
+        @order.errors.add(:line_items, Spree.t('errors.messages.blank'))
+        false
+      end
 
       def update_search_results
         session[:admin_orders_search] = search_params

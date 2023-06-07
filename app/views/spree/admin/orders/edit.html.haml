@@ -16,10 +16,7 @@
 = render partial: "spree/admin/shared/order_tabs", locals: { current: 'Order Details' }
 
 %div
-  -# Suppress errors when manually creating a new order - needs to proceed to edit page
-  -# without having line items (which otherwise gives a validation error)
-  - unless params["suppress_error_msg"]
-    = render partial: "spree/shared/error_messages", :locals => { :target => @order }
+  = render partial: "spree/shared/error_messages", locals: { target: @order }
 
   = admin_inject_shops(module: 'admin.orders')
   = admin_inject_order_cycles
@@ -32,4 +29,4 @@
         = Spree.t(:your_order_is_empty_add_product)
 
     %div.admin-order-edit-form
-      = render :partial => 'form', :locals => { :order => @order }
+      = render partial: 'form'
