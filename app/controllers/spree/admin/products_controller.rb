@@ -206,7 +206,7 @@ module Spree
       end
 
       def set_stock_levels(product, on_hand, on_demand)
-        variant = product_variant(product)
+        variant = product.variants.first
 
         begin
           variant.on_demand = on_demand if on_demand.present?
@@ -224,12 +224,6 @@ module Spree
           report.add_metadata(:variant, variant.attributes)
           report.add_metadata(:variant_error, variant.errors.first) unless variant.valid?
         end
-      end
-
-      def product_variant(product)
-        return unless product.variants.any?
-
-        product.variants.first
       end
 
       def set_product_master_variant_price_to_zero
