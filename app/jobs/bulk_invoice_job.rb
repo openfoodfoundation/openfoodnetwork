@@ -13,6 +13,8 @@ class BulkInvoiceJob < ApplicationJob
       pdf << CombinePDF.parse(invoice)
     end
 
+    ensure_directory_exists filepath
+
     pdf.save filepath
 
     broadcast(filepath, options[:channel]) if options[:channel]
@@ -40,5 +42,11 @@ class BulkInvoiceJob < ApplicationJob
                      locals: { invoice_url: "/admin/orders/invoices/#{file_id}" })
       ).
       broadcast
+  end
+
+  def ensure_directory_exists(filepath)
+    return unless File.exist?(File.dirname(filepath))
+
+    FileUtils.mkdir_p(File.dirname(filepath))
   end
 end
