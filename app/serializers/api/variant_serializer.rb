@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::VariantSerializer < ActiveModel::Serializer
-  attributes :id, :is_master, :product_name, :sku,
+  attributes :id, :product_name, :sku,
              :options_text, :unit_value, :unit_description, :unit_to_display,
              :display_as, :display_name, :name_to_display,
              :price, :on_demand, :on_hand,
