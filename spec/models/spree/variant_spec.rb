@@ -432,6 +432,20 @@ describe Spree::Variant do
         expect(variant.product_and_full_name).to eq "Apple - Pink Lady"
       end
     end
+
+    context "when related naming values are nil" do
+      before do
+        product.name = "Apples"
+        product.display_as = nil
+        variant.display_as = nil
+        variant.unit_presentation = nil
+      end
+
+      it "returns empty string or product name" do
+        expect(variant.full_name).to eq ""
+        expect(variant.product_and_full_name).to eq product.name
+      end
+    end
   end
 
   describe "calculating the price with enterprise fees" do
