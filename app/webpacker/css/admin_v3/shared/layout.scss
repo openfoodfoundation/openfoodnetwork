@@ -1,0 +1,134 @@
+// Basics
+//---------------------------------------------------
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.admin {
+  &__section-header {
+    padding: 15px 0;
+    background-color: very-light($color-3, 4);
+    border-bottom: 1px solid $color-border;
+
+    .ofn-drop-down {
+      border: 0;
+      background-color: $spree-blue;
+      color: $color-1;
+      float: none;
+      margin-left: 3px;
+      &:hover,
+      &.expanded {
+        border: 0;
+        color: $color-1;
+      }
+    }
+
+    &__content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      @media all and (min-width: $tablet_breakpoint) {
+        flex-wrap: nowrap;
+      }
+    }
+
+    &__title {
+      width: 100%;
+      margin-bottom: 10px;
+      @media all and (min-width: $tablet_breakpoint) {
+        margin-bottom: 0;
+      }
+    }
+
+    &__actions {
+      display: flex;
+      flex: 1 0 auto;
+      align-items: center;
+      list-style: none;
+      @media all and (min-width: $tablet_breakpoint) {
+        justify-content: flex-end;
+      }
+      > li {
+        display: flex;
+        margin-right: 10px;
+        &:empty {
+          display: none;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
+.mr-0 {
+  margin-right: 0 !important;
+}
+
+.ml-0 {
+  margin-left: 0 !important;
+}
+
+@media print {
+  .print-hidden {
+    display: none !important;
+  }
+}
+
+// Header
+//---------------------------------------------------
+#header {
+  background-color: $color-1;
+  padding: 5px 0;
+}
+
+#logo {
+  height: 40px;
+}
+
+.page-title {
+  i {
+    color: $color-2;
+  }
+}
+
+// Content
+//---------------------------------------------------
+#content {
+  background-color: $color-1;
+  position: relative;
+  z-index: 0;
+  padding: 0;
+  margin-top: 15px;
+}
+
+// Footer
+//---------------------------------------------------
+#footer {
+  margin-top: 15px;
+  border-top: 1px solid $color-border;
+  padding: 10px 0;
+}
+
+@media print {
+  header,
+  nav {
+    display: none;
+  }
+}
