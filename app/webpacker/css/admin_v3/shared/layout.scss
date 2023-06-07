@@ -9,8 +9,7 @@
 .admin {
   &__section-header {
     padding: 15px 0;
-    background-color: very-light($color-3, 4);
-    border-bottom: 1px solid $color-border;
+    margin-top: 25px;
 
     .ofn-drop-down {
       border: 0;
