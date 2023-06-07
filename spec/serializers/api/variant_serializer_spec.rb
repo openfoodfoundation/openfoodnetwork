@@ -11,7 +11,6 @@ describe Api::VariantSerializer do
       to include(
         :id,
         :name_to_display,
-        :is_master,
         :on_hand,
         :name_to_display,
         :unit_to_display,
