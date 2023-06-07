@@ -19,7 +19,7 @@ nav.menu {
         border: 1px solid transparent;
         text-transform: uppercase;
         font-weight: 600;
-        font-size: 90%;
+        font-size: 16px;
       }
 
       &.active a {
@@ -80,6 +80,7 @@ nav.menu {
       position: relative;
       text-align: center;
       font-weight: 600;
+      font-size: 16px;
 
       i {
         display: inline;
@@ -145,7 +146,7 @@ nav.menu {
         text-transform: uppercase;
       }
       position: relative;
-      font-size: 85%;
+      font-size: 14px;
     }
 
     &.selected a,
