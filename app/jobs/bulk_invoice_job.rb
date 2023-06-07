@@ -45,8 +45,6 @@ class BulkInvoiceJob < ApplicationJob
   end
 
   def ensure_directory_exists(filepath)
-    return unless File.exist?(File.dirname(filepath))
-
     FileUtils.mkdir_p(File.dirname(filepath))
   end
 end
