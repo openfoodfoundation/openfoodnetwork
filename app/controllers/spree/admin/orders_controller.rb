@@ -28,7 +28,6 @@ module Spree
 
       def edit
         @order.shipments.map(&:refresh_rates)
-        @order.errors.clear
       end
 
       def create
