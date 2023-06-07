@@ -613,21 +613,6 @@ module Spree
       self.email = user.email if user
     end
 
-    def after_cancel
-      shipments.each(&:cancel!)
-      payments.checkout.each(&:void!)
-
-      OrderMailer.cancel_email(id).deliver_later if send_cancellation_email
-      update(payment_state: updater.update_payment_state)
-    end
-
-    def after_resume
-      shipments.each(&:resume!)
-      payments.void.each(&:resume!)
-
-      update(payment_state: updater.update_payment_state)
-    end
-
     def use_billing?
       @use_billing == true || @use_billing == 'true' || @use_billing == '1'
     end

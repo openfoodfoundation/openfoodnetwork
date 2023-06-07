@@ -151,6 +151,21 @@ module Spree
 
           private
 
+          def after_cancel
+            shipments.each(&:cancel!)
+            payments.checkout.each(&:void!)
+
+            OrderMailer.cancel_email(id).deliver_later if send_cancellation_email
+            update(payment_state: updater.update_payment_state)
+          end
+
+          def after_resume
+            shipments.each(&:resume!)
+            payments.void.each(&:resume!)
+
+            update(payment_state: updater.update_payment_state)
+          end
+
           def validate_payment_method!
             return unless checkout_processing
             return if payments.any?
