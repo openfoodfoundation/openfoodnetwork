@@ -122,6 +122,8 @@
 @import "../shared/question-mark-icon";
 @import "../admin/question-mark-tooltip";
 
+@import "v3_overrides"; // admin_v3
+
 @import "~tom-select/src/scss/tom-select.default";
 @import "../admin/components/tom_select";
 
