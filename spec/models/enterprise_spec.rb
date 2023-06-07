@@ -332,6 +332,12 @@ describe Enterprise do
         expect(e.white_label_logo_link).to eq "http://www.example.com"
       end
 
+      it "ignores whitespace around the URL form copying and pasting" do
+        e = build(:enterprise, white_label_logo_link: ' www.example.com ')
+        expect(e).to be_valid
+        expect(e.white_label_logo_link).to eq "http://www.example.com"
+      end
+
       it "does not validate if URL is invalid and can't be infered" do
         e = build(:enterprise, white_label_logo_link: 'with spaces')
         expect(e).to be_invalid

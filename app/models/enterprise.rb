@@ -460,6 +460,7 @@ class Enterprise < ApplicationRecord
 
     return if white_label_logo_link.blank?
 
+    white_label_logo_link.strip!
     uri = URI(white_label_logo_link)
     self.white_label_logo_link = "http://#{white_label_logo_link}" if uri.scheme.nil?
   rescue URI::InvalidURIError
