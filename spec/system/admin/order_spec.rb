@@ -488,6 +488,7 @@ describe '
 
     # And I select that customer's email address and save the order
     tomselect_search_and_select customer.email, from: 'customer_search_override'
+    expect(page).to have_field "order_email", with: customer.email
     click_button 'Update'
 
     # Then their addresses should be associated with the order
