@@ -56,9 +56,9 @@ class ProcessPaymentIntent
   attr_reader :order, :payment_intent, :payment
 
   def process_payment
-    return unless order.process_payments! && order.state == "confirmation"
+    return unless order.process_payments!
 
-    OrderWorkflow.new(order).next
+    OrderWorkflow.new(order).complete
   end
 
   def ready_for_capture?
