@@ -24,9 +24,7 @@ describe "Authentication" do
       before do
         visit root_path
       end
-      describe "as large" do
-        around { |example| browse_as_large { example.run } }
-
+      describe "with default large screen" do
         before do
           open_login_modal
         end

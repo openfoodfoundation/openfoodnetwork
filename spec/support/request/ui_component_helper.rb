@@ -10,12 +10,8 @@ module UIComponentHelper
   end
 
   def browse_as_default(&block)
-    browse_with_window_size(1200, 800)
+    browse_with_window_size(1280, 800)
     block&.call
-  end
-
-  def browse_as_large(&block)
-    browse_with_window_size(1280, 800, &block)
   end
 
   def browse_with_window_size(width, height, &block)
