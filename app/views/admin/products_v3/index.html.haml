@@ -16,8 +16,8 @@
     %col{ width:"10%" }
     %col{ width:"5%" }
     %col{ width:"5%", style: "max-width:5em" }
-    %col{ width:"8%", style: "max-width:8em" }
-    %col{ width:"8%", style: "max-width:8em" }
+    / %col{ width:"8%", style: "max-width:8em" }
+    / %col{ width:"8%", style: "max-width:8em" }
     %thead
       %tr
         %th.align-left= t('admin.product.name')
@@ -28,8 +28,8 @@
         %th.align-left= t('admin.category')
         %th.align-left= t('admin.tax_category')
         %th.align-left= t('admin.inherits_properties')
-        %th.align-right= t('admin.available_on')
-        %th.align-right= t('admin.import_date')
+        / %th.align-right= t('admin.available_on')
+        / %th.align-right= t('admin.import_date')
     %tbody
       - @products.each do |product|
         %tr
@@ -50,9 +50,9 @@
             .line-clamp-1=  product.tax_category&.name
           %td.align-left
             .line-clamp-1=  product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values
-          %td.align-right
-            .line-clamp-1= product.available_on&.strftime('%F')
-          %td.align-right
-            .line-clamp-1= product.import_date&.strftime('%F')
+          / %td.align-right
+          /   .line-clamp-1= product.available_on&.strftime('%F')
+          / %td.align-right
+          /   .line-clamp-1= product.import_date&.strftime('%F')
 
   Limited to first 50 rows
