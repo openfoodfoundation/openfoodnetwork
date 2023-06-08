@@ -41,7 +41,7 @@
     %div.row-loading-icons
       - if local_assigns[:success]
         %i.success.icon-ok-sign{"data-controller": "ephemeral"}
-    %a.icon_link.with-tip.icon-edit.no-text{href: edit_admin_order_path(order), 'ofn-with-tip' => t('spree.admin.orders.index.edit')}
+    %a.icon_link.with-tip.icon-edit.no-text{href: edit_admin_order_path(order), "data-controller": "tooltip", "data-tooltip-tip-value": t('spree.admin.orders.index.edit'), "data-tooltip-target": "element"}
     - if order.ready_to_ship?
       %div{ "data-controller": "tooltip", "data-tooltip-tip-value": t('spree.admin.orders.index.ship') }
         %button.icon-road.icon_link.with-tip.no-text{"data-reflex": "click->Admin::OrdersReflex#ship", "data-id": order.id.to_s,

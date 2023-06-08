@@ -697,8 +697,6 @@ distributors: [distributor4, distributor5]) }
         end
 
         it "displays Edit tooltip" do
-          pending("issue #10956")
-
           within "tr#order_#{order.id}" do
             # checks shipment state
             expect(page).to have_content "PENDING"
