@@ -195,7 +195,8 @@ module Admin
             editable_enterprises.
             order('is_primary_producer ASC, name')
         elsif json_request?
-          OpenFoodNetwork::Permissions.new(spree_current_user).editable_enterprises.ransack(params[:q]).result
+          OpenFoodNetwork::Permissions.new(spree_current_user)
+            .editable_enterprises.ransack(params[:q]).result
         else
           Enterprise.where("1=0")
         end
@@ -203,7 +204,6 @@ module Admin
         OpenFoodNetwork::Permissions.new(spree_current_user).visible_enterprises
           .includes(:shipping_methods, :payment_methods).ransack(params[:q]).result
       else
-        # TODO was ordered with is_distributor DESC as well, not sure why or how we want to sort this now
         OpenFoodNetwork::Permissions.new(spree_current_user).
           editable_enterprises.
           order('is_primary_producer ASC, name')

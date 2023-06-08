@@ -25,7 +25,6 @@ module Admin
         format.json {
           render_as_json @collection, controller: self, include_calculators: @include_calculators
         }
-        # format.json { @presented_collection = @collection.each_with_index.map { |ef, i| EnterpriseFeePresenter.new(self, ef, i) } }
       end
     end
 
