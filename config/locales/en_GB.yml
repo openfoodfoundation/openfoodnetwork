@@ -58,8 +58,21 @@ en_GB:
         orders_close_at: Close date
       variant_override:
         count_on_hand: "In Stock"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Calculator Flat Percent:"
+        preferred_amount: "Calculator Amount:"
+        preferred_first_item: "Calculator First Item:"
+        preferred_additional_item: "Calculator Additional Item Cost:"
+        preferred_max_items: "Calculator Max Items:"
+        preferred_minimal_amount: "Calculator Minimal Amount:"
+        preferred_normal_amount: "Calculator Normal Amount:"
+        preferred_discount_amount: "Calculator Discount Amount:"
+        preferred_unit_from_list: "Calculator Unit From List:"
+        preferred_per_unit: "Calculator Per Unit:"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Inheriting the tax category requires a per-item calculator."
         spree/user:
           attributes:
             email:
@@ -259,6 +272,13 @@ en_GB:
     order_cycle:
       subject: "Order cycle report for %{producer}"
   provider_settings: "Provider settings"
+  report_mailer:
+    report_ready:
+      subject: "Report ready"
+      heading: "Report ready for download"
+      intro: |
+          The link below will expire after one week.
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "Dear Customer,"
@@ -1083,6 +1103,15 @@ en_GB:
         white_label:
           legend: "White Label"
           hide_ofn_navigation: "Hide OFN navigation"
+          upload_logo: "Logo used in shopfront"
+          remove_logo: "Remove logo"
+          remove_logo_confirm: "Are you sure you want to remove this logo?"
+          remove_logo_success: "Logo removed"
+          white_label_logo_link_label: "Link for the logo used in shopfront"
+          hide_groups_tab: "Hide groups tab in shopfront"
+          create_custom_tab: "Create custom tab in shopfront"
+          custom_tab_title: "Title for custom tab"
+          custom_tab_content: "Content for custom tab"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1360,6 +1389,15 @@ en_GB:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      show:
+        report_taking_longer: >
+            Sorry, this report took too long to process. It may contain a lot of data
+            or we are busy with other reports. You can try again later.
+        report_taking_longer_html: >
+            This report is taking longer to process. It may contain a lot of data
+            or we are busy with other reports. Once it's finished, we'll notify you
+            via email.
+        report_link_label: Download report (when available)
       revenues_by_hub:
         name: Revenues By Hub
         description: Revenues by hub
@@ -1910,6 +1948,14 @@ en_GB:
       explaination: You can review and confirm your order in the next step which includes the final costs.
       submit: Next - Order summary
       cancel: Back to Your details
+      voucher:
+        voucher: "%{voucher_amount} Voucher"
+        apply_voucher: Apply voucher
+        apply: Apply
+        placeholder: Enter voucher code
+        remove_code: Remove code
+        confirm_delete: Are you sure you want to remove the voucher?
+        warning_forfeit_remaining_amount: "Note: if your order total is less than your voucher you may not be able to spend the remaining value."
     step3:
       delivery_details:
         title: Delivery details
@@ -1943,6 +1989,7 @@ en_GB:
       select_a_payment_method: Select a payment method
       no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
       voucher_not_found: Not found
+      add_voucher_error: There was an error while adding the voucher
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
@@ -3615,6 +3662,7 @@ en_GB:
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
+    editing_shipping_category: "Editing Shipping Category"
     name: "Name"
     description: "Description"
     type: "Type"
@@ -3947,6 +3995,7 @@ en_GB:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
+        image_not_processable: "Image attachment is not a valid image."
         new:
           title: "New Product"
           new_product: "New Product"

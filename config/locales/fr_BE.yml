@@ -62,6 +62,8 @@ fr_BE:
         preferred_flat_percent: "Calculateur à pourcentage fixe"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "L'héritage de la catégorie de taxe nécessite un calculateur par article."
         spree/user:
           attributes:
             email:
@@ -1014,6 +1016,18 @@ fr_BE:
         vouchers:
           rate: 'Taux '
           customers: Acheteur·euse
+        white_label:
+          legend: "Marque blanche"
+          hide_ofn_navigation: "Masquer la navigation du site OFN"
+          upload_logo: "Logo utilisé en vitrine"
+          remove_logo: "Supprimer le logo"
+          remove_logo_confirm: "Voulez-vous vraiment supprimer ce logo ?"
+          remove_logo_success: "Logo supprimé"
+          white_label_logo_link_label: "Lien pour le logo utilisé en vitrine"
+          hide_groups_tab: "Masquer l'onglet des groupes dans la vitrine"
+          create_custom_tab: "Créer un onglet personnalisé dans la vitrine"
+          custom_tab_title: "Titre de l'onglet personnalisé"
+          custom_tab_content: "Contenu de l'onglet personnalisé"
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1246,6 +1260,7 @@ fr_BE:
           tag_rules: "Règles de tag"
           shop_preferences: "Préférences comptoir"
           users: "gestionnaire"
+          white_label: "Marque blanche"
         enterprise_group:
           primary_details: "Informations de base"
           users: "gestionnaire"
@@ -2326,6 +2341,7 @@ fr_BE:
   fundraising_fee: "Frais recherche de financement"
   price_graph: "Légende détail du prix"
   included_tax: "Inclut TVA"
+  tax: "Taxe"
   balance: "Solde"
   transaction: "Transaction"
   transaction_date: "Date"
@@ -2579,9 +2595,11 @@ fr_BE:
   report_header_taxable_items_total: "Montant produits soumis à TVA (%{currency_symbol})"
   report_header_sales_tax: "TVA sur produits (%{currency_symbol})"
   report_header_delivery_charge: "Frais de livraison (%{currency_symbol})"
+  report_header_tax: "Taxe"
   report_header_tax_on_delivery: "TVA sur livraison (%{currency_symbol})"
   report_header_tax_on_fees: "TVA sur commission hub (%{currency_symbol})"
   report_header_tax_category: "TVA applicable"
+  report_header_tax_rate_name: "Nom du taux de taxe"
   report_header_tax_rate: "TVA applicable"
   report_header_total_tax: "Total TVA (%{currency_symbol})"
   report_header_total_excl_tax: "Total HT (%{currency_symbol})"
@@ -2604,6 +2622,7 @@ fr_BE:
   report_header_supplier: Disitributeur·trice
   report_header_producer: Producteur·trice
   report_header_producer_suburb: Ville Producteur·trice
+  report_header_producer_tax_status: Statut fiscal du producteur
   report_header_unit: Unité
   report_header_group_buy_unit_quantity: Nb d'unités achetées (vente par lots)
   report_header_cost: Coût
@@ -2619,6 +2638,7 @@ fr_BE:
   report_header_distributor_address: Adresse Comptoir Distributeur·trice
   report_header_distributor_city: Ville Distributeur·trice
   report_header_distributor_postcode: Code Postal Distributeur·trice
+  report_header_distributor_tax_status: Statut fiscal du distributeur
   report_header_delivery_address: Adresse Livraison
   report_header_delivery_postcode: Code Postal Livraison
   report_header_bulk_unit_size: Quantité totale du lot
@@ -2790,6 +2810,7 @@ fr_BE:
       deleting_item_will_cancel_order: "Cette opération se traduira par une ou plusieurs commandes vides, qui seront annulées. Voulez-vous continuer?"
       modals:
         got_it: "J'ai compris"
+        confirm: "Confirmer"
         close: "Fermer"
         continue: "Suivant"
         cancel: "Annuler"
@@ -3207,8 +3228,11 @@ fr_BE:
     card_number: "Numéro de carte"
     category: "Catégorie"
     credit: "Crédit"
+    editing_tax_category: "Modification de la catégorie de taxe"
+    editing_tax_rate: "Modification du taux de taxe"
     more: "Plus"
     new_order_completed: "Nouvelle commande terminée"
+    new_tax_category: "Nouvelle catégorie de taxe"
     no_pending_payments: "Aucun paiement en attente"
     none: "Aucun"
     updating: "Mettre à jour"
@@ -3546,7 +3570,7 @@ fr_BE:
           zone: "Zone"
           calculator: "Calculateur"
           display: "Ecran"
-          both: "Aussi bien check-out ets parametre"
+          both: "Aussi bien check-out et paramètres"
           back_end: "Seulement Back office"
           no_shipping_methods_found: "Aucune méthode de livraison trouvée"
         new:
@@ -3560,7 +3584,7 @@ fr_BE:
           categories: "Les catégories"
           tax_category: "TVA applicable"
           zones: "Zones"
-          both: "Aussi bien check-out ets parametre"
+          both: "Aussi bien check-out et paramètres"
           back_end: "Seulement back office"
           deactivation_warning: "La désactivation d'une méthode de payement peux faire que la méthode de payement disparait de votre liste. Alternative, vous savez cacher la méthode de payement depuis la page de payement en changeant les options de 'affichages' vers \"retour a back office seulement\""
       payment_methods:
@@ -3606,7 +3630,7 @@ fr_BE:
           active: "Actif"
           active_yes: "Oui"
           active_no: "Non"
-          both: "Aussi bien check-out ets parametre"
+          both: "Aussi bien check-out et paramètres"
           back_end: "Seulement Back office"
           tags: "Tags"
           deactivation_warning: "La désactivation d'une méthode de payement peux faire que la méthode de payement disparait de votre liste. Alternative, vous savez cacher la méthode de payement depuis la page de payement en changeant les options de 'affichages' vers \"retour a back office seulement\""

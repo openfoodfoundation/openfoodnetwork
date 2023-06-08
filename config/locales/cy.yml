@@ -250,6 +250,9 @@ cy:
     order_cycle:
       subject: "Adroddiad cylch archebu ar gyfer %{producer}"
   provider_settings: "Gosodiadau darparwr"
+  report_mailer:
+    report_ready:
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "Annwyl Gwsmer,"
