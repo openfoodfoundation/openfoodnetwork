@@ -29,7 +29,7 @@ describe VoucherAdjustmentsController, type: :controller do
 
   describe "#create" do
     describe "adding a voucher" do
-      let(:params) { { voucher_code: voucher.code } }
+      let(:params) { { order: { voucher_code: voucher.code } } }
 
       it "adds a voucher to the user's current order" do
         post :create, params: params
@@ -39,13 +39,13 @@ describe VoucherAdjustmentsController, type: :controller do
       end
 
       context "when voucher doesn't exist" do
-        let(:params) { { voucher_code: "non_voucher" } }
+        let(:params) { { order: { voucher_code: "non_voucher" } } }
 
         it "returns 422 and an error message" do
           post :create, params: params
 
           expect(response.status).to eq 422
-          expect(flash[:error]).to match "Voucher Not found"
+          expect(flash[:error]).to match "Voucher code Not found"
         end
       end
 

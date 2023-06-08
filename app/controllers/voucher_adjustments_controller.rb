@@ -27,15 +27,15 @@ class VoucherAdjustmentsController < BaseController
   end
 
   def add_voucher
-    if params[:voucher_code].blank?
-      @order.errors.add(:voucher, I18n.t('split_checkout.errors.voucher_not_found'))
+    if voucher_params[:voucher_code].blank?
+      @order.errors.add(:voucher_code, I18n.t('split_checkout.errors.voucher_not_found'))
       return false
     end
 
-    voucher = Voucher.find_by(code: params[:voucher_code], enterprise: @order.distributor)
+    voucher = Voucher.find_by(code: voucher_params[:voucher_code], enterprise: @order.distributor)
 
     if voucher.nil?
-      @order.errors.add(:voucher, I18n.t('split_checkout.errors.voucher_not_found'))
+      @order.errors.add(:voucher_code, I18n.t('split_checkout.errors.voucher_not_found'))
       return false
     end
 
@@ -62,5 +62,9 @@ class VoucherAdjustmentsController < BaseController
 
     render status: :unprocessable_entity, cable_ready: cable_car.
       replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
+  end
+
+  def voucher_params
+    params.require(:order).permit(:voucher_code)
   end
 end

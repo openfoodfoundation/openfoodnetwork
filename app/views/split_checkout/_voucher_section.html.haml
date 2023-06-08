@@ -14,6 +14,6 @@
             %span.formError.standalone
               = t("split_checkout.step2.voucher.warning_forfeit_remaining_amount")
       - else
-        = form_with url: voucher_adjustments_path, method: :post, data: { remote: true } do |form|
-          = form.text_field :voucher_code, value: params[:voucher_code], data: { action: "input->toggle-button-disabled#inputIsChanged" }, placeholder: t("split_checkout.step2.voucher.placeholder"), class: "voucher"
+        = form_with url: voucher_adjustments_path, model: @order, method: :post, data: { remote: true } do |form|
+          = form.text_field :voucher_code, value: params.dig(:order, :voucher_code), data: { action: "input->toggle-button-disabled#inputIsChanged" }, placeholder: t("split_checkout.step2.voucher.placeholder"), class: "voucher"
           = form.submit t("split_checkout.step2.voucher.apply"), disabled: true, class: "button cancel voucher", "data-disable-with": false, data: { "toggle-button-disabled-target": "button" }

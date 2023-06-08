@@ -771,7 +771,7 @@ describe "As a consumer, I want to checkout my order" do
                 fill_in "Enter voucher code", with: "non_code"
                 click_button("Apply")
 
-                expect(page).to have_content("Voucher Not found")
+                expect(page).to have_content("Voucher code Not found")
               end
             end
           end
