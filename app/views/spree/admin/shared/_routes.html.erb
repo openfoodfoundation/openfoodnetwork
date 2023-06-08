@@ -10,6 +10,6 @@
     :taxons_search         => main_app.api_v0_taxons_url(:format => 'json'),
     :orders_api            => main_app.api_v0_orders_url,
     :states_search         => main_app.api_v0_states_url(:format => 'json'),
-    :cancel_order          => spree.fire_admin_order_url(id: @order&.number ? @order.number : "", e: 'cancel')
+    :cancel_order          => spree.fire_admin_order_url(id: @order&.number.to_s, e: 'cancel')
   }.to_json %>;
 </script>
