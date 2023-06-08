@@ -34,15 +34,25 @@
       - @products.each do |product|
         %tr
           %td.align-left
-            %b=  product.name
-          %td.align-right= product.sku
-          %td.align-right= "#{product.unit_value&.round(3)} #{product.variant_unit}"
-          %td.align-right= product.on_hand || 0
-          %td.align-left=  product.supplier.name
-          %td.align-left=  product.taxons.map(&:name).join(', ')
-          %td.align-left=  product.tax_category&.name
-          %td.align-left=  product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values
-          %td.align-right= product.available_on&.strftime('%F')
-          %td.align-right= product.import_date&.strftime('%F')
+            .line-clamp-1
+              %b=  product.name
+          %td.align-right
+            .line-clamp-1= product.sku
+          %td.align-right
+            .line-clamp-1= "#{product.unit_value&.round(3)} #{product.variant_unit}"
+          %td.align-right
+            .line-clamp-1= product.on_hand || 0
+          %td.align-left
+            .line-clamp-1=  product.supplier.name
+          %td.align-left
+            .line-clamp-1=  product.taxons.map(&:name).join(', ')
+          %td.align-left
+            .line-clamp-1=  product.tax_category&.name
+          %td.align-left
+            .line-clamp-1=  product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values
+          %td.align-right
+            .line-clamp-1= product.available_on&.strftime('%F')
+          %td.align-right
+            .line-clamp-1= product.import_date&.strftime('%F')
 
   Limited to first 50 rows
