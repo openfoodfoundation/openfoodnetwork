@@ -412,22 +412,18 @@
     justify-content: normal;
     align-items: center;
 
-    input {
-      width: 50%;
-    }
-
     a {
       color: inherit;
     }
+  }
 
-    .button {
-      &.cancel {
-        width: 30%;
-        border-radius: 0.5em;
-        padding:0;
-        height: 2.5em;
-        background-color: $teal-400
-      }
+  .voucher-button {
+    &.cancel {
+      width: 30%;
+      border-radius: 0.35em;
+      padding:0;
+      height: 2.5em;
+      background-color: $teal-400
     }
   }
   

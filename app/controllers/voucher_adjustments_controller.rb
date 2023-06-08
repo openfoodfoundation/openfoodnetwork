@@ -61,7 +61,14 @@ class VoucherAdjustmentsController < BaseController
     flash.now[:error] = @order.errors.full_messages.to_sentence
 
     render status: :unprocessable_entity, cable_ready: cable_car.
-      replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
+      replace("#flashes", partial("shared/flashes", locals: { flashes: flash })).
+      replace(
+        "#voucher-section",
+        partial(
+          "split_checkout/voucher_section",
+          locals: { order: @order, voucher_adjustment: @order.voucher_adjustments.first }
+        )
+      )
   end
 
   def voucher_params
