@@ -336,6 +336,7 @@ describe Spree::Order do
 
     before do
       order.cancel!
+      order.reload
       order.resume!
     end
 
