@@ -7,21 +7,24 @@
   }
 
   table.products {
-    table-layout: fixed; // Column widths are based solely on col definitions (not content)
+    table-layout: fixed; // Column widths are based solely on col definitions (not content). This allows more efficient rendering.
 
-    // Clip long content
-    th,
-    td {
+    th {
+      // Clip long content in headers, but allow wrapping
       overflow: hidden;
-      text-overflow: ellipsis;
+      text-overflow: clip; // If colums are so small that headers are clipping, ellipsis are more of a hindrance
     }
 
-    tbody {
-      // Don't allow wrapping in most cells (but it's ok in the thead)
-      th
-      td, {
-        white-space: nowrap;
-      }
+    // This could probably be a global utility class
+    .line-clamp-1 {
+      // Clip content instead of wrapping to new line
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      display: -webkit-box;
+      -webkit-line-clamp: 1; /* number of lines to show */
+      line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
   }
 }
