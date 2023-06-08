@@ -26,7 +26,7 @@ module Spree
         destination_url = options[:url] || spree.public_send("#{options[:route]}_path")
         titleized_label = Spree.t(options[:label],
                                   default: options[:label],
-                                  scope: [:admin, :tab]).titleize
+                                  scope: [:admin, :tab]).capitalize
 
         css_classes = []
 

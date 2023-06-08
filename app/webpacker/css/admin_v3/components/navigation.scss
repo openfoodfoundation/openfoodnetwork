@@ -77,10 +77,6 @@ nav.menu {
       display: block;
       padding: 25px 5px;
       color: $color-9 !important;
-      text-transform: lowercase;
-      &::first-letter {
-        text-transform: uppercase;
-      }
       position: relative;
       text-align: center;
       font-weight: 600;
@@ -136,10 +132,6 @@ nav.menu {
       padding: 12px 20px;
       color: $color-9;
       text-align: center;
-      text-transform: lowercase;
-      &::first-letter {
-        text-transform: uppercase;
-      }
       position: relative;
       font-size: 14px;
     }
