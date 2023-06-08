@@ -11,7 +11,7 @@
           = link_to t("split_checkout.step2.voucher.remove_code"), voucher_adjustment_path(id: voucher_adjustment.id), method: "delete", data: { confirm: t("split_checkout.step2.voucher.confirm_delete") }
 
           - # This might not be true, ie payment method including a fee which wouldn't be covered by voucher or tax implication raising total to be bigger than the voucher amount ?
-          - if voucher_adjustment.originator.amount > order.total
+          - if voucher_adjustment.originator.amount > order.pre_discount_total
             .checkout-input
               %span.formError.standalone
                 = t("split_checkout.step2.voucher.warning_forfeit_remaining_amount")
