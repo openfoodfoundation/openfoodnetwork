@@ -25,8 +25,8 @@ module Reporting
 
         def supplier_ids_filter(supplier_id)
           return true if params[:supplier_id_in].blank?
-
-          params[:supplier_id_in].include?(supplier_id)
+          
+          params[:supplier_id_in].include?(supplier_id.to_s)
         end
 
         def enterprise_fee_filtered_ids
