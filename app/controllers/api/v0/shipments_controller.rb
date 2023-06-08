@@ -34,7 +34,7 @@ module Api
         @shipment.fee_adjustment.fire_events(:open)
 
         if @shipment.update(shipment_params)
-          @order.updater.update_totals_and_states
+          @order.update_totals_and_states
         end
 
         @shipment.fee_adjustment.close

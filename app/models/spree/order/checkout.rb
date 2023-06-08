@@ -136,7 +136,35 @@ module Spree
             )
           end
 
+          def state_changed(name)
+            state = "#{name}_state"
+            return unless persisted?
+
+            old_state = __send__("#{state}_was")
+            state_changes.create(
+              previous_state: old_state,
+              next_state: __send__(state),
+              name: name,
+              user_id: user_id
+            )
+          end
+
           private
+
+          def after_cancel
+            shipments.each(&:cancel!)
+            payments.checkout.each(&:void!)
+
+            OrderMailer.cancel_email(id).deliver_later if send_cancellation_email
+            update(payment_state: updater.update_payment_state)
+          end
+
+          def after_resume
+            shipments.each(&:resume!)
+            payments.void.each(&:resume!)
+
+            update(payment_state: updater.update_payment_state)
+          end
 
           def validate_payment_method!
             return unless checkout_processing

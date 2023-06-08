@@ -115,7 +115,7 @@ class CheckoutController < ::BaseController
   end
 
   def update_payment_total
-    @order.updater.update_totals
+    @order.update_totals
     @order.updater.update_pending_payment
   end
 

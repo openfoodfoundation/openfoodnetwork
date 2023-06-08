@@ -8,6 +8,7 @@ require 'open_food_network/tag_rule_applicator'
 module Spree
   class Order < ApplicationRecord
     include OrderShipment
+    include OrderValidations
     include Checkout
     include Balance
     include SetUnusedAddressFields
@@ -83,7 +84,7 @@ module Spree
     accepts_nested_attributes_for :shipments
 
     delegate :admin_and_handling_total, :payment_fee, :ship_total, to: :adjustments_fetcher
-    delegate :update_totals, to: :updater
+    delegate :update_totals, :update_totals_and_states, to: :updater
     delegate :create_line_item_fees!, :create_order_fees!, :update_order_fees!,
              :update_line_item_fees!, :recreate_all_fees!, to: :fee_handler
 
@@ -303,10 +304,6 @@ module Spree
       number
     end
 
-    def shipped_shipments
-      shipments.shipped
-    end
-
     def contains?(variant)
       find_line_item_by_variant(variant).present?
     end
@@ -343,11 +340,6 @@ module Spree
       complete? || resumed? || awaiting_return? || returned?
     end
 
-    def credit_cards
-      credit_card_ids = payments.from_credit_card.pluck(:source_id).uniq
-      CreditCard.where(id: credit_card_ids)
-    end
-
     # Finalizes an in progress order after checkout is complete.
     # Called after transition to complete state when payments will have been processed
     def finalize!
@@ -374,13 +366,6 @@ module Spree
         name: 'order',
         user_id: user_id
       )
-    end
-
-    def deliver_order_confirmation_email
-      return if subscription.present?
-
-      Spree::OrderMailer.confirm_email_for_customer(id).deliver_later(wait: 10.seconds)
-      Spree::OrderMailer.confirm_email_for_shop(id).deliver_later(wait: 10.seconds)
     end
 
     # Helper methods for checkout steps
@@ -444,19 +429,6 @@ module Spree
       restart_checkout_flow if state.in?(["payment", "confirmation"])
     end
 
-    def state_changed(name)
-      state = "#{name}_state"
-      return unless persisted?
-
-      old_state = __send__("#{state}_was")
-      state_changes.create(
-        previous_state: old_state,
-        next_state: __send__(state),
-        name: name,
-        user_id: user_id
-      )
-    end
-
     def shipped?
       %w(partial shipped).include?(shipment_state)
     end
@@ -508,24 +480,6 @@ module Spree
         shipments.destroy_all
         restart_checkout_flow
       end
-    end
-
-    def refresh_shipment_rates
-      shipments.map(&:refresh_rates)
-    end
-
-    # Check that line_items in the current order are available from a newly selected distribution
-    def products_available_from_new_distribution
-      return if OrderCycleDistributedVariants.new(order_cycle, distributor)
-        .distributes_order_variants?(self)
-
-      errors.add(:base, I18n.t(:spree_order_availability_error))
-    end
-
-    def disallow_guest_order
-      return unless using_guest_checkout? && registered_email?
-
-      errors.add(:email, I18n.t('devise.failure.already_registered'))
     end
 
     # After changing line items of a completed order
@@ -589,10 +543,6 @@ module Spree
       save!
     end
 
-    def distribution_set?
-      distributor && order_cycle
-    end
-
     def shipping_tax
       shipment_adjustments.reload.tax.sum(:amount)
     end
@@ -629,6 +579,13 @@ module Spree
 
     private
 
+    def deliver_order_confirmation_email
+      return if subscription.present?
+
+      Spree::OrderMailer.confirm_email_for_customer(id).deliver_later(wait: 10.seconds)
+      Spree::OrderMailer.confirm_email_for_shop(id).deliver_later(wait: 10.seconds)
+    end
+
     def fee_handler
       @fee_handler ||= OrderFeesHandler.new(self)
     end
@@ -656,38 +613,6 @@ module Spree
 
     def link_by_email
       self.email = user.email if user
-    end
-
-    # Determine if email is required (we don't want validation errors before we hit the checkout)
-    def require_email
-      return true unless (new_record? || cart?) && !checkout_processing
-    end
-
-    def ensure_line_items_present
-      return if line_items.present?
-
-      errors.add(:base, Spree.t(:there_are_no_items_for_this_order)) && (return false)
-    end
-
-    def ensure_available_shipping_rates
-      return unless shipments.empty? || shipments.any? { |shipment| shipment.shipping_rates.blank? }
-
-      errors.add(:base, Spree.t(:items_cannot_be_shipped)) && (return false)
-    end
-
-    def after_cancel
-      shipments.each(&:cancel!)
-      payments.checkout.each(&:void!)
-
-      OrderMailer.cancel_email(id).deliver_later if send_cancellation_email
-      update(payment_state: updater.update_payment_state)
-    end
-
-    def after_resume
-      shipments.each(&:resume!)
-      payments.void.each(&:resume!)
-
-      update(payment_state: updater.update_payment_state)
     end
 
     def use_billing?
@@ -727,7 +652,7 @@ module Spree
       return if adjustment.finalized?
 
       adjustment.update_adjustment!(force: true)
-      updater.update_totals_and_states
+      update_totals_and_states
     end
   end
 end

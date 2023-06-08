@@ -120,7 +120,7 @@ describe "Order Management" do
 
     before do
       order.shipment.shipping_method.calculator.update(preferred_amount: 5.0)
-      order.refresh_shipment_rates
+      order.shipments.map(&:refresh_rates)
       order.save
       order.reload
 
