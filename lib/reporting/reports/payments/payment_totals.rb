@@ -23,7 +23,7 @@ module Reporting
 
         def total_by_payment_method(orders, pay_method)
           orders.map(&:payments).flatten.select { |payment|
-            payment.completed? && payment.payment_method.name.to_s.include?(pay_method)
+            payment.completed? && payment.payment_method&.name.to_s.include?(pay_method)
           }.sum(&:amount)
         end
       end
