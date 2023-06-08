@@ -24,6 +24,8 @@ class OrderWorkflow
   end
 
   def advance_to_payment
+    return unless order.state.in? ["cart", "address", "delivery"]
+
     advance_to_state("payment", advance_order_options)
   end
 

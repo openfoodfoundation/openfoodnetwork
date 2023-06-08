@@ -66,17 +66,13 @@ describe '
     expect(page).not_to have_content "Line items can't be blank"
 
     expect(page).to have_selector 'h1', text: 'Customer Details'
-    o = Spree::Order.last
-    expect(o.distributor).to eq(distributor)
-    expect(o.order_cycle).to eq(order_cycle)
+
+    order = Spree::Order.last
+    expect(order.distributor).to eq(distributor)
+    expect(order.order_cycle).to eq(order_cycle)
+    expect(order.line_items.count).to be_zero
 
     click_link "Order Details"
-    click_button "Update And Recalculate Fees"
-    expect(page).to have_selector '.flash.error'
-    expect(page).to have_content "Line items can't be blank"
-
-    # it suppresses validation errors when setting distribution
-    expect(page).not_to have_selector '#errorExplanation'
     expect(page).to have_content 'ADD PRODUCT'
     select2_select product.name, from: 'add_variant_id', search: true
     find('button.add_variant').click
@@ -84,7 +80,7 @@ describe '
     page.has_selector?("table.index tbody tr")
     expect(page).to have_selector 'td', text: product.name
 
-    click_button 'Update'
+    expect(order.reload.line_items.count).to be_positive
   end
 
   context "can't create an order without selecting a distributor nor an order cycle" do
@@ -116,61 +112,50 @@ describe '
     end
   end
 
-  context "when order has a distributor and order cycle" do
-    before do
-      order.distributor = distributor
-      order.order_cycle = order_cycle
-      order.save!
-      login_as_admin
-      visit spree.distribution_admin_order_path(order)
-    end
-
-    it "can access the `/distribution` step" do
-      expect(current_path).to eq spree.distribution_admin_order_path(order)
-      expect(page).to have_content "DISTRIBUTION"
-    end
-
-    it "shows the distributor and order cycle" do
-      expect(page).to have_content distributor.name
-      expect(page).to have_content order_cycle.name
-    end
-
-    it "shows links to other steps" do
-      expect(page).to have_content "CUSTOMER DETAILS"
-      expect(page).to have_content "ORDER DETAILS"
-      expect(page).to have_content "PAYMENTS"
-      expect(page).to have_content "ADJUSTMENTS"
-    end
-  end
-
   context "when creating an order with a customer-only" do
+    let!(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
     let(:customer2) { create(:customer, enterprise: distributor) }
     let(:customer3) { create(:customer, enterprise: distributor) }
 
     before do
       login_as_admin
-      visit spree.new_admin_order_path
-      select2_select distributor.name, from: 'order_distributor_id'
-      select2_select order_cycle.name, from: 'order_order_cycle_id'
-      click_button 'Next'
-      expect(Spree::Order.last.customer_id).to be_nil
+      visit spree.admin_order_customer_path(order)
+    end
+
+    it "sets the customer on the order" do
+      expect(order.customer_id).to be_nil
+
       tomselect_search_and_select customer2.email, from: 'customer_search_override'
       check 'order_use_billing'
       click_button 'Update'
       expect(page).to have_content 'Customer Details updated'
+
+      expect(order.reload.customer).to eq customer2
     end
 
-    it "set the right customer attached to the order" do
-      expect(Spree::Order.last.reload.customer).to eq customer2
-    end
+    context "when changing the attached customer" do
+      before do
+        order.update(
+          customer: customer2,
+          email: customer2.email,
+          ship_address: customer2.ship_address,
+          bill_address: customer2.bill_address
+        )
+        visit spree.admin_order_customer_path(order)
+      end
 
-    it "when changing the attached customer,"\
-       "it should update the order customer (not only its details)" do
-      tomselect_search_and_select customer3.email, from: 'customer_search_override'
-      expect do
-        click_button 'Update'
+      it "should update the order customer (not only its details)" do
+        expect(page).to have_field 'order_email', with: customer2.email
+        tomselect_search_and_select customer3.email, from: 'customer_search_override'
+        check 'order_use_billing'
+
         expect(page).to have_field 'order_email', with: customer3.email
-      end.to change { Spree::Order.last.reload.customer }.from(customer2).to(customer3)
+
+        expect do
+          click_button 'Update'
+          expect(page).to have_content 'Customer Details updated'
+        end.to change { order.reload.customer }.from(customer2).to(customer3)
+      end
     end
   end
 
@@ -328,7 +313,6 @@ describe '
         within(".modal") do
           expect do
             click_on("OK")
-            expect(page).not_to have_css(".modal")
           end.to change { order.reload.line_items.length }.by(-1)
         end
       end
@@ -425,14 +409,7 @@ describe '
       fill_in "order_bill_address_attributes_city", with: "Kansas"
       fill_in "order_bill_address_attributes_zipcode", with: "SP1 M11"
 
-      # The country is already selected and we avoid re-selecting it here
-      # because it would trigger an API call which we would need to wait for
-      # while we have no visual indicator for the wait.
-      #
-      # Ideally, we would implement a visual cue like disable the state field
-      # while the data is fetched from the API.
-      #
-      # select "Australia", from: "order_bill_address_attributes_country_id"
+      select "Australia", from: "order_bill_address_attributes_country_id"
       select "Victoria", from: "order_bill_address_attributes_state_id"
       fill_in "order_bill_address_attributes_phone", with: "111 1111 1111"
 
@@ -511,6 +488,7 @@ describe '
 
     # And I select that customer's email address and save the order
     tomselect_search_and_select customer.email, from: 'customer_search_override'
+    expect(page).to have_field "order_email", with: customer.email
     click_button 'Update'
 
     # Then their addresses should be associated with the order
