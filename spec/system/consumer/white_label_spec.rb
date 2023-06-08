@@ -33,7 +33,7 @@ describe 'White label setting' do
   shared_examples "hides the OFN navigation for mobile view as well" do
     context "mobile view" do
       before do
-        browser_as_small
+        browse_as_small
       end
 
       after do
@@ -53,10 +53,10 @@ describe 'White label setting' do
     end
   end
 
-  shared_examples "does not hides the OFN navigation for mobile view as well" do
+  shared_examples "does not hide the OFN navigation for mobile view as well" do
     context "mobile view" do
       before do
-        browser_as_small
+        browse_as_small
       end
 
       after do
@@ -86,7 +86,7 @@ describe 'White label setting' do
         expect(page).to have_selector ofn_navigation
       end
 
-      it_behaves_like "does not hides the OFN navigation for mobile view as well"
+      it_behaves_like "does not hide the OFN navigation for mobile view as well"
     end
 
     context "for cart path" do
@@ -98,7 +98,7 @@ describe 'White label setting' do
         expect(page).to have_selector ofn_navigation
       end
 
-      it_behaves_like "does not hides the OFN navigation for mobile view as well"
+      it_behaves_like "does not hide the OFN navigation for mobile view as well"
     end
 
     context "for root path" do
@@ -110,7 +110,7 @@ describe 'White label setting' do
         expect(page).to have_selector ofn_navigation
       end
 
-      it_behaves_like "does not hides the OFN navigation for mobile view as well"
+      it_behaves_like "does not hide the OFN navigation for mobile view as well"
     end
   end
 
@@ -142,7 +142,7 @@ describe 'White label setting' do
             expect(page).to have_selector ofn_navigation
           end
 
-          it_behaves_like "does not hides the OFN navigation for mobile view as well"
+          it_behaves_like "does not hide the OFN navigation for mobile view as well"
         end
       end
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module UIComponentHelper
-  def browser_as_small
+  def browse_as_small
     Capybara.current_session.current_window
       .resize_to(640, 480)
   end
