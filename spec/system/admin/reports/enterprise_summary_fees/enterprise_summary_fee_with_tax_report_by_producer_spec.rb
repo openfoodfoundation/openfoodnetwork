@@ -440,7 +440,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         }
 
         it 'generates the report and displays fees for the respective supplier' do
-          pending("test case (1), see #10797")
+          # pending("test case (1), see #10797")
 
           login_as distributor_owner
           visit admin_reports_path
@@ -448,6 +448,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
           expect(page).to have_button("Go")
           click_on "Go"
+
           expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
           table = page.find("table.report__table tbody")
@@ -628,29 +629,29 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
     let(:coordinator_state_tax_1){
       ["Distributor", "Supplier", "Yes", "oc1", "Adminstration", "admin", "Distributor",
-       "tax_category", "State", "0.015", "19.21", "0.3", "20.0"].join(" ")
+       "tax_category", "State", "0.015", "19.21", "0.3", "19.51"].join(" ")
     }
     let(:coordinator_country_tax_1){
       ["Distributor", "Supplier", "Yes", "oc1", "Adminstration", "admin", "Distributor",
-       "tax_category", "Country", "0.025", "19.21", "0.49", "20.0"].join(" ")
+       "tax_category", "Country", "0.025", "19.21", "0.49", "19.7"].join(" ")
     }
 
     let(:supplier_state_tax_1){
       ["Distributor", "Supplier", "Yes", "oc1", "Transport", "transport", "Supplier",
-       "tax_category", "State", "0.015", "14.41", "0.22", "15.0"].join(" ")
+       "tax_category", "State", "0.015", "14.41", "0.22", "14.63"].join(" ")
     }
     let(:supplier_country_tax_1){
       ["Distributor", "Supplier", "Yes", "oc1", "Transport", "transport", "Supplier",
-       "tax_category", "Country", "0.025", "14.41", "0.37", "15.0"].join(" ")
+       "tax_category", "Country", "0.025", "14.41", "0.37", "14.78"].join(" ")
     }
 
     let(:distributor_state_tax_1){
       ["Distributor", "Supplier", "Yes", "oc1", "Packing", "packing", "Distributor",
-       "tax_category", "State", "0.015", "9.61", "0.15", "10.0"].join(" ")
+       "tax_category", "State", "0.015", "9.61", "0.15", "9.76"].join(" ")
     }
     let(:distributor_country_tax_1){
       ["Distributor", "Supplier", "Yes", "oc1", "Packing", "packing", "Distributor",
-       "tax_category", "Country", "0.025", "9.61", "0.24", "10.0"].join(" ")
+       "tax_category", "Country", "0.025", "9.61", "0.24", "9.85"].join(" ")
     }
 
     let(:cost_of_produce_1){
@@ -669,29 +670,29 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     # for supplier 2, oc2
     let(:coordinator_state_tax_2){
       ["Distributor", "Supplier2", "Yes", "oc2", "Adminstration", "admin", "Distributor",
-       "tax_category", "State", "0.015", "19.21", "0.3", "20.0"].join(" ")
+       "tax_category", "State", "0.015", "19.21", "0.3", "19.51"].join(" ")
     }
     let(:coordinator_country_tax_2){
       ["Distributor", "Supplier2", "Yes", "oc2", "Adminstration", "admin", "Distributor",
-       "tax_category", "Country", "0.025", "19.21", "0.49", "20.0"].join(" ")
+       "tax_category", "Country", "0.025", "19.21", "0.49", "19.7"].join(" ")
     }
 
     let(:supplier_state_tax_2){
       ["Distributor", "Supplier2", "Yes", "oc2", "Sales", "sales", "Supplier2",
-       "tax_category", "State", "0.015", "24.02", "0.37", "25.0"].join(" ")
+       "tax_category", "State", "0.015", "24.02", "0.37", "24.39"].join(" ")
     }
     let(:supplier_country_tax_2){
       ["Distributor", "Supplier2", "Yes", "oc2", "Sales", "sales", "Supplier2",
-       "tax_category", "Country", "0.025", "24.02", "0.61", "25.0"].join(" ")
+       "tax_category", "Country", "0.025", "24.02", "0.61", "24.63"].join(" ")
     }
 
     let(:distributor_state_tax_2){
       ["Distributor", "Supplier2", "Yes", "oc2", "Packing", "packing", "Distributor",
-       "tax_category", "State", "0.015", "9.61", "0.15", "10.0"].join(" ")
+       "tax_category", "State", "0.015", "9.61", "0.15", "9.76"].join(" ")
     }
     let(:distributor_country_tax_2){
       ["Distributor", "Supplier2", "Yes", "oc2", "Packing", "packing", "Distributor",
-       "tax_category", "Country", "0.025", "9.61", "0.24", "10.0"].join(" ")
+       "tax_category", "Country", "0.025", "9.61", "0.24", "9.85"].join(" ")
     }
 
     let(:cost_of_produce_2){
@@ -709,7 +710,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
     context "with line items from a single supplier" do
       it 'generates the report and displays fees for the respective suppliers' do
-        pending("test case (3), see #10797")
+        # pending("test case (3), see #10797")
         login_as distributor_owner
         visit admin_reports_path
         click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
