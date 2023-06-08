@@ -13,6 +13,8 @@ module Spree
 
     acts_as_paranoid
 
+    self.ignored_columns = [:is_master]
+
     searchable_attributes :sku, :display_as, :display_name
     searchable_associations :product, :default_price
     searchable_scopes :active, :deleted
