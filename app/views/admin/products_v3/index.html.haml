@@ -32,7 +32,8 @@
     %tbody
       - @products.each do |product|
         %tr
-          %th.align-left=  product.name
+          %td.align-left
+            %b=  product.name
           %td.align-right= product.sku
           %td.align-right= "#{product.unit_value&.round(3)} #{product.variant_unit}"
           %td.align-right= product.on_hand || 0
