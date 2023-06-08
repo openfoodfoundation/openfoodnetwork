@@ -127,9 +127,11 @@ describe "As a consumer, I want to see adjustment breakdown" do
           choose "Delivery"
 
           click_button "Next - Payment method"
+
           # add Voucher
           fill_in "Enter voucher code", with: voucher.code
           click_button("Apply")
+          expect(page).to have_selector ".voucher-added"
 
           click_on "Next - Order summary"
           click_on "Complete order"
