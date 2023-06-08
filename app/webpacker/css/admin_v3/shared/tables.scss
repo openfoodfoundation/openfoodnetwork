@@ -16,7 +16,7 @@ table {
     }
 
     &:first-child {
-      border-left: 1px solid $color-border;
+      border-left: 4px solid $color-border;
     }
 
     a {
@@ -140,7 +140,7 @@ table {
   tbody {
     tr {
       td {
-        border-top: 4px solid $color-border; // TODO: Let the table background colour come through, to enable drop shadows
+        border-bottom: 4px solid $color-border; // TODO: Let the table background colour come through, to enable drop shadows
       }
 
       &:hover td {
