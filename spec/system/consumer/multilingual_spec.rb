@@ -100,7 +100,8 @@ describe 'Multilingual' do
   end
 
   describe "using the language switcher UI" do
-    before { browse_as_large }
+    around { |example| browse_as_large { example.run } }
+
     context "when there is only one language available" do
       before do
         allow(ENV).to receive(:[]).and_call_original

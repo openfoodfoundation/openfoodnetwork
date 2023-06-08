@@ -32,13 +32,7 @@ describe 'White label setting' do
 
   shared_examples "hides the OFN navigation for mobile view as well" do
     context "mobile view" do
-      before do
-        browse_as_small
-      end
-
-      after do
-        browse_as_default
-      end
+      around { |example| browse_as_small { example.run } }
 
       it "hides OFN navigation" do
         find("a.left-off-canvas-toggle").click
@@ -55,13 +49,7 @@ describe 'White label setting' do
 
   shared_examples "does not hide the OFN navigation for mobile view as well" do
     context "mobile view" do
-      before do
-        browse_as_small
-      end
-
-      after do
-        browse_as_default
-      end
+      around { |example| browse_as_small { example.run } }
 
       it "does not hide OFN navigation" do
         find("a.left-off-canvas-toggle").click
