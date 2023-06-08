@@ -788,9 +788,10 @@ describe "As a consumer, I want to checkout my order" do
                 click_on "Remove code"
               end
 
-              within '.voucher' do
+              within '#voucher-section' do
                 expect(page).to have_button("Apply", disabled: true)
               end
+
               expect(order.voucher_adjustments.length).to eq(0)
             end
           end
