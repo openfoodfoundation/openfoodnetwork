@@ -707,6 +707,8 @@ describe "As a consumer, I want to checkout my order" do
       end
 
       describe "vouchers" do
+        before { Flipper.enable :vouchers }
+
         context "with no voucher available" do
           before do
             visit checkout_step_path(:payment)
