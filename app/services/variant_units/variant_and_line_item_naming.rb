@@ -22,7 +22,8 @@ module VariantUnits
     end
 
     def product_and_full_name
-      return "#{product.name} - #{full_name}" unless full_name.start_with? product.name
+      return product.name if full_name.blank?
+      return "#{product.name} - #{full_name}" unless full_name.start_with?(product.name)
 
       full_name
     end
@@ -51,7 +52,7 @@ module VariantUnits
       return display_as if has_attribute?(:display_as) && display_as.present?
       return variant.display_as if variant_display_as?
 
-      options_text
+      options_text.to_s
     end
 
     def assign_units
