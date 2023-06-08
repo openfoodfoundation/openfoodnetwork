@@ -41,8 +41,8 @@ class VoucherAdjustmentsController < BaseController
 
     adjustment = voucher.create_adjustment(voucher.code, @order)
 
-    if !adjustment.valid?
-      @order.errors.add(:voucher, I18n.t('split_checkout.errors.add_voucher_error'))
+    unless adjustment.valid?
+      @order.errors.add(:voucher_code, I18n.t('split_checkout.errors.add_voucher_error'))
       adjustment.errors.each { |error| @order.errors.import(error) }
       return false
     end
