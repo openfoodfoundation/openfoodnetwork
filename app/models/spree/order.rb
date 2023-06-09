@@ -62,6 +62,10 @@ module Spree
     has_many :line_item_adjustments, through: :line_items, source: :adjustments
     has_many :shipment_adjustments, through: :shipments, source: :adjustments
     has_many :all_adjustments, class_name: 'Spree::Adjustment', dependent: :destroy
+    has_many :all_adjustments_but_vouchers,
+             -> { where.not(originator_type: 'Voucher') },
+             class_name: 'Spree::Adjustment',
+             dependent: :destroy
     has_many :voucher_adjustments,
              -> {
                where(originator_type: 'Voucher')
@@ -212,6 +216,8 @@ module Spree
     #   Subscriptions place orders at the beginning of an order cycle. They need to
     #   be completed to draw from stock levels and trigger emails.
     def payment_required?
+      return true if voucher_adjustments.present?
+
       total.to_f > 0.0 && !skip_payment_for_subscription?
     end
 

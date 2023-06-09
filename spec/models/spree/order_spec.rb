@@ -1448,4 +1448,25 @@ describe Spree::Order do
       expect(order.voucher_adjustments).to eq(expected_adjustments)
     end
   end
+
+  describe "#all_adjustments_but_vouchers" do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { create(:order, user: user, distributor: distributor) }
+    let(:voucher) { create(:voucher, code: 'new_code', enterprise: order.distributor) }
+    let(:enterprise_fee) { create(:enterprise_fee) }
+
+    it "returns an array of adjusment exluding voucher adjustment" do
+      fee_adjustment = create(
+        :adjustment,
+        adjustable: order,
+        originator: enterprise_fee,
+        amount: 100,
+        order: order,
+        state: "closed"
+      )
+      voucher.create_adjustment(voucher.code, order)
+
+      expect(order.all_adjustments_but_vouchers).to eq([fee_adjustment])
+    end
+  end
 end

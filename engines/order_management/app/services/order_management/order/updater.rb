@@ -137,7 +137,8 @@ module OrderManagement
       end
 
       def update_all_adjustments
-        order.all_adjustments.reload.each(&:update_adjustment!)
+        # We skip voucher_adjustment as their calculation is handled by VoucherAdjustmentsService
+        adjustments = order.all_adjustments_but_vouchers.reload.each(&:update_adjustment!)
       end
 
       def before_save_hook
