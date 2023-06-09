@@ -146,4 +146,81 @@ describe VoucherAdjustmentsService do
       end
     end
   end
+
+  describe ".reset" do
+    subject(:voucher_adjustment) { order.voucher_adjustments.first }
+
+    let(:enterprise) { build(:enterprise) }
+    let(:voucher) { create(:voucher, code: 'new_code', enterprise: enterprise) }
+    let(:order) { create(:order_with_totals) }
+
+    before do
+      adjustment = voucher.create_adjustment(voucher.code, order)
+      adjustment.amount = 12
+      adjustment.save!
+    end
+
+    context "when the order has no voucher adjustment" do
+      it "doesn't blow up" do
+        order = create(:order_with_totals)
+        expect { VoucherAdjustmentsService.reset(order) }.to_not raise_error
+      end
+    end
+
+    it "set the amount to 0" do
+      VoucherAdjustmentsService.reset(order)
+
+      expect(voucher_adjustment.reload.amount.to_f).to eq(0.0)
+    end
+
+    context "when adjustment is closed" do
+      before do
+        voucher_adjustment.close
+        VoucherAdjustmentsService.reset(order)
+      end
+
+      it "re open the adjustment" do
+        expect(voucher_adjustment.reload.state).to eq("open")
+      end
+
+    end
+
+    context "when adjustment has an included tax" do
+      before do
+        voucher_adjustment.included_tax = -10.0
+        voucher_adjustment.save!
+
+        VoucherAdjustmentsService.reset(order)
+      end
+
+      it "set the included_tax to 0" do
+        expect(voucher_adjustment.reload.included_tax.to_f).to eq(0.0)
+      end
+    end
+
+    context "when adjustment has a separate tax asjustment" do
+      before do
+        # Create a separate Tax asjustment
+        adjustment_attributes = {
+          amount: 10.0,
+          originator: voucher_adjustment.originator,
+          order: order,
+          label: "Tax #{voucher_adjustment.label}",
+          mandatory: false,
+          state: 'closed',
+          tax_category: nil,
+          included_tax: 0
+        }
+        order.adjustments.create!(adjustment_attributes)
+      end
+
+      it "removes the tax adjustment" do
+        expect do
+          VoucherAdjustmentsService.reset(order)
+        end.to change { order.voucher_adjustments.reload.count }.by(-1)
+
+        expect(order.voucher_adjustments.where('label LIKE ?', "Tax%")).to be_empty
+      end
+    end
+  end
 end

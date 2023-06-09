@@ -28,6 +28,24 @@ class VoucherAdjustmentsService
     adjustment.close
   end
 
+  # Reset the voucher adjustment associated with the order:
+  #  - set amount to 0
+  #  - set state to open
+  def self.reset(order)
+    adjustment = order.voucher_adjustments.first
+
+    return if adjustment.nil?
+    # reset the amount and included_tax to 0
+    adjustment.amount = 0
+    adjustment.included_tax = 0
+    adjustment.save
+
+    # Remove any tax adjustment
+    order.voucher_adjustments.where('label LIKE ?', "Tax%").destroy_all
+
+    adjustment.open
+  end
+
   def self.handle_tax_excluded_from_price(order, amount)
     voucher_rate = amount / order.total
 
