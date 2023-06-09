@@ -15,6 +15,12 @@ module Spree
               content_type: %r{\Aimage/(png|jpeg|gif|jpg|svg\+xml|webp)\Z}
     validate :no_attachment_errors
 
+    def self.default_image_url(size)
+      return "/noimage/product.png" unless size&.to_sym.in?([:mini, :small, :product, :large])
+
+      "/noimage/#{size}.png"
+    end
+
     def variant(name)
       if attachment.variable?
         attachment.variant(name)
@@ -24,11 +30,17 @@ module Spree
     end
 
     def url(size)
-      return unless attachment.attached?
+      return self.class.default_image_url(size) unless attachment.attached?
       return variant(size).processed.url if attachment.service.name == :amazon_public
 
       url_for(variant(size))
+    rescue ActiveStorage::Error => e
+      Rails.logger.error(e.message)
+
+      self.class.default_image_url(size)
     end
+
+    private
 
     # if there are errors from the plugin, then add a more meaningful message
     def no_attachment_errors
