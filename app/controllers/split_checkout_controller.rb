@@ -24,6 +24,9 @@ class SplitCheckoutController < ::BaseController
   def edit
     redirect_to_step_based_on_order unless params[:step]
     check_step if params[:step]
+    # We want the voucher to re applied each time we move to the summary step
+    VoucherAdjustmentsService.reset(@order) if payment_step?
+
     recalculate_tax if params[:step] == "summary"
 
     flash_error_when_no_shipping_method_available if available_shipping_methods.none?

@@ -67,7 +67,18 @@ module Spree
       # This action is called either from the cart page when the order is not yet complete, or from
       # the edit order page (frontoffice) if the hub allows users to update completed orders.
       if @order.contents.update_cart(order_params)
+        VoucherAdjustmentsService.reset(@order)
+
         @order.recreate_all_fees! # Enterprise fees on line items and on the order itself
+
+        # Re apply voucher if needed
+        if @order.voucher_adjustments.present?
+          VoucherAdjustmentsService.calculate(@order)
+          # update order to take into account the voucher we applied
+          # TODO this is not great as this also called in @order.recreate_all_fees!, ideally we
+          # would recreate_all_fees!, calculate voucher if needed and then update_order!
+          @order.update_order!
+        end
 
         if @order.complete?
           @order.update_payment_fees!
