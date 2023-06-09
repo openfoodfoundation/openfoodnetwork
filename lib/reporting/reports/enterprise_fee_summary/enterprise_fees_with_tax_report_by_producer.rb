@@ -219,8 +219,12 @@ module Reporting
 
         def order_cycle_totals_row
           proc do |_key, items, _rows|
+            supplier_id = items.first.first[2] # supplier id used in the grouped line items
             order_ids = items.flat_map(&:second).map(&:id).uniq
             line_items = items.flat_map(&:second).uniq.map(&:line_items).flatten
+              .filter do |line_item|
+                line_item.supplier_id == supplier_id
+              end
 
             total_excl_tax = total_fees_excl_tax(order_ids) + line_items_excl_tax(line_items)
             tax = tax_for_order_ids(order_ids) + tax_for_line_items(line_items)
