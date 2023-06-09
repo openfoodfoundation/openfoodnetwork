@@ -28,7 +28,7 @@ module Spree
 
     acts_as_paranoid
 
-    searchable_attributes :supplier_id, :primary_taxon_id, :meta_keywords
+    searchable_attributes :supplier_id, :primary_taxon_id, :meta_keywords, :sku
     searchable_associations :supplier, :properties, :primary_taxon, :variants
     searchable_scopes :active, :with_properties
 
