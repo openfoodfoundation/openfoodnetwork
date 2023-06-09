@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "spree/localized_number"
+
 module Spree
   class Payment < ApplicationRecord
     include Spree::Payment::Processing
