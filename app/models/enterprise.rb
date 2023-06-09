@@ -295,21 +295,15 @@ class Enterprise < ApplicationRecord
   end
 
   def logo_url(name)
-    return unless logo.variable?
-
-    url_for(logo.variant(name))
+    image_url_for(logo, name)
   end
 
   def promo_image_url(name)
-    return unless promo_image.variable?
-
-    url_for(promo_image.variant(name))
+    image_url_for(promo_image, name)
   end
 
   def white_label_logo_url(name = :default)
-    return unless white_label_logo.variable?
-
-    url_for(white_label_logo.variant(name))
+    image_url_for(white_label_logo, name)
   end
 
   def website
@@ -459,6 +453,17 @@ class Enterprise < ApplicationRecord
     self.white_label_logo_link = "http://#{white_label_logo_link}" if uri.scheme.nil?
   rescue URI::InvalidURIError
     errors.add(:white_label_logo_link, I18n.t(:invalid_url))
+  end
+
+  def image_url_for(image, name)
+    return unless image.variable?
+    return image.variant(name).processed.url if image.attachment.service.name == :amazon_public
+
+    url_for(image.variant(name))
+  rescue ActiveStorage::Error => e
+    Rails.logger.error(e.message)
+
+    nil
   end
 
   def current_exchange_variants
