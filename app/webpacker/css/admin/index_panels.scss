@@ -1,5 +1,5 @@
 tbody.panel-ctrl {
-  td.panel-toggle{
+  td.panel-toggle {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -60,14 +60,14 @@ tbody.panel-ctrl {
       }
 
       i.icon-status::before {
-        opacity: 1.0;
+        opacity: 1;
       }
     }
   }
 
-  &.expanded{
-    >tr:not(.panel-row) {
-      >td {
+  &.expanded {
+    > tr:not(.panel-row) {
+      > td {
         border-bottom: 1px solid #6788a2;
 
         &.selected {
@@ -86,7 +86,7 @@ tbody.panel-ctrl {
           }
 
           i.icon-status::before {
-            opacity: 1.0;
+            opacity: 1;
           }
 
           i.icon-chevron::before {
@@ -99,12 +99,12 @@ tbody.panel-ctrl {
 
   tr.panel-row {
     &:hover {
-      >td {
+      > td {
         background-color: #ffffff;
       }
     }
 
-    >td {
+    > td {
       border-color: #6788a2;
       padding: 0;
       .panel {
@@ -114,16 +114,18 @@ tbody.panel-ctrl {
           }
         }
 
-        .row{
+        .row {
           margin: 0px -4px;
 
           padding: 20px 0px;
 
-          .column.alpha, .columns.alpha {
+          .column.alpha,
+          .columns.alpha {
             padding-left: 20px;
           }
 
-          .column.omega, .columns.omega {
+          .column.omega,
+          .columns.omega {
             padding-right: 20px;
           }
         }

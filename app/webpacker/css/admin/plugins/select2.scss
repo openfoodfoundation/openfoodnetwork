@@ -1,5 +1,6 @@
 .select2-container {
-  &:hover .select2-choice, &.select2-container-active .select2-choice {
+  &:hover .select2-choice,
+  &.select2-container-active .select2-choice {
     background-color: $color-sel-hover-bg !important;
     border-color: $color-sel-hover-bg !important;
   }
@@ -35,7 +36,7 @@
     }
 
     &.select2-dropdown-open .select2-choice div b {
-      @extend .icon-caret-up
+      @extend .icon-caret-up;
     }
   }
 }
@@ -105,7 +106,8 @@
 
     &.select2-highlighted {
       .select2-result-label {
-        &, h6 {
+        &,
+        h6 {
           color: $color-1 !important;
         }
       }
@@ -118,7 +120,8 @@
       overflow: auto;
     }
 
-    &.select2-no-results, &.select2-searching {
+    &.select2-no-results,
+    &.select2-searching {
       padding: 5px;
       background-color: transparent;
       color: $color-body-text;
@@ -134,7 +137,8 @@
 }
 
 .select2-container-multi {
-  &.select2-container-active, &.select2-dropdown-open {
+  &.select2-container-active,
+  &.select2-dropdown-open {
     .select2-choices {
       border-color: $color-sel-hover-bg !important;
       box-shadow: none;

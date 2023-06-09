@@ -5,7 +5,8 @@ label.disabled {
   pointer-events: none;
 }
 
-input[type='button'], input[type='submit'] {
+input[type="button"],
+input[type="submit"] {
   &:disabled {
     background-color: $disabled-background;
     color: #ffffff;
@@ -14,7 +15,7 @@ input[type='button'], input[type='submit'] {
   &.secondary:disabled {
     background-color: #ebf3fb;
     border: 1px solid #ebf3fb;
-    color: #AFCFEF;
+    color: #afcfef;
   }
 }
 

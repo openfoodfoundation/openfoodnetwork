@@ -2,11 +2,11 @@
   text-align: center;
 }
 
-.text-right{
+.text-right {
   text-align: right;
 }
 
-.text-bold{
+.text-bold {
   font-weight: bold;
 }
 
@@ -32,7 +32,8 @@ text-angular .ta-editor {
   left: 275px;
 }
 
-span.error, div.error:not(.flash) {
+span.error,
+div.error:not(.flash) {
   color: $warning-red;
 }
 
@@ -42,8 +43,10 @@ span.error, div.error:not(.flash) {
   margin-bottom: 0;
 }
 
-input.red, a.button.red, button.red {
-	background-color: $warning-red;
+input.red,
+a.button.red,
+button.red {
+  background-color: $warning-red;
   margin-right: 5px;
   color: #ffffff;
 }
@@ -56,7 +59,7 @@ a.button.red {
 }
 
 input.orange {
-	background-color: #FF9848;
+  background-color: #ff9848;
   margin-right: 5px;
 }
 
@@ -68,7 +71,7 @@ input.search {
 }
 
 a {
- cursor:pointer;
+  cursor: pointer;
 }
 
 a.action--disabled {
@@ -100,7 +103,8 @@ form.order_cycle {
     ul {
       margin-left: 1em;
     }
-    p, li {
+    p,
+    li {
       margin: 0.5em 0;
     }
   }
@@ -129,7 +133,7 @@ form.order_cycle {
       width: 18%;
       min-height: 7.5em;
       margin: 0 1% 1% 0;
-      border: 1px solid #DAE7FF;
+      border: 1px solid #dae7ff;
       padding: 5px;
 
       .exchange-product-details {
@@ -149,10 +153,10 @@ form.order_cycle {
     }
     .collection-details {
       input {
-        width: 90%
+        width: 90%;
       }
       span {
-        font-size: 1rem
+        font-size: 1rem;
       }
     }
   }
@@ -195,28 +199,34 @@ table#listing_enterprise_groups {
 }
 
 .fullwidth_inputs {
-  #{$text-inputs}, select {
+  #{$text-inputs},
+  select {
     width: 100%;
   }
 }
 
 // TODO: remove this, use class below
 #no_results {
-  font-weight:bold;
+  font-weight: bold;
   color: $warning-red;
 }
 
 .no-results {
-  font-weight:bold;
+  font-weight: bold;
   color: $warning-red;
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: $warning-red;
   }
 }
 
 .field_with_errors > input {
-    border-color: red;
+  border-color: red;
 }
 
 // textAngular wysiwyg
@@ -248,12 +258,12 @@ text-angular {
       margin-right: 0.25em;
     }
     button.active:not(:hover) {
-      box-shadow: 0 0 0.7em rgba(0,0,0,0.3) inset;
+      box-shadow: 0 0 0.7em rgba(0, 0, 0, 0.3) inset;
       background-color: #4583bf;
     }
   }
   a {
-    color: $spree-green
+    color: $spree-green;
   }
 }
 
@@ -263,7 +273,9 @@ span.required {
 }
 
 table td.actions {
-  .icon-trash, .icon-edit, icon-copy {
+  .icon-trash,
+  .icon-edit,
+  icon-copy {
     &.disabled {
       border-color: #d0d0d0;
       color: #c0c0c0;

@@ -1,16 +1,17 @@
 #taxonomy_tree {
-  > ul, .jstree-icon {
+  > ul,
+  .jstree-icon {
     background-image: none;
   }
-  
+
   .jstree-icon {
     @extend [class^="icon-"], :before;
   }
 
-  .jstree-open > .jstree-icon {    
+  .jstree-open > .jstree-icon {
     @extend .icon-caret-down;
   }
-  .jstree-closed > .jstree-icon {    
+  .jstree-closed > .jstree-icon {
     @extend .icon-caret-right;
   }
 
@@ -31,13 +32,13 @@
 
       .jstree-icon {
         padding-left: 0px;
-        @extend .icon-move;   
+        @extend .icon-move;
       }
     }
   }
 }
 
-#vakata-dragged.jstree-apple .jstree-invalid, 
+#vakata-dragged.jstree-apple .jstree-invalid,
 #vakata-dragged.jstree-apple .jstree-ok,
 #jstree-marker {
   background-image: none !important;
@@ -45,7 +46,7 @@
   @extend [class^="icon-"], :before;
 }
 #vakata-dragged.jstree-apple .jstree-invalid {
-  @extend .icon-remove;  
+  @extend .icon-remove;
   color: $color-5;
 }
 #vakata-dragged.jstree-apple .jstree-ok {
@@ -66,12 +67,11 @@
   margin-top: -2px !important;
   border: none !important;
   border-bottom: 1px solid $color-body-text !important;
-  background-color:  very-light($color-3) !important;
+  background-color: very-light($color-3) !important;
 
   -webkit-box-shadow: none !important;
-     -moz-box-shadow: none !important;
-          box-shadow: none !important;
-  
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 #vakata-contextmenu {
@@ -83,7 +83,7 @@
   @include border-radius($border-radius !important);
 
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
@@ -109,12 +109,12 @@
       -webkit-box-shadow: none !important;
       line-height: inherit !important;
       padding: 5px 10px !important;
-      margin: 0 !important;      
+      margin: 0 !important;
     }
   }
 
   li:first-child a:hover:before {
-    content: '';
+    content: "";
     position: absolute;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
