@@ -34,7 +34,6 @@ describe '
   describe "Background processing" do
     before do
       Flipper.enable(:background_reports)
-      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
     end
 
     it "can run the customers report" do
@@ -42,7 +41,7 @@ describe '
       visit admin_report_path(
         report_type: :customers, report_subtype: :mailing_list
       )
-      click_button "Go"
+      generate_report
 
       expect(page).to have_selector "#report-table"
       expect(page).to have_content "EMAIL FIRST NAME"
@@ -67,23 +66,20 @@ describe '
       visit admin_report_path(
         report_type: :customers, report_subtype: :mailing_list
       )
-      click_button "Go"
+      generate_report
       expect(page).to have_content "Späti"
       expect(page).to have_content "EMAIL FIRST NAME"
       expect(page).to have_content "Müller"
     end
 
     it "displays a friendly timeout message and offers download" do
-      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
       login_as_admin
       visit admin_report_path(
         report_type: :customers, report_subtype: :mailing_list
       )
       stub_const("ReportJob::NOTIFICATION_TIME", 0)
 
-      click_button "Go"
-
-      perform_enqueued_jobs(only: ReportJob)
+      generate_report
 
       # We also get an email.
       perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
@@ -112,6 +108,43 @@ describe '
         expect { URI.parse(report_link).read }
           .to raise_error OpenURI::HTTPError, "404 Not Found"
       end
+    end
+
+    pending "allows the report to finish before the loading screen is rendered" do
+      login_as_admin
+      visit admin_report_path(
+        report_type: :customers, report_subtype: :mailing_list
+      )
+
+      # The controller wants to execute the ReportJob in the background.
+      # But we change the logic here, execute it immediately and then wait
+      # until the report is displayed in the browser.
+      # The controller will still be waiting while the browser is receiving
+      # the report via web socket.
+      breakpoint = Mutex.new
+      breakpoint.lock
+      expect(ReportJob).to receive(:perform_later) do |**args|
+        ReportJob.perform_now(**args)
+        breakpoint.synchronize { "continue after unlocked" }
+      end
+      click_button "Go"
+
+      expect(page).to have_selector "#report-table table"
+      expect(page).to have_content "EMAIL FIRST NAME"
+
+      # Now that we see the report, we need to make sure that it's not replaced
+      # by the "loading" spinner when the controller action finishes.
+      # Unlocking the breakpoint will continue execution of the controller.
+      breakpoint.unlock
+
+      # We have to wait to be sure that the "loading" spinner won't appear
+      # within the next half second. The default wait time would wait for
+      # 10 seconds which slows down the spec.
+      using_wait_time 0.5 do
+        page.has_selector? ".loading"
+      end
+
+      expect(page).to have_no_selector ".loading"
     end
   end
 
@@ -768,5 +801,13 @@ describe '
        amount.to_s, '', opts[:account_code], tax_type, '', '', '', '', Spree::Config.currency,
        '', 'N']
     end
+  end
+
+  def generate_report
+    click_button "Go"
+    expect(page).to have_selector ".loading"
+    perform_enqueued_jobs(only: ReportJob)
+    expect(page).to have_no_selector ".loading"
+    expect(page).to have_selector "#report-table table"
   end
 end
