@@ -669,6 +669,46 @@ distributors: [distributor4, distributor5]) }
         expect(order.reload.shipments.any?(&:shipped?)).to be true
         expect(order.shipment_state).to eq("shipped")
       end
+
+      context "mouse-hovering" do
+        before do
+          login_as_admin
+          visit spree.admin_orders_path
+        end
+
+        it "displays Ship and Capture tooltips" do
+          within "tr#order_#{order2.id}" do
+            # checks shipment state
+            expect(page).to have_content "READY"
+
+            # mouse-hovers and finds tooltip
+            find(".icon-road").hover
+            expect(page).to have_content "SHIP"
+          end
+
+          within "tr#order_#{order.id}" do
+            # checks shipment state
+            expect(page).to have_content "PENDING"
+
+            # mouse-hovers and finds tooltip
+            find(".icon-capture").hover
+            expect(page).to have_content "CAPTURE"
+          end
+        end
+
+        it "displays Edit tooltip" do
+          pending("issue #10956")
+
+          within "tr#order_#{order.id}" do
+            # checks shipment state
+            expect(page).to have_content "PENDING"
+
+            # mouse-hovers and finds tooltip
+            find(".icon-edit").hover
+            expect(page).to have_content "EDIT"
+          end
+        end
+      end
     end
   end
 
