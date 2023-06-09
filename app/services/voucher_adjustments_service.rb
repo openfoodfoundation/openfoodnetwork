@@ -35,6 +35,7 @@ class VoucherAdjustmentsService
     adjustment = order.voucher_adjustments.first
 
     return if adjustment.nil?
+
     # reset the amount and included_tax to 0
     adjustment.amount = 0
     adjustment.included_tax = 0

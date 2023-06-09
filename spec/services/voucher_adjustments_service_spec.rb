@@ -182,7 +182,6 @@ describe VoucherAdjustmentsService do
       it "re open the adjustment" do
         expect(voucher_adjustment.reload.state).to eq("open")
       end
-
     end
 
     context "when adjustment has an included tax" do
