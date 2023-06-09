@@ -178,7 +178,9 @@ module Admin
       when :for_order_cycle
         @order_cycle = OrderCycle.find_by(id: params[:order_cycle_id]) if params[:order_cycle_id]
         coordinator = Enterprise.find_by(id: params[:coordinator_id]) if params[:coordinator_id]
-        @order_cycle = OrderCycle.new(coordinator: coordinator) if @order_cycle.nil? && coordinator.present?
+        if @order_cycle.nil? && coordinator.present?
+          @order_cycle = OrderCycle.new(coordinator: coordinator)
+        end
 
         enterprises = OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, @order_cycle)
           .visible_enterprises
@@ -324,7 +326,9 @@ module Admin
                                                      :producer_properties_attributes).nil?
         names = Spree::Property.pluck(:name)
         enterprise_params[:producer_properties_attributes].each do |key, property|
-          enterprise_params[:producer_properties_attributes].delete key unless names.include? property[:property_name]
+          unless names.include? property[:property_name]
+            enterprise_params[:producer_properties_attributes].delete key
+          end
         end
       end
     end
