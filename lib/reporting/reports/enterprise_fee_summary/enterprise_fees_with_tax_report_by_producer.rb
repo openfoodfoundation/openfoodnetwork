@@ -238,7 +238,11 @@ module Reporting
 
         def order_cycle_line_items_row
           proc do |key, items, _rows|
+            supplier_id = items.first.first[2] # supplier id used in the grouped line items
             line_items = items.flat_map(&:last).uniq.map(&:line_items).flatten
+              .filter do |line_item|
+                line_item.supplier_id == supplier_id
+              end
             producer = producer(items.first)
 
             total_excl_tax = line_items_excl_tax(line_items)
