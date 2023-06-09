@@ -30,8 +30,17 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
       let(:params) { { q: "product 1" } }
 
       it "returns all products whose names or SKUs match the query" do
-        expect(result).to include v1
-        expect(result).to_not include v2, v3, v4
+        expect(result).to include v1, v2
+        expect(result).to_not include v3, v4
+      end
+
+      context "matching both product SKUs and variant SKUs" do
+        let!(:v5) { create(:variant, sku: "Product 1b") }
+
+        it "returns all variants whose SKU or product's SKU match the query" do
+          expect(result).to include v1, v2, v5
+          expect(result).to_not include v3, v4
+        end
       end
     end
 

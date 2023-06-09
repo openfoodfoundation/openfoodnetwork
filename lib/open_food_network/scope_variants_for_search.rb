@@ -29,7 +29,7 @@ module OpenFoodNetwork
     attr_reader :params
 
     def search_params
-      { product_name_cont: params[:q], sku_cont: params[:q] }
+      { product_name_cont: params[:q], sku_cont: params[:q], product_sku_cont: params[:q] }
     end
 
     def query_scope
