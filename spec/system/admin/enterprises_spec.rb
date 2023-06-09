@@ -793,6 +793,18 @@ describe '
               expect(page).to have_content("Custom tab content")
             end
 
+            it "enable the update button on custom tab content change" do
+              fill_in_trix_editor "custom_tab_content", with: "Custom tab content changed"
+              within "save-bar" do
+                expect(page).to have_button("Update", disabled: false)
+              end
+              expect {
+                click_button 'Update'
+              }.to change { distributor1.reload.custom_tab.content }
+                .from("Custom tab content")
+                .to("<div>Custom tab content changed</div>")
+            end
+
             it "can delete custom tab if uncheck the checkbox" do
               uncheck "Create custom tab in shopfront"
               click_button 'Update'

@@ -60,4 +60,4 @@
         = custom_tab_form.label :content, t('.custom_tab_content')
       .thirteen.columns
         = custom_tab_form.hidden_field :content, id: "custom_tab_content"
-        %trix-editor{ input: "custom_tab_content" }
+        %trix-editor{ input: "custom_tab_content", "data-controller": "trixeditor" }
