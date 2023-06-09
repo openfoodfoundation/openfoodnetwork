@@ -23,10 +23,10 @@ module Reporting
           @report_line_items ||= Reporting::LineItems.new(order_permissions, params)
         end
 
-        def supplier_ids_filter(supplier_id)
+        def supplier_ids_filter(line_item)
           return true if params[:supplier_id_in].blank?
-          
-          params[:supplier_id_in].include?(supplier_id.to_s)
+
+          params[:supplier_id_in].include?(line_item.supplier.id.to_s)
         end
 
         def enterprise_fee_filtered_ids
@@ -119,22 +119,47 @@ module Reporting
           end
         end
 
+        # For every supplier, we want to show the enteprise fees
+        # applied to at least one of his products
         def join_supplier
           proc do |item|
             order = item[:order]
-            order
-              .line_items
-              .map(&:supplier_id)
-              .filter(&method(:supplier_ids_filter))
-              .map do |supplier_id|
+
+            filtered_line_items(order)
+              .map do |line_item|
                 {
                   tax_rate_id: item[:tax_rate_id],
-                  enterprise_fee_id: item[:enterprise_fee_id],
-                  supplier_id: supplier_id,
+                  enterprise_fee_id: if item[:enterprise_fee_id].in?(
+                    enterprise_fees_per_variant(order)[line_item.variant]
+                  )
+                                       item[:enterprise_fee_id]
+                                     end,
+                  supplier_id: line_item.supplier.id,
                   order: order
                 }
               end
+              .filter do |hash|
+                hash[:enterprise_fee_id].present?
+              end
           end
+        end
+
+        def filtered_line_items(order)
+          order
+            .line_items
+            .filter(&method(:supplier_ids_filter))
+        end
+
+        # { variant: [enterprise_fee_ids] }
+        def enterprise_fees_per_variant(order)
+          hash = {}
+          order.order_cycle.exchanges.each do |exchange|
+            exchange.variants.each do |variant|
+              hash[variant] ||= order.order_cycle.coordinator_fee_ids
+              hash[variant] += exchange.enterprise_fee_ids
+            end
+          end
+          hash
         end
 
         def group_keys
