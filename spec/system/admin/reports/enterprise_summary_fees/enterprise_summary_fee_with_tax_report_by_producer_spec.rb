@@ -512,8 +512,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           end
 
           it "should filter by producer" do
-            pending("test case (2), see #10797")
-
             page.find("#s2id_supplier_id_in").click
             find('li', text: supplier2.name).click
 
