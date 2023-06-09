@@ -753,6 +753,25 @@ describe '
             expect(distributor1.reload.custom_tab.content).to eq("<div>Custom tab content</div>")
           end
 
+          context "managing errors" do
+            it "can't save custom tab fields if title is blank" do
+              fill_in "enterprise_custom_tab_attributes_title", with: ""
+              fill_in_trix_editor "custom_tab_content", with: "Custom tab content"
+              click_button 'Update'
+              expect(page).to have_content("Custom tab title can't be blank")
+              expect(distributor1.reload.custom_tab).to be_nil
+            end
+
+            it "can't save custom tab fields if title is too long" do
+              fill_in "enterprise_custom_tab_attributes_title", with: "a" * 21
+              fill_in_trix_editor "custom_tab_content", with: "Custom tab content"
+              click_button 'Update'
+              expect(page).
+                to have_content("Custom tab title is too long (maximum is 20 characters)")
+              expect(distributor1.reload.custom_tab).to be_nil
+            end
+          end
+
           context "when custom tab is already created" do
             let(:custom_tab) {
               create(:custom_tab, title: "Custom tab title",
