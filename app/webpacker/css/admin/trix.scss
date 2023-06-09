@@ -1,3 +1,15 @@
 trix-toolbar [data-trix-button-group="file-tools"] {
   display: none;
 }
+
+trix-toolbar .trix-button {
+  background-color: transparent;
+
+  &:hover {
+    background-color: transparent;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
