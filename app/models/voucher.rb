@@ -22,11 +22,10 @@ class Voucher < ApplicationRecord
   # the same method to stay as consistent as possible.
   #
   # Creates a new voucher adjustment for the given order
+  # The amount is set to 0, it will be calculated later by VoucherAdjustmentsService.calculate
   def create_adjustment(label, order)
-    amount = compute_amount(order)
-
     adjustment_attributes = {
-      amount: amount,
+      amount: 0,
       originator: self,
       order: order,
       label: label,
