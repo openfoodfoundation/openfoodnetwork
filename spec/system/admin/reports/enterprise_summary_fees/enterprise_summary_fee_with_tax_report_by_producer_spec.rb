@@ -196,38 +196,38 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     describe "orders" do
       # for supplier 1, oc1
 
-      let(:coordinator_state_tax_1){
+      let(:coordinator_state_tax1){
         ["Distributor", "Supplier", "Yes", "oc1", "Adminstration", "admin", "Distributor",
          "tax_category", "State", "0.015", "20.0", "0.3", "20.3"].join(" ")
       }
-      let(:coordinator_country_tax_1){
+      let(:coordinator_country_tax1){
         ["Distributor", "Supplier", "Yes", "oc1", "Adminstration", "admin", "Distributor",
          "tax_category", "Country", "0.025", "20.0", "0.5", "20.5"].join(" ")
       }
 
-      let(:supplier_state_tax_1){
+      let(:supplier_state_tax1){
         ["Distributor", "Supplier", "Yes", "oc1", "Transport", "transport", "Supplier",
          "tax_category", "State", "0.015", "15.0", "0.23", "15.23"].join(" ")
       }
-      let(:supplier_country_tax_1){
+      let(:supplier_country_tax1){
         ["Distributor", "Supplier", "Yes", "oc1", "Transport", "transport", "Supplier",
          "tax_category", "Country", "0.025", "15.0", "0.38", "15.38"].join(" ")
       }
 
-      let(:distributor_state_tax_1){
+      let(:distributor_state_tax1){
         ["Distributor", "Supplier", "Yes", "oc1", "Packing", "packing", "Distributor",
          "tax_category", "State", "0.015", "10.0", "0.15", "10.15"].join(" ")
       }
-      let(:distributor_country_tax_1){
+      let(:distributor_country_tax1){
         ["Distributor", "Supplier", "Yes", "oc1", "Packing", "packing", "Distributor",
          "tax_category", "Country", "0.025", "10.0", "0.25", "10.25"].join(" ")
       }
 
-      let(:cost_of_produce_1){
+      let(:cost_of_produce1){
         ["Distributor", "Supplier", "Yes", "oc1", "Cost of produce", "line items", "Supplier",
          "100.0", "4.0", "104.0"].join(" ")
       }
-      let(:summary_row_1){
+      let(:summary_row1){
         [
           "TOTAL", # Fees and line items
           "145.0", # Tax excl: 20 + 15 + 10 + 100
@@ -237,38 +237,38 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       }
 
       # for supplier 2, oc2
-      let(:coordinator_state_tax_2){
+      let(:coordinator_state_tax2){
         ["Distributor", "Supplier2", "Yes", "oc2", "Adminstration", "admin", "Distributor",
          "tax_category", "State", "0.015", "20.0", "0.3", "20.3"].join(" ")
       }
-      let(:coordinator_country_tax_2){
+      let(:coordinator_country_tax2){
         ["Distributor", "Supplier2", "Yes", "oc2", "Adminstration", "admin", "Distributor",
          "tax_category", "Country", "0.025", "20.0", "0.5", "20.5"].join(" ")
       }
 
-      let(:supplier_state_tax_2){
+      let(:supplier_state_tax2){
         ["Distributor", "Supplier2", "Yes", "oc2", "Sales", "sales", "Supplier2",
          "tax_category", "State", "0.015", "25.0", "0.38", "25.38"].join(" ")
       }
-      let(:supplier_country_tax_2){
+      let(:supplier_country_tax2){
         ["Distributor", "Supplier2", "Yes", "oc2", "Sales", "sales", "Supplier2",
          "tax_category", "Country", "0.025", "25.0", "0.63", "25.63"].join(" ")
       }
 
-      let(:distributor_state_tax_2){
+      let(:distributor_state_tax2){
         ["Distributor", "Supplier2", "Yes", "oc2", "Packing", "packing", "Distributor",
          "tax_category", "State", "0.015", "10.0", "0.15", "10.15"].join(" ")
       }
-      let(:distributor_country_tax_2){
+      let(:distributor_country_tax2){
         ["Distributor", "Supplier2", "Yes", "oc2", "Packing", "packing", "Distributor",
          "tax_category", "Country", "0.025", "10.0", "0.25", "10.25"].join(" ")
       }
 
-      let(:cost_of_produce_2){
+      let(:cost_of_produce2){
         ["Distributor", "Supplier2", "Yes", "oc2", "Cost of produce", "line items", "Supplier2",
          "50.0", "2.0", "52.0"].join(" ")
       }
-      let(:summary_row_2){
+      let(:summary_row2){
         [
           "TOTAL", # Fees and line items
           "105.0", # Tax excl: 20 + 25 + 10 + 50
@@ -289,23 +289,23 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
           table = page.find("table.report__table tbody")
-          expect(table).to have_content(supplier_state_tax_1)
-          expect(table).to have_content(supplier_country_tax_1)
-          expect(table).to have_content(distributor_state_tax_1)
-          expect(table).to have_content(distributor_country_tax_1)
-          expect(table).to have_content(coordinator_state_tax_1)
-          expect(table).to have_content(coordinator_country_tax_1)
-          expect(table).to have_content(cost_of_produce_1)
-          expect(table).to have_content(summary_row_1)
+          expect(table).to have_content(supplier_state_tax1)
+          expect(table).to have_content(supplier_country_tax1)
+          expect(table).to have_content(distributor_state_tax1)
+          expect(table).to have_content(distributor_country_tax1)
+          expect(table).to have_content(coordinator_state_tax1)
+          expect(table).to have_content(coordinator_country_tax1)
+          expect(table).to have_content(cost_of_produce1)
+          expect(table).to have_content(summary_row1)
 
-          expect(table).to have_content(supplier_state_tax_2)
-          expect(table).to have_content(supplier_country_tax_2)
-          expect(table).to have_content(distributor_state_tax_2)
-          expect(table).to have_content(distributor_country_tax_2)
-          expect(table).to have_content(coordinator_state_tax_2)
-          expect(table).to have_content(coordinator_country_tax_2)
-          expect(table).to have_content(cost_of_produce_2)
-          expect(table).to have_content(summary_row_2)
+          expect(table).to have_content(supplier_state_tax2)
+          expect(table).to have_content(supplier_country_tax2)
+          expect(table).to have_content(distributor_state_tax2)
+          expect(table).to have_content(distributor_country_tax2)
+          expect(table).to have_content(coordinator_state_tax2)
+          expect(table).to have_content(coordinator_country_tax2)
+          expect(table).to have_content(cost_of_produce2)
+          expect(table).to have_content(summary_row2)
         end
       end
 
@@ -333,9 +333,11 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           order_cycle3.coordinator_fees << coordinator_fees
           order_cycle3.exchanges.incoming.first.exchange_fees.create!(enterprise_fee: supplier_fees)
           order_cycle3.exchanges.incoming.first.exchange_variants.create!(variant: variant)
-          order_cycle3.exchanges.incoming.second.exchange_fees.create!(enterprise_fee: supplier_fees2)
+          order_cycle3.exchanges.incoming.second.exchange_fees
+            .create!(enterprise_fee: supplier_fees2)
           order_cycle3.exchanges.incoming.second.exchange_variants.create!(variant: variant2)
-          order_cycle3.exchanges.outgoing.first.exchange_fees.create!(enterprise_fee: distributor_fee)
+          order_cycle3.exchanges.outgoing.first.exchange_fees
+            .create!(enterprise_fee: distributor_fee)
           order_cycle3.exchanges.outgoing.first.exchange_variants.create!(variant: variant)
           order_cycle3.exchanges.outgoing.first.exchange_variants.create!(variant: variant2)
 
@@ -357,38 +359,38 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
         # table lines for supplier1
 
-        let(:coordinator_state_tax_3){
+        let(:coordinator_state_tax3){
           ["Distributor", "Supplier", "Yes", "oc3", "Adminstration", "admin", "Distributor",
            "tax_category", "State", "0.015", "20.0", "0.3", "20.3"].join(" ")
         }
-        let(:coordinator_country_tax_3){
+        let(:coordinator_country_tax3){
           ["Distributor", "Supplier", "Yes", "oc3", "Adminstration", "admin", "Distributor",
            "tax_category", "Country", "0.025", "20.0", "0.5", "20.5"].join(" ")
         }
 
-        let(:supplier_state_tax_3){
+        let(:supplier_state_tax3){
           ["Distributor", "Supplier", "Yes", "oc3", "Transport", "transport", "Supplier",
            "tax_category", "State", "0.015", "15.0", "0.23", "15.23"].join(" ")
         }
-        let(:supplier_country_tax_3){
+        let(:supplier_country_tax3){
           ["Distributor", "Supplier", "Yes", "oc3", "Transport", "transport", "Supplier",
            "tax_category", "Country", "0.025", "15.0", "0.38", "15.38"].join(" ")
         }
 
-        let(:distributor_state_tax_3){
+        let(:distributor_state_tax3){
           ["Distributor", "Supplier", "Yes", "oc3", "Packing", "packing", "Distributor",
            "tax_category", "State", "0.015", "10.0", "0.15", "10.15"].join(" ")
         }
-        let(:distributor_country_tax_3){
+        let(:distributor_country_tax3){
           ["Distributor", "Supplier", "Yes", "oc3", "Packing", "packing", "Distributor",
            "tax_category", "Country", "0.025", "10.0", "0.25", "10.25"].join(" ")
         }
 
-        let(:cost_of_produce_3){
+        let(:cost_of_produce3){
           ["Distributor", "Supplier", "Yes", "oc3", "Cost of produce", "line items", "Supplier",
            "100.0", "4.0", "104.0"].join(" ")
         }
-        let(:summary_row_3){
+        let(:summary_row3){
           [
             "TOTAL", # Fees and line items
             "145.0", # Tax excl: 20 + 15 + 10 + 100
@@ -399,38 +401,38 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
         # table lines for supplier2
 
-        let(:coordinator_state_tax_4){
+        let(:coordinator_state_tax4){
           ["Distributor", "Supplier2", "Yes", "oc3", "Adminstration", "admin", "Distributor",
            "tax_category", "State", "0.015", "20.0", "0.3", "20.3"].join(" ")
         }
-        let(:coordinator_country_tax_4){
+        let(:coordinator_country_tax4){
           ["Distributor", "Supplier2", "Yes", "oc3", "Adminstration", "admin", "Distributor",
            "tax_category", "Country", "0.025", "20.0", "0.5", "20.5"].join(" ")
         }
 
-        let(:supplier_state_tax_4){
+        let(:supplier_state_tax4){
           ["Distributor", "Supplier2", "Yes", "oc3", "Sales", "sales", "Supplier2",
            "tax_category", "State", "0.015", "25.0", "0.38", "25.38"].join(" ")
         }
-        let(:supplier_country_tax_4){
+        let(:supplier_country_tax4){
           ["Distributor", "Supplier2", "Yes", "oc3", "Sales", "sales", "Supplier2",
            "tax_category", "Country", "0.025", "25.0", "0.63", "25.63"].join(" ")
         }
 
-        let(:distributor_state_tax_4){
+        let(:distributor_state_tax4){
           ["Distributor", "Supplier2", "Yes", "oc3", "Packing", "packing", "Distributor",
            "tax_category", "State", "0.015", "10.0", "0.15", "10.15"].join(" ")
         }
-        let(:distributor_country_tax_4){
+        let(:distributor_country_tax4){
           ["Distributor", "Supplier2", "Yes", "oc3", "Packing", "packing", "Distributor",
            "tax_category", "Country", "0.025", "10.0", "0.25", "10.25"].join(" ")
         }
 
-        let(:cost_of_produce_4){
+        let(:cost_of_produce4){
           ["Distributor", "Supplier2", "Yes", "oc3", "Cost of produce", "line items", "Supplier2",
            "50.0", "2.0", "52.0"].join(" ")
         }
-        let(:summary_row_4){
+        let(:summary_row4){
           [
             "TOTAL", # Fees and line items
             "105.0", # Tax excl: 20 + 25 + 10 + 50
@@ -452,23 +454,23 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
           table = page.find("table.report__table tbody")
-          expect(table).to have_content(supplier_state_tax_3)
-          expect(table).to have_content(supplier_country_tax_3)
-          expect(table).to have_content(distributor_state_tax_3)
-          expect(table).to have_content(distributor_country_tax_3)
-          expect(table).to have_content(coordinator_state_tax_3)
-          expect(table).to have_content(coordinator_country_tax_3)
-          expect(table).to have_content(cost_of_produce_3)
-          expect(table).to have_content(summary_row_3)
+          expect(table).to have_content(supplier_state_tax3)
+          expect(table).to have_content(supplier_country_tax3)
+          expect(table).to have_content(distributor_state_tax3)
+          expect(table).to have_content(distributor_country_tax3)
+          expect(table).to have_content(coordinator_state_tax3)
+          expect(table).to have_content(coordinator_country_tax3)
+          expect(table).to have_content(cost_of_produce3)
+          expect(table).to have_content(summary_row3)
 
-          expect(table).to have_content(supplier_state_tax_4)
-          expect(table).to have_content(supplier_country_tax_4)
-          expect(table).to have_content(distributor_state_tax_4)
-          expect(table).to have_content(distributor_country_tax_4)
-          expect(table).to have_content(coordinator_state_tax_4)
-          expect(table).to have_content(coordinator_country_tax_4)
-          expect(table).to have_content(cost_of_produce_4)
-          expect(table).to have_content(summary_row_4)
+          expect(table).to have_content(supplier_state_tax4)
+          expect(table).to have_content(supplier_country_tax4)
+          expect(table).to have_content(distributor_state_tax4)
+          expect(table).to have_content(distributor_country_tax4)
+          expect(table).to have_content(coordinator_state_tax4)
+          expect(table).to have_content(coordinator_country_tax4)
+          expect(table).to have_content(cost_of_produce4)
+          expect(table).to have_content(summary_row4)
         end
 
         context "filtering" do
@@ -501,14 +503,14 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
             table = page.find("table.report__table tbody")
-            expect(table).to have_content(supplier_state_tax_2)
-            expect(table).to have_content(supplier_country_tax_2)
-            expect(table).to have_content(distributor_state_tax_2)
-            expect(table).to have_content(distributor_country_tax_2)
-            expect(table).to have_content(coordinator_state_tax_2)
-            expect(table).to have_content(coordinator_country_tax_2)
-            expect(table).to have_content(cost_of_produce_2)
-            expect(table).to have_content(summary_row_2)
+            expect(table).to have_content(supplier_state_tax2)
+            expect(table).to have_content(supplier_country_tax2)
+            expect(table).to have_content(distributor_state_tax2)
+            expect(table).to have_content(distributor_country_tax2)
+            expect(table).to have_content(coordinator_state_tax2)
+            expect(table).to have_content(coordinator_country_tax2)
+            expect(table).to have_content(cost_of_produce2)
+            expect(table).to have_content(summary_row2)
           end
 
           it "should filter by producer" do
@@ -521,23 +523,23 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
             table = page.find("table.report__table tbody")
 
-            expect(table).to have_content(supplier_state_tax_2)
-            expect(table).to have_content(supplier_country_tax_2)
-            expect(table).to have_content(distributor_state_tax_2)
-            expect(table).to have_content(distributor_country_tax_2)
-            expect(table).to have_content(coordinator_state_tax_2)
-            expect(table).to have_content(coordinator_country_tax_2)
-            expect(table).to have_content(cost_of_produce_2)
-            expect(table).to have_content(summary_row_2)
+            expect(table).to have_content(supplier_state_tax2)
+            expect(table).to have_content(supplier_country_tax2)
+            expect(table).to have_content(distributor_state_tax2)
+            expect(table).to have_content(distributor_country_tax2)
+            expect(table).to have_content(coordinator_state_tax2)
+            expect(table).to have_content(coordinator_country_tax2)
+            expect(table).to have_content(cost_of_produce2)
+            expect(table).to have_content(summary_row2)
 
-            expect(table).to_not have_content(supplier_state_tax_1)
-            expect(table).to_not have_content(supplier_country_tax_1)
-            expect(table).to_not have_content(distributor_state_tax_1)
-            expect(table).to_not have_content(distributor_country_tax_1)
-            expect(table).to_not have_content(coordinator_state_tax_1)
-            expect(table).to_not have_content(coordinator_country_tax_1)
-            expect(table).to_not have_content(cost_of_produce_1)
-            expect(table).to_not have_content(summary_row_1)
+            expect(table).to_not have_content(supplier_state_tax1)
+            expect(table).to_not have_content(supplier_country_tax1)
+            expect(table).to_not have_content(distributor_state_tax1)
+            expect(table).to_not have_content(distributor_country_tax1)
+            expect(table).to_not have_content(coordinator_state_tax1)
+            expect(table).to_not have_content(coordinator_country_tax1)
+            expect(table).to_not have_content(cost_of_produce1)
+            expect(table).to_not have_content(summary_row1)
           end
 
           it "should filter by fee name" do
@@ -551,13 +553,13 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
             table = page.find("table.report__table tbody")
 
-            expect(table).to_not have_content(supplier_state_tax_1)
-            expect(table).to_not have_content(supplier_country_tax_1)
-            expect(table).to_not have_content(distributor_state_tax_1)
-            expect(table).to_not have_content(distributor_country_tax_1)
-            expect(table).to have_content(coordinator_state_tax_1)
-            expect(table).to have_content(coordinator_country_tax_1)
-            expect(table).to have_content(cost_of_produce_1)
+            expect(table).to_not have_content(supplier_state_tax1)
+            expect(table).to_not have_content(supplier_country_tax1)
+            expect(table).to_not have_content(distributor_state_tax1)
+            expect(table).to_not have_content(distributor_country_tax1)
+            expect(table).to have_content(coordinator_state_tax1)
+            expect(table).to have_content(coordinator_country_tax1)
+            expect(table).to have_content(cost_of_produce1)
             expect(table).to have_content(summary_row_after_filtering_by_fee_name)
           end
 
@@ -570,13 +572,13 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
             table = page.find("table.report__table tbody")
-            expect(table).to have_content(supplier_state_tax_1)
-            expect(table).to have_content(supplier_country_tax_1)
-            expect(table).to_not have_content(distributor_state_tax_1)
-            expect(table).to_not have_content(distributor_country_tax_1)
-            expect(table).to_not have_content(coordinator_state_tax_1)
-            expect(table).to_not have_content(coordinator_country_tax_1)
-            expect(table).to have_content(cost_of_produce_1)
+            expect(table).to have_content(supplier_state_tax1)
+            expect(table).to have_content(supplier_country_tax1)
+            expect(table).to_not have_content(distributor_state_tax1)
+            expect(table).to_not have_content(distributor_country_tax1)
+            expect(table).to_not have_content(coordinator_state_tax1)
+            expect(table).to_not have_content(coordinator_country_tax1)
+            expect(table).to have_content(cost_of_produce1)
             expect(table).to have_content(summary_row_after_filtering_by_fee_owner)
           end
         end
@@ -625,38 +627,38 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       end
     end
 
-    let(:coordinator_state_tax_1){
+    let(:coordinator_state_tax1){
       ["Distributor", "Supplier", "Yes", "oc1", "Adminstration", "admin", "Distributor",
        "tax_category", "State", "0.015", "19.21", "0.3", "19.51"].join(" ")
     }
-    let(:coordinator_country_tax_1){
+    let(:coordinator_country_tax1){
       ["Distributor", "Supplier", "Yes", "oc1", "Adminstration", "admin", "Distributor",
        "tax_category", "Country", "0.025", "19.21", "0.49", "19.7"].join(" ")
     }
 
-    let(:supplier_state_tax_1){
+    let(:supplier_state_tax1){
       ["Distributor", "Supplier", "Yes", "oc1", "Transport", "transport", "Supplier",
        "tax_category", "State", "0.015", "14.41", "0.22", "14.63"].join(" ")
     }
-    let(:supplier_country_tax_1){
+    let(:supplier_country_tax1){
       ["Distributor", "Supplier", "Yes", "oc1", "Transport", "transport", "Supplier",
        "tax_category", "Country", "0.025", "14.41", "0.37", "14.78"].join(" ")
     }
 
-    let(:distributor_state_tax_1){
+    let(:distributor_state_tax1){
       ["Distributor", "Supplier", "Yes", "oc1", "Packing", "packing", "Distributor",
        "tax_category", "State", "0.015", "9.61", "0.15", "9.76"].join(" ")
     }
-    let(:distributor_country_tax_1){
+    let(:distributor_country_tax1){
       ["Distributor", "Supplier", "Yes", "oc1", "Packing", "packing", "Distributor",
        "tax_category", "Country", "0.025", "9.61", "0.24", "9.85"].join(" ")
     }
 
-    let(:cost_of_produce_1){
+    let(:cost_of_produce1){
       ["Distributor", "Supplier", "Yes", "oc1", "Cost of produce", "line items", "Supplier",
        "96.08", "3.92", "100.0"].join(" ")
     }
-    let(:summary_row_1){
+    let(:summary_row1){
       [
         "TOTAL", # Fees and line items
         "139.31", # Tax excl: 19.21 + 14.41 + 9.61 + 96.08
@@ -666,38 +668,38 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     }
 
     # for supplier 2, oc2
-    let(:coordinator_state_tax_2){
+    let(:coordinator_state_tax2){
       ["Distributor", "Supplier2", "Yes", "oc2", "Adminstration", "admin", "Distributor",
        "tax_category", "State", "0.015", "19.21", "0.3", "19.51"].join(" ")
     }
-    let(:coordinator_country_tax_2){
+    let(:coordinator_country_tax2){
       ["Distributor", "Supplier2", "Yes", "oc2", "Adminstration", "admin", "Distributor",
        "tax_category", "Country", "0.025", "19.21", "0.49", "19.7"].join(" ")
     }
 
-    let(:supplier_state_tax_2){
+    let(:supplier_state_tax2){
       ["Distributor", "Supplier2", "Yes", "oc2", "Sales", "sales", "Supplier2",
        "tax_category", "State", "0.015", "24.02", "0.37", "24.39"].join(" ")
     }
-    let(:supplier_country_tax_2){
+    let(:supplier_country_tax2){
       ["Distributor", "Supplier2", "Yes", "oc2", "Sales", "sales", "Supplier2",
        "tax_category", "Country", "0.025", "24.02", "0.61", "24.63"].join(" ")
     }
 
-    let(:distributor_state_tax_2){
+    let(:distributor_state_tax2){
       ["Distributor", "Supplier2", "Yes", "oc2", "Packing", "packing", "Distributor",
        "tax_category", "State", "0.015", "9.61", "0.15", "9.76"].join(" ")
     }
-    let(:distributor_country_tax_2){
+    let(:distributor_country_tax2){
       ["Distributor", "Supplier2", "Yes", "oc2", "Packing", "packing", "Distributor",
        "tax_category", "Country", "0.025", "9.61", "0.24", "9.85"].join(" ")
     }
 
-    let(:cost_of_produce_2){
+    let(:cost_of_produce2){
       ["Distributor", "Supplier2", "Yes", "oc2", "Cost of produce", "line items", "Supplier2",
        "48.04", "1.96", "50.0"].join(" ")
     }
-    let(:summary_row_2){
+    let(:summary_row2){
       [
         "TOTAL", # Fees and line items
         "100.88", # Tax excl: 19.21 + 24.02 + 9.61 + 48.04
@@ -719,23 +721,23 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
         table = page.find("table.report__table tbody")
-        expect(table).to have_content(supplier_state_tax_1)
-        expect(table).to have_content(supplier_country_tax_1)
-        expect(table).to have_content(distributor_state_tax_1)
-        expect(table).to have_content(distributor_country_tax_1)
-        expect(table).to have_content(coordinator_state_tax_1)
-        expect(table).to have_content(coordinator_country_tax_1)
-        expect(table).to have_content(cost_of_produce_1)
-        expect(table).to have_content(summary_row_1)
+        expect(table).to have_content(supplier_state_tax1)
+        expect(table).to have_content(supplier_country_tax1)
+        expect(table).to have_content(distributor_state_tax1)
+        expect(table).to have_content(distributor_country_tax1)
+        expect(table).to have_content(coordinator_state_tax1)
+        expect(table).to have_content(coordinator_country_tax1)
+        expect(table).to have_content(cost_of_produce1)
+        expect(table).to have_content(summary_row1)
 
-        expect(table).to have_content(supplier_state_tax_2)
-        expect(table).to have_content(supplier_country_tax_2)
-        expect(table).to have_content(distributor_state_tax_2)
-        expect(table).to have_content(distributor_country_tax_2)
-        expect(table).to have_content(coordinator_state_tax_2)
-        expect(table).to have_content(coordinator_country_tax_2)
-        expect(table).to have_content(cost_of_produce_2)
-        expect(table).to have_content(summary_row_2)
+        expect(table).to have_content(supplier_state_tax2)
+        expect(table).to have_content(supplier_country_tax2)
+        expect(table).to have_content(distributor_state_tax2)
+        expect(table).to have_content(distributor_country_tax2)
+        expect(table).to have_content(coordinator_state_tax2)
+        expect(table).to have_content(coordinator_country_tax2)
+        expect(table).to have_content(cost_of_produce2)
+        expect(table).to have_content(summary_row2)
       end
     end
   end
