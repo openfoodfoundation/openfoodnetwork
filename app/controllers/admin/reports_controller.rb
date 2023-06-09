@@ -23,7 +23,7 @@ module Admin
       @report = report_class.new(spree_current_user, params, render: render_data?)
 
       @background_reports = OpenFoodNetwork::FeatureToggle
-                              .enabled?(:background_reports, spree_current_user)
+        .enabled?(:background_reports, spree_current_user)
 
       if @background_reports && request.post?
         return background(report_format)
