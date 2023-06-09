@@ -1,14 +1,26 @@
 # frozen_string_literal: true
 
 module UIComponentHelper
-  def browse_as_medium
-    Capybara.current_session.current_window
-      .resize_to(1024, 768)
+  def browse_as_small(&block)
+    browse_with_window_size(640, 480, &block)
   end
 
-  def browse_as_large
+  def browse_as_medium(&block)
+    browse_with_window_size(1024, 768, &block)
+  end
+
+  def browse_as_default(&block)
+    browse_with_window_size(1280, 800)
+    block&.call
+  end
+
+  def browse_with_window_size(width, height, &block)
     Capybara.current_session.current_window
-      .resize_to(1280, 800)
+      .resize_to(width, height)
+    return unless block
+
+    block.call
+    browse_as_default
   end
 
   def click_login_button

@@ -6,6 +6,7 @@ describe 'White label setting' do
   include AuthenticationHelper
   include ShopWorkflow
   include FileHelper
+  include UIComponentHelper
 
   let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let!(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
@@ -29,20 +30,75 @@ describe 'White label setting' do
 
   let(:ofn_navigation) { 'ul.nav-main-menu' }
 
+  shared_examples "hides the OFN navigation for mobile view as well" do
+    context "mobile view" do
+      around { |example| browse_as_small { example.run } }
+
+      it "hides OFN navigation" do
+        find("a.left-off-canvas-toggle").click
+        within "aside.left-off-canvas-menu" do
+          expect(page).not_to have_selector "a[href='#{main_app.shops_path}']"
+          expect(page).not_to have_selector "a[href='#{main_app.map_path}']"
+          expect(page).not_to have_selector "a[href='#{main_app.producers_path}']"
+          expect(page).not_to have_selector "a[href='#{main_app.groups_path}']"
+          expect(page).not_to have_selector "a[href='#{I18n.t('.menu_5_url')}']"
+        end
+      end
+    end
+  end
+
+  shared_examples "does not hide the OFN navigation for mobile view as well" do
+    context "mobile view" do
+      around { |example| browse_as_small { example.run } }
+
+      it "does not hide OFN navigation" do
+        find("a.left-off-canvas-toggle").click
+        within "aside.left-off-canvas-menu" do
+          expect(page).to have_selector "a[href='#{main_app.shops_path}']"
+          expect(page).to have_selector "a[href='#{main_app.map_path}']"
+          expect(page).to have_selector "a[href='#{main_app.producers_path}']"
+          expect(page).to have_selector "a[href='#{main_app.groups_path}']"
+          expect(page).to have_selector "a[href='#{I18n.t('.menu_5_url')}']"
+        end
+      end
+    end
+  end
+
   shared_examples "does not hide the OFN navigation" do
-    it "does not hide the OFN navigation when visiting the shop" do
-      visit main_app.enterprise_shop_path(distributor)
-      expect(page).to have_selector ofn_navigation
+    context "for shop path" do
+      before do
+        visit main_app.enterprise_shop_path(distributor)
+      end
+
+      it "does not hide the OFN navigation" do
+        expect(page).to have_selector ofn_navigation
+      end
+
+      it_behaves_like "does not hide the OFN navigation for mobile view as well"
     end
 
-    it "does not hide the OFN navigation when visiting root path" do
-      visit main_app.root_path
-      expect(page).to have_selector ofn_navigation
+    context "for cart path" do
+      before do
+        visit main_app.cart_path
+      end
+
+      it "does not hide the OFN navigation" do
+        expect(page).to have_selector ofn_navigation
+      end
+
+      it_behaves_like "does not hide the OFN navigation for mobile view as well"
     end
 
-    it "does not hide the OFN navigation when visiting cart path" do
-      visit main_app.cart_path
-      expect(page).to have_selector ofn_navigation
+    context "for root path" do
+      before do
+        visit main_app.root_path
+      end
+
+      it "does not hide the OFN navigation" do
+        expect(page).to have_selector ofn_navigation
+      end
+
+      it_behaves_like "does not hide the OFN navigation for mobile view as well"
     end
   end
 
@@ -53,14 +109,28 @@ describe 'White label setting' do
       end
 
       shared_examples "hides the OFN navigation when needed only" do
-        it "hides the OFN navigation when visiting the shop" do
-          visit main_app.enterprise_shop_path(distributor)
-          expect(page).to have_no_selector ofn_navigation
+        context "for shop path" do
+          before do
+            visit main_app.enterprise_shop_path(distributor)
+          end
+
+          it "hides the OFN navigation" do
+            expect(page).to have_no_selector ofn_navigation
+          end
+
+          it_behaves_like "hides the OFN navigation for mobile view as well"
         end
 
-        it "does not hide the OFN navigation when visiting root path" do
-          visit main_app.root_path
-          expect(page).to have_selector ofn_navigation
+        context "for root path" do
+          before do
+            visit main_app.root_path
+          end
+
+          it "does not hide the OFN navigation when visiting root path" do
+            expect(page).to have_selector ofn_navigation
+          end
+
+          it_behaves_like "does not hide the OFN navigation for mobile view as well"
         end
       end
 
@@ -78,16 +148,30 @@ describe 'White label setting' do
         shared_examples "hides the OFN navigation when needed only for the checkout" do
           it_behaves_like "hides the OFN navigation when needed only"
 
-          it "hides the OFN navigation when visiting cart path" do
-            visit main_app.cart_path
-            expect(page).to have_no_selector ofn_navigation
+          context "for cart path" do
+            before do
+              visit main_app.cart_path
+            end
+
+            it "hides the OFN navigation" do
+              expect(page).to have_no_selector ofn_navigation
+            end
+
+            it_behaves_like "hides the OFN navigation for mobile view as well"
           end
 
-          it "hides the OFN navigation when visiting checkout path" do
-            visit checkout_path
-            expect(page).to have_content "Checkout now"
-            expect(page).to have_content "Order ready for "
-            expect(page).to have_no_selector ofn_navigation
+          context "for checkout path" do
+            before do
+              visit checkout_path
+            end
+
+            it "hides the OFN navigation" do
+              expect(page).to have_content "Checkout now"
+              expect(page).to have_content "Order ready for "
+              expect(page).to have_no_selector ofn_navigation
+            end
+
+            it_behaves_like "hides the OFN navigation for mobile view as well"
           end
         end
 
@@ -110,9 +194,14 @@ describe 'White label setting' do
         end
 
         shared_examples "hides the OFN navigation when needed only for the order confirmation" do
-          it "hides" do
-            visit order_path(complete_order, order_token: complete_order.token)
-            expect(page).to have_no_selector ofn_navigation
+          context "for order confirmation path" do
+            before do
+              visit order_path(complete_order, order_token: complete_order.token)
+            end
+
+            it "hides the OFN navigation" do
+              expect(page).to have_no_selector ofn_navigation
+            end
           end
         end
 

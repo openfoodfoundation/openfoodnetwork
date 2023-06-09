@@ -100,7 +100,6 @@ describe 'Multilingual' do
   end
 
   describe "using the language switcher UI" do
-    before { browse_as_large }
     context "when there is only one language available" do
       before do
         allow(ENV).to receive(:[]).and_call_original

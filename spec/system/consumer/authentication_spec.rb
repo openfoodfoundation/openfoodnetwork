@@ -24,9 +24,8 @@ describe "Authentication" do
       before do
         visit root_path
       end
-      describe "as large" do
+      describe "with default large screen" do
         before do
-          browse_as_large
           open_login_modal
         end
 
@@ -173,12 +172,8 @@ describe "Authentication" do
       end
 
       describe "as medium" do
-        before do
-          browse_as_medium
-        end
-        after do
-          browse_as_large
-        end
+        around { |example| browse_as_medium { example.run } }
+
         it "showing login" do
           open_off_canvas
           open_login_modal
