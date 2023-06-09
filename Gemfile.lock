@@ -383,7 +383,7 @@ GEM
     jsonapi-serializer (2.2.0)
       activesupport (>= 4.2)
     jwt (2.7.0)
-    knapsack_pro (4.1.0)
+    knapsack_pro (5.1.0)
       rake
     launchy (2.5.0)
       addressable (~> 2.7)
