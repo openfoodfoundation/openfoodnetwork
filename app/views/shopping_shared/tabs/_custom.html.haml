@@ -1,3 +1,4 @@
 .content
   .row
-    = sanitize(@distributor.custom_tab&.content, scrubber: TrixScrubber.new)
+    .columns
+      = sanitize(@distributor.custom_tab&.content, scrubber: TrixScrubber.new)
