@@ -203,7 +203,7 @@ describe '
                                                         name: 'Order Cycle 2' )
 
         visit spree.admin_dashboard_path
-        click_link "Order Cycles"
+        click_link "Order cycles"
 
         # I should see only the order cycle I am coordinating
         expect(page).to have_selector "tr.order-cycle-#{oc_user_coordinating.id}"

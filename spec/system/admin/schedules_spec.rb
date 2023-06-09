@@ -30,7 +30,7 @@ describe 'Schedules' do
     describe "Adding a new Schedule" do
       it "immediately shows the schedule in the order cycle list once created" do
         visit spree.admin_dashboard_path
-        click_link 'Order Cycles'
+        click_link 'Order cycles'
         expect(page).to have_selector ".order-cycle-#{oc1.id}"
         find('a', text: 'NEW SCHEDULE').click
 

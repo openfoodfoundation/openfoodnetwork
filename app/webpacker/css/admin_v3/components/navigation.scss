@@ -1,0 +1,153 @@
+// Navigation
+//---------------------------------------------------
+.inline-menu {
+  margin: 0;
+  -webkit-margin-before: 0;
+  -webkit-padding-start: 0;
+}
+
+nav.menu {
+  ul {
+    list-style: none;
+
+    li {
+      a {
+        padding: 10px 0;
+        display: block;
+        position: relative;
+        text-align: left;
+        border: 1px solid transparent;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      &.active a {
+        color: $color-2;
+        border-left-width: 0;
+        border-bottom-color: $color-2;
+      }
+
+      &:hover a {
+        color: $color-2;
+      }
+    }
+  }
+}
+
+.admin-login-navigation-bar {
+  ul {
+    text-align: right;
+
+    li {
+      padding: 5px 0 5px 10px;
+      text-align: right;
+      font-size: 90%;
+      color: $color-link;
+      margin-top: 8px;
+
+      &.user-logged-in-as {
+        width: 50%;
+        color: $color-body-text;
+      }
+
+      &:hover {
+        i {
+          color: $color-2;
+        }
+      }
+    }
+  }
+}
+
+#admin-menu {
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05), 0px 2px 2px rgba(0, 0, 0, 0.07);
+
+  ul {
+    display: flex;
+  }
+
+  li {
+    min-width: 90px;
+    flex-grow: 1;
+    padding-left: 2px;
+    padding-right: 2px;
+
+    a {
+      display: block;
+      padding: 25px 5px;
+      color: $color-9 !important;
+      position: relative;
+      text-align: center;
+      font-weight: 600;
+      font-size: 16px;
+
+      i {
+        display: inline;
+      }
+
+      &:hover {
+        color: $color-5 !important;
+        border-bottom: 2px solid $color-5;
+      }
+
+      span.text {
+        font-weight: 600;
+      }
+    }
+
+    a::before {
+      font-weight: normal;
+      padding-top: 0;
+    }
+
+    .dropdown {
+      width: 300px;
+      background-color: $color-3;
+      width: 200px;
+      z-index: 100000;
+
+      > li {
+        width: 200px !important;
+
+        a:after {
+          display: none;
+        }
+      }
+    }
+
+    &.selected a {
+      @extend a, :hover;
+    }
+  }
+}
+
+#sub-menu {
+  padding-bottom: 0;
+  box-shadow: 0px 1px 0px $color-7;
+
+  li {
+    a {
+      display: block;
+      padding: 12px 20px;
+      color: $color-9;
+      text-align: center;
+      position: relative;
+      font-size: 14px;
+    }
+
+    &.selected a,
+    a:hover {
+      color: $color-5;
+      border-bottom: 2px solid $color-5;
+    }
+  }
+}
+
+#header figure {
+  margin: 0.25em 0;
+}
+
+#login-nav {
+  line-height: 1.75em;
+}

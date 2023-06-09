@@ -26,11 +26,11 @@ module Spree
         destination_url = options[:url] || spree.public_send("#{options[:route]}_path")
         titleized_label = Spree.t(options[:label],
                                   default: options[:label],
-                                  scope: [:admin, :tab]).titleize
+                                  scope: [:admin, :tab]).capitalize
 
         css_classes = []
 
-        if options[:icon]
+        if options[:icon] && !feature?(:admin_style_v3, spree_current_user)
           link = link_to_with_icon(options[:icon], titleized_label, destination_url)
           css_classes << 'tab-with-icon'
         else

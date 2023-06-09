@@ -1195,8 +1195,8 @@ describe '
 
     it "displays a Bulk Management Tab under the Orders item" do
       visit '/admin/orders'
-      expect(page).to have_link "Bulk Order Management"
-      click_link "Bulk Order Management"
+      expect(page).to have_link "Bulk order management"
+      click_link "Bulk order management"
       expect(page).to have_selector "h1.page-title", text: "Bulk Order Management"
     end
 
