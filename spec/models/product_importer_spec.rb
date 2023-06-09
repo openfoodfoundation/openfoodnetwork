@@ -257,6 +257,32 @@ describe ProductImport::ProductImporter do
     end
   end
 
+  describe "when uploading a spreadsheet with unnecessary leading and trailing whitespace" do
+    let(:csv_data) {
+      CSV.generate do |csv|
+        csv << [" name ", "\nproducer\n", "\rcategory\r", "\ton_hand\t",
+                " price ", " units ", " unit_type ", " shipping_category "]
+        csv << [" Good Carrots ", "\n#{enterprise.name}\n", "\rVegetables\r", "\t5\t",
+                " 3.20 ", " 500 ", " g ", " #{shipping_category.name} "]
+      end
+    }
+    let(:importer) { import_data csv_data }
+
+    it "ignores unnecessary leading and trailing whitespace in headers and rows" do
+      importer.save_entries
+
+      expect(importer.products_created_count).to eq 1
+
+      carrots = Spree::Product.find_by(name: 'Good Carrots')
+      expect(carrots.on_hand).to eq 5
+      expect(carrots.price).to eq 3.20
+      expect(carrots.primary_taxon.name).to eq "Vegetables"
+      expect(carrots.shipping_category).to eq shipping_category
+      expect(carrots.supplier).to eq enterprise
+      expect(carrots.variants.first.unit_presentation).to eq "500g"
+    end
+  end
+
   describe "when shipping category is missing" do
     let(:csv_data) {
       CSV.generate do |csv|
@@ -718,6 +744,31 @@ describe ProductImport::ProductImporter do
         override = VariantOverride.where(variant_id: product4.variants.first.id,
                                          hub_id: enterprise2.id).first
         visible = InventoryItem.where(variant_id: product4.variants.first.id,
+                                      enterprise_id: enterprise2.id).first.visible
+
+        expect(override.count_on_hand).to eq 900
+        expect(visible).to be_truthy
+      end
+    end
+
+    describe "when headers or rows contain unnecessary leading or trailing whitespace" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << [" name ", "\ndisplay_name\n", "\rdistributor\r", "\tproducer\t",
+                  " on_hand ", " price ", " units "]
+          csv << [" Oats ", "\nPorridge Oats\n", "\r#{enterprise2.name}\r", "\t#{enterprise.name}\t",
+                  " 900 ", " 1.0 ", " 500 "]
+        end
+      }
+      let(:importer) { import_data csv_data, import_into: 'inventories' }
+
+      it "ignores unnecessary leading and trailing whitespace in headers and rows" do
+        importer.save_entries
+
+        expect(importer.inventory_created_count).to eq 1
+
+        override = VariantOverride.where(variant_id: variant2.id, hub_id: enterprise2.id).first
+        visible = InventoryItem.where(variant_id: variant2.id,
                                       enterprise_id: enterprise2.id).first.visible
 
         expect(override.count_on_hand).to eq 900

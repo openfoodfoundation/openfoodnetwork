@@ -233,6 +233,8 @@ module ProductImport
     def rows
       return [] unless @sheet&.last_row
 
+      @sheet.parse(clean: true)
+
       (2..@sheet.last_row).map do |i|
         @sheet.row(i)
       end
