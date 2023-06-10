@@ -52,6 +52,16 @@ module Spree
           expect(subject.url(:small)).to eq "/noimage/small.png"
         end
       end
+
+      context "when using public images" do
+        it "returns the direct URL for the processed image" do
+          allow(subject).to receive_message_chain(:attachment, :attached?) { true }
+          expect(subject).to receive_message_chain(:attachment, :service, :name) { :amazon_public }
+          expect(subject).to receive_message_chain(:variant, :processed, :url) { "https://ofn-s3/123.png" }
+
+          expect(subject.url(:small)).to eq "https://ofn-s3/123.png"
+        end
+      end
     end
 
     describe "#default_image_url" do
