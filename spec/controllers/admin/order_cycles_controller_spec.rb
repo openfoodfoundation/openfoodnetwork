@@ -397,12 +397,14 @@ module Admin
         let!(:another_distributor) { create(:distributor_enterprise, users: [distributor_owner]) }
 
         it "doesn't update order cycle properties" do
-          spree_put :bulk_update, format: :json, order_cycle_set: { collection_attributes: { '0' => {
-            id: oc.id,
-            name: "Updated Order Cycle",
-            orders_open_at: Date.current - 21.days,
-            orders_close_at: Date.current + 21.days,
-          } } }
+          spree_put :bulk_update,
+                    format: :json,
+                    order_cycle_set: { collection_attributes: { '0' => {
+                      id: oc.id,
+                      name: "Updated Order Cycle",
+                      orders_open_at: Date.current - 21.days,
+                      orders_close_at: Date.current + 21.days,
+                    } } }
 
           oc.reload
           expect(oc.name).to_not eq "Updated Order Cycle"

@@ -13,8 +13,8 @@ module Api
     let!(:property1) { create(:property, presentation: 'Organic') }
     let!(:property2) { create(:property, presentation: 'Dairy-Free') }
     let!(:property3) { create(:property, presentation: 'May Contain Nuts') }
-    let!(:product1) { create(:product, primary_taxon: taxon1, properties: [property1]) }
-    let!(:product2) { create(:product, primary_taxon: taxon2, properties: [property2]) }
+    let!(:product1) { create(:product, name: "Kangaroo", primary_taxon: taxon1, properties: [property1]) }
+    let!(:product2) { create(:product, name: "Parsnips", primary_taxon: taxon2, properties: [property2]) }
     let!(:product3) { create(:product, primary_taxon: taxon2) }
     let!(:product4) { create(:product, primary_taxon: taxon3, properties: [property3]) }
     let!(:user) { create(:user) }
@@ -32,6 +32,16 @@ module Api
         api_get :products, id: order_cycle.id, distributor: distributor.id
 
         expect(product_ids).to include product1.id, product2.id, product3.id
+      end
+
+      it "returns products that were searched for" do
+        ransack_param = "name_or_meta_keywords_or_variants_display_as_or_" \
+                        "variants_display_name_or_supplier_name_cont"
+        api_get :products, id: order_cycle.id, distributor: distributor.id,
+                           q: { ransack_param => "Kangaroo" }
+
+        expect(product_ids).to include product1.id
+        expect(product_ids).to_not include product2.id
       end
 
       context "with variant overrides" do

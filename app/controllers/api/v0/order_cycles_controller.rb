@@ -80,8 +80,12 @@ module Api
       end
 
       def permitted_ransack_params
-        [:name_or_meta_keywords_or_variants_display_as_or_variants_display_name_or_supplier_name_cont,
-         :with_properties, :primary_taxon_id_in_any]
+        [
+          "#{[:name, :meta_keywords, :variants_display_as,
+              :variants_display_name, :supplier_name]
+          .join('_or_')}_cont",
+          :with_properties, :primary_taxon_id_in_any
+        ]
       end
 
       def distributor

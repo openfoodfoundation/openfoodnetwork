@@ -43,10 +43,11 @@ RSpec::Matchers.define :match_table do |expected_table|
 
         elsif row != expected_row
           row.each_with_index do |cell, j|
-            if cell != expected_row[j]
-              @failure_message = "cell [#{i}, #{j}] has content '#{cell}', expected '#{expected_row[j]}'"
-              break
-            end
+            next unless cell != expected_row[j]
+
+            @failure_message = "cell [#{i}, #{j}] has content '#{cell}', " \
+                               "expected '#{expected_row[j]}'"
+            break
           end
           break if @failure_message
         end

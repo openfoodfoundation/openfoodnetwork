@@ -121,13 +121,18 @@ module Reporting
         end
 
         def produce_summary_rows(order, invoice_number, opts)
-          [summary_row(order, I18n.t(:report_header_total_untaxable_produce), total_untaxable_products(order), invoice_number, I18n.t(:report_header_gst_free_income), opts),
+          [summary_row(order, I18n.t(:report_header_total_untaxable_produce),
+                       total_untaxable_products(order), invoice_number,
+                       I18n.t(:report_header_gst_free_income), opts),
            summary_row(order, I18n.t(:report_header_total_taxable_produce),
-                       total_taxable_products(order), invoice_number, I18n.t(:report_header_gst_on_income), opts)]
+                       total_taxable_products(order), invoice_number,
+                       I18n.t(:report_header_gst_on_income), opts)]
         end
 
         def fee_summary_rows(order, invoice_number, opts)
-          [summary_row(order, I18n.t(:report_header_total_untaxable_fees), total_untaxable_fees(order), invoice_number, I18n.t(:report_header_gst_free_income), opts),
+          [summary_row(order, I18n.t(:report_header_total_untaxable_fees),
+                       total_untaxable_fees(order), invoice_number,
+                       I18n.t(:report_header_gst_free_income), opts),
            summary_row(order, I18n.t(:report_header_total_taxable_fees), total_taxable_fees(order),
                        invoice_number, I18n.t(:report_header_gst_on_income), opts)]
         end
@@ -143,9 +148,12 @@ module Reporting
         end
 
         def admin_adjustment_summary_rows(order, invoice_number, opts)
-          [summary_row(order, I18n.t(:report_header_total_untaxable_admin), total_untaxable_admin_adjustments(order), invoice_number, I18n.t(:report_header_gst_free_income), opts),
+          [summary_row(order, I18n.t(:report_header_total_untaxable_admin),
+                       total_untaxable_admin_adjustments(order), invoice_number,
+                       I18n.t(:report_header_gst_free_income), opts),
            summary_row(order, I18n.t(:report_header_total_taxable_admin),
-                       total_taxable_admin_adjustments(order), invoice_number, I18n.t(:report_header_gst_on_income), opts)]
+                       total_taxable_admin_adjustments(order), invoice_number,
+                       I18n.t(:report_header_gst_on_income), opts)]
         end
 
         def summary_row(order, description, amount, invoice_number, tax_type, opts = {})
@@ -228,8 +236,13 @@ module Reporting
         end
 
         def tax_on_shipping_s(order)
-          tax_on_shipping = order.shipments.sum("additional_tax_total + included_tax_total").positive?
-          tax_on_shipping ? I18n.t(:report_header_gst_on_income) : I18n.t(:report_header_gst_free_income)
+          tax_on_shipping = order.shipments
+            .sum("additional_tax_total + included_tax_total").positive?
+          if tax_on_shipping
+            I18n.t(:report_header_gst_on_income)
+          else
+            I18n.t(:report_header_gst_free_income)
+          end
         end
 
         def total_untaxable_admin_adjustments(order)
@@ -245,7 +258,11 @@ module Reporting
         end
 
         def tax_type(taxable)
-          taxable.has_tax? ? I18n.t(:report_header_gst_on_income) : I18n.t(:report_header_gst_free_income)
+          if taxable.has_tax?
+            I18n.t(:report_header_gst_on_income)
+          else
+            I18n.t(:report_header_gst_free_income)
+          end
         end
       end
     end

@@ -25,7 +25,6 @@ module Admin
         format.json {
           render_as_json @collection, controller: self, include_calculators: @include_calculators
         }
-        # format.json { @presented_collection = @collection.each_with_index.map { |ef, i| EnterpriseFeePresenter.new(self, ef, i) } }
       end
     end
 
@@ -63,7 +62,9 @@ module Admin
       when :for_order_cycle
         order_cycle = OrderCycle.find_by(id: params[:order_cycle_id]) if params[:order_cycle_id]
         coordinator = Enterprise.find_by(id: params[:coordinator_id]) if params[:coordinator_id]
-        order_cycle = OrderCycle.new(coordinator: coordinator) if order_cycle.nil? && coordinator.present?
+        if order_cycle.nil? && coordinator.present?
+          order_cycle = OrderCycle.new(coordinator: coordinator)
+        end
         enterprises = OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user,
                                                                  order_cycle).visible_enterprises
         EnterpriseFee.for_enterprises(enterprises).order('enterprise_id', 'fee_type', 'name')

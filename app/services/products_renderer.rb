@@ -68,12 +68,14 @@ class ProductsRenderer
   end
 
   def products_order
-    if distributor.preferred_shopfront_product_sorting_method == "by_producer" && distributor.preferred_shopfront_producer_order.present?
+    if (distributor.preferred_shopfront_product_sorting_method == "by_producer") &&
+       distributor.preferred_shopfront_producer_order.present?
       distributor
         .preferred_shopfront_producer_order
         .split(",").map { |id| "spree_products.supplier_id=#{id} DESC" }
         .join(", ") + ", spree_products.name ASC, spree_products.id ASC"
-    elsif distributor.preferred_shopfront_product_sorting_method == "by_category" && distributor.preferred_shopfront_taxon_order.present?
+    elsif distributor.preferred_shopfront_product_sorting_method == "by_category" &&
+          distributor.preferred_shopfront_taxon_order.present?
       distributor
         .preferred_shopfront_taxon_order
         .split(",").map { |id| "spree_products.primary_taxon_id=#{id} DESC" }

@@ -53,7 +53,8 @@ module OrderCyclesHelper
   end
 
   def simple_index
-    @simple_index ||= !OpenFoodNetwork::Permissions.new(spree_current_user).can_manage_complex_order_cycles?
+    @simple_index ||=
+      !OpenFoodNetwork::Permissions.new(spree_current_user).can_manage_complex_order_cycles?
   end
 
   def pickup_time(order_cycle = current_order_cycle)
@@ -73,7 +74,8 @@ module OrderCyclesHelper
   def validated_enterprise_options(enterprises, options = {})
     enterprises.map do |e|
       disabled_message = nil
-      if options[:shipping_and_payment_methods] && (e.shipping_methods.empty? || e.payment_methods.available.empty?)
+      if options[:shipping_and_payment_methods] &&
+         (e.shipping_methods.empty? || e.payment_methods.available.empty?)
         if e.shipping_methods.empty? && e.payment_methods.available.empty?
           disabled_message = I18n.t(:no_shipping_or_payment)
         elsif e.shipping_methods.empty?
