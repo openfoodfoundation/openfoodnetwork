@@ -2,6 +2,13 @@ trix-toolbar [data-trix-button-group="file-tools"] {
   display: none;
 }
 
+trix-editor {
+  ol,
+  ul {
+    margin-left: 1.5em;
+  }
+}
+
 trix-toolbar .trix-button {
   background-color: transparent;
 
