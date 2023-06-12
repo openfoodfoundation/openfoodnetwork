@@ -42,7 +42,8 @@ module Reporting
               .enterprise_fee
               .group('originator_id')
               .pluck("originator_id", 'array_agg(id)')
-              .filter(&method(:filter_enterprise_fee))
+              .filter(&method(:filter_enterprise_fee_by_id))
+              .filter(&method(:filter_enterprise_fee_by_owner))
               .map do |enterprise_fee_id, enterprise_fee_adjustment_ids|
               {
                 enterprise_fee_id: enterprise_fee_id,
@@ -54,11 +55,28 @@ module Reporting
         end
 
         # [enteperise_fee_id, [adjustment_ids]]
-        def filter_enterprise_fee(arg)
-          return true if ransack_params[:enterprise_fee_id_in].reject(&:blank?).empty?
+        def filter_enterprise_fee_by_id(arg)
+          return true unless filter_enterprise_fee_by_id_active?
 
           enterprise_fee_id = arg.first.to_s
           enterprise_fee_id.in?(ransack_params[:enterprise_fee_id_in])
+        end
+
+        def filter_enterprise_fee_by_owner(arg)
+          return true unless filter_enteprise_fee_by_owner_active?
+
+          enterprise_fee_id = arg.first
+
+          EnterpriseFee.exists?(id: enterprise_fee_id,
+                                enterprise_id: ransack_params[:enterprise_fee_owner_id_in] )
+        end
+
+        def filter_enterprise_fee_by_id_active?
+          !ransack_params[:enterprise_fee_id_in].compact_blank.empty?
+        end
+
+        def filter_enteprise_fee_by_owner_active?
+          !ransack_params[:enterprise_fee_owner_id_in].compact_blank.empty?
         end
 
         def join_tax_rate
@@ -146,10 +164,18 @@ module Reporting
 
         def enterprise_fees(order)
           query = order.all_adjustments.enterprise_fee
-          unless ransack_params[:enterprise_fee_id_in].reject(&:blank?).empty?
+          if filter_enterprise_fee_by_id_active?
             query = query.where(originator_id: ransack_params[:enterprise_fee_id_in])
           end
+          if filter_enteprise_fee_by_owner_active?
+            query = query.where(originator_id: enterprise_fee_ids_for_selected_owners)
+          end
           query
+        end
+
+        def enterprise_fee_ids_for_selected_owners
+          EnterpriseFee.where( enterprise_id: ransack_params[:enterprise_fee_owner_id_in] )
+            .pluck(:id)
         end
 
         def enterprise_fee_tax(order, included: false, added: false)
