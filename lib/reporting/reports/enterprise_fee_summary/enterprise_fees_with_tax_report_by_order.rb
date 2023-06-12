@@ -8,10 +8,7 @@ module Reporting
 
         def initialize(user, params = {}, render: false)
           super(user, params, render: render)
-          @parameters = Parameters.new(p || {})
-          @parameters.validate!
           @permissions = Permissions.new(user)
-          @parameters.authorize!(@permissions)
         end
 
         def search
@@ -45,6 +42,7 @@ module Reporting
               .enterprise_fee
               .group('originator_id')
               .pluck("originator_id", 'array_agg(id)')
+              .filter(&method(:filter_enterprise_fee))
               .map do |enterprise_fee_id, enterprise_fee_adjustment_ids|
               {
                 enterprise_fee_id: enterprise_fee_id,
@@ -53,6 +51,14 @@ module Reporting
               }
             end
           end
+        end
+
+        # [enteperise_fee_id, [adjustment_ids]]
+        def filter_enterprise_fee(arg)
+          return true if ransack_params[:enterprise_fee_id_in].reject(&:blank?).empty?
+
+          enterprise_fee_id = arg.first.to_s
+          enterprise_fee_id.in?(ransack_params[:enterprise_fee_id_in])
         end
 
         def join_tax_rate
@@ -119,11 +125,11 @@ module Reporting
               summary_row: proc do |_key, items, _rows|
                 item = items.first
                 order = item.second
-                enterprise_fees = order.all_adjustments.enterprise_fee.sum(:amount)
+                enterprise_fees = enterprise_fees_sum(order)
                 {
-                  total_excl_tax: enterprise_fees - order.enterprise_fee_tax(included: true),
-                  tax: order.enterprise_fee_tax,
-                  total_incl_tax: enterprise_fees + order.enterprise_fee_tax(added: true),
+                  total_excl_tax: enterprise_fees - enterprise_fee_tax(order, included: true),
+                  tax: enterprise_fee_tax(order),
+                  total_incl_tax: enterprise_fees + enterprise_fee_tax(order, added: true),
                   customer_first_name: order.customer&.first_name,
                   customer_last_name: order.customer&.last_name,
                   customer_code: order.customer&.code,
@@ -132,6 +138,25 @@ module Reporting
               end
             }
           ]
+        end
+
+        def enterprise_fees_sum(order)
+          enterprise_fees(order).sum(:amount)
+        end
+
+        def enterprise_fees(order)
+          query = order.all_adjustments.enterprise_fee
+          unless ransack_params[:enterprise_fee_id_in].reject(&:blank?).empty?
+            query = query.where(originator_id: ransack_params[:enterprise_fee_id_in])
+          end
+          query
+        end
+
+        def enterprise_fee_tax(order, included: false, added: false)
+          query = order.all_adjustments.tax
+          query = query.inclusive if included == true
+          query = query.additional if added == true
+          query.where(adjustable: enterprise_fees(order)).sum(:amount)
         end
 
         def distributor(query_result_row)
