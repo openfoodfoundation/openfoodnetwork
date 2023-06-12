@@ -8,15 +8,3 @@ trix-editor {
     margin-left: 1.5em;
   }
 }
-
-trix-toolbar .trix-button {
-  background-color: transparent;
-
-  &:hover {
-    background-color: transparent;
-  }
-
-  &:disabled {
-    cursor: default;
-  }
-}
