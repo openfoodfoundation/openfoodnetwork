@@ -1,0 +1,11 @@
+// Temporary location for some overrides, to avoid having to branch a whole file
+
+// Prevent uppercase
+fieldset legend,
+label,
+input[type=submit],
+input[type=button],
+button,
+.button {
+  text-transform: inherit !important;
+}

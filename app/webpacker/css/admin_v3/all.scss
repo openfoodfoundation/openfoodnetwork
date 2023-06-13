@@ -19,7 +19,7 @@
 
 @import "../admin/globals/functions";
 @import "globals/palette"; // admin_v3
-@import "../admin/globals/variables";
+@import "globals/variables"; // admin_v3
 @import "../admin/variables";
 @import "../admin/globals/mixins";
 
@@ -29,7 +29,7 @@
 @import "../shared/variables/variables";
 @import "../shared/utilities";
 @import "../admin/shared/typography";
-@import "../admin/shared/tables";
+@import "shared/tables"; // admin_v3
 @import "../admin/shared/icons";
 @import "../admin/shared/forms";
 @import "shared/layout"; // admin_v3
@@ -59,7 +59,7 @@
 @import "components/navigation"; // admin_v3
 @import "../admin/components/ng-cloak";
 @import "../admin/components/page_actions";
-@import "../admin/components/pagination";
+@import "components/pagination"; // admin_v3
 @import "../admin/components/per_page_controls";
 @import "../admin/components/product_autocomplete";
 @import "../admin/components/progress";
@@ -121,6 +121,8 @@
 
 @import "../shared/question-mark-icon";
 @import "../admin/question-mark-tooltip";
+
+@import "v3_overrides"; // admin_v3
 
 @import "~tom-select/src/scss/tom-select.default";
 @import "../admin/components/tom_select";
