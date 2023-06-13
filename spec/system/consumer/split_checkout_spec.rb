@@ -1114,11 +1114,8 @@ describe "As a consumer, I want to checkout my order" do
         let(:voucher) { create(:voucher, code: 'some_code', enterprise: distributor, amount: 6) }
 
         before do
-          # Add voucher to the order
           voucher.create_adjustment(voucher.code, order)
-
-          # Update order so voucher adjustment is properly taken into account
-          order.update_order!
+          order.update_totals
           VoucherAdjustmentsService.calculate(order)
 
           visit checkout_step_path(:summary)

@@ -14,9 +14,7 @@ describe VoucherAdjustmentsService do
 
       it 'updates the adjustment amount to -order.total' do
         voucher.create_adjustment(voucher.code, order)
-
-        order.total = 6
-        order.save!
+        order.update_columns(item_total: 6)
 
         VoucherAdjustmentsService.calculate(order)
 
