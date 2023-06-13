@@ -88,7 +88,16 @@ nav.menu {
 
       &:hover {
         color: $red !important;
-        border-bottom: 2px solid $red;
+
+        &:after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 25px;
+          right: 25px;
+          height: 3px;
+          background: $red;
+        }
       }
 
       span.text {
