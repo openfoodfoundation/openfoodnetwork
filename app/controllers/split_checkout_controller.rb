@@ -24,7 +24,6 @@ class SplitCheckoutController < ::BaseController
   def edit
     redirect_to_step_based_on_order unless params[:step]
     check_step if params[:step]
-    apply_voucher if @order.voucher_adjustments.present?
 
     flash_error_when_no_shipping_method_available if available_shipping_methods.none?
   end
@@ -204,6 +203,7 @@ class SplitCheckoutController < ::BaseController
 
   def process_voucher
     if add_voucher
+      VoucherAdjustmentsService.calculate(@order)
       render_voucher_section_or_redirect
     elsif @order.errors.present?
       render_error
@@ -307,13 +307,5 @@ class SplitCheckoutController < ::BaseController
     when "payment"
       redirect_to checkout_step_path(:payment) if params[:step] == "summary"
     end
-  end
-
-
-  def apply_voucher
-    VoucherAdjustmentsService.calculate(@order)
-
-    # update order to take into account the voucher we applied
-    @order.update_order!
   end
 end
