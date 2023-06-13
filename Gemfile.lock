@@ -473,8 +473,9 @@ GEM
     parallel (1.23.0)
     paranoia (2.6.2)
       activerecord (>= 5.1, < 7.1)
-    parser (3.2.2.1)
+    parser (3.2.2.3)
       ast (~> 2.4.1)
+      racc
     paypal-sdk-core (0.3.4)
       multi_json (~> 1.0)
       xml-simple
@@ -626,10 +627,10 @@ GEM
     rswag-ui (2.9.0)
       actionpack (>= 3.1, < 7.1)
       railties (>= 3.1, < 7.1)
-    rubocop (1.52.0)
+    rubocop (1.52.1)
       json (~> 2.3)
       parallel (~> 1.10)
-      parser (>= 3.2.0.0)
+      parser (>= 3.2.2.3)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml (>= 3.2.5, < 4.0)
