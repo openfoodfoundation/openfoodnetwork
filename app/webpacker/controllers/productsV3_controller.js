@@ -1,6 +1,8 @@
 import ApplicationController from "./application_controller";
 
 export default class extends ApplicationController {
+  static targets = ["loading"];
+
   connect() {
     super.connect();
     // Fetch the products on page load
@@ -8,6 +10,15 @@ export default class extends ApplicationController {
   }
 
   load = () => {
-    this.stimulate("Admin::ProductsV3#fetch");
+    this.showLoading();
+    this.stimulate("Admin::ProductsV3#fetch").then(() => this.hideLoading());
+  };
+
+  hideLoading = () => {
+    this.loadingTarget.classList.add("hidden");
+  };
+
+  showLoading = () => {
+    this.loadingTarget.classList.remove("hidden");
   };
 }
