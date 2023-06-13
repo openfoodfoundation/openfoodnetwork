@@ -46,21 +46,6 @@ module PaymentGateways
           order.payments << payment
         end
 
-        shared_examples "successful order completion" do
-          it "completes the order and redirects to the order confirmation page" do
-            expect(controller).to receive(:processing_succeeded).and_call_original
-            expect(controller).to receive(:order_completion_reset).and_call_original
-
-            get :confirm, params: { payment_intent: "pi_123" }
-
-            expect(order.completed?).to be true
-            expect(response).to redirect_to order_path(order, order_token: order.token)
-            expect(flash[:notice]).to eq 'Your order has been processed successfully'
-          end
-        end
-
-        include_examples "successful order completion"
-
         it "creates a customer record" do
           order.update_columns(customer_id: nil)
           Customer.delete_all
@@ -94,7 +79,16 @@ Please try again!"
             order.update_attribute :state, "confirmation"
           end
 
-          include_examples "successful order completion"
+          it "completes the order and redirects to the order confirmation page" do
+            expect(controller).to receive(:processing_succeeded).and_call_original
+            expect(controller).to receive(:order_completion_reset).and_call_original
+
+            get :confirm, params: { payment_intent: "pi_123" }
+
+            expect(order.completed?).to be true
+            expect(response).to redirect_to order_path(order, order_token: order.token)
+            expect(flash[:notice]).to eq 'Your order has been processed successfully'
+          end
         end
       end
 
@@ -235,6 +229,16 @@ completed due to stock issues."
               payment.reload
               expect(payment.state).to eq("completed")
               expect(payment.cvv_response_message).to be nil
+            end
+
+            it "moves the order state to completed" do
+              expect(order).to receive(:process_payments!) do
+                payment.complete!
+              end
+
+              get :authorize, params: { order_number: order.number, payment_intent: payment_intent }
+
+              expect(order.reload.state).to eq "complete"
             end
           end
 
