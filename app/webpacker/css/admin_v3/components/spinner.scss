@@ -11,7 +11,11 @@
   font-size: 24px;
   background: rgba(255, 255, 255, 0.8);
 
-  .spinner {
+  &.hidden {
+    display: none;
+  }
+
+  > .spinner {
     width: 56px;
     height: 56px;
     border-radius: 50%;

@@ -766,6 +766,7 @@ en:
         product_properties: "Product Properties"
     products_v3:
       title: Bulk Edit Products
+      loading: Loading your products
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
