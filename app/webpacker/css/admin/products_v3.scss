@@ -27,4 +27,21 @@
       -webkit-box-orient: vertical;
     }
   }
+
+  #no-products {
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: $h3-size;
+    gap: 20px;
+
+    #no-products-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+  }
 }
