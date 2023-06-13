@@ -316,7 +316,7 @@ module Spree
     # Creates new tax charges if there are any applicable rates. If prices already
     # include taxes then price adjustments are created instead.
     def create_tax_charge!
-      return if state.in?(["cart", "address", "delivery"])
+      return if before_payment_state?
 
       clear_legacy_taxes!
 
@@ -572,6 +572,10 @@ module Spree
       else
         line_items.sort_by { |li| [li.product.name] }
       end
+    end
+
+    def before_payment_state?
+      state.in?(["cart", "address", "delivery"])
     end
 
     private
