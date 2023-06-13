@@ -145,7 +145,7 @@ describe 'White label setting' do
           set_order(order)
         end
 
-        shared_examples "hides the OFN navigation when needed only for the checkout" do
+        context "when the split checkout is enabled" do
           it_behaves_like "hides the OFN navigation when needed only"
 
           context "for cart path" do
@@ -173,18 +173,6 @@ describe 'White label setting' do
 
             it_behaves_like "hides the OFN navigation for mobile view as well"
           end
-        end
-
-        context "when the split checkout is disabled" do
-          it_behaves_like "hides the OFN navigation when needed only for the checkout"
-        end
-
-        context "when the split checkout is enabled" do
-          before do
-            Flipper.enable(:split_checkout)
-          end
-
-          it_behaves_like "hides the OFN navigation when needed only for the checkout"
         end
       end
 

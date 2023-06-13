@@ -282,61 +282,64 @@ module Spree
         end
       end
 
-      context "#adjust" do
+      describe "#adjust" do
+        let!(:country) { create(:country, name: "Default Country") }
+        let!(:state) { create(:state, name: "Default State", country: country) }
+        let!(:zone) { create(:zone_with_member, default_tax: true, member: country ) }
+        let!(:category) { create(:tax_category, name: "Taxable Foo") }
+        let!(:category2) { create(:tax_category, name: "Non Taxable") }
+        let!(:rate1) {
+          create(:tax_rate, amount: 0.10, zone: zone, tax_category: category)
+        }
+        let!(:rate2) {
+          create(:tax_rate, amount: 0.05, zone: zone, tax_category: category)
+        }
+        let(:hub) { create(:distributor_enterprise, charges_sales_tax: true) }
+        let(:address) { create(:address, state: country.states.first, country: country) }
+        let!(:order) {
+          create(:order_with_line_items, line_items_count: 2, distributor: hub,
+                                         ship_address: address)
+        }
+        let!(:taxable) { order.line_items.first.variant.product }
+        let!(:nontaxable) { order.line_items.last.variant.product }
+
         before do
-          @country = create(:country)
-          @zone = create(:zone, name: "Country Zone", default_tax: true, zone_members: [])
-          @zone.zone_members.create(zoneable: @country)
-          @category    = Spree::TaxCategory.create(name: "Taxable Foo")
-          @category2   = Spree::TaxCategory.create(name: "Non Taxable")
-          @rate1       = Spree::TaxRate.create(
-            amount: 0.10,
-            calculator: ::Calculator::DefaultTax.new,
-            tax_category: @category,
-            zone: @zone
-          )
-          @rate2 = Spree::TaxRate.create(
-            amount: 0.05,
-            calculator: ::Calculator::DefaultTax.new,
-            tax_category: @category,
-            zone: @zone
-          )
-          @order       = Spree::Order.create!
-          @taxable     = create(:product, tax_category: @category)
-          @nontaxable  = create(:product, tax_category: @category2)
+          taxable.update(tax_category: category)
+          nontaxable.update(tax_category: category2)
+          order.line_items.delete_all
         end
 
         context "not taxable line item " do
-          let!(:line_item) { @order.contents.add(@nontaxable.variants.first, 1) }
+          let!(:line_item) { order.contents.add(nontaxable.variants.first, 1) }
 
           it "should not create a tax adjustment" do
-            Spree::TaxRate.adjust(@order, @order.line_items)
+            Spree::TaxRate.adjust(order, order.line_items)
             expect(line_item.adjustments.tax.charge.count).to eq 0
           end
 
           it "should not create a refund" do
-            Spree::TaxRate.adjust(@order, @order.line_items)
+            Spree::TaxRate.adjust(order, order.line_items)
             expect(line_item.adjustments.credit.count).to eq 0
           end
         end
 
         context "taxable line item" do
-          let!(:line_item) { @order.contents.add(@taxable.variants.first, 1) }
+          let!(:line_item) { order.contents.add(taxable.variants.first, 1) }
 
           before do
-            @rate1.update_column(:included_in_price, true)
-            @rate2.update_column(:included_in_price, true)
+            rate1.update_column(:included_in_price, true)
+            rate2.update_column(:included_in_price, true)
           end
 
           context "when price includes tax" do
             context "when zone is contained by default tax zone" do
               it "should create two adjustments, one for each tax rate" do
-                Spree::TaxRate.adjust(@order, @order.line_items)
+                Spree::TaxRate.adjust(order, order.line_items)
                 expect(line_item.adjustments.count).to eq 2
               end
 
               it "should not create a tax refund" do
-                Spree::TaxRate.adjust(@order, @order.line_items)
+                Spree::TaxRate.adjust(order, order.line_items)
                 expect(line_item.adjustments.credit.count).to eq 0
               end
             end
@@ -344,57 +347,59 @@ module Spree
             context "when order's zone is neither the default zone, or included in the default zone, but matches the rate's zone" do
               before do
                 # With no zone members, this zone will not contain anything
-                @zone.zone_members.delete_all
+                zone.zone_members.delete_all
               end
 
               it "should create an adjustment" do
-                Spree::TaxRate.adjust(@order, @order.line_items)
+                Spree::TaxRate.adjust(order, order.line_items)
                 expect(line_item.adjustments.charge.count).to eq 2
               end
 
               it "should not create a tax refund for each tax rate" do
-                Spree::TaxRate.adjust(@order, @order.line_items)
+                Spree::TaxRate.adjust(order, order.line_items)
                 expect(line_item.adjustments.credit.count).to eq 0
               end
             end
-          end
 
-          context "when order's zone does not match default zone, is not included in the default zone, AND does not match the rate's zone" do
-            before do
-              @new_zone = create(:zone, name: "New Zone", default_tax: false)
-              @new_country = create(:country, name: "New Country")
-              @new_zone.zone_members.create(zoneable: @new_country)
-              @new_state = create(:state, country: @new_country)
-              @order.ship_address = create(:address, country: @new_country, state: @new_state)
-              @order.save
-            end
+            context "when order's zone does not match default zone, is not included in the default zone, AND does not match the rate's zone" do
+              let!(:other_country) { create(:country, name: "Other Country") }
+              let!(:other_state) { create(:state, name: "Other State", country: other_country) }
+              let!(:other_address) { create(:address, state: other_state, country: other_country) }
+              let!(:other_zone) {
+                create(:zone_with_member, name: "Other Zone", default_tax: false,
+                                          member: other_country)
+              }
 
-            it "should not create positive adjustments" do
-              Spree::TaxRate.adjust(@order, @order.line_items)
-              expect(line_item.adjustments.charge.count).to eq 0
-            end
+              before do
+                order.update(ship_address: other_address)
+                order.all_adjustments.delete_all
+              end
 
-            it "should create a tax refund for each tax rate" do
-              Spree::TaxRate.adjust(@order, @order.line_items)
-              expect(line_item.adjustments.credit.count).to eq 2
+              it "should not create positive adjustments" do
+                Spree::TaxRate.adjust(order, order.line_items)
+                expect(line_item.adjustments.charge.count).to eq 0
+              end
+
+              it "should create a tax refund for each tax rate" do
+                Spree::TaxRate.adjust(order, order.line_items)
+                expect(line_item.adjustments.credit.count).to eq 2
+              end
             end
           end
 
           context "when price does not include tax" do
             before do
-              allow(@order).to receive(:tax_zone) { @zone }
-
-              [@rate1, @rate2].each do |rate|
-                rate.included_in_price = false
-                rate.zone = @zone
-                rate.save
+              allow(order).to receive(:tax_zone) { zone }
+              [rate1, rate2].each do |rate|
+                rate.update(included_in_price: false, zone: zone)
               end
+
+              Spree::TaxRate.adjust(order, order.line_items)
             end
 
             it "should not delete adjustments for complete order when taxrate is deleted" do
-              @order.update_column :completed_at, Time.now
-              @rate1.destroy!
-              @rate2.destroy!
+              rate1.destroy!
+              rate2.destroy!
               expect(line_item.adjustments.count).to eq 2
             end
 
@@ -407,10 +412,9 @@ module Spree
             end
 
             it "should remove adjustments when tax_zone is removed" do
-              Spree::TaxRate.adjust(@order, @order.line_items)
               expect(line_item.adjustments.count).to eq 2
-              allow(@order).to receive(:tax_zone) { nil }
-              Spree::TaxRate.adjust(@order, @order.line_items)
+              allow(order).to receive(:tax_zone) { nil }
+              Spree::TaxRate.adjust(order, order.line_items)
               expect(line_item.adjustments.count).to eq 0
             end
           end

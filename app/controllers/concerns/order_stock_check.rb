@@ -13,8 +13,6 @@ module OrderStockCheck
   def handle_insufficient_stock
     return if sufficient_stock?
 
-    reset_order_to_cart
-
     flash[:error] = Spree.t(:inventory_error_flash_for_insufficient_quantity)
     redirect_to main_app.cart_path
   end
@@ -42,11 +40,5 @@ module OrderStockCheck
 
   def sufficient_stock?
     @sufficient_stock ||= @order.insufficient_stock_lines.blank?
-  end
-
-  def reset_order_to_cart
-    return if OpenFoodNetwork::FeatureToggle.enabled? :split_checkout, spree_current_user
-
-    OrderCheckoutRestart.new(@order).call
   end
 end

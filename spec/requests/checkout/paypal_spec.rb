@@ -46,6 +46,7 @@ describe "checking out an order with a paypal express payment method", type: :re
       payment_method.calculator = calculator
       payment_method.save!
       order.payments.create!(payment_method_id: payment_method.id, amount: order.total)
+      order.next
     end
 
     it "destroys the old payment and processes the order" do

@@ -82,158 +82,95 @@ describe "As a consumer, I want to see adjustment breakdown" do
     end
 
     describe "for a customer with shipping address within the tax zone" do
-      context "on legacy checkout" do
-        before do
-          set_order order_within_zone
-          login_as(user_within_zone)
-        end
-
-        it "will be charged tax on the order" do
-          visit checkout_path
-
-          find(:xpath, '//*[@id="shipping"]/ng-form/dd').click
-          choose free_shipping.name.to_s
-
-          within "#payment" do
-            choose free_payment.name.to_s
-          end
-
-          click_on "Place order now"
-
-          # UI checks
-          expect(page).to have_selector('#order_total', text: with_currency(10.00))
-          expect(page).to have_selector('#tax-row', text: with_currency(1.15))
-
-          # DB checks
-          assert_db_tax_incl
-        end
+      before do
+        set_order order_within_zone
+        login_as(user_within_zone)
       end
 
-      context "on split-checkout" do
-        before do
-          Flipper.enable(:split_checkout)
+      it "will be charged tax on the order" do
+        visit checkout_step_path(:details)
 
-          set_order order_within_zone
-          login_as(user_within_zone)
+        choose "Delivery"
+
+        click_button "Next - Payment method"
+        click_on "Next - Order summary"
+        click_on "Complete order"
+
+        # UI checks
+        expect(page).to have_content("Confirmed")
+        expect(page).to have_selector('#order_total', text: with_currency(10.00))
+        expect(page).to have_selector('#tax-row', text: with_currency(1.15))
+
+        # DB checks
+        assert_db_tax_incl
+      end
+
+      context "when using a voucher" do
+        let!(:voucher) do
+          create(:voucher, code: 'some_code', enterprise: distributor, amount: 10)
         end
 
-        it "will be charged tax on the order" do
+        it "will include a tax included amount on the voucher adjustment" do
           visit checkout_step_path(:details)
 
           choose "Delivery"
 
           click_button "Next - Payment method"
+
+          # add Voucher
+          fill_in "Enter voucher code", with: voucher.code
+          click_button("Apply")
+
+          # Choose payment
           click_on "Next - Order summary"
           click_on "Complete order"
 
           # UI checks
           expect(page).to have_content("Confirmed")
-          expect(page).to have_selector('#order_total', text: with_currency(10.00))
+          expect(page).to have_selector('#order_total', text: with_currency(0.00))
           expect(page).to have_selector('#tax-row', text: with_currency(1.15))
 
-          # DB checks
-          assert_db_tax_incl
-        end
-
-        context "when using a voucher" do
-          let!(:voucher) do
-            create(:voucher, code: 'some_code', enterprise: distributor, amount: 10)
+          # Voucher
+          within "#line-items" do
+            expect(page).to have_content(voucher.code)
+            expect(page).to have_content(with_currency(-10.00))
           end
 
-          it "will include a tax included amount on the voucher adjustment" do
-            visit checkout_step_path(:details)
+          # DB check
+          order_within_zone.reload
+          voucher_adjustment = order_within_zone.voucher_adjustments.first
 
-            choose "Delivery"
-
-            click_button "Next - Payment method"
-
-            # add Voucher
-            fill_in "Enter voucher code", with: voucher.code
-            click_button("Apply")
-
-            # Choose payment
-            click_on "Next - Order summary"
-            click_on "Complete order"
-
-            # UI checks
-            expect(page).to have_content("Confirmed")
-            expect(page).to have_selector('#order_total', text: with_currency(0.00))
-            expect(page).to have_selector('#tax-row', text: with_currency(1.15))
-
-            # Voucher
-            within "#line-items" do
-              expect(page).to have_content(voucher.code)
-              expect(page).to have_content(with_currency(-10.00))
-            end
-
-            # DB check
-            order_within_zone.reload
-            voucher_adjustment = order_within_zone.voucher_adjustments.first
-
-            expect(voucher_adjustment.amount.to_f).to eq(-10)
-            expect(voucher_adjustment.included_tax.to_f).to eq(-1.15)
-          end
+          expect(voucher_adjustment.amount.to_f).to eq(-10)
+          expect(voucher_adjustment.included_tax.to_f).to eq(-1.15)
         end
       end
     end
 
     describe "for a customer with shipping address outside the tax zone" do
-      context "on legacy checkout" do
-        before do
-          set_order order_outside_zone
-          login_as(user_outside_zone)
-        end
-
-        it "will not be charged tax on the order" do
-          pending("#7540")
-          visit checkout_path
-
-          find(:xpath, '//*[@id="shipping"]/ng-form/dd').click
-          choose free_shipping.name.to_s
-
-          within "#payment" do
-            choose free_payment.name.to_s
-          end
-
-          click_on "Place order now"
-
-          # UI checks
-          expect(page).to have_selector('#order_total', text: with_currency(10.00))
-          expect(page).not_to have_content("includes tax")
-
-          # DB checks
-          assert_db_no_tax_incl
-        end
+      before do
+        set_order order_outside_zone
+        login_as(user_outside_zone)
       end
 
-      context "on split-checkout" do
-        before do
-          Flipper.enable(:split_checkout)
+      it "will not be charged tax on the order" do
+        pending("#7540")
+        visit checkout_step_path(:details)
 
-          set_order order_outside_zone
-          login_as(user_outside_zone)
-        end
+        choose "Delivery"
+        check "order_save_bill_address"
+        check "ship_address_same_as_billing"
 
-        it "will not be charged tax on the order" do
-          pending("#7540")
-          visit checkout_step_path(:details)
+        click_button "Next - Payment method"
+        click_on "Next - Order summary"
+        click_on "Complete order"
 
-          choose "Delivery"
-          check "order_save_bill_address"
-          check "ship_address_same_as_billing"
+        # UI checks
+        expect(page).to have_content("Confirmed")
+        expect(page).to have_selector('#order_total', text: with_currency(10.00))
+        expect(page).not_to have_content("includes tax")
 
-          click_button "Next - Payment method"
-          click_on "Next - Order summary"
-          click_on "Complete order"
-
-          # UI checks
-          expect(page).to have_content("Confirmed")
-          expect(page).to have_selector('#order_total', text: with_currency(10.00))
-          expect(page).not_to have_content("includes tax")
-
-          # DB checks
-          assert_db_no_tax_incl
-        end
+        # DB checks
+        assert_db_no_tax_incl
       end
     end
   end

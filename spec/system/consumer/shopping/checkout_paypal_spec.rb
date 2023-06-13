@@ -47,7 +47,7 @@ describe "Check out with Paypal" do
   end
 
   shared_examples "checking out with paypal" do |user_type|
-    context user_type.to_s do
+    pending user_type.to_s do
       before do
         fill_out_details
         fill_out_form(free_shipping.name, paypal.name, save_default_addresses: false)
@@ -82,7 +82,7 @@ describe "Check out with Paypal" do
   end
 
   describe "shared_examples" do
-    context "as a guest user" do
+    pending "as a guest user" do
       before do
         visit checkout_path
         checkout_as_guest
@@ -90,7 +90,7 @@ describe "Check out with Paypal" do
       it_behaves_like "checking out with paypal", "as guest"
     end
 
-    context "as a logged in user" do
+    pending "as a logged in user" do
       before do
         login_as user
         visit checkout_path

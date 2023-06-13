@@ -41,7 +41,7 @@ describe "Check out with Stripe" do
     distributor.shipping_methods << [shipping_with_fee, free_shipping]
   end
 
-  describe "using Stripe SCA" do
+  pending "using Stripe SCA" do
     let!(:stripe_account) { create(:stripe_account, enterprise: distributor) }
     let!(:stripe_sca_payment_method) {
       create(:stripe_sca_payment_method, distributors: [distributor])

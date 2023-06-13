@@ -75,9 +75,9 @@ module Spree
 
               before_transition to: :delivery, do: :create_proposed_shipments
               before_transition to: :delivery, do: :ensure_available_shipping_rates
-              before_transition to: :payment, do: :create_tax_charge!
               before_transition to: :confirmation, do: :validate_payment_method!
 
+              after_transition to: :payment, do: :create_tax_charge!
               after_transition to: :complete, do: :finalize!
               after_transition to: :resumed,  do: :after_resume
               after_transition to: :canceled, do: :after_cancel
@@ -93,14 +93,6 @@ module Spree
               previous_states << name
             else
               self.previous_states = [name]
-            end
-          end
-
-          def self.find_transition(options = {})
-            return nil if options.nil? || !options.include?(:from) || !options.include?(:to)
-
-            next_event_transitions.detect do |transition|
-              transition[options[:from].to_sym] == options[:to].to_sym
             end
           end
 

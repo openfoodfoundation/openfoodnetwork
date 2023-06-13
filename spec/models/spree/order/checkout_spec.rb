@@ -6,44 +6,18 @@ describe Spree::Order::Checkout do
   let(:order) { Spree::Order.new }
 
   context "with default state machine" do
-    let(:transitions) do
-      [
-        { address: :delivery },
-        { delivery: :payment },
-        { payment: :complete },
-        { delivery: :complete }
-      ]
-    end
-
-    it "has the following transitions" do
-      transitions.each do |transition|
-        transition = Spree::Order.find_transition(from: transition.keys.first,
-                                                  to: transition.values.first)
-        expect(transition).to_not be_nil
-      end
-    end
-
-    it "does not have a transition from delivery to confirm" do
-      transition = Spree::Order.find_transition(from: :delivery, to: :confirm)
-      expect(transition).to be_nil
-    end
-
-    it '.find_transition when contract was broken' do
-      expect(Spree::Order.find_transition({ foo: :bar, baz: :dog })).to be_falsy
-    end
-
     context "#checkout_steps" do
       context "when payment not required" do
         before { allow(order).to receive_messages payment_required?: false }
         specify do
-          expect(order.checkout_steps).to eq %w(address delivery complete)
+          expect(order.checkout_steps).to eq %w(address delivery confirmation complete)
         end
       end
 
       context "when payment required" do
         before { allow(order).to receive_messages payment_required?: true }
         specify do
-          expect(order.checkout_steps).to eq %w(address delivery payment complete)
+          expect(order.checkout_steps).to eq %w(address delivery payment confirmation complete)
         end
       end
     end
@@ -112,9 +86,9 @@ describe Spree::Order::Checkout do
           allow(order).to receive_messages payment_required?: false
         end
 
-        it "transitions to complete" do
+        it "transitions to confirmation" do
           order.next!
-          expect(order.state).to eq "complete"
+          expect(order.state).to eq 'confirmation'
         end
       end
     end

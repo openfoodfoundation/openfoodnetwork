@@ -37,28 +37,13 @@ describe 'checkout endpoints', type: :request do
   context "when getting the cart `/checkout/cart`" do
     let(:path) { "/checkout/cart" }
 
-    context "using the legacy checkout" do
-      it "do not redirect" do
-        get path
-        puts response.redirect_url
-        expect(response.status).to eq(200)
-      end
-    end
+    it "redirect to the split checkout" do
+      get path
+      expect(response.status).to redirect_to("/checkout")
 
-    context "using the split checkout" do
-      before do
-        # feature toggle is enabled
-        Flipper.enable(:split_checkout)
-      end
-
-      it "redirect to the split checkout" do
-        get path
-        expect(response.status).to redirect_to("/checkout")
-
-        # follow the redirect
-        get response.redirect_url
-        expect(response.status).to redirect_to("/checkout/details")
-      end
+      # follow the redirect
+      get response.redirect_url
+      expect(response.status).to redirect_to("/checkout/details")
     end
   end
 end

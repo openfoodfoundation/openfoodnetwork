@@ -224,7 +224,7 @@ module Spree
         }
         let(:tax_category)    { create(:tax_category, name: "Shipping", tax_rates: [tax_rate] ) }
         let(:hub)             { create(:distributor_enterprise, charges_sales_tax: true) }
-        let(:order)           { create(:order, distributor: hub) }
+        let(:order)           { create(:order, distributor: hub, state: 'payment') }
         let(:line_item)       { create(:line_item, order: order) }
 
         let(:shipping_method) {
@@ -348,7 +348,7 @@ module Spree
         let(:line_item)   { create(:line_item, variant: variant) }
         let(:order)       {
           create(:order, line_items: [line_item], order_cycle: order_cycle,
-                         distributor: coordinator)
+                         distributor: coordinator, state: 'payment')
         }
         let(:fee)         { order.all_adjustments.reload.enterprise_fee.first }
         let(:fee_tax)     { fee.adjustments.tax.first }
@@ -508,7 +508,7 @@ module Spree
       let!(:zone) { create(:zone_with_member) }
       let!(:tax_category) { create(:tax_category, name: "Tax Test") }
       let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
-      let(:order) { create(:order, distributor: distributor) }
+      let(:order) { create(:order, distributor: distributor, state: "payment") }
       let(:included_in_price) { true }
       let(:tax_rate) {
         create(:tax_rate, included_in_price: included_in_price, zone: zone,

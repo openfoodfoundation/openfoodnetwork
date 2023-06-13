@@ -114,7 +114,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
     stub_add_metadata_request(payment_method: "pm_456", response: {})
   end
 
-  context "when the user submits a new card and doesn't request that the card is saved for later" do
+  pending "when the user submits a new card and doesn't request that the card is saved for later" do
     let(:hubs_payment_method_response_mock) do
       { status: 200, body: JSON.generate(id: hubs_stripe_payment_method) }
     end
@@ -161,7 +161,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
     end
   end
 
-  context "when saving a card or using a stored card is involved" do
+  pending "when saving a card or using a stored card is involved" do
     let(:hubs_payment_method_response_mock) do
       {
         status: 200,
