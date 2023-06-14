@@ -15,13 +15,13 @@ $color-body-text:                $color-8 !default;
 $color-headers:                  $color-4 !default;
 $color-link:                     $color-3 !default;
 $color-link-hover:               lighten($color-link, 2) !default;
-$color-link-active:              $color-2 !default;
-$color-link-focus:               $color-2 !default;
+$color-link-active:              $green !default;
+$color-link-focus:               $green !default;
 $color-link-visited:             $color-3 !default;
 $color-border:                   $color-7 !default;
 
 // Basic flash colors
-$color-success:                  $color-2 !default;
+$color-success:                  $green !default;
 $color-notice:                   $color-6 !default;
 $color-error:                    $color-5 !default;
 
