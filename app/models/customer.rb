@@ -10,20 +10,22 @@
 class Customer < ApplicationRecord
   include SetUnusedAddressFields
 
+  self.belongs_to_required_by_default = true
+
   acts_as_taggable
 
   searchable_attributes :first_name, :last_name, :email, :code
 
-  belongs_to :enterprise, optional: false
-  belongs_to :user, class_name: "Spree::User"
+  belongs_to :enterprise
+  belongs_to :user, class_name: "Spree::User", optional: true
   has_many :orders, class_name: "Spree::Order"
   before_destroy :update_orders_and_delete_canceled_subscriptions
 
-  belongs_to :bill_address, class_name: "Spree::Address"
+  belongs_to :bill_address, class_name: "Spree::Address", optional: true
   alias_attribute :billing_address, :bill_address
   accepts_nested_attributes_for :bill_address
 
-  belongs_to :ship_address, class_name: "Spree::Address"
+  belongs_to :ship_address, class_name: "Spree::Address", optional: true
   alias_attribute :shipping_address, :ship_address
   accepts_nested_attributes_for :ship_address
 

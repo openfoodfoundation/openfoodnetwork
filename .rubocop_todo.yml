@@ -681,6 +681,7 @@ Metrics/ClassLength:
     - 'app/models/spree/payment.rb'
     - 'app/models/spree/product.rb'
     - 'app/models/spree/shipment.rb'
+    - 'app/models/spree/shipping_method.rb'
     - 'app/models/spree/user.rb'
     - 'app/models/spree/variant.rb'
     - 'app/models/spree/zone.rb'

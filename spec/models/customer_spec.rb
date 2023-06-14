@@ -3,6 +3,11 @@
 require 'spec_helper'
 
 describe Customer, type: :model do
+  it { is_expected.to belong_to(:enterprise).required }
+  it { is_expected.to belong_to(:user).optional }
+  it { is_expected.to belong_to(:bill_address).optional }
+  it { is_expected.to belong_to(:ship_address).optional }
+
   describe 'an existing customer' do
     let(:customer) { create(:customer) }
 

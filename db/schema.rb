@@ -44,8 +44,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_120633) do
   end
 
   create_table "adjustment_metadata", id: :serial, force: :cascade do |t|
-    t.integer "adjustment_id"
-    t.integer "enterprise_id"
+    t.integer "adjustment_id", null: false
+    t.integer "enterprise_id", null: false
     t.string "fee_name", limit: 255
     t.string "fee_type", limit: 255
     t.string "enterprise_role", limit: 255
@@ -64,8 +64,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_120633) do
   end
 
   create_table "coordinator_fees", id: :serial, force: :cascade do |t|
-    t.integer "order_cycle_id"
-    t.integer "enterprise_fee_id"
+    t.integer "order_cycle_id", null: false
+    t.integer "enterprise_fee_id", null: false
     t.index ["enterprise_fee_id"], name: "index_coordinator_fees_on_enterprise_fee_id"
     t.index ["order_cycle_id"], name: "index_coordinator_fees_on_order_cycle_id"
   end
@@ -116,8 +116,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_120633) do
   end
 
   create_table "distributors_payment_methods", force: :cascade do |t|
-    t.integer "distributor_id"
-    t.integer "payment_method_id"
+    t.integer "distributor_id", null: false
+    t.integer "payment_method_id", null: false
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.index ["distributor_id"], name: "index_distributors_payment_methods_on_distributor_id"
@@ -125,8 +125,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_120633) do
   end
 
   create_table "distributors_shipping_methods", id: :serial, force: :cascade do |t|
-    t.integer "distributor_id"
-    t.integer "shipping_method_id"
+    t.integer "distributor_id", null: false
+    t.integer "shipping_method_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["distributor_id"], name: "index_distributors_shipping_methods_on_distributor_id"
