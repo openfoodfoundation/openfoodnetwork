@@ -62,6 +62,15 @@ module Admin
     end
 
     def background(format)
+      cable_ready[ScopedChannel.for_id(params[:uuid])]
+        .inner_html(
+          selector: "#report-table",
+          html: render_to_string(partial: "admin/reports/loading")
+        ).scroll_into_view(
+          selector: "#report-table",
+          block: "start"
+        ).broadcast
+
       blob = ReportBlob.create_for_upload_later!(report_filename)
 
       ReportJob.perform_later(
@@ -69,14 +78,7 @@ module Admin
         format: format, blob: blob, channel: ScopedChannel.for_id(params[:uuid]),
       )
 
-      render cable_ready: cable_car.
-        inner_html(
-          selector: "#report-table",
-          html: render_to_string(partial: "admin/reports/loading")
-        ).scroll_into_view(
-          selector: "#report-table",
-          block: "start"
-        )
+      head :no_content
     end
   end
 end

@@ -110,7 +110,7 @@ describe '
       end
     end
 
-    pending "allows the report to finish before the loading screen is rendered" do
+    it "allows the report to finish before the loading screen is rendered" do
       login_as_admin
       visit admin_report_path(
         report_type: :customers, report_subtype: :mailing_list
