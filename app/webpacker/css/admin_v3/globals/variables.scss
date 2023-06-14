@@ -18,7 +18,7 @@ $color-link-hover:               lighten($color-link, 2) !default;
 $color-link-active:              $green !default;
 $color-link-focus:               $green !default;
 $color-link-visited:             $teal !default;
-$color-border:                   $color-7 !default;
+$color-border:                   $light-grey !default;
 
 // Basic flash colors
 $color-success:                  $green !default;
@@ -28,7 +28,7 @@ $color-error:                    $red !default;
 // Table colors
 $color-tbl-cell-bg:              $white !default;
 $color-tbl-thead-txt:            $color-headers !default;
-$color-tbl-thead-bg:             $color-7 !default;
+$color-tbl-thead-bg:             $light-grey !default;
 
 // Button colors
 $color-btn-bg:                   $teal !default;
