@@ -159,7 +159,8 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
   context 'added tax' do
     #   1 order cycle has:
     #     - coordinator fees  (20) 1.5% = 0.30, 2.5% = 0.50
-    #     - incoming exchange (15) 1.5% = 0.38, 2.5% = 0.63
+    # 1st - incoming exchange (15) 1.5% = 0.23, 2.5% = 0.38
+    # 2nd - incoming exchange (25) 1.5% = 0.38, 2.5% = 0.63
     #     - outgoing exchange (10) 1.5% = 0.15, 2.5% = 0.25
     #     - line items        (50) 1.5% = 0.75, 2.5% = 1.25
 
@@ -272,7 +273,8 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         [
           "TOTAL", # Fees and line items
           "105.0", # Tax excl: 20 + 25 + 10 + 50
-          "4.21",  # Tax     : (0.30 + 0.50) + (0.38 + 0.63) + (0.15 + 0.25) + 2
+          "4.21",  # Tax     : (0.30 + 0.50) + (0.38 + 0.63) + (0.15 + 0.25) + (0.75 + 1.25)
+
           "109.21" # Tax incl: 105 + 4.21
         ].join(" ")
       }
