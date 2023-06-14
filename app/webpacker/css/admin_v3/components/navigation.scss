@@ -75,7 +75,7 @@ nav.menu {
 
     a {
       display: block;
-      padding: 25px 5px;
+      padding: 16px 5px;
       color: $dark-grey !important;
       position: relative;
       text-align: center;
@@ -93,8 +93,8 @@ nav.menu {
           content: "";
           position: absolute;
           bottom: 0;
-          left: 25px;
-          right: 25px;
+          left: 30px;
+          right: 30px;
           height: 3px;
           background: $red;
         }
