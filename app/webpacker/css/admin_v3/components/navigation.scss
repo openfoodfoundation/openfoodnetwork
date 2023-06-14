@@ -87,8 +87,8 @@ nav.menu {
       }
 
       &:hover {
-        color: $color-5 !important;
-        border-bottom: 2px solid $color-5;
+        color: $red !important;
+        border-bottom: 2px solid $red;
         // avoid height jump on hovering by subtracting the border height to the padding ie. 25px - 2px
         padding-bottom: 23px;
       }
@@ -140,8 +140,8 @@ nav.menu {
 
     &.selected a,
     a:hover {
-      color: $color-5;
-      border-bottom: 2px solid $color-5;
+      color: $red;
+      border-bottom: 2px solid $red;
     }
   }
 }
