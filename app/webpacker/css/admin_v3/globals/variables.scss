@@ -13,11 +13,11 @@ $base-font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial,
 $color-body-bg:                  $white !default;
 $color-body-text:                $color-8 !default;
 $color-headers:                  $color-4 !default;
-$color-link:                     $color-3 !default;
+$color-link:                     $teal !default;
 $color-link-hover:               lighten($color-link, 2) !default;
 $color-link-active:              $green !default;
 $color-link-focus:               $green !default;
-$color-link-visited:             $color-3 !default;
+$color-link-visited:             $teal !default;
 $color-border:                   $color-7 !default;
 
 // Basic flash colors
@@ -31,7 +31,7 @@ $color-tbl-thead-txt:            $color-headers !default;
 $color-tbl-thead-bg:             $color-7 !default;
 
 // Button colors
-$color-btn-bg:                   $color-3 !default;
+$color-btn-bg:                   $teal !default;
 $color-btn-text:                 $white !default;
 $color-btn-shadow:               0px 1px 0px rgba(0, 0, 0, 0.05), 0px 2px 2px rgba(0, 0, 0, 0.07) !default;
 $color-btn-hover-bg:             lighten($color-btn-bg, 2) !default;
@@ -56,7 +56,7 @@ $color-action-mail-bg:           very-light($color-success, 5  ) !default;
 $color-action-mail-brd:          very-light($color-success, 20 ) !default;
 
 // Select2 select field colors
-$color-sel-bg:                   $color-3 !default;
+$color-sel-bg:                   $teal !default;
 $color-sel-text:                 $white !default;
 $color-sel-hover-bg:             lighten($color-sel-bg, 2) !default;
 $color-sel-hover-text:           $white !default;
@@ -64,7 +64,7 @@ $color-sel-hover-text:           $white !default;
 // Text inputs colors
 $color-txt-brd:                  $color-border !default;
 $color-txt-text:                 $color-8 !default;
-$color-txt-hover-brd:            $color-3 !default;
+$color-txt-hover-brd:            $teal !default;
 
 // States label colors
 $color-ste-complete-bg:          $color-success !default;
