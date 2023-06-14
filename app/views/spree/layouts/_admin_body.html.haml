@@ -44,14 +44,14 @@
   #content{class: content_class}
     .row
       .container
-        - if content_for?(:table_filter)
-          - table_filter_class = content_for?(:sidebar) ? 'twelve columns' : 'sixteen columns'
-          #table-filter{:class => table_filter_class}
-            %fieldset
-              %legend{:align => "center"}= yield :table_filter_title
-              = yield :table_filter
         - div_class = content_for?(:sidebar) ? 'twelve columns' : 'sixteen columns'
         %div{:class => div_class}
+          - if content_for?(:table_filter)
+            #table-filter
+              %fieldset
+                %legend{:align => "center"}= yield :table_filter_title
+                = yield :table_filter
+          
           = yield
         - if content_for?(:sidebar)
           %aside#sidebar.four.columns
