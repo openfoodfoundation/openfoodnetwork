@@ -88,9 +88,16 @@ nav.menu {
 
       &:hover {
         color: $red !important;
-        border-bottom: 2px solid $red;
-        // avoid height jump on hovering by subtracting the border height to the padding ie. 25px - 2px
-        padding-bottom: 23px;
+
+        &:after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 25px;
+          right: 25px;
+          height: 3px;
+          background: $red;
+        }
       }
 
       span.text {
