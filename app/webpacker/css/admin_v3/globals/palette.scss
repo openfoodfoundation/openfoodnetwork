@@ -6,7 +6,7 @@ $dark-blue: #004e5b !default; // Dark Blue (Sherpa)
 $red: #c85136 !default; // Red/Orange (Mojo)
 $yellow: #ff9300 !default; // Yellow
 $light-grey: #eff1f2 !default; // Light grey
-$color-8: #191c1d !default; // Near-black
+$near-black: #191c1d !default; // Near-black
 $color-9: #2e3132 !default; // Dark Grey
 
 // Old colour variables for backwards compatibility
@@ -17,3 +17,4 @@ $color-4: $dark-blue;
 $color-5: $red;
 $color-6: $yellow;
 $color-7: $light-grey;
+$color-8: $near-black;

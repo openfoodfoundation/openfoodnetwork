@@ -11,7 +11,7 @@ $base-font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial,
 
 // Body base colors
 $color-body-bg:                  $white !default;
-$color-body-text:                $color-8 !default;
+$color-body-text:                $near-black !default;
 $color-headers:                  $dark-blue !default;
 $color-link:                     $teal !default;
 $color-link-hover:               lighten($color-link, 2) !default;
@@ -63,7 +63,7 @@ $color-sel-hover-text:           $white !default;
 
 // Text inputs colors
 $color-txt-brd:                  $color-border !default;
-$color-txt-text:                 $color-8 !default;
+$color-txt-text:                 $near-black !default;
 $color-txt-hover-brd:            $teal !default;
 
 // States label colors
