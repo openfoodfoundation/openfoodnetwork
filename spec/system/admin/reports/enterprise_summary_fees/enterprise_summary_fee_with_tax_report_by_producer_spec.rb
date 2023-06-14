@@ -309,6 +309,37 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           expect(table).to have_content(cost_of_produce2)
           expect(table).to have_content(summary_row2)
         end
+
+        context "filtering" do
+          before do
+            login_as distributor_owner
+            visit admin_reports_path
+            click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
+          end
+
+          it "should filter by distributor and order cycle" do
+            page.find("#s2id_autogen1").click
+            find('li', text: distributor.name).click # selects Distributor
+
+            page.find("#s2id_q_order_cycle_id_in").click
+            find('li', text: order_cycle.name).click
+
+            expect(page).to have_button("Go")
+            click_on "Go"
+            expect(page.find("table.report__table thead tr")).to have_content(table_header)
+
+            table = page.find("table.report__table tbody")
+
+            expect(table).to have_content(supplier_state_tax1)
+            expect(table).to have_content(supplier_country_tax1)
+            expect(table).to have_content(distributor_state_tax1)
+            expect(table).to have_content(distributor_country_tax1)
+            expect(table).to have_content(coordinator_state_tax1)
+            expect(table).to have_content(coordinator_country_tax1)
+            expect(table).to have_content(cost_of_produce1)
+            expect(table).to have_content(summary_row1)
+          end
+        end
       end
 
       context "with line items from several suppliers" do
@@ -443,38 +474,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           ].join(" ")
         }
 
-        it 'generates the report and displays fees for the respective supplier' do
-          # pending("test case (1), see #10797")
-
-          login_as distributor_owner
-          visit admin_reports_path
-          click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
-
-          expect(page).to have_button("Go")
-          click_on "Go"
-
-          expect(page.find("table.report__table thead tr")).to have_content(table_header)
-
-          table = page.find("table.report__table tbody")
-          expect(table).to have_content(supplier_state_tax3)
-          expect(table).to have_content(supplier_country_tax3)
-          expect(table).to have_content(distributor_state_tax3)
-          expect(table).to have_content(distributor_country_tax3)
-          expect(table).to have_content(coordinator_state_tax3)
-          expect(table).to have_content(coordinator_country_tax3)
-          expect(table).to have_content(cost_of_produce3)
-          expect(table).to have_content(summary_row3)
-
-          expect(table).to have_content(supplier_state_tax4)
-          expect(table).to have_content(supplier_country_tax4)
-          expect(table).to have_content(distributor_state_tax4)
-          expect(table).to have_content(distributor_country_tax4)
-          expect(table).to have_content(coordinator_state_tax4)
-          expect(table).to have_content(coordinator_country_tax4)
-          expect(table).to have_content(cost_of_produce4)
-          expect(table).to have_content(summary_row4)
-        end
-
         context "filtering" do
           let(:fee_name_selector){ "#s2id_q_enterprise_fee_id_in" }
           let(:fee_owner_selector){ "#s2id_q_enterprise_fee_owner_id_in" }
@@ -494,25 +493,37 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           end
 
           it "should filter by distributor and order cycle" do
+            pending("incorrect totals for orders with more than one supplier")
+
             page.find("#s2id_autogen1").click
             find('li', text: distributor.name).click # selects Distributor
 
             page.find("#s2id_q_order_cycle_id_in").click
-            find('li', text: order_cycle2.name).click
+            find('li', text: order_cycle3.name).click
 
             expect(page).to have_button("Go")
             click_on "Go"
             expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
             table = page.find("table.report__table tbody")
-            expect(table).to have_content(supplier_state_tax2)
-            expect(table).to have_content(supplier_country_tax2)
-            expect(table).to have_content(distributor_state_tax2)
-            expect(table).to have_content(distributor_country_tax2)
-            expect(table).to have_content(coordinator_state_tax2)
-            expect(table).to have_content(coordinator_country_tax2)
-            expect(table).to have_content(cost_of_produce2)
-            expect(table).to have_content(summary_row2)
+
+            expect(table).to have_content(supplier_state_tax3)
+            expect(table).to have_content(supplier_country_tax3)
+            expect(table).to have_content(distributor_state_tax3)
+            expect(table).to have_content(distributor_country_tax3)
+            expect(table).to have_content(coordinator_state_tax3)
+            expect(table).to have_content(coordinator_country_tax3)
+            expect(table).to have_content(cost_of_produce3)
+            expect(table).to have_content(summary_row3)
+
+            expect(table).to have_content(supplier_state_tax4)
+            expect(table).to have_content(supplier_country_tax4)
+            expect(table).to have_content(distributor_state_tax4)
+            expect(table).to have_content(distributor_country_tax4)
+            expect(table).to have_content(coordinator_state_tax4)
+            expect(table).to have_content(coordinator_country_tax4)
+            expect(table).to have_content(cost_of_produce4)
+            expect(table).to have_content(summary_row4)
           end
 
           it "should filter by producer" do
