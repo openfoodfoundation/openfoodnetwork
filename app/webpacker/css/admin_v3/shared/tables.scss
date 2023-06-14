@@ -44,7 +44,7 @@ table {
 
       [class*="icon-"].no-text {
         font-size: 120%;
-        background-color: very-light($color-3);
+        background-color: very-light($teal);
         border: 1px solid $color-border;
         border-radius: 15px;
         width: 29px;
@@ -74,7 +74,7 @@ table {
         padding-left: 0px;
 
         &:hover {
-          background-color: $color-3;
+          background-color: $teal;
           color: $white;
         }
       }
@@ -144,7 +144,7 @@ table {
       }
 
       &:hover td {
-        background-color: very-light($color-3, 5);
+        background-color: very-light($teal, 5);
 
         img {
           border: 1px solid $color-border;
@@ -173,7 +173,7 @@ table {
         width: 100%;
 
         td {
-          background-color: lighten($color-3, 33);
+          background-color: lighten($teal, 33);
           border-bottom: 1px solid $color-border;
 
           &.actions {
