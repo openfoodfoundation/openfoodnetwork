@@ -124,22 +124,20 @@ module Reporting
         def join_supplier
           proc do |item|
             order = item[:order]
-
+            enterprise_fees_per_variant = enterprise_fees_per_variant(order)
             filtered_line_items(order)
+              .filter do |line_item|
+                item[:enterprise_fee_id].in?(
+                  enterprise_fees_per_variant[line_item.variant]
+                )
+              end
               .map do |line_item|
                 {
                   tax_rate_id: item[:tax_rate_id],
-                  enterprise_fee_id: if item[:enterprise_fee_id].in?(
-                    enterprise_fees_per_variant(order)[line_item.variant]
-                  )
-                                       item[:enterprise_fee_id]
-                                     end,
+                  enterprise_fee_id: item[:enterprise_fee_id],
                   supplier_id: line_item.supplier.id,
                   order: order
                 }
-              end
-              .filter do |hash|
-                hash[:enterprise_fee_id].present?
               end
           end
         end
