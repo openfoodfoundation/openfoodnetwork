@@ -157,7 +157,7 @@ table {
       }
 
       &.ui-sortable-placeholder td {
-        border: 1px solid $color-2 !important;
+        border: 1px solid $green !important;
         visibility: visible !important;
 
         &.actions {
@@ -165,7 +165,7 @@ table {
           border-right: none !important;
           border-top: none !important;
           border-bottom: none !important;
-          border-left: 1px solid $color-2 !important;
+          border-left: 1px solid $green !important;
         }
       }
 
@@ -189,14 +189,14 @@ table {
 
     &.grand-total {
       td {
-        border-color: $color-2 !important;
+        border-color: $green !important;
         text-transform: uppercase;
         font-size: 110%;
         font-weight: 600;
-        background-color: lighten($color-2, 50);
+        background-color: lighten($green, 50);
       }
       .total {
-        background-color: $color-2;
+        background-color: $green;
         color: $white;
       }
     }
