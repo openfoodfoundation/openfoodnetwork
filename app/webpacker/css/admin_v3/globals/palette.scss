@@ -1,5 +1,5 @@
 // Basic color palette for admin styles v3
-$color-1: #ffffff !default; // White
+$white: #ffffff !default; // White
 $color-2: #9fc820 !default; // Green
 $color-3: #008397 !default; // Teal (Allports)
 $color-4: #004e5b !default; // Dark Blue (Sherpa)
@@ -8,3 +8,6 @@ $color-6: #ff9300 !default; // Yellow
 $color-7: #eff1f2 !default; // Light grey
 $color-8: #191c1d !default; // Near-black
 $color-9: #2e3132 !default; // Dark Grey
+
+// Old colour variables for backwards compatibility
+$color-1: $white;

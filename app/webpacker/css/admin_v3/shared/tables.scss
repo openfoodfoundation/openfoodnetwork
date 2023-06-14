@@ -75,28 +75,28 @@ table {
 
         &:hover {
           background-color: $color-3;
-          color: $color-1;
+          color: $white;
         }
       }
       .icon-trash:hover,
       .icon-void:hover {
         background-color: $color-error;
-        color: $color-1;
+        color: $white;
       }
       .icon-cancel:hover {
         background-color: $color-notice;
-        color: $color-1;
+        color: $white;
       }
       .icon-edit:hover,
       .icon-capture:hover,
       .icon-ok:hover,
       .icon-plus:hover {
         background-color: $color-success;
-        color: $color-1;
+        color: $white;
       }
       .icon-copy:hover {
         background-color: $color-notice;
-        color: $color-1;
+        color: $white;
       }
     }
 
@@ -197,7 +197,7 @@ table {
       }
       .total {
         background-color: $color-2;
-        color: $color-1;
+        color: $white;
       }
     }
   }

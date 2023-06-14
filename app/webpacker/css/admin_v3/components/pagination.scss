@@ -14,19 +14,19 @@
     &.current {
       background-color: $color-2;
       border-radius: 3px;
-      color: $color-1;
+      color: $white;
     }
   }
 
   button {
     margin: 0 0.35em;
 
-    background-color: $color-1;
+    background-color: $white;
     color: $color-8;
     box-shadow: $color-btn-shadow;
 
     &.active {
-      color: $color-1;
+      color: $white;
       background-color: $color-5;
       cursor: default;
     }

@@ -18,13 +18,13 @@
     .ofn-drop-down {
       border: 0;
       background-color: $spree-blue;
-      color: $color-1;
+      color: $white;
       float: none;
       margin-left: 3px;
       &:hover,
       &.expanded {
         border: 0;
-        color: $color-1;
+        color: $white;
       }
     }
 
@@ -97,7 +97,7 @@
 // Header
 //---------------------------------------------------
 #header {
-  background-color: $color-1;
+  background-color: $white;
   padding: 5px 0;
 }
 
@@ -114,7 +114,7 @@
 // Content
 //---------------------------------------------------
 #content {
-  background-color: $color-1;
+  background-color: $white;
   position: relative;
   z-index: 0;
   padding: 0;
