@@ -3,7 +3,7 @@
   margin: 2em 0 1em;
   padding: 10px 0;
 
-  background-color: $color-7;
+  background-color: $light-grey;
 
   .page {
     padding: 5px 8px;
@@ -12,22 +12,22 @@
     text-align: center;
 
     &.current {
-      background-color: $color-2;
+      background-color: $green;
       border-radius: 3px;
-      color: $color-1;
+      color: $white;
     }
   }
 
   button {
     margin: 0 0.35em;
 
-    background-color: $color-1;
-    color: $color-8;
+    background-color: $white;
+    color: $near-black;
     box-shadow: $color-btn-shadow;
 
     &.active {
-      color: $color-1;
-      background-color: $color-5;
+      color: $white;
+      background-color: $red;
       cursor: default;
     }
 
