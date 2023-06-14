@@ -62,6 +62,8 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.dereferenceLoadedData()
 
   $scope.loadOrders = ->
+    return $scope.orders = [] unless $scope.line_items.length
+
     RequestMonitor.load $scope.orders = Orders.index(
       "q[id_in][]": $scope.line_items.map((line_item) -> line_item.order.id)
     )
