@@ -96,9 +96,9 @@ module Api
       def attachment_urls(attachment, styles)
         return unless attachment.variable?
 
-        styles.transform_values do |transformation|
+        styles.index_with do |style|
           Rails.application.routes.url_helpers.
-            url_for(attachment.variant(transformation))
+            url_for(attachment.variant(style))
         end
       end
     end

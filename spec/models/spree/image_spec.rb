@@ -31,10 +31,46 @@ module Spree
         )
       end
 
-      it "returns nil when the attachment is missing" do
+      it "returns default image when the attachment is missing" do
         subject.attachment = nil
 
-        expect(subject.url(:small)).to eq nil
+        expect(subject.url(:small)).to eq "/noimage/small.png"
+      end
+
+      context "when no image attachment is found" do
+        it "returns a default product image" do
+          expect(subject).to receive_message_chain(:attachment, :attached?) { false }
+
+          expect(subject.url(:mini)).to eq "/noimage/mini.png"
+        end
+      end
+
+      context "when accessing the image raises an ActiveStorage error" do
+        it "rescues the error and returns a default product image" do
+          expect(subject).to receive(:attachment) { raise ActiveStorage::FileNotFoundError }
+
+          expect(subject.url(:small)).to eq "/noimage/small.png"
+        end
+      end
+
+      context "when using public images" do
+        it "returns the direct URL for the processed image" do
+          allow(subject).to receive_message_chain(:attachment, :attached?) { true }
+          expect(subject).to receive_message_chain(:attachment, :service, :name) { :amazon_public }
+          expect(subject).to receive_message_chain(:variant, :processed, :url) { "https://ofn-s3/123.png" }
+
+          expect(subject.url(:small)).to eq "https://ofn-s3/123.png"
+        end
+      end
+    end
+
+    describe "#default_image_url" do
+      it "returns default product image for a given size" do
+        expect(subject.class.default_image_url(:mini)).to eq "/noimage/mini.png"
+      end
+
+      it "returns default product image when no size is given" do
+        expect(subject.class.default_image_url(nil)).to eq "/noimage/product.png"
       end
     end
 

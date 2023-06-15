@@ -40,7 +40,7 @@ class Api::VariantSerializer < ActiveModel::Serializer
   end
 
   def thumb_url
-    object.product.images.first&.url(:mini) || "/noimage/mini.png"
+    object.product.images.first&.url(:mini) || Spree::Image.default_image_url(:mini)
   end
 
   def unit_price_price

@@ -11,9 +11,7 @@
     .field.alpha.three.columns.align-center
       = f.label t('spree.thumbnail')
       %br/
-      - # A Rails bug makes it necessary to call `main_app.url_for` here.
-      - # https://github.com/rails/rails/issues/31325
-      = link_to image_tag(main_app.url_for(@image.variant(:small))), main_app.url_for(@image.variant(:product))
+      = link_to image_tag(@image.url(:small)), @image.url(:product)
     .nine.columns.omega
       = render partial: 'form', locals: { f: f }
     .clear

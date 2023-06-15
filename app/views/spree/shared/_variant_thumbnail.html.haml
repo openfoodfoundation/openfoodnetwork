@@ -1,1 +1,1 @@
-= image_tag(variant.product.images.first&.url(:mini) || "/noimage/mini.png")
+= image_tag(variant.product.images.first&.url(:mini) || Spree::Image.default_image_url(:mini))

@@ -27,11 +27,11 @@ module Api
       end
 
       def image_url
-        object.images.first&.url(:product) || "/noimage/product.png"
+        object.images.first&.url(:product) || Spree::Image.default_image_url(:product)
       end
 
       def thumb_url
-        object.images.first&.url(:mini) || "/noimage/mini.png"
+        object.images.first&.url(:mini) || Spree::Image.default_image_url(:mini)
       end
 
       def on_hand
