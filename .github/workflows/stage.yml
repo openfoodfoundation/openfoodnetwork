@@ -30,15 +30,14 @@ jobs:
 
       - name: Deploy to Staging
         env:
-          BRANCH_NAME: pull-request-${{ github.event.pull_request.number }}
           LABEL: ${{ github.event.label.name }}
         run: |
           if [[ $LABEL == 'pr-staged-uk' ]]; then
-            ssh ofn-deploy@staging.openfoodnetwork.org.uk -o LogLevel=ERROR "${BRANCH_NAME}"
+            ssh ofn-deploy@staging.openfoodnetwork.org.uk -o LogLevel=ERROR "pull-request-${{ github.event.pull_request.number }} ."
           elif [[ $LABEL == 'pr-staged-au' ]]; then
-            ssh ofn-deploy@staging.openfoodnetwork.org.au -o LogLevel=ERROR "${BRANCH_NAME}"
+            ssh ofn-deploy@staging.openfoodnetwork.org.au -o LogLevel=ERROR "pull-request-${{ github.event.pull_request.number }} ."
           elif [[ $LABEL == 'pr-staged-fr' ]]; then
-            ssh ofn-deploy@staging.coopcircuits.fr -o LogLevel=ERROR "${BRANCH_NAME}"
+            ssh ofn-deploy@staging.coopcircuits.fr -o LogLevel=ERROR "pull-request-${{ github.event.pull_request.number }} ."
           fi
 
   deploy_branch:
@@ -53,4 +52,4 @@ jobs:
 
       - name: Deploy to Staging
         run: |
-          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "${GITHUB_HEAD_REF}"
+          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "$GITHUB_REF $GITHUB_SHA"
