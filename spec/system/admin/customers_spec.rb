@@ -373,26 +373,29 @@ code: nil, created_manually: true)
                                             text: "Email is invalid"
             }.to_not change{ Customer.of(managed_distributor1).count }
 
-            # When an existing email is used
-            expect{
-              fill_in 'email', with: customer1.email
-              click_button 'Add Customer'
-              expect(page).to have_selector "#new-customer-dialog .error",
-                                            text: "Email is associated with an existing customer"
-            }.to change{ customer1.reload.created_manually }.from(false).to(true)
-              .and change { Customer.of(managed_distributor1).count }.by(0)
-
             # When a new valid email is used
             expect{
               fill_in 'email', with: "new@email.com"
               click_button 'Add Customer'
               expect(page).not_to have_selector "#new-customer-dialog"
             }.to change{ Customer.of(managed_distributor1).count }.from(2).to(3)
+          end
 
-            expect(
-              Customer.of(managed_distributor1).reorder(:id)
-                .last.created_manually 
-            ).to be true
+          it "shows a hidden customer when trying to create it" do
+            click_link('New Customer')
+            fill_in 'email', with: customer1.email
+
+            expect do
+              click_button 'Add Customer'
+              expect(page).not_to have_selector "#new-customer-dialog"
+              customer1.reload
+            end
+              .to change { customer1.created_manually }.from(false).to(true)
+              .and change { Customer.count }.by(0)
+
+            expect(page).to have_content customer1.email
+            expect(page).to have_field "first_name", with: "John"
+            expect(page).to have_field "last_name", with: "Doe"
           end
         end
       end
