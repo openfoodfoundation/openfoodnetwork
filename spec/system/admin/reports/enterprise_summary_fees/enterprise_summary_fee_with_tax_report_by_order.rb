@@ -67,9 +67,9 @@ describe "Enterprise Summary Fee with Tax Report By Order" do
   let!(:order_number){ "ORDER_NUMBER_1" }
 
   before do
-    state_tax_rate.update!({ name: 'State', amount: 0.015 })
-    country_tax_rate.update!({ name: 'Country', amount: 0.025 })
-    tax_category.update!({ name: 'tax_category' })
+    state_tax_rate.update!(name: 'State', amount: 0.015)
+    country_tax_rate.update!(name: 'Country', amount: 0.025)
+    tax_category.update!(name: 'tax_category')
 
     coordinator_fees.update!({
                                name: 'Adminstration',
