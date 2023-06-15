@@ -34,11 +34,11 @@ jobs:
           LABEL: ${{ github.event.label.name }}
         run: |
           if [[ $LABEL == 'pr-staged-uk' ]]; then
-            ssh ofn-deploy@staging.openfoodnetwork.org.uk -o LogLevel=ERROR "$BRANCH_NAME"
+            ssh ofn-deploy@staging.openfoodnetwork.org.uk -o LogLevel=ERROR "${BRANCH_NAME}"
           elif [[ $LABEL == 'pr-staged-au' ]]; then
-            ssh ofn-deploy@staging.openfoodnetwork.org.au -o LogLevel=ERROR "$BRANCH_NAME"
+            ssh ofn-deploy@staging.openfoodnetwork.org.au -o LogLevel=ERROR "${BRANCH_NAME}"
           elif [[ $LABEL == 'pr-staged-fr' ]]; then
-            ssh ofn-deploy@staging.coopcircuits.fr -o LogLevel=ERROR "$BRANCH_NAME"
+            ssh ofn-deploy@staging.coopcircuits.fr -o LogLevel=ERROR "${BRANCH_NAME}"
           fi
 
   deploy_branch:
@@ -53,4 +53,4 @@ jobs:
 
       - name: Deploy to Staging
         run: |
-          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "$GITHUB_HEAD_REF"
+          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "${GITHUB_HEAD_REF}"
