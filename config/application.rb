@@ -34,6 +34,9 @@ end
 
 module Openfoodnetwork
   class Application < Rails::Application
+    # Store a description of the current version, with linebreak trimmed
+    config.x.git_version = `git describe --tags --dirty=-modified`.strip
+
     config.after_initialize do
       # We need this here because the test env file loads before the Spree engine is loaded
       Spree::Core::Engine.routes.default_url_options[:host] = ENV["SITE_URL"] if Rails.env == 'test'
