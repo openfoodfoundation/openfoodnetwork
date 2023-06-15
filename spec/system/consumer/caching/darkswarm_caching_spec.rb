@@ -19,6 +19,11 @@ describe "Darkswarm data caching", caching: true do
   }
   let(:exchange) { order_cycle.exchanges.outgoing.where(receiver_id: distributor.id).first }
 
+  around do |example|
+    Rails.cache.clear
+    example.run
+  end
+
   before do
     exchange.variants << product.variants.first
   end
