@@ -53,4 +53,4 @@ jobs:
 
       - name: Deploy to Staging
         run: |
-          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "$GITHUB_REF"
+          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "${{ GITHUB_HEAD_REF }}"
