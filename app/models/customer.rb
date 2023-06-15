@@ -46,8 +46,6 @@ class Customer < ApplicationRecord
   attr_accessor :gateway_recurring_payment_client_secret, :gateway_shop_id
 
   def self.find_or_new(email, enterprise_id)
-    Customer.new(email: email, enterprise_id: enterprise_id) unless email.present? && enterprise_id.present?
-
     Customer.find_by(email: email, enterprise_id: enterprise_id) ||
       Customer.new(email: email, enterprise_id: enterprise_id)
   end
