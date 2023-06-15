@@ -222,11 +222,9 @@ module Reporting
         end
 
         def total_excl_tax(query_result_row)
-          order_id = order(query_result_row).id
-          enterpise_fee_id = enterprise_fee_id(query_result_row)
           amount = Spree::Adjustment.enterprise_fee
-            .where(order_id: order_id)
-            .where(originator_id: enterpise_fee_id)
+            .where(order: order(query_result_row))
+            .where(originator_id: enterprise_fee_id(query_result_row))
             .pick("sum(amount)") || 0
           amount - tax(query_result_row, all: true, included: true)
         end
@@ -264,11 +262,9 @@ module Reporting
         end
 
         def enterprise_fee_adjustemnt_ids(query_result_row)
-          order_id = order(query_result_row).id
-          enterpise_fee_id = enterprise_fee_id(query_result_row)
           Spree::Adjustment.enterprise_fee
-            .where(order_id: order_id)
-            .where(originator_id: enterpise_fee_id)
+            .where(order: order(query_result_row))
+            .where(originator_id: enterprise_fee_id(query_result_row))
             .pluck(:id)
         end
 
