@@ -1,0 +1,56 @@
+name: "Deploy to Staging"
+
+on:
+  pull_request:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      server:
+        description: "Staging Server"
+        type: choice
+        required: true
+        options:
+          - staging.openfoodnetwork.org.uk
+          - staging.openfoodnetwork.org.au
+          - staging.coopcircuits.fr
+
+permissions:
+  contents: read
+
+jobs:
+  deploy_pr:
+    if: contains(fromJSON('["pr-staged-uk", "pr-staged-au", "pr-staged-fr"]'), github.event.label.name)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure deployment key
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.DEPLOYMENT_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.DEPLOYMENT_HOSTS }}" > ~/.ssh/known_hosts
+
+      - name: Deploy to Staging
+        env:
+          BRANCH_NAME: pull-request-${{ github.event.pull_request.number }}
+          LABEL: ${{ github.event.label.name }}
+        run: |
+          if [[ $LABEL == 'pr-staged-uk' ]]; then
+            ssh ofn-deploy@staging.openfoodnetwork.org.uk -o LogLevel=ERROR "$BRANCH_NAME"
+          elif [[ $LABEL == 'pr-staged-au' ]]; then
+            ssh ofn-deploy@staging.openfoodnetwork.org.au -o LogLevel=ERROR "$BRANCH_NAME"
+          elif [[ $LABEL == 'pr-staged-fr' ]]; then
+            ssh ofn-deploy@staging.coopcircuits.fr -o LogLevel=ERROR "$BRANCH_NAME"
+          fi
+
+  deploy_branch:
+    if: ${{ inputs.server }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure deployment key
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.DEPLOYMENT_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.DEPLOYMENT_HOSTS }}" > ~/.ssh/known_hosts
+
+      - name: Deploy to Staging
+        run: |
+          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "$GITHUB_REF"
