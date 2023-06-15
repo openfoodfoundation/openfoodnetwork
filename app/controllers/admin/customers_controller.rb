@@ -36,7 +36,7 @@ module Admin
     end
 
     def create
-      @customer = Customer.find_or_new(customer_params[:email], customer_params[:enterprise_id])
+      @customer = Customer.find_or_initialize_by(customer_params.slice(:email, :enterprise_id))
 
       if user_can_create_customer?
         @customer.created_manually = true
