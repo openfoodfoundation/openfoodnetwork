@@ -31,7 +31,6 @@ module Api
         authorize! :update, Enterprise.find(customer_params[:enterprise_id])
         customer = Customer.find_or_new(customer_params[:email], customer_params[:enterprise_id])
         customer.assign_attributes(customer_params)
-        customer.set_created_manually_flag
 
         if customer.save
           render json: Api::V1::CustomerSerializer.new(customer), status: :created

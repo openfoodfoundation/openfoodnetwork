@@ -54,13 +54,6 @@ class Customer < ApplicationRecord
     "#{first_name} #{last_name}".strip
   end
 
-  def set_created_manually_flag
-    self.created_manually = true
-    return unless persisted?
-
-    update_attribute(:created_manually, true)
-  end
-
   private
 
   def downcase_email

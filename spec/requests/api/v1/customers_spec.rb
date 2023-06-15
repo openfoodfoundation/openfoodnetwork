@@ -190,6 +190,9 @@ describe "Customers", type: :request do
             allow_charges: false,
             terms_and_conditions_accepted_at: nil,
           )
+
+          customer = Customer.find(json_response[:data][:attributes][:id])
+          expect(customer.created_manually).to eq true
         end
       end
 
