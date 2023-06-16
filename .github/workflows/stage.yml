@@ -1,7 +1,7 @@
 name: "Deploy to Staging"
 
 on:
-  pull_request:
+  pull_request_target:
     types: [labeled]
   workflow_dispatch:
     inputs:
@@ -13,9 +13,6 @@ on:
           - staging.openfoodnetwork.org.uk
           - staging.openfoodnetwork.org.au
           - staging.coopcircuits.fr
-
-permissions:
-  contents: read
 
 jobs:
   deploy_pr:
@@ -29,10 +26,8 @@ jobs:
           echo "${{ secrets.DEPLOYMENT_HOSTS }}" > ~/.ssh/known_hosts
 
       - name: Deploy to Staging
-        env:
-          LABEL: ${{ github.event.label.name }}
         run: |
-          ssh ofn-deploy@${{ github.event.label.description }} -o LogLevel=ERROR "pull-request-${{ github.event.pull_request.number }} ."
+          ssh ofn-deploy@${{ github.event.label.description }} -o LogLevel=ERROR "openfoodfoundation:pull-request-${{ github.event.pull_request.number }} ."
 
   deploy_branch:
     if: ${{ inputs.server }}
@@ -46,4 +41,4 @@ jobs:
 
       - name: Deploy to Staging
         run: |
-          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "$GITHUB_REF_NAME $GITHUB_SHA"
+          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "openfoodfoundation:$GITHUB_REF_NAME $GITHUB_SHA"
