@@ -34,31 +34,49 @@ describe "Enterprise Summary Fee with Tax Report By Order" do
 
   let!(:state_zone){ create(:zone_with_state_member) }
   let!(:country_zone){ create(:zone_with_member) }
-  let!(:tax_category){ create(:tax_category) }
-  let!(:state_tax_rate){ create(:tax_rate, zone: state_zone, tax_category: tax_category) }
-  let!(:country_tax_rate){ create(:tax_rate, zone: country_zone, tax_category: tax_category) }
+  let!(:tax_category){ create(:tax_category, name: 'tax_category') }
+  let!(:state_tax_rate){
+    create(:tax_rate, zone: state_zone, tax_category: tax_category, name: 'State', amount: 0.015)
+  }
+  let!(:country_tax_rate){
+    create(:tax_rate, zone: country_zone, tax_category: tax_category, name: 'Country',
+                      amount: 0.025)
+  }
   let!(:ship_address){ create(:ship_address) }
 
   let!(:variant){ create(:variant) }
   let!(:product){ variant.product }
-  let!(:distributor){ create(:distributor_enterprise_with_tax) }
-  let!(:supplier){ create(:supplier_enterprise) }
+  let!(:distributor){ create(:distributor_enterprise_with_tax, name: 'Distributor') }
+  let!(:supplier){ create(:supplier_enterprise, name: 'Supplier', charges_sales_tax: true) }
   let!(:payment_method){ create(:payment_method, :flat_rate) }
   let!(:shipping_method){ create(:shipping_method, :flat_rate) }
 
-  let!(:order){ create(:order_with_distributor, distributor: distributor) }
+  let!(:order){ create(:order_with_distributor, distributor: distributor, number: order_number) }
   let!(:order_cycle){
-    create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor],
+    create(:simple_order_cycle, name: "oc1", suppliers: [supplier], distributors: [distributor],
                                 variants: [variant])
   }
 
   let(:admin){ create(:admin_user) }
 
   let!(:coordinator_fees){
-    create(:enterprise_fee, :flat_rate, enterprise: distributor, amount: 20)
+    create(:enterprise_fee, :flat_rate, enterprise: distributor, amount: 20,
+                                        name: 'Adminstration',
+                                        fee_type: 'admin',
+                                        tax_category: tax_category)
   }
-  let!(:supplier_fees){ create(:enterprise_fee, :flat_rate, enterprise: supplier, amount: 15) }
-  let!(:distributor_fee){ create(:enterprise_fee, :flat_rate, enterprise: distributor, amount: 10) }
+  let!(:supplier_fees){
+    create(:enterprise_fee, :flat_rate, enterprise: supplier, amount: 15,
+                                        name: 'Transport',
+                                        fee_type: 'transport',
+                                        tax_category: tax_category)
+  }
+  let!(:distributor_fee){
+    create(:enterprise_fee, :flat_rate, enterprise: distributor, amount: 10,
+                                        name: 'Packing',
+                                        fee_type: 'packing',
+                                        tax_category: tax_category)
+  }
 
   let!(:customer_first_name){ "Customer First Name" }
   let!(:customer_last_name){ "Customer Last Name" }
@@ -67,42 +85,17 @@ describe "Enterprise Summary Fee with Tax Report By Order" do
   let!(:order_number){ "ORDER_NUMBER_1" }
 
   before do
-    state_tax_rate.update!(name: 'State', amount: 0.015)
-    country_tax_rate.update!(name: 'Country', amount: 0.025)
-    tax_category.update!(name: 'tax_category')
-
-    coordinator_fees.update!({
-                               name: 'Adminstration',
-                               fee_type: 'admin',
-                               tax_category: tax_category
-                             })
-    supplier_fees.update!({
-                            name: 'Transport',
-                            fee_type: 'transport',
-                            tax_category: tax_category
-                          })
-    distributor_fee.update!({
-                              name: 'Packing',
-                              fee_type: 'packing',
-                              tax_category: tax_category
-                            })
-
     order_cycle.coordinator_fees << coordinator_fees
     order_cycle.exchanges.incoming.first.exchange_fees.create!(enterprise_fee: supplier_fees)
     order_cycle.exchanges.outgoing.first.exchange_fees.create!(enterprise_fee: distributor_fee)
-    order_cycle.update!(name: "oc1")
 
-    distributor.update!({ name: 'Distributor' })
     distributor.shipping_methods << shipping_method
     distributor.payment_methods << payment_method
-
-    supplier.update!({ name: 'Supplier', charges_sales_tax: true })
 
     product.update!({
                       tax_category_id: tax_category.id,
                       supplier_id: supplier.id
                     })
-    order.update!({ number: order_number })
   end
 
   context 'added tax' do
