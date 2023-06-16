@@ -866,7 +866,7 @@ es:
           select_country: "Selecciona país"
           select_state: "Selecciona Provincia"
         contact:
-          legend: "Conacto"
+          legend: "Contacto"
           name: Nombre
           name_placeholder: ej. Gustav Plum
           email_address: Dirección de correo electrónico público
@@ -1275,7 +1275,7 @@ es:
         enterprise:
           primary_details: "Detalles Principales"
           address: "Dirección"
-          contact: "Conacto"
+          contact: "Contacto"
           social: "Social"
           about: "Acerca de"
           business_details: "Detalles de la Organización"
@@ -1295,7 +1295,7 @@ es:
           users: "Usuarias"
           about: "Acerca de"
           images: "Imágenes"
-          contact: "Conacto"
+          contact: "Contacto"
           web: "Recursos Web"
     enterprise_issues:
       create_new: Crear nuevo

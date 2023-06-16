@@ -808,7 +808,7 @@ de_DE:
         default_stock: "Standardbestand"
         inherit?: Eigenschaften übernehmen?
         add: Hinzufügen
-        hide: Verbergen
+        hide: Ausblenden
         import_date: Importiert
         select_a_shop: Laden wählen
         review_now: Prüfen
@@ -1097,6 +1097,7 @@ de_DE:
           label: Bezeichnung
           purpose: Zweck
           expiry: Gültigkeit
+          use_limit: Verwendung
           customers: Kunde
           net_value: Nettowert
           add_new: Neuer Gutschein
@@ -1109,6 +1110,10 @@ de_DE:
           remove_logo_confirm: "Möchten Sie das Logo wirklich löschen?"
           remove_logo_success: "Das Logo wurde gelöscht."
           white_label_logo_link_label: "Verlinkungsziel des Logos im Online-Shop"
+          hide_groups_tab: "Reiter \"Gruppen\" im Online-Shop verbergen"
+          create_custom_tab: "Benutzerdefinierten Reiter im Online-Shop hinzufügen"
+          custom_tab_title: "Titel des Reiters"
+          custom_tab_content: "Inhalt des Reiters"
       actions:
         edit_profile: Einstellungen
         properties: Eigenschaften
@@ -1319,6 +1324,10 @@ de_DE:
         could_not_cancel_the_order: Die Bestellung konnte nicht storniert werden.
       resume:
         could_not_resume_the_order: Die Bestellung konnte nicht fortgesetzt werden.
+    select2:
+      minimal_search_length: Bitte geben Sie %{count} oder mehr Zeichen ein.
+      searching: Suche läuft...
+      no_matches: Keine Treffer gefunden.
     shared:
       user_guide_link:
         user_guide: Benutzerhandbuch
@@ -1953,6 +1962,7 @@ de_DE:
         placeholder: Gutschein-Code eingeben
         remove_code: Gutschein-Code entfernen
         confirm_delete: Möchten Sie den Gutschein wirklich entfernen?
+        warning_forfeit_remaining_amount: "Hinweis: Wenn die Gesamtsumme Ihrer Bestellung geringer ist als Ihr Gutschein, können Sie den Restwert möglicherweise nicht ausgeben."
     step3:
       delivery_details:
         title: Lieferdetails
@@ -3770,6 +3780,7 @@ de_DE:
         enterprise_relationships: "Berechtigungen"
         customers: "Kunden"
         groups: "Gruppen"
+        oidc_settings: "OIDC-Einstellungen"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Übernahme der Eigenschaften von %{supplier} (außer oben überschrieben)?"

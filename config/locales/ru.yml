@@ -3786,6 +3786,7 @@ ru:
         enterprise_relationships: "Права Доступа"
         customers: "Клиенты"
         groups: "Группы"
+        oidc_settings: "Настройки OIDC"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Наследовать свойства от %{supplier}? (если не отменено выше)"

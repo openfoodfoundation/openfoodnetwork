@@ -33,11 +33,11 @@ fr_BE:
         shipment_state: Statut livraison
         completed_at: 'Passée à '
         number: N° commande
-        state: Statut de la commande
+        state: Province
         email: Adresse électronique acheteur
       spree/payment:
         amount: Montant
-        state: Statut de la commande
+        state: Province
         source: Source
       spree/product:
         name: "Nom du Produit"
@@ -634,7 +634,9 @@ fr_BE:
         conditional_blank: ne peut pas être vide si unit_type est vide
         no_product: n'a pu être associé à aucun produit existant dans la base de données
         not_found: non trouvé dans le base de données
+        category_not_found: Ne correspond pas aux catégories autorisées. Consultez les bonnes catégories parmi lesquelles choisir sur la page d'importation de produits et/ou vérifiez qu'il n'y a pas de faute d'orthographe.
         not_updatable: ne peut pas être mis à jour pour des produits existants via la fonctionnalité d'import de fichier produits
+        values_must_be_same: doit être le même pour les produits du même nom
         blank: Champ obligatoire
         products_no_permission: vous n'avez pas l'autorisation de gérer les produits de cette entreprise
         inventory_no_permission: vous n'avez pas l'autorisation d'ajouter les produits de ce producteur à votre catalogue boutique
@@ -1226,6 +1228,7 @@ fr_BE:
         cancel: Annuler
         proceed: Continuer
       status:
+        open: ouvrir
         closed: fermé
     producer_properties:
       index:
@@ -1482,6 +1485,8 @@ fr_BE:
       destroy_attachment_does_not_exist: "Aucun logo trouvé :-("
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Aucune bannière trouvée :-("
+    enterprise_terms_and_conditions:
+      destroy_attachment_does_not_exist: "Le fichier des termes et conditions n'existe pas"
     orders:
       failed_to_update: "Annulation de la mise à jour la commande"
   checkout:
@@ -1489,8 +1494,12 @@ fr_BE:
       cart: "panier"
       message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
     terms_and_conditions:
+      message_html: "J'accepte les %{terms_and_conditions_link} du vendeur."
       link_text: "Termes et conditions"
+    platform_terms_of_service:
+      message_html: "J'accepte la plateforme %{tos_link}."
     all_terms_and_conditions:
+      message_html: "J'accepte les %{terms_and_conditions_link} du vendeur et la plateforme %{tos_link}."
       terms_and_conditions: "Termes et conditions"
     failed: "La vente a échouée. Veuillez nous le faire savoir afin que nous puissions traiter votre commande."
     payment_cancelled_due_to_stock: "Paiement annulé : la commande n'a pas pu être finalisée en raison d'un problème de stock."
@@ -1788,7 +1797,7 @@ fr_BE:
         city:
           label: Ville
         state_id:
-          label: Statut de la commande
+          label: Province
         zipcode:
           label: Code postal
         country_id:
@@ -1824,8 +1833,12 @@ fr_BE:
         title: Détails de la commande
         edit: Modifier
       terms_and_conditions:
+        message_html: "J'accepte les %{terms_and_conditions_link} du vendeur."
         link_text: "Termes et conditions"
+      platform_terms_of_service:
+        message_html: "J'accepte la plateforme %{tos_link}."
       all_terms_and_conditions:
+        message_html: "J'accepte les %{terms_and_conditions_link} du vendeur et la plateforme %{tos_link}."
         terms_and_conditions: "Termes et conditions"
       submit: Finaliser la commande
       cancel: Retour à Mode de paiement
@@ -1977,6 +1990,7 @@ fr_BE:
   hubs_distance: Le plus près de
   hubs_distance_filter: "Afficher les comptoirs près de %{location}"
   shop_changeable_orders_alert_html:
+    one: Votre commande avec <a href='%{path}' target='_blank'>%{shop} / %{order}</a> est ouverte pour révision. Vous pouvez apporter des modifications jusqu'au %{oc_close}.
     few: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
     many: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
     other: Vous avez <a href='%{path}' target='_blank'>%{count} commandes avec %{shop}</a> ouvertes à la vérification. Vous pouvez effectuer des modifications jusqu'au %{oc_close}.
@@ -2838,6 +2852,7 @@ fr_BE:
           message_1: "Les CGV représentent le contrat entre vous, le vendeur, et l'acheteur. Ajouter un fichier ici permet à vos acheteurs de valider ce contrat lors de leur commande sous la forme d'une case à cocher avant la validation du paiement. Pour rappel, la mise en place de CGV est une obligation réglementaire."
         terms_and_conditions_warning:
           title: "Mise à jour des CGU & CGV"
+          message_1: "Tous vos acheteurs devront les accepter une fois à la validation de la commande. Si vous mettez à jour le fichier, tous vos acheteurs devront les accepter à nouveau lors du paiement."
           message_2: "Pour les acheteurs abonnés, vous devez leur envoyer par e-mail les conditions générales (ou leurs modifications) pour le moment, rien ne les informera de ces nouvelles conditions générales."
         business_address_info:
           message: "Ces informations légales seront uniquement utilisées sur vos factures. Si vous ne renseignez pas ces champs, vos coordonnées publiques (présentes dans le menu Adresse) seront utilisées sur les factures."
@@ -3064,6 +3079,7 @@ fr_BE:
     shopfront:
       variant:
         add_to_cart: "Ajouter"
+        in_cart: "dans le panier"
       bulk_buy_modal:
         max_quantity: "Quantité max"
       price_breakdown: "Détail du prix"
@@ -3224,6 +3240,8 @@ fr_BE:
   previous: "Précédent"
   last: "Fin"
   spree:
+    add_country: "Ajouter un pays"
+    add_state: "Ajouter une province"
     all: "Tous"
     card_number: "Numéro de carte"
     category: "Catégorie"
@@ -3235,6 +3253,7 @@ fr_BE:
     new_tax_category: "Nouvelle catégorie de taxe"
     no_pending_payments: "Aucun paiement en attente"
     none: "Aucun"
+    start_date: "Date de début"
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, merci de chercher et d'ajouter un des produits ci-dessus"
     add_product: "Ajoutez un produit"
@@ -3516,7 +3535,10 @@ fr_BE:
           cancel_orders: "Annuler les commandes"
           resend_confirmation: "Renvoyer la confirmation"
           resend_confirmation_confirm_html: "Cela renverra l&#39;e-mail de confirmation au client.<br /> Êtes-vous sur de vouloir continuer?"
+          send_invoice: "Envoyer les factures"
           send_invoice_confirm_html: "Cela enverra par e-mail les factures des clients pour toutes les commandes finalisées sélectionnées.<br> Êtes-vous sur de vouloir continuer?"
+          selected:
+            zero: "Aucune commande sélectionnée"
         sortable_header:
           payment_state: "Statut du Paiement"
           shipment_state: "Statut livraison"
@@ -3544,6 +3566,8 @@ fr_BE:
           ofn_with_tip: Les Entreprises sont des Producteur·trice·s et/ou Comptoirs, et sont donc les organisations de base qui utilisent Open Food Network.
         enterprise_row:
           has_no_enterprise_fees: "n'a pas de marge / commission d'entreprise"
+          has_no_payment_methods: "n'a aucune méthode de paiement"
+          has_no_shipping_methods: "n'a aucune méthode de retrait/livraison"
         products:
           active_products:
             zero: "Vous n'avez aucun produit actif."
@@ -3649,6 +3673,7 @@ fr_BE:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
           supplier: "Fournisseur"
+          supplier_select_placeholder: "Sélectionnez un fournisseur"
           product_name: "Nom du Produit"
           units: "Unité de mesure"
           value: "Nb unités"
@@ -3710,6 +3735,7 @@ fr_BE:
           back_to_users_list: "Retour vers la liste des utilisateur·trice·s"
           general_settings: "Réglages Généraux"
         form:
+          disabled: "Désactivé?"
           email: "Email"
           roles: "Roles"
           enterprise_limit: "Nombre max d'entreprises"
@@ -3749,8 +3775,8 @@ fr_BE:
         sortable_header:
           name: "Nom"
           number: "N° commande"
-          completed_at: "Date"
-          state: "Statut de la commande"
+          completed_at: "Terminé à"
+          state: "Province"
           payment_state: "Statut du Paiement"
           shipment_state: "Statut livraison"
           email: "Email"
@@ -3780,6 +3806,8 @@ fr_BE:
           or_enter_new_card: "Ou entrez les informations pour utiliser une nouvelle carte :"
           remember_this_card: Se souvenir de cette carte ?
     date_picker:
+      today: "Aujourd'hui"
+      now: "Maintenant"
       close: "Ferme"
     orders:
       error_flash_for_unavailable_items: "Un produit dans votre panier n'est plus disponible. Veuillez changer le montant des quantité. "
@@ -3797,6 +3825,7 @@ fr_BE:
       pending: en attente
       ready: prêt
       shipped: envoyé
+      canceled: annulé
     payment_states:
       balance_due: solde dû
       completed: effectué
@@ -3823,6 +3852,8 @@ fr_BE:
       cancel_email_for_shop:
         greeting: "Chère %{name}"
         subject: "Annulation de Commande"
+        intro: "Un client a annulé sa commande #%{number}."
+        view_cancelled_order: "Voir la commande annulée"
       confirm_email:
         subject: "Confirmation de commande"
       invoice_email:
@@ -3941,6 +3972,24 @@ fr_BE:
       shipment:
         cannot_ready: "Impossible de préparer l'expédition."
       invalid_taxonomy_id: "Id taxonomique invalide."
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: Environ 1 heure
+        many: environ %{count} heures
+        other: environ %{count} heure(s)
+      about_x_months:
+        one: environ 1 mois
+        many: environ %{count} mois
+        other: environ %{count} mois
+      about_x_years:
+        one: environ 1 an
+        many: environ %{count} ans
+        other: environ %{count} an(s)
+      x_days:
+        one: "Un jour"
+        many: "%{count} jours"
+        other: "%{count} jour(s)"
   components:
     multiple_checked_select:
       filter_placeholder: "Options de filtre"

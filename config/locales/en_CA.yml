@@ -3686,6 +3686,7 @@ en_CA:
         enterprise_relationships: "Permissions"
         customers: "Customers"
         groups: "Groups"
+        oidc_settings: "OIDC Settings"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"

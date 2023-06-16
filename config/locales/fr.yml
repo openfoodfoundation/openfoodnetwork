@@ -1323,6 +1323,10 @@ fr:
         could_not_cancel_the_order: La commande n'a pas pu être supprimée
       resume:
         could_not_resume_the_order: La commande n'a pas pu être reprise
+    select2:
+      minimal_search_length: Entrez %{count} ou caractères
+      searching: Recherche...
+      no_matches: Pas de correspondance trouvée
     shared:
       user_guide_link:
         user_guide: Guide utilisateur
@@ -3823,6 +3827,7 @@ fr:
         enterprise_relationships: "Permissions"
         customers: "Acheteurs"
         groups: "Groupes"
+        oidc_settings: "OIDC"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier} ? (non applicable si information de remplacement déjà saisie)"

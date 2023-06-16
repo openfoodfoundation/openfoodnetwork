@@ -3734,6 +3734,7 @@ cy:
         enterprise_relationships: "Caniatâd"
         customers: "Cwsmeriaid"
         groups: "Grwpiau"
+        oidc_settings: "OIDC Settings"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Etifeddu eiddo gan %{supplier}? (oni bai ei fod yn cael ei ddiystyru uchod)"

@@ -3706,6 +3706,7 @@ it:
         enterprise_relationships: "permessi"
         customers: "Clienti"
         groups: "Reti"
+        oidc_settings: "Impoostazioni"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Eredita le proprietà da %{supplier}? (se non sovrascritto)"

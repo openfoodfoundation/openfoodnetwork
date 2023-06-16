@@ -3814,6 +3814,7 @@ ar:
         enterprise_relationships: "أذونات"
         customers: "العملاء"
         groups: "مجموعات"
+        oidc_settings: "إعدادات OIDC"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "وراثة الخصائص من %{supplier}؟ (ما لم يتم تجاوزه أعلاه)"
