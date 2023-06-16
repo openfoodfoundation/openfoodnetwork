@@ -27,7 +27,7 @@ jobs:
 
       - name: Deploy to Staging
         run: |
-          ssh ofn-deploy@${{ github.event.label.description }} -o LogLevel=ERROR "openfoodfoundation:pull-request-${{ github.event.pull_request.number }} ."
+          ssh ofn-deploy@${{ github.event.label.description }} -o LogLevel=ERROR "pull-request-${{ github.event.pull_request.number }} ."
 
   deploy_branch:
     if: ${{ inputs.server }}
@@ -41,4 +41,4 @@ jobs:
 
       - name: Deploy to Staging
         run: |
-          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "openfoodfoundation:$GITHUB_REF_NAME $GITHUB_SHA"
+          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "$GITHUB_REF_NAME $GITHUB_SHA"
