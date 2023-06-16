@@ -3,10 +3,12 @@
 class EnterpriseFee < ApplicationRecord
   include CalculatedAdjustments
 
+  self.belongs_to_required_by_default = true
+
   acts_as_paranoid
 
   belongs_to :enterprise
-  belongs_to :tax_category, class_name: 'Spree::TaxCategory'
+  belongs_to :tax_category, optional: true, class_name: 'Spree::TaxCategory'
 
   has_many :coordinator_fees, dependent: :destroy
   has_many :order_cycles, through: :coordinator_fees

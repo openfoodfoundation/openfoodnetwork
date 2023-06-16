@@ -121,7 +121,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_201542) do
   end
 
   create_table "enterprise_fees", id: :serial, force: :cascade do |t|
-    t.integer "enterprise_id"
+    t.integer "enterprise_id", null: false
     t.string "fee_type", limit: 255
     t.string "name", limit: 255
     t.datetime "created_at", precision: nil, null: false

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe EnterpriseFee do
   describe "associations" do
-    it { is_expected.to belong_to(:enterprise) }
+    it { is_expected.to belong_to(:enterprise).required }
   end
 
   describe "validations" do
