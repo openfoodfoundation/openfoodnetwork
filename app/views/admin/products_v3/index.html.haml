@@ -1,7 +1,7 @@
 - content_for :body_class do
   products_v3_page
 - content_for :page_title do
-  = t('spree.admin.products.index.header.title')
+  = t('.header.title')
 - content_for :page_actions do
   %div{ :class => "toolbar" }
     %ul{ :class => "actions header-action-links inline-menu" }
@@ -14,5 +14,5 @@
 #products_v3_page{"data-controller": "productsV3"}
   #loading-spinner.spinner-container{"data-productsV3-target": "loading"}
     .spinner
-    = t('admin.products_v3.loading')
+    = t('.loading')
   #products-table
