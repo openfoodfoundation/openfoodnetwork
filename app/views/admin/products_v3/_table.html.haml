@@ -26,9 +26,8 @@
     %tbody
       - products.each do |product|
         %tr
-          %td.align-left
-            .line-clamp-1
-              %b=  product.name
+          %td.align-left.header
+            .line-clamp-1= product.name
           %td.align-right
             .line-clamp-1= product.sku
           %td.align-right
@@ -36,13 +35,13 @@
           %td.align-right
             .line-clamp-1= product.on_hand || 0
           %td.align-left
-            .line-clamp-1=  product.supplier.name
+            .line-clamp-1= product.supplier.name
           %td.align-left
-            .line-clamp-1=  product.taxons.map(&:name).join(', ')
+            .line-clamp-1= product.taxons.map(&:name).join(', ')
           %td.align-left
-            .line-clamp-1=  product.tax_category&.name
+            .line-clamp-1= product.tax_category&.name
           %td.align-left
-            .line-clamp-1=  product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values
+            .line-clamp-1= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values
           / %td.align-right
           /   .line-clamp-1= product.available_on&.strftime('%F')
           / %td.align-right
