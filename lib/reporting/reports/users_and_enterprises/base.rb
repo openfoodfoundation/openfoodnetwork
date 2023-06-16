@@ -16,7 +16,8 @@ module Reporting
             is_producer: proc { |x| x.is_primary_producer },
             sells: proc { |x| x.sells },
             visible: proc { |x| x.visible },
-            confirmation_date: proc { |x| x.created_at }
+            confirmation_date: proc { |x| x.created_at },
+            ofn_uid: proc { |x| x.ofn_uid }
           }
         end
 
@@ -46,7 +47,8 @@ module Reporting
 
         def query_helper(query, email_user, relationship_type)
           query.order("enterprises.created_at DESC")
-            .select(["enterprises.name",
+            .select(["enterprises.id AS ofn_uid",
+                     "enterprises.name",
                      "enterprises.sells",
                      "enterprises.visible",
                      "enterprises.is_primary_producer",
