@@ -14,7 +14,11 @@ Openfoodnetwork::Application.configure do
   config.public_file_server.headers = { 'Cache-Control' => 'public, max-age=3600' }
 
   # Separate cache stores when running in parallel
-  config.cache_store = :file_store, Rails.root.join("tmp", "cache", "paralleltests#{ENV['TEST_ENV_NUMBER']}")
+  config.cache_store = :redis_cache_store, {
+    driver: :hiredis,
+    url: ENV.fetch("OFN_REDIS_URL", "redis://localhost:6379/1"),
+    reconnect_attempts: 1
+  }
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
