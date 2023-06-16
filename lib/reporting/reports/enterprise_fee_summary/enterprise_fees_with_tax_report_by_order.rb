@@ -4,11 +4,10 @@ module Reporting
   module Reports
     module EnterpriseFeeSummary
       class EnterpriseFeesWithTaxReportByOrder < ReportTemplate
-        attr_accessor :permissions, :parameters
+        attr_accessor :parameters
 
         def initialize(user, params = {}, render: false)
           super(user, params, render: render)
-          @permissions = Permissions.new(user)
         end
 
         def search
