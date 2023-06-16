@@ -19,11 +19,11 @@ describe Enterprise do
   end
 
   describe "associations" do
-    it { is_expected.to belong_to(:owner) }
+    it { is_expected.to belong_to(:owner).required }
     it { is_expected.to have_many(:supplied_products) }
     it { is_expected.to have_many(:distributed_orders) }
-    it { is_expected.to belong_to(:address) }
-    it { is_expected.to belong_to(:business_address) }
+    it { is_expected.to belong_to(:address).required }
+    it { is_expected.to belong_to(:business_address).optional }
     it { is_expected.to have_many(:vouchers) }
 
     it "destroys enterprise roles upon its own demise" do
@@ -123,12 +123,6 @@ describe Enterprise do
     it do
       create(:distributor_enterprise)
       is_expected.to validate_uniqueness_of(:permalink)
-    end
-
-    it "requires an owner" do
-      enterprise = build_stubbed(:enterprise, owner: nil)
-      expect(enterprise).not_to be_valid
-      expect(enterprise.errors[:owner].first).to eq "can't be blank"
     end
 
     describe "name uniqueness" do

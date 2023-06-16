@@ -10,6 +10,8 @@ class Enterprise < ApplicationRecord
   WHITE_LABEL_LOGO_SIZES = [:default, :mobile].freeze
   VALID_INSTAGRAM_REGEX = %r{\A[a-zA-Z0-9._]{1,30}([^/-]*)\z}
 
+  self.belongs_to_required_by_default = true
+
   searchable_attributes :sells, :is_primary_producer, :name
   searchable_associations :properties
   searchable_scopes :is_primary_producer, :is_distributor, :is_hub, :activated, :visible,
@@ -44,7 +46,7 @@ class Enterprise < ApplicationRecord
                                dependent: :destroy
   has_many :distributed_orders, class_name: 'Spree::Order', foreign_key: 'distributor_id'
   belongs_to :address, class_name: 'Spree::Address'
-  belongs_to :business_address, class_name: 'Spree::Address', dependent: :destroy
+  belongs_to :business_address, optional: true, class_name: 'Spree::Address', dependent: :destroy
   has_many :enterprise_fees
   has_many :enterprise_roles, dependent: :destroy
   has_many :users, through: :enterprise_roles
@@ -108,8 +110,7 @@ class Enterprise < ApplicationRecord
   validates :name, presence: true
   validate :name_is_unique
   validates :sells, presence: true, inclusion: { in: SELLS }
-  validates :address, presence: true, associated: true
-  validates :owner, presence: true
+  validates :address, associated: true
   validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
   validate :shopfront_producers
