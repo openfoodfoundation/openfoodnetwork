@@ -231,7 +231,7 @@ module Reporting
 
         def tax(query_result_row, all: false, included: nil)
           order_id = order(query_result_row).id
-          adjustment_ids = enterprise_fee_adjustemnt_ids(query_result_row)
+          adjustment_ids = enterprise_fee_adjustment_ids(query_result_row)
           query = Spree::Adjustment.tax
           query = query.where(included: true) unless included.nil?
           query = query.where(originator_id: tax_rate_id(query_result_row)) unless all == true
@@ -261,7 +261,7 @@ module Reporting
           order(query_result_row).customer&.email
         end
 
-        def enterprise_fee_adjustemnt_ids(query_result_row)
+        def enterprise_fee_adjustment_ids(query_result_row)
           Spree::Adjustment.enterprise_fee
             .where(order: order(query_result_row))
             .where(originator_id: enterprise_fee_id(query_result_row))
