@@ -133,6 +133,10 @@ nav.menu {
   }
 }
 
+#sub-menu .container {
+  @extend .no-gutter;
+}
+
 #header figure {
   margin: 0.25em 0;
 }
