@@ -67,48 +67,15 @@ nav.menu {
     display: flex;
   }
 
+  li a {
+    font-size: 16px;
+  }
+
   li {
     min-width: 90px;
     flex-grow: 1;
     padding-left: 2px;
     padding-right: 2px;
-
-    a {
-      display: block;
-      padding: 16px 5px;
-      color: $dark-grey !important;
-      position: relative;
-      text-align: center;
-      font-weight: 600;
-      font-size: 16px;
-
-      i {
-        display: inline;
-      }
-
-      &:hover {
-        color: $red !important;
-
-        &:after {
-          content: "";
-          position: absolute;
-          bottom: 0;
-          left: 30px;
-          right: 30px;
-          height: 3px;
-          background: $red;
-        }
-      }
-
-      span.text {
-        font-weight: 600;
-      }
-    }
-
-    a::before {
-      font-weight: normal;
-      padding-top: 0;
-    }
 
     .dropdown {
       width: 300px;
@@ -124,31 +91,44 @@ nav.menu {
         }
       }
     }
-
-    &.selected a {
-      @extend a, :hover;
-    }
   }
 }
 
 #sub-menu {
   padding-bottom: 0;
   box-shadow: 0px 1px 0px $light-grey;
+}
 
+// factoized menu item
+#admin-menu,
+#sub-menu {
   li {
     a {
-      display: block;
-      padding: 12px 20px;
-      color: $dark-grey;
+      display: inline-block;
+      padding: 16px 20px;
+      color: $dark-grey !important;
       text-align: center;
       position: relative;
       font-size: 14px;
+      font-weight: 600;
+
+      &:hover {
+        color: $red !important;
+
+        &:after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 20px;
+          right: 20px;
+          height: 3px;
+          background: $red;
+        }
+      }
     }
 
-    &.selected a,
-    a:hover {
-      color: $red;
-      border-bottom: 2px solid $red;
+    &.selected a {
+      @extend a, :hover;
     }
   }
 }
