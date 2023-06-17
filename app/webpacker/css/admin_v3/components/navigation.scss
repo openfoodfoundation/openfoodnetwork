@@ -141,6 +141,12 @@ nav.menu {
   margin: 0.25em 0;
 }
 
+#header .container {
+  // add same padding than #admin-menu,#sub-menu li a in order to align
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 #login-nav {
   line-height: 1.75em;
 }
