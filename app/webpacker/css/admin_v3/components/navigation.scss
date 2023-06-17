@@ -64,7 +64,7 @@ nav.menu {
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05), 0px 2px 2px rgba(0, 0, 0, 0.07);
 
   ul {
-    display: flex;
+    justify-content: space-between;
   }
 
   li a {
@@ -72,11 +72,6 @@ nav.menu {
   }
 
   li {
-    min-width: 90px;
-    flex-grow: 1;
-    padding-left: 2px;
-    padding-right: 2px;
-
     .dropdown {
       width: 300px;
       background-color: $teal;
@@ -102,39 +97,53 @@ nav.menu {
 // factoized menu item
 #admin-menu,
 #sub-menu {
-  li {
-    a {
-      display: inline-block;
-      padding: 16px 20px;
-      color: $dark-grey !important;
-      text-align: center;
-      position: relative;
-      font-size: 14px;
-      font-weight: 600;
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 
-      &:hover {
-        color: $red !important;
+  ul {
+    display: flex;
 
-        &:after {
-          content: "";
-          position: absolute;
-          bottom: 0;
-          left: 20px;
-          right: 20px;
-          height: 3px;
-          background: $red;
+    li {
+      a {
+        display: inline-block;
+        padding: 16px 20px;
+        color: $dark-grey !important;
+        text-align: center;
+        position: relative;
+        font-size: 14px;
+        font-weight: 600;
+
+        &:hover {
+          color: $red !important;
+
+          &:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            background: $red;
+          }
         }
       }
-    }
 
-    &.selected a {
-      @extend a, :hover;
+      &.selected a {
+        @extend a, :hover;
+      }
     }
   }
 }
 
 #header figure {
   margin: 0.25em 0;
+}
+
+#header .container {
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 #login-nav {
