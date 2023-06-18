@@ -1,0 +1,20 @@
+%p.callout
+  %span{:style => "float:right;"}
+    - if @order.outstanding_balance?
+      = @order.outstanding_balance_label
+      \:
+      %strong= @order.display_outstanding_balance
+    - else
+      - if @order.paid?
+        = t :email_payment_paid
+      - else
+        = t :email_payment_not_paid
+  %strong
+    = t :email_payment_summary
+- if @order.payments.any?
+  = render partial: 'spree/admin/orders/_invoice/payments_list', locals: { payments: @order.payments }
+  - if @order.last_payment_method
+    %p.callout{style: "margin-top: 40px"}
+      %strong
+        = t :email_payment_description
+    %p{style: "margin: 5px"}= @order.last_payment_method.description

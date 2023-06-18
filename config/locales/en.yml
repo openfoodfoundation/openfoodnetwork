@@ -3117,8 +3117,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
+  new_invoice: "New Invoice"
   date_completed: "Date Completed"
   amount: "Amount"
+  invoice_number: "Invoice Number"
   state_names:
     ready: Ready
     pending: Pending

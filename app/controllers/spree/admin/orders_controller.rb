@@ -99,6 +99,10 @@ module Spree
       end
 
       def print
+        if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+          @order = @order.invoices.find(params[:invoice_id]).presenter
+        end
+
         render_with_wicked_pdf InvoiceRenderer.new.args(@order)
       end
 

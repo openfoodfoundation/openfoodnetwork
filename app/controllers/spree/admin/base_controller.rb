@@ -33,7 +33,7 @@ module Spree
 
       def model_class
         const_name = controller_name.classify
-        return "Spree::#{const_name}".constantize if Spree.const_defined?(const_name)
+        return "Spree::#{const_name}".constantize if Object.const_defined?("Spree::#{const_name}")
 
         nil
       end

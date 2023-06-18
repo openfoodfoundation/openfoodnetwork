@@ -1,0 +1,6 @@
+%h5.inline-header
+  = "#{raw(line_item.variant.product.name)}"
+  - unless line_item.variant.product.name.include? line_item.name_to_display
+    %span= "- #{raw(line_item.name_to_display)}"
+- if line_item.options_text.present?
+  = "(#{raw(line_item.options_text)})"

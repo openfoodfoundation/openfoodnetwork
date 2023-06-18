@@ -1,0 +1,94 @@
+= pdf_stylesheet_pack_tag "mail"
+
+%table{:width => "100%"}
+  %tbody
+    %tr{ valign: "top" }
+      %td{ :align => "left" }
+        %h4
+          = t :tax_invoice
+      - if @order.distributor.display_invoice_logo? && @order.distributor.logo_url
+        %td{ :align => "right", rowspan: 2 }
+          = wicked_pdf_image_tag @order.distributor.logo_url
+    %tr{ valign: "top" }
+      %td{ :align => "left" }
+        - if @order.distributor.business_address.blank?
+          %strong= @order.distributor.name
+          %br
+          = @order.distributor.address.address_part1
+          %br
+          = @order.distributor.address.address_part2
+          %br
+          = @order.distributor.email_address
+          - if @order.distributor.phone.present?
+            %br
+            = @order.distributor.phone
+        - else 
+          %strong= @order.distributor.business_address.company
+          %br
+          = @order.distributor.business_address.address_part1
+          %br
+          = @order.distributor.business_address.address_part2
+          %br
+          = @order.distributor.email_address
+          - if @order.distributor.business_address.phone.present?
+            %br
+            = @order.distributor.business_address.phone
+        - if @order.distributor.abn.present?
+          %br
+          = "#{t :abn} #{@order.distributor.abn}"
+        - if @order.distributor.acn.present?
+          %br
+          = "#{t :acn} #{@order.distributor.acn}"
+    %tr{ valign: "top" }
+      %td{ :align => "left", colspan: 2 } &nbsp;
+    %tr{ valign: "top" }
+      %td{ :align => "left" }
+        %br
+        = t :invoice_issued_on
+        = l @order.invoice_date
+        %br
+        = t :date_of_transaction
+        = l @order.order_completed_at.to_date
+        %br
+        = t :order_number
+        = @order.number
+      %td{ :align => "right" }
+        = t :invoice_billing_address
+        %br
+        - if @order.bill_address
+          %strong= @order.bill_address.full_name
+        - if @order&.customer&.code.present?
+          %br
+          = "Code: #{@order.customer.code}"
+        %br
+        - if @order.bill_address
+          = @order.bill_address.address_part1
+        %br
+        - if @order.bill_address
+          = @order.bill_address.address_part2
+        - if @order.bill_address.phone.present?
+          %br
+          = @order.bill_address.phone
+        - if @order&.customer&.email.present?
+          %br
+          = @order.customer.email
+
+= render 'spree/admin/orders/invoice_table4'
+
+- if @order.special_instructions.present?
+  %p.callout
+    %strong
+      = t :customer_instructions
+  %p
+    %em= @order.special_instructions
+  %p
+    &nbsp;
+
+- if @order.distributor.invoice_text.present?
+  %p
+    = @order.distributor.invoice_text
+
+= render 'spree/admin/orders/_invoice/payment'
+
+- if @order.note.present?
+  = render partial: 'spree/admin/orders/_invoice/order_note'

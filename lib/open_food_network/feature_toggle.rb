@@ -38,6 +38,9 @@ module OpenFoodNetwork
       "vouchers" => <<~DESC,
         Add voucher functionality. Voucher can be managed via Enterprise settings.
       DESC
+      "invoices" => <<~DESC,
+        Preserve the state of generated invoices and enable multiple invoice numbers instead of only one live-updating invoice.
+      DESC
     }.freeze
 
     def self.setup!

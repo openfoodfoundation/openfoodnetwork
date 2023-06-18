@@ -1,0 +1,55 @@
+%table.order-summary{:width => "100%"}
+  %thead
+    %tr
+      %th{:align => "left"}
+        %h4= t(:invoice_column_item)
+      %th{:align => "right", :width => "15%"}
+        %h4= t(:invoice_column_qty)
+      %th{:align => "right", :width => "15%"}
+        %h4= @order.total_tax > 0 ? t(:invoice_column_tax) : ""
+      %th{:align => "right", :width => "15%"}
+        %h4= t(:invoice_column_price)
+  %tbody
+    - @order.sorted_line_items.each do |item|
+      %tr
+        %td
+          = render 'spree/admin/orders/_invoice/line_item_name', line_item: item
+          %br
+          %small
+            %em= raw(item.variant.product.supplier.name)
+        %td{:align => "right"}
+          = item.quantity
+        %td{:align => "right"}
+          = item.display_line_items_taxes
+        %td{:align => "right"}
+          = item.display_amount_with_adjustments
+      
+    - @order.checkout_adjustments(exclude: [:line_item]).reverse_each do |adjustment|
+      - taxable = adjustment#.adjustable_type == "Spree::Shipment" ? adjustment.adjustable : adjustment
+      %tr
+        %td
+          %strong= "#{raw(adjustment.label)}"
+        %td{:align => "right"}
+          1
+        %td{:align => "right"}
+          = adjustment.display_taxes
+        %td{:align => "right"}
+          = adjustment.display_amount
+  %tfoot
+    %tr
+      %td{:align => "right", :colspan => "2"}
+        %strong= t(:invoice_tax_total)
+      %td{:align => "right", :colspan => "2"}
+        %strong= @order.display_checkout_tax_total
+    %tr
+      %td{:align => "right", :colspan => "2"}
+        %strong= t(:total_excl_tax)
+      %td{:align => "right", :colspan => "2"}
+        %strong= @order.display_checkout_total_less_tax
+    %tr
+      %td{:align => "right", :colspan => "2"}
+        %strong= t(:total_incl_tax)
+      %td{:align => "right", :colspan => "2"}
+        %strong= @order.display_total
+%p
+  &nbsp;
