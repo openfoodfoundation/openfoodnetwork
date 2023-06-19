@@ -13,7 +13,7 @@ describe "Users & Enterprises reports" do
   end
 
   it "displays the report" do
-    find("[type='submit']").click
+    click_button 'Go'
 
     expect(page.find("table.report__table thead tr").text).to have_content([
       "USER",
