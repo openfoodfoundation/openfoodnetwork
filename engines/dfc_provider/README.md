@@ -1,12 +1,41 @@
-# DfcProvider
+# Data Food Consortium API for the Open Food Network app (OFN DFC API)
 
-This engine is implementing the Data Food Consortium specifications in order to serve semantic data.
-You can find more details about this on https://github.com/datafoodconsortium.
+This engine implements the [Data Food Consortium] specifications. It serves and
+reads semantic data encoded in JSON-LD.
 
-Basically, it allows an OFN user linked to an enterprise:
-* to serve his Products Catalog through a dedicated API using JSON-LD format, structured by the DFC Ontology
-* to be authenticated thanks to an Access Token from DFC Authorization server (using an OIDC implementation)
+[Data Food Consortium]: https://github.com/datafoodconsortium
 
-The API endpoint for the catalog is `/api/dfc_provider/enterprise/prodcuts.json` and you need to pass the token inside an authentication header (`Authentication: Bearer 123mytoken456`).
+## Authentication
 
-This feature is still under active development.
+The DFC uses OpenID Connect (OIDC) to authenticate requests. You need an
+account with a trusted OIDC provider. Currently these are:
+
+* https://login.lescommuns.org/auth/
+
+But you can also authenticate with your OFN user login (session cookie) through
+your browser.
+
+## API endpoints
+
+The API is under development and this list may be out of date.
+
+```
+/api/dfc-v1.7/persons/:id
+ * show: firstName, lastName, affiliatedOrganizations
+
+/api/dfc-v1.7/enterprises/:id
+ * show: name, suppliedProducts, catalogItems
+
+/api/dfc-v1.7/enterprises/:enterprise_id/supplied_products (index)
+
+/api/dfc-v1.7/enterprises/:enterprise_id/supplied_products/:id
+ * create: name, description, quantity
+ * show: name, description, productType, quantity
+ * update: description
+
+/api/dfc-v1.7/enterprises/:enterprise_id/catalog_items (index)
+
+/api/dfc-v1.7/enterprises/:enterprise_id/catalog_items/:id
+ * show: product, sku, stockLimitation, offers (price, stockLimitation)
+ * update: sku, stockLimitation
+```
