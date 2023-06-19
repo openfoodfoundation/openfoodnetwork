@@ -19,7 +19,7 @@
             %th{ colspan: 2 }
               = t('.shipping_methods')
               = hidden_field_tag "order_cycle[selected_distributor_shipping_method_ids][]", ""
-          - @order_cycle.distributors.each do |distributor|
+          - distributors_with_editable_shipping_and_payment_methods(@order_cycle).each do |distributor|
             - distributor_shipping_methods = @order_cycle.attachable_distributor_shipping_methods.where("distributor_id = ?", distributor.id).includes(:shipping_method)
             %tr{ class: "distributor-#{distributor.id}-shipping-methods", "data-controller": "checked" }
               %td.text-center
@@ -50,7 +50,7 @@
             %th{ colspan: 2 }
               = t('.payment_methods')
               = hidden_field_tag "order_cycle[selected_distributor_payment_method_ids][]", ""
-          - @order_cycle.distributors.each do |distributor|
+          - distributors_with_editable_shipping_and_payment_methods(@order_cycle).each do |distributor|
             - distributor_payment_methods = @order_cycle.attachable_distributor_payment_methods.where("distributor_id = ?", distributor.id).includes(:payment_method)
             %tr{ class: "distributor-#{distributor.id}-payment-methods", "data-controller": "checked" }
               %td.text-center

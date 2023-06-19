@@ -36,6 +36,15 @@ module OrderCyclesHelper
                                  shipping_and_payment_methods: true
   end
 
+  def distributors_with_editable_shipping_and_payment_methods(order_cycle)
+    return order_cycle.distributors if order_cycle.coordinator
+      .in? Enterprise.managed_by(spree_current_user)
+
+    order_cycle.distributors.select do |distributor|
+      distributor.in? Enterprise.managed_by(spree_current_user)
+    end
+  end
+
   def order_cycle_status_class(order_cycle)
     if order_cycle.undated?
       'undated'
