@@ -554,6 +554,8 @@ distributors: [distributor4, distributor5]) }
           expect(page).to have_content "This will cancel the current order."
 
           within ".reveal-modal" do
+            # Untick SEND A CANCELLATION EMAIL TO THE CUSTOMER
+            page.find("input[id='send_cancellation_email']").click
             expect {
               find_button("Cancel").click # Cancels the cancel action
             }.to_not enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
