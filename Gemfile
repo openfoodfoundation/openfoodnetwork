@@ -143,6 +143,8 @@ gem "private_address_check"
 group :production, :staging do
   gem 'ddtrace'
   gem 'sd_notify' # For better Systemd process management. Used by Puma.
+  gem 'sentry-rails'
+  gem 'sentry-ruby'
 end
 
 group :test, :development do
