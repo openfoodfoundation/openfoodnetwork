@@ -585,8 +585,6 @@ describe '
         within "#links-dropdown" do
           expect(page).to have_link "Resend Confirmation",
                                     href: spree.resend_admin_order_path(order)
-          expect(page).to have_link "Cancel Order",
-                                    href: spree.fire_admin_order_path(order, e: 'cancel')
         end
       end
 
@@ -605,6 +603,29 @@ describe '
             click_link "Resend Confirmation"
           end
           expect(page).to have_content "Order email has been resent"
+        end
+      end
+
+      context "Canceling an order" do
+        before do
+          visit spree.edit_admin_order_path(order)
+          find("#links-dropdown .ofn-drop-down").click
+        end
+
+        it "shows the link" do
+          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(order, e: 'cancel')
+        end
+
+        it "cancels the order" do
+          within ".ofn-drop-down .menu" do
+            expect(page).to have_selector("span", text: "Cancel Order")
+            page.find("span", text: "Cancel Order").click
+          end
+          within '.modal-content' do
+            expect {
+              find_button("OK").click
+            }.to change { order.reload.state }.from('complete').to('canceled')
+          end
         end
       end
       
