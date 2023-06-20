@@ -35,6 +35,7 @@ module Spree
 
       url_for(variant(size))
     rescue ActiveStorage::Error => e
+      Bugsnag.notify "Product ##{viewable_id} Image ##{id} error: #{e.message}"
       Rails.logger.error(e.message)
 
       self.class.default_image_url(size)
