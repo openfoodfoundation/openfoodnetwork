@@ -179,6 +179,81 @@ describe '
       expect(page).to have_content %(Variant "#{product.name}" has been successfully updated!)
       expect(variant.reload.unit_description).to eq('bar')
     end
+
+    context "with ES as a locale" do
+      let(:product) { create(:simple_product, variant_unit: "weight", variant_unit_scale: "1") }
+      let(:variant) { product.variants.first }
+
+      before do
+        # sets the locale into ES
+        I18n.default_locale = 'es'
+
+        variant.update( unit_value: 1, unit_description: 'foo' )
+
+        # When I view the variant
+        login_as_admin
+        visit spree.admin_product_variants_path product
+      end
+
+      context "with localization disabled" do
+        before do
+          allow(Spree::Config).to receive(:enable_localized_number?).and_return false
+
+          Spree::Config[:currency_decimal_mark] = "."
+          Spree::Config[:currency_thousands_separator] = ","
+        end
+
+        it "when variant_unit is weight" do
+          expect(Spree::Price.second.amount).to eq(19.99)
+
+          # Given a product with unit-related option types, with a variant
+          page.find('table.index .icon-edit').click
+
+          # assert on the price field
+          expect(page).to have_field "variant_price", with: "19,99 "
+
+          # When I update the fields and save the variant
+          fill_in "variant_price", with: "12,50 "
+
+          click_button 'Actualizar'
+          expect(page).to have_content %(Variant "#{product.name}" ha sido actualizado exitosamente)
+
+          # Then the variant price should have been updated
+          expect(Spree::Price.second.amount).to eq(12.50)
+        end
+      end
+
+      context "with localization enabled" do
+        before do
+          allow(Spree::Config).to receive(:enable_localized_number?).and_return true
+
+          Spree::Config[:currency_decimal_mark] = ","
+          Spree::Config[:currency_thousands_separator] = "."
+
+          login_as_admin
+          visit spree.admin_product_variants_path product
+        end
+
+        it "when variant_unit is weight" do
+          pending("#11085")
+          expect(Spree::Price.second.amount).to eq(19.99)
+
+          # Given a product with unit-related option types, with a variant
+          page.find('table.index .icon-edit').click
+
+          # assert on the Price field
+          expect(page).to have_field "variant_price", with: "19,99 "
+
+          # When I update the fields and save the variant
+          fill_in "variant_price", with: "12,50 "
+          click_button 'Actualizar'
+          expect(page).to have_content %(Variant "#{product.name}" ha sido actualizado exitosamente)
+
+          # Then the variant price should have been updated
+          expect(Spree::Price.second.amount).to eq(12.50)
+        end
+      end
+    end
   end
 
   describe "editing on hand and on demand values" do
@@ -224,7 +299,7 @@ describe '
 
   it "soft-deletes variants" do
     product = create(:simple_product)
-    variant = create(:variant, product: product)
+    variant = create(:variant, product:)
 
     login_as_admin
     visit spree.admin_product_variants_path product
