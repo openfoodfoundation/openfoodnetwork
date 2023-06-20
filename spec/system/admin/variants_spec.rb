@@ -77,8 +77,6 @@ describe '
       login_as_admin
       visit spree.admin_product_variants_path(product, filter)
 
-      visit spree.admin_product_variants_path(product, filter)
-
       expected_new_url = Regexp.new(
         Regexp.escape(spree.new_admin_product_variant_path(product, filter))
       )
@@ -182,63 +180,50 @@ describe '
         visit spree.admin_product_variants_path product
       end
 
-      context "with localization disabled" do
-        before do
-          allow(Spree::Config).to receive(:enable_localized_number?).and_return false
+      shared_examples "with localization" do |localized, decimal_mark, thousands_separator|
+        context "set to #{localized}" do
+          before do
+            allow(Spree::Config).to receive(:enable_localized_number?).and_return localized
+            Spree::Config[:currency_decimal_mark] = decimal_mark
+            Spree::Config[:currency_thousands_separator] = thousands_separator
+          end
 
-          Spree::Config[:currency_decimal_mark] = "."
-          Spree::Config[:currency_thousands_separator] = ","
+          it "when variant_unit is weight" do
+            expect(Spree::Price.second.amount).to eq(19.99)
+
+            # Given a product with unit-related option types, with a variant
+            page.find('table.index .icon-edit').click
+
+            # assert on the price field
+            expect(page).to have_field "variant_price", with: "19,99 "
+
+            # When I update the fields and save the variant
+            fill_in "variant_price", with: "12,50 "
+            click_button 'Actualizar'
+            expect(page).to have_content \
+              %(Variant "#{product.name}" ha sido actualizado exitosamente)
+
+            # Then the variant price should have been updated
+            expect(Spree::Price.second.amount).to eq(12.50)
+          end
         end
 
-        it "when variant_unit is weight" do
-          expect(Spree::Price.second.amount).to eq(19.99)
+        after do
+          # sets the locale back to EN
+          I18n.default_locale = 'en'
 
-          # Given a product with unit-related option types, with a variant
-          page.find('table.index .icon-edit').click
-
-          # assert on the price field
-          expect(page).to have_field "variant_price", with: "19,99 "
-
-          # When I update the fields and save the variant
-          fill_in "variant_price", with: "12,50 "
-
-          click_button 'Actualizar'
-          expect(page).to have_content %(Variant "#{product.name}" ha sido actualizado exitosamente)
-
-          # Then the variant price should have been updated
-          expect(Spree::Price.second.amount).to eq(12.50)
+          # disables localization to prevent leaking between specs
+          allow(Spree::Config).to receive(:enable_localized_number?).and_return false
         end
       end
 
-      context "with localization enabled" do
-        before do
-          allow(Spree::Config).to receive(:enable_localized_number?).and_return true
-
-          Spree::Config[:currency_decimal_mark] = ","
-          Spree::Config[:currency_thousands_separator] = "."
-
-          login_as_admin
-          visit spree.admin_product_variants_path product
-        end
-
-        it "when variant_unit is weight" do
-          pending("#11085")
-          expect(Spree::Price.second.amount).to eq(19.99)
-
-          # Given a product with unit-related option types, with a variant
-          page.find('table.index .icon-edit').click
-
-          # assert on the Price field
-          expect(page).to have_field "variant_price", with: "19,99 "
-
-          # When I update the fields and save the variant
-          fill_in "variant_price", with: "12,50 "
-          click_button 'Actualizar'
-          expect(page).to have_content %(Variant "#{product.name}" ha sido actualizado exitosamente)
-
-          # Then the variant price should have been updated
-          expect(Spree::Price.second.amount).to eq(12.50)
-        end
+      it_behaves_like "with localization", false, ".", ","
+      it_behaves_like "with localization", true, ".", "," do
+        before { pending("#11085") }
+      end
+      it_behaves_like "with localization", false, ",", "."
+      it_behaves_like "with localization", true, ",", "." do
+        before { pending("#11085") }
       end
     end
   end
