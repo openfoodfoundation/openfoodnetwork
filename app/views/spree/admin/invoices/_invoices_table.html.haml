@@ -18,7 +18,7 @@
         %td.align-center.label
           = invoice.presenter.total
         %td.align-center.label
-          = t(invoice.status)
+          = t(invoice.cancelled ? :cancelled : :active)
         %td.align-center.label
           =link_to(t(:download),print_admin_order_path(@order,invoice_id: invoice.id),target: "_blank")
 
