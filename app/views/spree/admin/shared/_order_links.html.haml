@@ -1,4 +1,12 @@
-%li.links-dropdown#links-dropdown{ links: order_links(@order).to_json }
-
-:coffee
-  angular.bootstrap(document.getElementById("links-dropdown"),['admin.dropdown'])
+%li.links-dropdown#links-dropdown
+  .ofn-drop-down{"data-controller": "dropdown", "data-action": "click->dropdown#toggle" }
+    %span
+      %i.icon-check
+      = I18n.t 'admin.actions'
+      %i{ "data-dropdown-target": "arrow", "data-expanded-class": "icon-caret-up", "data-collapsed-class": "icon-caret-down" }
+    %div.menu{"data-dropdown-target": "menu"}
+      - order_links(@order).each do |link|
+        %a.menu_item{ href: link[:url], target: link[:target] || "_self", data: { method: link[:method], "ujs-navigate": link[:method] ? "false" : "undefined", confirm: link[:confirm] } }
+          %span
+            %i{ class: link[:icon] }
+          %span=link[:name]
