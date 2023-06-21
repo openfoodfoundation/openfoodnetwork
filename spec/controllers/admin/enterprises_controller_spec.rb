@@ -398,7 +398,8 @@ describe Admin::EnterprisesController, type: :controller do
         it "is allowed" do
           spree_post :register, id: enterprise, sells: 'none'
           expect(response).to redirect_to spree.admin_dashboard_path
-          expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
+          expect(flash[:success])
+            .to eq "Congratulations! Registration for #{enterprise.name} is complete!"
           expect(enterprise.reload.sells).to eq 'none'
         end
       end
@@ -420,7 +421,8 @@ describe Admin::EnterprisesController, type: :controller do
         it "is allowed" do
           spree_post :register, id: enterprise, sells: 'own'
           expect(response).to redirect_to spree.admin_dashboard_path
-          expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
+          expect(flash[:success])
+            .to eq "Congratulations! Registration for #{enterprise.name} is complete!"
           expect(enterprise.reload.sells).to eq 'own'
         end
       end
@@ -429,7 +431,8 @@ describe Admin::EnterprisesController, type: :controller do
         it "is allowed" do
           spree_post :register, id: enterprise, sells: 'any'
           expect(response).to redirect_to spree.admin_dashboard_path
-          expect(flash[:success]).to eq "Congratulations! Registration for #{enterprise.name} is complete!"
+          expect(flash[:success])
+            .to eq "Congratulations! Registration for #{enterprise.name} is complete!"
           expect(enterprise.reload.sells).to eq 'any'
         end
       end
@@ -457,7 +460,9 @@ describe Admin::EnterprisesController, type: :controller do
         allow(controller).to receive_messages spree_current_user: new_owner
         bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
           '0' => { id: profile_enterprise1.id, sells: 'any',
-                   owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id }
+                   owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id,
+                                                      sells: 'any',
+                                                      owner_id: new_owner.id }
         } } }
 
         spree_put :bulk_update, bulk_enterprise_params
@@ -486,7 +491,9 @@ describe Admin::EnterprisesController, type: :controller do
         allow(controller).to receive_messages spree_current_user: original_owner
         bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
           '0' => { id: profile_enterprise1.id, sells: 'any',
-                   owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id }
+                   owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id,
+                                                      sells: 'any',
+                                                      owner_id: new_owner.id }
         } } }
 
         spree_put :bulk_update, bulk_enterprise_params
@@ -506,7 +513,9 @@ describe Admin::EnterprisesController, type: :controller do
         allow(controller).to receive_messages spree_current_user: admin_user
         bulk_enterprise_params = { sets_enterprise_set: { collection_attributes: {
           '0' => { id: profile_enterprise1.id, sells: 'any',
-                   owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id, sells: 'any', owner_id: new_owner.id }
+                   owner_id: new_owner.id }, '1' => { id: profile_enterprise2.id,
+                                                      sells: 'any',
+                                                      owner_id: new_owner.id }
         } } }
 
         spree_put :bulk_update, bulk_enterprise_params
@@ -547,8 +556,8 @@ describe Admin::EnterprisesController, type: :controller do
     context "when an order_cycle_id is provided in params" do
       before { get :for_order_cycle, as: :json, params: { order_cycle_id: 1 } }
       it "initializes permissions with the existing OrderCycle" do
-        expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user,
-                                                                                   "existing OrderCycle")
+        expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new)
+          .with(user, "existing OrderCycle")
       end
     end
 
@@ -563,8 +572,8 @@ describe Admin::EnterprisesController, type: :controller do
     context "when both an order cycle and a coordinator are provided in params" do
       before { get :for_order_cycle, as: :json, params: { order_cycle_id: 1, coordinator_id: 1 } }
       it "initializes permissions with the existing OrderCycle" do
-        expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new).with(user,
-                                                                                   "existing OrderCycle")
+        expect(OpenFoodNetwork::OrderCyclePermissions).to have_received(:new)
+          .with(user, "existing OrderCycle")
       end
     end
   end
@@ -584,8 +593,8 @@ describe Admin::EnterprisesController, type: :controller do
     end
 
     it "uses permissions to determine which enterprises are visible and should be rendered" do
-      expect(controller).to receive(:render_as_json).with([visible_enterprise],
-                                                          ams_prefix: 'basic', spree_current_user: user).and_call_original
+      expect(controller).to receive(:render_as_json)
+        .with([visible_enterprise], ams_prefix: 'basic', spree_current_user: user).and_call_original
       get :visible, format: :json
     end
   end

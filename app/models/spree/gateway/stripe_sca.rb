@@ -91,7 +91,7 @@ module Spree
                                                                  stripe_account: stripe_account_id)
         gateway_options[:stripe_account] = stripe_account_id
 
-        # If a payment has been confirmed it cannot be voided by Stripe, and must be refunded instead
+        # If a payment has been confirmed it can't be voided by Stripe, and must be refunded instead
         if voidable?(payment_intent_response)
           provider.void(response_code, gateway_options)
         else

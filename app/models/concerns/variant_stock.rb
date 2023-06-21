@@ -42,7 +42,8 @@ module VariantStock
   # Checks whether this variant is produced on demand.
   def on_demand
     # A variant that has not been saved yet or has been soft-deleted doesn't have a stock item
-    #   This provides a default value for variant.on_demand using Spree::StockLocation.backorderable_default
+    #   This provides a default value for variant.on_demand
+    #     using Spree::StockLocation.backorderable_default
     return Spree::StockLocation.first.backorderable_default if new_record? || deleted?
 
     # This can be removed unless we have seen this error in Bugsnag recently
@@ -76,8 +77,10 @@ module VariantStock
     end
   end
 
-  # Moving Spree::Stock::Quantifier.can_supply? to the variant enables us to override this behaviour for variant overrides
-  # We can have this responsibility here in the variant because there is only one stock item per variant
+  # Moving Spree::Stock::Quantifier.can_supply? to the variant enables us
+  #   to override this behaviour for variant overrides
+  # We can have this responsibility here in the variant because there is
+  #   only one stock item per variant
   #
   # Here we depend only on variant.total_on_hand and variant.on_demand.
   #   This way, variant_overrides only need to override variant.total_on_hand and variant.on_demand.
@@ -85,8 +88,10 @@ module VariantStock
     on_demand || total_on_hand >= quantity
   end
 
-  # Moving Spree::StockLocation.fill_status to the variant enables us to override this behaviour for variant overrides
-  # We can have this responsibility here in the variant because there is only one stock item per variant
+  # Moving Spree::StockLocation.fill_status to the variant enables us
+  #   to override this behaviour for variant overrides
+  # We can have this responsibility here in the variant because there is
+  #   only one stock item per variant
   #
   # Here we depend only on variant.total_on_hand and variant.on_demand.
   #   This way, variant_overrides only need to override variant.total_on_hand and variant.on_demand.
@@ -102,7 +107,8 @@ module VariantStock
     [on_hand, backordered]
   end
 
-  # We can have this responsibility here in the variant because there is only one stock item per variant
+  # We can have this responsibility here in the variant because there is
+  #   only one stock item per variant
   #
   # This enables us to override this behaviour for variant overrides
   def move(quantity, originator = nil)
@@ -138,7 +144,8 @@ module VariantStock
 
   # Overwrites stock_item.count_on_hand
   #
-  # Calling stock_item.adjust_count_on_hand will bypass filling backorders and creating stock movements
+  # Calling stock_item.adjust_count_on_hand will bypass filling backorders
+  #   and creating stock movements
   # If that was required we could call self.move
   def overwrite_stock_levels(new_level)
     stock_item.adjust_count_on_hand(new_level.to_i - stock_item.count_on_hand)

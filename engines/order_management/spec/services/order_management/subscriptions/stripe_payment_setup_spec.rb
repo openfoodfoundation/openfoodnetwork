@@ -56,8 +56,8 @@ module OrderManagement
 
                   expect(payment).to_not receive(:update)
                   expect(payment_setup.call!).to eq payment
-                  expect(order.errors[:base].first).to eq "There are no authorised "\
-                                                            "credit cards available to charge"
+                  expect(order.errors[:base].first).to eq "There are no authorised " \
+                                                          "credit cards available to charge"
                 end
               end
 
@@ -82,8 +82,8 @@ module OrderManagement
 
                     expect(payment).to_not receive(:update)
                     expect(payment_setup.call!).to eq payment
-                    expect(order.errors[:base].first).to eq "There are no authorised "\
-                                                              "credit cards available to charge"
+                    expect(order.errors[:base].first).to eq "There are no authorised " \
+                                                            "credit cards available to charge"
                   end
                 end
 

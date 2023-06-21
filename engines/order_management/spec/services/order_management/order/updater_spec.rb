@@ -160,7 +160,7 @@ module OrderManagement
           end
         end
 
-        context "when the order has a payment that requires authorization and a completed payment" do
+        context "when order has a payment that requires authorization and a completed payment" do
           let!(:payment) { create(:payment, order: order, state: "requires_authorization") }
           let!(:completed_payment) { create(:payment, :completed, order: order) }
 
@@ -359,7 +359,7 @@ module OrderManagement
         end
       end
 
-      context "when unused payments records exist which require authorization, "\
+      context "when unused payments records exist which require authorization, " \
               "but the order is fully paid" do
         let!(:cash_payment) {
           build(:payment, state: "completed", amount: order.new_outstanding_balance)

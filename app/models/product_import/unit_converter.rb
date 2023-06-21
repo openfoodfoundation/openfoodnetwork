@@ -73,11 +73,13 @@ module ProductImport
     end
 
     def units_and_unit_type_present?
-      @attrs.key?('units') && @attrs.key?('unit_type') && @attrs['units'].present? && @attrs['unit_type'].present?
+      @attrs.key?('units') && @attrs.key?('unit_type') && @attrs['units'].present? &&
+        @attrs['unit_type'].present?
     end
 
     def units_and_variant_unit_name_present?
-      @attrs.key?('units') && @attrs.key?('variant_unit_name') && @attrs['units'].present? && @attrs['variant_unit_name'].present?
+      @attrs.key?('units') && @attrs.key?('variant_unit_name') && @attrs['units'].present? &&
+        @attrs['variant_unit_name'].present?
     end
 
     def valid_unit_type?(unit_type)

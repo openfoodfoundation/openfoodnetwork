@@ -15,9 +15,13 @@ describe Admin::StripeAccountsController, type: :controller do
     end
 
     it "redirects to Stripe Authorization url constructed OAuth" do
-      get :connect, params: { enterprise_id: 1 } # A deterministic id results in a deterministic state JWT token
+      # A deterministic id results in a deterministic state JWT token
+      get :connect, params: { enterprise_id: 1 }
 
-      expect(response).to redirect_to("https://connect.stripe.com/oauth/authorize?state=eyJhbGciOiJIUzI1NiJ9.eyJlbnRlcnByaXNlX2lkIjoiMSJ9.jSSFGn0bLhwuiQYK5ORmHWW7aay1l030bcfGwn1JbFg&scope=read_write&client_id=some_id&response_type=code")
+      expect(response).to redirect_to("https://connect.stripe.com/oauth/authorize?" \
+                                      "state=eyJhbGciOiJIUzI1NiJ9.eyJlbnRlcnByaXNlX2lkIjoiMSJ9" \
+                                      ".jSSFGn0bLhwuiQYK5ORmHWW7aay1l030bcfGwn1JbFg&" \
+                                      "scope=read_write&client_id=some_id&response_type=code")
     end
   end
 
@@ -150,8 +154,8 @@ describe Admin::StripeAccountsController, type: :controller do
             end
 
             before do
-              stub_request(:get,
-                           "https://api.stripe.com/v1/accounts/acc_123").to_return(body: JSON.generate(stripe_account_mock))
+              stub_request(:get, "https://api.stripe.com/v1/accounts/acc_123")
+                .to_return(body: JSON.generate(stripe_account_mock))
             end
 
             it "returns with a status of 'connected'" do

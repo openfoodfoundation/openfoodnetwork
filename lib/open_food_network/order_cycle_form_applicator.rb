@@ -5,8 +5,8 @@ require 'open_food_network/order_cycle_permissions'
 module OpenFoodNetwork
   # There are two translator classes on the boundary between Angular and Rails: On the Angular side,
   # there is the OrderCycle#dataForSubmit method, and on the Rails side is this class. I think data
-  # translation is more a responsibility of Angular, so I'd be inclined to refactor this class to move
-  # as much as possible (if not all) of its logic into Angular.
+  # translation is more a responsibility of Angular, so I'd be inclined to refactor this class to
+  # move as much as possible (if not all) of its logic into Angular.
   class OrderCycleFormApplicator
     # The applicator will only touch exchanges where a permitted enterprise is the participant
     def initialize(order_cycle, spree_current_user)
@@ -132,7 +132,8 @@ module OpenFoodNetwork
     def manages_coordinator?
       return @manages_coordinator unless @manages_coordinator.nil?
 
-      @manages_coordinator = Enterprise.managed_by(@spree_current_user).include? @order_cycle.coordinator
+      @manages_coordinator =
+        Enterprise.managed_by(@spree_current_user).include? @order_cycle.coordinator
     end
 
     def editable_variant_ids_for_incoming_exchange_between(sender, _receiver)
@@ -156,13 +157,17 @@ module OpenFoodNetwork
       exchange = find_exchange(sender.id, receiver.id, true)
 
       requested_ids = variants_to_a(attrs[:variants]) # Only the ids the user has requested
-      existing_ids = exchange.present? ? exchange.variants.pluck(:id) : [] # The ids that already exist
-      editable_ids = editable_variant_ids_for_incoming_exchange_between(sender, receiver) # The ids we are allowed to add/remove
+      # The ids that already exist
+      existing_ids = exchange.present? ? exchange.variants.pluck(:id) : []
+      # The ids we are allowed to add/remove
+      editable_ids = editable_variant_ids_for_incoming_exchange_between(sender, receiver)
 
       result = existing_ids
 
-      result |= (requested_ids & editable_ids) # add any requested & editable ids that are not yet in the exchange
-      result -= ((result & editable_ids) - requested_ids) # remove any editable ids that were not specifically mentioned in the request
+      # add any requested & editable ids that are not yet in the exchange
+      result |= (requested_ids & editable_ids)
+      # remove any editable ids that were not specifically mentioned in the request
+      result -= ((result & editable_ids) - requested_ids)
 
       result
     end
@@ -173,14 +178,18 @@ module OpenFoodNetwork
       exchange = find_exchange(sender.id, receiver.id, false)
 
       requested_ids = variants_to_a(attrs[:variants]) # Only the ids the user has requested
-      existing_ids = exchange.present? ? exchange.variants.pluck(:id) : [] # The ids that already exist
-      editable_ids = editable_variant_ids_for_outgoing_exchange_between(sender, receiver) # The ids we are allowed to add/remove
+      # The ids that already exist
+      existing_ids = exchange.present? ? exchange.variants.pluck(:id) : []
+      # The ids we are allowed to add/remove
+      editable_ids = editable_variant_ids_for_outgoing_exchange_between(sender, receiver)
 
       result = existing_ids
 
-      result |= (requested_ids & editable_ids) # add any requested & editable ids that are not yet in the exchange
+      # add any requested & editable ids that are not yet in the exchange
+      result |= (requested_ids & editable_ids)
       result -= (result - incoming_variant_ids) # remove any ids not in incoming exchanges
-      result -= ((result & editable_ids) - requested_ids) # remove any editable ids that were not specifically mentioned in the request
+      # remove any editable ids that were not specifically mentioned in the request
+      result -= ((result & editable_ids) - requested_ids)
 
       result
     end

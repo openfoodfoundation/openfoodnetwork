@@ -12,8 +12,8 @@ describe Admin::ColumnPreferencesController, type: :controller do
 
     context "json" do
       let!(:column_preference) {
-        ColumnPreference.create(user_id: user1.id, action_name: 'enterprises_index', column_name: "name",
-                                visible: true)
+        ColumnPreference.create(user_id: user1.id, action_name: 'enterprises_index',
+                                column_name: "name", visible: true)
       }
 
       let(:column_preference_params) {

@@ -36,15 +36,17 @@ module Spree
           return val
         end
 
-        # If it's not in the cache, maybe it's in the database, but
-        # has been cleared from the cache
+        # If it's not in the cache, maybe it's in the database, but has been cleared from the cache
         # does it exist in the database?
-        if should_persist? && (Spree::Preference.table_exists? && preference = Spree::Preference.find_by(key: key))
-          # it does exist, so let's put it back into the cache
-          @cache.write(preference.key, preference.value)
+        if should_persist? && Spree::Preference.table_exists?
+          preference = Spree::Preference.find_by(key: key)
+          if preference
+            # it does exist, so let's put it back into the cache
+            @cache.write(preference.key, preference.value)
 
-          # and return the value
-          return preference.value
+            # and return the value
+            return preference.value
+          end
         end
 
         unless fallback.nil?

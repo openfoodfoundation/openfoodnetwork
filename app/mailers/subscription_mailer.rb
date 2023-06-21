@@ -38,14 +38,16 @@ class SubscriptionMailer < ApplicationMailer
     @shop = Enterprise.find(summary.shop_id)
     @summary = summary
     mail(to: @shop.contact.email,
-         subject: "#{Spree::Config[:site_name]} #{t('subscription_mailer.placement_summary_email.subject')}")
+         subject: "#{Spree::Config[:site_name]} " \
+                  "#{t('subscription_mailer.placement_summary_email.subject')}")
   end
 
   def confirmation_summary_email(summary)
     @shop = Enterprise.find(summary.shop_id)
     @summary = summary
     mail(to: @shop.contact.email,
-         subject: "#{Spree::Config[:site_name]} #{t('subscription_mailer.confirmation_summary_email.subject')}")
+         subject: "#{Spree::Config[:site_name]} " \
+                  "#{t('subscription_mailer.confirmation_summary_email.subject')}")
   end
 
   private

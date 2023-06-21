@@ -16,7 +16,8 @@ module Spree
         old_setter = instance_method(setter) if non_activerecord_attribute?(attribute)
 
         define_method(setter) do |number|
-          if Spree::Config.enable_localized_number? && Spree::LocalizedNumber.valid_localizable_number?(number)
+          if Spree::Config.enable_localized_number? &&
+             Spree::LocalizedNumber.valid_localizable_number?(number)
             number = Spree::LocalizedNumber.parse(number)
           elsif Spree::Config.enable_localized_number?
             @invalid_localized_number ||= []
@@ -54,16 +55,19 @@ module Spree
       return nil if number.blank?
       return number.to_d unless number.is_a?(String)
 
-      number = number.gsub(/[^\d.,-]/, '') # Replace all Currency Symbols, Letters and -- from the string
+      # Replace all Currency Symbols, Letters and -- from the string
+      number = number.gsub(/[^\d.,-]/, '')
 
       add_trailing_zeros(number)
 
-      number = number.gsub(/[.,]/, '') # Replace all (.) and (,) so the string result becomes in "cents"
+      # Replace all (.) and (,) so the string result becomes in "cents"
+      number = number.gsub(/[.,]/, '')
       number.to_d / 100 # Let to_decimal do the rest
     end
 
     def self.add_trailing_zeros(number)
-      # If string ends in a single digit (e.g. ,2), make it ,20 in order for the result to be in "cents"
+      # If string ends in a single digit (e.g. ,2), make it
+      # ,20 in order for the result to be in "cents"
       number << "0" if number =~ /^.*[.,]\d{1}$/
 
       # If does not end in ,00 / .00 then add trailing 00 to turn it into cents

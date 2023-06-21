@@ -15,7 +15,7 @@ module OrderManagement
           @subscriptions = subscriptions.not_ended.not_canceled
         else
           raise "ProxyOrderSyncer must be initialized with " \
-                  "an instance of Subscription or ActiveRecord::Relation"
+                "an instance of Subscription or ActiveRecord::Relation"
         end
       end
 
@@ -39,7 +39,7 @@ module OrderManagement
       def initialise_proxy_orders!
         uninitialised_order_cycle_ids.each do |order_cycle_id|
           Rails.logger.info "Initializing Proxy Order " \
-            "of subscription #{@subscription.id} in order cycle #{order_cycle_id}"
+                            "of subscription #{@subscription.id} in order cycle #{order_cycle_id}"
           proxy_orders << ProxyOrder.new(subscription: subscription, order_cycle_id: order_cycle_id)
         end
       end

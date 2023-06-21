@@ -4,7 +4,7 @@ require 'active_support/concern'
 
 # This module is an adapter for OFN to work with Spree 2 code.
 #
-# Although Spree 2 supports multiple shipments per order, in OFN we have only one shipment per order.
+# Although Spree 2 supports multiple shipments per order, in OFN we have only 1 shipment per order.
 # A shipment is associated to a shipping_method through a selected shipping_rate.
 # See https://github.com/openfoodfoundation/openfoodnetwork/wiki/Spree-Upgrade:-Migration-to-multiple-shipments
 # for details.
@@ -30,7 +30,8 @@ module OrderShipment
     shipments.first.shipping_method
   end
 
-  # Finds the shipment's shipping_rate for the given shipping_method_id and selects that shipping_rate.
+  # Finds the shipment's shipping_rate for the given shipping_method_id
+  # and selects that shipping_rate.
   # If the selection is successful, it persists it in the database by saving the shipment.
   # If it fails, it does not clear the current shipping_method selection.
   #

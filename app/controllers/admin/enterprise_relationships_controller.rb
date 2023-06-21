@@ -16,7 +16,8 @@ module Admin
       @enterprise_relationship = EnterpriseRelationship.new enterprise_relationship_params
 
       if @enterprise_relationship.save
-        render plain: Api::Admin::EnterpriseRelationshipSerializer.new(@enterprise_relationship).to_json
+        render plain: Api::Admin::EnterpriseRelationshipSerializer
+          .new(@enterprise_relationship).to_json
       else
         render status: :bad_request,
                json: { errors: @enterprise_relationship.errors.full_messages.join(', ') }

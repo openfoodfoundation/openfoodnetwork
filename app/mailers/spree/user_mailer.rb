@@ -13,7 +13,7 @@ module Spree
       @edit_password_reset_url = spree.
         edit_spree_user_password_url(reset_password_token: token)
       subject = "#{Spree::Config[:site_name]} " \
-        "#{I18n.t('spree.user_mailer.reset_password_instructions.subject')}"
+                "#{I18n.t('spree.user_mailer.reset_password_instructions.subject')}"
 
       I18n.with_locale valid_locale(user) do
         mail(to: user.email, subject: subject)

@@ -27,8 +27,11 @@ module PaymentGateways
           redirect_to provider.express_checkout_url(pp_response, useraction: 'commit')
         else
           flash[:error] =
-            Spree.t('flash.generic_error', scope: 'paypal',
-                                           reasons: pp_response.errors.map(&:long_message).join(" "))
+            Spree.t(
+              'flash.generic_error',
+              scope: 'paypal',
+              reasons: pp_response.errors.map(&:long_message).join(" "),
+            )
           redirect_to main_app.checkout_step_path(:payment)
         end
       rescue SocketError
