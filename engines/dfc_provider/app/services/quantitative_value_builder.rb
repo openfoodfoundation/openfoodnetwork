@@ -26,4 +26,19 @@ class QuantitativeValueBuilder < DfcBuilder
       DfcLoader.connector.MEASURES.UNIT.QUANTITYUNIT.PIECE
     end
   end
+
+  def self.apply(quantity, product)
+    product.variant_unit, product.variant_unit_name =
+      case quantity.unit
+      when DfcLoader.connector.MEASURES.UNIT.QUANTITYUNIT.LITRE
+        ["volume", "liter"]
+      when DfcLoader.connector.MEASURES.UNIT.QUANTITYUNIT.GRAM
+        ["weight", "gram"]
+      else
+        ["items", "items"]
+      end
+
+    product.variant_unit_scale = 1
+    product.unit_value = quantity.value
+  end
 end

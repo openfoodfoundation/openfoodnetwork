@@ -3,8 +3,8 @@
 class EnterpriseBuilder < DfcBuilder
   def self.enterprise(enterprise)
     variants = VariantFetcher.new(enterprise).scope.to_a
-    supplied_products = variants.map(&method(:supplied_product))
     catalog_items = variants.map(&method(:catalog_item))
+    supplied_products = catalog_items.map(&:product)
 
     DataFoodConsortium::Connector::Enterprise.new(
       enterprise.name

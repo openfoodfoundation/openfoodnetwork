@@ -1,13 +1,25 @@
 # frozen_string_literal: true
 
+require "data_food_consortium/connector/connector"
+
 # Controller used to provide the SuppliedProducts API for the DFC application
 # SuppliedProducts are products that are managed by an enterprise.
 module DfcProvider
   class SuppliedProductsController < DfcProvider::BaseController
     before_action :check_enterprise
+    rescue_from JSON::LD::JsonLdError::LoadingDocumentFailed, with: -> do
+      head :bad_request
+    end
+
+    def create
+      supplied_product = import.first
+      product = SuppliedProductBuilder.import(supplied_product)
+      product.supplier = current_enterprise
+      product.save!
+    end
 
     def show
-      product = DfcBuilder.supplied_product(variant)
+      product = SuppliedProductBuilder.supplied_product(variant)
       render json: DfcLoader.connector.export(product)
     end
 
@@ -26,6 +38,10 @@ module DfcProvider
     end
 
     private
+
+    def import
+      DfcLoader.connector.import(request.body)
+    end
 
     def variant
       @variant ||=

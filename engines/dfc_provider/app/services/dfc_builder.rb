@@ -6,28 +6,13 @@ class DfcBuilder
       enterprise_id: variant.product.supplier_id,
       id: variant.id,
     )
-    product = supplied_product(variant)
+    product = SuppliedProductBuilder.supplied_product(variant)
 
     DataFoodConsortium::Connector::CatalogItem.new(
       id, product: product,
           sku: variant.sku,
           stockLimitation: stock_limitation(variant),
           offers: [offer(variant)],
-    )
-  end
-
-  def self.supplied_product(variant)
-    id = urls.enterprise_supplied_product_url(
-      enterprise_id: variant.product.supplier_id,
-      id: variant.id,
-    )
-
-    DataFoodConsortium::Connector::SuppliedProduct.new(
-      id,
-      name: variant.name_to_display,
-      description: variant.description,
-      productType: product_type,
-      quantity: QuantitativeValueBuilder.quantity(variant),
     )
   end
 
