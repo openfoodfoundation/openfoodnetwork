@@ -766,6 +766,9 @@ en:
         header:
           title: Bulk Edit Products
         loading: Loading your products
+      sort:
+        pagination:
+          total_html: "<strong>%{total} products</strong> in your catalogue. Showing %{from} to %{to}."
       content:
         no_products_found: No products found
         import_products: Import multiple products
