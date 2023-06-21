@@ -23,6 +23,13 @@
           = t :order_total_price
       %td.text-right.total
         %h5#order_total= order.display_total.to_html
+    %tr.total
+      %td.text-right{colspan: "3"}
+        %h5.not-paid
+          = t :order_balance_due
+      %td.text-right.total.not-paid
+        %h5#order_balance
+
 
   - if order.total_tax > 0
     #tax
