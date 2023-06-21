@@ -1,5 +1,6 @@
 - if products.any?
   = render partial: 'table', locals: { products: products }
+  = render partial: 'admin/shared/pagy_links', locals: { pagy: pagy }
 - else
   #no-products
     = t('.no_products_found')
