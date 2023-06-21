@@ -6,8 +6,8 @@ module Admin
 
     def fetch
       cable_ready.replace(
-        selector: "#products-table",
-        html: render(partial: "admin/products_v3/table", locals: { products: @products })
+        selector: "#products-content",
+        html: render(partial: "admin/products_v3/content", locals: { products: @products })
       ).broadcast
 
       morph :nothing
