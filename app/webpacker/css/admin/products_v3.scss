@@ -14,18 +14,6 @@
       overflow: hidden;
       text-overflow: clip; // If colums are so small that headers are clipping, ellipsis are more of a hindrance
     }
-
-    // This could probably be a global utility class
-    .line-clamp-1 {
-      // Clip content instead of wrapping to new line
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      display: -webkit-box;
-      -webkit-line-clamp: 1; /* number of lines to show */
-      line-clamp: 1;
-      -webkit-box-orient: vertical;
-    }
   }
 
   #no-products {
