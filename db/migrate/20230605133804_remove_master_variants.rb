@@ -4,12 +4,23 @@ class RemoveMasterVariants < ActiveRecord::Migration[7.0]
       delete_master_option_values
     end
 
+    delete_master_line_items
     delete_master_inventory_units
     delete_master_variant_prices
     delete_master_variants
   end
 
   private
+
+  def delete_master_line_items
+    ActiveRecord::Base.connection.execute(<<-SQL
+      DELETE FROM spree_line_items
+      USING spree_variants
+      WHERE spree_variants.is_master = true
+        AND spree_variants.id = spree_line_items.variant_id
+    SQL
+    )
+  end
 
   def delete_master_inventory_units
     ActiveRecord::Base.connection.execute(<<-SQL
