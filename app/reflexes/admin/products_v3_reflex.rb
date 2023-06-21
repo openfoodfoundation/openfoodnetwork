@@ -2,12 +2,15 @@
 
 module Admin
   class ProductsV3Reflex < ApplicationReflex
-    before_reflex :fetch_products, only: [:fetch]
+    include Pagy::Backend
 
     def fetch
+      fetch_products(element.dataset.page || 1)
+
       cable_ready.replace(
         selector: "#products-content",
-        html: render(partial: "admin/products_v3/content", locals: { products: @products })
+        html: render(partial: "admin/products_v3/content",
+                     locals: { products: @products, pagy: @pagy })
       ).broadcast
 
       morph :nothing
@@ -16,10 +19,10 @@ module Admin
     private
 
     # copied from ProductsTableComponent
-    def fetch_products
+    def fetch_products(page)
       product_query = OpenFoodNetwork::Permissions.new(current_user)
         .editable_products.merge(product_scope)
-      @products = product_query.order(:name).limit(50)
+      @pagy, @products = pagy(product_query.order(:name), items: 15, page:)
     end
 
     def product_scope
