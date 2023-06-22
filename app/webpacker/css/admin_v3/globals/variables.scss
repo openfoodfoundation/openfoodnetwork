@@ -6,7 +6,7 @@
 //--------------------------------------------------------------
 $base-font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 
-// Colors
+// Styles
 //--------------------------------------------------------------
 
 // Body base colors
@@ -25,10 +25,15 @@ $color-success:                  $green !default;
 $color-notice:                   $yellow !default;
 $color-error:                    $red !default;
 
-// Table colors
+// Table styles
+$color-tbl-bg:                   $light-grey !default;
 $color-tbl-cell-bg:              $white !default;
+$color-tbl-cell-shadow:          rgb(0, 0, 0, 0.15) !default;
 $color-tbl-thead-txt:            $color-headers !default;
 $color-tbl-thead-bg:             $light-grey !default;
+$padding-tbl-cell:               12px 12px;
+$padding-tbl-cell-condensed:     10px 12px;
+$padding-tbl-cell-relaxed:       16px 12px;
 
 // Button colors
 $color-btn-bg:                   $teal !default;
