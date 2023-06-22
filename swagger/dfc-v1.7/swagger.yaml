@@ -24,6 +24,20 @@ security:
 - oidc_token: []
 - ofn_api_token: []
 - ofn_session: []
-paths: {}
+paths:
+  "/api/dfc-v1.7/persons/{id}":
+    get:
+      summary: Show person
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: not found
 servers:
 - url: "/"
