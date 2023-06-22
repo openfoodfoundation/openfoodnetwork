@@ -25,7 +25,7 @@
     }
 
     &.disabled {
-      background-color: $disabled_button;
+      background-color: $color-btn-disabled-bg;
       cursor: default;
     }
   }
