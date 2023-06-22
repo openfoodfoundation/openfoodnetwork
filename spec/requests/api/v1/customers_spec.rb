@@ -2,7 +2,7 @@
 
 require "swagger_helper"
 
-describe "Customers", type: :request do
+describe "Customers", type: :request, swagger_doc: "v1/swagger.yaml" do
   let!(:enterprise1) { create(:enterprise, name: "The Farm") }
   let!(:enterprise2) { create(:enterprise) }
   let!(:enterprise3) { create(:enterprise) }
