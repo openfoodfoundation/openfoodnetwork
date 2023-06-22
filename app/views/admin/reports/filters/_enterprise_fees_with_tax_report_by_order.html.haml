@@ -1,0 +1,23 @@
+.row
+  .alpha.two.columns= label_tag nil, t(:report_hubs)
+  .omega.fourteen.columns= f.collection_select(:distributor_id_in, @data.distributors, :id, :name, {}, {class: "select2 fullwidth", multiple: true})
+
+.row
+  .alpha.two.columns= label_tag nil, t(:report_customers_cycle)
+  .omega.fourteen.columns
+    = f.select(:order_cycle_id_in, report_order_cycle_options(@data.order_cycles), {selected: params.dig(:q, :order_cycle_id_in)}, {class: "select2 fullwidth", multiple: true})
+
+.row
+  .alpha.two.columns= label_tag nil, t(:fee_name)
+  .omega.fourteen.columns
+    = f.select(:enterprise_fee_id_in, fee_name_options(@report.search.result), {selected: params.dig(:q, :enterprise_fee_id_in)}, {class: "select2 fullwidth", multiple: true})
+
+.row
+  .alpha.two.columns= label_tag nil, t(:fee_owner)
+  .omega.fourteen.columns
+    = f.select(:enterprise_fee_owner_id_in, fee_owner_options(@report.search.result), {selected: params.dig(:q, :enterprise_fee_owner_id_in)}, {class: "select2 fullwidth", multiple: true})
+
+.row
+  .alpha.two.columns= label_tag nil, t(:report_customers)
+  .omega.fourteen.columns
+    = f.select(:customer_id_in, customer_email_options(@data.order_customers), {selected: params.dig(:q, :customer_id_in)}, {class: "select2 fullwidth", multiple: true})

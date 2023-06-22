@@ -3,7 +3,7 @@
 module Reporting
   module Reports
     module EnterpriseFeeSummary
-      class Base < ReportTemplate
+      class FeeSummary < ReportTemplate
         attr_accessor :permissions, :parameters
 
         def initialize(user, params = {}, render: false)

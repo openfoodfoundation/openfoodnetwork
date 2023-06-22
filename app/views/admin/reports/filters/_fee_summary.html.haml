@@ -1,0 +1,29 @@
+.row
+  .alpha.two.columns= label_tag nil, t(:report_hubs)
+  .omega.fourteen.columns
+    = collection_select(:q, :distributor_ids, @report.permissions.allowed_distributors, :id, :name, {selected: params.dig(:q, :distributor_ids)}, {class: "select2 fullwidth", multiple: true})
+
+.row
+  .alpha.two.columns= label_tag nil, t(:report_producers)
+  .omega.fourteen.columns
+    = collection_select(:q, :producer_ids, @report.permissions.allowed_producers, :id, :name, {selected: params.dig(:q, :producer_ids)}, {class: "select2 fullwidth", multiple: true})
+
+.row
+  .alpha.two.columns= label_tag nil, t(:order_cycles)
+  .omega.fourteen.columns
+    = collection_select(:q, :order_cycle_ids, @report.permissions.allowed_order_cycles, :id, :name, {selected: params.dig(:q, :order_cycle_ids)}, {class: "select2 fullwidth", multiple: true})
+
+.row
+  .alpha.two.columns= label_tag nil, t(:report_enterprise_fee)
+  .omega.fourteen.columns
+    = collection_select(:q, :enterprise_fee_ids, @report.permissions.allowed_enterprise_fees, :id, :name, {selected: params.dig(:q, :enterprise_fee_ids)}, {class: "select2 fullwidth", multiple: true})
+
+.row
+  .alpha.two.columns= label_tag nil, t('spree.shipping_methods')
+  .omega.fourteen.columns
+    = collection_select(:q, :shipping_method_ids, @report.permissions.allowed_shipping_methods, :id, :name, {selected: params.dig(:q, :shipping_method_ids)}, {class: "select2 fullwidth", multiple: true})
+
+.row
+  .alpha.two.columns= label_tag nil, t(:report_payment)
+  .omega.fourteen.columns
+    = collection_select(:q, :payment_method_ids, @report.permissions.allowed_payment_methods, :id, :name, {selected: params.dig(:q, :payment_method_ids)}, {class: "select2 fullwidth", multiple: true})
