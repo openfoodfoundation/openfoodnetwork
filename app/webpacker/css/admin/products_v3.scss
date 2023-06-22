@@ -30,6 +30,36 @@
     td {
       background-color: $color-tbl-cell-bg;
     }
+
+    // "Relaxed" row groups, containing condensed rows.
+    //
+    // `display:table` enforces strict rules and won't allow border styles on tbody.
+    // So we emulate group styles on the cells themselves.
+    .relaxed {
+      th,
+      td {
+        padding: $padding-tbl-cell-relaxed;
+      }
+
+      td {
+        border-bottom: 2px solid $color-tbl-bg;
+      }
+
+      tr:first-child td {
+        border-top: 4px solid $color-tbl-bg;
+      }
+      tr:last-child td {
+        border-bottom: 1px solid $color-tbl-cell-shadow;
+      }
+    }
+
+    // "Condensed" rows
+    .condensed {
+      td,
+      th {
+        padding: $padding-tbl-cell-condensed;
+      }
+    }
   }
 
   #no-products {
