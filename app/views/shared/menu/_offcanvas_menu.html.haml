@@ -3,7 +3,7 @@
     = cache_with_locale [ContentConfig.cache_key, @white_label_logo] do
       %li.ofn-logo
         %a{href: main_logo_link(@white_label_distributor)}
-          - if @white_label_logo&.variable?
+          - if @white_label_logo&.attached?
             = image_tag @white_label_distributor.white_label_logo_url(:mobile)
           - else
             %img{src: ContentConfig.url_for(:logo_mobile), srcset: ContentConfig.url_for(:logo_mobile_svg), width: "75", height: "26"}
