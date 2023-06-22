@@ -146,7 +146,7 @@ module Spree
     }
 
     scope :with_line_items_variants_and_products_outer, lambda {
-      left_joins(:line_items, line_items: :variant, variant: :product)
+      left_outer_joins(line_items: { variant: :product })
     }
 
     # All the states an order can be in after completing the checkout
