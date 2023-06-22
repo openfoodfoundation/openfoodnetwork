@@ -1,6 +1,6 @@
 input[type="submit"],
-input[type="button"],
-button:not(.plain),
+input[type="button"]:not(.trix-button),
+button:not(.plain):not(.trix-button),
 .button {
   position: relative;
   cursor: pointer;
