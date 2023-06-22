@@ -27,7 +27,7 @@ tbody.panel-ctrl {
       font-size: 2rem;
       -webkit-font-smoothing: antialiased;
       content: "\f071";
-      color: $warning-red;
+      color: $color-warning;
     }
 
     &.status {
@@ -38,7 +38,7 @@ tbody.panel-ctrl {
 
       i.issue::before {
         content: "\f071";
-        color: $warning-red;
+        color: $color-warning;
       }
 
       i.warning::before {

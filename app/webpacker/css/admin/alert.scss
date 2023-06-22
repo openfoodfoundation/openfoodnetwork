@@ -14,11 +14,11 @@
   }
 
   &:hover {
-    border-color: $warning-red;
-    color: $warning-red;
+    border-color: $color-warning;
+    color: $color-warning;
 
     h6 {
-      color: $warning-red;
+      color: $color-warning;
     }
   }
 }

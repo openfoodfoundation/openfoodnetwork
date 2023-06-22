@@ -19,11 +19,11 @@ div.dashboard_item {
     }
 
     &.red {
-      background-color: $warning-red;
+      background-color: $color-warning;
     }
 
     &.orange {
-      background-color: $warning-orange;
+      background-color: $color-warning;
     }
   }
 
@@ -40,20 +40,20 @@ div.dashboard_item {
     }
 
     &.red {
-      border-color: $warning-red;
+      border-color: $color-warning;
       border-width: 3px;
 
       h3 {
-        color: $warning-red;
+        color: $color-warning;
       }
     }
 
     &.orange {
-      border-color: $warning-orange;
+      border-color: $color-warning;
       border-width: 3px;
 
       h3 {
-        color: $warning-orange;
+        color: $color-warning;
       }
     }
 
@@ -141,12 +141,12 @@ div.dashboard_item {
     }
 
     .icon-warning-sign {
-      color: $warning-orange;
+      color: $color-warning;
       font-size: 30px;
     }
 
     .icon-remove-sign {
-      color: $warning-red;
+      color: $color-warning;
       font-size: 30px;
     }
 
@@ -156,13 +156,13 @@ div.dashboard_item {
     }
 
     &.orange {
-      color: $warning-orange;
-      border: solid $warning-orange;
+      color: $color-warning;
+      border: solid $color-warning;
     }
 
     &.red {
-      color: $warning-red;
-      border: solid $warning-red;
+      color: $color-warning;
+      border: solid $color-warning;
     }
 
     &.orange,
@@ -217,7 +217,7 @@ div.dashboard_item {
     text-align: center;
 
     &.orange {
-      background-color: $warning-orange;
+      background-color: $color-warning;
     }
 
     &.blue {
@@ -225,7 +225,7 @@ div.dashboard_item {
     }
 
     &.red {
-      background-color: $warning-red;
+      background-color: $color-warning;
     }
 
     &:hover {

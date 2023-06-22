@@ -9,7 +9,7 @@ input.show-dirty {
   &.ng-dirty {
     border: solid 1px orange;
     &.update-error {
-      border: solid 1px $warning-red;
+      border: solid 1px $color-warning;
     }
   }
 }
@@ -17,7 +17,7 @@ input.show-dirty {
 input,
 div {
   &.update-error {
-    border: solid 1px $warning-red;
+    border: solid 1px $color-warning;
   }
 }
 
@@ -138,7 +138,7 @@ table.edit-note-table {
   }
 
   .error {
-    color: $warning-red;
+    color: $color-warning;
   }
 }
 
