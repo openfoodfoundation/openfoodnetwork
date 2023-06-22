@@ -1,35 +1,48 @@
 # frozen_string_literal: true
 
+require "swagger_helper"
 require DfcProvider::Engine.root.join("spec/spec_helper")
 
-describe "Enterprises", type: :request do
+describe "Enterprises", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml" do
   let!(:user) { create(:oidc_user) }
   let!(:enterprise) { create(:distributor_enterprise, owner: user) }
   let!(:product) { create(:simple_product, supplier: enterprise ) }
 
-  describe :show do
-    it "returns the default enterprise" do
-      get enterprise_path("default"), headers: auth_header(user.uid)
+  before { login_as user }
 
-      expect(response).to have_http_status :ok
-      expect(response.body).to include(product.name)
-      expect(response.body).to include(product.variants.first.sku)
-      expect(response.body).to include("offers/#{product.variants.first.id}")
-    end
+  path "/api/dfc-v1.7/enterprises/{id}" do
+    get "Show enterprise" do
+      parameter name: :id, in: :path, type: :string
+      produces "application/json"
 
-    it "returns the requested enterprise" do
-      get enterprise_path(enterprise.id), headers: auth_header(user.uid)
+      response "200", "successful" do
+        context "without enterprise id" do
+          let(:id) { "default" }
 
-      expect(response).to have_http_status :ok
-      expect(response.body).to include(product.name)
-    end
+          run_test! do
+            expect(response.body).to include(product.name)
+            expect(response.body).to include(product.variants.first.sku)
+            expect(response.body).to include("offers/#{product.variants.first.id}")
+          end
+        end
 
-    it "returns not found for unrelated enterprise" do
-      other_enterprise = create(:distributor_enterprise)
-      get enterprise_path(other_enterprise.id), headers: auth_header(user.uid)
+        context "given an enterprise id" do
+          let(:id) { enterprise.id }
 
-      expect(response).to have_http_status :not_found
-      expect(response.body).to_not include(product.name)
+          run_test! do
+            expect(response.body).to include(product.name)
+          end
+        end
+      end
+
+      response "404", "not found" do
+        let(:id) { other_enterprise.id }
+        let(:other_enterprise) { create(:distributor_enterprise) }
+
+        run_test! do
+          expect(response.body).to_not include(product.name)
+        end
+      end
     end
   end
 end
