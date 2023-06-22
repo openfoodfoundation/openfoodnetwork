@@ -116,7 +116,7 @@ table.edit-note-table {
     float: right;
 
     &:disabled {
-      background-color: $disabled-button;
+      background-color: $color-btn-disabled-bg;
     }
   }
 }
