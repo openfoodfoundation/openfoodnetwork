@@ -23,7 +23,7 @@
       = f.text_field :sku, class: 'fullwidth'
     .field
       = f.label :price, t('.price')
-      = f.text_field :price, class: 'fullwidth', "ng-model" => "variant.price", "ng-init" => "variant.price = '#{number_to_currency(@variant.price, unit: '')}'"
+      = f.text_field :price, class: 'fullwidth', "ng-model" => "variant.price", "ng-init" => "variant.price = '#{number_to_currency(@variant.price, unit: '').strip}'"
     .field
       = hidden_field_tag 'product_variant_unit', @product.variant_unit
       = hidden_field_tag 'product_variant_unit_name', @product.variant_unit_name

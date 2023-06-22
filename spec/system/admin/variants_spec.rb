@@ -208,10 +208,10 @@ describe '
             page.find('table.index .icon-edit').click
 
             # assert on the price field
-            expect(page).to have_field "variant_price", with: "19,99 "
+            expect(page).to have_field "variant_price", with: "19,99"
 
             # When I update the fields and save the variant
-            fill_in "variant_price", with: "12,50 "
+            fill_in "variant_price", with: "12,50"
             click_button 'Actualizar'
             expect(page).to have_content \
               %(Variant "#{product.name}" ha sido actualizado exitosamente)
@@ -231,13 +231,9 @@ describe '
       end
 
       it_behaves_like "with localization", false, ".", ","
-      it_behaves_like "with localization", true, ".", "," do
-        before { pending("#11085") }
-      end
+      it_behaves_like "with localization", true, ".", ","
       it_behaves_like "with localization", false, ",", "."
-      it_behaves_like "with localization", true, ",", "." do
-        before { pending("#11085") }
-      end
+      it_behaves_like "with localization", true, ",", "."
     end
   end
 
