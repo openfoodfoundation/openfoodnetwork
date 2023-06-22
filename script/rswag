@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+# Generate the API documentation based on our specs.
+#
+# The PATTERN argument is adding engines to the search path.
+exec ./bin/rake rswag PATTERN="spec/requests/api/**/*_spec.rb,engines/dfc_provider/spec/requests/**/*_spec.rb"
