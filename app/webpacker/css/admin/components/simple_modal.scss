@@ -2,13 +2,13 @@
   width: 300px;
 
   .close-reveal-modal {
-    color: $modal-close-button-color;
+    color: $color-modal-close-btn;
     font-size: 23px;
     right: 0.45rem;
     top: 0.35rem;
 
     :hover {
-      color: $modal-close-button-hover-color;
+      color: $color-modal-close-btn-hover;
     }
   }
 
