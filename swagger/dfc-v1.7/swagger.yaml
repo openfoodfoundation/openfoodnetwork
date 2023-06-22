@@ -53,5 +53,55 @@ paths:
           description: successful
         '404':
           description: not found
+  "/api/dfc-v1.7/enterprises/{enterprise_id}/supplied_products":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      summary: Create SuppliedProduct
+      parameters: []
+      responses:
+        '400':
+          description: bad request
+        '204':
+          description: success
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+  "/api/dfc-v1.7/enterprises/{enterprise_id}/supplied_products/{id}":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show SuppliedProduct
+      responses:
+        '200':
+          description: success
+        '404':
+          description: not found
+    put:
+      summary: Update SuppliedProduct
+      parameters: []
+      responses:
+        '401':
+          description: unauthorized
+        '204':
+          description: success
+      requestBody:
+        content:
+          application/json:
+            schema: {}
 servers:
 - url: "/"
