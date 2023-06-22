@@ -1,7 +1,15 @@
 // Basic color palette for admin
+$spree-green: #9fc820;
+$spree-blue: #5498da;
+$spree-light-blue: #eff5fc;
+$pale-blue: #cee1f4;
+$bright-orange: #ffa92e;
+$medium-grey: #919191;
+$light-grey: #ccc;
+
 $color-1: #ffffff !default; // White
-$color-2: #9fc820 !default; // Green
-$color-3: #5498da !default; // Light Blue
+$color-2: $spree-green !default; // Green
+$color-3: $spree-blue !default; // Light Blue
 $color-4: #6788a2 !default; // Dark Blue
 $color-5: #c60f13 !default; // Red
 $color-6: #ff9300 !default; // Yellow

@@ -3,13 +3,19 @@ $white: #ffffff !default; // White
 $green: #9fc820 !default; // Green
 $teal: #008397 !default; // Teal (Allports)
 $dark-blue: #004e5b !default; // Dark Blue (Sherpa)
+$pale-blue: #cee1f4; // Pale blue
 $red: #c85136 !default; // Red/Orange (Mojo)
+$bright-orange: #ffa92e; // Bright orange
 $yellow: #ff9300 !default; // Yellow
 $light-grey: #eff1f2 !default; // Light grey
 $near-black: #191c1d !default; // Near-black
 $dark-grey: #2e3132 !default; // Dark Grey
+$medium-grey: #919191 !default; // Medium grey
 
 // Old colour variables for backwards compatibility
+$spree-green: $green;
+$spree-blue: $teal;
+$spree-light-blue: #eff5fc;
 $color-1: $white;
 $color-2: $green;
 $color-3: $teal;
