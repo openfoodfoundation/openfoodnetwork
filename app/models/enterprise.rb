@@ -463,6 +463,7 @@ class Enterprise < ApplicationRecord
 
     url_for(image.variant(name))
   rescue ActiveStorage::Error => e
+    Bugsnag.notify "Enterprise ##{id} #{image.try(:name)} error: #{e.message}"
     Rails.logger.error(e.message)
 
     nil
