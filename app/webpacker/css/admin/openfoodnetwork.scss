@@ -34,7 +34,7 @@ text-angular .ta-editor {
 
 span.error,
 div.error:not(.flash) {
-  color: $warning-red;
+  color: $color-warning;
 }
 
 /* Fix conflict between Spree and elRTE's styles */
@@ -46,7 +46,7 @@ div.error:not(.flash) {
 input.red,
 a.button.red,
 button.red {
-  background-color: $warning-red;
+  background-color: $color-warning;
   margin-right: 5px;
   color: #ffffff;
 }
@@ -54,7 +54,7 @@ button.red {
 a.button.red {
   &:not(:hover) {
     color: #fff;
-    background-color: $warning-red;
+    background-color: $color-warning;
   }
 }
 
@@ -208,12 +208,12 @@ table#listing_enterprise_groups {
 // TODO: remove this, use class below
 #no_results {
   font-weight: bold;
-  color: $warning-red;
+  color: $color-warning;
 }
 
 .no-results {
   font-weight: bold;
-  color: $warning-red;
+  color: $color-warning;
 
   h1,
   h2,
@@ -221,7 +221,7 @@ table#listing_enterprise_groups {
   h4,
   h5,
   h6 {
-    color: $color-error;
+    color: $color-warning;
   }
 }
 

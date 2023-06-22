@@ -1,6 +1,6 @@
 form[name="enterprise_form"] {
   div.row.warning {
-    color: $warning-orange;
+    color: $color-warning;
   }
 
   table.managers {
@@ -38,7 +38,7 @@ form[name="enterprise_form"] {
 
 table .enterprise-actions {
   .warning-icon {
-    color: $warning-red;
+    color: $color-warning;
     font-size: 16px;
   }
 }
