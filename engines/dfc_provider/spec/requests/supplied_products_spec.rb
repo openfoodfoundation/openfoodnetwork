@@ -3,7 +3,7 @@
 require "swagger_helper"
 require DfcProvider::Engine.root.join("spec/spec_helper")
 
-describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml" do
+describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rswag_autodoc: true do
   let!(:user) { create(:oidc_user) }
   let!(:enterprise) { create(:distributor_enterprise, owner: user) }
   let!(:product) { create(:simple_product, supplier: enterprise ) }

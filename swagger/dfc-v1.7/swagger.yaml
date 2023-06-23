@@ -37,6 +37,43 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": http://static.datafoodconsortium.org/ontologies/context.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc-v1.7/enterprises/473
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasName: ''
+                      dfc-b:hasDescription: ''
+                      dfc-b:VATnumber: ''
+                      dfc-b:supplies: http://test.host/api/dfc-v1.7/enterprises/473/supplied_products/298
+                      dfc-b:manages: http://test.host/api/dfc-v1.7/enterprises/473/catalog_items/298
+                    - "@id": http://test.host/api/dfc-v1.7/enterprises/473/supplied_products/298
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: 'Product #2 - 8569'
+                      dfc-b:description: |-
+                        Voluptatem sequi hic expedita reprehenderit ad veniam recusandae explicabo. Occaecati eum cumque exercitationem culpa dolor. Velit accusamus blanditiis quia laboriosam fuga corrupti maiores ut.
+                        Consectetur illo necessitatibus porro eveniet. Similique est error labore inventore exercitationem. Similique nulla iusto tenetur reiciendis.
+                        Quis laborum saepe illo magnam dolorem distinctio sed eligendi. Suscipit et iure vitae facilis nam quia placeat. Vero ea accusantium corrupti possimus error ad. Repellendus tenetur atque minima architecto. Optio cum magni quisquam aliquid rerum.
+                        Laborum quae tempora iure accusamus sed blanditiis enim. Debitis earum omnis voluptate accusantium deserunt nisi nemo ad. Ea nihil architecto eius odit illo aut. Totam corporis error illum voluptatem. Repellendus eius adipisci eaque amet porro occaecati.
+                      dfc-b:hasType: dfc-pt:non-local-vegetable
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:alcoholPercentage: 0.0
+                      dfc-b:lifetime: ''
+                      dfc-b:usageOrStorageCondition: ''
+                      dfc-b:totalTheoreticalStock: 0.0
+                    - "@id": http://test.host/api/dfc-v1.7/enterprises/473/catalog_items/298
+                      "@type": dfc-b:CatalogItem
+                      dfc-b:references: http://test.host/api/dfc-v1.7/enterprises/473/supplied_products/298
+                      dfc-b:sku: ''
+                      dfc-b:stockLimitation: 5
+                      dfc-b:offeredThrough: http://test.host/api/dfc-v1.7/enterprises/473/offers/298
         '404':
           description: not found
   "/api/dfc-v1.7/persons/{id}":
@@ -51,6 +88,14 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": http://static.datafoodconsortium.org/ontologies/context.json
+                    "@id": http://test.host/api/dfc-v1.7/persons/910
+                    "@type": dfc-b:Person
         '404':
           description: not found
   "/api/dfc-v1.7/enterprises/{enterprise_id}/supplied_products":
@@ -89,6 +134,28 @@ paths:
       responses:
         '200':
           description: success
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": http://static.datafoodconsortium.org/ontologies/context.json
+                    "@id": http://test.host/api/dfc-v1.7/enterprises/478/supplied_products/303
+                    "@type": dfc-b:SuppliedProduct
+                    dfc-b:name: 'Product #6 - 8953'
+                    dfc-b:description: Magni nemo enim saepe harum corporis nobis
+                      facilis. Nostrum facilis molestiae at quaerat exercitationem
+                      itaque veritatis. Incidunt eaque asperiores assumenda eveniet
+                      doloribus qui voluptatibus quidem.
+                    dfc-b:hasType: dfc-pt:non-local-vegetable
+                    dfc-b:hasQuantity:
+                      "@type": dfc-b:QuantitativeValue
+                      dfc-b:hasUnit: dfc-m:Gram
+                      dfc-b:value: 1.0
+                    dfc-b:alcoholPercentage: 0.0
+                    dfc-b:lifetime: ''
+                    dfc-b:usageOrStorageCondition: ''
+                    dfc-b:totalTheoreticalStock: 0.0
         '404':
           description: not found
     put:

@@ -3,7 +3,7 @@
 require "swagger_helper"
 require DfcProvider::Engine.root.join("spec/spec_helper")
 
-describe "Persons", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml" do
+describe "Persons", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rswag_autodoc: true do
   let(:user) { create(:oidc_user) }
   let(:other_user) { create(:oidc_user) }
 
