@@ -5,6 +5,7 @@ class RemoveMasterVariants < ActiveRecord::Migration[7.0]
     end
 
     handle_master_line_items
+    handle_master_exchange_variants
     delete_master_inventory_units
     delete_master_variant_prices
     delete_master_stock_items
@@ -20,6 +21,17 @@ class RemoveMasterVariants < ActiveRecord::Migration[7.0]
       FROM spree_line_items
       WHERE spree_variants.is_master = true
         AND spree_variants.id = spree_line_items.variant_id
+    SQL
+    )
+  end
+
+  def handle_master_exchange_variants
+    ActiveRecord::Base.connection.execute(<<-SQL
+      UPDATE spree_variants
+      SET is_master = false
+      FROM exchange_variants
+      WHERE spree_variants.is_master = true
+        AND spree_variants.id = exchange_variants.variant_id
     SQL
     )
   end
