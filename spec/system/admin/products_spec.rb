@@ -103,17 +103,17 @@ describe '
       expect(product.supplier).to eq(@supplier)
       expect(product.variant_unit).to eq('weight')
       expect(product.variant_unit_scale).to eq(1000)
-      expect(product.unit_value).to eq(5000)
-      expect(product.unit_description).to eq("")
+      expect(product.variants.first.unit_value).to eq(5000)
+      expect(product.variants.first.unit_description).to eq("")
       expect(product.variant_unit_name).to eq("")
       expect(product.primary_taxon_id).to eq(taxon.id)
-      expect(product.price.to_s).to eq('19.99')
+      expect(product.variants.first.price.to_s).to eq('19.99')
       expect(product.on_hand).to eq(5)
       expect(product.tax_category_id).to eq(tax_category.id)
       expect(product.shipping_category).to eq(shipping_category)
       expect(product.description).to eq("<p>A description...</p>")
       expect(product.group_buy).to be_falsey
-      expect(product.master.unit_presentation).to eq("5kg")
+      expect(product.variants.first.unit_presentation).to eq("5kg")
     end
 
     it "creating an on-demand product" do
@@ -527,10 +527,6 @@ describe '
 
       page.find('a#new_image_link').click
 
-      uri = URI.parse(current_url)
-      # we stay on the same url as the new image content is loaded via an ajax call
-      expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
-
       expected_cancel_link = Regexp.new(Regexp.escape(spree.admin_product_images_path(product,
                                                                                       filter)))
       expect(page).to have_link('Cancel', href: expected_cancel_link)
@@ -565,8 +561,8 @@ describe '
     it "loading edit product image page including url filter" do
       product = create(:simple_product, supplier: @supplier2)
       image = white_logo_file
-      image_object = Spree::Image.create(viewable_id: product.master.id,
-                                         viewable_type: 'Spree::Variant', alt: "position 1",
+      image_object = Spree::Image.create(viewable_id: product.id,
+                                         viewable_type: 'Spree::Product', alt: "position 1",
                                          attachment: image, position: 1)
 
       visit spree.admin_product_images_path(product, filter)
@@ -586,8 +582,8 @@ describe '
     it "updating a product image including url filter" do
       product = create(:simple_product, supplier: @supplier2)
       image = white_logo_file
-      image_object = Spree::Image.create(viewable_id: product.master.id,
-                                         viewable_type: 'Spree::Variant', alt: "position 1",
+      image_object = Spree::Image.create(viewable_id: product.id,
+                                         viewable_type: 'Spree::Product', alt: "position 1",
                                          attachment: image, position: 1)
 
       file_path = Rails.root + "spec/support/fixtures/thinking-cat.jpg"
@@ -608,7 +604,7 @@ describe '
       product = create(:simple_product, supplier: @supplier2)
 
       image = white_logo_file
-      Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant',
+      Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
                           alt: "position 1", attachment: image, position: 1)
 
       visit spree.admin_product_images_path(product)
@@ -623,25 +619,25 @@ describe '
     it "deleting product images" do
       product = create(:simple_product, supplier: @supplier2)
       image = white_logo_file
-      Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant',
+      Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
                           alt: "position 1", attachment: image, position: 1)
 
       visit spree.admin_product_images_path(product)
       expect(page).to have_selector "table.index td img"
-      expect(product.reload.images.count).to eq 1
+      expect(product.reload.image).to_not be_nil
 
       accept_alert do
         page.find('a.delete-resource').click
       end
 
       expect(page).to_not have_selector "table.index td img"
-      expect(product.reload.images.count).to eq 0
+      expect(product.reload.image).to be_nil
     end
 
     it "deleting product image including url filter" do
       product = create(:simple_product, supplier: @supplier2)
       image = white_logo_file
-      Spree::Image.create(viewable_id: product.master.id, viewable_type: 'Spree::Variant',
+      Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
                           alt: "position 1", attachment: image, position: 1)
 
       visit spree.admin_product_images_path(product, filter)

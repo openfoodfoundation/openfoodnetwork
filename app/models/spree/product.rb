@@ -28,42 +28,73 @@ module Spree
 
     acts_as_paranoid
 
-    searchable_attributes :supplier_id, :primary_taxon_id, :meta_keywords
-    searchable_associations :supplier, :properties, :primary_taxon, :variants, :master
+    searchable_attributes :supplier_id, :primary_taxon_id, :meta_keywords, :sku
+    searchable_associations :supplier, :properties, :primary_taxon, :variants
     searchable_scopes :active, :with_properties
-
-    has_many :product_properties, dependent: :destroy
-    has_many :properties, through: :product_properties
-
-    has_many :classifications, dependent: :delete_all
-    has_many :taxons, through: :classifications
 
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory'
     belongs_to :supplier, class_name: 'Enterprise', touch: true
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true
 
-    has_one :master,
-            -> { where is_master: true },
-            class_name: 'Spree::Variant',
-            dependent: :destroy
+    has_one :image, class_name: "Spree::Image", as: :viewable, dependent: :destroy
 
-    has_many :variants, -> {
-      where(is_master: false).order("spree_variants.position ASC")
-    }, class_name: 'Spree::Variant'
-
-    has_many :variants_including_master,
-             -> { order("spree_variants.position ASC") },
-             class_name: 'Spree::Variant',
-             dependent: :destroy
+    has_many :product_properties, dependent: :destroy
+    has_many :properties, through: :product_properties
+    has_many :classifications, dependent: :delete_all
+    has_many :taxons, through: :classifications
+    has_many :variants, -> { order("spree_variants.position ASC") }, class_name: 'Spree::Variant',
+                                                                     dependent: :destroy
 
     has_many :prices, -> {
       order('spree_variants.position, spree_variants.id, currency')
     }, through: :variants
 
     has_many :stock_items, through: :variants
-
     has_many :supplier_properties, through: :supplier, source: :properties
+    has_many :variant_images, -> { order(:position) }, source: :images,
+                                                       through: :variants
+
+    validates :name, presence: true
+    validates :permalink, presence: true
+    validates :shipping_category, presence: true
+
+    validates :supplier, presence: true
+    validates :primary_taxon, presence: true
+    validates :tax_category, presence: true,
+                             if: proc { Spree::Config[:products_require_tax_category] }
+
+    validates :variant_unit, presence: true
+    validates :unit_value, presence:
+      { if: ->(p) { %w(weight volume).include?(p.variant_unit) && new_record? } }
+    validates :variant_unit_scale,
+              presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
+    validates :variant_unit_name,
+              presence: { if: ->(p) { p.variant_unit == 'items' } }
+    validate :validate_image
+
+    accepts_nested_attributes_for :variants, allow_destroy: true
+    accepts_nested_attributes_for :image
+    accepts_nested_attributes_for :product_properties,
+                                  allow_destroy: true,
+                                  reject_if: lambda { |pp| pp[:property_name].blank? }
+
+    # Transient attributes used temporarily when creating a new product,
+    # these values are persisted on the product's variant
+    attr_accessor :price, :display_as, :unit_value, :unit_description
+
+    make_permalink order: :name
+
+    after_initialize :set_available_on_to_now, if: :new_record?
+
+    before_validation :sanitize_permalink
+
+    before_save :add_primary_taxon_to_taxons
+    before_destroy :punch_permalink
+
+    after_save :remove_previous_primary_taxon_from_taxons
+    after_create :ensure_standard_variant
+    after_save :update_units
 
     scope :with_properties, ->(*property_ids) {
       left_outer_joins(:product_properties).
@@ -75,58 +106,6 @@ module Spree
         )
     }
 
-    delegate_belongs_to :master, :sku, :price, :currency, :display_amount, :display_price, :weight,
-                        :height, :width, :depth, :is_master, :cost_currency,
-                        :price_in, :amount_in, :unit_value, :unit_description
-    delegate :images_attributes=, :display_as=, to: :master
-
-    after_create :set_master_variant_defaults
-    after_save :save_master
-
-    delegate :images, to: :master, prefix: true
-    alias_method :images, :master_images
-
-    has_many :variant_images, -> { order(:position) }, source: :images,
-                                                       through: :variants_including_master
-
-    accepts_nested_attributes_for :variants, allow_destroy: true
-
-    validates :name, presence: true
-    validates :permalink, presence: true
-    validates :price, presence: true, if: proc { Spree::Config[:require_master_price] }
-    validates :shipping_category, presence: true
-
-    validates :supplier, presence: true
-    validates :primary_taxon, presence: true
-    validates :tax_category, presence: true,
-                             if: proc { Spree::Config[:products_require_tax_category] }
-
-    validates :variant_unit, presence: true
-    validates :unit_value, presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
-    validates :variant_unit_scale,
-              presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
-    validates :variant_unit_name,
-              presence: { if: ->(p) { p.variant_unit == 'items' } }
-    validate :validate_image_for_master
-
-    accepts_nested_attributes_for :product_properties,
-                                  allow_destroy: true,
-                                  reject_if: lambda { |pp| pp[:property_name].blank? }
-
-    make_permalink order: :name
-
-    after_initialize :ensure_master
-    after_initialize :set_available_on_to_now, if: :new_record?
-
-    before_validation :sanitize_permalink
-    before_save :add_primary_taxon_to_taxons
-    after_save :remove_previous_primary_taxon_from_taxons
-    after_save :ensure_standard_variant
-    after_save :update_units
-
-    before_destroy :punch_permalink
-
-    # -- Joins
     scope :with_order_cycles_outer, -> {
       joins("
         LEFT OUTER JOIN spree_variants AS o_spree_variants
@@ -150,7 +129,7 @@ module Spree
     }
 
     scope :with_order_cycles_inner, -> {
-      joins(variants_including_master: { exchanges: :order_cycle })
+      joins(variants: { exchanges: :order_cycle })
     }
 
     scope :visible_for, lambda { |enterprise|
@@ -283,13 +262,6 @@ module Spree
       stock_items.sum(&:count_on_hand)
     end
 
-    # Master variant may be deleted (i.e. when the product is deleted)
-    # which would make AR's default finder return nil.
-    # This is a stopgap for that little problem.
-    def master
-      super || variants_including_master.with_deleted.find_by(is_master: true)
-    end
-
     def properties_including_inherited
       # Product properties override producer properties
       ps = product_properties.all
@@ -325,7 +297,7 @@ module Spree
         touch_distributors
 
         ExchangeVariant.
-          where('exchange_variants.variant_id IN (?)', variants_including_master.with_deleted.
+          where('exchange_variants.variant_id IN (?)', variants.with_deleted.
           select(:id)).destroy_all
 
         super
@@ -333,39 +305,6 @@ module Spree
     end
 
     private
-
-    # ensures the master variant is flagged as such
-    def set_master_variant_defaults
-      master.is_master = true
-    end
-
-    # Here we rescue errors when saving master variants (without the need for a
-    #   validates_associated on master) and we get more specific data about the errors
-    def save_master
-      if master && (
-          master.changed? || master.new_record? || (
-            master.default_price && (
-              master.default_price.changed? || master.default_price.new_record?
-            )
-          )
-        )
-        master.save!
-      end
-
-      # If the master cannot be saved, the Product object will get its errors
-      # and will be destroyed
-    rescue ActiveRecord::RecordInvalid
-      master.errors.each do |error|
-        errors.add error.attribute, error.message
-      end
-      raise
-    end
-
-    def ensure_master
-      return unless new_record?
-
-      self.master ||= Variant.new
-    end
 
     def punch_permalink
       # Punch permalink with date prefix
@@ -379,7 +318,7 @@ module Spree
     def update_units
       return unless saved_change_to_variant_unit? || saved_change_to_variant_unit_name?
 
-      variants_including_master.each(&:update_units)
+      variants.each(&:update_units)
     end
 
     def touch_distributors
@@ -397,11 +336,14 @@ module Spree
     end
 
     def ensure_standard_variant
-      return unless master.valid? && variants.empty?
+      return unless variants.empty?
 
-      variant = master.dup
+      variant = Spree::Variant.new
       variant.product = self
-      variant.is_master = false
+      variant.price = price
+      variant.display_as = display_as
+      variant.unit_value = unit_value
+      variant.unit_description = unit_description
       variants << variant
     end
 
@@ -413,8 +355,8 @@ module Spree
       self.permalink = create_unique_permalink(requested.parameterize)
     end
 
-    def validate_image_for_master
-      return if master.images.all?(&:valid?)
+    def validate_image
+      return if image.blank? || image.valid?
 
       errors.add(:base, I18n.t('spree.admin.products.image_not_processable'))
     end

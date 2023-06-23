@@ -29,11 +29,11 @@ module OpenFoodNetwork
     attr_reader :params
 
     def search_params
-      { product_name_cont: params[:q], sku_cont: params[:q] }
+      { product_name_cont: params[:q], sku_cont: params[:q], product_sku_cont: params[:q] }
     end
 
     def query_scope
-      Spree::Variant.where(is_master: false).
+      Spree::Variant.
         ransack(search_params.merge(m: 'or')).
         result.
         order("spree_products.name, display_name, display_as, spree_products.variant_unit_name").

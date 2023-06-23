@@ -35,8 +35,8 @@
             = f.label :unit_value, t(".value"), 'ng-disabled' => "!hasUnit(product)"
             %span.required *
             %input.fullwidth{ id: 'product_unit_value', 'ng-model' => 'product.master.unit_value_with_description', :type => 'text', placeholder: "eg. 2", 'ng-disabled' => "!hasUnit(product)" }
-            %input{ type: 'hidden', 'ng-value': 'product.master.unit_value', "ng-init": "product.master.unit_value='#{@product.master.unit_value}'", name: 'product[unit_value]' }
-            %input{ type: 'hidden', 'ng-value': 'product.master.unit_description', "ng-init": "product.master.unit_description='#{@product.master.unit_description}'", name: 'product[unit_description]' }
+            %input{ type: 'hidden', 'ng-value': 'product.master.unit_value', "ng-init": "product.master.unit_value='#{@product.unit_value}'", name: 'product[unit_value]' }
+            %input{ type: 'hidden', 'ng-value': 'product.master.unit_description', "ng-init": "product.master.unit_description='#{@product.unit_description}'", name: 'product[unit_description]' }
             = f.error_message_on :unit_value
         = render 'display_as', f: f
         .six.columns.omega{ 'ng-show' => "product.variant_unit_with_scale == 'items'" }
@@ -101,7 +101,7 @@
       .row
         = image_tag Spree::Image.default_image_url(:product), class: "four columns alpha"
       .row
-        = f.fields_for 'images_attributes[]', f.object.images.build do |image_fields|
+        = f.fields_for 'image_attributes', f.object.build_image do |image_fields|
           = image_fields.file_field :attachment
   .sixteen.columns.alpha
     .form-buttons.filter-actions.actions

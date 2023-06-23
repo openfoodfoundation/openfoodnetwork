@@ -7,5 +7,3 @@
     .form-buttons.filter-actions.actions
       = button t('actions.create'), 'icon-ok'
       = link_to_with_icon 'icon-remove', t('spree.actions.cancel'), admin_product_images_url(@product, @url_filters), id: 'cancel_link', class: 'button'
-
-= javascript_include_tag 'admin/spree/images/new.js'

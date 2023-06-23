@@ -72,8 +72,8 @@ describe '
 
     it "displays 'on demand' for any variant that is available on demand" do
       p1 = FactoryBot.create(:product)
-      v1 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 4)
-      v2 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 0, on_demand: true)
+      v1 = FactoryBot.create(:variant, product: p1, on_hand: 4)
+      v2 = FactoryBot.create(:variant, product: p1, on_hand: 0, on_demand: true)
 
       visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
@@ -128,10 +128,10 @@ describe '
       p1 = FactoryBot.create(:product)
       v0 = p1.variants.first
       v0.update_attribute(:on_demand, false)
-      v1 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 15)
+      v1 = FactoryBot.create(:variant, product: p1, on_hand: 15)
       v1.update_attribute(:on_demand, false)
       p1.variants << v1
-      v2 = FactoryBot.create(:variant, product: p1, is_master: false, on_hand: 6)
+      v2 = FactoryBot.create(:variant, product: p1, on_hand: 6)
       v2.update_attribute(:on_demand, false)
       p1.variants << v2
 
@@ -146,15 +146,14 @@ describe '
     end
 
     it "displays a price input (for each variant) for each product" do
-      p1 = FactoryBot.create(:product, price: 2.0)
-      v1 = FactoryBot.create(:variant, product: p1, is_master: false, price: 12.75)
-      v2 = FactoryBot.create(:variant, product: p1, is_master: false, price: 2.50)
+      p1 = create(:product, price: 2.0)
+      v1 = create(:variant, product: p1, price: 12.75)
+      v2 = create(:variant, product: p1, price: 2.50)
 
       visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
       all("a.view-variants").each(&:click)
 
-      expect(page).to have_field "price", with: "2.0", visible: false
       expect(page).to have_field "variant_price", with: "12.75"
       expect(page).to have_field "variant_price", with: "2.5"
     end
@@ -162,9 +161,9 @@ describe '
     it "displays a unit value field (for each variant) for each product" do
       p1 = FactoryBot.create(:product, price: 2.0, variant_unit: "weight",
                                        variant_unit_scale: "1000")
-      v1 = FactoryBot.create(:variant, product: p1, is_master: false, price: 12.75,
+      v1 = FactoryBot.create(:variant, product: p1, price: 12.75,
                                        unit_value: 1200, unit_description: "(small bag)", display_as: "bag")
-      v2 = FactoryBot.create(:variant, product: p1, is_master: false, price: 2.50,
+      v2 = FactoryBot.create(:variant, product: p1, price: 2.50,
                                        unit_value: 4800, unit_description: "(large bag)", display_as: "bin")
 
       visit spree.admin_products_path
@@ -229,9 +228,9 @@ describe '
   end
 
   context "creating new variants" do
+    let!(:product) { create(:product, variant_unit: 'weight', variant_unit_scale: 1000) }
+
     before do
-      # Given a product without variants or a unit
-      p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
       login_as_admin
       visit spree.admin_products_path
 
@@ -279,18 +278,19 @@ describe '
     end
 
     context "handle the 'on_demand' variant case creation" do
+      let(:v1) { create(:variant, product: product, on_hand: 4) }
+      let(:v2) { create(:variant, product: product, on_demand: true) }
+
       before do
-        p = Spree::Product.first
-        p.master.update_attribute(:on_hand, 5)
-        p.save
-        v1 = FactoryBot.create(:variant, product: p, is_master: false, on_hand: 4)
-        v2 = FactoryBot.create(:variant, product: p, is_master: false, on_demand: true)
-        p.variants << v1
-        p.variants << v2
+        product.variants << v1
+        product.variants << v2
+
+        visit spree.admin_products_path
+        page.find('a.view-variants').click
       end
 
       it "when variant unit value is: '120'" do
-        within "tr#v_#{Spree::Variant.second.id}" do
+        within "tr#v_#{v2.id}" do
           page.find(".add-variant").click
         end
 
@@ -304,7 +304,7 @@ describe '
       end
 
       it "creating a variant with unit value is: '120g' and 'on_hand' filled" do
-        within "tr#v_#{Spree::Variant.second.id}" do
+        within "tr#v_#{v2.id}" do
           page.find(".add-variant").click
         end
 
@@ -319,7 +319,7 @@ describe '
       end
 
       it "creating a variant with unit value is: '120g' and 'on_demand' checked" do
-        within "tr#v_#{Spree::Variant.second.id}" do
+        within "tr#v_#{v2.id}" do
           page.find(".add-variant").trigger("click")
         end
 
@@ -401,10 +401,10 @@ describe '
   end
 
   it "updating a product with variants" do
-    s1 = FactoryBot.create(:supplier_enterprise)
-    s2 = FactoryBot.create(:supplier_enterprise)
-    p = FactoryBot.create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 0.001,
-                                    price: 3.0, unit_value: 0.25, unit_description: '(bottle)' )
+    s1 = create(:supplier_enterprise)
+    s2 = create(:supplier_enterprise)
+    p = create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 0.001,
+                         price: 3.0, unit_value: 0.25, unit_description: '(bottle)' )
     v = p.variants.first
     v.update_attribute(:sku, "VARIANTSKU")
     v.update_attribute(:on_demand, false)

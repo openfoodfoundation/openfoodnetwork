@@ -60,10 +60,23 @@ describe '
 
       # Expect variant_weight to accept 3 decimal places
       fill_in 'variant_weight', with: '1.234'
+      fill_in 'unit_value_human', with: 1
       click_button 'Create'
 
       # Then the variant should have been created
       expect(page).to have_content "Variant \"#{product.name}\" has been successfully created!"
+    end
+
+    it "show validation errors if present" do
+      product = create(:simple_product, variant_unit: "volume", variant_unit_scale: "1")
+      login_as_admin
+      visit spree.admin_product_variants_path product
+      click_link 'New Variant'
+
+      fill_in 'unit_value_human', with: 0
+      click_button 'Create'
+
+      expect(page).to have_content "Unit value must be greater than 0"
     end
   end
 

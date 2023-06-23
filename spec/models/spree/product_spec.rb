@@ -16,71 +16,21 @@ module Spree
         it 'duplicates product' do
           clone = product.duplicate
           expect(clone.name).to eq 'COPY OF ' + product.name
-          expect(clone.master.sku).to eq ''
-          expect(clone.images.size).to eq product.images.size
-        end
-      end
-
-      context "product has no variants" do
-        context "#destroy" do
-          it "should set deleted_at value" do
-            product.destroy
-            expect(product.deleted_at).to_not be_nil
-            expect(product.master.deleted_at).to_not be_nil
-          end
+          expect(clone.sku).to eq ""
+          expect(clone.image).to eq product.image
         end
       end
 
       context "product has variants" do
         before do
-          create(:variant, product: product)
+          product.reload.variants << create(:variant, product: product)
         end
 
         context "#destroy" do
           it "should set deleted_at value" do
             product.destroy
             expect(product.deleted_at).to_not be_nil
-            expect(product.variants_including_master.all? { |v| !v.deleted_at.nil? }).to be_truthy
-          end
-        end
-      end
-
-      context "#price" do
-        # Regression test for Spree #1173
-        it 'strips non-price characters' do
-          product.price = "$10"
-          expect(product.price).to eq 10.0
-        end
-      end
-
-      context "#display_price" do
-        before { product.price = 10.55 }
-
-        context "with display_currency set to true" do
-          before { Spree::Config[:display_currency] = true }
-
-          it "shows the currency" do
-            expect(product.display_price.to_s).to eq "$10.55 #{Spree::Config[:currency]}"
-          end
-        end
-
-        context "with display_currency set to false" do
-          before { Spree::Config[:display_currency] = false }
-
-          it "does not include the currency" do
-            expect(product.display_price.to_s).to eq "$10.55"
-          end
-        end
-
-        context "with currency set to JPY" do
-          before do
-            product.master.default_price.currency = 'JPY'
-            product.master.default_price.save!
-            Spree::Config[:currency] = 'JPY'
-          end
-
-          it "displays the currency in yen" do
-            expect(product.display_price.to_s).to eq "¥11"
+            expect(product.variants.all? { |v| !v.deleted_at.nil? }).to be_truthy
           end
         end
       end
@@ -89,12 +39,6 @@ module Spree
         context 'without master variant' do
           it 'sorts variants by position' do
             expect(product.variants.to_sql).to match(/ORDER BY spree_variants.position ASC/)
-          end
-        end
-
-        context 'with master variant' do
-          it 'sorts variants by position' do
-            expect(product.variants_including_master.to_sql).to match(/ORDER BY spree_variants.position ASC/)
           end
         end
       end
@@ -281,7 +225,7 @@ module Spree
 
     context "has stock movements" do
       let(:product) { create(:product) }
-      let(:variant) { product.master }
+      let(:variant) { product.variants.first }
       let(:stock_item) { variant.stock_items.first }
 
       it "doesnt raise ReadOnlyRecord error" do
@@ -310,14 +254,6 @@ module Spree
 
       it "requires a supplier" do
         expect(build(:simple_product, supplier: nil)).not_to be_valid
-      end
-
-      it "does not save when master is invalid" do
-        product = build(:product)
-        product.variant_unit = 'weight'
-        product.master.unit_value = nil
-
-        expect(product.save).to eq(false)
       end
 
       it "defaults available_on to now" do
@@ -411,16 +347,10 @@ module Spree
             product.save!
           end
 
-          it "copies the properties on master variant to the first standard variant" do
+          it "copies properties to the first standard variant" do
             expect(product.variants.reload.length).to eq 1
             standard_variant = product.variants.reload.first
-            expect(standard_variant.price).to eq product.master.price
-          end
-
-          it "only duplicates master with after_save when no standard variants exist" do
-            expect(product).to receive :ensure_standard_variant
-            product.name = "Something else"
-            expect{ product.save! }.to_not change{ product.variants.count }
+            expect(standard_variant.price).to eq 4.27
           end
         end
 
@@ -461,11 +391,11 @@ module Spree
         end
       end
 
-      describe "#validate_image_for_master" do
-        let(:product) { build_stubbed(:simple_product) }
+      describe "#validate_image" do
+        let(:product) { create(:product_with_image) }
 
-        context "when the image attached to the master variant is invalid" do
-          before { product.master.images.new.errors.add(:image_not_processable, "invalid") }
+        context "when the image is invalid" do
+          before { expect(product.image).to receive(:valid?).and_return(false) }
 
           it "adds an error message to the base object" do
             expect(product).not_to be_valid
@@ -565,8 +495,8 @@ module Spree
           d2 = create(:distributor_enterprise)
           p1 = create(:product)
           p2 = create(:product)
-          create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.master])
-          create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.variants.first])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.variants.first])
           expect(Product.in_distributor(d1)).to eq([p1])
         end
 
@@ -590,7 +520,7 @@ module Spree
           p = create(:product)
           oc = create(:simple_order_cycle, coordinator: c, suppliers: [s], distributors: [d])
           ex = oc.exchanges.incoming.first
-          ex.variants << p.master
+          ex.variants << p.variants.first
 
           expect(Product.in_distributor(d)).to be_empty
         end
@@ -642,8 +572,8 @@ module Spree
           d2 = create(:distributor_enterprise)
           p1 = create(:product)
           p2 = create(:product)
-          create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.master])
-          create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.master])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.variants.first])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.variants.first])
           expect(Product.in_supplier_or_distributor(d1)).to eq([p1])
         end
 
@@ -651,7 +581,7 @@ module Spree
           s = create(:supplier_enterprise)
           d = create(:distributor_enterprise)
           p = create(:product, supplier: s)
-          create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.variants.first])
           [s, d].each { |e| expect(Product.in_supplier_or_distributor(e)).to eq([p]) }
         end
       end
@@ -664,9 +594,9 @@ module Spree
           p1 = create(:product)
           p2 = create(:product)
           oc1 = create(:simple_order_cycle, suppliers: [s], distributors: [d1],
-                                            variants: [p1.master])
+                                            variants: [p1.variants.first])
           oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2],
-                                            variants: [p2.master])
+                                            variants: [p2.variants.first])
           expect(Product.in_order_cycle(oc1)).to eq([p1])
         end
       end
@@ -680,9 +610,9 @@ module Spree
           p2 = create(:product)
           p3 = create(:product)
           oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2],
-                                            variants: [p2.master], orders_open_at: 8.days.ago, orders_close_at: 1.day.ago)
+                                            variants: [p2.variants.first], orders_open_at: 8.days.ago, orders_close_at: 1.day.ago)
           oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d3],
-                                            variants: [p3.master], orders_close_at: Date.tomorrow)
+                                            variants: [p3.variants.first], orders_close_at: Date.tomorrow)
           expect(Product.in_an_active_order_cycle).to eq([p3])
         end
       end
@@ -860,8 +790,8 @@ module Spree
         d2 = create(:distributor_enterprise)
         p1 = create(:product)
         p2 = create(:product)
-        oc1 = create(:simple_order_cycle, distributors: [d1], variants: [p1.master])
-        oc2 = create(:simple_order_cycle, distributors: [d2], variants: [p2.master])
+        oc1 = create(:simple_order_cycle, distributors: [d1], variants: [p1.variants.first])
+        oc2 = create(:simple_order_cycle, distributors: [d2], variants: [p2.variants.first])
 
         expect(p1).to be_in_distributor d1
         expect(p1).not_to be_in_distributor d2
@@ -872,8 +802,8 @@ module Spree
         d2 = create(:distributor_enterprise)
         p1 = create(:product)
         p2 = create(:product)
-        oc1 = create(:simple_order_cycle, distributors: [d1], variants: [p1.master])
-        oc2 = create(:simple_order_cycle, distributors: [d2], variants: [p2.master])
+        oc1 = create(:simple_order_cycle, distributors: [d1], variants: [p1.variants.first])
+        oc2 = create(:simple_order_cycle, distributors: [d2], variants: [p2.variants.first])
 
         expect(p1).to be_in_order_cycle oc1
         expect(p1).not_to be_in_order_cycle oc2
@@ -899,18 +829,6 @@ module Spree
 
           expect(v.reload.unit_presentation).to eq "1L"
         end
-
-        it "updates its master variant's unit values" do
-          p.master.update!(unit_value: 1)
-          p.reload
-
-          expect(p.master.unit_presentation).to eq "1g"
-
-          p.update!(variant_unit: 'volume', variant_unit_scale: 0.001)
-          p.reload
-
-          expect(p.master.unit_presentation).to eq "1L"
-        end
       end
     end
 
@@ -933,13 +851,7 @@ module Spree
         create(:exchange, order_cycle: oc, incoming: true, sender: s, receiver: oc.coordinator)
       }
 
-      it "removes the master variant from all order cycles" do
-        e.variants << p.master
-        p.destroy
-        expect(e.variants.reload).to be_empty
-      end
-
-      it "removes all other variants from order cycles" do
+      it "removes all variants from order cycles" do
         e.variants << v
         p.destroy
         expect(e.variants.reload).to be_empty

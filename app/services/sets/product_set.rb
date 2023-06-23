@@ -100,7 +100,7 @@ module Sets
     end
 
     def create_or_update_variant(product, variant_attributes)
-      variant = find_model(product.variants_including_master, variant_attributes[:id])
+      variant = find_model(product.variants, variant_attributes[:id])
       if variant.present?
         variant.update(variant_attributes.except(:id))
       else

@@ -9,7 +9,7 @@ class VariantFetcher
   end
 
   def scope
-    Spree::Variant.not_master.
+    Spree::Variant.
       joins(:product).
       where(spree_products: { supplier: @enterprise })
   end

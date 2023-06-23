@@ -98,7 +98,7 @@ module OpenFoodNetwork
               @order_cycle
             ).pluck(:id).uniq
 
-          product_ids = Spree::Product.joins(:variants_including_master).
+          product_ids = Spree::Product.joins(:variants).
             where("spree_variants.id IN (?)", variant_ids).pluck(:id).uniq
 
           producers_active_ids = Enterprise.joins(:supplied_products).
@@ -304,7 +304,7 @@ module OpenFoodNetwork
               hubs.select("enterprises.id"),
               @order_cycle).pluck(:id).uniq
 
-      product_ids = Spree::Product.joins(:variants_including_master).
+      product_ids = Spree::Product.joins(:variants).
         where(spree_variants: { id: variant_ids }).pluck(:id).uniq
 
       producer_ids = Enterprise.joins(:supplied_products).

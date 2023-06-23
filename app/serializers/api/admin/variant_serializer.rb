@@ -33,7 +33,7 @@ module Api
       end
 
       def image
-        options[:image] || object.product.images.first&.url(:mini)
+        options[:image] || object.product.image&.url(:mini)
       end
 
       def in_stock

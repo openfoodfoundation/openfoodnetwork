@@ -13,6 +13,8 @@ module Spree
 
     acts_as_paranoid
 
+    self.ignored_columns = [:is_master]
+
     searchable_attributes :sku, :display_as, :display_name
     searchable_associations :product, :default_price
     searchable_scopes :active, :deleted
@@ -53,10 +55,9 @@ module Spree
 
     localize_number :price, :weight
 
-    validate :check_price
+    validate :check_currency
     validates :price, numericality: { greater_than_or_equal_to: 0 },
-                      presence: true,
-                      if: proc { Spree::Config[:require_master_price] }
+                      presence: true
 
     validates :unit_value, presence: true, if: ->(variant) {
       %w(weight volume).include?(variant.product&.variant_unit)
@@ -89,7 +90,6 @@ module Spree
 
     scope :with_order_cycles_inner, -> { joins(exchanges: :order_cycle) }
 
-    scope :not_master, -> { where(is_master: false) }
     scope :in_order_cycle, lambda { |order_cycle|
       with_order_cycles_inner.
         merge(Exchange.outgoing).
@@ -198,15 +198,7 @@ module Spree
 
     private
 
-    # Ensures a new variant takes the product master price when price is not supplied
-    def check_price
-      if price.nil? && Spree::Config[:require_master_price]
-        raise 'No master variant found to infer price' unless product&.master
-        raise 'Must supply price for variant or master.price for product.' if self == product.master
-
-        self.price = product.master.price
-      end
-
+    def check_currency
       return unless currency.nil?
 
       self.currency = Spree::Config[:currency]

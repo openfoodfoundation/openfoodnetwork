@@ -568,7 +568,7 @@ describe '
     let(:order_cycle) {
       create(:simple_order_cycle, coordinator: distributor1,
                                   coordinator_fees: [enterprise_fee1, enterprise_fee2],
-                                  distributors: [distributor1], variants: [product1.master])
+                                  distributors: [distributor1], variants: [product1.variants.first])
     }
 
     let!(:zone) { create(:zone_with_member) }
@@ -752,7 +752,7 @@ describe '
 
     def xero_invoice_li_row(line_item, opts = {})
       tax_type = line_item.has_tax? ? 'GST on Income' : 'GST Free Income'
-      xero_invoice_row line_item.product.sku, line_item.product_and_full_name,
+      xero_invoice_row line_item.variant.sku, line_item.product_and_full_name,
                        line_item.price.to_s, line_item.quantity.to_s, tax_type, opts
     end
 

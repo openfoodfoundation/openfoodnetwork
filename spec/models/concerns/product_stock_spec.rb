@@ -5,25 +5,6 @@ require "spec_helper"
 describe ProductStock do
   let(:product) { create(:simple_product) }
 
-  context "when product has no variants" do
-    before do
-      product.variants.destroy
-      product.variants.reload
-    end
-
-    describe "product.on_demand" do
-      it "is master.on_demand" do
-        expect(product.on_demand).to eq(product.master.on_demand)
-      end
-    end
-
-    describe "product.on_hand" do
-      it "is master.on_hand" do
-        expect(product.on_hand).to eq(product.master.on_hand)
-      end
-    end
-  end
-
   context "when product has one variant" do
     describe "product.on_demand" do
       it "is the products first variant on_demand" do

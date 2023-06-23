@@ -18,7 +18,6 @@ class ExchangeProductsRenderer
 
   def exchange_variants(incoming, enterprise)
     variants_relation = Spree::Variant.
-      not_master.
       where(product_id: exchange_products(incoming, enterprise).select(&:id))
 
     filter_visible(variants_relation)
@@ -96,7 +95,7 @@ class ExchangeProductsRenderer
     return enterprises if enterprises.empty?
 
     enterprises.includes(
-      supplied_products: [:supplier, :variants, { master: [:images] }]
+      supplied_products: [:supplier, :variants, :image]
     )
   end
 end

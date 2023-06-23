@@ -121,8 +121,7 @@ module Spree
       end
 
       def product_includes
-        [{ variants: [:images] },
-         { master: [:images, :default_price] }]
+        [:image, { variants: [:images] }]
       end
 
       def collection_actions
@@ -182,7 +181,6 @@ module Spree
           joins(:product).
           where('spree_products.supplier_id IN (?)', editable_enterprises.collect(&:id)).
           where('spree_variants.import_date IS NOT NULL').
-          where(spree_variants: { is_master: false }).
           where(spree_variants: { deleted_at: nil }).
           order('spree_variants.import_date DESC')
       end
@@ -208,7 +206,7 @@ module Spree
       end
 
       def set_stock_levels(product, on_hand, on_demand)
-        variant = product_variant(product)
+        variant = product.variants.first
 
         begin
           variant.on_demand = on_demand if on_demand.present?
@@ -225,14 +223,6 @@ module Spree
           report.add_metadata(:product_error, product.errors.first) unless product.valid?
           report.add_metadata(:variant, variant.attributes)
           report.add_metadata(:variant_error, variant.errors.first) unless variant.valid?
-        end
-      end
-
-      def product_variant(product)
-        if product.variants.any?
-          product.variants.first
-        else
-          product.master
         end
       end
 

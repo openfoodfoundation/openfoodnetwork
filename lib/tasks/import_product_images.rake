@@ -25,7 +25,7 @@ namespace :ofn do
           next
         end
 
-        if product.images.first.nil?
+        if product.image.nil?
           ImageImporter.new.import(entry[:image_url], product)
           puts " image added."
         else

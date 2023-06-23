@@ -33,7 +33,7 @@ describe "spree/orders/show.html.haml" do
   end
 
   it "shows product images" do
-    order.line_items.first.variant.product.images << Spree::Image.new(
+    order.line_items.first.variant.product.image = Spree::Image.new(
       attachment: fixture_file_upload("logo.png", "image/png")
     )
 
@@ -43,7 +43,7 @@ describe "spree/orders/show.html.haml" do
   end
 
   it "handles broken images" do
-    image, = order.line_items.first.variant.product.images << Spree::Image.new(
+    image, = order.line_items.first.variant.product.image = Spree::Image.new(
       attachment: fixture_file_upload("logo.png", "image/png")
     )
     # This image is not "variable" and can't be resized:

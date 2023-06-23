@@ -32,7 +32,6 @@ FactoryBot.define do
       tax_category { |r| Spree::TaxCategory.first || r.association(:tax_category) }
 
       after(:create) do |product, evaluator|
-        product.master.on_hand = evaluator.on_hand
         product.variants.first.on_hand = evaluator.on_hand
         product.reload
       end
@@ -42,8 +41,8 @@ FactoryBot.define do
   factory :product_with_image, parent: :product do
     after(:create) do |product|
       Spree::Image.create(attachment: white_logo_file,
-                          viewable_id: product.master.id,
-                          viewable_type: 'Spree::Variant')
+                          viewable_id: product.id,
+                          viewable_type: 'Spree::Product')
     end
   end
 
@@ -53,8 +52,6 @@ FactoryBot.define do
       on_hand { 5 }
     end
     after(:create) do |product, evaluator|
-      product.master.on_demand = evaluator.on_demand
-      product.master.on_hand = evaluator.on_hand
       product.variants.first.on_demand = evaluator.on_demand
       product.variants.first.on_hand = evaluator.on_hand
       product.reload

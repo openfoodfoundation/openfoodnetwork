@@ -188,7 +188,7 @@ module Admin
         if enterprises.present?
           enterprises.includes(
             supplied_products:
-              [:supplier, :variants, { master: [:images] }]
+              [:supplier, :variants, :image]
           )
         end
       when :index

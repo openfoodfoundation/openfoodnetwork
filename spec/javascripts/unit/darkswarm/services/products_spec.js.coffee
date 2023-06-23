@@ -29,9 +29,9 @@ describe 'Products service', ->
         id: 9
       master: {}
       variants: []
-      images: [
+      image: {
         large_url: 'foo.png'
-      ]
+      }
     currentOrder =
       line_items: []
     currentHub =

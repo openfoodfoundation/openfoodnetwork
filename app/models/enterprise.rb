@@ -160,7 +160,7 @@ class Enterprise < ApplicationRecord
   scope :is_distributor, -> { where('sells != ?', 'none') }
   scope :is_hub, -> { where(sells: 'any') }
   scope :supplying_variant_in, lambda { |variants|
-    joins(supplied_products: :variants_including_master).
+    joins(supplied_products: :variants).
       where('spree_variants.id IN (?)', variants).
       select('DISTINCT enterprises.*')
   }
@@ -389,7 +389,7 @@ class Enterprise < ApplicationRecord
   def current_distributed_taxons
     Spree::Taxon
       .select("DISTINCT spree_taxons.*")
-      .joins(products: :variants_including_master)
+      .joins(products: :variants)
       .joins("INNER JOIN (#{current_exchange_variants.to_sql}) \
         AS exchange_variants ON spree_variants.id = exchange_variants.variant_id")
   end

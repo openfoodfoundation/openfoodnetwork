@@ -487,7 +487,7 @@ describe Enterprise do
         s = create(:supplier_enterprise)
         d = create(:distributor_enterprise)
         p = create(:product)
-        create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.master])
+        create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.variants.first])
         expect(Enterprise.distributors_with_active_order_cycles).to eq([d])
       end
 
@@ -496,19 +496,12 @@ describe Enterprise do
         d = create(:distributor_enterprise)
         p = create(:product)
         create(:simple_order_cycle, orders_open_at: 10.days.from_now,
-                                    orders_close_at: 17.days.from_now, suppliers: [s], distributors: [d], variants: [p.master])
+                                    orders_close_at: 17.days.from_now, suppliers: [s], distributors: [d], variants: [p.variants.first])
         expect(Enterprise.distributors_with_active_order_cycles).not_to include d
       end
     end
 
     describe "supplying_variant_in" do
-      it "finds producers by supply of master variant" do
-        s = create(:supplier_enterprise)
-        p = create(:simple_product, supplier: s)
-
-        expect(Enterprise.supplying_variant_in([p.master])).to eq([s])
-      end
-
       it "finds producers by supply of variant" do
         s = create(:supplier_enterprise)
         p = create(:simple_product, supplier: s)
@@ -523,7 +516,7 @@ describe Enterprise do
         p1 = create(:simple_product, supplier: s1)
         p2 = create(:simple_product, supplier: s2)
 
-        expect(Enterprise.supplying_variant_in([p1.master, p2.master])).to match_array [s1, s2]
+        expect(Enterprise.supplying_variant_in([p1.variants.first, p2.variants.first])).to match_array [s1, s2]
       end
 
       it "does not return duplicates" do
@@ -531,7 +524,7 @@ describe Enterprise do
         p1 = create(:simple_product, supplier: s)
         p2 = create(:simple_product, supplier: s)
 
-        expect(Enterprise.supplying_variant_in([p1.master, p2.master])).to eq([s])
+        expect(Enterprise.supplying_variant_in([p1.variants.first, p2.variants.first])).to eq([s])
       end
     end
 
@@ -541,14 +534,14 @@ describe Enterprise do
 
       it "returns enterprises distributing via an order cycle" do
         order_cycle = create(:simple_order_cycle, distributors: [distributor],
-                                                  variants: [product.master])
+                                                  variants: [product.variants.first])
         expect(Enterprise.distributing_products(product.id)).to eq([distributor])
       end
 
       it "does not return duplicate enterprises" do
         another_product = create(:product)
         order_cycle = create(:simple_order_cycle, distributors: [distributor],
-                                                  variants: [product.master, another_product.master])
+                                                  variants: [product.variants.first, another_product.variants.first])
         expect(Enterprise.distributing_products([product.id,
                                                  another_product.id])).to eq([distributor])
       end
@@ -660,13 +653,13 @@ describe Enterprise do
   end
 
   describe "finding variants distributed by the enterprise" do
-    it "finds variants, including master, distributed by order cycle" do
+    it "finds variants distributed by order cycle" do
       distributor = create(:distributor_enterprise)
       product = create(:product)
       variant = product.variants.first
       create(:simple_order_cycle, distributors: [distributor], variants: [variant])
 
-      expect(distributor.distributed_variants).to match_array [product.master, variant]
+      expect(distributor.distributed_variants).to match_array [variant]
     end
   end
 
@@ -858,7 +851,7 @@ describe Enterprise do
         :simple_order_cycle,
         suppliers: [supplier],
         distributors: [distributor],
-        variants: [product.master]
+        variants: [product.variants.first]
       )
       expect(distributor.plus_parents_and_order_cycle_producers(order_cycle)).to eq([supplier])
     end
@@ -872,7 +865,7 @@ describe Enterprise do
         :simple_order_cycle,
         distributors: [distributor],
         suppliers: [supplier],
-        variants: [product.master]
+        variants: [product.variants.first]
       )
       create(:enterprise_relationship, parent: distributor,
                                        child: supplier, permissions: [permission])
@@ -890,7 +883,7 @@ describe Enterprise do
         :simple_order_cycle,
         suppliers: [supplier],
         distributors: [distributor],
-        variants: [product.master]
+        variants: [product.variants.first]
       )
       expected = supplier.plus_parents_and_order_cycle_producers(order_cycle)
       expect(expected).not_to include(distributor)
@@ -908,7 +901,7 @@ permissions: [permission])
         :simple_order_cycle,
         suppliers: [sender],
         distributors: [distributor],
-        variants: [product.master]
+        variants: [product.variants.first]
       )
       expected = supplier.plus_parents_and_order_cycle_producers(order_cycle)
       expect(expected).to include(sender)

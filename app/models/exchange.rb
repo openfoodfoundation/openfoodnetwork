@@ -55,7 +55,7 @@ class Exchange < ApplicationRecord
   }
   scope :with_product, lambda { |product|
     joins(:exchange_variants).
-      where('exchange_variants.variant_id IN (?)', product.variants_including_master.select(&:id))
+      where('exchange_variants.variant_id IN (?)', product.variants.select(&:id))
   }
   scope :by_enterprise_name, -> {
     joins('INNER JOIN enterprises AS sender   ON (sender.id   = exchanges.sender_id)').

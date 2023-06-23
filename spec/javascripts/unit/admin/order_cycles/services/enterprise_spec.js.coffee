@@ -45,14 +45,7 @@ describe 'Enterprise service', ->
     expect(Enterprise.suppliedVariants(1)).toEqual [10, 10]
 
   describe "finding the variants of a product", ->
-    it "returns the master for products without variants", ->
-      p =
-        master_id: 1
-        variants: []
-      expect(Enterprise.variantsOf(p)).toEqual [1]
-
     it "returns the variant ids for products with variants", ->
       p =
-        master_id: 1
         variants: [{id: 2}, {id: 3}]
       expect(Enterprise.variantsOf(p)).toEqual [2, 3]

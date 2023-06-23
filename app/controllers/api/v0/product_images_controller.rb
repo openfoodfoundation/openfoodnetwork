@@ -9,9 +9,9 @@ module Api
         product = Spree::Product.find(params[:product_id])
         authorize! :update, product
 
-        image = product.images.first || Spree::Image.new(
-          viewable_id: product.master.id,
-          viewable_type: 'Spree::Variant'
+        image = product.image || Spree::Image.new(
+          viewable_id: product.id,
+          viewable_type: 'Spree::Product'
         )
 
         success_status = image.persisted? ? :ok : :created

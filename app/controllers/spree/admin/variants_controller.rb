@@ -7,8 +7,6 @@ module Spree
     class VariantsController < ::Admin::ResourceController
       belongs_to 'spree/product', find_by: :permalink
 
-      before_action :assign_default_attributes, only: :new
-
       def index
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
@@ -45,6 +43,7 @@ module Spree
           flash[:success] = flash_message_for(@object, :successfully_created)
           redirect_to spree.admin_product_variants_url(params[:product_id], @url_filters)
         else
+          flash[:error] = @object.errors.full_messages.to_sentence if @object.errors.any?
           redirect_to spree.new_admin_product_variant_url(params[:product_id], @url_filters)
         end
 
@@ -81,13 +80,6 @@ module Spree
 
       def create_before
         @object.save
-      end
-
-      def assign_default_attributes
-        @object.attributes = @object.product.master.
-          attributes.except('id', 'created_at', 'deleted_at', 'sku', 'is_master')
-        # Shallow Clone of the default price to populate the price field.
-        @object.default_price = @object.product.master.default_price.clone
       end
 
       def collection

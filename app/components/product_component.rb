@@ -6,7 +6,7 @@ class ProductComponent < ViewComponentReflex::Component
   def initialize(product:, columns:)
     super
     @product = product
-    @image = @product.images[0] if product.images.any?
+    @image = @product.image if product.image.present?
     @columns = columns.map do |c|
       {
         id: c[:value],
@@ -28,7 +28,7 @@ class ProductComponent < ViewComponentReflex::Component
     when 'price'
       @product.price
     when 'unit'
-      "#{@product.unit_value} #{@product.variant_unit}"
+      "#{@product.variants.first.unit_value} #{@product.variant_unit}"
     when 'producer'
       @product.supplier.name
     when 'category'
