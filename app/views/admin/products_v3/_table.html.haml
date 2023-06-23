@@ -1,1 +1,39 @@
 %table.products
+  %col{ width:"15%" }
+  %col{ width:"5%", style: "max-width:5em" }
+  %col{ width:"5%", style: "max-width:5em" }
+  %col{ width:"5%", style: "max-width:5em"}
+  - # producer
+  %col{ width:"10%" }
+  %col{ width:"10%" }
+  %col{ width:"5%" }
+  %col{ width:"5%", style: "max-width:5em" }
+  %thead
+    %tr
+      %th.align-left= t('admin.product.name')
+      %th.align-right= t('admin.sku')
+      %th.align-right= t('admin.unit')
+      %th.align-right= t('admin.on_hand')
+      %th.align-left= t('admin.producer')
+      %th.align-left= t('admin.category')
+      %th.align-left= t('admin.tax_category')
+      %th.align-left= t('admin.inherits_properties')
+  %tbody
+    - products.each do |product|
+      %tr
+        %td.align-left.header
+          .line-clamp-1= product.name
+        %td.align-right
+          .line-clamp-1= product.sku
+        %td.align-right
+          .line-clamp-1= "#{product.unit_value&.round(3)} #{product.variant_unit}"
+        %td.align-right
+          .line-clamp-1= product.on_hand || 0
+        %td.align-left
+          .line-clamp-1= product.supplier.name
+        %td.align-left
+          .line-clamp-1= product.taxons.map(&:name).join(', ')
+        %td.align-left
+          .line-clamp-1= product.tax_category&.name
+        %td.align-left
+          .line-clamp-1= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values

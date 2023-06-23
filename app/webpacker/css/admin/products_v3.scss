@@ -1,0 +1,44 @@
+// Customisations for the new Bulk Edit Products page only
+.products_v3_page {
+  // Hopefully these rules will be moved to component(s).
+  table.products {
+    table-layout: fixed; // Column widths are based solely on col definitions (not content). This allows more efficient rendering.
+
+    background-color: $color-tbl-bg;
+    padding: 4px;
+    border-collapse: separate; // This is needed for the outer padding. Also should be helpful to give more flexibility of borders between rows.
+
+    th,
+    td {
+      padding: $padding-tbl-cell;
+      border: none;
+    }
+
+    th {
+      // Clip long content in headers, but allow wrapping
+      overflow: hidden;
+      text-overflow: clip; // If colums are so small that headers are clipping, ellipsis are more of a hindrance
+    }
+
+    td {
+      background-color: $color-tbl-cell-bg;
+    }
+  }
+
+  #no-products {
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: $h3-size;
+    gap: 20px;
+
+    #no-products-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+  }
+}
