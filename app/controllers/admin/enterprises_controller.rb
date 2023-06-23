@@ -121,9 +121,12 @@ module Admin
     def for_order_cycle
       respond_to do |format|
         format.json do
-          render json: @collection,
-                 each_serializer: Api::Admin::ForOrderCycle::EnterpriseSerializer,
-                 order_cycle: @order_cycle, spree_current_user: spree_current_user
+          render(
+            json: @collection,
+            each_serializer: Api::Admin::ForOrderCycle::EnterpriseSerializer,
+            order_cycle: @order_cycle,
+            spree_current_user: spree_current_user
+          )
         end
       end
     end
