@@ -23,13 +23,13 @@ nav.menu {
       }
 
       &.active a {
-        color: $color-2;
+        color: $green;
         border-left-width: 0;
-        border-bottom-color: $color-2;
+        border-bottom-color: $green;
       }
 
       &:hover a {
-        color: $color-2;
+        color: $green;
       }
     }
   }
@@ -53,7 +53,7 @@ nav.menu {
 
       &:hover {
         i {
-          color: $color-2;
+          color: $green;
         }
       }
     }
@@ -76,7 +76,7 @@ nav.menu {
     a {
       display: block;
       padding: 25px 5px;
-      color: $color-9 !important;
+      color: $dark-grey !important;
       position: relative;
       text-align: center;
       font-weight: 600;
@@ -87,8 +87,8 @@ nav.menu {
       }
 
       &:hover {
-        color: $color-5 !important;
-        border-bottom: 2px solid $color-5;
+        color: $red !important;
+        border-bottom: 2px solid $red;
       }
 
       span.text {
@@ -103,7 +103,7 @@ nav.menu {
 
     .dropdown {
       width: 300px;
-      background-color: $color-3;
+      background-color: $teal;
       width: 200px;
       z-index: 100000;
 
@@ -124,13 +124,13 @@ nav.menu {
 
 #sub-menu {
   padding-bottom: 0;
-  box-shadow: 0px 1px 0px $color-7;
+  box-shadow: 0px 1px 0px $light-grey;
 
   li {
     a {
       display: block;
       padding: 12px 20px;
-      color: $color-9;
+      color: $dark-grey;
       text-align: center;
       position: relative;
       font-size: 14px;
@@ -138,8 +138,8 @@ nav.menu {
 
     &.selected a,
     a:hover {
-      color: $color-5;
-      border-bottom: 2px solid $color-5;
+      color: $red;
+      border-bottom: 2px solid $red;
     }
   }
 }
