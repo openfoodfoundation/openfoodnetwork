@@ -7,3 +7,9 @@
         = button_link_to t(:new_product), "/admin/products/new", { :icon => 'icon-plus', :id => 'admin_new_product' }
 
 = render partial: 'spree/admin/shared/product_sub_menu'
+
+#products_v3_page{"data-controller": "productsV3"}
+  #loading-spinner.spinner-container{"data-productsV3-target": "loading"}
+    .spinner
+    = t('.loading')
+  #products-content
