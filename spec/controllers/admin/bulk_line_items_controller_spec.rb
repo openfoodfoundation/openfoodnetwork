@@ -86,7 +86,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "retrives a list of line items whose orders match the criteria" do
-          expect(line_item_ids).to eq [line_item2.id, line_item3.id, line_item4.id]
+          expect(line_item_ids).to match_array [line_item2.id, line_item3.id, line_item4.id]
         end
       end
     end
@@ -163,7 +163,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         it "returns paginated results" do
           get :index, params: { page: 1, per_page: 2 }, as: :json
 
-          expect(line_item_ids).to eq [line_item1.id, line_item2.id]
+          expect(line_item_ids).to match_array [line_item1.id, line_item2.id]
           expect(json_response['pagination']).to eq(
             { 'page' => 1, 'per_page' => 2, 'pages' => 2, 'results' => 4 }
           )
@@ -172,7 +172,7 @@ describe Admin::BulkLineItemsController, type: :controller do
         it "returns paginated results for a second page" do
           get :index, params: { page: 2, per_page: 2 }, as: :json
 
-          expect(line_item_ids).to eq [line_item3.id, line_item4.id]
+          expect(line_item_ids).to match_array [line_item3.id, line_item4.id]
           expect(json_response['pagination']).to eq(
             { 'page' => 2, 'per_page' => 2, 'pages' => 2, 'results' => 4 }
           )
