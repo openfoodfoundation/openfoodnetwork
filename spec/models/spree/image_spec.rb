@@ -55,9 +55,14 @@ module Spree
 
       context "when using public images" do
         it "returns the direct URL for the processed image" do
+          allow(ENV).to receive(:[])
+          expect(ENV).to receive(:[]).with("S3_BUCKET").and_return("present")
+
+          variant = double(:variant)
           allow(subject).to receive_message_chain(:attachment, :attached?) { true }
-          expect(subject).to receive_message_chain(:attachment, :service, :name) { :amazon_public }
-          expect(subject).to receive_message_chain(:variant, :processed, :url) { "https://ofn-s3/123.png" }
+          expect(subject).to receive(:variant) { variant }
+          expect(variant).to receive_message_chain(:service, :public?) { true }
+          expect(variant).to receive_message_chain(:processed, :url) { "https://ofn-s3/123.png" }
 
           expect(subject.url(:small)).to eq "https://ofn-s3/123.png"
         end
