@@ -104,4 +104,43 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
     end
   end
+
+  describe "#index" do
+    let!(:user) { create(:user) }
+    let!(:enterprise_user) { create(:user) }
+    let!(:order) {
+      create(:order_with_distributor, bill_address: create(:address),
+                                      ship_address: create(:address))
+    }
+    let!(:distributor) { order.distributor }
+    let(:params) { { id: order.number } }
+
+    context "as a normal user" do
+      before { allow(controller).to receive(:spree_current_user) { user } }
+
+      it "should prevent me from listing invoices for the order" do
+        spree_get :index, params
+        expect(response).to redirect_to unauthorized_path
+      end
+    end
+
+    context "as an enterprise user" do
+      context "which is not a manager of the distributor for an order" do
+        before { allow(controller).to receive(:spree_current_user) { enterprise_user } }
+
+        it "should prevent me from listing invoices for the order" do
+          spree_get :index, params
+          expect(response).to redirect_to unauthorized_path
+        end
+      end
+      context 'which is a manager of the distributor for an order' do
+        before { allow(controller).to receive(:spree_current_user) { distributor.owner } }
+
+        it "should allow me to see the order" do
+          spree_get :index, params
+          expect(response).to be_successful
+        end
+      end
+    end
+  end
 end
