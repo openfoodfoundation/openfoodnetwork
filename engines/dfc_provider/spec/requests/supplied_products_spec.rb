@@ -3,7 +3,8 @@
 require "swagger_helper"
 require DfcProvider::Engine.root.join("spec/spec_helper")
 
-describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rswag_autodoc: true do
+describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml",
+                             rswag_autodoc: true do
   let!(:user) { create(:oidc_user) }
   let!(:enterprise) { create(:distributor_enterprise, owner: user) }
   let!(:product) { create(:simple_product, supplier: enterprise ) }
@@ -22,27 +23,33 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
 
       # This parameter is required but I want to write a spec which doesn't
       # supply it. I couldn't do it with rswag when requiring it.
-      parameter name: :supplied_product, in: :body, schema: {}, required: false
+      parameter name: :supplied_product, in: :body, required: false, schema: {
+        example: {
+          '@context': "http://static.datafoodconsortium.org/ontologies/context.json",
+          '@id': "http://test.host/api/dfc-v1.7/enterprises/6201/supplied_products/0",
+          '@type': "dfc-b:SuppliedProduct",
+          'dfc-b:name': "Apple",
+          'dfc-b:description': "A delicious heritage apple",
+          'dfc-b:hasType': "dfc-pt:non-local-vegetable",
+          'dfc-b:hasQuantity': {
+            '@type': "dfc-b:QuantitativeValue",
+            'dfc-b:hasUnit': "dfc-m:Gram",
+            'dfc-b:value': 3.0
+          },
+          'dfc-b:alcoholPercentage': 0.0,
+          'dfc-b:lifetime': "",
+          'dfc-b:usageOrStorageCondition': "",
+          'dfc-b:totalTheoreticalStock': 0.0
+        }
+      }
 
       response "400", "bad request" do
         run_test!
       end
 
       response "204", "success" do
-        let(:supplied_product) do
-          {
-            "@context": "http://static.datafoodconsortium.org/ontologies/context.json",
-            "@id": "http://test.host/api/dfc-v1.7/enterprises/6201/supplied_products/0",
-            "@type": "dfc-b:SuppliedProduct",
-            "dfc-b:name": "Apple",
-            "dfc-b:description": "A delicious heritage apple",
-            "dfc-b:hasType":"dfc-pt:non-local-vegetable",
-            "dfc-b:hasQuantity":{"@type":"dfc-b:QuantitativeValue","dfc-b:hasUnit":"dfc-m:Gram","dfc-b:value":3.0},
-            "dfc-b:alcoholPercentage":0.0,
-            "dfc-b:lifetime":"",
-            "dfc-b:usageOrStorageCondition":"",
-            "dfc-b:totalTheoreticalStock":0.0
-          }
+        let(:supplied_product) do |example|
+          example.metadata[:operation][:parameters].first[:schema][:example]
         end
 
         it "creates a variant" do |example|

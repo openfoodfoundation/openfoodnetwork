@@ -116,7 +116,22 @@ paths:
       requestBody:
         content:
           application/json:
-            schema: {}
+            schema:
+              example:
+                "@context": http://static.datafoodconsortium.org/ontologies/context.json
+                "@id": http://test.host/api/dfc-v1.7/enterprises/6201/supplied_products/0
+                "@type": dfc-b:SuppliedProduct
+                dfc-b:name: Apple
+                dfc-b:description: A delicious heritage apple
+                dfc-b:hasType: dfc-pt:non-local-vegetable
+                dfc-b:hasQuantity:
+                  "@type": dfc-b:QuantitativeValue
+                  dfc-b:hasUnit: dfc-m:Gram
+                  dfc-b:value: 3.0
+                dfc-b:alcoholPercentage: 0.0
+                dfc-b:lifetime: ''
+                dfc-b:usageOrStorageCondition: ''
+                dfc-b:totalTheoreticalStock: 0.0
   "/api/dfc-v1.7/enterprises/{enterprise_id}/supplied_products/{id}":
     parameters:
     - name: enterprise_id
