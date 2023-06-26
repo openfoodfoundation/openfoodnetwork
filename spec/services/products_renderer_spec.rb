@@ -67,9 +67,12 @@ describe ProductsRenderer do
     end
 
     context "filtering" do
-      it "filters products by name_or_meta_keywords_or_variants_display_as_or_variants_display_name_or_supplier_name_cont" do
+      it "filters products by name_or_meta_keywords_or_variants_display_as_or_" \
+         "variants_display_name_or_supplier_name_cont" do
         products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, { q: {
-          name_or_meta_keywords_or_variants_display_as_or_variants_display_name_or_supplier_name_cont: "apples"
+          "#{[:name, :meta_keywords, :variants_display_as,
+              :variants_display_name, :supplier_name]
+          .join('_or_')}_cont": "apples",
         } })
         products = products_renderer.send(:products)
         expect(products).to eq([product_apples])
@@ -200,7 +203,7 @@ describe ProductsRenderer do
         allow(hub).to receive(:prefers_product_selection_from_inventory_only?) { true }
       end
 
-      it "does not render variants that have not been explicitly added to the inventory for the hub" do
+      it "doesn't render variants that haven't been explicitly added to inventory for the hub" do
         # but does render 'new' variants, ie. v1
         expect(variants[p.id]).to include v3
         expect(variants[p.id]).to_not include v1, v4

@@ -401,7 +401,7 @@ describe '
 
           # Then it should show me an error
           expect(page).to have_no_content 'Enterprise "zzz" has been successfully created!'
-          expect(page).to have_content "#{enterprise_user.email} is not permitted "\
+          expect(page).to have_content "#{enterprise_user.email} is not permitted " \
                                        "to own any more enterprises (limit is 1)."
         end
       end
@@ -438,7 +438,7 @@ describe '
         expect(distributor3.reload.name).to eq('Eaterprises')
       end
 
-      it "does not show links to manage shipping methods, payment methods or "\
+      it "does not show links to manage shipping methods, payment methods or " \
          "enterprise fees on the edit page" do
         visit admin_enterprises_path
         within("tbody#e_#{distributor3.id}") { click_link 'Settings' }

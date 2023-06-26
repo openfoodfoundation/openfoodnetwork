@@ -18,7 +18,8 @@ describe AddressGeocoder do
   end
 
   it "formats the address into a single comma separated string when passing it to the geocoder" do
-    expect(Geocoder).to receive(:coordinates).with("12 Galvin Street, Unit 1, 3018, Altona, Australia, Victoria")
+    expect(Geocoder).to receive(:coordinates)
+      .with("12 Galvin Street, Unit 1, 3018, Altona, Australia, Victoria")
 
     AddressGeocoder.new(address).geocode
   end

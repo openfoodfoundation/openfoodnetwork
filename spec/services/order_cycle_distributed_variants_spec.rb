@@ -26,7 +26,8 @@ describe OrderCycleDistributedVariants do
   describe "finding variants that are available through a particular order cycle" do
     it "finds variants distributed by order cycle" do
       variant = double(:variant)
-      allow(order_cycle).to receive(:variants_distributed_by).with(distributor).and_return([variant])
+      allow(order_cycle).to receive(:variants_distributed_by)
+        .with(distributor).and_return([variant])
 
       expect(subject.available_variants).to eq [variant]
     end

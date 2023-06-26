@@ -344,7 +344,8 @@ module Spree
               end
             end
 
-            context "when order's zone is neither the default zone, or included in the default zone, but matches the rate's zone" do
+            context "when order's zone is neither the default zone, or included " \
+                    "in the default zone, but matches the rate's zone" do
               before do
                 # With no zone members, this zone will not contain anything
                 zone.zone_members.delete_all
@@ -361,7 +362,8 @@ module Spree
               end
             end
 
-            context "when order's zone does not match default zone, is not included in the default zone, AND does not match the rate's zone" do
+            context "when order's zone does not match default zone, is not included in the " \
+                    "default zone, AND does not match the rate's zone" do
               let!(:other_country) { create(:country, name: "Other Country") }
               let!(:other_state) { create(:state, name: "Other State", country: other_country) }
               let!(:other_address) { create(:address, state: other_state, country: other_country) }

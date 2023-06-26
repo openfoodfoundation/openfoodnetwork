@@ -219,7 +219,7 @@ describe "
               # We need to wait_until because the save action is not fast enough
               # for the have_content matcher
               wait_until { page.find("#status-message").text != "Saving..." }
-              expect(page).to have_content "I couldn't get authorisation to save those changes, "\
+              expect(page).to have_content "I couldn't get authorisation to save those changes, " \
                                            "so they remain unsaved."
             end.to change(VariantOverride, :count).by(0)
           end
@@ -233,7 +233,7 @@ describe "
 
             expect do
               click_button 'Save Changes'
-              expect(page).to have_content "I couldn't get authorisation to save those changes, "\
+              expect(page).to have_content "I couldn't get authorisation to save those changes, " \
                                            "so they remain unsaved."
             end.to change(VariantOverride, :count).by(0)
           end
@@ -415,7 +415,7 @@ describe "
               expect(vo.on_demand).to be_nil
             end
 
-            it "provides explanation when attempting to save variant override with incompatible "\
+            it "provides explanation when attempting to save variant override with incompatible " \
                "stock settings" do
               # Successfully change stock settings.
               select_on_demand variant, :no
@@ -479,13 +479,13 @@ describe "
           select2_select hub.name, from: 'hub_id'
         end
 
-        it "alerts the user to the presence of new products, and allows them to be added "\
+        it "alerts the user to the presence of new products, and allows them to be added " \
            "or hidden" do
           expect(page).to have_no_selector "table#variant-overrides tr#v_#{variant1.id}"
           expect(page).to have_no_selector "table#variant-overrides tr#v_#{variant2.id}"
 
           expect(page).to have_selector '.alert-row span.message',
-                                        text: "There are 1 new products available to add to your "\
+                                        text: "There are 1 new products available to add to your " \
                                               "inventory."
           click_button "Review Now"
 

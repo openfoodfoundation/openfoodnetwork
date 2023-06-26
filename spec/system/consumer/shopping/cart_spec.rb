@@ -111,7 +111,7 @@ describe "full-page cart" do
 
         it "shows enterprise fees row row" do
           expect(page).to have_selector('#cart-detail')
-          expect(page).to have_content("Whole order - #{handling_fee.name} fee by distributor "\
+          expect(page).to have_content("Whole order - #{handling_fee.name} fee by distributor " \
                                        "#{order_cycle.coordinator.name}")
           expect(page).to have_selector '.cart-item-price',
                                         text: with_currency(0.86)
@@ -237,8 +237,8 @@ describe "full-page cart" do
 
             # shows a relevant Flash message
             expect(page).to have_selector ".alert-box",
-                                          text: 'An item in your cart has become unavailable. '\
-                                          'Please update the selected quantities.'
+                                          text: 'An item in your cart has become unavailable. ' \
+                                                'Please update the selected quantities.'
 
             # "Continue Shopping" and "Checkout" buttons are disabled
             expect(page).to have_selector "a.continue-shopping[disabled=disabled]"

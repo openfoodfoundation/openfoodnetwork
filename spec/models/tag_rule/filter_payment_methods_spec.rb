@@ -20,7 +20,7 @@ describe TagRule::FilterPaymentMethods, type: :model do
         it { expect(tag_rule.send(:tags_match?, payment_method)).to be false }
       end
 
-      context "when the rule has preferred customer tags specified that match ANY of the customer tags" do
+      context "when the rule has preferred customer tags specified that match ANY customer tags" do
         before {
           allow(tag_rule).to receive(:preferred_payment_method_tags) {
                                "wholesale,some_tag,member"
@@ -29,7 +29,7 @@ describe TagRule::FilterPaymentMethods, type: :model do
         it { expect(tag_rule.send(:tags_match?, payment_method)).to be true }
       end
 
-      context "when the rule has preferred customer tags specified that match NONE of the customer tags" do
+      context "when the rule has preferred customer tags specified that match NO customer tags" do
         before {
           allow(tag_rule).to receive(:preferred_payment_method_tags) {
                                "wholesale,some_tag,some_other_tag"

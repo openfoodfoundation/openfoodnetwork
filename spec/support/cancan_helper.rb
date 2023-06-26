@@ -10,7 +10,8 @@ module Spree
       ability         = Ability.new(user)
       target          = options[:for]
       @ability_result = {}
-      ability_hash    = { ability_hash => true } if ability_hash.is_a? Symbol # e.g.: :create => {:create => true}
+      # e.g.: :create => {:create => true}
+      ability_hash    = { ability_hash => true } if ability_hash.is_a? Symbol
       if ability_hash.is_a? Array
         ability_hash = ability_hash.inject({}){ |member, i|
           member.merge(i => true)
@@ -32,7 +33,8 @@ module Spree
         }
       end
       target = options[:for]
-      message = "expected User:#{user} to have ability: #{ability_hash} for #{target}, but actual result is #{@ability_result}"
+      message = "expected User:#{user} to have ability: #{ability_hash} for #{target}, " \
+                "but actual result is #{@ability_result}"
     end
 
     # to clean up output of RSpec Documentation format

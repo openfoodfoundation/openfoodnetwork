@@ -69,7 +69,7 @@ describe "Managing users" do
           fill_in "Email", with: "newemail@example.org"
           click_button "Update"
 
-          expect(page).to have_content("The account will be updated once "\
+          expect(page).to have_content("The account will be updated once " \
                                        "the new email is confirmed.")
         end
 

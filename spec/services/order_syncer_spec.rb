@@ -29,30 +29,34 @@ describe OrderSyncer do
       end
     end
 
-    context "when the shipping method on a shipment is not the same as the original shipping method on the subscription" do
+    context "when the shipping method on a shipment is not the same " \
+            "as the original shipping method on the subscription" do
       let(:params) { { shipping_method_id: new_shipping_method.id } }
 
-      context "when the shipping method on a shipment is the same as the new shipping method on the subscription" do
+      context "when the shipping method on a shipment is the same as the new shipping method " \
+              "on the subscription" do
         before do
           # Create shipping rates for available shipping methods.
           order.shipments.each(&:refresh_rates)
 
           # Updating the shipping method on a shipment updates the shipping method on the order,
-          # and vice-versa via logic in Spree's shipments controller. So updating both here mimics that
-          # behaviour.
+          # and vice-versa via logic in Spree's shipments controller. So updating both here mimics
+          # that behaviour.
           order.select_shipping_method(new_shipping_method.id)
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
         end
 
-        it "does not update the shipping_method on the subscription or on the pre-altered shipment" do
+        it "does not update the shipping_method on the subscription or " \
+           "on the pre-altered shipment" do
           expect(order.reload.shipping_method).to eq new_shipping_method
           expect(order.reload.shipments.first.shipping_method).to eq new_shipping_method
           expect(syncer.order_update_issues[order.id]).to be nil
         end
       end
 
-      context "when the shipping method on a shipment is not the same as the new shipping method on the subscription" do
+      context "when the shipping method on a shipment is not the same as the new shipping method " \
+              "on the subscription" do
         let!(:changed_shipping_method) { create(:shipping_method) }
 
         before do
@@ -60,15 +64,16 @@ describe OrderSyncer do
           order.shipments.each(&:refresh_rates)
 
           # Updating the shipping method on a shipment updates the shipping method on the order,
-          # and vice-versa via logic in Spree's shipments controller. So updating both here mimics that
-          # behaviour.
+          # and vice-versa via logic in Spree's shipments controller. So updating both here mimics
+          # that behaviour.
           order.select_shipping_method(changed_shipping_method.id)
           subscription.assign_attributes(params)
 
           expect(syncer.sync!).to be true
         end
 
-        it "does not update the shipping_method on the subscription or on the pre-altered shipment" do
+        it "does not update the shipping_method on the subscription or " \
+           "on the pre-altered shipment" do
           expect(order.reload.shipping_method).to eq changed_shipping_method
           expect(order.reload.shipments.first.shipping_method).to eq changed_shipping_method
           expect(syncer.order_update_issues[order.id]).to include "Shipping Method"
@@ -105,7 +110,8 @@ describe OrderSyncer do
     context "when the payment method on a payment is not the same as the subscription" do
       let(:params) { { payment_method_id: new_payment_method.id } }
 
-      context "when the payment method on a payment is the same as the original payment method on the subscription" do
+      context "when the payment method on a payment is the same as the original payment method " \
+              "on the subscription" do
         before do
           order.payments.first.update_attribute(:payment_method_id, new_payment_method.id)
           subscription.assign_attributes(params)
@@ -120,7 +126,8 @@ describe OrderSyncer do
         end
       end
 
-      context "when the payment method on a shipment is not the same as the original payment method on the subscription" do
+      context "when the payment method on a shipment is not the same " \
+              "as the original payment method on the subscription" do
         let(:changed_payment_method) { create(:payment_method) }
 
         before do
@@ -420,7 +427,8 @@ describe OrderSyncer do
       end
 
       context "when order is complete" do
-        it "does not update the line_item quantities and adds the order to order_update_issues with insufficient stock" do
+        it "does not update the line_item quantities and adds the order " \
+           "to order_update_issues with insufficient stock" do
           OrderWorkflow.new(order).complete
 
           expect(syncer.sync!).to be true
@@ -430,18 +438,23 @@ describe OrderSyncer do
           expect(line_items.map(&:quantity)).to eq [1]
           expect(order.reload.total.to_f).to eq 59.97
           line_item = order.line_items.find_by(variant_id: sli.variant_id)
-          expect(syncer.order_update_issues[order.id]).to include "#{line_item.product.name} - #{line_item.variant.full_name} - Insufficient stock available"
+          expect(syncer.order_update_issues[order.id])
+            .to include "#{line_item.product.name} - #{line_item.variant.full_name} - " \
+                        "Insufficient stock available"
         end
 
-        it "does not update the line_item quantities and adds the order to order_update_issues with out of stock" do
-          # this single item available is used when the order is completed below, making the item out of stock
+        it "does not update the line_item quantities and adds the order " \
+           "to order_update_issues with out of stock" do
+          # this single item available is used when the order is completed below,
+          # making the item out of stock
           variant.update_attribute(:on_hand, 1)
           OrderWorkflow.new(order).complete
 
           expect(syncer.sync!).to be true
 
           line_item = order.line_items.find_by(variant_id: sli.variant_id)
-          expect(syncer.order_update_issues[order.id]).to include "#{line_item.product.name} - #{line_item.variant.full_name} - Out of Stock"
+          expect(syncer.order_update_issues[order.id])
+            .to include "#{line_item.product.name} - #{line_item.variant.full_name} - Out of Stock"
         end
       end
     end
@@ -453,7 +466,8 @@ describe OrderSyncer do
 
       before { variant.update_attribute(:on_hand, 3) }
 
-      context "when the changed line_item quantity matches the new quantity on the subscription line item" do
+      context "when the changed line_item quantity matches the new quantity " \
+              "on the subscription line item" do
         before do
           changed_line_item.update(quantity: 3)
           order.update_order!
@@ -469,7 +483,8 @@ describe OrderSyncer do
         end
       end
 
-      context "when the changed line_item quantity doesn't match the new quantity on the subscription line item" do
+      context "when the changed line_item quantity doesn't match the new quantity " \
+              "on the subscription line item" do
         before do
           changed_line_item.update(quantity: 2)
           order.update_order!
@@ -483,7 +498,8 @@ describe OrderSyncer do
 
           expect(changed_line_item.reload.quantity).to eq 2
           expect(order.reload.total.to_f).to eq 79.96
-          expect(syncer.order_update_issues[order.id]).to include "#{changed_line_item.product.name} - #{changed_line_item.variant.full_name}"
+          expect(syncer.order_update_issues[order.id])
+            .to include "#{changed_line_item.product.name} - #{changed_line_item.variant.full_name}"
         end
       end
     end
@@ -538,10 +554,13 @@ describe OrderSyncer do
           line_items = Spree::LineItem.where(order_id: subscription.orders, variant_id: variant.id)
           expect(line_items.map(&:quantity)).to eq []
           expect(order.reload.total.to_f).to eq 59.97
-          expect(syncer.order_update_issues[order.id]).to include "#{variant.product.name} - #{variant.full_name} - Insufficient stock available"
+          expect(syncer.order_update_issues[order.id])
+            .to include "#{variant.product.name} - #{variant.full_name} " \
+                        "- Insufficient stock available"
         end
 
-        context "and then updating the quantity of that subscription line item that was not added to the completed order" do
+        context "and then updating the quantity of that subscription line item " \
+                "that was not added to the completed order" do
           it "does nothing to the order and adds the order to order_update_issues" do
             expect(syncer.sync!).to be true
 
@@ -559,7 +578,8 @@ describe OrderSyncer do
             line_items = Spree::LineItem.where(order_id: subscription.orders,
                                                variant_id: variant.id)
             expect(line_items.map(&:quantity)).to eq []
-            expect(syncer.order_update_issues[order.id]).to include "#{variant.product.name} - #{variant.full_name}"
+            expect(syncer.order_update_issues[order.id])
+              .to include "#{variant.product.name} - #{variant.full_name}"
           end
         end
       end

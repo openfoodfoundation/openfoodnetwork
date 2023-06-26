@@ -7,7 +7,8 @@ describe ContentSanitizer do
 
   context "#strip_content" do
     it "strips disallowed tags" do
-      expect(service.strip_content("I'm friendly!<script>alert('hello! I'm malicious');</script>")).to eq("I'm friendly!")
+      expect(service.strip_content("I'm friendly!<script>alert('hello! I'm malicious');</script>"))
+        .to eq("I'm friendly!")
     end
 
     it "replaces spaces" do
@@ -55,7 +56,8 @@ describe ContentSanitizer do
     end
 
     it "removes empty <p> tags and keeps non-empty ones" do
-      expect(service.sanitize_content("<p> </p><p></p><p><b></b><p>hello</p><p></p><p>world!</p>")).to eq("<p>hello</p><p>world!</p>")
+      expect(service.sanitize_content("<p> </p><p></p><p><b></b><p>hello</p><p></p><p>world!</p>"))
+        .to eq("<p>hello</p><p>world!</p>")
     end
   end
 end

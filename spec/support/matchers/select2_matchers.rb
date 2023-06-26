@@ -52,7 +52,8 @@ RSpec::Matchers.define :have_select2 do |id, options = {}|
     if results.none? && (options.key? :with_options)
       results << all_options_absent(from, options[:with_options])
       # results << exact_options_present(from, options[:options]) if options.key? :options
-      # results << no_options_present(from, options[:without_options]) if options.key? :without_options
+      # results << no_options_present(from, options[:without_options])
+      #   if options.key? :without_options
     end
 
     if (options.keys & %i(selected options without_options)).any?

@@ -15,7 +15,8 @@ describe '
 
   let!(:order) {
     create(:order_with_totals_and_distribution, user: user, distributor: distributor,
-                                                order_cycle: order_cycle, state: 'complete', payment_state: 'balance_due')
+                                                order_cycle: order_cycle, state: 'complete',
+                                                payment_state: 'balance_due')
   }
   let!(:tax_category) { create(:tax_category, name: 'GST') }
   let!(:tax_rate) {

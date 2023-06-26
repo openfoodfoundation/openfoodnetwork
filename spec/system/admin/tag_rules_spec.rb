@@ -28,8 +28,8 @@ describe 'Tag Rules' do
       within(".customer_tag #tr_0") do
         fill_in_tag "volunteers-only"
         select2_select "NOT VISIBLE",
-                       from: "enterprise_tag_rules_attributes_0_preferred_matched_"\
-                       "shipping_methods_visibility"
+                       from: "enterprise_tag_rules_attributes_0_preferred_matched_" \
+                             "shipping_methods_visibility"
       end
 
       # New FilterProducts Rule
@@ -39,8 +39,8 @@ describe 'Tag Rules' do
       within(".customer_tag #tr_1") do
         fill_in_tag "volunteers-only1"
         select2_select "VISIBLE",
-                       from: "enterprise_tag_rules_attributes_1_preferred_matched_"\
-                       "variants_visibility"
+                       from: "enterprise_tag_rules_attributes_1_preferred_matched_" \
+                             "variants_visibility"
       end
 
       # New FilterPaymentMethods Rule
@@ -50,8 +50,8 @@ describe 'Tag Rules' do
       within(".customer_tag #tr_2") do
         fill_in_tag "volunteers-only2"
         select2_select "VISIBLE",
-                       from: "enterprise_tag_rules_attributes_2_preferred_matched_"\
-                       "payment_methods_visibility"
+                       from: "enterprise_tag_rules_attributes_2_preferred_matched_" \
+                             "payment_methods_visibility"
       end
 
       # New FilterOrderCycles Rule
@@ -61,8 +61,8 @@ describe 'Tag Rules' do
       within(".customer_tag #tr_3") do
         fill_in_tag "volunteers-only3"
         select2_select "NOT VISIBLE",
-                       from: "enterprise_tag_rules_attributes_3_preferred_matched_"\
-                       "order_cycles_visibility"
+                       from: "enterprise_tag_rules_attributes_3_preferred_matched_" \
+                             "order_cycles_visibility"
       end
 
       # New DEFAULT FilterOrderCycles Rule
@@ -167,10 +167,10 @@ describe 'Tag Rules' do
       within ".customer_tag #tr_1" do
         within "li.tag-item", text: "member ✖" do find("a.remove-button").click end
         fill_in_tag "volunteers-only1"
-        expect(page).to have_select2 "enterprise_tag_rules_attributes_1_preferred_matched_"\
+        expect(page).to have_select2 "enterprise_tag_rules_attributes_1_preferred_matched_" \
                                      "variants_visibility", selected: 'VISIBLE'
         select2_select 'NOT VISIBLE',
-                       from: "enterprise_tag_rules_attributes_1_preferred_matched_"\
+                       from: "enterprise_tag_rules_attributes_1_preferred_matched_" \
                              "variants_visibility"
       end
 
@@ -178,10 +178,10 @@ describe 'Tag Rules' do
       within ".customer_tag #tr_2" do
         within "li.tag-item", text: "trusted ✖" do find("a.remove-button").click end
         fill_in_tag "volunteers-only2"
-        expect(page).to have_select2 "enterprise_tag_rules_attributes_2_preferred_matched_"\
+        expect(page).to have_select2 "enterprise_tag_rules_attributes_2_preferred_matched_" \
                                      "payment_methods_visibility", selected: 'NOT VISIBLE'
         select2_select 'VISIBLE',
-                       from: "enterprise_tag_rules_attributes_2_preferred_matched_"\
+                       from: "enterprise_tag_rules_attributes_2_preferred_matched_" \
                              "payment_methods_visibility"
       end
 
@@ -189,10 +189,10 @@ describe 'Tag Rules' do
       within ".customer_tag #tr_3" do
         within "li.tag-item", text: "wholesale ✖" do find("a.remove-button").click end
         fill_in_tag "volunteers-only3"
-        expect(page).to have_select2 "enterprise_tag_rules_attributes_3_preferred_matched_"\
+        expect(page).to have_select2 "enterprise_tag_rules_attributes_3_preferred_matched_" \
                                      "order_cycles_visibility", selected: 'VISIBLE'
         select2_select 'NOT VISIBLE',
-                       from: "enterprise_tag_rules_attributes_3_preferred_matched_"\
+                       from: "enterprise_tag_rules_attributes_3_preferred_matched_" \
                              "order_cycles_visibility"
       end
 
@@ -200,10 +200,10 @@ describe 'Tag Rules' do
       within ".customer_tag #tr_4" do
         within "li.tag-item", text: "local ✖" do find("a.remove-button").click end
         fill_in_tag "volunteers-only4"
-        expect(page).to have_select2 "enterprise_tag_rules_attributes_4_preferred_matched_"\
+        expect(page).to have_select2 "enterprise_tag_rules_attributes_4_preferred_matched_" \
                                      "shipping_methods_visibility", selected: 'NOT VISIBLE'
         select2_select 'VISIBLE',
-                       from: "enterprise_tag_rules_attributes_4_preferred_matched_"\
+                       from: "enterprise_tag_rules_attributes_4_preferred_matched_" \
                              "shipping_methods_visibility"
       end
 =begin

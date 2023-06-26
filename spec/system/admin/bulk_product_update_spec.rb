@@ -151,9 +151,11 @@ describe '
       p1 = FactoryBot.create(:product, price: 2.0, variant_unit: "weight",
                                        variant_unit_scale: "1000")
       v1 = FactoryBot.create(:variant, product: p1, price: 12.75,
-                                       unit_value: 1200, unit_description: "(small bag)", display_as: "bag")
+                                       unit_value: 1200, unit_description: "(small bag)",
+                                       display_as: "bag")
       v2 = FactoryBot.create(:variant, product: p1, price: 2.50,
-                                       unit_value: 4800, unit_description: "(large bag)", display_as: "bin")
+                                       unit_value: 4800, unit_description: "(large bag)",
+                                       display_as: "bin")
 
       visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
@@ -304,7 +306,8 @@ describe '
         end
 
         click_button 'Save Changes', match: :first
-        expect(page.find("#status-message")).to have_content "Unit value can't be blank Unit value is not a number"
+        expect(page.find("#status-message"))
+          .to have_content "Unit value can't be blank Unit value is not a number"
       end
 
       it "creating a variant with unit value is: '120g' and 'on_demand' checked" do
@@ -319,7 +322,8 @@ describe '
         end
 
         click_button 'Save Changes', match: :first
-        expect(page.find("#status-message")).to have_content "Unit value can't be blank Unit value is not a number"
+        expect(page.find("#status-message"))
+          .to have_content "Unit value can't be blank Unit value is not a number"
       end
     end
   end
@@ -329,8 +333,8 @@ describe '
     s2 = FactoryBot.create(:supplier_enterprise)
     t1 = FactoryBot.create(:taxon)
     t2 = FactoryBot.create(:taxon)
-    p = FactoryBot.create(:product, supplier: s1,
-                                    variant_unit: 'volume', variant_unit_scale: 1, primary_taxon: t2, sku: "OLD SKU")
+    p = FactoryBot.create(:product, supplier: s1, variant_unit: 'volume',
+                                    variant_unit_scale: 1, primary_taxon: t2, sku: "OLD SKU")
 
     login_as_admin
     visit spree.admin_products_path
@@ -597,7 +601,7 @@ describe '
         visit spree.admin_products_path
       end
 
-      it "shows an edit button for products, which takes the user to the standard edit page for that product" do
+      it "shows edit product button, which takes user to the standard edit page of that product" do
         expect(page).to have_selector "a.edit-product", count: 2
 
         within "tr#p_#{p1.id}" do
@@ -607,7 +611,8 @@ describe '
         expect(URI.parse(current_url).path).to eq spree.edit_admin_product_path(v1.product.id)
       end
 
-      it "shows an edit button for products, which takes the user to the standard edit page for that product, url includes selected filter" do
+      it "shows edit product button, which takes user to the standard edit page " \
+         "for that product, url includes selected filter" do
         expect(page).to have_selector "a.edit-product", count: 2
 
         # Set a filter
@@ -624,7 +629,7 @@ describe '
         )
       end
 
-      it "shows an edit button for variants, which takes the user to the standard edit page for that variant" do
+      it "shows edit variant button, which takes user to the standard edit page for it" do
         expect(page).to have_selector "a.view-variants"
         all("a.view-variants").each(&:click)
 
@@ -640,7 +645,8 @@ describe '
         )
       end
 
-      it "shows an edit button for variants, which takes the user to the standard edit page for that variant, url includes selected filter" do
+      it "shows edit variant button, which takes the user to the standard edit page " \
+         "for that variant, url includes selected filter" do
         expect(page).to have_selector "a.view-variants"
         all("a.view-variants").each(&:click)
 
@@ -662,7 +668,7 @@ describe '
     end
 
     describe "using clone buttons" do
-      it "shows a clone button for products, which duplicates the product and adds it to the page when clicked" do
+      it "shows clone product button, which dupes it & adds it to the page when clicked" do
         p1 = FactoryBot.create(:product, name: "P1")
         p2 = FactoryBot.create(:product, name: "P2")
         p3 = FactoryBot.create(:product, name: "P3")
@@ -787,8 +793,12 @@ describe '
     it "shows only suppliers that I manage or have permission to" do
       visit spree.admin_products_path
 
-      expect(page).to have_select 'producer_id',
-                                  with_options: [supplier_managed1.name, supplier_managed2.name, supplier_permitted.name], selected: supplier_managed1.name
+      expect(page)
+        .to have_select(
+          'producer_id',
+          with_options: [supplier_managed1.name, supplier_managed2.name, supplier_permitted.name],
+          selected: supplier_managed1.name,
+        )
       expect(page).to have_no_select 'producer_id', with_options: [supplier_unmanaged.name]
     end
 

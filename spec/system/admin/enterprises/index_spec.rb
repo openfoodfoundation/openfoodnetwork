@@ -155,7 +155,7 @@ describe 'Enterprises Index' do
         expect(find('.js-admin-section-header')).to have_link "New Enterprise"
       end
 
-      it "does not give me an option to change or update the package and "\
+      it "does not give me an option to change or update the package and " \
          "producer properties of enterprises I manage" do
         visit admin_enterprises_path
 
@@ -186,7 +186,7 @@ describe 'Enterprises Index' do
     end
 
     context "listing enterprises" do
-      it "allows me to change or update the package and "\
+      it "allows me to change or update the package and " \
          "producer properties of enterprises I manage" do
         visit admin_enterprises_path
 

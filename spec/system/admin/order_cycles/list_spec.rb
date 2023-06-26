@@ -162,7 +162,7 @@ match: :first).value).to eq oc_open_at.strftime("%Y-%m-13 %H:%M")
         end
       end
 
-      it "correctly opens the datetimepicker and closes it using the last button "\
+      it "correctly opens the datetimepicker and closes it using the last button " \
          "(the 'Close' one)" do
         login_as_admin
         visit admin_order_cycles_path
@@ -205,8 +205,8 @@ match: :first).value).to eq test_value.to_datetime.strftime("%Y-%m-%d %H:%M")
   end
 
   def date_warning_msg(nbr = 1)
-    "This order cycle is linked to %d open subscription orders. Changing this date now will not "\
-    "affect any orders which have already been placed, but should be avoided if possible. "\
+    "This order cycle is linked to %d open subscription orders. Changing this date now will not " \
+    "affect any orders which have already been placed, but should be avoided if possible. " \
     "Are you sure you want to proceed?" % nbr
   end
 end

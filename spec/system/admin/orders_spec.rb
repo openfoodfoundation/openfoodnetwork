@@ -531,7 +531,7 @@ distributors: [distributor4, distributor5]) }
                 page.find("span", text: "Send Invoices").click
               end
 
-              expect(page).to have_content "This will email customer invoices "\
+              expect(page).to have_content "This will email customer invoices " \
                                            "for all selected complete orders."
               expect(page).to have_content "Are you sure you want to proceed?"
 
@@ -576,7 +576,7 @@ distributors: [distributor4, distributor5]) }
           end
 
           expect(page).to have_content "Compiling Invoices"
-          expect(page).to have_content "Please wait until the PDF is ready "\
+          expect(page).to have_content "Please wait until the PDF is ready " \
                                        "before closing this modal."
           # an error 422 is generated in the console
         end

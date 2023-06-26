@@ -97,8 +97,8 @@ code: nil, created_manually: true)
             end
           end
           expect(page).to have_selector "#info-dialog .text",
-                                        text: 'Delete failed: This customer has '\
-                                        'active subscriptions. Cancel them first.'
+                                        text: 'Delete failed: This customer has ' \
+                                              'active subscriptions. Cancel them first.'
           click_button "OK"
         }.to_not change{ Customer.count }
 

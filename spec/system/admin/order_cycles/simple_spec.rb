@@ -97,8 +97,8 @@ describe '
       it "displays a warning on the dashboard" do
         login_to_admin_section
         expect(page).to have_content(
-          "The hub #{hub.name} is listed in an active order cycle, but does not have valid "\
-          "shipping and payment methods. Until you set these up, customers will not be able "\
+          "The hub #{hub.name} is listed in an active order cycle, but does not have valid " \
+          "shipping and payment methods. Until you set these up, customers will not be able " \
           "to shop at this hub."
         )
       end
@@ -107,8 +107,8 @@ describe '
         login_as_admin
         visit admin_order_cycles_path
         expect(page).to have_content(
-          "The hub #{hub.name} is listed in an active order cycle, "\
-          "but does not have valid shipping and payment methods. Until you set these up, "\
+          "The hub #{hub.name} is listed in an active order cycle, " \
+          "but does not have valid shipping and payment methods. Until you set these up, " \
           "customers will not be able to shop at this hub."
         )
       end
@@ -751,7 +751,7 @@ describe '
     end
   end
 
-  it "modify the minute of a order cycle with the keyboard, "\
+  it "modify the minute of a order cycle with the keyboard, " \
      "check that the modifications are taken into account" do
     order_cycle = create(:simple_order_cycle, name: "Translusent Berries")
     login_as_admin

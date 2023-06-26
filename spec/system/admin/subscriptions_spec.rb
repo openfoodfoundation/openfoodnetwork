@@ -593,10 +593,11 @@ describe 'Subscriptions' do
           expect(page).to have_content 'Saved'
 
           expect(page).to have_selector "#order_update_issues_dialog .message",
-                                        text: 'Some orders could not be automatically updated, '\
-                                        'this is most likely because they have been manually '\
-                                        'edited. Please review the issues listed below and make '\
-                                        'any adjustments to individual orders if required.'
+                                        text: 'Some orders could not be automatically updated, ' \
+                                              'this is most likely because they have been ' \
+                                              'manually edited. Please review the issues listed ' \
+                                              'below and make any adjustments to individual ' \
+                                              'orders if required.'
         end
       end
     end

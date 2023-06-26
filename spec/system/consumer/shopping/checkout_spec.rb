@@ -495,8 +495,8 @@ describe "As a consumer I want to check out my cart" do
           check "Shipping address same as billing address?"
         end
 
-        it "takes us to the order confirmation page when submitted with 'same as billing address' "\
-           "checked" do
+        it "takes us to the order confirmation page when submitted with " \
+           "'same as billing address' checked" do
           place_order
           expect(page).to have_content "Your order has been processed successfully"
 
@@ -505,7 +505,7 @@ describe "As a consumer I want to check out my cart" do
           expect(order.shipment_state).to eq "pending"
         end
 
-        it "takes us to the cart page with an error when a product becomes out of stock just "\
+        it "takes us to the cart page with an error when a product becomes out of stock just " \
            "before we purchase" do
           variant.on_demand = false
           variant.on_hand = 0
@@ -565,7 +565,7 @@ describe "As a consumer I want to check out my cart" do
                                         type: gateway_type)
               }
 
-              it "takes us to the order confirmation page when submitted "\
+              it "takes us to the order confirmation page when submitted " \
                  "with a valid credit card" do
                 fill_in 'Card Number', with: "4111111111111111"
                 select 'February', from: 'secrets.card_month'
@@ -582,7 +582,7 @@ describe "As a consumer I want to check out my cart" do
                 expect(order.shipment_state).to eq "ready"
               end
 
-              it "shows the payment processing failed message when submitted "\
+              it "shows the payment processing failed message when submitted " \
                  "with an invalid credit card" do
                 fill_in 'Card Number', with: "9999999988887777"
                 select 'February', from: 'secrets.card_month'
