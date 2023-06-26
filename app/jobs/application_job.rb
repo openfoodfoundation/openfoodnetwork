@@ -7,4 +7,11 @@ class ApplicationJob < ActiveJob::Base
 
   # Most jobs are safe to ignore if the underlying records are no longer available
   # discard_on ActiveJob::DeserializationError
+
+  private
+
+  def enable_active_storage_urls
+    ActiveStorage::Current.url_options ||=
+      Rails.application.config.action_controller.default_url_options
+  end
 end
