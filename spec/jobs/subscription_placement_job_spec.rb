@@ -81,7 +81,8 @@ describe SubscriptionPlacementJob do
         job.perform
 
         expect(summarizer.recorded_issues[order.id])
-          .to eq("Errors: Cannot transition state via :next from :address (Reason(s): Items cannot be shipped)")
+          .to eq("Errors: Cannot transition state via :next from :address " \
+                 "(Reason(s): Items cannot be shipped)")
       end
     end
   end

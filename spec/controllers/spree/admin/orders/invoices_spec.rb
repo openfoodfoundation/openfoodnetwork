@@ -42,7 +42,8 @@ describe Spree::Admin::OrdersController, type: :controller do
               spree_get :invoice, params
             end.to_not change{ Spree::OrderMailer.deliveries.count }
             expect(response).to redirect_to spree.edit_admin_order_path(order)
-            expect(flash[:error]).to eq "#{distributor.name} must have a valid ABN before invoices can be sent."
+            expect(flash[:error])
+              .to eq "#{distributor.name} must have a valid ABN before invoices can be sent."
           end
         end
 

@@ -123,7 +123,8 @@ describe Spree::OrdersController, type: :controller do
       get :edit
 
       expect(response).to redirect_to root_url
-      expect(flash[:info]).to eq('The hub you have selected is temporarily closed for orders. Please try again later.')
+      expect(flash[:info]).to eq('The hub you have selected is temporarily closed for orders. ' \
+                                 'Please try again later.')
     end
 
     describe "when an item is in the cart" do
@@ -162,7 +163,8 @@ describe Spree::OrdersController, type: :controller do
         it "displays a flash message when we view the cart" do
           get :edit
           expect(response.status).to eq 200
-          expect(flash[:error]).to eq 'An item in your cart has become unavailable. Please update the selected quantities.'
+          expect(flash[:error]).to eq 'An item in your cart has become unavailable. ' \
+                                      'Please update the selected quantities.'
         end
       end
 
@@ -174,7 +176,8 @@ describe Spree::OrdersController, type: :controller do
         it "displays a flash message when we view the cart" do
           get :edit
           expect(response.status).to eq 200
-          expect(flash[:error]).to eq 'An item in your cart has become unavailable. Please update the selected quantities.'
+          expect(flash[:error]).to eq 'An item in your cart has become unavailable. ' \
+                                      'Please update the selected quantities.'
         end
       end
     end
@@ -232,7 +235,8 @@ describe Spree::OrdersController, type: :controller do
       let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
       let(:order) {
         create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee,
-                                           payment_fee: payment_fee, shipping_tax_category: shipping_tax_category)
+                                           payment_fee: payment_fee,
+                                           shipping_tax_category: shipping_tax_category)
       }
       let(:line_item1) { order.line_items.first }
       let(:line_item2) { order.line_items.second }
@@ -280,11 +284,13 @@ describe Spree::OrdersController, type: :controller do
       let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
       let!(:exchange) {
         create(:exchange, incoming: true, sender: variant1.product.supplier,
-                          receiver: order_cycle.coordinator, variants: [variant1, variant2], enterprise_fees: [enterprise_fee])
+                          receiver: order_cycle.coordinator, variants: [variant1, variant2],
+                          enterprise_fees: [enterprise_fee])
       }
       let!(:order) do
         order = create(:completed_order_with_totals, line_items_count: 2, user: user,
-                                                     distributor: distributor, order_cycle: order_cycle)
+                                                     distributor: distributor,
+                                                     order_cycle: order_cycle)
         order.reload.line_items.first.update(variant_id: variant1.id)
         order.reload.line_items.last.update(variant_id: variant2.id)
         break unless order.next! while !order.completed?
@@ -303,13 +309,15 @@ describe Spree::OrdersController, type: :controller do
       end
 
       it "updates the fees" do
-        expect(order.total).to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 2)
+        expect(order.total)
+          .to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 2)
         expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 2
 
         allow(controller).to receive_messages spree_current_user: user
         spree_post :update, params
 
-        expect(order.total).to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 3)
+        expect(order.total)
+          .to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 3)
         expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 3
       end
 
@@ -322,13 +330,15 @@ describe Spree::OrdersController, type: :controller do
         }
 
         it "updates the fees" do
-          expect(order.total).to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 2)
+          expect(order.total)
+            .to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 2)
           expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 2
 
           allow(controller).to receive_messages spree_current_user: user
           spree_post :update, params
 
-          expect(order.total).to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 1)
+          expect(order.total)
+            .to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 1)
           expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 1
         end
       end
@@ -360,7 +370,8 @@ describe Spree::OrdersController, type: :controller do
 
       it "does not remove items, flash suggests cancellation" do
         spree_post :update, params
-        expect(flash[:error]).to eq 'Cannot remove the final item from an order, please cancel the order instead.'
+        expect(flash[:error])
+          .to eq 'Cannot remove the final item from an order, please cancel the order instead.'
         expect(response).to redirect_to order_path(order)
         expect(order.reload.line_items.count).to eq 2
       end

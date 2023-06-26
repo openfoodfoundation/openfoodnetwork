@@ -122,7 +122,8 @@ describe SubscriptionConfirmJob do
     }
     let!(:order_cycle5) { create(:simple_order_cycle, orders_close_at: 1.minute.from_now) }
 
-    it "returns closed order cycles whose orders_close_at or updated_at date is within the last hour" do
+    it "returns closed order cycles whose orders_close_at " \
+       "or updated_at date is within the last hour" do
       order_cycles = job.send(:recently_closed_order_cycles)
       expect(order_cycles).to include order_cycle3, order_cycle4
       expect(order_cycles).to_not include order_cycle1, order_cycle2, order_cycle5

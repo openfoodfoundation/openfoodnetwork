@@ -33,7 +33,8 @@ describe CalculatedAdjustments do
       expect(target.adjustments.first.order_id).to eq order.id
     end
 
-    it "should have the correct originator and an amount derived from the calculator and supplied calculable" do
+    it "should have the correct originator and an amount derived " \
+       "from the calculator and supplied calculable" do
       adjustment = tax_rate.create_adjustment("foo", target)
       expect(adjustment).not_to be_nil
       expect(adjustment.amount).to eq 10

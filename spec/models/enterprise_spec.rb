@@ -112,7 +112,8 @@ describe Enterprise do
           e2.owner = u1
           e2.save!
         }.to raise_error ActiveRecord::RecordInvalid,
-                         "Validation failed: #{u1.email} is not permitted to own any more enterprises (limit is 5)."
+                         "Validation failed: #{u1.email} is not permitted " \
+                         "to own any more enterprises (limit is 5)."
       end
     end
   end
@@ -496,7 +497,8 @@ describe Enterprise do
         d = create(:distributor_enterprise)
         p = create(:product)
         create(:simple_order_cycle, orders_open_at: 10.days.from_now,
-                                    orders_close_at: 17.days.from_now, suppliers: [s], distributors: [d], variants: [p.variants.first])
+                                    orders_close_at: 17.days.from_now, suppliers: [s],
+                                    distributors: [d], variants: [p.variants.first])
         expect(Enterprise.distributors_with_active_order_cycles).not_to include d
       end
     end
@@ -541,7 +543,8 @@ describe Enterprise do
       it "does not return duplicate enterprises" do
         another_product = create(:product)
         order_cycle = create(:simple_order_cycle, distributors: [distributor],
-                                                  variants: [product.variants.first, another_product.variants.first])
+                                                  variants: [product.variants.first,
+                                                             another_product.variants.first])
         expect(Enterprise.distributing_products([product.id,
                                                  another_product.id])).to eq([distributor])
       end
@@ -588,7 +591,8 @@ describe Enterprise do
           hub2
         end
 
-        it "creates links from the new producer to all hubs owned by the same user, granting add_to_order_cycle and create_variant_overrides permissions" do
+        it "creates links from the new producer to all hubs owned by the same user, " \
+           "granting add_to_order_cycle and create_variant_overrides permissions" do
           producer1
 
           should_have_enterprise_relationship from: producer1, to: hub1,
@@ -605,7 +609,8 @@ describe Enterprise do
       end
 
       describe "when a new hub is created" do
-        it "it creates links to the hub, from all producers owned by the same user, granting add_to_order_cycle and create_variant_overrides permissions" do
+        it "it creates links to the hub, from all producers owned by the same user, " \
+           "granting add_to_order_cycle and create_variant_overrides permissions" do
           producer1
           producer2
           hub1
@@ -616,7 +621,8 @@ describe Enterprise do
                                               with: [:add_to_order_cycle, :create_variant_overrides]
         end
 
-        it "creates links from the new hub to all hubs owned by the same user, granting add_to_order_cycle permission" do
+        it "creates links from the new hub to all hubs owned by the same user, " \
+           "granting add_to_order_cycle permission" do
           hub1
           hub2
           hub3
@@ -644,7 +650,8 @@ describe Enterprise do
         expect(er).not_to be_nil
         if opts[:with] == :all_permissions
           expect(er.permissions.map(&:name)).to match_array ['add_to_order_cycle',
-                                                             'manage_products', 'edit_profile', 'create_variant_overrides']
+                                                             'manage_products', 'edit_profile',
+                                                             'create_variant_overrides']
         elsif opts.key? :with
           expect(er.permissions.map(&:name)).to match_array opts[:with].map(&:to_s)
         end
@@ -774,7 +781,8 @@ describe Enterprise do
       let!(:enterprise2) { create(:enterprise, permalink: "permalink1") }
 
       it "parameterizes the value provided" do
-        expect(Enterprise.find_available_permalink("Some Unused Permalink")).to eq "some-unused-permalink"
+        expect(Enterprise.find_available_permalink("Some Unused Permalink"))
+          .to eq "some-unused-permalink"
       end
 
       it "sets the permalink to 'my-enterprise' if parametized permalink is blank" do

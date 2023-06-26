@@ -85,7 +85,8 @@ describe CartController, type: :controller do
 
     it "returns the variant override stock levels of the variant requested but not in the order" do
       # This test passes because the variant requested gets added to the order
-      # If the variant was not added to the order, VariantsStockLevels alternative calculation would fail
+      # If the variant was not added to the order,
+      # VariantsStockLevels alternative calculation would fail
       # See #3222 for more details
       # This indicates that the VariantsStockLevels alternative calculation is never reached
       spree_post :populate, variants: { variant_not_in_the_order.id => 1 }

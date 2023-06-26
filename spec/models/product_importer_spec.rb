@@ -52,33 +52,39 @@ describe ProductImport::ProductImporter do
                             primary_taxon_id: category.id, description: nil)
   }
   let!(:product3) {
-    create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Sprouts', unit_value: '500',
-                            primary_taxon_id: category.id)
+    create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Sprouts',
+                            unit_value: '500', primary_taxon_id: category.id)
   }
   let!(:product4) {
     create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Cabbage', unit_value: '1',
-                            variant_unit_scale: nil, variant_unit: "items", variant_unit_name: "Whole", primary_taxon_id: category.id)
+                            variant_unit_scale: nil, variant_unit: "items",
+                            variant_unit_name: "Whole", primary_taxon_id: category.id)
   }
   let!(:product5) {
-    create(:simple_product, supplier: enterprise2, on_hand: '100', name: 'Lettuce', unit_value: '500',
-                            primary_taxon_id: category.id)
+    create(:simple_product, supplier: enterprise2, on_hand: '100', name: 'Lettuce',
+                            unit_value: '500', primary_taxon_id: category.id)
   }
   let!(:product6) {
     create(:simple_product, supplier: enterprise3, on_hand: '100', name: 'Beetroot',
-                            unit_value: '500', on_demand: true, variant_unit_scale: 1, variant_unit: 'weight', primary_taxon_id: category.id, description: nil)
+                            unit_value: '500', on_demand: true, variant_unit_scale: 1,
+                            variant_unit: 'weight', primary_taxon_id: category.id, description: nil)
   }
   let!(:product7) {
-    create(:simple_product, supplier: enterprise3, on_hand: '100', name: 'Tomato', unit_value: '500',
-                            variant_unit_scale: 1, variant_unit: 'weight', primary_taxon_id: category.id, description: nil)
+    create(:simple_product, supplier: enterprise3, on_hand: '100', name: 'Tomato',
+                            unit_value: '500', variant_unit_scale: 1,
+                            variant_unit: 'weight', primary_taxon_id: category.id,
+                            description: nil)
   }
 
   let!(:product8) {
     create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Oats', description: "",
-                            unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight', primary_taxon_id: category4.id)
+                            unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight',
+                            primary_taxon_id: category4.id)
   }
   let!(:product9) {
     create(:simple_product, supplier: enterprise, on_hand: '100', name: 'Oats', description: "",
-                            unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight', primary_taxon_id: category4.id)
+                            unit_value: '500', variant_unit_scale: 1, variant_unit: 'weight',
+                            primary_taxon_id: category4.id)
   }
   let!(:variant2) {
     create(:variant, product_id: product8.id, price: '4.50', on_hand: '100', unit_value: '500',
@@ -244,11 +250,13 @@ describe ProductImport::ProductImporter do
     let(:csv_data) {
       csv = "name,producer,category,on_hand,price,units,unit_type,shipping_category\n"
       csv += "Good Carrots,#{enterprise.name},Vegetables,5,3.20,500,g,#{shipping_category.name}\n"
-      csv += "Malformed \rBrocolli,#{enterprise.name},Vegetables,8,2.50,200,g,#{shipping_category.name}\n"
+      csv += "Malformed \rBrocolli,#{enterprise.name},
+             Vegetables,8,2.50,200,g,#{shipping_category.name}\n"
     }
     let(:importer) { import_data csv_data }
 
-    # an unquoted \n will create a non valid line which will fail entry validation hence why we are only testing with \r
+    # an unquoted \n will create a non valid line which will fail entry validation
+    # hence why we are only testing with \r
     it "should raise an unquoted field error if data include unquoted field with \r character" do
       expect(importer.errors.messages.values).to include(
         [format("Product Import encountered a malformed CSV: %s",
@@ -542,22 +550,22 @@ describe ProductImport::ProductImporter do
       expect(filter('invalid', entries)).to eq 2
 
       importer.entries.each do |entry|
-        expect(entry.errors.messages.values).to include ['cannot be updated on existing products via product import']
+        expect(entry.errors.messages.values)
+          .to include ['cannot be updated on existing products via product import']
       end
     end
   end
 
-  describe "when more than one product of the same name already exists with multiple variants each" do
+  describe "when more than one product of same name already exists with multiple variants each" do
     let(:csv_data) {
-      CSV.generate do |csv|
-        csv << ["name", "producer", "category", "description", "on_hand", "price", "units",
-                "unit_type", "display_name", "shipping_category"]
-        csv << ["Oats", enterprise.name, "Cereal", "", "50", "3.50", "500", "g", "Rolled Oats", shipping_category.name]   # Update
-        csv << ["Oats", enterprise.name, "Cereal", "", "80", "3.75", "500", "g", "Flaked Oats", shipping_category.name]   # Update
-        csv << ["Oats", enterprise.name, "Cereal", "", "60", "5.50", "500", "g", "Magic Oats", shipping_category.name]    # Add
-        csv << ["Oats", enterprise.name, "Cereal", "", "70", "8.50", "500", "g", "French Oats", shipping_category.name]   # Add
-        csv << ["Oats", enterprise.name, "Cereal", "", "70", "8.50", "500", "g", "Scottish Oats", shipping_category.name] # Add
-      end
+      <<~CSV
+        name,producer,category,description,on_hand,price,units,unit_type,display_name,shipping_category
+        Oats,#{enterprise.name},Cereal,,50,3.50,500,g,Rolled Oats,#{shipping_category.name}
+        Oats,#{enterprise.name},Cereal,,80,3.75,500,g,Flaked Oats,#{shipping_category.name}
+        Oats,#{enterprise.name},Cereal,,60,5.50,500,g,Magic Oats,#{shipping_category.name}
+        Oats,#{enterprise.name},Cereal,,70,8.50,500,g,French Oats,#{shipping_category.name}
+        Oats,#{enterprise.name},Cereal,,70,8.50,500,g,Scottish Oats,#{shipping_category.name}
+      CSV
     }
     let(:importer) { import_data csv_data }
 
@@ -589,11 +597,26 @@ describe ProductImport::ProductImporter do
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
                 "display_name", "shipping_category"]
-        csv << ["Bag of Oats", enterprise.name, "Cereal", "60", "5.50", "500", "g", "Magic Oats", shipping_category.name]     # Add
-        csv << ["Bag of Oats", enterprise.name, "Cereal", "70", "8.50", "500", "g", "French Oats", shipping_category.name]    # Add
-        csv << ["Bag of Oats", enterprise.name, "Cereal", "80", "9.50", "500", "g", "Organic Oats", shipping_category.name]   # Add
-        csv << ["Bag of Oats", enterprise.name, "Cereal", "90", "7.50", "500", "g", "Scottish Oats", shipping_category.name]  # Add
-        csv << ["Bag of Oats", enterprise.name, "Cereal", "30", "6.50", "500", "g", "Breakfast Oats", shipping_category.name] # Add
+        csv << [
+          "Bag of Oats", enterprise.name, "Cereal", "60", "5.50",
+          "500", "g", "Magic Oats", shipping_category.name
+        ] # Add
+        csv << [
+          "Bag of Oats", enterprise.name, "Cereal", "70", "8.50",
+          "500", "g", "French Oats", shipping_category.name
+        ] # Add
+        csv << [
+          "Bag of Oats", enterprise.name, "Cereal", "80", "9.50",
+          "500", "g", "Organic Oats", shipping_category.name
+        ] # Add
+        csv << [
+          "Bag of Oats", enterprise.name, "Cereal", "90", "7.50",
+          "500", "g", "Scottish Oats", shipping_category.name
+        ] # Add
+        csv << [
+          "Bag of Oats", enterprise.name, "Cereal", "30", "6.50",
+          "500", "g", "Breakfast Oats", shipping_category.name
+        ] # Add
       end
     }
 
@@ -831,7 +854,8 @@ describe ProductImport::ProductImporter do
       expect(beans.count_on_hand).to eq 777
     end
 
-    it "does not allow creating inventories for producers that a user's hubs don't have permission for" do
+    it "does not allow creating inventories for producers " \
+       "that a user's hubs don't have permission for" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "on_hand", "price", "units", "unit_type"]
         csv << ["Beans", enterprise.name, "5", "3.20", "500", "g"]
@@ -855,7 +879,8 @@ describe ProductImport::ProductImporter do
   end
 
   describe "applying settings and defaults on import" do
-    it "can reset all products for an enterprise that are not present in the uploaded file to zero stock" do
+    it "can reset all products for an enterprise that are not present " \
+       "in the uploaded file to zero stock" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
                 "shipping_category"]
@@ -891,12 +916,14 @@ describe ProductImport::ProductImporter do
 
       expect(Spree::Product.find_by(name: 'Carrots').on_hand).to eq 5    # Present in file, added
       expect(Spree::Product.find_by(name: 'Beans').on_hand).to eq 6      # Present in file, updated
-      expect(Spree::Product.find_by(name: 'Sprouts').on_hand).to eq 0    # In enterprise, not in file
-      expect(Spree::Product.find_by(name: 'Cabbage').on_hand).to eq 0    # In enterprise, not in file
-      expect(Spree::Product.find_by(name: 'Lettuce').on_hand).to eq 100  # In different enterprise; unchanged
+      expect(Spree::Product.find_by(name: 'Sprouts').on_hand).to eq 0    # In enterprise, not file
+      expect(Spree::Product.find_by(name: 'Cabbage').on_hand).to eq 0    # In enterprise, not file
+      expect(Spree::Product.find_by(name: 'Lettuce').on_hand)
+        .to eq 100 # In different enterprise; unchanged
     end
 
-    it "can reset all inventory items for an enterprise that are not present in the uploaded file to zero stock" do
+    it "can reset all inventory items for an enterprise that are not present " \
+       "in the uploaded file to zero stock" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "distributor", "producer", "on_hand", "price", "units", "unit_type"]
         csv << ["Beans", enterprise2.name, enterprise.name, "6", "3.20", "500", "g"]
@@ -920,7 +947,8 @@ describe ProductImport::ProductImporter do
       updated_ids = importer.updated_ids
 
       importer = import_data csv_data, import_into: 'inventories', reset_all_absent: true,
-                                       updated_ids: updated_ids, enterprises_to_reset: [enterprise2.id]
+                                       updated_ids: updated_ids,
+                                       enterprises_to_reset: [enterprise2.id]
       importer.reset_absent(updated_ids)
 
       beans = VariantOverride.where(variant_id: product2.variants.first.id,

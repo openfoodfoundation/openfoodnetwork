@@ -76,11 +76,13 @@ describe Spree::Admin::OrdersController, type: :controller do
         let(:enterprise_fee) { create(:enterprise_fee, calculator: build(:calculator_per_item) ) }
         let!(:exchange) {
           create(:exchange, incoming: true, sender: variant1.product.supplier,
-                            receiver: order_cycle.coordinator, variants: [variant1, variant2], enterprise_fees: [enterprise_fee])
+                            receiver: order_cycle.coordinator, variants: [variant1, variant2],
+                            enterprise_fees: [enterprise_fee])
         }
         let!(:order) do
           order = create(:completed_order_with_totals, line_items_count: 2,
-                                                       distributor: distributor, order_cycle: order_cycle)
+                                                       distributor: distributor,
+                                                       order_cycle: order_cycle)
           order.reload.line_items.first.update(variant_id: variant1.id)
           order.line_items.last.update(variant_id: variant2.id)
           break unless order.next! while !order.completed?
@@ -94,14 +96,16 @@ describe Spree::Admin::OrdersController, type: :controller do
         end
 
         it "recalculates fees if the orders contents have changed" do
-          expect(order.total).to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 2)
+          expect(order.total)
+            .to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 2)
           expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 2
 
           order.contents.add(order.line_items.first.variant, 1)
 
           spree_put :update, { id: order.number }
 
-          expect(order.reload.total).to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 3)
+          expect(order.reload.total)
+            .to eq order.item_total + (enterprise_fee.calculator.preferred_amount * 3)
           expect(order.adjustment_total).to eq enterprise_fee.calculator.preferred_amount * 3
         end
 
@@ -258,7 +262,8 @@ describe Spree::Admin::OrdersController, type: :controller do
 
             spree_put :update, params
 
-            expect(flash[:error]).to eq "Distributor or order cycle cannot supply the products in your cart"
+            expect(flash[:error])
+              .to eq "Distributor or order cycle cannot supply the products in your cart"
             expect(response).to redirect_to spree.edit_admin_order_path(order)
           end
         end

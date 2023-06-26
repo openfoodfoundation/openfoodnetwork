@@ -63,8 +63,9 @@ module Reporting
             subject { Addresses.new user, {} }
 
             it "returns headers for addresses" do
-              expect(subject.table_headers).to eq(["First Name", "Last Name", "Billing Address", "Email",
-                                                   "Phone", "Hub", "Hub Address", "Shipping Method"])
+              expect(subject.table_headers).to eq(["First Name", "Last Name", "Billing Address",
+                                                   "Email", "Phone", "Hub", "Hub Address",
+                                                   "Shipping Method"])
             end
 
             it "builds a table from a list of variants" do
@@ -78,7 +79,8 @@ module Reporting
                                                  a.firstname, a.lastname,
                                                  [a.address1, a.address2, a.city].join(" "),
                                                  o.email, a.phone, d.name,
-                                                 [d.address.address1, d.address.address2, d.address.city].join(" "),
+                                                 [d.address.address1, d.address.address2,
+                                                  d.address.city].join(" "),
                                                  o.shipping_method.name
                                                ]])
             end

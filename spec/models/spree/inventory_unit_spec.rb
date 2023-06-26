@@ -32,7 +32,8 @@ describe Spree::InventoryUnit do
       expect { units.first.save! }.to_not raise_error
     end
 
-    it "finds inventory units from its stock location when the unit's variant matches the stock item's variant" do
+    it "finds inventory units from its stock location " \
+       "when the unit's variant matches the stock item's variant" do
       expect(Spree::InventoryUnit.backordered_for_stock_item(stock_item)).to eq [unit]
     end
 
@@ -42,7 +43,8 @@ describe Spree::InventoryUnit do
       other_variant_unit.variant = create(:variant)
       other_variant_unit.save!
 
-      expect(Spree::InventoryUnit.backordered_for_stock_item(stock_item)).to_not include(other_variant_unit)
+      expect(Spree::InventoryUnit.backordered_for_stock_item(stock_item))
+        .to_not include(other_variant_unit)
     end
   end
 

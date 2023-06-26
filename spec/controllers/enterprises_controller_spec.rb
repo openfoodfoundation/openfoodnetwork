@@ -94,7 +94,7 @@ describe EnterprisesController, type: :controller do
       end
     end
 
-    it "empties an order that was set for a previous distributor, when shopping at a new distributor" do
+    it "empties an order set for a previous distributor, when shopping at a new distributor" do
       line_item = create(:line_item)
       controller.current_order.line_items << line_item
 
@@ -185,7 +185,8 @@ describe EnterprisesController, type: :controller do
     end
 
     it "shows a flash message with the error" do
-      expect(request.flash[:error]).to eq('The shop you are looking for doesn\'t exist or is inactive on OFN. Please check other shops.')
+      expect(request.flash[:error]).to eq('The shop you are looking for doesn\'t exist or ' \
+                                          'is inactive on OFN. Please check other shops.')
     end
   end
 end

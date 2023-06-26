@@ -341,7 +341,8 @@ describe Spree::Ability do
         )
       end
 
-      it "should be able to read/write related enterprises' products and variants with manage_products permission" do
+      it "should be able to read/write related enterprises' products " \
+         "and variants with manage_products permission" do
         er_ps
         is_expected.to have_ability([:admin, :read, :update, :bulk_update, :clone, :destroy],
                                     for: p_related)
@@ -415,7 +416,7 @@ describe Spree::Ability do
         is_expected.to have_ability(:destroy, for: er1)
       end
 
-      it "should be able to destroy enterprise relationships for other enterprises that are linked as child" do
+      it "should be able to destroy enterprise relationships for other child-linked enterprises" do
         is_expected.to have_ability(:destroy, for: er2)
       end
 
@@ -471,8 +472,8 @@ describe Spree::Ability do
         context "where the enterprise is in an order_cycle" do
           let!(:order_cycle) { create(:simple_order_cycle) }
           let!(:exchange){
-            create(:exchange, incoming: true, order_cycle: order_cycle, receiver: order_cycle.coordinator,
-                              sender: s1)
+            create(:exchange, incoming: true, order_cycle: order_cycle,
+                              receiver: order_cycle.coordinator, sender: s1)
           }
 
           it "should be able to access read/update order cycle actions" do
@@ -539,13 +540,15 @@ describe Spree::Ability do
           )
         end
 
-        it "should be able to manage shipping methods, payment methods and enterprise fees for enterprises it manages" do
+        it "should be able to manage shipping methods, payment methods and enterprise fees " \
+           "for enterprises it manages" do
           is_expected.to have_ability(
             [:manage_shipping_methods, :manage_payment_methods, :manage_enterprise_fees], for: d1
           )
         end
 
-        it "should not be able to manage shipping methods, payment methods and enterprise fees for enterprises it has edit profile permission to" do
+        it "should not be able to manage shipping methods, payment methods and enterprise fees " \
+           "for enterprises it has edit profile permission to" do
           is_expected.not_to have_ability(
             [:manage_shipping_methods, :manage_payment_methods,
              :manage_enterprise_fees], for: d_related
@@ -573,11 +576,12 @@ describe Spree::Ability do
           is_expected.to have_ability([:admin, :index, :read, :update], for: vo1)
         end
 
-        it "should not be able to read/write variant overrides when producer of product hasn't granted permission" do
+        it "should not be able to read/write variant overrides " \
+           "when producer of product hasn't granted permission" do
           is_expected.not_to have_ability([:admin, :index, :read, :update], for: vo2)
         end
 
-        it "should not be able to read/write variant overrides when we can't add hub to order cycle" do
+        it "shouldn't be able to read/write variant overrides when we can't add hub to OC" do
           is_expected.not_to have_ability([:admin, :index, :read, :update], for: vo3)
         end
 
@@ -648,7 +652,7 @@ describe Spree::Ability do
         is_expected.to have_ability(:destroy, for: er2)
       end
 
-      it "should be able to destroy enterprise relationships for other enterprises that are linked as child" do
+      it "should be able to destroy enterprise relationships for other child-linked enterprises" do
         is_expected.to have_ability(:destroy, for: er1)
       end
 
@@ -854,7 +858,7 @@ describe Spree::Ability do
       end
     end
 
-    describe "when owner of the enterprise with create_variant_overrides permission to the producer" do
+    describe "when owner of enterprise with create_variant_overrides permission to the producer" do
       let!(:authorized_enterprise) do
         create(:enterprise, sells: "any").tap do |record|
           create(:enterprise_relationship, parent: producer, child: record,

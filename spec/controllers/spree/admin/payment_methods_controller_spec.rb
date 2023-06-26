@@ -72,7 +72,10 @@ module Spree
       it "does not clear password on update" do
         expect(payment_method.preferred_password).to eq "haxme"
         spree_put :update, id: payment_method.id,
-                           payment_method: { type: payment_method.class.to_s, preferred_password: "" }
+                           payment_method: {
+                             type: payment_method.class.to_s,
+                             preferred_password: ""
+                           }
         expect(response).to redirect_to spree.edit_admin_payment_method_path(payment_method)
 
         payment_method.reload
@@ -95,7 +98,8 @@ module Spree
         }.to change(Spree::PaymentMethod, :count).by(1)
 
         expect(response).to be_redirect
-        expect(response).to redirect_to spree.edit_admin_payment_method_path(assigns(:payment_method))
+        expect(response).to redirect_to spree
+          .edit_admin_payment_method_path(assigns(:payment_method))
       end
 
       it "can not create a payment method of an invalid type" do
@@ -171,7 +175,8 @@ module Spree
 
         before { allow(controller).to receive(:spree_current_user) { user } }
 
-        context "when an attempt is made to change the stripe account holder (preferred_enterprise_id)" do
+        context "when an attempt is made to change " \
+                "the stripe account holder (preferred_enterprise_id)" do
           let(:params) {
             {
               id: payment_method.id,
@@ -206,7 +211,8 @@ module Spree
                 it "does not save the payment method" do
                   spree_put :update, params
                   expect(response).to render_template :edit
-                  expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include 'can\'t be blank'
+                  expect(assigns(:payment_method).errors
+                    .messages[:stripe_account_owner]).to include 'can\'t be blank'
                 end
               end
 
@@ -216,7 +222,8 @@ module Spree
                 it "does not save the payment method" do
                   spree_put :update, params
                   expect(response).to render_template :edit
-                  expect(assigns(:payment_method).errors.messages[:stripe_account_owner]).to include 'can\'t be blank'
+                  expect(assigns(:payment_method).errors
+                    .messages[:stripe_account_owner]).to include 'can\'t be blank'
                 end
               end
             end
@@ -230,7 +237,8 @@ module Spree
       let(:user) do
         new_user = create(:user, email: 'enterprise@hub.com', password: 'blahblah',
                                  password_confirmation: 'blahblah', )
-        new_user.spree_roles = [] # for some reason unbeknown to me, this new user gets admin permissions by default.
+        # for some reason unbeknown to me, this new user gets admin permissions by default.
+        new_user.spree_roles = []
         new_user.enterprise_roles.build(enterprise: enterprise).save
         new_user.save
         new_user

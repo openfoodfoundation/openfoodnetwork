@@ -59,7 +59,8 @@ describe InjectionHelper, type: :helper do
     end
 
     it "injects current OC when OC not null" do
-      allow(helper).to receive(:current_order_cycle).and_return order_cycle = create(:simple_order_cycle)
+      allow(helper).to receive(:current_order_cycle)
+        .and_return order_cycle = create(:simple_order_cycle)
       expect(helper.inject_current_order_cycle).to match order_cycle.id.to_s
     end
   end

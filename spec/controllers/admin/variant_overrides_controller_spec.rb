@@ -76,8 +76,8 @@ describe Admin::VariantOverridesController, type: :controller do
 
           context "where params for a variant override are blank" do
             let(:variant_override_params) {
-              [{ id: variant_override.id, price: "", count_on_hand: "", default_stock: nil, resettable: nil,
-                 sku: nil, on_demand: nil }]
+              [{ id: variant_override.id, price: "", count_on_hand: "", default_stock: nil,
+                 resettable: nil, sku: nil, on_demand: nil }]
             }
 
             it "destroys the variant override" do
@@ -145,7 +145,8 @@ describe Admin::VariantOverridesController, type: :controller do
           allow(controller).to receive(:spree_current_user) { hub.owner }
         end
 
-        context "where the producer has not granted create_variant_overrides permission to the hub" do
+        context "where the producer has not granted create_variant_overrides permission " \
+                "to the hub" do
           it "restricts access" do
             put :bulk_reset, params: params
             expect(response).to redirect_to unauthorized_path
@@ -174,14 +175,15 @@ describe Admin::VariantOverridesController, type: :controller do
             expect(variant_override2.reload.count_on_hand).to eq 2 # reset disabled
           end
 
-          context "and the producer has granted create_variant_overrides permission to another hub I manage" do
+          context "and the producer has granted create_variant_overrides permission " \
+                  "to another hub I manage" do
             before { hub.owner.update_attribute(:enterprise_limit, 2) }
             let(:hub2) { create(:distributor_enterprise, owner: hub.owner) }
             let(:product) { create(:product, supplier: producer) }
             let(:variant3) { create(:variant, product: product) }
             let!(:variant_override3) {
-              create(:variant_override, hub: hub2, variant: variant3, count_on_hand: 1, default_stock: 13,
-                                        resettable: true)
+              create(:variant_override, hub: hub2, variant: variant3, count_on_hand: 1,
+                                        default_stock: 13, resettable: true)
             }
             let!(:er2) {
               create(:enterprise_relationship, parent: producer, child: hub2,

@@ -205,7 +205,7 @@ module OpenFoodNetwork
               expect(enterprises).to_not include producer, coordinator
             end
 
-            context "and distributes variants distributed by an unmanaged and unpermitted producer" do
+            context "and distributes variants distributed by an unmanaged & unpermitted producer" do
               before {
                 ex.variants << create(:variant, product: create(:product, supplier: producer))
               }
@@ -418,9 +418,11 @@ module OpenFoodNetwork
           end
         end
 
-        # TODO: this is testing legacy behaviour for backwards compatability, remove when behaviour no longer required
+        # TODO: this is testing legacy behaviour for backwards compatability,
+        # remove when behaviour no longer required
         describe "legacy compatability" do
-          context "where my hub's outgoing exchange contains variants of a producer I don't manage and has not given my hub P-OC" do
+          context "where my hub's outgoing exchange contains variants of a producer " \
+                  "I don't manage and has not given my hub P-OC" do
             let!(:product) { create(:product, supplier: producer) }
             let!(:variant) { create(:variant, product: product) }
             let!(:ex_out) {
@@ -478,7 +480,8 @@ module OpenFoodNetwork
           end
         end
 
-        # TODO: this is testing legacy behaviour for backwards compatability, remove when behaviour no longer required
+        # TODO: this is testing legacy behaviour for backwards compatability,
+        # remove when behaviour no longer required
         describe "legacy compatability" do
           context "where an outgoing exchange contains variants of a producer I manage" do
             let!(:product) { create(:product, supplier: producer) }
@@ -506,7 +509,8 @@ module OpenFoodNetwork
       end
     end
 
-    describe "finding the variants within a hypothetical exchange between two enterprises which are visible to a user" do
+    describe "finding the variants within a hypothetical exchange " \
+             "between two enterprises which are visible to a user" do
       let!(:producer1) { create(:supplier_enterprise) }
       let!(:producer2) { create(:supplier_enterprise) }
       let!(:v1) { create(:variant, product: create(:simple_product, supplier: producer1)) }
@@ -591,13 +595,14 @@ module OpenFoodNetwork
           context "where the coordinator produces products" do
             let!(:v3) { create(:variant, product: create(:simple_product, supplier: coordinator)) }
 
-            it "returns any variants produced by the coordinator itself for exchanges with 'self'" do
+            it "returns any variants produced by the coordinator itself for exchanges w/ 'self'" do
               visible = permissions.visible_variants_for_outgoing_exchanges_to(coordinator)
               expect(visible).to include v3
               expect(visible).to_not include v1, v2
             end
 
-            it "does not return coordinator's variants for exchanges with other hubs, when permission has not been granted" do
+            it "does not return coordinator's variants for exchanges with other hubs, " \
+               "when permission has not been granted" do
               visible = permissions.visible_variants_for_outgoing_exchanges_to(hub)
               expect(visible).to include v1
               expect(visible).to_not include v2, v3
@@ -605,7 +610,8 @@ module OpenFoodNetwork
           end
 
           # TODO: for backwards compatability, remove later
-          context "when an exchange exists between the coordinator and the hub within this order cycle" do
+          context "when an exchange exists between the coordinator " \
+                  "and the hub within this order cycle" do
             let!(:ex) {
               create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
                                 incoming: false)
@@ -645,7 +651,8 @@ module OpenFoodNetwork
           end
 
           # TODO: for backwards compatability, remove later
-          context "when an exchange exists between the coordinator and the hub within this order cycle" do
+          context "when an exchange exists between the coordinator " \
+                  "and the hub within this order cycle" do
             let!(:ex) {
               create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
                                 incoming: false)
@@ -727,7 +734,8 @@ module OpenFoodNetwork
       end
     end
 
-    describe "finding the variants within a hypothetical exchange between two enterprises which are editable by a user" do
+    describe "finding the variants within a hypothetical exchange " \
+             "between two enterprises which are editable by a user" do
       let!(:producer1) { create(:supplier_enterprise) }
       let!(:producer2) { create(:supplier_enterprise) }
       let!(:v1) { create(:variant, product: create(:simple_product, supplier: producer1)) }
@@ -795,13 +803,14 @@ module OpenFoodNetwork
           context "where the coordinator produces products" do
             let!(:v3) { create(:variant, product: create(:simple_product, supplier: coordinator)) }
 
-            it "returns any variants produced by the coordinator itself for exchanges with 'self'" do
+            it "returns any variants produced by the coordinator itself for exchanges w/ 'self'" do
               visible = permissions.editable_variants_for_outgoing_exchanges_to(coordinator)
               expect(visible).to include v3
               expect(visible).to_not include v1, v2
             end
 
-            it "does not return coordinator's variants for exchanges with other hubs, when permission has not been granted" do
+            it "does not return coordinator's variants for exchanges with other hubs, " \
+               "when permission has not been granted" do
               visible = permissions.editable_variants_for_outgoing_exchanges_to(hub)
               expect(visible).to include v1
               expect(visible).to_not include v2, v3
@@ -809,7 +818,7 @@ module OpenFoodNetwork
           end
 
           # TODO: for backwards compatability, remove later
-          context "when an exchange exists between the coordinator and the hub within this order cycle" do
+          context "when an exchange exists between the coordinator and the hub within this OC" do
             let!(:ex) {
               create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
                                 incoming: false)
@@ -849,7 +858,8 @@ module OpenFoodNetwork
           end
 
           # TODO: for backwards compatability, remove later
-          context "when an exchange exists between the coordinator and the hub within this order cycle" do
+          context "when an exchange exists between the coordinator " \
+                  "and the hub within this order cycle" do
             let!(:ex) {
               create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub,
                                 incoming: false)

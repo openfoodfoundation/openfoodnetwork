@@ -43,7 +43,8 @@ describe ShopsController, type: :controller do
     get :index
 
     expect(response.body)
-      .to match(/"distributed_properties":\[{"id":\d+,"name":"certified","presentation":"certified"}\]/)
+      .to match(/"distributed_properties":\[{"id":\d+,"name":
+                "certified","presentation":"certified"}\]/x)
   end
 
   it 'renders distributed properties' do

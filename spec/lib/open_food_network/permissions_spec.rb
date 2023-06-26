@@ -36,7 +36,7 @@ module OpenFoodNetwork
       end
     end
 
-    describe "finding managed and related enterprises granting or granted a particular permission" do
+    describe "finding managed & related enterprises granting or granted a particular permission" do
       describe "as super admin" do
         before { allow(user).to receive(:admin?) { true } }
 
@@ -157,7 +157,8 @@ module OpenFoodNetwork
         let!(:producer_managed) { create(:supplier_enterprise) }
         let!(:er_oc) {
           create(:enterprise_relationship, parent: hub, child: producer_managed,
-                                           permissions_list: [:add_to_order_cycle, :create_variant_overrides])
+                                           permissions_list: [:add_to_order_cycle,
+                                                              :create_variant_overrides])
         }
 
         before do
@@ -180,7 +181,8 @@ module OpenFoodNetwork
         expect(permissions.variant_override_enterprises_per_hub[hub.id]).to_not include producer2.id
       end
 
-      it "returns itself if self is also a primary producer (even when no explicit permission exists)" do
+      it "returns itself if self is also a primary producer " \
+         "(even when no explicit permission exists)" do
         hub.update_attribute(:is_primary_producer, true)
 
         expect(permissions.variant_override_enterprises_per_hub[hub.id]).to include hub.id

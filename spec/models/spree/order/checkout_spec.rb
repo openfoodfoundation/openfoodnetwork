@@ -35,8 +35,9 @@ describe Spree::Order::Checkout do
 
     it "cannot transition to address without any line items" do
       expect(order.line_items).to be_blank
-      expect(lambda { order.next! }).to raise_error(StateMachines::InvalidTransition,
-                                                    /#{Spree.t(:there_are_no_items_for_this_order)}/)
+      expect(lambda { order.next! })
+        .to raise_error(StateMachines::InvalidTransition,
+                        /#{Spree.t(:there_are_no_items_for_this_order)}/)
     end
 
     context "from address" do

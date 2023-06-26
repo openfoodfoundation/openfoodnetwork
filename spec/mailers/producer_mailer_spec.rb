@@ -168,8 +168,8 @@ describe ProducerMailer, type: :mailer do
       create(:order, :with_line_item, distributor: d1, order_cycle: order_cycle, state: 'complete',
                                       bill_address: FactoryBot.create(:address, last_name: "Abby"))
       create(:order, :with_line_item, distributor: d1, order_cycle: order_cycle, state: 'complete',
-                                      bill_address: FactoryBot.create(:address, last_name: "maggie"))
-      expect(mail.body.encoded).to match(/.*Abby.*Doe.*maggie/m)
+                                      bill_address: FactoryBot.create(:address, last_name: "smith"))
+      expect(mail.body.encoded).to match(/.*Abby.*Doe.*smith/m)
     end
   end
 
