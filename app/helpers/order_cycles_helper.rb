@@ -37,12 +37,10 @@ module OrderCyclesHelper
   end
 
   def distributors_with_editable_shipping_and_payment_methods(order_cycle)
-    return order_cycle.distributors if order_cycle.coordinator
-      .in? Enterprise.managed_by(spree_current_user)
+    return order_cycle.distributors if Enterprise
+      .managed_by(spree_current_user).exists?(order_cycle.coordinator.id)
 
-    order_cycle.distributors.select do |distributor|
-      distributor.in? Enterprise.managed_by(spree_current_user)
-    end
+    order_cycle.distributors.managed_by(spree_current_user)
   end
 
   def order_cycle_status_class(order_cycle)
