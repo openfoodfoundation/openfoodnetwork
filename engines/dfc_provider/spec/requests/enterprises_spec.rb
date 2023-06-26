@@ -5,8 +5,15 @@ require DfcProvider::Engine.root.join("spec/spec_helper")
 
 describe "Enterprises", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rswag_autodoc: true do
   let!(:user) { create(:oidc_user) }
-  let!(:enterprise) { create(:distributor_enterprise, owner: user) }
-  let!(:product) { create(:simple_product, supplier: enterprise ) }
+  let!(:enterprise) { create(:distributor_enterprise, id: 10_000, owner: user) }
+  let!(:product) {
+    create(
+      :base_product,
+      supplier: enterprise, name: "Apple", description: "Round",
+      variants: [variant],
+    )
+  }
+  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, sku: "APP") }
 
   before { login_as user }
 
@@ -20,9 +27,9 @@ describe "Enterprises", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rs
           let(:id) { "default" }
 
           run_test! do
-            expect(response.body).to include(product.name)
-            expect(response.body).to include(product.variants.first.sku)
-            expect(response.body).to include("offers/#{product.variants.first.id}")
+            expect(response.body).to include("Apple")
+            expect(response.body).to include("APP")
+            expect(response.body).to include("offers/10001")
           end
         end
 
@@ -30,7 +37,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rs
           let(:id) { enterprise.id }
 
           run_test! do
-            expect(response.body).to include(product.name)
+            expect(response.body).to include "Apple"
           end
         end
       end
@@ -40,7 +47,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rs
         let(:other_enterprise) { create(:distributor_enterprise) }
 
         run_test! do
-          expect(response.body).to_not include(product.name)
+          expect(response.body).to_not include "Apple"
         end
       end
     end

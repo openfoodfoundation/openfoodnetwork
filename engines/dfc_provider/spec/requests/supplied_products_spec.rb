@@ -6,9 +6,15 @@ require DfcProvider::Engine.root.join("spec/spec_helper")
 describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml",
                              rswag_autodoc: true do
   let!(:user) { create(:oidc_user) }
-  let!(:enterprise) { create(:distributor_enterprise, owner: user) }
-  let!(:product) { create(:simple_product, supplier: enterprise ) }
-  let!(:variant) { product.variants.first }
+  let!(:enterprise) { create(:distributor_enterprise, id: 10_000, owner: user) }
+  let!(:product) {
+    create(
+      :base_product,
+      supplier: enterprise, name: "Pesto", description: "Basil Pesto",
+      variants: [variant],
+    )
+  }
+  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1) }
 
   before { login_as user }
 
@@ -53,10 +59,12 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
         end
 
         it "creates a variant" do |example|
+          existing = Spree::Variant.pluck(:id)
+
           expect { submit_request(example.metadata) }
             .to change { enterprise.supplied_products.count }.by(1)
 
-          variant = Spree::Variant.last
+          variant = Spree::Variant.where.not(id: existing).first
           expect(variant.name).to eq "Apple"
           expect(variant.unit_value).to eq 3
         end

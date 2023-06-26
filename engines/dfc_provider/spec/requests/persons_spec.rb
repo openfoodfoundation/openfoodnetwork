@@ -4,7 +4,7 @@ require "swagger_helper"
 require DfcProvider::Engine.root.join("spec/spec_helper")
 
 describe "Persons", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rswag_autodoc: true do
-  let(:user) { create(:oidc_user) }
+  let(:user) { create(:oidc_user, id: 10_000) }
   let(:other_user) { create(:oidc_user) }
 
   before { login_as user }
@@ -19,7 +19,7 @@ describe "Persons", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rswag_
 
         run_test! do
           expect(response.body).to include "dfc-b:Person"
-          expect(response.body).to include "persons/#{user.id}"
+          expect(response.body).to include "persons/10000"
         end
       end
 
