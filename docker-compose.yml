@@ -24,6 +24,7 @@ services:
       - .:/usr/src/app
       - gems:/bundles
       - ./config/database.yml:/usr/src/app/config/database.yml
+      - ./node_modules:/usr/src/app/node_modules
     depends_on:
       - db
       - redis
