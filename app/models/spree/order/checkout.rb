@@ -81,6 +81,12 @@ module Spree
                 order.create_tax_charge!
                 order.update_totals_and_states
               end
+
+              after_transition to: :confirmation do |order|
+                VoucherAdjustmentsService.calculate(order)
+                order.update_totals_and_states
+              end
+
               after_transition to: :complete, do: :finalize!
               after_transition to: :resumed,  do: :after_resume
               after_transition to: :canceled, do: :after_cancel
