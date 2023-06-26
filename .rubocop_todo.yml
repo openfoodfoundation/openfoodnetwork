@@ -187,7 +187,7 @@ Layout/LineEndStringConcatenationIndentation:
     - 'spec/system/consumer/cookies_spec.rb'
     - 'spec/system/consumer/shopping/cart_spec.rb'
 
-# Offense count: 482
+# Offense count: 213
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Max, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, AllowedPatterns.
 # URISchemes: http, https
@@ -198,67 +198,16 @@ Layout/LineLength:
     - 'app/models/customer.rb'
     - 'app/models/spree/line_item.rb'
     - 'spec/controllers/admin/order_cycles_controller_spec.rb'
-    - 'spec/controllers/admin/stripe_connect_settings_controller_spec.rb'
-    - 'spec/controllers/admin/subscription_line_items_controller_spec.rb'
-    - 'spec/controllers/admin/subscriptions_controller_spec.rb'
-    - 'spec/controllers/admin/variant_overrides_controller_spec.rb'
-    - 'spec/controllers/api/v0/base_controller_spec.rb'
-    - 'spec/controllers/api/v0/exchange_products_controller_spec.rb'
     - 'spec/controllers/api/v0/order_cycles_controller_spec.rb'
-    - 'spec/controllers/api/v0/orders_controller_spec.rb'
-    - 'spec/controllers/api/v0/products_controller_spec.rb'
-    - 'spec/controllers/cart_controller_spec.rb'
-    - 'spec/controllers/enterprises_controller_spec.rb'
-    - 'spec/controllers/line_items_controller_spec.rb'
-    - 'spec/controllers/shops_controller_spec.rb'
-    - 'spec/controllers/spree/admin/orders/customer_details_controller_spec.rb'
-    - 'spec/controllers/spree/admin/orders/invoices_spec.rb'
     - 'spec/controllers/spree/admin/orders_controller_spec.rb'
-    - 'spec/controllers/spree/admin/payment_methods_controller_spec.rb'
-    - 'spec/controllers/spree/admin/variants_controller_spec.rb'
-    - 'spec/controllers/spree/credit_cards_controller_spec.rb'
-    - 'spec/controllers/spree/orders_controller_spec.rb'
-    - 'spec/controllers/stripe/webhooks_controller_spec.rb'
-    - 'spec/factories/stock_location_factory.rb'
-    - 'spec/helpers/injection_helper_spec.rb'
-    - 'spec/helpers/order_cycles_helper_spec.rb'
-    - 'spec/helpers/spree/admin/base_helper_spec.rb'
-    - 'spec/jobs/subscription_confirm_job_spec.rb'
-    - 'spec/jobs/subscription_placement_job_spec.rb'
-    - 'spec/lib/open_food_network/enterprise_fee_calculator_spec.rb'
-    - 'spec/lib/open_food_network/order_cycle_form_applicator_spec.rb'
-    - 'spec/lib/open_food_network/order_cycle_permissions_spec.rb'
-    - 'spec/lib/open_food_network/permissions_spec.rb'
-    - 'spec/lib/open_food_network/scope_variant_to_hub_spec.rb'
-    - 'spec/lib/open_food_network/tag_rule_applicator_spec.rb'
     - 'spec/lib/reports/customers_report_spec.rb'
-    - 'spec/lib/reports/order_cycle_management_report_spec.rb'
-    - 'spec/lib/reports/products_and_inventory_report_spec.rb'
-    - 'spec/lib/reports/users_and_enterprises_report_spec.rb'
-    - 'spec/mailers/order_mailer_spec.rb'
-    - 'spec/mailers/producer_mailer_spec.rb'
-    - 'spec/mailers/subscription_mailer_spec.rb'
-    - 'spec/models/concerns/calculated_adjustments_spec.rb'
-    - 'spec/models/concerns/order_shipment_spec.rb'
-    - 'spec/models/concerns/product_stock_spec.rb'
-    - 'spec/models/enterprise_relationship_spec.rb'
     - 'spec/models/enterprise_spec.rb'
-    - 'spec/models/exchange_spec.rb'
     - 'spec/models/order_cycle_spec.rb'
     - 'spec/models/product_importer_spec.rb'
     - 'spec/models/spree/ability_spec.rb'
-    - 'spec/models/spree/address_spec.rb'
     - 'spec/models/spree/adjustment_spec.rb'
-    - 'spec/models/spree/classification_spec.rb'
-    - 'spec/models/spree/inventory_unit_spec.rb'
     - 'spec/models/spree/line_item_spec.rb'
-    - 'spec/models/spree/order/checkout_spec.rb'
-    - 'spec/models/spree/order_inventory_spec.rb'
-    - 'spec/models/spree/order_spec.rb'
-    - 'spec/models/spree/payment_method_spec.rb'
-    - 'spec/models/spree/payment_spec.rb'
     - 'spec/models/spree/product_spec.rb'
-    - 'spec/models/spree/shipping_method_spec.rb'
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/models/spree/user_spec.rb'
     - 'spec/models/spree/variant_spec.rb'
@@ -528,7 +477,7 @@ Metrics/AbcSize:
     - 'lib/tasks/enterprises.rake'
     - 'spec/services/order_checkout_restart_spec.rb'
 
-# Offense count: 49
+# Offense count: 48
 # Configuration parameters: CountComments, Max, CountAsOne, AllowedMethods, AllowedPatterns.
 # AllowedMethods: refine
 Metrics/BlockLength:
@@ -624,7 +573,7 @@ Metrics/ClassLength:
     - 'lib/reporting/reports/enterprise_fee_summary/scope.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
 
-# Offense count: 35
+# Offense count: 34
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/CyclomaticComplexity:
   Exclude:
@@ -644,7 +593,6 @@ Metrics/CyclomaticComplexity:
     - 'app/models/spree/preference.rb'
     - 'app/models/spree/preferences/preferable.rb'
     - 'app/models/spree/preferences/preferable_class_methods.rb'
-    - 'app/models/spree/product.rb'
     - 'app/models/spree/return_authorization.rb'
     - 'app/models/spree/tax_rate.rb'
     - 'app/models/spree/variant.rb'
@@ -733,11 +681,10 @@ Metrics/ModuleLength:
     - 'spec/support/request/shop_workflow.rb'
     - 'spec/support/request/stripe_stubs.rb'
 
-# Offense count: 8
+# Offense count: 7
 # Configuration parameters: Max, CountKeywordArgs, MaxOptionalParameters.
 Metrics/ParameterLists:
   Exclude:
-    - 'app/components/confirm_modal_component.rb'
     - 'app/helpers/angular_form_builder.rb'
     - 'app/models/product_import/entry_processor.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
@@ -845,7 +792,7 @@ Rails/ActionOrder:
     - 'app/controllers/spree/admin/variants_controller.rb'
     - 'app/controllers/user_confirmations_controller.rb'
 
-# Offense count: 13
+# Offense count: 12
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
@@ -949,7 +896,7 @@ Rails/HasAndBelongsToMany:
     - 'app/models/spree/user.rb'
     - 'app/models/spree/zone.rb'
 
-# Offense count: 48
+# Offense count: 47
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
 Rails/HasManyOrHasOneDependent:
@@ -964,7 +911,6 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/spree/order.rb'
     - 'app/models/spree/payment.rb'
     - 'app/models/spree/payment_method.rb'
-    - 'app/models/spree/product.rb'
     - 'app/models/spree/property.rb'
     - 'app/models/spree/return_authorization.rb'
     - 'app/models/spree/shipment.rb'
@@ -1013,7 +959,13 @@ Rails/I18nLocaleTexts:
   Exclude:
     - 'app/controllers/admin/stripe_accounts_controller.rb'
 
-# Offense count: 24
+# Offense count: 1
+# This cop supports unsafe autocorrection (--autocorrect-all).
+Rails/IgnoredColumnsAssignment:
+  Exclude:
+    - 'app/models/spree/variant.rb'
+
+# Offense count: 22
 # Configuration parameters: IgnoreScopes, Include.
 # Include: app/models/**/*.rb
 Rails/InverseOf:
@@ -1459,6 +1411,14 @@ Style/GuardClause:
     - 'spec/support/request/shop_workflow.rb'
     - 'spec/system/support/precompile_assets.rb'
 
+# Offense count: 1
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: braces, no_braces
+Style/HashAsLastArrayItem:
+  Exclude:
+    - 'app/components/products_table_component.rb'
+
 # Offense count: 12
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowSplatArgument.
@@ -1481,7 +1441,7 @@ Style/HashLikeCase:
   Exclude:
     - 'app/models/enterprise.rb'
 
-# Offense count: 1764
+# Offense count: 1778
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, EnforcedShorthandSyntax, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
 # SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
@@ -1497,6 +1457,7 @@ Style/HashSyntax:
     - 'app/controllers/admin/enterprise_groups_controller.rb'
     - 'app/controllers/admin/enterprises_controller.rb'
     - 'app/controllers/admin/order_cycles_controller.rb'
+    - 'app/controllers/admin/reports_controller.rb'
     - 'app/controllers/admin/resource_controller.rb'
     - 'app/controllers/admin/stripe_connect_settings_controller.rb'
     - 'app/controllers/api/v0/enterprise_attachment_controller.rb'
@@ -1713,6 +1674,7 @@ Style/HashSyntax:
     - 'spec/lib/reports/orders_and_fulfillment/orders_cycle_supplier_totals_report_spec.rb'
     - 'spec/lib/reports/packing/packing_report_spec.rb'
     - 'spec/lib/reports/products_and_inventory_report_spec.rb'
+    - 'spec/lib/spree/core/product_duplicator_spec.rb'
     - 'spec/lib/stripe/account_connector_spec.rb'
     - 'spec/lib/tasks/data/remove_transient_data_spec.rb'
     - 'spec/lib/tasks/data/truncate_data_spec.rb'
