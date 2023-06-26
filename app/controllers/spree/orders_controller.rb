@@ -69,6 +69,10 @@ module Spree
       if @order.contents.update_cart(order_params)
         @order.recreate_all_fees! # Enterprise fees on line items and on the order itself
 
+        # Re apply the voucher
+        VoucherAdjustmentsService.calculate(@order)
+        @order.update_totals_and_states
+
         if @order.complete?
           @order.update_payment_fees!
           @order.create_tax_charge!
