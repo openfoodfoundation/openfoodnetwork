@@ -8,7 +8,8 @@ class Schedule < ApplicationRecord
   has_many :coordinators, -> { distinct }, through: :order_cycles
 
   scope :with_coordinator, lambda { |enterprise|
-                             joins(:order_cycles).where('coordinator_id = ?', enterprise.id).select('DISTINCT schedules.*')
+                             joins(:order_cycles).where('coordinator_id = ?', enterprise.id)
+                               .select('DISTINCT schedules.*')
                            }
 
   def current_or_next_order_cycle

@@ -34,7 +34,10 @@ class Customer < ApplicationRecord
 
   validates :code, uniqueness: { scope: :enterprise_id, allow_nil: true }
   validates :email, presence: true, 'valid_email_2/email': true,
-                    uniqueness: { scope: :enterprise_id, message: I18n.t('validation_msg_is_associated_with_an_exising_customer') }
+                    uniqueness: {
+                      scope: :enterprise_id,
+                      message: I18n.t('validation_msg_is_associated_with_an_exising_customer')
+                    }
 
   scope :of, ->(enterprise) { where(enterprise_id: enterprise) }
   scope :managed_by, ->(user) { user&.persisted? ? where(user: user).or(of(Enterprise.managed_by(user))) : none }

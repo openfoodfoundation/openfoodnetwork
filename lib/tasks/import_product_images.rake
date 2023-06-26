@@ -6,7 +6,8 @@ namespace :ofn do
     task :product_images, [:filename] => [:environment] do |_task, args|
       COLUMNS = [:producer, :name, :image_url].freeze
 
-      puts "Warning: use only with trusted URLs. This script will download whatever it can, including local secrets, and expose the file as an image file."
+      puts "Warning: use only with trusted URLs. This script will download whatever it can, " \
+           "including local secrets, and expose the file as an image file."
 
       raise "Filename required" if args[:filename].blank?
 

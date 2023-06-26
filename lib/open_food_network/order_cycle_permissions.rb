@@ -242,7 +242,8 @@ module OpenFoodNetwork
     end
 
     def active_outgoing_variants(hub)
-      @active_outgoing_variants ||= @order_cycle.exchanges.outgoing.where(receiver_id: hub).first&.variants || []
+      @active_outgoing_variants ||=
+        @order_cycle.exchanges.outgoing.where(receiver_id: hub).first&.variants || []
     end
 
     def user_manages_coordinator_or(enterprise)

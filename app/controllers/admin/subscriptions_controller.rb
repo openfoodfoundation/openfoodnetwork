@@ -18,7 +18,8 @@ module Admin
           if view_context.subscriptions_setup_complete?(@shops)
             @order_cycles = OrderCycle.joins(:schedules).managed_by(spree_current_user)
               .includes([:distributors, :cached_incoming_exchanges])
-            @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user).includes(:taggings)
+            @payment_methods = Spree::PaymentMethod.managed_by(spree_current_user)
+              .includes(:taggings)
             @payment_method_tags = payment_method_tags_by_id
             @shipping_methods = Spree::ShippingMethod.managed_by(spree_current_user)
           else
@@ -100,7 +101,8 @@ module Admin
     end
 
     def load_shops
-      @shops = Enterprise.managed_by(spree_current_user).is_distributor.where(enable_subscriptions: true)
+      @shops = Enterprise.managed_by(spree_current_user)
+        .is_distributor.where(enable_subscriptions: true)
     end
 
     def load_form_data
@@ -139,7 +141,9 @@ module Admin
       @open_orders_to_keep = @subscription.proxy_orders.placed_and_open.pluck(:id)
       return if @open_orders_to_keep.empty? || params[:open_orders] == 'keep'
 
-      render json: { errors: { open_orders: t('admin.subscriptions.confirm_cancel_open_orders_msg') } },
+      render json: {
+               errors: { open_orders: t('admin.subscriptions.confirm_cancel_open_orders_msg') }
+             },
              status: :conflict
     end
 
@@ -147,7 +151,9 @@ module Admin
       return if params[:canceled_orders] == 'notified'
       return if @subscription.proxy_orders.active.canceled.empty?
 
-      render json: { errors: { canceled_orders: t('admin.subscriptions.resume_canceled_orders_msg') } },
+      render json: {
+               errors: { canceled_orders: t('admin.subscriptions.resume_canceled_orders_msg') }
+             },
              status: :conflict
     end
 

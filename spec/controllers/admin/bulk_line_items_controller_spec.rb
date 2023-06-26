@@ -47,7 +47,8 @@ describe Admin::BulkLineItemsController, type: :controller do
           get :index, format: :json
         end
 
-        it "retrieves a list of line_items with appropriate attributes, including line items with appropriate attributes" do
+        it "retrieves a list of line_items with appropriate attributes, " \
+           "including line items with appropriate attributes" do
           keys = json_response['line_items'].first.keys.map(&:to_sym)
           expect(line_item_attributes.all?{ |attr| keys.include? attr }).to eq(true)
         end
@@ -99,23 +100,28 @@ describe Admin::BulkLineItemsController, type: :controller do
       let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
       let!(:order1) {
         FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete',
-                                  completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) )
+                                  completed_at: Time.zone.now, distributor: distributor1,
+                                  billing_address: FactoryBot.create(:address) )
       }
       let!(:line_item1) {
         FactoryBot.create(:line_item_with_shipment, order: order1,
-                                                    product: FactoryBot.create(:product, supplier: supplier))
+                                                    product: FactoryBot.create(:product,
+                                                                               supplier: supplier))
       }
       let!(:line_item2) {
         FactoryBot.create(:line_item_with_shipment, order: order1,
-                                                    product: FactoryBot.create(:product, supplier: supplier))
+                                                    product: FactoryBot.create(:product,
+                                                                               supplier: supplier))
       }
       let!(:order2) {
         FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete',
-                                  completed_at: Time.zone.now, distributor: distributor2, billing_address: FactoryBot.create(:address) )
+                                  completed_at: Time.zone.now, distributor: distributor2,
+                                  billing_address: FactoryBot.create(:address) )
       }
       let!(:line_item3) {
         FactoryBot.create(:line_item_with_shipment, order: order2,
-                                                    product: FactoryBot.create(:product, supplier: supplier))
+                                                    product: FactoryBot.create(:product,
+                                                                               supplier: supplier))
       }
 
       context "producer enterprise" do
@@ -188,11 +194,14 @@ describe Admin::BulkLineItemsController, type: :controller do
     let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
     let!(:order1) {
       FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete',
-                                completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) )
+                                completed_at: Time.zone.now,
+                                distributor: distributor1,
+                                billing_address: FactoryBot.create(:address) )
     }
     let!(:line_item1) {
-      line_item1 = FactoryBot.create(:line_item_with_shipment, order: order1,
-                                                               product: FactoryBot.create(:product, supplier: supplier))
+      line_item1 = FactoryBot.create(:line_item_with_shipment,
+                                     order: order1,
+                                     product: FactoryBot.create(:product, supplier: supplier))
       # make sure shipment is available through db reloads of this line_item
       line_item1.tap(&:save!)
     }
@@ -294,11 +303,13 @@ describe Admin::BulkLineItemsController, type: :controller do
     let(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
     let!(:order1) {
       FactoryBot.create(:order, order_cycle: order_cycle, state: 'complete',
-                                completed_at: Time.zone.now, distributor: distributor1, billing_address: FactoryBot.create(:address) )
+                                completed_at: Time.zone.now, distributor: distributor1,
+                                billing_address: FactoryBot.create(:address) )
     }
     let!(:line_item1) {
       FactoryBot.create(:line_item_with_shipment, order: order1,
-                                                  product: FactoryBot.create(:product, supplier: supplier))
+                                                  product: FactoryBot.create(:product,
+                                                                             supplier: supplier))
     }
     let(:params) { { id: line_item1.id, order_id: order1.number } }
 

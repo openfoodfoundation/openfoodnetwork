@@ -123,8 +123,8 @@ module OrderManagement
         return @available_variant_ids if @available_variant_ids.present?
 
         subscription_variant_ids = subscription_line_items.map(&:variant_id)
-        @available_variant_ids = OrderManagement::Subscriptions::VariantsList.eligible_variants(shop)
-          .where(id: subscription_variant_ids).pluck(:id)
+        @available_variant_ids = OrderManagement::Subscriptions::VariantsList
+          .eligible_variants(shop).where(id: subscription_variant_ids).pluck(:id)
       end
 
       def build_msg_from(key, msg)

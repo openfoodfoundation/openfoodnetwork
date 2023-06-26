@@ -35,7 +35,8 @@ class EmbeddedPageService
   end
 
   def embedding_without_https?
-    @request.referer && URI(@request.referer).scheme != 'https' && !Rails.env.test? && !Rails.env.development?
+    @request.referer && URI(@request.referer).scheme != 'https' &&
+      !Rails.env.test? && !Rails.env.development?
   end
 
   def process_embedded_request
@@ -62,7 +63,8 @@ class EmbeddedPageService
   end
 
   def enterprise_slug
-    return false unless @params[:controller] == 'enterprises' && @params[:action] == 'shop' && @params[:id]
+    return false unless @params[:controller] == 'enterprises' &&
+                        @params[:action] == 'shop' && @params[:id]
 
     @params[:id]
   end

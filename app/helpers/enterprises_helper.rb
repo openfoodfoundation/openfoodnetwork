@@ -77,7 +77,8 @@ module EnterprisesHelper
   end
 
   def subscriptions_enabled?
-    spree_current_user.admin? || spree_current_user.enterprises.where(enable_subscriptions: true).any?
+    spree_current_user.admin? ||
+      spree_current_user.enterprises.where(enable_subscriptions: true).any?
   end
 
   def enterprise_url_selector(enterprise)

@@ -10,10 +10,11 @@ module Web
     end
 
     def matomo_iframe_src
-      "#{Spree::Config.matomo_url}"\
-        "/index.php?module=CoreAdminHome&action=optOut"\
-        "&language=#{locale_language}"\
-        "&backgroundColor=&fontColor=222222&fontSize=16px&fontFamily=%22Roboto%22%2C%20Arial%2C%20sans-serif"
+      "#{Spree::Config.matomo_url}" \
+        "/index.php?module=CoreAdminHome&action=optOut" \
+        "&language=#{locale_language}" \
+        "&backgroundColor=&fontColor=222222&fontSize=16px&" \
+        "fontFamily=%22Roboto%22%2C%20Arial%2C%20sans-serif"
     end
 
     # removes country from locale if needed

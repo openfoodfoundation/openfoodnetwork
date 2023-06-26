@@ -35,8 +35,8 @@ module OpenFoodNetwork
     def fees_by_type_for(variant)
       per_item_enterprise_fee_applicators_for(variant).each_with_object({}) do |applicator, fees|
         fees[applicator.enterprise_fee.fee_type.to_sym] ||= 0
-        fees[applicator.enterprise_fee.fee_type.to_sym] += calculate_fee_for variant,
-                                                                             applicator.enterprise_fee
+        fees[applicator.enterprise_fee.fee_type.to_sym] +=
+          calculate_fee_for variant, applicator.enterprise_fee
       end.select { |_fee_type, amount| amount > 0 }
     end
 

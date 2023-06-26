@@ -7,7 +7,8 @@ module AngularFormHelper
     container.map do |element|
       html_attributes = option_html_attributes(element)
       text, value = option_text_and_value(element).map(&:to_s)
-      %(<option value="#{ERB::Util.html_escape(value)}"#{html_attributes}>#{ERB::Util.html_escape(text)}</option>)
+      %(<option value="#{ERB::Util.html_escape(value)}"\
+        #{html_attributes}>#{ERB::Util.html_escape(text)}</option>)
     end.join("\n").html_safe
   end
 

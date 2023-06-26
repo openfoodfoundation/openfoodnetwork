@@ -41,7 +41,9 @@ class SubscriptionConfirmJob < ApplicationJob
 
   def recently_closed_order_cycles
     OrderCycle.closed.where(
-      'order_cycles.orders_close_at BETWEEN (?) AND (?) OR order_cycles.updated_at BETWEEN (?) AND (?)', 1.hour.ago, Time.zone.now, 1.hour.ago, Time.zone.now
+      'order_cycles.orders_close_at BETWEEN (?) AND (?) ' \
+      'OR order_cycles.updated_at BETWEEN (?) AND (?)',
+      1.hour.ago, Time.zone.now, 1.hour.ago, Time.zone.now
     )
   end
 

@@ -37,8 +37,14 @@ module Admin
     end
 
     def reset_absent_products
-      @importer = ProductImport::ProductImporter.new(File.new(file_path),
-                                                     spree_current_user, import_into: params[:import_into], enterprises_to_reset: params[:enterprises_to_reset], updated_ids: params[:updated_ids], settings: params[:settings])
+      @importer = ProductImport::ProductImporter.new(
+        File.new(file_path),
+        spree_current_user,
+        import_into: params[:import_into],
+        enterprises_to_reset: params[:enterprises_to_reset],
+        updated_ids: params[:updated_ids],
+        settings: params[:settings]
+      )
 
       if params.key?(:enterprises_to_reset) && params.key?(:updated_ids)
         @importer.reset_absent(params[:updated_ids])
@@ -56,8 +62,13 @@ module Admin
     end
 
     def process_data(method)
-      @importer = ProductImport::ProductImporter.new(File.new(file_path),
-                                                     spree_current_user, start: params[:start], end: params[:end], settings: params[:settings])
+      @importer = ProductImport::ProductImporter.new(
+        File.new(file_path),
+        spree_current_user,
+        start: params[:start],
+        end: params[:end],
+        settings: params[:settings]
+      )
 
       begin
         @importer.public_send("#{method}_entries")

@@ -87,18 +87,21 @@ class OrderCycleForm
       shipping_method_ids += user_only_selected_distributor_shipping_method_ids
       order_cycle.selected_distributor_shipping_method_ids = shipping_method_ids
     else
-      order_cycle.selected_distributor_shipping_method_ids = selected_distributor_shipping_method_ids
+      order_cycle.selected_distributor_shipping_method_ids =
+        selected_distributor_shipping_method_ids
     end
 
     order_cycle.save!
   end
 
   def attachable_distributor_payment_method_ids
-    @attachable_distributor_payment_method_ids ||= order_cycle.attachable_distributor_payment_methods.map(&:id)
+    @attachable_distributor_payment_method_ids ||=
+      order_cycle.attachable_distributor_payment_methods.map(&:id)
   end
 
   def attachable_distributor_shipping_method_ids
-    @attachable_distributor_shipping_method_ids ||= order_cycle.attachable_distributor_shipping_methods.map(&:id)
+    @attachable_distributor_shipping_method_ids ||=
+      order_cycle.attachable_distributor_shipping_methods.map(&:id)
   end
 
   def exchanges_unchanged?
@@ -113,7 +116,8 @@ class OrderCycleForm
       @selected_distributor_payment_method_ids.reject(&:blank?).map(&:to_i)
     )
 
-    if attachable_distributor_payment_method_ids.sort == @selected_distributor_payment_method_ids.sort
+    if attachable_distributor_payment_method_ids.sort ==
+       @selected_distributor_payment_method_ids.sort
       @selected_distributor_payment_method_ids = []
     end
 
@@ -130,7 +134,8 @@ class OrderCycleForm
       @selected_distributor_shipping_method_ids.reject(&:blank?).map(&:to_i)
     )
 
-    if attachable_distributor_shipping_method_ids.sort == @selected_distributor_shipping_method_ids.sort
+    if attachable_distributor_shipping_method_ids.sort ==
+       @selected_distributor_shipping_method_ids.sort
       @selected_distributor_shipping_method_ids = []
     end
 
@@ -146,7 +151,8 @@ class OrderCycleForm
 
     result = existing_schedule_ids
     result |= (requested_schedule_ids & permitted_schedule_ids) # Add permitted and requested
-    result -= ((result & permitted_schedule_ids) - requested_schedule_ids) # Remove permitted but not requested
+    # Remove permitted but not requested
+    result -= ((result & permitted_schedule_ids) - requested_schedule_ids)
     result
   end
 

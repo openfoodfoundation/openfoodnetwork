@@ -13,7 +13,8 @@ class VariantOverride < ApplicationRecord
 
   validates :hub, presence: true
   validates :variant, presence: true
-  # Default stock can be nil, indicating stock should not be reset or zero, meaning reset to zero. Need to ensure this can be set by the user.
+  # Default stock can be nil, indicating stock should not be reset or zero, meaning reset to zero.
+  # Need to ensure this can be set by the user.
   validates :default_stock, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :count_on_hand, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
@@ -48,7 +49,8 @@ class VariantOverride < ApplicationRecord
 
   def move_stock!(quantity)
     unless stock_overridden?
-      Bugsnag.notify RuntimeError.new "Attempting to move stock of a VariantOverride without a count_on_hand specified."
+      Bugsnag.notify RuntimeError.new "Attempting to move stock of a VariantOverride " \
+                                      "without a count_on_hand specified."
       return
     end
 
@@ -69,7 +71,8 @@ class VariantOverride < ApplicationRecord
         self.attributes = { on_demand: false, count_on_hand: default_stock }
         save
       else
-        Bugsnag.notify RuntimeError.new "Attempting to reset stock level for a variant with no default stock level."
+        Bugsnag.notify RuntimeError.new "Attempting to reset stock level for a variant " \
+                                        "with no default stock level."
       end
     end
     self

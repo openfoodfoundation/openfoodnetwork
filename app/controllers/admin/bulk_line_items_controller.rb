@@ -34,7 +34,8 @@ module Admin
       # and https://www.postgresql.org/docs/current/static/sql-select.html#SQL-FOR-UPDATE-SHARE
       order.with_lock do
         if order.contents.update_item(@line_item, line_item_params)
-          render body: nil, status: :no_content # No Content, does not trigger ng resource auto-update
+          # No Content, does not trigger ng resource auto-update
+          render body: nil, status: :no_content
         else
           render json: { errors: @line_item.errors }, status: :precondition_failed
         end

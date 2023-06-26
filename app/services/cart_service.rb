@@ -131,7 +131,8 @@ class CartService
 
     li_added = li.nil? && (variant_data[:quantity].to_i > 0 || variant_data[:max_quantity].to_i > 0)
     li_quantity_changed = li.present? && li.quantity != variant_data[:quantity].to_i
-    li_max_quantity_changed = li.present? && li.max_quantity.to_i != variant_data[:max_quantity].to_i
+    li_max_quantity_changed = li.present? &&
+                              li.max_quantity.to_i != variant_data[:max_quantity].to_i
 
     li_added || li_quantity_changed || li_max_quantity_changed
   end
@@ -153,8 +154,8 @@ class CartService
   end
 
   def check_variant_available_under_distribution(variant)
-    return true if OrderCycleDistributedVariants.new(@order_cycle,
-                                                     @distributor).available_variants.include? variant
+    return true if OrderCycleDistributedVariants.new(@order_cycle, @distributor)
+      .available_variants.include? variant
 
     errors.add(:base, I18n.t(:spree_order_populator_availability_error))
     false

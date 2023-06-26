@@ -20,7 +20,8 @@ describe Admin::SchedulesController, type: :controller do
 
         let(:params) { { format: :json } }
 
-        it "scopes @collection to schedules containing order_cycles coordinated by enterprises I manage" do
+        it "scopes @collection to schedules containing order_cycles " \
+           "coordinated by enterprises I manage" do
           get :index, params: params
           expect(assigns(:collection)).to eq [coordinated_schedule]
         end
@@ -30,7 +31,8 @@ describe Admin::SchedulesController, type: :controller do
           get :index, params: params
         end
 
-        context "and there is a schedule of an OC coordinated by _another_ enterprise I manage and the first enterprise is given" do
+        context "and there is a schedule of an OC coordinated by _another_ enterprise " \
+                "I manage and the first enterprise is given" do
           let!(:other_managed_coordinator) {
             create(:distributor_enterprise, owner: managed_coordinator.owner)
           }
@@ -42,7 +44,8 @@ describe Admin::SchedulesController, type: :controller do
           }
           let(:params) { { format: :json, enterprise_id: managed_coordinator.id } }
 
-          it "scopes @collection to schedules containing order_cycles coordinated by the first enterprise" do
+          it "scopes @collection to schedules containing order_cycles " \
+             "coordinated by the first enterprise" do
             get :index, params: params
             expect(assigns(:collection)).to eq [coordinated_schedule]
           end
@@ -109,7 +112,8 @@ describe Admin::SchedulesController, type: :controller do
           expect(assigns(:schedule)).to eq coordinated_schedule
           # coordinated_order_cycle2 is added, uncoordinated_order_cycle is NOT removed
           expect(coordinated_schedule.reload.order_cycles).to include coordinated_order_cycle2,
-                                                                      uncoordinated_order_cycle, uncoordinated_order_cycle3
+                                                                      uncoordinated_order_cycle,
+                                                                      uncoordinated_order_cycle3
           # coordinated_order_cycle is removed, uncoordinated_order_cycle2 is NOT added
           expect(coordinated_schedule.reload.order_cycles).to_not include coordinated_order_cycle,
                                                                           uncoordinated_order_cycle2
@@ -121,7 +125,8 @@ describe Admin::SchedulesController, type: :controller do
           expect(syncer_mock).to receive(:sync!).exactly(2).times
 
           spree_put :update, format: :json, id: coordinated_schedule.id,
-                             order_cycle_ids: [coordinated_order_cycle.id, coordinated_order_cycle2.id]
+                             order_cycle_ids: [coordinated_order_cycle.id,
+                                               coordinated_order_cycle2.id]
           spree_put :update, format: :json, id: coordinated_schedule.id,
                              order_cycle_ids: [coordinated_order_cycle.id]
           spree_put :update, format: :json, id: coordinated_schedule.id,
@@ -131,7 +136,8 @@ describe Admin::SchedulesController, type: :controller do
 
       context "where I don't manage any of the schedule's coordinators" do
         before do
-          allow(controller).to receive_messages spree_current_user: uncoordinated_order_cycle2.coordinator.owner
+          allow(controller)
+            .to receive_messages spree_current_user: uncoordinated_order_cycle2.coordinator.owner
         end
 
         it "prevents me from updating the schedule" do
@@ -253,7 +259,9 @@ describe Admin::SchedulesController, type: :controller do
             it "returns an error message and prevents me from deleting the schedule" do
               expect { spree_delete :destroy, params }.to_not change(Schedule, :count)
               json_response = JSON.parse(response.body)
-              expect(json_response["errors"]).to include 'This schedule cannot be deleted because it has associated subscriptions'
+              expect(json_response["errors"])
+                .to include 'This schedule cannot be deleted ' \
+                            'because it has associated subscriptions'
             end
           end
         end

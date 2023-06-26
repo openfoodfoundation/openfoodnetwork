@@ -11,7 +11,12 @@ module ProductImport
     include ActiveModel::Validations
 
     attr_accessor :line_number, :valid, :validates_as, :product_object, :product_validations,
-                  :on_hand_nil, :has_overrides, :units, :unscaled_units, :unit_type, :tax_category, :shipping_category, :id, :product_id, :producer, :producer_id, :distributor, :distributor_id, :name, :display_name, :sku, :unit_value, :unit_description, :variant_unit, :variant_unit_scale, :variant_unit_name, :display_as, :category, :primary_taxon_id, :price, :on_hand, :on_demand, :tax_category_id, :shipping_category_id, :description, :import_date, :enterprise, :enterprise_id
+                  :on_hand_nil, :has_overrides, :units, :unscaled_units, :unit_type, :tax_category,
+                  :shipping_category, :id, :product_id, :producer, :producer_id, :distributor,
+                  :distributor_id, :name, :display_name, :sku, :unit_value, :unit_description,
+                  :variant_unit, :variant_unit_scale, :variant_unit_name, :display_as, :category,
+                  :primary_taxon_id, :price, :on_hand, :on_demand, :tax_category_id,
+                  :shipping_category_id, :description, :import_date, :enterprise, :enterprise_id
 
     NON_DISPLAY_ATTRIBUTES = ['id', 'product_id', 'unscaled_units', 'variant_id', 'enterprise',
                               'enterprise_id', 'producer_id', 'distributor_id', 'primary_taxon',
@@ -68,7 +73,11 @@ module ProductImport
 
     def invalid_attributes
       invalid_attrs = {}
-      errors = @product_validations ? @product_validations.messages.merge(self.errors.messages) : self.errors.messages
+      errors = if @product_validations
+                 @product_validations.messages.merge(self.errors.messages)
+               else
+                 self.errors.messages
+               end
       errors.each do |attr, message|
         invalid_attrs[attr.to_s] = "#{attr.to_s.capitalize} #{message.first}"
       end

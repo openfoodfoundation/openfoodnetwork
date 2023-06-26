@@ -6,7 +6,8 @@ module ProductStock
   extend ActiveSupport::Concern
 
   def on_demand
-    raise 'Cannot determine product on_demand value of product with multiple variants' if variants.size > 1
+    raise 'Cannot determine product on_demand value of product with multiple variants' if
+      variants.size > 1
 
     variants.first.on_demand
   end
