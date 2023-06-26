@@ -47,9 +47,12 @@ describe "As a consumer, I want to see adjustment breakdown" do
                             calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
   let!(:order_within_zone) {
-    create(:order, order_cycle: order_cycle, distributor: distributor, user: user_within_zone,
-                   bill_address: address_within_zone, ship_address: address_within_zone,
-                   state: "cart", line_items: [create(:line_item, variant: variant_with_tax, quantity: 1)])
+    create(
+      :order,
+      order_cycle: order_cycle, distributor: distributor, user: user_within_zone,
+      bill_address: address_within_zone, ship_address: address_within_zone,
+      state: "cart", line_items: [create(:line_item, variant: variant_with_tax, quantity: 1)]
+    )
   }
   let!(:order_outside_zone) {
     create(:order, order_cycle: order_cycle, distributor: distributor, user: user_outside_zone,
@@ -247,7 +250,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
   def assert_db_voucher_adjustment(amount, tax_amount)
     adjustment = order_within_zone.voucher_adjustments.first
-    #adjustment.reload
     expect(adjustment.amount.to_f).to eq(amount)
     expect(adjustment.included_tax.to_f).to eq(tax_amount)
   end
