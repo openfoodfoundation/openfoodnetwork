@@ -45,8 +45,8 @@ describe Voucher do
     let(:voucher) { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 25) }
     let(:order) { create(:order_with_line_items, line_items_count: 3, distributor: enterprise) }
 
-    it 'includes the full voucher amount' do
-      expect(adjustment.amount.to_f).to eq(-25.0)
+    it 'includes an amount of 0' do
+      expect(adjustment.amount.to_f).to eq(0.0)
     end
 
     it 'has no included_tax' do
