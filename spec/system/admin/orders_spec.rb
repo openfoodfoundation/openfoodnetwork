@@ -242,6 +242,46 @@ distributors: [distributor4, distributor5]) }
       end
     end
 
+    context "cart orders" do
+      let!(:order_empty) {
+        create(:order_with_line_items, user: customer2, distributor: distributor2,
+        line_items_count: 0)
+      }
+
+      let!(:order_not_empty) {
+        create(:order_with_line_items, user: customer2, distributor: distributor2,
+        line_items_count: 1)
+      }
+
+      let!(:order_not_empty_no_address) {
+        create(:order_with_line_items, line_items_count: 1, user: customer2,
+        distributor: distributor2, bill_address_id: nil, ship_address_id: nil)
+      }
+
+      before do
+        login_as_admin
+        visit spree.admin_orders_path
+        uncheck 'Only show complete orders'
+        tomselect_search_and_select "cart", from: 'q[state_eq]'
+        page.find('.filter-actions .button[type=submit]').click
+      end
+
+      it "displays non-empty cart orders" do
+        pending "issue #11120"
+
+        # empty cart order does not appear in the results
+        expect(page).not_to have_content order_empty.number
+
+        # non-empty cart order, with bill- and ship-address appear in the results
+        expect(page).to have_content order_not_empty.number
+
+        # non-empty cart order, with no with bill- and ship-address appear in the results
+
+        # pending issue #11120
+        expect(page).to have_content order_not_empty_no_address.number
+      end
+    end
+
     describe "ordering" do
       context "orders with different completion dates" do
         before do
