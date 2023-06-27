@@ -4,7 +4,7 @@
       .sixteen.columns
         = render partial: 'sort', locals: { pagy: pagy }
     = render partial: 'table', locals: { products: products }
-    = render partial: 'admin/shared/v3/pagy', locals: { pagy: pagy, reflex: "click->Admin::ProductsV3#fetch" }
+    = render partial: 'admin/shared/v3/pagy', locals: { pagy: pagy, action: "click->productsV3#fetch" }
   - else
     #no-products
       = t('.no_products_found')
