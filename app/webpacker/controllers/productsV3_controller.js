@@ -1,8 +1,6 @@
 import ApplicationController from "./application_controller";
 
 export default class extends ApplicationController {
-  static targets = ["loading"];
-
   connect() {
     super.connect();
     // Fetch the products on page load
@@ -17,19 +15,13 @@ export default class extends ApplicationController {
     this.stimulate("ProductsV3#fetch");
   };
 
-  hideLoading = () => {
-    this.loadingTarget.classList.add("hidden");
-  };
-
-  showLoading = () => {
-    this.loadingTarget.classList.remove("hidden");
-  };
-
   beforeFetch(element, reflex, noop, reflexId) {
-    this.showLoading();
+    const event = new CustomEvent("show-loading");
+    document.dispatchEvent(event);
   }
 
   afterFetch(element, reflex, noop, reflexId) {
-    this.hideLoading();
+    const event = new CustomEvent("hide-loading");
+    document.dispatchEvent(event);
   }
 }
