@@ -15,13 +15,33 @@ export default class extends ApplicationController {
     this.stimulate("ProductsV3#fetch");
   };
 
-  beforeFetch(element, reflex, noop, reflexId) {
-    const event = new CustomEvent("show-loading");
-    document.dispatchEvent(event);
+  changePerPage = (event) => {
+    this.stimulate("ProductsV3#change_per_page", event.target);
+  };
+
+  beforeChangePerPage() {
+    this.showLoading();
   }
 
-  afterFetch(element, reflex, noop, reflexId) {
+  afterChangePerPage() {
+    this.hideLoading();
+  }
+
+  beforeFetch() {
+    this.showLoading();
+  }
+
+  afterFetch() {
+    this.hideLoading();
+  }
+
+  showLoading = () => {
+    const event = new CustomEvent("show-loading");
+    document.dispatchEvent(event);
+  };
+
+  hideLoading = () => {
     const event = new CustomEvent("hide-loading");
     document.dispatchEvent(event);
-  }
+  };
 }

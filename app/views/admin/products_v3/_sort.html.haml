@@ -1,2 +1,6 @@
 #sort
-  = t(".pagination.total_html", total: pagy.count, from: pagy.from, to: pagy.to)
+  %div
+    = t(".pagination.total_html", total: pagy.count, from: pagy.from, to: pagy.to)
+  %div.with-dropdown
+    = t(".pagination.per_page.show")
+    = select_tag :per_page, options_for_select([15, 25, 50, 100].collect{|i| [t('.pagination.per_page.per_page', num: i), i]}, pagy.items), data: { action: "change->productsV3#changePerPage" }
