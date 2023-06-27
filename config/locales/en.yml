@@ -1834,7 +1834,7 @@ en:
   abn: "ABN:"
   acn: "ACN:"
   invoice_issued_on: "Invoice issued on:"
-  order_number: "Invoice number:"
+  order_number: "Order number:"
   date_of_transaction: "Date of transaction:"
 
   menu_1_title: "Shops"
