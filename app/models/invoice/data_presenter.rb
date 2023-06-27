@@ -86,6 +86,10 @@ class Invoice
       date
     end
 
+    def invoice_number
+      invoice.number
+    end
+
     def paid?
       data[:payment_state] == 'paid' || data[:payment_state] == 'credit_owed'
     end
