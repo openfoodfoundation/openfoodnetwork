@@ -683,7 +683,7 @@ distributors: [distributor4, distributor5]) }
 
             # mouse-hovers and finds tooltip
             find(".icon-road").hover
-            expect(page).to have_content "SHIP"
+            expect(page).to have_content "Ship"
           end
 
           within "tr#order_#{order.id}" do
@@ -692,20 +692,18 @@ distributors: [distributor4, distributor5]) }
 
             # mouse-hovers and finds tooltip
             find(".icon-capture").hover
-            expect(page).to have_content "CAPTURE"
+            expect(page).to have_content "Capture"
           end
         end
 
         it "displays Edit tooltip" do
-          pending("issue #10956")
-
           within "tr#order_#{order.id}" do
             # checks shipment state
             expect(page).to have_content "PENDING"
 
             # mouse-hovers and finds tooltip
             find(".icon-edit").hover
-            expect(page).to have_content "EDIT"
+            expect(page).to have_content "Edit"
           end
         end
       end
