@@ -6,12 +6,15 @@ export default class extends ApplicationController {
   connect() {
     super.connect();
     // Fetch the products on page load
-    this.load();
+    this.fetch();
   }
 
-  load = () => {
-    this.showLoading();
-    this.stimulate("Admin::ProductsV3#fetch").then(() => this.hideLoading());
+  fetch = (event = {}) => {
+    if (event && event.target) {
+      this.stimulate("ProductsV3#fetch", event.target);
+      return;
+    }
+    this.stimulate("ProductsV3#fetch");
   };
 
   hideLoading = () => {
@@ -21,4 +24,12 @@ export default class extends ApplicationController {
   showLoading = () => {
     this.loadingTarget.classList.remove("hidden");
   };
+
+  beforeFetch(element, reflex, noop, reflexId) {
+    this.showLoading();
+  }
+
+  afterFetch(element, reflex, noop, reflexId) {
+    this.hideLoading();
+  }
 }
