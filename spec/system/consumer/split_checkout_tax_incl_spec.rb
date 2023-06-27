@@ -112,7 +112,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
         before { Flipper.enable :vouchers }
 
         let!(:voucher) do
-          create(:voucher, code: 'some_code', enterprise: distributor, amount: 10)
+          create(:voucher_flat_rate, code: 'some_code', enterprise: distributor, amount: 10)
         end
 
         it "will include a tax included amount on the voucher adjustment" do
@@ -148,7 +148,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
         describe "moving between summary to summary via edit cart" do
           let!(:voucher) do
-            create(:voucher, code: 'good_code', enterprise: distributor, amount: 15)
+            create(:voucher_flat_rate, code: 'good_code', enterprise: distributor, amount: 15)
           end
 
           it "recalculate the tax component properly" do
