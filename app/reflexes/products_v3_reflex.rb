@@ -4,8 +4,26 @@ class ProductsV3Reflex < ApplicationReflex
   include Pagy::Backend
 
   def fetch
-    fetch_products(element.dataset.page || 1, element.dataset.per_page || 15)
+    @page = element.dataset.page || 1
+    @per_page ||= 15
 
+    fetch_products
+
+    render_products
+  end
+
+  def change_per_page
+    @per_page = element.value.to_i
+    @page = 1
+
+    fetch_products
+
+    render_products
+  end
+
+  private
+
+  def render_products
     cable_ready.replace(
       selector: "#products-content",
       html: render(partial: "admin/products_v3/content",
@@ -15,13 +33,11 @@ class ProductsV3Reflex < ApplicationReflex
     morph :nothing
   end
 
-  private
-
   # copied from ProductsTableComponent
-  def fetch_products(page, per_page)
+  def fetch_products
     product_query = OpenFoodNetwork::Permissions.new(current_user)
       .editable_products.merge(product_scope)
-    @pagy, @products = pagy(product_query.order(:name), items: per_page, page:)
+    @pagy, @products = pagy(product_query.order(:name), items: @per_page, page: @page)
   end
 
   def product_scope

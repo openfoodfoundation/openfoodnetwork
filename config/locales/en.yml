@@ -770,6 +770,9 @@ en:
       sort:
         pagination:
           total_html: "<strong>%{total} products</strong> in your catalogue. Showing %{from} to %{to}."
+          per_page:
+            show: Show
+            per_page: "%{num} per page"
       content:
         no_products_found: No products found
         import_products: Import multiple products

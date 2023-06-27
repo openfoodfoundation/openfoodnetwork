@@ -85,5 +85,15 @@
 
   #sort {
     margin-bottom: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .with-dropdown {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
   }
 }
