@@ -60,7 +60,7 @@ module OrderCompletion
 
   def process_payment_completion!
     unless @order.process_payments!
-      processing_failed
+      payment_failed
       return redirect_to order_failed_route(step: 'payment')
     end
 
@@ -82,7 +82,16 @@ module OrderCompletion
     order_completion_reset(@order)
   end
 
-  def processing_failed(error = RuntimeError.new(order_processing_error))
+  def payment_failed
+    notify_failure
+  end
+
+  def processing_failed
+    notify_failure
+    Checkout::PostCheckoutActions.new(@order).failure
+  end
+
+  def notify_failure(error = RuntimeError.new(order_processing_error))
     Bugsnag.notify(error) do |payload|
       payload.add_metadata :order, @order
     end
