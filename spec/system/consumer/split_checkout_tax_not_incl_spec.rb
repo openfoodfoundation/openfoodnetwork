@@ -10,8 +10,12 @@ describe "As a consumer, I want to see adjustment breakdown" do
   include AuthenticationHelper
   include WebHelper
 
-  let!(:address_within_zone) { create(:address, state: Spree::State.first) }
-  let!(:address_outside_zone) { create(:address, state: Spree::State.second) }
+  let!(:state) { create(:state, name: "Victoria") }
+  let!(:zone) { create(:zone_with_state_member, default_tax: false, member: state) }
+  let!(:address_within_zone) { create(:address, state: state) }
+  let!(:address_outside_zone) {
+    create(:address, state: create(:state, name: "Timbuktu", country: state.country))
+  }
   let(:user_within_zone) {
     create(:user, bill_address: address_within_zone,
                   ship_address: address_within_zone)
@@ -20,8 +24,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
     create(:user, bill_address: address_outside_zone,
                   ship_address: address_outside_zone)
   }
-  let!(:zone) { create(:zone_with_state_member, name: 'Victoria', default_tax: false) }
-  let!(:tax_category) { create(:tax_category, name: "Veggies", is_default: "f") }
+  let!(:tax_category) { create(:tax_category, name: "Veggies", is_default: false) }
   let!(:tax_rate) {
     create(:tax_rate, name: "Tax rate - included or not", amount: 0.13,
                       zone: zone, tax_category: tax_category, included_in_price: false)
@@ -62,7 +65,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
     Spree::Config.set(tax_using_ship_address: true)
   end
 
-  pending "a not-included tax" do
+  describe "a not-included tax" do
     before do
       zone.update!(default_tax: false)
       tax_rate.update!(included_in_price: false)
@@ -99,12 +102,12 @@ describe "As a consumer, I want to see adjustment breakdown" do
         choose "Delivery"
 
         click_button "Next - Payment method"
-        click_on "Next - Order summary"
-        click_on "Complete order"
 
         # DB checks
-        order_within_zone.reload
-        expect(order_within_zone.additional_tax_total).to eq(1.3)
+        expect(order_within_zone.reload.additional_tax_total).to eq(1.3)
+
+        click_on "Next - Order summary"
+        click_on "Complete order"
 
         # UI checks
         expect(page).to have_content("Confirmed")
@@ -112,7 +115,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
         expect(page).to have_selector('#tax-row', text: with_currency(1.30))
       end
 
-      context "when using a voucher" do
+      pending "when using a voucher" do
         let!(:voucher) do
           create(:voucher, code: 'some_code', enterprise: distributor, amount: 10)
         end

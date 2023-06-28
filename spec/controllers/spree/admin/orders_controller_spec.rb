@@ -57,7 +57,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
         it "updates fees and taxes and redirects to order details page" do
           expect(order).to receive(:recreate_all_fees!)
-          expect(order).to receive(:create_tax_charge!)
+          expect(order).to receive(:create_tax_charge!).at_least :once
 
           spree_put :update, params
 

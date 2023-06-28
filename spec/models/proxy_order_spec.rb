@@ -118,6 +118,7 @@ describe ProxyOrder, type: :model do
                                        }
           break unless order.next! while !order.completed?
           order.cancel
+          order.reload
         end
 
         it "returns true, clears canceled_at and resumes the order" do

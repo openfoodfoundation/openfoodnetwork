@@ -20,20 +20,21 @@ describe Voucher do
   end
 
   describe '#compute_amount' do
-    subject { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 10) }
-
     let(:order) { create(:order_with_totals) }
 
-    it 'returns -10' do
-      expect(subject.compute_amount(order).to_f).to eq(-10)
+    context 'when order total is more than the voucher' do
+      subject { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 5) }
+
+      it 'uses the voucher total' do
+        expect(subject.compute_amount(order).to_f).to eq(-5)
+      end
     end
 
-    context 'when order total is smaller than 10' do
-      it 'returns minus the order total' do
-        order.total = 6
-        order.save!
+    context 'when order total is less than the voucher' do
+      subject { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 20) }
 
-        expect(subject.compute_amount(order).to_f).to eq(-6)
+      it 'matches the order total' do
+        expect(subject.compute_amount(order).to_f).to eq(-10)
       end
     end
   end

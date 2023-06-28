@@ -945,6 +945,9 @@ describe '
         let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
 
         before :each do
+          o1.update_totals_and_states
+          o2.update_totals_and_states
+
           visit_bulk_order_management
         end
 

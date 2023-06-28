@@ -24,7 +24,6 @@ module Spree
             end
 
             refresh_shipment_rates
-            recalculate_taxes
             OrderWorkflow.new(@order).advance_to_payment
 
             flash[:success] = Spree.t('customer_details_updated')
@@ -50,15 +49,6 @@ module Spree
 
         def refresh_shipment_rates
           @order.shipments.map(&:refresh_rates)
-        end
-
-        def recalculate_taxes
-          # If the order's address has been changed, the tax zone could be different,
-          # which means a different set of tax rates might be applicable.
-          @order.create_tax_charge!
-          Spree::TaxRate.adjust(@order, @order.adjustments.admin)
-
-          @order.update_totals_and_states
         end
 
         def order_params

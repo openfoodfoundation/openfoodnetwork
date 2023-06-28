@@ -24,13 +24,13 @@ class OrderWorkflow
   end
 
   def advance_to_payment
-    return unless order.state.in? ["cart", "address", "delivery"]
+    return unless order.before_payment_state?
 
     advance_to_state("payment", advance_order_options)
   end
 
   def advance_checkout(options = {})
-    advance_to = order.state.in?(["cart", "address", "delivery"]) ? "payment" : "confirmation"
+    advance_to = order.before_payment_state? ? "payment" : "confirmation"
 
     advance_to_state(advance_to, advance_order_options.merge(options))
   end
