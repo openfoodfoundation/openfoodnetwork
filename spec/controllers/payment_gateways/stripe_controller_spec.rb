@@ -44,6 +44,7 @@ module PaymentGateways
 
           order.update_attribute :state, "payment"
           order.payments << payment
+          order.update_attribute :state, "confirmation"
         end
 
         it "creates a customer record" do
@@ -72,20 +73,28 @@ Please try again!"
           end
         end
 
-        context "using split checkout" do
-          before do
-            order.update_attribute :state, "confirmation"
-          end
+        it "completes the order and redirects to the order confirmation page" do
+          expect(controller).to receive(:processing_succeeded).and_call_original
+          expect(controller).to receive(:order_completion_reset).and_call_original
 
-          it "completes the order and redirects to the order confirmation page" do
-            expect(controller).to receive(:processing_succeeded).and_call_original
-            expect(controller).to receive(:order_completion_reset).and_call_original
+          get :confirm, params: { payment_intent: "pi_123" }
 
-            get :confirm, params: { payment_intent: "pi_123" }
+          expect(order.completed?).to be true
+          expect(response).to redirect_to order_path(order, order_token: order.token)
+          expect(flash[:notice]).to eq 'Your order has been processed successfully'
+        end
 
-            expect(order.completed?).to be true
-            expect(response).to redirect_to order_path(order, order_token: order.token)
-            expect(flash[:notice]).to eq 'Your order has been processed successfully'
+        context 'when order completion fails' do
+          it "redirects to checkout state path" do
+            expect(controller).to receive(:process_payment_completion!).and_call_original
+            allow(order).to receive(:process_payments!).and_return(false)
+            expect(
+              get(:confirm, params: { payment_intent: "pi_123" })
+            ).to redirect_to checkout_step_path(step: :payment)
+
+            expect(flash[:error]).to eq(
+              'Payment could not be processed, please check the details you entered'
+            )
           end
         end
       end
@@ -99,7 +108,7 @@ Please try again!"
           get :confirm, params: { payment_intent: "pi_123" }
 
           expect(order.completed?).to be false
-          expect(response).to redirect_to checkout_path
+          expect(response).to redirect_to checkout_step_path(step: :details)
           expect(flash[:error]).to eq "Payment could not be processed, \
 please check the details you entered"
         end
@@ -112,7 +121,7 @@ please check the details you entered"
           get :confirm, params: { payment_intent: "pi_666" }
 
           expect(order.completed?).to be false
-          expect(response).to redirect_to checkout_path
+          expect(response).to redirect_to checkout_step_path(step: :details)
           expect(flash[:error]).to eq "Payment could not be processed, \
 please check the details you entered"
         end
@@ -130,7 +139,7 @@ please check the details you entered"
           get :confirm, params: { payment_intent: "pi_123" }
 
           expect(order.completed?).to be false
-          expect(response).to redirect_to checkout_path
+          expect(response).to redirect_to checkout_step_path(step: :details)
           expect(flash[:error]).to eq "Payment could not be processed, \
 please check the details you entered"
         end
