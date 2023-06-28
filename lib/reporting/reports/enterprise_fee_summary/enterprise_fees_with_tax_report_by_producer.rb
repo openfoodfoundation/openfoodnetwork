@@ -7,7 +7,7 @@ module Reporting
         attr_accessor :permissions
 
         def initialize(user, params = {}, render: false)
-          super(user, params, render: render)
+          super(user, params, render:)
           @permissions = Permissions.new(user)
         end
 
@@ -93,9 +93,9 @@ module Reporting
               .pluck("originator_id", 'array_agg(id)')
               .map do |enterprise_fee_id, enterprise_fee_adjustment_ids|
                 {
-                  enterprise_fee_id: enterprise_fee_id,
-                  enterprise_fee_adjustment_ids: enterprise_fee_adjustment_ids,
-                  order: order
+                  enterprise_fee_id:,
+                  enterprise_fee_adjustment_ids:,
+                  order:
                 }
               end
           end
@@ -111,7 +111,7 @@ module Reporting
             tax_rate_ids << nil if tax_rate_ids.empty?
             tax_rate_ids.map do |tax_rate_id|
               {
-                tax_rate_id: tax_rate_id,
+                tax_rate_id:,
                 enterprise_fee_id: item[:enterprise_fee_id],
                 order: item[:order],
               }
@@ -136,7 +136,7 @@ module Reporting
                   tax_rate_id: item[:tax_rate_id],
                   enterprise_fee_id: item[:enterprise_fee_id],
                   supplier_id: line_item.supplier.id,
-                  order: order
+                  order:
                 }
               end
           end
@@ -227,8 +227,8 @@ module Reporting
             total_excl_tax = total_fees_excl_tax(order_ids) + line_items_excl_tax(line_items)
             tax = tax_for_order_ids(order_ids) + tax_for_line_items(line_items)
             {
-              total_excl_tax: total_excl_tax,
-              tax: tax,
+              total_excl_tax:,
+              tax:,
               total_incl_tax: total_excl_tax + tax
             }
           end
@@ -247,14 +247,14 @@ module Reporting
             tax = tax_for_line_items(line_items)
             {
               distributor: distributor(items.first),
-              producer: producer,
+              producer:,
               producer_tax_status: producer_tax_status(items.first),
               order_cycle: key,
               enterprise_fee_name: I18n.t('report_line_cost_of_produce'),
               enterprise_fee_type: I18n.t('report_line_line_items'),
               enterprise_fee_owner: producer,
-              total_excl_tax: total_excl_tax,
-              tax: tax,
+              total_excl_tax:,
+              tax:,
               total_incl_tax: total_excl_tax + tax,
             }
           end

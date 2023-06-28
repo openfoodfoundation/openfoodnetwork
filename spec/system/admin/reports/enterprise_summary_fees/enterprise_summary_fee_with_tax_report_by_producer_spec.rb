@@ -23,11 +23,11 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
   let!(:country_zone){ create(:zone_with_member) }
   let!(:tax_category){ create(:tax_category, name: 'tax_category') }
   let!(:state_tax_rate){
-    create(:tax_rate, zone: state_zone, tax_category: tax_category,
+    create(:tax_rate, zone: state_zone, tax_category:,
                       name: 'State', amount: 0.015)
   }
   let!(:country_tax_rate){
-    create(:tax_rate, zone: country_zone, tax_category: tax_category,
+    create(:tax_rate, zone: country_zone, tax_category:,
                       name: 'Country', amount: 0.025)
   }
   let!(:ship_address){ create(:ship_address) }
@@ -42,10 +42,10 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     create(:supplier_enterprise, name: 'Supplier2', charges_sales_tax: true,
                                  owner_id: supplier2_owner.id)
   }
-  let!(:product){ create(:simple_product, supplier: supplier ) }
+  let!(:product){ create(:simple_product, supplier: ) }
   let!(:product2){ create(:simple_product, supplier: supplier2 ) }
-  let!(:variant){ create(:variant, product_id: product.id, tax_category: tax_category) }
-  let!(:variant2){ create(:variant, product_id: product2.id, tax_category: tax_category) }
+  let!(:variant){ create(:variant, product_id: product.id, tax_category:) }
+  let!(:variant2){ create(:variant, product_id: product2.id, tax_category:) }
   let!(:distributor_owner) { create(:user, enterprise_limit: 1) }
   let!(:distributor){
     create(:distributor_enterprise_with_tax, name: 'Distributor', owner_id: distributor_owner.id)
@@ -75,25 +75,25 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     create(:enterprise_fee, :flat_rate, enterprise: distributor, amount: 20,
                                         name: 'Adminstration',
                                         fee_type: 'admin',
-                                        tax_category: tax_category)
+                                        tax_category:)
   }
   let(:supplier_fees){
     create(:enterprise_fee, :per_item, enterprise: supplier, amount: 15,
                                        name: 'Transport',
                                        fee_type: 'transport',
-                                       tax_category: tax_category)
+                                       tax_category:)
   }
   let(:supplier_fees2){
     create(:enterprise_fee, :per_item, enterprise: supplier2, amount: 25,
                                        name: 'Sales',
                                        fee_type: 'sales',
-                                       tax_category: tax_category)
+                                       tax_category:)
   }
   let(:distributor_fee){
     create(:enterprise_fee, :flat_rate, enterprise: distributor, amount: 10,
                                         name: 'Packing',
                                         fee_type: 'packing',
-                                        tax_category: tax_category)
+                                        tax_category:)
   }
 
   # creates exchanges for oc1
@@ -119,28 +119,28 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
   }
 
   # creates orders for for oc1 and oc2
-  let!(:order) { create(:order_with_distributor, distributor: distributor) }
-  let!(:order2) { create(:order_with_distributor, distributor: distributor) }
+  let!(:order) { create(:order_with_distributor, distributor:) }
+  let!(:order2) { create(:order_with_distributor, distributor:) }
 
   before do
     # adds variants to exchanges on oc1
     order_cycle.coordinator_fees << coordinator_fees
     order_cycle.exchanges.incoming.first.exchange_fees.create!(enterprise_fee: supplier_fees)
-    order_cycle.exchanges.incoming.first.exchange_variants.create!(variant: variant)
+    order_cycle.exchanges.incoming.first.exchange_variants.create!(variant:)
     order_cycle.exchanges.incoming.second.exchange_fees.create!(enterprise_fee: supplier_fees2)
     order_cycle.exchanges.incoming.second.exchange_variants.create!(variant: variant2)
     order_cycle.exchanges.outgoing.first.exchange_fees.create!(enterprise_fee: distributor_fee)
-    order_cycle.exchanges.outgoing.first.exchange_variants.create!(variant: variant)
+    order_cycle.exchanges.outgoing.first.exchange_variants.create!(variant:)
     order_cycle.exchanges.outgoing.first.exchange_variants.create!(variant: variant2)
 
     # adds variants to exchanges on oc2
     order_cycle2.coordinator_fees << coordinator_fees
     order_cycle2.exchanges.incoming.first.exchange_fees.create!(enterprise_fee: supplier_fees)
-    order_cycle2.exchanges.incoming.first.exchange_variants.create!(variant: variant)
+    order_cycle2.exchanges.incoming.first.exchange_variants.create!(variant:)
     order_cycle2.exchanges.incoming.second.exchange_fees.create!(enterprise_fee: supplier_fees2)
     order_cycle2.exchanges.incoming.second.exchange_variants.create!(variant: variant2)
     order_cycle2.exchanges.outgoing.first.exchange_fees.create!(enterprise_fee: distributor_fee)
-    order_cycle2.exchanges.outgoing.first.exchange_variants.create!(variant: variant)
+    order_cycle2.exchanges.outgoing.first.exchange_variants.create!(variant:)
     order_cycle2.exchanges.outgoing.first.exchange_variants.create!(variant: variant2)
 
     distributor.shipping_methods << shipping_method
@@ -166,7 +166,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
     before do
       # adds a line items to the order on oc1
-      order.line_items.create({ variant: variant, quantity: 1, price: 100 })
+      order.line_items.create({ variant:, quantity: 1, price: 100 })
       order.update!({
                       order_cycle_id: order_cycle.id,
                       ship_address_id: ship_address.id
@@ -347,7 +347,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         let!(:order_cycle3){
           create(:simple_order_cycle, distributors: [distributor], name: "oc3")
         }
-        let!(:order3) { create(:order_with_distributor, distributor: distributor) }
+        let!(:order3) { create(:order_with_distributor, distributor:) }
 
         # creates exchanges on oc3
         let!(:incoming_exchange5) {
@@ -365,17 +365,17 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           # adds variants to exchanges on oc3
           order_cycle3.coordinator_fees << coordinator_fees
           order_cycle3.exchanges.incoming.first.exchange_fees.create!(enterprise_fee: supplier_fees)
-          order_cycle3.exchanges.incoming.first.exchange_variants.create!(variant: variant)
+          order_cycle3.exchanges.incoming.first.exchange_variants.create!(variant:)
           order_cycle3.exchanges.incoming.second.exchange_fees
             .create!(enterprise_fee: supplier_fees2)
           order_cycle3.exchanges.incoming.second.exchange_variants.create!(variant: variant2)
           order_cycle3.exchanges.outgoing.first.exchange_fees
             .create!(enterprise_fee: distributor_fee)
-          order_cycle3.exchanges.outgoing.first.exchange_variants.create!(variant: variant)
+          order_cycle3.exchanges.outgoing.first.exchange_variants.create!(variant:)
           order_cycle3.exchanges.outgoing.first.exchange_variants.create!(variant: variant2)
 
           # adds line items to the order on oc3
-          order3.line_items.create({ variant: variant, quantity: 1, price: 100 })
+          order3.line_items.create({ variant:, quantity: 1, price: 100 })
           order3.line_items.create({ variant: variant2, quantity: 1, price: 50 })
           order3.update!({
                            order_cycle_id: order_cycle3.id,
@@ -612,7 +612,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       country_tax_rate.update!({ included_in_price: true })
 
       # adds a line items to the order on oc1
-      order.line_items.create({ variant: variant, quantity: 1, price: 100 })
+      order.line_items.create({ variant:, quantity: 1, price: 100 })
       order.update!({
                       order_cycle_id: order_cycle.id,
                       ship_address_id: ship_address.id
