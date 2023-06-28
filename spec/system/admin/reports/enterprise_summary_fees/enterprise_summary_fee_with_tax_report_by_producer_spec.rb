@@ -35,7 +35,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
   let!(:supplier_owner) { create(:user, enterprise_limit: 1) }
   let!(:supplier2_owner) { create(:user, enterprise_limit: 1) }
   let!(:supplier){
-    create(:supplier_enterprise, name: 'Supplier', charges_sales_tax: true,
+    create(:supplier_enterprise, name: 'Supplier1', charges_sales_tax: true,
                                  owner_id: supplier_owner.id)
   }
   let!(:supplier2){
@@ -198,34 +198,34 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       # for supplier 1, oc1
 
       let(:coordinator_state_tax1){
-        ["Distributor", "Supplier", "Yes", "oc1", "Adminstration", "admin", "Distributor",
+        ["Distributor", "Supplier1", "Yes", "oc1", "Adminstration", "admin", "Distributor",
          "tax_category", "State", "0.015", "20.0", "0.3", "20.3"].join(" ")
       }
       let(:coordinator_country_tax1){
-        ["Distributor", "Supplier", "Yes", "oc1", "Adminstration", "admin", "Distributor",
+        ["Distributor", "Supplier1", "Yes", "oc1", "Adminstration", "admin", "Distributor",
          "tax_category", "Country", "0.025", "20.0", "0.5", "20.5"].join(" ")
       }
 
       let(:supplier_state_tax1){
-        ["Distributor", "Supplier", "Yes", "oc1", "Transport", "transport", "Supplier",
+        ["Distributor", "Supplier1", "Yes", "oc1", "Transport", "transport", "Supplier1",
          "tax_category", "State", "0.015", "15.0", "0.23", "15.23"].join(" ")
       }
       let(:supplier_country_tax1){
-        ["Distributor", "Supplier", "Yes", "oc1", "Transport", "transport", "Supplier",
+        ["Distributor", "Supplier1", "Yes", "oc1", "Transport", "transport", "Supplier1",
          "tax_category", "Country", "0.025", "15.0", "0.38", "15.38"].join(" ")
       }
 
       let(:distributor_state_tax1){
-        ["Distributor", "Supplier", "Yes", "oc1", "Packing", "packing", "Distributor",
+        ["Distributor", "Supplier1", "Yes", "oc1", "Packing", "packing", "Distributor",
          "tax_category", "State", "0.015", "10.0", "0.15", "10.15"].join(" ")
       }
       let(:distributor_country_tax1){
-        ["Distributor", "Supplier", "Yes", "oc1", "Packing", "packing", "Distributor",
+        ["Distributor", "Supplier1", "Yes", "oc1", "Packing", "packing", "Distributor",
          "tax_category", "Country", "0.025", "10.0", "0.25", "10.25"].join(" ")
       }
 
       let(:cost_of_produce1){
-        ["Distributor", "Supplier", "Yes", "oc1", "Cost of produce", "line items", "Supplier",
+        ["Distributor", "Supplier1", "Yes", "oc1", "Cost of produce", "line items", "Supplier1",
          "100.0", "4.0", "104.0"].join(" ")
       }
       let(:summary_row1){
@@ -393,34 +393,34 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         # table lines for supplier1
 
         let(:coordinator_state_tax3){
-          ["Distributor", "Supplier", "Yes", "oc3", "Adminstration", "admin", "Distributor",
+          ["Distributor", "Supplier1", "Yes", "oc3", "Adminstration", "admin", "Distributor",
            "tax_category", "State", "0.015", "20.0", "0.3", "20.3"].join(" ")
         }
         let(:coordinator_country_tax3){
-          ["Distributor", "Supplier", "Yes", "oc3", "Adminstration", "admin", "Distributor",
+          ["Distributor", "Supplier1", "Yes", "oc3", "Adminstration", "admin", "Distributor",
            "tax_category", "Country", "0.025", "20.0", "0.5", "20.5"].join(" ")
         }
 
         let(:supplier_state_tax3){
-          ["Distributor", "Supplier", "Yes", "oc3", "Transport", "transport", "Supplier",
+          ["Distributor", "Supplier1", "Yes", "oc3", "Transport", "transport", "Supplier1",
            "tax_category", "State", "0.015", "15.0", "0.23", "15.23"].join(" ")
         }
         let(:supplier_country_tax3){
-          ["Distributor", "Supplier", "Yes", "oc3", "Transport", "transport", "Supplier",
+          ["Distributor", "Supplier1", "Yes", "oc3", "Transport", "transport", "Supplier1",
            "tax_category", "Country", "0.025", "15.0", "0.38", "15.38"].join(" ")
         }
 
         let(:distributor_state_tax3){
-          ["Distributor", "Supplier", "Yes", "oc3", "Packing", "packing", "Distributor",
+          ["Distributor", "Supplier1", "Yes", "oc3", "Packing", "packing", "Distributor",
            "tax_category", "State", "0.015", "10.0", "0.15", "10.15"].join(" ")
         }
         let(:distributor_country_tax3){
-          ["Distributor", "Supplier", "Yes", "oc3", "Packing", "packing", "Distributor",
+          ["Distributor", "Supplier1", "Yes", "oc3", "Packing", "packing", "Distributor",
            "tax_category", "Country", "0.025", "10.0", "0.25", "10.25"].join(" ")
         }
 
         let(:cost_of_produce3){
-          ["Distributor", "Supplier", "Yes", "oc3", "Cost of produce", "line items", "Supplier",
+          ["Distributor", "Supplier1", "Yes", "oc3", "Cost of produce", "line items", "Supplier1",
            "100.0", "4.0", "104.0"].join(" ")
         }
         let(:summary_row3){
@@ -641,34 +641,34 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     end
 
     let(:coordinator_state_tax1){
-      ["Distributor", "Supplier", "Yes", "oc1", "Adminstration", "admin", "Distributor",
+      ["Distributor", "Supplier1", "Yes", "oc1", "Adminstration", "admin", "Distributor",
        "tax_category", "State", "0.015", "19.21", "0.3", "19.51"].join(" ")
     }
     let(:coordinator_country_tax1){
-      ["Distributor", "Supplier", "Yes", "oc1", "Adminstration", "admin", "Distributor",
+      ["Distributor", "Supplier1", "Yes", "oc1", "Adminstration", "admin", "Distributor",
        "tax_category", "Country", "0.025", "19.21", "0.49", "19.7"].join(" ")
     }
 
     let(:supplier_state_tax1){
-      ["Distributor", "Supplier", "Yes", "oc1", "Transport", "transport", "Supplier",
+      ["Distributor", "Supplier1", "Yes", "oc1", "Transport", "transport", "Supplier1",
        "tax_category", "State", "0.015", "14.41", "0.22", "14.63"].join(" ")
     }
     let(:supplier_country_tax1){
-      ["Distributor", "Supplier", "Yes", "oc1", "Transport", "transport", "Supplier",
+      ["Distributor", "Supplier1", "Yes", "oc1", "Transport", "transport", "Supplier1",
        "tax_category", "Country", "0.025", "14.41", "0.37", "14.78"].join(" ")
     }
 
     let(:distributor_state_tax1){
-      ["Distributor", "Supplier", "Yes", "oc1", "Packing", "packing", "Distributor",
+      ["Distributor", "Supplier1", "Yes", "oc1", "Packing", "packing", "Distributor",
        "tax_category", "State", "0.015", "9.61", "0.15", "9.76"].join(" ")
     }
     let(:distributor_country_tax1){
-      ["Distributor", "Supplier", "Yes", "oc1", "Packing", "packing", "Distributor",
+      ["Distributor", "Supplier1", "Yes", "oc1", "Packing", "packing", "Distributor",
        "tax_category", "Country", "0.025", "9.61", "0.24", "9.85"].join(" ")
     }
 
     let(:cost_of_produce1){
-      ["Distributor", "Supplier", "Yes", "oc1", "Cost of produce", "line items", "Supplier",
+      ["Distributor", "Supplier1", "Yes", "oc1", "Cost of produce", "line items", "Supplier1",
        "96.08", "3.92", "100.0"].join(" ")
     }
     let(:summary_row1){
