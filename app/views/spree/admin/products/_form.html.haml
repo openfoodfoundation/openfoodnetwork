@@ -5,11 +5,6 @@
       = f.text_field :name, :class => 'fullwidth title'
       = f.error_message_on :name
 
-    = f.field_container :permalink do
-      = f.label :permalink, raw(t(:permalink) + content_tag(:span, ' *',  :class => "required"))
-      = f.text_field :permalink, :class => 'fullwidth title'
-      = f.error_message_on :permalink
-
     = f.field_container :description do
       = f.label :description, t(:description)
       %text-angular{'id' => 'product_description', 'name' => 'product[description]', 'class' => 'text-angular', 'textangular-unsafe-sanitizer' => true, "textangular-links-target-blank" => true, 'ta-toolbar' => "[['bold','italics','underline','clear'],['insertLink']]"}

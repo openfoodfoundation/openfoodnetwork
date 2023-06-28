@@ -23,7 +23,6 @@ require 'concerns/product_stock'
 #
 module Spree
   class Product < ApplicationRecord
-    include PermalinkGenerator
     include ProductStock
 
     acts_as_paranoid
@@ -56,7 +55,6 @@ module Spree
                                                        through: :variants
 
     validates :name, presence: true
-    validates :permalink, presence: true
     validates :shipping_category, presence: true
 
     validates :supplier, presence: true
@@ -83,14 +81,9 @@ module Spree
     # these values are persisted on the product's variant
     attr_accessor :price, :display_as, :unit_value, :unit_description
 
-    make_permalink order: :name
-
     after_initialize :set_available_on_to_now, if: :new_record?
 
-    before_validation :sanitize_permalink
-
     before_save :add_primary_taxon_to_taxons
-    before_destroy :punch_permalink
 
     after_save :remove_previous_primary_taxon_from_taxons
     after_create :ensure_standard_variant
@@ -216,10 +209,6 @@ module Spree
       group(column_names.map { |col_name| "#{table_name}.#{col_name}" })
     end
 
-    def to_param
-      permalink.present? ? permalink : (permalink_was || UrlGenerator.to_url(name))
-    end
-
     def tax_category
       if self[:tax_category_id].nil?
         TaxCategory.find_by(is_default: true)
@@ -306,11 +295,6 @@ module Spree
 
     private
 
-    def punch_permalink
-      # Punch permalink with date prefix
-      update_attribute :permalink, "#{Time.now.to_i}_#{permalink}"
-    end
-
     def set_available_on_to_now
       self.available_on ||= Time.zone.now
     end
@@ -345,14 +329,6 @@ module Spree
       variant.unit_value = unit_value
       variant.unit_description = unit_description
       variants << variant
-    end
-
-    # Spree creates a permalink already but our implementation fixes an edge case.
-    def sanitize_permalink
-      return unless permalink.blank? || saved_change_to_permalink? || permalink_changed?
-
-      requested = permalink.presence || permalink_was.presence || name.presence || 'product'
-      self.permalink = create_unique_permalink(requested.parameterize)
     end
 
     def validate_image

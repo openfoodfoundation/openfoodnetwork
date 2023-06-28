@@ -23,15 +23,10 @@ module Api
         authorize! :create, Spree::Product
         @product = Spree::Product.new(product_params)
 
-        begin
-          if @product.save
-            render json: @product, serializer: Api::Admin::ProductSerializer, status: :created
-          else
-            invalid_resource!(@product)
-          end
-        rescue ActiveRecord::RecordNotUnique
-          @product.permalink = nil
-          retry
+        if @product.save
+          render json: @product, serializer: Api::Admin::ProductSerializer, status: :created
+        else
+          invalid_resource!(@product)
         end
       end
 
@@ -96,8 +91,6 @@ module Api
       private
 
       def find_product(id)
-        product_scope.find_by!(permalink: id.to_s)
-      rescue ActiveRecord::RecordNotFound
         product_scope.find(id)
       end
 

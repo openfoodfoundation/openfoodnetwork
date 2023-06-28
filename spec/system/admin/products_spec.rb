@@ -324,37 +324,37 @@ describe '
       expect(page).to have_link('Cancel', href: expected_admin_product_url)
 
       expected_product_url = Regexp.new(Regexp.escape(spree.edit_admin_product_path(
-                                                        product.permalink, filter
+                                                        product.id, filter
                                                       )))
       expect(page).to have_link('Product Details',
                                 href: expected_product_url)
 
       expected_product_image_url = Regexp.new(Regexp.escape(spree.admin_product_images_path(
-                                                              product.permalink, filter
+                                                              product.id, filter
                                                             )))
       expect(page).to have_link('Images',
                                 href: expected_product_image_url)
 
       expected_product_variant_url = Regexp.new(Regexp.escape(spree.admin_product_variants_path(
-                                                                product.permalink, filter
+                                                                product.id, filter
                                                               )))
       expect(page).to have_link('Variants',
                                 href: expected_product_variant_url)
 
       expected_product_properties_url =
         Regexp.new(Regexp.escape(spree.admin_product_product_properties_path(
-                                   product.permalink, filter)))
+                                   product.id, filter)))
       expect(page).to have_link('Product Properties',
                                 href: expected_product_properties_url)
 
       expected_product_group_buy_option_url =
         Regexp.new(Regexp.escape(spree.group_buy_options_admin_product_path(
-                                   product.permalink, filter)))
+                                   product.id, filter)))
       expect(page).to have_link('Group Buy Options',
                                 href: expected_product_group_buy_option_url)
 
       expected_product_seo_url = Regexp.new(Regexp.escape(spree.seo_admin_product_path(
-                                                            product.permalink, filter
+                                                            product.id, filter
                                                           )))
       expect(page).to have_link('Search', href: expected_product_seo_url)
     end

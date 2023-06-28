@@ -17,12 +17,12 @@ module Spree
           end
 
           it "lists only non-deleted variants with params[:deleted] == off" do
-            spree_get :index, product_id: product.permalink, deleted: "off"
+            spree_get :index, product_id: product.id, deleted: "off"
             expect(assigns(:variants)).to eq(product.variants)
           end
 
           it "lists only deleted variants with params[:deleted] == on" do
-            spree_get :index, product_id: product.permalink, deleted: "on"
+            spree_get :index, product_id: product.id, deleted: "on"
             expect(assigns(:variants)).to eq([deleted_variant])
           end
         end
@@ -69,29 +69,28 @@ module Spree
           end
 
           it 'deletes the variant' do
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink,
+            spree_delete :destroy, id: variant.id, product_id: variant.product.id,
                                    format: 'html'
             expect(variant).to have_received(:destroy)
           end
 
           it 'shows a success flash message' do
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink,
+            spree_delete :destroy, id: variant.id, product_id: variant.product.id,
                                    format: 'html'
             expect(flash[:success]).to be
           end
 
           it 'redirects to admin_product_variants_url' do
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink,
+            spree_delete :destroy, id: variant.id, product_id: variant.product.id,
                                    format: 'html'
-            expect(response).to redirect_to spree
-              .admin_product_variants_url(variant.product.permalink)
+            expect(response).to redirect_to spree.admin_product_variants_url(variant.product.id)
           end
 
           it 'destroys all its exchanges' do
             exchange = create(:exchange)
             variant.exchanges << exchange
 
-            spree_delete :destroy, id: variant.id, product_id: variant.product.permalink,
+            spree_delete :destroy, id: variant.id, product_id: variant.product.id,
                                    format: 'html'
             expect(variant.exchanges.reload).to be_empty
           end

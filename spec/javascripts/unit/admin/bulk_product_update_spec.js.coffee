@@ -191,7 +191,6 @@ describe "filtering products for submission to database", ->
       description: ""
       available_on: available_on
       deleted_at: null
-      permalink: null
       meta_keywords: null
       tax_category_id: null
       shipping_category_id: null
@@ -845,11 +844,9 @@ describe "AdminProductEditCtrl", ->
       $scope.products = [
         {
           id: 9
-          permalink_live: "apples"
         }
         {
           id: 13
-          permalink_live: "oranges"
         }
       ]
       $scope.dirtyProducts = {}
@@ -863,11 +860,9 @@ describe "AdminProductEditCtrl", ->
       $scope.products = [
         {
           id: 9
-          permalink_live: "apples"
         }
         {
           id: 13
-          permalink_live: "oranges"
         }
       ]
       DirtyProducts.addProductProperty 9, "someProperty", "something"
@@ -878,7 +873,6 @@ describe "AdminProductEditCtrl", ->
       $httpBackend.flush()
       expect($scope.products).toEqual [
         id: 9
-        permalink_live: "apples"
       ]
       expect(DirtyProducts.all()).toEqual 9:
         id: 9
@@ -913,12 +907,11 @@ describe "AdminProductEditCtrl", ->
 
 
     describe "when the variant has been saved", ->
-      it "deletes variants with a http delete request to /api/products/product_permalink/variants/(variant_id)", ->
+      it "deletes variants with a http delete request to /api/products/(id)/variants/(variant_id)", ->
         spyOn(window, "confirm").and.returnValue true
         $scope.products = [
           {
             id: 9
-            permalink_live: "apples"
             variants: [{
               id: 3
               price: 12
@@ -931,11 +924,10 @@ describe "AdminProductEditCtrl", ->
           }
           {
             id: 13
-            permalink_live: "oranges"
           }
         ]
         $scope.dirtyProducts = {}
-        $httpBackend.expectDELETE("/api/v0/products/apples/variants/3").respond 200, "data"
+        $httpBackend.expectDELETE("/api/v0/products/9/variants/3").respond 200, "data"
         $scope.deleteVariant $scope.products[0], $scope.products[0].variants[0]
         $httpBackend.flush()
 
@@ -944,7 +936,6 @@ describe "AdminProductEditCtrl", ->
         $scope.products = [
           {
             id: 9
-            permalink_live: "apples"
             variants: [
               {
                 id: 3
@@ -958,14 +949,13 @@ describe "AdminProductEditCtrl", ->
           }
           {
             id: 13
-            permalink_live: "oranges"
           }
         ]
         DirtyProducts.addVariantProperty 9, 3, "price", 12.0
         DirtyProducts.addVariantProperty 9, 4, "price", 6.0
         DirtyProducts.addProductProperty 13, "name", "P1"
 
-        $httpBackend.expectDELETE("/api/v0/products/apples/variants/3").respond 200, "data"
+        $httpBackend.expectDELETE("/api/v0/products/9/variants/3").respond 200, "data"
         $scope.deleteVariant $scope.products[0], $scope.products[0].variants[0]
         $httpBackend.flush()
         expect($scope.products[0].variants).toEqual [
@@ -995,8 +985,6 @@ describe "AdminProductEditCtrl", ->
         description: ""
         available_on: available_on
         deleted_at: null
-        permalink: 'test-product'
-        permalink_live: 'test-product'
         meta_keywords: null
         tax_category_id: null
         shipping_category_id: null
@@ -1021,7 +1009,7 @@ describe "AdminProductEditCtrl", ->
         $scope.editWarn(testProduct, testVariant)
 
         expect(windowStub.location.href).toBe(
-          "/admin/products/#{testProduct.permalink_live}/variants/#{testVariant.id}/edit"
+          "/admin/products/#{testProduct.id}/variants/#{testVariant.id}/edit"
         )
 
     describe 'product has no variant', ->
@@ -1036,7 +1024,7 @@ describe "AdminProductEditCtrl", ->
         $scope.editWarn(testProduct, null)
 
         expect(windowStub.location.href).toBe(
-          "/admin/products/#{testProduct.permalink_live}/edit"
+          "/admin/products/#{testProduct.id}/edit"
         )
 
       it 'should load edit product page including the selected filters', inject ($httpParamSerializer) ->
@@ -1051,7 +1039,7 @@ describe "AdminProductEditCtrl", ->
         $scope.editWarn(testProduct, null)
 
         expect(windowStub.location.href).toBe(
-          "/admin/products/#{testProduct.permalink_live}/edit?#{expectedFilter}"
+          "/admin/products/#{testProduct.id}/edit?#{expectedFilter}"
         )
 
   describe "filtering products", ->

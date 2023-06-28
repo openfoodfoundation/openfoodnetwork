@@ -135,7 +135,7 @@ describe Api::V0::VariantsController, type: :controller do
       end
 
       it "are visible by admin" do
-        api_get :index, show_deleted: 1, product_id: variant.product.to_param
+        api_get :index, show_deleted: 1, product_id: variant.product.id
 
         expect(json_response.count).to eq(2)
       end
@@ -145,7 +145,7 @@ describe Api::V0::VariantsController, type: :controller do
       original_number_of_variants = variant.product.variants.count
       api_post :create, variant: { sku: "12345", unit_value: "1",
                                    unit_description: "L", price: "1" },
-                        product_id: variant.product.to_param
+                        product_id: variant.product.id
 
       expect(attributes.all?{ |attr| json_response.include? attr.to_s }).to eq(true)
       expect(response.status).to eq(201)
