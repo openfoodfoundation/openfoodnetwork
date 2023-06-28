@@ -230,6 +230,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       }
       let(:summary_row1){
         [
+          cost_of_produce1, # Ensure summary row follows the right supplier
           "TOTAL", # Fees and line items
           "145.0", # Tax excl: 20 + 15 + 10 + 100
           "5.81",  # Tax     : (0.30 + 0.50) + (0.23 + 0.38) + (0.15 + 0.25) + (1.50 + 2.50)
@@ -271,6 +272,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       }
       let(:summary_row2){
         [
+          cost_of_produce2, # Ensure summary row follows the right supplier
           "TOTAL", # Fees and line items
           "105.0", # Tax excl: 20 + 25 + 10 + 50
           "4.21",  # Tax     : (0.30 + 0.50) + (0.38 + 0.63) + (0.15 + 0.25) + (0.75 + 1.25)
@@ -425,6 +427,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         }
         let(:summary_row3){
           [
+            cost_of_produce3, # Ensure summary row follows the right supplier
             "TOTAL", # Fees and line items
             "145.0", # Tax excl: 20 + 15 + 10 + 100
             "5.81",  # Tax     : (0.30 + 0.50) + (0.23 + 0.38) + (0.15 + 0.25) + (1.50 + 2.50)
@@ -467,6 +470,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         }
         let(:summary_row4){
           [
+            cost_of_produce4, # Ensure summary row follows the right supplier
             "TOTAL", # Fees and line items
             "105.0", # Tax excl: 20 + 25 + 10 + 50
             "4.21",  # Tax     : (0.30 + 0.50) + (0.38 + 0.63) + (0.15 + 0.25) + 2
@@ -479,11 +483,11 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           let(:fee_owner_selector){ "#s2id_q_enterprise_fee_owner_id_in" }
 
           let(:summary_row_after_filtering_by_fee_name){
-            ["TOTAL", "120.0", "4.8", "124.8"].join(" ")
+            [cost_of_produce1, "TOTAL", "120.0", "4.8", "124.8"].join(" ")
           }
 
           let(:summary_row_after_filtering_by_fee_owner){
-            ["TOTAL", "115.0", "4.61", "119.61"].join(" ")
+            [cost_of_produce1, "TOTAL", "115.0", "4.61", "119.61"].join(" ")
           }
 
           before do
@@ -507,6 +511,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
             table = page.find("table.report__table tbody")
 
+            # Supplier1
             expect(table).to have_content(supplier_state_tax3)
             expect(table).to have_content(supplier_country_tax3)
             expect(table).to have_content(distributor_state_tax3)
@@ -516,6 +521,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             expect(table).to have_content(cost_of_produce3)
             expect(table).to have_content(summary_row3)
 
+            # Supplier2
             expect(table).to have_content(supplier_state_tax4)
             expect(table).to have_content(supplier_country_tax4)
             expect(table).to have_content(distributor_state_tax4)
@@ -673,6 +679,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     }
     let(:summary_row1){
       [
+        cost_of_produce1,
         "TOTAL", # Fees and line items
         "139.31", # Tax excl: 19.21 + 14.41 + 9.61 + 96.08
         "5.69", # Tax     : (0.30 + 0.50) + (0.23 + 0.38) + (0.15 + 0.25) + (1.50 + 2.50)
@@ -714,6 +721,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     }
     let(:summary_row2){
       [
+        cost_of_produce2,
         "TOTAL", # Fees and line items
         "100.88", # Tax excl: 19.21 + 24.02 + 9.61 + 48.04
         "4.12", # Tax     : (0.30 + 0.50) + (0.38 + 0.63) + (0.15 + 0.25) + 2
