@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_28_131123) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_28_144825) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -1088,6 +1088,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_28_131123) do
     t.datetime "import_date", precision: nil
     t.string "variant_unit"
     t.string "unit_presentation"
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["product_id"], name: "index_variants_on_product_id"
     t.index ["sku"], name: "index_spree_variants_on_sku"
     t.check_constraint "unit_value > 0::double precision", name: "positive_unit_value"
