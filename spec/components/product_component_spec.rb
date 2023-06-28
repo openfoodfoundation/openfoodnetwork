@@ -67,31 +67,4 @@ describe ProductComponent, type: :component do
       end
     end
   end
-
-  # This also covers import_date
-  describe 'available_on' do
-    let(:product) { create(:simple_product, available_on: available_on) }
-    let(:available_on) { Time.zone.now }
-
-    before do
-      render_inline(
-        ProductComponent.new(
-          product: product,
-          columns: [{ label: "Available On", value: "available_on", sortable: false }]
-        )
-      )
-    end
-
-    it 'returns formated available_on' do
-      expect(page.find('.available_on')).to have_content(available_on.strftime('%F %T'))
-    end
-
-    context 'when available_on is nil' do
-      let(:available_on) { nil }
-
-      it 'returns an empty string' do
-        expect(page.find('.available_on')).to have_content('')
-      end
-    end
-  end
 end

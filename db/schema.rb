@@ -741,7 +741,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_28_131123) do
   create_table "spree_products", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255, default: "", null: false
     t.text "description"
-    t.datetime "available_on", precision: nil
     t.datetime "deleted_at", precision: nil
     t.string "meta_keywords", limit: 255
     t.integer "tax_category_id"
@@ -758,7 +757,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_28_131123) do
     t.integer "primary_taxon_id", null: false
     t.boolean "inherits_properties", default: true, null: false
     t.string "sku", limit: 255, default: "", null: false
-    t.index ["available_on"], name: "index_products_on_available_on"
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
     t.index ["name"], name: "index_products_on_name"
     t.index ["primary_taxon_id"], name: "index_spree_products_on_primary_taxon_id"

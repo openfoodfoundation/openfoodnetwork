@@ -352,9 +352,6 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("inherits_properties")
           filteredProduct.inherits_properties = product.inherits_properties
           hasUpdatableProperty = true
-        if product.hasOwnProperty("available_on")
-          filteredProduct.available_on = product.available_on
-          hasUpdatableProperty = true
         if filteredMaster?
           filteredProduct.master_attributes = filteredMaster
           hasUpdatableProperty = true

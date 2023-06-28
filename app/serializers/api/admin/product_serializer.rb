@@ -4,8 +4,8 @@ module Api
   module Admin
     class ProductSerializer < ActiveModel::Serializer
       attributes :id, :name, :sku, :variant_unit, :variant_unit_scale, :variant_unit_name,
-                 :inherits_properties, :on_hand, :price, :available_on,
-                 :tax_category_id, :import_date, :image_url, :thumb_url, :variants
+                 :inherits_properties, :on_hand, :price, :tax_category_id, :import_date,
+                 :image_url, :thumb_url, :variants
 
       has_one :supplier, key: :producer_id, embed: :id
       has_one :primary_taxon, key: :category_id, embed: :id
@@ -35,10 +35,6 @@ module Api
 
       def price
         object.price.nil? ? '0.0' : object.price
-      end
-
-      def available_on
-        object.available_on.blank? ? "" : object.available_on.strftime("%F %T")
       end
     end
   end

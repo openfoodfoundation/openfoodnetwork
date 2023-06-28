@@ -517,7 +517,6 @@ en:
         on_demand: "On Demand"
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
-        available_on: "Available On"
         import_date: "Import Date"
       columns_selector:
         unit: Unit
@@ -529,7 +528,6 @@ en:
         on_demand: "On Demand"
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
-        available_on: "Available On"
         import_date: "Import Date"
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
@@ -741,7 +739,6 @@ en:
         category: Category
         tax_category: Tax Category
         inherits_properties?: Inherits Properties?
-        available_on: Available On
         av_on: "Av. On"
         import_date: Imported
         upload_an_image: Upload an image

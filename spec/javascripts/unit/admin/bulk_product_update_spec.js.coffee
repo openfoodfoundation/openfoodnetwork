@@ -167,8 +167,6 @@ describe "filtering products for submission to database", ->
     ]
 
   it "returns stock properties of a product if no variant is provided", ->
-    available_on = new Date()
-
     testProduct =
       id: 1
       name: "TestProduct"
@@ -183,13 +181,10 @@ describe "filtering products for submission to database", ->
     ]
 
   it "only returns the properties of products which ought to be updated", ->
-    available_on = new Date()
-
     testProduct =
       id: 1
       name: "TestProduct"
       description: ""
-      available_on: available_on
       deleted_at: null
       meta_keywords: null
       tax_category_id: null
@@ -226,7 +221,6 @@ describe "filtering products for submission to database", ->
       variant_unit: 'volume'
       variant_unit_scale: 1
       variant_unit_name: 'loaf'
-      available_on: available_on
       tax_category_id: null
       master_attributes:
         id: 2
@@ -978,12 +972,10 @@ describe "AdminProductEditCtrl", ->
     testProduct = testVariant = null
 
     beforeEach ->
-      available_on = new Date()
       testProduct =
         id: 1
         name: "TestProduct"
         description: ""
-        available_on: available_on
         deleted_at: null
         meta_keywords: null
         tax_category_id: null
