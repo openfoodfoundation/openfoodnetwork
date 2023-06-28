@@ -103,7 +103,7 @@ describe "CatalogItems", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml",
       consumes "application/json"
 
       parameter name: :catalog_item, in: :body, schema: {
-        example: JSON.parse(DfcProvider::Engine.root.join("spec/support/patch_catalog_item.json").read)
+        example: ExampleJson.read("patch_catalog_item")
       }
 
       before { product }

@@ -103,9 +103,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
       parameter name: :supplied_product, in: :body, schema: {}
 
       let(:id) { variant.id }
-      let(:supplied_product) do
-        JSON.parse(DfcProvider::Engine.root.join("spec/support/patch_supplied_product.json").read)
-      end
+      let(:supplied_product) { ExampleJson.read("patch_supplied_product") }
 
       response "401", "unauthorized" do
         before { login_as nil }
