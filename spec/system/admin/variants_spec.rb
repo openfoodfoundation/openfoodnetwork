@@ -205,7 +205,7 @@ describe '
           end
 
           it "when variant_unit is weight" do
-            expect(Spree::Price.second.amount).to eq(19.99)
+            expect(variant.price).to eq(19.99)
 
             # Given a product with unit-related option types, with a variant
             page.find('table.index .icon-edit').click
@@ -220,7 +220,7 @@ describe '
               %(Variant "#{product.name}" ha sido actualizado exitosamente)
 
             # Then the variant price should have been updated
-            expect(Spree::Price.second.amount).to eq(12.50)
+            expect(variant.reload.price).to eq(12.50)
           end
         end
       end
