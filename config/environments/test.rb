@@ -16,7 +16,8 @@ Openfoodnetwork::Application.configure do
   # Separate cache stores when running in parallel
   config.cache_store = :redis_cache_store, {
     driver: :hiredis,
-    url: ENV.fetch("OFN_REDIS_URL", "redis://localhost:6379/1"),
+     # Unique database number to avoid conflict with others
+    url: ENV.fetch("OFN_REDIS_TEST_URL", "redis://localhost:6379/3"),
     reconnect_attempts: 1
   }
 
