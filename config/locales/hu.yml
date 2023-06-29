@@ -2369,6 +2369,7 @@ hu:
   enterprise_limit: Vállalkozási korlát
   shipping_method_destroy_error: "Ez a szállítási mód nem törölhető, mivel a következő rendelés hivatkozik rá: %{number}."
   fees: "Díjak"
+  fee_name: "Díj neve"
   item_cost: "Cikk költsége"
   bulk: "Tömeges"
   shop_variant_quantity_min: "min"
@@ -2586,6 +2587,7 @@ hu:
   report_filters: Jelentésszűrők
   report_print: Jelentés nyomtatása
   report_render_options: Renderelési beállítások
+  report_header_ofn_uid: OFN Azonosító
   report_header_order_cycle: Rendelési ciklus
   report_header_user: Felhasználó
   report_header_email: Email
@@ -2641,7 +2643,12 @@ hu:
   report_header_total_excl_tax: "Összesen, kivéve adó (%{currency_symbol})"
   report_header_total_incl_tax: "Összesen, beleértve adó (%{currency_symbol})"
   report_header_enterprise: Vállalkozás
+  report_header_enterprise_fee_name: Név
+  report_header_enterprise_fee_type: típus
+  report_header_enterprise_fee_owner: Tulajdonos
   report_header_customer: Vevő
+  report_header_customer_first_name: Keresztnév
+  report_header_customer_last_name: Vezetéknév
   report_header_customer_code: Ügyfélkód
   report_header_product: Termék
   report_header_product_properties: Termék tulajdonságai

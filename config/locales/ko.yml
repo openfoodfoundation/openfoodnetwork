@@ -2343,6 +2343,7 @@ ko:
   enterprise_limit: 회사 최대치
   shipping_method_destroy_error: "해당 발송 방법은 주문에 의해 참조되므로 삭제할 수 없습니다 : %{number}."
   fees: "수수료"
+  fee_name: "수수료 이름"
   item_cost: "물품 가격"
   bulk: "대형"
   shop_variant_quantity_min: "최소"
@@ -2561,6 +2562,7 @@ ko:
   report_filters: 기록 필터
   report_print: 보고서 출력
   report_render_options: 렌더링 옵션
+  report_header_ofn_uid: OFN UID
   report_header_order_cycle: 주문 주기
   report_header_user: 사용자
   report_header_email: 이메일
@@ -2614,7 +2616,12 @@ ko:
   report_header_total_excl_tax: "세금 제외 합계 (%{currency_symbol})"
   report_header_total_incl_tax: "세금 포함 합계 (%{currency_symbol})"
   report_header_enterprise: 회사
+  report_header_enterprise_fee_name: 이름
+  report_header_enterprise_fee_type: 타입
+  report_header_enterprise_fee_owner: 오너
   report_header_customer: 고객
+  report_header_customer_first_name: 이름
+  report_header_customer_last_name: 성
   report_header_customer_code: 소비자 코드
   report_header_product: 생산물
   report_header_product_properties: 상품 자산

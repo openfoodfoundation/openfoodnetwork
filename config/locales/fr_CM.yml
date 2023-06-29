@@ -2280,6 +2280,7 @@ fr_CM:
   enterprise_limit: Nombre max d'entreprises
   shipping_method_destroy_error: "Cette méthode de livraison ne peut pas être supprimée car elle est référencée dans une commande : %{number}."
   fees: "Frais"
+  fee_name: "Nom de la marge/commission"
   item_cost: "Coût du produit"
   bulk: "Vrac"
   shop_variant_quantity_min: "min"
@@ -2494,6 +2495,7 @@ fr_CM:
   report_users: "Utilisateurs"
   report_tax_rates: TVA par taux
   report_tax_types: TVA par type de produit/service
+  report_header_ofn_uid: ID OFN
   report_header_order_cycle: Cycle de Vente
   report_header_user: Utilisateur
   report_header_email: Email
@@ -2547,7 +2549,12 @@ fr_CM:
   report_header_total_excl_tax: "Total HT (%{currency_symbol})"
   report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
   report_header_enterprise: Entreprise
+  report_header_enterprise_fee_name: Produit/Variante
+  report_header_enterprise_fee_type: Catégorie
+  report_header_enterprise_fee_owner: Gestionnaire principal
   report_header_customer: Client
+  report_header_customer_first_name: Prénom
+  report_header_customer_last_name: Nom
   report_header_customer_code: Code acheteur
   report_header_product: Produit
   report_header_product_properties: Propriétés / labels Produits

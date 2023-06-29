@@ -2442,6 +2442,7 @@ ar:
   enterprise_limit: حد المؤسسة
   shipping_method_destroy_error: "لا يمكن حذف طريقة الشحن هذه كما تمت الإشارة إليها بواسطة الطلب: %{number}."
   fees: "رسوم"
+  fee_name: "اسم الرسوم"
   item_cost: "تكلفة البند"
   bulk: "جملة"
   shop_variant_quantity_min: "اقل"
@@ -2660,6 +2661,7 @@ ar:
   report_filters: مرشحات التقرير
   report_print: طباعة التقرير
   report_render_options: خيارات التقديم
+  report_header_ofn_uid: شبكة الغذاء المفتوح UID
   report_header_order_cycle: ترتيب الدورة
   report_header_user: المستعمل
   report_header_email: البريد الإلكتروني
@@ -2728,7 +2730,12 @@ ar:
   report_header_total_incl_tax: "إجمالي مدفوع الضريبة (%{currency_symbol})"
   report_header_total_orders: "إجمالي عدد الطلبات"
   report_header_enterprise: الشركة
+  report_header_enterprise_fee_name: الاسم
+  report_header_enterprise_fee_type: نوع
+  report_header_enterprise_fee_owner: المالك
   report_header_customer: عميل
+  report_header_customer_first_name: الاسم الاول
+  report_header_customer_last_name: الكنية
   report_header_customer_code: كود العميل
   report_header_product: المنتج
   report_header_product_properties: خصائص المنتج

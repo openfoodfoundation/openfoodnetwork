@@ -2117,6 +2117,7 @@ pt:
   enterprise_limit: Limite da Organização
   shipping_method_destroy_error: "Este método de envio não pode ser apagado porque está referenciado por uma encomenda: %{number}."
   fees: "Taxas"
+  fee_name: "Nome da Taxa"
   item_cost: "Custo da unidade"
   bulk: "Em Massa"
   shop_variant_quantity_min: "mín."
@@ -2320,6 +2321,7 @@ pt:
   report_users: "Utilizadores"
   report_tax_rates: Taxas de imposto
   report_tax_types: Tipos de imposto
+  report_header_ofn_uid: ID na OpenFoodNetwork
   report_header_order_cycle: Ciclo de Encomendas
   report_header_user: Utilizador
   report_header_email: Email
@@ -2373,7 +2375,12 @@ pt:
   report_header_total_excl_tax: "Total excl. impostos (%{currency_symbol})"
   report_header_total_incl_tax: "Total incl. impostos (%{currency_symbol})"
   report_header_enterprise: Organização
+  report_header_enterprise_fee_name: Nome
+  report_header_enterprise_fee_type: Tipo
+  report_header_enterprise_fee_owner: Proprietário
   report_header_customer: Consumidor
+  report_header_customer_first_name: Primeiro Nome
+  report_header_customer_last_name: Último Nome
   report_header_customer_code: Código de Consumidor
   report_header_product: Produto
   report_header_product_properties: Propriedades do Produto

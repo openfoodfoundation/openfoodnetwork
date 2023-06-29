@@ -6,6 +6,7 @@ cy:
       spree/shipping_method: Dull Anfon
     attributes:
       spree/order/ship_address:
+        address1: "Cyfeiriad danfon (Stryd a rhif y tŷ)"
         address2: "Cyfeiriad danfon llinell 2"
         city: "Tref y cyfeiriad danfon"
         country: "Gwlad y cyfeiriad danfon"
@@ -13,6 +14,14 @@ cy:
         firstname: "Enw cyntaf"
         lastname: "Enw olaf"
         zipcode: "Cod post y cyfeiriad danfon"
+      spree/order/bill_address:
+        address1: "Cyfeiriad Bilio (Stryd a rhif y tŷ)"
+        zipcode: "Cod post y cyfeiriad bilio"
+        city: "Dinas y cyfeiriad bilio"
+        country: "Gwlad y cyfeiriad bilio"
+        firstname: "Enw cyntaf - cyfeiriad bilio"
+        lastname: "Enw olaf – cyfeiriad bilio"
+        phone: Rhif ffôn y cwsmer
       spree/user:
         password: "Cyfrinair"
         password_confirmation: "Cadarnhau'r cyfrinair"
@@ -49,8 +58,21 @@ cy:
         orders_close_at: Dyddiad cau
       variant_override:
         count_on_hand: "Mewn stoc"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Canran unradd cyfrifiannell:"
+        preferred_amount: "Swm y Cyfrifiannell"
+        preferred_first_item: "Cyfrifiannell Eitem gyntaf:"
+        preferred_additional_item: "Cyfrifiannell - Cost eitemau ychwanegol"
+        preferred_max_items: "Cyfrifiannell – uchafswm eitemau:"
+        preferred_minimal_amount: "Cyfrifiannell - Isafswm:"
+        preferred_normal_amount: "Cyfrifiannell – Swm Arferol:"
+        preferred_discount_amount: "Cyfrifiannell – Swm Gostyngiad:"
+        preferred_unit_from_list: "Cyfrifiannell – Uned o’r rhestr:"
+        preferred_per_unit: "Cyfrifiannell – Fesul uned:"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Mae etifeddu’r categori treth yn golygu bod angen cyfrifiannell fesul eitem."
         spree/user:
           attributes:
             email:
@@ -252,6 +274,10 @@ cy:
   provider_settings: "Gosodiadau darparwr"
   report_mailer:
     report_ready:
+      subject: "Adroddiad yn barod"
+      heading: "Adroddiad yn barod i’w lawrlwytho"
+      intro: |
+          Daw’r ddolen isod i ben ar ôl wythnos.
       link_label: "%{name}"
   shipment_mailer:
     shipped_email:
@@ -849,6 +875,7 @@ cy:
           legend: "Cyfeiriad"
         business_details:
           legend: "Manylion Busnes"
+          upload: 'Lanlwytho'
           abn: Rhif y Cwmni
           abn_placeholder: e.e. 99 123 456 789
           acn: Rhif yr Elusen
@@ -1062,8 +1089,29 @@ cy:
           email_confirmed: "Cadarnhawyd yr e-bost "
           email_not_confirmed: "E-bost heb ei gadarnhau"
         vouchers:
+          legend: Talebau
+          voucher_code: Cod taleb(au)
           rate: Cyfradd
+          label: Label
+          purpose: Pwrpas
+          expiry: Daw i ben
+          use_limit: Defnydd/Cyfyngiad
           customers: Cwsmer
+          net_value: Gwerth Net
+          add_new: Ychwanegu newydd
+          no_voucher_yet: Dim talebau eto
+        white_label:
+          legend: "Label gwyn"
+          hide_ofn_navigation: "Cuddio gwelywio’r RhBA"
+          upload_logo: "Defnyddir y Logo yn ffrynt y siop"
+          remove_logo: "Dileu’r logo"
+          remove_logo_confirm: "Ydych chi’n siŵr eich bod chi am ddileu’r logo yma?"
+          remove_logo_success: "Wedi dileu’r Logo"
+          white_label_logo_link_label: "Defnyddiwyd dolen i’r logo yn ffrynt y siop"
+          hide_groups_tab: "Cuddio tab grwpiau yn ffrynt y siop"
+          create_custom_tab: "Creu tab pwrpasol yn ffrynt y siop"
+          custom_tab_title: "Teitl y tab pwrpasol"
+          custom_tab_content: "Cynnwys y tab pwrpasol"
       actions:
         edit_profile: Gosodiadau
         properties: Manylion
@@ -1299,6 +1347,8 @@ cy:
           tag_rules: "Rheolau Tag"
           shop_preferences: "Dewisiadau Siop"
           users: "Defnyddwyr"
+          vouchers: Talebau
+          white_label: "Label gwyn"
         enterprise_group:
           primary_details: "Manylion sylfaenol"
           users: "Defnyddwyr"
@@ -1333,11 +1383,24 @@ cy:
       payment_methods: Adroddiad Dulliau Talu
       delivery: Adroddiad Cyflenwi
       sales_tax_totals_by_producer: Cyfanswm Trethi Gwerthu fesul Cynhyrchwr
+      sales_tax_totals_by_order: Cyfanswm Trethi gwerthu fesul Archeb
       tax_types: Mathau o dreth
       tax_rates: Cyfraddau Treth
       pack_by_customer: Pecyn fesul Cwsmer
       pack_by_supplier: Pecyn fesul Cyflenwr
       pack_by_product: Pecynnu yn ôl Cynnyrch
+      download:
+        button: "Lawrlwytho adroddiad"
+      show:
+        report_taking_longer: >
+            Mae’n ddrwg gen i, cymerodd gormod o amser i brosesu’r adroddiad yma.
+            Hwyrach ei fod yn cynnwys llawer o ddata, neu rydym yn brysur gydag adroddiadau
+            eraill. Gallwch roi cynnig arall nes ymlaen.
+        report_taking_longer_html: >
+            Mae’n cymryd amser i brosesu’r adroddiad hwn, Hwyrach ei fod yn cynnwys
+            llawer o ddata, neu rydym yn brysur gydag adroddiadau eraill. Anfonwn
+            ebost atoch unwaith y bydd yn barod.
+        report_link_label: Lawrlwytho adroddiad (pan fydd ar gael)
       revenues_by_hub:
         name: Refeniw fesul Hyb
         description: Refeniw fesul hyb
@@ -1507,8 +1570,10 @@ cy:
         associated_subscriptions_error: Nid yw'n bosib dileu'r amserlen hon oherwydd bod tanysgrifiadau cysylltiedig yn berthnasol
     vouchers:
       new:
+        legend: Taleb newydd
         back: Yn ôl
         save: Cadw
+        voucher_code: Cod taleb(au)
         voucher_amount: Nifer
     controllers:
       enterprises:
@@ -1536,6 +1601,7 @@ cy:
     query_param:
       error:
         title: Invalid query parameter
+        extra_fields: "Meysydd digefnogaeth: %{fields}"
   checkout:
     already_ordered:
       cart: "basged"
@@ -1879,6 +1945,14 @@ cy:
       explaination: Gallwch adolygu a chadarnhau eich archeb yn y cam nesaf sy'n cynnwys y costau terfynol.
       submit: Nesaf - Crynodeb o'r Archeb
       cancel: Nôl at Eich Manylion
+      voucher:
+        voucher: "%{voucher_amount}Taleb"
+        apply_voucher: Defnyddio Taleb
+        apply: Defnyddio
+        placeholder: Noder cod y daleb
+        remove_code: Dileu’r cod
+        confirm_delete: Ydych chi’n siŵr eich bod chi am ddileu’r daleb?
+        warning_forfeit_remaining_amount: "Noder: os bydd cyfanswm eich archeb yn llai na’ch taleb, hwyrach na fyddwch yn gallu gwario’r gwerth sy’n weddill."
     step3:
       delivery_details:
         title: Manylion dosbarthu
@@ -1912,6 +1986,7 @@ cy:
       select_a_payment_method: Dewiswch ddull talu
       no_shipping_methods_available: Nid yw'n bosibl talu oherwydd diffyg opsiynau cludo. Cysylltwch â pherchennog y siop.
       voucher_not_found: Heb ei ganfod
+      add_voucher_error: Roedd gwall wrth ychwanegu’r daleb
   order_paid: TALWYD
   order_not_paid: HEB EI DALU
   order_total: Cyfanswm archeb
@@ -2408,6 +2483,7 @@ cy:
   enterprise_limit: Terfyn Mentrau
   shipping_method_destroy_error: "Ni ellir dileu'r dull anfon hwnnw oherwydd mae archeb yn cyfeirio ato: %{number}."
   fees: "Ffioedd"
+  fee_name: "Enw Ffi"
   item_cost: "Cost yr eitem"
   bulk: "Swmp"
   shop_variant_quantity_min: "isafswm"
@@ -2626,6 +2702,7 @@ cy:
   report_filters: Hidlau’r Adroddiad
   report_print: Argraffu Adroddiad
   report_render_options: Opsiynau Creu
+  report_header_ofn_uid: Open Food Network UID
   report_header_order_cycle: Cylch archebu
   report_header_user: Defnyddiwr
   report_header_email: E-bost
@@ -2694,7 +2771,12 @@ cy:
   report_header_total_incl_tax: "Cyfanswm gan gynnwys treth (%{currency_symbol})"
   report_header_total_orders: "Cyfanswm nifer yr Archebion"
   report_header_enterprise: Menter
+  report_header_enterprise_fee_name: Enw
+  report_header_enterprise_fee_type: Math
+  report_header_enterprise_fee_owner: Perchennog
   report_header_customer: Cwsmer
+  report_header_customer_first_name: Enw cyntaf
+  report_header_customer_last_name: Enw olaf
   report_header_customer_code: Cod Cwsmer
   report_header_product: Cynnyrch
   report_header_product_properties: Manylion Cynnyrch
@@ -2876,6 +2958,7 @@ cy:
   new_payment: "Taliad Newydd"
   date_completed: "Dyddiad Cwblhau"
   amount: "Swm"
+  invoice_number: "Rhif anfoneb"
   state_names:
     ready: Yn barod
     pending: Yn yr arfaeth
@@ -3625,6 +3708,7 @@ cy:
     shipping_categories: "Categorïau Anfon"
     new_shipping_category: "Categori Anfon Newydd"
     back_to_shipping_categories: "Yn ôl i Gategorïau Anfon"
+    editing_shipping_category: "Yn golygu’r Categori Danfon"
     name: "Enw"
     description: "Disgrifiad"
     type: "Math"
@@ -3812,6 +3896,8 @@ cy:
           cancel_orders: "Canslo Archebion"
           resend_confirmation: "Ailanfon Cadarnhad "
           resend_confirmation_confirm_html: "Bydd hwn yn ail-anfon yr ebost cadarnhau at y cwsmer. <br />Ydych chi’n siŵr eich bod am wneud hyn?"
+          send_invoice: "Anfon anfonebau"
+          send_invoice_confirm_html: "Bydd hyn yn ebostio anfonebau y cwsmer ar gyfer yr holl archebion cyflawn a ddewiswyd.  <br>Ydych chi’n siwr eich bod chi am barhau?"
           selected:
             zero: "Ni ddewiswyd archeb."
             one: "Dewiswyd 1 archeb"
@@ -3956,6 +4042,7 @@ cy:
             no_payment_via_admin_backend: Ni ellir cipio taliadau Paypal yn y Swyddfa Gefn
       products:
         image_upload_error: "Dylid defnyddio fformat JPG, ONG, GIF, SVG neu WEBP i lanlwytho'r llun."
+        image_not_processable: "Nid yw’r ddelwedd yn yr atodiad yn ddilys."
         new:
           title: "Cynnyrch Newydd"
           new_product: "Cynnyrch Newydd"

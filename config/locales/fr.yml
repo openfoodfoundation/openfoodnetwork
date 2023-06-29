@@ -1394,6 +1394,8 @@ fr:
       pack_by_customer: Préparation des commandes par Acheteur
       pack_by_supplier: Préparation des commandes par Producteur
       pack_by_product: Préparation des commandes par Produit
+      download:
+        button: "Télécharger le rapport"
       show:
         report_taking_longer: >
             Désolée, ce rapport met trop de temps à se charger, probablement parce
@@ -1436,6 +1438,7 @@ fr:
       enterprise_fee_summary:
         name: "Résumé des marges et commissions"
         description: "Résumé des marges et commissions collectées"
+      enterprise_fees_with_tax_report_by_order: "Détail des montants de taxe par commande"
       errors:
         no_report_type: "Merci de sélectionner un type de rapport"
         report_not_found: "Le rapport n'a pas été trouvé"
@@ -2495,6 +2498,8 @@ fr:
   enterprise_limit: Nombre max d'entreprises
   shipping_method_destroy_error: "Cette méthode de livraison ne peut pas être supprimée car elle est référencée dans une commande : %{number}."
   fees: "Frais"
+  fee_name: "Nom de la marge/commission"
+  fee_owner: "Propriétaire des droits"
   item_cost: "Coût du produit"
   bulk: "Vrac"
   shop_variant_quantity_min: "min"
@@ -2713,6 +2718,7 @@ fr:
   report_filters: Filtres
   report_print: Imprimer
   report_render_options: Mise en forme
+  report_header_ofn_uid: ID OFN
   report_header_order_cycle: Cycle de Vente
   report_header_user: Utilisateur
   report_header_email: Email
@@ -2781,7 +2787,12 @@ fr:
   report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
   report_header_total_orders: "Nombre de commandes"
   report_header_enterprise: Entreprise
+  report_header_enterprise_fee_name: Nom
+  report_header_enterprise_fee_type: Catégorie
+  report_header_enterprise_fee_owner: Gestionnaire principal
   report_header_customer: Client
+  report_header_customer_first_name: Prénom
+  report_header_customer_last_name: Nom
   report_header_customer_code: Code acheteur
   report_header_product: Produit
   report_header_product_properties: Propriétés / labels Produits
@@ -2963,8 +2974,10 @@ fr:
   no_orders_found: "Aucune commande trouvée pour ces critères"
   order_information: "Info commande"
   new_payment: "Nouveau paiement"
+  new_invoice: "Nouvelle facture"
   date_completed: "Date d'opération"
   amount: "Montant"
+  invoice_number: "Numéro de facture"
   state_names:
     ready: Prêt
     pending: En attente
@@ -3960,6 +3973,8 @@ fr:
             many: "Vous avez %{count} cycles de vente actifs."
             other: "Vous avez %{count} cycles de vente actifs."
           manage_order_cycles: "GÉRER LES CYCLES DE VENTE"
+        version:
+          view_all_releases: Voir toutes les mises à jour
       shipping_methods:
         index:
           shipping_methods: "Méthodes de livraison"

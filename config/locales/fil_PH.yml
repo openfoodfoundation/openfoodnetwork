@@ -2058,6 +2058,7 @@ fil_PH:
   enterprise_limit: Limitasyon ng enterprise
   shipping_method_destroy_error: "ang paraan ng pagpapadala ay hindi maaaring tanggalin sapagkat ito ay nakasangguni na sa isang order:%{number}."
   fees: "fees"
+  fee_name: "pangalan ng bayarin"
   item_cost: "halaga ng item"
   bulk: "Bulto"
   shop_variant_quantity_min: "pinakakaunti"
@@ -2263,6 +2264,7 @@ fil_PH:
   report_users: "mga gumagamit"
   report_tax_rates: mga rate ng tax
   report_tax_types: mga uri ng tax
+  report_header_ofn_uid: UID sa OFN
   report_header_order_cycle: order cycle
   report_header_user: User
   report_header_email: email
@@ -2315,7 +2317,12 @@ fil_PH:
   report_header_total_excl_tax: "Kabuuang tax na hindi kasama (%{currency_symbol})"
   report_header_total_incl_tax: "Kabuuang tax na kasama (%{currency_symbol})"
   report_header_enterprise: Enterprise
+  report_header_enterprise_fee_name: Pangalan
+  report_header_enterprise_fee_type: uri
+  report_header_enterprise_fee_owner: May-ari
   report_header_customer: customer
+  report_header_customer_first_name: Pangalan
+  report_header_customer_last_name: Apelyido
   report_header_customer_code: Code ng Customer
   report_header_product: produkto
   report_header_product_properties: mga katangian ng produkto

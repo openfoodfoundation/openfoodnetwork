@@ -2279,6 +2279,7 @@ es_US:
   enterprise_limit: Límite de la Organización
   shipping_method_destroy_error: "Ese método de envío no puede ser eliminado ya que se hace referencia en un pedido: %{number}."
   fees: "Comisiones"
+  fee_name: "Nombre de la comisión"
   item_cost: "Costo del artículo"
   bulk: "Agrupar"
   shop_variant_quantity_min: "mínimo"
@@ -2489,6 +2490,7 @@ es_US:
   report_users: "Usuarias"
   report_tax_rates: Porcentajes de los Impuestos
   report_tax_types: Tipos de Impuestos
+  report_header_ofn_uid: UID de OFN
   report_header_order_cycle: Ciclo de Pedido
   report_header_user: Usuaria
   report_header_email: Email
@@ -2541,7 +2543,12 @@ es_US:
   report_header_total_excl_tax: "Total Impuestos excl. (%{currency_symbol})"
   report_header_total_incl_tax: "Total Impuestos incl. (%{currency_symbol})"
   report_header_enterprise: Organización
+  report_header_enterprise_fee_name: Nombre
+  report_header_enterprise_fee_type: Tipo
+  report_header_enterprise_fee_owner: Propietaria
   report_header_customer: Consumidora
+  report_header_customer_first_name: Nombre
+  report_header_customer_last_name: Apellido
   report_header_customer_code: Código de consumidora
   report_header_product: Producto
   report_header_product_properties: Propiedades del producto

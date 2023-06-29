@@ -2201,6 +2201,7 @@ pt_BR:
   enterprise_limit: Limite de iniciativa
   shipping_method_destroy_error: "Esse método de entrega não pode ser excluído, pois é reportado por um pedido: %{number}."
   fees: "Taxas"
+  fee_name: "Nome da taxa"
   item_cost: "Custo da unidade"
   bulk: "Atacado"
   shop_variant_quantity_min: "mín."
@@ -2462,7 +2463,12 @@ pt_BR:
   report_header_total_excl_tax: "Total imposto excluído (%{currency_symbol})"
   report_header_total_incl_tax: "Total imposto incluído (%{currency_symbol})"
   report_header_enterprise: Iniciativa
+  report_header_enterprise_fee_name: Nome
+  report_header_enterprise_fee_type: Tipo
+  report_header_enterprise_fee_owner: Dono
   report_header_customer: Consumidor
+  report_header_customer_first_name: Nome
+  report_header_customer_last_name: Sobrenome
   report_header_customer_code: Código do Consumidor
   report_header_product: Produto
   report_header_product_properties: Propriedades do produto

@@ -2364,6 +2364,7 @@ uk:
   enterprise_limit: Корпоративний ліміт
   shipping_method_destroy_error: "Цей спосіб доставки не можна видалити, оскільки на нього посилається замовлення: %{number}."
   fees: "Збори"
+  fee_name: "Назва комісії"
   item_cost: "Вартість предмета"
   bulk: "Масовий"
   shop_variant_quantity_min: "хв"
@@ -2582,6 +2583,7 @@ uk:
   report_filters: Фільтри звітів
   report_print: Роздрукувати звіт
   report_render_options: Параметри візуалізації
+  report_header_ofn_uid: OFN UID
   report_header_order_cycle: Цикл замовлення
   report_header_user: Користувач
   report_header_email: Email
@@ -2635,7 +2637,12 @@ uk:
   report_header_total_excl_tax: "Всього без податків (%{currency_symbol})"
   report_header_total_incl_tax: "Всього в т.ч. податок (%{currency_symbol})"
   report_header_enterprise: Підприємство
+  report_header_enterprise_fee_name: Ім'я
+  report_header_enterprise_fee_type: Тип
+  report_header_enterprise_fee_owner: Власник
   report_header_customer: Замовник
+  report_header_customer_first_name: Ім'я
+  report_header_customer_last_name: Прізвище
   report_header_customer_code: Код клієнта
   report_header_product: Товар
   report_header_product_properties: Властивості продукту

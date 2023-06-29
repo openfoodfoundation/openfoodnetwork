@@ -2335,6 +2335,7 @@ it_CH:
   enterprise_limit: Limite azienda
   shipping_method_destroy_error: "Questo metodo di consegna non può essere annullato perchè è collegato ad una gentile richiesta: %{number}."
   fees: "Commissioni"
+  fee_name: "Nome della tariffa"
   item_cost: "Prezzo al produttore"
   bulk: "Volume"
   shop_variant_quantity_min: "min"
@@ -2549,6 +2550,7 @@ it_CH:
   report_users: "Utenti"
   report_tax_rates: Tariffe
   report_tax_types: Tipo tariffe
+  report_header_ofn_uid: OFN ID
   report_header_order_cycle: Ciclo di richieste
   report_header_user: Utente
   report_header_email: Email
@@ -2602,7 +2604,12 @@ it_CH:
   report_header_total_excl_tax: "Totale imponibile (%{currency_symbol})"
   report_header_total_incl_tax: "Totale IVA incl. (%{currency_symbol})"
   report_header_enterprise: Azienda
+  report_header_enterprise_fee_name: Nome
+  report_header_enterprise_fee_type: Tipo
+  report_header_enterprise_fee_owner: Proprietario
   report_header_customer: Cliente
+  report_header_customer_first_name: Nome
+  report_header_customer_last_name: Cognome
   report_header_customer_code: Codice Cliente
   report_header_product: Prodotto
   report_header_product_properties: Proprietà prodotto

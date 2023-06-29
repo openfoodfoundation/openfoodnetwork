@@ -2261,6 +2261,7 @@ pl:
   report_header_tax_category: "Kategoria podatku"
   report_header_total_tax: "Całkowity podatek (%{currency_symbol})"
   report_header_enterprise: Podmiot
+  report_header_enterprise_fee_name: Nazwa
   report_header_customer: Klient
   report_header_customer_code: Kod klienta
   report_header_product: Produkt

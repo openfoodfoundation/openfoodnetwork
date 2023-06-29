@@ -1393,6 +1393,8 @@ en_FR:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      download:
+        button: "Download Report"
       show:
         report_taking_longer: >
             Sorry, this report took too long to process. It may contain a lot of data
@@ -1433,6 +1435,7 @@ en_FR:
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      enterprise_fees_with_tax_report_by_order: "Enterprise Fees With Tax Report By Order"
       errors:
         no_report_type: "Please specify a report type"
         report_not_found: "Report not found"
@@ -2490,6 +2493,8 @@ en_FR:
   enterprise_limit: Enterprise Limit
   shipping_method_destroy_error: "That shipping method cannot be deleted as it is referenced by an order: %{number}."
   fees: "Fees"
+  fee_name: "Fee Name"
+  fee_owner: "Fee Owner"
   item_cost: "Item cost"
   bulk: "Bulk"
   shop_variant_quantity_min: "min"
@@ -2708,6 +2713,7 @@ en_FR:
   report_filters: Report Filters
   report_print: Print Report
   report_render_options: Rendering Options
+  report_header_ofn_uid: OFN UID
   report_header_order_cycle: Order Cycle
   report_header_user: User
   report_header_email: Email
@@ -2776,7 +2782,12 @@ en_FR:
   report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
   report_header_total_orders: "Total Number of Orders"
   report_header_enterprise: Enterprise
+  report_header_enterprise_fee_name: Name
+  report_header_enterprise_fee_type: Type
+  report_header_enterprise_fee_owner: Owner
   report_header_customer: Customer
+  report_header_customer_first_name: First Name
+  report_header_customer_last_name: Last Name
   report_header_customer_code: Customer Code
   report_header_product: Product
   report_header_product_properties: Product Properties
@@ -2956,8 +2967,10 @@ en_FR:
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
+  new_invoice: "New Invoice"
   date_completed: "Date Completed"
   amount: "Amount"
+  invoice_number: "Invoice Number"
   state_names:
     ready: Ready
     pending: Pending
@@ -3903,6 +3916,8 @@ en_FR:
             many: "You have %{count} active order cycles."
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
+        version:
+          view_all_releases: View all releases
       shipping_methods:
         index:
           shipping_methods: "Shipping Methods"

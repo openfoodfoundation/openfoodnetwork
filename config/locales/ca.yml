@@ -2324,6 +2324,7 @@ ca:
   enterprise_limit: Límit d'organitzacions
   shipping_method_destroy_error: "Aquest mètode d'enviament no es pot esborrar perquè s'hi fa referència en una comanda: %{number}."
   fees: "Comissions"
+  fee_name: "Nom de la comissió"
   item_cost: "Cost de l'article"
   bulk: "A granel"
   shop_variant_quantity_min: "min"
@@ -2536,6 +2537,7 @@ ca:
   report_tax_rates: Taxes d'impostos
   report_tax_types: Tipus d'impostos
   report_print: Imprimir informe
+  report_header_ofn_uid: UID d'OFN
   report_header_order_cycle: Cicle de comanda
   report_header_user: Usuàries
   report_header_email: Correu electrònic
@@ -2589,7 +2591,12 @@ ca:
   report_header_total_excl_tax: "Total excl. impostos (%{currency_symbol})"
   report_header_total_incl_tax: "Total incl. impostos (%{currency_symbol})"
   report_header_enterprise: Organització
+  report_header_enterprise_fee_name: Nom
+  report_header_enterprise_fee_type: Tipus
+  report_header_enterprise_fee_owner: Propietària
   report_header_customer: Consumidora
+  report_header_customer_first_name: Nom
+  report_header_customer_last_name: Cognoms
   report_header_customer_code: Codi de la consumidora
   report_header_product: Producte
   report_header_product_properties: Propietats del producte

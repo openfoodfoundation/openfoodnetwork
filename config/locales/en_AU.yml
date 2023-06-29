@@ -2136,6 +2136,7 @@ en_AU:
   enterprise_limit: Enterprise Limit
   shipping_method_destroy_error: "That shipping method cannot be deleted as it is referenced by an order: %{number}."
   fees: "Fees"
+  fee_name: "Fee Name"
   item_cost: "Item cost"
   bulk: "Bulk"
   shop_variant_quantity_min: "min"
@@ -2345,6 +2346,7 @@ en_AU:
   report_users: "Users"
   report_tax_rates: Tax rates
   report_tax_types: Tax types
+  report_header_ofn_uid: OFN UID
   report_header_order_cycle: Order Cycle
   report_header_user: User
   report_header_email: Email
@@ -2397,7 +2399,12 @@ en_AU:
   report_header_total_excl_tax: "Total excl. tax (%{currency_symbol})"
   report_header_total_incl_tax: "Total incl. tax (%{currency_symbol})"
   report_header_enterprise: Enterprise
+  report_header_enterprise_fee_name: Name
+  report_header_enterprise_fee_type: Type
+  report_header_enterprise_fee_owner: Owner
   report_header_customer: Customer
+  report_header_customer_first_name: First Name
+  report_header_customer_last_name: Last Name
   report_header_customer_code: Customer Code
   report_header_product: Product
   report_header_product_properties: Product Properties

@@ -2451,6 +2451,7 @@ ru:
   enterprise_limit: Лимит Предприятий
   shipping_method_destroy_error: "Этот способ доставки не может быть удален, так как на него ссылается заказ: %{number}."
   fees: "Сборы"
+  fee_name: "Название Сбора"
   item_cost: "Стоимость товара"
   bulk: "Массовый"
   shop_variant_quantity_min: "мин"
@@ -2669,6 +2670,7 @@ ru:
   report_filters: Фильтры Отчетов
   report_print: Распечатать Отчет
   report_render_options: Параметры рендеринга
+  report_header_ofn_uid: ОСП UID
   report_header_order_cycle: Цикл Заказа
   report_header_user: Пользователь
   report_header_email: Электронная почта
@@ -2737,7 +2739,12 @@ ru:
   report_header_total_incl_tax: "Итого, вкл. налог (%{currency_symbol})"
   report_header_total_orders: "Общее Количество Заказов"
   report_header_enterprise: Предприятие
+  report_header_enterprise_fee_name: Название
+  report_header_enterprise_fee_type: Тип
+  report_header_enterprise_fee_owner: Владелец
   report_header_customer: Клиент
+  report_header_customer_first_name: Имя
+  report_header_customer_last_name: Фамилия
   report_header_customer_code: Код Клиента
   report_header_product: Товар
   report_header_product_properties: Свойства Товара

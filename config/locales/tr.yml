@@ -2442,6 +2442,7 @@ tr:
   report_users: "Kullanıcılar"
   report_tax_rates: Vergi oranları
   report_tax_types: Vergi türleri
+  report_header_ofn_uid: AGA KN
   report_header_order_cycle: Sipariş Dönemi
   report_header_user: kullanıcı
   report_header_email: E-posta
@@ -2495,7 +2496,11 @@ tr:
   report_header_total_excl_tax: "Vergi Hariç Toplam (%{currency_symbol})"
   report_header_total_incl_tax: "Vergi Dahil Toplam (%{currency_symbol})"
   report_header_enterprise: İşletme
+  report_header_enterprise_fee_name: Ad
+  report_header_enterprise_fee_type: Ürün Çeşidi
   report_header_customer: Müşteri
+  report_header_customer_first_name: Ad
+  report_header_customer_last_name: Soyad
   report_header_customer_code: Müşteri kodu
   report_header_product: Ürün
   report_header_product_properties: Ürün Özellikleri
