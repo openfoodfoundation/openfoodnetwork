@@ -7,9 +7,8 @@
 
     = f.field_container :description do
       = f.label :description, t(:description)
-      %text-angular{'id' => 'product_description', 'name' => 'product[description]', 'class' => 'text-angular', 'textangular-unsafe-sanitizer' => true, "textangular-links-target-blank" => true, 'ta-toolbar' => "[['bold','italics','underline','clear'],['insertLink']]"}
-        = sanitize(@product.description, scrubber: ContentScrubber.new)
-      = f.error_message_on :description
+      = f.hidden_field :description, id: "product_description", value: sanitize(@product.description, scrubber: TrixScrubber.new)
+      %trix-editor{ input: "product_description", "data-controller": "trixeditor" }
 
   .right.four.columns.omega
     .variant_units_form{ 'ng-app' => 'admin.products', 'ng-controller' => 'editUnitsCtrl' }
