@@ -182,10 +182,13 @@ describe '
       let(:product) { create(:simple_product, variant_unit: "weight", variant_unit_scale: "1") }
       let(:variant) { product.variants.first }
 
-      before do
-        # sets the locale into ES
-        I18n.default_locale = 'es'
+      around do |example|
+        I18n.default_locale = :es
+        example.run
+        I18n.default_locale = :en
+      end
 
+      before do
         variant.update( unit_value: 1, unit_description: 'foo' )
 
         # When I view the variant
@@ -219,14 +222,6 @@ describe '
             # Then the variant price should have been updated
             expect(Spree::Price.second.amount).to eq(12.50)
           end
-        end
-
-        after do
-          # sets the locale back to EN
-          I18n.default_locale = 'en'
-
-          # disables localization to prevent leaking between specs
-          allow(Spree::Config).to receive(:enable_localized_number?).and_return false
         end
       end
 
