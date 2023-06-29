@@ -90,8 +90,6 @@ describe '
       login_as_admin
       visit spree.admin_product_variants_path(product, filter)
 
-      visit spree.admin_product_variants_path(product, filter)
-
       expected_new_url = Regexp.new(
         Regexp.escape(spree.new_admin_product_variant_path(product, filter))
       )
@@ -179,6 +177,59 @@ describe '
       expect(page).to have_content %(Variant "#{product.name}" has been successfully updated!)
       expect(variant.reload.unit_description).to eq('bar')
     end
+
+    context "with ES as a locale" do
+      let(:product) { create(:simple_product, variant_unit: "weight", variant_unit_scale: "1") }
+      let(:variant) { product.variants.first }
+
+      around do |example|
+        I18n.default_locale = :es
+        example.run
+        I18n.default_locale = :en
+      end
+
+      before do
+        variant.update( unit_value: 1, unit_description: 'foo' )
+
+        # When I view the variant
+        login_as_admin
+        visit spree.admin_product_variants_path product
+      end
+
+      shared_examples "with localization" do |localized, decimal_mark, thousands_separator|
+        context "set to #{localized}" do
+          before do
+            allow(Spree::Config).to receive(:enable_localized_number?).and_return localized
+            Spree::Config[:currency_decimal_mark] = decimal_mark
+            Spree::Config[:currency_thousands_separator] = thousands_separator
+          end
+
+          it "when variant_unit is weight" do
+            expect(variant.price).to eq(19.99)
+
+            # Given a product with unit-related option types, with a variant
+            page.find('table.index .icon-edit').click
+
+            # assert on the price field
+            expect(page).to have_field "variant_price", with: "19,99"
+
+            # When I update the fields and save the variant
+            fill_in "variant_price", with: "12,50"
+            click_button 'Actualizar'
+            expect(page).to have_content \
+              %(Variant "#{product.name}" ha sido actualizado exitosamente)
+
+            # Then the variant price should have been updated
+            expect(variant.reload.price).to eq(12.50)
+          end
+        end
+      end
+
+      it_behaves_like "with localization", false, ".", ","
+      it_behaves_like "with localization", true, ".", ","
+      it_behaves_like "with localization", false, ",", "."
+      it_behaves_like "with localization", true, ",", "."
+    end
   end
 
   describe "editing on hand and on demand values" do
@@ -224,7 +275,7 @@ describe '
 
   it "soft-deletes variants" do
     product = create(:simple_product)
-    variant = create(:variant, product: product)
+    variant = create(:variant, product:)
 
     login_as_admin
     visit spree.admin_product_variants_path product
