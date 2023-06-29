@@ -104,7 +104,9 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
     end
   end
+end
 
+describe Spree::Admin::InvoicesController, type: :controller do
   describe "#index" do
     let(:user) { create(:user) }
     let(:enterprise_user) { create(:user, enterprises: [create(:enterprise)]) }
@@ -113,7 +115,7 @@ describe Spree::Admin::OrdersController, type: :controller do
                                       ship_address: create(:address))
     }
     let(:distributor) { order.distributor }
-    let(:params) { { id: order.number } }
+    let(:params) { { order_id: order.number } }
 
     context "as a normal user" do
       before { allow(controller).to receive(:spree_current_user) { user } }
@@ -141,6 +143,7 @@ describe Spree::Admin::OrdersController, type: :controller do
         it "should allow me to see the order" do
           spree_get :index, params
           expect(response).to be_successful
+          expect(assigns(:order)).to eq order
         end
       end
     end
