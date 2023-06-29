@@ -15,6 +15,10 @@ trix-editor {
     color: #9fc820; // Equivalent to text-angular a
   }
 
+  div {
+    margin-bottom: 1.5rem; // Equivalent to text-angular p (trix doesn't use p as default one, since we could not include figures inside p)
+  }
+
   // Copy/pasted from _type.scss
   blockquote {
     line-height: 1.6;
