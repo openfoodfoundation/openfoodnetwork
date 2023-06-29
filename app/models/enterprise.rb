@@ -459,9 +459,8 @@ class Enterprise < ApplicationRecord
 
   def image_url_for(image, name)
     return unless image.variable?
-    return image.variant(name).processed.url if image.attachment.service.name == :amazon_public
 
-    url_for(image.variant(name))
+    image_variant_url_for(image.variant(name))
   rescue ActiveStorage::Error => e
     Bugsnag.notify "Enterprise ##{id} #{image.try(:name)} error: #{e.message}"
     Rails.logger.error(e.message)

@@ -31,9 +31,8 @@ module Spree
 
     def url(size)
       return self.class.default_image_url(size) unless attachment.attached?
-      return variant(size).processed.url if attachment.service.name == :amazon_public
 
-      url_for(variant(size))
+      image_variant_url_for(variant(size))
     rescue ActiveStorage::Error => e
       Bugsnag.notify "Product ##{viewable_id} Image ##{id} error: #{e.message}"
       Rails.logger.error(e.message)
