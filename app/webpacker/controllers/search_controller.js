@@ -29,7 +29,7 @@ export default class extends Controller {
   }
 
   submitSearch() {
-    this.form.requestSubmit();
+    this.form.requestSubmit(this.form.querySelector("[type='submit']"));
   }
 
   reset() {
