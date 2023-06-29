@@ -132,7 +132,6 @@ describe Spree::Admin::InvoicesController, type: :controller do
 
         it "shows only invoices of manged enterprises" do
           spree_get :index, params
-          pending "reporting success"
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -142,7 +141,7 @@ describe Spree::Admin::InvoicesController, type: :controller do
 
         it "should allow me to see the order" do
           spree_get :index, params
-          expect(response).to be_successful
+          expect(response).to have_http_status :success
           expect(assigns(:order)).to eq order
         end
       end

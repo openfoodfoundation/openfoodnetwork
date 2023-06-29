@@ -4,10 +4,10 @@ module Spree
   module Admin
     class InvoicesController < Spree::Admin::BaseController
       respond_to :json
-      authorize_resource class: false
 
       def index
         @order = Spree::Order.find_by(number: params[:order_id])
+        authorize! :invoice, @order
       end
 
       def create
