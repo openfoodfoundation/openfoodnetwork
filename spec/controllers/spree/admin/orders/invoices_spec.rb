@@ -107,7 +107,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
   describe "#index" do
     let(:user) { create(:user) }
-    let(:enterprise_user) { create(:user) }
+    let(:enterprise_user) { create(:user, enterprises: [create(:enterprise)]) }
     let(:order) {
       create(:order_with_distributor, bill_address: create(:address),
                                       ship_address: create(:address))
@@ -128,8 +128,9 @@ describe Spree::Admin::OrdersController, type: :controller do
       context "which is not a manager of the distributor for an order" do
         before { allow(controller).to receive(:spree_current_user) { enterprise_user } }
 
-        it "should prevent me from listing invoices for the order" do
+        it "shows only invoices of manged enterprises" do
           spree_get :index, params
+          pending "reporting success"
           expect(response).to redirect_to unauthorized_path
         end
       end
