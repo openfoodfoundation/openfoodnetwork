@@ -9,14 +9,14 @@ export default class extends ApplicationController {
 
   fetch = (event = {}) => {
     if (event && event.target) {
-      this.stimulate("ProductsV3#fetch", event.target);
+      this.stimulate("Products#fetch", event.target);
       return;
     }
-    this.stimulate("ProductsV3#fetch");
+    this.stimulate("Products#fetch");
   };
 
   changePerPage = (event) => {
-    this.stimulate("ProductsV3#change_per_page", event.target);
+    this.stimulate("Products#change_per_page", event.target);
   };
 
   beforeChangePerPage() {

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProductsV3Reflex < ApplicationReflex
+class ProductsReflex < ApplicationReflex
   include Pagy::Backend
 
   def fetch
