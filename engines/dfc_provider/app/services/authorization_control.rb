@@ -19,7 +19,7 @@ class AuthorizationControl
   end
 
   def user
-    oidc_user || ofn_user
+    oidc_user || ofn_api_user || ofn_user
   rescue JWT::ExpiredSignature
     nil
   end
@@ -28,6 +28,10 @@ class AuthorizationControl
 
   def oidc_user
     find_ofn_user(decode_token) if access_token
+  end
+
+  def ofn_api_user
+    Spree::User.find_by(spree_api_key: ofn_api_token) if ofn_api_token.present?
   end
 
   def ofn_user
@@ -44,6 +48,10 @@ class AuthorizationControl
 
   def access_token
     @request.headers['Authorization'].to_s.split(' ').last
+  end
+
+  def ofn_api_token
+    @request.headers["X-Api-Token"]
   end
 
   def find_ofn_user(payload)

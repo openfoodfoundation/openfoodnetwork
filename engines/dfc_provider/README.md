@@ -15,6 +15,12 @@ account with a trusted OIDC provider. Currently these are:
 But you can also authenticate with your OFN user login (session cookie) through
 your browser.
 
+And you can also use your OFN API token in the HTTP header. For example:
+
+```
+X-Api-Token: d6ccf8685b8cd29b67ae6186e9ceb423bd2ac30b7c880223
+```
+
 ## API endpoints
 
 The API is under development and this list may be out of date.
