@@ -4,8 +4,8 @@ class ProductsReflex < ApplicationReflex
   include Pagy::Backend
 
   def fetch
-    @page = element.dataset.page || 1
-    @per_page ||= 15
+    @page ||= element.dataset.page || 1
+    @per_page ||= element.dataset.perpage || 15
 
     fetch_products
 
@@ -16,9 +16,7 @@ class ProductsReflex < ApplicationReflex
     @per_page = element.value.to_i
     @page = 1
 
-    fetch_products
-
-    render_products
+    fetch
   end
 
   private
