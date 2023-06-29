@@ -28,6 +28,10 @@ class ProductsReflex < ApplicationReflex
                    locals: { products: @products, pagy: @pagy })
     ).broadcast
 
+    cable_ready.replace_state(
+      url: current_url,
+    ).broadcast_later
+
     morph :nothing
   end
 
@@ -59,5 +63,12 @@ class ProductsReflex < ApplicationReflex
       #   :variant_overrides
       # ]
     ]
+  end
+
+  def current_url
+    url = URI(request.original_url)
+    url.query = url.query.present? ? "#{url.query}&" : ""
+    url.query += "page=#{@page}&per_page=#{@per_page}"
+    url.to_s
   end
 end
