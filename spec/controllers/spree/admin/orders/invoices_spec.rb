@@ -106,13 +106,13 @@ describe Spree::Admin::OrdersController, type: :controller do
   end
 
   describe "#index" do
-    let!(:user) { create(:user) }
-    let!(:enterprise_user) { create(:user) }
-    let!(:order) {
+    let(:user) { create(:user) }
+    let(:enterprise_user) { create(:user) }
+    let(:order) {
       create(:order_with_distributor, bill_address: create(:address),
                                       ship_address: create(:address))
     }
-    let!(:distributor) { order.distributor }
+    let(:distributor) { order.distributor }
     let(:params) { { id: order.number } }
 
     context "as a normal user" do
@@ -133,6 +133,7 @@ describe Spree::Admin::OrdersController, type: :controller do
           expect(response).to redirect_to unauthorized_path
         end
       end
+
       context 'which is a manager of the distributor for an order' do
         before { allow(controller).to receive(:spree_current_user) { distributor.owner } }
 
