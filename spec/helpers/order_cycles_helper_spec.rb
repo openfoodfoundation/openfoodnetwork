@@ -92,4 +92,50 @@ describe OrderCyclesHelper, type: :helper do
       expect(helper.pickup_time(oc2)).to eq("turtles")
     end
   end
+
+  describe "distibutors that have editable shipping/payment methods" do
+    let(:result) {
+      helper.distributors_with_editable_shipping_and_payment_methods(order_cycle)
+    }
+    let(:order_cycle) {
+      create(
+        :simple_order_cycle,
+        coordinator:, suppliers: [supplier], distributors: [hub1, hub2],
+      )
+    }
+    let(:hub1) { create(:distributor_enterprise, name: 'hub1') }
+    let(:hub2) { create(:distributor_enterprise, name: 'hub2') }
+    let(:supplier){ create(:supplier_enterprise, name: 'supplier') }
+    let(:coordinator){ create(:distributor_enterprise, name: 'coordinator') }
+
+    context 'current user is a coordinator' do
+      before do
+        allow(helper).to receive(:spree_current_user).and_return coordinator.owner
+      end
+
+      it 'returns all distributors' do
+        expect(result).to match_array [hub1, hub2]
+      end
+    end
+
+    context 'current user is a producer' do
+      before do
+        allow(helper).to receive(:spree_current_user).and_return supplier.owner
+      end
+
+      it "doesn't return any distributors" do
+        expect(result).to eq []
+      end
+    end
+
+    context 'current user is a hub' do
+      before do
+        allow(helper).to receive(:spree_current_user).and_return hub1.owner
+      end
+
+      it "returns only the hubs of the current user" do
+        expect(result).to eq [hub1]
+      end
+    end
+  end
 end
