@@ -19,7 +19,8 @@ module Reporting
           it "should concatenate owner and manager queries" do
             expect(subject).to receive(:owners_and_enterprises).once
             expect(subject).to receive(:managers_and_enterprises).once
-            expect(owners_and_enterprises).to receive(:concat).with(managers_and_enterprises).and_return []
+            expect(owners_and_enterprises).to receive(:concat)
+              .with(managers_and_enterprises).and_return []
             expect(subject).to receive(:sort).with []
             subject.query_result
           end

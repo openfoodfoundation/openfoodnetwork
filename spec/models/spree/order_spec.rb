@@ -10,13 +10,15 @@ describe Spree::Order do
     it "provides friendly error messages" do
       order.ship_address = Spree::Address.new
       order.save
-      expect(order.errors.full_messages).to include "Shipping address (Street + House number) can't be blank"
+      expect(order.errors.full_messages)
+        .to include "Shipping address (Street + House number) can't be blank"
     end
 
     it "provides friendly error messages for bill address" do
       order.bill_address = Spree::Address.new
       order.save
-      expect(order.errors.full_messages).to include "Billing address (Street + House number) can't be blank"
+      expect(order.errors.full_messages)
+        .to include "Billing address (Street + House number) can't be blank"
     end
   end
 
@@ -200,7 +202,8 @@ describe Spree::Order do
     end
 
     it "should log state event" do
-      expect(order.state_changes).to receive(:create).exactly(3).times # order, shipment & payment state changes
+      # order, shipment & payment state changes
+      expect(order.state_changes).to receive(:create).exactly(3).times
       order.finalize!
     end
 
@@ -429,7 +432,8 @@ describe Spree::Order do
   end
 
   # Regression test for Spree #2191
-  context "when an order has an adjustment that zeroes the total, but another adjustment for shipping that raises it above zero" do
+  context "when an order has an adjustment that zeroes the total, but another adjustment " \
+          "for shipping that raises it above zero" do
     let!(:persisted_order) { create(:order) }
     let!(:line_item) { create(:line_item) }
     let!(:shipping_method) do
@@ -566,7 +570,8 @@ describe Spree::Order do
       expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).
         to receive(:create_line_item_adjustments_for).
         with(line_item)
-      allow_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).to receive(:create_order_adjustments_for)
+      allow_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator)
+        .to receive(:create_order_adjustments_for)
       allow(subject).to receive(:order_cycle) { order_cycle }
 
       subject.recreate_all_fees!
@@ -887,7 +892,8 @@ describe Spree::Order do
       subject.line_items = [line_item1, line_item2]
     end
 
-    it "allows the change when all variants in the order are provided by the new distributor in the new order cycle" do
+    it "allows the change when all variants in the order are provided " \
+       "by the new distributor in the new order cycle" do
       new_distributor = create(:enterprise)
       new_order_cycle = create(:simple_order_cycle, distributors: [new_distributor],
                                                     variants: [variant1, variant2])
@@ -898,13 +904,14 @@ describe Spree::Order do
       expect(subject).to be_valid
     end
 
-    it "does not allow the change when not all variants in the order are provided by the new distributor" do
+    it "doesn't allow change when not all variants in order are provided by new distributor" do
       new_distributor = create(:enterprise)
       create(:simple_order_cycle, distributors: [new_distributor], variants: [variant1])
 
       subject.distributor = new_distributor
       expect(subject).not_to be_valid
-      expect(subject.errors.messages).to eq(base: ["Distributor or order cycle cannot supply the products in your cart"])
+      expect(subject.errors.messages)
+        .to eq(base: ["Distributor or order cycle cannot supply the products in your cart"])
     end
   end
 
@@ -1094,7 +1101,9 @@ describe Spree::Order do
 
     it "returns a validation error" do
       expect{ order.next }.to change(order.errors, :count).from(0).to(1)
-      expect(order.errors.messages[:email]).to eq ['This email address is already registered. Please log in to continue, or go back and use another email address.']
+      expect(order.errors.messages[:email]).to eq ['This email address is already registered. ' \
+                                                   'Please log in to continue, or go back and ' \
+                                                   'use another email address.']
       expect(order.state).to eq 'cart'
     end
   end
@@ -1229,7 +1238,8 @@ describe Spree::Order do
 
       it "returns previous items" do
         expect(order.finalised_line_items.length).to eq 11
-        expect(order.finalised_line_items).to match_array(prev_order.line_items + prev_order2.line_items)
+        expect(order.finalised_line_items)
+          .to match_array(prev_order.line_items + prev_order2.line_items)
       end
     end
   end

@@ -155,29 +155,47 @@ describe EnterpriseRelationship do
       context "when variant_override permission is present" do
         let!(:er) {
           create(:enterprise_relationship, child: hub, parent: producer,
-                                           permissions_list: [:add_to_order_cycles, :create_variant_overrides] )
+                                           permissions_list: [:add_to_order_cycles,
+                                                              :create_variant_overrides] )
         }
         let!(:some_other_er) {
           create(:enterprise_relationship, child: hub, parent: some_other_producer,
-                                           permissions_list: [:add_to_order_cycles, :create_variant_overrides] )
+                                           permissions_list: [:add_to_order_cycles,
+                                                              :create_variant_overrides] )
         }
         let!(:vo1) {
           create(:variant_override, hub: hub,
-                                    variant: create(:variant, product: create(:product, supplier: producer)))
+                                    variant: create(
+                                      :variant,
+                                      product: create(
+                                        :product, supplier: producer
+                                      )
+                                    ))
         }
         let!(:vo2) {
           create(:variant_override, hub: hub,
-                                    variant: create(:variant, product: create(:product, supplier: producer)))
+                                    variant: create(
+                                      :variant,
+                                      product: create(
+                                        :product, supplier: producer
+                                      )
+                                    ))
         }
         let!(:vo3) {
           create(:variant_override, hub: hub,
-                                    variant: create(:variant, product: create(:product, supplier: some_other_producer)))
+                                    variant: create(
+                                      :variant,
+                                      product: create(
+                                        :product, supplier: some_other_producer
+                                      )
+                                    ))
         }
 
         context "revoking variant override permissions" do
           context "when the enterprise relationship is destroyed" do
             before { er.destroy }
-            it "should set permission_revoked_at to the current time for all variant overrides of the relationship" do
+            it "should set permission_revoked_at to the current time " \
+               "for all variant overrides of the relationship" do
               expect(vo1.reload.permission_revoked_at).to_not be_nil
               expect(vo2.reload.permission_revoked_at).to_not be_nil
               expect(vo2.reload.permission_revoked_at).to_not be_nil
@@ -187,7 +205,8 @@ describe EnterpriseRelationship do
 
         context "and is then removed" do
           before { er.permissions_list = [:add_to_order_cycles]; er.save! }
-          it "should set permission_revoked_at to the current time for all relevant variant overrides" do
+          it "should set permission_revoked_at to the current time " \
+             "for all relevant variant overrides" do
             expect(vo1.reload.permission_revoked_at).to_not be_nil
             expect(vo2.reload.permission_revoked_at).to_not be_nil
           end
@@ -219,15 +238,33 @@ describe EnterpriseRelationship do
         }
         let!(:vo1) {
           create(:variant_override, hub: hub,
-                                    variant: create(:variant, product: create(:product, supplier: producer)), permission_revoked_at: Time.now.in_time_zone)
+                                    variant: create(
+                                      :variant,
+                                      product: create(
+                                        :product, supplier: producer
+                                      )
+                                    ),
+                                    permission_revoked_at: Time.now.in_time_zone)
         }
         let!(:vo2) {
           create(:variant_override, hub: hub,
-                                    variant: create(:variant, product: create(:product, supplier: producer)), permission_revoked_at: Time.now.in_time_zone)
+                                    variant: create(
+                                      :variant,
+                                      product: create(
+                                        :product, supplier: producer
+                                      )
+                                    ),
+                                    permission_revoked_at: Time.now.in_time_zone)
         }
         let!(:vo3) {
           create(:variant_override, hub: hub,
-                                    variant: create(:variant, product: create(:product, supplier: some_other_producer)), permission_revoked_at: Time.now.in_time_zone)
+                                    variant: create(
+                                      :variant,
+                                      product: create(
+                                        :product, supplier: some_other_producer
+                                      )
+                                    ),
+                                    permission_revoked_at: Time.now.in_time_zone)
         }
 
         context "and is then added" do

@@ -169,7 +169,8 @@ module Spree
             shipping_categories: []
           )
           expect(shipping_method).not_to be_valid
-          expect(shipping_method.errors[:base].first).to eq "You need to select at least one shipping category"
+          expect(shipping_method.errors[:base].first)
+            .to eq "You need to select at least one shipping category"
         end
 
         context "one associated" do

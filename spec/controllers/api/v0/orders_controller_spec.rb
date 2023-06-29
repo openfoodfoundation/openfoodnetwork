@@ -21,19 +21,23 @@ module Api
       let!(:order_cycle2) { create(:simple_order_cycle, coordinator: coordinator2) }
       let!(:order1) do
         create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
-                       distributor: distributor, billing_address: create(:address, lastname: "c"), total: 5.0)
+                       distributor: distributor, billing_address: create(:address, lastname: "c"),
+                       total: 5.0)
       end
       let!(:order2) do
         create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
-                       distributor: distributor2, billing_address: create(:address, lastname: "a"), total: 10.0)
+                       distributor: distributor2, billing_address: create(:address, lastname: "a"),
+                       total: 10.0)
       end
       let!(:order3) do
         create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
-                       distributor: distributor, billing_address: create(:address, lastname: "b"), total: 1.0 )
+                       distributor: distributor, billing_address: create(:address, lastname: "b"),
+                       total: 1.0 )
       end
       let!(:order4) do
         create(:completed_order_with_fees, order_cycle: order_cycle2, distributor: distributor2,
-                                           billing_address: create(:address, lastname: "d"), total: 15.0)
+                                           billing_address: create(:address, lastname: "d"),
+                                           total: 15.0)
       end
       let!(:order5) { create(:order, state: 'cart', completed_at: nil) }
       let!(:line_item1) do
@@ -137,7 +141,8 @@ module Api
         end
 
         it 'can sort orders by bill_address.lastname' do
-          get :index, params: { q: { completed_at_not_null: true, s: 'bill_address_lastname ASC' } },
+          get :index, params: { q: { completed_at_not_null: true,
+                                     s: 'bill_address_lastname ASC' } },
                       as: :json
 
           expect(json_response['orders']
@@ -232,7 +237,8 @@ module Api
           expect_order
         end
 
-        it "can view an order with weight calculator (this validates case where options[current_order] is nil on the shipping method serializer)" do
+        it "can view an order with weight calculator (this validates case " \
+           "where options[current_order] is nil on the shipping method serializer)" do
           order.shipping_method.update_attribute(:calculator,
                                                  create(:weight_calculator, calculable: order))
           allow(controller).to receive(:current_order).and_return order
@@ -267,8 +273,10 @@ module Api
 
           expect(json_response[:payments].first[:amount]).to eq order.payments.first.amount.to_s
           expect(json_response[:line_items].size).to eq order.line_items.size
-          expect(json_response[:line_items].first[:variant][:product_name]).to eq order.line_items.first.variant.product.name
-          expect(json_response[:line_items].first[:tax_category_id]).to eq order.line_items.first.product.tax_category_id
+          expect(json_response[:line_items].first[:variant][:product_name])
+            .to eq order.line_items.first.variant.product.name
+          expect(json_response[:line_items].first[:tax_category_id])
+            .to eq order.line_items.first.product.tax_category_id
         end
       end
     end
@@ -309,7 +317,8 @@ module Api
           it "returns an error" do
             put :capture, params: { id: order.number }
 
-            expect(json_response['error']).to eq 'Payment could not be processed, please check the details you entered'
+            expect(json_response['error'])
+              .to eq 'Payment could not be processed, please check the details you entered'
           end
         end
       end

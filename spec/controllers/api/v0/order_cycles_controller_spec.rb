@@ -175,7 +175,8 @@ module Api
         it "returns hidden variants made visible for this specific customer" do
           vo1.update_attribute(:tag_list, default_hide_rule.preferred_variant_tags)
           vo3.update_attribute(:tag_list,
-                               "#{show_rule.preferred_variant_tags},#{default_hide_rule.preferred_variant_tags}")
+                               "#{show_rule.preferred_variant_tags}," \
+                               "#{default_hide_rule.preferred_variant_tags}")
           customer.update_attribute(:tag_list, show_rule.preferred_customer_tags)
 
           api_get :products, id: order_cycle.id, distributor: distributor.id

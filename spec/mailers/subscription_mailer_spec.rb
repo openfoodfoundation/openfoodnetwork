@@ -35,7 +35,8 @@ describe SubscriptionMailer, type: :mailer do
         body = SubscriptionMailer.deliveries.last.body.encoded
 
         expect(body).to include "This order was automatically created for you."
-        expect(body).to_not include "Unfortunately, not all products that you requested were available."
+        expect(body).to_not include "Unfortunately, not all products " \
+                                    "that you requested were available."
       end
     end
 
@@ -54,7 +55,9 @@ describe SubscriptionMailer, type: :mailer do
 
         it "provides link to make changes" do
           expect(body).to match %r{<a #{order_link_href} #{order_link_style}>make changes</a>}
-          expect(body).to_not match %r{<a #{order_link_href} #{order_link_style}>view details of this order</a>}
+          expect(body).to_not match %r{
+            <a #{order_link_href} #{order_link_style}>view details of this order</a>
+          }
         end
 
         context "when the distributor does not allow changes to the order" do
@@ -62,7 +65,8 @@ describe SubscriptionMailer, type: :mailer do
 
           it "provides link to view details" do
             expect(body).to_not match %r{<a #{order_link_href} #{order_link_style}>make changes</a>}
-            expect(body).to match %r{<a #{order_link_href} #{order_link_style}>view details of this order</a>}
+            expect(body)
+              .to match %r{<a #{order_link_href} #{order_link_style}>view details of this order</a>}
           end
         end
       end
@@ -203,9 +207,10 @@ describe SubscriptionMailer, type: :mailer do
     it "sends the email" do
       body = strip_tags(SubscriptionMailer.deliveries.last.body.encoded)
       expect(body).to include 'We tried to process a payment, but had some problems...'
-      email_so_failed_payment_explainer_html = "The payment for your subscription with <strong>%s</strong> \
-failed because of a problem with your credit card. <strong>%s</strong> has been notified \
-of this failed payment."
+      email_so_failed_payment_explainer_html = "The payment for your subscription with <strong>%s" \
+                                               "</strong> failed because of a problem with your " \
+                                               "credit card. <strong>%s</strong> has been " \
+                                               "notified of this failed payment."
       explainer = email_so_failed_payment_explainer_html % ([subscription.shop.name] * 2)
       expect(body).to include strip_tags(explainer)
       details = 'Here are the details of the failure provided by the payment gateway:'
@@ -255,11 +260,14 @@ of this failed payment."
         allow(summary).to receive(:issues) { {} }
       end
 
-      it "sends the email, which notifies the enterprise that all orders were successfully processed" do
+      it "sends the email, which notifies the enterprise that all orders " \
+         "were successfully processed" do
         SubscriptionMailer.placement_summary_email(summary).deliver_now
 
-        expect(body).to include("Below is a summary of the subscription orders that have just been placed for %s." % shop.name)
-        expect(body).to include("A total of %d subscriptions were marked for automatic processing." % 37)
+        expect(body).to include("Below is a summary of the subscription orders " \
+                                "that have just been placed for %s." % shop.name)
+        expect(body).to include("A total of %d subscriptions were marked " \
+                                "for automatic processing." % 37)
         expect(body).to include 'All were processed successfully.'
         expect(body).to_not include 'Details of the issues encountered are provided below.'
       end
@@ -287,12 +295,15 @@ of this failed payment."
       context "when no unrecorded issues are present" do
         it "sends the email, which notifies the enterprise that some issues were encountered" do
           SubscriptionMailer.placement_summary_email(summary).deliver_now
-          expect(body).to include("Below is a summary of the subscription orders that have just been placed for %s." % shop.name)
-          expect(body).to include("A total of %d subscriptions were marked for automatic processing." % 37)
+          expect(body).to include("Below is a summary of the subscription orders " \
+                                  "that have just been placed for %s." % shop.name)
+          expect(body).to include("A total of %d subscriptions were marked " \
+                                  "for automatic processing." % 37)
           expect(body).to include('Of these, %d were processed successfully.' % 35)
           expect(body).to include 'Details of the issues encountered are provided below.'
           expect(body).to include('Error Encountered (%d orders)' % 2)
-          expect(body).to include 'Automatic processing of these orders failed due to an error. The error has been listed where possible.'
+          expect(body).to include 'Automatic processing of these orders failed due to an error. ' \
+                                  'The error has been listed where possible.'
 
           # Lists orders for which an error was encountered
           expect(body).to include order1.number
@@ -316,9 +327,12 @@ of this failed payment."
           expect(summary).to receive(:orders_affected_by).with(:other) { [order3, order4] }
           SubscriptionMailer.placement_summary_email(summary).deliver_now
           expect(body).to include("Error Encountered (%d orders)" % 2)
-          expect(body).to include 'Automatic processing of these orders failed due to an error. The error has been listed where possible.'
+          expect(body).to include 'Automatic processing of these orders failed due to an error. ' \
+                                  'The error has been listed where possible.'
           expect(body).to include("Other Failure (%d orders)" % 2)
-          expect(body).to include 'Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.'
+          expect(body).to include 'Automatic processing of these orders failed ' \
+                                  'for an unknown reason. This should not occur, ' \
+                                  'please contact us if you are seeing this.'
 
           # Lists orders for which no error or success was recorded
           expect(body).to include order3.number
@@ -341,12 +355,15 @@ of this failed payment."
       end
 
       it "sends the email, which notifies the enterprise that some issues were encountered" do
-        expect(body).to include("Below is a summary of the subscription orders that have just been placed for %s" % shop.name)
-        expect(body).to include("A total of %d subscriptions were marked for automatic processing." % 2)
+        expect(body).to include("Below is a summary of the subscription orders " \
+                                "that have just been placed for %s" % shop.name)
+        expect(body).to include("A total of %d subscriptions were marked " \
+                                "for automatic processing." % 2)
         expect(body).to include 'Of these, none were processed successfully.'
         expect(body).to include 'Details of the issues encountered are provided below.'
         expect(body).to include("Insufficient Stock (%d orders)" % 2)
-        expect(body).to include 'These orders were processed but insufficient stock was available for some requested items'
+        expect(body).to include 'These orders were processed but insufficient stock ' \
+                                'was available for some requested items'
 
         # Lists orders for which an error was encountered
         expect(body).to include order1.number
@@ -377,9 +394,12 @@ of this failed payment."
         SubscriptionMailer.confirmation_summary_email(summary).deliver_now
       end
 
-      it "sends the email, which notifies the enterprise that all orders were successfully processed" do
-        expect(body).to include("Below is a summary of the subscription orders that have just been finalised for %s." % shop.name)
-        expect(body).to include("A total of %d subscriptions were marked for automatic processing." % 37)
+      it "sends the email, which notifies the enterprise " \
+         "that all orders were successfully processed" do
+        expect(body).to include("Below is a summary of the subscription orders " \
+                                "that have just been finalised for %s." % shop.name)
+        expect(body).to include("A total of %d subscriptions were marked " \
+                                "for automatic processing." % 37)
         expect(body).to include 'All were processed successfully.'
         expect(body).to_not include 'Details of the issues encountered are provided below.'
       end
@@ -402,12 +422,15 @@ of this failed payment."
       context "when no unrecorded issues are present" do
         it "sends the email, which notifies the enterprise that some issues were encountered" do
           SubscriptionMailer.confirmation_summary_email(summary).deliver_now
-          expect(body).to include("Below is a summary of the subscription orders that have just been finalised for %s." % shop.name)
-          expect(body).to include("A total of %d subscriptions were marked for automatic processing." % 37)
+          expect(body).to include("Below is a summary of the subscription orders " \
+                                  "that have just been finalised for %s." % shop.name)
+          expect(body).to include("A total of %d subscriptions were marked " \
+                                  "for automatic processing." % 37)
           expect(body).to include("Of these, %d were processed successfully." % 35)
           expect(body).to include 'Details of the issues encountered are provided below.'
           expect(body).to include("Failed Payment (%d orders)" % 2)
-          expect(body).to include 'Automatic processing of payment for these orders failed due to an error. The error has been listed where possible.'
+          expect(body).to include 'Automatic processing of payment for these orders failed ' \
+                                  'due to an error. The error has been listed where possible.'
 
           # Lists orders for which an error was encountered
           expect(body).to include order1.number
@@ -431,9 +454,12 @@ of this failed payment."
           expect(summary).to receive(:orders_affected_by).with(:other) { [order3, order4] }
           SubscriptionMailer.confirmation_summary_email(summary).deliver_now
           expect(body).to include("Failed Payment (%d orders)" % 2)
-          expect(body).to include 'Automatic processing of payment for these orders failed due to an error. The error has been listed where possible.'
+          expect(body).to include 'Automatic processing of payment for these orders failed ' \
+                                  'due to an error. The error has been listed where possible.'
           expect(body).to include("Other Failure (%d orders)" % 2)
-          expect(body).to include 'Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.'
+          expect(body).to include 'Automatic processing of these orders failed ' \
+                                  'for an unknown reason. This should not occur, ' \
+                                  'please contact us if you are seeing this.'
 
           # Lists orders for which no error or success was recorded
           expect(body).to include order3.number
@@ -456,12 +482,15 @@ of this failed payment."
       end
 
       it "sends the email, which notifies the enterprise that some issues were encountered" do
-        expect(body).to include("Below is a summary of the subscription orders that have just been finalised for %s." % shop.name)
-        expect(body).to include("A total of %d subscriptions were marked for automatic processing." % 2)
+        expect(body).to include("Below is a summary of the subscription orders that " \
+                                "have just been finalised for %s." % shop.name)
+        expect(body).to include("A total of %d subscriptions were marked " \
+                                "for automatic processing." % 2)
         expect(body).to include 'Of these, none were processed successfully.'
         expect(body).to include 'Details of the issues encountered are provided below.'
         expect(body).to include("Insufficient Stock (%d orders)" % 2)
-        expect(body).to include 'These orders were processed but insufficient stock was available for some requested items'
+        expect(body).to include 'These orders were processed but insufficient stock ' \
+                                'was available for some requested items'
 
         # Lists orders for which an error was encountered
         expect(body).to include order1.number

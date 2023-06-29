@@ -60,7 +60,8 @@ describe Admin::SubscriptionLineItemsController, type: :controller do
             it "returns an error" do
               spree_post :build, params
               json_response = JSON.parse(response.body)
-              expect(json_response['errors']).to eq ["#{shop.name} is not permitted to sell the selected product"]
+              expect(json_response['errors'])
+                .to eq ["#{shop.name} is not permitted to sell the selected product"]
             end
           end
 
@@ -97,7 +98,8 @@ describe Admin::SubscriptionLineItemsController, type: :controller do
               before { params.merge!(schedule_id: schedule.id) }
 
               context "where no relevant variant override exists" do
-                it "returns a serialized subscription line item with a price estimate, based on the variant" do
+                it "returns a serialized subscription line item with a price estimate, " \
+                   "based on the variant" do
                   spree_post :build, params
 
                   json_response = JSON.parse(response.body)
@@ -112,7 +114,8 @@ describe Admin::SubscriptionLineItemsController, type: :controller do
                   create(:variant_override, hub_id: shop.id, variant_id: variant.id, price: 12.00)
                 }
 
-                it "returns a serialized subscription line item with a price estimate, based on the override" do
+                it "returns a serialized subscription line item with a price estimate, " \
+                   "based on the override" do
                   spree_post :build, params
 
                   json_response = JSON.parse(response.body)

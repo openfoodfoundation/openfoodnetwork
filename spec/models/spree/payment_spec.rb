@@ -105,7 +105,8 @@ describe Spree::Payment do
         end
 
         it "should invalidate if payment method doesnt support source" do
-          expect(payment.payment_method).to receive(:supports?).with(payment.source).and_return(false)
+          expect(payment.payment_method).to receive(:supports?)
+            .with(payment.source).and_return(false)
           expect { payment.process! }.to raise_error(Spree::Core::GatewayError)
           expect(payment.state).to eq('invalid')
         end
@@ -439,7 +440,7 @@ describe Spree::Payment do
             allow(payment.order).to receive(:outstanding_balance) { 101 }
           end
 
-          it "should call credit on the gateway with the original payment amount and response_code" do
+          it "should call credit on the gateway with original payment amount and response_code" do
             expect(gateway).to receive(:credit).with(
               amount_in_cents.to_f, card, '123', anything
             ).and_return(success_response)

@@ -199,7 +199,9 @@ describe Admin::SubscriptionsController, type: :controller do
           it 'returns an error' do
             expect{ spree_post :create, params }.to_not change{ Subscription.count }
             json_response = JSON.parse(response.body)
-            expect(json_response['errors']['subscription_line_items']).to eq ["#{variant.product.name} - #{variant.full_name} is not available from the selected schedule"]
+            expect(json_response['errors']['subscription_line_items'])
+              .to eq ["#{variant.product.name} - #{variant.full_name} " \
+                      "is not available from the selected schedule"]
           end
         end
 
@@ -384,11 +386,12 @@ describe Admin::SubscriptionsController, type: :controller do
 
           context 'where the specified variants are not available from the shop' do
             it 'returns an error' do
-              expect{ spree_post :update, params }.to_not change{
-                                                            subscription.subscription_line_items.count
-                                                          }
+              expect{ spree_post :update, params }
+                .to_not change{ subscription.subscription_line_items.count }
               json_response = JSON.parse(response.body)
-              expect(json_response['errors']['subscription_line_items']).to eq ["#{product2.name} - #{variant2.full_name} is not available from the selected schedule"]
+              expect(json_response['errors']['subscription_line_items'])
+                .to eq ["#{product2.name} - #{variant2.full_name} " \
+                        "is not available from the selected schedule"]
             end
           end
 
@@ -462,7 +465,10 @@ describe Admin::SubscriptionsController, type: :controller do
                 spree_put :cancel, params
                 expect(response.status).to be 409
                 json_response = JSON.parse(response.body)
-                expect(json_response['errors']['open_orders']).to eq 'Some orders for this subscription are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?'
+                expect(json_response['errors']['open_orders'])
+                  .to eq 'Some orders for this subscription are currently open. ' \
+                         'The customer has already been notified that the order will be placed. ' \
+                         'Would you like to cancel these order(s) or keep them?'
               end
             end
 
@@ -563,7 +569,10 @@ describe Admin::SubscriptionsController, type: :controller do
                 spree_put :pause, params
                 expect(response.status).to be 409
                 json_response = JSON.parse(response.body)
-                expect(json_response['errors']['open_orders']).to eq 'Some orders for this subscription are currently open. The customer has already been notified that the order will be placed. Would you like to cancel these order(s) or keep them?'
+                expect(json_response['errors']['open_orders'])
+                  .to eq 'Some orders for this subscription are currently open. ' \
+                         'The customer has already been notified that the order will be placed. ' \
+                         'Would you like to cancel these order(s) or keep them?'
               end
             end
 
@@ -683,7 +692,9 @@ describe Admin::SubscriptionsController, type: :controller do
                   spree_put :unpause, params
                   expect(response.status).to be 409
                   json_response = JSON.parse(response.body)
-                  expect(json_response['errors']['canceled_orders']).to eq 'Some orders for this subscription can be resumed right now. You can resume them from the orders dropdown.'
+                  expect(json_response['errors']['canceled_orders'])
+                    .to eq 'Some orders for this subscription can be resumed right now. ' \
+                           'You can resume them from the orders dropdown.'
                 end
               end
 
@@ -712,7 +723,8 @@ describe Admin::SubscriptionsController, type: :controller do
               expect(subscription.reload.paused_at).to be nil
             end
 
-            context "when there is an open OC and no associated orders exist yet for it (OC was opened when the subscription was paused)" do
+            context "when there is an open OC and no associated orders exist yet for it " \
+                    "(OC was opened when the subscription was paused)" do
               it "creates an associated order" do
                 spree_put :unpause, params
 

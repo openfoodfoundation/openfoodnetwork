@@ -276,7 +276,8 @@ describe OrderCycle do
       @e0 = create(:exchange, order_cycle: @oc, sender: create(:enterprise),
                               receiver: @oc.coordinator, incoming: true)
       @e1 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d1,
-                              incoming: false, pickup_time: '5pm Tuesday', pickup_instructions: "Come get it!")
+                              incoming: false, pickup_time: '5pm Tuesday',
+                              pickup_instructions: "Come get it!")
       @e2 = create(:exchange, order_cycle: @oc, sender: @oc.coordinator, receiver: @d2,
                               incoming: false, pickup_time: nil)
     end
@@ -384,7 +385,8 @@ describe OrderCycle do
     it "should give the soonest opening order cycle for a distributor" do
       distributor = create(:distributor_enterprise)
       oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor],
-                                       orders_open_at: 10.days.from_now, orders_close_at: 11.days.from_now)
+                                       orders_open_at: 10.days.from_now,
+                                       orders_close_at: 11.days.from_now)
       expect(OrderCycle.first_opening_for(distributor)).to eq(oc)
     end
 
@@ -398,9 +400,11 @@ describe OrderCycle do
     it "should give the soonest closing order cycle for a distributor" do
       distributor = create(:distributor_enterprise)
       oc = create(:simple_order_cycle, name: 'oc 1', distributors: [distributor],
-                                       orders_open_at: 1.day.ago, orders_close_at: 11.days.from_now)
+                                       orders_open_at: 1.day.ago,
+                                       orders_close_at: 11.days.from_now)
       oc2 = create(:simple_order_cycle, name: 'oc 2', distributors: [distributor],
-                                        orders_open_at: 2.days.ago, orders_close_at: 12.days.from_now)
+                                        orders_open_at: 2.days.ago,
+                                        orders_close_at: 12.days.from_now)
       expect(OrderCycle.first_closing_for(distributor)).to eq(oc)
     end
   end

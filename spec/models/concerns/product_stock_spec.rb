@@ -33,7 +33,8 @@ describe ProductStock do
 
     describe "product.on_hand" do
       it "is the sum of the products variants on_hand values" do
-        expect(product.on_hand).to eq(product.variants.first.on_hand + product.variants.second.on_hand)
+        expect(product.on_hand)
+          .to eq(product.variants.first.on_hand + product.variants.second.on_hand)
       end
     end
   end

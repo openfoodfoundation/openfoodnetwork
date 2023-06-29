@@ -138,7 +138,8 @@ module Spree
         Spree::Property.where(name: 'foo').first_or_create!(presentation: "Foo's Presentation Name")
         product.set_property('foo', 'value1')
         product.set_property('bar', 'value2')
-        expect(Spree::Property.where(name: 'foo').first.presentation).to eq "Foo's Presentation Name"
+        expect(Spree::Property.where(name: 'foo').first.presentation)
+          .to eq "Foo's Presentation Name"
         expect(Spree::Property.where(name: 'bar').first.presentation).to eq "bar"
       end
     end
@@ -191,7 +192,7 @@ module Spree
         expect(Spree::Product.with_properties([])).to eq []
       end
 
-      it "returns only products with the wanted property set both on supplier and on the product itself" do
+      it "returns only products with the wanted property set both on supplier & product itself" do
         expect(
           Spree::Product.with_properties([wanted_property.id])
         ).to match_array [
@@ -610,9 +611,11 @@ module Spree
           p2 = create(:product)
           p3 = create(:product)
           oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d2],
-                                            variants: [p2.variants.first], orders_open_at: 8.days.ago, orders_close_at: 1.day.ago)
+                                            variants: [p2.variants.first],
+                                            orders_open_at: 8.days.ago, orders_close_at: 1.day.ago)
           oc2 = create(:simple_order_cycle, suppliers: [s], distributors: [d3],
-                                            variants: [p3.variants.first], orders_close_at: Date.tomorrow)
+                                            variants: [p3.variants.first],
+                                            orders_close_at: Date.tomorrow)
           expect(Product.in_an_active_order_cycle).to eq([p3])
         end
       end
@@ -713,8 +716,9 @@ module Spree
         product.set_property 'Organic Certified', 'NASAA 12345'
         property = product.properties.last
 
-        expect(product.properties_including_inherited).to eq([{ id: property.id,
-                                                                name: "Organic Certified", value: 'NASAA 12345' }])
+        expect(product.properties_including_inherited)
+          .to eq([{ id: property.id, name: "Organic Certified",
+                    value: 'NASAA 12345' }])
       end
 
       it "returns producer properties as a hash" do
@@ -724,8 +728,9 @@ module Spree
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = supplier.properties.last
 
-        expect(product.properties_including_inherited).to eq([{ id: property.id,
-                                                                name: "Organic Certified", value: 'NASAA 54321' }])
+        expect(product.properties_including_inherited)
+          .to eq([{ id: property.id, name: "Organic Certified",
+                    value: 'NASAA 54321' }])
       end
 
       it "overrides producer properties with product properties" do
@@ -736,8 +741,9 @@ module Spree
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = product.properties.last
 
-        expect(product.properties_including_inherited).to eq([{ id: property.id,
-                                                                name: "Organic Certified", value: 'NASAA 12345' }])
+        expect(product.properties_including_inherited)
+          .to eq([{ id: property.id, name: "Organic Certified",
+                    value: 'NASAA 12345' }])
       end
 
       context "when product has an inherit_properties value set to true" do
@@ -748,8 +754,9 @@ module Spree
           supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
           property = supplier.properties.last
 
-          expect(product.properties_including_inherited).to eq([{ id: property.id,
-                                                                  name: "Organic Certified", value: 'NASAA 54321' }])
+          expect(product.properties_including_inherited)
+            .to eq([{ id: property.id, name: "Organic Certified",
+                      value: 'NASAA 54321' }])
         end
       end
 

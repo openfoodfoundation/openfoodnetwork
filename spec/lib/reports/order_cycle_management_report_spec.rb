@@ -193,21 +193,23 @@ module Reporting
 
               it 'returns rows with delivery information' do
                 allow(subject).to receive(:unformatted_render?).and_return(true)
-                expect(subject.table_rows).to eq([[
-                                                   order.ship_address.firstname,
-                                                   order.ship_address.lastname,
-                                                   order.distributor.name,
-                                                   "",
-                                                   "#{order.ship_address.address1} #{order.ship_address.address2} #{order.ship_address.city}",
-                                                   order.ship_address.zipcode,
-                                                   order.ship_address.phone,
-                                                   order.shipment.shipping_method.name,
-                                                   nil,
-                                                   order.total,
-                                                   -order.total,
-                                                   false,
-                                                   order.special_instructions
-                                                 ]])
+                expect(subject.table_rows)
+                  .to eq([[
+                           order.ship_address.firstname,
+                           order.ship_address.lastname,
+                           order.distributor.name,
+                           "",
+                           "#{order.ship_address.address1} #{order.ship_address.address2} " \
+                           "#{order.ship_address.city}",
+                           order.ship_address.zipcode,
+                           order.ship_address.phone,
+                           order.shipment.shipping_method.name,
+                           nil,
+                           order.total,
+                           -order.total,
+                           false,
+                           order.special_instructions
+                         ]])
               end
             end
           end

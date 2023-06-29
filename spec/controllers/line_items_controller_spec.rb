@@ -169,7 +169,8 @@ describe LineItemsController, type: :controller do
       let(:enterprise_fee) { create(:enterprise_fee, calculator: calculator) }
       let!(:exchange) {
         create(:exchange, incoming: true, sender: variant1.product.supplier,
-                          receiver: order_cycle.coordinator, variants: [variant1, variant2], enterprise_fees: [enterprise_fee])
+                          receiver: order_cycle.coordinator, variants: [variant1, variant2],
+                          enterprise_fees: [enterprise_fee])
       }
       let!(:order) do
         order = create(:completed_order_with_totals, user: user, distributor: distributor,

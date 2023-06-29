@@ -15,11 +15,12 @@ describe Exchange do
     end
   end
 
-  it "should not be valid when (sender, receiver, direction) set are not unique for its order cycle" do
+  it "shouldn't be valid when (sender, receiver, direction) set aren't unique for its OC" do
     e1 = create(:exchange)
 
     e2 = build(:exchange,
-               order_cycle: e1.order_cycle, sender: e1.sender, receiver: e1.receiver, incoming: e1.incoming)
+               order_cycle: e1.order_cycle, sender: e1.sender, receiver: e1.receiver,
+               incoming: e1.incoming)
     expect(e2).not_to be_valid
 
     e2.incoming = !e2.incoming

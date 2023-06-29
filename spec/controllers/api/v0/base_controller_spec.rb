@@ -60,7 +60,8 @@ describe Api::V0::BaseController do
     expect(subject).to receive(:authenticate_user).and_return(true)
     expect(subject).to receive(:index).and_raise(ActiveRecord::RecordNotFound.new)
     get :index
-    expect(json_response).to eq( "error" => "The resource you were looking for could not be found." )
+    expect(json_response)
+      .to eq( "error" => "The resource you were looking for could not be found." )
     expect(response.status).to eq(404)
   end
 end

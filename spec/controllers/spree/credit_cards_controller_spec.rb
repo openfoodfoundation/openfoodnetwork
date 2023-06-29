@@ -221,11 +221,12 @@ describe Spree::CreditCardsController, type: :controller do
 
             it "deletes the card and redirects to account_path" do
               expect{ spree_delete :destroy, params }.to change(Spree::CreditCard, :count).by(-1)
-              expect(flash[:success]).to eq "Your card has been removed (number: %s)" % "x-#{card.last_digits}"
+              expect(flash[:success])
+                .to eq "Your card has been removed (number: %s)" % "x-#{card.last_digits}"
               expect(response.status).to eq 200
             end
 
-            context "the card is the default card and there are existing authorizations for the user" do
+            context "card is the default card and there are existing authorizations for the user" do
               before do
                 card.update_attribute(:is_default, true)
               end
