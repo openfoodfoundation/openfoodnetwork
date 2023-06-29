@@ -7,11 +7,7 @@ export default class extends ApplicationController {
     this.fetch();
   }
 
-  fetch = (event = {}) => {
-    if (event && event.target) {
-      this.stimulate("Products#fetch", event.target);
-      return;
-    }
+  fetch = () => {
     this.stimulate("Products#fetch");
   };
 
