@@ -16,6 +16,11 @@ module DfcProvider
       product = SuppliedProductBuilder.import(supplied_product)
       product.supplier = current_enterprise
       product.save!
+
+      supplied_product = SuppliedProductBuilder.supplied_product(
+        product.variants.first
+      )
+      render json: DfcLoader.connector.export(supplied_product)
     end
 
     def show

@@ -52,20 +52,30 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
         run_test!
       end
 
-      response "204", "success" do
+      response "200", "success" do
         let(:supplied_product) do |example|
           example.metadata[:operation][:parameters].first[:schema][:example]
         end
 
         it "creates a variant" do |example|
-          existing = Spree::Variant.pluck(:id)
-
           expect { submit_request(example.metadata) }
             .to change { enterprise.supplied_products.count }.by(1)
 
-          variant = Spree::Variant.where.not(id: existing).first
+          dfc_id = json_response["@id"]
+          expect(dfc_id).to match(
+            %r|^http://test\.host/api/dfc-v1\.7/enterprises/10000/supplied_products/[0-9]+$|
+          )
+
+          variant_id = dfc_id.split("/").last.to_i
+          variant = Spree::Variant.find(variant_id)
           expect(variant.name).to eq "Apple"
           expect(variant.unit_value).to eq 3
+
+          # Insert static value to keep documentation deterministic:
+          response.body.gsub!(
+            "supplied_products/#{variant_id}",
+            "supplied_products/10001"
+          )
         end
       end
     end
