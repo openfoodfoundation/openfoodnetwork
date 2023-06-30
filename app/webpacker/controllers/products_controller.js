@@ -1,6 +1,8 @@
 import ApplicationController from "./application_controller";
 
 export default class extends ApplicationController {
+  static targets = ["loading"];
+
   connect() {
     super.connect();
     // Fetch the products on page load
@@ -16,12 +18,21 @@ export default class extends ApplicationController {
   }
 
   showLoading = () => {
-    const event = new CustomEvent("show-loading");
-    document.dispatchEvent(event);
+    if (this.getLoadingController()) {
+      this.getLoadingController().showLoading();
+    }
   };
 
   hideLoading = () => {
-    const event = new CustomEvent("hide-loading");
-    document.dispatchEvent(event);
+    if (this.getLoadingController()) {
+      this.getLoadingController().hideLoading();
+    }
+  };
+
+  getLoadingController = () => {
+    return (this.loadongController = this.application.getControllerForElementAndIdentifier(
+      this.loadingTarget,
+      "loading"
+    ));
   };
 }
