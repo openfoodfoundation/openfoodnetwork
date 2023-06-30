@@ -99,6 +99,10 @@ module Reporting
       {}
     end
 
+    def skip_duplicate_rows?
+      false
+    end
+
     private
 
     def renderer

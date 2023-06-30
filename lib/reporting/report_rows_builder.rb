@@ -38,10 +38,18 @@ module Reporting
     private
 
     def computed_data
-      @computed_data ||= report.query_result.map { |item|
+      return @computed_data if defined? @computed_data
+
+      @computed_data = report.query_result.map { |item|
         row = @builder.build_row(item)
         OpenStruct.new(item: item, full_row: row, row: @builder.slice_and_format_row(row))
       }
+
+      if @report.skip_duplicate_rows?
+        @computed_data = @computed_data.uniq { |data| data.row.to_h.values }
+      end
+
+      @computed_data
     end
 
     def extract_rows(data, result)
