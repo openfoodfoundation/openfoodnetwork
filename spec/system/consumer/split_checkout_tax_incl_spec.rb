@@ -123,7 +123,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
           click_button "Next - Payment method"
 
           # add Voucher
-          fill_in "Enter voucher code", with: voucher.code
+          fill_in "Enter voucher code", with: "some_code"
           click_button("Apply")
 
           # Choose payment
@@ -155,7 +155,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
             proceed_to_payment
 
             # add Voucher
-            fill_in "Enter voucher code", with: voucher.code
+            fill_in "Enter voucher code", with: "good_code"
             click_button("Apply")
 
             proceed_to_summary

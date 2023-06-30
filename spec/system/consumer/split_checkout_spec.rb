@@ -735,7 +735,7 @@ describe "As a consumer, I want to checkout my order" do
           describe "adding voucher to the order" do
             shared_examples "adding voucher to the order" do
               before do
-                fill_in "Enter voucher code", with: voucher.code
+                fill_in "Enter voucher code", with: "some_code"
                 click_button("Apply")
               end
 
@@ -756,7 +756,7 @@ describe "As a consumer, I want to checkout my order" do
               it_behaves_like "adding voucher to the order"
 
               it "shows a warning message" do
-                fill_in "Enter voucher code", with: voucher.code
+                fill_in "Enter voucher code", with: "some_code"
                 click_button("Apply")
 
                 expect(page).to have_content(
