@@ -96,5 +96,26 @@ describe VoucherAdjustmentsController, type: :request do
         expect(response).to be_successful
       end
     end
+
+    context "when tax excluded from price" do
+      it "deletes all voucher adjustment" do
+        # Add a tax adjustment
+        adjustment_attributes = {
+          amount: 2.00,
+          originator: adjustment.originator,
+          order: order,
+          label: "Tax #{adjustment.label}",
+          mandatory: false,
+          state: 'closed',
+          tax_category: nil,
+          included_tax: 0
+        }
+        order.adjustments.create(adjustment_attributes)
+
+        delete "/voucher_adjustments/#{adjustment.id}"
+
+        expect(order.voucher_adjustments.reload.length).to eq(0)
+      end
+    end
   end
 end
