@@ -4,38 +4,14 @@ export default class extends ApplicationController {
   connect() {
     super.connect();
     // Fetch the products on page load
-    this.fetch();
-  }
-
-  fetch = () => {
     this.stimulate("Products#fetch");
-  };
+  }
 
-  changePerPage = (event) => {
-    this.stimulate("Products#change_per_page", event.target);
-  };
-
-  beforeFilter() {
+  beforeReflex() {
     this.showLoading();
   }
 
-  afterFilter() {
-    this.hideLoading();
-  }
-
-  beforeChangePerPage() {
-    this.showLoading();
-  }
-
-  afterChangePerPage() {
-    this.hideLoading();
-  }
-
-  beforeFetch() {
-    this.showLoading();
-  }
-
-  afterFetch() {
+  afterReflex() {
     this.hideLoading();
   }
 
