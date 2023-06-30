@@ -51,10 +51,10 @@ class VoucherAdjustmentsService
     tax_adjustment.save
 
     # Update the adjustment amount
-    amount = voucher_rate * (order.pre_discount_total - order.additional_tax_total)
+    adjustment_amount = voucher_rate * (order.pre_discount_total - order.additional_tax_total)
 
     adjustment.update_columns(
-      amount: amount,
+      amount: adjustment_amount,
       updated_at: Time.zone.now
     )
   end
