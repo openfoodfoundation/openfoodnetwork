@@ -133,6 +133,22 @@
     .submit {
       flex-grow: 1;
       text-align: right;
+
+      .search-button {
+        position: relative;
+        > input {
+          padding-left: 30px;
+        }
+        &:before {
+          position: absolute;
+          font-family: FontAwesome;
+          content: "\f002";
+          font-size: 16px;
+          margin-left: 10px;
+          line-height: 32px;
+          color: $teal;
+        }
+      }
     }
   }
 }
