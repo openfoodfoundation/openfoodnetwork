@@ -170,8 +170,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
             # Update quantity
             within ".cart-item-quantity" do
-              input = find(".line_item_quantity")
-              input.send_keys :up
+              fill_in "order_line_items_attributes_0_quantity", with: "2"
             end
 
             click_button("Update")
