@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require "swagger_helper"
-require DfcProvider::Engine.root.join("spec/spec_helper")
+require DfcProvider::Engine.root.join("spec/swagger_helper")
 
 describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml",
                              rswag_autodoc: true do

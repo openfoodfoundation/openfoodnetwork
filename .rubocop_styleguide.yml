@@ -25,6 +25,7 @@ Metrics/BlockLength:
   AllowedMethods: [
     "class_eval",
     "collection",
+    "configure",
     "context",
     "delete",
     "describe",
