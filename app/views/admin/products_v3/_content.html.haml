@@ -2,6 +2,9 @@
   - if products.any?
     .container
       .sixteen.columns
+        = render partial: 'filters', locals: { search_term: search_term }
+    .container
+      .sixteen.columns
         = render partial: 'sort', locals: { pagy: pagy }
     = render partial: 'table', locals: { products: products }
     = render partial: 'admin/shared/v3/pagy', locals: { pagy: pagy, reflex: "click->Products#fetch" }
