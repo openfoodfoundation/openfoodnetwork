@@ -9,7 +9,7 @@ describe "Credit Cards" do
 
   describe "as a logged in user" do
     let(:user) { create(:user) }
-    let!(:customer) { create(:customer, user: user) }
+    let!(:customer) { create(:customer, user: user, created_manually: true) }
     let!(:default_card) {
       create(:stored_credit_card, user_id: user.id, gateway_customer_profile_id: 'cus_AZNMJ',
                                   is_default: true)

@@ -116,5 +116,30 @@ describe Customer, type: :model do
         expect(Customer.managed_by(guest)).to match_array []
       end
     end
+
+    context "with split checkout enabled" do
+      before do
+        Flipper.enable(:split_checkout)
+      end
+
+      context 'visible' do
+        let!(:customer) { create(:customer) }
+        let!(:customer2) { create(:customer) }
+        let!(:customer3) { create(:customer) }
+        let!(:customer4) { create(:customer) }
+        let!(:customer5) { create(:customer, created_manually: true) }
+
+        let!(:order_ready_for_details) { create(:order_ready_for_details, customer: customer) }
+        let!(:order_ready_for_payment) { create(:order_ready_for_payment, customer: customer2) }
+        let!(:order_ready_for_confirmation) {
+          create(:order_ready_for_confirmation, customer: customer3)
+        }
+        let!(:completed_order) { create(:completed_order_with_totals, customer: customer4) }
+
+        it 'returns customers with completed orders' do
+          expect(Customer.visible).to match_array [customer4, customer5]
+        end
+      end
+    end
   end
 end

@@ -93,7 +93,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_05_133804) do
     t.datetime "terms_and_conditions_accepted_at", precision: nil
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
+    t.boolean "created_manually", default: false, null: false
     t.index ["bill_address_id"], name: "index_customers_on_bill_address_id"
+    t.index ["created_manually"], name: "index_customers_on_created_manually"
     t.index ["email"], name: "index_customers_on_email"
     t.index ["enterprise_id", "code"], name: "index_customers_on_enterprise_id_and_code", unique: true
     t.index ["ship_address_id"], name: "index_customers_on_ship_address_id"

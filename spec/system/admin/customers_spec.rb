@@ -16,11 +16,17 @@ describe 'Customers' do
     describe "using the customers index" do
       let!(:customer1) {
         create(:customer, first_name: 'John', last_name: 'Doe', enterprise: managed_distributor1, 
-code: nil)
+code: nil, created_manually: true)
       }
-      let!(:customer2) { create(:customer, enterprise: managed_distributor1, code: nil) }
-      let!(:customer3) { create(:customer, enterprise: unmanaged_distributor) }
-      let!(:customer4) { create(:customer, enterprise: managed_distributor2) }
+      let!(:customer2) {
+        create(:customer, enterprise: managed_distributor1, created_manually: true, code: nil)
+      }
+      let!(:customer3) {
+        create(:customer, enterprise: unmanaged_distributor, created_manually: true,)
+      }
+      let!(:customer4) {
+        create(:customer, enterprise: managed_distributor2, created_manually: true,)
+      }
 
       before do
         login_as user
@@ -346,6 +352,7 @@ code: nil)
         context "when a shop is selected" do
           before do
             select2_select managed_distributor1.name, from: "shop_id"
+            customer1.update!(created_manually: false)
           end
 
           it "creates customers when the email provided is valid" do
@@ -366,20 +373,29 @@ code: nil)
                                             text: "Email is invalid"
             }.to_not change{ Customer.of(managed_distributor1).count }
 
-            # When an existing email is used
-            expect{
-              fill_in 'email', with: customer1.email
-              click_button 'Add Customer'
-              expect(page).to have_selector "#new-customer-dialog .error",
-                                            text: "Email is associated with an existing customer"
-            }.to_not change{ Customer.of(managed_distributor1).count }
-
             # When a new valid email is used
             expect{
               fill_in 'email', with: "new@email.com"
               click_button 'Add Customer'
               expect(page).not_to have_selector "#new-customer-dialog"
             }.to change{ Customer.of(managed_distributor1).count }.from(2).to(3)
+          end
+
+          it "shows a hidden customer when trying to create it" do
+            click_link('New Customer')
+            fill_in 'email', with: customer1.email
+
+            expect do
+              click_button 'Add Customer'
+              expect(page).not_to have_selector "#new-customer-dialog"
+              customer1.reload
+            end
+              .to change { customer1.created_manually }.from(false).to(true)
+              .and change { Customer.count }.by(0)
+
+            expect(page).to have_content customer1.email
+            expect(page).to have_field "first_name", with: "John"
+            expect(page).to have_field "last_name", with: "Doe"
           end
         end
       end
