@@ -1,0 +1,6 @@
+%form{ id: "filters", 'data-reflex-serialize-form': true, 'data-reflex': 'submit->products#filter' }
+  .query
+    .search-input
+      = text_field_tag :search_term, search_term, placeholder: t('.search_products')
+  .submit
+    = submit_tag t(".search"), class: "search-button secondary"

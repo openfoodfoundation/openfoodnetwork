@@ -15,6 +15,14 @@ export default class extends ApplicationController {
     this.stimulate("Products#change_per_page", event.target);
   };
 
+  beforeFilter() {
+    this.showLoading();
+  }
+
+  afterFilter() {
+    this.hideLoading();
+  }
+
   beforeChangePerPage() {
     this.showLoading();
   }
