@@ -5,9 +5,6 @@ class VoucherAdjustmentsController < BaseController
 
   def create
     if add_voucher
-      VoucherAdjustmentsService.calculate(@order)
-      @order.update_totals_and_states
-
       update_payment_section
     elsif @order.errors.present?
       render_error
