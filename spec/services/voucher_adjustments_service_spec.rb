@@ -56,6 +56,38 @@ describe VoucherAdjustmentsService do
         # -0.0625 * 10 = -0.625
         expect(subject.included_tax.to_f).to eq(-0.63)
       end
+
+      context "when re calculating" do
+        it "does not update the adjustment amount" do
+          expect do
+            VoucherAdjustmentsService.calculate(order)
+          end.not_to change { subject.reload.amount }
+        end
+
+        it "does not update the tax adjustment" do
+          expect do
+            VoucherAdjustmentsService.calculate(order)
+          end.not_to change { subject.reload.included_tax }
+        end
+
+        context "when the order changed" do
+          before do
+            order.update_columns(item_total: 200)
+          end
+
+          it "does update the adjustment amount" do
+            expect do
+              VoucherAdjustmentsService.calculate(order)
+            end.not_to change { subject.reload.amount }
+          end
+
+          it "updates the tax adjustment" do
+            expect do
+              VoucherAdjustmentsService.calculate(order)
+            end.to change { subject.reload.included_tax }
+          end
+        end
+      end
     end
 
     context 'with tax not included in order price' do
@@ -70,6 +102,8 @@ describe VoucherAdjustmentsService do
           tax_rate_name: "Tax 1"
         )
       end
+      let(:adjustment) { order.voucher_adjustments.first }
+      let(:tax_adjustment) { order.voucher_adjustments.second }
 
       before do
         # create adjustment before tax are set
@@ -84,7 +118,6 @@ describe VoucherAdjustmentsService do
       end
 
       it 'includes amount without tax' do
-        adjustment = order.voucher_adjustments.first
         # voucher_rate = amount / order.total
         # -10 / 171 = -0.058479532
         # amount = voucher_rate * (order.total - order.additional_tax_total)
@@ -97,19 +130,39 @@ describe VoucherAdjustmentsService do
         # -10 / 171 = -0.058479532
         # amount = voucher_rate * order.additional_tax_total
         # -0.058479532 * 11 = -0.64
-        tax_adjustment = order.voucher_adjustments.second
         expect(tax_adjustment.amount.to_f).to eq(-0.64)
         expect(tax_adjustment.label).to match("Tax")
       end
 
       context "when re calculating" do
-        it "updates the tax adjustment" do
-          order.update_columns(item_total: 200)
-          tax_adjustment = order.voucher_adjustments.second
-
+        it "does not update the adjustment amount" do
           expect do
             VoucherAdjustmentsService.calculate(order)
-          end.to change { tax_adjustment.reload.amount }
+          end.not_to change { adjustment.reload.amount }
+        end
+
+        it "does not update the tax adjustment" do
+          expect do
+            VoucherAdjustmentsService.calculate(order)
+          end.not_to change { tax_adjustment.reload.amount }
+        end
+
+        context "when the order changed" do
+          before do
+            order.update_columns(item_total: 200)
+          end
+
+          it "updates the adjustment amount" do
+            expect do
+              VoucherAdjustmentsService.calculate(order)
+            end.to change { adjustment.reload.amount }
+          end
+
+          it "updates the tax adjustment" do
+            expect do
+              VoucherAdjustmentsService.calculate(order)
+            end.to change { tax_adjustment.reload.amount }
+          end
         end
       end
     end
