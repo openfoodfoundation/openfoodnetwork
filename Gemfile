@@ -116,8 +116,6 @@ gem 'spreadsheet_architect' # write spreadsheets
 
 gem 'whenever', require: false
 
-gem 'test-unit', '~> 3.5'
-
 gem 'coffee-rails', '~> 5.0.0'
 
 gem 'angular_rails_csrf'
