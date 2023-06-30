@@ -12,13 +12,25 @@ RSpec.configure do |config|
         title: 'OFN DFC API',
         version: 'v0.1.7'
       },
+      description: <<~HTML,
+        <p>
+        This API implements the Data Food Consortium (DFC) specifications.
+        It serves and reads semantic data encoded in JSON-LD.
+        <p>
+        Unfortunately, this description does not appear in the Swagger UI. :-(
+      HTML
       components: {
         securitySchemes: {
           oidc_token: {
             type: :http,
             scheme: :bearer,
             bearerFormat: "JWT",
-            description: "OpenID Connect token from a trusted platform"
+            description: <<~HTML
+              OpenID Connect token from a trusted platform:
+              <ul>
+                <li><a href="https://login.lescommuns.org/auth/" target="_blank">Les Communs</a></li>
+              </ul>
+            HTML
           },
           ofn_api_token: {
             type: :apiKey,
@@ -29,8 +41,10 @@ RSpec.configure do |config|
           ofn_session: {
             type: :apiKey,
             in: :cookie,
-            name: '_ofn_session',
-            description: "Session cookie of a logged in OFN user"
+            name: '_ofn_session_id',
+            description: <<~HTML
+              Session cookie of a logged in user. It allows only read access due to CSRF protection.
+            HTML
           },
         }
       },

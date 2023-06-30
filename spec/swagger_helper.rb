@@ -46,7 +46,7 @@ RSpec.configure do |config|
           },
           session: {
             type: :apiKey,
-            name: '_ofn_session',
+            name: '_ofn_session_id',
             in: :cookie,
             description: "Authenticates using the current user's session if logged in"
           },
