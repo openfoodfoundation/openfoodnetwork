@@ -300,8 +300,8 @@ module Spree
           create(:order_with_line_items, line_items_count: 2, distributor: hub,
                                          ship_address: address)
         }
-        let!(:taxable) { order.line_items.first.variant.product }
-        let!(:nontaxable) { order.line_items.last.variant.product }
+        let!(:taxable) { order.line_items.first.variant }
+        let!(:nontaxable) { order.line_items.last.variant }
 
         before do
           taxable.update(tax_category: category)
@@ -310,7 +310,7 @@ module Spree
         end
 
         context "not taxable line item " do
-          let!(:line_item) { order.contents.add(nontaxable.variants.first, 1) }
+          let!(:line_item) { order.contents.add(nontaxable, 1) }
 
           it "should not create a tax adjustment" do
             Spree::TaxRate.adjust(order, order.line_items)
@@ -324,7 +324,7 @@ module Spree
         end
 
         context "taxable line item" do
-          let!(:line_item) { order.contents.add(taxable.variants.first, 1) }
+          let!(:line_item) { order.contents.add(taxable, 1) }
 
           before do
             rate1.update_column(:included_in_price, true)

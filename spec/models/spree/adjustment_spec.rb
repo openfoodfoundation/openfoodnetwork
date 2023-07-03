@@ -433,7 +433,7 @@ module Spree
           let(:product_tax_category) { create(:tax_category, tax_rates: [product_tax_rate]) }
 
           before do
-            variant.product.update_attribute(:tax_category_id, product_tax_category.id)
+            variant.update_attribute(:tax_category_id, product_tax_category.id)
             order.recreate_all_fees!
           end
 

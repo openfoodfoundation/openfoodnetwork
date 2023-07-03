@@ -300,7 +300,6 @@ describe '
       expect(flash_message).to eq('Product "a product" has been successfully updated!')
       product.reload
       expect(product.supplier).to eq(@supplier_permitted)
-      expect(product.tax_category).to eq(tax_category)
     end
 
     it "editing a product comming from the bulk product update page with filter" do
