@@ -93,6 +93,8 @@ Naming/VariableNumber:
   AllowedIdentifiers:
     - street_address_1
     - street_address_2
+  AllowedPatterns:
+    - _v[\d]+
 
 Bundler/DuplicatedGem:
   Enabled: false
