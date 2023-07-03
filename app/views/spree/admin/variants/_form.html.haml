@@ -64,4 +64,8 @@
       - value = number_with_precision(@variant.send(field), precision: 2)
       = f.number_field field, value: value, class: 'fullwidth', step: 0.01
 
+  .field
+    = f.label :tax_category_id, t(:tax_category)
+    = f.collection_select(:tax_category_id, @tax_categories, :id, :name, { include_blank: t(:none) }, { class: 'select2 fullwidth' })
+
 .clear

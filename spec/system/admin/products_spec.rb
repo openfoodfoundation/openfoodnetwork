@@ -296,7 +296,6 @@ describe '
       visit spree.edit_admin_product_path product
 
       select 'Permitted Supplier', from: 'product_supplier_id'
-      select tax_category.name, from: 'product_tax_category_id'
       click_button 'Update'
       expect(flash_message).to eq('Product "a product" has been successfully updated!')
       product.reload
