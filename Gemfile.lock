@@ -719,8 +719,6 @@ GEM
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
     temple (0.8.2)
-    test-unit (3.6.0)
-      power_assert
     thor (1.2.2)
     thread-local (1.1.0)
     tilt (2.1.0)
@@ -910,7 +908,6 @@ DEPENDENCIES
   stimulus_reflex (= 3.5.0.rc2)
   stringex (~> 2.8.5)
   stripe
-  test-unit (~> 3.5)
   timecop
   valid_email2
   vcr
