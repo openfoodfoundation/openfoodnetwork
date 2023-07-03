@@ -26,9 +26,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
       consumes "application/json"
       produces "application/json"
 
-      # This parameter is required but I want to write a spec which doesn't
-      # supply it. I couldn't do it with rswag when requiring it.
-      parameter name: :supplied_product, in: :body, required: false, schema: {
+      parameter name: :supplied_product, in: :body, schema: {
         example: {
           '@context': {
             'dfc-b': "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#",
@@ -53,7 +51,18 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
       }
 
       response "400", "bad request" do
-        run_test!
+        describe "with missing request body" do
+          around do |example|
+            # Rswag expects all required parameters to be supplied with `let`
+            # but we want to send a request without the request body parameter.
+            parameters = example.metadata[:operation][:parameters]
+            example.metadata[:operation][:parameters] = []
+            example.run
+            example.metadata[:operation][:parameters] = parameters
+          end
+
+          run_test!
+        end
       end
 
       response "200", "success" do
