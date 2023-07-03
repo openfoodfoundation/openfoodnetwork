@@ -31,7 +31,6 @@ module Spree
     searchable_associations :supplier, :properties, :primary_taxon, :variants
     searchable_scopes :active, :with_properties
 
-    belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory'
     belongs_to :supplier, class_name: 'Enterprise', touch: true
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true
@@ -59,8 +58,6 @@ module Spree
 
     validates :supplier, presence: true
     validates :primary_taxon, presence: true
-    validates :tax_category, presence: true,
-                             if: proc { Spree::Config[:products_require_tax_category] }
 
     validates :variant_unit, presence: true
     validates :unit_value, presence:
@@ -203,14 +200,6 @@ module Spree
 
     def self.group_by_products_id
       group(column_names.map { |col_name| "#{table_name}.#{col_name}" })
-    end
-
-    def tax_category
-      if self[:tax_category_id].nil?
-        TaxCategory.find_by(is_default: true)
-      else
-        TaxCategory.find(self[:tax_category_id])
-      end
     end
 
     # for adding products which are closely related to existing ones
