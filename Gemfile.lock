@@ -385,6 +385,7 @@ GEM
     jwt (2.7.1)
     knapsack_pro (5.1.2)
       rake
+    language_server-protocol (3.17.0.3)
     launchy (2.5.0)
       addressable (~> 2.7)
     letter_opener (1.8.1)
@@ -488,7 +489,6 @@ GEM
       ruby-rc4
       ttfunk
     pg (1.2.3)
-    power_assert (2.0.3)
     private_address_check (0.5.0)
     pry (0.13.1)
       coderay (~> 1.1)
@@ -627,8 +627,9 @@ GEM
     rswag-ui (2.9.0)
       actionpack (>= 3.1, < 7.1)
       railties (>= 3.1, < 7.1)
-    rubocop (1.52.1)
+    rubocop (1.54.0)
       json (~> 2.3)
+      language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
       parser (>= 3.2.2.3)
       rainbow (>= 2.2.2, < 4.0)
