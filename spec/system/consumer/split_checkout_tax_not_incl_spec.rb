@@ -151,10 +151,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
           end
 
           # DB check
-          #order_within_zone.reload
-          #voucher_adjustment = order_within_zone.voucher_adjustments.first
-          #voucher_tax_adjustment = order_within_zone.voucher_adjustments.second
-
           assert_db_voucher_adjustment(-8.85, -1.15)
         end
 
