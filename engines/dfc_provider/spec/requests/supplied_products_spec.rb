@@ -113,10 +113,14 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
     put "Update SuppliedProduct" do
       consumes "application/json"
 
-      parameter name: :supplied_product, in: :body, schema: {}
+      parameter name: :supplied_product, in: :body, schema: {
+        example: ExampleJson.read("patch_supplied_product")
+      }
 
       let(:id) { variant.id }
-      let(:supplied_product) { ExampleJson.read("patch_supplied_product") }
+      let(:supplied_product) { |example|
+        example.metadata[:operation][:parameters].first[:schema][:example]
+      }
 
       response "401", "unauthorized" do
         before { login_as nil }
