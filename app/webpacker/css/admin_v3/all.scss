@@ -31,7 +31,7 @@
 @import "../shared/utilities";
 @import "../admin/shared/typography";
 @import "shared/tables"; // admin_v3
-@import "../admin/shared/icons";
+@import "shared/icons"; // admin_v3
 @import "../admin/shared/forms";
 @import "shared/layout"; // admin_v3
 @import "../admin/shared/scroll_bar";
@@ -52,6 +52,7 @@
 @import "../admin/components/alert-box";
 @import "../admin/components/alert_row";
 @import "../admin/components/buttons";
+@import "components/buttons"; // admin_v3
 @import "../admin/components/date-picker";
 @import "../admin/components/dialogs";
 @import "../admin/components/input";

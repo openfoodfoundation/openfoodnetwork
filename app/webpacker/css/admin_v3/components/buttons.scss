@@ -1,0 +1,79 @@
+input[type="submit"],
+input[type="button"]:not(.trix-button),
+button:not(.plain):not(.trix-button),
+.button {
+  position: relative;
+  cursor: pointer;
+  font-size: 14px;
+  @include border-radius($border-radius);
+  display: inline-block;
+  padding: 0px 12px;
+  background-color: $color-btn-bg;
+  border: 1px solid $color-btn-bg;
+  color: $color-btn-text;
+  text-transform: uppercase;
+  line-height: 40px;
+  height: 40px;
+
+  &:before {
+    font-weight: normal !important;
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+    border: 1px solid $color-btn-hover-border;
+  }
+
+  &:hover {
+    background-color: $color-btn-hover-bg;
+    border: 1px solid $color-btn-hover-bg;
+    color: $color-btn-hover-text;
+  }
+
+  &.fullwidth {
+    width: 100%;
+    text-align: center;
+  }
+
+  &.secondary {
+    background-color: transparent;
+    border: 1px solid $color-btn-bg;
+    color: $color-btn-bg;
+
+    &:hover {
+      background-color: $color-11;
+      border: 1px solid $color-10;
+      color: $color-10;
+    }
+
+    &:active,
+    &:focus {
+      background-color: $color-11;
+      border: 1px solid $color-4;
+      color: $color-4;
+    }
+  }
+
+  .badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 10px;
+    text-transform: capitalize;
+    padding: 0px 5px;
+    border-radius: 3px;
+
+    &:before {
+      padding: 0;
+    }
+
+    &.danger {
+      background-color: $warning-red;
+    }
+    &.success {
+      background-color: $spree-green;
+    }
+  }
+}

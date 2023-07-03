@@ -1,0 +1,42 @@
+// Some fixes for fontwesome stylesheets
+[class*="icon-"] {
+  &:before {
+    padding-right: 5px;
+  }
+
+  &.button,
+  &.icon_link {
+    &:before {
+      padding-right: 8px;
+    }
+  }
+}
+
+// for the button tagname as well
+button[class*="icon-"] {
+  &:before {
+    padding-right: 8px;
+  }
+}
+
+.icon-email:before {
+  @extend .icon-envelope, :before;
+}
+.icon-resend_authorization_email:before {
+  @extend .icon-envelope, :before;
+}
+.icon-resume:before {
+  @extend .icon-refresh, :before;
+}
+
+.icon-cancel:before,
+.icon-void:before {
+  @extend .icon-remove, :before;
+}
+
+.icon-capture {
+  @extend .icon-ok;
+}
+.icon-credit:before {
+  @extend .icon-ok, :before;
+}

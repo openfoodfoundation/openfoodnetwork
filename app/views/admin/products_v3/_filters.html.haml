@@ -10,4 +10,4 @@
     = select_tag :category_id, options_for_select(category_options, category_id), include_blank: t('.all_categories')
   .submit
     .search-button
-      = submit_tag t(".search"), class: "secondary"
+      = button_tag t(".search"), class: "secondary icon-search"
