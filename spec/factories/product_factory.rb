@@ -26,9 +26,6 @@ FactoryBot.define do
     factory :product do
       transient do
         on_hand { 5 }
-      end
-
-      transient do
         tax_category { |r| Spree::TaxCategory.first || r.association(:tax_category) }
       end
 
@@ -69,7 +66,7 @@ FactoryBot.define do
       tax_category { create(:tax_category) }
     end
 
-    after(:create) do |_product, proxy|
+    after(:create) do |product, proxy|
       raise "taxed_product factory requires a zone" unless proxy.zone
 
       create(:tax_rate, amount: proxy.tax_rate_amount,
@@ -78,6 +75,8 @@ FactoryBot.define do
                         calculator: Calculator::DefaultTax.new,
                         zone: proxy.zone,
                         name: proxy.tax_rate_name)
+
+      product.variants.first.update(tax_category: proxy.tax_category)
     end
   end
 end
