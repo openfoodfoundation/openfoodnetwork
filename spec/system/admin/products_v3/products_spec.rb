@@ -16,6 +16,10 @@ describe 'As an admin, I can see the new product page' do
     create(:simple_product,
            supplier: create(:enterprise, name: "Producer 1"))
   }
+  # create a product with a category that can be searched
+  let!(:product_by_category) {
+    create(:simple_product, taxons: [create(:taxon, name: "Category 1")])
+  }
 
   before do
     # activate feature toggle admin_style_v3 to use new admin interface
@@ -99,6 +103,20 @@ describe 'As an admin, I can see the new product page' do
         expect_products_count_to_be 1
       end
     end
+
+    context "search by category" do
+      it "has a category select" do
+        expect(page).to have_selector "select#category_id"
+      end
+
+      it "can search for a product" do
+        search_by_category "Category 1"
+
+        expect(page).to have_select "category_id", selected: "Category 1"
+        expect_page_to_be 1
+        expect_products_count_to_be 1
+      end
+    end
   end
 
   def expect_page_to_be(page)
@@ -121,6 +139,11 @@ describe 'As an admin, I can see the new product page' do
 
   def search_by_producer(producer)
     select producer, from: "producer_id"
+    click_button "Search"
+  end
+
+  def search_by_category(category)
+    select category, from: "category_id"
     click_button "Search"
   end
 end

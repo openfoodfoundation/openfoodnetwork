@@ -25,6 +25,7 @@ class ProductsReflex < ApplicationReflex
     @page = 1
     @search_term = params[:search_term]
     @producer_id = params[:producer_id]
+    @category_id = params[:category_id]
 
     fetch_products
     render_products
@@ -37,7 +38,8 @@ class ProductsReflex < ApplicationReflex
       selector: "#products-content",
       html: render(partial: "admin/products_v3/content",
                    locals: { products: @products, pagy: @pagy, search_term: @search_term,
-                             producer_options: producers, producer_id: @producer_id })
+                             producer_options: producers, producer_id: @producer_id,
+                             category_options: categories, category_id: @category_id })
     ).broadcast
 
     cable_ready.replace_state(
@@ -54,6 +56,10 @@ class ProductsReflex < ApplicationReflex
                   current_user.enterprises
                 end
     producers.map { |p| [p.name, p.id] }
+  end
+
+  def categories
+    Spree::Taxon.order(:name).map { |c| [c.name, c.id] }
   end
 
   # copied from ProductsTableComponent
@@ -77,6 +83,7 @@ class ProductsReflex < ApplicationReflex
     query = { s: "name desc" }
     query = query.merge({ supplier_id_in: @producer_id }) if @producer_id.present?
     query = query.merge({ name_cont: @search_term }) if @search_term.present?
+    query = query.merge({ primary_taxon_id_in: @category_id }) if @category_id.present?
     query
   end
 
