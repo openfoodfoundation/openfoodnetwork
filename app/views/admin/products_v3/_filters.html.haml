@@ -2,6 +2,8 @@
   .query
     .search-input
       = text_field_tag :search_term, search_term, placeholder: t('.search_products')
+  .producers
+    = select_tag :producer_id, options_for_select(producer_options, producer_id), include_blank: t('.all_producers')
   .submit
     .search-button
       = submit_tag t(".search"), class: "secondary"

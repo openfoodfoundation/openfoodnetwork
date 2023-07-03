@@ -2,7 +2,7 @@
   - if products.any?
     .container
       .sixteen.columns
-        = render partial: 'filters', locals: { search_term: search_term }
+        = render partial: 'filters', locals: { search_term: search_term, producer_id: producer_id, producer_options: producer_options }
     .container
       .sixteen.columns
         = render partial: 'sort', locals: { pagy: pagy }
