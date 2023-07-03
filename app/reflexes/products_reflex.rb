@@ -3,35 +3,51 @@
 class ProductsReflex < ApplicationReflex
   include Pagy::Backend
 
+  before_reflex :init_params
+
   def fetch
-    @page ||= element.dataset.page || 1
-    @per_page ||= element.dataset.perpage || 15
-    @search_term ||= element.dataset.searchterm || ""
-
-    fetch_products
-
-    render_products
+    fetch_and_render_products
   end
 
   def change_per_page
     @per_page = element.value.to_i
     @page = 1
 
-    fetch
+    fetch_and_render_products
   end
 
   def filter
-    @per_page = params[:per_page]
     @page = 1
-    @search_term = params[:search_term]
-    @producer_id = params[:producer_id]
-    @category_id = params[:category_id]
 
-    fetch_products
-    render_products
+    fetch_and_render_products
   end
 
   private
+
+  def init_params
+    init_filters_params
+    init_pagination_params
+  end
+
+  def init_filters_params
+    # params comes from the form
+    # _params comes from the url
+    # priority is given to params from the form (if present) over url params
+    @search_term = params[:search_term] || params[:_search_term]
+    @producer_id = params[:producer_id] || params[:_producer_id]
+    @category_id = params[:category_id] || params[:_category_id]
+  end
+
+  def init_pagination_params
+    # prority is given to element dataset (if present) over url params
+    @page = element.dataset.page || params[:_page] || 1
+    @per_page = element.dataset.perpage || params[:_per_page] || 15
+  end
+
+  def fetch_and_render_products
+    fetch_products
+    render_products
+  end
 
   def render_products
     cable_ready.replace(
@@ -103,7 +119,12 @@ class ProductsReflex < ApplicationReflex
   def current_url
     url = URI(request.original_url)
     url.query = url.query.present? ? "#{url.query}&" : ""
-    url.query += "page=#{@page}&per_page=#{@per_page}"
+    # add params with _ to avoid conflicts with params from the form
+    url.query += "_page=#{@page}"
+    url.query += "&_per_page=#{@per_page}"
+    url.query += "&_search_term=#{@search_term}" if @search_term.present?
+    url.query += "&_producer_id=#{@producer_id}" if @producer_id.present?
+    url.query += "&_category_id=#{@category_id}" if @category_id.present?
     url.to_s
   end
 end
