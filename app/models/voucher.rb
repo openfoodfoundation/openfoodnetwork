@@ -46,4 +46,8 @@ class Voucher < ApplicationRecord
   def compute_amount(_order)
     raise NotImplementedError, 'please use concrete voucher'
   end
+
+  def rate(_order)
+    raise NotImplementedError, 'please use concrete voucher'
+  end
 end

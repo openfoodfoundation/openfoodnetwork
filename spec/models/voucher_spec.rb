@@ -68,4 +68,13 @@ describe Voucher do
       expect(adjustment.state).to eq("open")
     end
   end
+
+  describe '#rate' do
+    subject(:voucher) { Vouchers::TestVoucher.new(code: 'new_code', enterprise: enterprise) }
+
+    it "raises not implemented error" do
+      expect{ voucher.rate(nil) }
+        .to raise_error(NotImplementedError, 'please use concrete voucher')
+    end
+  end
 end

@@ -23,7 +23,7 @@ class VoucherAdjustmentsService
     #
     # For now we just assume it is either all tax included in price or all tax excluded from price.
     if @order.additional_tax_total.positive?
-      handle_tax_excluded_from_price(amount)
+      handle_tax_excluded_from_price(voucher)
     elsif @order.included_tax_total.positive?
       handle_tax_included_in_price(amount, voucher)
     else
@@ -32,15 +32,8 @@ class VoucherAdjustmentsService
     end
   end
 
-  private
-
-  def handle_tax_excluded_from_price(amount, voucher)
-    if voucher.voucher_type == Voucher::FLAT_RATE
-      voucher_rate = amount / @order.pre_discount_total
-    else
-      voucher_rate = -voucher.amount / 100
-    end
-
+  def handle_tax_excluded_from_price(voucher)
+    voucher_rate = voucher.rate(@order)
     adjustment = @order.voucher_adjustments.first
 
     # Adding the voucher tax part
@@ -75,14 +68,7 @@ class VoucherAdjustmentsService
   end
 
   def handle_tax_included_in_price(amount, voucher)
-    if voucher.voucher_type == Voucher::FLAT_RATE
-      # Flat rate tax calulation
-      voucher_rate = amount / @order.pre_discount_total
-      included_tax = voucher_rate * @order.included_tax_total
-    else
-      # Percentage rate tax calculation
-      included_tax = -voucher.amount / 100 * @order.included_tax_total
-    end
+    included_tax = voucher.rate(@order) * @order.included_tax_total
 
     # Update Adjustment
     adjustment = @order.voucher_adjustments.first

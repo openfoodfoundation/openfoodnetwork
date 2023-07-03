@@ -26,4 +26,14 @@ describe Vouchers::PercentageRate do
       expect(subject.compute_amount(order)).to eq(-order.pre_discount_total * 0.1)
     end
   end
+
+  describe "#rate" do
+    subject do
+      create(:voucher_percentage_rate, code: 'new_code', enterprise: enterprise, amount: 50)
+    end
+
+    it "returns the voucher percentage rate" do
+      expect(subject.rate(nil)).to eq(-0.5)
+    end
+  end
 end

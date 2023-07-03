@@ -15,5 +15,11 @@ module Vouchers
     def compute_amount(order)
       -amount.clamp(0, order.pre_discount_total)
     end
+
+    def rate(order)
+      amount = compute_amount(order)
+
+      amount / order.pre_discount_total
+    end
   end
 end

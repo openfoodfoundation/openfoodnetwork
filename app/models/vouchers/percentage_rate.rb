@@ -11,8 +11,11 @@ module Vouchers
     end
 
     def compute_amount(order)
-      percentage = amount / 100
-      -percentage * order.pre_discount_total
+      rate(order) * order.pre_discount_total
+    end
+
+    def rate(_order)
+      -amount / 100
     end
   end
 end

@@ -31,4 +31,17 @@ describe Vouchers::FlatRate do
       end
     end
   end
+
+  describe "#rate" do
+    subject do
+      create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 5)
+    end
+    let(:order) { create(:order_with_totals) }
+
+    it "returns the voucher rate" do
+      # rate = -voucher_amount / order.pre_discount_total
+      # -5 / 10 = -0.5
+      expect(subject.rate(order).to_f).to eq(-0.5)
+    end
+  end
 end
