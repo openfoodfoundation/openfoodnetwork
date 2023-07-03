@@ -776,6 +776,10 @@ en:
         search_products: Search for products
         all_producers: All producers
         all_categories: All categories
+        producers:
+          label: Producers
+        categories:
+          label: Categories
         search: Search
       content:
         no_products_found: No products found
