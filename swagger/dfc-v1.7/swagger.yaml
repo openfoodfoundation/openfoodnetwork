@@ -1,0 +1,344 @@
+---
+openapi: 3.0.1
+info:
+  title: OFN DFC API
+  version: v0.1.7
+components:
+  securitySchemes:
+    oidc_token:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OpenID Connect token from a trusted platform
+    ofn_api_token:
+      type: apiKey
+      in: header
+      name: X-Api-Token
+      description: API token of an authorized OFN user
+    ofn_session:
+      type: apiKey
+      in: cookie
+      name: _ofn_session
+      description: Session cookie of a logged in OFN user
+security:
+- oidc_token: []
+- ofn_api_token: []
+- ofn_session: []
+paths:
+  "/api/dfc-v1.7/enterprises/{enterprise_id}/catalog_items":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: List CatalogItems
+      responses:
+        '404':
+          description: not found
+        '200':
+          description: success
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": http://static.datafoodconsortium.org/ontologies/context.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc-v1.7/persons/12345
+                      "@type": dfc-b:Person
+                      dfc-b:affiliates: http://test.host/api/dfc-v1.7/enterprises/10000
+                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasName: ''
+                      dfc-b:hasDescription: ''
+                      dfc-b:VATnumber: ''
+                      dfc-b:supplies: http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                      dfc-b:manages: http://test.host/api/dfc-v1.7/enterprises/10000/catalog_items/10001
+                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/catalog_items/10001
+                      "@type": dfc-b:CatalogItem
+                      dfc-b:references: http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                      dfc-b:sku: AR
+                      dfc-b:stockLimitation: 0
+                      dfc-b:offeredThrough: http://test.host/api/dfc-v1.7/enterprises/10000/offers/10001
+                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple
+                      dfc-b:description: Red
+                      dfc-b:hasType: dfc-pt:non-local-vegetable
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:alcoholPercentage: 0.0
+                      dfc-b:lifetime: ''
+                      dfc-b:usageOrStorageCondition: ''
+                      dfc-b:totalTheoreticalStock: 0.0
+                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/offers/10001
+                      "@type": dfc-b:Offer
+                      dfc-b:price: 19.99
+                      dfc-b:stockLimitation: 0
+        '401':
+          description: unauthorized
+  "/api/dfc-v1.7/enterprises/{enterprise_id}/catalog_items/{id}":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show CatalogItem
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": http://static.datafoodconsortium.org/ontologies/context.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/catalog_items/10001
+                      "@type": dfc-b:CatalogItem
+                      dfc-b:references: http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                      dfc-b:sku: AR
+                      dfc-b:stockLimitation: 0
+                      dfc-b:offeredThrough: http://test.host/api/dfc-v1.7/enterprises/10000/offers/10001
+                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/offers/10001
+                      "@type": dfc-b:Offer
+                      dfc-b:price: 19.99
+                      dfc-b:stockLimitation: 0
+        '404':
+          description: not found
+    put:
+      summary: Update CatalogItem
+      parameters: []
+      responses:
+        '204':
+          description: no content
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                "@context":
+                  rdfs: http://www.w3.org/2000/01/rdf-schema#
+                  skos: http://www.w3.org/2004/02/skos/core#
+                  dfc: http://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#
+                  dc: http://purl.org/dc/elements/1.1/#
+                  dfc-b: http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#
+                  dfc-p: http://static.datafoodconsortium.org/ontologies/DFC_ProductOntology.owl#
+                  dfc-t: http://static.datafoodconsortium.org/ontologies/DFC_TechnicalOntology.owl#
+                  dfc-m: http://static.datafoodconsortium.org/data/measures.rdf#
+                  dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
+                  dfc-f: http://static.datafoodconsortium.org/data/facets.rdf#
+                  dfc-p:hasUnit:
+                    "@type": "@id"
+                  dfc-b:hasUnit:
+                    "@type": "@id"
+                  dfc-b:hasQuantity:
+                    "@type": "@id"
+                  dfc-p:hasType:
+                    "@type": "@id"
+                  dfc-b:hasType:
+                    "@type": "@id"
+                  dfc-b:references:
+                    "@type": "@id"
+                  dfc-b:referencedBy:
+                    "@type": "@id"
+                  dfc-b:offeres:
+                    "@type": "@id"
+                  dfc-b:supplies:
+                    "@type": "@id"
+                  dfc-b:defines:
+                    "@type": "@id"
+                  dfc-b:affiliates:
+                    "@type": "@id"
+                  dfc-b:manages:
+                    "@type": "@id"
+                  dfc-b:offeredThrough:
+                    "@type": "@id"
+                  dfc-b:hasBrand:
+                    "@type": "@id"
+                  dfc-b:hasGeographicalOrigin:
+                    "@type": "@id"
+                  dfc-b:hasClaim:
+                    "@type": "@id"
+                  dfc-b:hasAllergenDimension:
+                    "@type": "@id"
+                  dfc-b:hasNutrimentDimension:
+                    "@type": "@id"
+                  dfc-b:hasPhysicalDimension:
+                    "@type": "@id"
+                  dfc:owner:
+                    "@type": "@id"
+                  dfc-t:hostedBy:
+                    "@type": "@id"
+                  dfc-t:hasPivot:
+                    "@type": "@id"
+                  dfc-t:represent:
+                    "@type": "@id"
+                dfc-b:stockLimitation: '3'
+                dfc-b:sku: new-sku
+  "/api/dfc-v1.7/enterprises/{id}":
+    get:
+      summary: Show enterprise
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": http://static.datafoodconsortium.org/ontologies/context.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasName: ''
+                      dfc-b:hasDescription: ''
+                      dfc-b:VATnumber: ''
+                      dfc-b:supplies: http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                      dfc-b:manages: http://test.host/api/dfc-v1.7/enterprises/10000/catalog_items/10001
+                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple
+                      dfc-b:description: Round
+                      dfc-b:hasType: dfc-pt:non-local-vegetable
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:alcoholPercentage: 0.0
+                      dfc-b:lifetime: ''
+                      dfc-b:usageOrStorageCondition: ''
+                      dfc-b:totalTheoreticalStock: 0.0
+                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/catalog_items/10001
+                      "@type": dfc-b:CatalogItem
+                      dfc-b:references: http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                      dfc-b:sku: APP
+                      dfc-b:stockLimitation: 0
+                      dfc-b:offeredThrough: http://test.host/api/dfc-v1.7/enterprises/10000/offers/10001
+        '404':
+          description: not found
+  "/api/dfc-v1.7/persons/{id}":
+    get:
+      summary: Show person
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": http://static.datafoodconsortium.org/ontologies/context.json
+                    "@id": http://test.host/api/dfc-v1.7/persons/10000
+                    "@type": dfc-b:Person
+        '404':
+          description: not found
+  "/api/dfc-v1.7/enterprises/{enterprise_id}/supplied_products":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      summary: Create SuppliedProduct
+      parameters: []
+      responses:
+        '400':
+          description: bad request
+        '204':
+          description: success
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                "@context": http://static.datafoodconsortium.org/ontologies/context.json
+                "@id": http://test.host/api/dfc-v1.7/enterprises/6201/supplied_products/0
+                "@type": dfc-b:SuppliedProduct
+                dfc-b:name: Apple
+                dfc-b:description: A delicious heritage apple
+                dfc-b:hasType: dfc-pt:non-local-vegetable
+                dfc-b:hasQuantity:
+                  "@type": dfc-b:QuantitativeValue
+                  dfc-b:hasUnit: dfc-m:Gram
+                  dfc-b:value: 3.0
+                dfc-b:alcoholPercentage: 0.0
+                dfc-b:lifetime: ''
+                dfc-b:usageOrStorageCondition: ''
+                dfc-b:totalTheoreticalStock: 0.0
+  "/api/dfc-v1.7/enterprises/{enterprise_id}/supplied_products/{id}":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show SuppliedProduct
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": http://static.datafoodconsortium.org/ontologies/context.json
+                    "@id": http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                    "@type": dfc-b:SuppliedProduct
+                    dfc-b:name: Pesto
+                    dfc-b:description: Basil Pesto
+                    dfc-b:hasType: dfc-pt:non-local-vegetable
+                    dfc-b:hasQuantity:
+                      "@type": dfc-b:QuantitativeValue
+                      dfc-b:hasUnit: dfc-m:Gram
+                      dfc-b:value: 1.0
+                    dfc-b:alcoholPercentage: 0.0
+                    dfc-b:lifetime: ''
+                    dfc-b:usageOrStorageCondition: ''
+                    dfc-b:totalTheoreticalStock: 0.0
+        '404':
+          description: not found
+    put:
+      summary: Update SuppliedProduct
+      parameters: []
+      responses:
+        '401':
+          description: unauthorized
+        '204':
+          description: success
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+servers:
+- url: "/"

@@ -1,91 +1,125 @@
 # frozen_string_literal: true
 
+require "swagger_helper"
 require DfcProvider::Engine.root.join("spec/spec_helper")
 
-describe "SuppliedProducts", type: :request do
+describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml",
+                             rswag_autodoc: true do
   let!(:user) { create(:oidc_user) }
-  let!(:enterprise) { create(:distributor_enterprise, owner: user) }
-  let!(:product) { create(:simple_product, supplier: enterprise ) }
-  let!(:variant) { product.variants.first }
+  let!(:enterprise) { create(:distributor_enterprise, id: 10_000, owner: user) }
+  let!(:product) {
+    create(
+      :base_product,
+      supplier: enterprise, name: "Pesto", description: "Basil Pesto",
+      variants: [variant],
+    )
+  }
+  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1) }
 
-  describe :create do
-    let(:endpoint) do
-      enterprise_supplied_products_path(enterprise_id: enterprise.id)
-    end
-    let(:supplied_product) do
-      SuppliedProductBuilder.supplied_product(new_variant)
-    end
-    let(:new_variant) do
-      # We need an id to generate a URL as semantic id when exporting.
-      build(:variant, id: 0, name: "Apple", unit_value: 3)
-    end
+  before { login_as user }
 
-    it "flags a bad request" do
-      post endpoint, headers: auth_header(user.uid)
+  path "/api/dfc-v1.7/enterprises/{enterprise_id}/supplied_products" do
+    parameter name: :enterprise_id, in: :path, type: :string
 
-      expect(response).to have_http_status :bad_request
-    end
+    let(:enterprise_id) { enterprise.id }
 
-    it "creates a variant" do
-      request_body = DfcLoader.connector.export(supplied_product)
+    post "Create SuppliedProduct" do
+      consumes "application/json"
+      produces "application/json"
 
-      expect do
-        post endpoint,
-             params: request_body,
-             headers: auth_header(user.uid)
+      # This parameter is required but I want to write a spec which doesn't
+      # supply it. I couldn't do it with rswag when requiring it.
+      parameter name: :supplied_product, in: :body, required: false, schema: {
+        example: {
+          '@context': "http://static.datafoodconsortium.org/ontologies/context.json",
+          '@id': "http://test.host/api/dfc-v1.7/enterprises/6201/supplied_products/0",
+          '@type': "dfc-b:SuppliedProduct",
+          'dfc-b:name': "Apple",
+          'dfc-b:description': "A delicious heritage apple",
+          'dfc-b:hasType': "dfc-pt:non-local-vegetable",
+          'dfc-b:hasQuantity': {
+            '@type': "dfc-b:QuantitativeValue",
+            'dfc-b:hasUnit': "dfc-m:Gram",
+            'dfc-b:value': 3.0
+          },
+          'dfc-b:alcoholPercentage': 0.0,
+          'dfc-b:lifetime': "",
+          'dfc-b:usageOrStorageCondition': "",
+          'dfc-b:totalTheoreticalStock': 0.0
+        }
+      }
+
+      response "400", "bad request" do
+        run_test!
       end
-        .to change { enterprise.supplied_products.count }.by(1)
 
-      variant = Spree::Variant.last
-      expect(variant.name).to eq "Apple"
-      expect(variant.unit_value).to eq 3
+      response "204", "success" do
+        let(:supplied_product) do |example|
+          example.metadata[:operation][:parameters].first[:schema][:example]
+        end
+
+        it "creates a variant" do |example|
+          existing = Spree::Variant.pluck(:id)
+
+          expect { submit_request(example.metadata) }
+            .to change { enterprise.supplied_products.count }.by(1)
+
+          variant = Spree::Variant.where.not(id: existing).first
+          expect(variant.name).to eq "Apple"
+          expect(variant.unit_value).to eq 3
+        end
+      end
     end
   end
 
-  describe :show do
-    it "returns variants" do
-      get enterprise_supplied_product_path(
-        variant.id, enterprise_id: enterprise.id
-      ), headers: auth_header(user.uid)
+  path "/api/dfc-v1.7/enterprises/{enterprise_id}/supplied_products/{id}" do
+    parameter name: :enterprise_id, in: :path, type: :string
+    parameter name: :id, in: :path, type: :string
 
-      expect(response).to have_http_status :ok
-      expect(response.body).to include variant.name
+    let(:enterprise_id) { enterprise.id }
+
+    get "Show SuppliedProduct" do
+      produces "application/json"
+
+      response "200", "success" do
+        let(:id) { variant.id }
+
+        run_test! do
+          expect(response.body).to include variant.name
+        end
+      end
+
+      response "404", "not found" do
+        let(:id) { other_variant.id }
+        let(:other_variant) { create(:variant) }
+
+        run_test!
+      end
     end
 
-    it "doesn't find unrelated variants" do
-      other_variant = create(:variant)
+    put "Update SuppliedProduct" do
+      consumes "application/json"
 
-      get enterprise_supplied_product_path(
-        other_variant.id, enterprise_id: enterprise.id
-      ), headers: auth_header(user.uid)
+      parameter name: :supplied_product, in: :body, schema: {}
 
-      expect(response).to have_http_status :not_found
-    end
-  end
+      let(:id) { variant.id }
+      let(:supplied_product) { ExampleJson.read("patch_supplied_product") }
 
-  describe :update do
-    it "requires authorisation" do
-      put enterprise_supplied_product_path(
-        variant.id, enterprise_id: enterprise.id
-      ), headers: {}
+      response "401", "unauthorized" do
+        before { login_as nil }
 
-      expect(response).to have_http_status :unauthorized
-    end
+        run_test!
+      end
 
-    it "updates a variant's attributes" do
-      params = { enterprise_id: enterprise.id, id: variant.id }
-      request_body = DfcProvider::Engine.root.join("spec/support/patch_supplied_product.json").read
-
-      expect {
-        put(
-          enterprise_supplied_product_path(params),
-          params: request_body,
-          headers: auth_header(user.uid)
-        )
-        expect(response).to have_http_status :success
-        variant.reload
-      }.to change { variant.description }.to("DFC-Pesto updated")
-        .and change { variant.unit_value }.to(17)
+      response "204", "success" do
+        it "updates a variant" do |example|
+          expect {
+            submit_request(example.metadata)
+            variant.reload
+          }.to change { variant.description }.to("DFC-Pesto updated")
+            .and change { variant.unit_value }.to(17)
+        end
+      end
     end
   end
 end

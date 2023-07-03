@@ -1,115 +1,128 @@
 # frozen_string_literal: true
 
+require "swagger_helper"
 require DfcProvider::Engine.root.join("spec/spec_helper")
 
-describe "CatalogItems", type: :request do
-  let(:user) { create(:oidc_user) }
-  let(:enterprise) { create(:distributor_enterprise, owner: user) }
-  let(:product) { create(:simple_product, supplier: enterprise ) }
-  let(:variant) { product.variants.first }
+describe "CatalogItems", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml",
+                         rswag_autodoc: true do
+  let(:user) { create(:oidc_user, id: 12_345) }
+  let(:enterprise) { create(:distributor_enterprise, id: 10_000, owner: user) }
+  let(:product) {
+    create(
+      :base_product,
+      supplier: enterprise, name: "Apple", description: "Red",
+      variants: [variant],
+    )
+  }
+  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, sku: "AR") }
 
-  describe :index do
-    it "returns not_found without enterprise" do
-      items_path = enterprise_catalog_items_path(enterprise_id: "default")
+  before { login_as user }
 
-      get items_path, headers: auth_header(user.uid)
+  path "/api/dfc-v1.7/enterprises/{enterprise_id}/catalog_items" do
+    parameter name: :enterprise_id, in: :path, type: :string
 
-      expect(response).to have_http_status :not_found
-    end
+    get "List CatalogItems" do
+      produces "application/json"
 
-    context "with existing variant" do
-      before { variant }
-      it "lists catalog items with offers of default enterprise" do
-        items_path = enterprise_catalog_items_path(enterprise_id: "default")
+      response "404", "not found" do
+        context "without enterprises" do
+          let(:enterprise_id) { "default" }
 
-        get items_path, headers: auth_header(user.uid)
+          run_test!
+        end
 
-        expect(response).to have_http_status :ok
-        expect(response.body).to include variant.name
-        expect(response.body).to include variant.sku
-        expect(response.body).to include "offers/#{variant.id}"
+        context "with unrelated enterprise" do
+          let(:enterprise_id) { create(:enterprise).id }
+
+          run_test!
+        end
       end
 
-      it "lists catalog items with offers of requested enterprise" do
-        items_path = enterprise_catalog_items_path(enterprise_id: enterprise.id)
+      response "200", "success" do
+        before { product }
 
-        get items_path, headers: auth_header(user.uid)
+        context "with default enterprise id" do
+          let(:enterprise_id) { "default" }
 
-        expect(response).to have_http_status :ok
-        expect(response.body).to include variant.name
-        expect(response.body).to include variant.sku
-        expect(response.body).to include "offers/#{variant.id}"
+          run_test! do
+            expect(response.body).to include "Apple"
+            expect(response.body).to include "AR"
+            expect(response.body).to include "offers/10001"
+          end
+        end
+
+        context "with given enterprise id" do
+          let(:enterprise_id) { 10_000 }
+
+          run_test! do
+            expect(response.body).to include "Apple"
+            expect(response.body).to include "AR"
+            expect(response.body).to include "offers/10001"
+          end
+        end
       end
 
-      it "returns not_found for unrelated enterprises" do
-        other_enterprise = create(:enterprise)
-        items_path = enterprise_catalog_items_path(enterprise_id: other_enterprise.id)
+      response "401", "unauthorized" do
+        let(:enterprise_id) { "default" }
 
-        get items_path, headers: auth_header(user.uid)
+        before { login_as nil }
 
-        expect(response).to have_http_status :not_found
+        run_test!
       end
-
-      it "returns unauthorized for unauthenticated users" do
-        items_path = enterprise_catalog_items_path(enterprise_id: "default")
-
-        get items_path, headers: {}
-
-        expect(response).to have_http_status :unauthorized
-      end
-
-      it "recognises app user sessions as logins" do
-        items_path = enterprise_catalog_items_path(enterprise_id: "default")
-        login_as user
-
-        get items_path, headers: {}
-
-        expect(response).to have_http_status :ok
-      end
-    end
-  end
-
-  describe :show do
-    it "returns a catalog item with offer" do
-      item_path = enterprise_catalog_item_path(
-        variant,
-        enterprise_id: enterprise.id
-      )
-
-      get item_path, headers: auth_header(user.uid)
-
-      expect(response).to have_http_status :ok
-      expect(response.body).to include "dfc-b:CatalogItem"
-      expect(response.body).to include "offers/#{variant.id}"
-    end
-
-    it "returns not_found for unrelated variant" do
-      item_path = enterprise_catalog_item_path(
-        create(:variant),
-        enterprise_id: enterprise.id
-      )
-
-      get item_path, headers: auth_header(user.uid)
-
-      expect(response).to have_http_status :not_found
     end
   end
 
-  describe :update do
-    it "updates a variant's attributes" do
-      params = { enterprise_id: enterprise.id, id: variant.id }
-      request_body = DfcProvider::Engine.root.join("spec/support/patch_catalog_item.json").read
+  path "/api/dfc-v1.7/enterprises/{enterprise_id}/catalog_items/{id}" do
+    parameter name: :enterprise_id, in: :path, type: :string
+    parameter name: :id, in: :path, type: :string
 
-      expect {
-        put(
-          enterprise_catalog_item_path(params),
-          params: request_body,
-          headers: auth_header(user.uid)
-        )
-        expect(response).to have_http_status :success
-        variant.reload
-      }.to change { variant.on_hand }.to(3)
-        .and change { variant.sku }.to("new-sku")
+    get "Show CatalogItem" do
+      produces "application/json"
+
+      before { product }
+
+      response "200", "success" do
+        let(:enterprise_id) { 10_000 }
+        let(:id) { 10_001 }
+
+        run_test! do
+          expect(response.body).to include "dfc-b:CatalogItem"
+          expect(response.body).to include "offers/10001"
+        end
+      end
+
+      response "404", "not found" do
+        let(:enterprise_id) { 10_000 }
+        let(:id) { create(:variant).id }
+
+        run_test!
+      end
+    end
+
+    put "Update CatalogItem" do
+      consumes "application/json"
+
+      parameter name: :catalog_item, in: :body, schema: {
+        example: ExampleJson.read("patch_catalog_item")
+      }
+
+      before { product }
+
+      response "204", "no content" do
+        let(:enterprise_id) { 10_000 }
+        let(:id) { 10_001 }
+        let(:catalog_item) do |example|
+          example.metadata[:operation][:parameters].first[:schema][:example]
+        end
+
+        it "updates a variant" do |example|
+          expect {
+            submit_request(example.metadata)
+            variant.reload
+          }.to change { variant.on_hand }.to(3)
+            .and change { variant.sku }.to("new-sku")
+        end
+      end
     end
   end
 end

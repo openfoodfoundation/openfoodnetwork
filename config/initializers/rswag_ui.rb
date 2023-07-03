@@ -10,6 +10,7 @@ Rswag::Ui.configure do |config|
   # correspond to the relative paths for those endpoints.
 
   config.swagger_endpoint '/api-docs/v1/swagger.yaml', 'API V1 Docs'
+  config.swagger_endpoint '/api-docs/dfc-v1.7/swagger.yaml', 'OFN DFC API Docs'
 
   # Add Basic Auth in case your API is private
   # config.basic_auth_enabled = true
