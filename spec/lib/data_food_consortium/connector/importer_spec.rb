@@ -130,7 +130,7 @@ describe DataFoodConsortium::Connector::Importer, vcr: true do
     expect(result.totalTheoreticalStock).to eq 3
   end
 
-  xit "imports an object with DFC v1.8 context" do
+  it "imports an object with DFC v1.8 context" do
     result = connector.import(product_data_with_context_v1_8)
 
     expect(result.class).to eq DataFoodConsortium::Connector::SuppliedProduct
