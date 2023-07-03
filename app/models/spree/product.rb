@@ -76,7 +76,7 @@ module Spree
 
     # Transient attributes used temporarily when creating a new product,
     # these values are persisted on the product's variant
-    attr_accessor :price, :display_as, :unit_value, :unit_description
+    attr_accessor :price, :display_as, :unit_value, :unit_description, :tax_category_id
 
     before_save :add_primary_taxon_to_taxons
 
@@ -309,6 +309,7 @@ module Spree
       variant.display_as = display_as
       variant.unit_value = unit_value
       variant.unit_description = unit_description
+      variant.tax_category_id = tax_category_id
       variants << variant
     end
 
