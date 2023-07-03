@@ -110,7 +110,7 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals do
     end
 
     it "has a variant row when product belongs to a tax category" do
-      product_tax_category_name = order.line_items.first.variant.product.tax_category.name
+      product_tax_category_name = order.line_items.first.variant.tax_category.name
 
       supplier_name_field = report_table.first[0]
       supplier_vat_status_field = report_table.first[-2]
@@ -139,7 +139,7 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals do
     end
 
     it "has a variant row when product belongs to a tax category" do
-      product_tax_category_name = order.line_items.first.variant.product.tax_category.name
+      product_tax_category_name = order.line_items.first.variant.tax_category.name
 
       supplier_name_field = report_table.first[0]
       supplier_vat_status_field = report_table.first[-2]

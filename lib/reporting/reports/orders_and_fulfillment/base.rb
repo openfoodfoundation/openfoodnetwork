@@ -61,7 +61,7 @@ module Reporting
         end
 
         def product_tax_category
-          proc { |line_items| line_items.first.variant.product.tax_category&.name }
+          proc { |line_items| line_items.first.variant.tax_category&.name }
         end
 
         def hub_name

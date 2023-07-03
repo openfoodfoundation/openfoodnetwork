@@ -39,7 +39,7 @@ module Reporting
         private
 
         def gst(variant)
-          tax_category = variant.product.tax_category
+          tax_category = variant.tax_category
           if tax_category && tax_category.tax_rates.present?
             tax_rate = tax_category.tax_rates.first
             line_item = mock_line_item(variant)

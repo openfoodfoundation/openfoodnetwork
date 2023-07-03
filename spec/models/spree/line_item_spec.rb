@@ -51,7 +51,7 @@ module Spree
       it "copies over a variant's tax category" do
         line_item.tax_category = nil
         line_item.copy_tax_category
-        expect(line_item.tax_category).to eq line_item.variant.product.tax_category
+        expect(line_item.tax_category).to eq line_item.variant.tax_category
       end
     end
 
