@@ -3,7 +3,9 @@
     .sixteen.columns
       = render partial: 'filters', locals: { search_term: search_term,
                                               producer_id: producer_id,
-                                              producer_options: producer_options }
+                                              producer_options: producer_options,
+                                              category_options: category_options,
+                                              category_id: category_id }
   - if products.any?
     .container
       .sixteen.columns
