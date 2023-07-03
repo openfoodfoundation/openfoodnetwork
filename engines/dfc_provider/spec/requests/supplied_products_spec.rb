@@ -63,6 +63,11 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
 
           run_test!
         end
+
+        describe "with empty request body" do
+          let(:supplied_product) { nil }
+          run_test!
+        end
       end
 
       response "200", "success" do

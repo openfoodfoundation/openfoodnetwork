@@ -12,7 +12,10 @@ module DfcProvider
     end
 
     def create
-      supplied_product = import.first
+      supplied_product = import&.first
+
+      return head :bad_request unless supplied_product
+
       product = SuppliedProductBuilder.import(supplied_product)
       product.supplier = current_enterprise
       product.save!
