@@ -6,9 +6,7 @@ FactoryBot.define do
     amount { 10 }
   end
 
-  factory :voucher_percentage, class: Voucher do
-    enterprise { build(:distributor_enterprise) }
-    voucher_type { Voucher::PERCENTAGE_RATE }
-    amount { rand(1..100) }
+  factory :voucher_flat_rate, parent: :voucher, class: Vouchers::FlatRate do
+    amount { 15 }
   end
 end
