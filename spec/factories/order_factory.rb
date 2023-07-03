@@ -192,12 +192,13 @@ FactoryBot.define do
 
     after(:create) do |order, proxy|
       order.distributor.update_attribute(:charges_sales_tax, true)
-      product = FactoryBot.create(:taxed_product, zone: proxy.zone,
-                                                  price: proxy.product_price,
-                                                  tax_rate_amount: proxy.tax_rate_amount,
-                                                  tax_rate_name: proxy.tax_rate_name,
-                                                  included_in_price: proxy.included_in_price)
-      FactoryBot.create(:line_item, order: order, product: product, price: product.price)
+      product = create(:taxed_product, zone: proxy.zone,
+                                       price: proxy.product_price,
+                                       tax_rate_amount: proxy.tax_rate_amount,
+                                       tax_rate_name: proxy.tax_rate_name,
+                                       included_in_price: proxy.included_in_price)
+
+      create(:line_item, order: order, variant: product.variants.first, price: product.price)
       order.reload
     end
   end
