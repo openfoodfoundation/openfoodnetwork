@@ -30,7 +30,11 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
       # supply it. I couldn't do it with rswag when requiring it.
       parameter name: :supplied_product, in: :body, required: false, schema: {
         example: {
-          '@context': "http://static.datafoodconsortium.org/ontologies/context.json",
+          '@context': {
+            'dfc-b': "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#",
+            'dfc-m': "http://static.datafoodconsortium.org/data/measures.rdf#",
+            'dfc-pt': "http://static.datafoodconsortium.org/data/productTypes.rdf#",
+          },
           '@id': "http://test.host/api/dfc-v1.7/enterprises/6201/supplied_products/0",
           '@type': "dfc-b:SuppliedProduct",
           'dfc-b:name': "Apple",
