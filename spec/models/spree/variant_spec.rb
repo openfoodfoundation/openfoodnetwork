@@ -22,6 +22,24 @@ describe Spree::Variant do
       variant.unit_value = 0
       expect(variant).to be_invalid
     end
+
+    describe "tax category" do
+      context "when a tax category is required" do
+        it "is invalid when a tax category is not provided" do
+          with_products_require_tax_category(true) do
+            expect(build_stubbed(:variant, tax_category_id: nil)).not_to be_valid
+          end
+        end
+      end
+
+      context "when a tax category is not required" do
+        it "is valid when a tax category is not provided" do
+          with_products_require_tax_category(false) do
+            expect(build_stubbed(:variant, tax_category_id: nil)).to be_valid
+          end
+        end
+      end
+    end
   end
 
   context "price parsing" do
