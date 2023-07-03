@@ -56,12 +56,9 @@ describe "Sales Tax Totals By Producer" do
     distributor.shipping_methods << shipping_method
     distributor.payment_methods << payment_method
 
-    supplier.update!({ name: 'Supplier', charges_sales_tax: true })
-
-    product.update!({
-                      tax_category_id: tax_category.id,
-                      supplier_id: supplier.id
-                    })
+    supplier.update!(name: 'Supplier', charges_sales_tax: true)
+    product.update!(supplier_id: supplier.id)
+    variant.update!(tax_category_id: tax_category.id)
   end
 
   context 'added tax' do

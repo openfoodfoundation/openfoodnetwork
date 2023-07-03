@@ -16,7 +16,7 @@ describe ProducerMailer, type: :mailer do
   let(:d1) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:d2) { create(:distributor_enterprise) }
   let(:p1) {
-    create(:product, name: "Zebra", price: 12.34, supplier: s1, tax_category: tax_category)
+    create(:product, name: "Zebra", price: 12.34, supplier: s1, tax_category_id: tax_category.id)
   }
   let(:p2) { create(:product, name: "Aardvark", price: 23.45, supplier: s2) }
   let(:p3) { create(:product, name: "Banana", price: 34.56, supplier: s1) }
