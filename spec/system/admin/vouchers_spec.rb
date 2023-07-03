@@ -50,9 +50,9 @@ describe '
     context "with a flat rate voucher" do
       it 'creates a voucher' do
         # And I fill in the fields for a new voucher click save
-        fill_in 'voucher_code', with: voucher_code
-        select "Flat", from: "voucher_voucher_type"
-        fill_in 'voucher_amount', with: amount
+        fill_in 'vouchers_flat_rate_code', with: voucher_code
+        select "Flat", from: "vouchers_flat_rate_voucher_type"
+        fill_in 'vouchers_flat_rate_amount', with: amount
         click_button 'Save'
 
         # Then I should get redirect to the entreprise voucher tab and see the created voucher
@@ -64,9 +64,9 @@ describe '
     context "with a percentage rate voucher" do
       it 'creates a voucher' do
         # And I fill in the fields for a new voucher click save
-        fill_in 'voucher_code', with: voucher_code
-        select "Percentage (%)", from:  "voucher_voucher_type"
-        fill_in 'voucher_amount', with: amount
+        fill_in 'vouchers_flat_rate_code', with: voucher_code
+        select "Percentage (%)", from: "vouchers_flat_rate_voucher_type"
+        fill_in 'vouchers_flat_rate_amount', with: amount
         click_button 'Save'
 
         # Then I should get redirect to the entreprise voucher tab and see the created voucher

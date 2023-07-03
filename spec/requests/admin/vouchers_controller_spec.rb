@@ -26,7 +26,7 @@ describe Admin::VouchersController, type: :request do
 
     let(:params) do
       {
-        voucher: {
+        vouchers_flat_rate: {
           code: code,
           amount: amount,
           voucher_type: type
@@ -35,15 +35,41 @@ describe Admin::VouchersController, type: :request do
     end
     let(:code) { "new_code" }
     let(:amount) { 15 }
-    let(:type) { "percentage" }
+    let(:type) { "Vouchers::PercentageRate" }
 
-    it "creates a new voucher" do
-      expect { create_voucher }.to change(Voucher, :count).by(1)
+    context "with a flat rate voucher" do
+      let(:type) { "Vouchers::FlatRate" }
 
-      voucher = Voucher.last
-      expect(voucher.code).to eq(code)
-      expect(voucher.amount).to eq(amount)
-      expect(voucher.voucher_type).to eq(type)
+      it "creates a new voucher" do
+        expect { create_voucher }.to change(Vouchers::FlatRate, :count).by(1)
+
+        voucher = Vouchers::FlatRate.last
+        expect(voucher.code).to eq(code)
+        expect(voucher.amount).to eq(amount)
+      end
+    end
+
+    context "with a percentage rate voucher" do
+      let(:type) { "Vouchers::PercentageRate" }
+
+      it "creates a new voucher" do
+        expect { create_voucher }.to change(Vouchers::PercentageRate, :count).by(1)
+
+        voucher = Vouchers::PercentageRate.last
+        expect(voucher.code).to eq(code)
+        expect(voucher.amount).to eq(amount)
+      end
+    end
+
+    context "with a wrong type" do
+      let(:type) { "Random" }
+
+      it "render the new page with an error" do
+        create_voucher
+
+        expect(response).to render_template("admin/vouchers/new")
+        expect(flash[:error]).to eq("Type is invalid")
+      end
     end
 
     it "redirects to admin enterprise setting page, voucher panel" do
