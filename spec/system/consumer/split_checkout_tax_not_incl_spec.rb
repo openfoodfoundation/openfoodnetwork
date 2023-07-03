@@ -160,7 +160,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
         describe "moving between summary to summary via edit cart" do
           let!(:voucher) do
-            create(:voucher_percentage, code: 'good_code', enterprise: distributor, amount: 20)
+            create(:voucher_percentage_rate, code: 'good_code', enterprise: distributor, amount: 20)
           end
 
           it "recalculate the tax component properly" do
@@ -171,7 +171,6 @@ describe "As a consumer, I want to see adjustment breakdown" do
             fill_in "Enter voucher code", with: voucher.code
             click_button("Apply")
 
-            #pause
             proceed_to_summary
             assert_db_voucher_adjustment(-2.00, -0.26)
 
@@ -200,7 +199,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
             proceed_to_payment
 
             # Check voucher is still there
-            expect(page).to have_content("20.0 % Voucher")
+            expect(page).to have_content("20.00% Voucher")
 
             # Go to summary
             proceed_to_summary
