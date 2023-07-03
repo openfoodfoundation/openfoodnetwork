@@ -11,6 +11,12 @@ describe 'As an admin, I can see the new product page' do
   let!(:products) { create_list(:simple_product, 70) }
   # create a product with a name that can be searched
   let!(:product_by_name) { create(:simple_product, name: "searchable product") }
+  # create a product with a supplier that can be searched
+  let!(:product_by_supplier) {
+    create(:simple_product,
+           supplier: create(:enterprise, name: "Producer 1"))
+  }
+
   before do
     # activate feature toggle admin_style_v3 to use new admin interface
     Flipper.enable(:admin_style_v3)
@@ -80,6 +86,17 @@ describe 'As an admin, I can see the new product page' do
       end
     end
 
+    context "search by producer" do
+      it "has a producer select" do
+        expect(page).to have_selector "select#producer_id"
+      end
+
+      it "can search for a product" do
+        search_by_producer "Producer 1"
+
+        expect(page).to have_select "producer_id", selected: "Producer 1"
+        expect_page_to_be 1
+        expect_products_count_to_be 1
       end
     end
   end
@@ -94,11 +111,16 @@ describe 'As an admin, I can see the new product page' do
   end
 
   def expect_products_count_to_be(count)
-    expect(page).to have_selector "table.products tbody", count: count
+    expect(page).to have_selector("table.products tbody", count:)
   end
 
   def search_for(term)
     fill_in "search_term", with: term
+    click_button "Search"
+  end
+
+  def search_by_producer(producer)
+    select producer, from: "producer_id"
     click_button "Search"
   end
 end

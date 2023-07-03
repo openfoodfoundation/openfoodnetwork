@@ -775,6 +775,7 @@ en:
             per_page: "%{num} per page"
       filters:
         search_products: Search for products
+        all_producers: All producers
         search: Search
       content:
         no_products_found: No products found

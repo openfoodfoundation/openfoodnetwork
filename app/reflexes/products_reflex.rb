@@ -24,6 +24,7 @@ class ProductsReflex < ApplicationReflex
     @per_page = params[:per_page]
     @page = 1
     @search_term = params[:search_term]
+    @producer_id = params[:producer_id]
 
     fetch_products
     render_products
@@ -35,7 +36,8 @@ class ProductsReflex < ApplicationReflex
     cable_ready.replace(
       selector: "#products-content",
       html: render(partial: "admin/products_v3/content",
-                   locals: { products: @products, pagy: @pagy, search_term: @search_term })
+                   locals: { products: @products, pagy: @pagy, search_term: @search_term,
+                             producer_options: producers, producer_id: @producer_id })
     ).broadcast
 
     cable_ready.replace_state(
@@ -43,6 +45,15 @@ class ProductsReflex < ApplicationReflex
     ).broadcast_later
 
     morph :nothing
+  end
+
+  def producers
+    producers = if current_user.has_spree_role?("admin")
+                  Enterprise.all
+                else
+                  current_user.enterprises
+                end
+    producers.map { |p| [p.name, p.id] }
   end
 
   # copied from ProductsTableComponent
@@ -64,7 +75,9 @@ class ProductsReflex < ApplicationReflex
 
   def ransack_query
     query = { s: "name desc" }
-    query.merge({ name_cont: @search_term }) if @search_term.present?
+    query = query.merge({ supplier_id_in: @producer_id }) if @producer_id.present?
+    query = query.merge({ name_cont: @search_term }) if @search_term.present?
+    query
   end
 
   # Optimise by pre-loading required columns
