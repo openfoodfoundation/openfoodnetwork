@@ -130,8 +130,8 @@
         background-color: $lighter-grey;
         border: 1px solid $lighter-grey;
         border-radius: 4px;
-        height: 34px;
-        line-height: 34px;
+        height: $btn-height;
+        line-height: $btn-height;
 
         &:has(input:focus),
         &:has(input:active) {
@@ -140,8 +140,6 @@
 
         > input {
           background-color: $lighter-grey;
-          height: 32px;
-          line-height: 32px;
         }
 
         &:before {
@@ -158,6 +156,7 @@
     .categories {
       select {
         width: 150px;
+        height: $btn-height;
       }
     }
 
@@ -168,15 +167,6 @@
         position: relative;
         > input {
           padding-left: 30px;
-        }
-        &:before {
-          position: absolute;
-          font-family: FontAwesome;
-          content: "\f002";
-          font-size: 16px;
-          margin-left: 10px;
-          line-height: 32px;
-          color: $teal;
         }
       }
     }
