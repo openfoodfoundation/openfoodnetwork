@@ -1053,8 +1053,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_080504) do
     t.string "unit_presentation"
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.bigint "tax_category_id"
     t.index ["product_id"], name: "index_variants_on_product_id"
     t.index ["sku"], name: "index_spree_variants_on_sku"
+    t.index ["tax_category_id"], name: "index_spree_variants_on_tax_category_id"
     t.check_constraint "unit_value > 0::double precision", name: "positive_unit_value"
   end
 
@@ -1286,6 +1288,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_080504) do
   add_foreign_key "spree_users", "spree_addresses", column: "bill_address_id", name: "spree_users_bill_address_id_fk"
   add_foreign_key "spree_users", "spree_addresses", column: "ship_address_id", name: "spree_users_ship_address_id_fk"
   add_foreign_key "spree_variants", "spree_products", column: "product_id", name: "spree_variants_product_id_fk"
+  add_foreign_key "spree_variants", "spree_tax_categories", column: "tax_category_id"
   add_foreign_key "spree_zone_members", "spree_zones", column: "zone_id", name: "spree_zone_members_zone_id_fk"
   add_foreign_key "subscription_line_items", "spree_variants", column: "variant_id", name: "subscription_line_items_variant_id_fk"
   add_foreign_key "subscription_line_items", "subscriptions", name: "subscription_line_items_subscription_id_fk"
