@@ -100,8 +100,30 @@
 
   #filters {
     gap: 20px;
+    align-items: flex-end;
+
+    .producers,
+    .categories {
+      > .label {
+        margin-left: 3px;
+        margin-bottom: 2px;
+      }
+    }
+
     .query {
-      flex-grow: 2;
+      flex-grow: 1;
+    }
+
+    .producers,
+    .categories {
+      flex-grow: 0;
+    }
+
+    .submit {
+      flex-grow: 0;
+    }
+
+    .query {
       .search-input {
         width: 100%;
         position: relative;
@@ -131,8 +153,15 @@
         }
       }
     }
+
+    .producers,
+    .categories {
+      select {
+        width: 150px;
+      }
+    }
+
     .submit {
-      flex-grow: 1;
       text-align: right;
 
       .search-button {
