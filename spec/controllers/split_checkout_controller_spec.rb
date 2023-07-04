@@ -212,6 +212,26 @@ describe SplitCheckoutController, type: :controller do
         end
       end
 
+      context "with a zero-priced order" do
+        let(:params) do
+          { step: "payment", order: { payments_attributes: [{ amount: 0 }] } }
+        end
+
+        before do
+          order.line_items.first.update(price: 0)
+          order.update_totals_and_states
+        end
+
+        it "allows proceeding to confirmation" do
+          put :update, params: params
+
+          expect(response).to redirect_to checkout_step_path(:summary)
+          expect(order.reload.state).to eq "confirmation"
+          expect(order.payments.count).to eq 1
+          expect(order.payments.first.amount).to eq 0
+        end
+      end
+
       context "with a saved credit card" do
         let!(:saved_card) { create(:stored_credit_card, user: user) }
         let(:checkout_params) do

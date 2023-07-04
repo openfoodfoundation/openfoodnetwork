@@ -50,5 +50,22 @@ module Spree
 
       order.process_payments!
     end
+
+    context "with a zero-priced order" do
+      let!(:zero_order) {
+        create(:order, state: "payment", line_items: [create(:line_item, price: 0)])
+      }
+      let!(:zero_payment) { create(:payment, order: zero_order, amount: 0, state: "checkout") }
+      let(:updater) { OrderManagement::Order::Updater.new(zero_order) }
+
+      it "processes payments successfully" do
+        zero_order.process_payments!
+        updater.update_payment_state
+
+        expect(zero_order.payment_state).to eq "paid"
+        expect(zero_payment.reload.state).to eq "completed"
+        expect(zero_payment.captured_at).to_not be_nil
+      end
+    end
   end
 end
