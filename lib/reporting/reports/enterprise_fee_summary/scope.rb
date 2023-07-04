@@ -236,7 +236,7 @@ module Reporting
               LEFT OUTER JOIN spree_tax_categories AS product_tax_categories
                 ON (
                   enterprise_fees.inherits_tax_category IS TRUE
-                    AND product_tax_categories.id = spree_products.tax_category_id
+                    AND product_tax_categories.id = spree_variants.tax_category_id
                 )
             JOIN_STRING
           )
