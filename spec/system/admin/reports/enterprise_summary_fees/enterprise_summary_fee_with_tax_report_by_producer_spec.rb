@@ -285,7 +285,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         it 'generates the report and displays fees for the respective suppliers' do
           login_as distributor_owner
           visit admin_reports_path
-          click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
+          click_on "Enterprise Fees With Tax Report By Producer"
           expect(page).to have_button("Go")
 
           click_on "Go"
@@ -316,7 +316,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           before do
             login_as distributor_owner
             visit admin_reports_path
-            click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
+            click_on "Enterprise Fees With Tax Report By Producer"
           end
 
           it "should filter by distributor and order cycle" do
@@ -493,7 +493,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           before do
             login_as distributor_owner
             visit admin_reports_path
-            click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
+            click_on "Enterprise Fees With Tax Report By Producer"
           end
 
           it "should filter by distributor and order cycle" do
@@ -734,7 +734,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         # pending("test case (3), see #10797")
         login_as distributor_owner
         visit admin_reports_path
-        click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_producer")
+        click_on "Enterprise Fees With Tax Report By Producer"
         expect(page).to have_button("Go")
 
         click_on "Go"
