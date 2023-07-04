@@ -158,19 +158,30 @@ module Reporting
                   it "returns one row per customer per shipping method" do
                     expect(subject.query_result.size).to eq(2)
                     expect(subject.table_rows.size).to eq(2)
-                    expect(subject.table_rows).to eq([[
-                                                       a.firstname, a.lastname,
-                                                       [a.address1, a.address2, a.city].join(" "),
-                                                       o1.email, a.phone, d.name,
-                                                       [d.address.address1, d.address.address2, d.address.city].join(" "),
-                                                       o1.shipping_method.name
-                                                     ], [
-                                                       a.firstname, a.lastname,
-                                                       [a.address1, a.address2, a.city].join(" "),
-                                                       o2.email, a.phone, d.name,
-                                                       [d.address.address1, d.address.address2, d.address.city].join(" "),
-                                                       sm2.name
-                                                     ]])
+                    expect(subject.table_rows).to eq(
+                      [
+                        [
+                          a.firstname,
+                          a.lastname,
+                          [a.address1, a.address2, a.city].join(" "),
+                          o1.email,
+                          a.phone,
+                          d.name,
+                          [d.address.address1, d.address.address2, d.address.city].join(" "),
+                          o1.shipping_method.name
+                        ],
+                        [
+                          a.firstname,
+                          a.lastname,
+                          [a.address1, a.address2, a.city].join(" "),
+                          o2.email,
+                          a.phone,
+                          d.name,
+                          [d.address.address1, d.address.address2, d.address.city].join(" "),
+                          sm2.name
+                        ]
+                      ]
+                    )
                   end
                 end
 
