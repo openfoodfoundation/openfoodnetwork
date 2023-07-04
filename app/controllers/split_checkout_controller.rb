@@ -50,58 +50,11 @@ class SplitCheckoutController < ::BaseController
   private
 
   def render_error
-    flash.now[:error] ||= I18n.t(
-      'split_checkout.errors.saving_failed',
-      messages: order_error_messages
-    )
+    flash.now[:error] ||= I18n.t('split_checkout.errors.saving_failed')
 
     render status: :unprocessable_entity, cable_ready: cable_car.
       replace("#checkout", partial("split_checkout/checkout")).
       replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
-  end
-
-  def order_error_messages
-    # Remove ship_address.* errors if no shipping method is not selected
-    remove_ship_address_errors if no_ship_address_needed?
-
-    # Reorder errors to make sure the most important ones are shown first
-    # and finally, return the error messages to sentence
-    reorder_errors.map(&:full_message).to_sentence
-  end
-
-  def no_ship_address_needed?
-    @order.errors[:shipping_method].present? || params[:ship_address_same_as_billing] == "1"
-  end
-
-  def remove_ship_address_errors
-    @order.errors.delete("ship_address.firstname")
-    @order.errors.delete("ship_address.address1")
-    @order.errors.delete("ship_address.city")
-    @order.errors.delete("ship_address.phone")
-    @order.errors.delete("ship_address.lastname")
-    @order.errors.delete("ship_address.zipcode")
-  end
-
-  def reorder_errors
-    @order.errors.sort_by do |e|
-      case e.attribute
-      when /email/i then 0
-      when /phone/i then 1
-      when /bill_address/i then 2 + bill_address_error_order(e)
-      else 20
-      end
-    end
-  end
-
-  def bill_address_error_order(error)
-    case error.attribute
-    when /firstname/i then 0
-    when /lastname/i then 1
-    when /address1/i then 2
-    when /city/i then 3
-    when /zipcode/i then 4
-    else 5
-    end
   end
 
   def check_payments_adjustments
