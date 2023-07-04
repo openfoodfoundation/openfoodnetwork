@@ -29,7 +29,6 @@ module Spree
         can :update, Order do |order, token|
           order.user == user || order.token && token == order.token
         end
-        can [:index], :invoice
         can [:index, :read], Product
         can [:index, :read], ProductProperty
         can [:index, :read], Property
@@ -276,7 +275,7 @@ module Spree
       can [:admin, :bulk_management, :managed, :distribution], Spree::Order do
         user.admin? || user.enterprises.any?(&:is_distributor)
       end
-      can [:admin, :create, :show, :poll], :invoice
+      can [:admin, :index, :create, :show, :poll, :generate], :invoice
       can [:admin, :visible], Enterprise
       can [:admin, :index, :create, :update, :destroy], :line_item
       can [:admin, :index, :create], Spree::LineItem
