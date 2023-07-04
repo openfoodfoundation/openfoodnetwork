@@ -372,7 +372,7 @@ module Spree
       end
 
       updater.update_shipment_state
-      updater.before_save_hook
+      updater.shipping_address_from_distributor
       save
 
       deliver_order_confirmation_email
