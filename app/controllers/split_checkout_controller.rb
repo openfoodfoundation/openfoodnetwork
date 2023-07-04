@@ -68,7 +68,7 @@ class SplitCheckoutController < ::BaseController
 
   def confirm_order
     return unless summary_step? && @order.confirmation?
-    return unless validate_summary! && @order.errors.empty?
+    return unless validate_current_step
 
     @order.customer.touch :terms_and_conditions_accepted_at
 
@@ -102,9 +102,11 @@ class SplitCheckoutController < ::BaseController
     @order.update(order_params)
     @order.update_totals_and_states
 
-    validate_current_step!
+    validate_current_step
+  end
 
-    @order.errors.empty?
+  def validate_current_step
+    Checkout::Validation.new(@order, params).call && @order.errors.empty?
   end
 
   def use_shipping_address_from_distributor
@@ -134,31 +136,6 @@ class SplitCheckoutController < ::BaseController
     return if @order.complete?
 
     OrderWorkflow.new(@order).advance_checkout(raw_params.slice(:shipping_method_id))
-  end
-
-  def validate_current_step!
-    step = ([params[:step]] & ["details", "payment", "summary"]).first
-    send("validate_#{step}!")
-  end
-
-  def validate_details!
-    return true if params[:shipping_method_id].present?
-
-    @order.errors.add :shipping_method, I18n.t('split_checkout.errors.select_a_shipping_method')
-  end
-
-  def validate_payment!
-    return true if params.dig(:order, :payments_attributes, 0, :payment_method_id).present?
-    return true if @order.zero_priced_order?
-
-    @order.errors.add :payment_method, I18n.t('split_checkout.errors.select_a_payment_method')
-  end
-
-  def validate_summary!
-    return true if params[:accept_terms]
-    return true unless TermsOfService.required?(@order.distributor)
-
-    @order.errors.add(:terms_and_conditions, t("split_checkout.errors.terms_not_accepted"))
   end
 
   def order_params
