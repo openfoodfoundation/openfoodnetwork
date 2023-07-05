@@ -131,6 +131,14 @@ describe 'As an admin, I can see the new product page' do
         expect_products_count_to_be 15
       end
     end
+
+    context "no results" do
+      it "shows a message when there are no results" do
+        search_for "no results"
+        expect(page).to have_content "No products found for your search criteria"
+        expect(page).to have_link "Clear search"
+      end
+    end
   end
 
   def expect_page_to_be(page)
