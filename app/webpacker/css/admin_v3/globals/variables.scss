@@ -6,36 +6,41 @@
 //--------------------------------------------------------------
 $base-font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 
-// Colors
+// Styles
 //--------------------------------------------------------------
 
 // Body base colors
-$color-body-bg:                  $color-1 !default;
-$color-body-text:                $color-8 !default;
-$color-headers:                  $color-4 !default;
-$color-link:                     $color-3 !default;
+$color-body-bg:                  $white !default;
+$color-body-text:                $near-black !default;
+$color-headers:                  $dark-blue !default;
+$color-link:                     $teal !default;
 $color-link-hover:               lighten($color-link, 2) !default;
-$color-link-active:              $color-2 !default;
-$color-link-focus:               $color-2 !default;
-$color-link-visited:             $color-3 !default;
-$color-border:                   $color-7 !default;
+$color-link-active:              $green !default;
+$color-link-focus:               $green !default;
+$color-link-visited:             $teal !default;
+$color-border:                   $light-grey !default;
 
 // Basic flash colors
-$color-success:                  $color-2 !default;
-$color-notice:                   $color-6 !default;
-$color-error:                    $color-5 !default;
+$color-success:                  $green !default;
+$color-notice:                   $yellow !default;
+$color-error:                    $red !default;
 
-// Table colors
-$color-tbl-cell-bg:              $color-1 !default;
+// Table styles
+$color-tbl-bg:                   $light-grey !default;
+$color-tbl-cell-bg:              $white !default;
+$color-tbl-cell-shadow:          rgb(0, 0, 0, 0.15) !default;
 $color-tbl-thead-txt:            $color-headers !default;
-$color-tbl-thead-bg:             $color-7 !default;
+$color-tbl-thead-bg:             $light-grey !default;
+$padding-tbl-cell:               12px 12px;
+$padding-tbl-cell-condensed:     10px 12px;
+$padding-tbl-cell-relaxed:       16px 12px;
 
 // Button colors
-$color-btn-bg:                   $color-3 !default;
-$color-btn-text:                 $color-1 !default;
+$color-btn-bg:                   $teal !default;
+$color-btn-text:                 $white !default;
 $color-btn-shadow:               0px 1px 0px rgba(0, 0, 0, 0.05), 0px 2px 2px rgba(0, 0, 0, 0.07) !default;
 $color-btn-hover-bg:             lighten($color-btn-bg, 2) !default;
-$color-btn-hover-text:           $color-1 !default;
+$color-btn-hover-text:           $white !default;
 
 // Actions colors
 $color-action-edit-bg:           very-light($color-success, 5  ) !default;
@@ -56,65 +61,65 @@ $color-action-mail-bg:           very-light($color-success, 5  ) !default;
 $color-action-mail-brd:          very-light($color-success, 20 ) !default;
 
 // Select2 select field colors
-$color-sel-bg:                   $color-3 !default;
-$color-sel-text:                 $color-1 !default;
+$color-sel-bg:                   $teal !default;
+$color-sel-text:                 $white !default;
 $color-sel-hover-bg:             lighten($color-sel-bg, 2) !default;
-$color-sel-hover-text:           $color-1 !default;
+$color-sel-hover-text:           $white !default;
 
 // Text inputs colors
 $color-txt-brd:                  $color-border !default;
-$color-txt-text:                 $color-8 !default;
-$color-txt-hover-brd:            $color-3 !default;
+$color-txt-text:                 $near-black !default;
+$color-txt-hover-brd:            $teal !default;
 
 // States label colors
 $color-ste-complete-bg:          $color-success !default;
-$color-ste-complete-text:        $color-1 !default;
+$color-ste-complete-text:        $white !default;
 $color-ste-completed-bg:         $color-success !default;
-$color-ste-completed-text:       $color-1 !default;
+$color-ste-completed-text:       $white !default;
 $color-ste-sold-bg:              $color-success !default;
-$color-ste-sold-text:            $color-1 !default;
+$color-ste-sold-text:            $white !default;
 $color-ste-pending-bg:           $color-notice !default;
-$color-ste-pending-text:         $color-1 !default;
+$color-ste-pending-text:         $white !default;
 $color-ste-requires_authorization-bg: $color-notice !default;
-$color-ste-requires_authorization-text: $color-1 !default;
+$color-ste-requires_authorization-text: $white !default;
 $color-ste-awaiting_return-bg:   $color-notice !default;
-$color-ste-awaiting_return-text: $color-1 !default;
+$color-ste-awaiting_return-text: $white !default;
 $color-ste-returned-bg:          $color-notice !default;
-$color-ste-returned-text:        $color-1 !default;
+$color-ste-returned-text:        $white !default;
 $color-ste-credit_owed-bg:       $color-notice !default;
-$color-ste-credit_owed-text:     $color-1 !default;
+$color-ste-credit_owed-text:     $white !default;
 $color-ste-paid-bg:              $color-success !default;
-$color-ste-paid-text:            $color-1 !default;
+$color-ste-paid-text:            $white !default;
 $color-ste-shipped-bg:           $color-success !default;
-$color-ste-shipped-text:         $color-1 !default;
+$color-ste-shipped-text:         $white !default;
 $color-ste-balance_due-bg:       $color-notice !default;
-$color-ste-balance_due-text:     $color-1 !default;
+$color-ste-balance_due-text:     $white !default;
 $color-ste-backorder-bg:         $color-notice !default;
-$color-ste-backorder-text:       $color-1 !default;
+$color-ste-backorder-text:       $white !default;
 $color-ste-none-bg:              $color-error !default;
-$color-ste-none-text:            $color-1 !default;
+$color-ste-none-text:            $white !default;
 $color-ste-ready-bg:             $color-success !default;
-$color-ste-ready-text:           $color-1 !default;
+$color-ste-ready-text:           $white !default;
 $color-ste-void-bg:              $color-error !default;
-$color-ste-void-text:            $color-1 !default;
+$color-ste-void-text:            $white !default;
 $color-ste-canceled-bg:          $color-error !default;
-$color-ste-canceled-text:        $color-1 !default;
+$color-ste-canceled-text:        $white !default;
 $color-ste-address-bg:           $color-error !default;
-$color-ste-address-text:         $color-1 !default;
+$color-ste-address-text:         $white !default;
 $color-ste-checkout-bg:          $color-notice !default;
-$color-ste-checkout-text:        $color-1 !default;
+$color-ste-checkout-text:        $white !default;
 $color-ste-cart-bg:              $color-notice !default;
-$color-ste-cart-text:            $color-1 !default;
+$color-ste-cart-text:            $white !default;
 $color-ste-payment-bg:           $color-error !default;
-$color-ste-payment-text:         $color-1 !default;
+$color-ste-payment-text:         $white !default;
 $color-ste-delivery-bg:          $color-success !default;
-$color-ste-delivery-text:        $color-1 !default;
+$color-ste-delivery-text:        $white !default;
 $color-ste-confirmation-bg:      $color-error !default;
-$color-ste-confirmation-text:    $color-1 !default;
+$color-ste-confirmation-text:    $white !default;
 $color-ste-active-bg:            $color-success !default;
-$color-ste-active-text:          $color-1 !default;
+$color-ste-active-text:          $white !default;
 $color-ste-inactive-bg:          $color-notice !default;
-$color-ste-inactive-text:        $color-1 !default;
+$color-ste-inactive-text:        $white !default;
 
 // Available states
 $states:                      completed,                 complete,                 sold,                 pending,                 awaiting_return,                 returned,                 credit_owed,                 paid,                 shipped,                 balance_due,                 backorder,                 checkout,                 cart,                 address,                 delivery,                 payment,                 confirmation,                 canceled,                 ready,                 void,                 requires_authorization,                 active,                 inactive  !default;

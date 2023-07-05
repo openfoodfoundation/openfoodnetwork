@@ -19,6 +19,10 @@ table {
       border-left: 4px solid $color-border;
     }
 
+    &.header {
+      font-weight: $font-weight-bold;
+    }
+
     a {
       border-bottom: 1px dotted lighten($color-link, 10);
 
@@ -44,7 +48,7 @@ table {
 
       [class*="icon-"].no-text {
         font-size: 120%;
-        background-color: very-light($color-3);
+        background-color: very-light($teal);
         border: 1px solid $color-border;
         border-radius: 15px;
         width: 29px;
@@ -74,29 +78,29 @@ table {
         padding-left: 0px;
 
         &:hover {
-          background-color: $color-3;
-          color: $color-1;
+          background-color: $teal;
+          color: $white;
         }
       }
       .icon-trash:hover,
       .icon-void:hover {
         background-color: $color-error;
-        color: $color-1;
+        color: $white;
       }
       .icon-cancel:hover {
         background-color: $color-notice;
-        color: $color-1;
+        color: $white;
       }
       .icon-edit:hover,
       .icon-capture:hover,
       .icon-ok:hover,
       .icon-plus:hover {
         background-color: $color-success;
-        color: $color-1;
+        color: $white;
       }
       .icon-copy:hover {
         background-color: $color-notice;
-        color: $color-1;
+        color: $white;
       }
     }
 
@@ -132,7 +136,6 @@ table {
       border-bottom: none;
       background-color: $color-tbl-thead-bg;
       color: $color-tbl-thead-txt;
-      font-size: 13px;
       font-weight: $font-weight-bold;
     }
   }
@@ -144,7 +147,7 @@ table {
       }
 
       &:hover td {
-        background-color: very-light($color-3, 5);
+        background-color: very-light($teal, 5);
 
         img {
           border: 1px solid $color-border;
@@ -157,7 +160,7 @@ table {
       }
 
       &.ui-sortable-placeholder td {
-        border: 1px solid $color-2 !important;
+        border: 1px solid $green !important;
         visibility: visible !important;
 
         &.actions {
@@ -165,7 +168,7 @@ table {
           border-right: none !important;
           border-top: none !important;
           border-bottom: none !important;
-          border-left: 1px solid $color-2 !important;
+          border-left: 1px solid $green !important;
         }
       }
 
@@ -173,7 +176,7 @@ table {
         width: 100%;
 
         td {
-          background-color: lighten($color-3, 33);
+          background-color: lighten($teal, 33);
           border-bottom: 1px solid $color-border;
 
           &.actions {
@@ -189,15 +192,15 @@ table {
 
     &.grand-total {
       td {
-        border-color: $color-2 !important;
+        border-color: $green !important;
         text-transform: uppercase;
         font-size: 110%;
         font-weight: 600;
-        background-color: lighten($color-2, 50);
+        background-color: lighten($green, 50);
       }
       .total {
-        background-color: $color-2;
-        color: $color-1;
+        background-color: $green;
+        color: $white;
       }
     }
   }

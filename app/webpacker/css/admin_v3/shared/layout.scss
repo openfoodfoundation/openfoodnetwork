@@ -12,19 +12,19 @@
     margin-top: 25px;
 
     h1 {
-      color: $color-8;
+      color: $near-black;
     }
 
     .ofn-drop-down {
       border: 0;
       background-color: $spree-blue;
-      color: $color-1;
+      color: $white;
       float: none;
       margin-left: 3px;
       &:hover,
       &.expanded {
         border: 0;
-        color: $color-1;
+        color: $white;
       }
     }
 
@@ -97,7 +97,7 @@
 // Header
 //---------------------------------------------------
 #header {
-  background-color: $color-1;
+  background-color: $white;
   padding: 5px 0;
 }
 
@@ -107,14 +107,14 @@
 
 .page-title {
   i {
-    color: $color-2;
+    color: $green;
   }
 }
 
 // Content
 //---------------------------------------------------
 #content {
-  background-color: $color-1;
+  background-color: $white;
   position: relative;
   z-index: 0;
   padding: 0;

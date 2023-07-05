@@ -3,7 +3,7 @@
   %head
     = render :partial => 'spree/admin/shared/head'
 
-  %body.admin{ "data-turbo": "false" }
+  %body.admin{ "data-turbo": "false", class: yield(:body_class) }
     - if content_for?(:main_ng_app_name)
       - if content_for?(:main_ng_ctrl_name)
         %div{ "ng-app" => yield(:main_ng_app_name).strip.html_safe, "ng-controller" => yield(:main_ng_ctrl_name).strip.html_safe }

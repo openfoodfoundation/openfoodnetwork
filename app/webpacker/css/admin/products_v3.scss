@@ -1,0 +1,81 @@
+// Customisations for the new Bulk Edit Products page only
+.products_v3_page {
+  #content .container {
+    // Allow table to extend to full width of available screen space
+    // TODO: move this to a generic rule, eg body.full-width{}. Then it can be included on any page.
+    //       or even better, create a switch that allows you to yield the page content without the surrounding content class. then you still have control to add the .content div where needed.
+    max-width: none;
+  }
+
+  // Hopefully these rules will be moved to component(s).
+  table.products {
+    table-layout: fixed; // Column widths are based solely on col definitions (not content). This allows more efficient rendering.
+
+    background-color: $color-tbl-bg;
+    padding: 4px;
+    border-collapse: separate; // This is needed for the outer padding. Also should be helpful to give more flexibility of borders between rows.
+
+    th,
+    td {
+      padding: $padding-tbl-cell;
+      border: none;
+    }
+
+    th {
+      // Clip long content in headers, but allow wrapping
+      overflow: hidden;
+      text-overflow: clip; // If colums are so small that headers are clipping, ellipsis are more of a hindrance
+    }
+
+    td {
+      background-color: $color-tbl-cell-bg;
+    }
+
+    // "Relaxed" row groups, containing condensed rows.
+    //
+    // `display:table` enforces strict rules and won't allow border styles on tbody.
+    // So we emulate group styles on the cells themselves.
+    .relaxed {
+      th,
+      td {
+        padding: $padding-tbl-cell-relaxed;
+      }
+
+      td {
+        border-bottom: 2px solid $color-tbl-bg;
+      }
+
+      tr:first-child td {
+        border-top: 4px solid $color-tbl-bg;
+      }
+      tr:last-child td {
+        border-bottom: 1px solid $color-tbl-cell-shadow;
+      }
+    }
+
+    // "Condensed" rows
+    .condensed {
+      td,
+      th {
+        padding: $padding-tbl-cell-condensed;
+      }
+    }
+  }
+
+  #no-products {
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: $h3-size;
+    gap: 20px;
+
+    #no-products-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+  }
+}
