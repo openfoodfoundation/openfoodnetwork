@@ -222,7 +222,7 @@ module Spree
     # There are items present in the order, but either the items have zero price,
     # or the order's total has been modified (maybe discounted) to zero.
     def zero_priced_order?
-      dup.valid? && line_items.count.positive? && total.zero?
+      line_items.count.positive? && total.zero?
     end
 
     # Returns the relevant zone (if any) to be used for taxation purposes.
