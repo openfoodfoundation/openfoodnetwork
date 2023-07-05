@@ -59,9 +59,9 @@
           %td.align-left
             .line-clamp-1= variant.product.supplier.name # same as product
           %td.align-left
-            .line-clamp-1= variant.product.taxons.map(&:name).join(', ') # same as product
+            -# empty
           %td.align-left
-            .line-clamp-1= variant.tax_category&.name
+            -# empty
           %td.align-left
-            .line-clamp-1= variant.product.inherits_properties ? 'YES' : 'NO' # same as product
+            -# empty
 
