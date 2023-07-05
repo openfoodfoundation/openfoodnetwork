@@ -36,11 +36,9 @@ module Forms
         enterprise_fees.each do |_, enterprise_amount|
           unless enterprise_amount.nil? || Float(enterprise_amount, exception: false)
             @errors.add(:base, I18n.t(:calculator_preferred_value_error))
-            return false
           end
         end
       end
-      return true
     end
 
     def check_calculators_compatibility_with_taxes
@@ -54,9 +52,7 @@ module Forms
             'activerecord.errors.models.enterprise_fee.inherit_tax_requires_per_item_calculator'
           )
         )
-        return false
       end
-      return true
     end
 
     def enterprise_fee_bulk_params
