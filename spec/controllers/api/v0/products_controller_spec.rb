@@ -45,26 +45,6 @@ describe Api::V0::ProductsController, type: :controller do
              } ).to eq(true)
     end
 
-    context "finds a product by permalink first then by id" do
-      let!(:other_product) {
-        create(:product, permalink: "these-are-not-the-droids-you-are-looking-for")
-      }
-
-      before do
-        product.update_attribute(:permalink, "#{other_product.id}-and-1-ways")
-      end
-
-      specify do
-        api_get :show, id: product.to_param
-
-        expect(json_response["permalink_live"]).to match(/and-1-ways/)
-        product.reload.destroy
-
-        api_get :show, id: other_product.id
-        expect(json_response["permalink_live"]).to match(/droids/)
-      end
-    end
-
     it "cannot see inactive products" do
       api_get :show, id: inactive_product.to_param
 

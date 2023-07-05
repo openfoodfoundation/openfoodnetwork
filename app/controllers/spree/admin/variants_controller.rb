@@ -5,7 +5,7 @@ require 'open_food_network/scope_variants_for_search'
 module Spree
   module Admin
     class VariantsController < ::Admin::ResourceController
-      belongs_to 'spree/product', find_by: :permalink
+      belongs_to 'spree/product'
 
       def index
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)

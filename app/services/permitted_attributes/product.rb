@@ -4,7 +4,7 @@ module PermittedAttributes
   class Product
     def self.attributes
       [
-        :id, :name, :description, :supplier_id, :price, :permalink,
+        :id, :name, :description, :supplier_id, :price,
         :variant_unit, :variant_unit_scale, :unit_value, :unit_description, :variant_unit_name,
         :display_as, :sku, :available_on, :group_buy, :group_buy_unit_size,
         :taxon_ids, :primary_taxon_id, :tax_category_id, :shipping_category_id,

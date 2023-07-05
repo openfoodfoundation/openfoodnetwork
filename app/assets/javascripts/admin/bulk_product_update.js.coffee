@@ -113,7 +113,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     (DirtyProducts.count() > 0 and confirm(t("unsaved_changes_confirmation"))) or (DirtyProducts.count() == 0)
 
   editProductUrl = (product, variant) ->
-    "/admin/products/" + product.permalink_live + ((if variant then "/variants/" + variant.id else "")) + "/edit"
+    "/admin/products/" + product.id + ((if variant then "/variants/" + variant.id else "")) + "/edit"
 
   $scope.editWarn = (product, variant) ->
     if confirm_unsaved_changes()
@@ -162,7 +162,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         if confirm(t("are_you_sure"))
           $http(
             method: "DELETE"
-            url: "/api/v0/products/" + product.permalink_live + "/variants/" + variant.id
+            url: "/api/v0/products/" + product.id + "/variants/" + variant.id
           ).then (response) ->
             $scope.removeVariant(product, variant)
     else
