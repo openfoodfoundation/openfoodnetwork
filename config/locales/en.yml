@@ -773,6 +773,7 @@ en:
           per_page:
             show: Show
             per_page: "%{num} per page"
+          clear_search: Clear search
       filters:
         search_products: Search for products
         all_producers: All producers

@@ -25,6 +25,10 @@ button:not(.plain):not(.trix-button),
     border: 1px solid $color-btn-hover-border;
   }
 
+  &:active:focus {
+    box-shadow: none;
+  }
+
   &:hover {
     background-color: $color-btn-hover-bg;
     border: 1px solid $color-btn-hover-bg;
@@ -52,6 +56,25 @@ button:not(.plain):not(.trix-button),
       background-color: $color-11;
       border: 1px solid $color-4;
       color: $color-4;
+    }
+  }
+
+  &.disruptive {
+    background-color: transparent;
+    border: 1px solid $color-5;
+    color: $color-5;
+
+    &:hover {
+      background-color: $fair-pink;
+      border: 1px solid $color-5;
+      color: $color-5;
+    }
+
+    &:active,
+    &:focus {
+      background-color: $fair-pink;
+      border: 1px solid $roof-terracotta;
+      color: $roof-terracotta;
     }
   }
 
