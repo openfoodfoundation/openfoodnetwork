@@ -22,6 +22,15 @@ class ProductsReflex < ApplicationReflex
     fetch_and_render_products
   end
 
+  def clear_search
+    @search_term = nil
+    @producer_id = nil
+    @category_id = nil
+    @page = 1
+
+    fetch_and_render_products
+  end
+
   private
 
   def init_params

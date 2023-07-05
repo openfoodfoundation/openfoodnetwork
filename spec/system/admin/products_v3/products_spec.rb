@@ -117,6 +117,20 @@ describe 'As an admin, I can see the new product page' do
         expect_products_count_to_be 1
       end
     end
+
+    context "clear filters" do
+      it "can clear filters" do
+        search_for "searchable product"
+        expect(page).to have_field "search_term", with: "searchable product"
+        expect_page_to_be 1
+        expect_products_count_to_be 1
+
+        click_link "Clear search"
+        expect(page).to have_field "search_term", with: ""
+        expect_page_to_be 1
+        expect_products_count_to_be 15
+      end
+    end
   end
 
   def expect_page_to_be(page)
