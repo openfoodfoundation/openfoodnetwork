@@ -34,7 +34,8 @@ module Admin
     end
 
     def bulk_update
-      @enterprise_fee_set = Forms::EnterpriseFeesBulkUpdate.new(enterprise_fee_bulk_params)
+      # Forms has strong parameters, so we don't need to validate them in controller
+      @enterprise_fee_set = Forms::EnterpriseFeesBulkUpdate.new(params)
 
       if @enterprise_fee_set.save
         redirect_to redirect_path, notice: I18n.t(:enterprise_fees_update_notice)
@@ -86,16 +87,6 @@ module Admin
       end
 
       main_app.admin_enterprise_fees_path
-    end
-
-    def enterprise_fee_bulk_params
-      params.require(:sets_enterprise_fee_set).permit(
-        collection_attributes: [
-          :id, :enterprise_id, :fee_type, :name, :tax_category_id,
-          :inherits_tax_category, :calculator_type,
-          { calculator_attributes: PermittedAttributes::Calculator.attributes }
-        ]
-      )
     end
   end
 end

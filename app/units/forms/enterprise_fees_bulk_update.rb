@@ -15,13 +15,15 @@ module Forms
     def save
       return false unless valid?
 
-      @enterprise_fee_set = Sets::EnterpriseFeeSet.new(@params)
+      @enterprise_fee_set = Sets::EnterpriseFeeSet.new(enterprise_fee_bulk_params)
       @enterprise_fee_set.save
       true
     end
 
+    private
+
     def check_enterprise_fee_input
-      @params['collection_attributes'].each do |_, fee_row|
+      enterprise_fee_bulk_params['collection_attributes'].each do |_, fee_row|
         enterprise_fees = fee_row['calculator_attributes']&.slice(
           :preferred_flat_percent, :preferred_amount,
           :preferred_first_item, :preferred_additional_item,
@@ -37,12 +39,12 @@ module Forms
             return false
           end
         end
-        return true
       end
+      return true
     end
 
     def check_calculators_compatibility_with_taxes
-      @params['collection_attributes'].each do |_, enterprise_fee|
+      enterprise_fee_bulk_params['collection_attributes'].each do |_, enterprise_fee|
         next unless enterprise_fee['inherits_tax_category'] == "true"
         next unless EnterpriseFee::PER_ORDER_CALCULATORS.include?(enterprise_fee['calculator_type'])
 
@@ -54,7 +56,17 @@ module Forms
         )
         return false
       end
-      true
+      return true
+    end
+
+    def enterprise_fee_bulk_params
+      @params.require(:sets_enterprise_fee_set).permit(
+        collection_attributes: [
+          :id, :enterprise_id, :fee_type, :name, :tax_category_id,
+          :inherits_tax_category, :calculator_type,
+          { calculator_attributes: PermittedAttributes::Calculator.attributes }
+        ]
+      )
     end
   end
 end
