@@ -14,9 +14,4 @@
     = render partial: 'admin/shared/v3/pagy', locals: { pagy: pagy, reflex: "click->Products#fetch" }
   - else
     #no-products
-      = t('.no_products_found')
-      #no-products-actions
-        %a{ href: "/admin/products/new", class: "button icon-plus", icon: "icon-plus" }
-          = t(:new_product)
-        %a{ href: "/admin/products/import", class: "button icon-upload secondary", icon: "icon-upload" }
-          = t(".import_products")
+      = render partial: "no_products", locals: { search_term: search_term, producer_id: producer_id, category_id: category_id }

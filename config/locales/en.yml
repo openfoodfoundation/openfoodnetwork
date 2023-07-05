@@ -784,8 +784,10 @@ en:
           label: Categories
         search: Search
       content:
+      no_products:
         no_products_found: No products found
         import_products: Import multiple products
+        no_products_found_for_search: No products found for your search criteria
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
