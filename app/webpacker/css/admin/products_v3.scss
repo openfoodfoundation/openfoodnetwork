@@ -91,11 +91,16 @@
     align-items: center;
   }
 
-  #sort .with-dropdown {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
+  #sort {
+    line-height: $btn-medium-height;
+    height: $btn-medium-height;
+
+    .with-dropdown {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
   }
 
   #filters {

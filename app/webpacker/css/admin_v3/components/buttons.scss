@@ -78,6 +78,11 @@ button:not(.plain):not(.trix-button),
     }
   }
 
+  &.medium {
+    line-height: $btn-medium-height;
+    height: $btn-medium-height;
+  }
+
   .badge {
     position: absolute;
     top: 0;
