@@ -107,7 +107,11 @@ class ProductsReflex < ApplicationReflex
   def ransack_query
     query = { s: "name desc" }
     query = query.merge({ supplier_id_in: @producer_id }) if @producer_id.present?
-    query = query.merge({ name_cont: @search_term }) if @search_term.present?
+    if @search_term.present?
+      # rubocop:disable Layout/LineLength
+      query = query.merge({ name_or_meta_keywords_or_variants_display_as_or_variants_display_name_or_supplier_name_cont: @search_term })
+      # rubocop:enable Layout/LineLength
+    end
     query = query.merge({ primary_taxon_id_in: @category_id }) if @category_id.present?
     query
   end
