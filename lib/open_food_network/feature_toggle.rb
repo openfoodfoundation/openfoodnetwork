@@ -32,9 +32,6 @@ module OpenFoodNetwork
       "new_products_page" => <<~DESC,
         Show the new (experimental) version of the admin products page.
       DESC
-      "split_checkout" => <<~DESC,
-        Replace the one-page checkout with a multi-step checkout.
-      DESC
       "vouchers" => <<~DESC,
         Add voucher functionality. Voucher can be managed via Enterprise settings.
       DESC
