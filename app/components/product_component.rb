@@ -43,8 +43,6 @@ class ProductComponent < ViewComponentReflex::Component
       @product.tax_category.name
     when 'inherits_properties'
       @product.inherits_properties
-    when 'available_on'
-      format_date(@product.available_on)
     when 'import_date'
       format_date(@product.import_date)
     end

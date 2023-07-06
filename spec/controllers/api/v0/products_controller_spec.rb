@@ -9,12 +9,10 @@ describe Api::V0::ProductsController, type: :controller do
   let(:supplier) { create(:supplier_enterprise) }
   let(:supplier2) { create(:supplier_enterprise) }
   let!(:product) { create(:product, supplier: supplier) }
-  let!(:inactive_product) {
-    create(:product, available_on: Time.zone.now.tomorrow, name: "inactive")
-  }
+  let!(:other_product) { create(:product) }
   let(:product_other_supplier) { create(:product, supplier: supplier2) }
   let(:product_with_image) { create(:product_with_image, supplier: supplier) }
-  let(:all_attributes) { ["id", "name", "available_on", "variants"] }
+  let(:all_attributes) { ["id", "name", "variants"] }
   let(:variants_attributes) {
     ["id", "options_text", "unit_value", "unit_description", "unit_to_display", "on_demand",
      "display_as", "display_name", "name_to_display", "sku", "on_hand", "price"]
@@ -43,13 +41,6 @@ describe Api::V0::ProductsController, type: :controller do
       expect(variants_attributes.all?{ |attr|
                json_response['variants'].first.keys.include? attr
              } ).to eq(true)
-    end
-
-    it "cannot see inactive products" do
-      api_get :show, id: inactive_product.to_param
-
-      expect(json_response["error"]).to eq("The resource you were looking for could not be found.")
-      expect(response.status).to eq(404)
     end
 
     it "returns a 404 error when it cannot find a product" do
@@ -230,7 +221,7 @@ describe Api::V0::ProductsController, type: :controller do
       it "returns a list of products" do
         api_get :bulk_products, { page: 1, per_page: 15 }, format: :json
         expect(returned_product_ids).to eq [product4.id, product3.id, product2.id,
-                                            inactive_product.id, product.id]
+                                            other_product.id, product.id]
       end
 
       it "returns pagination data" do
@@ -250,13 +241,13 @@ describe Api::V0::ProductsController, type: :controller do
         expect(returned_product_ids).to eq [product4.id, product3.id]
 
         api_get :bulk_products, { page: 2, per_page: 2 }, format: :json
-        expect(returned_product_ids).to eq [product2.id, inactive_product.id]
+        expect(returned_product_ids).to eq [product2.id, other_product.id]
       end
 
       it "filters results by supplier" do
         api_get :bulk_products, { page: 1, per_page: 15, q: { supplier_id_eq: supplier.id } },
                 format: :json
-        expect(returned_product_ids).to eq [product2.id, inactive_product.id, product.id]
+        expect(returned_product_ids).to eq [product2.id, other_product.id, product.id]
       end
 
       it "filters results by product category" do

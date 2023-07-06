@@ -17,7 +17,6 @@ class ProductsTableComponent < ViewComponentReflex::Component
       label: I18n.t("admin.products_page.columns_selector.inherits_properties"),
       value: "inherits_properties"
     },
-    { label: I18n.t("admin.products_page.columns_selector.available_on"), value: "available_on" },
     { label: I18n.t("admin.products_page.columns_selector.import_date"), value: "import_date" }
   ].sort do |a, b|
     a[:label] <=> b[:label]

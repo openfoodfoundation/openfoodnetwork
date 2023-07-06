@@ -10,8 +10,6 @@ module Api
       respond_to :json
       DEFAULT_PER_PAGE = 15
 
-      before_action :set_default_available_on, only: :create
-
       skip_authorization_check only: [:show, :bulk_products, :overridable]
 
       def show
@@ -144,10 +142,6 @@ module Api
       def product_params
         @product_params ||=
           params.permit(product: PermittedAttributes::Product.attributes)[:product].to_h
-      end
-
-      def set_default_available_on
-        product_params[:available_on] ||= Time.zone.now
       end
     end
   end

@@ -81,8 +81,6 @@ module Spree
     # these values are persisted on the product's variant
     attr_accessor :price, :display_as, :unit_value, :unit_description
 
-    after_initialize :set_available_on_to_now, if: :new_record?
-
     before_save :add_primary_taxon_to_taxons
 
     after_save :remove_previous_primary_taxon_from_taxons
@@ -201,9 +199,7 @@ module Spree
       return where('spree_products.supplier_id IN (?)', [enterprise.id] | permitted_producer_ids)
     }
 
-    scope :active, lambda {
-      where("spree_products.deleted_at IS NULL AND spree_products.available_on <= ?", Time.zone.now)
-    }
+    scope :active, lambda { where("spree_products.deleted_at IS NULL") }
 
     def self.group_by_products_id
       group(column_names.map { |col_name| "#{table_name}.#{col_name}" })
@@ -294,10 +290,6 @@ module Spree
     end
 
     private
-
-    def set_available_on_to_now
-      self.available_on ||= Time.zone.now
-    end
 
     def update_units
       return unless saved_change_to_variant_unit? || saved_change_to_variant_unit_name?

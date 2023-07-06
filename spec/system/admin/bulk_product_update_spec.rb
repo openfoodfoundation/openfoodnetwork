@@ -46,17 +46,6 @@ describe '
                                                  selected: s3.name
     end
 
-    it "displays a date input for available_on for each product, formatted to yyyy-mm-dd hh:mm:ss" do
-      p1 = FactoryBot.create(:product, available_on: Date.current)
-      p2 = FactoryBot.create(:product, available_on: Date.current - 1)
-
-      visit spree.admin_products_path
-      toggle_columns "Available On"
-
-      expect(page).to have_field "available_on", with: p1.available_on.strftime("%F %T")
-      expect(page).to have_field "available_on", with: p2.available_on.strftime("%F %T")
-    end
-
     it "displays an on hand count in a span for each product" do
       p1 = FactoryBot.create(:product)
       v1 = p1.variants.first
@@ -340,18 +329,17 @@ describe '
     s2 = FactoryBot.create(:supplier_enterprise)
     t1 = FactoryBot.create(:taxon)
     t2 = FactoryBot.create(:taxon)
-    p = FactoryBot.create(:product, supplier: s1, available_on: Date.current,
+    p = FactoryBot.create(:product, supplier: s1,
                                     variant_unit: 'volume', variant_unit_scale: 1, primary_taxon: t2, sku: "OLD SKU")
 
     login_as_admin
     visit spree.admin_products_path
 
-    toggle_columns "Available On", /^Category?/i, "Inherits Properties?", "SKU"
+    toggle_columns /^Category?/i, "Inherits Properties?", "SKU"
 
     within "tr#p_#{p.id}" do
       expect(page).to have_field "product_name", with: p.name
       expect(page).to have_select "producer_id", selected: s1.name
-      expect(page).to have_field "available_on", with: p.available_on.strftime("%F %T")
       expect(page).to have_select2 "p#{p.id}_category_id", selected: t2.name
       expect(page).to have_select "variant_unit_with_scale", selected: "Volume (L)"
       expect(page).to have_checked_field "inherits_properties"
@@ -359,7 +347,6 @@ describe '
 
       fill_in "product_name", with: "Big Bag Of Potatoes"
       select s2.name, from: 'producer_id'
-      fill_in "available_on", with: 3.days.ago.beginning_of_day.strftime("%F %T")
       select "Weight (kg)", from: "variant_unit_with_scale"
       select2_select t1.name, from: "p#{p.id}_category_id"
       uncheck "inherits_properties"
@@ -374,7 +361,6 @@ describe '
     expect(p.supplier).to eq s2
     expect(p.variant_unit).to eq "weight"
     expect(p.variant_unit_scale).to eq 1000 # Kg
-    expect(p.available_on).to eq 3.days.ago.beginning_of_day
     expect(p.primary_taxon.permalink).to eq t1.permalink
     expect(p.inherits_properties).to be false
     expect(p.sku).to eq "NEW SKU"
@@ -403,7 +389,7 @@ describe '
   it "updating a product with variants" do
     s1 = create(:supplier_enterprise)
     s2 = create(:supplier_enterprise)
-    p = create(:product, supplier: s1, available_on: Date.current, variant_unit: 'volume', variant_unit_scale: 0.001,
+    p = create(:product, supplier: s1, variant_unit: 'volume', variant_unit_scale: 0.001,
                          price: 3.0, unit_value: 0.25, unit_description: '(bottle)' )
     v = p.variants.first
     v.update_attribute(:sku, "VARIANTSKU")
@@ -709,13 +695,10 @@ describe '
         login_as_admin
         visit spree.admin_products_path
 
-        toggle_columns "Available On"
-
         expect(page).to have_selector "th", text: "NAME"
         expect(page).to have_selector "th", text: "PRODUCER"
         expect(page).to have_selector "th", text: "PRICE"
         expect(page).to have_selector "th", text: "ON HAND"
-        expect(page).to have_selector "th", text: "AV. ON"
 
         toggle_columns /^.{0,1}Producer$/i
 
@@ -723,7 +706,6 @@ describe '
         expect(page).to have_selector "th", text: "NAME"
         expect(page).to have_selector "th", text: "PRICE"
         expect(page).to have_selector "th", text: "ON HAND"
-        expect(page).to have_selector "th", text: "AV. ON"
       end
     end
 
@@ -777,7 +759,7 @@ describe '
       create(:product, name: 'Product Permitted', supplier: supplier_permitted, price: 10.0)
     }
     let(:product_supplied_inactive) {
-      create(:product, supplier: supplier_managed1, price: 10.0, available_on: 1.week.from_now)
+      create(:product, supplier: supplier_managed1, price: 10.0)
     }
 
     let!(:supplier_permitted_relationship) do
@@ -852,17 +834,13 @@ describe '
       v.update_attribute(:on_demand, false)
 
       visit spree.admin_products_path
-      toggle_columns "Available On"
 
       within "tr#p_#{p.id}" do
         expect(page).to have_field "product_name", with: p.name
         expect(page).to have_select "producer_id", selected: supplier_permitted.name
-        expect(page).to have_field "available_on", with: p.available_on.strftime("%F %T")
 
         fill_in "product_name", with: "Big Bag Of Potatoes"
         select supplier_managed2.name, from: 'producer_id'
-        fill_in "available_on", with: 3.days.ago.beginning_of_day.strftime("%F %T"),
-                                fill_options: { clear: :backspace }
         select "Weight (kg)", from: "variant_unit_with_scale"
 
         find("a.view-variants").click
@@ -883,7 +861,6 @@ describe '
       expect(p.supplier).to eq supplier_managed2
       expect(p.variant_unit).to eq "weight"
       expect(p.variant_unit_scale).to eq 1000 # Kg
-      expect(p.available_on).to eq 3.days.ago.beginning_of_day
       expect(v.display_as).to eq "Big Bag"
       expect(v.price).to eq 20.0
       expect(v.on_hand).to eq 18

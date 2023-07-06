@@ -31,8 +31,6 @@
       %option{value: ''}= t(:none)
   %td.inherits_properties{ 'ng-show' => 'columns.inherits_properties.visible' }
     %input{ 'ng-model' => 'product.inherits_properties', :name => 'inherits_properties', 'ofn-track-product' => 'inherits_properties', type: "checkbox" }
-  %td.available_on{ 'ng-show' => 'columns.available_on.visible' }
-    %input{ 'ng-model' => 'product.available_on', :name => 'available_on', 'ofn-track-product' => 'available_on', 'datetimepicker' => 'product.available_on', type: "text" }
   %td.import_date{ 'ng-show' => 'columns.import_date.visible' }
     %span {{(product.import_date | date:"MMMM dd, yyyy HH:mm") || ""}}
   %td.actions

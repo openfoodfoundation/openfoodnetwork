@@ -194,13 +194,6 @@ module Spree
         expect(build(:simple_product, supplier: nil)).not_to be_valid
       end
 
-      it "defaults available_on to now" do
-        Timecop.freeze do
-          product = Product.new
-          expect(product.available_on).to be_within(0.000001).of(Time.zone.now)
-        end
-      end
-
       describe "tax category" do
         context "when a tax category is required" do
           it "is invalid when a tax category is not provided" do

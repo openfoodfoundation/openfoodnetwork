@@ -6,7 +6,6 @@ FactoryBot.define do
     description { generate(:random_description) }
     price { 19.99 }
     sku { 'ABC' }
-    available_on { 1.year.ago }
     deleted_at { nil }
 
     supplier { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
