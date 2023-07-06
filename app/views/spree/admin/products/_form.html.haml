@@ -7,7 +7,7 @@
 
     = f.field_container :description do
       = f.label :description, t(:description)
-      = f.hidden_field :description, id: "product_description", value: sanitize(@product.description, scrubber: TrixScrubber.new)
+      = f.hidden_field :description, id: "product_description", value: @product.description
       %trix-editor{ input: "product_description", "data-controller": "trixeditor" }
 
   .right.four.columns.omega
