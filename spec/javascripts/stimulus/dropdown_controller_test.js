@@ -13,7 +13,7 @@ describe("Dropdown controller", () => {
 
   describe("Controller", () => {
     beforeEach(() => {
-      document.body.innerHTML = `<div data-controller="dropdown">
+      document.body.innerHTML = `<div data-controller="dropdown" id="container">
         <span id="dropdown" data-action="click->dropdown#toggle">
           <span id="arrow" data-dropdown-target="arrow" data-expanded-class="expandedClass expandedCLass2" data-collapsed-class="collapsedClass" />
         </span>
@@ -52,6 +52,17 @@ describe("Dropdown controller", () => {
       expect(menu.classList.contains("hidden")).toBe(false);
 
       document.body.click();
+
+      expect(menu.classList.contains("hidden")).toBe(true);
+    });
+
+    it ("do not display menu when disabled", () => {
+      const dropdown = document.getElementById("dropdown");
+      const container = document.getElementById("container");
+      const menu = document.getElementById("menu");
+      container.classList.add("disabled");
+      
+      dropdown.click();
 
       expect(menu.classList.contains("hidden")).toBe(true);
     });

@@ -13,6 +13,9 @@ export default class extends Controller {
   }
 
   toggle() {
+    if (this.element.classList.contains("disabled")) {
+      return;
+    }
     if (this.menuTarget.classList.contains("hidden")) {
       this.#show();
     } else {
