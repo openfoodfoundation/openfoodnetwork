@@ -17,12 +17,20 @@ export default class extends Controller {
 
   #show() {
     this.menuTarget.classList.remove("hidden");
-    this.arrowTarget.classList.remove(this.arrowTarget.dataset.collapsedClass);
-    this.arrowTarget.classList.add(this.arrowTarget.dataset.expandedClass);
+    this.arrowTarget.dataset.collapsedClass.split(" ").forEach((className) => {
+      this.arrowTarget.classList.remove(className);
+    });
+    this.arrowTarget.dataset.expandedClass.split(" ").forEach((className) => {
+      this.arrowTarget.classList.add(className);
+    });
   }
   #hide() {
     this.menuTarget.classList.add("hidden");
-    this.arrowTarget.classList.remove(this.arrowTarget.dataset.expandedClass);
-    this.arrowTarget.classList.add(this.arrowTarget.dataset.collapsedClass);
+    this.arrowTarget.dataset.expandedClass.split(" ").forEach((className) => {
+      this.arrowTarget.classList.remove(className);
+    });
+    this.arrowTarget.dataset.collapsedClass.split(" ").forEach((className) => {
+      this.arrowTarget.classList.add(className);
+    });
   }
 }

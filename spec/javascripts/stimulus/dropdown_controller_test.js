@@ -15,7 +15,7 @@ describe("Dropdown controller", () => {
     beforeEach(() => {
       document.body.innerHTML = `<div data-controller="dropdown">
         <span id="dropdown" data-action="click->dropdown#toggle">
-          <span id="arrow" data-dropdown-target="arrow" data-expanded-class="expandedClass" data-collapsed-class="collapsedClass" />
+          <span id="arrow" data-dropdown-target="arrow" data-expanded-class="expandedClass expandedCLass2" data-collapsed-class="collapsedClass" />
         </span>
         <div id="menu" data-dropdown-target="menu" >
 
@@ -34,12 +34,14 @@ describe("Dropdown controller", () => {
       const menu = document.getElementById("menu");
       expect(menu.classList.contains("hidden")).toBe(true);
       expect(arrow.classList.contains("expandedClass")).toBe(false);
+      expect(arrow.classList.contains("expandedClass2")).toBe(false);
       expect(arrow.classList.contains("collapsedClass")).toBe(true);
 
       dropdown.click();
 
       expect(menu.classList.contains("hidden")).toBe(false);
       expect(arrow.classList.contains("expandedClass")).toBe(true);
+      expect(arrow.classList.contains("expandedCLass2")).toBe(true);
       expect(arrow.classList.contains("collapsedClass")).toBe(false);
     });
   });
