@@ -41,18 +41,16 @@
                 = yield :page_actions
 
   - content_class = content_for?(:sidebar) ? "with-sidebar" : ""
+  - usefull_width_columns = content_for?(:sidebar) ? "twelve columns" : "sixteen columns"
   #content{class: content_class}
-    .row
-      .container
-        - div_class = content_for?(:sidebar) ? 'twelve columns' : 'sixteen columns'
-        %div{:class => div_class}
-          - if content_for?(:table_filter)
-            - table_filter_class = content_for?(:sidebar) ? 'twelve columns' : 'sixteen columns'
-            #table-filter{:class => table_filter_class}
-              %fieldset
-                %legend{:align => "center"}= yield :table_filter_title
-                = yield :table_filter
-
+    .container
+      .row
+        - if content_for?(:table_filter)
+          #table-filter{:class => usefull_width_columns}
+            %fieldset
+              %legend{:align => "center"}= yield :table_filter_title
+              = yield :table_filter
+        %div{:class => usefull_width_columns}
           = yield
         - if content_for?(:sidebar)
           %aside#sidebar.four.columns
