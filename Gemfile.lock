@@ -237,12 +237,6 @@ GEM
     datafoodconsortium-connector (1.0.0.pre.alpha.6)
       virtual_assembly-semantizer (~> 1.0, >= 1.0.4)
     date (3.3.3)
-    ddtrace (1.12.1)
-      debase-ruby_core_source (= 3.2.1)
-      libdatadog (~> 2.0.0.1.0)
-      libddwaf (~> 1.9.0.0.0)
-      msgpack
-    debase-ruby_core_source (3.2.1)
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
@@ -390,9 +384,6 @@ GEM
       addressable (~> 2.7)
     letter_opener (1.8.1)
       launchy (>= 2.2, < 3)
-    libdatadog (2.0.0.1.0)
-    libddwaf (1.9.0.0.1)
-      ffi (~> 1.0)
     link_header (0.0.8)
     listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -818,7 +809,6 @@ DEPENDENCIES
   database_cleaner
   datafoodconsortium-connector
   db2fog!
-  ddtrace
   debug (>= 1.0.0)
   debugger-linecache
   devise
