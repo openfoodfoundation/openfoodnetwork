@@ -5,12 +5,23 @@ export default class extends Controller {
 
   connect() {
     this.#hide();
+    document.addEventListener("click", this.#onBodyClick.bind(this));
+  }
+
+  disconnect() {
+    document.removeEventListener("click", this.#onBodyClick);
   }
 
   toggle() {
     if (this.menuTarget.classList.contains("hidden")) {
       this.#show();
     } else {
+      this.#hide();
+    }
+  }
+
+  #onBodyClick(event) {
+    if (!this.element.contains(event.target)) {
       this.#hide();
     }
   }

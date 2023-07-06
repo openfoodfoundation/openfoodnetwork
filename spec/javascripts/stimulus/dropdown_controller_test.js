@@ -44,5 +44,16 @@ describe("Dropdown controller", () => {
       expect(arrow.classList.contains("expandedCLass2")).toBe(true);
       expect(arrow.classList.contains("collapsedClass")).toBe(false);
     });
+
+    it ("hide menu when click outside", () => {
+      const dropdown = document.getElementById("dropdown");
+      const menu = document.getElementById("menu");
+      dropdown.click();
+      expect(menu.classList.contains("hidden")).toBe(false);
+
+      document.body.click();
+
+      expect(menu.classList.contains("hidden")).toBe(true);
+    });
   });
 });
