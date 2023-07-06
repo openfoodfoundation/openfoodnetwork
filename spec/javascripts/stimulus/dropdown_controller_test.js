@@ -23,6 +23,10 @@ describe("Dropdown controller", () => {
       </div>`;
     });
 
+    afterEach(() => {
+      document.body.innerHTML = "";
+    });
+
     it("hide menu by default", () => {
       const menu = document.getElementById("menu");
       expect(menu.classList.contains("hidden")).toBe(true);
