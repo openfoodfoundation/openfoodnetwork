@@ -51,10 +51,6 @@ describe 'api/v0/orders', swagger_doc: 'v0/swagger.yaml', type: :request do
           }
           let!(:li4) { create(:line_item_with_shipment, order: order_dist_1_credit_owed) }
 
-          let!(:order_empty) {
-            create(:order_with_line_items, line_items_count: 0)
-          }
-
           let(:user) { order_dist_1.distributor.owner }
           let(:'X-Spree-Token') do
             user.generate_api_key
@@ -151,6 +147,28 @@ describe 'api/v0/orders', swagger_doc: 'v0/swagger.yaml', type: :request do
               orders = data["orders"]
               expect(orders.size).to eq 1
               expect(orders.first["id"]).to eq order_dist_2.id
+            end
+          end
+
+          context "and queried by cart state" do
+            let!(:order_empty) {
+              create(:order_with_line_items, line_items_count: 0)
+            }
+
+            let!(:order_not_empty) {
+              create(:order_with_line_items, line_items_count: 1)
+            }
+
+            let!(:order_not_empty_no_address) {
+              create(:order_with_line_items, line_items_count: 1, bill_address_id: nil, ship_address_id: nil)
+            }
+
+            let(:'q[state_eq]') { "cart" }
+
+            run_test! do |response|
+              data = JSON.parse(response.body)
+              orders = data["orders"]
+              expect(orders.size).to eq 3
             end
           end
         end
