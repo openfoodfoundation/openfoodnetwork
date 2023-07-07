@@ -356,7 +356,6 @@ pt_BR:
         on_demand: "Sob Encomenda"
         tax_category: "Categoria de taxa"
         inherits_properties: "Herdar Propriedades?"
-        available_on: "Disponível Em"
         import_date: "Data de importação"
       columns_selector:
         unit: Unidade
@@ -368,7 +367,6 @@ pt_BR:
         on_demand: "Sob Encomenda"
         tax_category: "Categoria de taxa"
         inherits_properties: "Herdar Propriedades?"
-        available_on: "Disponível Em"
         import_date: "Data de importação"
     adjustments:
       skipped_changing_canceled_order: "Não é possível modificar um pedido cancelado"
@@ -556,7 +554,6 @@ pt_BR:
         category: Categoria
         tax_category: Categoria de taxa
         inherits_properties?: Herdar Propriedades?
-        available_on: Disponível Em
         av_on: "Disp. Em"
         import_date: Importado
         upload_an_image: Carregar uma imagem
@@ -579,6 +576,10 @@ pt_BR:
         images: "Imagens"
         variants: "Variantes"
         product_properties: "Propriedades do produto"
+    products_v3:
+      index:
+        header:
+          title: Editar Produtos em Atacado
     product_import:
       title: Importação de produtos
       file_not_found: O arquivo não foi encontrado ou não pôde ser aberto

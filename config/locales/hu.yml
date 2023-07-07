@@ -419,7 +419,6 @@ hu:
         on_demand: "Igény szerint"
         tax_category: "Adókategória"
         inherits_properties: "Megörökli az tulajdonságokat?"
-        available_on: "Elérhető"
         import_date: "Importálás dátuma"
       columns_selector:
         unit: Mértékegység
@@ -431,7 +430,6 @@ hu:
         on_demand: "Igény szerint"
         tax_category: "Adókategória"
         inherits_properties: "Megörökli az tulajdonságokat?"
-        available_on: "Elérhető"
         import_date: "Importálás dátuma"
     adjustments:
       skipped_changing_canceled_order: "A törölt rendelést nem módosíthatja."
@@ -624,7 +622,6 @@ hu:
         category: Kategória
         tax_category: Adókategória
         inherits_properties?: Megörökli az tulajdonságokat?
-        available_on: Elérhető
         av_on: "Av. Tovább"
         import_date: Importált
         upload_an_image: Tölts fel egy képet
@@ -647,6 +644,10 @@ hu:
         images: "Képek"
         variants: "Változatok"
         product_properties: "Termék tulajdonságai"
+    products_v3:
+      index:
+        header:
+          title: Termékek tömeges szerkesztése
     product_import:
       title: Termék importálása
       file_not_found: A fájl nem található vagy nem nyitható meg

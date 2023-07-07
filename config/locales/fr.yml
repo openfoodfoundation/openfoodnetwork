@@ -458,7 +458,6 @@ fr:
         on_demand: "A volonté"
         tax_category: "TVA applicable"
         inherits_properties: "Hériter des propriétés?"
-        available_on: "Disponible via"
         import_date: "Date d'import (si import)"
       columns_selector:
         unit: Unité
@@ -470,7 +469,6 @@ fr:
         on_demand: "A volonté"
         tax_category: "TVA applicable"
         inherits_properties: "Hériter des propriétés?"
-        available_on: "Disponible via"
         import_date: "Date d'import (si import)"
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
@@ -663,7 +661,6 @@ fr:
         category: Catégorie
         tax_category: TVA applicable
         inherits_properties?: Hériter des propriétés?
-        available_on: Disponible via
         av_on: "Disp. via"
         import_date: Importé
         upload_an_image: Importer une image
@@ -686,6 +683,14 @@ fr:
         images: "Images"
         variants: "Variantes"
         product_properties: "Propriétés / labels Produits"
+    products_v3:
+      index:
+        header:
+          title: Gestion du catalogue produits
+        loading: Vos produits sont en cours de chargement
+      content:
+        no_products_found: Pas de produits trouvés
+        import_products: Importer plusieurs produits
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir

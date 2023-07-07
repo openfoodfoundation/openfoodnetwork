@@ -304,7 +304,6 @@ en_ZA:
         on_demand: "Unlimited"
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
-        available_on: "Available On"
         import_date: "Import Date"
       columns_selector:
         unit: Unit
@@ -316,7 +315,6 @@ en_ZA:
         on_demand: "Unlimited"
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
-        available_on: "Available On"
         import_date: "Import Date"
     begins_at: Begins At
     begins_on: Begins On
@@ -483,7 +481,6 @@ en_ZA:
         category: Category
         tax_category: Tax Category
         inherits_properties?: Inherits Properties?
-        available_on: Available On
         av_on: "Av. On"
         import_date: Imported
         upload_an_image: Upload an image
@@ -506,6 +503,10 @@ en_ZA:
         images: "Images"
         variants: "Variants"
         product_properties: "Product Properties"
+    products_v3:
+      index:
+        header:
+          title: Bulk Edit Products
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened

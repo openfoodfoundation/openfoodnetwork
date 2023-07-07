@@ -439,7 +439,6 @@ ru:
         on_demand: "По Запросу"
         tax_category: "Налоговая Категория"
         inherits_properties: "Наследовать Свойства?"
-        available_on: "Доступен С"
         import_date: "Дата Импорта"
       columns_selector:
         unit: Единица измерения
@@ -451,7 +450,6 @@ ru:
         on_demand: "По Запросу"
         tax_category: "Налоговая Категория"
         inherits_properties: "Наследовать Свойства?"
-        available_on: "Доступен С"
         import_date: "Дата Импорта"
     adjustments:
       skipped_changing_canceled_order: "Вы не можете изменить отмененный заказ."
@@ -644,7 +642,6 @@ ru:
         category: Категория
         tax_category: Налоговая Категория
         inherits_properties?: Наследовать Свойства?
-        available_on: Доступен С
         av_on: "Дост. С"
         import_date: Импортирован
         upload_an_image: Загрузить изображение
@@ -667,6 +664,10 @@ ru:
         images: "Изображения"
         variants: "Варианты"
         product_properties: "Свойства Товара"
+    products_v3:
+      index:
+        header:
+          title: Массовое редактирование товаров
     product_import:
       title: Импорт Товара
       file_not_found: Файл не найден или не может быть открыт

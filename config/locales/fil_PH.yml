@@ -304,7 +304,6 @@ fil_PH:
         on_demand: "on demand"
         tax_category: "kategorya ng tax"
         inherits_properties: "gayahin ang mga katangian?"
-        available_on: "Magagamit Nakabukas"
         import_date: "petsa ng pag-import"
       columns_selector:
         unit: yunit
@@ -316,7 +315,6 @@ fil_PH:
         on_demand: "on demand"
         tax_category: "kategorya ng tax"
         inherits_properties: "gayahin ang mga katangian?"
-        available_on: "Magagamit Nakabukas"
         import_date: "petsa ng pag-import"
     begins_at: nagsimula sa
     begins_on: nagsisimula sa
@@ -483,7 +481,6 @@ fil_PH:
         category: kategorya
         tax_category: kategorya ng tax
         inherits_properties?: gayahin ang mga katangian?
-        available_on: Magagamit Nakabukas
         av_on: "Av On"
         import_date: na-import
         upload_an_image: mag-upload ng larawan
@@ -506,6 +503,10 @@ fil_PH:
         images: "mga larawan"
         variants: "mga uri"
         product_properties: "mga katangian ng produkto"
+    products_v3:
+      index:
+        header:
+          title: maramihang pag-edit ng mga produkto
     product_import:
       title: paglipat ng produkto
       file_not_found: 'ang file ay hindi mahanap o mabuksan '

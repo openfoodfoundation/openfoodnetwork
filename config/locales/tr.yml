@@ -358,7 +358,6 @@ tr:
         on_demand: "Talep Üzerine"
         tax_category: "Vergi Kategorisi"
         inherits_properties: "Özellikler devralınsın mı?"
-        available_on: "Şu Tarihte Hazır"
         import_date: "İçe Aktarım Tarihi"
       columns_selector:
         unit: Birim
@@ -370,7 +369,6 @@ tr:
         on_demand: "Talep Üzerine"
         tax_category: "Vergi Kategorisi"
         inherits_properties: "Özellikler devralınsın mı?"
-        available_on: "Şu Tarihte Hazır"
         import_date: "İçe Aktarım Tarihi"
     adjustments:
       skipped_changing_canceled_order: "İptal edilmiş bir siparişi değiştiremezsiniz."
@@ -558,7 +556,6 @@ tr:
         category: Kategori
         tax_category: Vergi Kategorisi
         inherits_properties?: Özellikler devralınsın mı?
-        available_on: Mevcut Olma Tarihi
         av_on: "Mevcut Olma Tarihi"
         import_date: Aktarıldı
         upload_an_image: Görsel yükleyin
@@ -581,6 +578,10 @@ tr:
         images: "Görseller"
         variants: "Çeşitler"
         product_properties: "Ürün Özellikleri"
+    products_v3:
+      index:
+        header:
+          title: Ürünleri Toplu Düzenleme
     product_import:
       title: Ürün Aktarımı
       file_not_found: Dosya bulunamadı veya açılamadı

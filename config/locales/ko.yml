@@ -418,7 +418,6 @@ ko:
         on_demand: "수요로 함"
         tax_category: "세금 목록"
         inherits_properties: "속성을 상속하시겠습니까?"
-        available_on: "사용 가능 날짜"
         import_date: "수입 날짜"
       columns_selector:
         unit: 단위
@@ -430,7 +429,6 @@ ko:
         on_demand: "수요로 함"
         tax_category: "세금 목록"
         inherits_properties: "속성을 상속하시겠습니까?"
-        available_on: "사용 가능 날짜"
         import_date: "수입 날짜"
     adjustments:
       skipped_changing_canceled_order: "취소된 명령을 바꿀 수 없습니다."
@@ -618,7 +616,6 @@ ko:
         category: 목록
         tax_category: 세금 목록
         inherits_properties?: 속성을 상속하시겠습니까?
-        available_on: 사용 가능 날짜
         av_on: "사용 가능 날짜"
         import_date: 수입품
         upload_an_image: 이미지 파일을 올리세요
@@ -641,6 +638,10 @@ ko:
         images: "사진"
         variants: "변경사항"
         product_properties: "제품 속성"
+    products_v3:
+      index:
+        header:
+          title: 제품 대량 편집
     product_import:
       title: 제품 가져오기
       file_not_found: 파일을 찾을 수 없거나 열 수 없습니다.

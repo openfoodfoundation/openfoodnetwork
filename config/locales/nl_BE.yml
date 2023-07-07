@@ -313,7 +313,6 @@ nl_BE:
         on_demand: "Op Aanvraag"
         tax_category: "Belastingcategorie"
         inherits_properties: "Erft Eigenschappen?"
-        available_on: "Beschikbaar op"
         import_date: "Importdatum"
       columns_selector:
         unit: Unit
@@ -325,7 +324,6 @@ nl_BE:
         on_demand: "Op Aanvraag"
         tax_category: "Belastingcategorie"
         inherits_properties: "Erft Eigenschappen?"
-        available_on: "Beschikbaar op"
         import_date: "Importdatum"
     begins_at: Begint Bij
     begins_on: Begint Op
@@ -496,7 +494,6 @@ nl_BE:
         category: Categorie
         tax_category: Belastingcategorie
         inherits_properties?: Erft Eigenschappen?
-        available_on: Beschikbaar op
         av_on: "Av. Op"
         import_date: Geïmporteerd
         upload_an_image: Een afbeelding uploaden
@@ -519,6 +516,10 @@ nl_BE:
         images: "Afbeeldingen"
         variants: "Variant"
         product_properties: "Producteigenschappen"
+    products_v3:
+      index:
+        header:
+          title: Beheer van de productencatalogus
     product_import:
       title: Importeren van producten
       file_not_found: Bestand niet gevonden of kon niet worden geopend

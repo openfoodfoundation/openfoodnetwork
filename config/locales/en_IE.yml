@@ -438,7 +438,6 @@ en_IE:
         on_demand: "Unlimited"
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
-        available_on: "Available On"
         import_date: "Import Date"
       columns_selector:
         unit: Unit
@@ -450,7 +449,6 @@ en_IE:
         on_demand: "Unlimited"
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
-        available_on: "Available On"
         import_date: "Import Date"
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
@@ -643,7 +641,6 @@ en_IE:
         category: Category
         tax_category: Tax Category
         inherits_properties?: Inherits Properties?
-        available_on: Available On
         av_on: "Av. On"
         import_date: Imported
         upload_an_image: Upload an image
@@ -666,6 +663,10 @@ en_IE:
         images: "Images"
         variants: "Variants"
         product_properties: "Product Properties"
+    products_v3:
+      index:
+        header:
+          title: Bulk Edit Products
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened

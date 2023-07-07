@@ -418,7 +418,6 @@ uk:
         on_demand: "На вимогу"
         tax_category: "Категорія податку"
         inherits_properties: "Успадковує властивості?"
-        available_on: "Доступно на"
         import_date: "Дата імпорту"
       columns_selector:
         unit: Одиниця
@@ -430,7 +429,6 @@ uk:
         on_demand: "На вимогу"
         tax_category: "Категорія податку"
         inherits_properties: "Успадковує властивості?"
-        available_on: "Доступно на"
         import_date: "Дата імпорту"
     adjustments:
       skipped_changing_canceled_order: "Ви не можете змінити скасоване замовлення."
@@ -621,7 +619,6 @@ uk:
         category: Категорія
         tax_category: Категорія податку
         inherits_properties?: Успадковує властивості?
-        available_on: Доступно на
         av_on: "Дост. на"
         import_date: Імпортні
         upload_an_image: Вивантажити зображення
@@ -644,6 +641,10 @@ uk:
         images: "Зображення"
         variants: "Варіанти"
         product_properties: "Властивості продукту"
+    products_v3:
+      index:
+        header:
+          title: Масове редагування продуктів
     product_import:
       title: Імпорт продукту
       file_not_found: Файл не знайдено або не вдалося відкрити

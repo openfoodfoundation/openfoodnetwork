@@ -138,7 +138,6 @@ sv:
         on_demand: "På begäran"
         tax_category: "Skattekategori"
         inherits_properties: "Ärva egenskaper?"
-        available_on: "Tillgänglig "
       columns_selector:
         unit: Enhet
         price: Pris
@@ -149,7 +148,6 @@ sv:
         on_demand: "På begäran"
         tax_category: "Skattekategori"
         inherits_properties: "Ärva egenskaper?"
-        available_on: "Tillgänglig "
     date: Datum
     email: epost
     name: Namn
@@ -268,7 +266,6 @@ sv:
         category: Kategori
         tax_category: Skattekategori
         inherits_properties?: Ärva egenskaper?
-        available_on: 'Tillgänglig '
         av_on: "Md. På"
       search: "Sök"
       properties:
@@ -279,6 +276,10 @@ sv:
       tabs:
         images: "Bilder"
         product_properties: "Produktegenskaper"
+    products_v3:
+      index:
+        header:
+          title: 'Redigera Omfång av Produkter '
     product_import:
       file_not_found: Filen hittades inte eller kunde inte öppnas
       no_data: Ingen data hittades i kalkylbladet

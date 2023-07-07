@@ -458,7 +458,6 @@ cy:
         on_demand: "Ar alw"
         tax_category: "Categori Treth"
         inherits_properties: "Yn etifeddu manylion cynnyrch?"
-        available_on: "Ar gael ar"
         import_date: "Dyddiad Mewnforio"
       columns_selector:
         unit: Uned
@@ -470,7 +469,6 @@ cy:
         on_demand: "Ar alw"
         tax_category: "Categori Treth"
         inherits_properties: "Yn etifeddu manylion cynnyrch?"
-        available_on: "Ar gael ar"
         import_date: "Dyddiad Mewnforio"
     adjustments:
       skipped_changing_canceled_order: "Nid yw'n bosib newid archeb a ganslwyd"
@@ -663,7 +661,6 @@ cy:
         category: Categori
         tax_category: Categori Treth
         inherits_properties?: Etifeddu priodoleddau?
-        available_on: Ar gael ar
         av_on: "Ar gael ar"
         import_date: Mewnforiwyd
         upload_an_image: 'Lanlwytho delwedd '
@@ -686,6 +683,10 @@ cy:
         images: "Delweddau"
         variants: "Amrywolion"
         product_properties: "Priodoleddau Cynnyrch"
+    products_v3:
+      index:
+        header:
+          title: Cynhyrchion Golygu Swmp
     product_import:
       title: Mewnforio Cynnyrch
       file_not_found: Ni ddaethpwyd o hyd i ffeil neu ni ellid ei hagor

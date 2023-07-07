@@ -419,7 +419,6 @@ nb:
         on_demand: "Ved forespørsel"
         tax_category: "Avgiftskategori"
         inherits_properties: "Arver egenskaper?"
-        available_on: "Tilgjengelig På"
         import_date: "Importdato"
       columns_selector:
         unit: Enhet
@@ -431,7 +430,6 @@ nb:
         on_demand: "Ved forespørsel"
         tax_category: "Avgiftskategori"
         inherits_properties: "Arver egenskaper?"
-        available_on: "Tilgjengelig På"
         import_date: "Importdato"
     adjustments:
       skipped_changing_canceled_order: "Du kan ikke endre en avbrutt bestilling."
@@ -624,7 +622,6 @@ nb:
         category: Kategori
         tax_category: Avgiftskategori
         inherits_properties?: Arver egenskaper?
-        available_on: Tilgjengelig på
         av_on: "Tilgj. På"
         import_date: Importert
         upload_an_image: Last opp et bilde
@@ -647,6 +644,10 @@ nb:
         images: "Bilder"
         variants: "Varianter"
         product_properties: "Produktegenskaper"
+    products_v3:
+      index:
+        header:
+          title: Endre produkter i bulk
     product_import:
       title: Produktimport
       file_not_found: Filen ble ikke funnet eller kunne ikke åpnes

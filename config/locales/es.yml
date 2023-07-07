@@ -426,7 +426,6 @@ es:
         on_demand: "Bajo demanda"
         tax_category: "Categoría de impuestos"
         inherits_properties: "¿Hereda propiedades?"
-        available_on: "Disponible en"
         import_date: "Fecha de importación"
       columns_selector:
         unit: Unidad
@@ -438,7 +437,6 @@ es:
         on_demand: "Bajo demanda"
         tax_category: "Categoría de impuestos"
         inherits_properties: "¿Hereda propiedades?"
-        available_on: "Disponible en"
         import_date: "Fecha de importación"
     adjustments:
       skipped_changing_canceled_order: "No puede cambiar un pedido cancelado."
@@ -629,7 +627,6 @@ es:
         category: Categoría
         tax_category: Categoría de impuestos
         inherits_properties?: ¿Hereda propiedades?
-        available_on: Disponible en
         av_on: "Av. En"
         import_date: Importado
         upload_an_image: Subir una imagen
@@ -652,6 +649,10 @@ es:
         images: "Imágenes"
         variants: "variaciones"
         product_properties: "Propiedades del producto"
+    products_v3:
+      index:
+        header:
+          title: Editar varios Productos
     product_import:
       title: Importación de productos
       file_not_found: Archivo no encontrado o no se pudo abrir

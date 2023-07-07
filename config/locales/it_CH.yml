@@ -417,7 +417,6 @@ it_CH:
         on_demand: "A richiesta"
         tax_category: "Categoria di imposta"
         inherits_properties: "Eredita proprietà?"
-        available_on: "Disponibile il"
         import_date: "Data di importazione"
       columns_selector:
         unit: Unità
@@ -429,7 +428,6 @@ it_CH:
         on_demand: "A richiesta"
         tax_category: "Categoria di imposta"
         inherits_properties: "Eredita proprietà?"
-        available_on: "Disponibile il"
         import_date: "Data di importazione"
     adjustments:
       skipped_changing_canceled_order: "Non puoi modificare una richiesta annullata"
@@ -617,7 +615,6 @@ it_CH:
         category: Categoria
         tax_category: Categoria di imposta
         inherits_properties?: Eredita proprietà?
-        available_on: Disponibile il
         av_on: "Disp. il"
         import_date: Importato
         upload_an_image: Carica un'immagine
@@ -640,6 +637,10 @@ it_CH:
         images: "Immagini"
         variants: "Varianti"
         product_properties: "Proprietà prodotto"
+    products_v3:
+      index:
+        header:
+          title: Modifica prodotti tabella
     product_import:
       title: Importa prodotto
       file_not_found: Documento non trovato o non disponibile

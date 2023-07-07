@@ -422,7 +422,6 @@ ca:
         on_demand: "Sota demanda"
         tax_category: "Categoria d'impostos"
         inherits_properties: "Hereda propietats?"
-        available_on: "Disponible el"
         import_date: "Data d'importació"
       columns_selector:
         unit: Unitat
@@ -434,7 +433,6 @@ ca:
         on_demand: "Sota demanda"
         tax_category: "Categoria d'impostos"
         inherits_properties: "Hereda propietats?"
-        available_on: "Disponible el"
         import_date: "Data d'importació"
     adjustments:
       skipped_changing_canceled_order: "No podeu canviar una comanda cancel·lada."
@@ -627,7 +625,6 @@ ca:
         category: Categoria
         tax_category: Categoria d'impostos
         inherits_properties?: Hereda propietats?
-        available_on: Disponible el
         av_on: "Disp. via"
         import_date: S'ha importat
         upload_an_image: Penja una imatge
@@ -650,6 +647,10 @@ ca:
         images: "Imatges"
         variants: "Variants"
         product_properties: "Propietats del producte"
+    products_v3:
+      index:
+        header:
+          title: Edició de productes en bloc
     product_import:
       title: Importació de productes
       file_not_found: No s'ha trobat el fitxer o no s'ha pogut obrir

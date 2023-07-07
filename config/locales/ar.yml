@@ -438,7 +438,6 @@ ar:
         on_demand: "على الطلب"
         tax_category: "الفئة الضريبية"
         inherits_properties: "الخصائص الموروثة؟"
-        available_on: "متاح على"
         import_date: "تاريخ الاستيراد"
       columns_selector:
         unit: وحدة
@@ -450,7 +449,6 @@ ar:
         on_demand: "على الطلب"
         tax_category: "الفئة الضريبية"
         inherits_properties: "الخصائص الموروثة؟"
-        available_on: "متاح على"
         import_date: "تاريخ الاستيراد"
     adjustments:
       skipped_changing_canceled_order: "لا يمكنك تغيير الطلب الذي تم إلغاؤه."
@@ -643,7 +641,6 @@ ar:
         category: الفئة
         tax_category: الفئة الضريبية
         inherits_properties?: الخصائص الموروثة؟
-        available_on: متاح على
         av_on: "المتوسط. على"
         import_date: مستورد
         upload_an_image: تحميل صورة
@@ -666,6 +663,10 @@ ar:
         images: "صور"
         variants: "الانواع"
         product_properties: "خصائص المنتج"
+    products_v3:
+      index:
+        header:
+          title: تحرير المنتجات بالجملة
     product_import:
       title: استيراد المنتج
       file_not_found: لم يتم العثور على الملف أو تعذر فتحه

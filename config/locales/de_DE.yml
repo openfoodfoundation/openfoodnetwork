@@ -458,7 +458,6 @@ de_DE:
         on_demand: "Unbegrenzt/auf Bestellung"
         tax_category: "Steuerkategorie"
         inherits_properties: "Übernimmt Eigenschaften des Ladens?"
-        available_on: "Verfügbar am"
         import_date: "Importdatum"
       columns_selector:
         unit: Einheit
@@ -470,7 +469,6 @@ de_DE:
         on_demand: "Unbegrenzt/auf Bestellung"
         tax_category: "Steuerkategorie"
         inherits_properties: "Übernimmt Eigenschaften des Ladens?"
-        available_on: "Verfügbar am"
         import_date: "Importdatum"
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
@@ -663,7 +661,6 @@ de_DE:
         category: Produktkategorie
         tax_category: Steuerkategorie
         inherits_properties?: Übernimmt Eigenschaften des Ladens?
-        available_on: Verfügbar am
         av_on: "Verfüg. am"
         import_date: Importiert
         upload_an_image: Bild hochladen
@@ -686,6 +683,10 @@ de_DE:
         images: "Bilder"
         variants: "Produktvarianten"
         product_properties: "Produkteigenschaften"
+    products_v3:
+      index:
+        header:
+          title: Produkte verwalten
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.

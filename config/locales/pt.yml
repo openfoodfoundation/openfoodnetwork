@@ -350,7 +350,6 @@ pt:
         on_demand: "Sob Encomenda"
         tax_category: "Categoria de Imposto"
         inherits_properties: "Herda Propriedades?"
-        available_on: "Disponível em"
         import_date: "Data de Importação"
       columns_selector:
         unit: Unidade
@@ -362,7 +361,6 @@ pt:
         on_demand: "Sob Encomenda"
         tax_category: "Categoria de Imposto"
         inherits_properties: "Herda Propriedades?"
-        available_on: "Disponível em"
         import_date: "Data de Importação"
     begins_at: Começa às
     begins_on: Começa em
@@ -535,7 +533,6 @@ pt:
         category: Categoria
         tax_category: Categoria de Imposto
         inherits_properties?: Herda Propriedades?
-        available_on: Disponível em
         av_on: "Disp. em"
         import_date: Importado
         upload_an_image: Carregar uma imagem
@@ -558,6 +555,10 @@ pt:
         images: "Imagens"
         variants: "Variantes"
         product_properties: "Propriedades do Produto"
+    products_v3:
+      index:
+        header:
+          title: Editar Produtos
     product_import:
       title: Importação de Produtos
       file_not_found: O ficheiro não foi encontrado ou não pôde ser aberto

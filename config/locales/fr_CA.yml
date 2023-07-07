@@ -439,7 +439,6 @@ fr_CA:
         on_demand: "A volonté"
         tax_category: "Type de taxe"
         inherits_properties: "Hériter des propriétés ?"
-        available_on: "Disponible via"
         import_date: "Date d'import"
       columns_selector:
         unit: Unité
@@ -451,7 +450,6 @@ fr_CA:
         on_demand: "A volonté"
         tax_category: "Type de taxe"
         inherits_properties: "Hériter des propriétés ?"
-        available_on: "Disponible via"
         import_date: "Date d'import"
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
@@ -644,7 +642,6 @@ fr_CA:
         category: Catégorie
         tax_category: 'Type de Taxe '
         inherits_properties?: Hériter des propriétés ?
-        available_on: Disponible via
         av_on: "Disp. via"
         import_date: importé
         upload_an_image: Importer une image
@@ -667,6 +664,10 @@ fr_CA:
         images: "Images"
         variants: "Variantes"
         product_properties: "Propriétés / labels Produits"
+    products_v3:
+      index:
+        header:
+          title: Gestion du catalogue produits
     product_import:
       title: import produit
       file_not_found: Fichier non trouvé ou impossible à ouvrir
