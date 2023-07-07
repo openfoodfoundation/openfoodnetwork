@@ -15,26 +15,26 @@
           .summary-subtitle
             = t("split_checkout.step3.delivery_details.address")
           %span
-            = @order.bill_address.firstname
-            = @order.bill_address.lastname
+            = @order.ship_address.firstname
+            = @order.ship_address.lastname
           %div
-            = @order.bill_address.phone
+            = @order.ship_address.phone
           %div
             = @order.user.email if @order.user
           %br
           %div
-            = @order.bill_address.address1
-          - unless @order.bill_address.address2.blank?
+            = @order.ship_address.address1
+          - unless @order.ship_address.address2.blank?
             %div
-              = @order.bill_address.address2
+              = @order.ship_address.address2
           %div
-            = @order.bill_address.city
+            = @order.ship_address.city
           %div
-            = @order.bill_address.state
+            = @order.ship_address.state
           %div
-            = @order.bill_address.zipcode
+            = @order.ship_address.zipcode
           %div
-            = @order.bill_address.country
+            = @order.ship_address.country
           - if @order.special_instructions.present?
             %br
             %em
