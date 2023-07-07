@@ -760,4 +760,273 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       end
     end
   end
+
+  context 'multiple orders, same enterprise fee, different tax rates' do
+    let(:another_state) {
+      Spree::State.find_by(name: "New South Wales")
+    }
+
+    let(:another_address) {
+      create(:address,
+             state: another_state,
+             country: another_state.country)
+    }
+
+    let!(:state_zone2){
+      create(
+        :zone,
+        zone_members: [Spree::ZoneMember.new(zoneable: another_state)]
+      )
+    }
+
+    let!(:state_tax_rate2){
+      create(:tax_rate, zone: state_zone2, tax_category:,
+                        name: 'Another State Tax', amount: 0.02)
+    }
+
+    context "added tax" do
+      before do
+        # adds a line items to the order on oc1
+        order.line_items.create({ variant:, quantity: 1, price: 100 })
+        order.update!({
+                        order_cycle_id: order_cycle.id,
+                        ship_address_id: ship_address.id
+                      })
+        order.recreate_all_fees!
+        while !order.completed?
+          break unless order.next!
+        end
+
+        # adds a line items to the order on oc2
+        order2.line_items.create({ variant:, quantity: 1, price: 50 })
+        order2.update!({
+                         order_cycle_id: order_cycle.id,
+                         ship_address_id: another_address.id
+                       })
+        order2.recreate_all_fees!
+        while !order2.completed?
+          break unless order2.next!
+        end
+      end
+      let(:admin_state_tax1){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Adminstration", "admin",
+          "Distributor", "tax_category", "State", "0.015", "20.0", "0.3", "20.3"
+        ].join(" ")
+      }
+      let(:admin_country_tax1){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Adminstration", "admin",
+          "Distributor", "tax_category", "Country", "0.025", "40.0", "1.0", "41.0"
+        ].join(" ")
+      }
+      let(:transport_state_tax1){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Transport", "transport",
+          "Supplier1", "tax_category", "State", "0.015", "15.0", "0.23", "15.23"
+        ].join(" ")
+      }
+      let(:transport_country_tax1){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Transport", "transport",
+          "Supplier1", "tax_category", "Country", "0.025", "30.0", "0.76", "30.76"
+        ].join(" ")
+      }
+      let(:packing_state_tax1){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Packing", "packing",
+          "Distributor", "tax_category", "State", "0.015", "10.0", "0.15", "10.15"
+        ].join(" ")
+      }
+      let(:packing_country_tax1){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Packing", "packing",
+          "Distributor", "tax_category", "Country", "0.025", "20.0", "0.5", "20.5"
+        ].join(" ")
+      }
+
+      let(:admin_state_tax2){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Adminstration", "admin",
+          "Distributor", "tax_category", "Another State Tax", "0.02", "20.0", "0.4", "20.4"
+        ].join(" ")
+      }
+      let(:transport_state_tax2){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Transport", "transport",
+          "Supplier1", "tax_category", "Another State Tax", "0.02", "15.0", "0.3", "15.3"
+        ].join(" ")
+      }
+      let(:packing_state_tax2){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Packing", "packing",
+          "Distributor", "tax_category", "Another State Tax", "0.02", "10.0", "0.2", "10.2"
+        ].join(" ")
+      }
+
+      let(:supplier1_cost_of_produce_line_items){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Cost of produce line items",
+          "Supplier1", "150.0", "6.25", "156.25"
+        ].join(" ")
+      }
+
+      let(:summary_row){
+        [
+          "TOTAL", "240.0", "10.09", "250.09"
+        ].join(" ")
+      }
+
+      it 'should list all the tax rates' do
+        login_as distributor_owner
+        visit admin_reports_path
+        click_on "Enterprise Fees With Tax Report By Producer"
+        expect(page).to have_button("Go")
+
+        click_on "Go"
+
+        expect(page.find("table.report__table thead tr")).to have_content(table_header)
+
+        table = page.find("table.report__table tbody")
+        expect(table).to have_content(admin_state_tax1)
+        expect(table).to have_content(admin_country_tax1)
+        expect(table).to have_content(transport_state_tax1)
+        expect(table).to have_content(transport_country_tax1)
+        expect(table).to have_content(packing_state_tax1)
+        expect(table).to have_content(packing_country_tax1)
+
+        expect(table).to have_content(admin_state_tax2)
+        expect(table).to have_content(transport_state_tax2)
+        expect(table).to have_content(packing_state_tax2)
+
+        expect(table).to have_content(supplier1_cost_of_produce_line_items)
+        expect(table).to have_content(summary_row)
+      end
+    end
+
+    context "included tax" do
+      before do
+        state_tax_rate.update!({ included_in_price: true })
+        country_tax_rate.update!({ included_in_price: true })
+        state_tax_rate2.update!({ included_in_price: true })
+
+        order.line_items.create({ variant:, quantity: 1, price: 100 })
+        order.update!({
+                        order_cycle_id: order_cycle.id,
+                        ship_address_id: ship_address.id
+                      })
+        order.recreate_all_fees!
+        while !order.completed?
+          break unless order.next!
+        end
+
+        # adds a line items to the order on oc2
+        order2.line_items.create({ variant:, quantity: 1, price: 50 })
+        order2.update!({
+                         order_cycle_id: order_cycle.id,
+                         ship_address_id: another_address.id
+                       })
+
+        order2.recreate_all_fees!
+        while !order2.completed?
+          break unless order2.next!
+        end
+      end
+
+      let(:admin_state_tax1){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Adminstration", "admin",
+          "Distributor", "tax_category", "State", "0.015", "19.21", "0.3", "19.51"
+        ].join(" ")
+      }
+      let(:admin_country_tax1){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Adminstration", "admin",
+          "Distributor", "tax_category", "Country", "0.025", "38.33", "0.98", "39.31"
+        ].join(" ")
+      }
+      let(:transport_state_tax1){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Transport", "transport",
+          "Supplier1", "tax_category", "State", "0.015", "14.41", "0.22", "14.63"
+        ].join(" ")
+      }
+      let(:transport_country_tax1){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Transport", "transport",
+          "Supplier1", "tax_category", "Country", "0.025", "28.75", "0.74", "29.49"
+        ].join(" ")
+      }
+      let(:packing_state_tax1){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Packing", "packing",
+          "Distributor", "tax_category", "State", "0.015", "9.61", "0.15", "9.76"
+        ].join(" ")
+      }
+      let(:packing_country_tax1){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Packing", "packing",
+          "Distributor", "tax_category", "Country", "0.025", "19.17", "0.48", "19.65"
+        ].join(" ")
+      }
+
+      let(:admin_state_tax2){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Adminstration", "admin",
+          "Distributor", "tax_category", "Another State Tax", "0.02", "19.12", "0.39", "19.51"
+        ].join(" ")
+      }
+      let(:transport_state_tax2){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Transport", "transport",
+          "Supplier1", "tax_category", "Another State Tax", "0.02", "14.34", "0.29", "14.63"
+        ].join(" ")
+      }
+      let(:packing_state_tax2){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Packing", "packing",
+          "Distributor", "tax_category", "Another State Tax", "0.02", "9.56", "0.2", "9.76"
+        ].join(" ")
+      }
+
+      let(:supplier1_cost_of_produce_line_items){
+        [
+          "Distributor", "Supplier1", "Yes", "oc1", "Cost of produce line items",
+          "Supplier1", "143.88", "6.12", "150.0"
+        ].join(" ")
+      }
+
+      let(:summary_row){
+        [
+          "TOTAL", "230.13", "9.87", "240.0"
+        ].join(" ")
+      }
+
+      it 'should list all the tax rates' do
+        login_as distributor_owner
+        visit admin_reports_path
+        click_on "Enterprise Fees With Tax Report By Producer"
+        expect(page).to have_button("Go")
+
+        click_on "Go"
+
+        expect(page.find("table.report__table thead tr")).to have_content(table_header)
+
+        table = page.find("table.report__table tbody")
+        expect(table).to have_content(admin_state_tax1)
+        expect(table).to have_content(admin_country_tax1)
+        expect(table).to have_content(transport_state_tax1)
+        expect(table).to have_content(transport_country_tax1)
+        expect(table).to have_content(packing_state_tax1)
+        expect(table).to have_content(packing_country_tax1)
+
+        expect(table).to have_content(admin_state_tax2)
+        expect(table).to have_content(transport_state_tax2)
+        expect(table).to have_content(packing_state_tax2)
+
+        expect(table).to have_content(supplier1_cost_of_produce_line_items)
+        expect(table).to have_content(summary_row)
+      end
+    end
+  end
 end
