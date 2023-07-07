@@ -12,21 +12,7 @@ module Reporting
         end
 
         def filter(orders)
-          filter_to_supplier filter_to_distributor filter_to_order_cycle orders
-        end
-
-        def filter_to_supplier(orders)
-          if params[:supplier_id].to_i > 0
-            orders.select do |order|
-              order.line_items.includes(:product)
-                .where("spree_products.supplier_id = ?", params[:supplier_id].to_i)
-                .references(:product)
-                .count
-                .positive?
-            end
-          else
-            orders
-          end
+          filter_to_distributor filter_to_order_cycle orders
         end
 
         def filter_to_distributor(orders)

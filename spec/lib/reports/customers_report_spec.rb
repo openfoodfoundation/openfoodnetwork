@@ -284,20 +284,6 @@ module Reporting
               expect(subject.filter(orders)).to eq(orders)
             end
 
-            it "returns orders with a specific supplier" do
-              supplier = create(:supplier_enterprise)
-              supplier2 = create(:supplier_enterprise)
-              product1 = create(:simple_product, supplier:)
-              product2 = create(:simple_product, supplier: supplier2)
-              order1 = create(:order)
-              order2 = create(:order)
-              order1.line_items << create(:line_item, product: product1)
-              order2.line_items << create(:line_item, product: product2)
-
-              allow(subject).to receive(:params).and_return(supplier_id: supplier.id)
-              expect(subject.filter(orders)).to eq([order1])
-            end
-
             it "filters to a specific distributor" do
               d1 = create(:distributor_enterprise)
               d2 = create(:distributor_enterprise)
