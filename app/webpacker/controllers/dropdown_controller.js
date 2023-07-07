@@ -4,8 +4,8 @@ export default class extends Controller {
   static targets = ["arrow", "menu"];
 
   connect() {
-    this.collapsedClass = this.arrowTarget.dataset.collapsedClass.split(" ");
-    this.expandedClass = this.arrowTarget.dataset.expandedClass.split(" ");
+    this.collapsedClasses = this.arrowTarget.dataset.collapsedClass.split(" ");
+    this.expandedClasses = this.arrowTarget.dataset.expandedClass.split(" ");
     this.#hide();
     document.addEventListener("click", this.#onBodyClick.bind(this));
   }
@@ -33,12 +33,12 @@ export default class extends Controller {
 
   #show() {
     this.menuTarget.classList.remove("hidden");
-    this.arrowTarget.classList.remove(...this.collapsedClass);
-    this.arrowTarget.classList.add(...this.expandedClass);
+    this.arrowTarget.classList.remove(...this.collapsedClasses);
+    this.arrowTarget.classList.add(...this.expandedClasses);
   }
   #hide() {
     this.menuTarget.classList.add("hidden");
-    this.arrowTarget.classList.remove(...this.expandedClass);
-    this.arrowTarget.classList.add(...this.collapsedClass);
+    this.arrowTarget.classList.remove(...this.expandedClasses);
+    this.arrowTarget.classList.add(...this.collapsedClasses);
   }
 }
