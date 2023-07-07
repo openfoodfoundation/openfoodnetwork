@@ -2912,6 +2912,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   hub_sidebar_red: "red"
   order_cycles_closed_for_hub: "The hub you have selected is temporarily closed for orders. Please try again later."
   report_customers_distributor: "Distributor"
+  report_customers_hub: "Hub"
   report_customers_supplier: "Supplier"
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"
