@@ -45,9 +45,7 @@ module Reporting
         OpenStruct.new(item: item, full_row: row, row: @builder.slice_and_format_row(row))
       }
 
-      if @report.skip_duplicate_rows?
-        @computed_data = @computed_data.uniq { |data| data.row.to_h.values }
-      end
+      @computed_data.uniq! { |data| data.row.to_h.values } if @report.skip_duplicate_rows?
 
       @computed_data
     end
