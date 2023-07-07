@@ -497,8 +497,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           end
 
           it "should filter by distributor and order cycle" do
-            pending("incorrect totals for orders with more than one supplier")
-
             page.find("#s2id_autogen1").click
             find('li', text: distributor.name).click # selects Distributor
 
