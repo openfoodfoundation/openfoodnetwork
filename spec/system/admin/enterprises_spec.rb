@@ -822,4 +822,170 @@ describe '
       end
     end
   end
+
+  context "changing package" do
+    let!(:owner) { create(:user) }
+    let!(:enterprise) { create(:distributor_enterprise, owner: owner, is_primary_producer: true) }
+    before do
+      login_as owner
+    end
+
+    context "via admin path, for a producer" do
+      before do
+        visit spree.admin_dashboard_path
+      end
+
+      it "changes user role" do
+        click_button "Change Package"
+
+        # checks options for producer profile
+        expect(page).to have_content "PRODUCER PROFILE"
+        expect(page).to have_content "PRODUCER SHOP"
+        expect(page).to have_content "PRODUCER HUB"
+        expect(page).not_to have_content "PROFILE ONLY"
+        expect(page).not_to have_content "HUB SHOP"
+
+        # Producer hub option is selected
+        page.find('a', class: 'selected', text: "PRODUCER HUB")
+        expect(enterprise.is_primary_producer).to eq true
+        expect(enterprise.reload.sells).to eq('any')
+
+        # Displays the correct dashboard sections
+        assert_hub_menu
+        assert_hub_content
+
+        # Changes to producer shop
+        page.find('a', text: "PRODUCER SHOP").click
+        click_button "Change now"
+        expect(page).to have_content update_message
+
+        # Checks changes are persistent
+        click_button "Change Package"
+
+        page.find('a', class: 'selected', text: "PRODUCER SHOP")
+        expect(enterprise.is_primary_producer).to eq true
+        expect(enterprise.reload.sells).to eq('own')
+
+        # Displays the correct dashboard sections
+        assert_hub_menu
+        assert_hub_content
+
+        # Changes to producer profile
+        page.find('a', text: "PRODUCER PROFILE").click
+        click_button "Change now"
+        expect(page).to have_content update_message
+
+        # Checks changes are persistent
+        click_button "Change Package"
+
+        page.find('a', class: 'selected', text: "PRODUCER PROFILE")
+        expect(enterprise.is_primary_producer).to eq true
+        expect(enterprise.reload.sells).to eq('none')
+
+        # Displays the correct dashboard sections
+        assert_supplier_menu
+        assert_supplier_content
+      end
+    end
+
+    context "via admin path, for a non-producer" do
+      before do
+        enterprise.update!(is_primary_producer: false)
+        visit spree.admin_dashboard_path
+      end
+
+      it "changes user role" do
+        click_button "Change Package"
+
+        # checks options for non-producer profile
+        expect(page).not_to have_content "PRODUCER PROFILE"
+        expect(page).not_to have_content "PRODUCER SHOP"
+        expect(page).not_to have_content "PRODUCER HUB"
+        expect(page).to have_content "PROFILE ONLY"
+        expect(page).to have_content "HUB SHOP"
+
+        # Producer hub option is selected
+        page.find('a', class: 'selected', text: "HUB SHOP")
+        expect(enterprise.reload.is_primary_producer).to eq false
+        expect(enterprise.reload.producer_profile_only).to eq false
+
+        # Displays the correct dashboard sections
+        assert_hub_menu
+        assert_hub_content
+
+        # Changes to producer shop
+        page.find('a', text: "PROFILE ONLY").click
+        click_button "Change now"
+        expect(page).to have_content update_message
+
+        # Checks changes are persistent
+        click_button "Change Package"
+
+        page.find('a', class: 'selected', text: "PROFILE ONLY")
+        expect(enterprise.reload.is_primary_producer).to eq false
+        expect(enterprise.reload.producer_profile_only).to eq false # this should be true?
+
+        # Displays the correct dashboard sections
+        assert_profile
+      end
+    end
+  end
+end
+
+def update_message
+  %(Congratulations! Registration for #{enterprise.name} is complete!)
+end
+
+def assert_hub_menu
+  within "#admin-menu" do
+    expect(page).to have_content "DASHBOARD"
+    expect(page).to have_content "PRODUCTS"
+    expect(page).to have_content "ORDER CYCLES"
+    expect(page).to have_content "ORDERS"
+    expect(page).to have_content "REPORTS"
+    expect(page).to have_content "ENTERPRISES"
+    expect(page).to have_content "CUSTOMERS"
+  end
+end
+
+def assert_hub_content
+  within "#content" do
+    expect(page).to have_content "Your profile live"
+    expect(page).to have_content "Edit profile details"
+    expect(page).to have_content "Add & manage products"
+    expect(page).to have_content "Add & manage order cycles"
+  end
+end
+
+def assert_supplier_menu
+  within "#admin-menu" do
+    expect(page).to have_content "DASHBOARD"
+    expect(page).to have_content "PRODUCTS"
+    expect(page).not_to have_content "ORDER CYCLES"
+    expect(page).not_to have_content "ORDERS"
+    expect(page).to have_content "REPORTS"
+    expect(page).to have_content "ENTERPRISES"
+    expect(page).not_to have_content "CUSTOMERS"
+  end
+end
+
+def assert_supplier_content
+  within "#content" do
+    expect(page).to have_content "Your profile live"
+    expect(page).to have_content "Edit profile details"
+    expect(page).to have_content "Add & manage products"
+    expect(page).not_to have_content "Add & manage order cycles"
+  end
+end
+
+def assert_profile
+  within "#admin-menu" do
+    expect(page).to have_content "DASHBOARD"
+    expect(page).to have_content "ENTERPRISES"
+  end
+
+  within "#content" do
+    expect(page).to have_content "Your profile live"
+    expect(page).to have_content "Edit profile details"
+  end
 end
