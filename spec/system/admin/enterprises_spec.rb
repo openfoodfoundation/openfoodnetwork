@@ -929,6 +929,125 @@ describe '
         assert_profile
       end
     end
+
+    context "via enterprises path, for a producer" do
+      before do
+        visit admin_enterprises_path
+      end
+
+      it "sees and changes user role" do
+        page.find("td.package").click
+
+        # checks options for producer profile
+        expect(page).to have_content "PROFILE ONLY"
+        expect(page).to have_content "PRODUCER SHOP"
+        expect(page).to have_content "PRODUCER HUB"
+        expect(page).not_to have_content "HUB SHOP"
+
+        # Producer hub option is selected
+        page.find('a', class: 'selected', text: "PRODUCER HUB")
+        expect(enterprise.is_primary_producer).to eq true
+        expect(enterprise.reload.sells).to eq('any')
+
+        # Displays the correct dashboard sections
+        assert_hub_menu
+
+        # Changes to producer shop
+        page.find('a', text: "PRODUCER SHOP").click
+        page.find('a', text: "SAVE").click
+
+        # Checks changes are persistent
+        page.find('a', class: 'selected', text: "PRODUCER SHOP")
+
+        # updates page
+        page.refresh
+
+        # Displays the correct dashboard sections
+        assert_hub_menu
+        expect(enterprise.reload.sells).to eq('own')
+        expect(enterprise.is_primary_producer).to eq true
+
+        # Changes to producer profile
+        page.find("td.package").click
+        page.find('a', text: "PROFILE ONLY").click
+        page.find('a', text: "SAVE").click
+
+        # Checks changes are persistent
+        page.find('a', class: 'selected', text: "PROFILE ONLY")
+
+        # updates page
+        page.refresh
+
+        # Displays the correct dashboard sections
+        assert_supplier_menu
+        expect(enterprise.reload.sells).to eq('none')
+        expect(enterprise.reload.is_primary_producer).to eq true
+      end
+    end
+
+    context "via enterprises path, for a non-producer" do
+      before do
+        visit admin_enterprises_path
+      end
+
+      it "sees and changes user role" do
+        # changes to non-producer profile
+        page.find("td.producer").click
+
+        # checks options for producer profile
+        expect(page).to have_content "PRODUCER"
+        expect(page).to have_content "NON-PRODUCER"
+
+        # Producer hub option is selected
+        page.find('a', class: 'selected', text: "PRODUCER")
+        expect(enterprise.is_primary_producer).to eq true
+        expect(enterprise.reload.sells).to eq('any')
+
+        # Changes to non-producer
+        page.find('a', text: "NON-PRODUCER").click
+        page.find('a', text: "SAVE").click
+
+        # updates page
+        page.refresh
+
+        # Displays the correct dashboard sections
+        assert_hub_menu
+
+        page.find("td.package").click
+
+        # checks options for non-producer profile
+        expect(page).not_to have_content "PRODUCER PROFILE"
+        expect(page).not_to have_content "PRODUCER SHOP"
+        expect(page).not_to have_content "PRODUCER HUB"
+        expect(page).to have_content "PROFILE ONLY"
+        expect(page).to have_content "HUB SHOP"
+
+        # Producer hub option is selected
+        page.find('a', class: 'selected', text: "HUB SHOP")
+        expect(enterprise.reload.is_primary_producer).to eq false
+        expect(enterprise.reload.sells).to eq('any')
+
+        # Changes to producer shop
+        page.find('a', text: "PROFILE ONLY").click
+        page.find('a', text: "SAVE").click
+
+        # updates page
+        page.refresh
+
+        # Checks changes are persistent
+        page.find("td.package").click
+        page.find('a', class: 'selected', text: "PROFILE ONLY")
+
+        # Displays the correct dashboard sections
+        within "#admin-menu" do
+          expect(page).to have_content "DASHBOARD"
+          expect(page).to have_content "ENTERPRISES"
+        end
+
+        expect(enterprise.reload.is_primary_producer).to eq false
+        expect(enterprise.reload.sells).to eq('none')
+      end
+    end
   end
 end
 
