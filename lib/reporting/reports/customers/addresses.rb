@@ -18,6 +18,7 @@ module Reporting
           end.values
         end
 
+        # rubocop:disable Metrics/AbcSize
         def columns
           {
             first_name: proc { |orders| orders.first.billing_address.firstname },
@@ -30,6 +31,7 @@ module Reporting
             shipping_method: proc { |orders| orders.first.shipping_method&.name },
           }
         end
+        # rubocop:enable Metrics/AbcSize
 
         def skip_duplicate_rows?
           true
