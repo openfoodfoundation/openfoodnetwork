@@ -12,7 +12,19 @@ module Reporting
         end
 
         def filter(orders)
-          filter_to_distributor filter_to_order_cycle orders
+          filter_to_completed_at filter_to_distributor filter_to_order_cycle orders
+        end
+
+        def filter_to_completed_at(orders)
+          if params[:q] &&
+             params[:q][:completed_at_gt].present? &&
+             params[:q][:completed_at_lt].present?
+            orders.where("completed_at >= ? AND completed_at <= ?",
+                         params[:q][:completed_at_gt],
+                         params[:q][:completed_at_lt])
+          else
+            orders
+          end
         end
 
         def filter_to_distributor(orders)
