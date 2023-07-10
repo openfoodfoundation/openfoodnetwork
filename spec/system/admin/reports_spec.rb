@@ -38,9 +38,7 @@ describe '
 
     it "can run the customers report" do
       login_as_admin
-      visit admin_report_path(
-        report_type: :customers, report_subtype: :addresses
-      )
+      visit admin_report_path(report_type: :customers)
       generate_report
 
       expect(page).to have_selector "#report-table"
@@ -63,9 +61,7 @@ describe '
 
       # Run the report:
       login_as_admin
-      visit admin_report_path(
-        report_type: :customers, report_subtype: :addresses
-      )
+      visit admin_report_path(report_type: :customers)
       generate_report
       expect(page).to have_content "Späti"
       expect(page).to have_content "FIRST NAME LAST NAME BILLING ADDRESS EMAIL"
@@ -74,9 +70,7 @@ describe '
 
     it "displays a friendly timeout message and offers download" do
       login_as_admin
-      visit admin_report_path(
-        report_type: :customers, report_subtype: :addresses
-      )
+      visit admin_report_path(report_type: :customers)
       stub_const("ReportJob::NOTIFICATION_TIME", 0)
 
       generate_report
@@ -112,9 +106,7 @@ describe '
 
     it "allows the report to finish before the loading screen is rendered" do
       login_as_admin
-      visit admin_report_path(
-        report_type: :customers, report_subtype: :addresses
-      )
+      visit admin_report_path(report_type: :customers)
 
       # The controller wants to execute the ReportJob in the background.
       # But we change the logic here, execute it immediately and then wait
@@ -155,7 +147,9 @@ describe '
     end
 
     it "customers report" do
-      click_link "Addresses"
+      within "table.index" do
+        click_link "Customers"
+      end
       click_button "Go"
 
       rows = find("table.report__table").all("thead tr")

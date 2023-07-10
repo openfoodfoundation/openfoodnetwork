@@ -260,12 +260,6 @@ describe Admin::ReportsController, type: :controller do
   context "My Customers" do
     before { controller_login_as_admin }
 
-    it "should have report types for customers" do
-      expect(subject.reports[:customers]).to eq([
-                                                  ["Addresses", :addresses]
-                                                ])
-    end
-
     context "with distributors and suppliers" do
       let(:distributors) { [coordinator1, distributor1, distributor2] }
       let(:suppliers) { [supplier1, supplier2] }

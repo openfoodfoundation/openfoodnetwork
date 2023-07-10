@@ -15,8 +15,6 @@ module Reporting
           subject { Base.new user, {} }
 
           describe "addresses report" do
-            subject { Addresses.new user, {} }
-
             it "returns headers for addresses" do
               expect(subject.table_headers).to eq(["First Name", "Last Name", "Billing Address",
                                                    "Email", "Phone", "Hub", "Hub Address",
@@ -121,7 +119,7 @@ module Reporting
                     [:first_name, :last_name, :billing_address, :email, :phone, :hub, :hub_address,
                      :shipping_method, :total_orders, :total_incl_tax, :last_completed_order_date]
                   end
-                  subject { Addresses.new(user, { fields_to_show: }) }
+                  subject { Base.new(user, { fields_to_show: }) }
 
                   it "returns one row per customer per shipping method" do
                     expect(subject.query_result.size).to eq(2)
@@ -157,7 +155,7 @@ module Reporting
                   let(:fields_to_show) do
                     [:first_name, :last_name, :billing_address, :email, :phone, :hub, :hub_address]
                   end
-                  subject { Addresses.new(user, { fields_to_show: }) }
+                  subject { Base.new(user, { fields_to_show: }) }
 
                   it "returns a single row for the customer, otherwise it would return two identical
                       rows" do
@@ -184,13 +182,13 @@ module Reporting
             it "fetches completed orders" do
               o1 = create(:order)
               o2 = create(:order, completed_at: 1.day.ago)
-              expect(subject.query_result).to eq([o2])
+              expect(subject.query_result).to eq([[o2]])
             end
 
             it "does not show cancelled orders" do
               o1 = create(:order, state: "canceled", completed_at: 1.day.ago)
               o2 = create(:order, completed_at: 1.day.ago)
-              expect(subject.query_result).to eq([o2])
+              expect(subject.query_result).to eq([[o2]])
             end
           end
         end
@@ -220,7 +218,7 @@ module Reporting
               o2 = create(:order, distributor: d2, completed_at: 1.day.ago)
 
               expect(subject).to receive(:filter).with([o1]).and_return([o1])
-              expect(subject.query_result).to eq([o1])
+              expect(subject.query_result).to eq([[o1]])
             end
 
             it "does not show orders through a hub that the current user does not manage" do

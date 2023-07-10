@@ -1530,7 +1530,6 @@ en:
       all_products: All products
       inventory: Inventory (on hand)
       lettuce_share: LettuceShare
-      addresses: Addresses
       payment_methods: Payment Methods Report
       delivery: Delivery Report
       sales_tax_totals_by_producer: Sales Tax Totals By Producer

@@ -13,7 +13,7 @@ module Reporting
           bulk_coop: bulk_coop_report_types,
           payments: payments_report_types,
           orders_and_fulfillment: orders_and_fulfillment_report_types,
-          customers: customers_report_types,
+          customers: [],
           products_and_inventory: products_and_inventory_report_types,
           users_and_enterprises: [],
           enterprise_fee_summary:,
@@ -50,12 +50,6 @@ module Reporting
           [I18n.t(:report_payment_by), :payments_by_payment_type],
           [I18n.t(:report_itemised_payment), :itemised_payment_totals],
           [I18n.t(:report_payment_totals), :payment_totals]
-        ]
-      end
-
-      def customers_report_types
-        [
-          [i18n_translate("addresses"), :addresses]
         ]
       end
 
