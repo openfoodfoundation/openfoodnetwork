@@ -19,6 +19,7 @@ module Reporting
         end
 
         # rubocop:disable Metrics/AbcSize
+        # rubocop:disable Metrics/CyclomaticComplexity
         def columns
           {
             first_name: proc { |orders| orders.first.billing_address.firstname },
@@ -31,9 +32,13 @@ module Reporting
             shipping_method: proc { |orders| orders.first.shipping_method&.name },
             total_orders: proc { |orders| orders.count },
             total_incl_tax: proc { |orders| orders.sum(&:total) },
+            last_completed_order_date: proc { |orders|
+                                         orders.max_by(&:completed_at)&.completed_at&.to_date
+                                       },
           }
         end
         # rubocop:enable Metrics/AbcSize
+        # rubocop:enable Metrics/CyclomaticComplexity
 
         def skip_duplicate_rows?
           true

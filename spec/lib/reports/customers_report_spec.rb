@@ -65,7 +65,8 @@ module Reporting
             it "returns headers for addresses" do
               expect(subject.table_headers).to eq(["First Name", "Last Name", "Billing Address",
                                                    "Email", "Phone", "Hub", "Hub Address",
-                                                   "Shipping Method", "Total Number of Orders", "Total incl. tax ($)"])
+                                                   "Shipping Method", "Total Number of Orders", "Total incl. tax ($)",
+                                                   "Last completed order date"])
             end
 
             it "builds a table from a list of variants" do
@@ -81,7 +82,7 @@ module Reporting
                                                  o.email, a.phone, d.name,
                                                  [d.address.address1, d.address.address2,
                                                   d.address.city].join(" "),
-                                                 o.shipping_method.name, 1, o.total
+                                                 o.shipping_method.name, 1, o.total, "none"
                                                ]])
             end
 
@@ -100,12 +101,14 @@ module Reporting
                                                                         shipping_method: sm)
               }
               before do
+                o1.update(completed_at: Time.zone.yesterday)
+                o2.update(completed_at: Time.zone.today)
                 [o1, o2].each do |order|
                   order.update!(email: "test@test.com")
                 end
               end
 
-              it "returns only one row per customer and count the number of orders" do
+              it "returns only one row per customer with the right data" do
                 expect(subject.query_result).to match_array [[o1, o2]]
                 expect(subject.table_rows.size).to eq(1)
                 expect(subject.table_rows)
@@ -114,7 +117,7 @@ module Reporting
                            [a.address1, a.address2, a.city].join(" "),
                            o1.email, a.phone, d.name,
                            [d.address.address1, d.address.address2, d.address.city].join(" "),
-                           o1.shipping_method.name, 2, o1.total + o2.total
+                           o1.shipping_method.name, 2, o1.total + o2.total, o2.completed_at.strftime("%Y-%m-%d")
                          ]])
               end
 
@@ -136,13 +139,13 @@ module Reporting
                              [a.address1, a.address2, a.city].join(" "),
                              o1.email, a.phone, d.name,
                              [d.address.address1, d.address.address2, d.address.city].join(" "),
-                             o1.shipping_method.name, 1, o1.total
+                             o1.shipping_method.name, 1, o1.total, o1.completed_at.strftime("%Y-%m-%d")
                            ], [
                              a.firstname, a.lastname,
                              [a.address1, a.address2, a.city].join(" "),
                              o2.email, a.phone, d2.name,
                              [d2.address.address1, d2.address.address2, d2.address.city].join(" "),
-                             o2.shipping_method.name, 1, o2.total
+                             o2.shipping_method.name, 1, o2.total, o2.completed_at.strftime("%Y-%m-%d")
                            ]])
                 end
               end
@@ -161,7 +164,7 @@ module Reporting
                 context "when the shipping method column is being included" do
                   let(:fields_to_show) do
                     [:first_name, :last_name, :billing_address, :email, :phone, :hub, :hub_address,
-                     :shipping_method, :total_orders, :total_incl_tax]
+                     :shipping_method, :total_orders, :total_incl_tax, :last_completed_order_date]
                   end
                   subject { Addresses.new(user, { fields_to_show: }) }
 
@@ -178,7 +181,7 @@ module Reporting
                           a.phone,
                           d.name,
                           [d.address.address1, d.address.address2, d.address.city].join(" "),
-                          o1.shipping_method.name, 1, o1.total
+                          o1.shipping_method.name, 1, o1.total, o1.completed_at.strftime("%Y-%m-%d")
                         ],
                         [
                           a.firstname,
@@ -188,7 +191,7 @@ module Reporting
                           a.phone,
                           d.name,
                           [d.address.address1, d.address.address2, d.address.city].join(" "),
-                          sm2.name, 1, o2.total
+                          sm2.name, 1, o2.total, o2.completed_at.strftime("%Y-%m-%d")
                         ]
                       ]
                     )

@@ -173,7 +173,8 @@ describe '
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address",
-         "Shipping Method", "Total Number of Orders", "Total incl. tax ($)"].map(&:upcase)
+         "Shipping Method", "Total Number of Orders", "Total incl. tax ($)",
+         "Last completed order date"].map(&:upcase)
       ].sort)
     end
   end
