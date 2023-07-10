@@ -29,6 +29,7 @@ module Reporting
             hub: proc { |orders| orders.first.distributor&.name },
             hub_address: proc { |orders| orders.first.distributor&.address&.address_and_city },
             shipping_method: proc { |orders| orders.first.shipping_method&.name },
+            total_orders: proc { |orders| orders.count },
           }
         end
         # rubocop:enable Metrics/AbcSize
