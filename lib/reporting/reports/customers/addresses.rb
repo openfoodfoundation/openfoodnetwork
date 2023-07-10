@@ -30,6 +30,7 @@ module Reporting
             hub_address: proc { |orders| orders.first.distributor&.address&.address_and_city },
             shipping_method: proc { |orders| orders.first.shipping_method&.name },
             total_orders: proc { |orders| orders.count },
+            total_incl_tax: proc { |orders| orders.sum(&:total) },
           }
         end
         # rubocop:enable Metrics/AbcSize

@@ -65,7 +65,7 @@ module Reporting
             it "returns headers for addresses" do
               expect(subject.table_headers).to eq(["First Name", "Last Name", "Billing Address",
                                                    "Email", "Phone", "Hub", "Hub Address",
-                                                   "Shipping Method", "Total Number of Orders"])
+                                                   "Shipping Method", "Total Number of Orders", "Total incl. tax ($)"])
             end
 
             it "builds a table from a list of variants" do
@@ -81,7 +81,7 @@ module Reporting
                                                  o.email, a.phone, d.name,
                                                  [d.address.address1, d.address.address2,
                                                   d.address.city].join(" "),
-                                                 o.shipping_method.name, 1
+                                                 o.shipping_method.name, 1, o.total
                                                ]])
             end
 
@@ -114,7 +114,7 @@ module Reporting
                            [a.address1, a.address2, a.city].join(" "),
                            o1.email, a.phone, d.name,
                            [d.address.address1, d.address.address2, d.address.city].join(" "),
-                           o1.shipping_method.name, 2
+                           o1.shipping_method.name, 2, o1.total + o2.total
                          ]])
               end
 
@@ -136,13 +136,13 @@ module Reporting
                              [a.address1, a.address2, a.city].join(" "),
                              o1.email, a.phone, d.name,
                              [d.address.address1, d.address.address2, d.address.city].join(" "),
-                             o1.shipping_method.name, 1
+                             o1.shipping_method.name, 1, o1.total
                            ], [
                              a.firstname, a.lastname,
                              [a.address1, a.address2, a.city].join(" "),
                              o2.email, a.phone, d2.name,
                              [d2.address.address1, d2.address.address2, d2.address.city].join(" "),
-                             o2.shipping_method.name, 1
+                             o2.shipping_method.name, 1, o2.total
                            ]])
                 end
               end
@@ -161,7 +161,7 @@ module Reporting
                 context "when the shipping method column is being included" do
                   let(:fields_to_show) do
                     [:first_name, :last_name, :billing_address, :email, :phone, :hub, :hub_address,
-                     :shipping_method, :total_orders]
+                     :shipping_method, :total_orders, :total_incl_tax]
                   end
                   subject { Addresses.new(user, { fields_to_show: }) }
 
@@ -178,7 +178,7 @@ module Reporting
                           a.phone,
                           d.name,
                           [d.address.address1, d.address.address2, d.address.city].join(" "),
-                          o1.shipping_method.name, 1
+                          o1.shipping_method.name, 1, o1.total
                         ],
                         [
                           a.firstname,
@@ -188,7 +188,7 @@ module Reporting
                           a.phone,
                           d.name,
                           [d.address.address1, d.address.address2, d.address.city].join(" "),
-                          sm2.name, 1
+                          sm2.name, 1, o2.total
                         ]
                       ]
                     )
