@@ -74,7 +74,7 @@ module Reporting
               o = create(:order, distributor: d, bill_address: a)
               o.shipments << create(:shipment)
 
-              allow(subject).to receive(:query_result).and_return [o]
+              allow(subject).to receive(:query_result).and_return [[o]]
               expect(subject.table_rows).to eq([[
                                                  a.firstname, a.lastname,
                                                  [a.address1, a.address2, a.city].join(" "),
@@ -106,7 +106,7 @@ module Reporting
               end
 
               it "returns only one row per customer" do
-                expect(subject.query_result).to match_array [o1]
+                expect(subject.query_result).to match_array [[o1, o2]]
                 expect(subject.table_rows.size).to eq(1)
                 expect(subject.table_rows)
                   .to eq([[
