@@ -14,51 +14,6 @@ module Reporting
           end
           subject { Base.new user, {} }
 
-          describe "mailing list report" do
-            subject { MailingList.new user, {} }
-
-            it "returns headers for mailing_list" do
-              expect(subject.table_headers).to eq(["Email", "First Name", "Last Name", "Suburb"])
-            end
-
-            it "builds a table from a list of variants" do
-              order = double(:order, email: "test@test.com")
-              address = double(:billing_address, firstname: "Firsty",
-                                                 lastname: "Lasty", city: "Suburbia")
-              allow(order).to receive(:billing_address).and_return address
-              allow(subject).to receive(:query_result).and_return [order]
-
-              expect(subject.table_rows).to eq([[
-                                                 "test@test.com", "Firsty", "Lasty", "Suburbia"
-                                               ]])
-            end
-
-            context "when there are multiple orders for the same customer" do
-              let!(:address) {
-                create(:bill_address, firstname: "Firsty",
-                                      lastname: "Lasty", city: "Suburbia")
-              }
-              let!(:order1) {
-                create(:order_with_totals_and_distribution, :completed, bill_address: address)
-              }
-              let!(:order2) {
-                create(:order_with_totals_and_distribution, :completed, bill_address: address)
-              }
-              before do
-                [order1, order2].each do |order|
-                  order.update!(email: "test@test.com")
-                end
-              end
-              it "returns only one row per customer" do
-                expect(subject.query_result).to match_array [order1]
-                expect(subject.table_rows.size).to eq(1)
-                expect(subject.table_rows).to eq([[
-                                                   "test@test.com", "Firsty", "Lasty", "Suburbia"
-                                                 ]])
-              end
-            end
-          end
-
           describe "addresses report" do
             subject { Addresses.new user, {} }
 

@@ -55,7 +55,6 @@ module Reporting
 
       def customers_report_types
         [
-          [i18n_translate("mailing_list"), :mailing_list],
           [i18n_translate("addresses"), :addresses]
         ]
       end

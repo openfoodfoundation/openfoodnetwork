@@ -262,7 +262,6 @@ describe Admin::ReportsController, type: :controller do
 
     it "should have report types for customers" do
       expect(subject.reports[:customers]).to eq([
-                                                  ["Mailing List", :mailing_list],
                                                   ["Addresses", :addresses]
                                                 ])
     end

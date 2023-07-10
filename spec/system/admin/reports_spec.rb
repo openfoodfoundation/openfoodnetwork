@@ -39,12 +39,12 @@ describe '
     it "can run the customers report" do
       login_as_admin
       visit admin_report_path(
-        report_type: :customers, report_subtype: :mailing_list
+        report_type: :customers, report_subtype: :addresses
       )
       generate_report
 
       expect(page).to have_selector "#report-table"
-      expect(page).to have_content "EMAIL FIRST NAME"
+      expect(page).to have_content "FIRST NAME LAST NAME BILLING ADDRESS EMAIL"
     end
 
     it "renders UTF-8 characters" do
@@ -64,18 +64,18 @@ describe '
       # Run the report:
       login_as_admin
       visit admin_report_path(
-        report_type: :customers, report_subtype: :mailing_list
+        report_type: :customers, report_subtype: :addresses
       )
       generate_report
       expect(page).to have_content "Späti"
-      expect(page).to have_content "EMAIL FIRST NAME"
+      expect(page).to have_content "FIRST NAME LAST NAME BILLING ADDRESS EMAIL"
       expect(page).to have_content "Müller"
     end
 
     it "displays a friendly timeout message and offers download" do
       login_as_admin
       visit admin_report_path(
-        report_type: :customers, report_subtype: :mailing_list
+        report_type: :customers, report_subtype: :addresses
       )
       stub_const("ReportJob::NOTIFICATION_TIME", 0)
 
@@ -113,7 +113,7 @@ describe '
     it "allows the report to finish before the loading screen is rendered" do
       login_as_admin
       visit admin_report_path(
-        report_type: :customers, report_subtype: :mailing_list
+        report_type: :customers, report_subtype: :addresses
       )
 
       # The controller wants to execute the ReportJob in the background.
@@ -130,7 +130,7 @@ describe '
       click_button "Go"
 
       expect(page).to have_selector "#report-table table"
-      expect(page).to have_content "EMAIL FIRST NAME"
+      expect(page).to have_content "FIRST NAME LAST NAME BILLING ADDRESS EMAIL"
 
       # Now that we see the report, we need to make sure that it's not replaced
       # by the "loading" spinner when the controller action finishes.
@@ -152,17 +152,6 @@ describe '
     before do
       login_as_admin
       visit admin_reports_path
-    end
-
-    it "customers report" do
-      click_link "Mailing List"
-      click_button "Go"
-
-      rows = find("table.report__table").all("thead tr")
-      table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-      expect(table.sort).to eq([
-        ["Email", "First Name", "Last Name", "Suburb"].map(&:upcase)
-      ].sort)
     end
 
     it "customers report" do
