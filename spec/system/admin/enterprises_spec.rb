@@ -847,7 +847,7 @@ describe '
 
         # Producer hub option is selected
         page.find('a', class: 'selected', text: "PRODUCER HUB")
-        expect(enterprise.is_primary_producer).to eq true
+        expect(enterprise.reload.is_primary_producer).to eq true
         expect(enterprise.reload.sells).to eq('any')
 
         # Displays the correct dashboard sections
@@ -863,7 +863,7 @@ describe '
         click_button "Change Package"
 
         page.find('a', class: 'selected', text: "PRODUCER SHOP")
-        expect(enterprise.is_primary_producer).to eq true
+        expect(enterprise.reload.is_primary_producer).to eq true
         expect(enterprise.reload.sells).to eq('own')
 
         # Displays the correct dashboard sections
@@ -879,8 +879,17 @@ describe '
         click_button "Change Package"
 
         page.find('a', class: 'selected', text: "PRODUCER PROFILE")
-        expect(enterprise.is_primary_producer).to eq true
+
+        # a primary producer:
+        expect(enterprise.reload.is_primary_producer).to eq true
+
+        # which is not selling:
         expect(enterprise.reload.sells).to eq('none')
+
+        # then, this should imply
+        # producer_profile_only to be true
+        # this probably relates to issue #7835
+        expect(enterprise.reload.producer_profile_only).to eq false
 
         # Displays the correct dashboard sections
         assert_supplier_menu
@@ -923,7 +932,7 @@ describe '
 
         page.find('a', class: 'selected', text: "PROFILE ONLY")
         expect(enterprise.reload.is_primary_producer).to eq false
-        expect(enterprise.reload.producer_profile_only).to eq false # this should be true?
+        expect(enterprise.reload.producer_profile_only).to eq false
 
         # Displays the correct dashboard sections
         assert_profile
@@ -980,8 +989,17 @@ describe '
 
         # Displays the correct dashboard sections
         assert_supplier_menu
-        expect(enterprise.reload.sells).to eq('none')
+
+        # a primary producer:
         expect(enterprise.reload.is_primary_producer).to eq true
+
+        # which is not selling:
+        expect(enterprise.reload.sells).to eq('none')
+
+        # then, this should imply
+        # producer_profile_only to be true
+        # this probably relates to issue #7835
+        expect(enterprise.reload.producer_profile_only).to eq false
       end
     end
 
