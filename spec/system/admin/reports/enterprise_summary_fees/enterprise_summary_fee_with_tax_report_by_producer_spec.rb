@@ -22,13 +22,14 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
   let!(:state_zone){ create(:zone_with_state_member) }
   let!(:country_zone){ create(:zone_with_member) }
   let!(:tax_category){ create(:tax_category, name: 'tax_category') }
+  let(:included_in_price) { false }
   let!(:state_tax_rate){
     create(:tax_rate, zone: state_zone, tax_category:,
-                      name: 'State', amount: 0.015)
+                      name: 'State', amount: 0.015, included_in_price:)
   }
   let!(:country_tax_rate){
     create(:tax_rate, zone: country_zone, tax_category:,
-                      name: 'Country', amount: 0.025)
+                      name: 'Country', amount: 0.025, included_in_price:)
   }
   let!(:ship_address){ create(:ship_address) }
 
@@ -604,10 +605,9 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     #     - line items       (100) 1.5% = 1.50, 2.5% = 2.50
     #     - line items        (50) 1.5% = 1.50, 2.5% = 2.50
 
-    before do
-      state_tax_rate.update!({ included_in_price: true })
-      country_tax_rate.update!({ included_in_price: true })
+    let(:included_in_price) { true }
 
+    before do
       # adds a line items to the order on oc1
       order.line_items.create({ variant:, quantity: 1, price: 100 })
       order.update!({
@@ -774,7 +774,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
     let!(:state_tax_rate2){
       create(:tax_rate, zone: state_zone2, tax_category:,
-                        name: 'Another State Tax', amount: 0.02)
+                        name: 'Another State Tax', amount: 0.02, included_in_price:)
     }
 
     context "added tax" do
@@ -898,11 +898,9 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     end
 
     context "included tax" do
-      before do
-        state_tax_rate.update!({ included_in_price: true })
-        country_tax_rate.update!({ included_in_price: true })
-        state_tax_rate2.update!({ included_in_price: true })
+      let(:included_in_price) { true }
 
+      before do
         order.line_items.create({ variant:, quantity: 1, price: 100 })
         order.update!({
                         order_cycle_id: order_cycle.id,
