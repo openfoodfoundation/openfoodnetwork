@@ -48,7 +48,13 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
   let!(:variant2){ create(:variant, product_id: product2.id, tax_category:) }
   let!(:distributor_owner) { create(:user, enterprise_limit: 1) }
   let!(:distributor){
-    create(:distributor_enterprise_with_tax, name: 'Distributor', owner_id: distributor_owner.id)
+    distributor = create(:distributor_enterprise_with_tax, name: 'Distributor',
+                                                           owner_id: distributor_owner.id)
+
+    distributor.shipping_methods << shipping_method
+    distributor.payment_methods << payment_method
+
+    distributor
   }
   let!(:payment_method){ create(:payment_method, :flat_rate) }
   let!(:shipping_method){ create(:shipping_method, :flat_rate) }
@@ -133,9 +139,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
   let!(:order2) { create(:order_with_distributor, distributor:) }
 
   before do
-    distributor.shipping_methods << shipping_method
-    distributor.payment_methods << payment_method
-
     product.update!({
                       tax_category_id: tax_category.id,
                       supplier_id: supplier.id
