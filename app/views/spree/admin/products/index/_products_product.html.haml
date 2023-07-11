@@ -16,7 +16,7 @@
     %input{ 'ng-model' => 'product.master.unit_value_with_description', :name => 'master_unit_value_with_description', 'ofn-track-master' => 'unit_value_with_description', :type => 'text', :placeholder => 'value', 'ng-show' => "!hasVariants(product) && hasUnit(product)", 'ofn-maintain-unit-scale' => true }
     %input{ 'ng-model' => 'product.variant_unit_name', :name => 'variant_unit_name', 'ofn-track-product' => 'variant_unit_name', :placeholder => 'unit', 'ng-show' => "product.variant_unit_with_scale == 'items'", :type => 'text' }
   %td.display_as{ 'ng-show' => 'columns.unit.visible' }
-    %input{ 'ofn-display-as' => 'product.master', name: 'display_as', 'ofn-track-master' => 'display_as', type: 'text', placeholder: '{{ placeholder_text }}', ng: { hide: 'hasVariants(product)', model: 'product.master.display_as' } }
+    %input{ 'ofn-display-as' => 'product.variants[0]', name: 'display_as', 'ofn-track-master' => 'display_as', type: 'text', placeholder: '{{ placeholder_text }}', ng: { hide: 'hasVariants(product)', model: 'product.master.display_as' } }
   %td.price{ 'ng-show' => 'columns.price.visible' }
     %input{ 'ng-model' => 'product.price', 'ofn-decimal' => :true, :name => 'price', 'ofn-track-product' => 'price', :type => 'text', 'ng-hide' => 'hasVariants(product)' }
   %td.on_hand{ 'ng-show' => 'columns.on_hand.visible' }
