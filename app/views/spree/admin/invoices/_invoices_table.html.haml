@@ -7,7 +7,7 @@
       %th= t(:status)
       %th= t(:invoice_file)
   %tbody
-    - @order.invoices.order('number desc').each do |invoice|
+    - @order.invoices.each do |invoice|
       - tr_class = cycle('odd', 'even')
       - tr_id = spree_dom_id(invoice)
       %tr{:class => tr_class, "data-hook" => "invoice_row", :id => tr_id}

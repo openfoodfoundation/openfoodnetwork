@@ -77,7 +77,7 @@ class OrderInvoiceComparator
   end
 
   def latest_invoice
-    @latest_invoice ||= invoices.last.presenter
+    @latest_invoice ||= invoices.first.presenter
   end
 
   def serialize_for_invoice
