@@ -60,6 +60,16 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     order_cycle.exchanges.create! sender: supplier, receiver: distributor, incoming: true
     order_cycle.exchanges.create! sender: supplier2, receiver: distributor, incoming: true
 
+    # adds variants to exchanges on oc1
+    order_cycle.coordinator_fees << coordinator_fees
+    order_cycle.exchanges.incoming.first.exchange_fees.create!(enterprise_fee: supplier_fees)
+    order_cycle.exchanges.incoming.first.exchange_variants.create!(variant:)
+    order_cycle.exchanges.incoming.second.exchange_fees.create!(enterprise_fee: supplier_fees2)
+    order_cycle.exchanges.incoming.second.exchange_variants.create!(variant: variant2)
+    order_cycle.exchanges.outgoing.first.exchange_fees.create!(enterprise_fee: distributor_fee)
+    order_cycle.exchanges.outgoing.first.exchange_variants.create!(variant:)
+    order_cycle.exchanges.outgoing.first.exchange_variants.create!(variant: variant2)
+
     order_cycle
   }
   let!(:order_cycle2){
@@ -68,6 +78,16 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     # creates exchanges for oc2
     order_cycle2.exchanges.create! sender: supplier, receiver: distributor, incoming: true
     order_cycle2.exchanges.create! sender: supplier2, receiver: distributor, incoming: true
+
+    # adds variants to exchanges on oc2
+    order_cycle2.coordinator_fees << coordinator_fees
+    order_cycle2.exchanges.incoming.first.exchange_fees.create!(enterprise_fee: supplier_fees)
+    order_cycle2.exchanges.incoming.first.exchange_variants.create!(variant:)
+    order_cycle2.exchanges.incoming.second.exchange_fees.create!(enterprise_fee: supplier_fees2)
+    order_cycle2.exchanges.incoming.second.exchange_variants.create!(variant: variant2)
+    order_cycle2.exchanges.outgoing.first.exchange_fees.create!(enterprise_fee: distributor_fee)
+    order_cycle2.exchanges.outgoing.first.exchange_variants.create!(variant:)
+    order_cycle2.exchanges.outgoing.first.exchange_variants.create!(variant: variant2)
 
     order_cycle2
   }
@@ -113,26 +133,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
   let!(:order2) { create(:order_with_distributor, distributor:) }
 
   before do
-    # adds variants to exchanges on oc1
-    order_cycle.coordinator_fees << coordinator_fees
-    order_cycle.exchanges.incoming.first.exchange_fees.create!(enterprise_fee: supplier_fees)
-    order_cycle.exchanges.incoming.first.exchange_variants.create!(variant:)
-    order_cycle.exchanges.incoming.second.exchange_fees.create!(enterprise_fee: supplier_fees2)
-    order_cycle.exchanges.incoming.second.exchange_variants.create!(variant: variant2)
-    order_cycle.exchanges.outgoing.first.exchange_fees.create!(enterprise_fee: distributor_fee)
-    order_cycle.exchanges.outgoing.first.exchange_variants.create!(variant:)
-    order_cycle.exchanges.outgoing.first.exchange_variants.create!(variant: variant2)
-
-    # adds variants to exchanges on oc2
-    order_cycle2.coordinator_fees << coordinator_fees
-    order_cycle2.exchanges.incoming.first.exchange_fees.create!(enterprise_fee: supplier_fees)
-    order_cycle2.exchanges.incoming.first.exchange_variants.create!(variant:)
-    order_cycle2.exchanges.incoming.second.exchange_fees.create!(enterprise_fee: supplier_fees2)
-    order_cycle2.exchanges.incoming.second.exchange_variants.create!(variant: variant2)
-    order_cycle2.exchanges.outgoing.first.exchange_fees.create!(enterprise_fee: distributor_fee)
-    order_cycle2.exchanges.outgoing.first.exchange_variants.create!(variant:)
-    order_cycle2.exchanges.outgoing.first.exchange_variants.create!(variant: variant2)
-
     distributor.shipping_methods << shipping_method
     distributor.payment_methods << payment_method
 
