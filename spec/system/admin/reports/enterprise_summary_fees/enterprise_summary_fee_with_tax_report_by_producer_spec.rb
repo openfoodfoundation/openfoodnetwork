@@ -136,7 +136,23 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
   }
 
   # creates orders for for oc1 and oc2
-  let!(:order) { create(:order_with_distributor, distributor:) }
+  let!(:order) {
+    order = create(:order_with_distributor, distributor:)
+
+    order.line_items.create({ variant:, quantity: 1, price: 100 })
+    order.update!({
+                    order_cycle_id: order_cycle.id,
+                    ship_address_id: ship_address.id
+                  })
+    # This will load the enterprise fees from the order cycle.
+    # This is needed because the order instance was created
+    # independently of the order_cycle.
+    order.recreate_all_fees!
+    while !order.completed?
+      break unless order.next!
+    end
+    order
+  }
   let!(:order2) { create(:order_with_distributor, distributor:) }
 
   before do
@@ -159,20 +175,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     #     - line items        (50) 1.5% = 0.75, 2.5% = 1.25
 
     before do
-      # adds a line items to the order on oc1
-      order.line_items.create({ variant:, quantity: 1, price: 100 })
-      order.update!({
-                      order_cycle_id: order_cycle.id,
-                      ship_address_id: ship_address.id
-                    })
-      # This will load the enterprise fees from the order cycle.
-      # This is needed because the order instance was created
-      # independently of the order_cycle.
-      order.recreate_all_fees!
-      while !order.completed?
-        break unless order.next!
-      end
-
       # adds a line items to the order on oc2
       order2.line_items.create({ variant: variant2, quantity: 1, price: 50 })
       order2.update!({
@@ -608,20 +610,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     let(:included_in_price) { true }
 
     before do
-      # adds a line items to the order on oc1
-      order.line_items.create({ variant:, quantity: 1, price: 100 })
-      order.update!({
-                      order_cycle_id: order_cycle.id,
-                      ship_address_id: ship_address.id
-                    })
-      # This will load the enterprise fees from the order cycle.
-      # This is needed because the order instance was created
-      # independently of the order_cycle.
-      order.recreate_all_fees!
-      while !order.completed?
-        break unless order.next!
-      end
-
       # adds a line items to the order on oc2
       order2.line_items.create({ variant: variant2, quantity: 1, price: 50 })
       order2.update!({
@@ -779,17 +767,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
     context "added tax" do
       before do
-        # adds a line items to the order on oc1
-        order.line_items.create({ variant:, quantity: 1, price: 100 })
-        order.update!({
-                        order_cycle_id: order_cycle.id,
-                        ship_address_id: ship_address.id
-                      })
-        order.recreate_all_fees!
-        while !order.completed?
-          break unless order.next!
-        end
-
         # adds a line items to the order on oc2
         order2.line_items.create({ variant:, quantity: 1, price: 50 })
         order2.update!({
@@ -901,16 +878,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       let(:included_in_price) { true }
 
       before do
-        order.line_items.create({ variant:, quantity: 1, price: 100 })
-        order.update!({
-                        order_cycle_id: order_cycle.id,
-                        ship_address_id: ship_address.id
-                      })
-        order.recreate_all_fees!
-        while !order.completed?
-          break unless order.next!
-        end
-
         # adds a line items to the order on oc2
         order2.line_items.create({ variant:, quantity: 1, price: 50 })
         order2.update!({
