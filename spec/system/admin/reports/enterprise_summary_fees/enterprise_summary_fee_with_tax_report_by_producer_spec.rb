@@ -54,10 +54,22 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
   let!(:shipping_method){ create(:shipping_method, :flat_rate) }
 
   let!(:order_cycle){
-    create(:simple_order_cycle, distributors: [distributor], name: "oc1")
+    order_cycle = create(:simple_order_cycle, distributors: [distributor], name: "oc1")
+
+    # creates exchanges for oc1
+    order_cycle.exchanges.create! sender: supplier, receiver: distributor, incoming: true
+    order_cycle.exchanges.create! sender: supplier2, receiver: distributor, incoming: true
+
+    order_cycle
   }
   let!(:order_cycle2){
-    create(:simple_order_cycle, distributors: [distributor], name: "oc2")
+    order_cycle2 = create(:simple_order_cycle, distributors: [distributor], name: "oc2")
+
+    # creates exchanges for oc2
+    order_cycle2.exchanges.create! sender: supplier, receiver: distributor, incoming: true
+    order_cycle2.exchanges.create! sender: supplier2, receiver: distributor, incoming: true
+
+    order_cycle2
   }
 
   let!(:enterprise_relationship1) {
@@ -94,28 +106,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
                                         name: 'Packing',
                                         fee_type: 'packing',
                                         tax_category:)
-  }
-
-  # creates exchanges for oc1
-  let!(:incoming_exchange1) {
-    order_cycle.exchanges.create! sender: supplier, receiver: distributor, incoming: true
-  }
-  let!(:incoming_exchange2) {
-    order_cycle.exchanges.create! sender: supplier2, receiver: distributor, incoming: true
-  }
-  let(:outgoing_exchange1) {
-    order_cycle.exchanges.create! sender: distributor, receiver: distributor, incoming: false
-  }
-
-  # sets exchanges for oc2
-  let!(:incoming_exchange3) {
-    order_cycle2.exchanges.create! sender: supplier, receiver: distributor, incoming: true
-  }
-  let!(:incoming_exchange4) {
-    order_cycle2.exchanges.create! sender: supplier2, receiver: distributor, incoming: true
-  }
-  let(:outgoing_exchange2) {
-    order_cycle2.exchanges.create! sender: distributor, receiver: distributor, incoming: false
   }
 
   # creates orders for for oc1 and oc2
