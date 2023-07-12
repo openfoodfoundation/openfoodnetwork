@@ -109,6 +109,7 @@ describe 'As an admin, I can see the new product page' do
         expect(page).to have_select "category_id", selected: "Category 1"
         expect_page_to_be 1
         expect_products_count_to_be 1
+        expect(page).to have_selector "table.products tbody tr td", text: product_by_category.name
       end
     end
 
@@ -118,6 +119,7 @@ describe 'As an admin, I can see the new product page' do
         expect(page).to have_field "search_term", with: "searchable product"
         expect_page_to_be 1
         expect_products_count_to_be 1
+        expect(page).to have_selector "table.products tbody tr td", text: product_by_name.name
 
         click_link "Clear search"
         expect(page).to have_field "search_term", with: ""
