@@ -216,4 +216,41 @@ describe Spree::OrderMailer do
       end
     end
   end
+
+  describe "#invoice_email" do
+    subject(:email) { described_class.invoice_email(order) }
+    let(:order) { create(:completed_order_with_totals) }
+    let!(:invoice_data_generator){ InvoiceDataGenerator.new(order) }
+    let!(:invoice){
+      create(:invoice, order:,
+                       data: invoice_data_generator.serialize_for_invoice)
+    }
+
+    let(:generator){ double(:generator) }
+    let(:renderer){ double(:renderer) }
+    before do
+      allow(OrderInvoiceGenerator).to receive(:new).with(order).and_return(generator)
+      allow(InvoiceRenderer).to receive(:new).and_return(renderer)
+    end
+    context "When invoices feature is not enabled" do
+      it "should call the invoice render with order as argument" do
+        expect(generator).not_to receive(:generate_or_update_latest_invoice)
+        expect(order).not_to receive(:invoices)
+        expect(renderer).to receive(:render_to_string).with(order)
+        email.deliver_now
+      end
+    end
+
+    context "When invoices feature is enabled" do
+      before do
+        Flipper.enable(:invoices)
+      end
+      it "should call the invoice renderer with invoice's presenter as argument" do
+        expect(generator).to receive(:generate_or_update_latest_invoice)
+        expect(order).to receive(:invoices).and_return([invoice])
+        expect(renderer).to receive(:render_to_string).with(invoice.presenter)
+        email.deliver_now
+      end
+    end
+  end
 end
