@@ -4256,7 +4256,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
             category: Category
             tax_category: Tax Category
             inherits_properties?: Inherits Properties?
-            available_on: Available On
             av_on: "Av. On"
             import_date: "Import Date"
           products_variant:
