@@ -70,9 +70,8 @@ class ProductsReflex < ApplicationReflex
   end
 
   def producers
-    producers = [{ label: "All", value: "all" }] +
-                 OpenFoodNetwork::Permissions.new(@user)
-                   .managed_product_enterprises.is_primary_producer.by_name
+    producers = OpenFoodNetwork::Permissions.new(current_user)
+      .managed_product_enterprises.is_primary_producer.by_name
     producers.map { |p| [p.name, p.id] }
   end
 
