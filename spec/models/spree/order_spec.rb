@@ -140,6 +140,23 @@ describe Spree::Order do
     end
   end
 
+  context "#invoiceable?" do
+    it "should return true if the order is completed" do
+      allow(order).to receive_messages(complete?: true)
+      expect(order.invoiceable?).to be_truthy
+    end
+
+    it "should return true if the order is resumed" do
+      allow(order).to receive_messages(resumed?: true)
+      expect(order.invoiceable?).to be_truthy
+    end
+
+    it "should return false if the order is neither completed nor resumed" do
+      allow(order).to receive_messages(complete?: false, resumed?: false)
+      expect(order.invoiceable?).to be_falsy
+    end
+  end
+
   context "checking if order is paid" do
     context "payment_state is paid" do
       before { allow(order).to receive_messages payment_state: 'paid' }
