@@ -14,7 +14,7 @@ describe 'As an admin, I can see the new product page' do
   # create a product with a supplier that can be searched
   let!(:product_by_supplier) {
     create(:simple_product,
-           supplier: create(:enterprise, name: "Producer 1"))
+           supplier: create(:enterprise, name: "Producer 1", is_primary_producer: true))
   }
   # create a product with a category that can be searched
   let!(:product_by_category) {
