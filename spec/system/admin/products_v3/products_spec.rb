@@ -37,15 +37,9 @@ describe 'As an admin, I can see the new product page' do
       visit "/admin/products_v3"
     end
 
-    it "has a pagination" do
+    it "has a pagination, has 15 products per page by default and can change the page" do
       expect(page).to have_selector ".pagination"
-    end
-
-    it "has 15 products per page by default" do
       expect_products_count_to_be 15
-    end
-
-    it "can change the page" do
       within ".pagination" do
         click_link "2"
       end
