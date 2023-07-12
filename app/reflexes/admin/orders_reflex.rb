@@ -72,7 +72,7 @@ module Admin
     def send_invoices(params)
       count = 0
       editable_orders.where(id: params[:bulk_ids]).find_each do |o|
-        next unless o.distributor.can_invoice? && (o.resumed? || o.complete?)
+        next unless o.distributor.can_invoice? && o.invoiceable?
 
         Spree::OrderMailer.invoice_email(o.id).deliver_later
         count += 1
