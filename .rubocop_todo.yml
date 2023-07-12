@@ -504,7 +504,7 @@ Rails/InverseOf:
     - 'app/models/spree/variant.rb'
     - 'app/models/subscription_line_item.rb'
 
-# Offense count: 38
+# Offense count: 35
 # Configuration parameters: Include.
 # Include: app/controllers/**/*.rb, app/mailers/**/*.rb
 Rails/LexicallyScopedActionFilter:
