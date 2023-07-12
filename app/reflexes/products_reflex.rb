@@ -70,11 +70,9 @@ class ProductsReflex < ApplicationReflex
   end
 
   def producers
-    producers = if current_user.has_spree_role?("admin")
-                  Enterprise.all
-                else
-                  current_user.enterprises
-                end
+    producers = [{ label: "All", value: "all" }] +
+                 OpenFoodNetwork::Permissions.new(@user)
+                   .managed_product_enterprises.is_primary_producer.by_name
     producers.map { |p| [p.name, p.id] }
   end
 
