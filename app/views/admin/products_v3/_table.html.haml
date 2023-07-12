@@ -10,15 +10,15 @@
   %col{ width:"5%", style: "max-width:5em" }
   %thead
     %tr
-      %th.align-left= t('admin.product.name')
-      %th.align-right= t('admin.sku')
-      %th.align-right= t('admin.unit')
-      %th.align-right= t('admin.price')
-      %th.align-right= t('admin.on_hand')
-      %th.align-left= t('admin.producer')
-      %th.align-left= t('admin.category')
-      %th.align-left= t('admin.tax_category')
-      %th.align-left= t('admin.inherits_properties')
+      %th.align-left= t('admin.products_page.columns.name')
+      %th.align-right= t('admin.products_page.columns.sku')
+      %th.align-right= t('admin.products_page.columns.unit')
+      %th.align-right= t('admin.products_page.columns.price')
+      %th.align-right= t('admin.products_page.columns.on_hand')
+      %th.align-left= t('admin.products_page.columns.producer')
+      %th.align-left= t('admin.products_page.columns.category')
+      %th.align-left= t('admin.products_page.columns.tax_category')
+      %th.align-left= t('admin.products_page.columns.inherits_properties')
   - products.each do |product|
     %tbody.relaxed
       %tr
