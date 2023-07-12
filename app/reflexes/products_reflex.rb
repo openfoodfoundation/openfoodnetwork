@@ -3,7 +3,7 @@
 class ProductsReflex < ApplicationReflex
   include Pagy::Backend
 
-  before_reflex :init_params
+  before_reflex :init_filters_params, :init_pagination_params
 
   def fetch
     fetch_and_render_products
@@ -32,11 +32,6 @@ class ProductsReflex < ApplicationReflex
   end
 
   private
-
-  def init_params
-    init_filters_params
-    init_pagination_params
-  end
 
   def init_filters_params
     # params comes from the form
