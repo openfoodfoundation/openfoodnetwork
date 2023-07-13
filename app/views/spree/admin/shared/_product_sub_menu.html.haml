@@ -5,4 +5,4 @@
     = tab :variant_overrides, url: main_app.admin_inventory_path, match_path: '/inventory'
     = tab :import, url: main_app.admin_product_import_path, match_path: '/product_import'
     - if feature?(:admin_style_v3, spree_current_user)
-      = tab :products_v3, url: main_app.admin_products_v3_path
+      = tab :products_v3, url: main_app.admin_products_v3_index_path
