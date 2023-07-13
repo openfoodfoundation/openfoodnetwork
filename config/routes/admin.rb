@@ -73,7 +73,7 @@ Openfoodnetwork::Application.routes.draw do
       get '/new_products', to: 'products#index'
     end
     constraints FeatureToggleConstraint.new(:admin_style_v3) do
-      get '/products_v3', to: 'products_v3#index'
+      resources :products_v3, only: :index
     end
 
     resources :variant_overrides do
