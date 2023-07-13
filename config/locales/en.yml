@@ -450,6 +450,7 @@ en:
   none: None
   notes: Notes
   error: Error
+  voucher: Voucher
   processing_payment: "Processing payment..."
   no_pending_payments: "No pending payments"
   invalid_payment_state: "Invalid payment state: %{state}"
@@ -2124,6 +2125,7 @@ en:
   order_not_paid: NOT PAID
   order_total: Total order
   order_payment: "Paying via:"
+  no_payment_required: "No payment required"
   order_billing_address: Billing address
   order_delivery_on: Delivery on
   order_delivery_address: Delivery address

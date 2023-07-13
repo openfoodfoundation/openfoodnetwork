@@ -63,6 +63,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
   before do
     # assures tax is charged in dependence of shipping address
     Spree::Config.set(tax_using_ship_address: true)
+    Flipper.enable :vouchers
   end
 
   describe "a not-included tax" do
@@ -115,7 +116,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
         expect(page).to have_selector('#tax-row', text: with_currency(1.30))
       end
 
-      pending "when using a voucher" do
+      context "when using a voucher" do
         let!(:voucher) do
           create(:voucher, code: 'some_code', enterprise: distributor, amount: 10)
         end
@@ -126,9 +127,11 @@ describe "As a consumer, I want to see adjustment breakdown" do
           choose "Delivery"
 
           click_button "Next - Payment method"
+
           # add Voucher
           fill_in "Enter voucher code", with: voucher.code
           click_button("Apply")
+          expect(page).to have_selector ".voucher-added"
 
           click_on "Next - Order summary"
           click_on "Complete order"

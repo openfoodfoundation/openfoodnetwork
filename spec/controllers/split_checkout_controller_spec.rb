@@ -212,6 +212,26 @@ describe SplitCheckoutController, type: :controller do
         end
       end
 
+      context "with a zero-priced order" do
+        let(:params) do
+          { step: "payment", order: { payments_attributes: [{ amount: 0 }] } }
+        end
+
+        before do
+          order.line_items.first.update(price: 0)
+          order.update_totals_and_states
+        end
+
+        it "allows proceeding to confirmation" do
+          put :update, params: params
+
+          expect(response).to redirect_to checkout_step_path(:summary)
+          expect(order.reload.state).to eq "confirmation"
+          expect(order.payments.count).to eq 1
+          expect(order.payments.first.amount).to eq 0
+        end
+      end
+
       context "with a saved credit card" do
         let!(:saved_card) { create(:stored_credit_card, user: user) }
         let(:checkout_params) do
@@ -231,73 +251,6 @@ describe SplitCheckoutController, type: :controller do
           expect(response).to redirect_to checkout_step_path(:summary)
           expect(order.reload.state).to eq "confirmation"
           expect(order.payments.first.source.id).to eq saved_card.id
-        end
-      end
-
-      describe "Vouchers" do
-        let(:voucher) { create(:voucher, code: 'some_code', enterprise: distributor) }
-
-        describe "adding a voucher" do
-          let(:checkout_params) do
-            {
-              apply_voucher: "true",
-              order: {
-                voucher_code: voucher.code
-              }
-            }
-          end
-
-          it "adds a voucher to the order" do
-            # Set the headers to simulate a cable_ready request
-            request.headers["accept"] = "text/vnd.cable-ready.json"
-
-            put :update, params: params
-
-            expect(response.status).to eq(200)
-            expect(order.reload.voucher_adjustments.length).to eq(1)
-          end
-
-          context "when voucher doesn't exist" do
-            let(:checkout_params) do
-              {
-                apply_voucher: "true",
-                order: {
-                  voucher_code: "non_voucher"
-                }
-              }
-            end
-
-            it "returns 422 and an error message" do
-              put :update, params: params
-
-              expect(response.status).to eq 422
-              expect(flash[:error]).to match "Voucher Not found"
-            end
-          end
-
-          context "when adding fails" do
-            it "returns 422 and an error message" do
-              # Create a non valid adjustment
-              adjustment = build(:adjustment, label: nil)
-              allow(voucher).to receive(:create_adjustment).and_return(adjustment)
-              allow(Voucher).to receive(:find_by).and_return(voucher)
-
-              put :update, params: params
-
-              expect(response.status).to eq 422
-              expect(flash[:error]).to match(
-                "There was an error while adding the voucher and Label can't be blank"
-              )
-            end
-          end
-
-          context "with an html request" do
-            it "redirects to the payment step" do
-              put :update, params: params
-
-              expect(response).to redirect_to(checkout_step_path(:payment))
-            end
-          end
         end
       end
     end

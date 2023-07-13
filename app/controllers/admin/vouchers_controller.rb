@@ -9,14 +9,11 @@ module Admin
     end
 
     def create
-      voucher_params = permitted_resource_params.merge(enterprise: @enterprise)
-      @voucher = Voucher.create(voucher_params)
+      @voucher = Voucher.create(permitted_resource_params.merge(enterprise: @enterprise))
 
       if @voucher.save
-        redirect_to(
-          "#{edit_admin_enterprise_path(@enterprise)}#vouchers_panel",
-          flash: { success: flash_message_for(@voucher, :successfully_created) }
-        )
+        flash[:success] = flash_message_for(@voucher, :successfully_created)
+        redirect_to edit_admin_enterprise_path(@enterprise, anchor: :vouchers_panel)
       else
         flash[:error] = @voucher.errors.full_messages.to_sentence
         render :new

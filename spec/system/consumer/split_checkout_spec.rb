@@ -707,6 +707,8 @@ describe "As a consumer, I want to checkout my order" do
       end
 
       describe "vouchers" do
+        before { Flipper.enable :vouchers }
+
         context "with no voucher available" do
           before do
             visit checkout_step_path(:payment)
@@ -769,7 +771,7 @@ describe "As a consumer, I want to checkout my order" do
                 fill_in "Enter voucher code", with: "non_code"
                 click_button("Apply")
 
-                expect(page).to have_content("Voucher Not found")
+                expect(page).to have_content("Voucher code Not found")
               end
             end
           end
@@ -786,9 +788,10 @@ describe "As a consumer, I want to checkout my order" do
                 click_on "Remove code"
               end
 
-              within '.voucher' do
+              within '#voucher-section' do
                 expect(page).to have_button("Apply", disabled: true)
               end
+
               expect(order.voucher_adjustments.length).to eq(0)
             end
           end
