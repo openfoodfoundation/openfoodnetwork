@@ -760,6 +760,11 @@ describe '
               click_button 'Update'
               expect(page).to have_content("Custom tab title can't be blank")
               expect(distributor1.reload.custom_tab).to be_nil
+
+              within(".side_menu") do
+                click_link "White Label"
+              end
+              expect(page).to have_checked_field "Create custom tab in shopfront"
             end
 
             it "can't save custom tab fields if title is too long" do

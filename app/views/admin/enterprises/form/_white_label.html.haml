@@ -46,7 +46,8 @@
     = label_tag :custom_tab, t('.create_custom_tab')
   .thirteen.columns
     = hidden_field_tag :custom_tab, "false" # submit `true` if checkbox is checked, `false` otherwise
-    = check_box_tag :custom_tab, "true", @object.custom_tab&.title.present?, { "data-controller": "checkbox-display", "data-checkbox-display-target-id-value": "custom_tab_form" }
+    - checked = @object.custom_tab&.title.present? || @object.errors["custom_tab.title"].present?
+    = check_box_tag :custom_tab, "true", checked, { "data-controller": "checkbox-display", "data-checkbox-display-target-id-value": "custom_tab_form" }
 
 %div{id: "custom_tab_form"}
   = f.fields_for :custom_tab, @object.custom_tab do |custom_tab_form|  
