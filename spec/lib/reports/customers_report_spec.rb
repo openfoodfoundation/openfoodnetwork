@@ -140,7 +140,7 @@ module Reporting
               end
 
               context "orders with different shipping methods" do
-                let!(:sm2) { create(:shipping_method, distributors: [d]) }
+                let!(:sm2) { create(:shipping_method, distributors: [d], name: "Bike") }
                 let!(:o2) {
                   create(:order_with_totals_and_distribution, :completed, distributor: d, bill_address: a, shipping_method: sm2)
                 }
@@ -148,22 +148,65 @@ module Reporting
                   o2.select_shipping_method(sm2.id)
                 end
 
-                it "returns one row per customer per shipping method" do
-                  expect(subject.query_result.size).to eq(2)
-                  expect(subject.table_rows.size).to eq(2)
-                  expect(subject.table_rows).to eq([[
-                                                     a.firstname, a.lastname,
-                                                     [a.address1, a.address2, a.city].join(" "),
-                                                     o1.email, a.phone, d.name,
-                                                     [d.address.address1, d.address.address2, d.address.city].join(" "),
-                                                     o1.shipping_method.name
-                                                   ], [
-                                                     a.firstname, a.lastname,
-                                                     [a.address1, a.address2, a.city].join(" "),
-                                                     o2.email, a.phone, d.name,
-                                                     [d.address.address1, d.address.address2, d.address.city].join(" "),
-                                                     sm2.name
-                                                   ]])
+                context "when the shipping method column is being included" do
+                  let(:fields_to_show) do
+                    [:first_name, :last_name, :billing_address, :email, :phone, :hub, :hub_address,
+                     :shipping_method]
+                  end
+                  subject { Addresses.new(user, { fields_to_show: fields_to_show }) }
+
+                  it "returns one row per customer per shipping method" do
+                    expect(subject.query_result.size).to eq(2)
+                    expect(subject.table_rows.size).to eq(2)
+                    expect(subject.table_rows).to eq(
+                      [
+                        [
+                          a.firstname,
+                          a.lastname,
+                          [a.address1, a.address2, a.city].join(" "),
+                          o1.email,
+                          a.phone,
+                          d.name,
+                          [d.address.address1, d.address.address2, d.address.city].join(" "),
+                          o1.shipping_method.name
+                        ],
+                        [
+                          a.firstname,
+                          a.lastname,
+                          [a.address1, a.address2, a.city].join(" "),
+                          o2.email,
+                          a.phone,
+                          d.name,
+                          [d.address.address1, d.address.address2, d.address.city].join(" "),
+                          sm2.name
+                        ]
+                      ]
+                    )
+                  end
+                end
+
+                context "when the shipping method column is not included in the report" do
+                  let(:fields_to_show) do
+                    [:first_name, :last_name, :billing_address, :email, :phone, :hub, :hub_address]
+                  end
+                  subject { Addresses.new(user, { fields_to_show: fields_to_show }) }
+
+                  it "returns a single row for the customer, otherwise it would return two identical
+                      rows" do
+                    expect(subject.query_result.size).to eq(2)
+                    expect(subject.table_rows.size).to eq(1)
+                    expect(subject.table_rows).to eq(
+                      [[
+                        a.firstname,
+                        a.lastname,
+                        [a.address1, a.address2, a.city].join(" "),
+                        o1.email,
+                        a.phone,
+                        d.name,
+                        [d.address.address1, d.address.address2, d.address.city].join(" ")
+                      ]]
+                    )
+                  end
                 end
               end
             end

@@ -131,6 +131,40 @@ module Reporting
         ]
         check_report
       end
+
+      context "when report contains duplicate rows" do
+        before do
+          @columns = {
+            customer: proc { |item| item.customer },
+            address: proc { |item| item.address }
+          }
+          @query_result = [
+            OpenStruct.new(customer: "John", address: "1 Main Street"),
+            OpenStruct.new(customer: "John", address: "1 Main Street")
+          ]
+        end
+
+        context "and the report type allows duplicate rows i.e. the default behaviour" do
+          it "outputs duplicate rows" do
+            @expected_table_rows = [
+              ["John", "1 Main Street"],
+              ["John", "1 Main Street"]
+            ]
+            check_report
+          end
+        end
+
+        context "and the report type does not allow duplicate rows" do
+          before { allow(subject).to receive(:skip_duplicate_rows?).and_return(true) }
+
+          it "outputs only unique rows" do
+            @expected_table_rows = [
+              ["John", "1 Main Street"]
+            ]
+            check_report
+          end
+        end
+      end
     end
 
     describe ".rules" do

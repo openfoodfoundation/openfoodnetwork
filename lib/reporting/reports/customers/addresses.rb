@@ -30,6 +30,10 @@ module Reporting
             shipping_method: proc { |order| order.shipping_method&.name },
           }
         end
+
+        def skip_duplicate_rows?
+          true
+        end
       end
     end
   end
