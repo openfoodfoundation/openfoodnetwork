@@ -31,6 +31,24 @@ class ProductsReflex < ApplicationReflex
     fetch_and_render_products
   end
 
+  def bulk_update
+    product_set = product_set_from_params
+
+    product_set.collection.each { |p| authorize! :update, p }
+
+    if product_set.save
+      # flash[:success] = with_locale { I18n.t('.success') }
+      # morph_admin_flashes  # ERROR: selector morph type has already been set
+
+      fetch_and_render_products
+    elsif product_set.errors.present?
+      # todo: render form with error messages
+      render json: { errors: product_set.errors }, status: :bad_request
+    else
+      render body: nil, status: :internal_server_error
+    end
+  end
+
   private
 
   def init_filters_params
@@ -129,5 +147,38 @@ class ProductsReflex < ApplicationReflex
     url.query += "&_producer_id=#{@producer_id}" if @producer_id.present?
     url.query += "&_category_id=#{@category_id}" if @category_id.present?
     url.to_s
+  end
+
+  # Similar to spree/admin/products_controller
+  def product_set_from_params
+    # Form field names:
+    #  '[products][<id>][name]'
+    #
+    # Resulting in params:
+    #     "products" => {
+    #       "<id>" =>  {
+    #         "name" => "Pommes",
+    #       }
+    #     }
+
+    # For ModelSet, we transform to:
+    # {
+    #   0=> {:id=>"7449", "name"=>"Pommes"}
+    # }
+    #
+    # TO Consider: We could actually rearrange the form to suit that format more directly. eg:
+    #   '[products][0][id]' (hidden field)
+    #   '[products][0][name]'
+    collection_hash = products_bulk_params[:products].map { |id, attributes|
+      { id:, **attributes }
+    }.each_with_index.to_h { |p, i|
+      [i, p]
+    }
+    Sets::ProductSet.new(collection_attributes: collection_hash)
+  end
+
+  def products_bulk_params
+    params.permit(products: ::PermittedAttributes::Product.attributes)
+      .to_h.with_indifferent_access
   end
 end

@@ -32,4 +32,31 @@ describe ProductsReflex, type: :reflex do
       end
     end
   end
+
+  describe '#bulk_update' do
+    let!(:product_z) { create(:simple_product, name: "Zucchini") }
+    let!(:product_a) { create(:simple_product, name: "Apples") }
+
+    it "saves valid changes" do
+      params = {
+        # '[products][<id>][name]'
+        "products" => {
+          product_a.id.to_s =>  {
+            "name" => "Pommes",
+          }
+        }
+      }
+
+      expect{
+        reflex(:bulk_update, params:)
+        product_a.reload
+      }.to change(product_a, :name).to("Pommes")
+    end
+  end
+end
+
+# Build and run a reflex using the context
+# Parameters can be added with params: option
+def reflex(method_name, opts = {})
+  build_reflex(method_name:, **context.merge(opts)).run(method_name)
 end

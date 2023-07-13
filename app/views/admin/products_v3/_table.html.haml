@@ -1,66 +1,74 @@
-%table.products
-  %col{ width:"15%" }
-  %col{ width:"5%", style: "max-width:5em" }
-  %col{ width:"8%" }
-  %col{ width:"5%", style: "max-width:5em"}
-  %col{ width:"5%", style: "max-width:5em"}
-  %col{ width:"10%" }= # producer
-  %col{ width:"10%" }
-  %col{ width:"5%" }
-  %col{ width:"5%", style: "max-width:5em" }
-  %thead
-    %tr
-      %th.align-left= t('admin.products_page.columns.name')
-      %th.align-right= t('admin.products_page.columns.sku')
-      %th.align-right= t('admin.products_page.columns.unit')
-      %th.align-right= t('admin.products_page.columns.price')
-      %th.align-right= t('admin.products_page.columns.on_hand')
-      %th.align-left= t('admin.products_page.columns.producer')
-      %th.align-left= t('admin.products_page.columns.category')
-      %th.align-left= t('admin.products_page.columns.tax_category')
-      %th.align-left= t('admin.products_page.columns.inherits_properties')
-  - products.each do |product|
-    %tbody.relaxed
+= form_with url: bulk_update_admin_products_v3_index_path, method: :patch,
+            html: {'data-reflex-serialize-form': true, 'data-reflex': 'submit->products#bulk_update'} do |form|
+  .container
+    .sixteen.columns.align-right
+      #fieldset
+        / = t('.products_modified', count: 'X')
+        = form.submit t('.reset'), type: :reset
+        = form.submit t('.save')
+  %table.products
+    %col{ width:"15%" }
+    %col{ width:"5%", style: "max-width:5em" }
+    %col{ width:"8%" }
+    %col{ width:"5%", style: "max-width:5em"}
+    %col{ width:"5%", style: "max-width:5em"}
+    %col{ width:"10%" }= # producer
+    %col{ width:"10%" }
+    %col{ width:"5%" }
+    %col{ width:"5%", style: "max-width:5em" }
+    %thead
       %tr
-        %td.align-left.header
-          .line-clamp-1= product.name
-        %td.align-right
-          .line-clamp-1= product.sku
-        %td.align-right
-          .line-clamp-1
-            = product.variant_unit.upcase_first
-            / TODO: properly handle custom unit names
-            = WeightsAndMeasures::UNITS[product.variant_unit] && "(" + WeightsAndMeasures::UNITS[product.variant_unit][product.variant_unit_scale]["name"] + ")"
-        %td.align-right
-          -# empty
-        %td.align-right
-          -# TODO: new requirement "DISPLAY ON DEMAND IF ALL VARIANTS ARE ON DEMAND". And translate value
-          .line-clamp-1= if product.variants.all?(&:on_demand) then "On demand" else product.on_hand || 0 end
-        %td.align-left
-          .line-clamp-1= product.supplier.name
-        %td.align-left
-          .line-clamp-1= product.primary_taxon.name
-        %td.align-left
-        %td.align-left
-          .line-clamp-1= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
-      - product.variants.each do |variant|
-        %tr.condensed
-          %td.align-left
-            .line-clamp-1= variant.display_name
-          %td.align-right
-            .line-clamp-1= variant.sku
-          %td.align-right
-            .line-clamp-1= variant.unit_to_display
-          %td.align-right
-            .line-clamp-1= number_to_currency(variant.price)
-          %td.align-right
-            .line-clamp-1= variant.on_hand || 0 #TODO: spec for this according to requirements.
-          %td.align-left
-            .line-clamp-1= variant.product.supplier.name # same as product
-          %td.align-left
-            -# empty
-          %td.align-left
-            .line-clamp-1= variant.tax_category&.name || "None" # TODO: convert to dropdown, else translate hardcoded string.
-          %td.align-left
-            -# empty
-
+        %th.align-left= t('admin.products_page.columns.name')
+        %th.align-right= t('admin.products_page.columns.sku')
+        %th.align-right= t('admin.products_page.columns.unit')
+        %th.align-right= t('admin.products_page.columns.price')
+        %th.align-right= t('admin.products_page.columns.on_hand')
+        %th.align-left= t('admin.products_page.columns.producer')
+        %th.align-left= t('admin.products_page.columns.category')
+        %th.align-left= t('admin.products_page.columns.tax_category')
+        %th.align-left= t('admin.products_page.columns.inherits_properties')
+    - products.each do |product|
+      = form.fields_for(product) do |product_form|
+        %tbody.relaxed
+          %tr
+            %td.align-left.header
+              .line-clamp-1= product_form.text_field :name, name: "[products][#{product.id}][name]", id: "_product_name_#{product.id}", 'aria-label': t('admin.products_page.columns.name')
+            %td.align-right
+              .line-clamp-1= product.sku
+            %td.align-right
+              .line-clamp-1
+                = product.variant_unit.upcase_first
+                / TODO: properly handle custom unit names
+                = WeightsAndMeasures::UNITS[product.variant_unit] && "(" + WeightsAndMeasures::UNITS[product.variant_unit][product.variant_unit_scale]["name"] + ")"
+            %td.align-right
+              -# empty
+            %td.align-right
+              -# TODO: new requirement "DISPLAY ON DEMAND IF ALL VARIANTS ARE ON DEMAND". And translate value
+              .line-clamp-1= if product.variants.all?(&:on_demand) then "On demand" else product.on_hand || 0 end
+            %td.align-left
+              .line-clamp-1= product.supplier.name
+            %td.align-left
+              .line-clamp-1= product.primary_taxon.name
+            %td.align-left
+            %td.align-left
+              .line-clamp-1= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
+          - product.variants.each do |variant|
+            %tr.condensed
+              %td.align-left
+                .line-clamp-1= variant.display_name
+              %td.align-right
+                .line-clamp-1= variant.sku
+              %td.align-right
+                .line-clamp-1= variant.unit_to_display
+              %td.align-right
+                .line-clamp-1= number_to_currency(variant.price)
+              %td.align-right
+                .line-clamp-1= variant.on_hand || 0 #TODO: spec for this according to requirements.
+              %td.align-left
+                .line-clamp-1= variant.product.supplier.name # same as product
+              %td.align-left
+                -# empty
+              %td.align-left
+                .line-clamp-1= variant.tax_category&.name || "None" # TODO: convert to dropdown, else translate hardcoded string.
+              %td.align-left
+                -# empty
