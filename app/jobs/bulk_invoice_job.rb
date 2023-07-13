@@ -6,7 +6,7 @@ class BulkInvoiceJob < ApplicationJob
 
   def perform(order_ids, filepath, options = {})
     orders = sorted_orders(order_ids)
-    orders = orders.filter(&:invoiceable?) if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+    orders.filter!(&:invoiceable?) if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
     orders.each(&method(:generate_invoice))
 
     ensure_directory_exists filepath
