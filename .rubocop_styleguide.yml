@@ -25,6 +25,7 @@ Metrics/BlockLength:
   AllowedMethods: [
     "class_eval",
     "collection",
+    "configure",
     "context",
     "delete",
     "describe",
@@ -92,6 +93,8 @@ Naming/VariableNumber:
   AllowedIdentifiers:
     - street_address_1
     - street_address_2
+  AllowedPatterns:
+    - _v[\d]+
 
 Bundler/DuplicatedGem:
   Enabled: false

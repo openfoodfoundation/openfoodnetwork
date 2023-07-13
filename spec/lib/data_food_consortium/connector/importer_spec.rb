@@ -25,6 +25,59 @@ describe DataFoodConsortium::Connector::Importer, vcr: true do
       totalTheoreticalStock: 3,
     )
   end
+  let(:product_data) do
+    <<~JSON
+      {
+        "@context":"http://static.datafoodconsortium.org/ontologies/context.json",
+        "@id":"https://example.net/tomato",
+        "@type":"dfc-b:SuppliedProduct",
+        "dfc-b:name":"Tomato",
+        "dfc-b:description":"Awesome tomato",
+        "dfc-b:alcoholPercentage":0.0,
+        "dfc-b:lifetime":"",
+        "dfc-b:usageOrStorageCondition":"",
+        "dfc-b:totalTheoreticalStock":3
+      }
+    JSON
+  end
+  let(:product_data_with_context) do
+    <<~JSON
+      {
+        "@context": {
+          "dfc-b": "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#",
+          "dfc-m": "http://static.datafoodconsortium.org/data/measures.rdf#",
+          "dfc-pt": "http://static.datafoodconsortium.org/data/productTypes.rdf#"
+        },
+        "@id":"https://example.net/tomato",
+        "@type":"dfc-b:SuppliedProduct",
+        "dfc-b:name":"Tomato",
+        "dfc-b:description":"Awesome tomato",
+        "dfc-b:alcoholPercentage":0.0,
+        "dfc-b:lifetime":"",
+        "dfc-b:usageOrStorageCondition":"",
+        "dfc-b:totalTheoreticalStock":3
+      }
+    JSON
+  end
+  let(:product_data_with_context_v1_8) do
+    <<~JSON
+      {
+        "@context": {
+          "dfc-b": "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#",
+          "dfc-m": "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#",
+          "dfc-pt": "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#"
+        },
+        "@id":"https://example.net/tomato",
+        "@type":"dfc-b:SuppliedProduct",
+        "dfc-b:name":"Tomato",
+        "dfc-b:description":"Awesome tomato",
+        "dfc-b:alcoholPercentage":0.0,
+        "dfc-b:lifetime":"",
+        "dfc-b:usageOrStorageCondition":"",
+        "dfc-b:totalTheoreticalStock":3
+      }
+    JSON
+  end
   let(:second_product) do
     DataFoodConsortium::Connector::SuppliedProduct.new(
       "https://example.net/ocra",
@@ -49,6 +102,39 @@ describe DataFoodConsortium::Connector::Importer, vcr: true do
 
     expect(result.class).to eq product.class
     expect(result.semanticType).to eq product.semanticType
+    expect(result.semanticId).to eq "https://example.net/tomato"
+    expect(result.name).to eq "Tomato"
+    expect(result.description).to eq "Awesome tomato"
+    expect(result.totalTheoreticalStock).to eq 3
+  end
+
+  it "imports an object with referenced context" do
+    result = connector.import(product_data)
+
+    expect(result.class).to eq DataFoodConsortium::Connector::SuppliedProduct
+    expect(result.semanticType).to eq "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#SuppliedProduct"
+    expect(result.semanticId).to eq "https://example.net/tomato"
+    expect(result.name).to eq "Tomato"
+    expect(result.description).to eq "Awesome tomato"
+    expect(result.totalTheoreticalStock).to eq 3
+  end
+
+  it "imports an object with included context" do
+    result = connector.import(product_data_with_context)
+
+    expect(result.class).to eq DataFoodConsortium::Connector::SuppliedProduct
+    expect(result.semanticType).to eq "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#SuppliedProduct"
+    expect(result.semanticId).to eq "https://example.net/tomato"
+    expect(result.name).to eq "Tomato"
+    expect(result.description).to eq "Awesome tomato"
+    expect(result.totalTheoreticalStock).to eq 3
+  end
+
+  it "imports an object with DFC v1.8 context" do
+    result = connector.import(product_data_with_context_v1_8)
+
+    expect(result.class).to eq DataFoodConsortium::Connector::SuppliedProduct
+    expect(result.semanticType).to eq "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#SuppliedProduct"
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"
     expect(result.description).to eq "Awesome tomato"

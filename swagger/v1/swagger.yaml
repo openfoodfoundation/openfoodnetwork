@@ -296,7 +296,7 @@ components:
       description: Authenticates via API key passed in specified query param
     session:
       type: apiKey
-      name: _ofn_session
+      name: _ofn_session_id
       in: cookie
       description: Authenticates using the current user's session if logged in
 paths:

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require "swagger_helper"
-require DfcProvider::Engine.root.join("spec/spec_helper")
+require DfcProvider::Engine.root.join("spec/swagger_helper")
 
 describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml",
                              rswag_autodoc: true do
@@ -27,11 +26,13 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
       consumes "application/json"
       produces "application/json"
 
-      # This parameter is required but I want to write a spec which doesn't
-      # supply it. I couldn't do it with rswag when requiring it.
-      parameter name: :supplied_product, in: :body, required: false, schema: {
+      parameter name: :supplied_product, in: :body, schema: {
         example: {
-          '@context': "http://static.datafoodconsortium.org/ontologies/context.json",
+          '@context': {
+            'dfc-b': "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#",
+            'dfc-m': "http://static.datafoodconsortium.org/data/measures.rdf#",
+            'dfc-pt': "http://static.datafoodconsortium.org/data/productTypes.rdf#",
+          },
           '@id': "http://test.host/api/dfc-v1.7/enterprises/6201/supplied_products/0",
           '@type': "dfc-b:SuppliedProduct",
           'dfc-b:name': "Apple",
@@ -50,23 +51,49 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
       }
 
       response "400", "bad request" do
-        run_test!
+        describe "with missing request body" do
+          around do |example|
+            # Rswag expects all required parameters to be supplied with `let`
+            # but we want to send a request without the request body parameter.
+            parameters = example.metadata[:operation][:parameters]
+            example.metadata[:operation][:parameters] = []
+            example.run
+            example.metadata[:operation][:parameters] = parameters
+          end
+
+          run_test!
+        end
+
+        describe "with empty request body" do
+          let(:supplied_product) { nil }
+          run_test!
+        end
       end
 
-      response "204", "success" do
+      response "200", "success" do
         let(:supplied_product) do |example|
           example.metadata[:operation][:parameters].first[:schema][:example]
         end
 
         it "creates a variant" do |example|
-          existing = Spree::Variant.pluck(:id)
-
           expect { submit_request(example.metadata) }
             .to change { enterprise.supplied_products.count }.by(1)
 
-          variant = Spree::Variant.where.not(id: existing).first
+          dfc_id = json_response["@id"]
+          expect(dfc_id).to match(
+            %r|^http://test\.host/api/dfc-v1\.7/enterprises/10000/supplied_products/[0-9]+$|
+          )
+
+          variant_id = dfc_id.split("/").last.to_i
+          variant = Spree::Variant.find(variant_id)
           expect(variant.name).to eq "Apple"
           expect(variant.unit_value).to eq 3
+
+          # Insert static value to keep documentation deterministic:
+          response.body.gsub!(
+            "supplied_products/#{variant_id}",
+            "supplied_products/10001"
+          )
         end
       end
     end
@@ -100,10 +127,14 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
     put "Update SuppliedProduct" do
       consumes "application/json"
 
-      parameter name: :supplied_product, in: :body, schema: {}
+      parameter name: :supplied_product, in: :body, schema: {
+        example: ExampleJson.read("patch_supplied_product")
+      }
 
       let(:id) { variant.id }
-      let(:supplied_product) { ExampleJson.read("patch_supplied_product") }
+      let(:supplied_product) { |example|
+        example.metadata[:operation][:parameters].first[:schema][:example]
+      }
 
       response "401", "unauthorized" do
         before { login_as nil }

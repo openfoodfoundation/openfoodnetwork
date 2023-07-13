@@ -18,44 +18,6 @@ RSpec.configure do |config|
   # document below. You can override this behavior by adding a swagger_doc tag to the
   # the root example_group in your specs, e.g. describe '...', swagger_doc: 'v2/swagger.json'
   config.swagger_docs = {
-    'dfc-v1.7/swagger.yaml' => {
-      openapi: '3.0.1',
-      info: {
-        title: 'OFN DFC API',
-        version: 'v0.1.7'
-      },
-      components: {
-        securitySchemes: {
-          oidc_token: {
-            type: :http,
-            scheme: :bearer,
-            bearerFormat: "JWT",
-            description: "OpenID Connect token from a trusted platform"
-          },
-          ofn_api_token: {
-            type: :apiKey,
-            in: :header,
-            name: 'X-Api-Token',
-            description: "API token of an authorized OFN user"
-          },
-          ofn_session: {
-            type: :apiKey,
-            in: :cookie,
-            name: '_ofn_session',
-            description: "Session cookie of a logged in OFN user"
-          },
-        }
-      },
-      security: [
-        { oidc_token: [] },
-        { ofn_api_token: [] },
-        { ofn_session: [] },
-      ],
-      paths: {},
-      servers: [
-        { url: "/" },
-      ]
-    },
     'v1/swagger.yaml' => {
       openapi: '3.0.1',
       info: {
@@ -84,7 +46,7 @@ RSpec.configure do |config|
           },
           session: {
             type: :apiKey,
-            name: '_ofn_session',
+            name: '_ofn_session_id',
             in: :cookie,
             description: "Authenticates using the current user's session if logged in"
           },

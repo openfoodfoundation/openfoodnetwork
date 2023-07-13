@@ -3,13 +3,23 @@ openapi: 3.0.1
 info:
   title: OFN DFC API
   version: v0.1.7
+description: |
+  <p>
+  This API implements the Data Food Consortium (DFC) specifications.
+  It serves and reads semantic data encoded in JSON-LD.
+  <p>
+  Unfortunately, this description does not appear in the Swagger UI. :-(
 components:
   securitySchemes:
     oidc_token:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: OpenID Connect token from a trusted platform
+      description: |
+        OpenID Connect token from a trusted platform:
+        <ul>
+          <li><a href="https://login.lescommuns.org/auth/" target="_blank">Les Communs</a></li>
+        </ul>
     ofn_api_token:
       type: apiKey
       in: header
@@ -18,8 +28,11 @@ components:
     ofn_session:
       type: apiKey
       in: cookie
-      name: _ofn_session
-      description: Session cookie of a logged in OFN user
+      name: _ofn_session_id
+      description: 'Session cookie of a logged in user. It allows only read access
+        due to CSRF protection.
+
+        '
 security:
 - oidc_token: []
 - ofn_api_token: []
@@ -269,14 +282,36 @@ paths:
       responses:
         '400':
           description: bad request
-        '204':
+        '200':
           description: success
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": http://static.datafoodconsortium.org/ontologies/context.json
+                    "@id": http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                    "@type": dfc-b:SuppliedProduct
+                    dfc-b:name: Apple
+                    dfc-b:description: A delicious heritage apple
+                    dfc-b:hasType: dfc-pt:non-local-vegetable
+                    dfc-b:hasQuantity:
+                      "@type": dfc-b:QuantitativeValue
+                      dfc-b:hasUnit: dfc-m:Piece
+                      dfc-b:value: 3.0
+                    dfc-b:alcoholPercentage: 0.0
+                    dfc-b:lifetime: ''
+                    dfc-b:usageOrStorageCondition: ''
+                    dfc-b:totalTheoreticalStock: 0.0
       requestBody:
         content:
           application/json:
             schema:
               example:
-                "@context": http://static.datafoodconsortium.org/ontologies/context.json
+                "@context":
+                  dfc-b: http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#
+                  dfc-m: http://static.datafoodconsortium.org/data/measures.rdf#
+                  dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
                 "@id": http://test.host/api/dfc-v1.7/enterprises/6201/supplied_products/0
                 "@type": dfc-b:SuppliedProduct
                 dfc-b:name: Apple
@@ -339,6 +374,66 @@ paths:
       requestBody:
         content:
           application/json:
-            schema: {}
+            schema:
+              example:
+                "@context":
+                  rdfs: http://www.w3.org/2000/01/rdf-schema#
+                  skos: http://www.w3.org/2004/02/skos/core#
+                  dfc: http://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#
+                  dc: http://purl.org/dc/elements/1.1/#
+                  dfc-b: http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#
+                  dfc-p: http://static.datafoodconsortium.org/ontologies/DFC_ProductOntology.owl#
+                  dfc-t: http://static.datafoodconsortium.org/ontologies/DFC_TechnicalOntology.owl#
+                  dfc-m: http://static.datafoodconsortium.org/data/measures.rdf#
+                  dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
+                  dfc-f: http://static.datafoodconsortium.org/data/facets.rdf#
+                  dfc-p:hasUnit:
+                    "@type": "@id"
+                  dfc-b:hasUnit:
+                    "@type": "@id"
+                  dfc-b:hasQuantity:
+                    "@type": "@id"
+                  dfc-p:hasType:
+                    "@type": "@id"
+                  dfc-b:hasType:
+                    "@type": "@id"
+                  dfc-b:references:
+                    "@type": "@id"
+                  dfc-b:referencedBy:
+                    "@type": "@id"
+                  dfc-b:offeres:
+                    "@type": "@id"
+                  dfc-b:supplies:
+                    "@type": "@id"
+                  dfc-b:defines:
+                    "@type": "@id"
+                  dfc-b:affiliates:
+                    "@type": "@id"
+                  dfc-b:manages:
+                    "@type": "@id"
+                  dfc-b:offeredThrough:
+                    "@type": "@id"
+                  dfc-b:hasBrand:
+                    "@type": "@id"
+                  dfc-b:hasGeographicalOrigin:
+                    "@type": "@id"
+                  dfc-b:hasClaim:
+                    "@type": "@id"
+                  dfc-b:hasAllergenDimension:
+                    "@type": "@id"
+                  dfc-b:hasNutrimentDimension:
+                    "@type": "@id"
+                  dfc-b:hasPhysicalDimension:
+                    "@type": "@id"
+                  dfc:owner:
+                    "@type": "@id"
+                  dfc-t:hostedBy:
+                    "@type": "@id"
+                  dfc-t:hasPivot:
+                    "@type": "@id"
+                  dfc-t:represent:
+                    "@type": "@id"
+                dfc-b:description: DFC-Pesto updated
+                dfc-b:quantity: 17
 servers:
 - url: "/"

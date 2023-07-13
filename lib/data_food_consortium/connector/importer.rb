@@ -22,6 +22,13 @@ module DataFoodConsortium
           args = Array.new(number_of_required_args)
           type_uri = clazz.new(*args).semanticType
           result[type_uri] = clazz
+
+          # Add support for the new DFC v1.8 URLs:
+          new_type_uri = type_uri.gsub(
+            "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#",
+            "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#"
+          )
+          result[new_type_uri] = clazz
         end
       end
 
@@ -73,6 +80,13 @@ module DataFoodConsortium
         property_id = statement.predicate.value
         value = resolve_object(statement.object)
 
+        # Hacky support of new DFC v1.8 ids:
+        unless subject.hasSemanticProperty?(property_id)
+          property_id = property_id.gsub(
+            "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#",
+            "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#"
+          )
+        end
         return unless subject.hasSemanticProperty?(property_id)
 
         property = subject.__send__(:findSemanticProperty, property_id)
@@ -98,6 +112,9 @@ module DataFoodConsortium
 
         id = object.value.sub(
           "http://static.datafoodconsortium.org/data/measures.rdf#", "dfc-m:"
+        ).sub(
+          "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#",
+          "dfc-m:"
         )
         SKOSParser.concepts[id]
       end
