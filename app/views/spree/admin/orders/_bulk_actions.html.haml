@@ -3,13 +3,13 @@
     %span{ "data-controller": "checked-feedback", "data-checked-feedback-translation-value": "spree.admin.orders.index.selected" }
       = t("spree.admin.orders.index.selected", count: 0)
 
-  %button.plain.ofn-drop-down.disabled{ "data-checked-target": "disable" }
+  %div.plain.ofn-drop-down.disabled{ "data-checked-target": "disable", "data-controller": "dropdown", "data-action": "click->dropdown#toggle" }
     %span{ class: 'icon-reorder' }
       ="#{t('admin.actions')}".html_safe
-    %span.toggle-off.icon-caret-up
-    %span.toggle-on.icon-caret-down
+    %span
+      %i{ "data-dropdown-target": "arrow", "data-expanded-class": "icon-caret-up", "data-collapsed-class": "icon-caret-down" }
 
-    %div.menu.dropdown-content
+    %div.menu{ "data-dropdown-target": "menu" }
       %div.menu_item
         %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "resend_confirmation" }
           = t('spree.admin.orders.index.resend_confirmation')
