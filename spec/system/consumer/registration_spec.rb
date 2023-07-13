@@ -159,6 +159,43 @@ describe "Registration" do
       expect(page).to have_checked_field "enterprise_visible_only_through_links"
     end
 
+    context "Enterprise name is already taken" do
+      before do
+        address = Spree::Address.create!(firstname: 'John', lastname: 'Doe',
+                                         address1: '1400 Sesame street', zipcode: '3070',
+                                         city: 'Southcote', phone: '12 3456 7890',
+                                         country_id: 1, state_id: 1, company: 'unused')
+        owner = Spree::User.create!(email: "penny.profile@example.org", password: "cannotbeblank")
+        Enterprise.create(name: 'My Awesome Enterprise', address:, owner:)
+      end
+
+      it "checks that button after failure is still enabled" do
+        visit registration_path
+        switch_to_login_tab
+
+        fill_in "Email", with: user.email
+        fill_in "Password", with: user.password
+        click_button "Login"
+        click_button "Let's get started!"
+
+        fill_in 'enterprise_name', with: "My Awesome Enterprise"
+        fill_in 'enterprise_address', with: '123 Abc Street'
+        fill_in 'enterprise_city', with: 'Northcote'
+        fill_in 'enterprise_zipcode', with: '3070'
+        select 'Vic', from: 'enterprise_state'
+        click_button "Continue"
+
+        fill_in 'enterprise_contact', with: 'Saskia Munroe'
+        fill_in 'enterprise_phone', with: '12 3456 7890'
+
+        click_button "Continue"
+        click_button "Create Profile"
+        click_link "producer-panel"
+        click_button "Create Profile"
+        expect(page).to have_button "Create Profile", disabled: false
+      end
+    end
+
     context "when the user has no more remaining enterprises" do
       before do
         user.update(enterprise_limit: 0)
