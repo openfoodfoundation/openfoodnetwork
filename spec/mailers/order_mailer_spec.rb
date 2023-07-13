@@ -228,6 +228,8 @@ describe Spree::OrderMailer do
 
     let(:generator){ double(:generator) }
     let(:renderer){ double(:renderer) }
+    let(:attachment_filename){ "invoice-#{order.number}.pdf" }
+    let(:deliveries){ ActionMailer::Base.deliveries }
     before do
       allow(OrderInvoiceGenerator).to receive(:new).with(order).and_return(generator)
       allow(InvoiceRenderer).to receive(:new).and_return(renderer)
@@ -236,8 +238,13 @@ describe Spree::OrderMailer do
       it "should call the invoice render with order as argument" do
         expect(generator).not_to receive(:generate_or_update_latest_invoice)
         expect(order).not_to receive(:invoices)
-        expect(renderer).to receive(:render_to_string).with(order)
-        email.deliver_now
+        expect(renderer).to receive(:render_to_string).with(order).and_return("invoice")
+        expect {
+          email.deliver_now
+        }.to_not raise_error
+        expect(deliveries.count).to eq(1)
+        expect(deliveries.first.attachments.count).to eq(1)
+        expect(deliveries.first.attachments.first.filename).to eq(attachment_filename)
       end
     end
 
