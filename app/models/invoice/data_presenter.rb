@@ -50,7 +50,7 @@ class Invoice
     end
 
     def checkout_adjustments(exclude: [], reject_zero_amount: true)
-      adjustments = all_eligible_adjustments
+      adjustments = all_eligible_adjustments.map(&:clone)
 
       adjustments.reject! { |a| a.originator_type == 'Spree::TaxRate' }
 
