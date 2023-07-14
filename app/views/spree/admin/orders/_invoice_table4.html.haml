@@ -28,7 +28,7 @@
           = item.display_amount_with_adjustments
         - if @order.total_tax > 0
           %td{:align => "right"}
-            = display_line_item_tax_rates(item)
+            = item.display_line_item_tax_rates
 
     - @order.checkout_adjustments(exclude: [:line_item]).reverse_each do |adjustment|
       %tr
