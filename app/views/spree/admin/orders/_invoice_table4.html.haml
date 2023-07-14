@@ -40,7 +40,7 @@
           = adjustment.display_amount
         - if @order.total_tax > 0
           %td{:align => "right"}
-            = display_adjustment_tax_rates(adjustment)
+            = adjustment.display_adjustment_tax_rates
   %tfoot
     %tr
       %td{:align => "right", :colspan => "3"}

@@ -3,8 +3,10 @@
 class Invoice
   class DataPresenter
     class Adjustment < Invoice::DataPresenter::Base
+      include ::ActionView::Helpers::NumberHelper
       attributes :additional_tax_total, :adjustable_type, :amount, :currency, :included_tax_total,
                  :label, :originator_type
+      array_attribute :tax_rates, class_name: 'TaxRate'
       invoice_generation_attributes :additional_tax_total, :adjustable_type, :amount,
                                     :included_tax_total
       invoice_update_attributes :label
@@ -22,6 +24,10 @@ class Invoice
         elsif display_zero
           Spree::Money.new(0.00, currency:)
         end
+      end
+
+      def display_adjustment_tax_rates
+        tax_rates.map { |tr| number_to_percentage(tr.amount * 100, precision: 1) }.join(", ")
       end
     end
   end
