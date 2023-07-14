@@ -58,8 +58,21 @@ en_CA:
         orders_close_at: Close date
       variant_override:
         count_on_hand: "On Hand"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Calculator Flat Percent:"
+        preferred_amount: "Calculator Amount:"
+        preferred_first_item: "Calculator First Item:"
+        preferred_additional_item: "Calculator Additional Item Cost:"
+        preferred_max_items: "Calculator Max Items:"
+        preferred_minimal_amount: "Calculator Minimal Amount"
+        preferred_normal_amount: "Calculator Normal Amount:"
+        preferred_discount_amount: "Calculator Discount Amount:"
+        preferred_unit_from_list: "Calculator Unit From List:"
+        preferred_per_unit: "Calculator Per Unit:"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Inheriting the tax category requires a per-item calculator"
         spree/user:
           attributes:
             email:
@@ -259,6 +272,13 @@ en_CA:
     order_cycle:
       subject: "Order cycle report for %{producer}"
   provider_settings: "Provider settings"
+  report_mailer:
+    report_ready:
+      subject: "Report ready"
+      heading: "Report ready for download"
+      intro: |
+          The link below will expire after one week.
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "Dear Customer, "
@@ -377,6 +397,7 @@ en_CA:
   allow_cookies: "Allow Cookies"
   notes: Notes
   error: Error
+  voucher: Voucher
   processing_payment: "Processing payment..."
   no_pending_payments: "No pending payments"
   invalid_payment_state: "Invalid payment state: %{state}"
@@ -667,6 +688,10 @@ en_CA:
       index:
         header:
           title: Bulk Edit Products
+        loading: Loading your products
+      content:
+        no_products_found: No products found
+        import_products: Import multiple products
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -856,6 +881,7 @@ en_CA:
           legend: "Address"
         business_details:
           legend: "Business Details"
+          upload: 'upload'
           abn: Business Number
           abn_placeholder: eg. 80781 2466
           acn: Busines Number
@@ -1069,8 +1095,29 @@ en_CA:
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
         vouchers:
+          legend: Vouchers
+          voucher_code: Voucher Code
           rate: Rate
+          label: Label
+          purpose: Purpose
+          expiry: Expiry
+          use_limit: Use/Limit
           customers: Customer
+          net_value: Net Value
+          add_new: Add New
+          no_voucher_yet: No Vouchers yet
+        white_label:
+          legend: "White Label"
+          hide_ofn_navigation: "Hide OFN navigation"
+          upload_logo: "Logo used in shopfront"
+          remove_logo: "Remove logo"
+          remove_logo_confirm: "Are you sure you want to remove this logo?"
+          remove_logo_success: "Logo removed"
+          white_label_logo_link_label: "Link for the logo used in shopfront"
+          hide_groups_tab: "Hide groups/networks tab in shopfront"
+          create_custom_tab: "Create custom tab in shopfront"
+          custom_tab_title: "Title for custom tab"
+          custom_tab_content: "Content for custom tab"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1281,6 +1328,10 @@ en_CA:
         could_not_cancel_the_order: Could not cancel the order
       resume:
         could_not_resume_the_order: Could not resume the order
+    select2:
+      minimal_search_length: Please enter %{count} or more characters
+      searching: Searching....
+      no_matches: No matches found
     shared:
       user_guide_link:
         user_guide: User Guide
@@ -1306,6 +1357,8 @@ en_CA:
           tag_rules: "Tag Rules"
           shop_preferences: "Shop Preferences"
           users: "Users"
+          vouchers: Vouchers
+          white_label: "White Label"
         enterprise_group:
           primary_details: "Primary Details"
           users: "Users"
@@ -1346,6 +1399,17 @@ en_CA:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      download:
+        button: "Download Report"
+      show:
+        report_taking_longer: >
+            Sorry, this report took too long to process.  It may contain a lot of
+            data, or we are busy with other reports.  Please try again later.
+        report_taking_longer_html: >
+            This report is taking longer to process than usual.  It may contain a
+            lot of data or we are busy with other reports.  Once it is finished,  we'll
+            notify you via email.
+        report_link_label: Download report (when available)
       revenues_by_hub:
         name: Revenues by Hub
         description: Revenues by Hub
@@ -1377,6 +1441,7 @@ en_CA:
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      enterprise_fees_with_tax_report_by_order: "Enterprise Fees With Tax Report By Order"
       errors:
         no_report_type: "Please specify a report type"
         report_not_found: "Report not found"
@@ -1515,8 +1580,10 @@ en_CA:
         associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
     vouchers:
       new:
+        legend: New Voucher
         back: Back
         save: Save
+        voucher_code: Voucher Code
         voucher_amount: Amount
     controllers:
       enterprises:
@@ -1528,6 +1595,9 @@ en_CA:
     resend_confirmation_emails_feedback:
       one: "Confirmation email sent for 1 order."
       other: "Confirmation emails sent for %{count} orders."
+    send_invoice_feedback:
+      one: "Invoice email sent for 1 order."
+      other: "Invoice emails sent for %{count} orders."
   api:
     unknown_error: "Something went wrong. Our team has been notified."
     invalid_api_key: "Invalid API key (%{key}) specified."
@@ -1544,6 +1614,10 @@ en_CA:
       destroy_attachment_does_not_exist: "Terms and Conditions file does not exist"
     orders:
       failed_to_update: "Failed to update order"
+    query_param:
+      error:
+        title: Invalid query parameter
+        extra_fields: "Unsupported fields: %{fields}"
   checkout:
     already_ordered:
       cart: "cart"
@@ -1887,6 +1961,14 @@ en_CA:
       explaination: You can review and confirm your order in the next step which includes the final costs
       submit: Next - Order Summary
       cancel: Back to your details
+      voucher:
+        voucher: "%{voucher_amount} Voucher"
+        apply_voucher: Apply voucher
+        apply: Apply
+        placeholder: Enter voucher code
+        remove_code: Remove code
+        confirm_delete: Are you sure you want to remove the voucher?
+        warning_forfeit_remaining_amount: "Note: If your order total is less than your voucher you may not be able to spend the remaining value."
     step3:
       delivery_details:
         title: Delivery details
@@ -1920,10 +2002,12 @@ en_CA:
       select_a_payment_method: Select a payment method
       no_shipping_methods_available: Checkout is not possible because no shipping/pick-up options are available. Please contact the shop owner.
       voucher_not_found: Not found
+      add_voucher_error: There was an error while adding the voucher
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
   order_payment: "Paying via:"
+  no_payment_required: "No payment required"
   order_billing_address: Billing address
   order_delivery_on: Delivery on
   order_delivery_address: Delivery address
@@ -2417,6 +2501,7 @@ en_CA:
   shipping_method_destroy_error: "That shipping method cannot be deleted as it is referenced by an order: %{number}."
   fees: "Fees"
   fee_name: "Fee Name"
+  fee_owner: "Fee Owner"
   item_cost: "Item cost"
   bulk: "Bulk"
   shop_variant_quantity_min: "min"
@@ -2889,8 +2974,10 @@ en_CA:
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
+  new_invoice: "New Invoice"
   date_completed: "Date Completed"
   amount: "Amount"
+  invoice_number: "Invoice Number"
   state_names:
     ready: Ready
     pending: Pending
@@ -3412,6 +3499,13 @@ en_CA:
   first: "First"
   previous: "Previous"
   last: "Last"
+  webhook_endpoints:
+    create:
+      success: Webhook endpoint successfully created
+      error: Webhook endpoint failed to create
+    destroy:
+      success: Webhook endpoint successfully deleted
+      error: Webhood endpoint failed to delete
   spree:
     add_country: "Add country"
     add_state: "Add Province"
@@ -3585,6 +3679,7 @@ en_CA:
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back to Shipping Categories"
+    editing_shipping_category: "Edit Shipping Category"
     name: "Name"
     description: "Description"
     type: "Type"
@@ -3772,6 +3867,8 @@ en_CA:
           cancel_orders: "Cancel Orders"
           resend_confirmation: "Resend Confirmation"
           resend_confirmation_confirm_html: "This will resend the confirmation email to the customer. <br />Are you sure you want to proceed?"
+          send_invoice: "Send Invoices"
+          send_invoice_confirm_html: "This will email customer invoices for all selected complete orders. <br> Are you sure you want to proceed?"
           selected:
             zero: "No order selected"
             one: "1 order selected"
@@ -3825,6 +3922,8 @@ en_CA:
             many: "You have %{count} active order cycles."
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
+        version:
+          view_all_releases: View all releases
       shipping_methods:
         index:
           shipping_methods: "Shipping Methods"
@@ -3916,6 +4015,7 @@ en_CA:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the backoffice.
       products:
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
+        image_not_processable: "Image attachment is not a valid image."
         new:
           title: "New Product"
           new_product: "New Product"
@@ -4188,6 +4288,16 @@ en_CA:
       api_keys:
         regenerate_key: "Regenerate Key"
         title: API key
+      webhook_endpoints:
+        title: Webhook Endpoints
+        description: Events in the system may trigger webhooks to external systems.
+        event_types:
+          order_cycle_opened: Order Cycle Opened
+        event_type:
+          header: Event type
+        url:
+          header: Endpoint URL
+          create_placeholder: Enter the URL of the remove webhook endpoint
       developer_settings:
         title: Developer Settings
       form:

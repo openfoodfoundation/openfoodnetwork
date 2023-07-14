@@ -397,6 +397,7 @@ fr:
   allow_cookies: "Autoriser les cookies"
   notes: Commentaires
   error: Erreur
+  voucher: Bon de réduction
   processing_payment: "Paiement en cours..."
   no_pending_payments: "Aucun paiement en attente."
   invalid_payment_state: "Statut de paiement invalide : %{state}"
@@ -2011,6 +2012,7 @@ fr:
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
   order_payment: "Payer via:"
+  no_payment_required: "Pas de paiement requis"
   order_billing_address: Adresse de facturation
   order_delivery_on: Livraison prévue
   order_delivery_address: Adresse de livraison

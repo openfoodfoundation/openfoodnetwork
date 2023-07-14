@@ -15,6 +15,12 @@ es:
         lastname: "Apellido"
         zipcode: "Dirección de envío código postal"
       spree/order/bill_address:
+        address1: "Dirección de facturación (Calle + Nº)"
+        zipcode: "Dirección de facturación código postal"
+        city: "Dirección de facturación ciudad"
+        country: "Dirección de facturación país"
+        firstname: "Dirección de facturación nombre"
+        lastname: "Dirección de facturación apellidos"
         phone: Teléfono de la Consumidora
       spree/user:
         password: "Contraseña"
@@ -41,6 +47,7 @@ es:
         shipping_category_id: "Categoría de envío"
         variant_unit: "Unidad Variante"
         variant_unit_name: "Nombre de la unidad de la variante"
+        unit_value: "Valor unidad"
       spree/credit_card:
         base: "Tarjeta de crédito"
         number: "Número"
@@ -250,6 +257,12 @@ es:
     order_cycle:
       subject: "Informe Ciclo de Pedido para %{producer}"
   provider_settings: "Configuración del proveedor"
+  report_mailer:
+    report_ready:
+      subject: "Informe listo"
+      heading: "Informe listo para descargar"
+      intro: |
+          Este enlace caducara en una semana
   shipment_mailer:
     shipped_email:
       dear_customer: "Estimada consumidora,"
@@ -653,6 +666,10 @@ es:
       index:
         header:
           title: Editar varios Productos
+        loading: Cargando tus productos
+      content:
+        no_products_found: No se encontraron productos
+        import_products: Importar varios productos
     product_import:
       title: Importación de productos
       file_not_found: Archivo no encontrado o no se pudo abrir
@@ -756,6 +773,7 @@ es:
         category: Categoría
         description: Descripción
         units: Unidades
+        unit_type: Tipo de unidad
         variant_unit_name: Nombre de la unidad de la variante
         price: Precio
         on_hand: Disponibles
@@ -1052,12 +1070,16 @@ es:
           email_not_confirmed: "Correo electrónico no confirmado"
         vouchers:
           legend: Bonos
+          voucher_code: Código promocional
           rate: Impuesto
           customers: Consumidora
           net_value: Valor neto
           add_new: Añadir nuevo
         white_label:
           hide_ofn_navigation: "Ocultar la navegación de OFN"
+          remove_logo: "Eliminar el logo"
+          remove_logo_confirm: "¿Está seguro de que desea eliminar este logo?"
+          remove_logo_success: "Logo eliminado"
       actions:
         edit_profile: Configuración
         properties: Propiedades
@@ -1254,6 +1276,7 @@ es:
         cancel: Cancelar
         proceed: Proceder
       status:
+        undated: Sin fecha
         upcoming: Próxima
         open: abierto
         closed: cerrado
@@ -1265,6 +1288,8 @@ es:
         could_not_cancel_the_order: No se pudo cancelar la orden
       resume:
         could_not_resume_the_order: No se pudo reanudar el pedido
+    select2:
+      searching: Buscando...
     shared:
       user_guide_link:
         user_guide: Manual de Usuario
@@ -1328,6 +1353,10 @@ es:
       pack_by_customer: Pack por Consumidor
       pack_by_supplier: Pack por proveedor
       pack_by_product: Empaquetar por producto
+      download:
+        button: "Descargar informe"
+      show:
+        report_link_label: Descargar informe (si está disponible)
       orders_and_distributors:
         name: Pedidos y Distribuidores
         description: Pedidos con detalles de distribuidor
@@ -1492,6 +1521,7 @@ es:
         legend: Nuevo bono
         back: Atrás
         save: Guardar
+        voucher_code: Código promocional
         voucher_amount: Cantidad
     controllers:
       enterprises:
@@ -4146,10 +4176,13 @@ es:
       webhook_endpoints:
         event_types:
           order_cycle_opened: Ciclo de pedidos abierto
+      developer_settings:
+        title: Configuración de desarrollo
       form:
         account_settings: Configuración de la cuenta
       show:
         tabs:
+          developer_settings: Configuración de desarrollo
           orders: Pedidos
           cards: Tarjetas de crédito
           transactions: Transacciones
@@ -4215,6 +4248,8 @@ es:
           one: Pago
           many: Pagos
           other: Pagos
+    unit: unidad
+    per_unit: Por unidad
   datetime:
     distance_in_words:
       about_x_hours:
@@ -4266,7 +4301,12 @@ es:
         one: "1 año"
         many: "%{count} años"
         other: "%{count} años"
+  errors:
+    internal_server_error:
+      title: "Lo sentimos pero algo fue mal (500)"
   components:
+    multiple_checked_select:
+      filter_placeholder: "Opciones para filtrar"
     search_input:
       placeholder: Buscar
     selector_with_filter:

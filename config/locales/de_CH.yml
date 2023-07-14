@@ -3576,7 +3576,7 @@ de_CH:
       admin:
         login_nav:
           header:
-            store: openfoodnetwork.de
+            store: Laden
     validation:
       must_be_int: "muss eine ganze Zahl sein"
     admin:
