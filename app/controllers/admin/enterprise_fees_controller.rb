@@ -106,7 +106,7 @@ module Admin
           :preferred_flat_percent, :preferred_amount,
           :preferred_first_item, :preferred_additional_item,
           :preferred_minimal_amount, :preferred_normal_amount,
-          :preferred_discount_amount, :preferred_per_unit
+          :preferred_discount_amount, :preferred_per_unit, :preferred_max_items, :preffered_currency
         )
 
         next unless enterprise_fees

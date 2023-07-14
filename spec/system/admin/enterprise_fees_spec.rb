@@ -279,6 +279,51 @@ describe '
                                   options: ['First Distributor', 'Second Distributor'])
     end
   end
+
+  it "for enterprise fees FLEXIBLE RATE calculator should validate all fields and keep information when submission of form validation fails" do
+    # Given an enterprise
+    e = create(:supplier_enterprise, name: 'Feedme')
+
+    # Go to the enterprise fees page
+    login_as_admin_and_visit admin_enterprise_fees_path
+
+    # Fill in the fields for a new enterprise fee and click update
+    select 'Feedme', from: 'sets_enterprise_fee_set_collection_attributes_0_enterprise_id'
+    select 'Admin', from: 'sets_enterprise_fee_set_collection_attributes_0_fee_type'
+    fill_in 'sets_enterprise_fee_set_collection_attributes_0_name', with: 'Hello!'
+    select 'GST', from: 'sets_enterprise_fee_set_collection_attributes_0_tax_category_id'
+    select 'Flexible Rate', from: 'sets_enterprise_fee_set_collection_attributes_0_calculator_type'
+    click_button 'Update'
+
+    # See my fee and fields for the calculator and a success flash message
+    expect(page).to have_content "Your enterprise fees have been updated."
+    expect(page).to have_content "MAX ITEMS:"
+    expect(page).to have_selector "#sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_max_items"
+
+    # Fill in the calculator fields and click update
+    fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_first_item',
+            with: "22.00"
+    fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_additional_item',
+            with: "25.00"
+    fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_max_items',
+            with: "10"
+    fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_currency',
+            with: "AUD"
+    click_button 'Update'
+
+    # Then I should see the flash success message
+    expect(flash_message).to eq('Your enterprise fees have been updated.')
+
+    # Update the max input field with invalid input
+    expect(page).to have_selector "#sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_max_items"
+    fill_in 'sets_enterprise_fee_set_collection_attributes_0_calculator_attributes_preferred_max_items',
+            with: "invalid input"
+    click_button 'Update'
+
+    # Should return a flas error message and updated information should be kept
+    expect(flash_message).to eq('Invalid input. Please use only numbers. For example: 10, 5.5, -20')
+    expect(page).to have_selector 'input[value="10"]'
+  end
 end
 
 def prefix
