@@ -4,8 +4,8 @@ class Invoice
   class DataPresenter
     attr_reader :invoice
 
-    delegate :data, :date, to: :invoice
-    delegate :number, to: :invoice, prefix: true
+    delegate :data, to: :invoice
+    delegate :number, :date, to: :invoice, prefix: true
 
     FINALIZED_NON_SUCCESSFUL_STATES = %w(canceled returned).freeze
 
@@ -81,10 +81,6 @@ class Invoice
 
     def all_tax_adjustments
       all_eligible_adjustments.select { |a| a.originator_type == 'Spree::TaxRate' }
-    end
-
-    def invoice_date
-      date
     end
 
     def paid?

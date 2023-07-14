@@ -31,6 +31,7 @@ describe '
     login_as_admin
     visit spree.edit_admin_order_path(order)
   end
+
   describe 'creating invoices' do
     context 'when the order has no invoices' do
       it 'creates an invoice for the order' do
