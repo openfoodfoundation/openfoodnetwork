@@ -6,7 +6,7 @@ describe Vouchers::FlatRate do
   let(:enterprise) { build(:enterprise) }
 
   describe 'validations' do
-    subject { build(:voucher_flat_rate, code: 'new_code', enterprise: enterprise) }
+    subject { build(:voucher_flat_rate, code: 'new_code', enterprise:) }
 
     it { is_expected.to validate_presence_of(:amount) }
     it { is_expected.to validate_numericality_of(:amount).is_greater_than(0) }
@@ -16,7 +16,7 @@ describe Vouchers::FlatRate do
     let(:order) { create(:order_with_totals) }
 
     context 'when order total is more than the voucher' do
-      subject { create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 5) }
+      subject { create(:voucher_flat_rate, code: 'new_code', enterprise:, amount: 5) }
 
       it 'uses the voucher total' do
         expect(subject.compute_amount(order).to_f).to eq(-5)
@@ -24,7 +24,7 @@ describe Vouchers::FlatRate do
     end
 
     context 'when order total is less than the voucher' do
-      subject { create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 20) }
+      subject { create(:voucher_flat_rate, code: 'new_code', enterprise:, amount: 20) }
 
       it 'matches the order total' do
         expect(subject.compute_amount(order).to_f).to eq(-10)
@@ -34,7 +34,7 @@ describe Vouchers::FlatRate do
 
   describe "#rate" do
     subject do
-      create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 5)
+      create(:voucher_flat_rate, code: 'new_code', enterprise:, amount: 5)
     end
     let(:order) { create(:order_with_totals) }
 

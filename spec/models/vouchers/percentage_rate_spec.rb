@@ -6,7 +6,7 @@ describe Vouchers::PercentageRate do
   let(:enterprise) { build(:enterprise) }
 
   describe 'validations' do
-    subject { build(:voucher_percentage_rate, code: 'new_code', enterprise: enterprise) }
+    subject { build(:voucher_percentage_rate, code: 'new_code', enterprise:) }
 
     it { is_expected.to validate_presence_of(:amount) }
     it do
@@ -18,7 +18,7 @@ describe Vouchers::PercentageRate do
 
   describe '#compute_amount' do
     subject do
-      create(:voucher_percentage_rate, code: 'new_code', enterprise: enterprise, amount: 10)
+      create(:voucher_percentage_rate, code: 'new_code', enterprise:, amount: 10)
     end
     let(:order) { create(:order_with_totals) }
 
@@ -29,7 +29,7 @@ describe Vouchers::PercentageRate do
 
   describe "#rate" do
     subject do
-      create(:voucher_percentage_rate, code: 'new_code', enterprise: enterprise, amount: 50)
+      create(:voucher_percentage_rate, code: 'new_code', enterprise:, amount: 50)
     end
 
     it "returns the voucher percentage rate" do
