@@ -3,7 +3,6 @@
 class Invoice
   class DataPresenter
     class Adjustment < Invoice::DataPresenter::Base
-      include ::ActionView::Helpers::NumberHelper
       attributes :additional_tax_total, :adjustable_type, :amount, :currency, :included_tax_total,
                  :label
       array_attribute :tax_rates, class_name: 'TaxRate'

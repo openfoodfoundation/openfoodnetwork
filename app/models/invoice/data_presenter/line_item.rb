@@ -3,7 +3,6 @@
 class Invoice
   class DataPresenter
     class LineItem < Invoice::DataPresenter::Base
-      include ::ActionView::Helpers::NumberHelper
       attributes :added_tax, :currency, :included_tax, :price_with_adjustments, :quantity,
                  :variant_id
       attributes_with_presenter :variant

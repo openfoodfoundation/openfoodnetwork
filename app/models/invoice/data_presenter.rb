@@ -2,6 +2,7 @@
 
 class Invoice
   class DataPresenter
+    include ::ActionView::Helpers::NumberHelper
     attr_reader :invoice
 
     delegate :data, to: :invoice
