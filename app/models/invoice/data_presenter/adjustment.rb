@@ -7,7 +7,8 @@ class Invoice
       attributes :additional_tax_total, :adjustable_type, :amount, :currency, :included_tax_total,
                  :label
       array_attribute :tax_rates, class_name: 'TaxRate'
-      attributes_with_presenter :originator, class_name: :AdjustmentOriginator
+      attributes_with_presenter :originator, class_name: 'AdjustmentOriginator'
+      attributes_with_presenter :adjustable
       invoice_generation_attributes :additional_tax_total, :adjustable_type, :amount,
                                     :included_tax_total
       invoice_update_attributes :label
