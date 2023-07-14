@@ -4,7 +4,7 @@ require 'system_helper'
 
 describe '
  As an administrator
- I want to list/create an invoice for an order
+ I want to manage invoices for an order
 ' do
   include WebHelper
   include AuthenticationHelper
@@ -93,7 +93,7 @@ describe '
             expect(latest_invoice.reload.cancelled).to eq true
             expect(latest_invoice.presenter.sorted_line_items.first.quantity).to eq 1
 
-            new_invoice = order.invoices.last
+            new_invoice = order.invoices.first # first invoice is the latest
             expect(new_invoice.cancelled).to eq false
             expect(new_invoice.number).to eq 2
             expect(new_invoice.presenter.sorted_line_items.first.quantity).to eq 2
@@ -104,14 +104,11 @@ describe '
   end
 
   describe 'listing invoices' do
-    before do
-      create(:invoice, order:, number: 1, cancelled: true)
-      create(:invoice, order:, number: 2, cancelled: false)
-    end
+    let(:date){ Time.current.to_date }
 
     let(:row1){
       [
-        Time.current.to_date.to_s,
+        I18n.l(date, format: :long),
         "2",
         order.total,
         "Active",
@@ -121,7 +118,7 @@ describe '
 
     let(:row2){
       [
-        Time.current.to_date.to_s,
+        I18n.l(date, format: :long),
         "1",
         order.total,
         "Cancelled",
@@ -135,6 +132,11 @@ describe '
         row2
       ].join(" ")
     }
+
+    before do
+      create(:invoice, order:, number: 1, cancelled: true, date:)
+      create(:invoice, order:, number: 2, cancelled: false, date:)
+    end
 
     it 'should list the invoices on the reverse order of creation' do
       click_link 'Invoices'

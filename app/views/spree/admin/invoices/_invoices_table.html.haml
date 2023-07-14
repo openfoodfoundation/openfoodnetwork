@@ -12,7 +12,7 @@
       - tr_id = spree_dom_id(invoice)
       %tr{:class => tr_class, "data-hook" => "invoice_row", :id => tr_id}
         %td.align-center.created_at
-          = invoice.presenter.invoice_date
+          = pretty_date(invoice.date)
         %td.align-center.label
           = invoice.number
         %td.align-center.label

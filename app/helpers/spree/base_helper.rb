@@ -39,5 +39,9 @@ module Spree
       [I18n.l(time.to_date, format: :long),
        time.strftime("%l:%M %p")].join(" ")
     end
+
+    def pretty_date(date)
+      I18n.l(date.to_date, format: :long)
+    end
   end
 end
