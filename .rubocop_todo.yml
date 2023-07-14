@@ -210,6 +210,7 @@ Metrics/ClassLength:
     - 'app/controllers/spree/admin/users_controller.rb'
     - 'app/controllers/spree/orders_controller.rb'
     - 'app/models/enterprise.rb'
+    - 'app/models/invoice/data_presenter.rb'
     - 'app/models/order_cycle.rb'
     - 'app/models/product_import/entry_processor.rb'
     - 'app/models/product_import/entry_validator.rb'
