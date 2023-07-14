@@ -12,7 +12,7 @@ class Invoice
       end
     end
 
-    def attributes_with_presenter(*attributes)
+    def attributes_with_presenter(*attributes, class_name: nil)
       attributes.each do |attribute|
         define_method(attribute) do
           instance_variable = instance_variable_get("@#{attribute}")
@@ -20,7 +20,7 @@ class Invoice
 
           instance_variable_set("@#{attribute}",
                                 Invoice::DataPresenter.const_get(
-                                  attribute.to_s.classify
+                                  class_name.present? ? class_name : attribute.to_s.classify
                                 ).new(data&.[](attribute)))
         end
       end

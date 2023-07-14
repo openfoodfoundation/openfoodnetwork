@@ -52,7 +52,7 @@ class Invoice
     def checkout_adjustments(exclude: [], reject_zero_amount: true)
       adjustments = all_eligible_adjustments.map(&:clone)
 
-      adjustments.reject! { |a| a.originator_type == 'Spree::TaxRate' }
+      adjustments.reject! { |a| a.originator.type == 'Spree::TaxRate' }
 
       if exclude.include? :line_item
         adjustments.reject! { |a|

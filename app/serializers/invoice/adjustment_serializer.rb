@@ -3,7 +3,8 @@
 class Invoice
   class AdjustmentSerializer < ActiveModel::Serializer
     attributes :adjustable_type, :label, :included_tax_total, :additional_tax_total, :amount,
-               :currency, :originator_type
+               :currency
+    has_one :originator, serializer: Invoice::AdjustmentOriginatorSerializer
     has_many :tax_rates, serializer: Invoice::TaxRateSerializer
 
     def tax_rates
