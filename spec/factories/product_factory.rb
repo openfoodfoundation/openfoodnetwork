@@ -18,8 +18,6 @@ FactoryBot.define do
     variant_unit_scale { 1 }
     variant_unit_name { '' }
 
-    shipping_category { DefaultShippingCategory.find_or_create }
-
     # ensure stock item will be created for this products master
     before(:create) { create(:stock_location) if Spree::StockLocation.count.zero? }
 

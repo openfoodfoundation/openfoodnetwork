@@ -123,8 +123,7 @@ describe Spree::Order::Checkout do
     let(:order) { create(:order_with_totals_and_distribution, ship_address: create(:address) ) }
     let(:shipping_method) { create(:shipping_method, distributors: [order.distributor]) }
     let(:other_shipping_category) { create(:shipping_category) }
-    let(:other_product) { create(:product, shipping_category: other_shipping_category ) }
-    let(:other_variant) { other_product.variants.first }
+    let(:other_variant) { create(:variant, shipping_category: other_shipping_category) }
 
     before do
       order.order_cycle = create(:simple_order_cycle,

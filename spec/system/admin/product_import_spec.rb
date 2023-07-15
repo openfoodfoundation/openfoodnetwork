@@ -182,7 +182,7 @@ describe "Product Import" do
 
       carrots = Spree::Product.find_by(name: 'Carrots')
       expect(carrots.variants.first.tax_category).to eq tax_category
-      expect(carrots.shipping_category).to eq shipping_category
+      expect(carrots.variants.first.shipping_category).to eq shipping_category
     end
 
     it "records a timestamp on import that can be viewed and filtered under Bulk Edit Products" do
