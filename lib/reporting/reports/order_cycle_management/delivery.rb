@@ -26,7 +26,7 @@ module Reporting
 
         def has_temperature_controlled_items?(order)
           order.line_items.any? { |line_item|
-            line_item.product.shipping_category&.temperature_controlled
+            line_item.variant.shipping_category&.temperature_controlled
           }
         end
       end
