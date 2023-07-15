@@ -68,4 +68,8 @@
     = f.label :tax_category_id, t(:tax_category)
     = f.collection_select(:tax_category_id, @tax_categories, :id, :name, { include_blank: t(:none) }, { class: 'select2 fullwidth' })
 
+  .field
+    = f.label :shipping_category_id, t(:shipping_categories)
+    = f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, {}, { class: 'select2 fullwidth' })
+
 .clear
