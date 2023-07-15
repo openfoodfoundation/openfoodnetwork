@@ -217,9 +217,7 @@ describe OrderAvailableShippingMethods do
 
   context "when certain shipping categories are required" do
     subject { OrderAvailableShippingMethods.new(order) }
-    let(:order) {
-      build(:order, distributor: distributor, order_cycle: oc)
-    }
+    let(:order) { build(:order, distributor: distributor, order_cycle: oc) }
     let(:oc) { create(:order_cycle) }
     let(:distributor) { oc.distributors.first }
     let(:standard_shipping) {
@@ -249,7 +247,7 @@ describe OrderAvailableShippingMethods do
 
     it "filters shipping methods for products needing refrigeration" do
       product = oc.products.first
-      product.update!(shipping_category: refrigerated)
+      product.variants.first.update!(shipping_category: refrigerated)
       order.line_items << build(:line_item, variant: product.variants.first)
       expect(subject.to_a).to eq [cooled_shipping]
     end
