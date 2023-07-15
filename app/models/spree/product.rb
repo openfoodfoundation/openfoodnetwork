@@ -33,7 +33,6 @@ module Spree
     searchable_associations :supplier, :properties, :primary_taxon, :variants
     searchable_scopes :active, :with_properties
 
-    belongs_to :shipping_category, class_name: 'Spree::ShippingCategory'
     belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', optional: false, touch: true
 
@@ -52,7 +51,6 @@ module Spree
                                                        through: :variants
 
     validates :name, presence: true
-    validates :shipping_category, presence: true
 
     validates :variant_unit, presence: true
     validates :unit_value, presence:
