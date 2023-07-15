@@ -78,6 +78,7 @@ module Spree
     }
 
     before_validation :set_cost_currency
+    before_validation :ensure_shipping_category
     before_validation :ensure_unit_value
     before_validation :update_weight_from_unit_value, if: ->(v) { v.product.present? }
 
@@ -247,6 +248,10 @@ module Spree
       return unless (product&.variant_unit == "items" && unit_value.nil?) || unit_value&.nan?
 
       self.unit_value = 1.0
+    end
+
+    def ensure_shipping_category
+      self.shipping_category ||= DefaultShippingCategory.find_or_create
     end
 
     def convert_variant_weight_to_decimal
