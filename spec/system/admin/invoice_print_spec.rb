@@ -122,7 +122,6 @@ describe '
         expect(page).to have_content 'description2'
       end
     end
-
   end
   shared_examples "Check display on each invoice: legacy and alternative" do |alternative_invoice|
     let!(:completed_order) do

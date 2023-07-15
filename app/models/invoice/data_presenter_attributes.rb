@@ -20,7 +20,7 @@ class Invoice
 
           instance_variable_set("@#{attribute}",
                                 Invoice::DataPresenter.const_get(
-                                  class_name.present? ? class_name : attribute.to_s.classify
+                                  class_name.presence || attribute.to_s.classify
                                 ).new(data&.[](attribute)))
         end
       end
