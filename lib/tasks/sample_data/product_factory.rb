@@ -68,7 +68,6 @@ module SampleData
         variant_unit: "weight",
         variant_unit_scale: 1,
         unit_value: 1,
-        shipping_category: DefaultShippingCategory.find_or_create,
         tax_category_id: find_or_create_tax_category.id
       )
       product = Spree::Product.create_with(params).find_or_create_by!(name: params[:name])
