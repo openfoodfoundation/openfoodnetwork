@@ -226,9 +226,9 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         [
           cost_of_produce1, # Ensure summary row follows the right supplier
           "TOTAL", # Fees and line items
-          "145.0", # Tax excl: 20 + 15 + 10 + 100
-          "5.81",  # Tax     : (0.30 + 0.50) + (0.23 + 0.38) + (0.15 + 0.25) + (1.50 + 2.50)
-          "150.81" # Tax incl: 145.00 + 5.81
+          "115.0", # Tax excl: 15 + 100
+          "4.61",  # Tax     : (0.23 + 0.38) + (1.50 + 2.50)
+          "119.61" # Tax incl: 100.00 + 15 + (0.23 + 0.38) + (1.50 + 2.50)
         ].join(" ")
       }
 
@@ -268,40 +268,41 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         [
           cost_of_produce2, # Ensure summary row follows the right supplier
           "TOTAL", # Fees and line items
-          "105.0", # Tax excl: 20 + 25 + 10 + 50
-          "4.21",  # Tax     : (0.30 + 0.50) + (0.38 + 0.63) + (0.15 + 0.25) + (0.75 + 1.25)
-
-          "109.21" # Tax incl: 105 + 4.21
+          "75.0", # Tax excl: 25 + 50
+          "3.01",  # Tax     : (0.38 + 0.63) + 2
+          "78.01" # Tax incl: 25 + 50 + 4.21
         ].join(" ")
       }
 
       context "with line items from a single supplier" do
         it 'generates the report and displays fees for the respective suppliers' do
+          pending "removal from distributor and coordinator fees from results"
+          
           login_as distributor_owner
           visit admin_reports_path
           click_on "Enterprise Fees With Tax Report By Producer"
           expect(page).to have_button("Go")
 
           click_on "Go"
-
+          
           expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
           table = page.find("table.report__table tbody")
           expect(table).to have_content(supplier_state_tax1)
           expect(table).to have_content(supplier_country_tax1)
-          expect(table).to have_content(distributor_state_tax1)
-          expect(table).to have_content(distributor_country_tax1)
-          expect(table).to have_content(coordinator_state_tax1)
-          expect(table).to have_content(coordinator_country_tax1)
+          expect(table).not_to have_content(distributor_state_tax1)
+          expect(table).not_to have_content(distributor_country_tax1)
+          expect(table).not_to have_content(coordinator_state_tax1)
+          expect(table).not_to have_content(coordinator_country_tax1)
           expect(table).to have_content(cost_of_produce1)
           expect(table).to have_content(summary_row1)
 
           expect(table).to have_content(supplier_state_tax2)
           expect(table).to have_content(supplier_country_tax2)
-          expect(table).to have_content(distributor_state_tax2)
-          expect(table).to have_content(distributor_country_tax2)
-          expect(table).to have_content(coordinator_state_tax2)
-          expect(table).to have_content(coordinator_country_tax2)
+          expect(table).not_to have_content(distributor_state_tax2)
+          expect(table).not_to have_content(distributor_country_tax2)
+          expect(table).not_to have_content(coordinator_state_tax2)
+          expect(table).not_to have_content(coordinator_country_tax2)
           expect(table).to have_content(cost_of_produce2)
           expect(table).to have_content(summary_row2)
         end
