@@ -35,7 +35,7 @@ module Admin
 
     def bulk_update
       # Forms has strong parameters, so we don't need to validate them in controller
-      @enterprise_fee_set = Forms::EnterpriseFeesBulkUpdate.new(params)
+      @enterprise_fee_set = EnterpriseFeesBulkUpdate.new(params)
 
       if @enterprise_fee_set.save
         redirect_to redirect_path, notice: I18n.t(:enterprise_fees_update_notice)

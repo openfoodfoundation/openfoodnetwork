@@ -41,11 +41,28 @@ describe EnterpriseFeesBulkUpdate do
       expect(subject).to be_valid
     end
 
+    it "passes up errors from EnterpriseFee creation" do
+      enterprise_fee_set = instance_double(Sets::EnterpriseFeeSet, save: false)
+      test_errors = ActiveModel::Errors.new(enterprise_fee_set)
+      test_errors.add(:base, "error with model creation")
+      allow(enterprise_fee_set).to receive(:errors).and_return(test_errors)
+      allow(Sets::EnterpriseFeeSet).to receive(:new).and_return(enterprise_fee_set)
 
+      subject = EnterpriseFeesBulkUpdate.new(valid_attributes)
+      subject.save
+      expect(subject.errors.messages[:base]).to include("error with model creation")
+    end
 
-
-	end
-
-end  end
+    it "passes up errors with invalid set attributes" do
+      subject = EnterpriseFeesBulkUpdate.new(invalid_attributes)
+      subject.save
+      expect(subject.errors.messages[:base]).to include(I18n.t(:calculator_preferred_value_error))
+      expect(subject.errors.messages[:base])
+        .to include(
+          I18n.t(
+            'activerecord.errors.models.enterprise_fee.inherit_tax_requires_per_item_calculator'
+          )
+        )
+    end
   end
 end
