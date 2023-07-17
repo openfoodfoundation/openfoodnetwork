@@ -391,6 +391,8 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
         # table lines for supplier1
 
+        # for supplier 1, oc3
+
         let(:coordinator_state_tax3){
           ["Distributor", "Supplier1", "Yes", "oc3", "Adminstration", "admin", "Distributor",
            "tax_category", "State", "0.015", "20.0", "0.3", "20.3"].join(" ")
@@ -426,14 +428,13 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           [
             cost_of_produce3, # Ensure summary row follows the right supplier
             "TOTAL", # Fees and line items
-            "145.0", # Tax excl: 20 + 15 + 10 + 100
-            "5.81",  # Tax     : (0.30 + 0.50) + (0.23 + 0.38) + (0.15 + 0.25) + (1.50 + 2.50)
-            "150.81" # Tax incl: 145.00 + 5.81
+            "115.0", # Tax excl: 15 + 100
+            "4.61",  # Tax     : (0.23 + 0.38) + (1.50 + 2.50)
+            "119.61" # Tax incl: 100.00 + 15 + (0.23 + 0.38) + (1.50 + 2.50)
           ].join(" ")
         }
 
-        # table lines for supplier2
-
+        # for supplier 2, oc3
         let(:coordinator_state_tax4){
           ["Distributor", "Supplier2", "Yes", "oc3", "Adminstration", "admin", "Distributor",
            "tax_category", "State", "0.015", "20.0", "0.3", "20.3"].join(" ")
@@ -469,9 +470,9 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           [
             cost_of_produce4, # Ensure summary row follows the right supplier
             "TOTAL", # Fees and line items
-            "105.0", # Tax excl: 20 + 25 + 10 + 50
-            "4.21",  # Tax     : (0.30 + 0.50) + (0.38 + 0.63) + (0.15 + 0.25) + 2
-            "109.21" # Tax incl: 105 + 4.21
+            "75.0", # Tax excl: 25 + 50
+            "3.01",  # Tax     : (0.38 + 0.63) + 2
+            "78.01" # Tax incl: 25 + 50 + 4.21
           ].join(" ")
         }
 
@@ -494,6 +495,8 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           end
 
           it "should filter by distributor and order cycle" do
+            pending "removal from distributor and coordinator fees from results"
+
             page.find("#s2id_autogen1").click
             find('li', text: distributor.name).click # selects Distributor
 
@@ -509,20 +512,20 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             # Supplier1
             expect(table).to have_content(supplier_state_tax3)
             expect(table).to have_content(supplier_country_tax3)
-            expect(table).to have_content(distributor_state_tax3)
-            expect(table).to have_content(distributor_country_tax3)
-            expect(table).to have_content(coordinator_state_tax3)
-            expect(table).to have_content(coordinator_country_tax3)
+            expect(table).not_to have_content(distributor_state_tax3)
+            expect(table).not_to have_content(distributor_country_tax3)
+            expect(table).not_to have_content(coordinator_state_tax3)
+            expect(table).not_to have_content(coordinator_country_tax3)
             expect(table).to have_content(cost_of_produce3)
             expect(table).to have_content(summary_row3)
 
             # Supplier2
             expect(table).to have_content(supplier_state_tax4)
             expect(table).to have_content(supplier_country_tax4)
-            expect(table).to have_content(distributor_state_tax4)
-            expect(table).to have_content(distributor_country_tax4)
-            expect(table).to have_content(coordinator_state_tax4)
-            expect(table).to have_content(coordinator_country_tax4)
+            expect(table).not_to have_content(distributor_state_tax4)
+            expect(table).not_to have_content(distributor_country_tax4)
+            expect(table).not_to have_content(coordinator_state_tax4)
+            expect(table).not_to have_content(coordinator_country_tax4)
             expect(table).to have_content(cost_of_produce4)
             expect(table).to have_content(summary_row4)
           end
@@ -651,7 +654,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       ].join(" ")
     }
 
-    # for supplier 2, oc2
+    # for supplier 2, oc3
     let(:coordinator_state_tax2){
       ["Distributor", "Supplier2", "Yes", "oc2", "Adminstration", "admin", "Distributor",
        "tax_category", "State", "0.015", "19.21", "0.3", "19.51"].join(" ")
