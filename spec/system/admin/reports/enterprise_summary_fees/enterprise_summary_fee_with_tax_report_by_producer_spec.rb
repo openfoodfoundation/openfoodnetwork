@@ -537,7 +537,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             find('li', text: supplier2.name).click
 
             expect(page).to have_button("Go")
-            
             click_on "Go"
             expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
@@ -559,8 +558,9 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           end
 
           it "should filter by fee name" do
+
             page.find(fee_name_selector).click
-            find('li', text: coordinator_fees.name).click
+            find('li', text: supplier_fees.name).click
 
             expect(page).to have_button("Go")
             click_on "Go"
@@ -569,14 +569,23 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
             table = page.find("table.report__table tbody")
 
-            expect(table).to_not have_content(supplier_state_tax1)
-            expect(table).to_not have_content(supplier_country_tax1)
+            expect(table).to have_content(supplier_state_tax1)
+            expect(table).to have_content(supplier_country_tax1)
             expect(table).to_not have_content(distributor_state_tax1)
             expect(table).to_not have_content(distributor_country_tax1)
-            expect(table).to have_content(coordinator_state_tax1)
-            expect(table).to have_content(coordinator_country_tax1)
+            expect(table).to_not have_content(coordinator_state_tax1)
+            expect(table).to_not have_content(coordinator_country_tax1)
             expect(table).to have_content(cost_of_produce1)
-            expect(table).to have_content(summary_row_after_filtering_by_fee_name)
+            expect(table).to have_content(summary_row1)
+
+            expect(table).to have_content(supplier_state_tax3)
+            expect(table).to have_content(supplier_country_tax3)
+            expect(table).to_not have_content(distributor_state_tax3)
+            expect(table).to_not have_content(distributor_country_tax3)
+            expect(table).to_not have_content(coordinator_state_tax3)
+            expect(table).to_not have_content(coordinator_country_tax3)
+            expect(table).to have_content(cost_of_produce3)
+            expect(table).to have_content(summary_row3)
           end
 
           it "should filter by fee owner" do
