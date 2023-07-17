@@ -946,31 +946,33 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
       let(:summary_row){
         [
-          "TOTAL", "230.13", "9.87", "240.0"
+          "TOTAL", "172.63", "7.37", "180.0"
         ].join(" ")
       }
 
       it 'should list all the tax rates' do
+        pending "removal from distributor and coordinator fees from results"
+
         login_as distributor_owner
         visit admin_reports_path
         click_on "Enterprise Fees With Tax Report By Producer"
-        expect(page).to have_button("Go")
 
+        expect(page).to have_button("Go")
         click_on "Go"
 
         expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
         table = page.find("table.report__table tbody")
-        expect(table).to have_content(admin_state_tax1)
-        expect(table).to have_content(admin_country_tax1)
+        expect(table).not_to have_content(admin_state_tax1)
+        expect(table).not_to have_content(admin_country_tax1)
         expect(table).to have_content(transport_state_tax1)
         expect(table).to have_content(transport_country_tax1)
-        expect(table).to have_content(packing_state_tax1)
-        expect(table).to have_content(packing_country_tax1)
+        expect(table).not_to have_content(packing_state_tax1)
+        expect(table).not_to have_content(packing_country_tax1)
 
-        expect(table).to have_content(admin_state_tax2)
+        expect(table).not_to have_content(admin_state_tax2)
         expect(table).to have_content(transport_state_tax2)
-        expect(table).to have_content(packing_state_tax2)
+        expect(table).not_to have_content(packing_state_tax2)
 
         expect(table).to have_content(supplier1_cost_of_produce_line_items)
         expect(table).to have_content(summary_row)
