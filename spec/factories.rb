@@ -99,24 +99,6 @@ FactoryBot.define do
     end
   end
 
-  factory :enterprise_fee_bulk_update, class: Forms::EnterpriseFeesBulkUpdate do
-    transient { enterprise_fee { build(:enterprise_fee)}}
-
-    collection_attributes do
-      {
-        [
-          id: enterprise_fee.id,
-          enterprise_id: enterprise_fee.enterprise_id,
-          fee_type: enterprise_fee.fee_type,
-          name: enterprise_fee.name,
-          tax_category_id: enterprise_fee.tax_category_id,
-          inherits_tax_category: enterprise_fee.inherits_tax_category,
-          calculator_type: enterprise_fee.calculator_type,
-          { calculator_attributes: enterprise_fee.calculator.attributes }
-        ]
-      }
-  end
-
   factory :adjustment_metadata, class: AdjustmentMetadata do
     adjustment { FactoryBot.create(:adjustment) }
     enterprise { FactoryBot.create(:distributor_enterprise) }
