@@ -10,6 +10,8 @@ module Admin
     before_action :adapt_params, only: [:update]
     before_action :check_dependent_subscriptions, only: [:destroy]
 
+    after_action :sync_subscriptions_for_update, only: :update
+
     respond_to :json
 
     OVERRIDE_RESPONSE = { json: {
@@ -43,12 +45,15 @@ module Admin
 
       if @schedule_form.save
         flash[:success] = flash_message_for(@schedule, :successfully_created)
+        @existing_order_cycle_ids = []
+        sync_subscriptions_for_create
       end
 
       respond_with(@schedule)
     end
 
     def update
+      @existing_order_cycle_ids = @schedule.order_cycle_ids
       @object = ScheduleForm.new(params, spree_current_user, @schedule)
       super
     end
@@ -83,7 +88,6 @@ module Admin
       params[:schedule][:order_cycle_ids] = params[:order_cycle_ids]
     end
 
-    # only needed for destroy callback
     def check_dependent_subscriptions
       return if Subscription.where(schedule_id: @schedule).empty?
 
@@ -95,6 +99,29 @@ module Admin
       return @permissions unless @permission.nil?
 
       @permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
+    end
+
+    def sync_subscriptions_for_create
+      return unless params[:order_cycle_ids]
+
+      sync_subscriptions
+    end
+
+    def sync_subscriptions_for_update
+      return unless params[:schedule][:order_cycle_ids] && @schedule.errors.blank?
+
+      sync_subscriptions
+    end
+
+    def sync_subscriptions
+      removed_ids = @existing_order_cycle_ids - @schedule.order_cycle_ids
+      new_ids = @schedule.order_cycle_ids - @existing_order_cycle_ids
+
+      return unless removed_ids.any? || new_ids.any?
+
+      subscriptions = Subscription.where(schedule_id: @schedule)
+      syncer = OrderManagement::Subscriptions::ProxyOrderSyncer.new(subscriptions)
+      syncer.sync!
     end
 
     def permitted_resource_params

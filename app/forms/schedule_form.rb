@@ -25,8 +25,6 @@ class ScheduleForm
       @schedule.order_cycle_ids = @params[:order_cycle_ids]
       @schedule.save!
 
-      sync_subscriptions_for_create
-
     end
 
     true
@@ -36,8 +34,10 @@ class ScheduleForm
     editable_order_cycle_ids_for_update
 
     false unless @schedule.update(permitted_resource_params)
+  end
 
-    sync_subscriptions_for_update
+  def order_cycle_ids
+    @schedule.order_cycle_ids
   end
 
   private
@@ -70,29 +70,6 @@ class ScheduleForm
     # remove any existing and permitted ids that were not specifically requested
     result -= ((result & permitted) - requested)
     result
-  end
-
-  def sync_subscriptions_for_create
-    return unless @params[:order_cycle_ids]
-
-    sync_subscriptions
-  end
-
-  def sync_subscriptions_for_update
-    return unless @params[:schedule][:order_cycle_ids] && @schedule.errors.blank?
-
-    sync_subscriptions
-  end
-
-  def sync_subscriptions
-    removed_ids = @existing_order_cycle_ids - @schedule.order_cycle_ids
-    new_ids = @schedule.order_cycle_ids - @existing_order_cycle_ids
-
-    return unless removed_ids.any? || new_ids.any?
-
-    subscriptions = Subscription.where(schedule_id: @schedule)
-    syncer = OrderManagement::Subscriptions::ProxyOrderSyncer.new(subscriptions)
-    syncer.sync!
   end
 
   def permitted_resource_params
