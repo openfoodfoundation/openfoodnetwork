@@ -55,6 +55,15 @@ module Admin
       @report_title = report_title
       @rendering_options = rendering_options
       @data = Reporting::FrontendData.new(spree_current_user)
+
+      variant_id_in = params[:variant_id_in].reject(&:blank?)
+      load_selected_variant if variant_id_in.present?
+    end
+
+    # Orders and Fulfillment Reports include a per product filter, load any selected product
+    def load_selected_variant
+      variant = Spree::Variant.find(params[:variant_id_in][0])
+      @variant_serialized = Api::Admin::VariantSerializer.new(variant)
     end
 
     def render_data?
