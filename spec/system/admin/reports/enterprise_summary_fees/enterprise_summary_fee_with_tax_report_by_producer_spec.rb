@@ -269,7 +269,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           cost_of_produce2, # Ensure summary row follows the right supplier
           "TOTAL", # Fees and line items
           "75.0", # Tax excl: 25 + 50
-          "3.01",  # Tax     : (0.38 + 0.63) + 2
+          "3.01", # Tax     : (0.38 + 0.63) + 2
           "78.01" # Tax incl: 25 + 50 + 4.21
         ].join(" ")
       }
@@ -277,14 +277,14 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       context "with line items from a single supplier" do
         it 'generates the report and displays fees for the respective suppliers' do
           pending "removal from distributor and coordinator fees from results"
-          
+
           login_as distributor_owner
           visit admin_reports_path
           click_on "Enterprise Fees With Tax Report By Producer"
           expect(page).to have_button("Go")
 
           click_on "Go"
-          
+
           expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
           table = page.find("table.report__table tbody")
@@ -471,7 +471,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             cost_of_produce4, # Ensure summary row follows the right supplier
             "TOTAL", # Fees and line items
             "75.0", # Tax excl: 25 + 50
-            "3.01",  # Tax     : (0.38 + 0.63) + 2
+            "3.01", # Tax     : (0.38 + 0.63) + 2
             "78.01" # Tax incl: 25 + 50 + 4.21
           ].join(" ")
         }
@@ -558,7 +558,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           end
 
           it "should filter by fee name" do
-
             page.find(fee_name_selector).click
             find('li', text: supplier_fees.name).click
 
@@ -707,7 +706,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     context "with line items from a single supplier" do
       it 'generates the report and displays fees for the respective suppliers' do
         pending "removal from distributor and coordinator fees from results"
-        
+
         login_as distributor_owner
         visit admin_reports_path
         click_on "Enterprise Fees With Tax Report By Producer"
