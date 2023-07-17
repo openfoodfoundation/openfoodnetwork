@@ -160,12 +160,15 @@ describe "Registration" do
     end
 
     context "Enterprise name is already taken" do
+      let(:owner) do
+        Spree::User.create!(email: "penny.profile@example.org", password: "cannotbeblank")
+      end
+
       before do
         address = Spree::Address.create!(firstname: 'John', lastname: 'Doe',
                                          address1: '1400 Sesame street', zipcode: '3070',
                                          city: 'Southcote', phone: '12 3456 7890',
                                          country_id: 1, state_id: 1, company: 'unused')
-        owner = Spree::User.create!(email: "penny.profile@example.org", password: "cannotbeblank")
         Enterprise.create(name: 'My Awesome Enterprise', address:, owner:)
       end
 
@@ -191,7 +194,15 @@ describe "Registration" do
         click_button "Continue"
         click_button "Create Profile"
         click_link "producer-panel"
-        click_button "Create Profile"
+        alert_text = <<~TEXT.strip
+          Name has already been taken. If this is your enterprise and you would \
+          like to claim ownership, or if you would like to trade with this \
+          enterprise please contact the current manager of this profile at \
+          #{owner.email}.
+        TEXT
+        accept_alert(alert_text) do
+          click_button "Create Profile"
+        end
         expect(page).to have_button "Create Profile", disabled: false
       end
     end
