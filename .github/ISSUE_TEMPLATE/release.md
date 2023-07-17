@@ -7,21 +7,21 @@ assignees: ''
 
 ---
 
-## Preparation on Thursday
+## 1. Preparation on Thursday
 
 - [ ] Merge pull requests in the [Ready To Go] column
 - [ ] Include translations: `tx pull --force`
 - [ ] [Draft new release]. Look at previous [releases] for inspiration.
 - [ ] Notify [#instance-managers] of user-facing changes.
 
-## Testing
+## 2. Testing
 
 - [ ] [Find build] of the release commit and copy it below.
 - [ ] Move this issue to Test Ready.
 - [ ] Notify `@testers` in [#testing].
 - [ ] Test build: <!-- paste build link here, e.g. https://semaphore...builds/1234 -->
 
-## Finish on Tuesday
+## 3. Finish on Tuesday
 
 - [ ] Publish and notify [#global-community] (this is automatically posted with a plugin)
 - [ ] Deploy the new release to all managed instances.
