@@ -23,6 +23,12 @@ module Reporting
         line_items = line_items.supplied_by_any(@params[:supplier_id_in])
       end
 
+      # Filter by product
+      variant_id_in = @params[:variant_id_in].reject(&:blank?)
+      if variant_id_in.present?
+        line_items = line_items.where("spree_line_items.variant_id": variant_id_in)
+      end
+
       if line_item_includes.present?
         line_items = line_items.includes(*line_item_includes).references(:line_items)
       end

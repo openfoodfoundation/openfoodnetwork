@@ -56,7 +56,7 @@ module Admin
       @rendering_options = rendering_options
       @data = Reporting::FrontendData.new(spree_current_user)
 
-      variant_id_in = params[:variant_id_in].reject(&:blank?)
+      variant_id_in = params[:variant_id_in]&.reject(&:blank?)
       load_selected_variant if variant_id_in.present?
     end
 
