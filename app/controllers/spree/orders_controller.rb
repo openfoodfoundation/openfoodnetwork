@@ -70,7 +70,7 @@ module Spree
         @order.recreate_all_fees! # Enterprise fees on line items and on the order itself
 
         # Re apply the voucher
-        VoucherAdjustmentsService.calculate(@order)
+        VoucherAdjustmentsService.new(@order).calculate
         @order.update_totals_and_states
 
         if @order.complete?
