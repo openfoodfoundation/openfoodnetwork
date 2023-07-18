@@ -19,7 +19,7 @@
     ]
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.4.4",
+    "@floating-ui/dom": "^1.4.5",
     "@hotwired/turbo": "^7.3.0",
     "@rails/webpacker": "5.4.4",
     "cable_ready": "5.0.1",
