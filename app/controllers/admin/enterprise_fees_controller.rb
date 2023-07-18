@@ -6,8 +6,6 @@ module Admin
   class EnterpriseFeesController < Admin::ResourceController
     before_action :load_enterprise_fee_set, only: :index
     before_action :load_data
-    before_action :check_enterprise_fee_input, only: [:bulk_update]
-    before_action :check_calculators_compatibility_with_taxes, only: [:bulk_update]
 
     def index
       @include_calculators = params[:include_calculators].present?
@@ -36,7 +34,8 @@ module Admin
     end
 
     def bulk_update
-      @enterprise_fee_set = Sets::EnterpriseFeeSet.new(enterprise_fee_bulk_params)
+      # Forms has strong parameters, so we don't need to validate them in controller
+      @enterprise_fee_set = EnterpriseFeesBulkUpdate.new(params)
 
       if @enterprise_fee_set.save
         redirect_to redirect_path, notice: I18n.t(:enterprise_fees_update_notice)
@@ -88,48 +87,6 @@ module Admin
       end
 
       main_app.admin_enterprise_fees_path
-    end
-
-    def enterprise_fee_bulk_params
-      params.require(:sets_enterprise_fee_set).permit(
-        collection_attributes: [
-          :id, :enterprise_id, :fee_type, :name, :tax_category_id,
-          :inherits_tax_category, :calculator_type,
-          { calculator_attributes: PermittedAttributes::Calculator.attributes }
-        ]
-      )
-    end
-
-    def check_enterprise_fee_input
-      enterprise_fee_bulk_params['collection_attributes'].each do |_, fee_row|
-        enterprise_fees = fee_row['calculator_attributes']&.slice(
-          :preferred_flat_percent, :preferred_amount,
-          :preferred_first_item, :preferred_additional_item,
-          :preferred_minimal_amount, :preferred_normal_amount,
-          :preferred_discount_amount, :preferred_per_unit
-        )
-
-        next unless enterprise_fees
-
-        enterprise_fees.each do |_, enterprise_amount|
-          unless enterprise_amount.nil? || Float(enterprise_amount, exception: false)
-            flash[:error] = I18n.t(:calculator_preferred_value_error)
-            return redirect_to redirect_path
-          end
-        end
-      end
-    end
-
-    def check_calculators_compatibility_with_taxes
-      enterprise_fee_bulk_params['collection_attributes'].each do |_, enterprise_fee|
-        next unless enterprise_fee['inherits_tax_category'] == "true"
-        next unless EnterpriseFee::PER_ORDER_CALCULATORS.include?(enterprise_fee['calculator_type'])
-
-        flash[:error] = I18n.t(
-          'activerecord.errors.models.enterprise_fee.inherit_tax_requires_per_item_calculator'
-        )
-        return redirect_to redirect_path
-      end
     end
   end
 end

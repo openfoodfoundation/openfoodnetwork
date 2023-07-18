@@ -187,7 +187,7 @@ Layout/LineEndStringConcatenationIndentation:
     - 'spec/system/consumer/cookies_spec.rb'
     - 'spec/system/consumer/shopping/cart_spec.rb'
 
-# Offense count: 213
+# Offense count: 209
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Max, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, AllowedPatterns.
 # URISchemes: http, https
@@ -517,12 +517,11 @@ Metrics/BlockNesting:
   Exclude:
     - 'app/models/spree/payment/processing.rb'
 
-# Offense count: 49
+# Offense count: 48
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ClassLength:
   Exclude:
     - 'app/components/products_table_component.rb'
-    - 'app/controllers/admin/enterprise_fees_controller.rb'
     - 'app/controllers/admin/enterprises_controller.rb'
     - 'app/controllers/admin/order_cycles_controller.rb'
     - 'app/controllers/admin/product_import_controller.rb'
@@ -1439,7 +1438,7 @@ Style/HashLikeCase:
   Exclude:
     - 'app/models/enterprise.rb'
 
-# Offense count: 1778
+# Offense count: 1780
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, EnforcedShorthandSyntax, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
 # SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
@@ -1813,7 +1812,6 @@ Style/HashSyntax:
     - 'spec/system/admin/subscriptions_spec.rb'
     - 'spec/system/admin/tag_rules_spec.rb'
     - 'spec/system/admin/variant_overrides_spec.rb'
-    - 'spec/system/admin/variants_spec.rb'
     - 'spec/system/admin/vouchers_spec.rb'
     - 'spec/system/consumer/account/cards_spec.rb'
     - 'spec/system/consumer/account/developer_settings_spec.rb'
