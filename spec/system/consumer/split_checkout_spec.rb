@@ -1119,7 +1119,7 @@ describe "As a consumer, I want to checkout my order" do
         before do
           voucher.create_adjustment(voucher.code, order)
           order.update_totals
-          VoucherAdjustmentsService.new(order).calculate
+          VoucherAdjustmentsService.new(order).update
 
           visit checkout_step_path(:summary)
         end

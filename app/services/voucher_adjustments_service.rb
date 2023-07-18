@@ -5,7 +5,7 @@ class VoucherAdjustmentsService
     @order = order
   end
 
-  def calculate
+  def update
     return if @order.nil?
 
     # Find open Voucher Adjustment
@@ -41,6 +41,18 @@ class VoucherAdjustmentsService
     # Adding the voucher tax part
     tax_amount = voucher_rate * @order.additional_tax_total
 
+    update_tax_adjustment_for(adjustment, tax_amount)
+
+    # Update the adjustment amount
+    adjustment_amount = voucher_rate * (@order.pre_discount_total - @order.additional_tax_total)
+
+    adjustment.update_columns(
+      amount: adjustment_amount,
+      updated_at: Time.zone.now
+    )
+  end
+
+  def update_tax_adjustment_for(adjustment, tax_amount)
     adjustment_attributes = {
       originator: adjustment.originator,
       order: @order,
@@ -55,14 +67,6 @@ class VoucherAdjustmentsService
     tax_adjustment = @order.adjustments.find_or_initialize_by(adjustment_attributes)
     tax_adjustment.amount = tax_amount
     tax_adjustment.save
-
-    # Update the adjustment amount
-    adjustment_amount = voucher_rate * (@order.pre_discount_total - @order.additional_tax_total)
-
-    adjustment.update_columns(
-      amount: adjustment_amount,
-      updated_at: Time.zone.now
-    )
   end
 
   def handle_tax_included_in_price(amount)

@@ -83,7 +83,7 @@ module Spree
               end
 
               after_transition to: :confirmation do |order|
-                VoucherAdjustmentsService.new(order).calculate
+                VoucherAdjustmentsService.new(order).update
                 order.update_totals_and_states
               end
 
