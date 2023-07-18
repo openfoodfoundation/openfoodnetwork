@@ -9,13 +9,11 @@ module Admin
     end
 
     def create
-      case params[:vouchers_flat_rate][:voucher_type]
-      when "Vouchers::FlatRate"
-        @voucher =
-          Vouchers::FlatRate.create(permitted_resource_params.merge(enterprise: @enterprise))
-      when "Vouchers::PercentageRate"
-        @voucher =
-          Vouchers::PercentageRate.create(permitted_resource_params.merge(enterprise: @enterprise))
+      voucher_type = params[:vouchers_flat_rate][:voucher_type]
+      if Voucher::TYPES.include?(voucher_type)
+        @voucher = voucher_type.safe_constantize.create(
+          permitted_resource_params.merge(enterprise: @enterprise)
+        )
       else
         @voucher.errors.add(:type)
         return render_error
