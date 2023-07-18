@@ -11,6 +11,10 @@
     position: static;
   }
 
+  #products-content .container {
+    padding: 0;
+  }
+
   // Hopefully these rules will be moved to component(s).
   table.products {
     table-layout: fixed; // Column widths are based solely on col definitions (not content). This allows more efficient rendering.
