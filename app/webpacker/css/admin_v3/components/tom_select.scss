@@ -54,3 +54,14 @@
     border-color: $orient;
   }
 }
+
+// For the "single" tom_select, be as clause as native select boxes
+// without too many options
+.ts-wrapper.single {
+  max-height: 40px;
+  max-width: 100%;
+
+  &.input-active .ts-control {
+    cursor: pointer;
+  }
+}
