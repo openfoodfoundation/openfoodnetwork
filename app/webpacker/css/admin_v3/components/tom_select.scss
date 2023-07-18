@@ -1,0 +1,56 @@
+.ts-wrapper.single,
+.ts-wrapper.multi {
+  min-height: 40px;
+
+  &.input-active {
+    .ts-control {
+      border-color: $lighter-grey;
+
+      input {
+        &::placeholder {
+          color: $light-grey;
+        }
+      }
+    }
+  }
+
+  .ts-control {
+    box-shadow: none;
+    border-color: $lighter-grey;
+    background-color: $lighter-grey;
+    background-image: none;
+    @include border-radius($border-radius);
+
+    input {
+      &::placeholder {
+        color: $near-black;
+      }
+    }
+  }
+
+  .ts-dropdown {
+    @include border-radius($border-radius);
+    border: none;
+    box-shadow: none;
+    color: $near-black;
+
+    .option {
+      &.selected {
+        border-left: 2px solid $orient;
+      }
+
+      &.active {
+        background-color: $lighter-grey;
+        color: $near-black;
+      }
+    }
+  }
+}
+
+.plugin-dropdown_input .dropdown-input {
+  border-color: $lighter-grey;
+
+  &:focus {
+    border-color: $orient;
+  }
+}
