@@ -4,13 +4,16 @@ module Spree
   module Admin
     class InvoicesController < Spree::Admin::BaseController
       respond_to :json
-      authorize_resource class: false
 
       def index
         @order = Spree::Order.find_by(number: params[:order_id])
+        authorize! :invoice, @order
       end
 
       def create
+        Spree::Order.where(id: params[:order_ids]).find_each do |order|
+          authorize! :invoice, order
+        end
         invoice_service = BulkInvoiceService.new
         invoice_service.start_pdf_job(params[:order_ids])
 
@@ -19,6 +22,8 @@ module Spree
 
       def generate
         @order = Order.find_by(number: params[:order_id])
+        authorize! :invoice, @order
+
         @comparator = OrderInvoiceComparator.new(@order)
         if @comparator.can_generate_new_invoice?
           @order.invoices.create!(

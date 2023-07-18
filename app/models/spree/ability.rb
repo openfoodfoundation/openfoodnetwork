@@ -275,7 +275,7 @@ module Spree
       can [:admin, :bulk_management, :managed, :distribution], Spree::Order do
         user.admin? || user.enterprises.any?(&:is_distributor)
       end
-      can [:admin, :create, :show, :poll], :invoice
+      can [:admin, :index, :create, :show, :poll, :generate], :invoice
       can [:admin, :visible], Enterprise
       can [:admin, :index, :create, :update, :destroy], :line_item
       can [:admin, :index, :create], Spree::LineItem
