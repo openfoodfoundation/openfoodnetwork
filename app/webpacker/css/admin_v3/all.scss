@@ -127,7 +127,7 @@
 @import "v3_overrides"; // admin_v3
 
 @import "~tom-select/src/scss/tom-select.default";
-@import "../admin/components/tom_select";
+@import "components/tom_select"; // admin_v3
 
 @import "app/components/help_modal_component/help_modal_component";
 @import "app/components/product_component/product_component";
