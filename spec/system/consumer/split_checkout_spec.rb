@@ -917,6 +917,32 @@ describe "As a consumer, I want to checkout my order" do
         create(:order_ready_for_confirmation, distributor: distributor)
       }
 
+      describe "display the delivery address and not the ship address" do
+        let(:ship_address) { create(:address, :randomized) }
+        let(:bill_address) { create(:address, :randomized) }
+
+        before do
+          order.update_attribute(:ship_address, ship_address)
+          order.update_attribute(:bill_address, bill_address)
+          visit checkout_step_path(:summary)
+        end
+
+        it "displays the ship address" do
+          expect(page).to have_content "Delivery address"
+          expect(page).to have_content order.ship_address.address1
+          expect(page).to have_content order.ship_address.city
+          expect(page).to have_content order.ship_address.zipcode
+          expect(page).to have_content order.ship_address.phone
+        end
+
+        it "and not the billing address" do
+          expect(page).not_to have_content order.bill_address.address1
+          expect(page).not_to have_content order.bill_address.city
+          expect(page).not_to have_content order.bill_address.zipcode
+          expect(page).not_to have_content order.bill_address.phone
+        end
+      end
+
       describe "with an order with special instructions" do
         before do
           order.update_attribute(:special_instructions, "Please deliver on Tuesday")

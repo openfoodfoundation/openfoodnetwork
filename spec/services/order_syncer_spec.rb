@@ -293,7 +293,9 @@ describe OrderSyncer do
             create(:address, firstname: original_bill_address.firstname,
                              lastname: original_bill_address.lastname,
                              address1: distributor_address.address1,
-                             phone: original_bill_address.phone)
+                             phone: original_bill_address.phone,
+                             city: distributor_address.city,
+                             zipcode: distributor_address.zipcode)
           end
           let(:subscription) do
             create(:subscription, shop: distributor, bill_address: original_bill_address,

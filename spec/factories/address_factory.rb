@@ -27,6 +27,8 @@ FactoryBot.define do
       address1 { FFaker::Address.street_address }
       address2 { nil }
       phone { FFaker::PhoneNumber.phone_number }
+      city { FFaker::Address.city }
+      zipcode { FFaker::AddressUS.zip_code }
     end
   end
 end
