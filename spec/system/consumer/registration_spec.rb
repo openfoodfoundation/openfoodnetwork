@@ -198,7 +198,7 @@ describe "Registration" do
           Name has already been taken. If this is your enterprise and you would \
           like to claim ownership, or if you would like to trade with this \
           enterprise please contact the current manager of this profile at \
-          #{owner.email}.
+          penny.profile@example.org.
         TEXT
         accept_alert(alert_text) do
           click_button "Create Profile"
