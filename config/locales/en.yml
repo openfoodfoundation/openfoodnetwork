@@ -3642,6 +3642,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   customer_details: "Customer Details"
   adjustments: "Adjustments"
   payments: "Payments"
+  invoices: "Invoices"
   return_authorizations: "Return Authorizations"
   credit_owed: "Credit Owed"
   new_adjustment: "New Adjustment"
