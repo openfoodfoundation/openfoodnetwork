@@ -9,7 +9,7 @@ describe '
   include WebHelper
   include AuthenticationHelper
 
-  let(:enterprise) { create(:supplier_enterprise, name: 'Feedme') }
+  let(:enterprise) { create(:supplier_enterprise, name: 'Feedme', sells: 'own') }
   let(:voucher_code) { 'awesomevoucher' }
   let(:amount) { 25 }
   let(:enterprise_user) { create(:user, enterprise_limit: 1) }
