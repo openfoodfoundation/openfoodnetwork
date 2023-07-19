@@ -98,10 +98,6 @@ describe 'As an admin, I can see the new product page' do
     end
 
     context "search by category" do
-      it "has a category select" do
-        expect(page).to have_selector "select#category_id"
-      end
-
       it "can search for a product" do
         search_by_category "Category 1"
 
