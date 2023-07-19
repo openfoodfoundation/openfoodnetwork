@@ -18,7 +18,7 @@ describe 'As an admin, I can see the new product page' do
   let!(:product_by_supplier) { create(:simple_product, supplier: producer) }
   # create a product with a category that can be searched
   let!(:product_by_category) {
-    create(:simple_product, taxons: [create(:taxon, name: "Category 1")])
+    create(:simple_product, primary_taxon: create(:taxon, name: "Category 1"))
   }
 
   before do
