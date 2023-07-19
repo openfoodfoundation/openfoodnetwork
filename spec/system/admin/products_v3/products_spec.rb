@@ -8,14 +8,14 @@ describe 'As an admin, I can see the new product page' do
   include FileHelper
 
   # create lot of products
-  let!(:products) { create_list(:simple_product, 70) }
+  70.times do |i|
+    let!("product_#{i}".to_sym) { create(:simple_product, name: "product #{i}") }
+  end
   # create a product with a name that can be searched
   let!(:product_by_name) { create(:simple_product, name: "searchable product") }
   # create a product with a supplier that can be searched
-  let!(:product_by_supplier) {
-    create(:simple_product,
-           supplier: create(:enterprise, name: "Producer 1", is_primary_producer: true))
-  }
+  let!(:producer) { create(:supplier_enterprise, name: "Producer 1") }
+  let!(:product_by_supplier) { create(:simple_product, supplier: producer) }
   # create a product with a category that can be searched
   let!(:product_by_category) {
     create(:simple_product, taxons: [create(:taxon, name: "Category 1")])
