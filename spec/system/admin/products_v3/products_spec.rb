@@ -71,7 +71,6 @@ describe 'As an admin, I can see the new product page' do
       end
 
       it "reset the page when searching" do
-        pending "this test is not working"
         within ".pagination" do
           click_link "2"
         end
