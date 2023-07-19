@@ -15,7 +15,11 @@ class VoucherAdjustmentsController < BaseController
   end
 
   def destroy
-    @order.voucher_adjustments.find_by(id: params[:id])&.destroy
+    # An order can have more than one adjustment linked to one voucher
+    adjustment = @order.voucher_adjustments.find_by(id: params[:id])
+    if adjustment.present?
+      @order.voucher_adjustments.where(originator_id: adjustment.originator_id)&.destroy_all
+    end
 
     update_payment_section
   end
