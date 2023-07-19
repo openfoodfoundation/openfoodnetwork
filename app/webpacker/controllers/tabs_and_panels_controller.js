@@ -40,8 +40,8 @@ export default class extends Controller {
   }
 
   simulateClick(tab, panel) {
-    this.updateActiveTab(tab);
     this.updateActivePanel(panel);
+    this.updateActiveTab(tab);
   }
 
   changeActivePanel(event) {
