@@ -910,6 +910,8 @@ different_shipping_method_for_distributor1]
 
           visit spree.edit_admin_order_path(incomplete_order)
 
+          expect(page).to have_content "Out of Stock".upcase
+
           within ".insufficient-stock-items" do
             expect(page).to have_content incomplete_order.products.first.name
             accept_alert 'Are you sure?' do
@@ -917,6 +919,10 @@ different_shipping_method_for_distributor1]
             end
             expect(page).to_not have_content incomplete_order.products.first.name
           end
+          
+          # updates the order and verifies the warning disappears
+          click_button 'Update And Recalculate Fees'
+          expect(page).to_not have_content "Out of Stock".upcase
         end
       end
     end
