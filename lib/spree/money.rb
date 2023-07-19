@@ -28,7 +28,8 @@ module Spree
     end
 
     def to_html(options = { html_wrap: true })
-      @money.format(@options.merge(options)).html_safe
+      "<span style='white-space: nowrap;'>#{@money.format(@options.merge(options))}</span>"
+        .html_safe
     end
 
     def format(options = {})

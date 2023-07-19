@@ -123,7 +123,7 @@ describe Spree::Money do
       money = Spree::Money.new(10)
       # The HTMLified version of the euro sign
       expect(money.to_html).to eq(
-        "<span class=\"money-whole\">10</span><span class=\"money-decimal-mark\">.</span><span class=\"money-decimal\">00</span> <span class=\"money-currency-symbol\">&#x20AC;</span>"
+        "<span style='white-space: nowrap;'><span class=\"money-whole\">10</span><span class=\"money-decimal-mark\">.</span><span class=\"money-decimal\">00</span> <span class=\"money-currency-symbol\">&#x20AC;</span></span>"
       )
     end
     # rubocop:enable Layout/LineLength
