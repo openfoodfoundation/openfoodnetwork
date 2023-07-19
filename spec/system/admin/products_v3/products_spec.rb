@@ -137,9 +137,8 @@ describe 'As an admin, I can see the new product page' do
     end
   end
 
-  def expect_page_to_be(page)
-    pending "this test is not working"
-    expect(page).to have_selector ".pagination .page.current", text: page.to_s
+  def expect_page_to_be(page_number)
+    expect(page).to have_selector ".pagination span.page.current", text: page_number.to_s
   end
 
   def expect_per_page_to_be(per_page)
