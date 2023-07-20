@@ -483,7 +483,7 @@ describe '
         page.find("#listing_orders thead th:first-child input[type=checkbox]").click
         expect(page.find(
           "#listing_orders tbody tr td:first-child input[type=checkbox]")
-        ).to be_checked
+              ).to be_checked
         # enables print invoices button
         page.find("span.icon-reorder", text: "ACTIONS").click
         expect(page).to have_content "Print Invoices"
@@ -491,7 +491,7 @@ describe '
         page.find("#listing_orders thead th:first-child input[type=checkbox]").trigger("click")
         expect(page.find(
           "#listing_orders tbody tr td:first-child input[type=checkbox]")
-        ).to_not be_checked
+              ).to_not be_checked
         # disables print invoices button
         page.find("span.icon-reorder", text: "ACTIONS").click
         expect(page).to_not have_content "Print Invoices"

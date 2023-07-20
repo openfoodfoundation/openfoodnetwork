@@ -16,12 +16,6 @@ Gemspec/RequiredRubyVersion:
     - 'engines/order_management/order_management.gemspec'
     - 'engines/web/web.gemspec'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Layout/ClosingParenthesisIndentation:
-  Exclude:
-    - 'spec/system/admin/orders_spec.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Layout/EmptyLines:
