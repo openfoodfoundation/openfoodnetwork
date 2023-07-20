@@ -75,7 +75,7 @@ describe 'Shops' do
 
     it "does not show hubs that are not in an order cycle" do
       expect(page).to have_no_selector 'hub.inactive'
-      expect(page).to have_no_selector 'hub',   text: d2.name
+      expect(page).to have_no_selector 'hub', text: d2.name
     end
 
     it "does not show profiles" do
