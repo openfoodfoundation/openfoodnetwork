@@ -16,14 +16,6 @@ Gemspec/RequiredRubyVersion:
     - 'engines/order_management/order_management.gemspec'
     - 'engines/web/web.gemspec'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleAlignWith.
-# SupportedStylesAlignWith: either, start_of_block, start_of_line
-Layout/BlockAlignment:
-  Exclude:
-    - 'spec/services/products_renderer_spec.rb'
-
 # Offense count: 4
 # This cop supports safe autocorrection (--autocorrect).
 Layout/BlockEndNewline:
@@ -124,7 +116,7 @@ Layout/LineContinuationSpacing:
     - 'spec/system/admin/enterprise_fees_spec.rb'
     - 'spec/system/admin/order_spec.rb'
 
-# Offense count: 91
+# Offense count: 92
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Max, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, AllowedPatterns.
 # URISchemes: http, https
@@ -152,6 +144,7 @@ Layout/LineLength:
     - 'spec/support/request/web_helper.rb'
     - 'spec/system/admin/adjustments_spec.rb'
     - 'spec/system/admin/bulk_order_management_spec.rb'
+    - 'spec/system/admin/customers_spec.rb'
     - 'spec/system/admin/order_cycles/simple_spec.rb'
     - 'spec/system/admin/order_spec.rb'
     - 'spec/system/admin/product_import_spec.rb'

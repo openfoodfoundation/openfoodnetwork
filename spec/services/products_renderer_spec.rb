@@ -25,7 +25,7 @@ describe ProductsRenderer do
     let!(:product_cherries) {
       create(:product, name: "cherries", primary_taxon_id: fruits.id,
                        supplier_id: fruits_supplier.id)
-      }
+    }
     let!(:product_doughnuts) {
       create(:product, name: "doughnuts", primary_taxon_id: cakes.id,
                        supplier_id: cakes_supplier.id)
