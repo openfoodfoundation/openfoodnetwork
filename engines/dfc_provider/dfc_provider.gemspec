@@ -13,6 +13,8 @@ Gem::Specification.new do |spec|
   spec.summary     = 'Provides an API stack implementing DFC semantic ' \
                      'specifications'
 
+  spec.required_ruby_version = File.read(File.expand_path("../../.ruby-version", __dir__)).chomp
+
   spec.files = Dir["{app,config,lib}/**/*"] + ['README.md']
 
   spec.add_dependency 'active_model_serializers', '~> 0.8.4'
