@@ -144,7 +144,7 @@ describe "full-page cart" do
       context "order with 2 line items" do
         let(:admin_fee) {
           create(:enterprise_fee, calculator: Calculator::Weight.new(preferred_per_unit: 1,
-                                  preferred_unit_from_list: "kg"),
+                                                                     preferred_unit_from_list: "kg"),
                                   enterprise: order_cycle.coordinator, fee_type: 'admin')
         }
 

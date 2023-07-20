@@ -265,7 +265,7 @@ describe '
       it "displays a column for user's full name" do
         expect(page).to have_selector "th.full_name", text: "NAME"
         expect(page).to have_selector "td.full_name",
-          text: "#{o1.bill_address.last_name}, #{o1.bill_address.first_name}"
+                                      text: "#{o1.bill_address.last_name}, #{o1.bill_address.first_name}"
         expect(page).to have_selector "td.full_name", text: ""
       end
 
@@ -790,7 +790,7 @@ describe '
       end
 
       it "displays only line items whose orders meet the date restriction criteria, when changed", 
-        retry: 3 do
+         retry: 3 do
         from = today - 8.days
         to = today + 1.day
 

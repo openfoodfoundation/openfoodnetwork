@@ -100,7 +100,7 @@ describe '
       select 'Admin', from: "#{prefix}_fee_type"
       fill_in "#{prefix}_name", with: 'Greetings!'
       select 'Inherit From Product', 
-        from: "#{prefix}_tax_category_id"
+             from: "#{prefix}_tax_category_id"
       select 'Flat Percent', from: "#{prefix}_calculator_type"
       click_button 'Update'
     end
@@ -126,11 +126,11 @@ describe '
 
     it "handle when updating calculator type for Weight to Flat Rate" do
       select 'Weight (per kg or lb)', 
-        from: "#{prefix}_calculator_type"
+             from: "#{prefix}_calculator_type"
       click_button 'Update'
 
       select 'Flat Rate (per item)', 
-        from: "#{prefix}_calculator_type"
+             from: "#{prefix}_calculator_type"
       click_button 'Update'
 
       expect(fee.reload.calculator_type).to eq("Calculator::PerItem")
@@ -157,7 +157,7 @@ describe '
       
       # editing to an invalid combination
       select 'Flat Rate (per order)', 
-        from: "#{prefix}_calculator_type"
+             from: "#{prefix}_calculator_type"
       expect{ click_button 'Update' }.to_not change { fee.reload.calculator_type }
       expect(page).to have_content "Inheriting the tax categeory requires a per-item calculator."
     end
@@ -218,7 +218,7 @@ describe '
             # After saving, we should be redirected to the fees for our chosen enterprise
             expect(page).
               not_to have_select 'sets_enterprise_fee_set_collection_attributes_1_enterprise_id',
-            selected: 'Second Distributor'
+                                 selected: 'Second Distributor'
             
             # A new enterprise fee is created
             expect(EnterpriseFee.count).to eq(fee_count)
@@ -229,7 +229,7 @@ describe '
       context "an error message is displayed" do
         message = 'Inheriting the tax categeory requires a per-item calculator.'
         it_behaves_like "setting it up", 'Inherit From Product',
-                                          'Flat Rate (per order)', message, 0
+                        'Flat Rate (per order)', message, 0
       end
 
       context "an success message is displayed" do
