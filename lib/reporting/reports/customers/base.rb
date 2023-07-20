@@ -51,15 +51,12 @@ module Reporting
         private
 
         def filter_to_completed_at(orders)
-          if params[:q] &&
-             params[:q][:completed_at_gt].present? &&
-             params[:q][:completed_at_lt].present?
-            orders.where("completed_at >= ? AND completed_at <= ?",
-                         params[:q][:completed_at_gt],
-                         params[:q][:completed_at_lt])
-          else
-            orders
-          end
+          min = params.dig(:q, :completed_at_gt)
+          max = params.dig(:q, :completed_at_lt)
+
+          return orders if min.blank? || max.blank?
+
+          orders.where(completed_at: [min..max])
         end
 
         def filter_to_distributor(orders)
