@@ -1453,6 +1453,7 @@ en:
       email_confirmation: "Email confirmation is pending. We've sent a confirmation email to %{email}."
       not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
     reports:
+      deprecated: "This report is deprecated and will be removed in a future release."
       hidden: HIDDEN
       unitsize: UNITSIZE
       total: TOTAL
