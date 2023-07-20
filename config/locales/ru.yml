@@ -58,6 +58,10 @@ ru:
         orders_close_at: Время Закрытия
       variant_override:
         count_on_hand: "В наличии"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Калькулятор Плоских Процентов:"
+        preferred_amount: "Калькулятор Сумма:"
+        preferred_first_item: "Первый Элемент Калькулятора:"
     errors:
       models:
         spree/user:
