@@ -158,7 +158,7 @@ describe "As a consumer, I want to checkout my order" do
 
         visit checkout_path
         expect(page).to have_content(
-          "Checkout is not possible due to absence of shipping options. "\
+          "Checkout is not possible due to absence of shipping options. " \
           "Please contact the shop owner."
         )
       end
@@ -218,10 +218,10 @@ describe "As a consumer, I want to checkout my order" do
 
           it "should display error message in the right order" do
             expect(page).to have_content(
-              "Customer E-Mail can't be blank, Customer E-Mail is invalid, Customer phone can't "\
-              "be blank, Billing address first name can't be blank, Billing address last name "\
-              "can't be blank, Billing address (Street + House number) can't be blank, Billing "\
-              "address city can't be blank, Billing address postcode can't be blank, and "\
+              "Customer E-Mail can't be blank, Customer E-Mail is invalid, Customer phone can't " \
+              "be blank, Billing address first name can't be blank, Billing address last name " \
+              "can't be blank, Billing address (Street + House number) can't be blank, Billing " \
+              "address city can't be blank, Billing address postcode can't be blank, and " \
               "Shipping method Select a shipping method"
             )
           end
@@ -343,7 +343,7 @@ describe "As a consumer, I want to checkout my order" do
 
     context "details step" do
       context "when form is submitted but invalid" do
-        it "display the checkbox about shipping address same as billing address "\
+        it "display the checkbox about shipping address same as billing address " \
            "when selecting a shipping method that requires ship address" do
           choose free_shipping_with_required_address.name
           check "Shipping address same as billing address?"
@@ -975,7 +975,7 @@ describe "As a consumer, I want to checkout my order" do
 
           click_link "Payment method"
 
-          expect(page).to have_content("You can review and confirm your order in the next step "\
+          expect(page).to have_content("You can review and confirm your order in the next step " \
                                        "which includes the final costs.")
         end
       end
@@ -1184,7 +1184,7 @@ describe "As a consumer, I want to checkout my order" do
           expect(page).to have_link("cart", href: "/cart#bought-products")
           click_on "cart"
           expect(page).to have_text(
-            "#{prev_order.line_items.length} "\
+            "#{prev_order.line_items.length} " \
             "additional items already confirmed for this order cycle"
           )
         end

@@ -80,8 +80,8 @@ describe '
 
         select2_select "Revoked", from: "payment_method_preferred_enterprise_id"
         expect(page).to have_selector "#stripe-account-status .alert-box.error",
-                                      text: 'Access to this Stripe account has been revoked, '\
-                                      'please reconnect your account.'
+                                      text: 'Access to this Stripe account has been revoked, ' \
+                                            'please reconnect your account.'
 
         select2_select "Connected", from: "payment_method_preferred_enterprise_id"
         expect(page).to have_selector "#stripe-account-status .status", text: "Status: Connected"

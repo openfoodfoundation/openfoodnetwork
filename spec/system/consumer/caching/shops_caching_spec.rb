@@ -61,12 +61,12 @@ describe "Shops caching", caching: true do
       "#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}"
     }
     let(:taxons_key) {
-      "views/#{test_domain}/api/v0/order_cycles/#{order_cycle.id}/"\
-      "taxons.json?distributor=#{distributor.id}"
+      "views/#{test_domain}/api/v0/order_cycles/#{order_cycle.id}/" \
+        "taxons.json?distributor=#{distributor.id}"
     }
     let(:properties_key) {
-      "views/#{test_domain}/api/v0/order_cycles/#{order_cycle.id}/"\
-      "properties.json?distributor=#{distributor.id}"
+      "views/#{test_domain}/api/v0/order_cycles/#{order_cycle.id}/" \
+        "properties.json?distributor=#{distributor.id}"
     }
     let(:options) { { expires_in: CacheService::FILTERS_EXPIRY } }
 

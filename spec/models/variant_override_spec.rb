@@ -286,7 +286,8 @@ describe VariantOverride do
 
       it "succeeds for variant override that uses producer stock settings" do
         vo = create(:variant_override, :use_producer_stock_settings, variant: variant, hub: hub,
-                                                                     default_stock: 20, resettable: true)
+                                                                     default_stock: 20,
+                                                                     resettable: true)
         vo.reset_stock!
 
         vo.reload

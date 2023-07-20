@@ -32,7 +32,7 @@ describe "As a consumer, I want to check unit price information for a product" d
       visit shop_path
     end
 
-    it "one click on the question mark icon should open the tooltip, "\
+    it "one click on the question mark icon should open the tooltip, " \
        "another click should close it" do
       expect(page).to have_selector '.variant-unit-price'
       within '.variant-unit-price' do
@@ -41,15 +41,15 @@ describe "As a consumer, I want to check unit price information for a product" d
       find('.question-mark-icon').click
       expect(page).to have_selector '.joyride-tip-guide.question-mark-tooltip'
       within '.joyride-tip-guide.question-mark-tooltip' do
-        expect(page).to have_content('This is the unit price of this product. '\
-                                     'It allows you to compare the price of products '\
+        expect(page).to have_content('This is the unit price of this product. ' \
+                                     'It allows you to compare the price of products ' \
                                      'independent of packaging sizes & weights.')
       end
 
       page.find("body").click
       expect(page).not_to have_selector '.joyride-tip-guide.question-mark-tooltip'
-      expect(page).to have_no_content('This is the unit price of this product. '\
-                                      'It allows you to compare the price of products '\
+      expect(page).to have_no_content('This is the unit price of this product. ' \
+                                      'It allows you to compare the price of products ' \
                                       'independent of packaging sizes & weights.')
     end
   end
@@ -66,14 +66,14 @@ describe "As a consumer, I want to check unit price information for a product" d
       find(".cart-content .question-mark-icon").click
       expect(page).to have_selector '.joyride-tip-guide.question-mark-tooltip'
       within '.joyride-tip-guide.question-mark-tooltip' do
-        expect(page).to have_content('This is the unit price of this product. '\
-                                     'It allows you to compare the price of products '\
+        expect(page).to have_content('This is the unit price of this product. ' \
+                                     'It allows you to compare the price of products ' \
                                      'independent of packaging sizes & weights.')
       end
       page.find("body").click
       expect(page).not_to have_selector '.joyride-tip-guide.question-mark-tooltip'
-      expect(page).to have_no_content('This is the unit price of this product. '\
-                                      'It allows you to compare the price of products '\
+      expect(page).to have_no_content('This is the unit price of this product. ' \
+                                      'It allows you to compare the price of products ' \
                                       'independent of packaging sizes & weights.')
     end
   end

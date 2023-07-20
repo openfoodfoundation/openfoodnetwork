@@ -38,7 +38,8 @@ describe EmbeddedPageService do
       it "sets session variables" do
         expect(session[:embedded_shopfront]).to eq true
         expect(session[:embedding_domain]).to eq 'embedding-enterprise.com'
-        expect(session[:shopfront_redirect]).to eq '/' + enterprise_slug + '/shop?embedded_shopfront=true'
+        expect(session[:shopfront_redirect])
+          .to eq '/' + enterprise_slug + '/shop?embedded_shopfront=true'
       end
 
       it "publicly reports that embedded layout should be used" do
@@ -56,7 +57,8 @@ describe EmbeddedPageService do
       it "resets the session variables for the new request" do
         expect(session[:embedded_shopfront]).to eq true
         expect(session[:embedding_domain]).to eq 'embedding-enterprise.com'
-        expect(session[:shopfront_redirect]).to eq '/' + enterprise_slug + '/shop?embedded_shopfront=true'
+        expect(session[:shopfront_redirect])
+          .to eq '/' + enterprise_slug + '/shop?embedded_shopfront=true'
       end
     end
 

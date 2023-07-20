@@ -50,8 +50,10 @@ module Features
     end
 
     def datepicker_month_and_year
-      month = find(".flatpickr-calendar.open .flatpickr-current-month select.flatpickr-monthDropdown-months").value.to_i + 1
-      year = find(".flatpickr-calendar.open .flatpickr-current-month .numInputWrapper .cur-year").value
+      month = find(".flatpickr-calendar.open .flatpickr-current-month " \
+                   "select.flatpickr-monthDropdown-months").value.to_i + 1
+      year = find(".flatpickr-calendar.open .flatpickr-current-month " \
+                  ".numInputWrapper .cur-year").value
       month.to_s + " " + year.to_s
     end
 

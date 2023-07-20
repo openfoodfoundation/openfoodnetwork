@@ -284,13 +284,14 @@ describe CartService do
       let(:order_cycle_distributed_variants) { double(:order_cycle_distributed_variants) }
 
       before do
-        expect(OrderCycleDistributedVariants).to receive(:new).with(234,
-                                                                    123).and_return(order_cycle_distributed_variants)
+        expect(OrderCycleDistributedVariants)
+          .to receive(:new).with(234, 123).and_return(order_cycle_distributed_variants)
         cart_service.instance_eval { @distributor = 123; @order_cycle = 234 }
       end
 
       it "delegates to OrderCycleDistributedVariants, returning true when available" do
-        expect(order_cycle_distributed_variants).to receive(:available_variants).and_return([variant])
+        expect(order_cycle_distributed_variants).to receive(:available_variants)
+          .and_return([variant])
 
         expect(cart_service.send(:check_variant_available_under_distribution, variant)).to be true
         expect(cart_service.errors).to be_empty
@@ -300,7 +301,8 @@ describe CartService do
         expect(order_cycle_distributed_variants).to receive(:available_variants).and_return([])
 
         expect(cart_service.send(:check_variant_available_under_distribution, variant)).to be false
-        expect(cart_service.errors.to_a).to eq(["That product is not available from the chosen distributor or order cycle."])
+        expect(cart_service.errors.to_a)
+          .to eq(["That product is not available from the chosen distributor or order cycle."])
       end
     end
   end

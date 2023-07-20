@@ -82,8 +82,8 @@ describe ProductTagRulesFilterer do
           variant_hidden_by_default.update_attribute(:tag_list,
                                                      default_hide_rule.preferred_variant_tags)
           variant_hidden_by_rule.update_attribute(:tag_list, hide_rule.preferred_variant_tags)
-          variant_hidden_for_another_customer.update_attribute(:tag_list,
-                                                               non_applicable_rule.preferred_variant_tags)
+          variant_hidden_for_another_customer
+            .update_attribute(:tag_list, non_applicable_rule.preferred_variant_tags)
 
           overrides_to_hide = filterer.__send__(:overrides_to_hide)
           expect(overrides_to_hide).to include variant_hidden_by_default.id,

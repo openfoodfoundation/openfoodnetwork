@@ -13,7 +13,8 @@ describe Checkout::PostCheckoutActions do
     describe "setting customer terms_and_conditions_accepted_at" do
       before { order.customer = build(:customer) }
 
-      it "does not set customer's terms_and_conditions to the current time if terms have not been accepted" do
+      it "does not set customer's terms_and_conditions to the current time " \
+         "if terms have not been accepted" do
         postCheckoutActions.success(params, current_user)
         expect(order.customer.terms_and_conditions_accepted_at).to be_nil
       end

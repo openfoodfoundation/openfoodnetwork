@@ -29,16 +29,20 @@ describe "checking out an order that initially fails", type: :request do
       shipping_method_id: shipping_method.id,
       payments_attributes: [{ payment_method_id: payment_method.id }],
       bill_address_attributes: address.attributes.slice("firstname", "lastname", "address1",
-                                                        "address2", "phone", "city", "zipcode", "state_id", "country_id"),
+                                                        "address2", "phone", "city", "zipcode",
+                                                        "state_id", "country_id"),
       ship_address_attributes: address.attributes.slice("firstname", "lastname", "address1",
-                                                        "address2", "phone", "city", "zipcode", "state_id", "country_id")
+                                                        "address2", "phone", "city", "zipcode",
+                                                        "state_id", "country_id")
     } }
   end
 
   before do
     order_cycle_distributed_variants = double(:order_cycle_distributed_variants)
-    allow(OrderCycleDistributedVariants).to receive(:new).and_return(order_cycle_distributed_variants)
-    allow(order_cycle_distributed_variants).to receive(:distributes_order_variants?).and_return(true)
+    allow(OrderCycleDistributedVariants).to receive(:new)
+      .and_return(order_cycle_distributed_variants)
+    allow(order_cycle_distributed_variants)
+      .to receive(:distributes_order_variants?).and_return(true)
 
     order.reload.update_totals
     set_order order
@@ -62,7 +66,8 @@ describe "checking out an order that initially fails", type: :request do
       # Checking out a BogusGateway without a source fails at :payment
       # Shipments and payments should then be cleared before rendering checkout
       expect(response.status).to be 400
-      expect(flash[:error]).to eq 'Payment could not be processed, please check the details you entered'
+      expect(flash[:error])
+        .to eq 'Payment could not be processed, please check the details you entered'
       order.reload
       expect(order.shipments.count).to be 0
       expect(order.payments.count).to be 0

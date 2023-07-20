@@ -28,15 +28,16 @@ describe Api::Admin::ExchangeSerializer do
 
     context "when order cycle shows only variants in the coordinator's inventory" do
       before do
-        allow(exchange.order_cycle).to receive(:prefers_product_selection_from_coordinator_inventory_only?) {
-                                         true
-                                       }
+        allow(exchange.order_cycle)
+          .to receive(:prefers_product_selection_from_coordinator_inventory_only?) { true }
       end
 
       it "filters variants within the exchange based on permissions, and visibility in inventory" do
         visible_variants = serializer.variants
-        expect(permissions_mock).to have_received(:visible_variants_for_incoming_exchanges_from).with(exchange.sender)
-        expect(permitted_variants).to have_received(:visible_for).with(exchange.order_cycle.coordinator)
+        expect(permissions_mock).to have_received(:visible_variants_for_incoming_exchanges_from)
+          .with(exchange.sender)
+        expect(permitted_variants).to have_received(:visible_for)
+          .with(exchange.order_cycle.coordinator)
         expect(exchange.variants).to include v1, v2, v3
         expect(visible_variants.keys).to include v1.id
         expect(visible_variants.keys).to_not include v2.id, v3.id
@@ -45,14 +46,14 @@ describe Api::Admin::ExchangeSerializer do
 
     context "when order cycle shows all available products" do
       before do
-        allow(exchange.order_cycle).to receive(:prefers_product_selection_from_coordinator_inventory_only?) {
-                                         false
-                                       }
+        allow(exchange.order_cycle)
+          .to receive(:prefers_product_selection_from_coordinator_inventory_only?) { false }
       end
 
       it "filters variants within the exchange based on permissions only" do
         visible_variants = serializer.variants
-        expect(permissions_mock).to have_received(:visible_variants_for_incoming_exchanges_from).with(exchange.sender)
+        expect(permissions_mock).to have_received(:visible_variants_for_incoming_exchanges_from)
+          .with(exchange.sender)
         expect(permitted_variants).to_not have_received(:visible_for)
         expect(exchange.variants).to include v1, v2, v3
         expect(visible_variants.keys).to include v1.id, v2.id
@@ -78,14 +79,14 @@ describe Api::Admin::ExchangeSerializer do
 
     context "when the receiver prefers to see all variants (not just those in their inventory)" do
       before do
-        allow(exchange.receiver).to receive(:prefers_product_selection_from_inventory_only?) {
-                                      false
-                                    }
+        allow(exchange.receiver)
+          .to receive(:prefers_product_selection_from_inventory_only?) { false }
       end
 
       it "filters variants within the exchange based on permissions only" do
         visible_variants = serializer.variants
-        expect(permissions_mock).to have_received(:visible_variants_for_outgoing_exchanges_to).with(exchange.receiver)
+        expect(permissions_mock).to have_received(:visible_variants_for_outgoing_exchanges_to)
+          .with(exchange.receiver)
         expect(permitted_variants).to have_received(:not_hidden_for).with(exchange.receiver)
         expect(permitted_variants).to_not have_received(:visible_for)
         expect(exchange.variants).to include v1, v2, v3
@@ -94,16 +95,17 @@ describe Api::Admin::ExchangeSerializer do
       end
     end
 
-    context "when the receiver prefers to restrict visible variants to only those in their inventory" do
+    context "when the receiver prefers to restrict visible variants " \
+            "to only those in their inventory" do
       before do
-        allow(exchange.receiver).to receive(:prefers_product_selection_from_inventory_only?) {
-                                      true
-                                    }
+        allow(exchange.receiver)
+          .to receive(:prefers_product_selection_from_inventory_only?) { true }
       end
 
       it "filters variants within the exchange based on permissions, and inventory visibility" do
         visible_variants = serializer.variants
-        expect(permissions_mock).to have_received(:visible_variants_for_outgoing_exchanges_to).with(exchange.receiver)
+        expect(permissions_mock).to have_received(:visible_variants_for_outgoing_exchanges_to)
+          .with(exchange.receiver)
         expect(permitted_variants).to have_received(:visible_for).with(exchange.receiver)
         expect(permitted_variants).to_not have_received(:not_hidden_for)
         expect(exchange.variants).to include v1, v2, v3

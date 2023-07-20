@@ -60,7 +60,7 @@ describe "Product Import" do
     end
     after { File.delete('/tmp/test.csv') }
 
-    it "validates entries and saves them if they are all valid and allows viewing new items "\
+    it "validates entries and saves them if they are all valid and allows viewing new items " \
        "in Bulk Products" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
@@ -156,7 +156,7 @@ describe "Product Import" do
 
       proceed_to_validation
       find('div.header-description', text: 'Items contain errors').click
-      expect(page).to have_content "Variant_unit_name must be the same for products "\
+      expect(page).to have_content "Variant_unit_name must be the same for products " \
                                    "with the same name"
       expect(page).to have_content "Imported file contains invalid entries"
 
@@ -272,7 +272,7 @@ describe "Product Import" do
       expect(Spree::Product.find_by(name: 'Beans').on_hand).to eq 0
     end
 
-    it "can save a new product and variant of that product at the same time, "\
+    it "can save a new product and variant of that product at the same time, " \
        "add variant to existing product" do
       csv_data = CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
@@ -445,11 +445,11 @@ describe "Product Import" do
 
         expect(page).to have_content "Aubergine"
         expect(page).to have_select(
-          "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}"\
+          "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}" \
           "-on_demand", selected: "Yes"
         )
         expect(page).to have_input(
-          "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}"\
+          "variant-overrides-#{Spree::Product.find_by(name: 'Aubergine').variants.first.id}" \
           "-price", with: "3.3"
         )
       end
@@ -472,7 +472,7 @@ describe "Product Import" do
         proceed_to_validation
 
         find('div.header-description', text: 'Items contain errors').click
-        expect(page).to have_content "Variant_unit_name must be the same for products "\
+        expect(page).to have_content "Variant_unit_name must be the same for products " \
                                      "with the same name"
         expect(page).to have_content "Imported file contains invalid entries"
         expect(page).to have_no_selector 'input[type=submit][value="Save"]'
@@ -861,7 +861,7 @@ describe "Product Import" do
 
     it "handles cases where files contain malformed data" do
       csv_data = "name,producer,category,on_hand,price,units,unit_type,shipping_category\n"
-      csv_data += "Malformed \rBrocolli,#{enterprise.name},Vegetables,8,2.50,200,g,"\
+      csv_data += "Malformed \rBrocolli,#{enterprise.name},Vegetables,8,2.50,200,g," \
                   "#{shipping_category.name}\n"
 
       File.write('/tmp/test.csv', csv_data)

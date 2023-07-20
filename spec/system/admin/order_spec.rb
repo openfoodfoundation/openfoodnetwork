@@ -735,7 +735,7 @@ distributors: [distributor1])
           end
         end
 
-        context "when the distributor unsupport a shipping method that's selected "\
+        context "when the distributor unsupport a shipping method that's selected " \
                 "in an existing order " do
           before do
             distributor1.shipping_methods = [shipping_method_for_distributor1,

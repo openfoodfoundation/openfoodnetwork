@@ -104,7 +104,8 @@ module Permissions
         end
       end
 
-      context "as an enterprise that is a distributor in the order cycle, but not the distributor of the order" do
+      context "as an enterprise that is a distributor in the order cycle, " \
+              "but not the distributor of the order" do
         before do
           allow(basic_permissions).to receive(:managed_enterprises) {
                                         Enterprise.where(id: random_enterprise)
@@ -155,7 +156,8 @@ module Permissions
         end
       end
 
-      context "as the manager producer which has granted P-OC to the distributor of the parent order" do
+      context "as the manager producer which has granted P-OC to the distributor " \
+              "of the parent order" do
         before do
           allow(basic_permissions).to receive(:managed_enterprises) {
                                         Enterprise.where(id: producer)
@@ -174,7 +176,8 @@ module Permissions
         end
       end
 
-      context "as an enterprise that is a distributor in the order cycle, but not the distributor of the parent order" do
+      context "as an enterprise that is a distributor in the order cycle, " \
+              "but not the distributor of the parent order" do
         before do
           allow(basic_permissions).to receive(:managed_enterprises) {
                                         Enterprise.where(id: random_enterprise)
@@ -199,11 +202,13 @@ module Permissions
           allow(user).to receive(:has_spree_role?) { "admin" }
         end
 
-        it "only returns line items from completed, non-cancelled orders within search filter range" do
+        it "only returns line items from completed, " \
+           "non-cancelled orders within search filter range" do
           expect(permissions.visible_line_items).to include order_completed.line_items.first
           expect(permissions.visible_line_items).to_not include order_cancelled.line_items.first
           expect(permissions.visible_line_items).to_not include order_cart.line_items.first
-          expect(permissions.visible_line_items).to_not include order_from_last_year.line_items.first
+          expect(permissions.visible_line_items)
+            .to_not include order_from_last_year.line_items.first
         end
       end
     end

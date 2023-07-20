@@ -6,7 +6,8 @@ describe 'api/v0/orders', swagger_doc: 'v0/swagger.yaml', type: :request do
   path '/api/v0/orders' do
     get('list orders') do
       tags 'Orders'
-      # type should be replaced with swagger 3.01 valid schema: {type: string} when rswag #317 is resolved:
+      # type should be replaced with swagger 3.01 valid schema:
+      # {type: string} when rswag #317 is resolved:
       # https://github.com/rswag/rswag/pull/319
       parameter name: 'X-Spree-Token', in: :header, type: :string
       parameter name: 'q[distributor_id_eq]', in: :query, type: :string, required: false,
@@ -18,7 +19,8 @@ describe 'api/v0/orders', swagger_doc: 'v0/swagger.yaml', type: :request do
       parameter name: 'q[state_eq]', in: :query, type: :string, required: false,
                 description: "Query orders by order state, eg 'cart', 'complete'."
       parameter name: 'q[payment_state_eq]', in: :query, type: :string, required: false,
-                description: "Query orders by order payment_state, eg 'balance_due', 'paid', 'failed'."
+                description: "Query orders by order payment_state, eg 'balance_due', " \
+                             "'paid', 'failed'."
       parameter name: 'q[email_cont]', in: :query, type: :string, required: false,
                 description: "Query orders where the order email contains a string."
       parameter name: 'q[order_cycle_id_eq]', in: :query, type: :string, required: false,
@@ -42,8 +44,10 @@ describe 'api/v0/orders', swagger_doc: 'v0/swagger.yaml', type: :request do
           let!(:order_dist_2) { create(:order_with_totals_and_distribution) }
           let!(:li2) { create(:line_item, order: order_dist_2) }
           let!(:order_dist_1_complete) {
-            create(:completed_order_with_totals,  distributor: order_dist_1.distributor, state: 'complete',
-                                                  completed_at: Time.zone.today - 7.days, line_items_count: 1)
+            create(:completed_order_with_totals,  distributor: order_dist_1.distributor,
+                                                  state: 'complete',
+                                                  completed_at: Time.zone.today - 7.days,
+                                                  line_items_count: 1)
           }
           let!(:order_dist_1_credit_owed) {
             create(:order, distributor: order_dist_1.distributor, payment_state: 'credit_owed',

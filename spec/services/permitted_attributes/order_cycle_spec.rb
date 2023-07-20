@@ -21,8 +21,17 @@ module PermittedAttributes
 
     describe "nested incoming_exchanges attributes" do
       let(:params) {
-        ActionController::Parameters.new(order_cycle: { incoming_exchanges: [{ sender_id: "2",
-                                                                               name: "Exchange Name", variants: [] }] } )
+        ActionController::Parameters.new(
+          order_cycle: {
+            incoming_exchanges: [
+              {
+                sender_id: "2",
+                name: "Exchange Name",
+                variants: []
+              }
+            ]
+          }
+        )
       }
 
       it "keeps permitted and removes not permitted" do
@@ -36,8 +45,18 @@ module PermittedAttributes
 
     describe "variants inside incoming_exchanges attributes" do
       let(:params) {
-        ActionController::Parameters.new(order_cycle: { incoming_exchanges: [{ variants: { "7" => true,
-                                                                                           "12" => true } }] } )
+        ActionController::Parameters.new(
+          order_cycle: {
+            incoming_exchanges: [
+              {
+                variants: {
+                  "7" => true,
+                  "12" => true,
+                }
+              }
+            ]
+          }
+        )
       }
 
       it "keeps all variant_ids provided" do

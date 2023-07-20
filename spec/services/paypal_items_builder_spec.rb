@@ -43,8 +43,9 @@ describe PaypalItemsBuilder do
                           originator: included_tax_rate, included: true, state: "closed")
     }
     let!(:additional_tax_adjustment) {
-      create(:adjustment, label: "Additional Tax Adjustment", order: order, adjustable: order.shipment,
-                          amount: 78, originator: additional_tax_rate, state: "closed")
+      create(:adjustment, label: "Additional Tax Adjustment", order: order,
+                          adjustable: order.shipment, amount: 78, originator: additional_tax_rate,
+                          state: "closed")
     }
     let!(:enterprise_fee) { create(:enterprise_fee) }
     let!(:line_item_enterprise_fee) {

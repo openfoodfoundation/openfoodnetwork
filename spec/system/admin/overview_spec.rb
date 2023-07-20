@@ -40,8 +40,8 @@ describe '
         it "displays a message telling how to set visibility" do
           visit '/admin'
           expect(page).to have_selector ".alert-box",
-                                        text: "To allow people to find you, turn on your "\
-                                        "visibility under Manage #{d1.name}."
+                                        text: "To allow people to find you, turn on your " \
+                                              "visibility under Manage #{d1.name}."
         end
       end
 

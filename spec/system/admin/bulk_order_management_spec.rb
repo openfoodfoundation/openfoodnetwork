@@ -70,9 +70,13 @@ describe '
 
       it "orders by completion date" do
         find("a", text: 'COMPLETED AT').click # sets ascending ordering
-        expect(page).to have_content(/#{li2.product.name}.*#{li1.product.name}.*#{li22.product.name}.*#{li21.product.name}/m)
+        expect(page).to have_content(
+          /#{li2.product.name}.*#{li1.product.name}.*#{li22.product.name}.*#{li21.product.name}/m
+        )
         find("a", text: 'COMPLETED AT').click # sets descending ordering
-        expect(page).to have_content(/#{li21.product.name}.*#{li22.product.name}.*#{li1.product.name}.*#{li2.product.name}/m)
+        expect(page).to have_content(
+          /#{li21.product.name}.*#{li22.product.name}.*#{li1.product.name}.*#{li2.product.name}/m
+        )
       end
     end
 
@@ -123,11 +127,11 @@ describe '
         expect(page).to have_button("Next", disabled: false)
         expect(page).to have_button("Last »", disabled: false)
         within "tbody" do
-          expect(page).to have_css("tr", count: 15) # verifies that the remaining 15 line items are shown
+          expect(page).to have_css("tr", count: 15) # verifies the remaining 15 line items are shown
         end
         click_button "2" # switches to the second results page
         within "tbody" do
-          expect(page).to have_css("tr", count: 5) # verifies that the remaining 5 line items are shown
+          expect(page).to have_css("tr", count: 5) # verifies the remaining 5 line items are shown
         end
         click_button "1" # switches to the first results page
         select2_select "50 per page", from: "autogen4" # should display all 20 line items
@@ -240,11 +244,13 @@ describe '
 
     context "displaying individual columns" do
       let!(:o1) {
-        create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.now,
                                         bill_address: create(:address) )
       }
       let!(:o2) {
-        create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
+        create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                        completed_at: Time.zone.now,
                                         bill_address: nil )
       }
       let!(:li1) { create(:line_item_with_shipment, order: o1) }
@@ -258,7 +264,8 @@ describe '
 
       it "displays a column for user's full name" do
         expect(page).to have_selector "th.full_name", text: "NAME"
-        expect(page).to have_selector "td.full_name", text: "#{o1.bill_address.last_name}, #{o1.bill_address.first_name}"
+        expect(page).to have_selector "td.full_name",
+          text: "#{o1.bill_address.last_name}, #{o1.bill_address.first_name}"
         expect(page).to have_selector "td.full_name", text: ""
       end
 
@@ -275,7 +282,8 @@ describe '
         expect(page).to have_selector "td.producer", text: li2.product.supplier.name
       end
 
-      it "displays a column for variant description, which shows only product name when options text is blank" do
+      it "displays a column for variant description, which shows only product name " \
+         "when options text is blank" do
         expect(page).to have_selector "th.variant", text: "PRODUCT: UNIT"
         expect(page).to have_selector "td.variant", text: li1.product.name
         expect(page).to have_selector "td.variant",
@@ -437,8 +445,8 @@ describe '
                                       completed_at: Time.zone.now )
     }
     let!(:li1) {
-      create(:line_item_with_shipment, order: o1, variant: v1, quantity: 5, final_weight_volume: 1000,
-                                       price: 10.00 )
+      create(:line_item_with_shipment, order: o1, variant: v1, quantity: 5,
+                                       final_weight_volume: 1000, price: 10.00 )
     }
 
     before :each do
@@ -524,7 +532,8 @@ describe '
         let!(:s1) { create(:supplier_enterprise) }
         let!(:s2) { create(:supplier_enterprise) }
         let!(:o1) {
-          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                          completed_at: Time.zone.now,
                                           order_cycle: create(:simple_order_cycle) )
         }
         let!(:li1) {
@@ -538,7 +547,7 @@ describe '
           visit_bulk_order_management
         end
 
-        it "displays a select box for producers, which filters line items by the selected supplier" do
+        it "displays select box for producers, which filters line items by the selected supplier" do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           open_select2 "#s2id_supplier_filter"
@@ -571,11 +580,13 @@ describe '
         let!(:d1) { create(:distributor_enterprise) }
         let!(:d2) { create(:distributor_enterprise) }
         let!(:o1) {
-          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now, distributor: d1,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                          completed_at: Time.zone.now, distributor: d1,
                                           order_cycle: create(:simple_order_cycle) )
         }
         let!(:o2) {
-          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now, distributor: d2,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                          completed_at: Time.zone.now, distributor: d2,
                                           order_cycle: create(:simple_order_cycle) )
         }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
@@ -585,7 +596,7 @@ describe '
           visit_bulk_order_management
         end
 
-        it "displays a select box for distributors, which filters line items "\
+        it "displays a select box for distributors, which filters line items " \
            "by the selected distributor", retry: 3 do
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
@@ -622,19 +633,23 @@ describe '
         let!(:oc2) { create(:simple_order_cycle, distributors: [distributor]) }
         let!(:oc3) { create(:simple_order_cycle, distributors: [distributor]) }
         let!(:o1) {
-          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                          completed_at: Time.zone.now,
                                           order_cycle: oc1 )
         }
         let!(:o2) {
-          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                          completed_at: Time.zone.now,
                                           order_cycle: oc2 )
         }
         let!(:o3) {
-          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now + 1.week,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                          completed_at: Time.zone.now + 1.week,
                                           order_cycle: oc3 )
         }
         let!(:o4) {
-          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now + 2.weeks,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                          completed_at: Time.zone.now + 2.weeks,
                                           order_cycle: oc3 )
         }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
@@ -648,7 +663,7 @@ describe '
           visit_bulk_order_management
         end
 
-        it "displays a select box for order cycles, which filters line items "\
+        it "displays a select box for order cycles, which filters line items " \
            "by the selected order cycle", retry: 3 do
           displays_default_orders
           expect(page).to have_select2 'order_cycle_filter',
@@ -682,11 +697,13 @@ describe '
         let!(:p1) { create(:product, supplier: s1) }
         let!(:p2) { create(:product, supplier: s2) }
         let!(:o1) {
-          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now, distributor: d1,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                          completed_at: Time.zone.now, distributor: d1,
                                           order_cycle: oc1 )
         }
         let!(:o2) {
-          create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now, distributor: d2,
+          create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                          completed_at: Time.zone.now, distributor: d2,
                                           order_cycle: oc2 )
         }
         let!(:li1) { create(:line_item_with_shipment, order: o1, product: p1 ) }
@@ -810,7 +827,8 @@ describe '
             page.find('.filter-actions .button.icon-search').click
           end
           # daterange picker should have changed
-          expect(find("input.datepicker").value).to eq "#{today.prev_day(9).strftime('%F')} to #{today.strftime('%F')}"
+          expect(find("input.datepicker").value)
+            .to eq "#{today.prev_day(9).strftime('%F')} to #{today.strftime('%F')}"
           expect(page).to have_no_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
             expect(page).to have_no_selector "input[name=quantity].ng-dirty"
@@ -877,7 +895,8 @@ describe '
 
       context "performing actions" do
         context "deletes selected items" do
-          it "displays a confirmation dialog when deleting one or more items leads to order cancelation" do
+          it "displays a confirmation dialog when deleting one or more items " \
+             "leads to order cancelation" do
             expect(page).to have_selector "tr#li_#{li1.id}"
             expect(page).to have_selector "tr#li_#{li11.id}"
             within("tr#li_#{li1.id} td.bulk") do
@@ -890,7 +909,8 @@ describe '
             find("div#bulk-actions-dropdown").click
             find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
 
-            expect(page).to have_content "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
+            expect(page).to have_content "This operation will result in one or more empty " \
+                                         "orders, which will be cancelled. Do you wish to proceed?"
 
             expect do
               within(".modal") do
@@ -907,7 +927,8 @@ describe '
             end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
           end
 
-          it "deletes one line item should show modal confirmation about this line item deletion and not about order cancelation" do
+          it "deletes one line item should show modal confirmation about this line item deletion " \
+             "and not about order cancelation" do
             expect(page).to have_selector "tr#li_#{li1.id}"
             within("tr#li_#{li1.id} td.bulk") do
               check "bulk"
@@ -917,7 +938,8 @@ describe '
             find("div#bulk-actions-dropdown div.menu_item", text: "Delete Selected" ).click
 
             within ".modal" do
-              expect(page).to have_content "This will delete one line item from the order. Are you sure you want to proceed?"
+              expect(page).to have_content "This will delete one line item from the order. " \
+                                           "Are you sure you want to proceed?"
               click_on "OK"
             end
 
@@ -934,12 +956,12 @@ describe '
       context "using edit buttons" do
         let(:address) { create(:address) }
         let!(:o1) {
-          create(:order_with_distributor, ship_address: address, state: 'complete', shipment_state: 'ready',
-                                          completed_at: Time.zone.now )
+          create(:order_with_distributor, ship_address: address, state: 'complete',
+                                          shipment_state: 'ready', completed_at: Time.zone.now )
         }
         let!(:o2) {
-          create(:order_with_distributor, ship_address: address, state: 'complete', shipment_state: 'ready',
-                                          completed_at: Time.zone.now )
+          create(:order_with_distributor, ship_address: address, state: 'complete',
+                                          shipment_state: 'ready', completed_at: Time.zone.now )
         }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
         let!(:li2) { create(:line_item_with_shipment, order: o2 ) }
@@ -951,12 +973,14 @@ describe '
           visit_bulk_order_management
         end
 
-        it "shows an edit button for line_items, which takes the user to the standard edit page for the order" do
+        it "shows an edit button for line_items, which takes the user " \
+           "to the standard edit page for the order" do
           expect(page).to have_selector "a.edit-order", count: 2
 
           # Shows a confirm dialog when unsaved changes exist
-          page.driver.dismiss_modal :confirm,
-                                    text: "Unsaved changes exist and will be lost if you continue." do
+          page.driver
+            .dismiss_modal :confirm,
+                           text: "Unsaved changes exist and will be lost if you continue." do
             within "tr#li_#{li1.id}" do
               fill_in "quantity", with: (li1.quantity + 1)
               find("a.edit-order").click
@@ -1003,7 +1027,8 @@ describe '
           end
         end
 
-        context "when deleting the last item of an order, it shows a modal about order cancellation" do
+        context "when deleting the last item of an order, " \
+                "it shows a modal about order cancellation" do
           before :each do
             visit_bulk_order_management
             expect(page).to have_selector "a.delete-line-item", count: 2
@@ -1174,12 +1199,12 @@ describe '
     let(:d1) { create(:distributor_enterprise, name: 'First Distributor') }
     let(:d2) { create(:distributor_enterprise, name: 'Another Distributor') }
     let!(:o1) {
-      create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
-                                      distributor: d1 )
+      create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                      completed_at: Time.zone.now, distributor: d1 )
     }
     let!(:o2) {
-      create(:order_with_distributor, state: 'complete', shipment_state: 'ready', completed_at: Time.zone.now,
-                                      distributor: d2 )
+      create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
+                                      completed_at: Time.zone.now, distributor: d2 )
     }
     let!(:line_item_distributed) {
       create(:line_item_with_shipment, order: o1, product: create(:product, supplier: s1) )
