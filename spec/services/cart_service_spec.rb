@@ -273,7 +273,7 @@ describe CartService do
       end
 
       it "returns true when order cycle is provided" do
-        cart_service.instance_variable_set :@order_cycle,  double(:order_cycle)
+        cart_service.instance_variable_set :@order_cycle, double(:order_cycle)
         expect(cart_service.send(:check_order_cycle_provided)).to be true
       end
     end

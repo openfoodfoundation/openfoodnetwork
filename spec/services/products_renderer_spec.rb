@@ -25,7 +25,7 @@ describe ProductsRenderer do
     let!(:product_cherries) {
       create(:product, name: "cherries", primary_taxon_id: fruits.id,
                        supplier_id: fruits_supplier.id)
-      }
+    }
     let!(:product_doughnuts) {
       create(:product, name: "doughnuts", primary_taxon_id: cakes.id,
                        supplier_id: cakes_supplier.id)
@@ -70,10 +70,10 @@ describe ProductsRenderer do
       it "filters products by name_or_meta_keywords_or_variants_display_as_or_" \
          "variants_display_name_or_supplier_name_cont" do
         products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, { q: {
-          "#{[:name, :meta_keywords, :variants_display_as,
-              :variants_display_name, :supplier_name]
-          .join('_or_')}_cont": "apples",
-        } })
+                                                   "#{[:name, :meta_keywords, :variants_display_as,
+                                                       :variants_display_name, :supplier_name]
+                                                   .join('_or_')}_cont": "apples",
+                                                 } })
         products = products_renderer.send(:products)
         expect(products).to eq([product_apples])
       end
@@ -88,7 +88,7 @@ describe ProductsRenderer do
           product_apples.product_properties.create!({ property_id: property_organic.id, 
                                                       value: '1', position: 1 })
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, 
-            { q: { with_properties: [property_organic.id] } })
+                                                   { q: { with_properties: [property_organic.id] } })
           products = products_renderer.send(:products)
           expect(products).to eq([product_apples])
         end
@@ -97,7 +97,7 @@ describe ProductsRenderer do
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id, 
                                                         value: '1', position: 1 })
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, 
-            { q: { with_properties: [property_organic.id] } })
+                                                   { q: { with_properties: [property_organic.id] } })
           products = products_renderer.send(:products)
           expect(products).to eq([product_apples, product_cherries])
         end
@@ -115,7 +115,7 @@ describe ProductsRenderer do
           product_doughnuts.product_properties.create!({ property_id: property_organic.id, 
                                                          value: '1', position: 1 })
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, 
-            { q: { with_properties: [property_organic.id] } })
+                                                   { q: { with_properties: [property_organic.id] } })
           products = products_renderer.send(:products)
           expect(products).to eq([product_cherries, product_banana_bread, product_doughnuts])
         end

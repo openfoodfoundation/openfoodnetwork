@@ -18,7 +18,7 @@ describe "full-page cart" do
       create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor],
                                   coordinator: create(:distributor_enterprise),
                                   variants: [product_with_tax.variants.first,
-                                    product_with_fee.variants.first])
+                                             product_with_fee.variants.first])
     }
     let(:enterprise_fee) {
       create(:enterprise_fee, amount: 11.00, tax_category: product_with_tax.tax_category)
@@ -144,7 +144,7 @@ describe "full-page cart" do
       context "order with 2 line items" do
         let(:admin_fee) {
           create(:enterprise_fee, calculator: Calculator::Weight.new(preferred_per_unit: 1,
-                                  preferred_unit_from_list: "kg"),
+                                                                     preferred_unit_from_list: "kg"),
                                   enterprise: order_cycle.coordinator, fee_type: 'admin')
         }
 

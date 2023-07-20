@@ -19,7 +19,7 @@ module OpenFoodNetwork
     end
 
     describe "merging ProducerProperties and Spree::ProductProperties" do
-      let(:product_property) { create(:product_property,  property: property) }
+      let(:product_property) { create(:product_property, property: property) }
       let(:duplicate_product_property) { create(:producer_property, property: duplicate_property) }
       let(:producer_property) { create(:producer_property, property: different_property) }
 

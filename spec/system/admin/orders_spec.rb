@@ -41,11 +41,12 @@ describe '
                                            distributors: [distributor, distributor2, distributor3])
   }
   let!(:shipping_method2) {
- create(:shipping_method_with, :pickup, name: "delivery",
-distributors: [distributor4, distributor5]) }
+    create(:shipping_method_with, :pickup, name: "delivery",
+   distributors: [distributor4, distributor5])
+  }
   let(:order_cycle) do
     create(:simple_order_cycle, name: 'One', distributors: [distributor, distributor2,
-                                distributor3, distributor4],
+                                                            distributor3, distributor4],
                                 variants: [product.variants.first])
   end
 
@@ -481,16 +482,16 @@ distributors: [distributor4, distributor5]) }
         # select all orders
         page.find("#listing_orders thead th:first-child input[type=checkbox]").click
         expect(page.find(
-          "#listing_orders tbody tr td:first-child input[type=checkbox]")
-        ).to be_checked
+                 "#listing_orders tbody tr td:first-child input[type=checkbox]")
+              ).to be_checked
         # enables print invoices button
         page.find("span.icon-reorder", text: "ACTIONS").click
         expect(page).to have_content "Print Invoices"
         # unselect all orders
         page.find("#listing_orders thead th:first-child input[type=checkbox]").trigger("click")
         expect(page.find(
-          "#listing_orders tbody tr td:first-child input[type=checkbox]")
-        ).to_not be_checked
+                 "#listing_orders tbody tr td:first-child input[type=checkbox]")
+              ).to_not be_checked
         # disables print invoices button
         page.find("span.icon-reorder", text: "ACTIONS").click
         expect(page).to_not have_content "Print Invoices"

@@ -95,7 +95,7 @@ describe "As a consumer I want to view products" do
         expect(page).to have_content product.name
 
         expect_product_description_html_to_be_displayed(product, "<p>Safe</p>",
-          "<script>alert('Dangerous!');</script>", truncate: false)
+                                                        "<script>alert('Dangerous!');</script>", truncate: false)
       end
     end
 

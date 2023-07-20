@@ -97,7 +97,6 @@ module Spree
         transition from: [:void], to: :checkout
       end
 
-
       after_transition to: :completed, do: :set_captured_at
     end
 

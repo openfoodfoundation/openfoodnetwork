@@ -57,11 +57,11 @@ describe "Packing Reports" do
       }
       let(:line_item2) {
         build(:line_item_with_shipment, 
-          product: create(:simple_product, name: "visible", supplier: supplier1))
+              product: create(:simple_product, name: "visible", supplier: supplier1))
       }
       let(:line_item3) {
         build(:line_item_with_shipment, 
-          product: create(:simple_product, name: "not visible", supplier: supplier2))
+              product: create(:simple_product, name: "not visible", supplier: supplier2))
       }
 
       before do
