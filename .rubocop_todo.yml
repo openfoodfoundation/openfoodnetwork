@@ -18,12 +18,6 @@ Gemspec/RequiredRubyVersion:
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
-Layout/EmptyLines:
-  Exclude:
-    - 'app/models/spree/payment.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: empty_lines, no_empty_lines
 Layout/EmptyLinesAroundBlockBody:
