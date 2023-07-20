@@ -739,7 +739,7 @@ distributors: [distributor1])
                 "in an existing order " do
           before do
             distributor1.shipping_methods = [shipping_method_for_distributor1,
-different_shipping_method_for_distributor1]
+                                             different_shipping_method_for_distributor1]
             order.shipments.each(&:refresh_rates)
             order.shipment.adjustments.first.open
             order.select_shipping_method(different_shipping_method_for_distributor1)

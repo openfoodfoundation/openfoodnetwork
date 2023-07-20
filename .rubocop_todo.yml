@@ -16,17 +16,6 @@ Gemspec/RequiredRubyVersion:
     - 'engines/order_management/order_management.gemspec'
     - 'engines/web/web.gemspec'
 
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: with_first_element, with_fixed_indentation
-Layout/ArrayAlignment:
-  Exclude:
-    - 'spec/system/admin/customers_spec.rb'
-    - 'spec/system/admin/order_spec.rb'
-    - 'spec/system/admin/orders_spec.rb'
-    - 'spec/system/consumer/shopping/cart_spec.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyleAlignWith.
@@ -87,7 +76,7 @@ Layout/FirstHashElementIndentation:
   Exclude:
     - 'spec/services/products_renderer_spec.rb'
 
-# Offense count: 13
+# Offense count: 9
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowMultipleStyles, EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle.
 # SupportedHashRocketStyles: key, separator, table
@@ -96,13 +85,11 @@ Layout/FirstHashElementIndentation:
 Layout/HashAlignment:
   Exclude:
     - 'app/controllers/spree/users_controller.rb'
-    - 'spec/migrations/migrate_customer_names_spec.rb'
     - 'spec/models/enterprise_spec.rb'
     - 'spec/system/admin/customers_spec.rb'
     - 'spec/system/admin/order_spec.rb'
     - 'spec/system/admin/orders_spec.rb'
     - 'spec/system/admin/tag_rules_spec.rb'
-    - 'spec/system/consumer/shopping/cart_spec.rb'
 
 # Offense count: 4
 # This cop supports safe autocorrection (--autocorrect).
@@ -137,7 +124,7 @@ Layout/LineContinuationSpacing:
     - 'spec/system/admin/enterprise_fees_spec.rb'
     - 'spec/system/admin/order_spec.rb'
 
-# Offense count: 77
+# Offense count: 91
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Max, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, AllowedPatterns.
 # URISchemes: http, https
@@ -151,6 +138,7 @@ Layout/LineLength:
     - 'spec/controllers/api/v0/order_cycles_controller_spec.rb'
     - 'spec/controllers/spree/admin/orders_controller_spec.rb'
     - 'spec/lib/reports/customers_report_spec.rb'
+    - 'spec/migrations/migrate_customer_names_spec.rb'
     - 'spec/models/enterprise_spec.rb'
     - 'spec/models/order_cycle_spec.rb'
     - 'spec/models/product_importer_spec.rb'
@@ -160,11 +148,15 @@ Layout/LineLength:
     - 'spec/models/spree/product_spec.rb'
     - 'spec/models/spree/variant_spec.rb'
     - 'spec/requests/api/orders_spec.rb'
+    - 'spec/services/products_renderer_spec.rb'
     - 'spec/support/request/web_helper.rb'
     - 'spec/system/admin/adjustments_spec.rb'
     - 'spec/system/admin/bulk_order_management_spec.rb'
+    - 'spec/system/admin/order_cycles/simple_spec.rb'
     - 'spec/system/admin/order_spec.rb'
     - 'spec/system/admin/product_import_spec.rb'
+    - 'spec/system/consumer/shopping/cart_spec.rb'
+    - 'spec/system/consumer/shopping/products_spec.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).

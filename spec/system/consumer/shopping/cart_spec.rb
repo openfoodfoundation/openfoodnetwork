@@ -18,7 +18,7 @@ describe "full-page cart" do
       create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor],
                                   coordinator: create(:distributor_enterprise),
                                   variants: [product_with_tax.variants.first,
-                                    product_with_fee.variants.first])
+                                             product_with_fee.variants.first])
     }
     let(:enterprise_fee) {
       create(:enterprise_fee, amount: 11.00, tax_category: product_with_tax.tax_category)

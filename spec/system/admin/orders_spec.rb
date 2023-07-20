@@ -45,7 +45,7 @@ describe '
 distributors: [distributor4, distributor5]) }
   let(:order_cycle) do
     create(:simple_order_cycle, name: 'One', distributors: [distributor, distributor2,
-                                distributor3, distributor4],
+                                                            distributor3, distributor4],
                                 variants: [product.variants.first])
   end
 
