@@ -124,11 +124,14 @@ module OpenFoodNetwork
         let!(:ef_admin) { create(:enterprise_fee, fee_type: 'admin', amount: 1.23, name: "Admin") }
         let!(:ef_sales) { create(:enterprise_fee, fee_type: 'sales', amount: 4.56, name: "Sales") }
         let!(:ef_packing) {
-          create(:enterprise_fee, fee_type: 'packing', amount: 7.89, name: "Packing") }
+          create(:enterprise_fee, fee_type: 'packing', amount: 7.89, name: "Packing")
+        }
         let!(:ef_transport) {
-          create(:enterprise_fee, fee_type: 'transport', amount: 0.12, name: "Transport") }
+          create(:enterprise_fee, fee_type: 'transport', amount: 0.12, name: "Transport")
+        }
         let!(:ef_fundraising) {
-          create(:enterprise_fee, fee_type: 'fundraising', amount: 3.45, name: "Fundraising") }
+          create(:enterprise_fee, fee_type: 'fundraising', amount: 3.45, name: "Fundraising")
+        }
         let!(:exchange) {
           create(:exchange, order_cycle: order_cycle,
                             sender: coordinator, receiver: distributor, incoming: false,

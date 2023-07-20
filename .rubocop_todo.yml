@@ -16,13 +16,6 @@ Gemspec/RequiredRubyVersion:
     - 'engines/order_management/order_management.gemspec'
     - 'engines/web/web.gemspec'
 
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-Layout/BlockEndNewline:
-  Exclude:
-    - 'spec/lib/open_food_network/enterprise_fee_calculator_spec.rb'
-    - 'spec/system/admin/orders_spec.rb'
-
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 Layout/ClosingParenthesisIndentation:
@@ -92,13 +85,6 @@ Layout/IndentationConsistency:
     - 'spec/system/admin/order_cycles/complex_updating_specific_time_spec.rb'
     - 'spec/system/admin/order_cycles/simple_spec.rb'
     - 'spec/system/admin/product_import_spec.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Width, AllowedPatterns.
-Layout/IndentationWidth:
-  Exclude:
-    - 'spec/services/products_renderer_spec.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
