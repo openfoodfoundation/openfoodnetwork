@@ -705,7 +705,7 @@ describe '
       context "with different shipping methods" do
         let!(:different_shipping_method_for_distributor1) do
           create(:shipping_method_with, :flat_rate, name: "Different", amount: 15,
-distributors: [distributor1])
+                                                    distributors: [distributor1])
         end
         let!(:shipping_method_for_distributor2) do
           create(:shipping_method, name: "Other", distributors: [distributor2])

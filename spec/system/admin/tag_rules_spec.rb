@@ -142,7 +142,7 @@ describe 'Tag Rules' do
     it "saves changes to rules of each type" do
       # Tag groups exist
       expect(page).to have_selector '.customer_tag .header', text: "For customers tagged:",
-                                    count: 4
+                                                             count: 4
       expect(page).to have_selector '.customer_tag .header tags-input .tag-list ti-tag-item',
                                     text: "member", count: 1
       expect(page).to have_selector '.customer_tag .header tags-input .tag-list ti-tag-item',

@@ -16,7 +16,7 @@ describe 'Customers' do
     describe "using the customers index" do
       let!(:customer1) {
         create(:customer, first_name: 'John', last_name: 'Doe', enterprise: managed_distributor1, 
-code: nil, created_manually: true)
+                          code: nil, created_manually: true)
       }
       let!(:customer2) {
         create(:customer, enterprise: managed_distributor1, created_manually: true, code: nil)

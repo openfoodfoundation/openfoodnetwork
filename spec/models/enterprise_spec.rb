@@ -903,7 +903,7 @@ describe Enterprise do
       distributor = create(:distributor_enterprise, is_primary_producer: false)
       permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
       create(:enterprise_relationship, parent: distributor, child: supplier, 
-permissions: [permission])
+                                       permissions: [permission])
       product = create(:product)
       order_cycle = create(
         :simple_order_cycle,
