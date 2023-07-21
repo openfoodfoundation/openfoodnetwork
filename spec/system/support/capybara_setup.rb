@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# Whether fields, links, and buttons will match against aria-label attribute.
+# This allows us to find <input aria-label="Name"> with `expect(page).to have_field "Name"`
+Capybara.enable_aria_label = true
+
 # Usually, especially when using Selenium, developers tend to increase the max wait time.
 # With Cuprite, there is no need for that.
 # We use a Capybara default value here explicitly.
