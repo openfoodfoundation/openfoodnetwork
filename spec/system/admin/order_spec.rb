@@ -643,7 +643,7 @@ describe '
           end
 
           it 'can send invoices' do
-            accept_alert "An invoice for this order will be sent to the customer. "\
+            accept_alert "An invoice for this order will be sent to the customer. " \
                          "Are you sure you want to continue?" do
               click_link "Send Invoice"
             end
