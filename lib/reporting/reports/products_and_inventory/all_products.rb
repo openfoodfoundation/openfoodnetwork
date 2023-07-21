@@ -4,10 +4,6 @@ module Reporting
   module Reports
     module ProductsAndInventory
       class AllProducts < Base
-        def default_params
-          { fields_to_hide: [:on_demand, :on_hand] }
-        end
-
         def message
           I18n.t("spree.admin.reports.products_and_inventory.all_products.message")
         end

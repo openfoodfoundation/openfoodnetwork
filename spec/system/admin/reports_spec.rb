@@ -423,22 +423,23 @@ describe '
       expect(page).to have_content "Supplier"
       expect(page).to have_table_row ["Supplier", "Producer Suburb", "Product",
                                       "Product Properties", "Taxons", "Variant Value", "Price",
-                                      "Group Buy Unit Quantity", "Amount", "SKU"].map(&:upcase)
+                                      "Group Buy Unit Quantity", "Amount", "SKU",
+                                      "On demand?", "On hand"].map(&:upcase)
       expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city,
                                       "Product Name",
                                       product1.properties.map(&:presentation).join(", "),
                                       product1.primary_taxon.name, "1g", "100.0",
-                                      "none", "", "sku1"]
+                                      "none", "", "sku1", "No", "10"]
       expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city,
                                       "Product Name",
                                       product1.properties.map(&:presentation).join(", "),
                                       product1.primary_taxon.name, "1g", "80.0",
-                                      "none", "", "sku2"]
+                                      "none", "", "sku2", "No", "20"]
       expect(page).to have_table_row [product2.supplier.name, product1.supplier.address.city,
                                       "Product 2",
                                       product1.properties.map(&:presentation).join(", "),
                                       product2.primary_taxon.name, "100g", "99.0",
-                                      "none", "", "product_sku"]
+                                      "none", "", "product_sku", "No", "9"]
     end
 
     it "shows the LettuceShare report" do

@@ -40,7 +40,7 @@ module Reporting
       def products_and_inventory_report_types
         [
           [i18n_translate("all_products"), :all_products],
-          [i18n_translate("inventory"), :inventory],
+          [i18n_translate("inventory"), :inventory, { deprecated: true }],
           [i18n_translate("lettuce_share"), :lettuce_share]
         ]
       end

@@ -2,4 +2,7 @@
   - report_subtypes.each do |report_subtype|
     %li
       - url = main_app.admin_report_path(report_type: report_type, report_subtype: report_subtype[1])
-      = link_to report_subtype[0], url
+      - if report_subtype.dig(2, :deprecated)
+        %strike= link_to report_subtype[0], url, title: t('admin.reports.deprecated')
+      - else
+        = link_to report_subtype[0], url
