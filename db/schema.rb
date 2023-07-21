@@ -306,12 +306,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_06_033212) do
 
   create_table "invoices", force: :cascade do |t|
     t.bigint "order_id"
-    t.string "status"
     t.integer "number"
     t.jsonb "data"
     t.date "date", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "cancelled", default: false, null: false
     t.index ["order_id"], name: "index_invoices_on_order_id"
   end
 
