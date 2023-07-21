@@ -84,10 +84,6 @@ describe 'As an admin, I can see the new product page' do
     end
 
     context "search by producer" do
-      it "has a producer select" do
-        expect(page).to have_selector "select#producer_id"
-      end
-
       it "can search for a product" do
         search_by_producer "Producer 1"
 
