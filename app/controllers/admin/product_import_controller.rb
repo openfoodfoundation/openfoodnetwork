@@ -139,7 +139,8 @@ module Admin
     end
 
     def raise_invalid_file_path
-      redirect_to '/admin/product_import', notice: I18n.t(:product_import_no_data_in_spreadsheet_notice)
+      redirect_to '/admin/product_import',
+                  notice: I18n.t(:product_import_no_data_in_spreadsheet_notice)
       raise 'Invalid File Path'
     end
     TEMP_FILE_PATH_REGEX = %r{^/tmp/product_import[A-Za-z0-9-]*/import\.csv$}

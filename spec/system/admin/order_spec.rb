@@ -595,7 +595,8 @@ describe '
         end
 
         it "shows the link" do
-          expect(page).to have_link "Resend Confirmation", href: spree.resend_admin_order_path(order)
+          expect(page).to have_link "Resend Confirmation", 
+                                    href: spree.resend_admin_order_path(order)
         end
 
         it "resends the confirmation email" do
@@ -613,7 +614,8 @@ describe '
         end
 
         it "shows the link" do
-          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(order, e: 'cancel')
+          expect(page).to have_link "Cancel Order", 
+                                    href: spree.fire_admin_order_path(order, e: 'cancel')
         end
 
         it "cancels the order" do

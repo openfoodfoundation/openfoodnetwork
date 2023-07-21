@@ -518,7 +518,8 @@ describe Enterprise do
         p1 = create(:simple_product, supplier: s1)
         p2 = create(:simple_product, supplier: s2)
 
-        expect(Enterprise.supplying_variant_in([p1.variants.first, p2.variants.first])).to match_array [s1, s2]
+        expect(Enterprise.supplying_variant_in([p1.variants.first, 
+                                                p2.variants.first])).to match_array [s1, s2]
       end
 
       it "does not return duplicates" do

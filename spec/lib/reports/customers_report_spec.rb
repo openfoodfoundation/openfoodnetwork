@@ -90,10 +90,12 @@ module Reporting
               let!(:d){ create(:distributor_enterprise) }
               let!(:sm) { create(:shipping_method, distributors: [d]) }
               let!(:o1) {
-                create(:order_with_totals_and_distribution, :completed, distributor: d, bill_address: a, shipping_method: sm)
+                create(:order_with_totals_and_distribution, :completed, distributor: d,
+                                                                        bill_address: a, shipping_method: sm)
               }
               let!(:o2) {
-                create(:order_with_totals_and_distribution, :completed, distributor: d, bill_address: a, shipping_method: sm)
+                create(:order_with_totals_and_distribution, :completed, distributor: d,
+                                                                        bill_address: a, shipping_method: sm)
               }
               before do
                 [o1, o2].each do |order|
@@ -117,7 +119,8 @@ module Reporting
                 let!(:d2) { create(:distributor_enterprise) }
                 let!(:sm2) { create(:shipping_method, distributors: [d2]) }
                 let!(:o2) {
-                  create(:order_with_totals_and_distribution, :completed, distributor: d2, bill_address: a, shipping_method: sm2)
+                  create(:order_with_totals_and_distribution, :completed, distributor: d2,
+                                                                          bill_address: a, shipping_method: sm2)
                 }
 
                 it "returns one row per customer per hub" do
@@ -142,7 +145,8 @@ module Reporting
               context "orders with different shipping methods" do
                 let!(:sm2) { create(:shipping_method, distributors: [d], name: "Bike") }
                 let!(:o2) {
-                  create(:order_with_totals_and_distribution, :completed, distributor: d, bill_address: a, shipping_method: sm2)
+                  create(:order_with_totals_and_distribution, :completed, distributor: d,
+                                                                          bill_address: a, shipping_method: sm2)
                 }
                 before do
                   o2.select_shipping_method(sm2.id)
