@@ -139,6 +139,7 @@ gem "faraday"
 gem "private_address_check"
 
 group :production, :staging do
+  gem 'newrelic_rpm'
   gem 'sd_notify' # For better Systemd process management. Used by Puma.
 end
 
