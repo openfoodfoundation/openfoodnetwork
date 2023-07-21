@@ -12,7 +12,8 @@ class Voucher < ApplicationRecord
 
   before_validation :strip_code
 
-  validates :code, presence: true, uniqueness: { scope: :enterprise_id }
+  validates :code, length: { maximum: STRING_COLUMN_LIMIT },
+                   presence: true, uniqueness: { scope: :enterprise_id }
   validates :amount, presence: true, numericality: { greater_than: 0 }
 
   def display_value

@@ -9,6 +9,8 @@ class ApplicationRecord < ActiveRecord::Base
   include ArelHelpers::Aliases
   include ArelHelpers::JoinAssociation
 
+  STRING_COLUMN_LIMIT = 255
+
   self.abstract_class = true
 
   def self.image_service

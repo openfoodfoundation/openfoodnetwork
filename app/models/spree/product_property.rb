@@ -6,7 +6,7 @@ module Spree
     belongs_to :property, class_name: 'Spree::Property'
 
     validates :property, presence: true
-    validates :value, length: { maximum: 255 }
+    validates :value, length: { maximum: STRING_COLUMN_LIMIT }
 
     default_scope -> { order("#{table_name}.position") }
 

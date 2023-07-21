@@ -22,6 +22,7 @@ describe Voucher do
   describe 'validations' do
     subject { build(:voucher, code: 'new_code', enterprise: enterprise) }
 
+    it { is_expected.to validate_length_of(:code).is_at_most(255) }
     it { is_expected.to validate_presence_of(:code) }
     it { is_expected.to validate_uniqueness_of(:code).scoped_to(:enterprise_id) }
     it { is_expected.to validate_presence_of(:amount) }
