@@ -245,8 +245,12 @@ module Reporting
               o2 = create(:order, completed_at: 3.days.ago)
               o3 = create(:order, completed_at: 5.days.ago)
 
-              allow(subject).to receive(:params).and_return({ q: { completed_at_gt: 1.day.before(o2.completed_at),
-                                                                   completed_at_lt: 1.day.after(o2.completed_at) } })
+              allow(subject).to receive(:params).and_return(
+                q: {
+                  completed_at_gt: 1.day.before(o2.completed_at),
+                  completed_at_lt: 1.day.after(o2.completed_at)
+                }
+              )
               expect(subject.filter(orders)).to eq([o2])
             end
 
