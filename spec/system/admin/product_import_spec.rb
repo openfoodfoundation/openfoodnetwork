@@ -815,7 +815,7 @@ describe "Product Import" do
 
           product_headings.each do |heading|
             expect(page).to have_content 
-              I18n.t("admin.product_import.product_headings.#{heading}").upcase
+            I18n.t("admin.product_import.product_headings.#{heading}").upcase
           end
         end
       end

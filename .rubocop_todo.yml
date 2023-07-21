@@ -6,16 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: normal, indented_internal_methods
-Layout/IndentationConsistency:
-  Exclude:
-    - 'spec/system/admin/order_cycles/complex_updating_specific_time_spec.rb'
-    - 'spec/system/admin/order_cycles/simple_spec.rb'
-    - 'spec/system/admin/product_import_spec.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowDoxygenCommentStyle, AllowGemfileRubyComment.
@@ -32,7 +22,7 @@ Layout/LineContinuationSpacing:
     - 'spec/system/admin/enterprise_fees_spec.rb'
     - 'spec/system/admin/order_spec.rb'
 
-# Offense count: 92
+# Offense count: 94
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Max, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, AllowedPatterns.
 # URISchemes: http, https
@@ -40,6 +30,7 @@ Layout/LineLength:
   Exclude:
     - 'app/components/confirm_modal_component.rb'
     - 'app/controllers/admin/product_import_controller.rb'
+    - 'app/controllers/spree/users_controller.rb'
     - 'app/models/customer.rb'
     - 'app/models/spree/line_item.rb'
     - 'spec/controllers/admin/order_cycles_controller_spec.rb'
@@ -63,6 +54,7 @@ Layout/LineLength:
     - 'spec/system/admin/customers_spec.rb'
     - 'spec/system/admin/order_cycles/simple_spec.rb'
     - 'spec/system/admin/order_spec.rb'
+    - 'spec/system/admin/orders_spec.rb'
     - 'spec/system/admin/product_import_spec.rb'
     - 'spec/system/consumer/shopping/cart_spec.rb'
     - 'spec/system/consumer/shopping/products_spec.rb'

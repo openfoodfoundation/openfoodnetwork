@@ -81,7 +81,7 @@ xdescribe '
     open_all_exchange_product_tabs
 
     expect(page).to have_selector
-      "#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}"
+    "#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}"
     # uncheck (with visible:true filter)
     page.find("#order_cycle_incoming_exchange_1_variants_#{initial_variants.last.id}").click
     check "order_cycle_incoming_exchange_2_variants_#{v1.id}"
