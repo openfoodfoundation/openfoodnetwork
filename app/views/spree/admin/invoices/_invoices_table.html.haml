@@ -5,7 +5,7 @@
       %th= t(:invoice_number)
       %th= t(:amount)
       %th= t(:status)
-      %th= t(:file)
+      %th= t(:invoice_file)
   %tbody
     - @order.invoices.each do |invoice|
       - tr_class = cycle('odd', 'even')

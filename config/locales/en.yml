@@ -3138,6 +3138,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   date_completed: "Date Completed"
   amount: "Amount"
   invoice_number: "Invoice Number"
+  invoice_file: "File"
   state_names:
     ready: Ready
     pending: Pending
