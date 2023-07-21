@@ -24,9 +24,9 @@ module Reporting
       end
 
       # Filter by product
-      variant_id_in = @params[:variant_id_in].reject(&:blank?)
+      variant_id_in = @params[:variant_id_in]&.compact_blank
       if variant_id_in.present?
-        line_items = line_items.where("spree_line_items.variant_id": variant_id_in)
+        line_items = line_items.where('spree_line_items.variant_id': variant_id_in)
       end
 
       if line_item_includes.present?

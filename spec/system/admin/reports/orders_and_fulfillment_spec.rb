@@ -179,7 +179,7 @@ describe "Orders And Fulfillment" do
 
       context "When filtering by product" do
         let(:variant1) { create(:variant, product: product, unit_description: "Big") }
-        let(:variant3) { create(:variant)}
+        let(:variant3) { create(:variant) }
 
         before do
           create(:line_item_with_shipment, variant: variant1, quantity: 1, order: order1)
