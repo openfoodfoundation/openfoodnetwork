@@ -10,6 +10,8 @@ class Voucher < ApplicationRecord
            class_name: 'Spree::Adjustment',
            dependent: :nullify
 
+  before_validation :strip_code
+
   validates :code, presence: true, uniqueness: { scope: :enterprise_id }
   validates :amount, presence: true, numericality: { greater_than: 0 }
 
@@ -42,5 +44,11 @@ class Voucher < ApplicationRecord
   # covers more than the order.total we only need to create an adjustment covering the order.total
   def compute_amount(order)
     -amount.clamp(0, order.pre_discount_total)
+  end
+
+  private
+
+  def strip_code
+    code.strip! if code.present?
   end
 end
