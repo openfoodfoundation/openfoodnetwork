@@ -19,13 +19,13 @@ describe 'As an admin, I can see the new product page' do
   end
 
   it "can see the new product page" do
-    visit "/admin/products_v3"
+    visit admin_products_v3_index_url
     expect(page).to have_content "Bulk Edit Products"
   end
 
   describe "pagination" do
     before do
-      visit "/admin/products_v3"
+      visit admin_products_v3_index_url
     end
 
     it "has a pagination, has 15 products per page by default and can change the page" do
@@ -49,7 +49,7 @@ describe 'As an admin, I can see the new product page' do
 
   describe "search" do
     before do
-      visit "/admin/products_v3"
+      visit admin_products_v3_index_url
     end
 
     context "product has searchable term" do
