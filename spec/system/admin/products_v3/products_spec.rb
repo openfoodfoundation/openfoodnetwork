@@ -23,6 +23,21 @@ describe 'As an admin, I can see the new product page' do
     expect(page).to have_content "Bulk Edit Products"
   end
 
+  describe "sorting" do
+    let!(:product_z) { create(:simple_product, name: "Zucchini") }
+    let!(:product_a) { create(:simple_product, name: "Apples") }
+
+    before do
+      visit admin_products_v3_index_url
+    end
+
+    it "Should sort products alphabetically by default" do
+      expect(page).to have_selector "table.products tbody tr td", text: "Apples"
+      # other products push later one to next page
+      expect(page).not_to have_selector "table.products tbody tr td", text: "Zucchini"
+    end
+  end
+
   describe "pagination" do
     before do
       visit admin_products_v3_index_url
