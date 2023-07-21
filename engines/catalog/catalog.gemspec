@@ -10,6 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ["developers@ofn"]
   s.summary     = "Catalog domain of the OFN solution."
 
+  s.required_ruby_version = File.read(File.expand_path("../../.ruby-version", __dir__)).chomp
+
   s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE.txt", "Rakefile", "README.rdoc"]
   s.metadata['rubygems_mfa_required'] = 'true'
 end
