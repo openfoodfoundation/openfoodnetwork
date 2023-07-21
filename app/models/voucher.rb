@@ -1,6 +1,8 @@
 # frozen_string_literal: false
 
 class Voucher < ApplicationRecord
+  INVALID_CODE_REGEX = /(\r|\n)/
+
   acts_as_paranoid
 
   belongs_to :enterprise, optional: false
@@ -12,7 +14,8 @@ class Voucher < ApplicationRecord
 
   before_validation :strip_code
 
-  validates :code, length: { maximum: STRING_COLUMN_LIMIT },
+  validates :code, format: { without: INVALID_CODE_REGEX },
+                   length: { maximum: STRING_COLUMN_LIMIT },
                    presence: true, uniqueness: { scope: :enterprise_id }
   validates :amount, presence: true, numericality: { greater_than: 0 }
 
