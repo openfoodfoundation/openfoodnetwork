@@ -97,7 +97,7 @@ class ProductsReflex < ApplicationReflex
   end
 
   def ransack_query
-    query = { s: "name desc" }
+    query = {}
     query.merge!(supplier_id_in: @producer_id) if @producer_id.present?
     if @search_term.present?
       # rubocop:disable Layout/LineLength
