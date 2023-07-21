@@ -23,8 +23,8 @@ describe 'As an admin, I can see the new product page' do
     expect(page).to have_content "Bulk Edit Products"
   end
 
-  context "pagination" do
-    before :each do
+  describe "pagination" do
+    before do
       visit "/admin/products_v3"
     end
 
@@ -47,8 +47,8 @@ describe 'As an admin, I can see the new product page' do
     end
   end
 
-  context "search" do
-    before :each do
+  describe "search" do
+    before do
       visit "/admin/products_v3"
     end
 
