@@ -8,7 +8,7 @@ module DfcProvider
 
     def index
       person = PersonBuilder.person(current_user)
-      render json: DfcLoader.connector.export(
+      render json: DfcIo.export(
         person,
         *person.affiliatedOrganizations,
         *person.affiliatedOrganizations.flat_map(&:catalogItems),
@@ -20,7 +20,7 @@ module DfcProvider
     def show
       catalog_item = DfcBuilder.catalog_item(variant)
       offers = catalog_item.offers
-      render json: DfcLoader.connector.export(catalog_item, *offers)
+      render json: DfcIo.export(catalog_item, *offers)
     end
 
     def update

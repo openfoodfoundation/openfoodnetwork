@@ -91,7 +91,7 @@ RSpec.configure do |config|
     expectations.syntax = :expect
   end
 
-  config.around(:each) do |example|
+  config.around(:each, vcr: true) do |example|
     # The DFC Connector fetches the context when loaded.
     VCR.use_cassette("dfc-context") do
       example.run

@@ -23,12 +23,12 @@ module DfcProvider
       supplied_product = SuppliedProductBuilder.supplied_product(
         product.variants.first
       )
-      render json: DfcLoader.connector.export(supplied_product)
+      render json: DfcIo.export(supplied_product)
     end
 
     def show
       product = SuppliedProductBuilder.supplied_product(variant)
-      render json: DfcLoader.connector.export(product)
+      render json: DfcIo.export(product)
     end
 
     def update
