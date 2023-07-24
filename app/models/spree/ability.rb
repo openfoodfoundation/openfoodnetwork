@@ -191,6 +191,8 @@ module Spree
         OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? product.supplier
       end
 
+      can [:admin, :index], :products_v3
+
       can [:create], Spree::Variant
       can [:admin, :index, :read, :edit,
            :update, :search, :delete, :destroy], Spree::Variant do |variant|
