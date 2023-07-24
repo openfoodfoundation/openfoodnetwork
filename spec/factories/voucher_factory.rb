@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :voucher, class: Voucher do
+    code { "new_code" }
     enterprise { build(:distributor_enterprise) }
     amount { 10 }
   end

@@ -3,10 +3,8 @@
 require 'spec_helper'
 
 describe Vouchers::PercentageRate do
-  let(:enterprise) { build(:enterprise) }
-
   describe 'validations' do
-    subject { build(:voucher_percentage_rate, code: 'new_code', enterprise:) }
+    subject { build(:voucher_percentage_rate) }
 
     it { is_expected.to validate_presence_of(:amount) }
     it do
@@ -18,18 +16,22 @@ describe Vouchers::PercentageRate do
 
   describe '#compute_amount' do
     subject do
-      create(:voucher_percentage_rate, code: 'new_code', enterprise:, amount: 10)
+      create(:voucher_percentage_rate, amount: 10)
     end
     let(:order) { create(:order_with_totals) }
 
+    before do
+      order.update_columns(item_total: 15)
+    end
+
     it 'returns percentage of the order total' do
-      expect(subject.compute_amount(order)).to eq(-order.pre_discount_total * 0.1)
+      expect(subject.compute_amount(order)).to eq(-1.5)
     end
   end
 
   describe "#rate" do
     subject do
-      create(:voucher_percentage_rate, code: 'new_code', enterprise:, amount: 50)
+      create(:voucher_percentage_rate, amount: 50)
     end
 
     it "returns the voucher percentage rate" do
