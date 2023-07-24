@@ -13,8 +13,12 @@ module Api
     let!(:property1) { create(:property, presentation: 'Organic') }
     let!(:property2) { create(:property, presentation: 'Dairy-Free') }
     let!(:property3) { create(:property, presentation: 'May Contain Nuts') }
-    let!(:product1) { create(:product, name: "Kangaroo", primary_taxon: taxon1, properties: [property1]) }
-    let!(:product2) { create(:product, name: "Parsnips", primary_taxon: taxon2, properties: [property2]) }
+    let!(:product1) {
+      create(:product, name: "Kangaroo", primary_taxon: taxon1, properties: [property1])
+    }
+    let!(:product2) {
+      create(:product, name: "Parsnips", primary_taxon: taxon2, properties: [property2])
+    }
     let!(:product3) { create(:product, primary_taxon: taxon2) }
     let!(:product4) { create(:product, primary_taxon: taxon3, properties: [property3]) }
     let!(:user) { create(:user) }

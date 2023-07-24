@@ -337,7 +337,8 @@ describe Spree::Ability do
         is_expected.to have_ability([:admin, :read, :update, :bulk_update, :clone, :destroy],
                                     for: p1)
         is_expected.to have_ability(
-          [:admin, :index, :read, :edit, :update, :search, :destroy, :delete], for: p1.variants.first
+          [:admin, :index, :read, :edit, :update, :search, :destroy,
+           :delete], for: p1.variants.first
         )
       end
 
@@ -347,7 +348,8 @@ describe Spree::Ability do
         is_expected.to have_ability([:admin, :read, :update, :bulk_update, :clone, :destroy],
                                     for: p_related)
         is_expected.to have_ability(
-          [:admin, :index, :read, :edit, :update, :search, :destroy, :delete], for: p_related.variants.first
+          [:admin, :index, :read, :edit, :update, :search, :destroy,
+           :delete], for: p_related.variants.first
         )
       end
 
@@ -376,7 +378,8 @@ describe Spree::Ability do
 
       it "should not be able to read/write other enterprises' product variants" do
         is_expected.not_to have_ability(
-          [:admin, :index, :read, :create, :edit, :search, :update, :destroy], for: p2.variants.first
+          [:admin, :index, :read, :create, :edit, :search, :update,
+           :destroy], for: p2.variants.first
         )
       end
 

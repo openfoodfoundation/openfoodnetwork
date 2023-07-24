@@ -406,8 +406,10 @@ module Spree
           d2 = create(:distributor_enterprise)
           p1 = create(:product)
           p2 = create(:product)
-          create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.variants.first])
-          create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.variants.first])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d1],
+                                      variants: [p1.variants.first])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d2],
+                                      variants: [p2.variants.first])
           expect(Product.in_distributor(d1)).to eq([p1])
         end
 
@@ -483,8 +485,10 @@ module Spree
           d2 = create(:distributor_enterprise)
           p1 = create(:product)
           p2 = create(:product)
-          create(:simple_order_cycle, suppliers: [s], distributors: [d1], variants: [p1.variants.first])
-          create(:simple_order_cycle, suppliers: [s], distributors: [d2], variants: [p2.variants.first])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d1],
+                                      variants: [p1.variants.first])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d2],
+                                      variants: [p2.variants.first])
           expect(Product.in_supplier_or_distributor(d1)).to eq([p1])
         end
 
@@ -492,7 +496,8 @@ module Spree
           s = create(:supplier_enterprise)
           d = create(:distributor_enterprise)
           p = create(:product, supplier: s)
-          create(:simple_order_cycle, suppliers: [s], distributors: [d], variants: [p.variants.first])
+          create(:simple_order_cycle, suppliers: [s], distributors: [d],
+                                      variants: [p.variants.first])
           [s, d].each { |e| expect(Product.in_supplier_or_distributor(e)).to eq([p]) }
         end
       end

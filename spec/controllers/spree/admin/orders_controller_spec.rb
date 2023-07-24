@@ -229,7 +229,9 @@ describe Spree::Admin::OrdersController, type: :controller do
       context "with line items" do
         let!(:distributor){ create(:distributor_enterprise) }
         let!(:shipment){ create(:shipment) }
-        let!(:order_cycle){ create(:simple_order_cycle, distributors: [distributor], variants: [line_item.variant]) }
+        let!(:order_cycle){
+          create(:simple_order_cycle, distributors: [distributor], variants: [line_item.variant])
+        }
 
         before do
           line_item.product.supplier = distributor

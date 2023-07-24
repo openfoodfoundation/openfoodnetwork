@@ -42,7 +42,7 @@ describe '
   }
   let!(:shipping_method2) {
     create(:shipping_method_with, :pickup, name: "delivery",
-   distributors: [distributor4, distributor5])
+                                           distributors: [distributor4, distributor5])
   }
   let(:order_cycle) do
     create(:simple_order_cycle, name: 'One', distributors: [distributor, distributor2,
@@ -246,17 +246,17 @@ describe '
     context "cart orders" do
       let!(:order_empty) {
         create(:order_with_line_items, user: customer2, distributor: distributor2,
-        line_items_count: 0)
+                                       line_items_count: 0)
       }
 
       let!(:order_not_empty) {
         create(:order_with_line_items, user: customer2, distributor: distributor2,
-        line_items_count: 1)
+                                       line_items_count: 1)
       }
 
       let!(:order_not_empty_no_address) {
         create(:order_with_line_items, line_items_count: 1, user: customer2,
-        distributor: distributor2, bill_address_id: nil, ship_address_id: nil)
+                                       distributor: distributor2, bill_address_id: nil, ship_address_id: nil)
       }
 
       before do

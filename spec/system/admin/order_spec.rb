@@ -595,7 +595,8 @@ describe '
         end
 
         it "shows the link" do
-          expect(page).to have_link "Resend Confirmation", href: spree.resend_admin_order_path(order)
+          expect(page).to have_link "Resend Confirmation", 
+                                    href: spree.resend_admin_order_path(order)
         end
 
         it "resends the confirmation email" do
@@ -613,7 +614,8 @@ describe '
         end
 
         it "shows the link" do
-          expect(page).to have_link "Cancel Order", href: spree.fire_admin_order_path(order, e: 'cancel')
+          expect(page).to have_link "Cancel Order", 
+                                    href: spree.fire_admin_order_path(order, e: 'cancel')
         end
 
         it "cancels the order" do
@@ -643,7 +645,7 @@ describe '
           end
 
           it 'can send invoices' do
-            accept_alert "An invoice for this order will be sent to the customer. "\
+            accept_alert "An invoice for this order will be sent to the customer. " \
                          "Are you sure you want to continue?" do
               click_link "Send Invoice"
             end
@@ -705,7 +707,7 @@ describe '
       context "with different shipping methods" do
         let!(:different_shipping_method_for_distributor1) do
           create(:shipping_method_with, :flat_rate, name: "Different", amount: 15,
-distributors: [distributor1])
+                                                    distributors: [distributor1])
         end
         let!(:shipping_method_for_distributor2) do
           create(:shipping_method, name: "Other", distributors: [distributor2])

@@ -201,7 +201,7 @@ describe '
     shop_message_input.native.send_keys('This is my shopfront message.')
     expect(page)
       .to have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_close_at"
-    #using "find" as fields outside of the screen and are not visible
+    # using "find" as fields outside of the screen and are not visible
     find(:xpath, '//*[@id="enterprise_preferred_shopfront_order_cycle_order_orders_open_at"]')
       .trigger("click")
     find(:xpath, '//*[@id="enterprise_enable_subscriptions_true"]').trigger("click")

@@ -50,7 +50,7 @@ module Spree
           "#signup-feedback",
           partial("layouts/alert", 
                   locals: { type: "success",
-                  message: t('devise.user_registrations.spree_user.signed_up_but_unconfirmed') })
+                            message: t('devise.user_registrations.spree_user.signed_up_but_unconfirmed') })
         )
       else
         render status: :unprocessable_entity, cable_ready: cable_car.morph(

@@ -49,12 +49,12 @@ describe '
     expect(page).to have_selector "input[value='Hello!']"
 
     # When I fill in the calculator fields and click update
-    fill_in "#{prefix}_calculator_attributes"\
+    fill_in "#{prefix}_calculator_attributes" \
             "_preferred_flat_percent", with: '12.34'
     click_button 'Update'
 
     # Then I should see the correct values in my calculator fields
-    expect(page).to have_selector("##{prefix}_calculator"\
+    expect(page).to have_selector("##{prefix}_calculator" \
                                   "_attributes_preferred_flat_percent[value='12.34']")
   end
 
@@ -139,7 +139,7 @@ describe '
     it 'shows error flash when updating fee amount with invalid values' do
       # When I fill in the calculator fields and click update
       fill_in(
-        "#{prefix}_calculator_attributes_"\
+        "#{prefix}_calculator_attributes_" \
         'preferred_flat_percent', with: "\'20.0'"
       )
       click_button 'Update'

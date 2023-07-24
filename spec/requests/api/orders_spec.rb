@@ -164,7 +164,8 @@ describe 'api/v0/orders', swagger_doc: 'v0/swagger.yaml', type: :request do
             }
 
             let!(:order_not_empty_no_address) {
-              create(:order_with_line_items, line_items_count: 1, bill_address_id: nil, ship_address_id: nil)
+              create(:order_with_line_items, line_items_count: 1, bill_address_id: nil,
+                                             ship_address_id: nil)
             }
 
             let(:'q[state_eq]') { "cart" }
