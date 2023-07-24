@@ -36,15 +36,6 @@ Layout/LineLength:
 
 # Offense count: 6
 # This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: symmetrical, new_line, same_line
-Layout/MultilineMethodCallBraceLayout:
-  Exclude:
-    - 'spec/system/admin/orders_spec.rb'
-    - 'spec/system/admin/products_spec.rb'
-
-# Offense count: 6
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, IndentationWidth.
 # SupportedStyles: aligned, indented, indented_relative_to_receiver
 Layout/MultilineMethodCallIndentation:
