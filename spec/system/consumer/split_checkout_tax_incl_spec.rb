@@ -146,7 +146,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
           assert_db_voucher_adjustment(-10.00, -1.15)
         end
 
-        describe "moving between summary to summary via edit cart" do
+        describe "updating voucher adjustment after editing order" do
           let!(:voucher) do
             create(:voucher_flat_rate, code: 'good_code', enterprise: distributor, amount: 15)
           end
