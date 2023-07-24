@@ -780,15 +780,17 @@ describe '
 
   def expect_payment_methods_to_be_checked_for(distributor)
     distributor.distributor_payment_method_ids.each do |distributor_payment_method_id|
-      expect(page).to have_checked_field
-      "order_cycle_selected_distributor_payment_method_ids_#{distributor_payment_method_id}"
+      expect(page).to have_checked_field(
+        "order_cycle_selected_distributor_payment_method_ids_#{distributor_payment_method_id}"
+      )
     end
   end
 
   def expect_shipping_methods_to_be_checked_for(distributor)
     distributor.distributor_shipping_method_ids.each do |distributor_shipping_method_id|
-      expect(page).to have_checked_field
-      "order_cycle_selected_distributor_shipping_method_ids_#{distributor_shipping_method_id}"
+      expect(page).to have_checked_field(
+        "order_cycle_selected_distributor_shipping_method_ids_#{distributor_shipping_method_id}"
+      )
     end
   end
 
