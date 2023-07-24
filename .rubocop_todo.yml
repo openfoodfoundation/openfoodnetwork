@@ -34,18 +34,6 @@ Layout/LineLength:
     - 'spec/system/consumer/shopping/cart_spec.rb'
     - 'spec/system/consumer/shopping/products_spec.rb'
 
-# Offense count: 6
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented, indented_relative_to_receiver
-Layout/MultilineMethodCallIndentation:
-  Exclude:
-    - 'spec/controllers/api/v0/orders_controller_spec.rb'
-    - 'spec/system/admin/order_cycles/complex_editing_spec.rb'
-    - 'spec/system/admin/overview_spec.rb'
-    - 'spec/system/admin/payment_method_spec.rb'
-    - 'spec/system/admin/variant_overrides_spec.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
