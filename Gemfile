@@ -138,8 +138,9 @@ gem 'mini_portile2', '~> 2.8'
 gem "faraday"
 gem "private_address_check"
 
+gem 'newrelic_rpm'
+
 group :production, :staging do
-  gem 'newrelic_rpm'
   gem 'sd_notify' # For better Systemd process management. Used by Puma.
 end
 
