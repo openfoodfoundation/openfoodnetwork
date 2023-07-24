@@ -155,6 +155,8 @@ describe "Registration" do
       page.find('.full_hub h3').click
       click_button "Select and Continue"
       expect(page).to have_content "Your profile live"
+      click_link "Manage My Awesome Enterprise"
+      expect(page).to have_checked_field "enterprise_visible_only_through_links"
     end
 
     context "when the user has no more remaining enterprises" do
