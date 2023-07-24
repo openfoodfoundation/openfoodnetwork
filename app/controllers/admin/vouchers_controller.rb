@@ -9,6 +9,8 @@ module Admin
     end
 
     def create
+      # The use of "safe_constantize" here will trigger a Brakeman error, it can safely be ignored
+      # as it's a false positive : https://github.com/openfoodfoundation/openfoodnetwork/pull/10821
       voucher_type = params[:vouchers_flat_rate][:voucher_type]
       if Voucher::TYPES.include?(voucher_type)
         @voucher = voucher_type.safe_constantize.create(
