@@ -112,7 +112,7 @@ describe DataFoodConsortium::Connector::Importer, vcr: true do
     result = connector.import(product_data)
 
     expect(result.class).to eq DataFoodConsortium::Connector::SuppliedProduct
-    expect(result.semanticType).to eq "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#SuppliedProduct"
+    expect(result.semanticType).to eq "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#SuppliedProduct"
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"
     expect(result.description).to eq "Awesome tomato"
@@ -123,7 +123,7 @@ describe DataFoodConsortium::Connector::Importer, vcr: true do
     result = connector.import(product_data_with_context)
 
     expect(result.class).to eq DataFoodConsortium::Connector::SuppliedProduct
-    expect(result.semanticType).to eq "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#SuppliedProduct"
+    expect(result.semanticType).to eq "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#SuppliedProduct"
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"
     expect(result.description).to eq "Awesome tomato"
@@ -134,7 +134,7 @@ describe DataFoodConsortium::Connector::Importer, vcr: true do
     result = connector.import(product_data_with_context_v1_8)
 
     expect(result.class).to eq DataFoodConsortium::Connector::SuppliedProduct
-    expect(result.semanticType).to eq "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#SuppliedProduct"
+    expect(result.semanticType).to eq "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#SuppliedProduct"
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"
     expect(result.description).to eq "Awesome tomato"

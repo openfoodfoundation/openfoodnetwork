@@ -60,14 +60,15 @@ paths:
                     "@context":
                       rdfs: http://www.w3.org/2000/01/rdf-schema#
                       skos: http://www.w3.org/2004/02/skos/core#
-                      dfc: http://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#
+                      dfc: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#
                       dc: http://purl.org/dc/elements/1.1/#
-                      dfc-b: http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#
-                      dfc-p: http://static.datafoodconsortium.org/ontologies/DFC_ProductOntology.owl#
-                      dfc-t: http://static.datafoodconsortium.org/ontologies/DFC_TechnicalOntology.owl#
-                      dfc-m: http://static.datafoodconsortium.org/data/measures.rdf#
-                      dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
-                      dfc-f: http://static.datafoodconsortium.org/data/facets.rdf#
+                      dfc-b: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#
+                      dfc-p: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_ProductGlossary.owl#
+                      dfc-t: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_TechnicalOntology.owl#
+                      dfc-m: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#
+                      dfc-pt: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#
+                      dfc-f: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#
+                      ontosec: http://www.semanticweb.org/ontologies/2008/11/OntologySecurity.owl#
                       dfc-p:hasUnit:
                         "@type": "@id"
                       dfc-b:hasUnit:
@@ -90,6 +91,8 @@ paths:
                         "@type": "@id"
                       dfc-b:affiliates:
                         "@type": "@id"
+                      dfc-b:hasCertification:
+                        "@type": "@id"
                       dfc-b:manages:
                         "@type": "@id"
                       dfc-b:offeredThrough:
@@ -102,7 +105,7 @@ paths:
                         "@type": "@id"
                       dfc-b:hasAllergenDimension:
                         "@type": "@id"
-                      dfc-b:hasNutrimentDimension:
+                      dfc-b:hasNutrientDimension:
                         "@type": "@id"
                       dfc-b:hasPhysicalDimension:
                         "@type": "@id"
@@ -135,7 +138,7 @@ paths:
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Apple
                       dfc-b:description: Red
-                      dfc-b:hasType: dfc-pt:non-local-vegetable
+                      dfc-b:hasType: http://static.datafoodconsortium.org/data/productTypes.rdf#non-local-vegetable
                       dfc-b:hasQuantity:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
@@ -175,14 +178,15 @@ paths:
                     "@context":
                       rdfs: http://www.w3.org/2000/01/rdf-schema#
                       skos: http://www.w3.org/2004/02/skos/core#
-                      dfc: http://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#
+                      dfc: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#
                       dc: http://purl.org/dc/elements/1.1/#
-                      dfc-b: http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#
-                      dfc-p: http://static.datafoodconsortium.org/ontologies/DFC_ProductOntology.owl#
-                      dfc-t: http://static.datafoodconsortium.org/ontologies/DFC_TechnicalOntology.owl#
-                      dfc-m: http://static.datafoodconsortium.org/data/measures.rdf#
-                      dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
-                      dfc-f: http://static.datafoodconsortium.org/data/facets.rdf#
+                      dfc-b: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#
+                      dfc-p: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_ProductGlossary.owl#
+                      dfc-t: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_TechnicalOntology.owl#
+                      dfc-m: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#
+                      dfc-pt: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#
+                      dfc-f: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#
+                      ontosec: http://www.semanticweb.org/ontologies/2008/11/OntologySecurity.owl#
                       dfc-p:hasUnit:
                         "@type": "@id"
                       dfc-b:hasUnit:
@@ -205,6 +209,8 @@ paths:
                         "@type": "@id"
                       dfc-b:affiliates:
                         "@type": "@id"
+                      dfc-b:hasCertification:
+                        "@type": "@id"
                       dfc-b:manages:
                         "@type": "@id"
                       dfc-b:offeredThrough:
@@ -217,7 +223,7 @@ paths:
                         "@type": "@id"
                       dfc-b:hasAllergenDimension:
                         "@type": "@id"
-                      dfc-b:hasNutrimentDimension:
+                      dfc-b:hasNutrientDimension:
                         "@type": "@id"
                       dfc-b:hasPhysicalDimension:
                         "@type": "@id"
@@ -332,14 +338,15 @@ paths:
                     "@context":
                       rdfs: http://www.w3.org/2000/01/rdf-schema#
                       skos: http://www.w3.org/2004/02/skos/core#
-                      dfc: http://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#
+                      dfc: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#
                       dc: http://purl.org/dc/elements/1.1/#
-                      dfc-b: http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#
-                      dfc-p: http://static.datafoodconsortium.org/ontologies/DFC_ProductOntology.owl#
-                      dfc-t: http://static.datafoodconsortium.org/ontologies/DFC_TechnicalOntology.owl#
-                      dfc-m: http://static.datafoodconsortium.org/data/measures.rdf#
-                      dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
-                      dfc-f: http://static.datafoodconsortium.org/data/facets.rdf#
+                      dfc-b: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#
+                      dfc-p: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_ProductGlossary.owl#
+                      dfc-t: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_TechnicalOntology.owl#
+                      dfc-m: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#
+                      dfc-pt: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#
+                      dfc-f: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#
+                      ontosec: http://www.semanticweb.org/ontologies/2008/11/OntologySecurity.owl#
                       dfc-p:hasUnit:
                         "@type": "@id"
                       dfc-b:hasUnit:
@@ -362,6 +369,8 @@ paths:
                         "@type": "@id"
                       dfc-b:affiliates:
                         "@type": "@id"
+                      dfc-b:hasCertification:
+                        "@type": "@id"
                       dfc-b:manages:
                         "@type": "@id"
                       dfc-b:offeredThrough:
@@ -374,7 +383,7 @@ paths:
                         "@type": "@id"
                       dfc-b:hasAllergenDimension:
                         "@type": "@id"
-                      dfc-b:hasNutrimentDimension:
+                      dfc-b:hasNutrientDimension:
                         "@type": "@id"
                       dfc-b:hasPhysicalDimension:
                         "@type": "@id"
@@ -398,7 +407,7 @@ paths:
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Apple
                       dfc-b:description: Round
-                      dfc-b:hasType: dfc-pt:non-local-vegetable
+                      dfc-b:hasType: http://static.datafoodconsortium.org/data/productTypes.rdf#non-local-vegetable
                       dfc-b:hasQuantity:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
@@ -435,14 +444,15 @@ paths:
                     "@context":
                       rdfs: http://www.w3.org/2000/01/rdf-schema#
                       skos: http://www.w3.org/2004/02/skos/core#
-                      dfc: http://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#
+                      dfc: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#
                       dc: http://purl.org/dc/elements/1.1/#
-                      dfc-b: http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#
-                      dfc-p: http://static.datafoodconsortium.org/ontologies/DFC_ProductOntology.owl#
-                      dfc-t: http://static.datafoodconsortium.org/ontologies/DFC_TechnicalOntology.owl#
-                      dfc-m: http://static.datafoodconsortium.org/data/measures.rdf#
-                      dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
-                      dfc-f: http://static.datafoodconsortium.org/data/facets.rdf#
+                      dfc-b: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#
+                      dfc-p: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_ProductGlossary.owl#
+                      dfc-t: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_TechnicalOntology.owl#
+                      dfc-m: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#
+                      dfc-pt: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#
+                      dfc-f: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#
+                      ontosec: http://www.semanticweb.org/ontologies/2008/11/OntologySecurity.owl#
                       dfc-p:hasUnit:
                         "@type": "@id"
                       dfc-b:hasUnit:
@@ -465,6 +475,8 @@ paths:
                         "@type": "@id"
                       dfc-b:affiliates:
                         "@type": "@id"
+                      dfc-b:hasCertification:
+                        "@type": "@id"
                       dfc-b:manages:
                         "@type": "@id"
                       dfc-b:offeredThrough:
@@ -477,7 +489,7 @@ paths:
                         "@type": "@id"
                       dfc-b:hasAllergenDimension:
                         "@type": "@id"
-                      dfc-b:hasNutrimentDimension:
+                      dfc-b:hasNutrientDimension:
                         "@type": "@id"
                       dfc-b:hasPhysicalDimension:
                         "@type": "@id"
@@ -516,14 +528,15 @@ paths:
                     "@context":
                       rdfs: http://www.w3.org/2000/01/rdf-schema#
                       skos: http://www.w3.org/2004/02/skos/core#
-                      dfc: http://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#
+                      dfc: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#
                       dc: http://purl.org/dc/elements/1.1/#
-                      dfc-b: http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#
-                      dfc-p: http://static.datafoodconsortium.org/ontologies/DFC_ProductOntology.owl#
-                      dfc-t: http://static.datafoodconsortium.org/ontologies/DFC_TechnicalOntology.owl#
-                      dfc-m: http://static.datafoodconsortium.org/data/measures.rdf#
-                      dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
-                      dfc-f: http://static.datafoodconsortium.org/data/facets.rdf#
+                      dfc-b: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#
+                      dfc-p: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_ProductGlossary.owl#
+                      dfc-t: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_TechnicalOntology.owl#
+                      dfc-m: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#
+                      dfc-pt: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#
+                      dfc-f: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#
+                      ontosec: http://www.semanticweb.org/ontologies/2008/11/OntologySecurity.owl#
                       dfc-p:hasUnit:
                         "@type": "@id"
                       dfc-b:hasUnit:
@@ -546,6 +559,8 @@ paths:
                         "@type": "@id"
                       dfc-b:affiliates:
                         "@type": "@id"
+                      dfc-b:hasCertification:
+                        "@type": "@id"
                       dfc-b:manages:
                         "@type": "@id"
                       dfc-b:offeredThrough:
@@ -558,7 +573,7 @@ paths:
                         "@type": "@id"
                       dfc-b:hasAllergenDimension:
                         "@type": "@id"
-                      dfc-b:hasNutrimentDimension:
+                      dfc-b:hasNutrientDimension:
                         "@type": "@id"
                       dfc-b:hasPhysicalDimension:
                         "@type": "@id"
@@ -574,7 +589,7 @@ paths:
                     "@type": dfc-b:SuppliedProduct
                     dfc-b:name: Apple
                     dfc-b:description: A delicious heritage apple
-                    dfc-b:hasType: dfc-pt:non-local-vegetable
+                    dfc-b:hasType: http://static.datafoodconsortium.org/data/productTypes.rdf#non-local-vegetable
                     dfc-b:hasQuantity:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Piece
@@ -630,14 +645,15 @@ paths:
                     "@context":
                       rdfs: http://www.w3.org/2000/01/rdf-schema#
                       skos: http://www.w3.org/2004/02/skos/core#
-                      dfc: http://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#
+                      dfc: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#
                       dc: http://purl.org/dc/elements/1.1/#
-                      dfc-b: http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#
-                      dfc-p: http://static.datafoodconsortium.org/ontologies/DFC_ProductOntology.owl#
-                      dfc-t: http://static.datafoodconsortium.org/ontologies/DFC_TechnicalOntology.owl#
-                      dfc-m: http://static.datafoodconsortium.org/data/measures.rdf#
-                      dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
-                      dfc-f: http://static.datafoodconsortium.org/data/facets.rdf#
+                      dfc-b: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#
+                      dfc-p: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_ProductGlossary.owl#
+                      dfc-t: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_TechnicalOntology.owl#
+                      dfc-m: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#
+                      dfc-pt: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#
+                      dfc-f: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#
+                      ontosec: http://www.semanticweb.org/ontologies/2008/11/OntologySecurity.owl#
                       dfc-p:hasUnit:
                         "@type": "@id"
                       dfc-b:hasUnit:
@@ -660,6 +676,8 @@ paths:
                         "@type": "@id"
                       dfc-b:affiliates:
                         "@type": "@id"
+                      dfc-b:hasCertification:
+                        "@type": "@id"
                       dfc-b:manages:
                         "@type": "@id"
                       dfc-b:offeredThrough:
@@ -672,7 +690,7 @@ paths:
                         "@type": "@id"
                       dfc-b:hasAllergenDimension:
                         "@type": "@id"
-                      dfc-b:hasNutrimentDimension:
+                      dfc-b:hasNutrientDimension:
                         "@type": "@id"
                       dfc-b:hasPhysicalDimension:
                         "@type": "@id"
@@ -688,7 +706,7 @@ paths:
                     "@type": dfc-b:SuppliedProduct
                     dfc-b:name: Pesto
                     dfc-b:description: Basil Pesto
-                    dfc-b:hasType: dfc-pt:non-local-vegetable
+                    dfc-b:hasType: http://static.datafoodconsortium.org/data/productTypes.rdf#non-local-vegetable
                     dfc-b:hasQuantity:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram

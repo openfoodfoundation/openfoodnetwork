@@ -23,10 +23,10 @@ module DataFoodConsortium
           type_uri = clazz.new(*args).semanticType
           result[type_uri] = clazz
 
-          # Add support for the new DFC v1.8 URLs:
+          # Add support for the old DFC v1.7 URLs:
           new_type_uri = type_uri.gsub(
-            "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#",
-            "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#"
+            "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#",
+            "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#"
           )
           result[new_type_uri] = clazz
         end
@@ -80,16 +80,16 @@ module DataFoodConsortium
         property_id = statement.predicate.value
         value = resolve_object(statement.object)
 
-        # Hacky support of new DFC v1.8 ids:
+        # Backwards-compatibility with old DFC v1.7 ids:
         unless subject.hasSemanticProperty?(property_id)
           property_id = property_id.gsub(
-            "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#",
-            "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#"
+            "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#",
+            "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#"
           )
         end
         return unless subject.hasSemanticProperty?(property_id)
 
-        property = subject.__send__(:findSemanticProperty, property_id)
+        property = subject.semanticProperty(property_id)
 
         if property.value.is_a?(Enumerable)
           property.value << value

@@ -6,14 +6,15 @@ module DfcIo
     {
       "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
       "skos" : "http://www.w3.org/2004/02/skos/core#",
-      "dfc": "http://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#",
+      "dfc": "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#",
       "dc": "http://purl.org/dc/elements/1.1/#",
-      "dfc-b": "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#",
-      "dfc-p": "http://static.datafoodconsortium.org/ontologies/DFC_ProductOntology.owl#",
-      "dfc-t": "http://static.datafoodconsortium.org/ontologies/DFC_TechnicalOntology.owl#",
-      "dfc-m": "http://static.datafoodconsortium.org/data/measures.rdf#",
-      "dfc-pt": "http://static.datafoodconsortium.org/data/productTypes.rdf#",
-      "dfc-f": "http://static.datafoodconsortium.org/data/facets.rdf#",
+      "dfc-b": "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#",
+      "dfc-p": "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_ProductGlossary.owl#",
+      "dfc-t": "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_TechnicalOntology.owl#",
+      "dfc-m": "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#",
+      "dfc-pt": "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#",
+      "dfc-f": "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#",
+      "ontosec": "http://www.semanticweb.org/ontologies/2008/11/OntologySecurity.owl#",
       "dfc-p:hasUnit":{ "@type":"@id" },
       "dfc-b:hasUnit":{ "@type":"@id" },
       "dfc-b:hasQuantity":{ "@type":"@id" },
@@ -25,14 +26,14 @@ module DfcIo
       "dfc-b:supplies":{ "@type":"@id" },
       "dfc-b:defines":{ "@type":"@id" },
       "dfc-b:affiliates":{ "@type":"@id" },
-      "dfc-b:hasQuantity":{ "@type":"@id" },
+      "dfc-b:hasCertification":{ "@type":"@id" },
       "dfc-b:manages":{ "@type":"@id" },
       "dfc-b:offeredThrough":{ "@type":"@id" },
       "dfc-b:hasBrand":{ "@type":"@id" },
       "dfc-b:hasGeographicalOrigin":{ "@type":"@id" },
       "dfc-b:hasClaim":{ "@type":"@id" },
       "dfc-b:hasAllergenDimension":{ "@type":"@id" },
-      "dfc-b:hasNutrimentDimension":{ "@type":"@id" },
+      "dfc-b:hasNutrientDimension":{ "@type":"@id" },
       "dfc-b:hasPhysicalDimension":{ "@type":"@id" },
       "dfc:owner":{ "@type":"@id" },
       "dfc-t:hostedBy":{ "@type":"@id" },
@@ -41,13 +42,17 @@ module DfcIo
     }
   JSON
 
+  # The HashSerializer expects only string values.
+  # This context is only used to shorten URIs.
+  SERIALIZER_CONTEXT = CONTEXT.select { |_key, value| value.is_a?(String) }.freeze
+
   # Serialise DFC Connector subjects as JSON-LD string.
   #
   # This is a re-implementation of the Connector.export to provide our own context.
   def self.export(*subjects)
     return "" if subjects.empty?
 
-    serializer = VirtualAssembly::Semantizer::HashSerializer.new(CONTEXT)
+    serializer = VirtualAssembly::Semantizer::HashSerializer.new(SERIALIZER_CONTEXT)
 
     hashes = subjects.map do |subject|
       # JSON::LD needs a context on every input using prefixes.
