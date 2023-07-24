@@ -69,7 +69,7 @@ Layout/TrailingEmptyLines:
   Exclude:
     - 'Rakefile'
 
-# Offense count: 80
+# Offense count: 79
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowInHeredoc.
 Layout/TrailingWhitespace:
@@ -92,7 +92,6 @@ Layout/TrailingWhitespace:
     - 'spec/system/admin/order_cycles/list_spec.rb'
     - 'spec/system/admin/order_cycles/simple_spec.rb'
     - 'spec/system/admin/order_spec.rb'
-    - 'spec/system/admin/product_import_spec.rb'
     - 'spec/system/admin/shipping_methods_spec.rb'
 
 # Offense count: 7
@@ -239,14 +238,6 @@ Lint/UnusedMethodArgument:
 Lint/UselessMethodDefinition:
   Exclude:
     - 'app/models/spree/gateway.rb'
-
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: CheckForMethodsWithNoSideEffects.
-Lint/Void:
-  Exclude:
-    - 'spec/system/admin/order_cycles/complex_updating_specific_time_spec.rb'
-    - 'spec/system/admin/order_cycles/simple_spec.rb'
 
 # Offense count: 26
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
@@ -1234,7 +1225,7 @@ Style/HashLikeCase:
   Exclude:
     - 'app/models/enterprise.rb'
 
-# Offense count: 1783
+# Offense count: 1781
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, EnforcedShorthandSyntax, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
 # SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
@@ -1491,7 +1482,6 @@ Style/HashSyntax:
     - 'spec/models/enterprise_relationship_spec.rb'
     - 'spec/models/enterprise_spec.rb'
     - 'spec/models/exchange_spec.rb'
-    - 'spec/models/invoice_spec.rb'
     - 'spec/models/order_cycle_spec.rb'
     - 'spec/models/product_import/entry_validator_spec.rb'
     - 'spec/models/product_import/inventory_reset_strategy_spec.rb'
