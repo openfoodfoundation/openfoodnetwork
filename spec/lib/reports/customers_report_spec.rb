@@ -54,8 +54,8 @@ module Reporting
                                                                         shipping_method: sm)
               }
               before do
-                o1.update(completed_at: Time.zone.yesterday)
-                o2.update(completed_at: Time.zone.today)
+                o1.update(completed_at: "2023-01-01")
+                o2.update(completed_at: "2023-01-02")
                 [o1, o2].each do |order|
                   order.update!(email: "test@test.com")
                 end
@@ -70,7 +70,7 @@ module Reporting
                            [a.address1, a.address2, a.city].join(" "),
                            o1.email, a.phone, d.name,
                            [d.address.address1, d.address.address2, d.address.city].join(" "),
-                           o1.shipping_method.name, 2, o1.total + o2.total, o2.completed_at.strftime("%Y-%m-%d")
+                           o1.shipping_method.name, 2, o1.total + o2.total, "2023-01-02"
                          ]])
               end
 
@@ -92,13 +92,13 @@ module Reporting
                              [a.address1, a.address2, a.city].join(" "),
                              o1.email, a.phone, d.name,
                              [d.address.address1, d.address.address2, d.address.city].join(" "),
-                             o1.shipping_method.name, 1, o1.total, o1.completed_at.strftime("%Y-%m-%d")
+                             o1.shipping_method.name, 1, o1.total, "2023-01-01"
                            ], [
                              a.firstname, a.lastname,
                              [a.address1, a.address2, a.city].join(" "),
                              o2.email, a.phone, d2.name,
                              [d2.address.address1, d2.address.address2, d2.address.city].join(" "),
-                             o2.shipping_method.name, 1, o2.total, o2.completed_at.strftime("%Y-%m-%d")
+                             o2.shipping_method.name, 1, o2.total, "2023-01-02"
                            ]])
                 end
               end
