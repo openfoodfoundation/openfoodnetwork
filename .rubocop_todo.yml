@@ -34,14 +34,6 @@ Layout/LineLength:
     - 'spec/system/consumer/shopping/cart_spec.rb'
     - 'spec/system/consumer/shopping/products_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: final_newline, final_blank_line
-Layout/TrailingEmptyLines:
-  Exclude:
-    - 'Rakefile'
-
 # Offense count: 79
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowInHeredoc.
