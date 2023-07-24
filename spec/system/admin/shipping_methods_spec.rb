@@ -47,7 +47,7 @@ describe 'shipping methods' do
 
     it "deleting a shipping method" do
       visit spree.admin_shipping_methods_path
-        
+
       accept_alert 'Are you sure?' do
         page.find('a.delete-resource').click
       end
@@ -89,7 +89,7 @@ describe 'shipping methods' do
 
       select2_select 'None', from: 'calc_type'
       click_button 'Update'
-      
+
       expect(@shipping_method.reload.calculator_type).to eq "Calculator::None"
     end
   end

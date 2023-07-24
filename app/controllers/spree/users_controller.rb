@@ -33,7 +33,7 @@ module Spree
         render status: :ok, cable_ready: cable_car.
           inner_html(
             "#login-feedback",
-            partial("layouts/alert", 
+            partial("layouts/alert",
                     locals: { type: "alert", message: t('devise.failure.already_registered') })
           ).
           dispatch_event(name: "login:modal:open")
@@ -48,7 +48,7 @@ module Spree
       if @user.save
         render cable_ready: cable_car.inner_html(
           "#signup-feedback",
-          partial("layouts/alert", 
+          partial("layouts/alert",
                   locals: { type: "success",
                             message: t('devise.user_registrations.spree_user.signed_up_but_unconfirmed') })
         )

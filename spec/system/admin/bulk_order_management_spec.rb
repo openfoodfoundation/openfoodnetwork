@@ -789,7 +789,7 @@ describe '
         expect(page).to have_selector "tr#li_#{li4.id}"
       end
 
-      it "displays only line items whose orders meet the date restriction criteria, when changed", 
+      it "displays only line items whose orders meet the date restriction criteria, when changed",
          retry: 3 do
         from = today - 8.days
         to = today + 1.day
@@ -1068,7 +1068,7 @@ describe '
               expect(o2.reload.state).to eq("canceled")
             end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
           end
-          
+
           it "the user can confirm + uncheck the restock option: line item is then deleted and order is canceled without retocking" do
             expect_any_instance_of(Spree::StockLocation).to_not receive(:restock)
             expect do
@@ -1118,7 +1118,7 @@ describe '
         end
       end
 
-      shared_examples "display only group by information for selected variant" do          
+      shared_examples "display only group by information for selected variant" do
         it "displays group buy calc box" do
           expect(page).to have_selector "div#group_buy_calculation"
 
@@ -1140,7 +1140,7 @@ describe '
             end
           end
         end
-  
+
         it "all line items of the same variant" do
           expect(page).to have_no_selector "tr#li_#{li1.id}"
           expect(page).to have_no_selector "tr#li_#{li2.id}"
@@ -1163,7 +1163,7 @@ describe '
           expect(page).to have_selector "tr#li_#{li2.id}"
           expect(page).to have_selector "tr#li_#{li3.id}"
           expect(page).to have_selector "tr#li_#{li4.id}"
-        end 
+        end
       end
 
       context "when filtering" do

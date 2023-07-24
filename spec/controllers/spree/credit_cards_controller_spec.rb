@@ -247,7 +247,7 @@ describe Spree::CreditCardsController, type: :controller do
 
               context "when has any other saved cards" do
                 let!(:second_card) {
-                  create(:stored_credit_card, user_id: user.id, 
+                  create(:stored_credit_card, user_id: user.id,
                                               gateway_customer_profile_id: 'cus_AZNMJ')
                 }
 

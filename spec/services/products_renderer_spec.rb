@@ -19,7 +19,7 @@ describe ProductsRenderer do
                        supplier_id: fruits_supplier.id)
     }
     let!(:product_banana_bread) {
-      create(:product, name: "banana bread", primary_taxon_id: cakes.id, 
+      create(:product, name: "banana bread", primary_taxon_id: cakes.id,
                        supplier_id: cakes_supplier.id)
     }
     let!(:product_cherries) {
@@ -85,18 +85,18 @@ describe ProductsRenderer do
         }
 
         it "filters products with a product property" do
-          product_apples.product_properties.create!({ property_id: property_organic.id, 
+          product_apples.product_properties.create!({ property_id: property_organic.id,
                                                       value: '1', position: 1 })
-          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, 
+          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer,
                                                    { q: { with_properties: [property_organic.id] } })
           products = products_renderer.send(:products)
           expect(products).to eq([product_apples])
         end
 
         it "filters products with a producer property" do
-          fruits_supplier.producer_properties.create!({ property_id: property_organic.id, 
+          fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
-          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, 
+          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer,
                                                    { q: { with_properties: [property_organic.id] } })
           products = products_renderer.send(:products)
           expect(products).to eq([product_apples, product_cherries])
@@ -106,15 +106,15 @@ describe ProductsRenderer do
           allow(distributor).to receive(:preferred_shopfront_taxon_order) {
             "#{fruits.id},#{cakes.id}"
           }
-          product_apples.product_properties.create!({ property_id: property_conventional.id, 
+          product_apples.product_properties.create!({ property_id: property_conventional.id,
                                                       value: '1', position: 1 })
-          product_banana_bread.product_properties.create!({ property_id: property_organic.id, 
+          product_banana_bread.product_properties.create!({ property_id: property_organic.id,
                                                             value: '1', position: 1 })
-          product_cherries.product_properties.create!({ property_id: property_organic.id, 
+          product_cherries.product_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
-          product_doughnuts.product_properties.create!({ property_id: property_organic.id, 
+          product_doughnuts.product_properties.create!({ property_id: property_organic.id,
                                                          value: '1', position: 1 })
-          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, 
+          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer,
                                                    { q: { with_properties: [property_organic.id] } })
           products = products_renderer.send(:products)
           expect(products).to eq([product_cherries, product_banana_bread, product_doughnuts])

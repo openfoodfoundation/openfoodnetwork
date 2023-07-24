@@ -71,7 +71,7 @@ describe '
       'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id',
       selected: supplier.name
     )
-    expect(page).to have_select( 
+    expect(page).to have_select(
       'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id',
       selected: supplier.enterprise_fees.first.name
     )
@@ -107,7 +107,7 @@ describe '
       'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id',
       selected: distributor.name
     )
-    expect(page).to have_select( 
+    expect(page).to have_select(
       'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id',
       selected: distributor.enterprise_fees.first.name
     )

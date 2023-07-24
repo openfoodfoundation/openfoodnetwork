@@ -37,7 +37,7 @@ FactoryBot.define do
           end
 
           after(:create) do |order, evaluator|
-            order.payments << build(:payment, amount: order.total, 
+            order.payments << build(:payment, amount: order.total,
                                               payment_method: evaluator.payment_method)
             order.next!
           end

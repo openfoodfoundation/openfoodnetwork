@@ -89,7 +89,7 @@ describe '
       visit spree.admin_orders_path
       click_link 'New Order'
     end
-    
+
     it 'shows error when distributor is not selected' do
       click_button 'Next'
 
@@ -204,7 +204,7 @@ describe '
       it "and then the order is cancelled and email is not sent when unchecked" do
         expect_any_instance_of(Spree::StockLocation).to receive(:restock).at_least(1).times
         expect do
-          within(".modal") do 
+          within(".modal") do
             uncheck("send_cancellation_email")
             click_on("OK")
           end
@@ -232,20 +232,20 @@ describe '
 
     before do
       order.line_items << line_item
-      login_as_admin  
+      login_as_admin
       visit spree.edit_admin_order_path(order)
     end
 
     context "when using the cancel button" do
-      before do 
+      before do
         find("#cancel_order_form").click
       end
 
       it_should_behave_like "Cancelling the order"
     end
 
-    context "when using the cancel option in the dropdown" do  
-      before do 
+    context "when using the cancel option in the dropdown" do
+      before do
         find("#links-dropdown .ofn-drop-down").click
         find('a[href$="cancel"]').click
       end
@@ -296,7 +296,7 @@ describe '
         login_as_admin
         visit spree.edit_admin_order_path(order)
         find("a.delete-item").click
-        expect(page).to have_content "Are you sure?"        
+        expect(page).to have_content "Are you sure?"
       end
 
       it "show a modal 'Are you sure?' that the user can close and then nothing change" do
@@ -324,7 +324,7 @@ describe '
         order.line_items = [order.line_items.first]
         login_as_admin
         visit spree.edit_admin_order_path(order)
-        find("a.delete-item").click 
+        find("a.delete-item").click
       end
 
       it_should_behave_like "Cancelling the order"
@@ -398,11 +398,11 @@ describe '
 
     it "creates order and shipment successfully and allows proceeding to payment" do
       fill_in "order_email", with: "test@test.com"
-      
+
       expect(page).to have_selector('#order_ship_address_attributes_firstname')
       check "order_use_billing"
       expect(page).not_to have_selector('#order_ship_address_attributes_firstname')
-      
+
       fill_in "order_bill_address_attributes_firstname", with: "Clark"
       fill_in "order_bill_address_attributes_lastname", with: "Kent"
       fill_in "order_bill_address_attributes_address1", with: "Smallville"
@@ -595,7 +595,7 @@ describe '
         end
 
         it "shows the link" do
-          expect(page).to have_link "Resend Confirmation", 
+          expect(page).to have_link "Resend Confirmation",
                                     href: spree.resend_admin_order_path(order)
         end
 
@@ -614,7 +614,7 @@ describe '
         end
 
         it "shows the link" do
-          expect(page).to have_link "Cancel Order", 
+          expect(page).to have_link "Cancel Order",
                                     href: spree.fire_admin_order_path(order, e: 'cancel')
         end
 
@@ -630,9 +630,8 @@ describe '
           end
         end
       end
-      
+
       context "Check send/print invoice links" do
-        
         shared_examples_for 'can send/print invoices' do
           before do
             visit spree.edit_admin_order_path(order)
@@ -671,7 +670,7 @@ describe '
             before do
               distributor1.update_attribute(:abn, '12345678')
             end
-            
+
             it_should_behave_like 'can send/print invoices'
           end
 
@@ -732,7 +731,7 @@ describe '
             "Shipping: #{different_shipping_method_for_distributor1.name}"
           )
 
-          within "#order-total" do 
+          within "#order-total" do
             expect(page).to have_content "$175.00"
           end
         end
@@ -759,7 +758,7 @@ describe '
                 "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
               )
 
-              within "#order-total" do 
+              within "#order-total" do
                 expect(page).to have_content "$160.00"
               end
             end
@@ -775,9 +774,9 @@ describe '
                   "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
                 )
 
-                within "#order-total" do 
+                within "#order-total" do
                   expect(page).to have_content "$160.00"
-                end  
+                end
               end
             end
           end
@@ -793,7 +792,7 @@ describe '
                 "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
               )
 
-              within "#order-total" do 
+              within "#order-total" do
                 expect(page).to have_content "$160.00"
               end
             end
@@ -804,15 +803,15 @@ describe '
               end
 
               it "should not update the shipping cost" do
-                # Since the order is completed, the price is not supposed to be updated 
+                # Since the order is completed, the price is not supposed to be updated
                 visit spree.edit_admin_order_path(order)
                 expect(page).to have_content(
                   "Shipping: #{different_shipping_method_for_distributor1.name} $15.00"
                 )
 
-                within "#order-total" do 
+                within "#order-total" do
                   expect(page).to have_content "$160.00"
-                end  
+                end
               end
             end
           end
@@ -921,7 +920,7 @@ describe '
             end
             expect(page).to_not have_content incomplete_order.products.first.name
           end
-          
+
           # updates the order and verifies the warning disappears
           click_button 'Update And Recalculate Fees'
           expect(page).to_not have_content "Out of Stock".upcase
@@ -956,7 +955,7 @@ describe '
       expect(o.order_cycle).to eq order_cycle1
     end
   end
-  
+
   describe "searching customers" do
     def serching_for_customers
       # opens the customer dropdown
@@ -978,7 +977,7 @@ describe '
     end
 
     context "as the enterprise owner" do
-      before do  
+      before do
         product.variants.first.update(on_demand: false, on_hand: 0)
 
         login_as user
@@ -989,7 +988,7 @@ describe '
       it "finds a customer by name" do
         serching_for_customers
       end
-    end  
+    end
 
     context "as superadmin" do
       before do
@@ -999,7 +998,7 @@ describe '
         new_order_with_distribution(distributor, order_cycle)
         expect(page).to have_selector 'h1', text: "Customer Details"
       end
-      
+
       it "finds a customer by name" do
         serching_for_customers
       end

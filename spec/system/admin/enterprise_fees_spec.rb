@@ -147,11 +147,10 @@ describe '
     end
 
     it "does not allow editing to an invalid combination" do
-      
       # starting with a valid tax category / calculator combination
       expect(page).to have_select "#{prefix}_tax_category_id", selected: 'Inherit From Product'
       expect(page).to have_selector "option[selected]", text: 'Flat Percent (per item)'
-      
+
       # editing to an invalid combination
       select 'Flat Rate (per order)', from: "#{prefix}_calculator_type"
       expect{ click_button 'Update' }.to_not change { fee.reload.calculator_type }
@@ -178,7 +177,7 @@ describe '
         fill_in "#{prefix1}_calculator_attributes_preferred_amount", with: 1.5
         click_button 'Update'
       end
-      
+
       it "handles updating two enterprise fees" do
         # Then I should see the updated fields for my fees
         expect(page).to have_select "#{prefix}_fee_type", selected: 'Fundraising fee'
@@ -273,7 +272,7 @@ describe '
             expect(page).
               not_to have_select 'sets_enterprise_fee_set_collection_attributes_1_enterprise_id',
                                  selected: 'Second Distributor'
-            
+
             # A new enterprise fee is created
             expect(EnterpriseFee.count).to eq(fee_count)
           end

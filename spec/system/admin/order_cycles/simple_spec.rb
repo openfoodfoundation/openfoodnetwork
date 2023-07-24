@@ -444,7 +444,7 @@ describe '
         expect(page).to have_checked_field("order_cycle_outgoing_exchange_0_variants_#{v2.id}",
                                            disabled: true)
 
-        expect(page).not_to have_selector( 
+        expect(page).not_to have_selector(
           "table.exchanges tr.distributor-#{distributor_managed.id} td.tags"
         )
 
