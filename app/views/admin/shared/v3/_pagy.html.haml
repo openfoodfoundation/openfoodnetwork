@@ -1,0 +1,21 @@
+%nav.pagy_nav.pagination{"aria-label" => "pager", :role => "navigation"}
+  - if pagy.prev
+    %a.page.prev{ href: "#", id: "pagy-prev", "data-reflex": reflex, "data-perPage": pagy.items, "data-page": pagy.prev || 1, "aria-label": "previous"}
+      %i.icon-chevron-left
+  - else
+    %span.page.prev.disabled
+      %i.icon-chevron-left
+  - pagy.series.each do |item|       # series example: [1, :gap, 7, 8, "9", 10, 11, :gap, 36]
+    - if item.is_a?(Integer)         # page link
+      %a.page{ href: "#", id:"pagy-#{item}", "data-reflex": reflex, "data-perPage": pagy.items, "data-page": item, "aria-label": "page #{item}"}
+        = item
+    - elsif item.is_a?(String)       # current page
+      %span.page.current= item
+    - elsif item == :gap             # page gap
+      %span.page.gap &hellip;
+  - if pagy.next
+    %a.page.next{ href: "#", id:"pagy-next", "data-reflex": reflex, "data-perPage": pagy.items, "data-page": pagy.next || pagy.last, "aria-label": "next"}
+      %i.icon-chevron-right
+  - else
+    %span.page.next.disabled
+      %i.icon-chevron-right

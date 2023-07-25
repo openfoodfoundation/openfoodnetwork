@@ -1,0 +1,9 @@
+#sort
+  %div
+    = t(".pagination.total_html", total: pagy.count, from: pagy.from, to: pagy.to)
+    - if search_term.present? || producer_id.present? || category_id.present?
+      %a{ href: "#", class: "button disruptive medium", data: { reflex: "click->products#clear_search" } }
+        = t(".pagination.clear_search")  
+  %div.with-dropdown
+    = t(".pagination.per_page.show")
+    = select_tag :per_page, options_for_select([15, 25, 50, 100].collect{|i| [t('.pagination.per_page.per_page', num: i), i]}, pagy.items), data: { reflex: "change->products#change_per_page" }

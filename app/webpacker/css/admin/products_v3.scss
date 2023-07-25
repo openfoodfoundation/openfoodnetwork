@@ -1,10 +1,14 @@
 // Customisations for the new Bulk Edit Products page only
 .products_v3_page {
-  #content .container {
+  #content > .row:first-child > .container:first-child {
     // Allow table to extend to full width of available screen space
     // TODO: move this to a generic rule, eg body.full-width{}. Then it can be included on any page.
     //       or even better, create a switch that allows you to yield the page content without the surrounding content class. then you still have control to add the .content div where needed.
     max-width: none;
+  }
+
+  #products-content > .container:first-child {
+    position: static;
   }
 
   // Hopefully these rules will be moved to component(s).
@@ -76,6 +80,100 @@
       justify-content: center;
       align-items: center;
       gap: 20px;
+    }
+  }
+
+  #sort,
+  #filters {
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #sort {
+    line-height: $btn-medium-height;
+    height: $btn-medium-height;
+
+    .with-dropdown {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  #filters {
+    gap: 20px;
+    align-items: flex-end;
+
+    .producers,
+    .categories {
+      > .label {
+        margin-left: 3px;
+        margin-bottom: 2px;
+      }
+    }
+
+    .query {
+      flex-grow: 1;
+    }
+
+    .producers,
+    .categories {
+      flex-grow: 0;
+    }
+
+    .submit {
+      flex-grow: 0;
+    }
+
+    .query {
+      .search-input {
+        width: 100%;
+        position: relative;
+        background-color: $lighter-grey;
+        border: 1px solid $lighter-grey;
+        border-radius: 4px;
+        height: $btn-height;
+        line-height: $btn-height;
+
+        &:has(input:focus),
+        &:has(input:active) {
+          border: 1px solid $dark-blue;
+        }
+
+        > input {
+          background-color: $lighter-grey;
+        }
+
+        &:before {
+          font-family: FontAwesome;
+          content: "\f002";
+          color: $near-black;
+          font-size: 16px;
+          margin-left: 10px;
+        }
+      }
+    }
+
+    .producers,
+    .categories {
+      select {
+        width: 150px;
+        height: $btn-height;
+      }
+    }
+
+    .submit {
+      text-align: right;
+
+      .search-button {
+        position: relative;
+        > input {
+          padding-left: 30px;
+        }
+      }
     }
   }
 }

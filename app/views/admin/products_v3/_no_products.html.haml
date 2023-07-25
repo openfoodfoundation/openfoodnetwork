@@ -1,0 +1,11 @@
+- if search_term.present? || producer_id.present? || category_id.present?
+  = t('.no_products_found_for_search')
+  %a{ href: "#", class: "button disruptive", data: { reflex: "click->products#clear_search" } }
+    = t("admin.products_v3.sort.pagination.clear_search")
+- else
+  = t('.no_products_found')
+  #no-products-actions
+    %a{ href: "/admin/products/new", class: "button icon-plus", icon: "icon-plus" }
+      = t(:new_product)
+    %a{ href: "/admin/products/import", class: "button icon-upload secondary", icon: "icon-upload" }
+      = t(".import_products")

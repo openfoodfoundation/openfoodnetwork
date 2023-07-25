@@ -1,20 +1,36 @@
 .pagination {
   text-align: center;
-  margin: 2em 0 1em;
+  margin: 0 0 1em;
   padding: 10px 0;
 
-  background-color: $light-grey;
+  background-color: $color-7;
 
   .page {
-    padding: 5px 8px;
+    width: 40px;
+    line-height: 40px;
     text-align: center;
     display: inline-block;
     text-align: center;
+    background-color: $color-1;
+    @include defaultBoxShadow;
+    border-radius: 4px;
+    color: $color-9;
 
     &.current {
-      background-color: $green;
-      border-radius: 3px;
+      background-color: $color-5;
       color: $white;
+    }
+
+    &.prev {
+      margin-right: 20px;
+    }
+
+    &.next {
+      margin-left: 20px;
+    }
+
+    &.disabled {
+      cursor: default;
     }
   }
 

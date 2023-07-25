@@ -61,46 +61,9 @@ nav.menu {
 }
 
 #admin-menu {
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05), 0px 2px 2px rgba(0, 0, 0, 0.07);
-
-  ul {
-    display: flex;
-  }
+  @include defaultBoxShadow;
 
   li {
-    min-width: 90px;
-    flex-grow: 1;
-    padding-left: 2px;
-    padding-right: 2px;
-
-    a {
-      display: block;
-      padding: 25px 5px;
-      color: $dark-grey !important;
-      position: relative;
-      text-align: center;
-      font-weight: 600;
-      font-size: 16px;
-
-      i {
-        display: inline;
-      }
-
-      &:hover {
-        color: $red !important;
-        border-bottom: 2px solid $red;
-      }
-
-      span.text {
-        font-weight: 600;
-      }
-    }
-
-    a::before {
-      font-weight: normal;
-      padding-top: 0;
-    }
-
     .dropdown {
       width: 300px;
       background-color: $teal;
@@ -115,37 +78,82 @@ nav.menu {
         }
       }
     }
-
-    &.selected a {
-      @extend a, :hover;
-    }
   }
 }
 
 #sub-menu {
   padding-bottom: 0;
-  box-shadow: 0px 1px 0px $light-grey;
+  box-shadow: 0px 1px 0px $color-7;
+}
 
-  li {
-    a {
-      display: block;
-      padding: 12px 20px;
-      color: $dark-grey;
-      text-align: center;
-      position: relative;
-      font-size: 14px;
+// Factorized rules on menu item for admin menu and sub menu
+#admin-menu,
+#sub-menu {
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  ul {
+    display: flex;
+
+    li {
+      a {
+        display: inline-block;
+        padding: 16px 20px;
+        color: $color-9 !important;
+        text-align: center;
+        position: relative;
+        font-size: 14px;
+        font-weight: 600;
+
+        &:hover {
+          color: $red !important;
+
+          &:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            background: $red;
+          }
+        }
+      }
+
+      &.selected a {
+        @extend a, :hover;
+      }
     }
+  }
+}
 
-    &.selected a,
-    a:hover {
-      color: $red;
-      border-bottom: 2px solid $red;
+// Specific rules on menu item for admin menu and sub menu
+#admin-menu {
+  ul {
+    justify-content: space-between;
+    li a {
+      font-size: 16px;
+    }
+  }
+}
+
+#sub-menu {
+  ul li a:hover {
+    &:after {
+      height: 2px;
     }
   }
 }
 
 #header figure {
   margin: 0.25em 0;
+}
+
+#header .container {
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 #login-nav {

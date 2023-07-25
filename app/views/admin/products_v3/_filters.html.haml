@@ -1,0 +1,13 @@
+%form{ id: "filters", 'data-reflex-serialize-form': true, 'data-reflex': 'submit->products#filter' }
+  .query
+    .search-input
+      = text_field_tag :search_term, search_term, placeholder: t('.search_products')
+  .producers
+    .label= t('.producers.label')
+    = select_tag :producer_id, options_for_select(producer_options, producer_id), include_blank: t('.all_producers')
+  .categories
+    .label= t('.categories.label')
+    = select_tag :category_id, options_for_select(category_options, category_id), include_blank: t('.all_categories')
+  .submit
+    .search-button
+      = button_tag t(".search"), class: "secondary icon-search"

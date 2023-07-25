@@ -21,6 +21,12 @@ module Spree
 
     NAME_FIELDS = ["display_name", "display_as", "weight", "unit_value", "unit_description"].freeze
 
+    SEARCH_KEY = "#{%w(name
+                       meta_keywords
+                       variants_display_as
+                       variants_display_name
+                       supplier_name).join('_or_')}_cont".freeze
+
     belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product'
 
     delegate_belongs_to :product, :name, :description, :tax_category_id, :shipping_category_id,
