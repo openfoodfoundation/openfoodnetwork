@@ -453,6 +453,11 @@ describe Admin::EnterprisesController, type: :controller do
           expect(flash[:error]).to eq "Please select a package"
         end
       end
+
+      it "set visibility to 'only_through_links' by default" do
+        spree_post :register, id: enterprise, sells: 'none'
+        expect(enterprise.reload.visible).to eq 'only_through_links'
+      end
     end
   end
 
