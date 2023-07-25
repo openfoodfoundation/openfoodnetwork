@@ -11,14 +11,9 @@ angular.module("admin.indexUtils").directive "objForUpdate", (switchClass, pendi
         pendingChanges.remove(scope.object().id, scope.attr)
         scope.clear()
       else
-        change =
-          object: scope.object()
-          type: scope.type
-          attr: scope.attr
-          value: if value? then value else ""
-          scope: scope
         scope.pending()
-        pendingChanges.add(scope.object().id, scope.attr, change)
+        value = if value? then value else ""
+        addPendingChange(scope.attr, value)
 
     scope.reset = (value) ->
       scope.savedValue = value
@@ -34,3 +29,30 @@ angular.module("admin.indexUtils").directive "objForUpdate", (switchClass, pendi
 
     scope.clear = ->
       switchClass( element, "", ["update-pending", "update-error", "update-success"], false )
+
+    # In the particular case of a list of customer filtered by a tag, we want to make sure the
+    # tag is removed when deleting the tag the list is filtered by.
+    # As the list is filter by tag, deleting the tag will remove the customer entry, thus
+    # removing "objForUpdate" directive from the active scope. That means $watch won't pick up
+    # the tag_list changed.
+    # To ensure the tag is still deleted, we check on the $destroy event to see if the tag_list has
+    # changed, if so we queue up deleting the tag.
+    scope.$on '$destroy', (value) ->
+      return if scope.attr != 'tag_list'
+
+      # No tag has been deleted
+      return if scope.object()['tag_list'] == scope.savedValue
+
+      # Queuing up change to delete tag
+      addPendingChange('tag_list', scope.object()['tag_list'])
+
+    # private
+
+    addPendingChange = (attr, value) ->
+      change =
+        object: scope.object()
+        type: scope.type
+        attr: attr
+        value: value
+        scope: scope
+      pendingChanges.add(scope.object().id, attr, change)
