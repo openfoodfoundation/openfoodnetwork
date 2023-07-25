@@ -14,6 +14,7 @@ button:not(.plain):not(.trix-button),
   text-transform: uppercase;
   line-height: 40px;
   height: 40px;
+  font-weight: bold;
 
   &:before {
     font-weight: normal !important;

@@ -29,7 +29,7 @@
 @import "../shared/variables/layout";
 @import "../shared/variables/variables";
 @import "../shared/utilities";
-@import "../admin/shared/typography";
+@import "shared/typography"; // admin_v3
 @import "shared/tables"; // admin_v3
 @import "shared/icons"; // admin_v3
 @import "../admin/shared/forms";
