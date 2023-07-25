@@ -37,6 +37,14 @@ describe Api::V0::EnterprisesController, type: :controller do
         expect(enterprise.sells).to eq('any')
       end
 
+      it "creates a visible=hidden enterprise" do
+        api_post :create, { enterprise: new_enterprise_params }
+        expect(response.status).to eq 201
+
+        enterprise = Enterprise.last
+        expect(enterprise.visible).to eq("only_through_links")
+      end
+
       it "saves all user ids submitted" do
         manager1 = create(:user)
         manager2 = create(:user)

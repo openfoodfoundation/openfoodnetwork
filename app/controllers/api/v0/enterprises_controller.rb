@@ -74,7 +74,7 @@ module Api
       end
 
       def override_visible
-        enterprise_params[:visible] = false
+        enterprise_params[:visible] = "only_through_links"
       end
 
       def enterprise_params
