@@ -1,8 +1,10 @@
 - content_for :sub_menu do
   %ul#sub_nav.inline-menu
-    = tab :products, match_path: '/products'
+    = tab :products
     = tab :properties
     = tab :variant_overrides, url: main_app.admin_inventory_path, match_path: '/inventory'
     = tab :import, url: main_app.admin_product_import_path, match_path: '/product_import'
     - if feature?(:new_products_page, spree_current_user)
-      = tab :new_products, url: main_app.admin_new_products_path, match_path: '/new_products'
+      = tab :new_products, url: main_app.admin_new_products_path
+    - if feature?(:admin_style_v3, spree_current_user)
+      = tab :products_v3, url: main_app.admin_products_v3_path
