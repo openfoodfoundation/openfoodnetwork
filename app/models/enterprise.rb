@@ -91,7 +91,7 @@ class Enterprise < ApplicationRecord
   end
   has_one_attached :white_label_logo, service: image_service do |attachment|
     attachment.variant :default, resize_to_fill: [217, 44]
-    attachment.variant :mobile,  resize_to_fill: [75, 26]
+    attachment.variant :mobile,  resize_to_fill: [128, 26]
   end
 
   validates :logo,
