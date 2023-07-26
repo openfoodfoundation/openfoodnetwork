@@ -189,17 +189,6 @@ module Spree
 
     scope :active, lambda { where("spree_products.deleted_at IS NULL") }
 
-    scope :bulk_products, lambda { |user, params|
-                            ProductScopeQuery.new(user, params).bulk_products
-                          }
-
-    scope :paged_products_for_producers,
-          lambda { |user, params| ProductScopeQuery.new(user, params).paged_products_for_producers }
-
-    scope :product_scope, lambda { |user, params|
-                            ProductScopeQuery.new(user, params).product_scope
-                          }
-
     def self.group_by_products_id
       group(column_names.map { |col_name| "#{table_name}.#{col_name}" })
     end
