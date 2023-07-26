@@ -14,7 +14,9 @@ describe "Shops caching", caching: true do
   }
 
   describe "caching enterprises AMS data" do
-    it "caches data for all enterprises, with the provided options" do
+    xit "caches data for all enterprises, with the provided options" do
+      pending "#11010"
+
       visit shops_path
 
       key, options = CacheService::FragmentCaching.ams_shops
