@@ -13,11 +13,6 @@ describe "Shops caching", caching: true do
     create(:open_order_cycle, distributors: [distributor], coordinator: distributor)
   }
 
-  around do |example|
-    Rails.cache.clear
-    example.run
-  end
-
   describe "caching enterprises AMS data" do
     it "caches data for all enterprises, with the provided options" do
       visit shops_path
