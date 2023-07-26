@@ -24,7 +24,7 @@ describe 'As an admin, I can see the new product page' do
   end
 
   describe "sorting" do
-    let!(:product_z) { create(:simple_product, name: "Zucchini") }
+    let!(:product_z) { create(:simple_product, name: "zucchini") }
     let!(:product_a) { create(:simple_product, name: "Apples") }
 
     before do
@@ -34,7 +34,7 @@ describe 'As an admin, I can see the new product page' do
     it "Should sort products alphabetically by default" do
       expect(page).to have_selector "table.products tbody tr td", text: "Apples"
       # other products push later one to next page
-      expect(page).not_to have_selector "table.products tbody tr td", text: "Zucchini"
+      expect(page).not_to have_selector "table.products tbody tr td", text: "zucchini"
     end
   end
 
