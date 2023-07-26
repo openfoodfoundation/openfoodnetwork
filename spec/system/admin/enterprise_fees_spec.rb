@@ -99,8 +99,7 @@ describe '
       select 'Foo', from: "#{prefix}_enterprise_id"
       select 'Admin', from: "#{prefix}_fee_type"
       fill_in "#{prefix}_name", with: 'Greetings!'
-      select 'Inherit From Product', 
-             from: "#{prefix}_tax_category_id"
+      select 'Inherit From Product', from: "#{prefix}_tax_category_id"
       select 'Flat Percent', from: "#{prefix}_calculator_type"
       click_button 'Update'
     end
@@ -125,12 +124,10 @@ describe '
     end
 
     it "handle when updating calculator type for Weight to Flat Rate" do
-      select 'Weight (per kg or lb)', 
-             from: "#{prefix}_calculator_type"
+      select 'Weight (per kg or lb)', from: "#{prefix}_calculator_type"
       click_button 'Update'
 
-      select 'Flat Rate (per item)', 
-             from: "#{prefix}_calculator_type"
+      select 'Flat Rate (per item)', from: "#{prefix}_calculator_type"
       click_button 'Update'
 
       expect(fee.reload.calculator_type).to eq("Calculator::PerItem")
@@ -156,10 +153,67 @@ describe '
       expect(page).to have_selector "option[selected]", text: 'Flat Percent (per item)'
       
       # editing to an invalid combination
-      select 'Flat Rate (per order)', 
-             from: "#{prefix}_calculator_type"
+      select 'Flat Rate (per order)', from: "#{prefix}_calculator_type"
       expect{ click_button 'Update' }.to_not change { fee.reload.calculator_type }
       expect(page).to have_content "Inheriting the tax categeory requires a per-item calculator."
+    end
+
+    context "editing two enterprise fees" do
+      let!(:fee1) { create(:enterprise_fee, fee_type: "sales", enterprise_id: enterprise.id) }
+
+      before do
+        # edits the existing fee
+        select 'Fundraising', from: "#{prefix}_fee_type"
+        fill_in "#{prefix}_name", with: 'Hello!'
+
+        # edits the another fee
+        select 'Sales', from: "#{prefix1}_fee_type"
+        fill_in "#{prefix1}_name", with: 'World!'
+        select 'GST', from: "#{prefix1}_tax_category_id"
+        select 'Flat Rate', from: "#{prefix1}_calculator_type"
+        click_button 'Update'
+
+        # edits the mounts on the calculators
+        fill_in "#{prefix}_calculator_attributes_preferred_flat_percent", with: 12.5
+        fill_in "#{prefix1}_calculator_attributes_preferred_amount", with: 1.5
+        click_button 'Update'
+      end
+      
+      it "handles updating two enterprise fees" do
+        # Then I should see the updated fields for my fees
+        expect(page).to have_select "#{prefix}_fee_type", selected: 'Fundraising fee'
+        expect(page).to have_selector "input[value='Hello!']"
+        expect(page).to have_select "#{prefix}_tax_category_id", selected: 'Inherit From Product'
+        expect(page).to have_selector "option[selected]", text: 'Flat Percent (per item)'
+        expect(page).to have_field "Flat Percent:", with: '12.5'
+
+        expect(page).to have_select "#{prefix1}_enterprise_id", selected: 'Foo'
+        expect(page).to have_select "#{prefix1}_fee_type", selected: 'Sales fee'
+        expect(page).to have_selector "input[value='World!']"
+        expect(page).to have_select "#{prefix1}_tax_category_id", selected: 'GST'
+        expect(page).to have_selector "option[selected]", text: 'Flat Rate (per order)'
+        expect(page).to have_field "Amount:", with: '1.5'
+
+        fee.reload
+        expect(fee.enterprise).to eq(enterprise)
+        expect(fee.name).to eq('Hello!')
+        expect(fee.fee_type).to eq('fundraising')
+        expect(fee.calculator_type).to eq("Calculator::FlatPercentPerItem")
+
+        fee1.reload
+        expect(fee1.enterprise).to eq(enterprise)
+        expect(fee1.name).to eq('World!')
+        expect(fee1.fee_type).to eq('sales')
+        expect(fee1.calculator_type).to eq("Calculator::FlatRate")
+
+        # Sets tax_category and inherits_tax_category
+        expect(fee.tax_category).to eq(nil)
+        expect(fee.inherits_tax_category).to eq(true)
+
+        # Sets tax_category and inherits_tax_category
+        expect(fee1.tax_category).to eq(tax_category_gst)
+        expect(fee1.inherits_tax_category).to eq(false)
+      end
     end
   end
 
@@ -283,4 +337,8 @@ end
 
 def prefix
   'sets_enterprise_fee_set_collection_attributes_0'
+end
+
+def prefix1
+  'sets_enterprise_fee_set_collection_attributes_1'
 end
