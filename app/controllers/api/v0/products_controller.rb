@@ -13,7 +13,7 @@ module Api
       skip_authorization_check only: [:show, :bulk_products, :overridable]
 
       def show
-        @product = ProductScopeQuery.new(current_api_user, params).find_product
+        @product = product_finder.find_product
         render json: @product, serializer: Api::Admin::ProductSerializer
       end
 
@@ -30,7 +30,7 @@ module Api
 
       def update
         authorize! :update, Spree::Product
-        @product = ProductScopeQuery.new(current_api_user, params).find_product
+        @product = product_finder.find_product
         if @product.update(product_params)
           render json: @product, serializer: Api::Admin::ProductSerializer, status: :ok
         else
@@ -40,20 +40,20 @@ module Api
 
       def destroy
         authorize! :delete, Spree::Product
-        @product = ProductScopeQuery.new(current_api_user, params).find_product
+        @product = product_finder.find_product
         authorize! :delete, @product
         @product.destroy
         render json: @product, serializer: Api::Admin::ProductSerializer, status: :no_content
       end
 
       def bulk_products
-        @products = Spree::Product.bulk_products(current_api_user, params)
+        @products = product_finder.bulk_products
 
         render_paged_products @products
       end
 
       def overridable
-        @products = Spree::Product.paged_products_for_producers(current_api_user, params)
+        @products = product_finder.paged_products_for_producers
 
         render_paged_products @products, ::Api::Admin::ProductSimpleSerializer
       end
@@ -62,7 +62,7 @@ module Api
       #
       def clone
         authorize! :create, Spree::Product
-        original_product = ProductScopeQuery.new(current_api_user, params).find_product_to_be_cloned
+        original_product = product_finder.find_product_to_be_cloned
         authorize! :update, original_product
 
         @product = original_product.duplicate
@@ -71,6 +71,10 @@ module Api
       end
 
       private
+
+      def product_finder
+        ProductScopeQuery.new(current_api_user, params)
+      end
 
       def render_paged_products(products, product_serializer = ::Api::Admin::ProductSerializer)
         @pagy, products = pagy(products, items: params[:per_page] || DEFAULT_PER_PAGE)
