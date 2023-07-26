@@ -1,4 +1,5 @@
-= form_with url: bulk_update_admin_products_v3_index_path, method: :patch,
+= form_with url: bulk_update_admin_products_v3_index_path, method: :patch, id: "products-form",
+
             html: {'data-reflex-serialize-form': true, 'data-reflex': 'submit->products#bulk_update'} do |form|
   .container
     .sixteen.columns.align-right
@@ -6,6 +7,9 @@
         / = t('.products_modified', count: 'X')
         = form.submit t('.reset'), type: :reset
         = form.submit t('.save')
+        - if defined?(error_msg) && error_msg.present?
+          .error
+            = error_msg
   %table.products
     %col{ width:"15%" }
     %col{ width:"5%", style: "max-width:5em" }

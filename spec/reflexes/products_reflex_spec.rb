@@ -49,7 +49,7 @@ describe ProductsReflex, type: :reflex do
       }
 
       expect{
-        reflex(:bulk_update, params:)
+        run_reflex(:bulk_update, params:)
         product_a.reload
       }.to change(product_a, :name).to("Pommes")
     end
@@ -68,7 +68,7 @@ describe ProductsReflex, type: :reflex do
           ]
         }
       }
-      subject{ reflex(:bulk_update, params:) }
+      subject{ run_reflex(:bulk_update, params:) }
 
       it "Should retain sort order, even when names change" do
         expect(subject.get(:products).map(&:id)).to eq [
@@ -77,13 +77,42 @@ describe ProductsReflex, type: :reflex do
         ]
       end
     end
+
+    describe "error messages" do
+      it "summarises duplicate error messages" do
+        params = {
+          "products" => [
+            {
+              "id" => product_a.id.to_s,
+              "name" => "",
+            },
+            {
+              "id" => product_b.id.to_s,
+              "name" => "",
+            },
+          ]
+        }
+
+        reflex = run_reflex(:bulk_update, params:)
+        expect(reflex.get(:error_msg)).to eq "Product Name can't be blank"
+
+        # # WTF
+        # expect{ reflex(:bulk_update, params:) }.to broadcast(
+        #   replace: {
+        #     selector: "#products-form",
+        #     html: /Product Name can't be blank/,
+        #   },
+        #   broadcast: nil
+        # )
+      end
+    end
   end
 end
 
 # Build and run a reflex using the context
 # Parameters can be added with params: option
 # For more options see https://github.com/podia/stimulus_reflex_testing#usage
-def reflex(method_name, opts = {})
+def run_reflex(method_name, opts = {})
   build_reflex(method_name:, **context.merge(opts)).tap{ |reflex|
     reflex.run(method_name)
   }
