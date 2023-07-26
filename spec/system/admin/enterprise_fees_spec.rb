@@ -99,8 +99,7 @@ describe '
       select 'Foo', from: "#{prefix}_enterprise_id"
       select 'Admin', from: "#{prefix}_fee_type"
       fill_in "#{prefix}_name", with: 'Greetings!'
-      select 'Inherit From Product', 
-             from: "#{prefix}_tax_category_id"
+      select 'Inherit From Product', from: "#{prefix}_tax_category_id"
       select 'Flat Percent', from: "#{prefix}_calculator_type"
       click_button 'Update'
     end
@@ -125,12 +124,10 @@ describe '
     end
 
     it "handle when updating calculator type for Weight to Flat Rate" do
-      select 'Weight (per kg or lb)', 
-             from: "#{prefix}_calculator_type"
+      select 'Weight (per kg or lb)', from: "#{prefix}_calculator_type"
       click_button 'Update'
 
-      select 'Flat Rate (per item)', 
-             from: "#{prefix}_calculator_type"
+      select 'Flat Rate (per item)', from: "#{prefix}_calculator_type"
       click_button 'Update'
 
       expect(fee.reload.calculator_type).to eq("Calculator::PerItem")
@@ -156,8 +153,7 @@ describe '
       expect(page).to have_selector "option[selected]", text: 'Flat Percent (per item)'
       
       # editing to an invalid combination
-      select 'Flat Rate (per order)', 
-             from: "#{prefix}_calculator_type"
+      select 'Flat Rate (per order)', from: "#{prefix}_calculator_type"
       expect{ click_button 'Update' }.to_not change { fee.reload.calculator_type }
       expect(page).to have_content "Inheriting the tax categeory requires a per-item calculator."
     end
@@ -173,8 +169,7 @@ describe '
         # edits the another fee
         select 'Sales', from: "#{prefix1}_fee_type"
         fill_in "#{prefix1}_name", with: 'World!'
-        select 'GST', 
-          from: "#{prefix1}_tax_category_id"
+        select 'GST', from: "#{prefix1}_tax_category_id"
         select 'Flat Rate', from: "#{prefix1}_calculator_type"
         click_button 'Update'
 
