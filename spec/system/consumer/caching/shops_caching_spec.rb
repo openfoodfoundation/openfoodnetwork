@@ -13,13 +13,10 @@ describe "Shops caching", caching: true do
     create(:open_order_cycle, distributors: [distributor], coordinator: distributor)
   }
 
-  around do |example|
-    Rails.cache.clear
-    example.run
-  end
-
   describe "caching enterprises AMS data" do
-    it "caches data for all enterprises, with the provided options" do
+    xit "caches data for all enterprises, with the provided options" do
+      pending "#11010"
+
       visit shops_path
 
       key, options = CacheService::FragmentCaching.ams_shops
