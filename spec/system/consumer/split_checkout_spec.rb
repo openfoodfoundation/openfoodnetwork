@@ -724,15 +724,16 @@ describe "As a consumer, I want to checkout my order" do
             create(:voucher, code: 'some_code', enterprise: distributor, amount: 15)
           end
 
-          before do
-            visit checkout_step_path(:payment)
-          end
-
           it "shows voucher input" do
+            visit checkout_step_path(:payment)
             expect(page).to have_content "Apply voucher"
           end
 
           describe "adding voucher to the order" do
+            before do
+              visit checkout_step_path(:payment)
+            end
+
             shared_examples "adding voucher to the order" do
               before do
                 fill_in "Enter voucher code", with: "some_code"
@@ -779,7 +780,6 @@ describe "As a consumer, I want to checkout my order" do
           describe "removing voucher from order" do
             before do
               voucher.create_adjustment(voucher.code, order)
-              # Reload the page so we pickup the voucher
               visit checkout_step_path(:payment)
             end
 
