@@ -343,13 +343,15 @@ describe '
 
       expected_product_properties_url =
         Regexp.new(Regexp.escape(spree.admin_product_product_properties_path(
-                                   product.id, filter)))
+                                   product.id, filter
+                                 )))
       expect(page).to have_link('Product Properties',
                                 href: expected_product_properties_url)
 
       expected_product_group_buy_option_url =
         Regexp.new(Regexp.escape(spree.group_buy_options_admin_product_path(
-                                   product.id, filter)))
+                                   product.id, filter
+                                 )))
       expect(page).to have_link('Group Buy Options',
                                 href: expected_product_group_buy_option_url)
 

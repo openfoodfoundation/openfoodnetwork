@@ -518,7 +518,7 @@ describe Enterprise do
         p1 = create(:simple_product, supplier: s1)
         p2 = create(:simple_product, supplier: s2)
 
-        expect(Enterprise.supplying_variant_in([p1.variants.first, 
+        expect(Enterprise.supplying_variant_in([p1.variants.first,
                                                 p2.variants.first])).to match_array [s1, s2]
       end
 
@@ -903,7 +903,7 @@ describe Enterprise do
       sender = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
       permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
-      create(:enterprise_relationship, parent: distributor, child: supplier, 
+      create(:enterprise_relationship, parent: distributor, child: supplier,
                                        permissions: [permission])
       product = create(:product)
       order_cycle = create(

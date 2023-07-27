@@ -211,7 +211,7 @@ describe "
 
             # Set a user without suficient permissions
             allow_any_instance_of(Spree::Admin::BaseController).to receive(:current_spree_user)
-                                                               .and_return(build(:user))
+              .and_return(build(:user))
 
             expect do
               click_button 'Save Changes'

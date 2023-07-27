@@ -114,7 +114,7 @@ class Enterprise < ApplicationRecord
   validate :shopfront_taxons
   validate :shopfront_producers
   validate :enforce_ownership_limit, if: lambda { owner_id_changed? && !owner_id.nil? }
-  validates :instagram, 
+  validates :instagram,
             format: {
               with: VALID_INSTAGRAM_REGEX,
               message: Spree.t('errors.messages.invalid_instagram_url')

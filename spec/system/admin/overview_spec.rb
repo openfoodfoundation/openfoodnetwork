@@ -13,7 +13,7 @@ describe '
     before do
       @enterprise_user = create(:user)
       allow_any_instance_of(Spree::Admin::OverviewController).to receive(:spree_current_user)
-                                                             .and_return @enterprise_user
+        .and_return @enterprise_user
       login_as @enterprise_user
     end
 

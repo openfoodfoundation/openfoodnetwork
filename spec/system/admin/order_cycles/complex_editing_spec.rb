@@ -27,9 +27,9 @@ describe '
     # Then I should see the basic settings
     expect(page.find('#order_cycle_name').value).to eq(oc.name)
     expect(page.find('#order_cycle_orders_open_at').value)
-        .to eq(oc.orders_open_at.strftime("%Y-%m-%d %H:%M"))
+      .to eq(oc.orders_open_at.strftime("%Y-%m-%d %H:%M"))
     expect(page.find('#order_cycle_orders_close_at').value)
-        .to eq(oc.orders_close_at.strftime("%Y-%m-%d %H:%M"))
+      .to eq(oc.orders_close_at.strftime("%Y-%m-%d %H:%M"))
     expect(page).to have_content "COORDINATOR #{oc.coordinator.name}"
 
     click_button 'Next'
@@ -71,7 +71,7 @@ describe '
       'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id',
       selected: supplier.name
     )
-    expect(page).to have_select( 
+    expect(page).to have_select(
       'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id',
       selected: supplier.enterprise_fees.first.name
     )
@@ -107,7 +107,7 @@ describe '
       'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_id',
       selected: distributor.name
     )
-    expect(page).to have_select( 
+    expect(page).to have_select(
       'order_cycle_outgoing_exchange_0_enterprise_fees_0_enterprise_fee_id',
       selected: distributor.enterprise_fees.first.name
     )

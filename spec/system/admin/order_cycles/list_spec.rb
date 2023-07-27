@@ -144,7 +144,7 @@ describe '
         visit admin_order_cycles_path
 
         within("tr.order-cycle-#{oc_pt.id}") do
-          expect(find('input.datetimepicker', 
+          expect(find('input.datetimepicker',
                       match: :first).value).to start_with oc_open_at.strftime("%Y-%m-%d %H:%M")
           find('input.datetimepicker', match: :first).click
         end
@@ -157,7 +157,7 @@ describe '
         end
 
         within("tr.order-cycle-#{oc_pt.id}") do
-          expect(find('input.datetimepicker', 
+          expect(find('input.datetimepicker',
                       match: :first).value).to eq oc_open_at.strftime("%Y-%m-13 %H:%M")
         end
       end
@@ -185,7 +185,7 @@ describe '
 
         # Check the value is correct
         within("tr.order-cycle-#{oc_pt.id}") do
-          expect(find('input.datetimepicker', 
+          expect(find('input.datetimepicker',
                       match: :first).value).to eq test_value.to_datetime.strftime("%Y-%m-%d %H:%M")
         end
       end
