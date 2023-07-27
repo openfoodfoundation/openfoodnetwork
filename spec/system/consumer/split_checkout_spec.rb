@@ -726,6 +726,7 @@ describe "As a consumer, I want to checkout my order" do
 
           it "shows voucher input" do
             visit checkout_step_path(:payment)
+            expect(page).to have_field "Enter voucher code"
             expect(page).to have_content "Apply voucher"
           end
 
@@ -765,6 +766,17 @@ describe "As a consumer, I want to checkout my order" do
                   "you may not be able to spend the remaining value."
                 )
               end
+
+              it "proceeds without requiring payment" do
+                fill_in "Enter voucher code", with: "some_code"
+                click_button("Apply")
+
+                pending
+                expect(page).to have_content "No payment required"
+                click_button "Next - Order summary"
+                # Expect to be on the Order Summary page
+                expect(page).to have_content "Delivery details"
+              end
             end
 
             context "voucher doesn't exist" do
@@ -781,18 +793,41 @@ describe "As a consumer, I want to checkout my order" do
             before do
               voucher.create_adjustment(voucher.code, order)
               visit checkout_step_path(:payment)
-            end
 
-            it "removes voucher" do
               accept_confirm "Are you sure you want to remove the voucher?" do
                 click_on "Remove code"
               end
+            end
 
+            it "removes voucher" do
               within '#voucher-section' do
                 expect(page).to have_button("Apply", disabled: true)
+                expect(page).to have_field "Enter voucher code" # Currently no confirmation msg
               end
 
               expect(order.voucher_adjustments.length).to eq(0)
+            end
+
+            it "can re-enter a voucher" do
+              # Re-enter a voucher code
+              fill_in "Enter voucher code", with: "some_code"
+              click_button("Apply")
+
+              expect(page).to have_content("$15.00 Voucher")
+              expect(order.reload.voucher_adjustments.length).to eq(1)
+              pending
+              expect(page).to have_content "No payment required"
+
+              click_button "Next - Order summary"
+              # Expect to be on the Order Summary page
+              expect(page).to have_content "Delivery details"
+            end
+
+            it "can proceed with payment" do
+              choose "Payment with Fee"
+              click_button "Next - Order summary"
+              # Expect to be on the Order Summary page
+              expect(page).to have_content "Delivery details"
             end
           end
         end
