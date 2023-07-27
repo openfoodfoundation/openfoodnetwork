@@ -507,6 +507,20 @@ describe '
     page.has_selector? "table.index tbody tr" # Wait for JS
   end
 
+  context 'when order is in confirmation state' do
+    before do
+      order.update(state: 'confirmation')
+    end
+
+    it 'checks order may proceed to payments' do
+      login_as_admin
+      visit spree.edit_admin_order_path(order)
+
+      click_link "Payments"
+      expect(page).to have_content "NEW PAYMENT"
+    end
+  end
+
   context "as an enterprise manager" do
     let(:coordinator1) { create(:distributor_enterprise) }
     let(:coordinator2) { create(:distributor_enterprise) }
