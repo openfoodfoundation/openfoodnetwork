@@ -41,7 +41,7 @@
         %td.align-left
           .line-clamp-1= product.taxons.map(&:name).join(', ')
         %td.align-left
-          .line-clamp-1= product.tax_category&.name || "None" # TODO: convert to dropdown, else translate hardcoded string.
+          .line-clamp-1= product.tax_category_id && product.tax_category&.name || "None"
         %td.align-left
           .line-clamp-1= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
       - product.variants.each do |variant|
