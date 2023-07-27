@@ -1004,4 +1004,148 @@ describe '
       end
     end
   end
+
+  describe "Legal Invoices" do
+    before do
+      Flipper.enable(:invoices)
+      login_as user
+    end
+
+    describe "for order states" do
+      context "complete" do
+        let!(:order1) {
+          create(:order_with_totals_and_distribution, user: user, distributor:,
+                                                      order_cycle: order_cycle, state: 'complete',
+                                                      payment_state: 'balance_due',
+                                                      customer_id: customer.id)
+        }
+
+        context "editing the order" do
+          before do
+            visit spree.edit_admin_order_path(order1)
+          end
+
+          it "displays the invoice tab" do
+            expect(page).to have_content "Complete".upcase
+            expect(page).to have_content "Invoices".upcase
+          end
+        end
+
+        context "visiting the invoices tab" do
+          let!(:table_header) {
+            [
+              "Date/Time",
+              "Invoice Number",
+              "Amount",
+              "Status",
+              "File",
+            ].join(" ").upcase
+          }
+
+          let(:table_contents) {
+            [
+              Invoice.first.created_at.strftime('%B %d, %Y 12:00 AM').to_s,
+              "1",
+              "0.0",
+              "Active",
+              "Download"
+            ].join(" ")
+          }
+          let(:download_href) {
+            "#{spree.print_admin_order_path(order1)}?invoice_id=#{Invoice.last.id}"
+          }
+
+          before do
+            visit spree.admin_order_invoices_path(order1)
+          end
+
+          it "displays the invoices table" do
+            # with no invoices, only the table header is displayed
+            expect(page).to have_css "table.index"
+            expect(page).to have_content "#{customer.first_name} #{customer.last_name} -"
+            expect(page.find("table").text).to have_content(table_header)
+
+            # the New invoice button should be visible
+            expect(page).to have_link "New Invoice"
+            click_link 'New Invoice'
+
+            # and disappear after clicking
+            expect(page).to have_no_link "New Invoice"
+
+            # creating an invoice, displays a second row
+            expect(page.find("table").text).to have_content(table_contents)
+
+            # with a valid invoice download link
+            expect(page).to have_link("Download",
+                                      href: download_href)
+          end
+        end
+      end
+
+      context "resumed" do
+        let!(:order2) {
+          create(:order_with_totals_and_distribution, user: user, distributor:,
+                                                      order_cycle: order_cycle, state: 'resumed',
+                                                      payment_state: 'balance_due')
+        }
+        before do
+          visit spree.edit_admin_order_path(order2)
+        end
+
+        it "displays the invoice tab" do
+          expect(page).to have_content "Resumed".upcase
+          expect(page).to have_content "Invoices".upcase
+        end
+      end
+
+      context "canceled" do
+        let!(:order3) {
+          create(:order_with_totals_and_distribution, user: user, distributor:,
+                                                      order_cycle: order_cycle, state: 'canceled',
+                                                      payment_state: 'balance_due')
+        }
+        before do
+          visit spree.edit_admin_order_path(order3)
+        end
+
+        it "displays the invoice tab" do
+          expect(page).to have_content "Cancelled".upcase
+          expect(page).to have_content "Invoices".upcase
+        end
+      end
+
+      context "cart" do
+        let!(:order_empty) {
+          create(:order_with_line_items, user: user, distributor:, order_cycle: order_cycle,
+                                         line_items_count: 0)
+        }
+        before do
+          visit spree.edit_admin_order_path(order_empty)
+        end
+
+        it "displays the invoice tab" do
+          pending "issue #11240"
+          expect(page).to have_content "Cart".upcase
+          expect(page).not_to have_content "Invoices".upcase
+        end
+      end
+
+      context "payment" do
+        let!(:order4) do
+          create(:order_ready_for_payment, user: user, distributor: distributor,
+                                           order_cycle: order_cycle,
+                                           payment_state: 'balance_due')
+        end
+        before do
+          visit spree.edit_admin_order_path(order4)
+        end
+
+        it "displays the invoice tab" do
+          pending "issue #11240"
+          expect(page).to have_content "Payment".upcase
+          expect(page).not_to have_content "Invoices".upcase
+        end
+      end
+    end
+  end
 end
