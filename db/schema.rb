@@ -167,8 +167,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_201542) do
   end
 
   create_table "enterprise_relationships", id: :serial, force: :cascade do |t|
-    t.integer "parent_id"
-    t.integer "child_id"
+    t.integer "parent_id", null: false
+    t.integer "child_id", null: false
     t.index ["child_id"], name: "index_enterprise_relationships_on_child_id"
     t.index ["parent_id", "child_id"], name: "index_enterprise_relationships_on_parent_id_and_child_id", unique: true
     t.index ["parent_id"], name: "index_enterprise_relationships_on_parent_id"
