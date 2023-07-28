@@ -24,6 +24,7 @@ require_relative "../lib/open_food_network/i18n_config"
 require_relative '../lib/spree/core/environment'
 require_relative '../lib/spree/core/mail_interceptor'
 require_relative "../lib/i18n_digests"
+require_relative "../lib/git_utils"
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -34,8 +35,8 @@ end
 
 module Openfoodnetwork
   class Application < Rails::Application
-    # Store a description of the current version, with linebreak trimmed
-    config.x.git_version = `git describe --tags --dirty=-modified`.strip
+    # Store a description of the current version
+    config.x.git_version = GitUtils::git_version
 
     config.after_initialize do
       # We need this here because the test env file loads before the Spree engine is loaded
