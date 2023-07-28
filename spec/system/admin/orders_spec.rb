@@ -413,7 +413,7 @@ describe '
           billing_address2.update!(firstname: "Mad", lastname: "Hatter")
           billing_address3.update!(firstname: "Alice", lastname: "Smith")
           billing_address4.update!(firstname: "Cheshire", lastname: "Cat")
-          billing_address5.update!(lastname: "Bob", lastname: "Smith")
+          billing_address5.update!(firstname: "Bob", lastname: "Smith")
           login_as_admin
           visit spree.admin_orders_path
         end
