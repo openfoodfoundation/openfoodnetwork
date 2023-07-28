@@ -26,8 +26,8 @@ class ApplicationReflex < StimulusReflex::Reflex
     Spree::Ability.new(current_user)
   end
 
-  def with_locale(&block)
-    I18n.with_locale(current_user.locale, &block)
+  def with_locale(&)
+    I18n.with_locale(current_user.locale, &)
   end
 
   def morph_admin_flashes

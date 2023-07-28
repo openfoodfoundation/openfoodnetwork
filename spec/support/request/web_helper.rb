@@ -49,8 +49,8 @@ module WebHelper
     end
   end
 
-  def within_row(num, &block)
-    within("table.index tbody tr:nth-child(#{num})", &block)
+  def within_row(num, &)
+    within("table.index tbody tr:nth-child(#{num})", &)
   end
 
   def select2_select(value, options)

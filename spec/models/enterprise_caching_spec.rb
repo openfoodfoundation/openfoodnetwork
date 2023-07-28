@@ -141,7 +141,7 @@ describe Enterprise do
     end
   end
 
-  def later(&block)
-    Timecop.travel(1.day.from_now, &block)
+  def later(&)
+    Timecop.travel(1.day.from_now, &)
   end
 end

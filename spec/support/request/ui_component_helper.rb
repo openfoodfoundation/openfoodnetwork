@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module UIComponentHelper
-  def browse_as_small(&block)
-    browse_with_window_size(640, 480, &block)
+  def browse_as_small(&)
+    browse_with_window_size(640, 480, &)
   end
 
-  def browse_as_medium(&block)
-    browse_with_window_size(1024, 768, &block)
+  def browse_as_medium(&)
+    browse_with_window_size(1024, 768, &)
   end
 
   def browse_as_default(&block)

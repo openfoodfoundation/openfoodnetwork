@@ -74,8 +74,8 @@ RSpec.configure do |config|
 end
 
 module RswagExtension
-  def param(args, &block)
-    public_send(:let, args) { instance_eval(&block) }
+  def param(args, &)
+    public_send(:let, args) { instance_eval(&) }
   end
 end
 Rswag::Specs::ExampleGroupHelpers.prepend RswagExtension

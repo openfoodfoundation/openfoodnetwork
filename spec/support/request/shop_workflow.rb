@@ -84,10 +84,10 @@ module ShopWorkflow
     wait_for_cart
   end
 
-  def within_variant(variant = nil, &block)
+  def within_variant(variant = nil, &)
     selector = variant ? "#variant-#{variant.id}" : ".variants"
     expect(page).to have_selector selector
-    within(selector, &block)
+    within(selector, &)
   end
 
   def open_bulk_quantity_modal(variant)

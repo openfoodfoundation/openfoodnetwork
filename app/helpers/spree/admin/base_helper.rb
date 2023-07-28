@@ -3,14 +3,14 @@
 module Spree
   module Admin
     module BaseHelper
-      def field_container(model, method, options = {}, &block)
+      def field_container(model, method, options = {}, &)
         css_classes = options[:class].to_a
         css_classes << 'field'
         if error_message_on(model, method).present?
           css_classes << 'withError'
         end
         content_tag(:div,
-                    capture(&block),
+                    capture(&),
                     class: css_classes.join(' '),
                     id: "#{model}_#{method}_field")
       end
