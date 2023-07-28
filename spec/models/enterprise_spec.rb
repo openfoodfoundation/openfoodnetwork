@@ -817,7 +817,7 @@ describe Enterprise do
     it "should return only parent producers" do
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
-      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      permission = EnterpriseRelationshipPermission.new(name: "add_to_order_cycle")
       create(:enterprise_relationship, parent: distributor,
                                        child: supplier, permissions: [permission])
       expect(Enterprise.parents_of_one_union_others(supplier, nil)).to include(distributor)
@@ -827,7 +827,7 @@ describe Enterprise do
       another_enterprise = create(:enterprise)
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
-      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      permission = EnterpriseRelationshipPermission.new(name: "add_to_order_cycle")
       create(:enterprise_relationship, parent: distributor,
                                        child: supplier, permissions: [permission])
       expect(
@@ -838,7 +838,7 @@ describe Enterprise do
     it "does not find child in the relationship" do
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
-      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      permission = EnterpriseRelationshipPermission.new(name: "add_to_order_cycle")
       create(:enterprise_relationship, parent: distributor,
                                        child: supplier, permissions: [permission])
       expect(Enterprise.parents_of_one_union_others(distributor, nil)).not_to include(supplier)
@@ -862,7 +862,7 @@ describe Enterprise do
     it "finds parent in the relationship" do
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
-      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      permission = EnterpriseRelationshipPermission.new(name: "add_to_order_cycle")
       product = create(:product)
       order_cycle = create(
         :simple_order_cycle,
@@ -878,7 +878,7 @@ describe Enterprise do
     it "does not find child in the relationship" do
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
-      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      permission = EnterpriseRelationshipPermission.new(name: "add_to_order_cycle")
       create(:enterprise_relationship, parent: distributor,
                                        child: supplier, permissions: [permission])
       product = create(:product)
@@ -896,7 +896,7 @@ describe Enterprise do
       supplier = create(:supplier_enterprise)
       sender = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
-      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      permission = EnterpriseRelationshipPermission.new(name: "add_to_order_cycle")
       create(:enterprise_relationship, parent: distributor, child: supplier,
                                        permissions: [permission])
       product = create(:product)

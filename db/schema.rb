@@ -161,7 +161,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_201542) do
   end
 
   create_table "enterprise_relationship_permissions", id: :serial, force: :cascade do |t|
-    t.integer "enterprise_relationship_id"
+    t.integer "enterprise_relationship_id", null: false
     t.string "name", limit: 255, null: false
     t.index ["enterprise_relationship_id"], name: "index_erp_on_erid"
   end
