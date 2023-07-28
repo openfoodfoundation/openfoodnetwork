@@ -771,7 +771,6 @@ describe "As a consumer, I want to checkout my order" do
                 fill_in "Enter voucher code", with: "some_code"
                 click_button("Apply")
 
-                pending
                 expect(page).to have_content "No payment required"
                 click_button "Next - Order summary"
                 # Expect to be on the Order Summary page
@@ -815,7 +814,7 @@ describe "As a consumer, I want to checkout my order" do
 
               expect(page).to have_content("$15.00 Voucher")
               expect(order.reload.voucher_adjustments.length).to eq(1)
-              pending
+
               expect(page).to have_content "No payment required"
 
               click_button "Next - Order summary"

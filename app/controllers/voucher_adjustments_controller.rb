@@ -44,6 +44,9 @@ class VoucherAdjustmentsController < BaseController
       return false
     end
 
+    VoucherAdjustmentsService.new(@order).update
+    @order.update_totals_and_states
+
     true
   end
 
