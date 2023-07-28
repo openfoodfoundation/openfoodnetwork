@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class EnterpriseRelationship < ApplicationRecord
-  self.belongs_to_required_by_default = true
-
   belongs_to :parent, class_name: 'Enterprise', touch: true
   belongs_to :child, class_name: 'Enterprise', touch: true
   has_many :permissions, class_name: 'EnterpriseRelationshipPermission', dependent: :destroy

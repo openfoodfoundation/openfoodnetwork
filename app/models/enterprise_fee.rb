@@ -3,8 +3,6 @@
 class EnterpriseFee < ApplicationRecord
   include CalculatedAdjustments
 
-  self.belongs_to_required_by_default = true
-
   acts_as_paranoid
 
   belongs_to :enterprise

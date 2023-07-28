@@ -10,8 +10,6 @@ class Enterprise < ApplicationRecord
   WHITE_LABEL_LOGO_SIZES = [:default, :mobile].freeze
   VALID_INSTAGRAM_REGEX = %r{\A[a-zA-Z0-9._]{1,30}([^/-]*)\z}
 
-  self.belongs_to_required_by_default = true
-
   searchable_attributes :sells, :is_primary_producer, :name
   searchable_associations :properties
   searchable_scopes :is_primary_producer, :is_distributor, :is_hub, :activated, :visible,

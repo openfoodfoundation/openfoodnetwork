@@ -5,8 +5,6 @@ require 'open_food_network/locking'
 class EnterpriseGroup < ApplicationRecord
   include PermalinkGenerator
 
-  self.belongs_to_required_by_default = true
-
   acts_as_list
 
   has_and_belongs_to_many :enterprises, join_table: 'enterprise_groups_enterprises'

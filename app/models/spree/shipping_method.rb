@@ -8,8 +8,6 @@ module Spree
       back_end: "back_end"
     }.freeze
 
-    self.belongs_to_required_by_default = true
-
     acts_as_paranoid
     acts_as_taggable
 
