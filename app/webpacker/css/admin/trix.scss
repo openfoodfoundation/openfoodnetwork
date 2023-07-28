@@ -2,9 +2,25 @@ trix-toolbar [data-trix-button-group="file-tools"] {
   display: none;
 }
 
+// Match the rendering into the shopfront
 trix-editor {
+  color: $darker-grey;
+
   ol,
   ul {
     margin-left: 1.5em;
+  }
+
+  a {
+    color: $ofn-brand;
+  }
+
+  // Copy/pasted from _type.scss
+  blockquote {
+    line-height: 1.6;
+    color: #6f6f6f;
+    margin: 0 0 1.25rem;
+    padding: 0.5625rem 1.25rem 0 1.1875rem;
+    border-left: 1px solid #dddddd;
   }
 }
