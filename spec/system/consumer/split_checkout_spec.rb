@@ -790,7 +790,8 @@ describe "As a consumer, I want to checkout my order" do
 
           describe "removing voucher from order" do
             before do
-              voucher.create_adjustment(voucher.code, order)
+              add_voucher_to_order(voucher, order)
+
               visit checkout_step_path(:payment)
 
               accept_confirm "Are you sure you want to remove the voucher?" do
@@ -804,6 +805,7 @@ describe "As a consumer, I want to checkout my order" do
                 expect(page).to have_field "Enter voucher code" # Currently no confirmation msg
               end
 
+              expect(page).not_to have_content "No payment required"
               expect(order.voucher_adjustments.length).to eq(0)
             end
 
@@ -823,7 +825,6 @@ describe "As a consumer, I want to checkout my order" do
             end
 
             it "can proceed with payment" do
-              choose "Payment with Fee"
               click_button "Next - Order summary"
               # Expect to be on the Order Summary page
               expect(page).to have_content "Delivery details"
@@ -1151,9 +1152,7 @@ describe "As a consumer, I want to checkout my order" do
         let(:voucher) { create(:voucher, code: 'some_code', enterprise: distributor, amount: 6) }
 
         before do
-          voucher.create_adjustment(voucher.code, order)
-          order.update_totals
-          VoucherAdjustmentsService.new(order).update
+          add_voucher_to_order(voucher, order)
 
           visit checkout_step_path(:summary)
         end
@@ -1206,5 +1205,11 @@ describe "As a consumer, I want to checkout my order" do
         expect(page).to_not have_content("You have an order for this order cycle already.")
       end
     end
+  end
+
+  def add_voucher_to_order(voucher, order)
+    voucher.create_adjustment(voucher.code, order)
+    VoucherAdjustmentsService.new(order).update
+    order.update_totals_and_states
   end
 end

@@ -14,6 +14,9 @@ class VoucherAdjustmentsController < BaseController
   def destroy
     @order.voucher_adjustments.find_by(id: params[:id])&.destroy
 
+    # Update order to make sure we display the appropriate payment method
+    @order.update_totals_and_states
+
     update_payment_section
   end
 
