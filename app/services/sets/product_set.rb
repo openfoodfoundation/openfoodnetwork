@@ -13,8 +13,10 @@ module Sets
     end
 
     def collection_attributes=(attributes)
-      @collection = Spree::Product
-        .where(id: attributes.each_value.map { |product| product[:id] })
+      ids = attributes.each_value.map { |product| product[:id] }.compact
+      @collection = []
+      # Find and load existing products in the order they are provided
+      @collection = Spree::Product.find(ids) if ids.present?
       @collection_hash = attributes
     end
 

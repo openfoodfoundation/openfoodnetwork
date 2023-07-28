@@ -198,6 +198,38 @@ describe Sets::ProductSet do
           end
         end
       end
+
+      context 'when there are multiple products' do
+        let!(:product_b) { create(:simple_product, name: "Bananas") }
+        let!(:product_a) { create(:simple_product, name: "Apples") }
+
+        let(:collection_hash) do
+          {
+            0 => {
+              id: product_a.id,
+              name: "Pommes",
+            },
+            1 => {
+              id: product_b.id,
+              name: "Bananes",
+            },
+          }
+        end
+
+        it 'updates the products' do
+          product_set.save
+
+          expect(product_a.reload.name).to eq "Pommes"
+          expect(product_b.reload.name).to eq "Bananes"
+        end
+
+        it 'retains the order of products' do
+          product_set.save
+
+          expect(product_set.collection[0]).to eq product_a.reload
+          expect(product_set.collection[1]).to eq product_b.reload
+        end
+      end
     end
   end
 end
