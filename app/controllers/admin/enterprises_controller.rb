@@ -92,7 +92,7 @@ module Admin
         return render :welcome, layout: "spree/layouts/bare_admin"
       end
 
-      attributes = { sells: register_params[:sells], visible: true }
+      attributes = { sells: register_params[:sells], visible: "only_through_links" }
 
       if @enterprise.update(attributes)
         flash[:success] = I18n.t(:enterprise_register_success_notice, enterprise: @enterprise.name)

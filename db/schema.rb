@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_06_033212) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_20_080504) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -233,7 +233,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_06_033212) do
     t.boolean "enable_subscriptions", default: false, null: false
     t.integer "business_address_id"
     t.boolean "show_customer_names_to_suppliers", default: false, null: false
-    t.string "visible", limit: 255, default: "public", null: false
+    t.string "visible", default: "only_through_links", null: false
     t.string "whatsapp_phone", limit: 255
     t.boolean "hide_ofn_navigation", default: false, null: false
     t.text "white_label_logo_link"

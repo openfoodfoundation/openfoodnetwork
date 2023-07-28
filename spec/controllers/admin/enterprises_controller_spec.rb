@@ -47,6 +47,15 @@ describe Admin::EnterprisesController, type: :controller do
       expect(distributor_manager.enterprise_roles.where(enterprise_id: enterprise).first).to be
     end
 
+    it "set the `visible` attribute to `hidden`" do
+      allow(controller).to receive_messages spree_current_user: distributor_manager
+      enterprise_params[:enterprise][:owner_id] = distributor_manager
+
+      spree_put :create, enterprise_params
+      enterprise = Enterprise.find_by name: 'zzz'
+      expect(enterprise.visible).to eq 'only_through_links'
+    end
+
     context "when I already own a hub" do
       before { distributor }
 
@@ -443,6 +452,11 @@ describe Admin::EnterprisesController, type: :controller do
           expect(response).to render_template :welcome
           expect(flash[:error]).to eq "Please select a package"
         end
+      end
+
+      it "set visibility to 'only_through_links' by default" do
+        spree_post :register, id: enterprise, sells: 'none'
+        expect(enterprise.reload.visible).to eq 'only_through_links'
       end
     end
   end

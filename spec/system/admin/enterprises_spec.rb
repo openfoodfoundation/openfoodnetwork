@@ -63,6 +63,9 @@ describe '
 
     click_button 'Create'
     expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully created!')
+
+    # `Visible in search` radio button should be set to `Hide all references` by default
+    expect(page).to have_checked_field "enterprise_visible_only_through_links"
   end
 
   it "editing an existing enterprise" do
