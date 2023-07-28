@@ -1,3 +1,5 @@
-%a{href:"https://github.com/openfoodfoundation/openfoodnetwork/releases", target: "_blank", title: t('.view_all_releases')}
-  =# Show the latest tag. If there are commits since the tag, show number of commits and an identifier. If the working tree is dirty, show 'modified'.
-  = Rails.application.config.x.git_version
+.row
+  .sixteen.columns{ style: "text-align: center;" }
+    %a{href:"https://github.com/openfoodfoundation/openfoodnetwork/releases", target: "_blank", title: t('.view_all_releases')}
+      =# Show the latest tag. If there are commits since the tag, show number of commits and an identifier. If the working tree is dirty, show 'modified'.
+      = Rails.application.config.x.git_version
