@@ -34,17 +34,18 @@ describe ProductsReflex, type: :reflex do
   end
 
   describe '#bulk_update' do
-    let!(:product_z) { create(:simple_product, name: "Zucchini") }
+    let!(:product_b) { create(:simple_product, name: "Bananas") }
     let!(:product_a) { create(:simple_product, name: "Apples") }
 
     it "saves valid changes" do
       params = {
-        # '[products][<id>][name]'
-        "products" => {
-          product_a.id.to_s =>  {
+        # '[products][<i>][name]'
+        "products" => [
+          {
+            "id" => product_a.id.to_s,
             "name" => "Pommes",
           }
-        }
+        ]
       }
 
       expect{
@@ -52,11 +53,38 @@ describe ProductsReflex, type: :reflex do
         product_a.reload
       }.to change(product_a, :name).to("Pommes")
     end
+
+    describe "sorting" do
+      let(:params) {
+        {
+          "products" => [
+            {
+              "id" => product_a.id.to_s,
+              "name" => "Pommes",
+            },
+            {
+              "id" => product_b.id.to_s,
+            },
+          ]
+        }
+      }
+      subject{ reflex(:bulk_update, params:) }
+
+      it "Should retain sort order, even when names change" do
+        expect(subject.get(:products).map(&:id)).to eq [
+          product_a.id,
+          product_b.id,
+        ]
+      end
+    end
   end
 end
 
 # Build and run a reflex using the context
 # Parameters can be added with params: option
+# For more options see https://github.com/podia/stimulus_reflex_testing#usage
 def reflex(method_name, opts = {})
-  build_reflex(method_name:, **context.merge(opts)).run(method_name)
+  build_reflex(method_name:, **context.merge(opts)).tap{ |reflex|
+    reflex.run(method_name)
+  }
 end

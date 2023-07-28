@@ -35,18 +35,16 @@ class ProductsReflex < ApplicationReflex
     product_set = product_set_from_params
 
     product_set.collection.each { |p| authorize! :update, p }
+    @products = product_set.collection # use instance variable mainly for testing
 
     if product_set.save
       # flash[:success] = with_locale { I18n.t('.success') }
       # morph_admin_flashes  # ERROR: selector morph type has already been set
-
-      fetch_and_render_products
     elsif product_set.errors.present?
-      # todo: render form with error messages
-      render json: { errors: product_set.errors }, status: :bad_request
-    else
-      render body: nil, status: :internal_server_error
+      # flash there are errors..
     end
+
+    render_products_form(product_set)
   end
 
   private
@@ -85,6 +83,19 @@ class ProductsReflex < ApplicationReflex
     ).broadcast_later
 
     morph :nothing
+  end
+
+  def render_products_form(product_set)
+    cable_ready.replace(
+      selector: "#products-form",
+      html: render(partial: "admin/products_v3/table",
+                   locals: { products: @products, errors: product_set.errors })
+    ).broadcast
+    morph :nothing
+
+    # dunno why this doesn't work.
+    # morph "#products-form", render(partial: "admin/products_v3/table",
+    #                locals: { products: products })
   end
 
   def producers
@@ -152,28 +163,21 @@ class ProductsReflex < ApplicationReflex
   # Similar to spree/admin/products_controller
   def product_set_from_params
     # Form field names:
-    #  '[products][<id>][name]'
+    #   '[products][0][id]' (hidden field)
+    #   '[products][0][name]'
     #
     # Resulting in params:
     #     "products" => {
-    #       "<id>" =>  {
+    #       "<i>" =>  {
+    #         "id" => "123"
     #         "name" => "Pommes",
     #       }
     #     }
 
-    # For ModelSet, we transform to:
-    # {
-    #   0=> {:id=>"7449", "name"=>"Pommes"}
-    # }
-    #
-    # TO Consider: We could actually rearrange the form to suit that format more directly. eg:
-    #   '[products][0][id]' (hidden field)
-    #   '[products][0][name]'
-    collection_hash = products_bulk_params[:products].map { |id, attributes|
-      { id:, **attributes }
-    }.each_with_index.to_h { |p, i|
-      [i, p]
-    }
+    collection_hash = products_bulk_params[:products].each_with_index
+      .to_h { |p, i|
+        [i, p]
+      }.with_indifferent_access
     Sets::ProductSet.new(collection_attributes: collection_hash)
   end
 

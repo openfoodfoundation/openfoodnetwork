@@ -27,12 +27,13 @@
         %th.align-left= t('admin.products_page.columns.category')
         %th.align-left= t('admin.products_page.columns.tax_category')
         %th.align-left= t('admin.products_page.columns.inherits_properties')
-    - products.each do |product|
+    - products.each do |product, i|
       = form.fields_for(product) do |product_form|
         %tbody.relaxed
           %tr
             %td.align-left.header
-              .line-clamp-1= product_form.text_field :name, name: "[products][#{product.id}][name]", id: "_product_name_#{product.id}", 'aria-label': t('admin.products_page.columns.name')
+              = product_form.hidden_field :id, name: "[products][#{i}][id]" #todo: can we remove #{i} and implicitly pop?
+              .line-clamp-1= product_form.text_field :name, name: "[products][#{i}][name]", id: "_product_name_#{product.id}", 'aria-label': t('admin.products_page.columns.name')
             %td.align-right
               .line-clamp-1= product.sku
             %td.align-right

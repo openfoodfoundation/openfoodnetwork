@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 module Sets
+  # Accepts a collection_hash in format:
+  # {
+  #   0=> {id:"7449", name:"Pommes"},
+  #   1=> {...}
+  # }
+  #
   class ProductSet < ModelSet
     def initialize(attributes = {})
       super(Spree::Product, [], attributes)
