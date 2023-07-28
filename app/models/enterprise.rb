@@ -359,7 +359,7 @@ class Enterprise < ApplicationRecord
   def category
     # Make this crazy logic human readable so we can argue about it sanely.
     cat = is_primary_producer ? "producer_" : "non_producer_"
-    cat << "sells_" + sells
+    cat << ("sells_" + sells)
 
     # Map backend cases to front end cases.
     case cat
@@ -493,7 +493,7 @@ class Enterprise < ApplicationRecord
   end
 
   def correct_whatsapp_url(phone_number)
-    phone_number && "https://wa.me/" + phone_number.tr('+ ', '')
+    phone_number && ("https://wa.me/" + phone_number.tr('+ ', ''))
   end
 
   def correct_instagram_url(url)

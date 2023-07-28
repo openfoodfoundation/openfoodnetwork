@@ -202,7 +202,7 @@ module Spree
 
       fees = adjustments.enterprise_fee.sum(:amount)
 
-      (price + fees / quantity).round(2)
+      (price + (fees / quantity)).round(2)
     end
 
     def single_display_amount_with_adjustments

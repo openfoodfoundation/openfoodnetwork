@@ -24,10 +24,10 @@ module Spree
         can [:index, :read], Country
         can :create, Order
         can :read, Order do |order, token|
-          order.user == user || order.token && token == order.token
+          order.user == user || (order.token && token == order.token)
         end
         can :update, Order do |order, token|
-          order.user == user || order.token && token == order.token
+          order.user == user || (order.token && token == order.token)
         end
         can [:index, :read], Product
         can [:index, :read], ProductProperty
