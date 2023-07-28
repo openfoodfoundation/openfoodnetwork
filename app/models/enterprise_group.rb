@@ -5,13 +5,15 @@ require 'open_food_network/locking'
 class EnterpriseGroup < ApplicationRecord
   include PermalinkGenerator
 
+  self.belongs_to_required_by_default = true
+
   acts_as_list
 
   has_and_belongs_to_many :enterprises, join_table: 'enterprise_groups_enterprises'
-  belongs_to :owner, class_name: 'Spree::User', inverse_of: :owned_groups
+  belongs_to :owner, class_name: 'Spree::User', inverse_of: :owned_groups, optional: true
   belongs_to :address, class_name: 'Spree::Address'
   accepts_nested_attributes_for :address
-  validates :address, presence: true, associated: true
+  validates :address, associated: true
   before_validation :set_undefined_address_fields
   before_validation :set_unused_address_fields
   before_validation :sanitize_permalink
@@ -46,10 +48,14 @@ class EnterpriseGroup < ApplicationRecord
   }
 
   def set_unused_address_fields
+    return if address.blank?
+
     address.firstname = address.lastname = address.company = I18n.t(:unused)
   end
 
   def set_undefined_address_fields
+    return if address.blank?
+
     address.phone.present? || address.phone = I18n.t(:undefined)
     address.address1.present? || address.address1 = I18n.t(:undefined)
     address.city.present? || address.city = I18n.t(:undefined)
