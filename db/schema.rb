@@ -175,8 +175,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_201542) do
   end
 
   create_table "enterprise_roles", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "enterprise_id"
+    t.integer "user_id", null: false
+    t.integer "enterprise_id", null: false
     t.boolean "receives_notifications", default: false
     t.index ["enterprise_id", "user_id"], name: "index_enterprise_roles_on_enterprise_id_and_user_id", unique: true
     t.index ["enterprise_id"], name: "index_enterprise_roles_on_enterprise_id"
