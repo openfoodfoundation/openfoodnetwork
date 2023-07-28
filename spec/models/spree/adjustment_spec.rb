@@ -11,10 +11,10 @@ module Spree
       it { is_expected.to have_one(:metadata) }
       it { is_expected.to have_many(:adjustments) }
 
-      it { is_expected.to belong_to(:adjustable) }
-      it { is_expected.to belong_to(:originator) }
-      it { is_expected.to belong_to(:order) }
-      it { is_expected.to belong_to(:tax_category) }
+      it { is_expected.to belong_to(:adjustable).optional }
+      it { is_expected.to belong_to(:originator).optional }
+      it { is_expected.to belong_to(:order).optional }
+      it { is_expected.to belong_to(:tax_category).optional }
     end
 
     describe "scopes" do
