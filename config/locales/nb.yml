@@ -308,6 +308,8 @@ nb:
   confirm_resend_order_confirmation: "Er du sikker på at du vil sende ordrebekreftelse via epost på nytt?"
   must_have_valid_business_number: "%{enterprise_name} må ha et gyldig ORG nr. før fakturaer kan sendes."
   invoice: "Faktura"
+  active: "Aktiv"
+  cancelled: "Avbrutt"
   more: "Mer"
   say_no: "Nei"
   say_yes: "Ja"
@@ -648,6 +650,15 @@ nb:
       index:
         header:
           title: Endre produkter i bulk
+      sort:
+        pagination:
+          clear_search: Tøm søk
+      filters:
+        producers:
+          label: Produsenter
+        categories:
+          label: Kategorier
+        search: Søk
     product_import:
       title: Produktimport
       file_not_found: Filen ble ikke funnet eller kunne ikke åpnes
@@ -3874,7 +3885,6 @@ nb:
             category: Kategori
             tax_category: Avgiftskategori
             inherits_properties?: Arver egenskaper?
-            available_on: Tilgjengelig på
             av_on: "Tilgj. På"
             import_date: "Importdato"
           products_variant:

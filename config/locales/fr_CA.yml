@@ -325,6 +325,8 @@ fr_CA:
   confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
   must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être envoyées."
   invoice: "Facture"
+  active: "Actif"
+  cancelled: "Annulée"
   more: "Plus"
   say_no: "Non"
   say_yes: "Oui"
@@ -668,6 +670,15 @@ fr_CA:
       index:
         header:
           title: Gestion du catalogue produits
+      sort:
+        pagination:
+          clear_search: Annuler la recherche
+      filters:
+        producers:
+          label: Producteurs
+        categories:
+          label: Conditions de transport
+        search: Chercher
     product_import:
       title: import produit
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -3983,7 +3994,6 @@ fr_CA:
             category: Catégorie
             tax_category: Type de taxe
             inherits_properties?: Hériter des propriétés ?
-            available_on: Disponible via
             av_on: "Disp. via"
             import_date: "Date d'import"
           products_variant:

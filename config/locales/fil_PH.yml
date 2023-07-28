@@ -206,6 +206,8 @@ fil_PH:
   confirm_resend_order_confirmation: "nais mo bang ipadala muli ang order confirmation email?"
   must_have_valid_business_number: "%{enterprise_name}ay dapat may valid na TIN bago makapagpadala ng mga invoice"
   invoice: "invoice"
+  active: "aktibo"
+  cancelled: "kanselado"
   more: "Karagdagang Impormasyon"
   say_no: "Hindi"
   say_yes: "Oo"
@@ -507,6 +509,12 @@ fil_PH:
       index:
         header:
           title: maramihang pag-edit ng mga produkto
+      filters:
+        producers:
+          label: Mga Producer
+        categories:
+          label: mga kategorya
+        search: hanapin
     product_import:
       title: paglipat ng produkto
       file_not_found: 'ang file ay hindi mahanap o mabuksan '
@@ -3383,7 +3391,6 @@ fil_PH:
             category: kategorya
             tax_category: kategorya ng tax
             inherits_properties?: minana ang mga katangian?
-            available_on: Magagamit Nakabukas
             av_on: "Av On"
             import_date: "petsa ng pag-import"
           products_variant:

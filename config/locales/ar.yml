@@ -324,6 +324,8 @@ ar:
   confirm_resend_order_confirmation: "هل أنت متأكد من أنك تريد إعادة إرسال رسالة تأكيد الطلب؟"
   must_have_valid_business_number: "يجب أن يكون %{enterprise_name} على ABN صالح قبل إرسال الفواتير."
   invoice: "فاتورة"
+  active: "نشط"
+  cancelled: "ألغيت"
   more: "أكثر"
   say_no: "لا"
   say_yes: "نعم"
@@ -667,6 +669,15 @@ ar:
       index:
         header:
           title: تحرير المنتجات بالجملة
+      sort:
+        pagination:
+          clear_search: مسح البحث
+      filters:
+        producers:
+          label: المنتجين
+        categories:
+          label: التصنيفات
+        search: بحث
     product_import:
       title: استيراد المنتج
       file_not_found: لم يتم العثور على الملف أو تعذر فتحه
@@ -4077,7 +4088,6 @@ ar:
             category: الفئة
             tax_category: الفئة الضريبية
             inherits_properties?: الخصائص الموروثة؟
-            available_on: متاح على
             av_on: "المتوسط. على"
             import_date: "تاريخ الاستيراد"
           products_variant:

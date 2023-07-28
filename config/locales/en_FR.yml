@@ -344,6 +344,10 @@ en_FR:
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
   must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
   invoice: "Invoice"
+  file: "File"
+  active: "Active"
+  download: "Download"
+  cancelled: "Cancelled"
   more: "More"
   say_no: "No"
   say_yes: "Yes"
@@ -689,9 +693,26 @@ en_FR:
         header:
           title: Bulk Edit Products
         loading: Loading your products
-      content:
+      sort:
+        pagination:
+          total_html: "<strong>%{total} products</strong> in your catalogue. Showing %{from} to %{to}."
+          per_page:
+            show: Show
+            per_page: "%{num} per page"
+          clear_search: Clear search
+      filters:
+        search_products: Search for products
+        all_producers: All producers
+        all_categories: All categories
+        producers:
+          label: Producers
+        categories:
+          label: Categories
+        search: Search
+      no_products:
         no_products_found: No products found
         import_products: Import multiple products
+        no_products_found_for_search: No products found for your search criteria
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -1374,6 +1395,7 @@ en_FR:
       email_confirmation: "Email confirmation is pending. We've sent a confirmation email to %{email}."
       not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
     reports:
+      deprecated: "This report is deprecated and will be removed in a future release."
       hidden: HIDDEN
       unitsize: UNITSIZE
       total: TOTAL
@@ -2978,6 +3000,7 @@ en_FR:
   date_completed: "Date Completed"
   amount: "Amount"
   invoice_number: "Invoice Number"
+  invoice_file: "File"
   state_names:
     ready: Ready
     pending: Pending
@@ -3474,6 +3497,7 @@ en_FR:
   customer_details: "Customer Details"
   adjustments: "Adjustments"
   payments: "Payments"
+  invoices: "Invoices"
   return_authorizations: "Return Authorizations"
   credit_owed: "Credit Owed"
   new_adjustment: "New Adjustment"
@@ -4048,7 +4072,6 @@ en_FR:
             category: Category
             tax_category: Tax Category
             inherits_properties?: Inherits Properties?
-            available_on: Available On
             av_on: "Av. On"
             import_date: "Import Date"
           products_variant:

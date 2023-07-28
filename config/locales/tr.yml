@@ -247,6 +247,8 @@ tr:
   confirm_resend_order_confirmation: "Sipariş onayı e-postasını tekrar göndermek istediğinizden emin misiniz?"
   must_have_valid_business_number: "Faturaların gönderilebilmesi için %{enterprise_name} adına geçerli bir VKN/TCKN olmalı."
   invoice: "Fatura"
+  active: "AKTİF"
+  cancelled: "İptal edildi"
   more: "Daha Fazla"
   say_no: "Hayır"
   say_yes: "Evet"
@@ -582,6 +584,15 @@ tr:
       index:
         header:
           title: Ürünleri Toplu Düzenleme
+      sort:
+        pagination:
+          clear_search: Aramayı temizle
+      filters:
+        producers:
+          label: ÜRETİCİLER
+        categories:
+          label: Kategoriler
+        search: Ara
     product_import:
       title: Ürün Aktarımı
       file_not_found: Dosya bulunamadı veya açılamadı
@@ -3696,7 +3707,6 @@ tr:
             category: Kategori
             tax_category: Vergi Kategorisi
             inherits_properties?: Özellikler devralınsın mı?
-            available_on: Şu Tarihte Hazır
             av_on: "Şu tarihte hazır"
             import_date: "İçe Aktarım Tarihi"
           products_variant:

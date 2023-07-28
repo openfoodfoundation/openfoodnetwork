@@ -211,6 +211,8 @@ nl_BE:
   confirm_resend_order_confirmation: "Weet u zeker dat u de orderbevestiging opnieuw wilt verzenden?"
   must_have_valid_business_number: "%{enterprise_name}moet een geldige ABN hebben voordat facturen kunnen worden verzonden."
   invoice: "Factuur"
+  active: "Aktief"
+  cancelled: "Geannuleerd"
   more: "Meer"
   say_no: "Néé"
   say_yes: "Ya"
@@ -520,6 +522,15 @@ nl_BE:
       index:
         header:
           title: Beheer van de productencatalogus
+      sort:
+        pagination:
+          clear_search: Verwijder zoektermen
+      filters:
+        producers:
+          label: Producenten
+        categories:
+          label: Categorieën
+        search: Zoeken
     product_import:
       title: Importeren van producten
       file_not_found: Bestand niet gevonden of kon niet worden geopend
@@ -3386,7 +3397,6 @@ nl_BE:
             category: Categorie
             tax_category: Belastingcategorie
             inherits_properties?: Erft Eigenschappen?
-            available_on: Beschikbaar op
             av_on: "Av. Op"
             import_date: "Importdatum"
           products_variant:

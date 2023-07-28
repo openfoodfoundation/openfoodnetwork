@@ -62,8 +62,17 @@ ru:
         preferred_flat_percent: "Калькулятор Плоских Процентов:"
         preferred_amount: "Калькулятор Сумма:"
         preferred_first_item: "Первый Элемент Калькулятора:"
+        preferred_additional_item: "Калькулятор Дополнительной Стоимости Предмета:"
+        preferred_max_items: "Калькулятор Максимального Количества Предметов:"
+        preferred_minimal_amount: "Калькулятор Минимальной Суммы:"
+        preferred_normal_amount: "Калькулятор Нормального Количества:"
+        preferred_discount_amount: "Калькулятор Суммы Скидки:"
+        preferred_unit_from_list: "Блок Калькулятора из Списка:"
+        preferred_per_unit: "Калькулятор На Единицу:"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Для наследования налоговой категории требуется поэлементный калькулятор."
         spree/user:
           attributes:
             email:
@@ -264,6 +273,13 @@ ru:
     order_cycle:
       subject: "Отчет по Циклу Заказа для %{producer}"
   provider_settings: "Настройки провайдера"
+  report_mailer:
+    report_ready:
+      subject: "Отчет готов"
+      heading: "Отчет готов к загрузке"
+      intro: |
+          Срок действия ссылки ниже истекает через неделю.
+      link_label: "<span class='notranslate'>%{name}</span>"
   shipment_mailer:
     shipped_email:
       dear_customer: "Уважаемый Клиент,"
@@ -329,6 +345,10 @@ ru:
   confirm_resend_order_confirmation: "Вы уверены, что хотите повторно отправить письмо с подтверждением заказа?"
   must_have_valid_business_number: " %{enterprise_name} должен быть указан ИНН перед отправкой счетов."
   invoice: "Счёт"
+  file: "Файл"
+  active: "Активен"
+  download: "Скачать"
+  cancelled: "Отменён"
   more: "Ещё"
   say_no: "Нет"
   say_yes: "Да"
@@ -382,6 +402,7 @@ ru:
   allow_cookies: "Разрешить Cookies"
   notes: Заметки
   error: Ошибка
+  voucher: Ваучер
   processing_payment: "Обработка платежа..."
   no_pending_payments: "Нет ожидающих платежей"
   invalid_payment_state: "Неверное состояние платежа: %{state}"
@@ -672,6 +693,19 @@ ru:
       index:
         header:
           title: Массовое редактирование товаров
+        loading: Загрузка ваших товаров
+      sort:
+        pagination:
+          clear_search: Сбросить поиск
+      filters:
+        producers:
+          label: Производители
+        categories:
+          label: Категории
+        search: Поиск
+      no_products:
+        no_products_found: Товары не найдены
+        import_products: Импорт нескольких товаров
     product_import:
       title: Импорт Товара
       file_not_found: Файл не найден или не может быть открыт
@@ -1090,6 +1124,15 @@ ru:
         white_label:
           legend: "Белая Этикетка"
           hide_ofn_navigation: "Скрыть навигацию ОСП"
+          upload_logo: "Логотип используемый на витрине магазина"
+          remove_logo: "Удалить логотип"
+          remove_logo_confirm: "Вы уверены, что хотите удалить этот логотип?"
+          remove_logo_success: "Логотип удален"
+          white_label_logo_link_label: "Ссылка на логотип, используемый на витрине магазина"
+          hide_groups_tab: "Скрыть вкладку групп на витрине"
+          create_custom_tab: "Создать пользовательскую вкладку на витрине магазина"
+          custom_tab_title: "Название пользовательской вкладки"
+          custom_tab_content: "Контент для пользовательской вкладки"
       actions:
         edit_profile: Настройки
         properties: Свойства
@@ -1300,6 +1343,10 @@ ru:
         could_not_cancel_the_order: Не удалось отменить заказ
       resume:
         could_not_resume_the_order: Не удалось возобновить заказ
+    select2:
+      minimal_search_length: Пожалуйста, введите <span class='notranslate'>%{count}</span> или более символов
+      searching: Идет поиск...
+      no_matches: Ничего не найдено
     shared:
       user_guide_link:
         user_guide: Руководство Пользователя
@@ -1342,6 +1389,7 @@ ru:
       email_confirmation: "Ожидается подтверждение по электронной почте. Мы отправили электронное письмо с подтверждением на %{email}."
       not_visible: "%{enterprise} не виден и поэтому не может быть найден на карте или в поисках"
     reports:
+      deprecated: "Этот отчет устарел и будет удален в будущем выпуске."
       hidden: СКРЫТО
       unitsize: РАЗМЕР ЕДИНИЦЫ
       total: ВСЕГО
@@ -1367,11 +1415,18 @@ ru:
       pack_by_customer: Выборка по Клиенту
       pack_by_supplier: Выборка по Поставщику
       pack_by_product: Пакет По Продукту
+      download:
+        button: "Скачать отчет"
       show:
         report_taking_longer: >
             К сожалению, обработка этого отчета заняла слишком много времени. Он может
             содержать много данных или мы заняты другими отчетами. Вы можете повторить
             попытку позже.
+        report_taking_longer_html: >
+            Этот отчет обрабатывается дольше. Он может содержать много данных или
+            мы заняты другими отчетами. Когда все будет готово, мы сообщим вам по
+            электронной почте.
+        report_link_label: Скачать отчет (если доступен)
       revenues_by_hub:
         name: Доходы По Центрам
         description: Доходы по центрам
@@ -1403,6 +1458,7 @@ ru:
       enterprise_fee_summary:
         name: "Сводка Сборов Предприятия"
         description: "Сводная Информация о Сборах с Предприятия"
+      enterprise_fees_with_tax_report_by_order: "Сборы Предприятия с Налоговым Отчетом по Заказу"
       errors:
         no_report_type: "Укажите тип отчета"
         report_not_found: "Отчет не найден"
@@ -1927,6 +1983,14 @@ ru:
       explaination: Вы можете просмотреть и подтвердить свой заказ на следующем шаге, который включает окончательную стоимость.
       submit: Далее - Сводка заказа
       cancel: Назад к Вашим данным
+      voucher:
+        voucher: "<span class='notranslate'>%{voucher_amount}</span> Ваучер"
+        apply_voucher: Применить ваучер
+        apply: Применить
+        placeholder: Введите код ваучера
+        remove_code: Удалить код
+        confirm_delete: Вы уверены, что хотите удалить ваучер?
+        warning_forfeit_remaining_amount: "Примечание: если сумма вашего заказа меньше, чем ваш ваучер, вы не сможете потратить оставшуюся сумму."
     step3:
       delivery_details:
         title: Подробности доставки
@@ -1960,10 +2024,12 @@ ru:
       select_a_payment_method: Выберите способ оплаты
       no_shipping_methods_available: Оформить заказ невозможно из-за отсутствия возможности доставки. Пожалуйста, свяжитесь с владельцем магазина.
       voucher_not_found: Не найден
+      add_voucher_error: При добавлении ваучера произошла ошибка
   order_paid: ОПЛАЧЕН
   order_not_paid: НЕ ОПЛАЧЕН
   order_total: Весь заказ
   order_payment: "Тип оплаты:"
+  no_payment_required: "Оплата не требуется"
   order_billing_address: Платежный Адрес
   order_delivery_on: Доставка по
   order_delivery_address: Адрес доставки
@@ -2457,6 +2523,7 @@ ru:
   shipping_method_destroy_error: "Этот способ доставки не может быть удален, так как на него ссылается заказ: %{number}."
   fees: "Сборы"
   fee_name: "Название Сбора"
+  fee_owner: "Оплата Владелец"
   item_cost: "Стоимость товара"
   bulk: "Массовый"
   shop_variant_quantity_min: "мин"
@@ -2929,8 +2996,11 @@ ru:
   no_orders_found: "Заказов Не Найдено"
   order_information: "Информация по Заказу"
   new_payment: "Новый Платёж"
+  new_invoice: "Новый Счет"
   date_completed: "Дата Завершения"
   amount: "К оплате"
+  invoice_number: "Номер Счета"
+  invoice_file: "Файл"
   state_names:
     ready: Готово
     pending: В ожидании
@@ -3482,6 +3552,7 @@ ru:
   customer_details: "Информация о Клиенте"
   adjustments: "Корректировки"
   payments: "Платежи"
+  invoices: "Счета"
   return_authorizations: "Разрешения на возврат"
   credit_owed: "Кредит"
   new_adjustment: "Новая Корректировка"
@@ -3931,6 +4002,8 @@ ru:
             many: "У Вас %{count} активных циклов заказа."
             other: "У Вас %{count} активных циклов заказа."
           manage_order_cycles: "УПРАВЛЯТЬ ЦИКЛАМИ ЗАКАЗА"
+        version:
+          view_all_releases: Посмотреть все выпуски
       shipping_methods:
         index:
           shipping_methods: "Способы Доставки"
@@ -4022,6 +4095,7 @@ ru:
             no_payment_via_admin_backend: Платежи Paypal не могут быть зарегистрированы в Бэк-офисе
       products:
         image_upload_error: "Загрузите изображение в формате JPG, PNG, GIF, SVG или WEBP."
+        image_not_processable: "Вложенное изображение не является допустимым изображением."
         new:
           title: "Новый Товар"
           new_product: "Новый Товар"
@@ -4053,7 +4127,6 @@ ru:
             category: Категория
             tax_category: Налоговая Категория
             inherits_properties?: Наследовать Свойства?
-            available_on: Доступен на
             av_on: "Дост. На"
             import_date: "Дата Импорта"
           products_variant:

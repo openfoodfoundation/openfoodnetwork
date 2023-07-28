@@ -306,6 +306,8 @@ de_CH:
   confirm_resend_order_confirmation: "Sind Sie sicher, dass Sie die E-Mail-Bestätigung erneut senden wollen?"
   must_have_valid_business_number: "%{enterprise_name} sollte eine gültige Steuer-ID-Nummer haben, bevor die Rechnung gesendet wird."
   invoice: "Rechnung"
+  active: "Aktiv"
+  cancelled: "Storniert"
   more: "Mehr"
   say_no: "Nein"
   say_yes: "Ja"
@@ -641,6 +643,15 @@ de_CH:
       index:
         header:
           title: Produkte verwalten
+      sort:
+        pagination:
+          clear_search: Suche zurücksetzen
+      filters:
+        producers:
+          label: Unsere Produzenten
+        categories:
+          label: Lieferkategorien
+        search: Suche
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -3847,7 +3858,6 @@ de_CH:
             category: Kategorie
             tax_category: Steuerkategorie
             inherits_properties?: Übernimmt Eigenschaften des Ladens?
-            available_on: Verfügbar am
             av_on: "Verfüg. am"
             import_date: "Importdatum"
           products_variant:

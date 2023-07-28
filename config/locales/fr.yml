@@ -344,6 +344,10 @@ fr:
   confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
   must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être envoyées."
   invoice: "Facture"
+  file: "fichier"
+  active: "Actif"
+  download: "Télécharger"
+  cancelled: "Annulée"
   more: "Plus"
   say_no: "Non"
   say_yes: "Oui"
@@ -689,9 +693,26 @@ fr:
         header:
           title: Gestion du catalogue produits
         loading: Vos produits sont en cours de chargement
-      content:
+      sort:
+        pagination:
+          total_html: "<strong>%{total} produits</strong> dans votre catalogue. Montrer %{from} à %{to}."
+          per_page:
+            show: Montrer
+            per_page: "%{num} par page"
+          clear_search: Annuler la recherche
+      filters:
+        search_products: Chercher des produits
+        all_producers: Tous les producteurs
+        all_categories: Toutes les catégories
+        producers:
+          label: Producteurs
+        categories:
+          label: Conditions de transport
+        search: Rechercher
+      no_products:
         no_products_found: Pas de produits trouvés
         import_products: Importer plusieurs produits
+        no_products_found_for_search: Aucun produit trouvé avec vos critères de recherche
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -1375,6 +1396,7 @@ fr:
       email_confirmation: "L'adresse e-mail doit être confirmée. Nous avons envoyé un lien de confirmation à %{email}."
       not_visible: "%{enterprise} n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
     reports:
+      deprecated: "Ce rapport est obsolète et ne sera bientôt plus disponible (sera supprimé dans une prochaine mise à jour)."
       hidden: Masqué
       unitsize: Unité de mesure
       total: Total
@@ -1669,10 +1691,10 @@ fr:
     footer:
       footer_secure: "Fiable et sécurisé."
       footer_secure_text: "CoopCircuits utilise un certificat type SSL (2048 bit RSA) pour garantir la confidentialité de vos commandes et données bancaires. Nos serveurs ne conservent pas vos données bancaires et les paiements sont effectués conformément aux normes de sécurité PCI."
-      footer_contact_headline: "Général"
-      footer_contact_email: "Nous écrire"
-      footer_nav_headline: "Naviguer sur la plateforme"
-      footer_join_headline: "S'inscrire"
+      footer_contact_headline: "Informations CoopCircuits"
+      footer_contact_email: "Contacter CoopCircuits"
+      footer_nav_headline: "Naviguer sur CoopCircuits.fr"
+      footer_join_headline: "Vendre via CoopCircuits"
       footer_join_body: "Créer un profil, une boutique ou un groupe sur CoopCircuits."
       footer_join_cta: "Je veux en savoir plus!"
       footer_legal_call: "Lire nos"
@@ -2985,6 +3007,7 @@ fr:
   date_completed: "Date d'opération"
   amount: "Montant"
   invoice_number: "Numéro de facture"
+  invoice_file: "fichier"
   state_names:
     ready: Prêt
     pending: En attente
@@ -3531,6 +3554,7 @@ fr:
   customer_details: "Informations acheteur"
   adjustments: "Ajustements"
   payments: "Paiements"
+  invoices: "Factures"
   return_authorizations: "Autorisations de retours"
   credit_owed: "Crédit dû"
   new_adjustment: "Nouveau ajustement"
@@ -4105,7 +4129,6 @@ fr:
             category: Catégorie
             tax_category: TVA applicable
             inherits_properties?: Hériter des propriétés?
-            available_on: Disponible via
             av_on: "Disp. via"
             import_date: "Date d'import (si import)"
           products_variant:

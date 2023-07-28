@@ -307,6 +307,8 @@ ko:
   confirm_resend_order_confirmation: "주문 확인 이메일을 재전송하기를 원하시는 것이 확실합니까?"
   must_have_valid_business_number: "%{enterprise_name}는 청구서가 보내기 전에 사용가능한 호주 사업 번호를 가져야 합니다. "
   invoice: "청구서"
+  active: "활성화"
+  cancelled: "취소됨"
   more: "추가 정보"
   say_no: "아니오"
   say_yes: "예"
@@ -642,6 +644,15 @@ ko:
       index:
         header:
           title: 제품 대량 편집
+      sort:
+        pagination:
+          clear_search: 검색 지우기
+      filters:
+        producers:
+          label: 생산자들
+        categories:
+          label: 카테고리
+        search: 탐색
     product_import:
       title: 제품 가져오기
       file_not_found: 파일을 찾을 수 없거나 열 수 없습니다.
@@ -3786,7 +3797,6 @@ ko:
             category: 목록
             tax_category: 세금 목록
             inherits_properties?: 속성을 상속하시겠습니까?
-            available_on: 사용 가능 날짜
             av_on: "사용 가능 날짜"
             import_date: "수입 날짜"
           products_variant:

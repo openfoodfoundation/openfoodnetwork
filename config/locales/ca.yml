@@ -311,6 +311,8 @@ ca:
   confirm_resend_order_confirmation: "Segur que vol reenviar el correu de confirmació de la comanda?"
   must_have_valid_business_number: "%{enterprise_name} ha de tenir un NIF vàlid abans de poder enviar les factures."
   invoice: "Factura"
+  active: "Actiu"
+  cancelled: "Cancel·lada"
   more: "Més"
   say_no: "No"
   say_yes: "Sí"
@@ -651,6 +653,15 @@ ca:
       index:
         header:
           title: Edició de productes en bloc
+      sort:
+        pagination:
+          clear_search: Esborra la cerca
+      filters:
+        producers:
+          label: Productors
+        categories:
+          label: Categories
+        search: Cerca
     product_import:
       title: Importació de productes
       file_not_found: No s'ha trobat el fitxer o no s'ha pogut obrir
@@ -3800,7 +3811,6 @@ ca:
             category: Categoria
             tax_category: Categoria d'impostos
             inherits_properties?: Hereda propietats?
-            available_on: Disponible el
             av_on: "Disp. via"
             import_date: "Data d'importació"
           products_variant:

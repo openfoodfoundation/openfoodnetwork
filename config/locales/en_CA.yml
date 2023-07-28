@@ -344,6 +344,8 @@ en_CA:
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
   must_have_valid_business_number: "%{enterprise_name} must have a Business Number before invoices can be sent."
   invoice: "Invoice"
+  active: "Active"
+  cancelled: "Cancelled"
   more: "More"
   say_no: "No"
   say_yes: "Yes"
@@ -689,7 +691,16 @@ en_CA:
         header:
           title: Bulk Edit Products
         loading: Loading your products
-      content:
+      sort:
+        pagination:
+          clear_search: Clear search
+      filters:
+        producers:
+          label: Producers
+        categories:
+          label: Categories
+        search: Search
+      no_products:
         no_products_found: No products found
         import_products: Import multiple products
     product_import:
@@ -4047,7 +4058,6 @@ en_CA:
             category: Category
             tax_category: Tax Category
             inherits_properties?: Inherits Properties?
-            available_on: Available On
             av_on: "Av. On"
             import_date: "Import Date"
           products_variant:

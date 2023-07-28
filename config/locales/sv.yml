@@ -70,6 +70,7 @@ sv:
   confirm_resend_order_confirmation: "Är du säker på att du vill skicka beställningsbekräftelsen en gång till? "
   must_have_valid_business_number: "%{enterprise_name} måste ha ett giltigt organisationsnummer innan fakturor kan skickas."
   invoice: "Faktura"
+  cancelled: "Avbokad"
   say_no: "Nej"
   say_yes: "Ja"
   sort_order_cycles_on_shopfront_by: "Sortera butikens beställningsomgångar efter"
@@ -280,6 +281,10 @@ sv:
       index:
         header:
           title: 'Redigera Omfång av Produkter '
+      filters:
+        producers:
+          label: 'Producenter '
+        search: Sök
     product_import:
       file_not_found: Filen hittades inte eller kunde inte öppnas
       no_data: Ingen data hittades i kalkylbladet
@@ -2232,7 +2237,6 @@ sv:
             category: Kategori
             tax_category: Skattekategori
             inherits_properties?: Ärva egenskaper?
-            available_on: 'Tillgänglig '
             av_on: "Md. På"
       users:
         index:

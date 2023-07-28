@@ -307,6 +307,8 @@ es_CR:
   confirm_resend_order_confirmation: "¿Estás seguro que quieres reenviar el correo de confirmación del pedido?"
   must_have_valid_business_number: "%{enterprise_name} debe tener un NIF válido antes de que las facturas se puedan enviar."
   invoice: "Factura"
+  active: "Activo"
+  cancelled: "Cancelado"
   more: "Más"
   say_no: "No"
   say_yes: "Si"
@@ -647,6 +649,15 @@ es_CR:
       index:
         header:
           title: Editar productos por volumen
+      sort:
+        pagination:
+          clear_search: Borrar búsqueda
+      filters:
+        producers:
+          label: Productores
+        categories:
+          label: Categorías
+        search: Buscar
     product_import:
       title: Importe de producto
       file_not_found: Archivo no encontrado o no se pudo abrir
@@ -3814,7 +3825,6 @@ es_CR:
             category: Categoría
             tax_category: Categoría de impuestos
             inherits_properties?: ¿Hereda propiedades?
-            available_on: Disponible en
             av_on: "Disp. en"
             import_date: "Fecha de importación"
           products_variant:

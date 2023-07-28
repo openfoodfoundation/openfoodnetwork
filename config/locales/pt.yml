@@ -243,6 +243,8 @@ pt:
   confirm_resend_order_confirmation: "Tem a certeza que deseja enviar novamente o email de confirmação de encomenda? "
   must_have_valid_business_number: "%{enterprise_name}tem de ter um NIPC/NIF válido antes de se poder enviar facturas."
   invoice: "Factura"
+  active: "Ativo"
+  cancelled: "Cancelada"
   more: "Mais"
   say_no: "Não"
   say_yes: "Sim"
@@ -559,6 +561,12 @@ pt:
       index:
         header:
           title: Editar Produtos
+      filters:
+        producers:
+          label: Produtores
+        categories:
+          label: Categorias
+        search: Procurar
     product_import:
       title: Importação de Produtos
       file_not_found: O ficheiro não foi encontrado ou não pôde ser aberto
@@ -3361,7 +3369,6 @@ pt:
             category: Categoria
             tax_category: Categoria de Imposto
             inherits_properties?: Herda Propriedades?
-            available_on: Disponível em
             av_on: "Disp. em"
             import_date: "Data de Importação"
           products_variant:

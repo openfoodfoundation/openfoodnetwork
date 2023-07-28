@@ -344,6 +344,8 @@ cy:
   confirm_resend_order_confirmation: "Ydych chi'n siŵr eich bod chi eisiau ail-anfon e-bost cadarnhau archeb?"
   must_have_valid_business_number: "Noder rhif eich cwmni yma."
   invoice: "Anfoneb"
+  active: "Gweithredol"
+  cancelled: "Canslwyd"
   more: "Mwy"
   say_no: "Na"
   say_yes: "Ie"
@@ -687,6 +689,15 @@ cy:
       index:
         header:
           title: Cynhyrchion Golygu Swmp
+      sort:
+        pagination:
+          clear_search: Clirio'r chwiliad
+      filters:
+        producers:
+          label: Prynu bwyd
+        categories:
+          label: Categorïau
+        search: Chwilio
     product_import:
       title: Mewnforio Cynnyrch
       file_not_found: Ni ddaethpwyd o hyd i ffeil neu ni ellid ei hagor
@@ -4075,7 +4086,6 @@ cy:
             category: Categori
             tax_category: Categori Treth
             inherits_properties?: Yn etifeddu manylion cynnyrch?
-            available_on: Ar gael ar
             av_on: "Cyfartaledd ar"
             import_date: "Dyddiad Mewnforio"
           products_variant:

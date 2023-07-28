@@ -213,6 +213,7 @@ pl:
   confirm_resend_order_confirmation: "Na pewno ponownie wysłać potwierdzającą wiadomość e-mail?"
   must_have_valid_business_number: "%{enterprise_name} musi mieć ważny NIP, aby można było wysyłać faktury."
   invoice: "Faktura"
+  cancelled: "Anulowane"
   more: "Więcej"
   say_no: "Nie"
   say_yes: "Tak"
@@ -501,6 +502,11 @@ pl:
         images: "Obrazy"
         variants: "Warianty"
         product_properties: "Właściwości produktu"
+    products_v3:
+      filters:
+        producers:
+          label: Producenci
+        search: Szukaj
     product_import:
       title: Import produktów
       file_not_found: Nie znaleziono pliku lub nie można go otworzyć
@@ -3377,7 +3383,6 @@ pl:
             category: Kategoria
             tax_category: Kategoria podatku
             inherits_properties?: Dziedziczy właściwości?
-            available_on: Dostępne na
             av_on: "Dostęone "
             import_date: "Data importu"
           products_variant:

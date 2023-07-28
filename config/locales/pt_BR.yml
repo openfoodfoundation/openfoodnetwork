@@ -248,6 +248,8 @@ pt_BR:
   confirm_resend_order_confirmation: "Tem certeza que deseja enviar novamente o pedido de confirmação do e-mail?"
   must_have_valid_business_number: "%{enterprise_name} deve ter um CNPJ válido antes que as faturas possam ser enviadas."
   invoice: "Fatura"
+  active: "Ativo"
+  cancelled: "Cancelado"
   more: "Mais"
   say_no: "Não"
   say_yes: "Sim"
@@ -580,6 +582,13 @@ pt_BR:
       index:
         header:
           title: Editar Produtos em Atacado
+      sort:
+        pagination:
+          clear_search: Nova busca
+      filters:
+        producers:
+          label: Produtores
+        search: Buscar
     product_import:
       title: Importação de produtos
       file_not_found: O arquivo não foi encontrado ou não pôde ser aberto
@@ -3676,7 +3685,6 @@ pt_BR:
             category: Categoria
             tax_category: Categoria de taxa
             inherits_properties?: Herdar Propriedades?
-            available_on: Disponível Em
             av_on: "Disp. Em"
             import_date: "Data de importação"
           products_variant:

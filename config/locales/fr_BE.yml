@@ -289,6 +289,8 @@ fr_BE:
   confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
   must_have_valid_business_number: "%{enterprise_name} doit avoir un numéro d'entreprise valide avant que les factures puissent être envoyées."
   invoice: "Facture"
+  active: "Actif"
+  cancelled: "Annulée"
   more: "Plus"
   say_no: "Non"
   say_yes: "Oui"
@@ -623,6 +625,15 @@ fr_BE:
       index:
         header:
           title: Gestion du catalogue produits
+      sort:
+        pagination:
+          clear_search: Effacer recherche
+      filters:
+        producers:
+          label: Producteur·trice·s
+        categories:
+          label: Les catégories
+        search: Rechercher
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -3708,7 +3719,6 @@ fr_BE:
             category: Catégorie
             tax_category: TVA applicable
             inherits_properties?: Hériter des propriétés?
-            available_on: Disponible via
             av_on: "Disp. via"
             import_date: "Date d'import (si import)"
           products_variant:

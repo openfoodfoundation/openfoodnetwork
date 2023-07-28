@@ -308,6 +308,8 @@ hu:
   confirm_resend_order_confirmation: "Biztos, hogy újra el akarja küldeni a rendelést visszaigazoló e-mailt?"
   must_have_valid_business_number: "%{enterprise_name}-nak érvényes adószámmal kell rendelkeznie a számlák küldéséhez."
   invoice: "Számla"
+  active: "Aktív"
+  cancelled: "Törölve"
   more: "Több"
   say_no: "Nem"
   say_yes: "Igen"
@@ -648,6 +650,15 @@ hu:
       index:
         header:
           title: Termékek tömeges szerkesztése
+      sort:
+        pagination:
+          clear_search: Keresés törlése
+      filters:
+        producers:
+          label: Termelők
+        categories:
+          label: Kategóriák
+        search: Keresés
     product_import:
       title: Termék importálása
       file_not_found: A fájl nem található vagy nem nyitható meg
@@ -3897,7 +3908,6 @@ hu:
             category: Kategória
             tax_category: Adókategória
             inherits_properties?: Megörökli az tulajdonságokat?
-            available_on: Elérhető
             av_on: "Av. Tovább"
             import_date: "Importálás dátuma"
           products_variant:

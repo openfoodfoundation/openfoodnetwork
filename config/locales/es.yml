@@ -328,6 +328,8 @@ es:
   confirm_resend_order_confirmation: "¿Estás seguro que quieres reenviar el correo de confirmación del pedido?"
   must_have_valid_business_number: "%{enterprise_name} debe tener un NIF válido antes de que las facturas se puedan enviar."
   invoice: "Factura"
+  active: "Activo"
+  cancelled: "Cancelado"
   more: "Más"
   say_no: "No"
   say_yes: "Si"
@@ -667,7 +669,16 @@ es:
         header:
           title: Editar varios Productos
         loading: Cargando tus productos
-      content:
+      sort:
+        pagination:
+          clear_search: Limpiar la búsqueda
+      filters:
+        producers:
+          label: Productoras
+        categories:
+          label: Categorías
+        search: Buscar
+      no_products:
         no_products_found: No se encontraron productos
         import_products: Importar varios productos
     product_import:
@@ -3939,7 +3950,6 @@ es:
             category: Categoría
             tax_category: Categoría de impuestos
             inherits_properties?: ¿Hereda propiedades?
-            available_on: Disponible en
             av_on: "Av. En"
             import_date: "Fecha de importación"
           products_variant:
