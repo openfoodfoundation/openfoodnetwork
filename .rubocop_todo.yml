@@ -124,12 +124,6 @@ Lint/NonAtomicFileOperation:
   Exclude:
     - 'app/services/bulk_invoice_service.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Lint/RedundantCopDisableDirective:
-  Exclude:
-    - 'app/components/product_component.rb'
-
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Lint/RedundantDirGlobSort:
