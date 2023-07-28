@@ -25,6 +25,8 @@ module Spree
   class Product < ApplicationRecord
     include ProductStock
 
+    self.belongs_to_required_by_default = false
+
     acts_as_paranoid
 
     searchable_attributes :supplier_id, :primary_taxon_id, :meta_keywords, :sku

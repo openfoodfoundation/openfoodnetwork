@@ -3,6 +3,8 @@
 require 'open_food_network/scope_variant_to_hub'
 
 class OrderCycle < ApplicationRecord
+  self.belongs_to_required_by_default = false
+
   searchable_attributes :orders_open_at, :orders_close_at, :coordinator_id
   searchable_scopes :active, :inactive, :active_or_complete, :upcoming, :closed, :not_closed,
                     :dated, :undated, :soonest_opening, :soonest_closing, :most_recently_closed

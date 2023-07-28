@@ -13,6 +13,8 @@ module Spree
     include Balance
     include SetUnusedAddressFields
 
+    self.belongs_to_required_by_default = false
+
     searchable_attributes :number, :state, :shipment_state, :payment_state, :distributor_id,
                           :order_cycle_id, :email, :total, :customer_id
     searchable_associations :shipping_method, :bill_address, :distributor

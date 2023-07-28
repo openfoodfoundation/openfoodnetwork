@@ -4,6 +4,8 @@ require 'ostruct'
 
 module Spree
   class Shipment < ApplicationRecord
+    self.belongs_to_required_by_default = false
+
     belongs_to :order, class_name: 'Spree::Order'
     belongs_to :address, class_name: 'Spree::Address'
     belongs_to :stock_location, class_name: 'Spree::StockLocation'

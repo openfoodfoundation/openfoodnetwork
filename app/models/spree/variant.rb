@@ -11,6 +11,8 @@ module Spree
     include VariantUnits::VariantAndLineItemNaming
     include VariantStock
 
+    self.belongs_to_required_by_default = false
+
     acts_as_paranoid
 
     searchable_attributes :sku, :display_as, :display_name

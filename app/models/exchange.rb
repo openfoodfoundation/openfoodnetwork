@@ -10,6 +10,8 @@
 # shopfront (outgoing products). But the set of shown products can be smaller
 # than all incoming products.
 class Exchange < ApplicationRecord
+  self.belongs_to_required_by_default = false
+
   acts_as_taggable
 
   belongs_to :order_cycle

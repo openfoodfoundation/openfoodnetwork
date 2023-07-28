@@ -7,6 +7,8 @@ module Spree
     include CalculatedAdjustments
     include PaymentMethodDistributors
 
+    self.belongs_to_required_by_default = false
+
     acts_as_taggable
     acts_as_paranoid
 

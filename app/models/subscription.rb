@@ -6,6 +6,8 @@ class Subscription < ApplicationRecord
   ALLOWED_PAYMENT_METHOD_TYPES = ["Spree::PaymentMethod::Check",
                                   "Spree::Gateway::StripeSCA"].freeze
 
+  self.belongs_to_required_by_default = false
+
   searchable_attributes :shop_id, :canceled_at, :paused_at
   searchable_associations :shop
   searchable_scopes :active, :not_ended, :not_paused, :not_canceled

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class StripeAccount < ApplicationRecord
+  self.belongs_to_required_by_default = false
+
   belongs_to :enterprise
   validates :stripe_user_id, :stripe_publishable_key, presence: true
   validates :enterprise_id, uniqueness: true

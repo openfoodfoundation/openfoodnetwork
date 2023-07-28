@@ -14,6 +14,8 @@ end
 
 module Spree
   class TaxRate < ApplicationRecord
+    self.belongs_to_required_by_default = false
+
     acts_as_paranoid
     include CalculatedAdjustments
 

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ProducerProperty < ApplicationRecord
+  self.belongs_to_required_by_default = false
+
   belongs_to :producer, class_name: 'Enterprise', touch: true
   belongs_to :property, class_name: 'Spree::Property'
 

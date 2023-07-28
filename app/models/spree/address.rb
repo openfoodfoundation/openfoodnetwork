@@ -4,6 +4,8 @@ module Spree
   class Address < ApplicationRecord
     include AddressDisplay
 
+    self.belongs_to_required_by_default = false
+
     searchable_attributes :firstname, :lastname, :phone, :full_name
     searchable_associations :country, :state
 

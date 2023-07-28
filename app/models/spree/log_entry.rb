@@ -2,6 +2,8 @@
 
 module Spree
   class LogEntry < ApplicationRecord
+    self.belongs_to_required_by_default = false
+
     belongs_to :source, polymorphic: true
 
     # Fix for Spree #1767
