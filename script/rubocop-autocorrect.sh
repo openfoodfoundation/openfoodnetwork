@@ -34,6 +34,11 @@ grep "This cop supports safe autocorrection" -A 5 .rubocop_todo.yml\
       echo "Safely autocorrect $cop" > .git/COMMIT_EDITMSG
       echo "" >> .git/COMMIT_EDITMSG
       bundle exec rubocop --autocorrect >> .git/COMMIT_EDITMSG
-      git add --all
-      git commit --file .git/COMMIT_EDITMSG
+      if grep -q "offenses corrected" .git/COMMIT_EDITMSG; then
+        git add --all
+        git commit --file .git/COMMIT_EDITMSG
+      else
+        echo "No corrections made for $cop. Skipping."
+      fi
+
     done
