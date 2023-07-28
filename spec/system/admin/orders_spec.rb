@@ -410,22 +410,22 @@ describe '
 
       context "orders with different billing addresses" do
         before do
-          billing_address2.update!(lastname: "Mad Hatter")
-          billing_address3.update!(lastname: "Duchess")
-          billing_address4.update!(lastname: "Cheshire Cat")
-          billing_address5.update!(lastname: "Alice")
+          billing_address2.update!(firstname: "Mad", lastname: "Hatter")
+          billing_address3.update!(firstname: "Alice", lastname: "Smith")
+          billing_address4.update!(firstname: "Cheshire", lastname: "Cat")
+          billing_address5.update!(lastname: "Bob", lastname: "Smith")
           login_as_admin
           visit spree.admin_orders_path
         end
 
-        it "orders by last name" do
+        it "orders by last name then first name" do
           find("a", text: 'NAME').click # sets ascending ordering
           expect(page).to have_content(
-            /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
+            /#{order4.number}.*#{order2.number}.*#{order3.number}.*#{order5.number}/m
           )
           find("a", text: 'NAME').click # sets descending ordering
           expect(page).to have_content(
-            /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
+            /#{order5.number}.*#{order3.number}.*#{order2.number}.*#{order4.number}/m
           )
         end
       end

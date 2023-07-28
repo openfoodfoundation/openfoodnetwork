@@ -14,7 +14,7 @@
       %th
         = t(:products_distributor)
 
-      - columns = ['completed_at', 'number', 'state', 'payment_state', 'shipment_state', 'email', 'bill_address_lastname', 'total']
+      - columns = ['completed_at', 'number', 'state', 'payment_state', 'shipment_state', 'email', 'billing_address_name', 'total']
 
       = render partial: "spree/admin/shared/stimulus_sortable_header", collection: columns, as: :column,
         locals: { sorted: params.dig(:q, :s), default: "completed_at desc" }

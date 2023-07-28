@@ -33,7 +33,7 @@
     %a{ href: "mailto:#{order.email}", target: "_blank" }
       = order.email
   %td
-    = order.bill_address.full_name
+    = order.bill_address.full_name_for_sorting
   %td.align-center
     %span
       = order.display_total

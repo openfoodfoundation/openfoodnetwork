@@ -16,7 +16,8 @@ module Spree
     searchable_attributes :number, :state, :shipment_state, :payment_state, :distributor_id,
                           :order_cycle_id, :email, :total, :customer_id
     searchable_associations :shipping_method, :bill_address, :distributor
-    searchable_scopes :complete, :incomplete
+    searchable_scopes :complete, :incomplete, :sort_by_billing_address_name_asc,
+                      :sort_by_billing_address_name_desc
 
     checkout_flow do
       go_to_state :address
@@ -143,6 +144,14 @@ module Spree
       else
         where('spree_orders.distributor_id IN (?)', user.enterprises.select(&:id))
       end
+    }
+
+    scope :sort_by_billing_address_name_asc, -> {
+      joins(:bill_address).order("spree_addresses.lastname ASC, spree_addresses.firstname ASC")
+    }
+
+    scope :sort_by_billing_address_name_desc, -> {
+      joins(:bill_address).order("spree_addresses.lastname DESC, spree_addresses.firstname DESC")
     }
 
     scope :with_line_items_variants_and_products_outer, lambda {
