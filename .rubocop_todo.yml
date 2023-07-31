@@ -34,16 +34,6 @@ Layout/LineLength:
     - 'spec/system/consumer/shopping/cart_spec.rb'
     - 'spec/system/consumer/shopping/products_spec.rb'
 
-# Offense count: 7
-# This cop supports safe autocorrection (--autocorrect).
-Lint/AmbiguousOperatorPrecedence:
-  Exclude:
-    - 'app/models/calculator/flexi_rate.rb'
-    - 'app/models/enterprise.rb'
-    - 'app/models/spree/ability.rb'
-    - 'app/models/spree/line_item.rb'
-    - 'app/models/spree/preferences/store.rb'
-
 # Offense count: 17
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: enums
