@@ -280,7 +280,7 @@ module Spree
       if final_weight_volume.present? && quantity_was > 0
         self.final_weight_volume = final_weight_volume * quantity / quantity_was
       elsif variant&.unit_value.present?
-        self.final_weight_volume = variant&.unit_value * quantity
+        self.final_weight_volume = variant&.unit_value&.* quantity
       end
     end
   end

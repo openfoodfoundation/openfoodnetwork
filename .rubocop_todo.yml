@@ -143,15 +143,6 @@ Lint/RedundantSafeNavigation:
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowedMethods.
-# AllowedMethods: present?, blank?, presence, try, try!, in?
-Lint/SafeNavigationChain:
-  Exclude:
-    - 'app/models/spree/line_item.rb'
-    - 'app/models/spree/stock/availability_validator.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods, IgnoreNotImplementedMethods.
 Lint/UnusedMethodArgument:
   Exclude:
