@@ -226,8 +226,8 @@ describe Spree::OrderMailer do
                        data: invoice_data_generator.serialize_for_invoice)
     }
 
-    let(:generator){ double(:generator) }
-    let(:renderer){ double(:renderer) }
+    let(:generator){ instance_double(OrderInvoiceGenerator) }
+    let(:renderer){ instance_double(InvoiceRenderer) }
     let(:attachment_filename){ "invoice-#{order.number}.pdf" }
     let(:deliveries){ ActionMailer::Base.deliveries }
     before do
