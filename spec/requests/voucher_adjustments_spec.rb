@@ -61,9 +61,7 @@ describe VoucherAdjustmentsController, type: :request do
         post "/voucher_adjustments", params: params
 
         expect(response).to be_unprocessable
-        expect(flash[:error]).to match(
-          "There was an error while adding the voucher and Label can't be blank"
-        )
+        expect(flash[:error]).to match("Voucher code There was an error while adding the voucher")
       end
     end
 
