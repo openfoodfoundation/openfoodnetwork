@@ -6,6 +6,25 @@ class Spree::Gateway::Test < Spree::Gateway
 end
 
 describe Spree::PaymentMethod do
+  describe ".managed_by scope" do
+    subject! { create(:payment_method) }
+    let(:owner) { subject.distributors.first.owner }
+    let(:other_user) { create(:user) }
+    let(:admin) { create(:admin_user) }
+
+    it "returns everything for admins" do
+      expect(Spree::PaymentMethod.managed_by(admin)).to eq [subject]
+    end
+
+    it "returns payment methods of managed enterprises" do
+      expect(Spree::PaymentMethod.managed_by(owner)).to eq [subject]
+    end
+
+    it "returns nothing for other users" do
+      expect(Spree::PaymentMethod.managed_by(other_user)).to eq []
+    end
+  end
+
   describe "#available" do
     let(:enterprise) { create(:enterprise) }
 

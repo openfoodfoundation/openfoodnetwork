@@ -28,14 +28,12 @@ module Spree
     scope :production, -> { where(environment: 'production') }
 
     scope :managed_by, lambda { |user|
-      if user.has_spree_role?('admin')
-        where(nil)
-      else
-        joins(:distributors).
-          where('distributors_payment_methods.distributor_id IN (?)',
-                user.enterprises.select(&:id)).
-          select('DISTINCT spree_payment_methods.*')
-      end
+      return where(nil) if user.admin?
+
+      joins(:distributors).
+        where('distributors_payment_methods.distributor_id IN (?)',
+              user.enterprises.select(&:id)).
+        select('DISTINCT spree_payment_methods.*')
     }
 
     scope :for_distributors, ->(distributors) {
