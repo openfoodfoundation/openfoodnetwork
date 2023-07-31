@@ -30,6 +30,52 @@ describe OrderInvoiceComparator do
         order.update!(note: "THIS IS A NEW NOTE")
         expect(subject).to be false
       end
+
+      context "additional tax total changes" do
+        let(:distributor) { create(:distributor_enterprise) }
+        let!(:order_with_taxes) do
+          create(:order_with_taxes, distributor: distributor, ship_address: create(:address),
+                                    product_price: 110, tax_rate_amount: 0.1, included_in_price: false,
+                                    tax_rate_name: "Tax 1").tap do |order|
+                                      order.create_tax_charge!
+                                      order.update_shipping_fees!
+                                    end
+        end
+
+
+        it "returns returns true if additional tax total changes" do
+
+          expect(order_with_taxes.additional_tax_total).to eq 0.11e2
+          Spree::TaxRate.first.update!(amount: 0.15)
+          order_with_taxes.create_tax_charge! && order_with_taxes.save
+
+          expect(order_with_taxes.additional_tax_total).to eq 0.165e2
+
+          expect(subject).to be true
+        end
+      end
+
+      context "included tax total changes" do
+        let(:distributor) { create(:distributor_enterprise) }
+        let!(:order_with_taxes) do
+          create(:order_with_taxes, distributor: distributor, ship_address: create(:address),
+                                    product_price: 110, tax_rate_amount: 0.1, included_in_price: true,
+                                    tax_rate_name: "Tax 1").tap do |order|
+                                      order.create_tax_charge!
+                                      order.update_shipping_fees!
+                                    end
+        end
+
+        it "returns returns true if included_tax_total changes" do
+          expect(order_with_taxes.included_tax_total).to eq 0.1e2
+          Spree::TaxRate.first.update!(amount: 0.15)
+          order_with_taxes.create_tax_charge! && order_with_taxes.save
+          
+          expect(order_with_taxes.included_tax_total).to eq 0.1435e2
+
+          expect(subject).to be true
+        end
+      end
     end
 
     context "a non-relevant associated model is updated" do
