@@ -15,11 +15,11 @@ module Reporting
         NamedFunction.new("SUM", [coalesce(field, default)])
       end
 
-      def sum_grouped(field, default = 0)
+      def sum_grouped(field, _default = 0)
         Case.new(sql_grouping(grouping_fields)).when(0).then(field.maximum).else(field.sum)
       end
 
-      def sum_new(field, default = 0)
+      def sum_new(field, _default = 0)
         Case.new(sql_grouping(grouping_fields)).when(0).then(field.maximum).else(sum_values(field))
       end
 
