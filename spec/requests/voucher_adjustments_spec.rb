@@ -8,7 +8,7 @@ describe VoucherAdjustmentsController, type: :request do
   let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
   let(:exchange) { order_cycle.exchanges.outgoing.first }
-  let(:order) do
+  let!(:order) do
     create(
       :order_with_line_items,
       line_items_count: 1,
@@ -64,6 +64,29 @@ describe VoucherAdjustmentsController, type: :request do
         expect(flash[:error]).to match(
           "There was an error while adding the voucher and Label can't be blank"
         )
+      end
+    end
+
+    context "when the order has a payment and payment feed" do
+      let(:payment_method) { create(:payment_method, calculator: calculator) }
+      let(:calculator) do
+        ::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)
+      end
+
+      before do
+        create(:payment, order: order, payment_method: payment_method, amount: order.total)
+      end
+
+      it "removes existing payments" do
+        expect do
+          post "/voucher_adjustments", params: params
+        end.to change { order.reload.payments.count }.from(1).to(0)
+      end
+
+      it "removes existing payment fees" do
+        expect do
+          post "/voucher_adjustments", params: params
+        end.to change { order.reload.all_adjustments.payment_fee.count }.from(1).to(0)
       end
     end
   end
