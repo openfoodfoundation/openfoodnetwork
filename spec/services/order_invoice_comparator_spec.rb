@@ -26,7 +26,7 @@ describe OrderInvoiceComparator do
         expect(subject).to be true
       end
 
-      it "returns true if a non-relevant attribute changes" do
+      it "returns false if a non-relevant attribute changes" do
         order.update!(note: "THIS IS A NEW NOTE")
         expect(subject).to be false
       end
