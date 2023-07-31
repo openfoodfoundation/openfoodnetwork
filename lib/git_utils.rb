@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GitUtils
   # Generate a description of the git version based on latest tag.
   # Eg: "v4.4.4-156-g8afcd82-modified"
