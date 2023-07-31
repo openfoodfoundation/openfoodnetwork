@@ -77,8 +77,8 @@ module DelegateBelongsTo
 
     private
 
-    def class_def(name, method = nil, &blk)
-      class_eval { method.nil? ? define_method(name, &blk) : define_method(name, method) }
+    def class_def(name, method = nil, &)
+      class_eval { method.nil? ? define_method(name, &) : define_method(name, method) }
     end
   end
 

@@ -403,31 +403,6 @@ Naming/AccessorMethodName:
     - 'spec/support/request/shop_workflow.rb'
     - 'spec/support/request/web_helper.rb'
 
-# Offense count: 42
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, BlockForwardingName.
-# SupportedStyles: anonymous, explicit
-Naming/BlockForwarding:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-    - 'app/helpers/link_helper.rb'
-    - 'app/helpers/spree/admin/base_helper.rb'
-    - 'app/reflexes/application_reflex.rb'
-    - 'app/services/cache_service.rb'
-    - 'app/services/current_order_locker.rb'
-    - 'lib/reporting/reports/enterprise_fee_summary/scope.rb'
-    - 'lib/spree/core/controller_helpers/respond_with.rb'
-    - 'lib/spree/core/delegate_belongs_to.rb'
-    - 'lib/spree/core/environment_extension.rb'
-    - 'spec/models/enterprise_caching_spec.rb'
-    - 'spec/support/embedded_pages_helper.rb'
-    - 'spec/support/preferences_helper.rb'
-    - 'spec/support/request/shop_workflow.rb'
-    - 'spec/support/request/ui_component_helper.rb'
-    - 'spec/support/request/web_helper.rb'
-    - 'spec/swagger_helper.rb'
-    - 'spec/system/support/capybara_setup.rb'
-
 # Offense count: 1
 # Configuration parameters: ForbiddenDelimiters.
 # ForbiddenDelimiters: (?i-mx:(^|\s)(EO[A-Z]{1}|END)(\s|$))

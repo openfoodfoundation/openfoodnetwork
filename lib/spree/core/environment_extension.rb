@@ -19,8 +19,8 @@ module Spree
 
       private
 
-      def create_method(name, &block)
-        self.class.__send__(:define_method, name, &block)
+      def create_method(name, &)
+        self.class.__send__(:define_method, name, &)
       end
     end
   end

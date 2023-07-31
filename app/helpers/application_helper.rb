@@ -38,15 +38,15 @@ module ApplicationHelper
     end.join("\n").html_safe
   end
 
-  def ng_form_for(name, *args, &block)
+  def ng_form_for(name, *args, &)
     options = args.extract_options!
 
-    form_for(name, *(args << options.merge(builder: AngularFormBuilder)), &block)
+    form_for(name, *(args << options.merge(builder: AngularFormBuilder)), &)
   end
 
   # Pass URL helper calls on to spree where applicable so that we don't need to use
   # spree.foo_path in any view rendered from non-spree-namespaced controllers.
-  def method_missing(method, *args, &block)
+  def method_missing(method, *args, &)
     if method.to_s.end_with?('_path', '_url') && spree.respond_to?(method)
       spree.public_send(method, *args)
     else
