@@ -20,7 +20,7 @@ class ProductComponent < ViewComponentReflex::Component
     @product.id
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
   def column_value(column)
     case column
     when 'name'
@@ -47,7 +47,7 @@ class ProductComponent < ViewComponentReflex::Component
       format_date(@product.import_date)
     end
   end
-  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   private
 

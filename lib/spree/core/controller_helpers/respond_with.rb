@@ -4,13 +4,13 @@ require 'spree/responder'
 
 module ActionController
   class Base
-    def respond_with(*resources, &block)
+    def respond_with(*resources, &)
       if self.class.mimes_for_respond_to.empty?
         raise "In order to use respond_with, first you need to declare the formats your " \
               "controller responds to in the class level"
       end
 
-      return unless (collector = retrieve_collector_from_mimes(&block))
+      return unless (collector = retrieve_collector_from_mimes(&))
 
       options = resources.size == 1 ? {} : resources.extract_options!
 

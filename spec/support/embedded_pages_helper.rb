@@ -2,8 +2,8 @@
 
 module OpenFoodNetwork
   module EmbeddedPagesHelper
-    def on_embedded_page(&block)
-      within_frame :frame, &block
+    def on_embedded_page(&)
+      within_frame(:frame, &)
     end
   end
 end

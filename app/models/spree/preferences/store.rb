@@ -25,7 +25,7 @@ module Spree
 
       def exist?(key)
         @cache.exist?(key) ||
-          should_persist? && Spree::Preference.where(key: key).exists?
+          (should_persist? && Spree::Preference.where(key: key).exists?)
       end
 
       def get(key, fallback = nil)

@@ -35,7 +35,7 @@ module Calculator
     private
 
     def compute_for(count)
-      count * preferred_additional_item.to_f + preferred_first_item.to_f
+      (count * preferred_additional_item.to_f) + preferred_first_item.to_f
     end
   end
 end

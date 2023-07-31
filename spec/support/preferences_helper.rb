@@ -8,12 +8,12 @@ module PreferencesHelper
   #   config.site_name = "my fancy pants store"
   # end
   #
-  def reset_spree_preferences(&config_block)
+  def reset_spree_preferences(&)
     Spree::Preferences::Store.instance.persistence = false
     Spree::Preferences::Store.instance.clear_cache
 
     config = Rails.application.config.spree.preferences
-    configure_spree_preferences(&config_block) if block_given?
+    configure_spree_preferences(&) if block_given?
   end
 
   def configure_spree_preferences

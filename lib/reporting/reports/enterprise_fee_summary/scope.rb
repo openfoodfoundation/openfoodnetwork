@@ -389,8 +389,8 @@ module Reporting
           end
         end
 
-        def chain_to_scope(&block)
-          @scope = @scope.instance_eval(&block)
+        def chain_to_scope(&)
+          @scope = @scope.instance_eval(&)
           self
         end
 
