@@ -11,7 +11,7 @@
 
 common: &default_settings
   # Required license key associated with your New Relic account.
-  # Use NEW_RELIC_APP_NAME env variable to specify the license key
+  # Use NEW_RELIC_LICENSE_KEY env variable to specify the license key
 
   # Your application name. Renaming here affects where data displays in New
   # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
@@ -22,8 +22,8 @@ common: &default_settings
     enabled: true
 
   # To disable the agent regardless of other settings, uncomment the following:
-
-  # agent_enabled: false
+  # Agent is disabled by default, to enable set NEW_RELIC_AGENT_ENABLE env variable to true
+  agent_enabled: false
 
   # Logging level for log/newrelic_agent.log
   log_level: info
@@ -52,7 +52,6 @@ common: &default_settings
 development:
   <<: *default_settings
   app_name: 'Open Food Network (Development)'
-  monitor_mode: false
 
 test:
   <<: *default_settings
