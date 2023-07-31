@@ -67,9 +67,7 @@ describe VoucherAdjustmentsController, type: :request do
 
     context "when the order has a payment and payment feed" do
       let(:payment_method) { create(:payment_method, calculator: calculator) }
-      let(:calculator) do
-        ::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)
-      end
+      let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
       before do
         create(:payment, order: order, payment_method: payment_method, amount: order.total)

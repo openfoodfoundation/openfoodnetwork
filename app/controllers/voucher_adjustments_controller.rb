@@ -47,9 +47,7 @@ class VoucherAdjustmentsController < BaseController
       return false
     end
 
-    # Clear payments and payment_fee, to not affect voucher adjustment calculation
-    @order.all_adjustments.payment_fee.destroy_all
-    @order.payments.clear
+    clear_payments
 
     VoucherAdjustmentsService.new(@order).update
     @order.update_totals_and_states
@@ -80,5 +78,11 @@ class VoucherAdjustmentsController < BaseController
 
   def voucher_params
     params.require(:order).permit(:voucher_code)
+  end
+
+  # Clear payments and payment fees, to not affect voucher adjustment calculation
+  def clear_payments
+    @order.all_adjustments.payment_fee.destroy_all
+    @order.payments.clear
   end
 end
