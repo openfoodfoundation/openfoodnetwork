@@ -50,16 +50,15 @@ describe ProductScopeQuery do
   end
 
   describe 'finder functions' do
-    let!(:query) {
-      ProductScopeQuery.new(current_api_user, { id: product.id, product_id: product2.id })
-    }
     describe 'find_product' do
+      subject(:query) { ProductScopeQuery.new(current_api_user, { id: product.id }) }
       it 'finds product' do
         expect(query.find_product).to eq(product)
       end
     end
 
     describe 'find_product_to_be_cloned' do
+      subject(:query) { ProductScopeQuery.new(current_api_user, { product_id: product2.id }) }
       it 'finds product to be cloned' do
         expect(query.find_product_to_be_cloned).to eq(product2)
       end
