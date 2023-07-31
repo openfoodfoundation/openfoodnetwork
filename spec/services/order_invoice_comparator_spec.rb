@@ -42,9 +42,7 @@ describe OrderInvoiceComparator do
                                     end
         end
 
-
-        it "returns returns true if additional tax total changes" do
-
+        it "returns returns true" do
           expect(order_with_taxes.additional_tax_total).to eq 0.11e2
           Spree::TaxRate.first.update!(amount: 0.15)
           order_with_taxes.create_tax_charge! && order_with_taxes.save
@@ -59,20 +57,33 @@ describe OrderInvoiceComparator do
         let(:distributor) { create(:distributor_enterprise) }
         let!(:order_with_taxes) do
           create(:order_with_taxes, distributor: distributor, ship_address: create(:address),
-                                    product_price: 110, tax_rate_amount: 0.1, included_in_price: true,
+                                    product_price: 110, tax_rate_amount: 0.1,
+                                    included_in_price: true,
                                     tax_rate_name: "Tax 1").tap do |order|
                                       order.create_tax_charge!
                                       order.update_shipping_fees!
                                     end
         end
 
-        it "returns returns true if included_tax_total changes" do
+        it "returns returns true" do
           expect(order_with_taxes.included_tax_total).to eq 0.1e2
           Spree::TaxRate.first.update!(amount: 0.15)
           order_with_taxes.create_tax_charge! && order_with_taxes.save
-          
+
           expect(order_with_taxes.included_tax_total).to eq 0.1435e2
 
+          expect(subject).to be true
+        end
+      end
+
+      context "shipping method changes" do
+        let(:shipping_method) { create(:shipping_method) }
+        let!(:order_ready_to_ship) {
+          create(:order_ready_to_ship)
+        }
+        it "returns returns true" do
+          Spree::ShippingRate.first.update(shipping_method_id: shipping_method.id)
+          order_ready_to_ship.update_shipping_fees! && order_ready_to_ship.save
           expect(subject).to be true
         end
       end
