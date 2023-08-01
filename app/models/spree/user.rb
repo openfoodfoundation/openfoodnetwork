@@ -23,6 +23,7 @@ module Spree
     has_many :spree_orders, class_name: "Spree::Order"
 
     before_validation :set_login
+    after_create :associate_customers, :associate_orders
     before_destroy :check_completed_orders
 
     roles_table_name = Role.table_name
@@ -45,8 +46,6 @@ module Spree
 
     accepts_nested_attributes_for :bill_address
     accepts_nested_attributes_for :ship_address
-
-    after_create :associate_customers, :associate_orders
 
     validates :email, 'valid_email_2/email': { mx: true }, if: :email_changed?
     validate :limit_owned_enterprises

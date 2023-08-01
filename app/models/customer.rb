@@ -19,6 +19,9 @@ class Customer < ApplicationRecord
   belongs_to :enterprise
   belongs_to :user, class_name: "Spree::User", optional: true
   has_many :orders, class_name: "Spree::Order"
+  before_validation :downcase_email
+  before_validation :empty_code
+  before_create :associate_user
   before_destroy :update_orders_and_delete_canceled_subscriptions
 
   belongs_to :bill_address, class_name: "Spree::Address", optional: true
@@ -28,9 +31,6 @@ class Customer < ApplicationRecord
   belongs_to :ship_address, class_name: "Spree::Address", optional: true
   alias_attribute :shipping_address, :ship_address
   accepts_nested_attributes_for :ship_address
-
-  before_validation :downcase_email
-  before_validation :empty_code
 
   validates :code, uniqueness: { scope: :enterprise_id, allow_nil: true }
   validates :email, presence: true, 'valid_email_2/email': true,
@@ -45,8 +45,6 @@ class Customer < ApplicationRecord
                      }
   scope :created_manually, -> { where(created_manually: true) }
   scope :visible, -> { where(id: Spree::Order.complete.select(:customer_id)).or(created_manually) }
-
-  before_create :associate_user
 
   attr_accessor :gateway_recurring_payment_client_secret, :gateway_shop_id
 

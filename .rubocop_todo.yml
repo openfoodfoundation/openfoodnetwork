@@ -443,23 +443,6 @@ Naming/VariableNumber:
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/requests/api/orders_spec.rb'
 
-# Offense count: 12
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/ActiveRecordCallbacksOrder:
-  Exclude:
-    - 'app/models/customer.rb'
-    - 'app/models/enterprise.rb'
-    - 'app/models/enterprise_group.rb'
-    - 'app/models/enterprise_relationship.rb'
-    - 'app/models/spree/order.rb'
-    - 'app/models/spree/payment.rb'
-    - 'app/models/spree/product.rb'
-    - 'app/models/spree/return_authorization.rb'
-    - 'app/models/spree/user.rb'
-    - 'app/models/spree/variant.rb'
-
 # Offense count: 1
 # Configuration parameters: Severity, Include.
 # Include: app/models/**/*.rb

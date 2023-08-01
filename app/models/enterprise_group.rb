@@ -14,13 +14,13 @@ class EnterpriseGroup < ApplicationRecord
   validates :address, presence: true, associated: true
   before_validation :set_undefined_address_fields
   before_validation :set_unused_address_fields
-  after_find :unset_undefined_address_fields
+  before_validation :sanitize_permalink
   after_save :unset_undefined_address_fields
+  after_find :unset_undefined_address_fields
 
   validates :name, presence: true
   validates :description, presence: true
 
-  before_validation :sanitize_permalink
   validates :permalink, uniqueness: true, presence: true
 
   delegate :phone, :address1, :address2, :city, :zipcode, :state, :country, to: :address

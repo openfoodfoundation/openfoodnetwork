@@ -11,9 +11,9 @@ class EnterpriseRelationship < ApplicationRecord
     message: I18n.t('validation_msg_relationship_already_established')
   }
 
-  after_save :update_permissions_of_child_variant_overrides
   before_destroy :revoke_all_child_variant_overrides
   before_destroy :destroy_related_exchanges
+  after_save :update_permissions_of_child_variant_overrides
 
   scope :with_enterprises, -> {
     joins("

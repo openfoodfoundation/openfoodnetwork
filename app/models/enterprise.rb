@@ -125,12 +125,11 @@ class Enterprise < ApplicationRecord
   before_validation :set_unused_address_fields
   after_validation :ensure_owner_is_manager, if: lambda { owner_id_changed? && !owner_id.nil? }
 
-  after_touch :touch_distributors
   after_create :set_default_contact
   after_create :relate_to_owners_enterprises
-  after_create_commit :send_welcome_email
-
   after_rollback :restore_permalink
+  after_touch :touch_distributors
+  after_create_commit :send_welcome_email
 
   scope :by_name, -> { order('name') }
   scope :visible, -> { where(visible: "public") }

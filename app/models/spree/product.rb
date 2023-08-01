@@ -83,8 +83,8 @@ module Spree
 
     before_save :add_primary_taxon_to_taxons
 
-    after_save :remove_previous_primary_taxon_from_taxons
     after_create :ensure_standard_variant
+    after_save :remove_previous_primary_taxon_from_taxons
     after_save :update_units
 
     scope :with_properties, ->(*property_ids) {

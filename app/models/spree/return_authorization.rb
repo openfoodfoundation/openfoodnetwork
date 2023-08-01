@@ -8,8 +8,8 @@ module Spree
 
     has_many :inventory_units, inverse_of: :return_authorization
     has_one :stock_location
-    before_create :generate_number
     before_save :force_positive_amount
+    before_create :generate_number
 
     validates :order, presence: true
     validates :amount, numericality: true
