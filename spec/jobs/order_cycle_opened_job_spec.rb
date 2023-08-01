@@ -4,13 +4,13 @@ require 'spec_helper'
 
 describe OrderCycleOpenedJob do
   let(:oc_opened_before) {
-    create(:order_cycle, orders_open_at: Time.zone.now - 1.hour)
+    create(:order_cycle, orders_open_at: 1.hour.ago)
   }
   let(:oc_opened_now) {
     create(:order_cycle, orders_open_at: Time.zone.now)
   }
   let(:oc_opening_soon) {
-    create(:order_cycle, orders_open_at: Time.zone.now + 1.minute)
+    create(:order_cycle, orders_open_at: 1.minute.from_now)
   }
 
   it "enqueues jobs for recently opened order cycles only" do

@@ -478,21 +478,6 @@ Rails/CompactBlank:
     - 'lib/reporting/report_ruler.rb'
     - 'lib/reporting/reports/enterprise_fee_summary/parameters.rb'
 
-# Offense count: 27
-# This cop supports safe autocorrection (--autocorrect).
-Rails/DurationArithmetic:
-  Exclude:
-    - 'app/services/create_order_cycle.rb'
-    - 'spec/jobs/order_cycle_closing_job_spec.rb'
-    - 'spec/jobs/order_cycle_opened_job_spec.rb'
-    - 'spec/services/permissions/order_spec.rb'
-    - 'spec/services/terms_of_service_spec.rb'
-    - 'spec/system/admin/bulk_order_management_spec.rb'
-    - 'spec/system/admin/order_cycles/list_spec.rb'
-    - 'spec/system/admin/orders_spec.rb'
-    - 'spec/system/admin/reports/orders_and_fulfillment_spec.rb'
-    - 'spec/system/admin/reports/packing_report_spec.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Rails/ExpandedDateRange:

@@ -644,12 +644,12 @@ describe '
         }
         let!(:o3) {
           create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                          completed_at: Time.zone.now + 1.week,
+                                          completed_at: 1.week.from_now,
                                           order_cycle: oc3 )
         }
         let!(:o4) {
           create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
-                                          completed_at: Time.zone.now + 2.weeks,
+                                          completed_at: 2.weeks.from_now,
                                           order_cycle: oc3 )
         }
         let!(:li1) { create(:line_item_with_shipment, order: o1 ) }
@@ -658,8 +658,8 @@ describe '
         let!(:li4) { create(:line_item_with_shipment, order: o4 ) }
 
         before do
-          oc3.update!(orders_close_at: Time.zone.now + 2.weeks)
-          oc3.update!(orders_open_at: Time.zone.now + 1.week)
+          oc3.update!(orders_close_at: 2.weeks.from_now)
+          oc3.update!(orders_open_at: 1.week.from_now)
           visit_bulk_order_management
         end
 

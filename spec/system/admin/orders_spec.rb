@@ -286,10 +286,10 @@ describe '
     describe "ordering" do
       context "orders with different completion dates" do
         before do
-          order2.update!(completed_at: Time.zone.now - 2.weeks)
-          order3.update!(completed_at: Time.zone.now - 3.weeks)
-          order4.update!(completed_at: Time.zone.now - 4.weeks)
-          order5.update!(completed_at: Time.zone.now - 5.weeks)
+          order2.update!(completed_at: 2.weeks.ago)
+          order3.update!(completed_at: 3.weeks.ago)
+          order4.update!(completed_at: 4.weeks.ago)
+          order5.update!(completed_at: 5.weeks.ago)
           login_as_admin
           visit spree.admin_orders_path
         end

@@ -38,7 +38,7 @@ class CreateOrderCycle
       coordinator_id: enterprise.id,
       name: 'Monthly order cycle',
       orders_open_at: Time.zone.now,
-      orders_close_at: Time.zone.now + 1.month
+      orders_close_at: 1.month.from_now
     )
   end
 

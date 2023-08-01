@@ -4,13 +4,13 @@ require 'spec_helper'
 
 describe OrderCycleClosingJob do
   let(:order_cycle1) {
-    create(:order_cycle, automatic_notifications: true, orders_close_at: Time.zone.now - 1.minute)
+    create(:order_cycle, automatic_notifications: true, orders_close_at: 1.minute.ago)
   }
   let(:order_cycle2) {
-    create(:order_cycle, automatic_notifications: true, orders_close_at: Time.zone.now + 1.minute)
+    create(:order_cycle, automatic_notifications: true, orders_close_at: 1.minute.from_now)
   }
   let(:order_cycle3) {
-    create(:order_cycle, automatic_notifications: false, orders_close_at: Time.zone.now - 1.minute)
+    create(:order_cycle, automatic_notifications: false, orders_close_at: 1.minute.ago)
   }
 
   it "sends notifications for recently closed order cycles with automatic notifications enabled" do
