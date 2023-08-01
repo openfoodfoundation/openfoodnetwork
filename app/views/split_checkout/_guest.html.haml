@@ -1,14 +1,15 @@
-.checkout-step
-  .medium-10
-    %div.checkout-guest-title
-      = t :checkout_headline
+%checkout.row#checkout
+  .small-12.medium-12.columns
+    .checkout-step
+      %div.checkout-guest-title
+        = t :checkout_headline
 
-    %div.checkout-submit{ class: "#{@order.distributor.allow_guest_orders? ? 'checkout-submit-inline' : 'medium-6' }" }
-      %button.button.primary{ "data-action": "click->guest-checkout#login" }
-        = t :label_login
-      -if @order.distributor.allow_guest_orders?
-        %span.checkout-submit-or
-          
-        %button.button.cancel{ "data-action": "click->guest-checkout#guestSelected" }
-          = t :checkout_as_guest
+      %div.checkout-submit{ class: "#{@order.distributor.allow_guest_orders? ? 'checkout-submit-inline' : 'medium-6' }" }
+        %button.button.primary{ "data-action": "click->guest-checkout#login" }
+          = t :label_login
+        -if @order.distributor.allow_guest_orders?
+          %span.checkout-submit-or
+              
+          %button.button.cancel{ "data-action": "click->guest-checkout#guestSelected" }
+            = t :checkout_as_guest
 
