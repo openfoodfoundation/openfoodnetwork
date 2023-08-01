@@ -5,6 +5,12 @@ module Spree
     class TaxonsController < Spree::Admin::BaseController
       respond_to :html, :json, :js
 
+      def edit
+        @taxonomy = Taxonomy.find(params[:taxonomy_id])
+        @taxon = @taxonomy.taxons.find(params[:id])
+        @permalink_part = @taxon.permalink.split("/").last
+      end
+
       def create
         @taxonomy = Taxonomy.find(params[:taxonomy_id])
         @taxon = @taxonomy.taxons.build(params[:taxon])
@@ -24,12 +30,6 @@ module Spree
             end
           end
         end
-      end
-
-      def edit
-        @taxonomy = Taxonomy.find(params[:taxonomy_id])
-        @taxon = @taxonomy.taxons.find(params[:id])
-        @permalink_part = @taxon.permalink.split("/").last
       end
 
       def update

@@ -443,22 +443,6 @@ Naming/VariableNumber:
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/requests/api/orders_spec.rb'
 
-# Offense count: 9
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: ExpectedOrder, Include.
-# ExpectedOrder: index, show, new, edit, create, update, destroy
-# Include: app/controllers/**/*.rb
-Rails/ActionOrder:
-  Exclude:
-    - 'app/controllers/admin/resource_controller.rb'
-    - 'app/controllers/api/v0/orders_controller.rb'
-    - 'app/controllers/spree/admin/images_controller.rb'
-    - 'app/controllers/spree/admin/invoices_controller.rb'
-    - 'app/controllers/spree/admin/products_controller.rb'
-    - 'app/controllers/spree/admin/taxons_controller.rb'
-    - 'app/controllers/spree/admin/variants_controller.rb'
-    - 'app/controllers/user_confirmations_controller.rb'
-
 # Offense count: 12
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Include.

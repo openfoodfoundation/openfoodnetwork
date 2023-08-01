@@ -10,6 +10,13 @@ module Spree
         authorize! :invoice, @order
       end
 
+      def show
+        invoice_id = params[:id]
+        invoice_pdf = BulkInvoiceService.new.filepath(invoice_id)
+
+        send_file(invoice_pdf, type: 'application/pdf', disposition: :inline)
+      end
+
       def create
         Spree::Order.where(id: params[:order_ids]).find_each do |order|
           authorize! :invoice, order
@@ -38,13 +45,6 @@ module Spree
           )
         end
         redirect_back(fallback_location: spree.admin_dashboard_path)
-      end
-
-      def show
-        invoice_id = params[:id]
-        invoice_pdf = BulkInvoiceService.new.filepath(invoice_id)
-
-        send_file(invoice_pdf, type: 'application/pdf', disposition: :inline)
       end
 
       def poll

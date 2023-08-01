@@ -5,6 +5,13 @@ class UserConfirmationsController < DeviseController
   include Spree::Core::ControllerHelpers::Auth
   include CablecarResponses
 
+  # GET /resource/confirmation?confirmation_token=abcdef
+  def show
+    self.resource = resource_class.confirm_by_token(params[:confirmation_token])
+
+    respond_with_navigational(resource){ redirect_to after_confirmation_path_for(resource) }
+  end
+
   # GET /resource/confirmation/new
   def new
     build_resource({})
@@ -31,13 +38,6 @@ class UserConfirmationsController < DeviseController
     end
 
     respond_with_navigational(resource){ redirect_to login_path }
-  end
-
-  # GET /resource/confirmation?confirmation_token=abcdef
-  def show
-    self.resource = resource_class.confirm_by_token(params[:confirmation_token])
-
-    respond_with_navigational(resource){ redirect_to after_confirmation_path_for(resource) }
   end
 
   protected

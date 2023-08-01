@@ -16,8 +16,22 @@ module Spree
       before_action :load_spree_api_key, only: [:index, :variant_overrides]
       before_action :strip_new_properties, only: [:create, :update]
 
+      def index
+        @current_user = spree_current_user
+        @show_latest_import = params[:latest_import] || false
+      end
+
+      def show
+        session[:return_to] ||= request.referer
+        redirect_to( action: :edit )
+      end
+
       def new
         @object.shipping_category = DefaultShippingCategory.find_or_create
+      end
+
+      def edit
+        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
 
       def create
@@ -33,20 +47,6 @@ module Spree
             render :new
           end
         end
-      end
-
-      def show
-        session[:return_to] ||= request.referer
-        redirect_to( action: :edit )
-      end
-
-      def index
-        @current_user = spree_current_user
-        @show_latest_import = params[:latest_import] || false
-      end
-
-      def edit
-        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
 
       def update
