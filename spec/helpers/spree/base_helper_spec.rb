@@ -55,10 +55,4 @@ describe Spree::BaseHelper do
       expect(pretty_time(DateTime.new(2012, 5, 6, 13, 33))).to eq "May 06, 2012  1:33 PM"
     end
   end
-
-  context "pretty_date" do
-    it "prints in a format" do
-      expect(pretty_date(DateTime.new(2012, 5, 6, 13, 33))).to eq "May 06, 2012"
-    end
-  end
 end

@@ -79,6 +79,10 @@ class Invoice
       end.sort_by { |tax| tax[:rate_amount] }
     end
 
+    def display_date
+      I18n.l(invoice_date.to_date, format: :long)
+    end
+
     def all_tax_adjustments
       all_eligible_adjustments.select { |a| a.originator_type == 'Spree::TaxRate' }
     end
