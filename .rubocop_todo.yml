@@ -478,12 +478,6 @@ Rails/CompactBlank:
     - 'lib/reporting/report_ruler.rb'
     - 'lib/reporting/reports/enterprise_fee_summary/parameters.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Rails/DotSeparatedKeys:
-  Exclude:
-    - 'app/controllers/api/v1/base_controller.rb'
-
 # Offense count: 27
 # This cop supports safe autocorrection (--autocorrect).
 Rails/DurationArithmetic:

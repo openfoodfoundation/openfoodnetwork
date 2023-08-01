@@ -69,14 +69,14 @@ module Api
       end
 
       def missing_parameter(error)
-        message = I18n.t(:missing_parameter, param: error.param, scope: :api)
+        message = I18n.t('api.missing_parameter', param: error.param)
 
         render status: :unprocessable_entity,
                json: json_api_error(message)
       end
 
       def unpermitted_parameters(error)
-        message = I18n.t(:unpermitted_parameters, params: error.params.join(", "), scope: :api)
+        message = I18n.t('api.unpermitted_parameters', params: error.params.join(", "))
 
         render status: :unprocessable_entity,
                json: json_api_error(message)
