@@ -54,6 +54,10 @@ module Sets
       errors
     end
 
+    def invalid
+      @collection.select { |model| model.errors.any? }
+    end
+
     def save
       collection_to_delete.each(&:destroy)
       collection_to_keep.all?(&:save)

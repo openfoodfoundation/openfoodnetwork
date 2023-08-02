@@ -55,5 +55,32 @@ describe Sets::ModelSet do
 
       expect { ms.save }.to change(Enterprise, :count).by(0)
     end
+
+    describe "errors" do
+      let(:product_b) { create(:simple_product, name: "Bananas") }
+      let(:product_a) { create(:simple_product, name: "Apples") }
+      let(:collection_attributes) do
+        {
+          0 => {
+            id: product_a.id,
+            name: "", # Product Name can't be blank
+          },
+          1 => {
+            id: product_b.id,
+            name: "Bananes",
+          },
+        }
+      end
+      subject{ Sets::ModelSet.new(Spree::Product, [product_a, product_b], collection_attributes:) }
+
+      it 'errors are aggregated' do
+        subject.save
+
+        expect(subject.errors.full_messages).to eq ["Product Name can't be blank"]
+
+        expect(subject.invalid).to     include product_a
+        expect(subject.invalid).to_not include product_b
+      end
+    end
   end
 end

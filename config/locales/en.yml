@@ -821,8 +821,11 @@ en:
       table:
         save: Save changes
         reset: Discard changes
-      bulk_update:
-        success: "Products successfully updated"
+      bulk_update: # TODO: fix these
+        success: "Products successfully updated" #TODO: add count
+        products_have_error:
+          one: "%{count} product has an error."
+          other: "%{count} products have an error."
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened

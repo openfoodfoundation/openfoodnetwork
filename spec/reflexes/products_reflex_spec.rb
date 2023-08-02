@@ -79,7 +79,7 @@ describe ProductsReflex, type: :reflex do
     end
 
     describe "error messages" do
-      it "summarises duplicate error messages" do
+      it "summarises error messages" do
         params = {
           "products" => [
             {
@@ -94,13 +94,13 @@ describe ProductsReflex, type: :reflex do
         }
 
         reflex = run_reflex(:bulk_update, params:)
-        expect(reflex.get(:error_msg)).to eq "Product Name can't be blank"
+        expect(reflex.get(:error_msg)).to include "2 products have errors"
 
         # # WTF
         # expect{ reflex(:bulk_update, params:) }.to broadcast(
         #   replace: {
         #     selector: "#products-form",
-        #     html: /Product Name can't be blank/,
+        #     html: /2 products have errors/,
         #   },
         #   broadcast: nil
         # )
