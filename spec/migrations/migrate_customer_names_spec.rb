@@ -13,11 +13,14 @@ describe MigrateCustomerNames do
 
   before do
     Spree::Preference.create(value: true,
-                             value_type: "boolean", key: "/enterprise/show_customer_names_to_suppliers/#{enterprise1.id}")
+                             value_type: "boolean",
+                             key: "/enterprise/show_customer_names_to_suppliers/#{enterprise1.id}")
     Spree::Preference.create(value: false,
-                             value_type: "boolean", key: "/enterprise/show_customer_names_to_suppliers/#{enterprise2.id}")
+                             value_type: "boolean",
+                             key: "/enterprise/show_customer_names_to_suppliers/#{enterprise2.id}")
     Spree::Preference.create(value: true,
-                             value_type: "boolean", key: "/enterprise/show_customer_names_to_suppliers/#{enterprise4.id}")
+                             value_type: "boolean",
+                             key: "/enterprise/show_customer_names_to_suppliers/#{enterprise4.id}")
   end
 
   describe '#migrate_customer_names_preferences!' do

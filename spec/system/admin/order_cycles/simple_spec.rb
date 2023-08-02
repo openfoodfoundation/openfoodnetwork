@@ -342,8 +342,9 @@ describe '
 
           expect(page).to have_field 'order_cycle_name', with: oc.name
           select2_select schedule.name, from: 'schedule_ids'
-          expect(page).not_to have_select2 'schedule_ids',
-                                           with_options: [schedule_of_other_managed_distributor.name]
+          expect(page)
+            .not_to have_select2 'schedule_ids',
+                                 with_options: [schedule_of_other_managed_distributor.name]
 
           click_button 'Save and Next'
 
@@ -619,10 +620,14 @@ describe '
       oc = OrderCycle.last
 
       expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
-      expect(page).to have_input "oc#{oc.id}[orders_open_at]",
-                                 value: Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0).strftime("%F %T %z"), visible: false
-      expect(page).to have_input "oc#{oc.id}[orders_close_at]",
-                                 value: Time.zone.local(2040, 10, 24, 17, 0o0, 0o0).strftime("%F %T %z"), visible: false
+      expect(page)
+        .to have_input "oc#{oc.id}[orders_open_at]",
+                       value: Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0).strftime("%F %T %z"),
+                       visible: false
+      expect(page)
+        .to have_input "oc#{oc.id}[orders_close_at]",
+                       value: Time.zone.local(2040, 10, 24, 17, 0o0, 0o0).strftime("%F %T %z"),
+                       visible: false
 
       # And it should have some variants selected
       expect(oc.exchanges.incoming.first.variants.count).to eq(2)
@@ -729,10 +734,14 @@ describe '
       oc = OrderCycle.last
 
       expect(page).to have_input "oc#{oc.id}[name]", value: "Plums & Avos"
-      expect(page).to have_input "oc#{oc.id}[orders_open_at]",
-                                 value: Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0).strftime("%F %T %z"), visible: false
-      expect(page).to have_input "oc#{oc.id}[orders_close_at]",
-                                 value: Time.zone.local(2040, 10, 24, 17, 0o0, 0o0).strftime("%F %T %z"), visible: false
+      expect(page)
+        .to have_input "oc#{oc.id}[orders_open_at]",
+                       value: Time.zone.local(2040, 10, 17, 0o6, 0o0, 0o0).strftime("%F %T %z"),
+                       visible: false
+      expect(page)
+        .to have_input "oc#{oc.id}[orders_close_at]",
+                       value: Time.zone.local(2040, 10, 24, 17, 0o0, 0o0).strftime("%F %T %z"),
+                       visible: false
 
       # And it should have a variant selected
       expect(oc.exchanges.incoming.first.variants).to eq([v2])

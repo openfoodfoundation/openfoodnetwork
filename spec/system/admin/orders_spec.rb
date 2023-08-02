@@ -256,7 +256,8 @@ describe '
 
       let!(:order_not_empty_no_address) {
         create(:order_with_line_items, line_items_count: 1, user: customer2,
-                                       distributor: distributor2, bill_address_id: nil, ship_address_id: nil)
+                                       distributor: distributor2, bill_address_id: nil,
+                                       ship_address_id: nil)
       }
 
       before do

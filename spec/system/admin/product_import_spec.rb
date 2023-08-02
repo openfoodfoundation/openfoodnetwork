@@ -62,14 +62,11 @@ describe "Product Import" do
 
     it "validates entries and saves them if they are all valid and allows viewing new items " \
        "in Bulk Products" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
-                "shipping_category_id"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g",
-                shipping_category_id_str]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg",
-                shipping_category_id_str]
-      end
+      csv_data = <<~CSV
+        name, producer, category, on_hand, price, units, unit_type, shipping_category_id
+        Carrots, User Enterprise, Vegetables, 5, 3.20, 500, g, #{shipping_category_id_str}
+        Potatoes, User Enterprise, Vegetables, 6, 6.50, 1, kg, #{shipping_category_id_str}
+      CSV
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
@@ -108,17 +105,14 @@ describe "Product Import" do
     end
 
     it "displays info about invalid entries but no save button if all items are invalid" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
-                "shipping_category_id"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g",
-                shipping_category_id_str]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "5.50", "1", "kg",
-                shipping_category_id_str]
-        csv << ["Bad Carrots", "Unkown Enterprise", "Mouldy vegetables", "666", "3.20", "", "g",
-                shipping_category_id_str]
-        csv << ["Bad Potatoes", "", "Vegetables", "6", "6", "6", ""]
-      end
+      csv_data = <<~CSV
+        name, producer, category, on_hand, price, units, unit_type, shipping_category_id
+        Carrots, User Enterprise, Vegetables, 5, 3.20, 500, g, #{shipping_category_id_str}
+        Carrots, User Enterprise, Vegetables, 5, 5.50, 1, kg, #{shipping_category_id_str}
+        Bad Carrots, Unkown Enterprise, Mouldy vegetables, 666, 3.20, , g, \
+          #{shipping_category_id_str}
+        Bad Potatoes, , Vegetables, 6, 6, 6, ,
+      CSV
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
@@ -138,14 +132,12 @@ describe "Product Import" do
     end
 
     it "displays info about inconsistent variant unit names, within the same product" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
-                "variant_unit_name", "shipping_category_id"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "50", "3.20", "250", "", "Bag",
-                shipping_category_id_str]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "50", "6.40", "500", "", "Big-Bag",
-                shipping_category_id_str]
-      end
+      csv_data = <<~CSV
+        name, producer, category, on_hand, price, units, unit_type, variant_unit_name, \
+          shipping_category_id
+        Carrots, User Enterprise, Vegetables, 50, 3.20, 250, , Bag, #{shipping_category_id_str}
+        Carrots, User Enterprise, Vegetables, 50, 6.40, 500, , Big-Bag, #{shipping_category_id_str}
+      CSV
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
@@ -164,12 +156,11 @@ describe "Product Import" do
     end
 
     it "handles saving of named tax and shipping categories" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
-                "tax_category", "shipping_category"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g",
-                tax_category.name, shipping_category.name]
-      end
+      csv_data = <<~CSV
+        name, producer, category, on_hand, price, units, unit_type, tax_category, shipping_category
+        Carrots, User Enterprise, Vegetables, 5, 3.20, 500, g, #{tax_category.name}, \
+          #{shipping_category.name}
+      CSV
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
@@ -195,14 +186,11 @@ describe "Product Import" do
     end
 
     it "records a timestamp on import that can be viewed and filtered under Bulk Edit Products" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
-                "shipping_category_id"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "5", "3.20", "500", "g",
-                shipping_category_id_str]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6.50", "1", "kg",
-                shipping_category_id_str]
-      end
+      csv_data = <<~CSV
+        name, producer, category, on_hand, price, units, unit_type, shipping_category_id
+        Carrots, User Enterprise, Vegetables, 5, 3.20, 500, g, #{shipping_category_id_str}
+        Potatoes, User Enterprise, Vegetables, 6, 6.50, 1, kg, #{shipping_category_id_str}
+      CSV
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
@@ -244,12 +232,10 @@ describe "Product Import" do
     end
 
     it "can reset product stock to zero for products not present in the CSV" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
-                "shipping_category_id"]
-        csv << ["Carrots", "User Enterprise", "Vegetables", "500", "3.20", "500", "g",
-                shipping_category_id_str]
-      end
+      csv_data = <<~CSV
+        name, producer, category, on_hand, price, units, unit_type, shipping_category_id
+        Carrots, User Enterprise, Vegetables, 500, 3.20, 500, g, #{shipping_category_id_str}
+      CSV
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
@@ -274,16 +260,15 @@ describe "Product Import" do
 
     it "can save a new product and variant of that product at the same time, " \
        "add variant to existing product" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
-                "display_name", "shipping_category_id"]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "5", "3.50", "500", "g", "Small Bag",
-                shipping_category_id_str]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "5.50", "2000", "g", "Big Bag",
-                shipping_category_id_str]
-        csv << ["Beans", "User Enterprise", "Vegetables", "7", "2.50", "250", "g", nil,
-                shipping_category_id_str]
-      end
+      csv_data = <<~CSV
+        name, producer, category, on_hand, price, units, unit_type, display_name, \
+          shipping_category_id
+        Potatoes, User Enterprise, Vegetables, 5, 3.50, 500, g, Small Bag, \
+          #{shipping_category_id_str}
+        Potatoes, User Enterprise, Vegetables, 6, 5.50, 2000, g, Big Bag, \
+          #{shipping_category_id_str}
+        Beans, User Enterprise, Vegetables, 7, 2.50, 250, g, , #{shipping_category_id_str}
+      CSV
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
@@ -315,14 +300,12 @@ describe "Product Import" do
     end
 
     it "can import items into inventory" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units"]
-        csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", "5", "3.20", "500"]
-        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50",
-                "500"]
-        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "2001", "1.50",
-                "500"]
-      end
+      csv_data = <<~CSV
+        name, distributor, producer, category, on_hand, price, units
+        Beans, Another Enterprise, User Enterprise, Vegetables, 5, 3.20, 500
+        Sprouts, Another Enterprise, User Enterprise, Vegetables, 6, 6.50, 500
+        Cabbage, Another Enterprise, User Enterprise, Vegetables, 2001, 1.50, 500
+      CSV
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
@@ -377,13 +360,10 @@ describe "Product Import" do
     it "handles a unit of kg for inventory import" do
       product = create(:simple_product, supplier: enterprise, on_hand: 100, name: 'Beets',
                                         unit_value: '1000', variant_unit_scale: 1000)
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "unit_type",
-                "units", "on_demand"]
-        csv << ["Beets", "Another Enterprise", "User Enterprise", "Vegetables", nil, "3.20", "kg",
-                "1", "1"]
-      end
-
+      csv_data = <<~CSV
+        name, distributor, producer, category, on_hand, price, unit_type, units, on_demand
+        Beets, Another Enterprise, User Enterprise, Vegetables, , 3.20, kg, 1, 1
+      CSV
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
@@ -421,12 +401,11 @@ describe "Product Import" do
                                 variant_unit_name: "Bag")
       }
       it "are sucessfully imported to inventory" do
-        csv_data = CSV.generate do |csv|
-          csv << ["name", "distributor", "producer", "category", "on_hand", "price", "unit_type",
-                  "units", "on_demand", "variant_unit_name"]
-          csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", "", "3.3",
-                  "kg", "1", "1", "Bag"]
-        end
+        csv_data = <<~CSV
+          name, distributor, producer, category, on_hand, price, unit_type, units, on_demand, \
+            variant_unit_name
+          Aubergine, Another Enterprise, User Enterprise, Vegetables, , 3.3, kg, 1, 1, Bag
+        CSV
 
         File.write('/tmp/test.csv', csv_data)
         visit main_app.admin_product_import_path
@@ -455,14 +434,12 @@ describe "Product Import" do
       end
 
       it "displays the appropriate error message, when variant unit names are inconsistent" do
-        csv_data = CSV.generate do |csv|
-          csv << ["name", "distributor", "producer", "category", "on_hand", "price", "unit_type",
-                  "units", "on_demand", "variant_unit_name"]
-          csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", "", "3.3",
-                  "kg", "1", "1", "Bag"]
-          csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", "", "6.6",
-                  "kg", "1", "1", "Big-Bag"]
-        end
+        csv_data = <<~CSV
+          name, distributor, producer, category, on_hand, price, unit_type, units, on_demand, \
+            variant_unit_name
+          Aubergine, Another Enterprise, User Enterprise, Vegetables, , 3.3, kg, 1, 1, Bag
+          Aubergine, Another Enterprise, User Enterprise, Vegetables, , 6.6, kg, 1, 1, Big-Bag
+        CSV
 
         File.write('/tmp/test.csv', csv_data)
         visit main_app.admin_product_import_path
@@ -483,16 +460,13 @@ describe "Product Import" do
       end
 
       it "invalidates units value if 0 or non-numeric" do
-        csv_data = CSV.generate do |csv|
-          csv << ["name", "distributor", "producer", "category", "on_hand", "price", "unit_type",
-                  "units", "on_demand", "variant_unit_name"]
-          csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", "", "3.3",
-                  "kg", "1", "1", "Bag"]
-          csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", "3", "3.0",
-                  "kg", "0", "1", "Bag"]
-          csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "1", "4.3",
-                  "kg", "XX", "", "Bag"]
-        end
+        csv_data = <<~CSV
+          name, distributor, producer, category, on_hand, price, unit_type, units, on_demand, \
+            variant_unit_name
+          Aubergine, Another Enterprise, User Enterprise, Vegetables, , 3.3, kg, 1, 1, Bag
+          Beans, Another Enterprise, User Enterprise, Vegetables, 3, 3.0, kg, 0, 1, Bag
+          Cabbage, Another Enterprise, User Enterprise, Vegetables, 1, 4.3, kg, XX, , Bag
+        CSV
 
         File.write('/tmp/test.csv', csv_data)
         visit main_app.admin_product_import_path
@@ -513,16 +487,13 @@ describe "Product Import" do
       end
 
       it "Price validation" do
-        csv_data = CSV.generate do |csv|
-          csv << ["name", "distributor", "producer", "category", "on_hand", "price", "unit_type",
-                  "units", "on_demand", "variant_unit_name"]
-          csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", "", "3.3",
-                  "kg", "1", "1", "Bag"]
-          csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", "3", "",
-                  "kg", "2", "1", "Bag"]
-          csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "1", "t6",
-                  "kg", "3", "", "Bag"]
-        end
+        csv_data = <<~CSV
+          name, distributor, producer, category, on_hand, price, unit_type, units, on_demand, \
+            variant_unit_name
+          Aubergine, Another Enterprise, User Enterprise, Vegetables, , 3.3, kg, 1, 1, Bag
+          Beans, Another Enterprise, User Enterprise, Vegetables, 3, , kg, 2, 1, Bag
+          Cabbage, Another Enterprise, User Enterprise, Vegetables, 1, t6, kg, 3, , Bag
+        CSV
 
         File.write('/tmp/test.csv', csv_data)
         visit main_app.admin_product_import_path
@@ -544,18 +515,13 @@ describe "Product Import" do
     end
 
     it "handles on_demand and on_hand validations with inventory - nill or empty values" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units",
-                "on_demand"]
-        csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", nil, "3.20", "500",
-                "1"]
-        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50",
-                "500", "0"]
-        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "", "1.50",
-                "500", nil]
-        csv << ["Aubergine", "Another Enterprise", "User Enterprise", "Vegetables", nil, "1.50",
-                "500", ""]
-      end
+      csv_data = <<~CSV
+        name, distributor, producer, category, on_hand, price, units, on_demand
+        Beans, Another Enterprise, User Enterprise, Vegetables, , 3.20, 500, 1
+        Sprouts, Another Enterprise, User Enterprise, Vegetables, 6, 6.50, 500, 0
+        Cabbage, Another Enterprise, User Enterprise, Vegetables, , 1.50, 500,
+        Aubergine, Another Enterprise, User Enterprise, Vegetables, , 1.50, 500,
+      CSV
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
@@ -570,8 +536,10 @@ describe "Product Import" do
       expect(page).to have_selector '.invalid-count', text: "2"
 
       find('div.header-description', text: 'Items contain errors').click
-      expect(page).to have_content "line 4: Cabbage - On_hand incorrect value - On_demand incorrect value"
-      expect(page).to have_content "line 5: Aubergine - On_hand incorrect value - On_demand incorrect value"
+      expect(page)
+        .to have_content "line 4: Cabbage - On_hand incorrect value - On_demand incorrect value"
+      expect(page)
+        .to have_content "line 5: Aubergine - On_hand incorrect value - On_demand incorrect value"
       expect(page).to have_content "Imported file contains invalid entries"
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
       expect(page).not_to have_content "line 2: Beans"
@@ -579,18 +547,18 @@ describe "Product Import" do
     end
 
     it "handles on_demand and on_hand validations - non-numeric values" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "on_demand", "units", "unit_type",
-                "display_name", "shipping_category_id"]
-        csv << ["Beans", "User Enterprise", "Vegetables", "invalid", "3.50", "1", "0.5", "g", "Small Bag",
-                shipping_category_id_str]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6", "invalid", "5", "kg", "Big Bag",
-                shipping_category_id_str]
-        csv << ["Cabbage", "User Enterprise", "Vegetables", "invalid", "1.5", "invalid", "1", "kg", "Bag",
-                shipping_category_id_str]
-        csv << ["Aubergine", "User Enterprise", "Vegetables", nil, "1.5", "invalid", "1", "kg", "Bag",
-                shipping_category_id_str]
-      end
+      csv_data = <<~CSV
+        name, producer, category, on_hand, price, on_demand, units, unit_type, display_name, \
+          shipping_category_id
+        Beans, User Enterprise, Vegetables, invalid, 3.50, 1, 0.5, g, Small Bag, \
+          #{shipping_category_id_str}
+        Potatoes, User Enterprise, Vegetables, 6, 6, invalid, 5, kg, Big Bag, \
+          #{shipping_category_id_str}
+        Cabbage, User Enterprise, Vegetables, invalid, 1.5, invalid, 1, kg, Bag, \
+          #{shipping_category_id_str}
+        Aubergine, User Enterprise, Vegetables, , 1.5, invalid, 1, kg, Bag, \
+          #{shipping_category_id_str}
+      CSV
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
@@ -604,8 +572,10 @@ describe "Product Import" do
       expect(page).to have_selector '.invalid-count', text: "2"
 
       find('div.header-description', text: 'Items contain errors').click
-      expect(page).to have_content "line 4: Cabbage ( Bag ) - On_hand incorrect value - On_demand incorrect value"
-      expect(page).to have_content "line 5: Aubergine ( Bag ) - On_hand incorrect value - On_demand incorrect value"
+      expect(page).to have_content "line 4: Cabbage ( Bag ) - On_hand incorrect value - " \
+                                   "On_demand incorrect value"
+      expect(page).to have_content "line 5: Aubergine ( Bag ) - On_hand incorrect value - " \
+                                   "On_demand incorrect value"
       expect(page).to have_content "Imported file contains invalid entries"
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
       expect(page).not_to have_content "line 2: Beans"
@@ -613,18 +583,16 @@ describe "Product Import" do
     end
 
     it "handles on_demand and on_hand validations - negative values" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "on_demand", "units", "unit_type",
-                "display_name", "shipping_category_id"]
-        csv << ["Beans", "User Enterprise", "Vegetables", "-1", "3.50", "1", "500", "g", "Small Bag",
-                shipping_category_id_str]
-        csv << ["Potatoes", "User Enterprise", "Vegetables", "6", "6", "-1", "500", "g", "Big Bag",
-                shipping_category_id_str]
-        csv << ["Cabbage", "User Enterprise", "Vegetables", "-1", "1.5", "-1", "1", "kg", "Bag",
-                shipping_category_id_str]
-        csv << ["Aubergine", "User Enterprise", "Vegetables", nil, "1.5", "-1", "1", "kg", "Bag",
-                shipping_category_id_str]
-      end
+      csv_data = <<~CSV
+        name, producer, category, on_hand, price, on_demand, units, unit_type, display_name, \
+          shipping_category_id
+        Beans, User Enterprise, Vegetables, -1, 3.50, 1, 500, g, Small Bag, \
+          #{shipping_category_id_str}
+        Potatoes, User Enterprise, Vegetables, 6, 6, -1, 500, g, Big Bag, \
+          #{shipping_category_id_str}
+        Cabbage, User Enterprise, Vegetables, -1, 1.5, -1, 1, kg, Bag, #{shipping_category_id_str}
+        Aubergine, User Enterprise, Vegetables, , 1.5, -1, 1, kg, Bag, #{shipping_category_id_str}
+      CSV
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path
@@ -638,8 +606,10 @@ describe "Product Import" do
       expect(page).to have_selector '.invalid-count', text: "2"
 
       find('div.header-description', text: 'Items contain errors').click
-      expect(page).to have_content "line 4: Cabbage ( Bag ) - On_hand incorrect value - On_demand incorrect value"
-      expect(page).to have_content "line 5: Aubergine ( Bag ) - On_hand incorrect value - On_demand incorrect value"
+      expect(page).to have_content "line 4: Cabbage ( Bag ) - On_hand incorrect value - " \
+                                   "On_demand incorrect value"
+      expect(page).to have_content "line 5: Aubergine ( Bag ) - On_hand incorrect value - " \
+                                   "On_demand incorrect value"
       expect(page).to have_content "Imported file contains invalid entries"
       expect(page).to have_no_selector 'input[type=submit][value="Save"]'
       expect(page).not_to have_content "line 2: Beans"
@@ -647,16 +617,12 @@ describe "Product Import" do
     end
 
     it "handles on_demand and on_hand validations with inventory - With both values set" do
-      csv_data = CSV.generate do |csv|
-        csv << ["name", "distributor", "producer", "category", "on_hand", "price", "units",
-                "on_demand"]
-        csv << ["Beans", "Another Enterprise", "User Enterprise", "Vegetables", "6", "3.20", "500",
-                "1"]
-        csv << ["Sprouts", "Another Enterprise", "User Enterprise", "Vegetables", "6", "6.50",
-                "500", "1"]
-        csv << ["Cabbage", "Another Enterprise", "User Enterprise", "Vegetables", "0", "1.50",
-                "500", "1"]
-      end
+      csv_data = <<~CSV
+        name, distributor, producer, category, on_hand, price, units, on_demand
+        Beans, Another Enterprise, User Enterprise, Vegetables, 6, 3.20, 500, 1
+        Sprouts, Another Enterprise, User Enterprise, Vegetables, 6, 6.50, 500, 1
+        Cabbage, Another Enterprise, User Enterprise, Vegetables, 0, 1.50, 500, 1
+      CSV
       File.write('/tmp/test.csv', csv_data)
 
       visit main_app.admin_product_import_path

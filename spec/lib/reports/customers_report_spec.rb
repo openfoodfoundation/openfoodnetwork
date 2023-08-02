@@ -91,11 +91,13 @@ module Reporting
               let!(:sm) { create(:shipping_method, distributors: [d]) }
               let!(:o1) {
                 create(:order_with_totals_and_distribution, :completed, distributor: d,
-                                                                        bill_address: a, shipping_method: sm)
+                                                                        bill_address: a,
+                                                                        shipping_method: sm)
               }
               let!(:o2) {
                 create(:order_with_totals_and_distribution, :completed, distributor: d,
-                                                                        bill_address: a, shipping_method: sm)
+                                                                        bill_address: a,
+                                                                        shipping_method: sm)
               }
               before do
                 [o1, o2].each do |order|
@@ -106,13 +108,14 @@ module Reporting
               it "returns only one row per customer" do
                 expect(subject.query_result).to match_array [o1]
                 expect(subject.table_rows.size).to eq(1)
-                expect(subject.table_rows).to eq([[
-                                                   a.firstname, a.lastname,
-                                                   [a.address1, a.address2, a.city].join(" "),
-                                                   o1.email, a.phone, d.name,
-                                                   [d.address.address1, d.address.address2, d.address.city].join(" "),
-                                                   o1.shipping_method.name
-                                                 ]])
+                expect(subject.table_rows)
+                  .to eq([[
+                           a.firstname, a.lastname,
+                           [a.address1, a.address2, a.city].join(" "),
+                           o1.email, a.phone, d.name,
+                           [d.address.address1, d.address.address2, d.address.city].join(" "),
+                           o1.shipping_method.name
+                         ]])
               end
 
               context "orders from different hubs" do
@@ -120,25 +123,27 @@ module Reporting
                 let!(:sm2) { create(:shipping_method, distributors: [d2]) }
                 let!(:o2) {
                   create(:order_with_totals_and_distribution, :completed, distributor: d2,
-                                                                          bill_address: a, shipping_method: sm2)
+                                                                          bill_address: a,
+                                                                          shipping_method: sm2)
                 }
 
                 it "returns one row per customer per hub" do
                   expect(subject.query_result.size).to eq(2)
                   expect(subject.table_rows.size).to eq(2)
-                  expect(subject.table_rows).to eq([[
-                                                     a.firstname, a.lastname,
-                                                     [a.address1, a.address2, a.city].join(" "),
-                                                     o1.email, a.phone, d.name,
-                                                     [d.address.address1, d.address.address2, d.address.city].join(" "),
-                                                     o1.shipping_method.name
-                                                   ], [
-                                                     a.firstname, a.lastname,
-                                                     [a.address1, a.address2, a.city].join(" "),
-                                                     o2.email, a.phone, d2.name,
-                                                     [d2.address.address1, d2.address.address2, d2.address.city].join(" "),
-                                                     o2.shipping_method.name
-                                                   ]])
+                  expect(subject.table_rows)
+                    .to eq([[
+                             a.firstname, a.lastname,
+                             [a.address1, a.address2, a.city].join(" "),
+                             o1.email, a.phone, d.name,
+                             [d.address.address1, d.address.address2, d.address.city].join(" "),
+                             o1.shipping_method.name
+                           ], [
+                             a.firstname, a.lastname,
+                             [a.address1, a.address2, a.city].join(" "),
+                             o2.email, a.phone, d2.name,
+                             [d2.address.address1, d2.address.address2, d2.address.city].join(" "),
+                             o2.shipping_method.name
+                           ]])
                 end
               end
 
@@ -146,7 +151,8 @@ module Reporting
                 let!(:sm2) { create(:shipping_method, distributors: [d], name: "Bike") }
                 let!(:o2) {
                   create(:order_with_totals_and_distribution, :completed, distributor: d,
-                                                                          bill_address: a, shipping_method: sm2)
+                                                                          bill_address: a,
+                                                                          shipping_method: sm2)
                 }
                 before do
                   o2.select_shipping_method(sm2.id)

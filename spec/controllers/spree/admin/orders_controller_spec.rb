@@ -249,7 +249,8 @@ describe Spree::Admin::OrdersController, type: :controller do
         context "and no errors" do
           it "updates distribution charges and redirects to payments  page" do
             expect_any_instance_of(Spree::Order).to receive(:recreate_all_fees!)
-            allow_any_instance_of(Spree::Order).to receive(:ensure_available_shipping_rates).and_return(true)
+            allow_any_instance_of(Spree::Order)
+              .to receive(:ensure_available_shipping_rates).and_return(true)
 
             expect {
               spree_put :update, params

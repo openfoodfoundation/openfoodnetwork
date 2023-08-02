@@ -38,7 +38,8 @@ describe '
     visit spree.admin_orders_path
   end
 
-  shared_examples "when the enable_localized_number preference" do |adjustment_label, adjustment_amount, tax_category, tax, tax_total|
+  shared_examples "when the enable_localized_number preference" \
+    do |adjustment_label, adjustment_amount, tax_category, tax, tax_total|
     it "creates the adjustment and calculates taxes" do
       # When I go to the adjustments page for the order
       page.find('td.actions a.icon-edit').click

@@ -204,8 +204,9 @@ describe OrderCycle do
     end
 
     it "reports on the variants exchanged" do
-      expect(oc.variants).to match_array [p0.variants.first, p1.variants.first, p2.variants.first, p2_v, p1_v_visible,
-                                          p1_v_hidden]
+      expect(oc.variants)
+        .to match_array [p0.variants.first, p1.variants.first, p2.variants.first, p2_v,
+                         p1_v_visible, p1_v_hidden]
     end
 
     it "returns the correct count of variants" do
@@ -217,8 +218,8 @@ describe OrderCycle do
     end
 
     it "reports on the variants distributed" do
-      expect(oc.distributed_variants).to match_array [p1.variants.first, p2.variants.first, p2_v, p1_v_visible,
-                                                      p1_v_hidden]
+      expect(oc.distributed_variants)
+        .to match_array [p1.variants.first, p2.variants.first, p2_v, p1_v_visible, p1_v_hidden]
     end
 
     it "reports on the products distributed by a particular distributor" do

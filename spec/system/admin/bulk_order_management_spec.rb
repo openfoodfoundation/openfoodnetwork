@@ -264,8 +264,9 @@ describe '
 
       it "displays a column for user's full name" do
         expect(page).to have_selector "th.full_name", text: "NAME"
-        expect(page).to have_selector "td.full_name",
-                                      text: "#{o1.bill_address.last_name}, #{o1.bill_address.first_name}"
+        expect(page)
+          .to have_selector "td.full_name",
+                            text: "#{o1.bill_address.last_name}, #{o1.bill_address.first_name}"
         expect(page).to have_selector "td.full_name", text: ""
       end
 
@@ -1033,7 +1034,9 @@ describe '
             visit_bulk_order_management
             expect(page).to have_selector "a.delete-line-item", count: 2
             find("tr#li_#{li2.id} a.delete-line-item").click
-            expect(page).to have_content "This operation will result in one or more empty orders, which will be cancelled. Do you wish to proceed?"
+            expect(page)
+              .to have_content "This operation will result in one or more empty orders, " \
+                               "which will be cancelled. Do you wish to proceed?"
             expect(page).to have_checked_field "Restock Items: return all items to stock"
           end
 
@@ -1057,7 +1060,8 @@ describe '
             end.to_not have_enqueued_mail(Spree::OrderMailer, :cancel_email)
           end
 
-          it "the user can confirm + wants to send email confirmation : line item is then deleted, order is canceled and email is sent" do
+          it "the user can confirm + wants to send email confirmation : line item is " \
+             "then deleted, order is canceled and email is sent" do
             expect_any_instance_of(Spree::StockLocation).to receive(:restock).at_least(1).times
             expect do
               within(".modal") do
@@ -1069,7 +1073,8 @@ describe '
             end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
           end
 
-          it "the user can confirm + uncheck the restock option: line item is then deleted and order is canceled without retocking" do
+          it "the user can confirm + uncheck the restock option: line item is then deleted and " \
+             "order is canceled without retocking" do
             expect_any_instance_of(Spree::StockLocation).to_not receive(:restock)
             expect do
               within(".modal") do

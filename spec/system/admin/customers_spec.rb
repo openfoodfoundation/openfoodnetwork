@@ -37,7 +37,8 @@ describe 'Customers' do
         # Prompts for a hub for a list of my managed enterprises
         expect(page)
           .to have_select2 "shop_id", with_options: [managed_distributor1.name,
-                                                     managed_distributor2.name], without_options: [unmanaged_distributor.name]
+                                                     managed_distributor2.name],
+                                      without_options: [unmanaged_distributor.name]
 
         select2_select managed_distributor2.name, from: "shop_id"
 
