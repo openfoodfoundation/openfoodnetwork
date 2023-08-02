@@ -276,8 +276,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
       context "with line items from a single supplier" do
         it 'generates the report and displays fees for the respective suppliers' do
-          pending "removal from distributor and coordinator fees from results"
-
           login_as distributor_owner
           visit admin_reports_path
           click_on "Enterprise Fees With Tax Report By Producer"
@@ -315,8 +313,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           end
 
           it "should filter by distributor and order cycle" do
-            pending "removal from distributor and coordinator fees from results"
-
             page.find("#s2id_autogen1").click
             find('li', text: distributor.name).click # selects Distributor
 
@@ -495,8 +491,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           end
 
           it "should filter by distributor and order cycle" do
-            pending "removal from distributor and coordinator fees from results"
-
             page.find("#s2id_autogen1").click
             find('li', text: distributor.name).click # selects Distributor
 
@@ -531,8 +525,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           end
 
           it "should filter by producer" do
-            pending "removal from distributor and coordinator fees from results"
-
             page.find("#s2id_supplier_id_in").click
             find('li', text: supplier2.name).click
 
@@ -705,8 +697,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
     context "with line items from a single supplier" do
       it 'generates the report and displays fees for the respective suppliers' do
-        pending "removal from distributor and coordinator fees from results"
-
         login_as distributor_owner
         visit admin_reports_path
         click_on "Enterprise Fees With Tax Report By Producer"
@@ -849,8 +839,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       }
 
       it 'should list all the tax rates' do
-        pending "removal from distributor and coordinator fees from results"
-
         login_as distributor_owner
         visit admin_reports_path
         click_on "Enterprise Fees With Tax Report By Producer"
@@ -950,8 +938,6 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       }
 
       it 'should list all the tax rates' do
-        pending "removal from distributor and coordinator fees from results"
-
         login_as distributor_owner
         visit admin_reports_path
         click_on "Enterprise Fees With Tax Report By Producer"

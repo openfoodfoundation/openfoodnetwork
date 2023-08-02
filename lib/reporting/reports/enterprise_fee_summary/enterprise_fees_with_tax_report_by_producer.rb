@@ -85,6 +85,7 @@ module Reporting
             query = order
               .all_adjustments
               .enterprise_fee
+              .where(originator_id: enterprise_fees_related_to_incoming_exchanges_ids(order))
 
             if enterprise_fee_filters?
               query = query.where(originator_id: enterprise_fee_filtered_ids)
@@ -99,6 +100,15 @@ module Reporting
                 }
               end
           end
+        end
+
+        def enterprise_fees_related_to_incoming_exchanges_ids(order)
+          order
+            .order_cycle
+            .exchanges
+            .incoming
+            .flat_map(&:enterprise_fee_ids)
+            .uniq
         end
 
         def join_tax_rate
