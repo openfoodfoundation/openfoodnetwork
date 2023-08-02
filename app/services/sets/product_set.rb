@@ -13,9 +13,10 @@ module Sets
     end
 
     def save
-      @collection_hash.each_value.all? do |product_attributes|
+      # Attempt to save all records, collecting model errors.
+      @collection_hash.each_value.map do |product_attributes|
         update_product_attributes(product_attributes)
-      end
+      end.all?
     end
 
     def collection_attributes=(attributes)

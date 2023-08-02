@@ -229,6 +229,33 @@ describe Sets::ProductSet do
           expect(product_set.collection[0]).to eq product_a.reload
           expect(product_set.collection[1]).to eq product_b.reload
         end
+
+        context 'first product has an error' do
+          let(:collection_hash) do
+            {
+              0 => {
+                id: product_a.id,
+                name: "", # Product Name can't be blank
+              },
+              1 => {
+                id: product_b.id,
+                name: "Bananes",
+              },
+            }
+          end
+
+          it 'continues to update subsequent products' do
+            product_set.save
+
+            # Errors are logged on the model
+            first_item = product_set.collection[0]
+            expect(first_item.errors.full_messages.to_sentence).to eq "Product Name can't be blank"
+            expect(first_item.name).to eq ""
+
+            # Subsequent product was updated
+            expect(product_b.reload.name).to eq "Bananes"
+          end
+        end
       end
     end
   end
