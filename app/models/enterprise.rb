@@ -461,7 +461,7 @@ class Enterprise < ApplicationRecord
     return unless image.variable?
 
     image_variant_url_for(image.variant(name))
-  rescue ActiveStorage::Error => e
+  rescue ActiveStorage::Error, MiniMagick::Error, ActionView::Template::Error => e
     Bugsnag.notify "Enterprise ##{id} #{image.try(:name)} error: #{e.message}"
     Rails.logger.error(e.message)
 
