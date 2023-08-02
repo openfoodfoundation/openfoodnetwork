@@ -40,8 +40,8 @@ export default class extends Controller {
   }
 
   simulateClick(tab, panel) {
-    this.updateActiveTab(tab);
     this.updateActivePanel(panel);
+    this.updateActiveTab(tab);
   }
 
   changeActivePanel(event) {
@@ -49,9 +49,7 @@ export default class extends Controller {
   }
 
   updateActivePanel(panel_id) {
-    const newActivePanel = this.panelTargets.find(
-      (panel) => panel.id == panel_id
-    );
+    const newActivePanel = this.panelTargets.find((panel) => panel.id == panel_id);
 
     if (newActivePanel === undefined) {
       // No panel found
@@ -84,8 +82,6 @@ export default class extends Controller {
   }
 
   get currentActivePanel() {
-    return this.panelTargets.find(
-      (panel) => panel.id == `${this.currentActiveTab.id}_panel`
-    );
+    return this.panelTargets.find((panel) => panel.id == `${this.currentActiveTab.id}_panel`);
   }
 }
