@@ -221,12 +221,12 @@ table#listing_enterprise_groups {
   h4,
   h5,
   h6 {
-    color: $warning-red;
+    color: $color-error;
   }
 }
 
 .field_with_errors > input {
-  border-color: red;
+  border-color: $color-error;
 }
 
 // textAngular wysiwyg
@@ -269,7 +269,7 @@ text-angular {
 }
 
 span.required {
-  color: red;
+  color: $color-5;
   font-size: 110%;
 }
 
