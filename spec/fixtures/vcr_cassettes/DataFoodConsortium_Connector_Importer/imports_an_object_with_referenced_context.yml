@@ -1,0 +1,155 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://static.datafoodconsortium.org/ontologies/context.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/ld+json;profile=http://www.w3.org/ns/json-ld#context, application/ld+json;q=0.9,
+        text/html;q=0.8, application/xhtml+xml;q=0.8, application/json;q=0.5
+      User-Agent:
+      - Ruby RDF.rb/3.2.11
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2287'
+      Server:
+      - GitHub.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Last-Modified:
+      - Fri, 30 Jun 2023 11:40:56 GMT
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"649ebf48-8ef"
+      Expires:
+      - Mon, 24 Jul 2023 04:38:43 GMT
+      Cache-Control:
+      - max-age=600
+      X-Proxy-Cache:
+      - MISS
+      X-Github-Request-Id:
+      - 24DC:04FB:2AEA02:31C021:64BDFDF3
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 24 Jul 2023 05:44:37 GMT
+      Via:
+      - 1.1 varnish
+      Age:
+      - '0'
+      X-Served-By:
+      - cache-mel11282-MEL
+      X-Cache:
+      - HIT
+      X-Cache-Hits:
+      - '1'
+      X-Timer:
+      - S1690177478.716470,VS0,VE228
+      Vary:
+      - Accept-Encoding
+      X-Fastly-Request-Id:
+      - 4abc71bc0dad77693c85526b60655799fab0500a
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "@context": {
+            "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+            "skos" : "http://www.w3.org/2004/02/skos/core#",
+            "dfc": "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#",
+            "dc": "http://purl.org/dc/elements/1.1/#",
+            "dfc-b": "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#",
+            "dfc-p": "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_ProductGlossary.owl#",
+            "dfc-t": "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_TechnicalOntology.owl#",
+            "dfc-m": "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#",
+            "dfc-pt": "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#",
+            "dfc-f": "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#",
+           "ontosec": "http://www.semanticweb.org/ontologies/2008/11/OntologySecurity.owl#",
+            "dfc-p:hasUnit":{
+              "@type":"@id"
+            },
+            "dfc-b:hasUnit":{
+              "@type":"@id"
+            },
+            "dfc-b:hasQuantity":{
+              "@type":"@id"
+            },
+            "dfc-p:hasType":{
+              "@type":"@id"
+            },
+            "dfc-b:hasType":{
+              "@type":"@id"
+            },
+            "dfc-b:references":{
+              "@type":"@id"
+            },
+            "dfc-b:referencedBy":{
+              "@type":"@id"
+            },
+            "dfc-b:offeres":{
+              "@type":"@id"
+            },
+            "dfc-b:supplies":{
+              "@type":"@id"
+            },
+            "dfc-b:defines":{
+              "@type":"@id"
+            },
+            "dfc-b:affiliates":{
+              "@type":"@id"
+            },
+            "dfc-b:hasCertification":{
+              "@type":"@id"
+            },
+            "dfc-b:manages":{
+              "@type":"@id"
+            },
+            "dfc-b:offeredThrough":{
+              "@type":"@id"
+            },
+            "dfc-b:hasBrand":{
+              "@type":"@id"
+            },
+            "dfc-b:hasGeographicalOrigin":{
+              "@type":"@id"
+            },
+            "dfc-b:hasClaim":{
+              "@type":"@id"
+            },
+            "dfc-b:hasAllergenDimension":{
+              "@type":"@id"
+            },
+            "dfc-b:hasNutrientDimension":{
+              "@type":"@id"
+            },
+            "dfc-b:hasPhysicalDimension":{
+              "@type":"@id"
+            },
+            "dfc:owner":{
+              "@type":"@id"
+            },
+            "dfc-t:hostedBy":{
+              "@type":"@id"
+            },
+            "dfc-t:hasPivot":{
+              "@type":"@id"
+            },
+            "dfc-t:represent":{
+              "@type":"@id"
+            }
+          }
+        }
+  recorded_at: Mon, 24 Jul 2023 05:44:37 GMT
+recorded_with: VCR 6.2.0

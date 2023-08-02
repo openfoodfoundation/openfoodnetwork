@@ -7,7 +7,7 @@ module DfcProvider
 
     def show
       enterprise = EnterpriseBuilder.enterprise(current_enterprise)
-      render json: DfcLoader.connector.export(
+      render json: DfcIo.export(
         enterprise,
         *enterprise.suppliedProducts,
         *enterprise.catalogItems,
