@@ -16,7 +16,7 @@ nav {
 
       &.inactive {
         cursor: default;
-        color: $disabled-dark;
+        color: $dark-grey;
       }
     }
 
@@ -52,7 +52,7 @@ nav {
       }
 
       .pagination-gap {
-        color: $disabled-dark;
+        color: $dark-grey;
       }
 
       .pagination-page {

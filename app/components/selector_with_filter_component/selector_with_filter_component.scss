@@ -37,11 +37,11 @@
 
   .selector-wrapper {
     .super-selector-search {
-      border-bottom: 1px solid $disabled-light;
+      border-bottom: 1px solid $light-grey;
       padding: 10px 5px;
 
       input {
-        border: 1px solid $disabled-light;
+        border: 1px solid $light-grey;
         box-sizing: border-box;
         border-radius: 4px;
         width: 100%;

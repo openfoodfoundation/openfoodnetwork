@@ -19,6 +19,13 @@
     padding: 4px;
     border-collapse: separate; // This is needed for the outer padding. Also should be helpful to give more flexibility of borders between rows.
 
+    tr:hover {
+      th,
+      td {
+        background-color: $light-grey;
+      }
+    }
+
     th,
     td {
       padding: $padding-tbl-cell;

@@ -2,7 +2,7 @@
   position: relative;
 
   .selector-main {
-    border: 1px solid $disabled-light;
+    border: 1px solid $light-grey;
     height: 3em;
     position: relative;
     cursor: pointer;
@@ -30,7 +30,7 @@
         height: 0;
         border-left: 5px solid transparent;
         border-right: 5px solid transparent;
-        border-top: 5px solid $disabled-light;
+        border-top: 5px solid $light-grey;
       }
     }
   }
@@ -42,7 +42,7 @@
     z-index: 1;
     background-color: white;
     margin-top: -1px;
-    border: 1px solid $disabled-light;
+    border: 1px solid $light-grey;
 
     .selector-items {
       overflow-y: auto;
@@ -51,7 +51,7 @@
       .selector-item {
         padding-left: 10px;
         padding-right: 10px;
-        border-bottom: 1px solid $disabled-light;
+        border-bottom: 1px solid $light-grey;
         position: relative;
         height: 3em;
         line-height: 3em;
