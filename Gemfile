@@ -103,8 +103,8 @@ gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
-gem "cable_ready", "5.0.0.rc2"
-gem "stimulus_reflex", "3.5.0.rc2"
+gem "cable_ready", "5.0.1"
+gem "stimulus_reflex", "3.5.0.rc3"
 
 gem 'combine_pdf'
 gem 'wicked_pdf'
