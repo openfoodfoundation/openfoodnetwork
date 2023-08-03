@@ -336,8 +336,8 @@ module Spree
       describe "EnterpriseFee adjustments" do
         let(:zone)             { create(:zone_with_member) }
         let(:fee_tax_rate)     {
-          create(:tax_rate, included_in_price: true, calculator: ::Calculator::DefaultTax.new, zone: zone,
-                            amount: 0.1)
+          create(:tax_rate, included_in_price: true, calculator: ::Calculator::DefaultTax.new,
+                            zone: zone, amount: 0.1)
         }
         let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
 
@@ -364,7 +364,9 @@ module Spree
           context "when enterprise fees are taxed per-order" do
             let(:enterprise_fee) {
               create(:enterprise_fee, enterprise: coordinator, tax_category: fee_tax_category,
-                                      calculator: ::Calculator::FlatRate.new(preferred_amount: 50.0))
+                                      calculator: ::Calculator::FlatRate.new(
+                                        preferred_amount: 50.0
+                                      ))
             }
 
             describe "when the tax rate includes the tax in the price" do
@@ -425,7 +427,7 @@ module Spree
           end
         end
 
-        context "when enterprise fees inherit their tax_category from the product they are applied to" do
+        context "when enterprise fees inherit tax_category from the product they are applied to" do
           let(:product_tax_rate) {
             create(:tax_rate, included_in_price: true, calculator: ::Calculator::DefaultTax.new,
                               zone: zone, amount: 0.2)
@@ -440,7 +442,9 @@ module Spree
           context "when enterprise fees are taxed per-order" do
             let(:enterprise_fee) {
               create(:enterprise_fee, enterprise: coordinator, inherits_tax_category: false,
-                                      calculator: ::Calculator::FlatRate.new(preferred_amount: 50.0))
+                                      calculator: ::Calculator::FlatRate.new(
+                                        preferred_amount: 50.0
+                                      ))
             }
 
             before do

@@ -35,7 +35,7 @@ module Admin
 
         context "json" do
           context "where ransack conditions are specified" do
-            it "loads order cycles that closed within the past month, and orders without a close_at date" do
+            it "loads order cycles closed within past month, and orders w/o a close_at date" do
               get :index, as: :json
               expect(assigns(:collection)).to_not include oc1, oc2
               expect(assigns(:collection)).to include oc3, oc4
@@ -45,7 +45,7 @@ module Admin
           context "where q[orders_close_at_gt] is set" do
             let(:q) { { orders_close_at_gt: 45.days.ago } }
 
-            it "loads order cycles that closed after the specified date, and orders without a close_at date" do
+            it "loads order cycles closed after specified date, and orders w/o a close_at date" do
               get :index, as: :json, params: { q: q }
               expect(assigns(:collection)).to_not include oc1
               expect(assigns(:collection)).to include oc2, oc3, oc4
@@ -97,7 +97,9 @@ module Admin
             it "renders the set_coordinator template and sets a flash error" do
               get :new, params: { coordinator_id: distributor3.id }
               expect(response).to render_template :set_coordinator
-              expect(flash[:error]).to eq "You don't have permission to create an order cycle coordinated by that enterprise"
+              expect(flash[:error])
+                .to eq "You don't have permission to create an order cycle " \
+                       "coordinated by that enterprise"
             end
           end
         end
@@ -122,10 +124,10 @@ module Admin
           let!(:distributor) { create(:distributor_enterprise) }
           let(:order_cycle) { create(:simple_order_cycle, coordinator: distributor) }
           before do
-            order_cycle.exchanges.create! sender: distributor, receiver: distributor, incoming: true,
-                                          receival_instructions: 'A', tag_list: "A"
-            order_cycle.exchanges.create! sender: distributor, receiver: distributor, incoming: false,
-                                          pickup_instructions: 'B', tag_list: "B"
+            order_cycle.exchanges.create! sender: distributor, receiver: distributor,
+                                          incoming: true, receival_instructions: 'A', tag_list: "A"
+            order_cycle.exchanges.create! sender: distributor, receiver: distributor,
+                                          incoming: false, pickup_instructions: 'B', tag_list: "B"
             controller_login_as_enterprise_user([distributor])
           end
 
@@ -281,7 +283,9 @@ module Admin
           allow(form_mock).to receive(:save) { true }
 
           spree_put :update, params.
-            merge(order_cycle: { preferred_product_selection_from_coordinator_inventory_only: true })
+            merge(order_cycle: {
+                    preferred_product_selection_from_coordinator_inventory_only: true
+                  })
         end
 
         it "can update preference automatic_notifications" do
@@ -308,15 +312,19 @@ module Admin
                           incoming: true, variants: [v])
       }
       let!(:outgoing_exchange) {
-        create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: hub, incoming: false,
-                          variants: [v])
+        create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: hub,
+                          incoming: false, variants: [v])
       }
 
       let(:allowed) { { incoming_exchanges: [], outgoing_exchanges: [] } }
       let(:restricted) {
         { name: 'some name', orders_open_at: 1.day.from_now.to_s, orders_close_at: 1.day.ago.to_s }
       }
-      let(:params) { { format: :json, id: order_cycle.id, order_cycle: allowed.merge(restricted) } }
+      let(:params) {
+        {
+          format: :json, id: order_cycle.id, order_cycle: allowed.merge(restricted)
+        }
+      }
       let(:form_mock) { instance_double(OrderCycleForm, save: true) }
 
       before { allow(controller).to receive(:spree_current_user) { user } }
@@ -371,7 +379,8 @@ module Admin
             spree_put :bulk_update, format: :json
           end.to change(oc, :orders_open_at).by(0)
           json_response = JSON.parse(response.body)
-          expect(json_response['errors']).to eq 'Hm, something went wrong. No order cycle data found.'
+          expect(json_response['errors'])
+            .to eq 'Hm, something went wrong. No order cycle data found.'
         end
 
         context "when a validation error occurs" do
@@ -457,7 +466,9 @@ module Admin
         it "displays an error message when we attempt to delete it" do
           get :destroy, params: { id: oc.id }
           expect(response).to redirect_to admin_order_cycles_path
-          expect(flash[:error]).to eq 'That order cycle has been selected by a customer and cannot be deleted. To prevent customers from accessing it, please close it instead.'
+          expect(flash[:error])
+            .to eq 'That order cycle has been selected by a customer and cannot be deleted. ' \
+                   'To prevent customers from accessing it, please close it instead.'
         end
       end
 
@@ -467,7 +478,9 @@ module Admin
         it "displays an error message when we attempt to delete it" do
           get :destroy, params: { id: oc.id }
           expect(response).to redirect_to admin_order_cycles_path
-          expect(flash[:error]).to eq 'That order cycle is linked to a schedule and cannot be deleted. Please unlink or delete the schedule first.'
+          expect(flash[:error])
+            .to eq 'That order cycle is linked to a schedule and cannot be deleted. ' \
+                   'Please unlink or delete the schedule first.'
         end
       end
 

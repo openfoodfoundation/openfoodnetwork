@@ -50,7 +50,8 @@ module Spree
 
     delegate :product, :variant_unit, :unit_description, :display_name, :display_as, to: :variant
 
-    attr_accessor :skip_stock_check, :target_shipment # Allows manual skipping of Stock::AvailabilityValidator
+    # Allows manual skipping of Stock::AvailabilityValidator
+    attr_accessor :skip_stock_check, :target_shipment
 
     attribute :restock_item, type: :boolean, default: true
 

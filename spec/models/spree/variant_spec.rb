@@ -371,7 +371,7 @@ describe Spree::Variant do
                                       visible: true )
             }
 
-            it "lists any variants that are not listed as visible=false only for the relevant enterprise" do
+            it "lists any variants not listed as visible=false only for the relevant enterprise" do
               expect(variants).to include new_variant, visible_variant
               expect(variants).to_not include hidden_variant
             end
@@ -494,9 +494,8 @@ describe Spree::Variant do
       order_cycle = double(:order_cycle)
       variant = Spree::Variant.new
 
-      expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).to receive(:fees_for).with(variant) {
-                                                                            23
-                                                                          }
+      expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator)
+        .to receive(:fees_for).with(variant) { 23 }
 
       expect(variant.fees_for(distributor, order_cycle)).to eq(23)
     end
@@ -509,9 +508,8 @@ describe Spree::Variant do
       variant = Spree::Variant.new
       fees = double(:fees)
 
-      expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator).to receive(:fees_by_type_for).with(variant) {
-                                                                            fees
-                                                                          }
+      expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator)
+        .to receive(:fees_by_type_for).with(variant) { fees }
 
       expect(variant.fees_by_type_for(distributor, order_cycle)).to eq(fees)
     end
@@ -719,7 +717,8 @@ describe Spree::Variant do
       }
 
       it "requests the new value from OptionValueName" do
-        expect_any_instance_of(VariantUnits::OptionValueNamer).to receive(:name).exactly(1).times.and_call_original
+        expect_any_instance_of(VariantUnits::OptionValueNamer)
+          .to receive(:name).exactly(1).times.and_call_original
         v.update(unit_value: 10, unit_description: 'foo')
         expect(v.unit_presentation).to eq "10g foo"
       end

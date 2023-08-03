@@ -205,7 +205,8 @@ module Spree
       end
 
       it "finds line items from a given order cycle" do
-        expect(LineItem.from_order_cycle(oc_order.order_cycle).first.id).to eq oc_order.line_items.first.id
+        expect(LineItem.from_order_cycle(oc_order.order_cycle).first.id)
+          .to eq oc_order.line_items.first.id
       end
     end
 
@@ -338,9 +339,8 @@ module Spree
 
           it "draws stock from the variant override" do
             expect(vo.reload.count_on_hand).to eq 3
-            expect{ line_item.increment!(:quantity) }.to_not change{
-                                                               Spree::Variant.find(variant.id).on_hand
-                                                             }
+            expect{ line_item.increment!(:quantity) }
+              .to_not change{ Spree::Variant.find(variant.id).on_hand }
             expect(vo.reload.count_on_hand).to eq 2
           end
         end

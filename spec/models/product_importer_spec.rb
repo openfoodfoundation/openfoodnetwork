@@ -779,8 +779,8 @@ describe ProductImport::ProductImporter do
         CSV.generate do |csv|
           csv << [" name ", "\ndisplay_name\n", "\rdistributor\r", "\tproducer\t",
                   " on_hand ", " price ", " units "]
-          csv << [" Oats ", "\nPorridge Oats\n", "\r#{enterprise2.name}\r", "\t#{enterprise.name}\t",
-                  " 900 ", " 1.0 ", " 500 "]
+          csv << [" Oats ", "\nPorridge Oats\n", "\r#{enterprise2.name}\r",
+                  "\t#{enterprise.name}\t", " 900 ", " 1.0 ", " 500 "]
         end
       }
       let(:importer) { import_data csv_data, import_into: 'inventories' }
