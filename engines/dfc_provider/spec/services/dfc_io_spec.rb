@@ -15,11 +15,11 @@ describe DfcIo do
       expect(DfcIo.export).to eq ""
     end
 
-    it "embeds the context" do
+    it "refers to the DFC context URI" do
       json = DfcIo.export(person)
       result = JSON.parse(json)
 
-      expect(result["@context"]).to be_a Hash
+      expect(result["@context"]).to eq "https://www.datafoodconsortium.org"
     end
 
     it "uses the context to shorten URIs" do
