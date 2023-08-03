@@ -8,10 +8,19 @@
           = "#{t('spree.admin.orders.invoice.issued_on')}: "
           = l @order.invoice_date
     %tr{ valign: "top" }
+      %td{ :align => "left", colspan: 3 }
+        %h6
+          = "#{t('spree.admin.orders.invoice.order_number')}: "
+          = @order.number
+    %tr{ valign: "top" }
+      %td{ :align => "left", colspan: 3 }
+        %h6
+          = "#{t('spree.admin.orders.invoice.invoice_number')}: "
+          = @order.invoice_number
+    %tr{ valign: "top" }
       %td{ :align => "left" }
         %h4
-          = "#{t('spree.admin.orders.invoice.tax_invoice')}: "
-          = "#{@order.number}"
+          = "#{t('spree.admin.orders.invoice.tax_invoice')}"
       %td{width: "10%" }
         &nbsp;
       %td{ :align => "right" }

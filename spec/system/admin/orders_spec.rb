@@ -208,7 +208,7 @@ describe '
       end
 
       it "filter by invoice number" do
-        fill_in "Invoice number:", with: order2.number
+        fill_in "Order number:", with: order2.number
 
         page.find('.filter-actions .button[type=submit]').click
 
@@ -835,7 +835,7 @@ describe '
 
       # Specify each filters
       uncheck 'Only show complete orders'
-      fill_in "Invoice number", with: "R123456"
+      fill_in "Order number", with: "R123456"
       tomselect_multiselect order_cycle.name, from: 'q[order_cycle_id_in][]'
       tomselect_multiselect distributor.name, from: 'q[distributor_id_in][]'
       tomselect_search_and_select shipping_method.name, from: 'shipping_method_id'
@@ -854,7 +854,7 @@ describe '
 
       # Check every filters to be equal
       expect(find_field("Only show complete orders")).not_to be_checked
-      expect(find_field("Invoice number").value).to eq "R123456"
+      expect(find_field("Order number").value).to eq "R123456"
       expect(find("#shipping_method_id-ts-control .item").text).to eq shipping_method.name
       expect(find("#q_state_eq-ts-control .item").text).to eq "complete"
       expect(find("#q_distributor_id_in").value).to eq [distributor.id.to_s]
@@ -870,7 +870,7 @@ describe '
     it "and clear filters" do
       find("#clear_filters_button").click
       expect(find_field("Only show complete orders")).to be_checked
-      expect(find_field("Invoice number").value).to eq ""
+      expect(find_field("Order number").value).to eq ""
       expect(find("#shipping_method_id").value).to be_empty
       expect(find("#q_state_eq").value).to be_empty
       expect(find("#q_distributor_id_in").value).to be_empty

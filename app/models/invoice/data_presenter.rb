@@ -5,6 +5,7 @@ class Invoice
     attr_reader :invoice
 
     delegate :data, :date, to: :invoice
+    delegate :number, to: :invoice, prefix: true
 
     FINALIZED_NON_SUCCESSFUL_STATES = %w(canceled returned).freeze
 
