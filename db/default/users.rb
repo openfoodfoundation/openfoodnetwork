@@ -58,6 +58,10 @@ def create_admin_user
     admin = Spree::User.new(attributes)
     admin.skip_confirmation!
     admin.skip_confirmation_notification!
+
+    # The default domain example.com is not resolved by all nameservers.
+    ValidEmail2::Address.define_method(:valid_mx?) { true }
+
     if admin.save
       role = Spree::Role.find_or_create_by(name: 'admin')
       admin.spree_roles << role
