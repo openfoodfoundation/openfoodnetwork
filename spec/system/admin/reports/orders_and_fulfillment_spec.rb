@@ -176,6 +176,36 @@ describe "Orders And Fulfillment" do
           expect(rows[3]).to have_content "Ave Zebu"
         end
       end
+
+      context "When filtering by product" do
+        let(:variant1) { create(:variant, product: product, unit_description: "Big") }
+        let(:variant3) { create(:variant) }
+
+        before do
+          create(:line_item_with_shipment, variant: variant1, quantity: 1, order: order1)
+          create(:line_item_with_shipment, variant: variant2, quantity: 3, order: order1)
+          create(:line_item_with_shipment, variant: variant1, quantity: 2, order: order2)
+          create(:line_item_with_shipment, variant: variant3, quantity: 1, order: order2)
+        end
+
+        it "includes only selected product" do
+          tomselect_search_and_select(variant3.sku, from: "variant_id_in[]")
+          click_button 'Go'
+
+          rows = find("table.report__table").all("tbody tr")
+          table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
+          expect(table).to have_content(variant3.product.name)
+          expect(table).not_to have_content(product.name)
+
+          # Check the product dropdown still show the selected product
+          selected_product = page
+            .find("[name='variant_id_in[]']")
+            .sibling(".ts-wrapper")
+            .first(".ts-control")
+            .first(".item")
+          expect(selected_product.text).to have_content(variant3.product.name)
+        end
+      end
     end
 
     describe "Order Cycle Supplier" do
@@ -508,6 +538,7 @@ describe "Orders And Fulfillment" do
             expect(page).to have_checked_field('Summary Row')
           end
         end
+
         context "Columns to show" do
           it "should store columns to show for every report separately" do
             # Step 1: Update report rendering options on two reports
@@ -542,6 +573,7 @@ describe "Orders And Fulfillment" do
           end
         end
       end
+
       context "Revisiting a report after logout" do
         context "Display options" do
           it "should store display options" do

@@ -12,3 +12,9 @@
   .alpha.two.columns= label_tag nil, t(:report_customers_cycle)
   .omega.fourteen.columns
     = f.select(:order_cycle_id_in, report_order_cycle_options(@data.order_cycles), {selected: params.dig(:q, :order_cycle_id_in)}, {class: "select2 fullwidth", multiple: true})
+.row
+  .alpha.two.columns= label_tag :add_variant_id, Spree.t(:name_or_sku)
+  .omega.fourteen.columns
+    - variant_json = @variant_serialized.present? ? @variant_serialized.to_json() : {}
+    = select_tag(:variant_id_in, params[:variant_id_in], { class: "fullwidth", multiple: true , data: { controller: "select-variant", "select-variant-selected-value": "#{variant_json}" } })
+
