@@ -1005,9 +1005,9 @@ describe '
     end
   end
 
-  describe "Legal Invoices - Invoices feature enabled" do
+  describe "Legal Invoices" do
     before do
-      Flipper.enable(:invoices, user)
+      Flipper.enable(:invoices)
       login_as user
     end
 
@@ -1123,7 +1123,7 @@ describe '
           visit spree.edit_admin_order_path(order_empty)
         end
 
-        it "not displays the invoice tab" do
+        it "should not display the invoice tab" do
           expect(page).to have_content "Cart".upcase
           expect(page).not_to have_content "Invoices".upcase
         end
@@ -1139,46 +1139,7 @@ describe '
           visit spree.edit_admin_order_path(order4)
         end
 
-        it "not displays the invoice tab" do
-          expect(page).to have_content "Payment".upcase
-          expect(page).not_to have_content "Invoices".upcase
-        end
-      end
-    end
-  end
-
-  describe "Legal Invoices - Invoices feature not enabled" do
-    before do
-      login_as user
-    end
-    describe "for order states" do
-      context "resumed" do
-        let!(:order2) {
-          create(:order_with_totals_and_distribution, user: user, distributor:,
-                                                      order_cycle: order_cycle, state: 'resumed',
-                                                      payment_state: 'balance_due')
-        }
-        before do
-          visit spree.edit_admin_order_path(order2)
-        end
-
-        it "displays the invoice tab" do
-          expect(page).to have_content "Resumed".upcase
-          expect(page).not_to have_content "Invoices".upcase
-        end
-      end
-
-      context "payment" do
-        let!(:order4) do
-          create(:order_ready_for_payment, user: user, distributor: distributor,
-                                           order_cycle: order_cycle,
-                                           payment_state: 'balance_due')
-        end
-        before do
-          visit spree.edit_admin_order_path(order4)
-        end
-
-        it "not displays the invoice tab" do
+        it "should not display the invoice tab" do
           expect(page).to have_content "Payment".upcase
           expect(page).not_to have_content "Invoices".upcase
         end

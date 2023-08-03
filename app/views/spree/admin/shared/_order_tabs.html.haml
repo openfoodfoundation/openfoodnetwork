@@ -61,11 +61,10 @@
         %li{ class: adjustments_classes }
           = link_to_with_icon 'icon-cogs', t(:adjustments), spree.admin_order_adjustments_url(@order)
 
-        - if feature?(:invoices, spree_current_user)
-          - if @order.can_show_invoice?
-            - invoices_classes = "active" if current == 'Invoices'
-            %li{ class: invoices_classes }
-              = link_to_with_icon 'icon-cogs', t(:invoices), spree.admin_order_invoices_url(@order)
+        - if feature?(:invoices) && @order.can_show_invoice?
+          - invoices_classes = "active" if current == 'Invoices'
+          %li{ class: invoices_classes }
+            = link_to_with_icon 'icon-cogs', t(:invoices), spree.admin_order_invoices_url(@order)
 
         - if @order.completed?
           - authorizations_classes = "active" if current == "Return Authorizations"
