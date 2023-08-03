@@ -65,7 +65,6 @@ def create_admin_user
     if admin.save
       role = Spree::Role.find_or_create_by(name: 'admin')
       admin.spree_roles << role
-      admin.save
       say "New admin user persisted!"
     else
       say "There was some problems with persisting new admin user:"
