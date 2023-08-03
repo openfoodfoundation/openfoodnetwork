@@ -6,7 +6,7 @@ module PermittedAttributes
       [
         :id, :sku, :on_hand, :on_demand,
         :price, :unit_value, :unit_description,
-        :display_name, :display_as,
+        :display_name, :display_as, :tax_category_id,
         :weight, :height, :width, :depth
       ]
     end

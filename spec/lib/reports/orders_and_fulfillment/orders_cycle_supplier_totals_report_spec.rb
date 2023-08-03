@@ -105,12 +105,15 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals do
   end
 
   context "with a VAT/GST-free supplier" do
-    before(:each) do
+    let(:tax_category) { create(:tax_category) }
+
+    before do
       supplier.update(charges_sales_tax: false)
+      order.line_items.first.variant.update(tax_category_id: tax_category.id)
     end
 
     it "has a variant row when product belongs to a tax category" do
-      product_tax_category_name = order.line_items.first.variant.product.tax_category.name
+      product_tax_category_name = order.line_items.first.variant.tax_category.name
 
       supplier_name_field = report_table.first[0]
       supplier_vat_status_field = report_table.first[-2]
@@ -122,7 +125,8 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals do
     end
 
     it "has a variant row when product doesn't belong to a tax category" do
-      order.line_items.first.variant.product.update(tax_category_id: nil)
+      order.line_items.first.variant.update(tax_category_id: nil)
+
       supplier_name_field = report_table.first[0]
       supplier_vat_status_field = report_table.first[-2]
       product_tax_category_field = report_table.first[-1]
@@ -134,12 +138,15 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals do
   end
 
   context "with a VAT/GST-enabled supplier" do
+    let(:tax_category) { create(:tax_category) }
+
     before(:each) do
       supplier.update(charges_sales_tax: true)
+      order.line_items.first.variant.update(tax_category_id: tax_category.id)
     end
 
     it "has a variant row when product belongs to a tax category" do
-      product_tax_category_name = order.line_items.first.variant.product.tax_category.name
+      product_tax_category_name = order.line_items.first.variant.tax_category.name
 
       supplier_name_field = report_table.first[0]
       supplier_vat_status_field = report_table.first[-2]
@@ -151,7 +158,8 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals do
     end
 
     it "has a variant row when product doesn't belong to a tax category" do
-      order.line_items.first.variant.product.update(tax_category_id: nil)
+      order.line_items.first.variant.update(tax_category_id: nil)
+
       supplier_name_field = report_table.first[0]
       supplier_vat_status_field = report_table.first[-2]
       product_tax_category_field = report_table.first[-1]

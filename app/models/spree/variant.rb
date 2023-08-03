@@ -28,9 +28,10 @@ module Spree
                        supplier_name).join('_or_')}_cont".freeze
 
     belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product'
+    belongs_to :tax_category, class_name: 'Spree::TaxCategory'
 
-    delegate_belongs_to :product, :name, :description, :tax_category_id, :shipping_category_id,
-                        :meta_keywords, :tax_category, :shipping_category
+    delegate_belongs_to :product, :name, :description, :shipping_category_id,
+                        :meta_keywords, :shipping_category
 
     has_many :inventory_units, inverse_of: :variant
     has_many :line_items, inverse_of: :variant
@@ -61,8 +62,9 @@ module Spree
     localize_number :price, :weight
 
     validate :check_currency
-    validates :price, numericality: { greater_than_or_equal_to: 0 },
-                      presence: true
+    validates :price, numericality: { greater_than_or_equal_to: 0 }, presence: true
+    validates :tax_category, presence: true,
+                             if: proc { Spree::Config[:products_require_tax_category] }
 
     validates :unit_value, presence: true, if: ->(variant) {
       %w(weight volume).include?(variant.product&.variant_unit)
@@ -164,6 +166,14 @@ module Spree
                                             currency || Spree::Config[:currency]).
                                           where('spree_prices.amount IS NOT NULL').
                                           select("spree_variants.id"))
+    end
+
+    def tax_category
+      if self[:tax_category_id].nil?
+        TaxCategory.find_by(is_default: true)
+      else
+        TaxCategory.find(self[:tax_category_id])
+      end
     end
 
     def price_with_fees(distributor, order_cycle)

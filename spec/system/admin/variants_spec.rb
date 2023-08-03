@@ -290,53 +290,56 @@ describe '
     expect(variant.reload.deleted_at).not_to be_nil
   end
 
-  it "editing display name for a variant" do
-    product = create(:simple_product)
-    variant = product.variants.first
+  describe "editing variant attributes" do
+    let!(:variant) { create(:variant) }
+    let(:product) { variant.product }
+    let!(:tax_category) { create(:tax_category) }
 
-    # When I view the variant
-    login_as_admin
-    visit spree.admin_product_variants_path product
-    page.find('table.index .icon-edit').click
+    before do
+      login_as_admin
+      visit spree.edit_admin_product_variant_path product, variant
+    end
 
-    # It should allow the display name to be changed
-    expect(page).to have_field "variant_display_name"
-    expect(page).to have_field "variant_display_as"
+    it "editing display name for a variant" do
+      # It should allow the display name to be changed
+      expect(page).to have_field "variant_display_name"
+      expect(page).to have_field "variant_display_as"
 
-    # When I update the fields and save the variant
-    fill_in "variant_display_name", with: "Display Name"
-    fill_in "variant_display_as", with: "Display As This"
-    click_button 'Update'
-    expect(page).to have_content %(Variant "#{product.name}" has been successfully updated!)
+      # When I update the fields and save the variant
+      fill_in "variant_display_name", with: "Display Name"
+      fill_in "variant_display_as", with: "Display As This"
+      click_button 'Update'
+      expect(page).to have_content %(Variant "#{product.name}" has been successfully updated!)
 
-    # Then the displayed values should have been saved
-    expect(variant.reload.display_name).to eq("Display Name")
-    expect(variant.display_as).to eq("Display As This")
-  end
+      # Then the displayed values should have been saved
+      expect(variant.reload.display_name).to eq("Display Name")
+      expect(variant.display_as).to eq("Display As This")
+    end
 
-  it "editing weight for a variant" do
-    product = create(:simple_product)
-    variant = product.variants.first
+    it "editing weight for a variant" do
+      # It should allow the weight to be changed
+      expect(page).to have_field "unit_value_human"
 
-    # When I view the variant
-    login_as_admin
-    visit spree.admin_product_variants_path product
+      # When I update the fields and save the variant with invalid value
+      fill_in "unit_value_human", with: "1.234"
+      click_button 'Update'
+      expect(page).not_to have_content %(Variant "#{product.name}" has been successfully updated!)
 
-    page.find('table.index .icon-edit').click
+      fill_in "unit_value_human", with: "1.23"
+      click_button 'Update'
+      expect(page).not_to have_content %(Variant "#{product.name}" has been successfully updated!)
 
-    # It should allow the weight to be changed
-    expect(page).to have_field "unit_value_human"
+      # Then the displayed values should have been saved
+      expect(variant.reload.unit_value).to eq(1.23)
+    end
 
-    # When I update the fields and save the variant with invalid value
-    fill_in "unit_value_human", with: "1.234"
-    click_button 'Update'
-    expect(page).not_to have_content %(Variant "#{product.name}" has been successfully updated!)
+    context "editing variant tax category" do
+      it "editing variant tax category" do
+        select2_select tax_category.name, from: 'variant_tax_category_id'
+        click_button 'Update'
 
-    fill_in "unit_value_human", with: "1.23"
-    click_button 'Update'
-    expect(page).not_to have_content %(Variant "#{product.name}" has been successfully updated!)
-
-    # Then the displayed values should have been saved
-    expect(variant.reload.unit_value).to eq(1.23)
+        expect(variant.reload.tax_category).to eq tax_category
+      end
+    end
   end
 end

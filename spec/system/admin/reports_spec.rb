@@ -294,7 +294,7 @@ describe '
     }
     let(:enterprise_fee) {
       create(:enterprise_fee, enterprise: user1.enterprises.first,
-                              tax_category: product2.tax_category,
+                              tax_category: product2.variants.first.tax_category,
                               calculator: Calculator::FlatRate.new(preferred_amount: 120.0))
     }
     let(:order_cycle) {
@@ -588,12 +588,12 @@ describe '
 
     let(:enterprise_fee1) {
       create(:enterprise_fee, enterprise: user1.enterprises.first,
-                              tax_category: product2.tax_category,
+                              tax_category: product2.variants.first.tax_category,
                               calculator: Calculator::FlatRate.new(preferred_amount: 10))
     }
     let(:enterprise_fee2) {
       create(:enterprise_fee, enterprise: user1.enterprises.first,
-                              tax_category: product2.tax_category,
+                              tax_category: product2.variants.first.tax_category,
                               calculator: Calculator::FlatRate.new(preferred_amount: 20))
     }
     let(:order_cycle) {

@@ -7,6 +7,8 @@ module Spree
     class VariantsController < ::Admin::ResourceController
       belongs_to 'spree/product'
 
+      before_action :load_data, only: [:new, :edit]
+
       def index
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
@@ -106,6 +108,12 @@ module Spree
           :q, :distributor_id, :order_cycle_id, :schedule_id, :eligible_for_subscriptions,
           :include_out_of_stock
         ).to_h.with_indifferent_access
+      end
+
+      private
+
+      def load_data
+        @tax_categories = TaxCategory.order(:name)
       end
     end
   end

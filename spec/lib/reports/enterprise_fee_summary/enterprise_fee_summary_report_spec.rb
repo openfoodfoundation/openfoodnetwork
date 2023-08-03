@@ -31,9 +31,9 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
 
   # Set up other requirements for ordering.
   let!(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
-  let!(:product) { create(:product, tax_category: product_tax_category) }
+  let!(:product) { create(:product) }
   let!(:product_tax_category) { create(:tax_category, name: "Sample Product Tax") }
-  let!(:variant) { prepare_variant }
+  let!(:variant) { prepare_variant(tax_category: product_tax_category) }
 
   # Create customers.
   let!(:customer) { create(:customer, first_name: "Sample", last_name: "Customer") }
@@ -54,7 +54,8 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
     end
 
     let!(:variant) do
-      prepare_variant(incoming_exchange_fees: variant_incoming_exchange_fees,
+      prepare_variant(tax_category: product_tax_category,
+                      incoming_exchange_fees: variant_incoming_exchange_fees,
                       outgoing_exchange_fees: variant_outgoing_exchange_fees)
     end
 

@@ -121,7 +121,7 @@ module Spree
     def copy_tax_category
       return unless variant
 
-      self.tax_category = variant.product.tax_category
+      self.tax_category = variant.tax_category
     end
 
     def copy_dimensions
@@ -192,7 +192,7 @@ module Spree
     end
 
     def tax_rates
-      product.tax_category&.tax_rates || []
+      variant&.tax_category&.tax_rates || []
     end
 
     def price_with_adjustments

@@ -190,7 +190,7 @@ describe "Product Import" do
       expect(page).to have_no_selector '.updated-count'
 
       carrots = Spree::Product.find_by(name: 'Carrots')
-      expect(carrots.tax_category).to eq tax_category
+      expect(carrots.variants.first.tax_category).to eq tax_category
       expect(carrots.shipping_category).to eq shipping_category
     end
 

@@ -82,10 +82,8 @@ describe "Sales Tax Totals By order" do
     distributor.shipping_methods << shipping_method
     distributor.payment_methods << payment_method
 
-    product.update!(
-      tax_category_id: tax_category.id,
-      supplier_id: supplier.id
-    )
+    product.update!(supplier_id: supplier.id)
+    variant.update!(tax_category_id: tax_category.id)
 
     order.update!(
       number: 'ORDER_NUMBER_1',

@@ -433,7 +433,7 @@ module Spree
           let(:product_tax_category) { create(:tax_category, tax_rates: [product_tax_rate]) }
 
           before do
-            variant.product.update_attribute(:tax_category_id, product_tax_category.id)
+            variant.update_attribute(:tax_category_id, product_tax_category.id)
             order.recreate_all_fees!
           end
 
@@ -527,8 +527,8 @@ module Spree
         create(:tax_rate, included_in_price: included_in_price, zone: zone,
                           calculator: ::Calculator::FlatRate.new(preferred_amount: 0.1))
       }
-      let(:product) { create(:product, tax_category: tax_category) }
-      let(:variant) { product.variants.first }
+      let(:variant) { create(:variant, tax_category: tax_category) }
+      let(:product) { variant.product }
 
       describe "tax adjustment creation" do
         before do

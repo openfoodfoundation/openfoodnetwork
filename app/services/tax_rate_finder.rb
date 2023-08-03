@@ -43,7 +43,7 @@ class TaxRateFinder
 
   def line_item_tax_category(enterprise_fee, line_item)
     if enterprise_fee.inherits_tax_category?
-      line_item.product.tax_category
+      line_item.variant.tax_category
     else
       enterprise_fee.tax_category
     end

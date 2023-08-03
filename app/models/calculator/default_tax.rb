@@ -45,7 +45,7 @@ module Calculator
 
     def line_items_total(order)
       matched_line_items = order.line_items.select do |line_item|
-        line_item.product.tax_category == rate.tax_category
+        line_item.variant.tax_category == rate.tax_category
       end
 
       matched_line_items.sum(&:total)
@@ -70,7 +70,7 @@ module Calculator
     def applicable_rate?(applicator, line_item)
       fee = applicator.enterprise_fee
       (!fee.inherits_tax_category && fee.tax_category == rate.tax_category) ||
-        (fee.inherits_tax_category && line_item.product.tax_category == rate.tax_category)
+        (fee.inherits_tax_category && line_item.variant.tax_category == rate.tax_category)
     end
 
     # Finds relevant fees for whole order,

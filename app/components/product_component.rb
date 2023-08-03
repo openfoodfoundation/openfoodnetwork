@@ -40,7 +40,7 @@ class ProductComponent < ViewComponentReflex::Component
     when 'on_demand'
       @product.on_demand
     when 'tax_category'
-      @product.tax_category.name
+      @product.variant.tax_category.name
     when 'inherits_properties'
       @product.inherits_properties
     when 'import_date'

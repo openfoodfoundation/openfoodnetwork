@@ -276,7 +276,7 @@ module Api
           expect(json_response[:line_items].first[:variant][:product_name])
             .to eq order.line_items.first.variant.product.name
           expect(json_response[:line_items].first[:tax_category_id])
-            .to eq order.line_items.first.product.tax_category_id
+            .to eq order.line_items.first.variant.tax_category_id
         end
       end
     end

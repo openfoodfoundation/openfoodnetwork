@@ -37,7 +37,7 @@ module OpenFoodNetwork
 
     def tax_category(target)
       if target.is_a?(Spree::LineItem) && enterprise_fee.inherits_tax_category?
-        target.product.tax_category
+        target.variant.tax_category
       else
         enterprise_fee.tax_category
       end

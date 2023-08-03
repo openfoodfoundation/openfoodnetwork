@@ -109,7 +109,7 @@ describe '
       expect(product.primary_taxon_id).to eq(taxon.id)
       expect(product.variants.first.price.to_s).to eq('19.99')
       expect(product.on_hand).to eq(5)
-      expect(product.tax_category_id).to eq(tax_category.id)
+      expect(product.variants.first.tax_category_id).to eq(tax_category.id)
       expect(product.shipping_category).to eq(shipping_category)
       expect(product.description).to eq("<p>A description...</p>")
       expect(product.group_buy).to be_falsey
@@ -285,7 +285,7 @@ describe '
           expect(flash_message).to eq('Product "A new product !!!" has been successfully created!')
           product = Spree::Product.find_by(name: 'A new product !!!')
           expect(product.supplier).to eq(@supplier2)
-          expect(product.tax_category).to be_nil
+          expect(product.variants.first.tax_category).to be_nil
         end
       end
     end
@@ -296,12 +296,10 @@ describe '
       visit spree.edit_admin_product_path product
 
       select 'Permitted Supplier', from: 'product_supplier_id'
-      select tax_category.name, from: 'product_tax_category_id'
       click_button 'Update'
       expect(flash_message).to eq('Product "a product" has been successfully updated!')
       product.reload
       expect(product.supplier).to eq(@supplier_permitted)
-      expect(product.tax_category).to eq(tax_category)
     end
 
     it "editing a product comming from the bulk product update page with filter" do

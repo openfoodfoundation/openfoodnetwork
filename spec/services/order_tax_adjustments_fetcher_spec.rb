@@ -43,9 +43,7 @@ describe OrderTaxAdjustmentsFetcher do
     let(:tax_category25) { create(:tax_category, tax_rates: [tax_rate25]) }
     let(:tax_category30) { create(:tax_category, tax_rates: [tax_rate30]) }
 
-    let(:variant) do
-      create(:variant, product: create(:product, tax_category: tax_category10))
-    end
+    let(:variant) { create(:variant, tax_category: tax_category10) }
     let(:enterprise_fee) do
       create(:enterprise_fee, enterprise: coordinator,
                               tax_category: tax_category20,
