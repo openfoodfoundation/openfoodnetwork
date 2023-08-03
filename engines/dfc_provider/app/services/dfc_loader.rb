@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "data_food_consortium/connector/connector"
+
 class DfcLoader
   def self.connector
     @connector ||= load_vocabularies

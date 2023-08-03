@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "data_food_consortium/connector/connector"
-
 # Controller used to provide the SuppliedProducts API for the DFC application
 # SuppliedProducts are products that are managed by an enterprise.
 module DfcProvider
