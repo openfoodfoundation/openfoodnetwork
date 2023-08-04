@@ -700,16 +700,6 @@ Rails/SquishedSQLHeredocs:
     - 'app/queries/outstanding_balance.rb'
     - 'spec/queries/outstanding_balance_spec.rb'
 
-# Offense count: 24
-# This cop supports safe autocorrection (--autocorrect).
-Rails/StripHeredoc:
-  Exclude:
-    - 'app/models/content_configuration.rb'
-    - 'app/queries/customers_with_balance.rb'
-    - 'app/queries/outstanding_balance.rb'
-    - 'lib/reporting/reports/enterprise_fee_summary/scope.rb'
-    - 'lib/tasks/data/truncate_data.rake'
-
 # Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.

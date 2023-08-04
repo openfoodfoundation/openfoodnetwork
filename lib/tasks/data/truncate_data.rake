@@ -32,11 +32,11 @@ namespace :ofn do
     end
 
     def warn_with_confirmation
-      message = <<-MSG.strip_heredoc
-      \n
-      <% highlighted_message = "This will permanently change DB contents. This is not meant to be run in production as it needs more thorough testing." %>
-      <%= color(highlighted_message, :blink, :on_red) %>
-      Are you sure you want to proceed? (y/N)
+      message = <<~MSG
+        \n
+        <% highlighted_message = "This will permanently change DB contents. This is not meant to be run in production as it needs more thorough testing." %>
+        <%= color(highlighted_message, :blink, :on_red) %>
+        Are you sure you want to proceed? (y/N)
       MSG
 
       exit unless HighLine.new.agree(message) { |question| question.default = "N" }

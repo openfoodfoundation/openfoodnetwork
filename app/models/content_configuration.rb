@@ -71,7 +71,7 @@ class ContentConfiguration < Spree::Preferences::Configuration
   preference :footer_pinterest_url, :string, default: ""
   preference :footer_email, :string, default: "hello@openfoodnetwork.org"
   preference :community_forum_url, :string, default: "http://community.openfoodnetwork.org"
-  preference :footer_links_md, :text, default: <<-EOS.strip_heredoc
+  preference :footer_links_md, :text, default: <<~EOS
     [Newsletter sign-up](/)
 
     [News](/)
