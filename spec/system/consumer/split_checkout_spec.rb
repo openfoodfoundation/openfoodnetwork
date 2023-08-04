@@ -993,8 +993,8 @@ describe "As a consumer, I want to checkout my order" do
       describe "terms and conditions" do
         let(:customer) { create(:customer, enterprise: order.distributor, user: user) }
         let(:tos_url) { "https://example.org/tos" }
-        let(:system_terms_path) { Rails.root.join("public/Terms-of-service.pdf") }
-        let(:shop_terms_path) { Rails.root.join("public/Terms-of-ServiceUK.pdf") }
+        let(:system_terms_path) { Rails.public_path.join('Terms-of-service.pdf') }
+        let(:shop_terms_path) { Rails.public_path.join('Terms-of-ServiceUK.pdf') }
         let(:system_terms) {
           Rack::Test::UploadedFile.new(system_terms_path, "application/pdf")
         }

@@ -24,8 +24,8 @@ describe "Uploading Terms and Conditions PDF" do
         end
       end
 
-      let(:original_terms) { Rails.root.join("public/Terms-of-service.pdf") }
-      let(:updated_terms) { Rails.root.join("public/Terms-of-ServiceUK.pdf") }
+      let(:original_terms) { Rails.public_path.join('Terms-of-service.pdf') }
+      let(:updated_terms) { Rails.public_path.join('Terms-of-ServiceUK.pdf') }
 
       it "uploading terms and conditions" do
         go_to_business_details
