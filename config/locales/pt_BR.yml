@@ -1473,7 +1473,6 @@ pt_BR:
   abn: "CNPJ:"
   acn: "NIRE:"
   invoice_issued_on: "Fatura emitida em:"
-  order_number: "Número da fatura:"
   date_of_transaction: "Dia da transação:"
   menu_1_title: "Lojas"
   menu_1_url: "/shops"
@@ -3761,7 +3760,7 @@ pt_BR:
           shipment_state: "Situação do Envio"
           email: "E-mail"
           total: "Total"
-          bill_address_lastname: "Nome"
+          billing_address_name: "Nome"
       general_settings:
         edit:
           legal_settings: "Configurações de Legislação"

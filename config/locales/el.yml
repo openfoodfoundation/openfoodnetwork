@@ -1421,7 +1421,6 @@ el:
   abn: "ABN:"
   acn: "ACN:"
   invoice_issued_on: "Το τιμολόγιο εκδόθηκε στις:"
-  order_number: "Αριθμός τιμολογίου"
   date_of_transaction: "Ημερομηνία συναλλαγής"
   menu_1_title: "Καταστήματα"
   menu_1_url: "/shops"
@@ -3616,7 +3615,7 @@ el:
           shipment_state: "Κατάσταση αποστολής"
           email: "Email"
           total: "Σύνολο"
-          bill_address_lastname: "Όνομα"
+          billing_address_name: "Όνομα"
       general_settings:
         edit:
           legal_settings: "Νομικές ρυθμίσεις"

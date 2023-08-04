@@ -1586,7 +1586,6 @@ ko:
   abn: "호주 비즈니스 번호 :"
   acn: "호주 회사 번호 :"
   invoice_issued_on: "송장 발행일 :"
-  order_number: "송장 번호 :"
   date_of_transaction: "거래 날짜 :"
   menu_1_title: "가게"
   menu_1_url: "/가게"
@@ -3874,7 +3873,7 @@ ko:
           shipment_state: "배송 현황"
           email: "이메일"
           total: "총합"
-          bill_address_lastname: "이름"
+          billing_address_name: "이름"
       general_settings:
         edit:
           legal_settings: "법적 설정"

@@ -1579,7 +1579,6 @@ it_CH:
   abn: "CF:"
   acn: "C.F.:"
   invoice_issued_on: "Documento emesso il: "
-  order_number: "Numero documento:"
   date_of_transaction: "Data della transazione:"
   menu_1_title: "Negozi"
   menu_1_url: "/shops"
@@ -3929,7 +3928,7 @@ it_CH:
           shipment_state: "Stato della spedizione"
           email: "Email"
           total: "Totale"
-          bill_address_lastname: "Nome"
+          billing_address_name: "Nome"
       general_settings:
         edit:
           legal_settings: "Impostazioni Legali"

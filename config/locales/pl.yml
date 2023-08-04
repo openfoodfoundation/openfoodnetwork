@@ -1326,7 +1326,6 @@ pl:
   abn: "NIP:"
   acn: "REGON:"
   invoice_issued_on: "Faktura wystawiona dnia:"
-  order_number: "Numer faktury:"
   date_of_transaction: "Data transakcji:"
   menu_1_title: "Sklepy"
   menu_1_url: "/shops"
@@ -3456,7 +3455,7 @@ pl:
           shipment_state: "Status dostawy"
           email: "E-mail"
           total: "Razem"
-          bill_address_lastname: "Nazwa"
+          billing_address_name: "Nazwa"
       general_settings:
         edit:
           legal_settings: "Ustawienia prawne"

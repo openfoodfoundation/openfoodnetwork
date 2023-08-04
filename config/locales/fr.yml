@@ -1739,7 +1739,7 @@ fr:
   abn: "SIRET"
   acn: "n° TVA intracommunautaire"
   invoice_issued_on: "Date de facture :"
-  order_number: "N° de facture :"
+  order_number: "Numéro de commande :"
   date_of_transaction: "Date de la transaction :"
   menu_1_title: "Acheter"
   menu_1_url: "/shops"
@@ -3969,6 +3969,8 @@ fr:
           from: "De"
           to: "Facturer à"
           shipping: "Envoi"
+          order_number: "Numéro de commande"
+          invoice_number: "Numéro de facture"
         note:
           note_label: "Note :"
           no_note_present: "Aucune note n'a été ajoutée."
@@ -4209,7 +4211,7 @@ fr:
           shipment_state: "Statut livraison"
           email: "Email"
           total: "Total"
-          bill_address_lastname: "Nom"
+          billing_address_name: "Nom"
       general_settings:
         edit:
           legal_settings: "Configuration légales"

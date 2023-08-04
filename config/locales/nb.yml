@@ -1613,7 +1613,6 @@ nb:
   abn: "Org. nr.:"
   acn: "MVA nr:"
   invoice_issued_on: "Fakturadato:"
-  order_number: "Fakturanummer:"
   date_of_transaction: "Transaksjonsdato:"
   menu_1_title: "Butikker"
   menu_1_url: "/shops"
@@ -3962,7 +3961,7 @@ nb:
           shipment_state: "Leveringsstatus"
           email: "Epost"
           total: "Total"
-          bill_address_lastname: "Navn"
+          billing_address_name: "Navn"
       general_settings:
         edit:
           legal_settings: "Juridiske innstillinger"

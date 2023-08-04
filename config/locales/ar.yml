@@ -1676,7 +1676,6 @@ ar:
   abn: "ABN:"
   acn: "ACN:"
   invoice_issued_on: "الفاتورة الصادرة في:"
-  order_number: "رقم الفاتورة:"
   date_of_transaction: "تاريخ المعاملة:"
   menu_1_title: "متاجر"
   menu_1_url: "shops/"
@@ -4168,7 +4167,7 @@ ar:
           shipment_state: "حالة الشحن"
           email: "البريد الإلكتروني"
           total: "المجموع"
-          bill_address_lastname: "الاسم"
+          billing_address_name: "الاسم"
       general_settings:
         edit:
           legal_settings: "الإعدادات القانونية"

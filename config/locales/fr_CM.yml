@@ -1524,7 +1524,6 @@ fr_CM:
   abn: "SIRET"
   acn: "n° TVA intracommunautaire"
   invoice_issued_on: "Date de facture :"
-  order_number: "N° de facture :"
   date_of_transaction: "Date de la transaction :"
   menu_1_title: "Acheter"
   menu_1_url: "/shops"
@@ -3893,7 +3892,7 @@ fr_CM:
           shipment_state: "Statut livraison"
           email: "Email"
           total: "Total"
-          bill_address_lastname: "Produit/Variante"
+          billing_address_name: "Produit/Variante"
       general_settings:
         edit:
           legal_settings: "Configuration légales"

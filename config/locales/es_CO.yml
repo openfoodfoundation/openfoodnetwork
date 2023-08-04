@@ -1412,7 +1412,6 @@ es_CO:
   abn: "NIT:"
   acn: "Matricula Mercantil:"
   invoice_issued_on: "Factura emitida el:"
-  order_number: "Número de factura:"
   date_of_transaction: "Fecha de la transacción:"
   menu_1_title: "Tiendas"
   menu_1_url: "/shops"
@@ -3575,7 +3574,7 @@ es_CO:
           shipment_state: "Estado del envío"
           email: "Correo electrónico"
           total: "Total"
-          bill_address_lastname: "Nombre"
+          billing_address_name: "Nombre"
       general_settings:
         edit:
           legal_settings: "Configuraciones legales"

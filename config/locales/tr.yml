@@ -1486,7 +1486,6 @@ tr:
   abn: "VKN/TCKN:"
   acn: "Mersis no."
   invoice_issued_on: "Fatura Düznleme Tarihi"
-  order_number: "Fatura numarası:"
   date_of_transaction: "İşlem tarihi:"
   menu_1_title: "PAZAR YERİ"
   menu_1_url: "/shops"
@@ -3783,7 +3782,7 @@ tr:
           shipment_state: "Teslimat Durumu"
           email: "E-posta"
           total: "Toplam"
-          bill_address_lastname: "Ad"
+          billing_address_name: "Ad"
       general_settings:
         edit:
           legal_settings: "Yasal Ayarlar"

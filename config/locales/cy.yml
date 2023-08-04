@@ -1708,7 +1708,6 @@ cy:
   abn: "Rhif y Cwmni:"
   acn: "Rhif yr Elusen"
   invoice_issued_on: "Cyhoeddwyd yr anfoneb ar:"
-  order_number: "Rhif yr anfoneb:"
   date_of_transaction: "Dyddiad y trafodiad:"
   menu_1_title: "Hafan"
   menu_1_url: "/"
@@ -3928,6 +3927,7 @@ cy:
           from: "O"
           to: "Bil i"
           shipping: "Yn anfon"
+          invoice_number: "Rhif anfoneb"
         note:
           note_label: "Noder:"
           no_note_present: "Ni ddarparwyd nodyn."
@@ -4166,7 +4166,7 @@ cy:
           shipment_state: "Sir Anfon"
           email: "E-bost"
           total: "Cyfanswm"
-          bill_address_lastname: "Enw"
+          billing_address_name: "Enw"
       general_settings:
         edit:
           legal_settings: "Gosodiadau Cyfreithiol"

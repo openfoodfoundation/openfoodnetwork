@@ -1734,7 +1734,7 @@ en_FR:
   abn: "ABN:"
   acn: "ACN:"
   invoice_issued_on: "Invoice issued on:"
-  order_number: "Invoice number:"
+  order_number: "Order number:"
   date_of_transaction: "Date of transaction:"
   menu_1_title: "Shops"
   menu_1_url: "/shops"
@@ -3912,6 +3912,8 @@ en_FR:
           from: "From"
           to: "Bill to"
           shipping: "Shipping"
+          order_number: "Order Number"
+          invoice_number: "Invoice Number"
         note:
           note_label: "Note:"
           no_note_present: "No note provided."
@@ -4152,7 +4154,7 @@ en_FR:
           shipment_state: "Shipment State"
           email: "Email"
           total: "Total"
-          bill_address_lastname: "Name"
+          billing_address_name: "Name"
       general_settings:
         edit:
           legal_settings: "Legal Settings"

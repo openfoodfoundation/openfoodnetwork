@@ -1596,7 +1596,6 @@ ca:
   abn: "NIF:"
   acn: "IVA intracomunitari:"
   invoice_issued_on: "Factura emesa el:"
-  order_number: "Nombre de factura:"
   date_of_transaction: "Data de la transacció:"
   menu_1_title: "Botigues"
   menu_1_url: "/shops"
@@ -3887,7 +3886,7 @@ ca:
           shipment_state: "Estat de la Tramesa"
           email: "Correu electrònic"
           total: "Total"
-          bill_address_lastname: "Nom"
+          billing_address_name: "Nom"
       general_settings:
         edit:
           legal_settings: "Paràmetres legals"

@@ -1371,7 +1371,6 @@ fil_PH:
   abn: "TIN:"
   acn: "Branch TIN:"
   invoice_issued_on: "inilabas ang invoice noong:"
-  order_number: "numero ng invoice"
   date_of_transaction: "Petsa ng Transaksiyon:"
   menu_1_title: "Mga Shop"
   menu_1_url: "/shops"
@@ -3461,7 +3460,7 @@ fil_PH:
           shipment_state: "status ng kargamento"
           email: "Email"
           total: "kabuuan"
-          bill_address_lastname: "Pangalan"
+          billing_address_name: "Pangalan"
       general_settings:
         edit:
           legal_settings: "Legal Settings"

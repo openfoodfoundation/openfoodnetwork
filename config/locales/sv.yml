@@ -821,7 +821,6 @@ sv:
   abn: "ABN:"
   acn: "ACN:"
   invoice_issued_on: "Faktura utfärdad på:"
-  order_number: "Fakturanummer:"
   date_of_transaction: "Transaktionsdatum:"
   menu_1_title: "Butiker"
   menu_2_title: "Karta"
@@ -2269,7 +2268,7 @@ sv:
           shipment_state: "Leveransstatus"
           email: "E-post"
           total: "Summa"
-          bill_address_lastname: "Namn"
+          billing_address_name: "Namn"
       general_settings:
         edit:
           enterprises_require_tos: "Företag måste acceptera servicevillkoren"

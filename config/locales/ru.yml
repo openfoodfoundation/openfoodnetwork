@@ -1734,7 +1734,6 @@ ru:
   abn: "ИНН"
   acn: "Юридическое название"
   invoice_issued_on: "Счёт выписан:"
-  order_number: "Номер счёта:"
   date_of_transaction: "Дата операции:"
   menu_1_title: "Магазины"
   menu_1_url: "/shops"
@@ -3967,6 +3966,7 @@ ru:
           from: "От"
           to: "Плательщик"
           shipping: "Доставка"
+          invoice_number: "Номер Счета"
         note:
           note_label: "Примечание:"
           no_note_present: "Примечаний нет."
@@ -4207,7 +4207,7 @@ ru:
           shipment_state: "Статус Доставки"
           email: "Email"
           total: "Всего"
-          bill_address_lastname: "Название"
+          billing_address_name: "Название"
       general_settings:
         edit:
           legal_settings: "Правовые настройки"

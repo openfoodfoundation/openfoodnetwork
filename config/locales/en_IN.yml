@@ -1389,7 +1389,6 @@ en_IN:
   abn: "Company Number:"
   acn: "Charity Number:"
   invoice_issued_on: "Invoice issued on:"
-  order_number: "Invoice number:"
   date_of_transaction: "Date of transaction:"
   menu_1_title: "Shops"
   menu_1_url: "/shops"
@@ -3514,7 +3513,7 @@ en_IN:
           shipment_state: "Shipment State"
           email: "Email"
           total: "Total"
-          bill_address_lastname: "Name"
+          billing_address_name: "Name"
       general_settings:
         edit:
           legal_settings: "Legal Settings"

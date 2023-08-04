@@ -1604,7 +1604,6 @@ uk:
   abn: "ABN:"
   acn: "ACN:"
   invoice_issued_on: "Рахунок виставлено:"
-  order_number: "Номер рахунку:"
   date_of_transaction: "Дата операції:"
   menu_1_title: "Магазини"
   menu_1_url: "/магазини"
@@ -3997,7 +3996,7 @@ uk:
           shipment_state: "Стан відвантаження"
           email: "Email"
           total: "Всього"
-          bill_address_lastname: "Ім'я"
+          billing_address_name: "Ім'я"
       general_settings:
         edit:
           legal_settings: "Юридичні налаштування"

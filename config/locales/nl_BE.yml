@@ -1403,7 +1403,6 @@ nl_BE:
   abn: "Bedrijfsnummer : "
   acn: "Intracommunautaire BTW nr. : "
   invoice_issued_on: "Aanmaakdatum Factuur:"
-  order_number: "Factuurnummer:"
   date_of_transaction: "Transactiedatum:"
   menu_1_title: "Winkels"
   menu_1_url: "/shops"
@@ -3471,7 +3470,7 @@ nl_BE:
           shipment_state: "Status Verzending"
           email: "E-mail"
           total: "Totaal"
-          bill_address_lastname: "Naam"
+          billing_address_name: "Naam"
       general_settings:
         edit:
           legal_settings: "De legale instelling"

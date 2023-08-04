@@ -1651,7 +1651,6 @@ es:
   abn: "NIF:"
   acn: "ACN:"
   invoice_issued_on: "Factura emitida el:"
-  order_number: "Número de Factura:"
   date_of_transaction: "Fecha de la transacción:"
   menu_1_title: "Tiendas"
   menu_1_url: "/shops"
@@ -4026,7 +4025,7 @@ es:
           shipment_state: "Estado del envío"
           email: "Email"
           total: "Total"
-          bill_address_lastname: "Nombre"
+          billing_address_name: "Nombre"
       general_settings:
         edit:
           legal_settings: "Configuraciones legales"

@@ -1610,7 +1610,6 @@ hu:
   abn: "LÉGI ÚTON SZÁLLÍTOTT:"
   acn: "Adószám:"
   invoice_issued_on: "Kiállított számla:"
-  order_number: "Számlaszám:"
   date_of_transaction: "A tranzakció dátuma:"
   menu_1_title: "Átadópontok"
   menu_1_url: "/shops"
@@ -3984,7 +3983,7 @@ hu:
           shipment_state: "Szállítási állapot"
           email: "Email"
           total: "Összesen"
-          bill_address_lastname: "Név"
+          billing_address_name: "Név"
       general_settings:
         edit:
           legal_settings: "Jogi beállítások"
