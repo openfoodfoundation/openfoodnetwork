@@ -82,7 +82,6 @@ class VoucherAdjustmentsController < BaseController
 
   # Clear payments and payment fees, to not affect voucher adjustment calculation
   def clear_payments
-    @order.all_adjustments.payment_fee.destroy_all
-    @order.payments.clear
+    @order.payments.incomplete.destroy_all
   end
 end
