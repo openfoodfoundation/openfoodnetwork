@@ -12,7 +12,7 @@ describe ContentConfiguration do
     end
 
     def image_exist?(default_url)
-      File.exist?(File.join(Rails.root, 'public', default_url))
+      File.exist?(Rails.public_path.join(default_url).to_s)
     end
   end
 end

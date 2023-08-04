@@ -287,7 +287,7 @@ module ProductImport
     end
 
     def delete_uploaded_file
-      return unless @file.path == Rails.root.join('tmp', 'product_import').to_s
+      return unless @file.path == Rails.root.join("tmp/product_import").to_s
 
       File.delete(@file)
     end

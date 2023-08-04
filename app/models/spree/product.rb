@@ -105,7 +105,7 @@ module Spree
       import_date = Time.zone.parse import_date if import_date.is_a? String
       import_date = import_date.to_date
       joins(:variants).merge(Spree::Variant.
-        where(import_date: import_date.beginning_of_day..import_date.end_of_day))
+        where(import_date: import_date.all_day))
     }
 
     scope :with_order_cycles_inner, -> {
