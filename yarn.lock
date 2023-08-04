@@ -5464,10 +5464,10 @@ jquery-ui@1.13.2:
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
   integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
 
-js-big-decimal@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/js-big-decimal/-/js-big-decimal-2.0.1.tgz#bee278c82442006f10cd75c86835878fa372ab06"
-  integrity sha512-7TG4ONel3kUKs465ZoJAAxypb1FUZ3Poaz4fdCD62BF8oQnS+s65oetAIDwoKxIDHNN0fbiJ6HMruypqpfiGPw==
+js-big-decimal@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/js-big-decimal/-/js-big-decimal-2.0.4.tgz#eca611e5a917130e7b08f0d35eaa1b49dd12ea41"
+  integrity sha512-y2IkNqwCqJyUVkiW/ddqxDAzCojoIKKBHIXBGEprtEs+93Zk64Y2ZWHt1MzTRM+ASpKdOurYLcss4BX25bkGyQ==
 
 js-tokens@^4.0.0:
   version "4.0.0"
