@@ -415,39 +415,6 @@ Naming/VariableNumber:
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/requests/api/orders_spec.rb'
 
-# Offense count: 9
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: ExpectedOrder, Include.
-# ExpectedOrder: index, show, new, edit, create, update, destroy
-# Include: app/controllers/**/*.rb
-Rails/ActionOrder:
-  Exclude:
-    - 'app/controllers/admin/resource_controller.rb'
-    - 'app/controllers/api/v0/orders_controller.rb'
-    - 'app/controllers/spree/admin/images_controller.rb'
-    - 'app/controllers/spree/admin/invoices_controller.rb'
-    - 'app/controllers/spree/admin/products_controller.rb'
-    - 'app/controllers/spree/admin/taxons_controller.rb'
-    - 'app/controllers/spree/admin/variants_controller.rb'
-    - 'app/controllers/user_confirmations_controller.rb'
-
-# Offense count: 12
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/ActiveRecordCallbacksOrder:
-  Exclude:
-    - 'app/models/customer.rb'
-    - 'app/models/enterprise.rb'
-    - 'app/models/enterprise_group.rb'
-    - 'app/models/enterprise_relationship.rb'
-    - 'app/models/spree/order.rb'
-    - 'app/models/spree/payment.rb'
-    - 'app/models/spree/product.rb'
-    - 'app/models/spree/return_authorization.rb'
-    - 'app/models/spree/user.rb'
-    - 'app/models/spree/variant.rb'
-
 # Offense count: 1
 # Configuration parameters: Severity, Include.
 # Include: app/models/**/*.rb
@@ -482,27 +449,6 @@ Rails/CompactBlank:
     - 'lib/reporting/report_headers_builder.rb'
     - 'lib/reporting/report_ruler.rb'
     - 'lib/reporting/reports/enterprise_fee_summary/parameters.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Rails/DotSeparatedKeys:
-  Exclude:
-    - 'app/controllers/api/v1/base_controller.rb'
-
-# Offense count: 27
-# This cop supports safe autocorrection (--autocorrect).
-Rails/DurationArithmetic:
-  Exclude:
-    - 'app/services/create_order_cycle.rb'
-    - 'spec/jobs/order_cycle_closing_job_spec.rb'
-    - 'spec/jobs/order_cycle_opened_job_spec.rb'
-    - 'spec/services/permissions/order_spec.rb'
-    - 'spec/services/terms_of_service_spec.rb'
-    - 'spec/system/admin/bulk_order_management_spec.rb'
-    - 'spec/system/admin/order_cycles/list_spec.rb'
-    - 'spec/system/admin/orders_spec.rb'
-    - 'spec/system/admin/reports/orders_and_fulfillment_spec.rb'
-    - 'spec/system/admin/reports/packing_report_spec.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).

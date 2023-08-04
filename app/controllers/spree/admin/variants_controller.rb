@@ -13,24 +13,11 @@ module Spree
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
 
-      def edit
-        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
-      end
-
-      def update
-        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
-
-        if @object.update(permitted_resource_params)
-          flash[:success] = flash_message_for(@object, :successfully_updated)
-          redirect_to spree.admin_product_variants_url(params[:product_id], @url_filters)
-        else
-          redirect_to spree.edit_admin_product_variant_url(params[:product_id],
-                                                           @object,
-                                                           @url_filters)
-        end
-      end
-
       def new
+        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
+      end
+
+      def edit
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
 
@@ -53,6 +40,19 @@ module Spree
 
         @object.on_demand = on_demand if on_demand.present?
         @object.on_hand = on_hand.to_i if on_hand.present?
+      end
+
+      def update
+        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
+
+        if @object.update(permitted_resource_params)
+          flash[:success] = flash_message_for(@object, :successfully_updated)
+          redirect_to spree.admin_product_variants_url(params[:product_id], @url_filters)
+        else
+          redirect_to spree.edit_admin_product_variant_url(params[:product_id],
+                                                           @object,
+                                                           @url_filters)
+        end
       end
 
       def search

@@ -23,7 +23,7 @@ module Permissions
     }
     let(:order_from_last_year) {
       create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor,
-                                           completed_at: Time.zone.now - 1.year)
+                                           completed_at: 1.year.ago)
     }
 
     before { allow(OpenFoodNetwork::Permissions).to receive(:new) { basic_permissions } }

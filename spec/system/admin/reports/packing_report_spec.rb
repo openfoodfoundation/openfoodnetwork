@@ -10,7 +10,7 @@ describe "Packing Reports" do
     Timecop.freeze(Time.zone.now.strftime("%Y-%m-%d 00:00")) { example.run }
   end
 
-  let!(:open_datetime) { (Time.zone.now - 1.month).strftime("%Y-%m-%d 00:00") }
+  let!(:open_datetime) { 1.month.ago.strftime("%Y-%m-%d 00:00") }
   let!(:close_datetime) { Time.zone.now.strftime("%Y-%m-%d 00:00") }
 
   describe "Packing reports" do

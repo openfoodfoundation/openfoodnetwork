@@ -20,6 +20,10 @@ module Spree
         render layout: !request.xhr?
       end
 
+      def edit
+        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
+      end
+
       def create
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
         set_viewable
@@ -32,10 +36,6 @@ module Spree
         else
           respond_with(@object)
         end
-      end
-
-      def edit
-        @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
 
       def update

@@ -110,11 +110,11 @@ describe "Orders And Fulfillment" do
       end
 
       context "with two orders on the same day at different times" do
-        let(:completed_at1) { Time.zone.now - 1500.hours } # 1500 hours in the past
-        let(:completed_at2) { Time.zone.now - 1700.hours } # 1700 hours in the past
-        let(:datetime_start1) { Time.zone.now - 1600.hours } # 1600 hours in the past
-        let(:datetime_start2) { Time.zone.now - 1800.hours } # 1600 hours in the past
-        let(:datetime_end) { Time.zone.now - 1400.hours } # 1400 hours in the past
+        let(:completed_at1) { 1500.hours.ago } # 1500 hours in the past
+        let(:completed_at2) { 1700.hours.ago } # 1700 hours in the past
+        let(:datetime_start1) { 1600.hours.ago } # 1600 hours in the past
+        let(:datetime_start2) { 1800.hours.ago } # 1600 hours in the past
+        let(:datetime_end) { 1400.hours.ago } # 1400 hours in the past
         before do
           Timecop.travel(completed_at1) { order1.finalize! }
           Timecop.travel(completed_at2) { order2.finalize! }

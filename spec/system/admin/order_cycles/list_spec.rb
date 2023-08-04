@@ -125,8 +125,8 @@ describe '
   end
 
   describe 'listing order cycles with other locales' do
-    oc_open_at = Time.zone.now - 2.weeks
-    oc_close_at = Time.zone.now + 2.weeks
+    oc_open_at = 2.weeks.ago
+    oc_close_at = 2.weeks.from_now
     let!(:oc_pt) {
       create(:simple_order_cycle, name: 'oc', orders_open_at: oc_open_at,
                                   orders_close_at: oc_close_at)

@@ -24,9 +24,10 @@ module Admin
       end
     end
 
-    def update
-      if @object.update(permitted_resource_params)
-        flash[:success] = flash_message_for(@object, :successfully_updated)
+    def create
+      @object.attributes = permitted_resource_params
+      if @object.save
+        flash[:success] = flash_message_for(@object, :successfully_created)
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
           format.js   { render layout: false }
@@ -36,10 +37,9 @@ module Admin
       end
     end
 
-    def create
-      @object.attributes = permitted_resource_params
-      if @object.save
-        flash[:success] = flash_message_for(@object, :successfully_created)
+    def update
+      if @object.update(permitted_resource_params)
+        flash[:success] = flash_message_for(@object, :successfully_updated)
         respond_with(@object) do |format|
           format.html { redirect_to location_after_save }
           format.js   { render layout: false }

@@ -25,14 +25,15 @@ module Spree
     has_one :adjustment, as: :adjustable, dependent: :destroy
 
     validate :validate_source
+    after_initialize :build_source
     before_create :set_unique_identifier
 
+    # invalidate previously entered payments
+    after_create :invalidate_old_payments
     after_save :create_payment_profile, if: :profiles_supported?
 
     # update the order totals, etc.
     after_save :ensure_correct_adjustment, :update_order
-    # invalidate previously entered payments
-    after_create :invalidate_old_payments
 
     # Skips the validation of the source (for example, credit card) of the payment.
     #
@@ -42,8 +43,6 @@ module Spree
     #    consider them invalid.
     attr_accessor :skip_source_validation
     attr_accessor :source_attributes
-
-    after_initialize :build_source
 
     scope :from_credit_card, -> { where(source_type: 'Spree::CreditCard') }
     scope :with_state, ->(s) { where(state: s.to_s) }

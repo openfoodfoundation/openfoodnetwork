@@ -5,11 +5,6 @@ module Api
     class OrdersController < Api::V0::BaseController
       include PaginationData
 
-      def show
-        authorize! :read, order
-        render json: order, serializer: Api::OrderDetailedSerializer, current_order: order
-      end
-
       def index
         authorize! :admin, Spree::Order
 
@@ -24,6 +19,11 @@ module Api
           orders: serialized_orders(orders),
           pagination: pagination_data
         }
+      end
+
+      def show
+        authorize! :read, order
+        render json: order, serializer: Api::OrderDetailedSerializer, current_order: order
       end
 
       def update
