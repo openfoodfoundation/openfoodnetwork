@@ -4108,6 +4108,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           shipping: "Shipping"
           order_number: "Order Number"
           invoice_number: "Invoice Number"
+          payments_list:
+            date_time: "Date/time"
+            payment_method: "Payment method"
+            payment_state: "Payment state"
+            amount: "Amount"
         note:
           note_label: "Note:"
           no_note_present: "No note provided."

@@ -24,6 +24,10 @@ class Invoice
         render_address([address1, address2, city, zipcode, state&.name])
       end
 
+      def blank?
+        @data.nil?
+      end
+
       private
 
       def render_address(address_parts)

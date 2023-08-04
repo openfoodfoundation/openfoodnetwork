@@ -48,7 +48,14 @@ module Spree
 
     def invoice_email(order_or_order_id)
       @order = find_order(order_or_order_id)
-      pdf = InvoiceRenderer.new.render_to_string(@order)
+      renderer_data = if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+                        OrderInvoiceGenerator.new(@order).generate_or_update_latest_invoice
+                        @order.invoices.first.presenter
+                      else
+                        @order
+                      end
+
+      pdf = InvoiceRenderer.new.render_to_string(renderer_data)
 
       attach_file("invoice-#{@order.number}.pdf", pdf)
       I18n.with_locale valid_locale(@order.user) do

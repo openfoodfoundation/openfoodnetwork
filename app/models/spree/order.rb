@@ -208,6 +208,10 @@ module Spree
       completed_at.present?
     end
 
+    def invoiceable?
+      complete? || resumed?
+    end
+
     # Indicates whether or not the user is allowed to proceed to checkout.
     # Currently this is implemented as a check for whether or not there is at
     # least one LineItem in the Order.  Feel free to override this logic in your

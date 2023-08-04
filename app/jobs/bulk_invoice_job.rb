@@ -5,13 +5,9 @@ class BulkInvoiceJob < ApplicationJob
   delegate :render, to: ActionController::Base
 
   def perform(order_ids, filepath, options = {})
-    pdf = CombinePDF.new
-
-    sorted_orders(order_ids).each do |order|
-      invoice = renderer.render_to_string(order)
-
-      pdf << CombinePDF.parse(invoice)
-    end
+    orders = sorted_orders(order_ids)
+    orders.filter!(&:invoiceable?) if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+    orders.each(&method(:generate_invoice))
 
     ensure_directory_exists filepath
 
@@ -32,6 +28,17 @@ class BulkInvoiceJob < ApplicationJob
     @renderer ||= InvoiceRenderer.new
   end
 
+  def generate_invoice(order)
+    renderer_data = if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+                      OrderInvoiceGenerator.new(order).generate_or_update_latest_invoice
+                      order.invoices.first.presenter
+                    else
+                      order
+                    end
+    invoice = renderer.render_to_string(renderer_data)
+    pdf << CombinePDF.parse(invoice)
+  end
+
   def broadcast(filepath, channel)
     file_id = filepath.split("/").last.split(".").first
 
@@ -46,5 +53,9 @@ class BulkInvoiceJob < ApplicationJob
 
   def ensure_directory_exists(filepath)
     FileUtils.mkdir_p(File.dirname(filepath))
+  end
+
+  def pdf
+    @pdf ||= CombinePDF.new
   end
 end
