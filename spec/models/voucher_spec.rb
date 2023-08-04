@@ -10,10 +10,9 @@ describe Voucher do
     it { is_expected.to have_many(:adjustments) }
   end
 
-  context "before validation" do
-    it "removes leading and trailing whitespace from the code" do
+  describe '#code=' do
+    it "removes leading and trailing whitespace" do
       voucher = build(:voucher, code: "\r\n\t new_code \r\n\t")
-      voucher.valid?
 
       expect(voucher.code).to eq("new_code")
     end
