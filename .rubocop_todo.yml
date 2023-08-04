@@ -502,14 +502,6 @@ Rails/HelperInstanceVariable:
     - 'app/helpers/spree/admin/orders_helper.rb'
     - 'app/helpers/spree/orders_helper.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Include.
-# Include: app/controllers/**/*.rb
-Rails/I18nLazyLookup:
-  Exclude:
-    - 'app/controllers/admin/proxy_orders_controller.rb'
-
 # Offense count: 8
 # Configuration parameters: Include.
 # Include: spec/**/*.rb, test/**/*.rb
@@ -684,12 +676,11 @@ Rails/ResponseParsedBody:
     - 'spec/controllers/spree/credit_cards_controller_spec.rb'
     - 'spec/controllers/user_registrations_controller_spec.rb'
 
-# Offense count: 4
+# Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/RootPathnameMethods:
   Exclude:
     - 'spec/lib/reports/orders_and_fulfillment/order_cycle_customer_totals_report_spec.rb'
-    - 'spec/models/content_configuration_spec.rb'
     - 'spec/models/terms_of_service_file_spec.rb'
     - 'spec/system/admin/configuration/terms_of_service_files_spec.rb'
 
@@ -1513,14 +1504,13 @@ Style/RedundantArgument:
     - 'engines/dfc_provider/app/services/authorization_control.rb'
     - 'spec/support/query_counter.rb'
 
-# Offense count: 14
+# Offense count: 13
 # This cop supports safe autocorrection (--autocorrect).
 Style/RedundantConstantBase:
   Exclude:
     - 'app/controllers/split_checkout_controller.rb'
     - 'app/controllers/webhook_endpoints_controller.rb'
     - 'config.ru'
-    - 'spec/base_spec_helper.rb'
     - 'spec/helpers/checkout_helper_spec.rb'
     - 'spec/models/spree/order_spec.rb'
     - 'spec/models/spree/payment_method_spec.rb'
@@ -1540,6 +1530,13 @@ Style/RedundantDoubleSplatHashBraces:
 Style/RedundantInitialize:
   Exclude:
     - 'spec/models/spree/gateway_spec.rb'
+
+# Offense count: 2
+# This cop supports unsafe autocorrection (--autocorrect-all).
+Style/RedundantInterpolation:
+  Exclude:
+    - 'lib/tasks/karma.rake'
+    - 'spec/base_spec_helper.rb'
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
