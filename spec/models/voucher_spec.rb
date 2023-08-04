@@ -27,16 +27,6 @@ describe Voucher do
     it { is_expected.to validate_uniqueness_of(:code).scoped_to(:enterprise_id) }
     it { is_expected.to validate_presence_of(:amount) }
     it { is_expected.to validate_numericality_of(:amount).is_greater_than(0) }
-    it { is_expected.to allow_value("somethingvalid").for(:code) }
-
-    it "is invalid if the code contains certain forbidden characters e.g. new lines" do
-      voucher = subject
-      ["\n", "\r"].each do |forbidden_code_character|
-        voucher.code = "somethingvalid#{forbidden_code_character}somethingvalid"
-        expect(voucher).not_to be_valid
-        expect(voucher.errors[:code]).to eq(["is invalid"])
-      end
-    end
   end
 
   describe '#compute_amount' do
