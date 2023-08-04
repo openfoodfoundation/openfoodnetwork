@@ -29,7 +29,7 @@ module Spree
 
     belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product'
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
-    belongs_to :shipping_category, class_name: 'Spree::ShippingCategory'
+    belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
 
     delegate_belongs_to :product, :name, :description, :meta_keywords
 
@@ -63,7 +63,6 @@ module Spree
 
     validate :check_currency
     validates :price, numericality: { greater_than_or_equal_to: 0 }, presence: true
-    validates :shipping_category, presence: true
     validates :tax_category, presence: true,
                              if: proc { Spree::Config[:products_require_tax_category] }
 
