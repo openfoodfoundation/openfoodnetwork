@@ -10,8 +10,7 @@ class Voucher < ApplicationRecord
            class_name: 'Spree::Adjustment',
            dependent: :nullify
 
-  validates :code, length: { maximum: STRING_COLUMN_LIMIT },
-                   presence: true, uniqueness: { scope: :enterprise_id }
+  validates :code, presence: true, uniqueness: { scope: :enterprise_id }
   validates :amount, presence: true, numericality: { greater_than: 0 }
 
   def code=(value)
