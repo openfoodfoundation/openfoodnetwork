@@ -95,6 +95,10 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals do
       # This second line item will have a default a bigint value.
       order.line_items << create(:line_item)
 
+      # Create deterministic / aphabetical order of items:
+      order.line_items[0].variant.product.update!(name: "Apple")
+      order.line_items[1].variant.product.update!(name: "Banana")
+
       # Generating the report used to raise:
       # > TypeError: no implicit conversion of BigDecimal into String
       expect(table_headers[4]).to eq "Total Units"
