@@ -19,7 +19,17 @@ class SearchOrders
       includes(:payments, :subscription, :shipments, :bill_address, :distributor, :order_cycle).
       ransack(params[:q])
 
-    @search.result(distinct: true).joins(:bill_address)
+    @search = @search.result(distinct: true)
+
+    if ['bill_address',
+        'billing_address'].any?{ |param|
+         params.dig(:q, :s)&.starts_with?(param)
+       }
+      @search = @search.left_joins(:bill_address).
+        select('spree_addresses.*, spree_orders.*')
+    end
+
+    @search
   end
 
   def search_query

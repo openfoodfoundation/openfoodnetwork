@@ -149,6 +149,33 @@ module Api
             .map{ |o| o[:id] }).to eq serialized_orders([order2, order3, order1, order4])
               .map{ |o| o["id"] }
         end
+
+        context "with an order without billing address" do
+          let!(:order7) {
+            create(:order_with_line_items, billing_address: nil, order_cycle: order_cycle,
+                                           distributor: distributor)
+          }
+
+          it 'can show orders without bill address' do
+            get :index, params: { q: {} },
+                        as: :json
+
+            expect(json_response['orders']
+              .map{ |o| o[:id] }).to match_array serialized_orders([order2, order3, order1, order4,
+                                                                    order7])
+                .map{ |o|
+                                                   o["id"]
+                                                 }
+          end
+
+          it 'can sort orders by bill_address.lastname' do
+            get :index, params: { q: { s: 'bill_address_lastname ASC' } },
+                        as: :json
+            expect(json_response['orders']
+              .map{ |o| o[:id] }).to eq serialized_orders([order2, order3, order1, order4, order7])
+                .map{ |o| o["id"] }
+          end
+        end
       end
 
       context 'with pagination' do
