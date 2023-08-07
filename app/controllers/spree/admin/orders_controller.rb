@@ -99,7 +99,7 @@ module Spree
       end
 
       def print
-        if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+        if OpenFoodNetwork::FeatureToggle.enabled?(:invoices, spree_current_user)
           @order = @order.invoices.find(params[:invoice_id]).presenter
         end
 
