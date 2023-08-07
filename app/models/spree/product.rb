@@ -28,16 +28,11 @@ module Spree
 
     acts_as_paranoid
 
-    after_create :ensure_standard_variant
-    around_destroy :destruction
-    after_save :update_units
-
-    searchable_attributes :supplier_id, :primary_taxon_id, :meta_keywords, :sku
-    searchable_associations :supplier, :properties, :primary_taxon, :variants
+    searchable_attributes :supplier_id, :meta_keywords, :sku
+    searchable_associations :supplier, :properties, :variants
     searchable_scopes :active, :with_properties
 
     belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
-    belongs_to :primary_taxon, class_name: 'Spree::Taxon', optional: false, touch: true
 
     has_one :image, class_name: "Spree::Image", as: :viewable, dependent: :destroy
 
@@ -78,6 +73,10 @@ module Spree
     # these values are persisted on the product's variant
     attr_accessor :price, :display_as, :unit_value, :unit_description, :tax_category_id,
                   :shipping_category_id
+
+    after_create :ensure_standard_variant
+    around_destroy :destruction
+    after_save :update_units
 
     scope :with_properties, ->(*property_ids) {
       left_outer_joins(:product_properties).

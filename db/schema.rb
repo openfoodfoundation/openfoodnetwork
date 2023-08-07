@@ -959,6 +959,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_15_022359) do
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.bigint "tax_category_id"
     t.bigint "shipping_category_id"
+    t.bigint "primary_taxon_id"
+    t.index ["primary_taxon_id"], name: "index_spree_variants_on_primary_taxon_id"
     t.index ["product_id"], name: "index_variants_on_product_id"
     t.index ["shipping_category_id"], name: "index_spree_variants_on_shipping_category_id"
     t.index ["sku"], name: "index_spree_variants_on_sku"
@@ -1203,6 +1205,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_15_022359) do
   add_foreign_key "spree_variants", "spree_products", column: "product_id", name: "spree_variants_product_id_fk"
   add_foreign_key "spree_variants", "spree_shipping_categories", column: "shipping_category_id"
   add_foreign_key "spree_variants", "spree_tax_categories", column: "tax_category_id"
+  add_foreign_key "spree_variants", "spree_taxons", column: "primary_taxon_id"
   add_foreign_key "spree_zone_members", "spree_zones", column: "zone_id", name: "spree_zone_members_zone_id_fk"
   add_foreign_key "subscription_line_items", "spree_variants", column: "variant_id", name: "subscription_line_items_variant_id_fk"
   add_foreign_key "subscription_line_items", "subscriptions", name: "subscription_line_items_subscription_id_fk"
