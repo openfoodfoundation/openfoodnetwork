@@ -27,7 +27,7 @@
     "flatpickr": "^4.6.9",
     "foundation-sites": "^5.5.2",
     "jquery-ui": "1.13.2",
-    "js-big-decimal": "^2.0.1",
+    "js-big-decimal": "^2.0.4",
     "moment": "^2.29.1",
     "mrujs": "^1.0.0",
     "select2": "^4.0.13",
