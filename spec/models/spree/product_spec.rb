@@ -9,10 +9,6 @@ module Spree
       let(:product) { create(:product) }
 
       context '#duplicate' do
-        before do
-          allow(product).to receive_messages taxons: [create(:taxon)]
-        end
-
         it 'duplicates product' do
           clone = product.duplicate
           expect(clone.name).to eq 'COPY OF ' + product.name
@@ -170,7 +166,7 @@ module Spree
       end
 
       it "requires a primary taxon" do
-        expect(build(:simple_product, taxons: [], primary_taxon: nil)).not_to be_valid
+        expect(build(:simple_product, primary_taxon: nil)).not_to be_valid
       end
 
       it "requires a unit value" do
@@ -314,22 +310,6 @@ module Spree
         it "removes variants from order cycles" do
           expect { product.destroy }.to change { ExchangeVariant.count }
         end
-      end
-
-      it "adds the primary taxon to the product's taxon list" do
-        taxon = create(:taxon)
-        product = create(:product, primary_taxon: taxon)
-
-        expect(product.taxons).to include(taxon)
-      end
-
-      it "removes the previous primary taxon from the taxon list" do
-        original_taxon = create(:taxon)
-        product = create(:product, primary_taxon: original_taxon)
-        product.primary_taxon = create(:taxon)
-        product.save!
-
-        expect(product.taxons).not_to include(original_taxon)
       end
 
       it "updates units when saved change to variant unit" do
