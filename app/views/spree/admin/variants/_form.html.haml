@@ -72,4 +72,8 @@
     = f.label :shipping_category_id, t(:shipping_categories)
     = f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, {}, { class: 'select2 fullwidth' })
 
+  .field
+    = f.label :primary_taxon, t('spree.admin.products.primary_taxon_form.product_category')
+    = f.collection_select(:primary_taxon_id, Spree::Taxon.order(:name), :id, :name, { include_blank: true }, { class: "select2 fullwidth" })
+
 .clear
