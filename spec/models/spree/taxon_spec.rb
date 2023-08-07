@@ -11,10 +11,10 @@ module Spree
     let(:t2) { create(:taxon) }
 
     describe "finding all supplied taxons" do
-      let!(:p1) { create(:simple_product, supplier: e, taxons: [t1, t2]) }
+      let!(:p1) { create(:simple_product, supplier: e, primary_taxon_id: t1.id) }
 
       it "finds taxons" do
-        expect(Taxon.supplied_taxons).to eq(e.id => Set.new(p1.taxons.map(&:id)))
+        expect(Taxon.supplied_taxons).to eq(e.id => Set.new([t1.id]))
       end
     end
 
