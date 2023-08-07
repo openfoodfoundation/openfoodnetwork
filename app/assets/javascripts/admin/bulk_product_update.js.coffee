@@ -136,6 +136,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       on_hand: null
       price: null
       tax_category_id: null
+      category_id: null
     DisplayProperties.setShowVariants product.id, true
 
 
@@ -332,9 +333,6 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("on_demand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_demand = product.on_demand
           hasUpdatableProperty = true
-        if product.hasOwnProperty("category_id")
-          filteredProduct.primary_taxon_id = product.category_id
-          hasUpdatableProperty = true
         if product.hasOwnProperty("inherits_properties")
           filteredProduct.inherits_properties = product.inherits_properties
           hasUpdatableProperty = true
@@ -374,6 +372,9 @@ filterSubmitVariant = (variant) ->
       hasUpdatableProperty = true
     if variant.hasOwnProperty("tax_category_id")
       filteredVariant.tax_category_id = variant.tax_category_id
+      hasUpdatableProperty = true
+    if variant.hasOwnProperty("category_id")
+      filteredVariant.primary_taxon_id = variant.category_id
       hasUpdatableProperty = true
     if variant.hasOwnProperty("display_as")
       filteredVariant.display_as = variant.display_as
