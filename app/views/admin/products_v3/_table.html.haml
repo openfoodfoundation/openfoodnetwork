@@ -39,7 +39,7 @@
         %td.align-left
           .line-clamp-1= product.supplier.name
         %td.align-left
-          .line-clamp-1= product.taxons.map(&:name).join(', ')
+          .line-clamp-1= product.primary_taxon.name
         %td.align-left
         %td.align-left
           .line-clamp-1= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
