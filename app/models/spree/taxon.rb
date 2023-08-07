@@ -39,10 +39,6 @@ module Spree
       permalink
     end
 
-    def active_products
-      products.active
-    end
-
     def pretty_name
       ancestor_chain = ancestors.inject("") do |name, ancestor|
         name + "#{ancestor.name} -> "
