@@ -399,11 +399,6 @@ describe Spree::Ability do
         is_expected.to have_ability([:admin, :index, :read, :search], for: Spree::Taxon)
       end
 
-      it "should be able to read/write Classifications on a product" do
-        is_expected.to have_ability([:admin, :index, :read, :create, :edit],
-                                    for: Spree::Classification)
-      end
-
       it "should be able to read/write their enterprises' producer properties" do
         is_expected.to have_ability(
           [:admin, :index, :read, :create, :edit, :update_positions,
