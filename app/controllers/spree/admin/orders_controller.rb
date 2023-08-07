@@ -90,7 +90,8 @@ module Spree
       end
 
       def invoice
-        Spree::OrderMailer.invoice_email(@order.id).deliver_later
+        Spree::OrderMailer.invoice_email(@order.id,
+                                         current_user_id: spree_current_user.id ).deliver_later
         flash[:success] = t('admin.orders.invoice_email_sent')
 
         respond_with(@order) { |format|
