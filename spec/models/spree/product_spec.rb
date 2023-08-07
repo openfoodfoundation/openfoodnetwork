@@ -703,16 +703,6 @@ module Spree
       end
     end
 
-    describe "taxons" do
-      let(:taxon1) { create(:taxon) }
-      let(:taxon2) { create(:taxon) }
-      let(:product) { create(:simple_product) }
-
-      it "returns the first taxon as the primary taxon" do
-        expect(product.taxons).to eq([product.primary_taxon])
-      end
-    end
-
     describe "deletion" do
       let(:p)  { create(:simple_product) }
       let(:v)  { create(:variant, product: p) }

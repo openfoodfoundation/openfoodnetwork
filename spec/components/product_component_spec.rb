@@ -35,12 +35,6 @@ describe ProductComponent, type: :component do
         )
       )
     end
-
-    it "joins the categories' name" do
-      expect(page.find('.category')).to have_content(
-        /random 1, random 2/, exact: true, normalize_ws: true
-      )
-    end
   end
 
   describe 'on_hand' do

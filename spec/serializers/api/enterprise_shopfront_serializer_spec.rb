@@ -12,10 +12,10 @@ describe Api::EnterpriseShopfrontSerializer do
   let!(:taxon1) { create(:taxon, name: 'Meat') }
   let!(:taxon2) { create(:taxon, name: 'Veg') }
   let!(:product) {
-    create(:product, supplier: producer, primary_taxon: taxon1, taxons: [taxon1, taxon2] )
+    create(:product, supplier: producer, primary_taxon: taxon1 )
   }
   let!(:product2) {
-    create(:product, supplier: producer_hidden, primary_taxon: taxon1, taxons: [taxon1, taxon2] )
+    create(:product, supplier: producer_hidden, primary_taxon: taxon2 )
   }
 
   let(:close_time) { 2.days.from_now }
@@ -67,6 +67,5 @@ describe Api::EnterpriseShopfrontSerializer do
   it "serializes taxons" do
     expect(serializer.serializable_hash[:taxons]).to be_a ActiveModel::ArraySerializer
     expect(serializer.serializable_hash[:taxons].to_json).to match 'Meat'
-    expect(serializer.serializable_hash[:taxons].to_json).to match 'Veg'
   end
 end

@@ -43,9 +43,8 @@ module Reporting
             allow(variant).to receive_message_chain(:product, :name).and_return("Product Name")
             allow(variant).to receive_message_chain(:product, :properties)
               .and_return [double(name: "property1"), double(name: "property2")]
-            allow(variant).to receive_message_chain(:product,
-                                                    :taxons).and_return [double(name: "taxon1"),
-                                                                         double(name: "taxon2")]
+            allow(variant).to receive_message_chain(:product, :primary_taxon).
+              and_return double(name: "taxon1")
             allow(variant).to receive_message_chain(:product, :group_buy_unit_size).and_return(21)
             allow(subject).to receive(:query_result).and_return [variant]
 
@@ -54,7 +53,7 @@ module Reporting
                                                "A city",
                                                "Product Name",
                                                "property1, property2",
-                                               "taxon1, taxon2",
+                                               "taxon1",
                                                "Variant Name",
                                                100,
                                                21,
