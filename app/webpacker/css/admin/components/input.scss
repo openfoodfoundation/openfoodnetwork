@@ -1,9 +1,7 @@
-@import "../../darkswarm/branding";
-
 .container {
   input {
     &[readonly] {
-      background-color: $disabled-light;
+      background-color: $light-grey;
       cursor: default;
     }
   }

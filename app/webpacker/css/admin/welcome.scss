@@ -1,13 +1,11 @@
-@import "../darkswarm/mixins";
-
 #welcome_page {
   header {
     text-align: center;
     padding: 4em 2em;
 
-    @include fullbg;
     background-color: black;
     background-image: url("../images/home/tagline-bg.jpg");
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     margin-bottom: 2em;

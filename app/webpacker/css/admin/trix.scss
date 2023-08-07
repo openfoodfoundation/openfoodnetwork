@@ -2,9 +2,9 @@ trix-toolbar [data-trix-button-group="file-tools"] {
   display: none;
 }
 
-// Match the rendering into the shopfront
+// Match the rendering into the shopfront (see ../darkswarm/)
 trix-editor {
-  color: $darker-grey;
+  color: #222;
 
   ol,
   ul {
@@ -12,7 +12,7 @@ trix-editor {
   }
 
   a {
-    color: $ofn-brand;
+    color: #f27052;
   }
 
   // Copy/pasted from _type.scss

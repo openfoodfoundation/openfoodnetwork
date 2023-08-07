@@ -1,6 +1,6 @@
 form[name="enterprise_form"] {
   div.row.warning {
-    color: $warning-orange;
+    color: $color-warning;
   }
 
   table.managers {
@@ -29,7 +29,7 @@ form[name="enterprise_form"] {
 }
 
 .admin-enterprises-index-admin-actions-divider {
-  background-color: $admin-table-border;
+  background-color: $color-tbl-border;
   border-width: 0;
   height: 1px;
   margin-bottom: 1em;
@@ -38,7 +38,7 @@ form[name="enterprise_form"] {
 
 table .enterprise-actions {
   .warning-icon {
-    color: $warning-red;
+    color: $color-warning;
     font-size: 16px;
   }
 }

@@ -23,18 +23,21 @@ $color-border:                   very-light($color-3, 12) !default;
 // Basic flash colors
 $color-success:                  $color-2 !default;
 $color-notice:                   $color-6 !default;
+$color-warning:                  $color-5 !default;
 $color-error:                    $color-5 !default;
 
 // Table colors
 $color-tbl-odd:                  $color-1 !default;
 $color-tbl-even:                 very-light($color-3, 4) !default;
 $color-tbl-thead:                very-light($color-3, 4) !default;
+$color-tbl-border:               $pale-blue !default;
 
 // Button colors
 $color-btn-bg:                   $color-3 !default;
 $color-btn-text:                 $color-1 !default;
 $color-btn-hover-bg:             $color-2 !default;
 $color-btn-hover-text:           $color-1 !default;
+$color-btn-disabled-bg:          $light-grey !default;
 
 // Actions colors
 $color-action-edit-bg:           very-light($color-success, 5  ) !default;
@@ -64,6 +67,10 @@ $color-sel-hover-text:           $color-1 !default;
 $color-txt-brd:                  $color-border !default;
 $color-txt-text:                 $color-3 !default;
 $color-txt-hover-brd:            $color-2 !default;
+
+// Modal colors
+$color-modal-close-btn:          $color-5 !default;
+$color-modal-close-btn-hover:    darken($color-5, 5%) !default;
 
 // States label colors
 $color-ste-complete-bg:          $color-success !default;

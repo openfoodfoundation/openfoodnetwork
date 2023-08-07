@@ -13,7 +13,8 @@ postcss.config.js
 
 # SCSS
 # Enabled: most of admin
-/app/webpacker/css/admin/globals/
+/app/webpacker/css/admin/globals/mixins.scss
+/app/webpacker/css/admin/globals/variables.scss
 /app/webpacker/css/admin/shared/
 /app/webpacker/css/admin_v3/globals/variables.scss
 /app/webpacker/css/darkswarm/
