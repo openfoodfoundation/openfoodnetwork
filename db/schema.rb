@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_20_080504) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_07_145022) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -763,13 +763,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_080504) do
     t.index ["supplier_id"], name: "index_spree_products_on_supplier_id"
   end
 
-  create_table "spree_products_taxons", id: :serial, force: :cascade do |t|
-    t.integer "product_id"
-    t.integer "taxon_id"
-    t.index ["product_id"], name: "index_products_taxons_on_product_id"
-    t.index ["taxon_id"], name: "index_products_taxons_on_taxon_id"
-  end
-
   create_table "spree_properties", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.string "presentation", limit: 255, null: false
@@ -1272,8 +1265,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_080504) do
   add_foreign_key "spree_products", "spree_shipping_categories", column: "shipping_category_id", name: "spree_products_shipping_category_id_fk"
   add_foreign_key "spree_products", "spree_tax_categories", column: "tax_category_id", name: "spree_products_tax_category_id_fk"
   add_foreign_key "spree_products", "spree_taxons", column: "primary_taxon_id", name: "spree_products_primary_taxon_id_fk"
-  add_foreign_key "spree_products_taxons", "spree_products", column: "product_id", name: "spree_products_taxons_product_id_fk", on_delete: :cascade
-  add_foreign_key "spree_products_taxons", "spree_taxons", column: "taxon_id", name: "spree_products_taxons_taxon_id_fk", on_delete: :cascade
   add_foreign_key "spree_return_authorizations", "spree_orders", column: "order_id", name: "spree_return_authorizations_order_id_fk"
   add_foreign_key "spree_roles_users", "spree_roles", column: "role_id", name: "spree_roles_users_role_id_fk"
   add_foreign_key "spree_roles_users", "spree_users", column: "user_id", name: "spree_roles_users_user_id_fk"
