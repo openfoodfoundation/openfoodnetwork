@@ -698,7 +698,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
     t.float "variant_unit_scale"
     t.string "variant_unit_name", limit: 255
     t.text "notes"
-    t.integer "primary_taxon_id", null: false
+    t.integer "primary_taxon_id"
     t.boolean "inherits_properties", default: true, null: false
     t.string "sku", limit: 255, default: "", null: false
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
