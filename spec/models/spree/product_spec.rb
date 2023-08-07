@@ -140,19 +140,6 @@ module Spree
       end
     end
 
-    # Regression tests for Spree #2352
-    context "classifications and taxons" do
-      it "is joined through classifications" do
-        reflection = Spree::Product.reflect_on_association(:taxons)
-        reflection.options[:through] = :classifications
-      end
-
-      it "will delete all classifications" do
-        reflection = Spree::Product.reflect_on_association(:classifications)
-        reflection.options[:dependent] = :delete_all
-      end
-    end
-
     describe '#total_on_hand' do
       it 'returns sum of stock items count_on_hand' do
         product = build(:product)
