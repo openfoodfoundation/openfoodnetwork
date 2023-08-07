@@ -13,8 +13,8 @@ module Spree
 
     acts_as_paranoid
 
-    searchable_attributes :sku, :display_as, :display_name
-    searchable_associations :product, :default_price
+    searchable_attributes :sku, :display_as, :display_name, :primary_taxon_id
+    searchable_associations :product, :default_price, :primary_taxon
     searchable_scopes :active, :deleted
 
     NAME_FIELDS = ["display_name", "display_as", "weight", "unit_value", "unit_description"].freeze
@@ -28,6 +28,7 @@ module Spree
     belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product'
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
+    belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true, optional: false
 
     delegate :name, :name=, :description, :description=, :meta_keywords, to: :product
 
