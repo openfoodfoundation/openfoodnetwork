@@ -37,7 +37,8 @@ module Admin
       BulkInvoiceJob.perform_later(
         params[:bulk_ids],
         "tmp/invoices/#{Time.zone.now.to_i}-#{SecureRandom.hex(2)}.pdf",
-        channel: SessionChannel.for_request(request)
+        channel: SessionChannel.for_request(request),
+        current_user_id: current_user.id
       )
 
       morph :nothing
