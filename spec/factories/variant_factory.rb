@@ -11,7 +11,8 @@ FactoryBot.define do
     width  { generate(:random_float) }
     depth  { generate(:random_float) }
 
-    product { |p| p.association(:base_product) }
+    primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
+    product { |v| create(:product, primary_taxon_id: v.primary_taxon.id) }
 
     # ensure stock item will be created for this variant
     before(:create) { create(:stock_location) if Spree::StockLocation.count.zero? }
@@ -22,7 +23,7 @@ FactoryBot.define do
         on_hand { 5 }
       end
 
-      product { |p| p.association(:product) }
+      product { |v| create(:product, primary_taxon_id: v.primary_taxon.id) }
       unit_value { 1 }
       unit_description { '' }
 
