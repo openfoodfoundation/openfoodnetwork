@@ -562,7 +562,7 @@ describe ProductImport::ProductImporter do
     let(:csv_data) {
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
-        csv << ["Beetroot", enterprise3.name, "Meat", "5", "3.50", "500", "g"]
+        csv << ["Beetroot", enterprise3.name, "Vegetables", "5", "3.50", "500", "Kg"]
         csv << ["Tomato", enterprise3.name, "Vegetables", "6", "5.50", "500", "Kg"]
       end
     }
