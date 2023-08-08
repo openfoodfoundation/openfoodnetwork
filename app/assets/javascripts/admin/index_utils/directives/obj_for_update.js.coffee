@@ -12,8 +12,7 @@ angular.module("admin.indexUtils").directive "objForUpdate", (switchClass, pendi
         scope.clear()
       else
         scope.pending()
-        value = if value? then value else ""
-        addPendingChange(scope.attr, value)
+        addPendingChange(scope.attr, value ? "")
 
     scope.reset = (value) ->
       scope.savedValue = value
