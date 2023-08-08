@@ -30,7 +30,7 @@
 %td.align-left
   .content= product.supplier&.name
 %td.align-left
-  .content= product.primary_taxon&.name
+  .content= product.variants.first.primary_taxon&.name
 %td.align-left
 %td.align-left
   .content= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
