@@ -205,7 +205,7 @@ describe 'Customers' do
           end
 
           context "when updating code" do
-            pending "allows user to save changes" do
+            it "allows user to save changes" do
               fill_in "code", with: ""
 
               expect(page).not_to have_content("12345")
