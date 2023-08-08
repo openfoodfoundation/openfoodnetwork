@@ -43,7 +43,7 @@ module Reporting
             allow(variant).to receive_message_chain(:product, :name).and_return("Product Name")
             allow(variant).to receive_message_chain(:product, :properties)
               .and_return [double(name: "property1"), double(name: "property2")]
-            allow(variant).to receive_message_chain(:product, :primary_taxon).
+            allow(variant).to receive_message_chain(:primary_taxon).
               and_return double(name: "taxon1")
             allow(variant).to receive_message_chain(:product, :group_buy_unit_size).and_return(21)
             allow(subject).to receive(:query_result).and_return [variant]

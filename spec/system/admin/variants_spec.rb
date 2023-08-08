@@ -9,6 +9,8 @@ describe '
   include AuthenticationHelper
   include WebHelper
 
+  let!(:taxon) { create(:taxon) }
+
   describe "new variant" do
     it "creating a new variant" do
       # Given a product with a unit-related option type
@@ -21,6 +23,7 @@ describe '
 
       fill_in 'unit_value_human', with: '1'
       fill_in 'variant_unit_description', with: 'foo'
+      select taxon.name, from: "variant_primary_taxon_id"
       click_button 'Create'
 
       # Then the variant should have been created
@@ -61,6 +64,7 @@ describe '
       # Expect variant_weight to accept 3 decimal places
       fill_in 'variant_weight', with: '1.234'
       fill_in 'unit_value_human', with: 1
+      select taxon.name, from: "variant_primary_taxon_id"
       click_button 'Create'
 
       # Then the variant should have been created

@@ -344,7 +344,6 @@ describe '
     within "tr#p_#{p.id}" do
       expect(page).to have_field "product_name", with: p.name
       expect(page).to have_select "producer_id", selected: s1.name
-      expect(page).to have_select2 "p#{p.id}_category_id", selected: t2.name
       expect(page).to have_select "variant_unit_with_scale", selected: "Volume (L)"
       expect(page).to have_checked_field "inherits_properties"
       expect(page).to have_field "product_sku", with: p.sku
@@ -352,7 +351,6 @@ describe '
       fill_in "product_name", with: "Big Bag Of Potatoes"
       select s2.name, from: 'producer_id'
       select "Weight (kg)", from: "variant_unit_with_scale"
-      select2_select t1.name, from: "p#{p.id}_category_id"
       uncheck "inherits_properties"
       fill_in "product_sku", with: "NEW SKU"
     end
@@ -365,7 +363,6 @@ describe '
     expect(p.supplier).to eq s2
     expect(p.variant_unit).to eq "weight"
     expect(p.variant_unit_scale).to eq 1000 # Kg
-    expect(p.primary_taxon.permalink).to eq t1.permalink
     expect(p.inherits_properties).to be false
     expect(p.sku).to eq "NEW SKU"
   end

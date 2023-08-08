@@ -93,6 +93,7 @@ describe Spree::Admin::ProductsController, type: :controller do
           variant_unit_name: nil
         )
       end
+      let!(:taxon) { create(:taxon) }
 
       before { controller_login_as_enterprise_user([producer]) }
 
@@ -111,7 +112,8 @@ describe Spree::Admin::ProductsController, type: :controller do
                            "price" => "5.0",
                            "unit_value" => 4,
                            "unit_description" => "",
-                           "display_name" => "name"
+                           "display_name" => "name",
+                           "primary_taxon_id" => taxon.id
                          }
                        ]
                      }
