@@ -267,7 +267,7 @@ describe Api::V0::ProductsController, type: :controller do
       end
 
       it "filters results by product category" do
-        api_get :bulk_products, { page: 1, per_page: 15, q: { primary_taxon_id_eq: taxon.id } },
+        api_get :bulk_products, { page: 1, per_page: 15, q: { variants_primary_taxon_id_eq: taxon.id } },
                 format: :json
         expect(returned_product_ids).to eq [product3.id, product2.id]
       end
