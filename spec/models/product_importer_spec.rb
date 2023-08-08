@@ -284,7 +284,7 @@ describe ProductImport::ProductImporter do
       carrots = Spree::Product.find_by(name: 'Good Carrots')
       expect(carrots.on_hand).to eq 5
       expect(carrots.variants.first.price).to eq 3.20
-      expect(carrots.primary_taxon.name).to eq "Vegetables"
+      expect(carrots.variants.first.primary_taxon.name).to eq "Vegetables"
       expect(carrots.variants.first.shipping_category).to eq shipping_category
       expect(carrots.supplier).to eq enterprise
       expect(carrots.variants.first.unit_presentation).to eq "500g"
