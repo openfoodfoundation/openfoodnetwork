@@ -155,7 +155,6 @@ module Spree
 
     describe "associations" do
       it { is_expected.to belong_to(:supplier).required }
-      it { is_expected.to belong_to(:primary_taxon).required }
     end
 
     describe "validations and defaults" do
@@ -166,10 +165,6 @@ module Spree
       it { is_expected.to validate_presence_of :name }
       it { is_expected.to validate_length_of(:name).is_at_most(255) }
       it { is_expected.to validate_length_of(:sku).is_at_most(255) }
-
-      it "requires a primary taxon" do
-        expect(build(:simple_product, primary_taxon: nil)).not_to be_valid
-      end
 
       context "unit value" do
         it "requires a unit value when variant unit is weight" do
@@ -232,7 +227,7 @@ module Spree
 
           before do
             create(:stock_location)
-            product.primary_taxon = create(:taxon)
+            product.primary_taxon_id = create(:taxon).id
             product.supplier = create(:supplier_enterprise)
             product.name = "Product1"
             product.variant_unit = "weight"
