@@ -7,8 +7,11 @@ module Spree
     acts_as_nested_set dependent: :destroy
 
     belongs_to :taxonomy, class_name: 'Spree::Taxonomy', touch: true
+
     has_many :variants, class_name: "Spree::Variant", foreign_key: "primary_taxon_id",
                         inverse_of: :primary_taxon, dependent: :restrict_with_error
+
+    has_many :products, through: :variants, dependent: nil
 
     before_create :set_permalink
 
@@ -77,7 +80,7 @@ module Spree
 
       taxons = Spree::Taxon
         .select("DISTINCT spree_taxons.id, ents_and_vars.enterprise_id")
-        .joins(products: :variants)
+        .joins(:variants)
         .joins("
           INNER JOIN (#{ents_and_vars.to_sql}) AS ents_and_vars
           ON spree_variants.id = ents_and_vars.variant_id")
