@@ -20,16 +20,23 @@
     table-layout: fixed; // Column widths are based solely on col definitions (not content). This allows more efficient rendering.
 
     background-color: $color-tbl-bg;
-    padding: 4px 4px 4px 0; // Left border is implemented in td:first-child
+    padding: 4px;
     border-collapse: separate; // This is needed for the outer padding. Also should be helpful to give more flexibility of borders between rows.
 
     // Row hover
     tr:hover {
       td {
         background-color: $light-grey;
+        position: relative;
 
-        &:first-child {
-          border-left-color: $teal;
+        // Left border
+        &:first-child:before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -4px;
+          border-left: 4px solid $teal;
+          height: 100%;
         }
       }
     }
@@ -38,11 +45,6 @@
     td {
       padding: $padding-tbl-cell;
       border: none;
-
-      &:first-child {
-        // Implement the
-        border-left: 4px solid $color-tbl-bg;
-      }
     }
 
     th {
