@@ -48,7 +48,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     params = {
       'q[name_cont]': $scope.q.query,
       'q[supplier_id_eq]': $scope.q.producerFilter,
-      'q[primary_taxon_id_eq]': $scope.q.categoryFilter,
+      'q[variants_primary_taxon_id_eq]': $scope.q.categoryFilter,
       'q[s]': $scope.sorting,
       import_date: $scope.q.importDateFilter,
       page: $scope.page,
@@ -218,7 +218,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         filters:
           'q[name_cont]': $scope.q.query
           'q[supplier_id_eq]': $scope.q.producerFilter
-          'q[primary_taxon_id_eq]': $scope.q.categoryFilter
+          'q[variants_primary_taxon_id_eq]': $scope.q.categoryFilter
           'q[s]': $scope.sorting
           import_date: $scope.q.importDateFilter
         page: $scope.page
