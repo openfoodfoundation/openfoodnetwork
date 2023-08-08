@@ -66,7 +66,7 @@ class SuppliedProductBuilder < DfcBuilder
       name: supplied_product.name,
       description: supplied_product.description,
       price: 0, # will be in DFC Offer
-      primary_taxon: taxon(supplied_product)
+      primary_taxon_id: taxon(supplied_product).id
     ).tap do |product|
       QuantitativeValueBuilder.apply(supplied_product.quantity, product)
     end
