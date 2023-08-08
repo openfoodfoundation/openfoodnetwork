@@ -8,7 +8,7 @@ input[type="number"],
 textarea,
 fieldset {
   @include border-radius($border-radius);
-  padding: 7px 10px;
+  padding: $vpadding-txt $hpadding-txt;
   border: 1px solid $color-txt-brd;
   color: $color-txt-text;
   font-size: 90%;
