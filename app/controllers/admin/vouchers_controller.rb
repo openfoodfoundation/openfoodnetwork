@@ -9,9 +9,13 @@ module Admin
     end
 
     def create
+      # In the scenario where you get an error when trying to create a percentage voucher, we'll
+      # now have percentage rate voucher instanciated. Hence why we check for both params type
+      voucher_type = params.dig(:vouchers_flat_rate, :voucher_type) ||
+                     params[:vouchers_percentage_rate][:voucher_type]
+
       # The use of "safe_constantize" here will trigger a Brakeman error, it can safely be ignored
       # as it's a false positive : https://github.com/openfoodfoundation/openfoodnetwork/pull/10821
-      voucher_type = params[:vouchers_flat_rate][:voucher_type]
       if Voucher::TYPES.include?(voucher_type)
         @voucher = voucher_type.safe_constantize.create(
           permitted_resource_params.merge(enterprise: @enterprise)
@@ -44,7 +48,11 @@ module Admin
     end
 
     def permitted_resource_params
-      params.require(:vouchers_flat_rate).permit(:code, :amount)
+      if params[:vouchers_flat_rate].present?
+        return params.require(:vouchers_flat_rate).permit(:code, :amount)
+      end
+
+      params.require(:vouchers_percentage_rate).permit(:code, :amount)
     end
   end
 end

@@ -50,6 +50,15 @@ describe Admin::VouchersController, type: :request do
     end
 
     context "with a percentage rate voucher" do
+      let(:params) do
+        {
+          vouchers_percentage_rate: {
+            code: code,
+            amount: amount,
+            voucher_type: type
+          }
+        }
+      end
       let(:type) { "Vouchers::PercentageRate" }
 
       it "creates a new voucher" do
