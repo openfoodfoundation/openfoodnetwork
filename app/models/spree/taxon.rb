@@ -6,7 +6,7 @@ module Spree
 
     belongs_to :taxonomy, class_name: 'Spree::Taxonomy', touch: true
     has_many :products, class_name: "Spree::Product", foreign_key: "primary_taxon_id",
-                        inverse_of: :primary_taxon
+                        inverse_of: :primary_taxon, dependent: :restrict_with_error
 
     before_create :set_permalink
 
