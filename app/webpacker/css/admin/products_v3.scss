@@ -23,6 +23,7 @@
     padding: 4px;
     border-collapse: separate; // This is needed for the outer padding. Also should be helpful to give more flexibility of borders between rows.
 
+    // Row hover
     tr:hover {
       th,
       td {
@@ -73,6 +74,21 @@
       td,
       th {
         padding: $padding-tbl-cell-condensed;
+      }
+    }
+
+    // "Naked" inputs. Row hover helps reveal them.
+    input {
+      border-color: transparent;
+
+      &:focus {
+        border-color: $color-txt-hover-brd;
+      }
+    }
+
+    .field_with_errors {
+      input {
+        border-color: $color-error;
       }
     }
   }
