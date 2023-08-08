@@ -138,7 +138,27 @@ en:
       aspect_ratio_is_not: "must have an aspect ratio of %{aspect_ratio}"
       aspect_ratio_unknown: "has an unknown aspect ratio"
       image_not_processable: "is not a valid image"
-
+    not_found:
+      title: "The page you were looking for doesn't exist (404)"
+      message_html: "<b>Please try again</b>
+      <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/'>Home</a> and try again.</p>
+      <b>Contact support</b>
+      <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p>
+      <p>It really helps us if you can give as much detail as possible about what the missing page is about.</p>"
+    internal_server_error:
+      title: "We're sorry, but something went wrong (500)"
+      message_html: "<b>Please try again</b>
+      <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/''>Home</a> and try again.</p>
+      <b>We're on it</b>
+      <p>If you have seen this problem before, we probably already know about it and are working on a fix. We record all the errors that come up.</p>
+      <b>Contact support</b>
+      <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p>
+      <p>It really helps us if you can give as much detail as possible about what you were doing when this error occurred.</p>"
+    unprocessable_entity:
+      title: "The change you wanted was rejected (422)"
+      message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to.
+      <br><h3><a href='/' >Return home</a></h3>
+      </p>"
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -4622,28 +4642,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       x_years:
         one: 1 year
         other: "%{count} years"
-  errors:
-    not_found:
-      title: "The page you were looking for doesn't exist (404)"
-      message_html: "<b>Please try again</b>
-      <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/'>Home</a> and try again.</p>
-      <b>Contact support</b>
-      <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p>
-      <p>It really helps us if you can give as much detail as possible about what the missing page is about.</p>"
-    internal_server_error:
-      title: "We're sorry, but something went wrong (500)"
-      message_html: "<b>Please try again</b>
-      <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/''>Home</a> and try again.</p>
-      <b>We're on it</b>
-      <p>If you have seen this problem before, we probably already know about it and are working on a fix. We record all the errors that come up.</p>
-      <b>Contact support</b>
-      <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p>
-      <p>It really helps us if you can give as much detail as possible about what you were doing when this error occurred.</p>"
-    unprocessable_entity:
-      title: "The change you wanted was rejected (422)"
-      message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to.
-      <br><h3><a href='/' >Return home</a></h3>
-      </p>"
   components:
     multiple_checked_select:
       filter_placeholder: "Filter options"
