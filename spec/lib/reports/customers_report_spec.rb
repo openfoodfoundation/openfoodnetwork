@@ -18,7 +18,8 @@ module Reporting
             it "returns headers for addresses" do
               expect(subject.table_headers).to eq(["First Name", "Last Name", "Billing Address",
                                                    "Email", "Phone", "Hub", "Hub Address",
-                                                   "Shipping Method", "Total Number of Orders", "Total incl. tax ($)",
+                                                   "Shipping Method", "Total Number of Orders",
+                                                   "Total incl. tax ($)",
                                                    "Last completed order date"])
             end
 
