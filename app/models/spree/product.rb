@@ -39,12 +39,10 @@ module Spree
 
     has_many :product_properties, dependent: :destroy
     has_many :properties, through: :product_properties
-    has_many :variants, -> { order("spree_variants.position ASC") }, class_name: 'Spree::Variant',
-                                                                     dependent: :destroy
+    has_many :variants, -> { order("spree_variants.id ASC") }, class_name: 'Spree::Variant',
+                                                               dependent: :destroy
 
-    has_many :prices, -> {
-      order('spree_variants.position, spree_variants.id, currency')
-    }, through: :variants
+    has_many :prices, -> { order('spree_variants.id, currency') }, through: :variants
 
     has_many :stock_items, through: :variants
     has_many :supplier_properties, through: :supplier, source: :properties
