@@ -6,7 +6,6 @@ describe Spree::Core::ProductDuplicator do
   let(:product) do
     double 'Product',
            name: "foo",
-           taxons: [],
            product_properties: [property],
            variants: [variant],
            image: image
@@ -68,7 +67,6 @@ describe Spree::Core::ProductDuplicator do
   it "can duplicate a product" do
     duplicator = Spree::Core::ProductDuplicator.new(product)
     expect(new_product).to receive(:name=).with("COPY OF foo")
-    expect(new_product).to receive(:taxons=).with([])
     expect(new_product).to receive(:sku=).with("")
     expect(new_product).to receive(:product_properties=).with([new_property])
     expect(new_product).to receive(:created_at=).with(nil)

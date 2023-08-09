@@ -39,8 +39,6 @@ module Spree
 
     has_many :product_properties, dependent: :destroy
     has_many :properties, through: :product_properties
-    has_many :classifications, dependent: :delete_all
-    has_many :taxons, through: :classifications
     has_many :variants, -> { order("spree_variants.position ASC") }, class_name: 'Spree::Variant',
                                                                      dependent: :destroy
 
@@ -78,10 +76,7 @@ module Spree
     # these values are persisted on the product's variant
     attr_accessor :price, :display_as, :unit_value, :unit_description, :tax_category_id
 
-    before_save :add_primary_taxon_to_taxons
-
     after_create :ensure_standard_variant
-    after_save :remove_previous_primary_taxon_from_taxons
     after_save :update_units
 
     scope :with_properties, ->(*property_ids) {
@@ -288,16 +283,6 @@ module Spree
 
     def touch_distributors
       Enterprise.distributing_products(id).each(&:touch)
-    end
-
-    def add_primary_taxon_to_taxons
-      taxons << primary_taxon unless taxons.include? primary_taxon
-    end
-
-    def remove_previous_primary_taxon_from_taxons
-      return unless saved_change_to_primary_taxon_id? && primary_taxon_id_before_last_save
-
-      taxons.destroy(primary_taxon_id_before_last_save)
     end
 
     def ensure_standard_variant

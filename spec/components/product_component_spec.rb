@@ -19,30 +19,6 @@ describe ProductComponent, type: :component do
     end
   end
 
-  describe 'category' do
-    let(:product) do
-      product = create(:simple_product)
-      product.taxons = taxons
-
-      product
-    end
-    let(:taxons) { [create(:taxon, name: 'random 1'), create(:taxon, name: 'random 2')] }
-
-    before do
-      render_inline(
-        ProductComponent.new(
-          product: product, columns: [{ label: "Category", value: "category", sortable: false }]
-        )
-      )
-    end
-
-    it "joins the categories' name" do
-      expect(page.find('.category')).to have_content(
-        /random 1, random 2/, exact: true, normalize_ws: true
-      )
-    end
-  end
-
   describe 'on_hand' do
     let(:product) { create(:simple_product, on_hand: on_hand) }
     let(:on_hand) { 5 }

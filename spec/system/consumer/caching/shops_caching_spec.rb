@@ -53,7 +53,7 @@ describe "Shops caching", caching: true do
     let!(:property) { create(:property, presentation: "Cached Property") }
     let!(:property2) { create(:property, presentation: "New Property") }
     let!(:product) {
-      create(:product, taxons: [taxon], primary_taxon: taxon, properties: [property])
+      create(:product, primary_taxon: taxon, properties: [property])
     }
     let(:exchange) { order_cycle.exchanges.to_enterprises(distributor).outgoing.first }
 
@@ -92,7 +92,6 @@ describe "Shops caching", caching: true do
         expect(page).to have_content taxon.name
         expect(page).to have_content property.presentation
 
-        product.taxons << taxon2
         product.update_attribute(:primary_taxon, taxon2)
         product.update_attribute(:properties, [property2])
 

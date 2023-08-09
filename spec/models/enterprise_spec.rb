@@ -677,8 +677,8 @@ describe Enterprise do
     let(:taxon1) { create(:taxon) }
     let(:taxon2) { create(:taxon) }
     let(:taxon3) { create(:taxon) }
-    let(:product1) { create(:simple_product, primary_taxon: taxon1, taxons: [taxon1]) }
-    let(:product2) { create(:simple_product, primary_taxon: taxon1, taxons: [taxon1, taxon2]) }
+    let(:product1) { create(:simple_product, primary_taxon: taxon1) }
+    let(:product2) { create(:simple_product, primary_taxon: taxon2) }
     let(:product3) { create(:simple_product, primary_taxon: taxon3) }
     let(:oc) { create(:order_cycle) }
     let(:ex) {

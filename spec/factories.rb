@@ -7,9 +7,6 @@ FactoryBot.define do
   sequence(:random_description) { FFaker::Lorem.paragraphs(Kernel.rand(1..5)).join("\n") }
   sequence(:random_email)       { FFaker::Internet.email }
 
-  factory :classification, class: Spree::Classification do
-  end
-
   factory :exchange, class: Exchange do
     incoming    { false }
     order_cycle { OrderCycle.first || FactoryBot.create(:simple_order_cycle) }

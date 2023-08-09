@@ -7,11 +7,11 @@ describe Enterprise do
     describe "is touched when a(n)" do
       let(:enterprise) { create(:distributor_enterprise) }
       let(:taxon) { create(:taxon) }
+      let(:taxon2) { create(:taxon) }
       let(:supplier2) { create(:supplier_enterprise) }
 
       describe "with a supplied product" do
-        let(:product) { create(:simple_product, supplier: enterprise) }
-        let!(:classification) { create(:classification, taxon: taxon, product: product) }
+        let(:product) { create(:simple_product, supplier: enterprise, primary_taxon_id: taxon.id) }
         let(:property) { product.product_properties.last }
         let(:producer_property) { enterprise.producer_properties.last }
 
@@ -20,9 +20,9 @@ describe Enterprise do
           enterprise.set_producer_property 'Biodynamic', 'ASDF 4321'
         end
 
-        it "touches enterprise when a classification on that product changes" do
+        it "touches enterprise when a taxon on that product changes" do
           expect {
-            later { classification.touch }
+            later { product.update(primary_taxon_id: taxon2.id) }
           }.to change { enterprise.reload.updated_at }
         end
 
@@ -46,13 +46,12 @@ describe Enterprise do
       end
 
       describe "with a distributed product" do
-        let(:product) { create(:simple_product) }
+        let(:product) { create(:simple_product, primary_taxon_id: taxon.id) }
         let(:oc) {
           create(:simple_order_cycle, distributors: [enterprise],
                                       variants: [product.variants.first])
         }
         let(:supplier) { product.supplier }
-        let!(:classification) { create(:classification, taxon: taxon, product: product) }
         let(:property) { product.product_properties.last }
         let(:producer_property) { supplier.producer_properties.last }
 
@@ -64,9 +63,9 @@ describe Enterprise do
         context "with an order cycle" do
           before { oc }
 
-          it "touches enterprise when a classification on that product changes" do
+          it "touches enterprise when a taxon on that product changes" do
             expect {
-              later { classification.touch }
+              later { product.update(primary_taxon_id: taxon2.id) }
             }.to change { enterprise.reload.updated_at }
           end
 

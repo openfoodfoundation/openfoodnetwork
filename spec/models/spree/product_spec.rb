@@ -9,10 +9,6 @@ module Spree
       let(:product) { create(:product) }
 
       context '#duplicate' do
-        before do
-          allow(product).to receive_messages taxons: [create(:taxon)]
-        end
-
         it 'duplicates product' do
           clone = product.duplicate
           expect(clone.name).to eq 'COPY OF ' + product.name
@@ -140,19 +136,6 @@ module Spree
       end
     end
 
-    # Regression tests for Spree #2352
-    context "classifications and taxons" do
-      it "is joined through classifications" do
-        reflection = Spree::Product.reflect_on_association(:taxons)
-        reflection.options[:through] = :classifications
-      end
-
-      it "will delete all classifications" do
-        reflection = Spree::Product.reflect_on_association(:classifications)
-        reflection.options[:dependent] = :delete_all
-      end
-    end
-
     describe '#total_on_hand' do
       it 'returns sum of stock items count_on_hand' do
         product = build(:product)
@@ -183,7 +166,7 @@ module Spree
       end
 
       it "requires a primary taxon" do
-        expect(build(:simple_product, taxons: [], primary_taxon: nil)).not_to be_valid
+        expect(build(:simple_product, primary_taxon: nil)).not_to be_valid
       end
 
       it "requires a unit value" do
@@ -327,22 +310,6 @@ module Spree
         it "removes variants from order cycles" do
           expect { product.destroy }.to change { ExchangeVariant.count }
         end
-      end
-
-      it "adds the primary taxon to the product's taxon list" do
-        taxon = create(:taxon)
-        product = create(:product, primary_taxon: taxon)
-
-        expect(product.taxons).to include(taxon)
-      end
-
-      it "removes the previous primary taxon from the taxon list" do
-        original_taxon = create(:taxon)
-        product = create(:product, primary_taxon: original_taxon)
-        product.primary_taxon = create(:taxon)
-        product.save!
-
-        expect(product.taxons).not_to include(original_taxon)
       end
 
       it "updates units when saved change to variant unit" do
@@ -733,16 +700,6 @@ module Spree
 
           expect(v.reload.unit_presentation).to eq "1L"
         end
-      end
-    end
-
-    describe "taxons" do
-      let(:taxon1) { create(:taxon) }
-      let(:taxon2) { create(:taxon) }
-      let(:product) { create(:simple_product) }
-
-      it "returns the first taxon as the primary taxon" do
-        expect(product.taxons).to eq([product.primary_taxon])
       end
     end
 
