@@ -48,7 +48,7 @@ module Reporting
               supplier: supplier_alias[:name],
               product: product_table[:name],
               variant: variant_full_name,
-              weight: line_item_table[:weight],
+              weight: line_item_table[:final_weight_volume],
               height: line_item_table[:height],
               width: line_item_table[:width],
               depth: line_item_table[:depth],
