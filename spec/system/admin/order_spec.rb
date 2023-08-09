@@ -1123,8 +1123,7 @@ describe '
           visit spree.edit_admin_order_path(order_empty)
         end
 
-        it "displays the invoice tab" do
-          pending "issue #11240"
+        it "should not display the invoice tab" do
           expect(page).to have_content "Cart".upcase
           expect(page).not_to have_content "Invoices".upcase
         end
@@ -1140,8 +1139,7 @@ describe '
           visit spree.edit_admin_order_path(order4)
         end
 
-        it "displays the invoice tab" do
-          pending "issue #11240"
+        it "should not display the invoice tab" do
           expect(page).to have_content "Payment".upcase
           expect(page).not_to have_content "Invoices".upcase
         end

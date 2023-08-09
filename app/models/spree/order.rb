@@ -361,6 +361,10 @@ module Spree
       complete? || resumed? || awaiting_return? || returned?
     end
 
+    def can_show_invoice?
+      complete? || resumed? || canceled?
+    end
+
     # Finalizes an in progress order after checkout is complete.
     # Called after transition to complete state when payments will have been processed
     def finalize!
