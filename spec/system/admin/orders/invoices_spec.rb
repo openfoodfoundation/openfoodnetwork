@@ -38,8 +38,8 @@ describe '
         click_link 'Invoices'
 
         expect {
-          click_link 'New Invoice'
-          expect(page).to have_no_link "New Invoice"
+          click_link "Create or Update Invoice"
+          expect(page).to have_no_link "Create or Update Invoice"
         }.to change { order.invoices.count }.by(1)
 
         invoice = order.invoices.first
@@ -54,7 +54,7 @@ describe '
       context 'order not updated since latest invoice' do
         it 'should not render new invoice button' do
           click_link 'Invoices'
-          expect(page).to_not have_link 'New Invoice'
+          expect(page).to_not have_link "Create or Update Invoice"
         end
       end
 
@@ -70,8 +70,8 @@ describe '
           it 'updates the lastest invoice for the order' do
             click_link 'Invoices'
             expect {
-              click_link 'New Invoice'
-              expect(page).to have_no_link "New Invoice"
+              click_link "Create or Update Invoice"
+              expect(page).to have_no_link "Create or Update Invoice"
             }.to change { order.reload.invoices.count }.by(0)
               .and change { latest_invoice.reload.presenter.note }.from("").to(new_note)
 
@@ -87,8 +87,8 @@ describe '
           it 'creates a new invoice for the order' do
             click_link 'Invoices'
             expect {
-              click_link 'New Invoice'
-              expect(page).to have_no_link "New Invoice"
+              click_link "Create or Update Invoice"
+              expect(page).to have_no_link "Create or Update Invoice"
             }.to change { order.reload.invoices.count }.by(1)
 
             expect(latest_invoice.reload.cancelled).to eq true
