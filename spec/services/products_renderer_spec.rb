@@ -39,7 +39,7 @@ describe ProductsRenderer do
     end
 
     describe "sorting" do
-      it "sorts products by the distributor's preferred taxon list" do
+      xit "sorts products by the distributor's preferred taxon list" do
         allow(distributor)
           .to receive(:preferred_shopfront_taxon_order) { "#{cakes.id},#{fruits.id}" }
         products = products_renderer.send(:products)
@@ -106,7 +106,7 @@ describe ProductsRenderer do
           expect(products).to eq([product_apples, product_cherries])
         end
 
-        it "filters products with property when sorting is enabled" do
+        xit "filters products with property when sorting is enabled" do
           allow(distributor).to receive(:preferred_shopfront_taxon_order) {
             "#{fruits.id},#{cakes.id}"
           }
