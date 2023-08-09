@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_09_195519) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_09_201542) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -100,21 +100,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_195519) do
     t.index ["enterprise_id", "code"], name: "index_customers_on_enterprise_id_and_code", unique: true
     t.index ["ship_address_id"], name: "index_customers_on_ship_address_id"
     t.index ["user_id"], name: "index_customers_on_user_id"
-  end
-
-  create_table "delayed_jobs", id: :serial, force: :cascade do |t|
-    t.integer "priority", default: 0, null: false
-    t.integer "attempts", default: 0, null: false
-    t.text "handler", null: false
-    t.text "last_error"
-    t.datetime "run_at", precision: nil
-    t.datetime "locked_at", precision: nil
-    t.datetime "failed_at", precision: nil
-    t.string "locked_by", limit: 255
-    t.string "queue", limit: 255
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
   create_table "distributors_payment_methods", force: :cascade do |t|
@@ -404,22 +389,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_195519) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "spree_activators", id: :serial, force: :cascade do |t|
-    t.string "description", limit: 255
-    t.datetime "expires_at", precision: nil
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.datetime "starts_at", precision: nil
-    t.string "name", limit: 255
-    t.string "event_name", limit: 255
-    t.string "type", limit: 255
-    t.integer "usage_limit"
-    t.string "match_policy", limit: 255, default: "all"
-    t.string "code", limit: 255
-    t.boolean "advertise", default: false
-    t.string "path", limit: 255
-  end
-
   create_table "spree_addresses", id: :serial, force: :cascade do |t|
     t.string "firstname", limit: 255
     t.string "lastname", limit: 255
@@ -658,13 +627,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_195519) do
     t.index ["transaction_id"], name: "index_spree_paypal_express_checkouts_on_transaction_id"
   end
 
-  create_table "spree_pending_promotions", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "promotion_id"
-    t.index ["promotion_id"], name: "index_spree_pending_promotions_on_promotion_id"
-    t.index ["user_id"], name: "index_spree_pending_promotions_on_user_id"
-  end
-
   create_table "spree_preferences", id: :serial, force: :cascade do |t|
     t.text "value"
     t.datetime "created_at", precision: nil, null: false
@@ -690,14 +652,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_195519) do
     t.datetime "updated_at", precision: nil, null: false
     t.integer "position", default: 0
     t.index ["product_id"], name: "index_product_properties_on_product_id"
-  end
-
-  create_table "spree_product_scopes", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
-    t.text "arguments"
-    t.integer "product_group_id"
-    t.index ["name"], name: "index_product_scopes_on_name"
-    t.index ["product_group_id"], name: "index_product_scopes_on_product_group_id"
   end
 
   create_table "spree_products", id: :serial, force: :cascade do |t|
@@ -875,19 +829,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_195519) do
     t.integer "originator_id"
     t.string "originator_type", limit: 255
     t.index ["stock_item_id"], name: "index_spree_stock_movements_on_stock_item_id"
-  end
-
-  create_table "spree_stock_transfers", id: :serial, force: :cascade do |t|
-    t.string "type", limit: 255
-    t.string "reference", limit: 255
-    t.integer "source_location_id"
-    t.integer "destination_location_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.string "number", limit: 255
-    t.index ["destination_location_id"], name: "index_spree_stock_transfers_on_destination_location_id"
-    t.index ["number"], name: "index_spree_stock_transfers_on_number"
-    t.index ["source_location_id"], name: "index_spree_stock_transfers_on_source_location_id"
   end
 
   create_table "spree_tax_categories", id: :serial, force: :cascade do |t|
