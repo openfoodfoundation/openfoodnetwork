@@ -1044,7 +1044,7 @@ describe '
 
           let(:table_contents) {
             [
-              Invoice.first.created_at.strftime('%B %d, %Y 12:00 AM').to_s,
+              Invoice.first.created_at.strftime('%B %d, %Y').to_s,
               "1",
               "0.0",
               "Active",
