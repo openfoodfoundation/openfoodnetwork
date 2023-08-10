@@ -10,6 +10,14 @@ describe Voucher do
     it { is_expected.to have_many(:adjustments) }
   end
 
+  describe '#code=' do
+    it "removes leading and trailing whitespace" do
+      voucher = build(:voucher, code: "\r\n\t new_code \r\n\t")
+
+      expect(voucher.code).to eq("new_code")
+    end
+  end
+
   describe 'validations' do
     subject { build(:voucher, code: 'new_code', enterprise: enterprise) }
 

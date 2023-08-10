@@ -13,6 +13,10 @@ class Voucher < ApplicationRecord
   validates :code, presence: true, uniqueness: { scope: :enterprise_id }
   validates :amount, presence: true, numericality: { greater_than: 0 }
 
+  def code=(value)
+    super(value.to_s.strip)
+  end
+
   def display_value
     Spree::Money.new(amount)
   end
