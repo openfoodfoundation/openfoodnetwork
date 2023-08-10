@@ -125,6 +125,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
           # add Voucher
           fill_in "Enter voucher code", with: "some_code"
           click_button("Apply")
+          expect(page).to have_link "Remove code"
 
           # Choose payment
           click_on "Next - Order summary"
