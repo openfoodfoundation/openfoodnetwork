@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_09_172206) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_09_194304) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -575,36 +575,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_172206) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "spree_option_types", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 100
-    t.string "presentation", limit: 100
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.integer "position", default: 0, null: false
-  end
-
-  create_table "spree_option_values", id: :serial, force: :cascade do |t|
-    t.integer "position"
-    t.string "name", limit: 255
-    t.string "presentation", limit: 255
-    t.integer "option_type_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-  end
-
-  create_table "spree_option_values_line_items", id: false, force: :cascade do |t|
-    t.integer "line_item_id"
-    t.integer "option_value_id"
-    t.index ["line_item_id"], name: "index_option_values_line_items_on_line_item_id"
-  end
-
-  create_table "spree_option_values_variants", id: false, force: :cascade do |t|
-    t.integer "variant_id"
-    t.integer "option_value_id"
-    t.index ["variant_id", "option_value_id"], name: "index_option_values_variants_on_variant_id_and_option_value_id"
-    t.index ["variant_id"], name: "index_option_values_variants_on_variant_id"
-  end
-
   create_table "spree_orders", id: :serial, force: :cascade do |t|
     t.string "number", limit: 15
     t.decimal "item_total", precision: 10, scale: 2, default: "0.0", null: false
@@ -710,14 +680,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_172206) do
     t.string "currency", limit: 255
     t.datetime "deleted_at", precision: nil
     t.index ["variant_id"], name: "index_spree_prices_on_variant_id"
-  end
-
-  create_table "spree_product_option_types", id: :serial, force: :cascade do |t|
-    t.integer "position"
-    t.integer "product_id"
-    t.integer "option_type_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "spree_product_properties", id: :serial, force: :cascade do |t|
@@ -1244,9 +1206,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_172206) do
   add_foreign_key "spree_inventory_units", "spree_variants", column: "variant_id", name: "spree_inventory_units_variant_id_fk"
   add_foreign_key "spree_line_items", "spree_orders", column: "order_id", name: "spree_line_items_order_id_fk"
   add_foreign_key "spree_line_items", "spree_variants", column: "variant_id", name: "spree_line_items_variant_id_fk"
-  add_foreign_key "spree_option_values", "spree_option_types", column: "option_type_id", name: "spree_option_values_option_type_id_fk"
-  add_foreign_key "spree_option_values_variants", "spree_option_values", column: "option_value_id", name: "spree_option_values_variants_option_value_id_fk"
-  add_foreign_key "spree_option_values_variants", "spree_variants", column: "variant_id", name: "spree_option_values_variants_variant_id_fk"
   add_foreign_key "spree_orders", "customers", name: "spree_orders_customer_id_fk"
   add_foreign_key "spree_orders", "enterprises", column: "distributor_id", name: "spree_orders_distributor_id_fk"
   add_foreign_key "spree_orders", "order_cycles", name: "spree_orders_order_cycle_id_fk"
@@ -1256,8 +1215,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_172206) do
   add_foreign_key "spree_payments", "spree_orders", column: "order_id", name: "spree_payments_order_id_fk"
   add_foreign_key "spree_payments", "spree_payment_methods", column: "payment_method_id", name: "spree_payments_payment_method_id_fk"
   add_foreign_key "spree_prices", "spree_variants", column: "variant_id", name: "spree_prices_variant_id_fk"
-  add_foreign_key "spree_product_option_types", "spree_option_types", column: "option_type_id", name: "spree_product_option_types_option_type_id_fk"
-  add_foreign_key "spree_product_option_types", "spree_products", column: "product_id", name: "spree_product_option_types_product_id_fk"
   add_foreign_key "spree_product_properties", "spree_products", column: "product_id", name: "spree_product_properties_product_id_fk"
   add_foreign_key "spree_product_properties", "spree_properties", column: "property_id", name: "spree_product_properties_property_id_fk"
   add_foreign_key "spree_products", "enterprises", column: "supplier_id", name: "spree_products_supplier_id_fk"
