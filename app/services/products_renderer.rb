@@ -35,7 +35,7 @@ class ProductsRenderer
 
     @products ||= begin
       results = distributed_products.
-        products_relation.
+        products_taxons_relation.
         order(Arel.sql(products_order))
 
       filter_and_paginate(results).
@@ -54,7 +54,7 @@ class ProductsRenderer
   def filter_and_paginate(query)
     results = query.ransack(args[:q]).result
 
-    _pagy, paginated_results = pagy(
+    _pagy, paginated_results = pagy_arel(
       results,
       page: args[:page] || 1,
       items: args[:per_page] || DEFAULT_PER_PAGE
@@ -73,6 +73,12 @@ class ProductsRenderer
       distributor
         .preferred_shopfront_producer_order
         .split(",").map { |id| "spree_products.supplier_id=#{id} DESC" }
+        .join(", ") + ", spree_products.name ASC, spree_products.id ASC"
+    elsif distributor.preferred_shopfront_product_sorting_method == "by_category" &&
+          distributor.preferred_shopfront_taxon_order.present?
+      distributor
+        .preferred_shopfront_taxon_order
+        .split(",").map { |id| "first_variant.primary_taxon_id=#{id} DESC" }
         .join(", ") + ", spree_products.name ASC, spree_products.id ASC"
     else
       "spree_products.name ASC, spree_products.id"

@@ -26,6 +26,14 @@
     %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_taxon_order', name: 'enterprise[preferred_shopfront_taxon_order]', rows: 6, "ofn-taxon-autocomplete": '', "multiple-selection": 'true', placeholder: t('.shopfront_sort_by_category_placeholder'), "ng-model": 'Enterprise.preferred_shopfront_taxon_order', "ng-readonly": "Enterprise.preferred_shopfront_product_sorting_method != 'by_category'" }
 .row
   .three.columns.alpha
+    = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_category, { 'ng-model' => 'Enterprise.preferred_shopfront_product_sorting_method' }
+    = label :enterprise, :preferred_shopfront_product_sorting_method_by_category, t('.shopfront_sort_by_category')
+  .eight.columns.omega
+    %textarea.fullwidth{ id: 'enterprise_preferred_shopfront_taxon_order', name: 'enterprise[preferred_shopfront_taxon_order]', rows: 6,
+      'ofn-taxon-autocomplete' => '', 'multiple-selection' => 'true', placeholder: t('.shopfront_sort_by_category_placeholder'),
+      ng: { model: 'Enterprise.preferred_shopfront_taxon_order', readonly: "Enterprise.preferred_shopfront_product_sorting_method != 'by_category'" }}
+.row
+  .three.columns.alpha
     = radio_button :enterprise, :preferred_shopfront_product_sorting_method, :by_producer, { 'ng-model' => 'Enterprise.preferred_shopfront_product_sorting_method' }
     = label :enterprise, :preferred_shopfront_product_sorting_method_by_producer, t('.shopfront_sort_by_producer')
   .eight.columns.omega
