@@ -716,6 +716,20 @@ describe '
             it_behaves_like "edit link with", "www.openfoodnetwork.org", "http://www.openfoodnetwork.org"
             it_behaves_like "edit link with", "openfoodnetwork.org", "http://openfoodnetwork.org"
           end
+
+          shared_examples "edit link with invalid" do |url|
+            it "url: #{url}" do
+              fill_in "enterprise_white_label_logo_link", with: url
+              click_button 'Update'
+              expect(page)
+                .to have_content "Link for the logo used in shopfront '#{url}' is an invalid URL"
+              expect(distributor1.reload.white_label_logo_link).to be_nil
+            end
+          end
+
+          context "can not edit white label logo link" do
+            it_behaves_like "edit link with invalid", "invalid url"
+          end
         end
 
         it "can check/uncheck the hide_groups_tab attribute" do
