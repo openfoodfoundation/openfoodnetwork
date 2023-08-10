@@ -148,6 +148,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
             submit_request(example.metadata)
             variant.reload
           }.to change { variant.description }.to("DFC-Pesto updated")
+            .and change { variant.name }.to("Pesto novo")
             .and change { variant.unit_value }.to(17)
         end
       end

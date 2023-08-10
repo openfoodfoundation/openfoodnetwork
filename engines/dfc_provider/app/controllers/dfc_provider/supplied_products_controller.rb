@@ -34,13 +34,10 @@ module DfcProvider
 
       return head :bad_request unless supplied_product
 
-      variant.product.update!(
-        description: supplied_product.description,
-      )
+      SuppliedProductBuilder.apply(supplied_product, variant)
 
-      variant.update!(
-        unit_value: supplied_product.quantity.value,
-      )
+      variant.product.save!
+      variant.save!
     end
 
     private

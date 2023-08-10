@@ -26,4 +26,14 @@ class SuppliedProductBuilder < DfcBuilder
       QuantitativeValueBuilder.apply(supplied_product.quantity, product)
     end
   end
+
+  def self.apply(supplied_product, variant)
+    variant.product.assign_attributes(
+      name: supplied_product.name,
+      description: supplied_product.description,
+    )
+
+    QuantitativeValueBuilder.apply(supplied_product.quantity, variant.product)
+    variant.unit_value = variant.product.unit_value
+  end
 end
