@@ -37,9 +37,8 @@ module DfcProvider
         description: dfc_request["dfc-b:description"],
       )
 
-      # This input is DFC v1.6 currently sent by the DFC Prototype.
       variant.update!(
-        unit_value: dfc_request["dfc-b:quantity"],
+        unit_value: dfc_request["dfc-b:hasQuantity"]["dfc-b:value"],
       )
     end
 

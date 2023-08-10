@@ -128,7 +128,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
       consumes "application/json"
 
       parameter name: :supplied_product, in: :body, schema: {
-        example: ExampleJson.read("patch_supplied_product")
+        example: ExampleJson.read("put_supplied_product")
       }
 
       let(:id) { variant.id }
