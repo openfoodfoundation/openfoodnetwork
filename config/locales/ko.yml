@@ -67,6 +67,30 @@ ko:
             using_producer_stock_settings_but_count_on_hand_set: "생산자 제고 관리를 위해 빈 칸으로 남겨야 합니다."
             on_demand_but_count_on_hand_set: "요구 사항이 있을 경우 빈 칸으로 남겨야 합니다."
             limited_stock_but_no_count_on_hand: "한정된 재고 사항에 따라 명시되어야 합니다."
+      messages:
+        blank: "빈칸이 될 수 없습니다."
+  errors:
+    messages:
+      content_type_invalid: "사용 불가한 컨텐츠 타입입니다."
+      file_size_out_of_range: "%{file_size}의 크기는 요구된 범위에 있지 않습니다."
+      limit_out_of_range: "총합이 범위를 넘어섭니다."
+      image_metadata_missing: "가능한 이미지 파일이 아닙니다."
+      dimension_min_inclusion: "%{width} x %{height} 픽셀보다 크거나 같아야 합니다."
+      dimension_max_inclusion: "%{width} x %{height} 픽셀보다 작거나 같아야 합니다."
+      dimension_width_inclusion: "가로의 길이가 %{min} 과 %{max} 픽셀 사이에 있지 않습니다."
+      dimension_height_inclusion: "세로이 길이가 %{min} 과%{max} 픽셀 사이에 있지 않습니다."
+      dimension_width_greater_than_or_equal_to: "가로의 길이는%{length} 픽셀보다 크거나 같아야 합니다."
+      dimension_height_greater_than_or_equal_to: "세로의 길이는 %{length} 픽셀보다 크거나 같아야 합니다."
+      dimension_width_less_than_or_equal_to: "가로의 길이는 %{length} 픽셀보다 작거나 같아야 합니다."
+      dimension_height_less_than_or_equal_to: "세로의 길이는 %{length} 픽셀보다 작거나 같아야 합니다."
+      dimension_width_equal_to: "가로의 길이는 %{length} 픽셀이어야 합니다."
+      dimension_height_equal_to: "세로의 길이는 %{length} 픽셀이어야 합니다."
+      aspect_ratio_not_square: "정사각형 형태의 사진이어야 합니다."
+      aspect_ratio_not_portrait: "세로로 찍은 사진이어야 합니다."
+      aspect_ratio_not_landscape: "가로로 찍은 사진이어야 합니다."
+      aspect_ratio_is_not: "화면 비율이 %{aspect_ratio} 이어야 합니다."
+      aspect_ratio_unknown: "알 수 없는 화면 비율 입니다."
+      image_not_processable: "가능한 이미지 파일이 아닙니다."
   stripe:
     error_code:
       incorrect_number: "카드 숫자가 맞지 않습니다."
@@ -329,6 +353,8 @@ ko:
   edit: 편집
   clone: 복사
   distributors: 유통업체
+  distribution: 분배
+  order_cycles: 주문 주기
   bulk_order_management: 대량 주문 관리
   enterprises: 회사
   enterprise_groups: 그룹
@@ -360,6 +386,7 @@ ko:
   powered_by: 제작자
   blocked_cookies_alert: "당신의 브라우저가 이 상점을 사용하는데 필요한 쿠키를 차단하고 있을 수 있습니다. 쿠키를 허용하고 페이지를 다시 로드하려면 아래를 클릭하십시오."
   allow_cookies: "쿠키 허용"
+  none: 아니다
   notes: 기록
   error: 오류
   processing_payment: "결제가 진행 중입니다..."
@@ -369,6 +396,7 @@ ko:
   clear_filters: 필터 제거
   quantity: 수량
   pick_up: 선택
+  ok: 확인
   copy: 복사
   change_my_password: "비밀번호 교체"
   update_password: "비밀번호 갱신"
@@ -378,6 +406,7 @@ ko:
   back_to_payments_list: "결제 리스트로 돌아가기"
   maestro_or_solo_cards: "마스터/전용 카드"
   backordered: "일시 품절됨"
+  on_hand: "대기 중"
   on hand: "대기 중"
   ship: "출하"
   shipping_category: "전송물품 목록"
@@ -474,6 +503,7 @@ ko:
     clear_all: 모두 지우기
     start_date: "시작 날짜"
     end_date: "종료 날짜"
+    unsaved_changes: "저장되지 않은 변경이 있습니다."
     form_invalid: "양식에 누락되거나 잘못된 필드가 있습니다."
     clear_filters: 필터 지우기
     clear: 지우기
@@ -494,7 +524,6 @@ ko:
     has_one_rule: "한 가지 규칙 있음"
     has_n_rules: "%{num}개의 규칙 있음"
     unsaved_confirm_leave: "이 페이지에 대한 변경사항이 저장되지 않았습니다. 저장하지 않고 진행할까요?"
-    unsaved_changes: "저장되지 않은 변경이 있습니다."
     available_units: "사용 가능 단위"
     shopfront_settings:
       embedded_shopfront_settings: "내부 매장 설정"
@@ -1198,11 +1227,11 @@ ko:
         general_settings: "일반 설정"
         incoming: 새로 생성됨
         supplier: 공급업체
+        products: 생산품
         receival_details: 수취 내역
         fees: 수수료
         outgoing: 방출됨
         distributor: 유통업체
-        products: 생산품
         tags: 태그
         add_a_tag: 태그 추가
         delivery_details: 픽업 / 배달 세부사항
@@ -1634,15 +1663,14 @@ ko:
   longitude: 경도
   longitude_placeholder: 예. 144.7851531
   use_geocoder: 주소에서 위도와 경도를 자동으로 계산하시겠습니까?
+  state: 상태
   postcode: 우편번호
   postcode_placeholder: 예. 3070
   suburb: 교외
-  state: 상태
   country: 나라
   unauthorized: 공인되지 않음
   terms_of_service: "서비스 약관"
   on_demand: 요구 사항
-  none: 아니다
   not_allowed: 허용되지 않음
   no_shipping: 전송 방법 없음
   no_payment: 결제 방법 없음
@@ -1650,6 +1678,7 @@ ko:
   unconfirmed: 확인되지 않음
   days: 날짜
   authorization_failure: "인증 실패"
+  description: "설명"
   label_shop: "쇼핑"
   label_shops: "가게"
   label_map: "지도"
@@ -2090,6 +2119,7 @@ ko:
   producers_signup_cta_headline: 지금 가입하세요!
   producers_signup_cta_action: 가입하기
   producers_signup_detail: 자세한 내용은 이렇습니다.
+  producer: 제공자
   products_item: 항목
   products_description: 설명
   products_variant: 변경
@@ -2359,6 +2389,7 @@ ko:
   bulk: "대형"
   shop_variant_quantity_min: "최소"
   shop_variant_quantity_max: "최대"
+  contact: "연락처"
   follow: "팔로우"
   shop_for_products_html: "<span class=\"turquoise\">%{enterprise}</span> 제품 구매:"
   change_shop: "상점 변경 위치 :"
@@ -2372,6 +2403,7 @@ ko:
   included_tax: "세금 포함"
   tax: "세금"
   tax_amount_included: "%{amount} (포함)"
+  remove_tax: "세금 제거"
   balance: "잔고"
   transaction: "거래"
   transaction_date: "날짜"
@@ -2382,7 +2414,6 @@ ko:
   credit: "신용 거래"
   Paid: "유급"
   Ready: "준비"
-  ok: 확인
   not_visible: 볼 수 없음
   you_have_no_orders_yet: "아직 주문이 없음"
   show_only_complete_orders: "확정된 주문만 보기"
@@ -2434,7 +2465,6 @@ ko:
   delivery_method: 배달 방식
   fee_type: "지불 방식"
   tax_category: "세금 목록"
-  description: "설명"
   display: "전시"
   tags: "태그"
   calculator: "계산기"
@@ -2467,10 +2497,8 @@ ko:
   no_customers_found: "고객을 찾을 수 없습니다"
   go: "진행"
   hub: "물류"
-  producer: "제공자"
   product: "생산물"
   price: "가격"
-  on_hand: "대기 중"
   review: "리뷰"
   save_changes: "변경 내용 저장"
   order_saved: "주문 저장됨"
@@ -2522,9 +2550,7 @@ ko:
   edit_profile_details: "프로필 세부 사항 편집"
   edit_profile_details_etc: "프로필 설명, 이미지 등을 변경합니다."
   order_cycle: "주문 주기"
-  order_cycles: "주문 주기"
   enterprise_relationships: "회사 권한"
-  remove_tax: "세금 제거"
   first_name_begins_with: "이름"
   last_name_begins_with: "성"
   shipping_method: "배송 방법"
@@ -2581,8 +2607,8 @@ ko:
   report_header_comments: 코멘트
   report_header_first_name: 이름
   report_header_last_name: 성
-  report_header_phone: 전화번호
   report_header_suburb: 교외
+  report_header_phone: 전화번호
   report_header_address: 주소
   report_header_billing_address: 청구서 발송지
   report_header_relationship: 관계
@@ -2746,7 +2772,6 @@ ko:
   images: "사진"
   web: "웹페이지"
   primary_details: "기본 세부 사항"
-  contact: "연락처"
   social: "사회성"
   shipping: "배송"
   shipping_methods: "전송 방법"
@@ -3247,7 +3272,6 @@ ko:
       report:
         none: "아니다"
   order: "주문"
-  distribution: "분배"
   order_details: "주문 세부 사항"
   customer_details: "고객 세부 사항"
   adjustments: "조정"
@@ -3351,7 +3375,6 @@ ko:
     tracking: "추적"
     tracking_number: "추적 번호"
     order_total: "주문 총합"
-    order_updated: "주문 업데이트됨"
     customer_details: "고객 세부 사항"
     customer_details_updated: "고객 세부 사항 업데이트됨"
     customer_search: "고객 찾기"
@@ -3644,6 +3667,10 @@ ko:
           from: "부터"
           to: "청구처"
           shipping: "배송"
+          payments_list:
+            date_time: "날짜 / 시간"
+            payment_method: "결제 방식"
+            amount: "수량"
         form:
           distribution_fields:
             title: "분배"

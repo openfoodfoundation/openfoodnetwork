@@ -85,6 +85,12 @@ fr_BE:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car les paramètres de stock du producteur sont utilisés"
             on_demand_but_count_on_hand_set: "doit être vide si à la demande"
             limited_stock_but_no_count_on_hand: "doit être spécifié car le stock limité est forcé"
+      messages:
+        blank: "Champ obligatoire"
+  errors:
+    messages:
+      image_metadata_missing: "n'est pas une image valide"
+      image_not_processable: "n'est pas une image valide"
   stripe:
     error_code:
       incorrect_number: "Le numéro de carte est incorrect."
@@ -311,6 +317,8 @@ fr_BE:
   edit: Modifier
   clone: Dupliquer
   distributors: Distributeurs
+  distribution: Distribution
+  order_cycles: Cycles de Vente
   bulk_order_management: Gestion des commandes par lot
   enterprises: Entreprises
   enterprise_groups: Groupes
@@ -342,6 +350,7 @@ fr_BE:
   powered_by: Propulsé par
   blocked_cookies_alert: "Votre navigateur semble bloquer des cookies nécessaires à l'utilisation de ce site. Cliquez ci-dessous pour autoriser les cookies et rechargez la page."
   allow_cookies: "Autoriser les cookies"
+  none: Aucun
   notes: Commentaires
   error: Erreur
   processing_payment: "Paiement en cours..."
@@ -350,6 +359,7 @@ fr_BE:
   clear_filters: Effacer les filtres
   quantity: Quantité
   pick_up: Retrait
+  ok: OK
   copy: Copier
   change_my_password: "Changer mon mot de passe"
   update_password: "Mise à jour du mot de passe"
@@ -359,6 +369,7 @@ fr_BE:
   back_to_payments_list: "Retour à la liste des paiements"
   maestro_or_solo_cards: "Cartes Maestro / Solo"
   backordered: "En rupture de stock"
+  on_hand: "En stock"
   on hand: "En stock"
   ship: "Expédier"
   shipping_category: "Catégorie de livraison"
@@ -455,6 +466,7 @@ fr_BE:
     clear_all: Vider
     start_date: "Date de début"
     end_date: "Date de fin"
+    unsaved_changes: "Des modifications n'ont pas été sauvegardées."
     form_invalid: "Le formulaire contient des champs manquants ou invalides"
     clear_filters: Annuler les filtres
     clear: Annuler
@@ -475,7 +487,6 @@ fr_BE:
     has_one_rule: "a une règle"
     has_n_rules: "a %{num} règle(s)"
     unsaved_confirm_leave: "Des modifications n'ont pas été sauvegardées et seront perdues si vous quittez la page. Souhaitez-vous quitter la page?"
-    unsaved_changes: "Des modifications n'ont pas été sauvegardées."
     available_units: "Unités disponibles"
     shopfront_settings:
       embedded_shopfront_settings: "Paramètres comptoir Intégrées"
@@ -1200,11 +1211,11 @@ fr_BE:
         general_settings: "Réglages Généraux"
         incoming: Produits entrants (pouvant être mis en vente par les hubs)
         supplier: Fournisseur
+        products: Produits
         receival_details: Détails livraison produits
         fees: Commission
         outgoing: Produits sortants (mis en vente par/via un ou plusieurs hubs)
         distributor: Hub (distributeur)
-        products: Produits
         tags: Tags
         add_a_tag: Ajouter un tag
         delivery_details: Précisions retrait / livraison
@@ -1638,15 +1649,14 @@ fr_BE:
   city_placeholder: 'ex: Wavre'
   latitude_longitude_tip: La latitude et la longitude sont nécessaires pour afficher votre profil sur la carte.
   use_geocoder: Souhaitez-vous calculer automatiquement la latitude et la longitude depuis l'adresse ?
+  state: Province
   postcode: Code postal
   postcode_placeholder: 'ex: 1300'
   suburb: Ville
-  state: Province
   country: Pays
   unauthorized: Non authorisé
   terms_of_service: "Conditions d'utilisation"
   on_demand: A volonté
-  none: Aucun
   not_allowed: Non autorisé
   no_shipping: pas de méthode de livraison
   no_payment: pas de méthode de paiement
@@ -1654,6 +1664,7 @@ fr_BE:
   unconfirmed: non confirmé
   days: jours
   authorization_failure: "Echec autorisation "
+  description: "Description"
   label_shop: "Comptoir"
   label_shops: "Comptoirs"
   label_map: "Carte"
@@ -2089,6 +2100,7 @@ fr_BE:
   producers_signup_cta_headline: Rejoindre le réseau!
   producers_signup_cta_action: Rejoindre le réseau
   producers_signup_detail: Comment ça marche.
+  producer: Producteur·trice
   products_item: Produit
   products_description: Description
   products_variant: Variante
@@ -2356,6 +2368,7 @@ fr_BE:
   bulk: "Vrac"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
+  contact: "Contact"
   follow: "Suivre"
   shop_for_products_html: "Acheter les produits de <span class=\"turquoise\">%{enterprise}</span> dans les comptoirs suivants:"
   change_shop: "Changer de comptoir pour:"
@@ -2368,6 +2381,7 @@ fr_BE:
   price_graph: "Légende détail du prix"
   included_tax: "Inclut TVA"
   tax: "Taxe"
+  remove_tax: "Retirer TVA"
   balance: "Solde"
   transaction: "Transaction"
   transaction_date: "Date"
@@ -2378,7 +2392,6 @@ fr_BE:
   credit: "Crédit"
   Paid: "Payé"
   Ready: "Prêt"
-  ok: OK
   not_visible: invisible
   you_have_no_orders_yet: "Vous n'avez pas encore de commande"
   show_only_complete_orders: "Montrer uniquement les commandes finalisées"
@@ -2430,7 +2443,6 @@ fr_BE:
   delivery_method: Méthode de Livraison
   fee_type: "Type de marge"
   tax_category: "TVA applicable"
-  description: "Description"
   display: "Ecran"
   tags: "Tags"
   calculator: "Calculateur"
@@ -2461,10 +2473,8 @@ fr_BE:
   no_customers_found: "Aucun acheteur trouvé"
   go: "Lancer"
   hub: "Comptoir"
-  producer: "Producteur·trice"
   product: "Produit"
   price: "Prix"
-  on_hand: "En stock"
   review: "Vérifier"
   save_changes: "Sauvegarder les modifications"
   order_saved: "Commande Sauvegardée"
@@ -2516,9 +2526,7 @@ fr_BE:
   edit_profile_details: "Modifier les informations du profil"
   edit_profile_details_etc: "Modifier la description, les images, etc."
   order_cycle: "Cycle de vente"
-  order_cycles: "Cycles de Vente"
   enterprise_relationships: "Permissions inter-entreprises"
-  remove_tax: "Retirer TVA"
   first_name_begins_with: "Début du prénom"
   last_name_begins_with: "Début du nom de famille"
   shipping_method: "Méthode de livraison"
@@ -2574,8 +2582,8 @@ fr_BE:
   report_header_comments: Commentaire
   report_header_first_name: Prénom
   report_header_last_name: Nom
-  report_header_phone: N° tel
   report_header_suburb: Ville
+  report_header_phone: N° tel
   report_header_address: Adresse
   report_header_billing_address: Adresse de facturation
   report_header_relationship: Droits
@@ -2749,7 +2757,6 @@ fr_BE:
   images: "Images"
   web: "Web"
   primary_details: "Informations de base"
-  contact: "Contact"
   social: "Réseaux sociaux"
   shipping: "Expédition"
   shipping_methods: "Méthodes de livraison"
@@ -3226,7 +3233,6 @@ fr_BE:
       report:
         none: "Aucun"
   order: "Commandes à venir"
-  distribution: "Distribution"
   order_details: "Données de la commande  "
   customer_details: "Données client·e"
   adjustments: "Corrections"
@@ -3571,6 +3577,10 @@ fr_BE:
           from: "De"
           to: "Facture à"
           shipping: "Expédition"
+          payments_list:
+            date_time: "Date/Temps"
+            payment_method: "Mode de paiement"
+            amount: "Quantité"
         form:
           distribution_fields:
             title: "Distribution"

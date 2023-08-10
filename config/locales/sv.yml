@@ -29,6 +29,8 @@ sv:
           attributes:
             email:
               taken: "Det finns redan ett konto med denna mailadress. Logga in eller återställ ditt lösenord."
+      messages:
+        blank: "kan inte vara blank"
   customer_instructions: "Kundinstruktioner"
   devise:
     failure:
@@ -86,6 +88,8 @@ sv:
   cancel: Avbryt
   edit: Redigera
   distributors: Distributörer
+  distribution: Distribution
+  order_cycles: Beställningsomgångar
   bulk_order_management: Hantera flera beställningar
   enterprises: Företag
   enterprise_groups: Grupper
@@ -113,6 +117,9 @@ sv:
   powered_by: Drivs av
   blocked_cookies_alert: "Din webbläsare kan blockera cookies som behövs för att använda den här butiken. Klicka nedan för att tillåta cookies och ladda om sidan."
   allow_cookies: "Tillåt cookies"
+  none: Ingen
+  ok: OK
+  on_hand: "På lager"
   on hand: "På lager"
   ship: "Frakta"
   actions:
@@ -175,6 +182,7 @@ sv:
     clear_all: Rensa allt
     start_date: "Startdatum"
     end_date: "Slutdatum"
+    unsaved_changes: "Du har ändringar som ej sparats"
     form_invalid: "Formuläret saknar data eller har innehåller ogiltiga fält"
     clear_filters: Rensa filterinställningar
     clear: Rensa
@@ -189,7 +197,6 @@ sv:
     has_one_rule: "har en regel"
     has_n_rules: "har %{num} regler"
     unsaved_confirm_leave: "Det finns ändringar på denna sida som ej sparats. Fortsätta utan att spara?"
-    unsaved_changes: "Du har ändringar som ej sparats"
     shopfront_settings:
       embedded_shopfront_settings: "Inställningar för inbäddning av nätbutik"
       enable_embedded_shopfronts: "Aktivera inbäddning av butiker"
@@ -617,11 +624,11 @@ sv:
       form:
         incoming: Inkommande
         supplier: Leverantör
+        products: Produkter
         receival_details: Mottagna detaljer
         fees: Avgifter
         outgoing: Utgående
         distributor: Distributör
-        products: Produkter
         tags: Etiketter
         delivery_details: Upphämtning/Leveransdetaljer
       name_and_timing_form:
@@ -855,20 +862,20 @@ sv:
   address2: Adress (fortgående)
   city: Ort
   city_placeholder: eg. Northcote
+  state: Region
   postcode: Postnummer
   postcode_placeholder: eg. 3070
   suburb: Stadsdel
-  state: Region
   country: Land
   unauthorized: Obehörig
   terms_of_service: "Användarvillkor "
   on_demand: 'På begäran '
-  none: Ingen
   not_allowed: Inte tillåtet
   no_shipping: inga fraktmetoder
   no_payment: inga betalningsmetoder
   no_shipping_or_payment: inga frakt- eller betalningsmetoder
   unconfirmed: obekräftad
+  description: "Beskrivning"
   label_shops: "Butiker"
   label_map: "Karta"
   label_producers: "Producenter "
@@ -1163,6 +1170,7 @@ sv:
   producers_signup_cta_headline: Gå med nu!
   producers_signup_cta_action: Gå med nu
   producers_signup_detail: Här är haken.
+  producer: Producent
   products_item: Artikel
   products_description: Beskrivning
   products_variant: Variant
@@ -1410,6 +1418,7 @@ sv:
   bulk: "Grupp"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
+  contact: "Kontakt"
   follow: "Följ"
   shop_for_products_html: "Köp för <span class=\"turquoise\">%{enterprise}</span> produkter vid:"
   change_shop: "Ändra butik till:"
@@ -1421,6 +1430,7 @@ sv:
   fundraising_fee: "Insamlingsvgift"
   price_graph: "Priskurva"
   included_tax: "Ingående skatt"
+  remove_tax: "Tag bort skatt"
   balance: "Saldo"
   transaction: "Transaktion"
   transaction_date: "Datum"
@@ -1431,7 +1441,6 @@ sv:
   credit: "Kredit"
   Paid: "Betald"
   Ready: "Klar"
-  ok: OK
   not_visible: inte synlig
   you_have_no_orders_yet: "Du har inga order ännu"
   running_balance: "Saldo"
@@ -1472,7 +1481,6 @@ sv:
   delivery_method: Leveransmetod
   fee_type: "Avgiftstyp"
   tax_category: "Taxområde"
-  description: "Beskrivning"
   tags: "Taggar"
   calculator: "Kalkulator"
   calculator_values: "Kalkulatorvärden"
@@ -1494,10 +1502,8 @@ sv:
   no_customers_found: "Inga kunder hittade"
   go: "Kör igång"
   hub: "Matställe"
-  producer: "Producent"
   product: "Produkt"
   price: "Pris"
-  on_hand: "På hand"
   save_changes: "Spara ändringar"
   order_saved: "Beställningen sparades"
   no_products: Inga produkter
@@ -1544,8 +1550,6 @@ sv:
   edit_profile_details: "Redigera detaljer i profilen"
   edit_profile_details_etc: "Ändra beskrivningen av din profil, bilder, etc"
   order_cycle: "Ordercykel"
-  order_cycles: "Beställningsomgångar"
-  remove_tax: "Tag bort skatt"
   enterprise_tos_link: "Länk till företagets servicevillkor"
   enterprise_tos_message: "Vi vill arbeta med personer som delar våra mål och värderingar. Därför ber vi nya företag att samtycka med vår"
   enterprise_tos_agree: "Jag samtycker med ovanstående servicevillkor "
@@ -1591,8 +1595,8 @@ sv:
   report_header_comments: Kommentarer
   report_header_first_name: Förnamn
   report_header_last_name: Efternamn
-  report_header_phone: Telefonnummer
   report_header_suburb: Stadsdel
+  report_header_phone: Telefonnummer
   report_header_address: Adress
   report_header_billing_address: Fakturerirngsadress
   report_header_relationship: Förhållande
@@ -1746,7 +1750,6 @@ sv:
   images: "Bilder"
   web: "Webb"
   primary_details: "Viktiga detaljer"
-  contact: "Kontakt"
   social: "Social"
   shipping_methods: "Transportmetoder"
   payment_methods: "Betalningsmetoder"
@@ -2060,7 +2063,6 @@ sv:
       report:
         none: "Ingen"
   order: "Beställningar"
-  distribution: "Distribution"
   payment: "Betalning "
   payment_method: "Betalningsmetod"
   category: "Kategori"
@@ -2171,6 +2173,8 @@ sv:
           tax_invoice: "FAKTURA"
           code: "Kod"
           from: "Från"
+          payments_list:
+            amount: "Belopp"
         form:
           distribution_fields:
             title: "Distribution"

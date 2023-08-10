@@ -68,6 +68,16 @@ ca:
             using_producer_stock_settings_but_count_on_hand_set: "ha d'estar en blanc perquè s'utilitza la configuració d'estoc de la productora"
             on_demand_but_count_on_hand_set: "ha d'estar en blanc si és sota demanda"
             limited_stock_but_no_count_on_hand: "cal especificar-se perquè força existències limitades"
+      messages:
+        blank: "no es pot deixar en blanc"
+  errors:
+    messages:
+      file_size_out_of_range: "la mida %{file_size} no és entre el rang necessari"
+      limit_out_of_range: "el total està fora del marge"
+      image_metadata_missing: "no és una imatge vàlida"
+      image_not_processable: "no és una imatge vàlida"
+    not_found:
+      message_html: "<b>Si us plau torna-ho a provar</b> Això podria ser un problema temporal. Feu clic al botó Enrere per tornar a la pantalla anterior o torneu a <a href='/'>Inici</a> i torneu-ho a provar. <b>Contacteu amb suport</b><p> Si el problema persisteix o és urgent, si us plau, digueu-nos-ho. Esn pots enviar un correua a <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>suport<p>katuma.org </a>.</p><p> Ens ajuda molt si pots donar tants detalls com sigui possible sobre de què estaves fent quan va aparèixer l'error.</p>"
   stripe:
     error_code:
       incorrect_number: "El número de la targeta és incorrecte."
@@ -333,6 +343,8 @@ ca:
   edit: Editar
   clone: Clonar
   distributors: Distribuïdors
+  distribution: Distribució
+  order_cycles: Cicles de comanda
   bulk_order_management: Gestió de comandes en bloc
   enterprises: Organitzacions
   enterprise_groups: Grups
@@ -364,6 +376,7 @@ ca:
   powered_by: Impulsat per
   blocked_cookies_alert: "El vostre navegador pot estar bloquejant les galetes necessàries per utilitzar aquesta botiga. Feu clic a continuació per permetre les galetes i tornar a carregar la pàgina."
   allow_cookies: "Permet les galetes"
+  none: No productora
   notes: Notes
   error: Error
   processing_payment: "S'està processant el pagament..."
@@ -373,6 +386,7 @@ ca:
   clear_filters: Esborra els filtres
   quantity: Quantitat
   pick_up: Recollida
+  ok: D'acord
   copy: Còpia
   change_my_password: "Canviar la meva contrasenya"
   update_password: "Actualitzar la contrasenya"
@@ -382,6 +396,7 @@ ca:
   back_to_payments_list: "Torna a la llista de pagaments"
   maestro_or_solo_cards: "Targetes Maestro/Solo"
   backordered: "Reabastit"
+  on_hand: "Disponibles"
   on hand: "Disponibles"
   ship: "Enviament"
   shipping_category: "Categoria d'enviament"
@@ -478,6 +493,7 @@ ca:
     clear_all: Esborrar tot
     start_date: "Data d'inici"
     end_date: "Data de finalització"
+    unsaved_changes: "Teniu canvis sense desar"
     form_invalid: "El formulari conté camps que falten o no son vàlids"
     clear_filters: Netejar Filtres
     clear: Netejar
@@ -498,7 +514,6 @@ ca:
     has_one_rule: "té una regla"
     has_n_rules: "té %{num} regles"
     unsaved_confirm_leave: "Hi ha canvis no desats canviats en aquesta pàgina. Continua sense desar?"
-    unsaved_changes: "Teniu canvis sense desar"
     available_units: "Unitats disponibles"
     shopfront_settings:
       embedded_shopfront_settings: "Configuració de botiga incrustada"
@@ -1220,11 +1235,11 @@ ca:
         general_settings: "Configuració general"
         incoming: Entrant
         supplier: Proveïdora
+        products: Productes
         receival_details: Detalls de recepció
         fees: Comissions
         outgoing: Sortint
         distributor: Distribuïdora
-        products: Productes
         tags: Etiquetes
         add_a_tag: Afegeix una etiqueta
         delivery_details: Detalls de recollida / lliurament
@@ -1644,15 +1659,14 @@ ca:
   longitude: Longitud
   longitude_placeholder: 'ex: 144,7851531'
   use_geocoder: Voleu calcular la latitud i la longitud automàticament a partir de l'adreça?
+  state: Estat
   postcode: Codi postal
   postcode_placeholder: 'p. ex: 08870'
   suburb: Barri
-  state: Estat
   country: País
   unauthorized: No autoritzat
   terms_of_service: "Termes del servei"
   on_demand: Sota demanda
-  none: No productora
   not_allowed: No permès
   no_shipping: sense mètodes d'enviament
   no_payment: sense mètodes de pagament
@@ -1660,6 +1674,7 @@ ca:
   unconfirmed: no confirmat
   days: dies
   authorization_failure: "Error d'autorització"
+  description: "Descripció"
   label_shop: "Botiga"
   label_shops: "Botigues"
   label_map: "Mapa"
@@ -2069,6 +2084,7 @@ ca:
   producers_signup_cta_headline: Uneix-te ara!
   producers_signup_cta_action: 'Uneix-te ara '
   producers_signup_detail: Aquest és el detall.
+  producer: Productor
   products_item: Article
   products_description: Descripció
   products_variant: Variant
@@ -2340,6 +2356,7 @@ ca:
   bulk: "A granel"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "màx"
+  contact: "Contacte"
   follow: "Segueix"
   shop_for_products_html: "Compra productes de <span class = \"turquesa\"> %{enterprise} </ span> a:"
   change_shop: "Canvia la botiga a:"
@@ -2351,6 +2368,7 @@ ca:
   fundraising_fee: "Comissió d'autogestió"
   price_graph: "Gràfic de preus"
   included_tax: "Impostos incloses"
+  remove_tax: "Suprimeix comissions"
   balance: "Balanç"
   transaction: "Transacció"
   transaction_date: "Data"
@@ -2361,7 +2379,6 @@ ca:
   credit: "Crèdit"
   Paid: "Pagat"
   Ready: "Llest"
-  ok: D'acord
   not_visible: no visible
   you_have_no_orders_yet: "Encara no tens comandes"
   show_only_complete_orders: "Mostra només comandes completades"
@@ -2413,7 +2430,6 @@ ca:
   delivery_method: Mètode de lliurament
   fee_type: "Tipus de comissió"
   tax_category: "Categoria d'impostos"
-  description: "Descripció"
   display: "Mostra"
   tags: "Etiquetes"
   calculator: "Calculadora"
@@ -2445,10 +2461,8 @@ ca:
   no_customers_found: "No s'han trobat consumidores"
   go: "Anar"
   hub: "Grup"
-  producer: "Productor"
   product: "Producte"
   price: "Preu"
-  on_hand: "Disponible"
   review: "Revisa"
   save_changes: "Desa els canvis"
   order_saved: "Comanda desada"
@@ -2500,9 +2514,7 @@ ca:
   edit_profile_details: "Edita els detalls del perfil"
   edit_profile_details_etc: "Canvia la descripció del perfil, les imatges, etc."
   order_cycle: "Cicle de Comanda"
-  order_cycles: "Cicles de comanda"
   enterprise_relationships: "Permisos d'organització"
-  remove_tax: "Suprimeix comissions"
   first_name_begins_with: "El nom comença amb"
   last_name_begins_with: "El cognom comença amb"
   shipping_method: "Mètode d'enviament"
@@ -2556,8 +2568,8 @@ ca:
   report_header_comments: Comentaris
   report_header_first_name: Nom
   report_header_last_name: Cognoms
-  report_header_phone: Telèfon
   report_header_suburb: Barri
+  report_header_phone: Telèfon
   report_header_address: Adreça
   report_header_billing_address: Adreça de facturació
   report_header_relationship: Relació
@@ -2717,7 +2729,6 @@ ca:
   images: "Imatges"
   web: "Web"
   primary_details: "Detalls principals"
-  contact: "Contacte"
   social: "Social"
   shipping: "Enviament"
   shipping_methods: "Mètodes d'enviament"
@@ -3260,7 +3271,6 @@ ca:
       report:
         none: "Cap"
   order: "Comanda"
-  distribution: "Distribució"
   order_details: "Detalls de la comanda"
   customer_details: "Detalls de la consumidora"
   adjustments: "Ajustaments"
@@ -3655,6 +3665,9 @@ ca:
           from: "De"
           to: "Facturar a"
           shipping: "Enviament"
+          payments_list:
+            date_time: "Data i hora"
+            amount: "Quantitat"
         note:
           note_label: "Nota:"
           no_note_present: "Cap nota proporcionada"
@@ -4151,9 +4164,6 @@ ca:
       x_years:
         one: "1 any"
         other: "%{count} anys"
-  errors:
-    not_found:
-      message_html: "<b>Si us plau torna-ho a provar</b> Això podria ser un problema temporal. Feu clic al botó Enrere per tornar a la pantalla anterior o torneu a <a href='/'>Inici</a> i torneu-ho a provar. <b>Contacteu amb suport</b><p> Si el problema persisteix o és urgent, si us plau, digueu-nos-ho. Esn pots enviar un correua a <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>suport<p>katuma.org </a>.</p><p> Ens ajuda molt si pots donar tants detalls com sigui possible sobre de què estaves fent quan va aparèixer l'error.</p>"
   components:
     search_input:
       placeholder: Cerca

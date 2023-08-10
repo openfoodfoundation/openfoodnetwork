@@ -67,6 +67,8 @@ es_US:
             using_producer_stock_settings_but_count_on_hand_set: "debe estar en blanco porque estás usando la configuración de estoc de la productora"
             on_demand_but_count_on_hand_set: "debe estar en blanco si está bajo demanda"
             limited_stock_but_no_count_on_hand: "se debe especificar porque se ha definido estoc limitado"
+      messages:
+        blank: "no puede estar vacío"
   stripe:
     error_code:
       incorrect_number: "El número de tarjeta es incorrecto."
@@ -328,6 +330,8 @@ es_US:
   edit: Editar
   clone: Duplicar
   distributors: Distribuidores
+  distribution: Distribución
+  order_cycles: Ciclos de Pedidos
   bulk_order_management: Gestión de pedidos en bloque
   enterprises: Organizaciones
   enterprise_groups: Redes
@@ -359,6 +363,7 @@ es_US:
   powered_by: Powered by
   blocked_cookies_alert: "Es posible que su navegador esté bloqueando las cookies necesarias para utilizar esta tienda. Haga clic a continuación para permitir las cookies y vuelva a cargar la página."
   allow_cookies: "Permitir cookies"
+  none: Ninguno
   notes: Notas
   error: Error
   processing_payment: "Procesando el pago..."
@@ -368,6 +373,7 @@ es_US:
   clear_filters: Borrar filtros
   quantity: Cantidad
   pick_up: Recogida
+  ok: OK
   copy: Copia
   change_my_password: "Cambiar mi contraseña"
   update_password: "Actualizar contraseña"
@@ -377,6 +383,7 @@ es_US:
   back_to_payments_list: "Volver a la lista de pagos"
   maestro_or_solo_cards: "Tarjetas Maestro/Solo"
   backordered: "Reabastecido"
+  on_hand: "Disponibles"
   on hand: "Disponibles"
   ship: "Envío"
   shipping_category: "Categoría de envío"
@@ -473,6 +480,7 @@ es_US:
     clear_all: Limpiar todo
     start_date: "Fecha de inicio"
     end_date: "Fecha de finalización"
+    unsaved_changes: "Tienes cambios sin guardar"
     form_invalid: "El formulario contiene campos vacíos o inválidos"
     clear_filters: Limpiar filtros
     clear: Limpiar
@@ -493,7 +501,6 @@ es_US:
     has_one_rule: "Tiene una regla"
     has_n_rules: "Tiene %{num} reglas"
     unsaved_confirm_leave: "Has cambios sin guardar en esta página ¿Continuar sin guardar?"
-    unsaved_changes: "Tienes cambios sin guardar"
     available_units: "Unidades disponibles"
     shopfront_settings:
       embedded_shopfront_settings: "Configuración de la tienda integrada"
@@ -1193,11 +1200,11 @@ es_US:
         general_settings: "Configuración general"
         incoming: Entrante
         supplier: Proveedora
+        products: Productos
         receival_details: Detalles de la recepción
         fees: Comisiones
         outgoing: Saliente
         distributor: Distribuidor
-        products: Productos
         tags: Etiquetas
         add_a_tag: Add a tag
         delivery_details: Detalles de Recogida / Entrega
@@ -1607,15 +1614,14 @@ es_US:
   latitude: Latitud
   longitude: Longitud
   use_geocoder: ¿Calcular la latitud y longitud automáticamente a partir de la dirección?
+  state: Estado
   postcode: Código postal
   postcode_placeholder: ej. 08025
   suburb: Barrio
-  state: Estado
   country: País
   unauthorized: No autorizado
   terms_of_service: "Términos de servicio"
   on_demand: Bajo demanda
-  none: Ninguno
   not_allowed: No permitido
   no_shipping: Sin métodos de envío
   no_payment: Sin métodos de pago
@@ -1623,6 +1629,7 @@ es_US:
   unconfirmed: sin confirmar
   days: dias
   authorization_failure: "Fallo de autorización"
+  description: "Descripción"
   label_shop: "Tienda"
   label_shops: "Tiendas"
   label_map: "Mapa"
@@ -2028,6 +2035,7 @@ es_US:
   producers_signup_cta_headline: ¡Únase ahora!
   producers_signup_cta_action: Únase ahora
   producers_signup_detail: Aquí esta el detalle.
+  producer: Productora
   products_item: Artículo
   products_description: Descripción
   products_variant: Variante
@@ -2295,6 +2303,7 @@ es_US:
   bulk: "Agrupar"
   shop_variant_quantity_min: "mínimo"
   shop_variant_quantity_max: "máximo"
+  contact: "Contacto"
   follow: "Seguir"
   shop_for_products_html: "Comprar productos de <span class=\"turquoise\">%{enterprise}</span> en:"
   change_shop: "Cambiar de tienda:"
@@ -2306,6 +2315,7 @@ es_US:
   fundraising_fee: "Comisión para recaptación de fondos"
   price_graph: "Gráfico de precios"
   included_tax: "Impuesto incluido"
+  remove_tax: "Eliminar impuesto"
   balance: "Saldo"
   transaction: "Transacción"
   transaction_date: "Fecha"
@@ -2316,7 +2326,6 @@ es_US:
   credit: "Crédito"
   Paid: "Pagado"
   Ready: "Listo"
-  ok: OK
   not_visible: no visible
   you_have_no_orders_yet: "No tienes pedidos todavía"
   show_only_complete_orders: "Mostrar solo pedidos completos"
@@ -2368,7 +2377,6 @@ es_US:
   delivery_method: Método de entrega
   fee_type: "Tipo de Comisión"
   tax_category: "Categoría del impuesto"
-  description: "Descripción"
   display: "Mostrar"
   tags: "Tags"
   calculator: "Calculadora"
@@ -2399,10 +2407,8 @@ es_US:
   no_customers_found: "No se encuentran consumidores"
   go: "Ir"
   hub: "Grupo de Consumo"
-  producer: "Productora"
   product: "Producto"
   price: "Precio"
-  on_hand: "Disponibles"
   review: "Revisión"
   save_changes: "Guardar Cambios"
   order_saved: "Pedido Guardado"
@@ -2454,9 +2460,7 @@ es_US:
   edit_profile_details: "Editar detalles del perfil"
   edit_profile_details_etc: "Cambia tu descripción, imágenes, etc."
   order_cycle: "Ciclo de Pedido"
-  order_cycles: "Ciclos de Pedidos"
   enterprise_relationships: "Permisos de la organización"
-  remove_tax: "Eliminar impuesto"
   first_name_begins_with: "El nombre comienza con"
   last_name_begins_with: "El apellido comienza con"
   shipping_method: "Método de envío"
@@ -2509,8 +2513,8 @@ es_US:
   report_header_comments: Comentarios
   report_header_first_name: Nombre
   report_header_last_name: Apellido
-  report_header_phone: Teléfono
   report_header_suburb: Barrio
+  report_header_phone: Teléfono
   report_header_address: Dirección
   report_header_billing_address: Dirección de Facturación
   report_header_relationship: Relación
@@ -2668,7 +2672,6 @@ es_US:
   images: "Imagenes"
   web: "Web"
   primary_details: "Detalles Principales"
-  contact: "Contacto"
   social: "Social"
   shipping: "Envío"
   shipping_methods: "Métodos de envío"
@@ -3226,7 +3229,6 @@ es_US:
       report:
         none: "Ninguno"
   order: "Pedido"
-  distribution: "Distribución"
   order_details: "Detalles del pedido"
   customer_details: "Detalles de la consumidora"
   adjustments: "Ajustes"
@@ -3610,6 +3612,9 @@ es_US:
           from: "De"
           to: "Facturar a"
           shipping: "envío"
+          payments_list:
+            date_time: "Fecha y hora"
+            amount: "Cantidad"
         form:
           distribution_fields:
             title: "Distribución"

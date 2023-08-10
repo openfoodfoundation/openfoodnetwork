@@ -81,6 +81,18 @@ ar:
             using_producer_stock_settings_but_count_on_hand_set: "يجب أن تكون فارغة بسبب استخدام إعدادات المخزون للمنتج"
             on_demand_but_count_on_hand_set: "يجب أن تكون فارغة إذا كانت عند الطلب"
             limited_stock_but_no_count_on_hand: "يجب ان تكون تحديد بسبب فرض مدودية المخزون"
+      messages:
+        blank: "لا يمكن أن تكون فارغة"
+  errors:
+    not_found:
+      title: "الصفحة التي تبحث عنها غير موجودة (404)"
+      message_html: "<b>حاول مرة اخرى</b><p style=\";text-align:right;direction:rtl\"> قد تكون هذه مشكلة مؤقتة. الرجاء النقر فوق زر الرجوع للعودة إلى الشاشة السابقة أو العودة إلى <a href='/'>الصفحة الرئيسية</a> والمحاولة مرة أخرى.</p> <b>اتصل بالدعم</b><p style=\";text-align:right;direction:rtl\"> إذا استمرت المشكلة أو كانت عاجلة ، فيرجى إخبارنا بها. ابحث عن تفاصيل الاتصال الخاصة بنا من <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>الصفحة المحلية العالمية لشبكة الغذاء المفتوحة</a> .</p><p style=\";text-align:right;direction:rtl\"> إنه يساعدنا حقًا إذا كان بإمكانك تقديم أكبر قدر ممكن من التفاصيل حول موضوع الصفحة المفقودة.</p>"
+    internal_server_error:
+      title: "نحن آسفون ، ولكن حدث خطأ ما (500)"
+      message_html: "<b>حاول مرة اخرى</b><p style=\";text-align:right;direction:rtl\"> قد تكون هذه مشكلة مؤقتة. الرجاء النقر فوق زر الرجوع للعودة إلى الشاشة السابقة أو العودة إلى <a href='/''>الصفحة الرئيسية</a> والمحاولة مرة أخرى.</p> <b>نحن عليه</b><p style=\";text-align:right;direction:rtl\"> إذا كنت قد رأيت هذه المشكلة من قبل ، فمن المحتمل أننا نعرفها بالفعل ونعمل على إصلاحها. نسجل جميع الأخطاء التي تظهر.</p> <b>اتصل بالدعم</b><p style=\";text-align:right;direction:rtl\"> إذا استمرت المشكلة أو كانت عاجلة ، فيرجى إخبارنا بها. ابحث عن تفاصيل الاتصال الخاصة بنا من <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>الصفحة المحلية العالمية لشبكة الغذاء المفتوحة</a> .</p><p style=\";text-align:right;direction:rtl\"> إنه يساعدنا حقًا إذا كان بإمكانك تقديم أكبر قدر ممكن من التفاصيل حول ما كنت تفعله عند حدوث هذا الخطأ.</p>"
+    unprocessable_entity:
+      title: "تم رفض التغيير الذي أردته (422)"
+      message_html: "<p style=\";text-align:right;direction:rtl\">تم رفض التغيير الذي تريده. ربما حاولت تغيير شيء لا يمكنك الوصول إليه.<br><h3 style=\";text-align:right;direction:rtl\"> <a href='/' >العودة للصفحة الرئيسية</a></h3></p>"
   stripe:
     error_code:
       incorrect_number: "رقم البطاقة غير صحيح."
@@ -346,6 +358,8 @@ ar:
   edit: تعديل
   clone: استنساخ
   distributors: الموزعين
+  distribution: توزيع
+  order_cycles: دورات الطلب
   bulk_order_management: 'ادارة طلب الجملة '
   enterprises: المؤسسات
   enterprise_groups: مجموعات
@@ -377,6 +391,7 @@ ar:
   powered_by: 'مدعوم من '
   blocked_cookies_alert: "قد يحظر متصفحك ملفات تعريف الارتباط اللازمة لاستخدام واجهة المتجر هذا. انقر أدناه للسماح بملفات تعريف الارتباط وإعادة تحميل الصفحة."
   allow_cookies: "السماح لملفات تعريف الارتباط"
+  none: لا شيء
   notes: ملاحظات
   error: خطأ
   processing_payment: "معالجة الدفع..."
@@ -386,6 +401,7 @@ ar:
   clear_filters: ازالة المرشحات
   quantity: الكمية
   pick_up: النقل
+  ok: حسنا
   copy: نسخ
   change_my_password: "تغيير كلمة المرور الخاصة بي"
   update_password: "تحديث كلمة السر"
@@ -395,6 +411,7 @@ ar:
   back_to_payments_list: "العودة إلى قائمة المدفوعات"
   maestro_or_solo_cards: "بطاقات مايسترو / سولو"
   backordered: "طلبات متأخرة"
+  on_hand: "متوفر"
   on hand: "متوفر"
   ship: "الشحن"
   shipping_category: "نوع الشحن"
@@ -494,6 +511,7 @@ ar:
     clear_all: امسح الكل
     start_date: "تاريخ البدء"
     end_date: "تاريخ الانتهاء"
+    unsaved_changes: "لم تحفظ التغييرات"
     form_invalid: "يحتوي النموذج على حقول مفقودة أو غير صالحة"
     clear_filters: ازالة المرشحات
     clear: ازالة
@@ -514,7 +532,6 @@ ar:
     has_one_rule: "لديه قاعدة واحدة"
     has_n_rules: "لديه %{num} قواعد"
     unsaved_confirm_leave: "هناك تغييرات لم يتم حفظها في هذه الصفحة. أكمل بدون حفظ؟"
-    unsaved_changes: "لم تحفظ التغييرات"
     available_units: "الوحدات المتاحة"
     shopfront_settings:
       embedded_shopfront_settings: "إعدادات واجهة المتجر المدمجة "
@@ -1249,11 +1266,11 @@ ar:
         general_settings: "الاعدادات العامة"
         incoming: الوارد
         supplier: المورد
+        products: منتجات
         receival_details: تفاصيل الاستلام
         fees: رسوم
         outgoing: الصادر
         distributor: الموزع
-        products: منتجات
         tags: الاوسمة
         add_a_tag: أضف وسم
         delivery_details: تفاصيل الاستلام/ التسليم
@@ -1724,15 +1741,14 @@ ar:
   longitude: خط الطول
   longitude_placeholder: على سبيل المثال 144.7851531
   use_geocoder: حساب خطوط الطول والعرض تلقائيًا من العنوان؟
+  state: ولاية
   postcode: الرمز البريدي
   postcode_placeholder: على سبيل المثال. 3070
   suburb: ضاحية
-  state: ولاية
   country: بلد
   unauthorized: غير مصرح
   terms_of_service: "شروط الخدمة"
   on_demand: حسب الطلب
-  none: لا شيء
   not_allowed: غير مسموح
   no_shipping: لا يوجد طرق شحن
   no_payment: لا يوجد طرق الدفع
@@ -1740,6 +1756,7 @@ ar:
   unconfirmed: غير مؤكد
   days: أيام
   authorization_failure: "فشل التفويض"
+  description: "وصف"
   label_shop: "متجر"
   label_shops: "متاجر"
   label_map: "خريطة"
@@ -2186,6 +2203,7 @@ ar:
   producers_signup_cta_headline: انضم الان!
   producers_signup_cta_action: انظم الان
   producers_signup_detail: هنا التفاصيل.
+  producer: المنتج
   products_item: بند
   products_description: وصف
   products_variant: النوع
@@ -2458,6 +2476,7 @@ ar:
   bulk: "جملة"
   shop_variant_quantity_min: "اقل"
   shop_variant_quantity_max: "اعلى"
+  contact: "اتصل"
   follow: "إتبع"
   shop_for_products_html: "متجر لمنتجات <span class=\"turquoise\">%{enterprise}</span> على:"
   change_shop: "تغيير المتجر إلى:"
@@ -2471,6 +2490,7 @@ ar:
   included_tax: "الضريبة مشمولة"
   tax: "ضريبة"
   tax_amount_included: "%{amount} (مضمنة)"
+  remove_tax: "إزالة الضريبة"
   balance: "الباقي"
   transaction: "عملية تجارية"
   transaction_date: "تاريخ"
@@ -2481,7 +2501,6 @@ ar:
   credit: "اجل"
   Paid: "دفع"
   Ready: "جاهز"
-  ok: حسنا
   not_visible: غير مرئي
   you_have_no_orders_yet: "ليس لديك أي طلبات حتى الآن"
   show_only_complete_orders: "اظهر فقط الطلبات كاملة"
@@ -2533,7 +2552,6 @@ ar:
   delivery_method: طريقة التوصيل
   fee_type: "نوع الرسوم"
   tax_category: "الفئة الضريبية"
-  description: "وصف"
   display: "عرض"
   tags: "الاوسمة"
   calculator: "آلة حاسبة"
@@ -2566,10 +2584,8 @@ ar:
   no_customers_found: "لم يتم العثور على العملاء"
   go: "اذهب"
   hub: "مركز بيع"
-  producer: "المنتج"
   product: "المنتج"
   price: "السعر"
-  on_hand: "متوفر"
   review: "مراجعة"
   save_changes: "حفظ التغييرات"
   order_saved: "تم حفظ الطلب"
@@ -2621,9 +2637,7 @@ ar:
   edit_profile_details: "تعديل تفاصيل الملف الشخصي"
   edit_profile_details_etc: "تغيير وصف ملفك الشخصي ، الصور ، إلخ."
   order_cycle: "ترتيب الدورة"
-  order_cycles: "دورات الطلب"
   enterprise_relationships: "أذونات المؤسسة"
-  remove_tax: "إزالة الضريبة"
   first_name_begins_with: "الاسم الأول يبدأ بـ"
   last_name_begins_with: "اسم العائلة يبدأ بـ"
   shipping_method: "طريقة الشحن"
@@ -2680,8 +2694,8 @@ ar:
   report_header_comments: تعليقات
   report_header_first_name: الاسم الاول
   report_header_last_name: الكنية
-  report_header_phone: هاتف
   report_header_suburb: ضاحية
+  report_header_phone: هاتف
   report_header_address: عنوان
   report_header_billing_address: عنوان وصول الفواتير
   report_header_relationship: العلاقة
@@ -2865,7 +2879,6 @@ ar:
   images: "صور"
   web: "شبكة"
   primary_details: "التفاصيل الأساسية"
-  contact: "اتصل"
   social: "اجتماعي"
   shipping: "الشحن"
   shipping_methods: "طرق الشحن"
@@ -3512,7 +3525,6 @@ ar:
       report:
         none: "لا شيء"
   order: "طلب"
-  distribution: "توزيع"
   order_details: "تفاصيل الطلب"
   customer_details: "تفاصيل العميل"
   adjustments: "التعديلات"
@@ -3625,7 +3637,6 @@ ar:
     tracking: "تتبع"
     tracking_number: "أرقام التتبع"
     order_total: "مجموع الطلب "
-    order_updated: "تم تحديث الطلب"
     customer_details: "تفاصيل العميل"
     customer_details_updated: "تم تحديث تفاصيل العميل"
     customer_search: "بحث العملاء"
@@ -3930,6 +3941,10 @@ ar:
           from: "من "
           to: "فاتورة الى"
           shipping: "الشحن"
+          payments_list:
+            date_time: "التاريخ / الوقت"
+            payment_method: "طريقة الدفع "
+            amount: "القيمة"
         note:
           note_label: "ملحوظة:"
           no_note_present: "لم يتم تقديم أي ملاحظة."
@@ -4504,16 +4519,6 @@ ar:
         few: "%{count} سنة"
         many: "%{count} سنة"
         other: "%{count} سنوات"
-  errors:
-    not_found:
-      title: "الصفحة التي تبحث عنها غير موجودة (404)"
-      message_html: "<b>حاول مرة اخرى</b><p style=\";text-align:right;direction:rtl\"> قد تكون هذه مشكلة مؤقتة. الرجاء النقر فوق زر الرجوع للعودة إلى الشاشة السابقة أو العودة إلى <a href='/'>الصفحة الرئيسية</a> والمحاولة مرة أخرى.</p> <b>اتصل بالدعم</b><p style=\";text-align:right;direction:rtl\"> إذا استمرت المشكلة أو كانت عاجلة ، فيرجى إخبارنا بها. ابحث عن تفاصيل الاتصال الخاصة بنا من <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>الصفحة المحلية العالمية لشبكة الغذاء المفتوحة</a> .</p><p style=\";text-align:right;direction:rtl\"> إنه يساعدنا حقًا إذا كان بإمكانك تقديم أكبر قدر ممكن من التفاصيل حول موضوع الصفحة المفقودة.</p>"
-    internal_server_error:
-      title: "نحن آسفون ، ولكن حدث خطأ ما (500)"
-      message_html: "<b>حاول مرة اخرى</b><p style=\";text-align:right;direction:rtl\"> قد تكون هذه مشكلة مؤقتة. الرجاء النقر فوق زر الرجوع للعودة إلى الشاشة السابقة أو العودة إلى <a href='/''>الصفحة الرئيسية</a> والمحاولة مرة أخرى.</p> <b>نحن عليه</b><p style=\";text-align:right;direction:rtl\"> إذا كنت قد رأيت هذه المشكلة من قبل ، فمن المحتمل أننا نعرفها بالفعل ونعمل على إصلاحها. نسجل جميع الأخطاء التي تظهر.</p> <b>اتصل بالدعم</b><p style=\";text-align:right;direction:rtl\"> إذا استمرت المشكلة أو كانت عاجلة ، فيرجى إخبارنا بها. ابحث عن تفاصيل الاتصال الخاصة بنا من <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>الصفحة المحلية العالمية لشبكة الغذاء المفتوحة</a> .</p><p style=\";text-align:right;direction:rtl\"> إنه يساعدنا حقًا إذا كان بإمكانك تقديم أكبر قدر ممكن من التفاصيل حول ما كنت تفعله عند حدوث هذا الخطأ.</p>"
-    unprocessable_entity:
-      title: "تم رفض التغيير الذي أردته (422)"
-      message_html: "<p style=\";text-align:right;direction:rtl\">تم رفض التغيير الذي تريده. ربما حاولت تغيير شيء لا يمكنك الوصول إليه.<br><h3 style=\";text-align:right;direction:rtl\"> <a href='/' >العودة للصفحة الرئيسية</a></h3></p>"
   components:
     multiple_checked_select:
       filter_placeholder: "خيارات التصفية"

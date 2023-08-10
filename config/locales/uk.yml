@@ -67,6 +67,30 @@ uk:
             using_producer_stock_settings_but_count_on_hand_set: "має бути порожнім, оскільки використовуються налаштування запасів виробника"
             on_demand_but_count_on_hand_set: "має бути порожнім, якщо на вимогу"
             limited_stock_but_no_count_on_hand: "необхідно вказати, оскільки запаси обмежені"
+      messages:
+        blank: "не може бути порожнім"
+  errors:
+    messages:
+      content_type_invalid: "має невірний тип контенту"
+      file_size_out_of_range: "розмір %{file_size} не знаходиться в необхідному діапазоні"
+      limit_out_of_range: "загальна кількість виходить за межі діапазону"
+      image_metadata_missing: "не є дійсним зображенням"
+      dimension_min_inclusion: "має бути більшим або дорівнювати %{width} x %{height} пікселям."
+      dimension_max_inclusion: "має бути меншим або дорівнювати %{width} x %{height} пікселям."
+      dimension_width_inclusion: "ширина не включається між %{min} та %{max} пікселями."
+      dimension_height_inclusion: "висота не включається між %{min} та %{max} пікселями."
+      dimension_width_greater_than_or_equal_to: "ширина має бути більшою або дорівнювати %{length} пікселю."
+      dimension_height_greater_than_or_equal_to: "висота має бути більшою або дорівнювати %{length} пікселям."
+      dimension_width_less_than_or_equal_to: "ширина має бути меншою або дорівнювати %{length} пікселям."
+      dimension_height_less_than_or_equal_to: "висота має бути меншою або дорівнювати %{length} пікселю."
+      dimension_width_equal_to: "ширина має дорівнювати %{length} пікселям."
+      dimension_height_equal_to: "висота має дорівнювати %{length} пікселям."
+      aspect_ratio_not_square: "має бути квадратне зображення"
+      aspect_ratio_not_portrait: "має бути портретне зображення"
+      aspect_ratio_not_landscape: "має бути пейзажним зображенням"
+      aspect_ratio_is_not: "має мати співвідношення сторін %{aspect_ratio}"
+      aspect_ratio_unknown: "має невідоме співвідношення сторін"
+      image_not_processable: "не є дійсним зображенням"
   stripe:
     error_code:
       incorrect_number: "Номер картки неправильний."
@@ -329,6 +353,8 @@ uk:
   edit: Редагувати
   clone: Клонувати
   distributors: Дистриб&#39;ютори
+  distribution: Дистрибуція
+  order_cycles: Цикли замовлення
   bulk_order_management: Управління гуртовими замовленнями
   enterprises: Підприємства
   enterprise_groups: Групи
@@ -360,6 +386,7 @@ uk:
   powered_by: 'Заряджено:'
   blocked_cookies_alert: "Можливо, ваш браузер блокує файли cookie, необхідні для використання цього магазину. Натисніть нижче, щоб дозволити файли cookie та перезавантажити сторінку."
   allow_cookies: "Дозволити cookie"
+  none: Жодного
   notes: Примітки
   error: Помилка
   processing_payment: "Обробка платежу..."
@@ -369,6 +396,7 @@ uk:
   clear_filters: Очистити фільтри
   quantity: Кількість
   pick_up: Забрати
+  ok: ОК
   copy: Копія
   change_my_password: "Змінити мій пароль"
   update_password: "Оновити пароль"
@@ -378,6 +406,7 @@ uk:
   back_to_payments_list: "Назад до списку платежів"
   maestro_or_solo_cards: "Картки Maestro/Solo"
   backordered: "Незамовлені"
+  on_hand: "Під рукою"
   on hand: "Під рукою"
   ship: "Відправити"
   shipping_category: "Категорія доставки"
@@ -474,6 +503,7 @@ uk:
     clear_all: Очистити все
     start_date: "Дата початку"
     end_date: "Дата закінчення"
+    unsaved_changes: "У вас є незбережені зміни"
     form_invalid: "Форма містить відсутні або недійсні поля"
     clear_filters: Очистити фільтри
     clear: Очистити
@@ -494,7 +524,6 @@ uk:
     has_one_rule: "має одне правило"
     has_n_rules: "має %{num} правил"
     unsaved_confirm_leave: "На цій сторінці є незбережені зміни. Продовжити без збереження?"
-    unsaved_changes: "У вас є незбережені зміни"
     available_units: "Доступні одиниці"
     shopfront_settings:
       embedded_shopfront_settings: "Налаштування вбудованого магазину"
@@ -1213,11 +1242,11 @@ uk:
         general_settings: "Загальні налаштування"
         incoming: Вхідні
         supplier: Постачальник
+        products: Продукти
         receival_details: Деталі отримання
         fees: Збори
         outgoing: Вихідний
         distributor: Дистрибютор
-        products: Продукти
         tags: Мітки
         add_a_tag: Додати тег
         delivery_details: Деталі самовивозу/доставки
@@ -1652,15 +1681,14 @@ uk:
   longitude: Довгота
   longitude_placeholder: напр. 144,7851531
   use_geocoder: Автоматично обчислити широту та довготу за адресою?
+  state: Стан
   postcode: Поштовий індекс
   postcode_placeholder: напр. 3070
   suburb: Передмістя
-  state: Стан
   country: Країна
   unauthorized: Неавторизований
   terms_of_service: "Умови обслуговування"
   on_demand: На вимогу
-  none: Жодного
   not_allowed: Не дозволено
   no_shipping: немає способів доставки
   no_payment: немає способів оплати
@@ -1668,6 +1696,7 @@ uk:
   unconfirmed: непідтверджений
   days: днів
   authorization_failure: "Помилка авторизації"
+  description: "Опис"
   label_shop: "Магазин"
   label_shops: "Магазини"
   label_map: "Карта"
@@ -2108,6 +2137,7 @@ uk:
   producers_signup_cta_headline: Приєднуйся зараз!
   producers_signup_cta_action: Приєднуйся зараз
   producers_signup_detail: Ось деталі.
+  producer: Виробник
   products_item: Товар
   products_description: Опис
   products_variant: Варіант
@@ -2380,6 +2410,7 @@ uk:
   bulk: "Масовий"
   shop_variant_quantity_min: "хв"
   shop_variant_quantity_max: "макс"
+  contact: "Контакти"
   follow: "Стежити"
   shop_for_products_html: "Купуйте продукти <span class=\"turquoise\">%{enterprise}</span> за адресою:"
   change_shop: "Змінити магазин на:"
@@ -2393,6 +2424,7 @@ uk:
   included_tax: "Включено податок"
   tax: "податок"
   tax_amount_included: "%{amount} (в комплекті)"
+  remove_tax: "Видалити податок"
   balance: "Баланс"
   transaction: "Транзакція"
   transaction_date: "Дата"
@@ -2403,7 +2435,6 @@ uk:
   credit: "Кредит"
   Paid: "Платний"
   Ready: "Готовий"
-  ok: ОК
   not_visible: не видно
   you_have_no_orders_yet: "У вас ще немає замовлень"
   show_only_complete_orders: "Показувати лише повні замовлення"
@@ -2455,7 +2486,6 @@ uk:
   delivery_method: Метод доставки
   fee_type: "Тип плати"
   tax_category: "Категорія податку"
-  description: "Опис"
   display: "Відобразити"
   tags: "Мітки"
   calculator: "Калькулятор"
@@ -2488,10 +2518,8 @@ uk:
   no_customers_found: "Клієнтів не знайдено"
   go: "Вперед"
   hub: "Хаб"
-  producer: "Виробник"
   product: "Товар"
   price: "Ціна"
-  on_hand: "Під рукою"
   review: "Огляд"
   save_changes: "Зберегти зміни"
   order_saved: "Замовлення збережено"
@@ -2543,9 +2571,7 @@ uk:
   edit_profile_details: "Редагувати дані профілю"
   edit_profile_details_etc: "Змініть опис профілю, зображення тощо."
   order_cycle: "Цикл замовлення"
-  order_cycles: "Цикли замовлення"
   enterprise_relationships: "Корпоративні дозволи"
-  remove_tax: "Видалити податок"
   first_name_begins_with: "Ім'я починається з"
   last_name_begins_with: "Прізвище починається з"
   shipping_method: "Метод доставки"
@@ -2602,8 +2628,8 @@ uk:
   report_header_comments: Коментарі
   report_header_first_name: Ім'я
   report_header_last_name: Прізвище
-  report_header_phone: Телефон
   report_header_suburb: Передмістя
+  report_header_phone: Телефон
   report_header_address: Адреса
   report_header_billing_address: Платіжна адреса
   report_header_relationship: Cтосунки
@@ -2767,7 +2793,6 @@ uk:
   images: "Зображення"
   web: "Web"
   primary_details: "Основні деталі"
-  contact: "Контакти"
   social: "Соціальний"
   shipping: "Доставка"
   shipping_methods: "Способи доставки"
@@ -3362,7 +3387,6 @@ uk:
       report:
         none: "Жодного"
   order: "Порядок"
-  distribution: "Дистрибуція"
   order_details: "Деталі замовлення"
   customer_details: "Відомості про клієнта"
   adjustments: "Коригування"
@@ -3466,7 +3490,6 @@ uk:
     tracking: "Відстеження"
     tracking_number: "Номер відстеження"
     order_total: "Всього замовлення"
-    order_updated: "Замовлення оновлено"
     customer_details: "Відомості про клієнта"
     customer_details_updated: "Відомості про клієнта оновлено"
     customer_search: "Пошук клієнтів"
@@ -3763,6 +3786,10 @@ uk:
           from: "Від"
           to: "Виставити рахунок"
           shipping: "Доставка"
+          payments_list:
+            date_time: "Дата, час"
+            payment_method: "Спосіб оплати"
+            amount: "Кількість"
         note:
           note_label: "Примітка:"
           no_note_present: "Примітка не надана."

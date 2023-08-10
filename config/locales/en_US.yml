@@ -67,6 +67,8 @@ en_US:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
+      messages:
+        blank: "can't be blank"
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -329,6 +331,8 @@ en_US:
   edit: Edit
   clone: Clone
   distributors: Distributors
+  distribution: Distribution
+  order_cycles: Order Cycles
   bulk_order_management: Bulk Order Management
   enterprises: Enterprises
   enterprise_groups: Groups
@@ -360,6 +364,7 @@ en_US:
   powered_by: Powered by
   blocked_cookies_alert: "Your browser may be blocking cookies needed to use this shopfront. Click below to allow cookies and reload the page."
   allow_cookies: "Allow Cookies"
+  none: None
   notes: Notes
   error: Error
   processing_payment: "Processing payment..."
@@ -369,6 +374,7 @@ en_US:
   clear_filters: Clear filters
   quantity: Quantity
   pick_up: Pick up
+  ok: OK
   copy: Copy
   change_my_password: "Change my password"
   update_password: "Update password"
@@ -378,6 +384,7 @@ en_US:
   back_to_payments_list: "Back to Payments List"
   maestro_or_solo_cards: "Debit cards"
   backordered: "Backordered"
+  on_hand: "On Hand"
   on hand: "On Hand"
   ship: "Ship"
   shipping_category: "Shipping Category"
@@ -474,6 +481,7 @@ en_US:
     clear_all: Clear All
     start_date: "Start Date"
     end_date: "End Date"
+    unsaved_changes: "You have unsaved changes"
     form_invalid: "Form contains missing or invalid fields"
     clear_filters: Clear Filters
     clear: Clear
@@ -494,7 +502,6 @@ en_US:
     has_one_rule: "has one rule"
     has_n_rules: "has %{num} rules"
     unsaved_confirm_leave: "There are unsaved changed on this page. Continue without saving?"
-    unsaved_changes: "You have unsaved changes"
     available_units: "Available Units"
     shopfront_settings:
       embedded_shopfront_settings: "Embedded Group Settings"
@@ -1194,11 +1201,11 @@ en_US:
         general_settings: "General Settings"
         incoming: Incoming
         supplier: Supplier
+        products: Products
         receival_details: Receival details
         fees: Fees
         outgoing: Outgoing
         distributor: Distributor
-        products: Products
         tags: Tags
         add_a_tag: Add a tag
         delivery_details: Pickup / Delivery details
@@ -1619,15 +1626,14 @@ en_US:
   longitude: Longitude
   longitude_placeholder: eg. 144.7851531
   use_geocoder: Calculate latitude and longitude automatically from address?
+  state: State
   postcode: Zip Code
   postcode_placeholder: eg. 24091
   suburb: City
-  state: State
   country: Country
   unauthorized: Unauthorized
   terms_of_service: "Terms of service"
   on_demand: On demand
-  none: None
   not_allowed: Not allowed
   no_shipping: no shipping methods
   no_payment: no payment methods
@@ -1635,6 +1641,7 @@ en_US:
   unconfirmed: unconfirmed
   days: days
   authorization_failure: "Authorization Failure"
+  description: "Description"
   label_shop: "Shop"
   label_shops: "Stores"
   label_map: "Map"
@@ -2074,6 +2081,7 @@ en_US:
   producers_signup_cta_headline: Join now!
   producers_signup_cta_action: Join now
   producers_signup_detail: Here's the detail.
+  producer: Producer
   products_item: Item
   products_description: Description
   products_variant: Variant
@@ -2343,6 +2351,7 @@ en_US:
   bulk: "Bulk"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
+  contact: "Contact"
   follow: "Follow"
   shop_for_products_html: "Shop for <span class=\"turquoise\">%{enterprise}</span> products at:"
   change_shop: "Change shop to:"
@@ -2356,6 +2365,7 @@ en_US:
   included_tax: "Included tax"
   tax: "Tax"
   tax_amount_included: "%{amount} (included)"
+  remove_tax: "Remove tax"
   balance: "Balance"
   transaction: "Transaction"
   transaction_date: "Date"
@@ -2366,7 +2376,6 @@ en_US:
   credit: "Credit"
   Paid: "Paid"
   Ready: "Ready"
-  ok: OK
   not_visible: not visible
   you_have_no_orders_yet: "You have no orders yet"
   show_only_complete_orders: "Only show complete orders"
@@ -2418,7 +2427,6 @@ en_US:
   delivery_method: Delivery Method
   fee_type: "Fee Type"
   tax_category: "Tax Category"
-  description: "Description"
   display: "Display"
   tags: "Tags"
   calculator: "Calculator"
@@ -2451,10 +2459,8 @@ en_US:
   no_customers_found: "No customers found"
   go: "Go"
   hub: "Hub"
-  producer: "Producer"
   product: "Product"
   price: "Price"
-  on_hand: "On hand"
   review: "Review"
   save_changes: "Save Changes"
   order_saved: "Order Saved"
@@ -2506,9 +2512,7 @@ en_US:
   edit_profile_details: "Edit profile details"
   edit_profile_details_etc: "Change your profile description, images, etc."
   order_cycle: "Order Cycle"
-  order_cycles: "Order Cycles"
   enterprise_relationships: "Enterprise permissions"
-  remove_tax: "Remove tax"
   first_name_begins_with: "First name begins with"
   last_name_begins_with: "Last name begins with"
   shipping_method: "Shipping method"
@@ -2561,8 +2565,8 @@ en_US:
   report_header_comments: Comments
   report_header_first_name: First Name
   report_header_last_name: Last Name
-  report_header_phone: Phone
   report_header_suburb: City
+  report_header_phone: Phone
   report_header_address: Address
   report_header_billing_address: Billing Address
   report_header_relationship: Relationship
@@ -2722,7 +2726,6 @@ en_US:
   images: "Images"
   web: "Web"
   primary_details: "Primary Details"
-  contact: "Contact"
   social: "Social"
   shipping: "Shipping"
   shipping_methods: "Shipping Methods"
@@ -3268,7 +3271,6 @@ en_US:
       report:
         none: "None"
   order: "Order"
-  distribution: "Distribution"
   order_details: "Order Details"
   customer_details: "Customer Details"
   adjustments: "Adjustments"
@@ -3372,7 +3374,6 @@ en_US:
     tracking: "Tracking"
     tracking_number: "Tracking Number"
     order_total: "Order Total"
-    order_updated: "Order updated"
     customer_details: "Customer Details"
     customer_details_updated: "Customer Details updated"
     customer_search: "Customer Search"
@@ -3665,6 +3666,10 @@ en_US:
           from: "From"
           to: "Bill to"
           shipping: "Shipping"
+          payments_list:
+            date_time: "Date/time"
+            payment_method: "Payment method"
+            amount: "Amount"
         form:
           distribution_fields:
             title: "Distribution"

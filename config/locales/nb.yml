@@ -67,6 +67,39 @@ nb:
             using_producer_stock_settings_but_count_on_hand_set: "må være tomt fordi du bruker produsentens lagerinnstillinger"
             on_demand_but_count_on_hand_set: "må være tom hvis på forespørsel"
             limited_stock_but_no_count_on_hand: "må spesifiseres fordi det tvinger begrenset lager"
+      messages:
+        blank: "kan ikke være tomt"
+  errors:
+    messages:
+      content_type_invalid: "har en ugyldig innholdstype"
+      file_size_out_of_range: "størrelse %{file_size} er ikke i det nødvendige området"
+      limit_out_of_range: "totalt antall er utenfor rekkevidde"
+      image_metadata_missing: "er ikke et gyldig bilde"
+      dimension_min_inclusion: "må være større enn eller lik %{width} x %{height} piksel."
+      dimension_max_inclusion: "må være mindre enn eller lik %{width} x %{height} piksel."
+      dimension_width_inclusion: "bredde er ikke inkludert mellom %{min} og %{max} piksel."
+      dimension_height_inclusion: "høyde er ikke inkludert mellom %{min} og %{max} piksel."
+      dimension_width_greater_than_or_equal_to: "bredden må være større enn eller lik %{length} piksel."
+      dimension_height_greater_than_or_equal_to: "høyden må være større enn eller lik %{length} piksel."
+      dimension_width_less_than_or_equal_to: "bredden må være mindre enn eller lik %{length} piksel."
+      dimension_height_less_than_or_equal_to: "høyden må være mindre enn eller lik %{length} piksel."
+      dimension_width_equal_to: "bredde må være lik %{length} piksel."
+      dimension_height_equal_to: "høyden må være lik %{length} piksel."
+      aspect_ratio_not_square: "må være et firkantet bilde"
+      aspect_ratio_not_portrait: "må være et portrettbilde"
+      aspect_ratio_not_landscape: "må være et landskapsbilde"
+      aspect_ratio_is_not: "må ha et størrelsesforhold på %{aspect_ratio}"
+      aspect_ratio_unknown: "har et ukjent størrelsesforhold"
+      image_not_processable: "er ikke et gyldig bilde"
+    not_found:
+      title: "Siden du lette etter eksisterer ikke (404)"
+      message_html: "<b>Vennligst prøv på nytt</b><p> Dette kan være et midlertidig problem. Klikk tilbake-knappen for å gå tilbake til forrige skjermbilde eller gå tilbake til <a href='/'>Hjem</a> og prøv igjen.</p> <b>Kontakt support</b><p> Hvis problemet vedvarer eller haster, vennligst fortell oss om det. Finn kontaktinformasjonen vår fra den globale <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local-siden</a> .</p><p> Det hjelper oss virkelig hvis du kan gi så mange detaljer som mulig om hva den manglende siden handler om.</p>"
+    internal_server_error:
+      title: "Vi beklager, men noe gikk galt (500)"
+      message_html: "<b>Vennligst prøv på nytt</b><p> Dette kan være et midlertidig problem. Klikk tilbake-knappen for å gå tilbake til forrige skjermbilde eller gå tilbake til <a href='/''>Hjem</a> og prøv igjen.</p> <b>Vi er på saken</b><p> Hvis du har sett dette problemet før, vet vi sannsynligvis allerede om det og jobber med en løsning. Vi registrerer alle feilene som dukker opp.</p> <b>Kontakt support</b><p> Hvis problemet vedvarer eller haster, vennligst fortell oss om det. Finn kontaktinformasjonen vår fra den globale <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local-siden</a> .</p><p> Det hjelper oss virkelig hvis du kan gi så mange detaljer som mulig om hva du gjorde da denne feilen oppstod.</p>"
+    unprocessable_entity:
+      title: "Endringen du ønsket ble avvist (422)"
+      message_html: "<p>Endringen du ønsket ble avvist. Kanskje du prøvde å endre noe du ikke har tilgang til.<br><h3> <a href='/' >Vend hjem</a></h3></p>"
   stripe:
     error_code:
       incorrect_number: "Kortnummeret er feil."
@@ -330,6 +363,8 @@ nb:
   edit: Endre
   clone: Klon
   distributors: Distributører
+  distribution: Distribusjon
+  order_cycles: Bestillingsrunder
   bulk_order_management: Bulk ordrehåndtering
   enterprises: Bedrifter
   enterprise_groups: Grupper
@@ -361,6 +396,7 @@ nb:
   powered_by: Drevet av
   blocked_cookies_alert: "Nettleseren din kan blokkere informasjonskapsler som trengs for å bruke denne butikken. Klikk nedenfor for å tillate informasjonskapsler 'cookies' og last siden på nytt."
   allow_cookies: "Tillat informasjonskapsler"
+  none: Ingen
   notes: Merknader
   error: Feil
   processing_payment: "Behandler betaling ..."
@@ -370,6 +406,7 @@ nb:
   clear_filters: Fjern filtre
   quantity: Mengde
   pick_up: Hent
+  ok: OK
   copy: Kopier
   change_my_password: "Endre passordet mitt"
   update_password: "Oppdater passord"
@@ -379,6 +416,7 @@ nb:
   back_to_payments_list: "Tilbake til betalingsliste"
   maestro_or_solo_cards: "Maestro/Solo kort"
   backordered: "Restbestilte"
+  on_hand: "Tilgjengelig"
   on hand: "Tilgjengelig"
   ship: "Levere"
   shipping_category: "Leveringskategori"
@@ -475,6 +513,7 @@ nb:
     clear_all: Fjern Alt
     start_date: "Startdato"
     end_date: "Sluttdato"
+    unsaved_changes: "Du har ulagrede endringer"
     form_invalid: "Skjemaet inneholder manglende eller ugyldige felt"
     clear_filters: Fjern filtre
     clear: Fjern
@@ -495,7 +534,6 @@ nb:
     has_one_rule: "har én regel"
     has_n_rules: "har %{num} regler"
     unsaved_confirm_leave: "Det finnes ulagrede endringer på denne siden. Fortsett uten å lagre?"
-    unsaved_changes: "Du har ulagrede endringer"
     available_units: "Tilgjengelige Enheter"
     shopfront_settings:
       embedded_shopfront_settings: "Innstillinger Innebygd Nettbutikk"
@@ -1219,11 +1257,11 @@ nb:
         general_settings: "Generelle innstillinger"
         incoming: Innkommende
         supplier: Leverandør
+        products: Produkter
         receival_details: Mottaksdetaljer
         fees: Avgifter
         outgoing: Utgående
         distributor: Distributør
-        products: Produkter
         tags: Merkelapper
         add_a_tag: Legg til en merkelapp
         delivery_details: Hente-/Leveringsdetaljer
@@ -1661,15 +1699,14 @@ nb:
   longitude: Lengdegrad
   longitude_placeholder: f.eks. 144.7851531
   use_geocoder: Beregne breddegrad og lengdegrad automatisk fra adresse?
+  state: Fylke
   postcode: Postnummer
   postcode_placeholder: f.eks. 3070
   suburb: Område
-  state: Fylke
   country: Land
   unauthorized: Uautorisert
   terms_of_service: "Vilkår"
   on_demand: Ved forespørsel
-  none: Ingen
   not_allowed: Ikke tillatt
   no_shipping: ingen leveringsmetoder
   no_payment: ingen betalingsmetoder
@@ -1677,6 +1714,7 @@ nb:
   unconfirmed: ubekreftet
   days: dager
   authorization_failure: "Autorisasjonsfeil"
+  description: "Beskrivelse"
   label_shop: "Butikk"
   label_shops: "Butikker"
   label_map: "Kart"
@@ -2118,6 +2156,7 @@ nb:
   producers_signup_cta_headline: Bli med nå!
   producers_signup_cta_action: Bli med nå
   producers_signup_detail: Detaljene.
+  producer: Produsent
   products_item: Vare
   products_description: Beskrivelse
   products_variant: Variant
@@ -2390,6 +2429,7 @@ nb:
   bulk: "Bulk"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
+  contact: "Kontakt"
   follow: "Følg"
   shop_for_products_html: "Handle produkter fra <span class=\"turquoise\">%{enterprise}</span> på:"
   change_shop: "Endre butikk til:"
@@ -2403,6 +2443,7 @@ nb:
   included_tax: "Inkludert avgift"
   tax: "Avgift"
   tax_amount_included: "%{amount} (inkludert)"
+  remove_tax: "Fjern avgift"
   balance: "Balanse"
   transaction: "Transaksjon"
   transaction_date: "Dato"
@@ -2413,7 +2454,6 @@ nb:
   credit: "Kreditt"
   Paid: "Betalt"
   Ready: "Klar"
-  ok: OK
   not_visible: ikke synlig
   you_have_no_orders_yet: "Du har ingen bestilinger enda"
   show_only_complete_orders: "Vis kun fullførte bestillinger"
@@ -2465,7 +2505,6 @@ nb:
   delivery_method: Leveringsmetode
   fee_type: "Avfgiftstype"
   tax_category: "Avgiftskategori"
-  description: "Beskrivelse"
   display: "Visning"
   tags: "Merkelapper"
   calculator: "Kalkulator"
@@ -2498,10 +2537,8 @@ nb:
   no_customers_found: "Fant ingen kunder"
   go: "Gå"
   hub: "Hub"
-  producer: "Produsent"
   product: "Produkt"
   price: "Pris"
-  on_hand: "På lager"
   review: "Anmeldelse"
   save_changes: "Lagre Endringer"
   order_saved: "Bestilling lagret"
@@ -2553,9 +2590,7 @@ nb:
   edit_profile_details: "Endre profildetaljer"
   edit_profile_details_etc: "Endre din profilbeskrivelse, bilder, osv."
   order_cycle: "Bestillingsrunde"
-  order_cycles: "Bestillingsrunder"
   enterprise_relationships: "Bedriftsrettigheter"
-  remove_tax: "Fjern avgift"
   first_name_begins_with: "Fornavn begynner med"
   last_name_begins_with: "Etternavn begynner med"
   shipping_method: "Leveringsmetode"
@@ -2612,8 +2647,8 @@ nb:
   report_header_comments: Kommentarer
   report_header_first_name: Fornavn
   report_header_last_name: Etternavn
-  report_header_phone: Telefon
   report_header_suburb: Område
+  report_header_phone: Telefon
   report_header_address: Adresse
   report_header_billing_address: Fakturaadresse
   report_header_relationship: Forhold
@@ -2780,7 +2815,6 @@ nb:
   images: "Bilder"
   web: "Nett"
   primary_details: "Primærdetaljer"
-  contact: "Kontakt"
   social: "Sosial"
   shipping: "Levering"
   shipping_methods: "Leveringsmetoder"
@@ -3326,7 +3360,6 @@ nb:
       report:
         none: "Ingen"
   order: "Bestilling"
-  distribution: "Distribusjon"
   order_details: "Ordredetaljer"
   customer_details: "Kundedetaljer"
   adjustments: "Justeringer"
@@ -3430,7 +3463,6 @@ nb:
     tracking: "Sporing"
     tracking_number: "Sporingsnummer"
     order_total: "Bestilling Totalt"
-    order_updated: "Bestillingen er oppdatert"
     customer_details: "Kundedetaljer"
     customer_details_updated: "Kundedetaljer oppdatert"
     customer_search: "Kundesøk"
@@ -3728,6 +3760,10 @@ nb:
           from: "Fra"
           to: "Fakturér til"
           shipping: "Levering"
+          payments_list:
+            date_time: "Dato/tid"
+            payment_method: "Betalingsmetode"
+            amount: "Antall"
         note:
           note_label: "Merk:"
           no_note_present: "Ingen merknad oppgitt."
@@ -4234,16 +4270,6 @@ nb:
       x_years:
         one: "1 år"
         other: "%{count} år"
-  errors:
-    not_found:
-      title: "Siden du lette etter eksisterer ikke (404)"
-      message_html: "<b>Vennligst prøv på nytt</b><p> Dette kan være et midlertidig problem. Klikk tilbake-knappen for å gå tilbake til forrige skjermbilde eller gå tilbake til <a href='/'>Hjem</a> og prøv igjen.</p> <b>Kontakt support</b><p> Hvis problemet vedvarer eller haster, vennligst fortell oss om det. Finn kontaktinformasjonen vår fra den globale <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local-siden</a> .</p><p> Det hjelper oss virkelig hvis du kan gi så mange detaljer som mulig om hva den manglende siden handler om.</p>"
-    internal_server_error:
-      title: "Vi beklager, men noe gikk galt (500)"
-      message_html: "<b>Vennligst prøv på nytt</b><p> Dette kan være et midlertidig problem. Klikk tilbake-knappen for å gå tilbake til forrige skjermbilde eller gå tilbake til <a href='/''>Hjem</a> og prøv igjen.</p> <b>Vi er på saken</b><p> Hvis du har sett dette problemet før, vet vi sannsynligvis allerede om det og jobber med en løsning. Vi registrerer alle feilene som dukker opp.</p> <b>Kontakt support</b><p> Hvis problemet vedvarer eller haster, vennligst fortell oss om det. Finn kontaktinformasjonen vår fra den globale <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local-siden</a> .</p><p> Det hjelper oss virkelig hvis du kan gi så mange detaljer som mulig om hva du gjorde da denne feilen oppstod.</p>"
-    unprocessable_entity:
-      title: "Endringen du ønsket ble avvist (422)"
-      message_html: "<p>Endringen du ønsket ble avvist. Kanskje du prøvde å endre noe du ikke har tilgang til.<br><h3> <a href='/' >Vend hjem</a></h3></p>"
   components:
     search_input:
       placeholder: Søk

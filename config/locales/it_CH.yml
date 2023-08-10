@@ -67,6 +67,8 @@ it_CH:
             using_producer_stock_settings_but_count_on_hand_set: "deve restare vuoto perché si stanno utilizzando le impostazioni di magazzino del produttore"
             on_demand_but_count_on_hand_set: "deve restare vuoto se su richiesta"
             limited_stock_but_no_count_on_hand: "deve essere specificato a causa di una disponibilità limitata"
+      messages:
+        blank: "non può essere lasciato vuoto"
   stripe:
     error_code:
       incorrect_number: "Il numero di carta non è corretto"
@@ -328,6 +330,8 @@ it_CH:
   edit: Modifica
   clone: Duplica
   distributors: Distributori
+  distribution: Distribuzione
+  order_cycles: Cicli di richieste
   bulk_order_management: Gentili richieste - vista a tabella
   enterprises: Aziende
   enterprise_groups: Reti
@@ -359,6 +363,7 @@ it_CH:
   powered_by: Powered by
   blocked_cookies_alert: "Il tuo browser sembra stia bloccando i cookies necessari ad usare questa pagina del negozio. Clicca sotto per consentire i cookies e ricaricare la pagina."
   allow_cookies: "Accetta i cookies"
+  none: Nessuno
   notes: Note
   error: Errore
   processing_payment: "Elaborazione pagamento..."
@@ -368,6 +373,7 @@ it_CH:
   clear_filters: Pulisci filtri
   quantity: Quantità
   pick_up: Ritiro
+  ok: OK
   copy: Copia
   change_my_password: "Cambia la mia password"
   update_password: "Aggiorna password"
@@ -377,6 +383,7 @@ it_CH:
   back_to_payments_list: "Torna alla Lista dei Pagamenti"
   maestro_or_solo_cards: "Carte Maestro/Solo"
   backordered: "Ordini arretrati"
+  on_hand: "Disponibile"
   on hand: "Disponibile"
   ship: "Spedizione"
   shipping_category: "Categoria Spedizioni"
@@ -473,6 +480,7 @@ it_CH:
     clear_all: Cancella tutto
     start_date: "Data di inizio"
     end_date: "Data di fine"
+    unsaved_changes: "Hai modifiche non salvate"
     form_invalid: "Modulo contenente campi mancanti o non validi"
     clear_filters: Cancella filtri
     clear: Pulisci
@@ -493,7 +501,6 @@ it_CH:
     has_one_rule: "ha una regola"
     has_n_rules: "ha %{num} regole"
     unsaved_confirm_leave: "Ci sono cambiamenti non salvati in questa pagina. Continuare senza salvare?"
-    unsaved_changes: "Hai modifiche non salvate"
     available_units: "Unità disponibili"
     shopfront_settings:
       embedded_shopfront_settings: "Impostazioni incorporazione Reti"
@@ -1200,11 +1207,11 @@ it_CH:
         general_settings: "Impostazioni generali"
         incoming: In arrivo
         supplier: Fornitore
+        products: Prodotti
         receival_details: Dettagli ritiro
         fees: Tariffe
         outgoing: In uscita
         distributor: Distributore
-        products: Prodotti
         tags: Etichette
         add_a_tag: Aggiungi un'etichetta
         delivery_details: Dettagli per il ritiro / consegna
@@ -1627,15 +1634,14 @@ it_CH:
   longitude: Longitudine
   longitude_placeholder: es. 144.7851531
   use_geocoder: Calcola latitudine e longitudine automaticamente dall'indirizzo?
+  state: Provincia
   postcode: CAP
   postcode_placeholder: es. 10040
   suburb: Comune
-  state: Provincia
   country: Paese
   unauthorized: Non autorizzato
   terms_of_service: "Termini di servizio"
   on_demand: A richiesta
-  none: Nessuno
   not_allowed: Non consentito
   no_shipping: nessun metodo di spedizione
   no_payment: Nessun metodo di pagamento
@@ -1643,6 +1649,7 @@ it_CH:
   unconfirmed: non confermato
   days: giorni
   authorization_failure: "Errore di autorizzazione"
+  description: "Descrizione"
   label_shop: "Negozio"
   label_shops: "Negozi"
   label_map: "Mappa"
@@ -2082,6 +2089,7 @@ it_CH:
   producers_signup_cta_headline: Unisciti ora!
   producers_signup_cta_action: Unisciti ora
   producers_signup_detail: Ecco il dettaglio.
+  producer: Produttore
   products_item: Articolo
   products_description: Descrizione
   products_variant: Variante
@@ -2351,6 +2359,7 @@ it_CH:
   bulk: "Volume"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
+  contact: "Contatta"
   follow: "Segui"
   shop_for_products_html: "Acquista prodotti di <span class=\"turquoise\">%{enterprise}</span>:"
   change_shop: "Cambia negozio:"
@@ -2364,6 +2373,7 @@ it_CH:
   included_tax: "Tasse incluse"
   tax: "Tasse"
   tax_amount_included: "%{amount} (incluso)"
+  remove_tax: "Rimuovi tassa"
   balance: "Bilancio"
   transaction: "Transazione"
   transaction_date: "Data"
@@ -2374,7 +2384,6 @@ it_CH:
   credit: "Credito"
   Paid: "Pagato"
   Ready: "Pronto"
-  ok: OK
   not_visible: non visibile
   you_have_no_orders_yet: "Non hai ordini al momento"
   show_only_complete_orders: "Mostra solo le richieste complete"
@@ -2426,7 +2435,6 @@ it_CH:
   delivery_method: Metodo di consegna
   fee_type: "Tipo di contributo"
   tax_category: "Categoria di imposta"
-  description: "Descrizione"
   display: "Visualizza"
   tags: "Etichette"
   calculator: "Calcolatore"
@@ -2459,10 +2467,8 @@ it_CH:
   no_customers_found: "Nessun cliente trovato"
   go: "Vai"
   hub: "Distributore"
-  producer: "Produttore"
   product: "Prodotto"
   price: "Prezzo"
-  on_hand: "A disposizione"
   review: "Revisione"
   save_changes: "Salva Modifiche"
   order_saved: "Gentile richiesta salvata"
@@ -2514,9 +2520,7 @@ it_CH:
   edit_profile_details: "Modifica i dettagli del profilo"
   edit_profile_details_etc: "Cambia la descrizione del tuo profilo, le immagini, ecc."
   order_cycle: "Ciclo di richieste"
-  order_cycles: "Cicli di richieste"
   enterprise_relationships: "Permessi azienda"
-  remove_tax: "Rimuovi tassa"
   first_name_begins_with: "Il nome inizia con"
   last_name_begins_with: "Il cognome inizia con"
   shipping_method: "Metodi di spedizione"
@@ -2569,8 +2573,8 @@ it_CH:
   report_header_comments: ommenti
   report_header_first_name: Nome
   report_header_last_name: Cognome
-  report_header_phone: Telefono
   report_header_suburb: Comune
+  report_header_phone: Telefono
   report_header_address: Indirizzo
   report_header_billing_address: Indirizzo di fatturazione
   report_header_relationship: Relazione
@@ -2729,7 +2733,6 @@ it_CH:
   images: "Immagini"
   web: "Web"
   primary_details: "Dettagli principali"
-  contact: "Contatta"
   social: "Social"
   shipping: "Spedizione"
   shipping_methods: "Metodi di Spedizione"
@@ -3303,7 +3306,6 @@ it_CH:
       report:
         none: "Nessuno"
   order: "Gentile Richiesta"
-  distribution: "Distribuzione"
   order_details: "Dettagli ordine"
   customer_details: "Dettagli Cliente"
   adjustments: "Regolazioni"
@@ -3407,7 +3409,6 @@ it_CH:
     tracking: "Tracciamento"
     tracking_number: "Numero Tracciamento"
     order_total: "Ordine totale"
-    order_updated: "Gentile richiesta aggiornata"
     customer_details: "Dettagli Cliente"
     customer_details_updated: "Dettagli Consumatore aggiornati"
     customer_search: "Ricerca Clienti"
@@ -3700,6 +3701,10 @@ it_CH:
           from: "Da"
           to: "Pagamento a"
           shipping: "Spedizione"
+          payments_list:
+            date_time: "Data/ora"
+            payment_method: "Metodo di pagamento"
+            amount: "Quantità"
         form:
           distribution_fields:
             title: "Distribuzione"
