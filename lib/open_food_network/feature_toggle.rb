@@ -29,9 +29,6 @@ module OpenFoodNetwork
         shipping categories. Activating this feature for an enterprise owner
         will activate it for all shops of this enterprise.
       DESC
-      "new_products_page" => <<~DESC,
-        Show the new (experimental) version of the admin products page.
-      DESC
       "vouchers" => <<~DESC,
         Add voucher functionality. Voucher can be managed via Enterprise settings.
       DESC

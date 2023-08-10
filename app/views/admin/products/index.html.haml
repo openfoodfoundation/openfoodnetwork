@@ -1,8 +1,0 @@
-
-- content_for :page_title do
-  = t('admin.products_page.title')
-
-= render partial: 'spree/admin/shared/product_sub_menu'
-
-#products_page
-  = render(ProductsTableComponent.new(user: spree_current_user))

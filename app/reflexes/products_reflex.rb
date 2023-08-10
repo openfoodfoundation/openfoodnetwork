@@ -79,7 +79,6 @@ class ProductsReflex < ApplicationReflex
     Spree::Taxon.order(:name).map { |c| [c.name, c.id] }
   end
 
-  # copied from ProductsTableComponent
   def fetch_products
     product_query = OpenFoodNetwork::Permissions.new(current_user)
       .editable_products.merge(product_scope).ransack(ransack_query).result
