@@ -118,6 +118,7 @@ paths:
                       dfc-b:lifetime: ''
                       dfc-b:usageOrStorageCondition: ''
                       dfc-b:totalTheoreticalStock: 0.0
+                      ofn:spree_product_id: 90000
                     - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
                       "@type": dfc-b:Offer
                       dfc-b:price: 19.99
@@ -341,6 +342,7 @@ paths:
                       dfc-b:lifetime: ''
                       dfc-b:usageOrStorageCondition: ''
                       dfc-b:totalTheoreticalStock: 0.0
+                      ofn:spree_product_id: 90000
                     - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       "@type": dfc-b:CatalogItem
                       dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
@@ -409,6 +411,7 @@ paths:
                     dfc-b:lifetime: ''
                     dfc-b:usageOrStorageCondition: ''
                     dfc-b:totalTheoreticalStock: 0.0
+                    ofn:spree_product_id: 90000
       requestBody:
         content:
           application/json:
@@ -471,6 +474,7 @@ paths:
                     dfc-b:lifetime: ''
                     dfc-b:usageOrStorageCondition: ''
                     dfc-b:totalTheoreticalStock: 0.0
+                    ofn:spree_product_id: 90000
         '404':
           description: not found
     put:

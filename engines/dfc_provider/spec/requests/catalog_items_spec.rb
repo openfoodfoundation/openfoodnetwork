@@ -15,7 +15,7 @@ describe "CatalogItems", type: :request, swagger_doc: "dfc.yaml",
   let(:product) {
     create(
       :base_product,
-      supplier: enterprise, name: "Apple", description: "Red",
+      id: 90_000, supplier: enterprise, name: "Apple", description: "Red",
       variants: [variant],
     )
   }

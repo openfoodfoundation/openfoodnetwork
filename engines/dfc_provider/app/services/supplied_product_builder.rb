@@ -13,7 +13,11 @@ class SuppliedProductBuilder < DfcBuilder
       description: variant.description,
       productType: product_type,
       quantity: QuantitativeValueBuilder.quantity(variant),
-    )
+    ).tap do |supplied_product|
+      supplied_product.registerSemanticProperty("ofn:spree_product_id") do
+        variant.product.id
+      end
+    end
   end
 
   def self.import(supplied_product)
