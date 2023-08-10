@@ -224,8 +224,8 @@ describe Spree::Order do
       order.finalize!
     end
 
-    it 'calls updater#before_save' do
-      expect(order.updater).to receive(:before_save_hook)
+    it 'calls updater#shipping_address_from_distributor' do
+      expect(order.updater).to receive(:shipping_address_from_distributor)
       order.finalize!
     end
   end

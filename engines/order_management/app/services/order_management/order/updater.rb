@@ -143,10 +143,6 @@ module OrderManagement
         order.all_adjustments.non_voucher.reload.each(&:update_adjustment!)
       end
 
-      def before_save_hook
-        shipping_address_from_distributor
-      end
-
       # Sets the distributor's address as shipping address of the order for those
       # shipments using a shipping method that doesn't require address, such us
       # a pickup.

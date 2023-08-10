@@ -193,38 +193,16 @@ describe "As a consumer, I want to checkout my order" do
         click_on "Checkout as guest"
       end
 
-      context "should show proper list of errors" do
+      context "should show a flash message and inline error messages" do
         before do
           click_button "Next - Payment method"
-          expect(page).to have_content "Saving failed, please update the highlighted fields."
-        end
-
-        it "should not display any shipping errors messages when shipping method is not selected" do
-          expect(page).not_to have_content "Shipping address line 1 can't be blank"
-          expect(page).not_to have_content "Shipping address suburb 1 can't be blank"
-          expect(page).not_to have_content "Shipping address postcode can't be blank"
         end
 
         it "should not display bill address phone number error message" do
-          expect(page).not_to have_content "Bill address phone can't be blank"
-          expect(page).to have_content "Customer phone can't be blank"
-        end
+          expect(page).to have_content "Saving failed, please update the highlighted fields."
 
-        context "with no email filled in" do
-          before do
-            fill_in "Email", with: ""
-            click_button "Next - Payment method"
-          end
-
-          it "should display error message in the right order" do
-            expect(page).to have_content(
-              "Customer E-Mail can't be blank, Customer E-Mail is invalid, Customer phone can't " \
-              "be blank, Billing address first name can't be blank, Billing address last name " \
-              "can't be blank, Billing address (Street + House number) can't be blank, Billing " \
-              "address city can't be blank, Billing address postcode can't be blank, and " \
-              "Shipping method Select a shipping method"
-            )
-          end
+          expect(page).to have_selector ".field_with_errors"
+          expect(page).to have_content "can't be blank"
         end
       end
 
@@ -562,7 +540,6 @@ describe "As a consumer, I want to checkout my order" do
               end
               within ".flash[type='error']" do
                 expect(page).to have_content "Saving failed, please update the highlighted fields."
-                expect(page).to have_content("can't be blank", count: 3)
               end
             end
 
@@ -620,8 +597,6 @@ describe "As a consumer, I want to checkout my order" do
           end
           within ".flash[type='error']" do
             expect(page).to have_content("Saving failed, please update the highlighted fields")
-            expect(page).to have_content("can't be blank", count: 7)
-            expect(page).to have_content("is invalid", count: 1)
           end
         end
       end

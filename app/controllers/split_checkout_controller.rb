@@ -8,6 +8,7 @@ class SplitCheckoutController < ::BaseController
   include OrderStockCheck
   include Spree::BaseHelper
   include CheckoutCallbacks
+  include CheckoutSteps
   include OrderCompletion
   include CablecarResponses
   include WhiteLabel
@@ -50,58 +51,11 @@ class SplitCheckoutController < ::BaseController
   private
 
   def render_error
-    flash.now[:error] ||= I18n.t(
-      'split_checkout.errors.saving_failed',
-      messages: order_error_messages
-    )
+    flash.now[:error] ||= I18n.t('split_checkout.errors.saving_failed')
 
     render status: :unprocessable_entity, cable_ready: cable_car.
       replace("#checkout", partial("split_checkout/checkout")).
       replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
-  end
-
-  def order_error_messages
-    # Remove ship_address.* errors if no shipping method is not selected
-    remove_ship_address_errors if no_ship_address_needed?
-
-    # Reorder errors to make sure the most important ones are shown first
-    # and finally, return the error messages to sentence
-    reorder_errors.map(&:full_message).to_sentence
-  end
-
-  def no_ship_address_needed?
-    @order.errors[:shipping_method].present? || params[:ship_address_same_as_billing] == "1"
-  end
-
-  def remove_ship_address_errors
-    @order.errors.delete("ship_address.firstname")
-    @order.errors.delete("ship_address.address1")
-    @order.errors.delete("ship_address.city")
-    @order.errors.delete("ship_address.phone")
-    @order.errors.delete("ship_address.lastname")
-    @order.errors.delete("ship_address.zipcode")
-  end
-
-  def reorder_errors
-    @order.errors.sort_by do |e|
-      case e.attribute
-      when /email/i then 0
-      when /phone/i then 1
-      when /bill_address/i then 2 + bill_address_error_order(e)
-      else 20
-      end
-    end
-  end
-
-  def bill_address_error_order(error)
-    case error.attribute
-    when /firstname/i then 0
-    when /lastname/i then 1
-    when /address1/i then 2
-    when /city/i then 3
-    when /zipcode/i then 4
-    else 5
-    end
   end
 
   def check_payments_adjustments
@@ -114,7 +68,7 @@ class SplitCheckoutController < ::BaseController
 
   def confirm_order
     return unless summary_step? && @order.confirmation?
-    return unless validate_summary! && @order.errors.empty?
+    return unless validate_current_step
 
     @order.customer.touch :terms_and_conditions_accepted_at
 
@@ -140,48 +94,15 @@ class SplitCheckoutController < ::BaseController
   def update_order
     return if params[:confirm_order] || @order.errors.any?
 
-    # If we have "pick up" shipping method (require_ship_address is set to false), use the
-    # distributor address as shipping address
-    use_shipping_address_from_distributor if shipping_method_ship_address_not_required?
-
     @order.select_shipping_method(params[:shipping_method_id])
     @order.update(order_params)
     @order.update_totals_and_states
 
-    validate_current_step!
-
-    @order.errors.empty?
+    validate_current_step
   end
 
-  def use_shipping_address_from_distributor
-    @order.ship_address = @order.address_from_distributor
-
-    # Add the missing data
-    bill_address = params[:order][:bill_address_attributes]
-    @order.ship_address.firstname = bill_address[:firstname]
-    @order.ship_address.lastname = bill_address[:lastname]
-    @order.ship_address.phone = bill_address[:phone]
-
-    # Remove shipping address from parameter so we don't override the address we just set
-    params[:order].delete(:ship_address_attributes)
-  end
-
-  def shipping_method_ship_address_not_required?
-    selected_shipping_method = available_shipping_methods&.select do |sm|
-      sm.id.to_s == params[:shipping_method_id]
-    end
-
-    return false if selected_shipping_method.empty?
-
-    selected_shipping_method.first.require_ship_address == false
-  end
-
-  def summary_step?
-    params[:step] == "summary"
-  end
-
-  def payment_step?
-    params[:step] == "payment"
+  def validate_current_step
+    Checkout::Validation.new(@order, params).call && @order.errors.empty?
   end
 
   def advance_order_state
@@ -190,64 +111,7 @@ class SplitCheckoutController < ::BaseController
     OrderWorkflow.new(@order).advance_checkout(raw_params.slice(:shipping_method_id))
   end
 
-  def validate_current_step!
-    step = ([params[:step]] & ["details", "payment", "summary"]).first
-    send("validate_#{step}!")
-  end
-
-  def validate_details!
-    return true if params[:shipping_method_id].present?
-
-    @order.errors.add :shipping_method, I18n.t('split_checkout.errors.select_a_shipping_method')
-  end
-
-  def validate_payment!
-    return true if params.dig(:order, :payments_attributes, 0, :payment_method_id).present?
-    return true if @order.zero_priced_order?
-
-    @order.errors.add :payment_method, I18n.t('split_checkout.errors.select_a_payment_method')
-  end
-
-  def validate_summary!
-    return true if params[:accept_terms]
-    return true unless TermsOfService.required?(@order.distributor)
-
-    @order.errors.add(:terms_and_conditions, t("split_checkout.errors.terms_not_accepted"))
-  end
-
   def order_params
     @order_params ||= Checkout::Params.new(@order, params, spree_current_user).call
-  end
-
-  def redirect_to_step_based_on_order
-    case @order.state
-    when "cart", "address", "delivery"
-      redirect_to checkout_step_path(:details)
-    when "payment"
-      redirect_to checkout_step_path(:payment)
-    when "confirmation"
-      redirect_to checkout_step_path(:summary)
-    else
-      redirect_to order_path(@order, order_token: @order.token)
-    end
-  end
-
-  def redirect_to_step
-    case params[:step]
-    when "details"
-      return redirect_to checkout_step_path(:payment)
-    when "payment"
-      return redirect_to checkout_step_path(:summary)
-    end
-    redirect_to_step_based_on_order
-  end
-
-  def check_step
-    case @order.state
-    when "cart", "address", "delivery"
-      redirect_to checkout_step_path(:details) unless params[:step] == "details"
-    when "payment"
-      redirect_to checkout_step_path(:payment) if params[:step] == "summary"
-    end
   end
 end
