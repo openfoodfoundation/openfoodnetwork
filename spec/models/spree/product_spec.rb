@@ -32,10 +32,8 @@ module Spree
       end
 
       describe 'Variants sorting' do
-        context 'without master variant' do
-          it 'sorts variants by position' do
-            expect(product.variants.to_sql).to match(/ORDER BY spree_variants.position ASC/)
-          end
+        it 'sorts variants by id' do
+          expect(product.variants.to_sql).to match(/ORDER BY spree_variants.id ASC/)
         end
       end
     end

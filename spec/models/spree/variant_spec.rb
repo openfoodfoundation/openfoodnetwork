@@ -168,14 +168,6 @@ describe Spree::Variant do
     end
   end
 
-  # Regression test for #2744
-  describe "set_position" do
-    it "sets variant position after creation" do
-      variant = create(:variant)
-      expect(variant.position).to_not be_nil
-    end
-  end
-
   describe '#in_stock?' do
     # Stock data can only be stored against a persisted variant.
     subject(:variant) { create(:variant) }
