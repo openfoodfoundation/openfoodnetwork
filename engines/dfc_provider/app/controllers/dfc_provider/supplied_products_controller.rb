@@ -30,15 +30,16 @@ module DfcProvider
     end
 
     def update
-      dfc_request = JSON.parse(request.body.read)
-      return unless dfc_request.key?("dfc-b:description")
+      supplied_product = import&.first
+
+      return head :bad_request unless supplied_product
 
       variant.product.update!(
-        description: dfc_request["dfc-b:description"],
+        description: supplied_product.description,
       )
 
       variant.update!(
-        unit_value: dfc_request["dfc-b:hasQuantity"]["dfc-b:value"],
+        unit_value: supplied_product.quantity.value,
       )
     end
 
