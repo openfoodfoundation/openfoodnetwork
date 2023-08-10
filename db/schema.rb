@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_09_194304) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_09_195519) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -995,7 +995,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_194304) do
     t.decimal "width", precision: 8, scale: 2
     t.decimal "depth", precision: 8, scale: 2
     t.datetime "deleted_at", precision: nil
-    t.boolean "is_master", default: false
     t.integer "product_id"
     t.string "cost_currency", limit: 255
     t.float "unit_value"
