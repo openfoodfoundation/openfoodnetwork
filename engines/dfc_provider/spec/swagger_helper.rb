@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require Rails.root.join("spec/swagger_helper")
+require_relative "../../../spec/swagger_helper"
 require_relative "spec_helper"
 
 RSpec.configure do |config|
