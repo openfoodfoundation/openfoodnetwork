@@ -63,4 +63,4 @@ jobs:
       - name: Deploy to Staging
         if: success()
         run: |
-          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "$GITHUB_REF_NAME ${{ inputs.commit_ref || vars.GITHUB_SHA }}"
+          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "$GITHUB_REF_NAME ${{ inputs.commit_ref || github.GITHUB_SHA }}"
