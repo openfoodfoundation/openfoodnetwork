@@ -1,0 +1,35 @@
+// A mixin used to include some trix styles in the shopfront that could have been reseted
+@mixin trix-styles {
+  ol,
+  ul {
+    margin-left: 1.5em;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  div,
+  pre,
+  h1 {
+    margin-bottom: 1.5rem; // Equivalent to text-angular p (trix doesn't use p as default one, since we could not include figures inside p)
+  }
+
+  h1 {
+    color: #222222;
+    font-size: 1.1rem;
+  }
+
+  // Copy/pasted from _type.scss
+  blockquote {
+    line-height: 1.6;
+    color: #6f6f6f;
+    margin: 0 0 1.25rem;
+    padding: 0.5625rem 1.25rem 0 1.1875rem;
+    border-left: 1px solid #dddddd;
+  }
+}
