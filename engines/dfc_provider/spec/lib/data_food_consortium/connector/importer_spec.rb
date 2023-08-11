@@ -100,7 +100,7 @@ describe DataFoodConsortium::Connector::Importer do
   it "imports a single object with simple properties" do
     result = import(product)
 
-    expect(result.class).to eq product.class
+    expect(result).to be_a product.class
     expect(result.semanticType).to eq product.semanticType
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"
@@ -111,7 +111,7 @@ describe DataFoodConsortium::Connector::Importer do
   it "imports an object with referenced context" do
     result = connector.import(product_data)
 
-    expect(result.class).to eq DataFoodConsortium::Connector::SuppliedProduct
+    expect(result).to be_a DataFoodConsortium::Connector::SuppliedProduct
     expect(result.semanticType).to eq "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#SuppliedProduct"
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"
@@ -122,7 +122,7 @@ describe DataFoodConsortium::Connector::Importer do
   it "imports an object with included context" do
     result = connector.import(product_data_with_context)
 
-    expect(result.class).to eq DataFoodConsortium::Connector::SuppliedProduct
+    expect(result).to be_a DataFoodConsortium::Connector::SuppliedProduct
     expect(result.semanticType).to eq "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#SuppliedProduct"
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"
@@ -133,7 +133,7 @@ describe DataFoodConsortium::Connector::Importer do
   it "imports an object with DFC v1.8 context" do
     result = connector.import(product_data_with_context_v1_8)
 
-    expect(result.class).to eq DataFoodConsortium::Connector::SuppliedProduct
+    expect(result).to be_a DataFoodConsortium::Connector::SuppliedProduct
     expect(result.semanticType).to eq "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#SuppliedProduct"
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"
@@ -149,7 +149,7 @@ describe DataFoodConsortium::Connector::Importer do
 
     item, tomato = result
 
-    expect(item.class).to eq catalog_item.class
+    expect(item).to be_a catalog_item.class
     expect(item.semanticType).to eq catalog_item.semanticType
     expect(item.semanticId).to eq "https://example.net/tomatoItem"
     expect(tomato.name).to eq "Tomato"

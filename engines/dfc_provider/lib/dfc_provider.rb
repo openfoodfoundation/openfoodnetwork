@@ -10,4 +10,5 @@ require "dfc_provider/engine"
 require "dfc_provider/supplied_product"
 
 module DfcProvider
+  DataFoodConsortium::Connector::Importer.register_type(SuppliedProduct)
 end
