@@ -1,6 +1,0 @@
-%tr
-  - @columns.each do |column|
-    %td.products_column{class: column[:id]}
-      - if column[:id] == "name" && @image&.attachment.present?
-        = image_tag @image.url(:mini)
-      = column[:value]

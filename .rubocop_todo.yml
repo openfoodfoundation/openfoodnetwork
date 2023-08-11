@@ -188,7 +188,6 @@ Metrics/BlockNesting:
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ClassLength:
   Exclude:
-    - 'app/components/products_table_component.rb'
     - 'app/controllers/admin/enterprises_controller.rb'
     - 'app/controllers/admin/order_cycles_controller.rb'
     - 'app/controllers/admin/product_import_controller.rb'
@@ -1002,7 +1001,6 @@ Style/GuardClause:
 # SupportedStyles: braces, no_braces
 Style/HashAsLastArrayItem:
   Exclude:
-    - 'app/components/products_table_component.rb'
 
 # Offense count: 12
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -1035,8 +1033,6 @@ Style/HashSyntax:
   Exclude:
     - 'app/components/confirm_modal_component.rb'
     - 'app/components/help_modal_component.rb'
-    - 'app/components/products_table_component.rb'
-    - 'app/components/selector_with_filter_component.rb'
     - 'app/controllers/admin/customers_controller.rb'
     - 'app/controllers/admin/enterprise_fees_controller.rb'
     - 'app/controllers/admin/enterprise_groups_controller.rb'
@@ -1178,7 +1174,6 @@ Style/HashSyntax:
     - 'lib/tasks/sample_data/user_factory.rb'
     - 'lib/tasks/subscriptions/debug.rake'
     - 'lib/tasks/subscriptions/test.rake'
-    - 'spec/components/product_component_spec.rb'
     - 'spec/constraints/feature_toggle_constraint_spec.rb'
     - 'spec/controllers/admin/bulk_line_items_controller_spec.rb'
     - 'spec/controllers/admin/customers_controller_spec.rb'
