@@ -9,7 +9,7 @@ class ErrorsController < ApplicationController
 
       event.add_metadata(:request, request.env)
     end
-    render "not_found", status: :not_found, formats: :html
+    render status: :not_found, formats: :html
   end
 
   def internal_server_error
