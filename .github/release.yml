@@ -1,6 +1,6 @@
 changelog:
   categories:
-    - title: What's changed
+    - title: "User-facing changes 👀" # Other categories will need to be manually arrange for now.
       labels:
         - '*'
       exclude:
