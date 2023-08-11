@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "context"
+# Load the original library first:
+require "datafoodconsortium/connector"
+
+# Then our tools for monky-patching:
 require_relative "importer"
+require_relative "context"
 
 module DataFoodConsortium
   module Connector

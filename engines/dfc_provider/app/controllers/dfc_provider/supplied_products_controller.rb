@@ -43,7 +43,7 @@ module DfcProvider
     private
 
     def import
-      DfcLoader.connector.import(request.body)
+      DfcIo.import(request.body)
     end
 
     def variant
