@@ -32,3 +32,15 @@ trix-editor {
     border-left: 1px solid #dddddd;
   }
 }
+
+// Override app/webpacker/css/admin/shared/forms.scss#L81
+.field trix-editor ul {
+  border-top: none;
+  list-style: disc;
+  padding-top: 0;
+
+  li {
+    padding-right: 0;
+    display: list-item;
+  }
+}
