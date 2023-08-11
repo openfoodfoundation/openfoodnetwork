@@ -162,6 +162,8 @@
             > div {
               margin-bottom: 1.5rem; // Equivalent to p (trix doesn't use p as separator by default, so emulate div as p to be backward compatible)
             }
+
+            @include trix-styles;
           }
 
           .product-properties {
