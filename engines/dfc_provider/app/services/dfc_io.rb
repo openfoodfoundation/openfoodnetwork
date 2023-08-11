@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# Load our monkey-patches:
-require "data_food_consortium/connector/connector"
-
 # Our interface to the DFC Connector library.
 module DfcIo
   # Serialise DFC Connector subjects as JSON-LD string.

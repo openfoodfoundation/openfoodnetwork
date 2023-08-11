@@ -7,17 +7,14 @@ class SuppliedProductBuilder < DfcBuilder
       id: variant.id,
     )
 
-    DataFoodConsortium::Connector::SuppliedProduct.new(
+    DfcProvider::SuppliedProduct.new(
       id,
       name: variant.name_to_display,
       description: variant.description,
       productType: product_type,
       quantity: QuantitativeValueBuilder.quantity(variant),
-    ).tap do |supplied_product|
-      supplied_product.registerSemanticProperty("ofn:spree_product_id") do
-        variant.product.id
-      end
-    end
+      spree_product_id: variant.product.id,
+    )
   end
 
   def self.import(supplied_product)
