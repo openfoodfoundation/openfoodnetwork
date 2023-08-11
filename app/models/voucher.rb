@@ -11,14 +11,11 @@ class Voucher < ApplicationRecord
            dependent: :nullify
 
   validates :code, presence: true, uniqueness: { scope: :enterprise_id }
-  validates :amount, presence: true, numericality: { greater_than: 0 }
+
+  TYPES = ["Vouchers::FlatRate", "Vouchers::PercentageRate"].freeze
 
   def code=(value)
     super(value.to_s.strip)
-  end
-
-  def display_value
-    Spree::Money.new(amount)
   end
 
   # Ideally we would use `include CalculatedAdjustments` to be consistent with other adjustments,
@@ -41,9 +38,16 @@ class Voucher < ApplicationRecord
     order.adjustments.create(adjustment_attributes)
   end
 
-  # We limit adjustment to the maximum amount needed to cover the order, ie if the voucher
-  # covers more than the order.total we only need to create an adjustment covering the order.total
-  def compute_amount(order)
-    -amount.clamp(0, order.pre_discount_total)
+  # The following method must be overriden in a concrete voucher.
+  def display_value
+    raise NotImplementedError, 'please use concrete voucher'
+  end
+
+  def compute_amount(_order)
+    raise NotImplementedError, 'please use concrete voucher'
+  end
+
+  def rate(_order)
+    raise NotImplementedError, 'please use concrete voucher'
   end
 end

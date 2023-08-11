@@ -1712,6 +1712,9 @@ en:
         save: Save
         voucher_code: Voucher Code
         voucher_amount: Amount
+        voucher_type: Voucher Type 
+        flat_rate: Flat 
+        percentage_rate: Percentage (%) 
 
     # Admin controllers
     controllers:

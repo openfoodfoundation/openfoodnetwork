@@ -1466,7 +1466,7 @@ describe Spree::Order do
   describe "#voucher_adjustments" do
     let(:distributor) { create(:distributor_enterprise) }
     let(:order) { create(:order, user: user, distributor: distributor) }
-    let(:voucher) { create(:voucher, code: 'new_code', enterprise: order.distributor) }
+    let(:voucher) { create(:voucher_flat_rate, code: 'new_code', enterprise: order.distributor) }
 
     context "when no voucher adjustment" do
       it 'returns an empty array' do

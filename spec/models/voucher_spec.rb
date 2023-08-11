@@ -2,6 +2,11 @@
 
 require 'spec_helper'
 
+# This is used to test non implemented methods
+module Vouchers
+  class TestVoucher < Voucher; end
+end
+
 describe Voucher do
   let(:enterprise) { build(:enterprise) }
 
@@ -19,38 +24,36 @@ describe Voucher do
   end
 
   describe 'validations' do
-    subject { build(:voucher, code: 'new_code', enterprise: enterprise) }
+    subject { build(:voucher_flat_rate, code: 'new_code', enterprise: enterprise) }
 
     it { is_expected.to validate_presence_of(:code) }
     it { is_expected.to validate_uniqueness_of(:code).scoped_to(:enterprise_id) }
-    it { is_expected.to validate_presence_of(:amount) }
-    it { is_expected.to validate_numericality_of(:amount).is_greater_than(0) }
+  end
+
+  describe '#display_value' do
+    subject(:voucher) { Vouchers::TestVoucher.new(code: 'new_code', enterprise: enterprise) }
+
+    it "raises not implemented error" do
+      expect{ voucher.display_value }
+        .to raise_error(NotImplementedError, 'please use concrete voucher')
+    end
   end
 
   describe '#compute_amount' do
-    let(:order) { create(:order_with_totals) }
+    subject(:voucher) { Vouchers::TestVoucher.new(code: 'new_code', enterprise: enterprise) }
 
-    context 'when order total is more than the voucher' do
-      subject { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 5) }
-
-      it 'uses the voucher total' do
-        expect(subject.compute_amount(order).to_f).to eq(-5)
-      end
-    end
-
-    context 'when order total is less than the voucher' do
-      subject { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 20) }
-
-      it 'matches the order total' do
-        expect(subject.compute_amount(order).to_f).to eq(-10)
-      end
+    it "raises not implemented error" do
+      expect{ voucher.compute_amount(nil) }
+        .to raise_error(NotImplementedError, 'please use concrete voucher')
     end
   end
 
   describe '#create_adjustment' do
     subject(:adjustment) { voucher.create_adjustment(voucher.code, order) }
 
-    let(:voucher) { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 25) }
+    let(:voucher) do
+      create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 25)
+    end
     let(:order) { create(:order_with_line_items, line_items_count: 3, distributor: enterprise) }
 
     it 'includes an amount of 0' do
@@ -63,6 +66,15 @@ describe Voucher do
 
     it 'sets the adjustment as open' do
       expect(adjustment.state).to eq("open")
+    end
+  end
+
+  describe '#rate' do
+    subject(:voucher) { Vouchers::TestVoucher.new(code: 'new_code', enterprise: enterprise) }
+
+    it "raises not implemented error" do
+      expect{ voucher.rate(nil) }
+        .to raise_error(NotImplementedError, 'please use concrete voucher')
     end
   end
 end

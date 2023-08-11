@@ -118,7 +118,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
       context "when using a voucher" do
         let!(:voucher) do
-          create(:voucher, code: 'some_code', enterprise: distributor, amount: 10)
+          create(:voucher_flat_rate, code: 'some_code', enterprise: distributor, amount: 10)
         end
 
         it "will include a tax included amount on the voucher adjustment" do
@@ -151,12 +151,66 @@ describe "As a consumer, I want to see adjustment breakdown" do
           end
 
           # DB check
-          order_within_zone.reload
-          voucher_adjustment = order_within_zone.voucher_adjustments.first
-          voucher_tax_adjustment = order_within_zone.voucher_adjustments.second
+          assert_db_voucher_adjustment(-8.85, -1.15)
+        end
 
-          expect(voucher_adjustment.amount.to_f).to eq(-8.85)
-          expect(voucher_tax_adjustment.amount.to_f).to eq(-1.15)
+        describe "moving between summary to summary via edit cart" do
+          let!(:voucher) do
+            create(:voucher_percentage_rate, code: 'good_code', enterprise: distributor, amount: 20)
+          end
+
+          it "recalculate the tax component properly" do
+            visit checkout_step_path(:details)
+            proceed_to_payment
+
+            # add Voucher
+            fill_in "Enter voucher code", with: voucher.code
+            click_button("Apply")
+
+            proceed_to_summary
+            assert_db_voucher_adjustment(-2.00, -0.26)
+
+            # Click on edit link
+            within "div", text: /Order details/ do
+              # It's a bit brittle, but the scoping doesn't seem to work
+              all(".summary-edit").last.click
+            end
+
+            # Update quantity
+            within ".cart-item-quantity" do
+              input = find(".line_item_quantity")
+              input.send_keys :up
+            end
+
+            click_button("Update")
+
+            # Check adjustment has been recalculated
+            assert_db_voucher_adjustment(-4.00, -0.52)
+
+            within "#cart-container" do
+              click_link("Checkout")
+            end
+
+            # Go back to payment step
+            proceed_to_payment
+
+            # Check voucher is still there
+            expect(page).to have_content("20.00% Voucher")
+
+            # Go to summary
+            proceed_to_summary
+
+            # Check voucher value
+            within ".summary-right" do
+              expect(page).to have_content "good_code"
+              expect(page).to have_content "-4"
+              expect(page).to have_content "Tax good_code"
+              expect(page).to have_content "-0.52"
+            end
+
+            # Check adjustment has been recalculated, we are not expecting any changes here
+            assert_db_voucher_adjustment(-4.00, -0.52)
+          end
         end
       end
     end
@@ -232,5 +286,14 @@ describe "As a consumer, I want to see adjustment breakdown" do
         end
       end
     end
+  end
+
+  private
+
+  def assert_db_voucher_adjustment(amount, tax_amount)
+    adjustment = order_within_zone.voucher_adjustments.first
+    tax_adjustment = order_within_zone.voucher_adjustments.second
+    expect(adjustment.amount.to_f).to eq(amount)
+    expect(tax_adjustment.amount.to_f).to eq(tax_amount)
   end
 end

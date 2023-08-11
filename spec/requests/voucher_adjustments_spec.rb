@@ -19,7 +19,7 @@ describe VoucherAdjustmentsController, type: :request do
     )
   end
   let(:shipping_method) { distributor.shipping_methods.first }
-  let(:voucher) { create(:voucher, code: 'some_code', enterprise: distributor) }
+  let(:voucher) { create(:voucher_flat_rate, code: 'some_code', enterprise: distributor) }
 
   before do
     order.update!(created_by: user)
