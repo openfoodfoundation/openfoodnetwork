@@ -15,11 +15,11 @@ module Spree
 
       def new
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
+        @object.shipping_category ||= DefaultShippingCategory.find_or_create
       end
 
       def edit
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
-        @object.shipping_category = DefaultShippingCategory.find_or_create
       end
 
       def create
