@@ -5,7 +5,6 @@ class EnterpriseRelationship < ApplicationRecord
   belongs_to :child, class_name: 'Enterprise', touch: true
   has_many :permissions, class_name: 'EnterpriseRelationshipPermission', dependent: :destroy
 
-  validates :parent, :child, presence: true
   validates :child_id, uniqueness: {
     scope: :parent_id,
     message: I18n.t('validation_msg_relationship_already_established')

@@ -1,6 +1,8 @@
 # frozen_string_literal: false
 
 class Voucher < ApplicationRecord
+  self.belongs_to_required_by_default = false
+
   acts_as_paranoid
 
   belongs_to :enterprise, optional: false

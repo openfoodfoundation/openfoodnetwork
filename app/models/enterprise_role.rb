@@ -4,7 +4,6 @@ class EnterpriseRole < ApplicationRecord
   belongs_to :user, class_name: "Spree::User"
   belongs_to :enterprise
 
-  validates :user, :enterprise, presence: true
   validates :enterprise_id,
             uniqueness: { scope: :user_id, message: I18n.t(:enterprise_role_uniqueness_error) }
 

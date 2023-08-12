@@ -6,6 +6,8 @@ class VariantOverride < ApplicationRecord
   extend Spree::LocalizedNumber
   include StockSettingsOverrideValidation
 
+  self.belongs_to_required_by_default = false
+
   acts_as_taggable
 
   belongs_to :hub, class_name: 'Enterprise'

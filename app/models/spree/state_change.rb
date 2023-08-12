@@ -2,6 +2,8 @@
 
 module Spree
   class StateChange < ApplicationRecord
+    self.belongs_to_required_by_default = false
+
     belongs_to :user
     belongs_to :stateful, polymorphic: true
     before_create :assign_user

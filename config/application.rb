@@ -227,7 +227,6 @@ module Openfoodnetwork
     # https://guides.rubyonrails.org/configuring.html#results-of-config-load-defaults
     config.load_defaults 6.1
     config.action_view.form_with_generates_remote_forms = false
-    config.active_record.belongs_to_required_by_default = false
     config.active_record.cache_versioning = false
     config.active_record.has_many_inversing = false
     config.active_record.yaml_column_permitted_classes = [BigDecimal, Symbol]

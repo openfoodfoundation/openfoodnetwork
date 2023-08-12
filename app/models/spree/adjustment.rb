@@ -31,6 +31,8 @@ module Spree
   class Adjustment < ApplicationRecord
     extend Spree::LocalizedNumber
 
+    self.belongs_to_required_by_default = false
+
     # Deletion of metadata is handled in the database.
     # So we don't need the option `dependent: :destroy` as long as
     # AdjustmentMetadata has no destroy logic itself.

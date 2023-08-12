@@ -154,8 +154,8 @@ module Spree
     end
 
     describe "associations" do
-      it { is_expected.to belong_to(:supplier) }
-      it { is_expected.to belong_to(:primary_taxon) }
+      it { is_expected.to belong_to(:supplier).required }
+      it { is_expected.to belong_to(:primary_taxon).required }
     end
 
     describe "validations and defaults" do

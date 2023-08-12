@@ -10,6 +10,8 @@
 # shopfront (outgoing products). But the set of shown products can be smaller
 # than all incoming products.
 class Exchange < ApplicationRecord
+  self.belongs_to_required_by_default = false
+
   acts_as_taggable
 
   belongs_to :order_cycle
@@ -88,7 +90,6 @@ class Exchange < ApplicationRecord
     exchange = dup
     exchange.order_cycle = new_order_cycle
     exchange.enterprise_fee_ids = enterprise_fee_ids
-    exchange.tag_ids = tag_ids
     exchange.save!
     clone_all_exchange_variants(exchange.id)
     exchange

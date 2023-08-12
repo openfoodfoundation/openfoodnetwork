@@ -2,6 +2,8 @@
 
 module Spree
   class StockMovement < ApplicationRecord
+    self.belongs_to_required_by_default = false
+
     belongs_to :stock_item, class_name: 'Spree::StockItem'
     belongs_to :originator, polymorphic: true
 

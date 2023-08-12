@@ -2,6 +2,8 @@
 
 module Spree
   class Price < ApplicationRecord
+    self.belongs_to_required_by_default = false
+
     acts_as_paranoid without_default_scope: true
 
     belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant'

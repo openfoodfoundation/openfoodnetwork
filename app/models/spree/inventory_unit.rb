@@ -2,6 +2,8 @@
 
 module Spree
   class InventoryUnit < ApplicationRecord
+    self.belongs_to_required_by_default = false
+
     belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant"
     belongs_to :order, class_name: "Spree::Order"
     belongs_to :shipment, class_name: "Spree::Shipment"

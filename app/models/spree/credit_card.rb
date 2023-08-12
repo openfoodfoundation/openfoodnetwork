@@ -2,6 +2,8 @@
 
 module Spree
   class CreditCard < ApplicationRecord
+    self.belongs_to_required_by_default = false
+
     belongs_to :payment_method
     belongs_to :user
 

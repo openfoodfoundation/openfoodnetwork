@@ -8,6 +8,8 @@ module Spree
     include VariantUnits::VariantAndLineItemNaming
     include LineItemStockChanges
 
+    self.belongs_to_required_by_default = false
+
     searchable_attributes :price, :quantity, :order_id, :variant_id, :tax_category_id
     searchable_associations :order, :order_cycle, :variant, :product, :supplier, :tax_category
     searchable_scopes :with_tax, :without_tax

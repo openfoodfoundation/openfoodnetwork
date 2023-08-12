@@ -2,6 +2,8 @@
 
 module Spree
   class ShippingRate < ApplicationRecord
+    self.belongs_to_required_by_default = false
+
     belongs_to :shipment, class_name: 'Spree::Shipment'
     belongs_to :shipping_method, class_name: 'Spree::ShippingMethod', inverse_of: :shipping_rates
 

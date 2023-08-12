@@ -121,7 +121,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_201542) do
   end
 
   create_table "enterprise_fees", id: :serial, force: :cascade do |t|
-    t.integer "enterprise_id"
+    t.integer "enterprise_id", null: false
     t.string "fee_type", limit: 255
     t.string "name", limit: 255
     t.datetime "created_at", precision: nil, null: false
@@ -161,22 +161,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_201542) do
   end
 
   create_table "enterprise_relationship_permissions", id: :serial, force: :cascade do |t|
-    t.integer "enterprise_relationship_id"
+    t.integer "enterprise_relationship_id", null: false
     t.string "name", limit: 255, null: false
     t.index ["enterprise_relationship_id"], name: "index_erp_on_erid"
   end
 
   create_table "enterprise_relationships", id: :serial, force: :cascade do |t|
-    t.integer "parent_id"
-    t.integer "child_id"
+    t.integer "parent_id", null: false
+    t.integer "child_id", null: false
     t.index ["child_id"], name: "index_enterprise_relationships_on_child_id"
     t.index ["parent_id", "child_id"], name: "index_enterprise_relationships_on_parent_id_and_child_id", unique: true
     t.index ["parent_id"], name: "index_enterprise_relationships_on_parent_id"
   end
 
   create_table "enterprise_roles", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "enterprise_id"
+    t.integer "user_id", null: false
+    t.integer "enterprise_id", null: false
     t.boolean "receives_notifications", default: false
     t.index ["enterprise_id", "user_id"], name: "index_enterprise_roles_on_enterprise_id_and_user_id", unique: true
     t.index ["enterprise_id"], name: "index_enterprise_roles_on_enterprise_id"

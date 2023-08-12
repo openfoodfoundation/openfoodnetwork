@@ -7,6 +7,8 @@ module Spree
     include Spree::Payment::Processing
     extend Spree::LocalizedNumber
 
+    self.belongs_to_required_by_default = false
+
     localize_number :amount
 
     IDENTIFIER_CHARS = (('A'..'Z').to_a + ('0'..'9').to_a - %w(0 1 I O)).freeze

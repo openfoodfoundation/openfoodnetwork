@@ -25,6 +25,8 @@ module Spree
   class Product < ApplicationRecord
     include ProductStock
 
+    self.belongs_to_required_by_default = false
+
     acts_as_paranoid
 
     searchable_attributes :supplier_id, :primary_taxon_id, :meta_keywords, :sku
@@ -32,8 +34,8 @@ module Spree
     searchable_scopes :active, :with_properties
 
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory'
-    belongs_to :supplier, class_name: 'Enterprise', touch: true
-    belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true
+    belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
+    belongs_to :primary_taxon, class_name: 'Spree::Taxon', optional: false, touch: true
 
     has_one :image, class_name: "Spree::Image", as: :viewable, dependent: :destroy
 
@@ -51,9 +53,6 @@ module Spree
 
     validates :name, presence: true
     validates :shipping_category, presence: true
-
-    validates :supplier, presence: true
-    validates :primary_taxon, presence: true
 
     validates :variant_unit, presence: true
     validates :unit_value, presence:

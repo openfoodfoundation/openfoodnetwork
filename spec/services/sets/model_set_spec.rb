@@ -5,16 +5,16 @@ require 'spec_helper'
 describe Sets::ModelSet do
   describe "updating" do
     it "creates new models" do
-      attrs = { collection_attributes: { '1' => { name: 's1' },
-                                         '2' => { name: 's2' } } }
+      attrs = { collection_attributes: { '1' => { name: "Fantasia", iso_name: "FAN" },
+                                         '2' => { name: "Utopia", iso_name: "UTO" } } }
 
-      ms = Sets::ModelSet.new(EnterpriseRelationshipPermission,
-                              EnterpriseRelationshipPermission.all,
+      ms = Sets::ModelSet.new(Spree::Country,
+                              Spree::Country.all,
                               attrs)
 
-      expect { ms.save }.to change(EnterpriseRelationshipPermission, :count).by(2)
+      expect { ms.save }.to change(Spree::Country, :count).by(2)
 
-      expect(EnterpriseRelationshipPermission.where(name: ['s1', 's2']).count).to eq(2)
+      expect(Spree::Country.where(name: ["Fantasia", "Utopia"]).count).to eq(2)
     end
 
     it "updates existing models" do
