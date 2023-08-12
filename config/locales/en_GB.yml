@@ -261,10 +261,10 @@ en_GB:
       email_welcome: "Welcome"
       email_registered: "is now part of"
       email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here: %{link}"
-      userguide: "Open Food Network User Guide"
+      userguide: "Labelleorange User Guide"
       email_admin_html: "You can manage your account by logging into the %{link} or by clicking on 'Profile' in the top right hand side of the homepage, and selecting Administration."
       admin_panel: "Admin Panel"
-      email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
+      email_community_html: "We also have an online forum for community discussion related to Labelleorange software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
       join_community: "Join the community"
     invite_manager:
       subject: "%{enterprise} has invited you to be a manager"
@@ -323,12 +323,12 @@ en_GB:
       other:
         title: Other Failure (%{count} orders)
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
-  home: "OFN"
-  title: "Open Food Network"
+  home: "Labelleorange"
+  title: "Labelleorange"
   welcome_to: "Welcome to"
-  site_meta_description: "The Open Food Network software platform allows farmers to sell produce online, at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
+  site_meta_description: "The Labelleorange software platform allows farmers to sell produce online, at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
   search_by_name: Search by name, town, county or postcode...
-  producers_join: UK producers are now welcome to join Open Food Network UK.
+  producers_join: UK producers are now welcome to join Labelleorange UK.
   charges_sales_tax: Charges VAT?
   business_address: "Business Address"
   print_invoice: "Print Invoice"
@@ -568,7 +568,7 @@ en_GB:
         settings: "Settings"
         stripe_connect_enabled: Enable shops to accept payments using Stripe Connect?
         no_api_key_msg: No Stripe account exists for this enterprise.
-        configuration_explanation_html: For detailed instructions on configuring the Stripe Connect integration, please <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>consult this guide</a>.
+        configuration_explanation_html: For detailed instructions on configuring the Stripe Connect integration, please <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-Labelleorange-instance' target='_blank'>consult this guide</a>.
         status: Status
         ok: Ok
         instance_secret_key: Instance Secret Key
@@ -577,7 +577,7 @@ en_GB:
         charges_enabled: Charges Enabled
         charges_enabled_warning: "Warning: Charges are not enabled for your account"
         auth_fail_error: The API key you provided is invalid
-        empty_api_key_error_html: No Stripe API key has been provided. To set your API key, please follow <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">these instructions</a>
+        empty_api_key_error_html: No Stripe API key has been provided. To set your API key, please follow <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-Labelleorange-instance" target="_blank">these instructions</a>
     matomo_settings:
       edit:
         title: "Matomo Settings"
@@ -585,7 +585,7 @@ en_GB:
         matomo_site_id: "Matomo Site ID"
         matomo_tag_manager_url: "Matomo Tag Manager URL"
         info_html: "Matomo is a Web and Mobile Analytics application. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
-        config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
+        config_instructions_html: "Here you can configure the Labelleorange Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
         config_instructions_tag_manager_html: "Setting the Matomo Tag Manager URL enables Matomo Tag Manager. This tool allows you to set up analytics events. The Matomo Tag Manager URL is copied from the Install Code section of Matomo Tag Manager. Ensure you select the right container and environment as these options change the URL."
     customers:
       index:
@@ -982,7 +982,7 @@ en_GB:
           sells: Sells
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
           visible_in_search: Visible in search?
-          visible_in_search_tip: "Shops can be <br />1. publicly visible, appearing on the OFN map and listings. <br />2. Hidden on maps and listings but referenced by other shops and linked in their profile. <br />3. Completely hidden."
+          visible_in_search_tip: "Shops can be <br />1. publicly visible, appearing on the Labelleorange map and listings. <br />2. Hidden on maps and listings but referenced by other shops and linked in their profile. <br />3. Completely hidden."
           visible: Public
           not_visible: Hidden
           hidden: Hide all references
@@ -992,9 +992,9 @@ en_GB:
           permalink: Permalink (no spaces)
           permalink_tip: "This permalink is used to create the url to your shop: %{link}your-shop-name/shop"
           link_to_front: Link to shop front
-          link_to_front_tip: A direct link to your shopfront on the Open Food Network.
-          ofn_uid: OFN UID
-          ofn_uid_tip: The unique id used to identify the enterprise on Open Food Network.
+          link_to_front_tip: A direct link to your shopfront on the Labelleorange.
+          ofn_uid: Labelleorange UID
+          ofn_uid_tip: The unique id used to identify the enterprise on Labelleorange.
         shipping_methods:
           legend: "Shipping Methods"
           name: "Name"
@@ -1060,14 +1060,14 @@ en_GB:
           linkedin_placeholder: "eg. www.linkedin.com/in/YourNameHere"
         stripe_connect:
           connect_with_stripe: "Connect with Stripe"
-          stripe_connect_intro: "To accept payments using credit card, you will need to connect your stripe account to the Open Food Network. Use the button to the right to get started."
+          stripe_connect_intro: "To accept payments using credit card, you will need to connect your stripe account to the Labelleorange. Use the button to the right to get started."
           stripe_account_connected: "Stripe account connected."
           disconnect: "Disconnect account"
           confirm_modal:
             title: Connect with Stripe
-            part1: Stripe is a payment processing service that allows shops on the OFN to accept credit card payments from customers.
-            part2: To use this feature, you must connect your Stripe account to the OFN. Clicking 'I Agree' below will redirect to you the Stripe website where you can connect an existing Stripe account, or create a new one if you don't already have one.
-            part3: This will allow the Open Food Network to accept credit card payments from customers on your behalf. Please note that you will need to maintain your own Stripe account, pay the fees Stripe charges and handle any chargebacks and customer service yourself.
+            part1: Stripe is a payment processing service that allows shops on the Labelleorange to accept credit card payments from customers.
+            part2: To use this feature, you must connect your Stripe account to the Labelleorange. Clicking 'I Agree' below will redirect to you the Stripe website where you can connect an existing Stripe account, or create a new one if you don't already have one.
+            part3: This will allow the Labelleorange to accept credit card payments from customers on your behalf. Please note that you will need to maintain your own Stripe account, pay the fees Stripe charges and handle any chargebacks and customer service yourself.
             i_agree: I Agree
             cancel: Cancel
         tag_rules:
@@ -1114,7 +1114,7 @@ en_GB:
           no_voucher_yet: No Vouchers yet
         white_label:
           legend: "White Label"
-          hide_ofn_navigation: "Hide OFN navigation"
+          hide_ofn_navigation: "Hide Labelleorange navigation"
           upload_logo: "Logo used in shopfront"
           remove_logo: "Remove logo"
           remove_logo_confirm: "Are you sure you want to remove this logo?"
@@ -1142,22 +1142,22 @@ en_GB:
         producer: Producer
       change_type_form:
         producer_profile: Producer Profile
-        connect_ofn: Connect through OFN
+        connect_ofn: Connect through Labelleorange
         always_free: Free
-        producer_description_text: Add your products to Open Food Network, allowing hubs to stock your products in their stores.
+        producer_description_text: Add your products to Labelleorange, allowing hubs to stock your products in their stores.
         producer_shop: Producer Shop
         sell_your_produce: Sell your own produce
-        producer_shop_description_text: Sell your products directly to customers through your very own Open Food Network shopfront.
+        producer_shop_description_text: Sell your products directly to customers through your very own Labelleorange shopfront.
         producer_shop_description_text2: A Producer Shop is for your produce only, if you want to sell produce grown/produced off site, select 'Producer Hub'.
         producer_hub: Producer Hub
         producer_hub_text: Sell produce from self and others
-        producer_hub_description_text: Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Open Food Network.
+        producer_hub_description_text: Your enterprise is the backbone of your local food system. You can sell your own produce as well as produce aggregated from other enterprises through your shopfront on the Labelleorange.
         profile: Profile Only
         get_listing: Get a listing
-        profile_description_text: People can find and contact you on the Open Food Network. Your enterprise will be visible on the map, and will be searchable in listings.
+        profile_description_text: People can find and contact you on the Labelleorange. Your enterprise will be visible on the map, and will be searchable in listings.
         hub_shop: Hub Shop
         hub_shop_text: Sell produce from others
-        hub_shop_description_text: Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Open Food Network.
+        hub_shop_description_text: Your enterprise is the backbone of your local food system. You aggregate produce from other enterprises and can sell it through your shop on the Labelleorange.
         choose_option: Please choose one of the options above.
         change_now: Change now
       enterprise_user_index:
@@ -1181,7 +1181,7 @@ en_GB:
         title: New Enterprise
         back_link: Back to enterprises list
       welcome:
-        welcome_title: Welcome to the Open Food Network!
+        welcome_title: Welcome to the Labelleorange!
         welcome_text: You have successfully created a
         next_step: Next step
         choose_starting_point: 'Choose your package:'
@@ -1640,7 +1640,7 @@ en_GB:
   shared:
     mailers:
       powered_by:
-        open_food_network: "Open Food Network"
+        open_food_network: "Labelleorange"
         powered_html: "Your shopping experience is powered by the %{open_food_network}."
     menu:
       cart:
@@ -1658,20 +1658,20 @@ en_GB:
       mobile_menu:
         cart: "Basket"
     register_call:
-      selling_on_ofn: "Interested in selling on the Open Food Network?"
+      selling_on_ofn: "Interested in selling on the Labelleorange?"
       register: "Register here"
     footer:
       footer_secure: "Secure and trusted."
-      footer_secure_text: "Open Food Network does not store your credit card details. We use SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private and payments are processed by PCI-compliant services."
+      footer_secure_text: "Labelleorange does not store your credit card details. We use SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private and payments are processed by PCI-compliant services."
       footer_contact_headline: "Keep in touch"
       footer_contact_email: "Email us"
       footer_nav_headline: "Navigate"
       footer_join_headline: "Join us"
-      footer_join_body: "Create a listing, shop or group directory on the Open Food Network."
+      footer_join_body: "Create a listing, shop or group directory on the Labelleorange."
       footer_join_cta: "Tell me more!"
       footer_legal_call: "Read our"
       footer_legal_visit: "Find us on"
-      footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
+      footer_legal_text_html: "Labelleorange is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
       footer_data_text_with_privacy_policy_html: "We take good care of your data. See our %{privacy_policy} and %{cookies_policy}"
       footer_data_text_without_privacy_policy_html: "We take good care of your data. See our %{cookies_policy}"
       footer_data_privacy_policy: "privacy policy"
@@ -1822,7 +1822,7 @@ en_GB:
     cookies_policy:
       header: "How We Use Cookies"
       desc_part_1: "Cookies are very small text files that are stored on your computer when you visit some websites."
-      desc_part_2: "In OFN we are fully respectful of your privacy. We use only the cookies that are necessary for delivering you the service of selling/buying food online. We don’t sell any of your data. We might in the future propose you to share some of your data to build new commons services that could be useful for the ecosystem (like logistics services for short food systems) but we are not yet there, and we won’t do it without your authorization :-)"
+      desc_part_2: "In Labelleorange we are fully respectful of your privacy. We use only the cookies that are necessary for delivering you the service of selling/buying food online. We don’t sell any of your data. We might in the future propose you to share some of your data to build new commons services that could be useful for the ecosystem (like logistics services for short food systems) but we are not yet there, and we won’t do it without your authorization :-)"
       desc_part_3: "We use cookies mainly to remember who you are if you 'log in' to the service, or to be able to remember the items you put in your cart even if you are not logged in. If you keep navigating on the website without clicking on “Accept cookies”, we assume you are giving us consent to store the cookies that are essential for the functioning of the website. Here is the list of cookies we use!"
       essential_cookies: "Essential Cookies"
       essential_cookies_desc: "The following cookies are strictly necessary for the operation of our website."
@@ -1841,12 +1841,12 @@ en_GB:
       cookie_matomo_heatmap_desc: "Matomo Heatmap & Session Recording cookie."
       cookie_matomo_ignore_desc: "Cookie used to exclude user from being tracked."
       disabling_cookies_header: "Warning on disabling cookies"
-      disabling_cookies_desc: "As a user you can always allow, block or delete Open Food Network’s or any other website cookies whenever you want to through your browser’s setting control. Each browser has a different operative. Here are the links:"
+      disabling_cookies_desc: "As a user you can always allow, block or delete Labelleorange's or any other website cookies whenever you want to through your browser’s setting control. Each browser has a different operative. Here are the links:"
       disabling_cookies_firefox_link: "https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
       disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
       disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
-      disabling_cookies_note: "But be aware that if you delete or modify the essential cookies used by Open Food Network, the website won’t work, you will not be able to add anything to your cart neither to checkout for instance."
+      disabling_cookies_note: "But be aware that if you delete or modify the essential cookies used by Labelleorange, the website won’t work, you will not be able to add anything to your cart neither to checkout for instance."
     cookies_banner:
       cookies_usage: "This site uses cookies in order to make your navigation frictionless and secure, and to help us understand how you use it in order to improve the features we offer."
       cookies_definition: "Cookies are very small text files that are stored on your computer when you visit some websites."
@@ -1857,9 +1857,9 @@ en_GB:
   home_shop: Buy
   brandstory_headline: "Growing Local Food Online"
   brandstory_intro: "Read about our mission"
-  brandstory_part1: "The Open Food Network software platform allows farmers to sell produce online, at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
+  brandstory_part1: "The Labelleorange software platform allows farmers to sell produce online, at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
   brandstory_part2: "Food Producers can create an online shop, collect payments, sell through other shops on the platform and access reduced-rate courier services."
-  brandstory_part3: "Wholesalers can integrate OFN with their existing systems and manage buying groups to  supply customers with their produce through our national network of food hubs and shops."
+  brandstory_part3: "Wholesalers can integrate Labelleorange with their existing systems and manage buying groups to  supply customers with their produce through our national network of food hubs and shops."
   brandstory_part4: "Communities can bring together producers in their local area to create virtual farmers’ markets, building a resilient local food economy."
   brandstory_part5_strong: "And what’s just as important as the software itself are the values which underpin it. "
   brandstory_part6: "If you sell good food - as a farmer, farmer’s market, food co-op, or food hub- then choose software that aligns with your values to build food systems for people and planet, not profit.  By working collectively rather than competitively, we share the costs of developing new software, and we ensure that our project is resilient!"
@@ -2173,7 +2173,7 @@ en_GB:
   products_no_results_html: "Sorry, no results found for %{query}"
   products_clear_search: "Clear search"
   search_no_results_html: "Sorry, no results found for %{query}. Try another search?"
-  components_profiles_popover: "Profiles do not have a shopfront on the Open Food Network, but may have their own physical or online shop elsewhere"
+  components_profiles_popover: "Profiles do not have a shopfront on the Labelleorange, but may have their own physical or online shop elsewhere"
   components_profiles_show: "Show profiles"
   components_filters_nofilters: "No filters"
   components_filters_clearfilters: "Clear all filters"
@@ -2200,14 +2200,14 @@ en_GB:
   groups_signup_motivation3: We know you have big ideas, and we want to help. We'll share our knowledge, networks and resources. We know that isolation doesn't create change, so we'll partner with you.
   groups_signup_motivation4: We meet you where you are.
   groups_signup_motivation5: You might be an alliance of food hubs, producers, or distributors, and an industry body, or a local government.
-  groups_signup_motivation6: Whatever your role in your local food movement, we're ready to help. However you come to wonder what Open Food Network would look like or is doing in your part of the world, let's start the conversation.
+  groups_signup_motivation6: Whatever your role in your local food movement, we're ready to help. However you come to wonder what Labelleorange would look like or is doing in your part of the world, let's start the conversation.
   groups_signup_motivation7: We make food movements make more sense.
   groups_signup_motivation8: You need to activate and enable your networks, we offer a platform for conversation and action. You need real engagement. We’ll help reach all the players, all the stakeholders, all the sectors.
   groups_signup_motivation9: You need resourcing. We’ll bring all our experience to bear. You need cooperation. We’ll better connect you to a global network of peers.
   groups_signup_pricing: Group Account
   groups_signup_studies: Case Studies
   groups_signup_contact: Ready to discuss?
-  groups_signup_contact_text: "Get in touch to discover what OFN can do for you:"
+  groups_signup_contact_text: "Get in touch to discover what Labelleorange can do for you:"
   groups_signup_detail: "Here's the detail."
   login_invalid: "Invalid email or password"
   producers_about: About us
@@ -2222,10 +2222,10 @@ en_GB:
   producers_title: Producers
   producers_headline: Find local producers
   producers_signup_title: Sign up as a producer
-  producers_signup_headline: Food producers. Meet OFN.
+  producers_signup_headline: Food producers. Meet Labelleorange.
   producers_signup_motivation: Sell your food and tell your stories. Save time and money on every overhead. We support innovation without the risk. We're levelling the playing field.
   producers_signup_send: Register
-  producers_signup_enterprise: Why the Open Food Network?
+  producers_signup_enterprise: Why the Labelleorange?
   producers_signup_studies: Stories from our producers.
   producers_signup_cta_headline: Join now!
   producers_signup_cta_action: Register
@@ -2240,18 +2240,18 @@ en_GB:
   name_or_sku: "NAME OR SKU"
   register_title: Find out more
   sell_title: "Register"
-  sell_headline: "Get on the Open Food Network!"
+  sell_headline: "Get on the Labelleorange!"
   sell_motivation: "Showcase your beautiful food."
   sell_producers: "Producers"
   sell_hubs: "Hubs"
   sell_groups: "Groups"
-  sell_producers_detail: "Set up a profile for your business on the OFN in just minutes. At any time you can upgrade your profile to an online store and sell your products direct to customers."
-  sell_hubs_detail: "Set up a profile for your food enterprise or organisation on the OFN. At any time you can upgrade your profile to a multi-producer shop."
+  sell_producers_detail: "Set up a profile for your business on the Labelleorange in just minutes. At any time you can upgrade your profile to an online store and sell your products direct to customers."
+  sell_hubs_detail: "Set up a profile for your food enterprise or organisation on the Labelleorange. At any time you can upgrade your profile to a multi-producer shop."
   sell_groups_detail: "Set up a tailored directory of enterprises (producers and other food enterprises) for your region or for your organisation."
   sell_user_guide: "Find out more in our user guide."
-  sell_listing_price: "Listing a profile on OFN UK is free. Plans for shops and hubs start from as little as £1 per month.  For more detail on pricing visit https://about.openfoodnetwork.org.uk/pricing-and-plans/ ."
-  sell_embed: "We collectively budget for new feature development from the international OFN community. This way the huge cost of good software development can be shared. If you want a new feature, chances are someone in France, South Africa, Australia, India or Brazil might want it too! Use the Community Forum to suggest features you'd like to see."
-  sell_ask_services: "Ask us about OFN services."
+  sell_listing_price: "Listing a profile on Labelleorange UK is free. Plans for shops and hubs start from as little as £1 per month.  For more detail on pricing visit https://about.openfoodnetwork.org.uk/pricing-and-plans/ ."
+  sell_embed: "We collectively budget for new feature development from the international Labelleorange community. This way the huge cost of good software development can be shared. If you want a new feature, chances are someone in France, South Africa, Australia, India or Brazil might want it too! Use the Community Forum to suggest features you'd like to see."
+  sell_ask_services: "Ask us about Labelleorange services."
   shops_title: Shops
   shops_headline: Transform your shopping.
   shops_text: Food grows in cycles, farmers harvest in cycles, and we order food in cycles. If you find an order cycle closed, check back soon.
@@ -2375,9 +2375,9 @@ en_GB:
         registration_promo_image: "Landscape image for your profile"
         registration_about_us: "'About Us' text"
         registration_outcome_headline: "What do I get?"
-        registration_outcome1_html: "Your profile helps people <strong>find</strong> and <strong>contact</strong> you on the Open Food Network."
+        registration_outcome1_html: "Your profile helps people <strong>find</strong> and <strong>contact</strong> you on the Labelleorange."
         registration_outcome2: "Use this space to tell the story of your enterprise, to help drive connections to your social and online presence."
-        registration_outcome3: "It's also the first step towards trading on the Open Food Network, or opening an online store."
+        registration_outcome3: "It's also the first step towards trading on the Labelleorange, or opening an online store."
         registration_action: "Let's get started!"
       details:
         title: "Details"
@@ -2432,7 +2432,7 @@ en_GB:
         title: "About"
         headline: "Nice one!"
         message: "Now let's flesh out the details about"
-        success: "Success! %{enterprise} added to the Open Food Network"
+        success: "Success! %{enterprise} added to the Labelleorange"
         registration_exit_message: "If you exit this wizard at any stage, you can continue to create your profile by going to the admin interface."
         enterprise_description: "Short Description"
         enterprise_description_placeholder: "A short sentence describing your enterprise"
@@ -2489,7 +2489,7 @@ en_GB:
       finished:
         headline: "Finished!"
         thanks: "Thanks for filling out the details for %{enterprise}."
-        login: "You can change or update your enterprise at any stage by logging into Open Food Network and going to Admin."
+        login: "You can change or update your enterprise at any stage by logging into Labelleorange and going to Admin."
         action: "Go to Enterprise Dashboard"
   back: "Back"
   continue: "Continue"
@@ -2716,7 +2716,7 @@ en_GB:
   report_filters: Report Filters
   report_print: Print Report
   report_render_options: Rendering Options
-  report_header_ofn_uid: OFN UID
+  report_header_ofn_uid: Labelleorange UID
   report_header_order_cycle: Order Cycle
   report_header_user: User
   report_header_email: Email
@@ -2957,7 +2957,7 @@ en_GB:
   enterprise_register_success_notice: "Congratulations! Registration for %{enterprise} is complete!"
   enterprise_bulk_update_success_notice: "Enterprises updated successfully"
   enterprise_bulk_update_error: 'Update failed'
-  enterprise_shop_show_error: "The shop you are looking for doesn't exist or is inactive on OFN. Please check other shops."
+  enterprise_shop_show_error: "The shop you are looking for doesn't exist or is inactive on Labelleorange. Please check other shops."
   order_cycles_create_notice: 'Your order cycle has been created.'
   order_cycles_update_notice: 'Your order cycle has been updated.'
   order_cycles_bulk_update_notice: 'Order cycles have been updated.'
@@ -3047,11 +3047,11 @@ en_GB:
           hub_profile: Hub Profile
           hub_profile_cost: "COST: Visit our Pricing page for more detail"
           hub_profile_text1: >
-              People can find and contact you on the Open Food Network. Your enterprise
+              People can find and contact you on the Labelleorange. Your enterprise
               will be visible on the map, and will be searchable in listings.
           hub_profile_text2: >
               As a producer, making connections within your local food system through
-              the Open Food Network will always be free.
+              the Labelleorange will always be free.
           hub_shop: Hub Shop
           hub_shop_text1: >
               Hubs can take many forms - CSA, veg box scheme, food co-op, community
@@ -3062,7 +3062,7 @@ en_GB:
               and sold via your shop front. Hubs can form the backbone of your local
               food economy.
           hub_shop_text3: >
-              Open Food Network aims to provide the tools and support for you to run
+              Labelleorange aims to provide the tools and support for you to run
               your organisation or business in a manner which suits you.
 
               If you also want to sell your own products, you will need to switch
@@ -3083,13 +3083,13 @@ en_GB:
               You can set up your products and invite other people to sell them for
               you.
           profile_only_text3: >
-              You can choose which Open Food Network ‘hubs’ you would like to stock
+              You can choose which Labelleorange ‘hubs’ you would like to stock
               and sell your products.  Leave the hassle of selling your food to someone
               else and focus on growing, making, brewing, baking...
           producer_shop: Producer Shop
           producer_shop_text1: >
               Sell only your own products directly to customers and buyers with your
-              own Open Food Network shopfront.
+              own Labelleorange shopfront.
           producer_shop_text2: >
               If you would also like to stock items grown/baked/made by others, please
               select ‘Hub’.
@@ -3103,7 +3103,7 @@ en_GB:
               own, if you are also a food producer) can be stocked and sold via your
               shop front. Hubs can form the backbone of your local food economy.
           producer_hub_text3: >
-              Open Food Network aims to provide the tools and support for you to run
+              Labelleorange aims to provide the tools and support for you to run
               your organisation or business in a manner which suits you.
           get_listing: Get a listing
           always_free: Visit our Pricing page for more detail
@@ -3119,7 +3119,7 @@ en_GB:
               it, bake it, ferment it, milk it or mould it.
           producer_text2: >
               Food producers can also sell their products (and those of others) through
-              Shops or Hubs on the Open Food Network.
+              Shops or Hubs on the Labelleorange.
           non_producer: Non-producer
           non_producer_text1: >
               A ‘Non-producer’, such as a Farmers’ Market or veg box co-ordinator,
@@ -3127,7 +3127,7 @@ en_GB:
               cottage enterprises, community/city gardens) to sell to customers. They
               do not offer food that they produced themselves for sale.
           non_producer_text2: >
-              This option is best suited for those wishing to operate Open Food Network
+              This option is best suited for those wishing to operate Labelleorange
               ‘Hubs’ but not produce their own food.
           producer_desc: Producer
           producer_example: eg. Farmers, growers, small holders, crofters, cottage enterprises, market gardens, CSAs, community gardens, city farms...
@@ -3328,7 +3328,7 @@ en_GB:
       users:
         order: "Order"
     registration:
-      welcome_to_ofn: "Welcome to the Open Food Network!"
+      welcome_to_ofn: "Welcome to the Labelleorange!"
       signup_or_login: "Start by signing up (or logging in)"
       have_an_account: "Already have an account?"
       action_login: "Log in now."
@@ -3633,7 +3633,7 @@ en_GB:
     display_currency: "Display currency"
     choose_currency: "Choose Currency"
     mail_method_settings: "Mail Method Settings"
-    mail_settings_notice_html: "<b>Changes made here will be temporary</b> for debugging only, and may get reverted in the future. <br>Permanent changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the OFN global team for further details."
+    mail_settings_notice_html: "<b>Changes made here will be temporary</b> for debugging only, and may get reverted in the future. <br>Permanent changes can be made by updating the instance's secrets and provisioning them using <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a>. Reach out to the Labelleorange global team for further details."
     general: "General"
     enable_mail_delivery: "Enable Mail Delivery"
     send_mails_as: "Send Mails As"
@@ -3901,7 +3901,7 @@ en_GB:
           order_total: "Order Total"
       overview:
         enterprises_header:
-          ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network.
+          ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Labelleorange.
         enterprise_row:
           has_no_enterprise_fees: "has no enterprise fees"
           has_no_payment_methods: "has no payment methods"
@@ -4219,10 +4219,10 @@ en_GB:
             If you continue to have problems please feel free to contact us.
         subject: "Reset password instructions"
       confirmation_instructions:
-        subject: "Please confirm your OFN account"
+        subject: "Please confirm your Labelleorange account"
     payment_mailer:
       authorize_payment:
-        subject: "Please authorise your payment to %{distributor} on OFN"
+        subject: "Please authorise your payment to %{distributor} on Labelleorange"
         instructions: "Your payment of %{amount} to %{distributor} requires additional authentication. Please visit the following URL to authorise your payment:"
       authorization_required:
         subject: "A payment requires authorisation from the customer"
@@ -4414,10 +4414,10 @@ en_GB:
   errors:
     not_found:
       title: "The page you were looking for doesn't exist (404)"
-      message_html: "<b>Please try again</b> <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/'>Home</a> and try again.</p> <b>Contact support</b> <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p> <p>It really helps us if you can give as much detail as possible about what the missing page is about.</p>"
+      message_html: "<b>Please try again</b> <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/'>Home</a> and try again.</p> <b>Contact support</b> <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Labelleorange Local page</a>.</p> <p>It really helps us if you can give as much detail as possible about what the missing page is about.</p>"
     internal_server_error:
       title: "We're sorry, but something went wrong (500)"
-      message_html: "<b>Please try again</b> <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/''>Home</a> and try again.</p> <b>We're on it</b> <p>If you have seen this problem before, we probably already know about it and are working on a fix. We record all the errors that come up.</p> <b>Contact support</b> <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p> <p>It really helps us if you can give as much detail as possible about what you were doing when this error occurred.</p>"
+      message_html: "<b>Please try again</b> <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/''>Home</a> and try again.</p> <b>We're on it</b> <p>If you have seen this problem before, we probably already know about it and are working on a fix. We record all the errors that come up.</p> <b>Contact support</b> <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Labelleorange Local page</a>.</p> <p>It really helps us if you can give as much detail as possible about what you were doing when this error occurred.</p>"
     unprocessable_entity:
       title: "The change you wanted was rejected (422)"
       message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to. <br><h3><a href='/' >Return home</a></h3> </p>"
