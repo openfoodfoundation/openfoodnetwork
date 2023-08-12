@@ -35,10 +35,11 @@ describe 'Customers' do
 
       it "passes the smoke test" do
         # Prompts for a hub for a list of my managed enterprises
-        expect(page)
-          .to have_select2 "shop_id", with_options: [managed_distributor1.name,
-                                                     managed_distributor2.name],
-                                      without_options: [unmanaged_distributor.name]
+        expect(page).to have_select2(
+          "shop_id",
+          with_options: [managed_distributor1.name, managed_distributor2.name],
+          without_options: [unmanaged_distributor.name]
+        )
 
         select2_select managed_distributor2.name, from: "shop_id"
 
@@ -180,6 +181,77 @@ describe 'Customers' do
             within "tr#c_#{customer1.id}" do
               expect(page).to have_content "CREDIT OWED"
               expect(page).to have_content "$63.00"
+            end
+          end
+        end
+      end
+
+      describe "filtering" do
+        before do
+          customer4.update enterprise: managed_distributor1
+        end
+
+        context "when filtering by code" do
+          before do
+            customer4.update code: 12_345
+
+            select2_select managed_distributor1.name, from: "shop_id"
+
+            fill_in "quick_search", with: customer4.code
+          end
+
+          it "displays only customer matching the code" do
+            expect(page).to have_content(customer4.email)
+            expect(page).not_to have_content(customer1.email)
+            expect(page).not_to have_content(customer2.email)
+          end
+
+          context "when updating code" do
+            it "allows user to save changes" do
+              fill_in "code", with: ""
+
+              expect(page).not_to have_content("12345")
+              expect(page).to have_content 'You have unsaved changes'
+
+              click_button "Save Changes"
+
+              # changes are saved in the database
+              expect(customer4.reload.code).to eq(nil)
+            end
+          end
+        end
+
+        context "when filtering by tag" do
+          before do
+            # Add test_tag to customer4
+            select2_select managed_distributor1.name, from: "shop_id"
+            within "tr#c_#{customer4.id}" do
+              find(:css, "tags-input .tags input").set "test_tag\n"
+            end
+            click_button "Save Changes"
+
+            # Reload the page
+            visit admin_customers_path
+            select2_select managed_distributor1.name, from: "shop_id"
+            fill_in "quick_search", with: "test_tag"
+          end
+
+          it "displays only customer matching the tag" do
+            expect(page).to have_content(customer4.email)
+            expect(page).not_to have_content(customer1.email)
+            expect(page).not_to have_content(customer2.email)
+          end
+
+          context "when removing tag" do
+            it "allows user to save changes" do
+              find("tags-input li.tag-item a.remove-button").click
+
+              expect(page).to have_content("No customers found")
+              expect(page).to have_content 'You have unsaved changes'
+
+              click_button "Save Changes"
+
+              expect(customer4.reload.tag_list).to be_empty
             end
           end
         end

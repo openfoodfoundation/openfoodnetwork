@@ -47,9 +47,12 @@ describe "As a consumer, I want to see adjustment breakdown" do
                             calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
   let!(:order_within_zone) {
-    create(:order, order_cycle: order_cycle, distributor: distributor, user: user_within_zone,
-                   bill_address: address_within_zone, ship_address: address_within_zone,
-                   state: "cart", line_items: [create(:line_item, variant: variant_with_tax)])
+    create(
+      :order,
+      order_cycle: order_cycle, distributor: distributor, user: user_within_zone,
+      bill_address: address_within_zone, ship_address: address_within_zone,
+      state: "cart", line_items: [create(:line_item, variant: variant_with_tax, quantity: 1)]
+    )
   }
   let!(:order_outside_zone) {
     create(:order, order_cycle: order_cycle, distributor: distributor, user: user_outside_zone,
@@ -109,7 +112,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
         before { Flipper.enable :vouchers }
 
         let!(:voucher) do
-          create(:voucher, code: 'some_code', enterprise: distributor, amount: 10)
+          create(:voucher_flat_rate, code: 'some_code', enterprise: distributor, amount: 10)
         end
 
         it "will include a tax included amount on the voucher adjustment" do
@@ -120,8 +123,9 @@ describe "As a consumer, I want to see adjustment breakdown" do
           click_button "Next - Payment method"
 
           # add Voucher
-          fill_in "Enter voucher code", with: voucher.code
+          fill_in "Enter voucher code", with: "some_code"
           click_button("Apply")
+          expect(page).to have_link "Remove code"
 
           # Choose payment
           click_on "Next - Order summary"
@@ -139,11 +143,64 @@ describe "As a consumer, I want to see adjustment breakdown" do
           end
 
           # DB check
-          order_within_zone.reload
-          voucher_adjustment = order_within_zone.voucher_adjustments.first
+          assert_db_voucher_adjustment(-10.00, -1.15)
+        end
 
-          expect(voucher_adjustment.amount.to_f).to eq(-10)
-          expect(voucher_adjustment.included_tax.to_f).to eq(-1.15)
+        describe "updating voucher adjustment after editing order" do
+          let!(:voucher) do
+            create(:voucher_flat_rate, code: 'good_code', enterprise: distributor, amount: 15)
+          end
+
+          it "recalculate the tax component properly" do
+            visit checkout_step_path(:details)
+            proceed_to_payment
+
+            # add Voucher
+            fill_in "Enter voucher code", with: "good_code"
+            click_button("Apply")
+
+            proceed_to_summary
+
+            assert_db_voucher_adjustment(-10.00, -1.15)
+
+            # Click on edit link
+            within "div", text: /Order details/ do
+              # It's a bit brittle, but the scoping doesn't seem to work
+              all(".summary-edit").last.click
+            end
+
+            # Update quantity
+            within ".cart-item-quantity" do
+              fill_in "order_line_items_attributes_0_quantity", with: "2"
+            end
+
+            click_button("Update")
+
+            # Check adjustment has been recalculated
+            assert_db_voucher_adjustment(-15.00, -1.73)
+
+            within "#cart-container" do
+              click_link("Checkout")
+            end
+
+            # Go back to payment step
+            proceed_to_payment
+
+            # Check voucher is still there
+            expect(page).to have_content("$15.00 Voucher")
+
+            # Go to summary
+            proceed_to_summary
+
+            # Check voucher value
+            within ".summary-right" do
+              expect(page).to have_content "good_code"
+              expect(page).to have_content "-15"
+            end
+
+            # Check adjustment has been recalculated, we are not expecting any changes here
+            assert_db_voucher_adjustment(-15.00, -1.73)
+          end
         end
       end
     end
@@ -189,5 +246,11 @@ describe "As a consumer, I want to see adjustment breakdown" do
     order_outside_zone.reload
     expect(order_outside_zone.included_tax_total).to eq(0.0)
     expect(order_outside_zone.additional_tax_total).to eq(0.0)
+  end
+
+  def assert_db_voucher_adjustment(amount, tax_amount)
+    adjustment = order_within_zone.voucher_adjustments.first
+    expect(adjustment.amount.to_f).to eq(amount)
+    expect(adjustment.included_tax.to_f).to eq(tax_amount)
   end
 end

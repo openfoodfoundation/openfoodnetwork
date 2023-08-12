@@ -16,7 +16,6 @@
 @import "globals/functions";
 @import "globals/palette";
 @import "globals/variables";
-@import "variables";
 @import "globals/mixins";
 
 @import "plugins/font-awesome";
@@ -111,7 +110,6 @@
 @import "tag_rules";
 @import "terms_of_service_files";
 @import "validation";
-@import "variables";
 @import "variant_overrides";
 @import "welcome";
 
@@ -122,12 +120,5 @@
 @import "components/tom_select";
 
 @import "app/components/help_modal_component/help_modal_component";
-@import "app/components/product_component/product_component";
-@import "app/components/selector_component/selector_component";
-@import "app/components/products_table_component/products_table_component";
-@import "app/components/selector_with_filter_component/selector_with_filter_component";
-@import "app/components/pagination_component/pagination_component";
-@import "app/components/table_header_component/table_header_component";
-@import "app/components/search_input_component/search_input_component";
 @import "app/components/confirm_modal_component/confirm_modal_component";
 @import "app/webpacker/css/admin/trix.scss";

@@ -25,6 +25,8 @@ module Spree
   class Product < ApplicationRecord
     include ProductStock
 
+    self.belongs_to_required_by_default = false
+
     acts_as_paranoid
 
     searchable_attributes :supplier_id, :primary_taxon_id, :meta_keywords, :sku
@@ -32,21 +34,17 @@ module Spree
     searchable_scopes :active, :with_properties
 
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory'
-    belongs_to :supplier, class_name: 'Enterprise', touch: true
-    belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true
+    belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
+    belongs_to :primary_taxon, class_name: 'Spree::Taxon', optional: false, touch: true
 
     has_one :image, class_name: "Spree::Image", as: :viewable, dependent: :destroy
 
     has_many :product_properties, dependent: :destroy
     has_many :properties, through: :product_properties
-    has_many :classifications, dependent: :delete_all
-    has_many :taxons, through: :classifications
-    has_many :variants, -> { order("spree_variants.position ASC") }, class_name: 'Spree::Variant',
-                                                                     dependent: :destroy
+    has_many :variants, -> { order("spree_variants.id ASC") }, class_name: 'Spree::Variant',
+                                                               dependent: :destroy
 
-    has_many :prices, -> {
-      order('spree_variants.position, spree_variants.id, currency')
-    }, through: :variants
+    has_many :prices, -> { order('spree_variants.id, currency') }, through: :variants
 
     has_many :stock_items, through: :variants
     has_many :supplier_properties, through: :supplier, source: :properties
@@ -55,9 +53,6 @@ module Spree
 
     validates :name, presence: true
     validates :shipping_category, presence: true
-
-    validates :supplier, presence: true
-    validates :primary_taxon, presence: true
 
     validates :variant_unit, presence: true
     validates :unit_value, presence:
@@ -78,10 +73,7 @@ module Spree
     # these values are persisted on the product's variant
     attr_accessor :price, :display_as, :unit_value, :unit_description, :tax_category_id
 
-    before_save :add_primary_taxon_to_taxons
-
     after_create :ensure_standard_variant
-    after_save :remove_previous_primary_taxon_from_taxons
     after_save :update_units
 
     scope :with_properties, ->(*property_ids) {
@@ -288,16 +280,6 @@ module Spree
 
     def touch_distributors
       Enterprise.distributing_products(id).each(&:touch)
-    end
-
-    def add_primary_taxon_to_taxons
-      taxons << primary_taxon unless taxons.include? primary_taxon
-    end
-
-    def remove_previous_primary_taxon_from_taxons
-      return unless saved_change_to_primary_taxon_id? && primary_taxon_id_before_last_save
-
-      taxons.destroy(primary_taxon_id_before_last_save)
     end
 
     def ensure_standard_variant

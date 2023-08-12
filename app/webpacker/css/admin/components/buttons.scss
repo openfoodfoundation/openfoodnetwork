@@ -69,7 +69,7 @@ button:not(.plain):not(.trix-button),
     }
 
     &.danger {
-      background-color: $warning-red;
+      background-color: $color-warning;
     }
     &.success {
       background-color: $spree-green;

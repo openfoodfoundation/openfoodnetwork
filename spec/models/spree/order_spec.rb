@@ -224,8 +224,8 @@ describe Spree::Order do
       order.finalize!
     end
 
-    it 'calls updater#before_save' do
-      expect(order.updater).to receive(:before_save_hook)
+    it 'calls updater#shipping_address_from_distributor' do
+      expect(order.updater).to receive(:shipping_address_from_distributor)
       order.finalize!
     end
   end
@@ -1466,7 +1466,7 @@ describe Spree::Order do
   describe "#voucher_adjustments" do
     let(:distributor) { create(:distributor_enterprise) }
     let(:order) { create(:order, user: user, distributor: distributor) }
-    let(:voucher) { create(:voucher, code: 'new_code', enterprise: order.distributor) }
+    let(:voucher) { create(:voucher_flat_rate, code: 'new_code', enterprise: order.distributor) }
 
     context "when no voucher adjustment" do
       it 'returns an empty array' do

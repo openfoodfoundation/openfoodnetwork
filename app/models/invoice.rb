@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 class Invoice < ApplicationRecord
+  self.belongs_to_required_by_default = false
+
   belongs_to :order, class_name: 'Spree::Order'
   serialize :data, Hash
   before_validation :serialize_order
   after_create :cancel_previous_invoices
+  default_scope { order(created_at: :desc) }
 
   def presenter
     @presenter ||= Invoice::DataPresenter.new(self)

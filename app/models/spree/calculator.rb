@@ -2,6 +2,8 @@
 
 module Spree
   class Calculator < ApplicationRecord
+    self.belongs_to_required_by_default = false
+
     belongs_to :calculable, polymorphic: true
 
     # This method must be overriden in concrete calculator.

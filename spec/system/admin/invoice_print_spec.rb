@@ -212,7 +212,9 @@ describe '
         end
 
         it "displays $0.00 when a line item has no tax" do
-          expect(page).to have_content "#{Spree::Product.first.name} (1g) 1 $0.00 $12.54"
+          expect(page).to have_content Spree::Product.first.name
+          expect(page).to have_content "(1g)"
+          expect(page).to have_content "1 $0.00 $12.54"
         end
 
         it "displays the taxes correctly" do
@@ -343,7 +345,9 @@ describe '
           convert_pdf_to_page
         end
         it "displays $0.0 when a line item has no tax" do
-          expect(page).to have_content "#{Spree::Product.first.name} (1g) 1 $0.00 $12.54"
+          expect(page).to have_content Spree::Product.first.name
+          expect(page).to have_content "(1g)"
+          expect(page).to have_content "1 $0.00 $12.54"
         end
 
         it "displays the added tax on the GST colum" do

@@ -1,7 +1,0 @@
-
-= component_controller do
-  %thead.table-header
-    %tr
-      - @columns.each do |column|
-        %th{class: (column[:sortable] ? "th-sortable " : "" ) + (@sort[:column] == column[:value] ? " th-sorted-#{@sort[:direction]}" : ""), data: (@data if column[:sortable] == true), "data-sort-value": column[:value], "data-sort-direction": @sort[:direction]}
-          = column[:label]

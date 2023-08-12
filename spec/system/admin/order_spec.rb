@@ -1044,7 +1044,7 @@ describe '
 
           let(:table_contents) {
             [
-              Invoice.first.created_at.strftime('%B %d, %Y 12:00 AM').to_s,
+              Invoice.first.created_at.strftime('%B %d, %Y').to_s,
               "1",
               "0.0",
               "Active",
@@ -1066,11 +1066,11 @@ describe '
             expect(page.find("table").text).to have_content(table_header)
 
             # the New invoice button should be visible
-            expect(page).to have_link "New Invoice"
-            click_link 'New Invoice'
+            expect(page).to have_link "Create or Update Invoice"
+            click_link "Create or Update Invoice"
 
             # and disappear after clicking
-            expect(page).to have_no_link "New Invoice"
+            expect(page).to have_no_link "Create or Update Invoice"
 
             # creating an invoice, displays a second row
             expect(page.find("table").text).to have_content(table_contents)
@@ -1123,8 +1123,7 @@ describe '
           visit spree.edit_admin_order_path(order_empty)
         end
 
-        it "displays the invoice tab" do
-          pending "issue #11240"
+        it "should not display the invoice tab" do
           expect(page).to have_content "Cart".upcase
           expect(page).not_to have_content "Invoices".upcase
         end
@@ -1140,8 +1139,7 @@ describe '
           visit spree.edit_admin_order_path(order4)
         end
 
-        it "displays the invoice tab" do
-          pending "issue #11240"
+        it "should not display the invoice tab" do
           expect(page).to have_content "Payment".upcase
           expect(page).not_to have_content "Invoices".upcase
         end

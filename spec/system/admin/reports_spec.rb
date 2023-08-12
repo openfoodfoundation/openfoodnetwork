@@ -402,8 +402,6 @@ describe '
     before do
       product1.set_property 'Organic', 'NASAA 12345'
       product2.set_property 'Organic', 'NASAA 12345'
-      product1.taxons = [taxon]
-      product2.taxons = [taxon]
       variant1.on_hand = 10
       variant1.update!(sku: "sku1")
       variant2.on_hand = 20

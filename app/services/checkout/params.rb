@@ -12,6 +12,7 @@ module Checkout
       return {} unless params[:order]
 
       apply_strong_parameters
+      set_pickup_address
       set_address_details
       set_payment_amount
       set_existing_card
@@ -34,6 +35,17 @@ module Checkout
           { source_attributes: PermittedAttributes::PaymentSource.attributes }
         ]
       )
+    end
+
+    def set_pickup_address
+      return unless shipping_method && !shipping_method.require_ship_address?
+
+      order.ship_address = order.distributor.address.clone
+      order.ship_address.firstname = @order_params[:bill_address_attributes][:firstname]
+      order.ship_address.lastname = @order_params[:bill_address_attributes][:lastname]
+      order.ship_address.phone = @order_params[:bill_address_attributes][:phone]
+
+      @order_params.delete(:ship_address_attributes)
     end
 
     def set_address_details
@@ -62,6 +74,12 @@ module Checkout
       end
 
       @order_params[:payments_attributes].first[:source] = card
+    end
+
+    def shipping_method
+      return unless params[:shipping_method_id]
+
+      @shipping_method ||= Spree::ShippingMethod.find(params[:shipping_method_id])
     end
 
     def existing_card_selected?

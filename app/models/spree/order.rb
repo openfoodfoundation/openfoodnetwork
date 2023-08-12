@@ -13,6 +13,8 @@ module Spree
     include Balance
     include SetUnusedAddressFields
 
+    self.belongs_to_required_by_default = false
+
     searchable_attributes :number, :state, :shipment_state, :payment_state, :distributor_id,
                           :order_cycle_id, :email, :total, :customer_id
     searchable_associations :shipping_method, :bill_address, :distributor
@@ -361,6 +363,10 @@ module Spree
       complete? || resumed? || awaiting_return? || returned?
     end
 
+    def can_show_invoice?
+      complete? || resumed? || canceled?
+    end
+
     # Finalizes an in progress order after checkout is complete.
     # Called after transition to complete state when payments will have been processed
     def finalize!
@@ -376,7 +382,7 @@ module Spree
       end
 
       updater.update_shipment_state
-      updater.before_save_hook
+      updater.shipping_address_from_distributor
       save
 
       deliver_order_confirmation_email

@@ -234,7 +234,6 @@ module Spree
       can [:admin, :index, :read, :create, :edit, :update, :destroy], Spree::Image
 
       can [:admin, :index, :read, :search], Spree::Taxon
-      can [:admin, :index, :read, :create, :edit], Spree::Classification
 
       can [:admin, :index, :guide, :import, :save, :save_data,
            :validate_data, :reset_absent_products], ProductImport::ProductImporter

@@ -193,38 +193,16 @@ describe "As a consumer, I want to checkout my order" do
         click_on "Checkout as guest"
       end
 
-      context "should show proper list of errors" do
+      context "should show a flash message and inline error messages" do
         before do
           click_button "Next - Payment method"
-          expect(page).to have_content "Saving failed, please update the highlighted fields."
-        end
-
-        it "should not display any shipping errors messages when shipping method is not selected" do
-          expect(page).not_to have_content "Shipping address line 1 can't be blank"
-          expect(page).not_to have_content "Shipping address suburb 1 can't be blank"
-          expect(page).not_to have_content "Shipping address postcode can't be blank"
         end
 
         it "should not display bill address phone number error message" do
-          expect(page).not_to have_content "Bill address phone can't be blank"
-          expect(page).to have_content "Customer phone can't be blank"
-        end
+          expect(page).to have_content "Saving failed, please update the highlighted fields."
 
-        context "with no email filled in" do
-          before do
-            fill_in "Email", with: ""
-            click_button "Next - Payment method"
-          end
-
-          it "should display error message in the right order" do
-            expect(page).to have_content(
-              "Customer E-Mail can't be blank, Customer E-Mail is invalid, Customer phone can't " \
-              "be blank, Billing address first name can't be blank, Billing address last name " \
-              "can't be blank, Billing address (Street + House number) can't be blank, Billing " \
-              "address city can't be blank, Billing address postcode can't be blank, and " \
-              "Shipping method Select a shipping method"
-            )
-          end
+          expect(page).to have_selector ".field_with_errors"
+          expect(page).to have_content "can't be blank"
         end
       end
 
@@ -562,7 +540,6 @@ describe "As a consumer, I want to checkout my order" do
               end
               within ".flash[type='error']" do
                 expect(page).to have_content "Saving failed, please update the highlighted fields."
-                expect(page).to have_content("can't be blank", count: 3)
               end
             end
 
@@ -620,8 +597,6 @@ describe "As a consumer, I want to checkout my order" do
           end
           within ".flash[type='error']" do
             expect(page).to have_content("Saving failed, please update the highlighted fields")
-            expect(page).to have_content("can't be blank", count: 7)
-            expect(page).to have_content("is invalid", count: 1)
           end
         end
       end
@@ -721,21 +696,23 @@ describe "As a consumer, I want to checkout my order" do
 
         context "with voucher available" do
           let!(:voucher) do
-            create(:voucher, code: 'some_code', enterprise: distributor, amount: 15)
-          end
-
-          before do
-            visit checkout_step_path(:payment)
+            create(:voucher_flat_rate, code: 'some_code', enterprise: distributor, amount: 15)
           end
 
           it "shows voucher input" do
+            visit checkout_step_path(:payment)
+            expect(page).to have_field "Enter voucher code"
             expect(page).to have_content "Apply voucher"
           end
 
           describe "adding voucher to the order" do
+            before do
+              visit checkout_step_path(:payment)
+            end
+
             shared_examples "adding voucher to the order" do
               before do
-                fill_in "Enter voucher code", with: voucher.code
+                fill_in "Enter voucher code", with: "some_code"
                 click_button("Apply")
               end
 
@@ -756,13 +733,23 @@ describe "As a consumer, I want to checkout my order" do
               it_behaves_like "adding voucher to the order"
 
               it "shows a warning message" do
-                fill_in "Enter voucher code", with: voucher.code
+                fill_in "Enter voucher code", with: "some_code"
                 click_button("Apply")
 
                 expect(page).to have_content(
                   "Note: if your order total is less than your voucher " \
                   "you may not be able to spend the remaining value."
                 )
+              end
+
+              it "proceeds without requiring payment" do
+                fill_in "Enter voucher code", with: "some_code"
+                click_button("Apply")
+
+                expect(page).to have_content "No payment required"
+                click_button "Next - Order summary"
+                # Expect to be on the Order Summary page
+                expect(page).to have_content "Delivery details"
               end
             end
 
@@ -778,21 +765,44 @@ describe "As a consumer, I want to checkout my order" do
 
           describe "removing voucher from order" do
             before do
-              voucher.create_adjustment(voucher.code, order)
-              # Reload the page so we pickup the voucher
-              visit checkout_step_path(:payment)
-            end
+              add_voucher_to_order(voucher, order)
 
-            it "removes voucher" do
+              visit checkout_step_path(:payment)
+
               accept_confirm "Are you sure you want to remove the voucher?" do
                 click_on "Remove code"
               end
+            end
 
+            it "removes voucher" do
               within '#voucher-section' do
                 expect(page).to have_button("Apply", disabled: true)
+                expect(page).to have_field "Enter voucher code" # Currently no confirmation msg
               end
 
+              expect(page).not_to have_content "No payment required"
               expect(order.voucher_adjustments.length).to eq(0)
+            end
+
+            it "can re-enter a voucher" do
+              # Re-enter a voucher code
+              fill_in "Enter voucher code", with: "some_code"
+              click_button("Apply")
+
+              expect(page).to have_content("$15.00 Voucher")
+              expect(order.reload.voucher_adjustments.length).to eq(1)
+
+              expect(page).to have_content "No payment required"
+
+              click_button "Next - Order summary"
+              # Expect to be on the Order Summary page
+              expect(page).to have_content "Delivery details"
+            end
+
+            it "can proceed with payment" do
+              click_button "Next - Order summary"
+              # Expect to be on the Order Summary page
+              expect(page).to have_content "Delivery details"
             end
           end
         end
@@ -1140,12 +1150,12 @@ describe "As a consumer, I want to checkout my order" do
       end
 
       describe "vouchers" do
-        let(:voucher) { create(:voucher, code: 'some_code', enterprise: distributor, amount: 6) }
+        let(:voucher) do
+          create(:voucher_flat_rate, code: 'some_code', enterprise: distributor, amount: 6)
+        end
 
         before do
-          voucher.create_adjustment(voucher.code, order)
-          order.update_totals
-          VoucherAdjustmentsService.calculate(order)
+          add_voucher_to_order(voucher, order)
 
           visit checkout_step_path(:summary)
         end
@@ -1198,5 +1208,11 @@ describe "As a consumer, I want to checkout my order" do
         expect(page).to_not have_content("You have an order for this order cycle already.")
       end
     end
+  end
+
+  def add_voucher_to_order(voucher, order)
+    voucher.create_adjustment(voucher.code, order)
+    VoucherAdjustmentsService.new(order).update
+    order.update_totals_and_states
   end
 end

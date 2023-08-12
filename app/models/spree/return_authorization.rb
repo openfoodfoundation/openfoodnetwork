@@ -2,6 +2,8 @@
 
 module Spree
   class ReturnAuthorization < ApplicationRecord
+    self.belongs_to_required_by_default = false
+
     acts_as_paranoid
 
     belongs_to :order, class_name: 'Spree::Order', inverse_of: :return_authorizations

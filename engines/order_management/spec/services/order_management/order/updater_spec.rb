@@ -279,7 +279,7 @@ module OrderManagement
         end
       end
 
-      context '#before_save_hook' do
+      context '#shipping_address_from_distributor' do
         let(:distributor) { build(:distributor_enterprise) }
         let(:shipment) {
           create(:shipment_with, :shipping_method, shipping_method: shipping_method)
@@ -296,7 +296,7 @@ module OrderManagement
           before { distributor.address = address }
 
           it "populates the shipping address from distributor" do
-            updater.before_save_hook
+            updater.shipping_address_from_distributor
             expect(order.ship_address.address1).to eq(distributor.address.address1)
           end
         end
@@ -307,7 +307,7 @@ module OrderManagement
           before { order.ship_address = address }
 
           it "does not populate the shipping address from distributor" do
-            updater.before_save_hook
+            updater.shipping_address_from_distributor
             expect(order.ship_address.firstname).to eq("will")
           end
         end

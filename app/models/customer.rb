@@ -10,8 +10,6 @@
 class Customer < ApplicationRecord
   include SetUnusedAddressFields
 
-  self.belongs_to_required_by_default = true
-
   acts_as_taggable
 
   searchable_attributes :first_name, :last_name, :email, :code

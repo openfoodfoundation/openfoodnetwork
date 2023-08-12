@@ -4,13 +4,13 @@ require 'spec_helper'
 
 describe Subscription, type: :model do
   describe "associations" do
-    it { expect(subject).to belong_to(:shop) }
-    it { expect(subject).to belong_to(:customer) }
-    it { expect(subject).to belong_to(:schedule) }
-    it { expect(subject).to belong_to(:shipping_method) }
-    it { expect(subject).to belong_to(:payment_method) }
-    it { expect(subject).to belong_to(:ship_address) }
-    it { expect(subject).to belong_to(:bill_address) }
+    it { expect(subject).to belong_to(:shop).optional }
+    it { expect(subject).to belong_to(:customer).optional }
+    it { expect(subject).to belong_to(:schedule).optional }
+    it { expect(subject).to belong_to(:shipping_method).optional }
+    it { expect(subject).to belong_to(:payment_method).optional }
+    it { expect(subject).to belong_to(:ship_address).optional }
+    it { expect(subject).to belong_to(:bill_address).optional }
     it { expect(subject).to have_many(:subscription_line_items) }
     it { expect(subject).to have_many(:order_cycles) }
     it { expect(subject).to have_many(:proxy_orders) }

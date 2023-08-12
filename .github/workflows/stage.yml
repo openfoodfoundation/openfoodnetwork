@@ -13,6 +13,10 @@ on:
           - staging.openfoodnetwork.org.uk
           - staging.openfoodnetwork.org.au
           - staging.coopcircuits.fr
+      commit_ref:
+        description: "Commit Reference"
+        type: string
+        required: false
 
 jobs:
   deploy_pr:
@@ -59,4 +63,4 @@ jobs:
       - name: Deploy to Staging
         if: success()
         run: |
-          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "$GITHUB_REF_NAME $GITHUB_SHA"
+          ssh ofn-deploy@${{ inputs.server }} -o LogLevel=ERROR "$GITHUB_REF_NAME ${{ inputs.commit_ref || github.sha }}"

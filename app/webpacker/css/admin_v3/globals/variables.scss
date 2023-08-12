@@ -23,6 +23,7 @@ $color-border:                   $light-grey !default;
 // Basic flash colors
 $color-success:                  $green !default;
 $color-notice:                   $yellow !default;
+$color-warning:                  $red !default;
 $color-error:                    $red !default;
 
 // Table styles
@@ -31,6 +32,7 @@ $color-tbl-cell-bg:              $white !default;
 $color-tbl-cell-shadow:          rgb(0, 0, 0, 0.15) !default;
 $color-tbl-thead-txt:            $color-headers !default;
 $color-tbl-thead-bg:             $light-grey !default;
+$color-tbl-border:               $pale-blue !default;
 $padding-tbl-cell:               12px 12px;
 $padding-tbl-cell-condensed:     10px 12px;
 $padding-tbl-cell-relaxed:       16px 12px;
@@ -42,6 +44,7 @@ $color-btn-shadow:               0px 1px 0px rgba(0, 0, 0, 0.05), 0px 2px 2px rg
 $color-btn-hover-bg:             $orient !default;
 $color-btn-hover-text:           $white !default;
 $color-btn-hover-border:         $dark-blue !default;
+$color-btn-disabled-bg:          $light-grey !default;
 
 // Actions colors
 $color-action-edit-bg:           very-light($color-success, 5  ) !default;
@@ -71,6 +74,10 @@ $color-sel-hover-text:           $white !default;
 $color-txt-brd:                  $color-border !default;
 $color-txt-text:                 $near-black !default;
 $color-txt-hover-brd:            $teal !default;
+
+// Modal colors
+$color-modal-close-btn:          $color-5 !default;
+$color-modal-close-btn-hover:    darken($color-5, 5%) !default;
 
 // States label colors
 $color-ste-complete-bg:          $color-success !default;

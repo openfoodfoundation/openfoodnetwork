@@ -137,11 +137,10 @@ module OrderManagement
       end
 
       def update_all_adjustments
-        order.all_adjustments.reload.each(&:update_adjustment!)
-      end
-
-      def before_save_hook
-        shipping_address_from_distributor
+        # Voucher are modelled as a Spree::Adjustment but  they don't behave like all the other
+        # adjustments, so we don't want voucher adjustment to be updated here.
+        # Calculation are handled by VoucherAdjustmentsService.calculate
+        order.all_adjustments.non_voucher.reload.each(&:update_adjustment!)
       end
 
       # Sets the distributor's address as shipping address of the order for those

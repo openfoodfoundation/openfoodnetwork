@@ -11,14 +11,8 @@ angular.module("admin.indexUtils").directive "objForUpdate", (switchClass, pendi
         pendingChanges.remove(scope.object().id, scope.attr)
         scope.clear()
       else
-        change =
-          object: scope.object()
-          type: scope.type
-          attr: scope.attr
-          value: if value? then value else ""
-          scope: scope
         scope.pending()
-        pendingChanges.add(scope.object().id, scope.attr, change)
+        addPendingChange(scope.attr, value ? "")
 
     scope.reset = (value) ->
       scope.savedValue = value
@@ -34,3 +28,33 @@ angular.module("admin.indexUtils").directive "objForUpdate", (switchClass, pendi
 
     scope.clear = ->
       switchClass( element, "", ["update-pending", "update-error", "update-success"], false )
+
+    # When a list of customer is filtered and we removed the "filtered value" from a customer, we
+    # want to make sure the customer is updated. IE. filtering by tag, and removing said tag.
+    # Deleting the "filtered value" from a customer will remove the customer entry, thus
+    # removing "objForUpdate" directive from the active scope. That means $watch won't pick up
+    # the attribute changed.
+    # To ensure the customer is still updated, we check on the $destroy event to see if
+    # the attribute has changed, if so we queue up the change.
+    scope.$on '$destroy', (value) ->
+      # No update
+      return if scope.object()[scope.attr] is scope.savedValue
+
+      # For some reason the code attribute is removed from the object when cleared, so we add
+      # an emptyvalue so it gets updated properly
+      if scope.attr is "code" and scope.object()[scope.attr] is undefined
+        scope.object()["code"] = ""
+
+      # Queuing up change
+      addPendingChange(scope.attr, scope.object()[scope.attr])
+
+    # private
+
+    addPendingChange = (attr, value) ->
+      change =
+        object: scope.object()
+        type: scope.type
+        attr: attr
+        value: value
+        scope: scope
+      pendingChanges.add(scope.object().id, attr, change)

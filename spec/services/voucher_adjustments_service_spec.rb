@@ -3,118 +3,286 @@
 require 'spec_helper'
 
 describe VoucherAdjustmentsService do
-  describe '.calculate' do
+  describe '#update' do
     let(:enterprise) { build(:enterprise) }
-    let(:voucher) { create(:voucher, code: 'new_code', enterprise: enterprise, amount: 10) }
 
-    context 'when voucher covers the order total' do
-      subject { order.voucher_adjustments.first }
+    context 'with a flat rate voucher' do
+      let(:voucher) do
+        create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 10)
+      end
 
-      let(:order) { create(:order_with_totals) }
+      context 'when voucher covers the order total' do
+        subject { order.voucher_adjustments.first }
 
-      it 'updates the adjustment amount to -order.total' do
-        voucher.create_adjustment(voucher.code, order)
-        order.update_columns(item_total: 6)
+        let(:order) { create(:order_with_totals) }
 
-        VoucherAdjustmentsService.calculate(order)
+        it 'updates the adjustment amount to -order.total' do
+          voucher.create_adjustment(voucher.code, order)
+          order.update_columns(item_total: 6)
 
-        expect(subject.amount.to_f).to eq(-6.0)
+          VoucherAdjustmentsService.new(order).update
+
+          expect(subject.amount.to_f).to eq(-6.0)
+        end
+      end
+
+      context 'with tax included in order price' do
+        subject { order.voucher_adjustments.first }
+
+        let(:order) do
+          create(
+            :order_with_taxes,
+            distributor: enterprise,
+            ship_address: create(:address),
+            product_price: 110,
+            tax_rate_amount: 0.10,
+            included_in_price: true,
+            tax_rate_name: "Tax 1"
+          )
+        end
+
+        before do
+          # create adjustment before tax are set
+          voucher.create_adjustment(voucher.code, order)
+
+          # Update taxes
+          order.create_tax_charge!
+          order.update_shipping_fees!
+          order.update_order!
+
+          VoucherAdjustmentsService.new(order).update
+        end
+
+        it 'updates the adjustment included_tax' do
+          # voucher_rate = amount / order.total
+          # -10 / 160 = -0.0625
+          # included_tax = voucher_rate * order.included_tax_total
+          # -0.625 * 10 = -0.63
+          expect(subject.included_tax.to_f).to eq(-0.63)
+        end
+
+        context "when re calculating" do
+          it "does not update the adjustment amount" do
+            expect do
+              VoucherAdjustmentsService.new(order).update
+            end.not_to change { subject.reload.amount }
+          end
+
+          it "does not update the tax adjustment" do
+            expect do
+              VoucherAdjustmentsService.new(order).update
+            end.not_to change { subject.reload.included_tax }
+          end
+
+          context "when the order changed" do
+            before do
+              order.update_columns(item_total: 200)
+            end
+
+            it "does update the adjustment amount" do
+              expect do
+                VoucherAdjustmentsService.new(order).update
+              end.not_to change { subject.reload.amount }
+            end
+
+            it "updates the tax adjustment" do
+              expect do
+                VoucherAdjustmentsService.new(order).update
+              end.to change { subject.reload.included_tax }
+            end
+          end
+        end
+      end
+
+      context 'with tax not included in order price' do
+        let(:order) do
+          create(
+            :order_with_taxes,
+            distributor: enterprise,
+            ship_address: create(:address),
+            product_price: 110,
+            tax_rate_amount: 0.10,
+            included_in_price: false,
+            tax_rate_name: "Tax 1"
+          )
+        end
+        let(:adjustment) { order.voucher_adjustments.first }
+        let(:tax_adjustment) { order.voucher_adjustments.second }
+
+        before do
+          # create adjustment before tax are set
+          voucher.create_adjustment(voucher.code, order)
+
+          # Update taxes
+          order.create_tax_charge!
+          order.update_shipping_fees!
+          order.update_order!
+
+          VoucherAdjustmentsService.new(order).update
+        end
+
+        it 'includes amount without tax' do
+          # voucher_rate = amount / order.total
+          # -10 / 171 = -0.058479532
+          # amount = voucher_rate * (order.total - order.additional_tax_total)
+          # -0.058479532 * (171 -11) = -9.36
+          expect(adjustment.amount.to_f).to eq(-9.36)
+        end
+
+        it 'creates a tax adjustment' do
+          # voucher_rate = amount / order.total
+          # -10 / 171 = -0.058479532
+          # amount = voucher_rate * order.additional_tax_total
+          # -0.058479532 * 11 = -0.64
+          expect(tax_adjustment.amount.to_f).to eq(-0.64)
+          expect(tax_adjustment.label).to match("Tax")
+        end
+
+        context "when re calculating" do
+          it "does not update the adjustment amount" do
+            expect do
+              VoucherAdjustmentsService.new(order).update
+            end.not_to change { adjustment.reload.amount }
+          end
+
+          it "does not update the tax adjustment" do
+            expect do
+              VoucherAdjustmentsService.new(order).update
+            end.not_to change { tax_adjustment.reload.amount }
+          end
+
+          context "when the order changed" do
+            before do
+              order.update_columns(item_total: 200)
+            end
+
+            it "updates the adjustment amount" do
+              expect do
+                VoucherAdjustmentsService.new(order).update
+              end.to change { adjustment.reload.amount }
+            end
+
+            it "updates the tax adjustment" do
+              expect do
+                VoucherAdjustmentsService.new(order).update
+              end.to change { tax_adjustment.reload.amount }
+            end
+          end
+        end
       end
     end
 
-    context 'with price included in order price' do
-      subject { order.voucher_adjustments.first }
+    context 'with a percentage rate voucher' do
+      let(:voucher) do
+        create(:voucher_percentage_rate, code: 'new_code', enterprise: enterprise, amount: 10)
+      end
+      let(:adjustment) { order.voucher_adjustments.first }
+      let(:tax_adjustment) { order.voucher_adjustments.second }
 
-      let(:order) do
-        create(
-          :order_with_taxes,
-          distributor: enterprise,
-          ship_address: create(:address),
-          product_price: 110,
-          tax_rate_amount: 0.10,
-          included_in_price: true,
-          tax_rate_name: "Tax 1"
-        )
+      context 'when voucher covers the order total' do
+        subject { order.voucher_adjustments.first }
+
+        let(:voucher) do
+          create(:voucher_percentage_rate, code: 'new_code', enterprise: enterprise, amount: 100)
+        end
+        let(:order) { create(:order_with_totals) }
+
+        it 'updates the adjustment amount to -order.total' do
+          voucher.create_adjustment(voucher.code, order)
+
+          order.update_columns(item_total: 150)
+
+          VoucherAdjustmentsService.new(order).update
+
+          expect(subject.amount.to_f).to eq(-150.0)
+        end
       end
 
-      before do
-        # create adjustment before tax are set
-        voucher.create_adjustment(voucher.code, order)
+      context 'with tax included in order price' do
+        subject { order.voucher_adjustments.first }
 
-        # Update taxes
-        order.create_tax_charge!
-        order.update_shipping_fees!
-        order.update_order!
+        let(:order) do
+          create(
+            :order_with_taxes,
+            distributor: enterprise,
+            ship_address: create(:address),
+            product_price: 110,
+            tax_rate_amount: 0.10,
+            included_in_price: true,
+            tax_rate_name: "Tax 1"
+          )
+        end
 
-        VoucherAdjustmentsService.calculate(order)
+        before do
+          # create adjustment before tax are set
+          voucher.create_adjustment(voucher.code, order)
+
+          # Update taxes
+          order.create_tax_charge!
+          order.update_shipping_fees!
+          order.update_order!
+
+          VoucherAdjustmentsService.new(order).update
+        end
+
+        it 'updates the adjustment included_tax' do
+          # voucher_rate = voucher.amount / 100
+          # 10 / 100 = 0.1
+          # included_tax = -voucher_rate * included_tax_total
+          # -0.1 * 10 = -1
+          expect(subject.included_tax.to_f).to eq(-1)
+        end
       end
 
-      it 'updates the adjustment included_tax' do
-        # voucher_rate = amount / order.total
-        # -10 / 150 = -0.066666667
-        # included_tax = voucher_rate * order.included_tax_total
-        # -0.66666666 * 10 = -0.67
-        expect(subject.included_tax.to_f).to eq(-0.67)
-      end
+      context 'with tax not included in order price' do
+        let(:order) do
+          create(
+            :order_with_taxes,
+            distributor: enterprise,
+            ship_address: create(:address),
+            product_price: 110,
+            tax_rate_amount: 0.10,
+            included_in_price: false,
+            tax_rate_name: "Tax 1"
+          )
+        end
 
-      it 'moves the adjustment state to closed' do
-        expect(subject.state).to eq('closed')
-      end
-    end
+        before do
+          # create adjustment before tax are set
+          voucher.create_adjustment(voucher.code, order)
 
-    context 'with price not included in order price' do
-      let(:order) do
-        create(
-          :order_with_taxes,
-          distributor: enterprise,
-          ship_address: create(:address),
-          product_price: 110,
-          tax_rate_amount: 0.10,
-          included_in_price: false,
-          tax_rate_name: "Tax 1"
-        )
-      end
+          # Update taxes
+          order.create_tax_charge!
+          order.update_shipping_fees!
+          order.update_order!
 
-      before do
-        # create adjustment before tax are set
-        voucher.create_adjustment(voucher.code, order)
+          VoucherAdjustmentsService.new(order).update
+        end
 
-        # Update taxes
-        order.create_tax_charge!
-        order.update_shipping_fees!
-        order.update_order!
+        it 'includes amount without tax' do
+          adjustment = order.voucher_adjustments.first
+          # voucher_rate = voucher.amount / 100
+          # 10 / 100 = 0.1
+          # amount = -voucher_rate * (order.total - order.additional_tax_total)
+          # -0.1 * (171 -11) = -16.0
+          expect(adjustment.amount.to_f).to eq(-16.0)
+        end
 
-        VoucherAdjustmentsService.calculate(order)
-      end
-
-      it 'includes amount withou tax' do
-        adjustment = order.voucher_adjustments.first
-        # voucher_rate = amount / order.total
-        # -10 / 161 = -0.062111801
-        # amount = voucher_rate * (order.total - order.additional_tax_total)
-        # -0.062111801 * (161 -11) = -9.32
-        expect(adjustment.amount.to_f).to eq(-9.32)
-      end
-
-      it 'creates a tax adjustment' do
-        # voucher_rate = amount / order.total
-        # -10 / 161 = -0.062111801
-        # amount = voucher_rate * order.additional_tax_total
-        # -0.0585 * 11 = -0.68
-        tax_adjustment = order.voucher_adjustments.second
-        expect(tax_adjustment.amount.to_f).to eq(-0.68)
-        expect(tax_adjustment.label).to match("Tax")
-      end
-
-      it 'moves the adjustment state to closed' do
-        adjustment = order.voucher_adjustments.first
-        expect(adjustment.state).to eq('closed')
+        it 'creates a tax adjustment' do
+          # voucher_rate = voucher.amount / 100
+          # 10 / 100 = 0.1
+          # amount = -voucher_rate * order.additional_tax_total
+          # -0.1 * 11 = -1.1
+          tax_adjustment = order.voucher_adjustments.second
+          expect(tax_adjustment.amount.to_f).to eq(-1.1)
+          expect(tax_adjustment.label).to match("Tax")
+        end
       end
     end
 
     context 'when no order given' do
       it "doesn't blow up" do
-        expect { VoucherAdjustmentsService.calculate(nil) }.to_not raise_error
+        expect { VoucherAdjustmentsService.new(nil).update }.to_not raise_error
       end
     end
 
@@ -122,7 +290,7 @@ describe VoucherAdjustmentsService do
       let(:order) { create(:order_with_line_items, line_items_count: 1, distributor: enterprise) }
 
       it "doesn't blow up" do
-        expect { VoucherAdjustmentsService.calculate(order) }.to_not raise_error
+        expect { VoucherAdjustmentsService.new(order).update }.to_not raise_error
       end
     end
   end

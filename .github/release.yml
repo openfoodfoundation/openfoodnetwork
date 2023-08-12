@@ -1,0 +1,11 @@
+changelog:
+  categories:
+    - title: "User-facing changes 👀" # Other categories will need to be manually arrange for now.
+      labels:
+        - '*'
+      exclude:
+        labels:
+          - dependencies
+    - title: Dependencies 📦
+      labels:
+        - dependencies

@@ -11,9 +11,9 @@ module Spree
     include VariantUnits::VariantAndLineItemNaming
     include VariantStock
 
-    acts_as_paranoid
+    self.belongs_to_required_by_default = false
 
-    self.ignored_columns = [:is_master]
+    acts_as_paranoid
 
     searchable_attributes :sku, :display_as, :display_name
     searchable_associations :product, :default_price
@@ -86,7 +86,6 @@ module Spree
     }
 
     after_create :create_stock_items
-    after_create :set_position
     around_destroy :destruction
     after_save :save_default_price
 
@@ -229,10 +228,6 @@ module Spree
       StockLocation.all.find_each do |stock_location|
         stock_location.propagate_variant(self)
       end
-    end
-
-    def set_position
-      update_column(:position, product.variants.maximum(:position).to_i + 1)
     end
 
     def update_weight_from_unit_value

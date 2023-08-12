@@ -2,6 +2,8 @@
 
 module Spree
   class StockItem < ApplicationRecord
+    self.belongs_to_required_by_default = false
+
     acts_as_paranoid
 
     belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :stock_items

@@ -44,7 +44,7 @@ class Enterprise < ApplicationRecord
                                dependent: :destroy
   has_many :distributed_orders, class_name: 'Spree::Order', foreign_key: 'distributor_id'
   belongs_to :address, class_name: 'Spree::Address'
-  belongs_to :business_address, class_name: 'Spree::Address', dependent: :destroy
+  belongs_to :business_address, optional: true, class_name: 'Spree::Address', dependent: :destroy
   has_many :enterprise_fees
   has_many :enterprise_roles, dependent: :destroy
   has_many :users, through: :enterprise_roles
@@ -108,8 +108,7 @@ class Enterprise < ApplicationRecord
   validates :name, presence: true
   validate :name_is_unique
   validates :sells, presence: true, inclusion: { in: SELLS }
-  validates :address, presence: true, associated: true
-  validates :owner, presence: true
+  validates :address, associated: true
   validates :permalink, uniqueness: true, presence: true
   validate :shopfront_taxons
   validate :shopfront_producers

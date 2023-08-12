@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class InventoryItem < ApplicationRecord
+  self.belongs_to_required_by_default = false
+
   belongs_to :enterprise
   belongs_to :variant, class_name: "Spree::Variant"
 

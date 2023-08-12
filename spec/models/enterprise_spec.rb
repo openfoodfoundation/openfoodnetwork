@@ -19,11 +19,11 @@ describe Enterprise do
   end
 
   describe "associations" do
-    it { is_expected.to belong_to(:owner) }
+    it { is_expected.to belong_to(:owner).required }
     it { is_expected.to have_many(:supplied_products) }
     it { is_expected.to have_many(:distributed_orders) }
-    it { is_expected.to belong_to(:address) }
-    it { is_expected.to belong_to(:business_address) }
+    it { is_expected.to belong_to(:address).required }
+    it { is_expected.to belong_to(:business_address).optional }
     it { is_expected.to have_many(:vouchers) }
 
     it "destroys enterprise roles upon its own demise" do
@@ -123,12 +123,6 @@ describe Enterprise do
     it do
       create(:distributor_enterprise)
       is_expected.to validate_uniqueness_of(:permalink)
-    end
-
-    it "requires an owner" do
-      enterprise = build_stubbed(:enterprise, owner: nil)
-      expect(enterprise).not_to be_valid
-      expect(enterprise.errors[:owner].first).to eq "can't be blank"
     end
 
     describe "name uniqueness" do
@@ -677,8 +671,8 @@ describe Enterprise do
     let(:taxon1) { create(:taxon) }
     let(:taxon2) { create(:taxon) }
     let(:taxon3) { create(:taxon) }
-    let(:product1) { create(:simple_product, primary_taxon: taxon1, taxons: [taxon1]) }
-    let(:product2) { create(:simple_product, primary_taxon: taxon1, taxons: [taxon1, taxon2]) }
+    let(:product1) { create(:simple_product, primary_taxon: taxon1) }
+    let(:product2) { create(:simple_product, primary_taxon: taxon2) }
     let(:product3) { create(:simple_product, primary_taxon: taxon3) }
     let(:oc) { create(:order_cycle) }
     let(:ex) {
@@ -823,7 +817,7 @@ describe Enterprise do
     it "should return only parent producers" do
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
-      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      permission = EnterpriseRelationshipPermission.new(name: "add_to_order_cycle")
       create(:enterprise_relationship, parent: distributor,
                                        child: supplier, permissions: [permission])
       expect(Enterprise.parents_of_one_union_others(supplier, nil)).to include(distributor)
@@ -833,7 +827,7 @@ describe Enterprise do
       another_enterprise = create(:enterprise)
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
-      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      permission = EnterpriseRelationshipPermission.new(name: "add_to_order_cycle")
       create(:enterprise_relationship, parent: distributor,
                                        child: supplier, permissions: [permission])
       expect(
@@ -844,7 +838,7 @@ describe Enterprise do
     it "does not find child in the relationship" do
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
-      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      permission = EnterpriseRelationshipPermission.new(name: "add_to_order_cycle")
       create(:enterprise_relationship, parent: distributor,
                                        child: supplier, permissions: [permission])
       expect(Enterprise.parents_of_one_union_others(distributor, nil)).not_to include(supplier)
@@ -868,7 +862,7 @@ describe Enterprise do
     it "finds parent in the relationship" do
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
-      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      permission = EnterpriseRelationshipPermission.new(name: "add_to_order_cycle")
       product = create(:product)
       order_cycle = create(
         :simple_order_cycle,
@@ -884,7 +878,7 @@ describe Enterprise do
     it "does not find child in the relationship" do
       supplier = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
-      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      permission = EnterpriseRelationshipPermission.new(name: "add_to_order_cycle")
       create(:enterprise_relationship, parent: distributor,
                                        child: supplier, permissions: [permission])
       product = create(:product)
@@ -902,7 +896,7 @@ describe Enterprise do
       supplier = create(:supplier_enterprise)
       sender = create(:supplier_enterprise)
       distributor = create(:distributor_enterprise, is_primary_producer: false)
-      permission = EnterpriseRelationshipPermission.create(name: "add_to_order_cycle")
+      permission = EnterpriseRelationshipPermission.new(name: "add_to_order_cycle")
       create(:enterprise_relationship, parent: distributor, child: supplier,
                                        permissions: [permission])
       product = create(:product)

@@ -3,6 +3,13 @@
 require 'spec_helper'
 
 describe EnterpriseGroup do
+  describe "associations" do
+    subject { build(:enterprise_group) }
+
+    it { is_expected.to belong_to(:owner).optional }
+    it { is_expected.to belong_to(:address).required }
+  end
+
   describe "validations" do
     it "pass with name, description and address" do
       e = EnterpriseGroup.new

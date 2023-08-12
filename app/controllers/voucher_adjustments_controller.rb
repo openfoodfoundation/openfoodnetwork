@@ -5,9 +5,6 @@ class VoucherAdjustmentsController < BaseController
 
   def create
     if add_voucher
-      VoucherAdjustmentsService.calculate(@order)
-      @order.update_totals_and_states
-
       update_payment_section
     elsif @order.errors.present?
       render_error
@@ -20,6 +17,9 @@ class VoucherAdjustmentsController < BaseController
     if adjustment.present?
       @order.voucher_adjustments.where(originator_id: adjustment.originator_id)&.destroy_all
     end
+
+    # Update order to make sure we display the appropriate payment method
+    @order.update_totals_and_states
 
     update_payment_section
   end
@@ -45,11 +45,16 @@ class VoucherAdjustmentsController < BaseController
 
     adjustment = voucher.create_adjustment(voucher.code, @order)
 
-    unless adjustment.valid?
+    unless adjustment.persisted?
       @order.errors.add(:voucher_code, I18n.t('split_checkout.errors.add_voucher_error'))
       adjustment.errors.each { |error| @order.errors.import(error) }
       return false
     end
+
+    clear_payments
+
+    VoucherAdjustmentsService.new(@order).update
+    @order.update_totals_and_states
 
     true
   end
@@ -77,5 +82,10 @@ class VoucherAdjustmentsController < BaseController
 
   def voucher_params
     params.require(:order).permit(:voucher_code)
+  end
+
+  # Clear payments and payment fees, to not affect voucher adjustment calculation
+  def clear_payments
+    @order.payments.incomplete.destroy_all
   end
 end

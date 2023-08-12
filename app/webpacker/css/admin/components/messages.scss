@@ -1,14 +1,14 @@
 .errorExplanation {
-  padding: 5px;
+  padding: 10px;
   border: 1px solid very-light($color-error, 12);
   background-color: very-light($color-error, 6);
   border-radius: 3px;
-  color: very-light($color-error, 30);
+  color: $color-error;
   margin-bottom: 15px;
 
   h2 {
     font-size: 140%;
-    color: very-light($color-error, 30);
+    color: $color-error;
     margin-bottom: 5px;
   }
 

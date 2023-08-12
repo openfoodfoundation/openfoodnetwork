@@ -39,16 +39,15 @@
       %h1
         = t :loading_customers
 
-  .row{ :class => "sixteen columns alpha", 'ng-show' => '!RequestMonitor.loading && filteredCustomers.length == 0'}
-    %h1#no_results
-      =t :no_customers_found
-
-  .row.margin-bottom-50{ ng: { show: "!RequestMonitor.loading && filteredCustomers.length > 0" } }
+  .row.margin-bottom-50{ ng: { show: "!RequestMonitor.loading" } }
     %form{ name: "customers_form" }
+      %h1#no_results{ 'ng-show' => '!RequestMonitor.loading && filteredCustomers.length == 0' }
+        =t :no_customers_found
+
       %save-bar{ dirty: "customers_form.$dirty", persist: "false" }
         %input.red{ type: "button", value: t(:save_changes), ng: { click: "submitAll(customers_form)" } }
 
-      %table.index#customers
+      %table.index#customers{ 'ng-show' => '!RequestMonitor.loading && filteredCustomers.length > 0' }
         %col.email{ width: "20%", 'ng-show' => 'columns.email.visible' }
         %col.first_name{ width: "20%", 'ng-show' => 'columns.first_name.visible' }
         %col.last_name{ width: "20%", 'ng-show' => 'columns.last_name.visible' }
