@@ -22,12 +22,25 @@ describe TermsOfService do
       allow(TermsOfServiceFile).to receive(:updated_at) { 2.weeks.ago }
     end
 
-    it "should reflect whether the platform TOS have been accepted since the last update" do
-      expect {
-        allow(TermsOfServiceFile).to receive(:updated_at) { Time.zone.now }
-      }.to change {
-        TermsOfService.tos_accepted?(customer)
-      }.from(true).to(false)
+    context "ToS file is present" do
+      it "should reflect whether the platform TOS have been accepted since the last update" do
+        expect {
+          allow(TermsOfServiceFile).to receive(:updated_at) { Time.zone.now }
+          allow(TermsOfServiceFile).to receive(:exists?) { true }
+        }.to change {
+          TermsOfService.tos_accepted?(customer)
+        }.from(true).to(false)
+      end
+    end
+
+    context "ToS file is not present" do
+      it "should always return true" do
+        expect {
+          allow(TermsOfServiceFile).to receive(:exists?) { false }
+        }.to_not change {
+          TermsOfService.tos_accepted?(customer)
+        }.from(true)
+      end
     end
   end
 
