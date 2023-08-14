@@ -6,7 +6,7 @@
 * Use the scripts in this directory to execute tasks in Docker. Please note that these scripts are intended to be executed from this app's root directory (/openfoodnetwork). These scripts allow you to bypass the need to keep typing "docker-compose run web".
 
 ## Limitations
-1. he docker environment can't directly control your host system browser, which means that browser specs (under `/spec/system/`) and email previews will not work. You may be able to find a solution with [this article](https://evilmartians.com/chronicles/system-of-a-test-setting-up-end-to-end-rails-testing). If so, please contribute!
+1. The docker environment can't directly control your host system browser, which means that browser specs (under `/spec/system/`) and email previews will not work. You may be able to find a solution with [this article](https://evilmartians.com/chronicles/system-of-a-test-setting-up-end-to-end-rails-testing). If so, please contribute!
 
 ## Installing Docker
 ### Requirements
