@@ -1,4 +1,4 @@
-= form_with model: @voucher, url: admin_enterprise_vouchers_path(@enterprise), html: { name: "voucher_form" } do |f|
+= form_with model: @voucher.becomes(Voucher), url: admin_enterprise_vouchers_path(@enterprise), html: { name: "voucher_form" } do |f|
   .row
     .sixteen.columns.alpha
       .four.columns.alpha.text-right

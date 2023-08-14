@@ -26,7 +26,7 @@ describe Admin::VouchersController, type: :request do
 
     let(:params) do
       {
-        vouchers_flat_rate: {
+        voucher: {
           code: code,
           amount: amount,
           voucher_type: type
@@ -52,7 +52,7 @@ describe Admin::VouchersController, type: :request do
     context "with a percentage rate voucher" do
       let(:params) do
         {
-          vouchers_percentage_rate: {
+          voucher: {
             code: code,
             amount: amount,
             voucher_type: type
