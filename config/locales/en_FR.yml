@@ -1747,9 +1747,9 @@ en_FR:
   menu_5_title: "Open my shop"
   menu_5_url: "/sell"
   menu_6_title: "About"
-  menu_6_url: "https://apropos.coopcircuits.fr/"
+  menu_6_url: "https://apropos.labelleorange.es/"
   menu_7_title: "Learn"
-  menu_7_url: "https://apropos.coopcircuits.fr/ressources/"
+  menu_7_url: "https://apropos.labelleorange.es/ressources/"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
   logo_mobile_svg: "Mobile logo (SVG)"
@@ -4250,7 +4250,7 @@ en_FR:
         subject: "Please confirm your OFN account"
     payment_mailer:
       authorize_payment:
-        subject: "Please authorize your payment to %{distributor} on CoopCircuits"
+        subject: "Please authorize your payment to %{distributor} on Labelleorange"
         instructions: "Your payment of %{amount} to %{distributor} requires additional authentication. Please visit the following URL to authorize your payment:"
       authorization_required:
         subject: "A payment requires authorization from the customer"
