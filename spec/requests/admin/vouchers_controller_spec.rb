@@ -29,7 +29,7 @@ describe Admin::VouchersController, type: :request do
         voucher: {
           code: code,
           amount: amount,
-          voucher_type: type
+          type: type
         }
       }
     end
@@ -55,7 +55,7 @@ describe Admin::VouchersController, type: :request do
           voucher: {
             code: code,
             amount: amount,
-            voucher_type: type
+            type: type
           }
         }
       end
