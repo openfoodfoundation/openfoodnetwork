@@ -963,7 +963,7 @@ fr_CA:
           sells: Produits vendus
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
           visible_in_search: Apparaît dans la recherche?
-          visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de CoopCircuits et la liste des boutiques. <br /> 2. Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
+          visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de Labelleorange et la liste des boutiques. <br /> 2. Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
           visible: Visible par tous
           not_visible: Invisible
           hidden: Masquer toutes les références
