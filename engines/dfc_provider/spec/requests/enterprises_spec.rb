@@ -4,7 +4,13 @@ require DfcProvider::Engine.root.join("spec/swagger_helper")
 
 describe "Enterprises", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rswag_autodoc: true do
   let!(:user) { create(:oidc_user) }
-  let!(:enterprise) { create(:distributor_enterprise, id: 10_000, owner: user) }
+  let!(:enterprise) do
+    create(
+      :distributor_enterprise,
+      id: 10_000, owner: user, abn: "123 456", name: "Fred's Farm",
+      description: "This is an awesome enterprise",
+    )
+  end
   let!(:product) {
     create(
       :base_product,
@@ -36,6 +42,9 @@ describe "Enterprises", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rs
           let(:id) { enterprise.id }
 
           run_test! do
+            expect(response.body).to include "Fred's Farm"
+            expect(response.body).to include "This is an awesome enterprise"
+            expect(response.body).to include "123 456"
             expect(response.body).to include "Apple"
           end
         end

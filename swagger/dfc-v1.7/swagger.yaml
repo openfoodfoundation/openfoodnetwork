@@ -64,9 +64,8 @@ paths:
                       dfc-b:affiliates: http://test.host/api/dfc-v1.7/enterprises/10000
                     - "@id": http://test.host/api/dfc-v1.7/enterprises/10000
                       "@type": dfc-b:Enterprise
-                      dfc-b:hasName: ''
-                      dfc-b:hasDescription: ''
-                      dfc-b:VATnumber: ''
+                      dfc-b:hasName: Fred's Farm
+                      dfc-b:hasDescription: Beautiful
                       dfc-b:supplies: http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
                       dfc-b:manages: http://test.host/api/dfc-v1.7/enterprises/10000/catalog_items/10001
                     - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/catalog_items/10001
@@ -221,9 +220,9 @@ paths:
                     "@graph":
                     - "@id": http://test.host/api/dfc-v1.7/enterprises/10000
                       "@type": dfc-b:Enterprise
-                      dfc-b:hasName: ''
-                      dfc-b:hasDescription: ''
-                      dfc-b:VATnumber: ''
+                      dfc-b:hasName: Fred's Farm
+                      dfc-b:hasDescription: This is an awesome enterprise
+                      dfc-b:VATnumber: 123 456
                       dfc-b:supplies: http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
                       dfc-b:manages: http://test.host/api/dfc-v1.7/enterprises/10000/catalog_items/10001
                     - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001

@@ -5,7 +5,12 @@ require DfcProvider::Engine.root.join("spec/swagger_helper")
 describe "CatalogItems", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml",
                          rswag_autodoc: true do
   let(:user) { create(:oidc_user, id: 12_345) }
-  let(:enterprise) { create(:distributor_enterprise, id: 10_000, owner: user) }
+  let(:enterprise) {
+    create(
+      :distributor_enterprise,
+      id: 10_000, owner: user, name: "Fred's Farm", description: "Beautiful",
+    )
+  }
   let(:product) {
     create(
       :base_product,
