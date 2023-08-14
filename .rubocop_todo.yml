@@ -1322,7 +1322,6 @@ Style/HashSyntax:
     - 'spec/queries/customers_with_balance_spec.rb'
     - 'spec/queries/outstanding_balance_spec.rb'
     - 'spec/queries/payments_requiring_action_spec.rb'
-    - 'spec/requests/admin/vouchers_controller_spec.rb'
     - 'spec/requests/api/v1/customers_spec.rb'
     - 'spec/requests/checkout/failed_checkout_spec.rb'
     - 'spec/requests/checkout/paypal_spec.rb'

@@ -9,7 +9,7 @@ describe "/admin/enterprises/:enterprise_id/vouchers", type: :request do
   before do
     Flipper.enable(:vouchers)
 
-    enterprise_user.enterprise_roles.build(enterprise: enterprise).save
+    enterprise_user.enterprise_roles.build(enterprise:).save
     sign_in enterprise_user
   end
 
@@ -22,14 +22,14 @@ describe "/admin/enterprises/:enterprise_id/vouchers", type: :request do
   end
 
   describe "POST /admin/enterprises/:enterprise_id/vouchers" do
-    subject(:create_voucher) { post admin_enterprise_vouchers_path(enterprise), params: params }
+    subject(:create_voucher) { post admin_enterprise_vouchers_path(enterprise), params: }
 
     let(:params) do
       {
         voucher: {
-          code: code,
-          amount: amount,
-          type: type
+          code:,
+          amount:,
+          type:
         }
       }
     end
@@ -53,9 +53,9 @@ describe "/admin/enterprises/:enterprise_id/vouchers", type: :request do
       let(:params) do
         {
           voucher: {
-            code: code,
-            amount: amount,
-            type: type
+            code:,
+            amount:,
+            type:
           }
         }
       end
