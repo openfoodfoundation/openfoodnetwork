@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Admin::VouchersController, type: :request do
+describe "/admin/enterprises/:enterprise_id/vouchers", type: :request do
   let(:enterprise) { create(:supplier_enterprise, name: "Feedme") }
   let(:enterprise_user) { create(:user, enterprise_limit: 1) }
 
