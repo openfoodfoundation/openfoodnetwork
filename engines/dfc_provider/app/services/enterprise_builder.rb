@@ -7,11 +7,12 @@ class EnterpriseBuilder < DfcBuilder
     supplied_products = catalog_items.map(&:product)
 
     DataFoodConsortium::Connector::Enterprise.new(
-      enterprise.name
-    ).tap do |e|
-      e.semanticId = urls.enterprise_url(enterprise.id)
-      e.suppliedProducts = supplied_products
-      e.catalogItems = catalog_items
-    end
+      urls.enterprise_url(enterprise.id),
+      name: enterprise.name,
+      description: enterprise.description,
+      vatNumber: enterprise.abn,
+      suppliedProducts: supplied_products,
+      catalogItems: catalog_items
+    )
   end
 end

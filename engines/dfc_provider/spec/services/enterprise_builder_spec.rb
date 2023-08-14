@@ -16,6 +16,24 @@ describe EnterpriseBuilder do
       )
     end
 
+    it "assigns a name" do
+      result = builder.enterprise(enterprise)
+
+      expect(result.name).to eq(enterprise.name)
+    end
+
+    it "assigns a description" do
+      result = builder.enterprise(enterprise)
+
+      expect(result.description).to eq(enterprise.description)
+    end
+
+    it "assigns a VAT Number (ABN in australia)" do
+      result = builder.enterprise(enterprise)
+
+      expect(result.vatNumber).to eq(enterprise.abn)
+    end
+
     it "assignes products" do
       result = builder.enterprise(enterprise)
 
