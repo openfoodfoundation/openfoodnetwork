@@ -186,7 +186,7 @@ fr_CM:
       subject: "Confirmez l'adresse email pour %{enterprise}"
     welcome:
       subject: "%{enterprise} est maintenant sur %{sitename}"
-      email_welcome: "Merci d’avoir rejoint Labelleorange "
+      email_welcome: "Merci d’avoir rejoint Labelleorange"
       email_registered: "va, dès que vous aurez choisi un type de profil, être créé sur"
       email_userguide_html: "Le Guide Utilisateur est là pour vous accompagner dans la prise en main de la plateforme. Vous y trouverez les informations détaillées de paramétrage de votre profil entreprise, de vos produits si vous êtes producteur, et de votre boutique si vous avez choisi un type de profil comprenant une boutique. Pour accéder au guide en français, cliquez ici : %{link}"
       userguide: "Guide utilisateur"
