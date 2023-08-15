@@ -26,10 +26,10 @@ assignees: ''
 
 ## 2. Testing
 
-- [ ] [Find build] of the release commit and copy it below.
+- [ ] Copy the release commit below
 - [ ] Move this issue to Test Ready.
 - [ ] Notify `@testers` in [#testing].
-- [ ] Test build: <!-- paste build link here, e.g. https://semaphore...builds/1234 -->
+- [ ] Test build: [Deploy to Staging] with commit <!-- paste commit ID here, eg bb8bcecc9... -->
 
 ## 3. Finish on Tuesday
 
@@ -54,5 +54,5 @@ The full process is described at https://github.com/openfoodfoundation/openfoodn
 [releases]: https://github.com/openfoodfoundation/openfoodnetwork/releases
 [#instance-managers]: https://app.slack.com/client/T02G54U79/CG7NJ966B
 [#testing]: https://openfoodnetwork.slack.com/app_redirect?channel=C02TZ6X00
-[Find build]: https://semaphoreci.com/openfoodfoundation/openfoodnetwork-2/branches/master
+[Deploy to Staging]: https://github.com/openfoodfoundation/openfoodnetwork/actions/workflows/stage.yml
 [#global-community]: https://app.slack.com/client/T02G54U79/C59ADD8F2
