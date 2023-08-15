@@ -39,9 +39,15 @@
       cursor: pointer;
     }
 
-    &:hover:not(.disabled) {
+    &:hover:not(.disabled):not(.gap) {
       background-color: $color-5;
       color: $white;
+    }
+
+    &.gap {
+      background-color: transparent;
+      box-shadow: none;
+      width: auto;
     }
   }
 
