@@ -20,6 +20,7 @@
     border-radius: 4px;
     color: $color-8;
     font-weight: 600;
+    cursor: default;
 
     &.current {
       background-color: $color-5;
@@ -34,8 +35,8 @@
       margin-left: 28px; // 28+8 (the gap) = 36px : the space between the arrows and the numbers
     }
 
-    &.disabled {
-      cursor: default;
+    &:not(.disabled):not(.current) {
+      cursor: pointer;
     }
 
     &:hover:not(.disabled) {
