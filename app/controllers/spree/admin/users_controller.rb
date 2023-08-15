@@ -28,7 +28,7 @@ module Spree
         if @user.save
 
           if roles
-            @user.spree_roles = roles.reject(&:blank?).collect{ |r| Spree::Role.find(r) }
+            @user.spree_roles = roles.compact_blank.collect{ |r| Spree::Role.find(r) }
           end
 
           flash.now[:success] = Spree.t(:created_successfully)
@@ -45,7 +45,7 @@ module Spree
 
         if @user.update(user_params)
           if roles
-            @user.spree_roles = roles.reject(&:blank?).collect{ |r| Spree::Role.find(r) }
+            @user.spree_roles = roles.compact_blank.collect{ |r| Spree::Role.find(r) }
           end
 
           flash.now[:success] = update_message

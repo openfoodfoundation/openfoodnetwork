@@ -420,18 +420,6 @@ Rails/ApplicationController:
   Exclude:
     - 'engines/dfc_provider/app/controllers/dfc_provider/base_controller.rb'
 
-# Offense count: 17
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/CompactBlank:
-  Exclude:
-    - 'app/controllers/spree/admin/users_controller.rb'
-    - 'app/models/concerns/address_display.rb'
-    - 'app/models/spree/zone.rb'
-    - 'app/services/order_cycle_form.rb'
-    - 'lib/reporting/report_headers_builder.rb'
-    - 'lib/reporting/report_ruler.rb'
-    - 'lib/reporting/reports/enterprise_fee_summary/parameters.rb'
-
 # Offense count: 8
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb

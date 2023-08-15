@@ -55,7 +55,7 @@ module Reporting
       rule[:fields_used_in_header] ||= rule[:header]
       fields = rule[:header]
       rule[:header] = proc do |_key, _items, rows|
-        fields.map { |field| rows.first[field] }.reject(&:blank?).join(' ')
+        fields.map { |field| rows.first[field] }.compact_blank.join(' ')
       end
     end
   end

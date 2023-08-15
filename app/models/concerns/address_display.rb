@@ -2,10 +2,10 @@
 
 module AddressDisplay
   def full_name_reverse
-    [lastname, firstname].reject(&:blank?).join(" ")
+    [lastname, firstname].compact_blank.join(" ")
   end
 
   def full_name_for_sorting
-    [last_name, first_name].reject(&:blank?).join(", ")
+    [last_name, first_name].compact_blank.join(", ")
   end
 end
