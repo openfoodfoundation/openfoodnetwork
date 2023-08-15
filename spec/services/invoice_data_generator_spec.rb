@@ -54,7 +54,7 @@ describe InvoiceDataGenerator do
 
     context "line items" do
       it "should reflect the changes" do
-        line_item = order.line_items.first
+        line_item = order.sorted_line_items.first
         new_quantity = line_item.quantity + 1
         line_item.update!(quantity: new_quantity)
 
@@ -62,7 +62,7 @@ describe InvoiceDataGenerator do
       end
 
       it "should not reflect variant changes" do
-        line_item = order.line_items.first
+        line_item = order.sorted_line_items.first
         old_variant_name = line_item.variant.display_name
         line_item.variant.update!(display_name: "NEW NAME")
 
