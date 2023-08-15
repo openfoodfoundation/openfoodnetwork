@@ -5,6 +5,10 @@
 
   background-color: $color-7;
 
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+
   .page {
     width: 40px;
     line-height: 40px;
