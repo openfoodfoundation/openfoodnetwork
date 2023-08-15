@@ -37,6 +37,11 @@
     &.disabled {
       cursor: default;
     }
+
+    &:hover:not(.disabled) {
+      background-color: $color-5;
+      color: $white;
+    }
   }
 
   button {
