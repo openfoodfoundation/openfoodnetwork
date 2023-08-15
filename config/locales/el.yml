@@ -62,6 +62,8 @@ el:
             using_producer_stock_settings_but_count_on_hand_set: "πρέπει να είναι κενό επειδή χρησιμοποιούνται ρυθμίσεις αποθεμάτων παραγωγού"
             on_demand_but_count_on_hand_set: "πρέπει να παραμείνει κενό αν είναι κατόπιν ζήτησης"
             limited_stock_but_no_count_on_hand: "πρέπει να καθοριστεί επειδή δημιουργεί περιορισμένο απόθεμα"
+      messages:
+        blank: "δεν μπορεί να είναι κενό"
   activemodel:
     errors:
       messages:
@@ -272,6 +274,8 @@ el:
   edit: Επεξεργασία
   clone: Κλώνος
   distributors: Διανομείς
+  distribution: Κατανομή
+  order_cycles: Κύκλοι παραγγελιών
   bulk_order_management: Διαχείριση μαζικών παραγγελιών
   enterprises: Επιχειρήσεις
   enterprise_groups: Ομάδες
@@ -302,6 +306,7 @@ el:
   powered_by: Υποστηρίζεται από
   blocked_cookies_alert: "Το πρόγραμμα περιήγησης που χρησιμοποιείται ενδέχεται να απαγορεύει τα cookies που απαιτούνται για να χρησιμοποιήσετε αυτή την σελίδα καταστήματος.\nΠαρακαλούμε κάντε κλικ παρακάτω για να επιτρέψετε τα cookies κι επαναφορτώστε την σελίδα."
   allow_cookies: "Να επιτρέπονται τα cookies"
+  none: Κανένας
   notes: Σημειώσεις
   error: Πρόβλημα
   processing_payment: "Επεξεργασία πληρωμής..."
@@ -311,6 +316,7 @@ el:
   clear_filters: Καθαρισμός φίλτρων
   quantity: Ποσότητα
   pick_up: Παραλαβή
+  ok: Εντάξει
   copy: Αντιγραφή
   change_my_password: "Αλλαγή κωδικού"
   update_password: "Ανανέωση κωδικού"
@@ -320,6 +326,7 @@ el:
   back_to_payments_list: "Πίσω στην Λίστα Πληρωμών"
   maestro_or_solo_cards: "Κάρτα Maestro/Sola"
   backordered: "Σε εκκρεμότητα"
+  on_hand: "Στο χέρι"
   on hand: "Στο χέρι"
   ship: "Αποστολή"
   shipping_category: "Κατηγορία μεταφορικών"
@@ -412,6 +419,7 @@ el:
     clear_all: Καθαρισμός
     start_date: "Ημερομηνία εκκίνησης"
     end_date: "Ημερομηνία λήξης"
+    unsaved_changes: "Αποτυχημένη προσπάθεισ"
     form_invalid: "Η φόρμα έχει ελλειπή ή μη έγκυρα στοιχεία"
     clear_filters: Καθαρισμός φίλτρων
     clear: Καθαρισμός
@@ -432,7 +440,6 @@ el:
     has_one_rule: "έχει έναν κανόνα"
     has_n_rules: "έχει %{αριθ} κανόνες"
     unsaved_confirm_leave: "Δεν έχουν αποθηκευτεί οι αλλαγές στην σελίδα. Συνέχεια χωρίς αποθήκευση?"
-    unsaved_changes: "Αποτυχημένη προσπάθεισ"
     available_units: "Διαθέσιμες Μονάδες"
     shopfront_settings:
       embedded_shopfront_settings: "Ενσωματωμένες Ρυθμίσεις Σελίδας Καταστήματος"
@@ -1079,11 +1086,11 @@ el:
         general_settings: "Γενικές Ρυθμίσεις"
         incoming: Εισερχόμενο
         supplier: Προμηθευτής
+        products: Προίόντα
         receival_details: Λεπτομέρειες παραλαβής
         fees: Τέλη
         outgoing: Εξερχόμενος
         distributor: Διανομέας
-        products: Προίόντα
         tags: Ετικέτες
         add_a_tag: Προσθήκη ετικέτας
         delivery_details: Λεπτομέριες Παραλαβής  / Παράδοσης
@@ -1469,15 +1476,14 @@ el:
   longitude: Γεωγραφικό μήκος
   longitude_placeholder: π.χ. 144.7851531
   use_geocoder: Υπολογισμός γεωγραφικού πλάτους και γεωγραφικού μήκους αυτόματα από τη διεύθυνση;
+  state: Πόλη
   postcode: Ταχ. Κώδικας
   postcode_placeholder: π.χ. 3070
   suburb: Προάστιο
-  state: Πόλη
   country: Χώρα
   unauthorized: Ανεξουσιοδότητος
   terms_of_service: "Όροι χρήσης"
   on_demand: Κατά παραγγελία
-  none: Κανένας
   not_allowed: Δεν επιτρέπεται
   no_shipping: χωρίς τρόπους αποστολής
   no_payment: χωρίς τρόπους πληρωμής
@@ -1485,6 +1491,7 @@ el:
   unconfirmed: ανεξακρίβωτος
   days: ημέρες
   authorization_failure: "Αποτυχία εξουσιοδότησης"
+  description: "Περιγραφή"
   label_shop: "Κατάστημα"
   label_shops: "Καταστήματα"
   label_map: "Χάρτης"
@@ -1905,6 +1912,7 @@ el:
   producers_signup_cta_headline: Πάρε μέρος τώρα!
   producers_signup_cta_action: Πάρε μέρος τώρα
   producers_signup_detail: Εδώ είναι η λεπτομέρεια.
+  producer: Παραγωγός
   products_item: Θέμα
   products_description: Περιγραφή
   products_variant: Διάφορα
@@ -2173,6 +2181,7 @@ el:
   bulk: "Ογκος"
   shop_variant_quantity_min: "λ"
   shop_variant_quantity_max: "Μέγιστη"
+  contact: "επικοινωνία"
   follow: "Ακολουθηστε"
   shop_for_products_html: "Αγοράστε <span class=\"turquoise\">προϊόντα %{enterprise}</span> στη διεύθυνση:"
   change_shop: "Αλλαγή καταστήματος σε:"
@@ -2186,6 +2195,7 @@ el:
   included_tax: "Συμπριλαμβανομένων φόρων"
   tax: "Φόρος"
   tax_amount_included: "%{amount} (περιλαμβάνεται)"
+  remove_tax: "Κατάργηση φόρου"
   balance: "Ισορροπία"
   transaction: "Συναλλαγή"
   transaction_date: "Ημερομηνία"
@@ -2196,7 +2206,6 @@ el:
   credit: "Πίστωση"
   Paid: "επί πληρωμή"
   Ready: "Ετοιμος"
-  ok: Εντάξει
   not_visible: μη ορατό
   you_have_no_orders_yet: "Δεν έχετε ακόμα παραγγελίες"
   show_only_complete_orders: "Εμφάνιση μόνο πλήρων παραγγελιών"
@@ -2248,7 +2257,6 @@ el:
   delivery_method: Μέθοδος παράδοσης
   fee_type: "Κατηγορίες αμοιβών"
   tax_category: "Φορολογική κατηγορία"
-  description: "Περιγραφή"
   display: "Απεικόνιση"
   tags: "Ετικέτες"
   calculator: "Υπολογισμός"
@@ -2281,10 +2289,8 @@ el:
   no_customers_found: "Δεν βρέθηκαν πελάτες"
   go: "Πηγαίνω"
   hub: "Κεντρικό σημείο"
-  producer: "Παραγωγός"
   product: "Προϊόν"
   price: "Τιμή"
-  on_hand: "Σε ετοιμότητα"
   review: "Αναθεώρηση"
   save_changes: "Αποθήκευσε τις αλλαγές"
   order_saved: "Η παραγγελία αποθηκεύτηκε"
@@ -2336,9 +2342,7 @@ el:
   edit_profile_details: "Επεξεργασία στοιχείων προφίλ"
   edit_profile_details_etc: "Αλλάξτε την περιγραφή του προφίλ σας, εικόνες κ.λπ."
   order_cycle: "Κύκλος Παραγγελειών"
-  order_cycles: "Κύκλοι παραγγελιών"
   enterprise_relationships: "Δικαιώματα επιχείρησης"
-  remove_tax: "Κατάργηση φόρου"
   first_name_begins_with: "Το όνομα αρχίζει με"
   last_name_begins_with: "Το επώνυμο αρχίζει με"
   shipping_method: "Μέθοδος αποστολής"
@@ -2388,8 +2392,8 @@ el:
   report_header_comments: Σχόλια
   report_header_first_name: Ονομα
   report_header_last_name: Επίθετο
-  report_header_phone: Τηλέφωνο
   report_header_suburb: Προάστιο
+  report_header_phone: Τηλέφωνο
   report_header_address: Διεύθυνση
   report_header_billing_address: Διεύθυνση Τιμολόγησης
   report_header_relationship: Σχέση
@@ -2545,7 +2549,6 @@ el:
   images: "Εικόνες"
   web: "Ιστός"
   primary_details: "Πρωτογενείς λεπτομέρειες"
-  contact: "επικοινωνία"
   social: "Κοινωνικός"
   shipping: "Αποστολή"
   shipping_methods: "Τρόποι αποστολής"
@@ -2996,7 +2999,6 @@ el:
       report:
         none: "Κανένας"
   order: "Σειρά"
-  distribution: "Κατανομή"
   order_details: "Λεπτομέρειες Παραγγελίας"
   customer_details: "Πληροφορίες Πελάτη"
   adjustments: "Προσαρμογές"
@@ -3387,6 +3389,9 @@ el:
           from: "Από"
           to: "Bill to"
           shipping: "Αποστολή"
+          payments_list:
+            payment_method: "Μέθοδος Πληρωμής"
+            amount: "Ποσό"
         form:
           distribution_fields:
             title: "Κατανομή"

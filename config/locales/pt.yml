@@ -67,6 +67,8 @@ pt:
             using_producer_stock_settings_but_count_on_hand_set: "deve ser vazio dado estar a usar as configurações do produtor"
             on_demand_but_count_on_hand_set: "deve ser vazio dado estar sob encomenda"
             limited_stock_but_no_count_on_hand: "deve ser definido dado não estar sob encomenda"
+      messages:
+        blank: "não pode ser vazio"
   stripe:
     error_code:
       incorrect_number: "O número do cartão está incorreto."
@@ -265,6 +267,8 @@ pt:
   edit: Editar
   clone: Clonar
   distributors: Distribuidores
+  distribution: Distribuição
+  order_cycles: Ciclos de Encomendas
   bulk_order_management: Gestão de Encomendas em Massa
   enterprises: Organizações
   enterprise_groups: Grupos
@@ -296,6 +300,7 @@ pt:
   powered_by: Impulsionado por
   blocked_cookies_alert: "O seu browser pode estar a bloquear cookies necessárias para o correcto funcionamento deste mercado. Clique abaixo para autorizar cookies e recarregue a página."
   allow_cookies: "Autorizar cookies"
+  none: Nenhum
   notes: Notas
   error: Erro
   processing_payment: "Pagamento em processamento..."
@@ -303,6 +308,7 @@ pt:
   filter_results: Filtrar resultados
   quantity: Quantidade
   pick_up: Levantamento
+  ok: OK
   copy: Copiar
   change_my_password: "Mudar a minha palavra-passe"
   update_password: "Redefinir palavra-passe"
@@ -312,6 +318,7 @@ pt:
   back_to_payments_list: "Voltar à lista de pagamentos"
   maestro_or_solo_cards: "Cartões Maestro/Solo"
   backordered: "Encomendado"
+  on_hand: "Disponível"
   on hand: "Disponível"
   ship: "Enviar"
   shipping_category: "Categoria de Envio"
@@ -402,6 +409,7 @@ pt:
     clear_all: Limpar Tudo
     start_date: "Data de Início"
     end_date: "Data de Fim"
+    unsaved_changes: "Tem alterações por guardar"
     form_invalid: "O formulário contém campos incompletos ou inválidos"
     clear_filters: Limpar filtros
     clear: Limpar
@@ -422,7 +430,6 @@ pt:
     has_one_rule: "tem uma regra"
     has_n_rules: "tem %{num} regras"
     unsaved_confirm_leave: "Existem alterações por guardar nesta página. Continuar sem guardar? "
-    unsaved_changes: "Tem alterações por guardar"
     available_units: "Unidades Disponíveis"
     shopfront_settings:
       embedded_shopfront_settings: "Definições de Loja Embutida"
@@ -1082,11 +1089,11 @@ pt:
         general_settings: "Configurações Gerais"
         incoming: Entrada
         supplier: Fornecedor
+        products: Produtos
         receival_details: Detalhes de recebimento
         fees: Taxas
         outgoing: Saída
         distributor: Distribuidor
-        products: Produtos
         tags: Etiquetas
         add_a_tag: Acrescentar uma etiqueta
         delivery_details: Detalhes de entrega/levantamento
@@ -1463,15 +1470,14 @@ pt:
   address2: Morada (cont.)
   city: Cidade
   city_placeholder: ex. Famalicão
+  state: Região
   postcode: Código postal
   postcode_placeholder: 'ex:  4000-125'
   suburb: Localidade
-  state: Região
   country: País
   unauthorized: Não autorizado
   terms_of_service: "Termos de serviço"
   on_demand: Sob encomenda
-  none: Nenhum
   not_allowed: Não permitido
   no_shipping: sem métodos de envio
   no_payment: sem métodos de pagamento
@@ -1479,6 +1485,7 @@ pt:
   unconfirmed: não confirmado
   days: dias
   authorization_failure: "Falha na Autorização"
+  description: "Descrição"
   label_shop: "Loja"
   label_shops: "Lojas"
   label_map: "Mapa"
@@ -1870,6 +1877,7 @@ pt:
   producers_signup_cta_headline: Registe-se agora!
   producers_signup_cta_action: Registe-se agora
   producers_signup_detail: Aqui está o detalhe.
+  producer: Produtor
   products_item: Ítem
   products_description: Descrição
   products_variant: Variante
@@ -2130,6 +2138,7 @@ pt:
   bulk: "Em Massa"
   shop_variant_quantity_min: "mín."
   shop_variant_quantity_max: "max."
+  contact: "Contacto"
   follow: "Seguir"
   shop_for_products_html: "Compre produtos da <span class=\"turquoise\">%{enterprise}</span> em:"
   change_shop: "Mudar loja para:"
@@ -2141,6 +2150,7 @@ pt:
   fundraising_fee: "Taxa de financiamento"
   price_graph: "Gráfico de preços"
   included_tax: "Taxas incluídas"
+  remove_tax: "Remover imposto"
   balance: "Saldo"
   transaction: "Transação"
   transaction_date: "Data"
@@ -2151,7 +2161,6 @@ pt:
   credit: "Crédito"
   Paid: "Pago"
   Ready: "Pronto"
-  ok: OK
   not_visible: não visível
   you_have_no_orders_yet: "Ainda não tem encomendas"
   show_only_complete_orders: "Mostrar só encomendas completas"
@@ -2201,7 +2210,6 @@ pt:
   delivery_method: Método de Entrega
   fee_type: "Tipo de Taxa"
   tax_category: "Categoria de Imposto"
-  description: "Descrição"
   display: "Mostrar"
   tags: "Etiquetas"
   calculator: "Calculadora"
@@ -2230,10 +2238,8 @@ pt:
   no_customers_found: "Nenhum consumidor encontrado"
   go: "Ir"
   hub: "Central"
-  producer: "Produtor"
   product: "Produto"
   price: "Preço"
-  on_hand: "Disponível"
   review: "Rever"
   save_changes: "Guardar Modificações"
   order_saved: "Encomenda Guardada"
@@ -2284,9 +2290,7 @@ pt:
   edit_profile_details: "Editar detalhes de perfil "
   edit_profile_details_etc: "Modificar o seu perfil: descrição, imagem, etc."
   order_cycle: "Ciclo de Encomendas"
-  order_cycles: "Ciclos de Encomendas"
   enterprise_relationships: "Permissões das organizações"
-  remove_tax: "Remover imposto"
   first_name_begins_with: "Primeiro nome começa com"
   last_name_begins_with: "Último nome começa com"
   new_order: "Nova Encomenda"
@@ -2337,8 +2341,8 @@ pt:
   report_header_comments: Comentários
   report_header_first_name: Primeiro Nome
   report_header_last_name: Último Nome
-  report_header_phone: Telefone
   report_header_suburb: Localidade
+  report_header_phone: Telefone
   report_header_address: Morada
   report_header_billing_address: Morada de faturação
   report_header_relationship: Relação
@@ -2497,7 +2501,6 @@ pt:
   images: "Imagens"
   web: "Web"
   primary_details: "Detalhes Principais"
-  contact: "Contacto"
   social: "Social"
   shipping: "Envio"
   shipping_methods: "Métodos de Envio"
@@ -2957,7 +2960,6 @@ pt:
       report:
         none: "Nenhum"
   order: "Encomenda"
-  distribution: "Distribuição"
   order_details: "Detalhes da Encomenda"
   customer_details: "Detalhes do/a Consumidor/a"
   adjustments: "Ajustes"
@@ -3231,6 +3233,8 @@ pt:
           from: "De"
           to: "Faturar a"
           shipping: "Envio"
+          payments_list:
+            amount: "Quantia"
         form:
           distribution_fields:
             title: "Distribuição"

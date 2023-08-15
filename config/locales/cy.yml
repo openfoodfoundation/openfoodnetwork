@@ -94,6 +94,39 @@ cy:
             using_producer_stock_settings_but_count_on_hand_set: "rhaid bod yn wag oherwydd defnydd o osodiadau stoc cynhyrchwyr"
             on_demand_but_count_on_hand_set: "rhaid iddo fod yn wag os ar alw"
             limited_stock_but_no_count_on_hand: "rhaid nodi hyn oherwydd gorfodi stoc gyfyngedig"
+      messages:
+        blank: "ni chaniateir ei adael yn wag"
+  errors:
+    messages:
+      content_type_invalid: "math o gynnwys annilys"
+      file_size_out_of_range: "nid yw'r maint %{file_size} rhwng yr ystod ofynnol"
+      limit_out_of_range: "mae'r cyfanswm rhif tu hwnt i'r ystod"
+      image_metadata_missing: "nid yw'n llun dilys"
+      dimension_min_inclusion: "mae'n gorfod bod yn fwy neu'r un faint â %{width} x %{height} picsel."
+      dimension_max_inclusion: "mae'n gorfod bod yn llai neu'r un faint â %{width} x %{height} picsel."
+      dimension_width_inclusion: "nid yw lled yn cael ei gynnwys rhwng %{min} ac %{max} picsel."
+      dimension_height_inclusion: "nid yw uchder yn cael ei gynnwys rhwng %{min} acd %{max} picsel."
+      dimension_width_greater_than_or_equal_to: "mae'r lled yn gorfod bod yn fwy neu'r un faint â %{length} picsel."
+      dimension_height_greater_than_or_equal_to: "mae'r uchder yn gorfod bod yn fwy neu'r un faint â %{length} picsel."
+      dimension_width_less_than_or_equal_to: "mae'r lled yn gorfod bod yn llai neu'r un faint â %{length} picsel."
+      dimension_height_less_than_or_equal_to: "mae'r uchder yn gorfod bod yn llai neu'r un faint â %{length} picsel."
+      dimension_width_equal_to: "mae'r lled yn gorfod bod yr un faint â %{length} picsel."
+      dimension_height_equal_to: "mae'r uchder yn gorfod bod yr un faint â %{length} picsel."
+      aspect_ratio_not_square: "mae'n gorfod bod yn llun sgwâr"
+      aspect_ratio_not_portrait: "mae'n gorfod bod yn llun siâp portread"
+      aspect_ratio_not_landscape: "mae'n gorfod bod yn llun siâp tirlun"
+      aspect_ratio_is_not: "mae'n rhaid cael cymhareb agwedd o %{aspect_ratio}"
+      aspect_ratio_unknown: "yn meddu ar gymhareb agwedd anhysbys"
+      image_not_processable: "nid yw'n llun dilys"
+    not_found:
+      title: "Nid yw'r dudalen rydych yn chwilio amdani'n bodoli (404)"
+      message_html: "<b>Rhowch gynnig arall</b> <p>. Hwyrach taw problem dros dro yw hon. Cliciwch y botwm ‘yn ôl’ i ddychwelyd at y sgrin flaenorol, neu ewch yn ôl i’r <a href='/'> Hafan </a>, a rhowch gynnig arall </p>. <b> Cysylltwch â’r ddesg</b> <p>Gymorth os bydd y broblem yn parhau neu os bydd yn fater brys, cofiwch ddweud wrthym amdano. Mae ein manylion cyswllt ar gael ar dudalen ‘Lleol’ <a href='https://openfoodnetwork.org/ofn-local/' target='blank'> y Rhwydwaith Bwyd Agored byd-eang </a>. </p> <p> Bydd o gymorth mawr inni os gallwch roi cymaint o fanylion â phosibl am y dudalen sydd ar goll.</p>"
+    internal_server_error:
+      title: "Mae'n ddrwg gennym, aeth rhywbeth o'i le (500)"
+      message_html: "<b>Rhowch gynnig arall</b> <p>. Hwyrach taw problem dros dro yw hon. Cliciwch y botwm ‘yn ôl’ i ddychwelyd at y sgrin flaenorol, neu ewch yn ôl i’r <a href='/''> Hafan </a>, a rhowch gynnig arall </p>. <b>Rydym yn gwybod am hyn</b><p>. Os ydych chi wedi gweld y broblem hon o’r blaen, mae’n debyg ein bod yn gwybod amdano, ac yn gweithio i’w drwsio. Byddwn yn cofnodi pob nam sy'n digwydd.</p><b>Cysylltwch â’r ddesg Gymorth</b><p>os bydd y broblem yn parhau neu os bydd yn fater brys, cofiwch ddweud wrthym amdano. Mae ein manylion cyswllt ar gael ar dudalen ‘Lleol’<a href='https://openfoodnetwork.org/ofn-local/' target='blank'>y Rhwydwaith Bwyd Agored byd-eang</a>. </p><p> Bydd o gymorth mawr inni os gallwch roi cymaint o fanylion â phosibl inni am yr hyn roeddech yn ei wneud pan ddigwyddodd y nam hwn.</p>"
+    unprocessable_entity:
+      title: "Gwrthodwyd y newid roeddech chi am ei wneud (422)"
+      message_html: "<p>Gwrthodwyd y newid roeddech chi am ei wneud. Hwyrach ichi geisio newid rhywbeth nad oes gennych fynediad ato.<br><h3><a href='/' >Ewch yn ôl i’r Hafan.</a></h3></p>"
   stripe:
     error_code:
       incorrect_number: "Mae rhif y cerdyn yn anghywir"
@@ -366,6 +399,8 @@ cy:
   edit: Golygu
   clone: Clôn
   distributors: Dosbarthwyr
+  distribution: Dosbarthiad
+  order_cycles: Cylchoedd archebu
   bulk_order_management: Rheoli Archeb Swmp
   enterprises: Mentrau
   enterprise_groups: Grwpiau
@@ -397,6 +432,7 @@ cy:
   powered_by: Wedi ei bweru gan
   blocked_cookies_alert: "Efallai bod eich porwr yn blocio cwcis angenrheidiol o ran defnyddio'rr blaen siop hwn. Cliciwch isod i ganiatáu cwcis ac ail-lwytho'r dudalen."
   allow_cookies: "Caniatáu Cwcis"
+  none: Dim
   notes: Nodiadau
   error: Gwall
   processing_payment: "Prosesu taliad ..."
@@ -406,6 +442,7 @@ cy:
   clear_filters: Clirio hidlwyr
   quantity: Nifer
   pick_up: Codi
+  ok: iawn
   copy: Copi
   change_my_password: "Newid fy nghyfrinair"
   update_password: "Diweddaru cyfrinair"
@@ -415,6 +452,7 @@ cy:
   back_to_payments_list: "Yn ôl i'r Rhestr Taliadau"
   maestro_or_solo_cards: "Cardiau Maestro / Solo"
   backordered: "Ol-archebwyd"
+  on_hand: "Ar gael"
   on hand: "Mewn stoc"
   ship: "Anfon"
   shipping_category: "Categori Anfon"
@@ -514,6 +552,7 @@ cy:
     clear_all: Clirio pob un
     start_date: "Dyddiad cychwyn"
     end_date: "Dyddiad gorffen"
+    unsaved_changes: "Mae gennych chi newidiadau heb eu cadw"
     form_invalid: "Mae'r ffurflen yn cynnwys meysydd coll neu annilys"
     clear_filters: 'Clirio Hidlau '
     clear: Clir
@@ -534,7 +573,6 @@ cy:
     has_one_rule: "un rheol yn berthnasol"
     has_n_rules: "%{num} rheolau'n berthnasol"
     unsaved_confirm_leave: "Mae yna newidiadau heb eu cadw ar y dudalen hon. Parhau heb eu cadw?"
-    unsaved_changes: "Mae gennych chi newidiadau heb eu cadw"
     available_units: "Unedau sydd ar gael"
     shopfront_settings:
       embedded_shopfront_settings: "Mewnosodwyd gosodiadau blaen siop "
@@ -1282,11 +1320,11 @@ cy:
         general_settings: "Gosodiadau Cyffredinol"
         incoming: Yn dod i mewn
         supplier: Cyflenwr
+        products: Cynnyrch
         receival_details: Manylion derbyn
         fees: Ffioedd
         outgoing: Yn mynd allan
         distributor: Dosbarthwr
-        products: Cynnyrch
         tags: Tagiau
         add_a_tag: Ychwanegu tag
         delivery_details: Manylion casglu / dosbarthu
@@ -1756,15 +1794,14 @@ cy:
   longitude: Hydred
   longitude_placeholder: e.e. - 144.7851531
   use_geocoder: Cyfrifo'r lledred a'r hydred yn awtomatig o'r cyfeiriad?
+  state: Sir
   postcode: Cod post
   postcode_placeholder: ee. 3070
   suburb: Maestref
-  state: Sir
   country: Gwlad
   unauthorized: Heb awdurdod
   terms_of_service: "Telerau gwasanaeth"
   on_demand: Ar alw
-  none: Dim
   not_allowed: Ni chaniateir
   no_shipping: dim dulliau anfon
   no_payment: dim dulliau talu
@@ -1772,6 +1809,7 @@ cy:
   unconfirmed: heb ei gadarnhau
   days: dyddiau
   authorization_failure: "Wedi methu awdurdodi"
+  description: "Disgrifiad"
   label_shop: "Siop"
   label_shops: "Siopiau"
   label_map: "Map"
@@ -2227,6 +2265,7 @@ cy:
   producers_signup_cta_headline: Ymuno nawr!
   producers_signup_cta_action: Ymuno nawr
   producers_signup_detail: Dyma'r manylion
+  producer: Cynhyrchydd
   products_item: Eitem
   products_description: Disgrifiad
   products_variant: Amrywiolyn
@@ -2499,6 +2538,7 @@ cy:
   bulk: "Swmp"
   shop_variant_quantity_min: "isafswm"
   shop_variant_quantity_max: "uchafswm"
+  contact: "Cysylltu"
   follow: "Dilyn"
   shop_for_products_html: "Siopa am gynnyrch <span class=\"turquoise\">%{enterprise}</span> yn:"
   change_shop: "Newid siop i:"
@@ -2512,6 +2552,7 @@ cy:
   included_tax: "Yn cynnwys treth "
   tax: "Treth"
   tax_amount_included: "%{amount} (wedi'i gynnwys)"
+  remove_tax: "Dileu treth"
   balance: "Balans"
   transaction: "Trafodiad"
   transaction_date: "Dyddiad"
@@ -2522,7 +2563,6 @@ cy:
   credit: "Credyd"
   Paid: "Talwyd"
   Ready: "Yn barod"
-  ok: iawn
   not_visible: ddim yn weladwy
   you_have_no_orders_yet: "Nid oes gennych unrhyw archebion eto"
   show_only_complete_orders: "Dangos archebion cyflawn yn unig"
@@ -2574,7 +2614,6 @@ cy:
   delivery_method: Dull Cyflenwi
   fee_type: "Math o Ffi"
   tax_category: "Categori Treth"
-  description: "Disgrifiad"
   display: "Arddangos"
   tags: "Tagiau"
   calculator: "Cyfrifiannell"
@@ -2607,10 +2646,8 @@ cy:
   no_customers_found: "Ni ddaethpwyd o hyd i gwsmeriaid"
   go: "Ewch"
   hub: "Hwb"
-  producer: "Cynhyrchydd"
   product: "Cynnyrch"
   price: "Pris"
-  on_hand: "Wrth law"
   review: "Adolygu"
   save_changes: "Cadw Newidiadau"
   order_saved: "Cadwyd yr archeb"
@@ -2662,9 +2699,7 @@ cy:
   edit_profile_details: "Golygu manylion proffil"
   edit_profile_details_etc: "Newidiwch eich disgrifiad proffil, delweddau, ac ati."
   order_cycle: "Cylch archebu"
-  order_cycles: "Cylchoedd archebu"
   enterprise_relationships: "Caniatâd y fenter"
-  remove_tax: "Dileu treth"
   first_name_begins_with: "Mae'r enw cyntaf yn dechrau gyda"
   last_name_begins_with: "Mae'r enw olaf yn dechrau gyda"
   shipping_method: "Dull cludo"
@@ -2721,8 +2756,8 @@ cy:
   report_header_comments: Sylwadau
   report_header_first_name: Enw cyntaf
   report_header_last_name: Enw olaf
-  report_header_phone: Ffôn
   report_header_suburb: Maestref
+  report_header_phone: Ffôn
   report_header_address: Cyfeiriad
   report_header_billing_address: Cyfeiriad bilio
   report_header_relationship: Perthynas
@@ -2906,7 +2941,6 @@ cy:
   images: "Delweddau"
   web: "Gwe"
   primary_details: "Manylion sylfaenol"
-  contact: "Cysylltu"
   social: "Cymdeithasol"
   shipping: "Anfon"
   shipping_methods: "Dulliau anfon"
@@ -3508,7 +3542,6 @@ cy:
       report:
         none: "Dim"
   order: "Archeb"
-  distribution: "Dosbarthiad"
   order_details: "Manylion yr archeb"
   customer_details: "Manylion Cwsmer"
   adjustments: "Addasiadau"
@@ -3621,7 +3654,6 @@ cy:
     tracking: "Tracio"
     tracking_number: "Rhif tracio"
     order_total: "Cyfanswm yr archeb"
-    order_updated: "Diweddarwyd yr archeb"
     customer_details: "Manylion Cwsmer"
     customer_details_updated: "Diweddarwyd manylion y Cwsmer"
     customer_search: "Chwilio am gwsmer"
@@ -3928,6 +3960,10 @@ cy:
           to: "Bil i"
           shipping: "Yn anfon"
           invoice_number: "Rhif anfoneb"
+          payments_list:
+            date_time: "Dyddiad / amser"
+            payment_method: "Dull talu"
+            amount: "Nifer"
         note:
           note_label: "Noder:"
           no_note_present: "Ni ddarparwyd nodyn."
@@ -4477,16 +4513,6 @@ cy:
         two: "%{count} mlynedd"
         many: "%{count} mlynedd"
         other: "%{count} blwyddyn"
-  errors:
-    not_found:
-      title: "Nid yw'r dudalen rydych yn chwilio amdani'n bodoli (404)"
-      message_html: "<b>Rhowch gynnig arall</b> <p>. Hwyrach taw problem dros dro yw hon. Cliciwch y botwm ‘yn ôl’ i ddychwelyd at y sgrin flaenorol, neu ewch yn ôl i’r <a href='/'> Hafan </a>, a rhowch gynnig arall </p>. <b> Cysylltwch â’r ddesg</b> <p>Gymorth os bydd y broblem yn parhau neu os bydd yn fater brys, cofiwch ddweud wrthym amdano. Mae ein manylion cyswllt ar gael ar dudalen ‘Lleol’ <a href='https://openfoodnetwork.org/ofn-local/' target='blank'> y Rhwydwaith Bwyd Agored byd-eang </a>. </p> <p> Bydd o gymorth mawr inni os gallwch roi cymaint o fanylion â phosibl am y dudalen sydd ar goll.</p>"
-    internal_server_error:
-      title: "Mae'n ddrwg gennym, aeth rhywbeth o'i le (500)"
-      message_html: "<b>Rhowch gynnig arall</b> <p>. Hwyrach taw problem dros dro yw hon. Cliciwch y botwm ‘yn ôl’ i ddychwelyd at y sgrin flaenorol, neu ewch yn ôl i’r <a href='/''> Hafan </a>, a rhowch gynnig arall </p>. <b>Rydym yn gwybod am hyn</b><p>. Os ydych chi wedi gweld y broblem hon o’r blaen, mae’n debyg ein bod yn gwybod amdano, ac yn gweithio i’w drwsio. Byddwn yn cofnodi pob nam sy'n digwydd.</p><b>Cysylltwch â’r ddesg Gymorth</b><p>os bydd y broblem yn parhau neu os bydd yn fater brys, cofiwch ddweud wrthym amdano. Mae ein manylion cyswllt ar gael ar dudalen ‘Lleol’<a href='https://openfoodnetwork.org/ofn-local/' target='blank'>y Rhwydwaith Bwyd Agored byd-eang</a>. </p><p> Bydd o gymorth mawr inni os gallwch roi cymaint o fanylion â phosibl inni am yr hyn roeddech yn ei wneud pan ddigwyddodd y nam hwn.</p>"
-    unprocessable_entity:
-      title: "Gwrthodwyd y newid roeddech chi am ei wneud (422)"
-      message_html: "<p>Gwrthodwyd y newid roeddech chi am ei wneud. Hwyrach ichi geisio newid rhywbeth nad oes gennych fynediad ato.<br><h3><a href='/' >Ewch yn ôl i’r Hafan.</a></h3></p>"
   components:
     multiple_checked_select:
       filter_placeholder: "Opsiynau hidlo"

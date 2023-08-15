@@ -67,6 +67,8 @@ tr:
             using_producer_stock_settings_but_count_on_hand_set: "Boş bırakılmalı çünkü üretici stok ayarları kullanılıyor"
             on_demand_but_count_on_hand_set: "talep üzerine is boş bırakılmalıdır"
             limited_stock_but_no_count_on_hand: "Sınırlı stok durumundan dolayı belirtilmeli"
+      messages:
+        blank: "boş olamaz"
   activemodel:
     errors:
       messages:
@@ -269,6 +271,8 @@ tr:
   edit: Düzenle
   clone: Kopyala
   distributors: Dağıtımcılar
+  distribution: dağıtım
+  order_cycles: SİPARİŞ DÖNEMLERİ
   bulk_order_management: TOPLU SİPARİŞ YÖNETİMİ
   enterprises: İşletmeler
   enterprise_groups: AĞLAR
@@ -300,6 +304,7 @@ tr:
   powered_by: Destekleyici
   blocked_cookies_alert: "Tarayıcınız bu ekranı kullanmak için gereken çerezleri engelliyor olabilir. Çerezlere izin vermek ve sayfayı yeniden yüklemek için aşağıya tıklayın."
   allow_cookies: "Çerezlere izin ver"
+  none: Yok
   notes: Notlar
   error: Hata
   processing_payment: "Ödeme İşlemi Gerçekleştiriliyor.."
@@ -309,6 +314,7 @@ tr:
   clear_filters: Filtreleri temizle
   quantity: Miktar
   pick_up: Teslim Alma
+  ok: tamam
   copy: Kopyala
   change_my_password: "Şifremi Değiştir"
   update_password: "Şifreyi Güncelle"
@@ -318,6 +324,7 @@ tr:
   back_to_payments_list: "Ödeme Listesine Geri Dön"
   maestro_or_solo_cards: "Ödeme kartları"
   backordered: "Bakiye Sipariş"
+  on_hand: "Mevcut"
   on hand: "Mevcut"
   ship: "Teslimat"
   shipping_category: "Teslimat KategOrİSİ"
@@ -414,6 +421,7 @@ tr:
     clear_all: HEPSİNİ TEMİZLE
     start_date: "Başlangıç Tarihi"
     end_date: "Bitiş Tarihi"
+    unsaved_changes: "Kaydedilmemiş değişiklikleriniz var"
     form_invalid: "Formda eksik veya geçersiz alanlar var"
     clear_filters: Filtreleri Temizle
     clear: Temizle
@@ -434,7 +442,6 @@ tr:
     has_one_rule: "bir kural var"
     has_n_rules: "%{num} kural var"
     unsaved_confirm_leave: "Kaydedilmemiş değişiklikler var. Kaydetmeden devam etmek istiyor musunuz?"
-    unsaved_changes: "Kaydedilmemiş değişiklikleriniz var"
     available_units: "Mevcut Miktar"
     shopfront_settings:
       embedded_shopfront_settings: "YERLEŞTİRİLMİŞ DÜKKAN AYARLARI"
@@ -1118,11 +1125,11 @@ tr:
         general_settings: "Genel Ayarlar"
         incoming: Gelen
         supplier: Tedarikçi
+        products: Ürünler
         receival_details: TESLİM ALMA DETAYLARI
         fees: Ücretler
         outgoing: Giden
         distributor: Dağıtımcı
-        products: Ürünler
         tags: ETİKETLER
         add_a_tag: Etiket ekle
         delivery_details: Teslimat/Gönderim Bilgileri
@@ -1534,15 +1541,14 @@ tr:
   longitude: Boylam
   longitude_placeholder: Örn. 144.7851531
   use_geocoder: Enlem ve boylamı adresten otomatik olarak hesapla?
+  state: Şehir
   postcode: posta kodu
   postcode_placeholder: Örn. 16000
   suburb: İlçe
-  state: Şehir
   country: Ülke
   unauthorized: Yetkisiz
   terms_of_service: "Üyelik Sözleşmesi"
   on_demand: Talep üzerine
-  none: Yok
   not_allowed: İzin verilmedi
   no_shipping: teslimat yöntemi yok
   no_payment: ödeme yöntemi yok
@@ -1550,6 +1556,7 @@ tr:
   unconfirmed: doğrulanmamış
   days: günler
   authorization_failure: "Yetki Hatası"
+  description: "Açıklama"
   label_shop: "Dükkan"
   label_shops: "PAZAR YERİ"
   label_map: "HARİTA"
@@ -1976,6 +1983,7 @@ tr:
   producers_signup_cta_headline: Şimdi Katıl!
   producers_signup_cta_action: Şimdi Katıl
   producers_signup_detail: İşte bilgiler.
+  producer: Üretici
   products_item: Ürün
   products_description: Açıklama
   products_variant: Çeşit
@@ -2244,6 +2252,7 @@ tr:
   bulk: "toplu"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "maks"
+  contact: "İLETİŞİM"
   follow: "TAKİP ET"
   shop_for_products_html: "<span class=\"turquoise\">%{enterprise}</span> ÜRÜNLERİNİ SATIN ALIN:"
   change_shop: "Dükkanı şuna değiştir:"
@@ -2257,6 +2266,7 @@ tr:
   included_tax: "Vergi Dahil"
   tax: "Vergi"
   tax_amount_included: "%{amount} (dahil)"
+  remove_tax: "Vergiyi kaldır"
   balance: "Bakiye"
   transaction: "işlem"
   transaction_date: "tarih"
@@ -2267,7 +2277,6 @@ tr:
   credit: "Bakiye"
   Paid: "Ödendi"
   Ready: "hazır"
-  ok: tamam
   not_visible: görünmez
   you_have_no_orders_yet: "Henüz siparişiniz yok"
   show_only_complete_orders: "YALNIZCA TAMAMLANAN SİPARİŞLERİ GÖSTER"
@@ -2319,7 +2328,6 @@ tr:
   delivery_method: Teslimat Yöntemi
   fee_type: "Ücret Türü"
   tax_category: "Vergi Kategorisi"
-  description: "Açıklama"
   display: "GÖSTER"
   tags: "ETİKETLER"
   calculator: "Hesaplama"
@@ -2351,10 +2359,8 @@ tr:
   no_customers_found: "Müşteri bulunamadı"
   go: "Git"
   hub: "pazar"
-  producer: "Üretici"
   product: "Ürün"
   price: "Fiyat"
-  on_hand: "Mevcut"
   review: "gözden geçir"
   save_changes: "DEĞİŞİKLİKLERİ KAYDET"
   order_saved: "Sipariş Kaydedildi"
@@ -2406,9 +2412,7 @@ tr:
   edit_profile_details: "Profil bilgilerini düzenle"
   edit_profile_details_etc: "Profil açıklamanızı, resimlerinizi vb. değiştirin."
   order_cycle: "Sipariş Dönemi"
-  order_cycles: "SİPARİŞ DÖNEMLERİ"
   enterprise_relationships: "İŞLETME İZİNLERİ"
-  remove_tax: "Vergiyi kaldır"
   first_name_begins_with: "Adının BAŞ HARFİ"
   last_name_begins_with: "Soyadının BAŞ HARFİ"
   shipping_method: "Teslimat Yöntemi"
@@ -2461,8 +2465,8 @@ tr:
   report_header_comments: Yorumlar
   report_header_first_name: Ad
   report_header_last_name: Soyadı
-  report_header_phone: Telefon
   report_header_suburb: Kırsal
+  report_header_phone: Telefon
   report_header_address: Adres
   report_header_billing_address: Fatura Adresi
   report_header_relationship: İlişki
@@ -2620,7 +2624,6 @@ tr:
   images: "Görseller"
   web: "Web"
   primary_details: "TEMEL BİLGİLER"
-  contact: "İLETİŞİM"
   social: "Sosyal"
   shipping: "Teslimat"
   shipping_methods: "TESLİMAT YÖNTEMLERİ"
@@ -3161,7 +3164,6 @@ tr:
       report:
         none: "SATIŞ YAPMIYOR"
   order: "Sipariş"
-  distribution: "dağıtım"
   order_details: "sipariş detayları"
   customer_details: "Müşteri detayları"
   adjustments: "Düzeltmeler"
@@ -3554,6 +3556,10 @@ tr:
           from: "Üretici"
           to: "Fatura Adresi"
           shipping: "Teslimat"
+          payments_list:
+            date_time: "Gün/Saat"
+            payment_method: "Ödeme yöntemi"
+            amount: "Tutar"
         form:
           distribution_fields:
             title: "Dağıtım"

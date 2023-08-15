@@ -94,6 +94,39 @@ ru:
             using_producer_stock_settings_but_count_on_hand_set: "должно быть пустым, потому что используются настройки склада производителя"
             on_demand_but_count_on_hand_set: "должен быть пустым, если по требованию'"
             limited_stock_but_no_count_on_hand: "необходимо указать, поскольку принудительный ограниченный запас"
+      messages:
+        blank: "не может быть пустым"
+  errors:
+    messages:
+      content_type_invalid: "имеет неверный тип контента"
+      file_size_out_of_range: "размер %{file_size} не входит в требуемый диапазон"
+      limit_out_of_range: "общее количество вне диапазона"
+      image_metadata_missing: "недопустимое изображение"
+      dimension_min_inclusion: "должно быть больше или равно %{width} x %{height} пикселей."
+      dimension_max_inclusion: "должно быть меньше или равно %{width} x %{height} пикселей."
+      dimension_width_inclusion: "ширина не включена между %{min} и %{max} пикселей."
+      dimension_height_inclusion: "высота не включена между %{min} и %{max} пикселями."
+      dimension_width_greater_than_or_equal_to: "ширина должна быть больше или равна %{length} пикселя."
+      dimension_height_greater_than_or_equal_to: "высота должна быть больше или равна %{length} пикселя."
+      dimension_width_less_than_or_equal_to: "ширина должна быть меньше или равна %{length} пикселя."
+      dimension_height_less_than_or_equal_to: "высота должна быть меньше или равна %{length} пикселя."
+      dimension_width_equal_to: "ширина должна быть равна %{length} пикселю."
+      dimension_height_equal_to: "высота должна быть равна %{length} пикселю."
+      aspect_ratio_not_square: "должно быть квадратное изображение"
+      aspect_ratio_not_portrait: "должно быть портретное изображение"
+      aspect_ratio_not_landscape: "должно быть пейзажное изображение"
+      aspect_ratio_is_not: "должен иметь соотношение сторон %{aspect_ratio}"
+      aspect_ratio_unknown: "имеет неизвестное соотношение сторон"
+      image_not_processable: "недопустимое изображение"
+    not_found:
+      title: "Страница не существует (404)"
+      message_html: "<b>Пожалуйста, попробуйте еще раз</b><p> Это может быть временной проблемой. Нажмите кнопку «Назад», чтобы вернуться к предыдущему экрану, или вернитесь на <a href='/'>Главную</a> страницу и повторите попытку.</p> <b>Свяжитесь с поддержкой</b><p> Если проблема сохраняется или срочная, пожалуйста, сообщите нам об этом. Найдите наши контактные данные на глобальной <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>странице Open Food Network Local</a> .</p><p> Нам очень поможет, если вы сможете дать как можно больше подробностей о том, о чем пропавшая страница.</p>"
+    internal_server_error:
+      title: "Сожалеем, но что-то пошло не так (500)"
+      message_html: "<b>Пожалуйста, попробуйте еще раз</b><p> Это может быть временной проблемой. Нажмите кнопку «Назад», чтобы вернуться к предыдущему экрану, или вернитесь на <a href='/''>главную</a> страницу и повторите попытку.</p> <b>Мы на этом</b><p> Если вы сталкивались с этой проблемой раньше, мы, вероятно, уже знаем о ней и работаем над исправлением. Мы фиксируем все возникающие ошибки.</p> <b>Свяжитесь с поддержкой</b><p> Если проблема сохраняется или срочная, пожалуйста, сообщите нам об этом. Найдите наши контактные данные на глобальной <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>странице Open Food Network Local</a> .</p><p> Нам очень поможет, если вы сможете предоставить как можно больше подробностей о том, что вы делали, когда возникла эта ошибка.</p>"
+    unprocessable_entity:
+      title: "Требуемое изменение было отклонено (422)"
+      message_html: "<p>Требуемое изменение было отклонено. Возможно, вы пытались изменить что-то, к чему у вас нет доступа.<br><h3> <a href='/' >Вернуться домой</a></h3></p>"
   stripe:
     error_code:
       incorrect_number: "Номер карты неверный."
@@ -345,6 +378,7 @@ ru:
   confirm_resend_order_confirmation: "Вы уверены, что хотите повторно отправить письмо с подтверждением заказа?"
   must_have_valid_business_number: " %{enterprise_name} должен быть указан ИНН перед отправкой счетов."
   invoice: "Счёт"
+  invoices: "Счета"
   file: "Файл"
   active: "Активен"
   download: "Скачать"
@@ -369,6 +403,8 @@ ru:
   edit: Изменить
   clone: Клонировать
   distributors: Дистрибьюторы
+  distribution: Дистрибьюция
+  order_cycles: Циклы Заказа
   bulk_order_management: Пакетное Управление Заказами
   enterprises: Предприятия
   enterprise_groups: Группы
@@ -400,6 +436,7 @@ ru:
   powered_by: Работает на
   blocked_cookies_alert: "Ваш браузер может блокировать файлы Cookie, необходимые для использования этой витрины. Нажмите ниже, чтобы разрешить Cookies и перезагрузить страницу."
   allow_cookies: "Разрешить Cookies"
+  none: Ничего
   notes: Заметки
   error: Ошибка
   voucher: Ваучер
@@ -410,6 +447,7 @@ ru:
   clear_filters: Очистить фильтры
   quantity: Количество
   pick_up: Самовывоз
+  ok: OK
   copy: Копия
   change_my_password: "Изменить пароль"
   update_password: "Обновить пароль"
@@ -419,6 +457,7 @@ ru:
   back_to_payments_list: "Назад к Списку Платежей"
   maestro_or_solo_cards: "Дебитовые карты"
   backordered: "Предзаказано"
+  on_hand: "В наличии"
   on hand: "В наличии"
   ship: "Доставка"
   shipping_category: "Категория Доставки"
@@ -518,6 +557,7 @@ ru:
     clear_all: Очистить Всё
     start_date: "Дата С:"
     end_date: "Дата По:"
+    unsaved_changes: "У вас есть несохранённые изменения"
     form_invalid: "Форма содержит пропущенные или неверные поля"
     clear_filters: Сбросить Фильры
     clear: Сбросить
@@ -538,7 +578,6 @@ ru:
     has_one_rule: "имеет одно правило"
     has_n_rules: "имеет %{num} правил"
     unsaved_confirm_leave: "На этой странице есть несохранённые изменения. Продолжить без сохранения?"
-    unsaved_changes: "У вас есть несохранённые изменения"
     available_units: "Доступные Единицы"
     shopfront_settings:
       embedded_shopfront_settings: "Настройки Встроенного Магазина"
@@ -1291,11 +1330,11 @@ ru:
         general_settings: "Основные Настройки"
         incoming: Входящие
         supplier: Поставщик
+        products: Товары
         receival_details: Детали получения
         fees: Сборы
         outgoing: Исходящие
         distributor: Дистрибьютор
-        products: Товары
         tags: Метки
         add_a_tag: Добавить Метку
         delivery_details: Инфорация по Самовывозу / Доставке
@@ -1782,15 +1821,14 @@ ru:
   longitude: Долгота
   longitude_placeholder: например. 144,7851531
   use_geocoder: Автоматически рассчитывать широту и долготу по адресу?
+  state: Область
   postcode: Почтовый индекс
   postcode_placeholder: напр. 240910
   suburb: Город
-  state: Область
   country: Страна
   unauthorized: Неавторизованный
   terms_of_service: "Условия Сервиса"
   on_demand: По запросу
-  none: Ничего
   not_allowed: Не положено
   no_shipping: нет способов доставки
   no_payment: нет способов оплаты
@@ -1798,6 +1836,7 @@ ru:
   unconfirmed: неподтвержден
   days: дней
   authorization_failure: "Ошибка авторизации"
+  description: "Описание"
   label_shop: "Магазин"
   label_shops: "Магазины"
   label_map: "Карта"
@@ -2254,6 +2293,7 @@ ru:
   producers_signup_cta_headline: Подключиться!
   producers_signup_cta_action: Подключиться
   producers_signup_detail: Подробности.
+  producer: Производитель
   products_item: Товар
   products_description: Описание
   products_variant: Вариант
@@ -2527,6 +2567,7 @@ ru:
   bulk: "Массовый"
   shop_variant_quantity_min: "мин"
   shop_variant_quantity_max: "макс"
+  contact: "Контакты"
   follow: "Следовать"
   shop_for_products_html: "Покупайте товары <span class=\"turquoise\">%{enterprise}</span> по адресу:"
   change_shop: "Изменить магазин на:"
@@ -2540,6 +2581,7 @@ ru:
   included_tax: "Включенный налог"
   tax: "Налог"
   tax_amount_included: "%{amount} (включен)"
+  remove_tax: "Удалить налог"
   balance: "Баланс"
   transaction: "Операция"
   transaction_date: "Дата"
@@ -2550,7 +2592,6 @@ ru:
   credit: "Кредит"
   Paid: "Оплачен"
   Ready: "Готово"
-  ok: OK
   not_visible: невидимый
   you_have_no_orders_yet: "У Вас еще нет заказов"
   show_only_complete_orders: "Показывать только завершенные заказы"
@@ -2602,7 +2643,6 @@ ru:
   delivery_method: Способ Доставки
   fee_type: "Тип Сбора"
   tax_category: "Налоговая Категория"
-  description: "Описание"
   display: "Показать"
   tags: "Метки"
   calculator: "Калькулятор"
@@ -2635,10 +2675,8 @@ ru:
   no_customers_found: "Клиенты не найдены"
   go: "Вперёд"
   hub: "Центр"
-  producer: "Производитель"
   product: "Продукт"
   price: "Цена"
-  on_hand: "Наличие"
   review: "Просмотр"
   save_changes: "Сохранить Изменения"
   order_saved: "Заказ Сохранён"
@@ -2690,9 +2728,7 @@ ru:
   edit_profile_details: "Изменить детали профиля"
   edit_profile_details_etc: "Изменить Ваши описание профиля, изображения и т.п."
   order_cycle: "Цикл заказа"
-  order_cycles: "Циклы Заказа"
   enterprise_relationships: "Разрешения Предприятия"
-  remove_tax: "Удалить налог"
   first_name_begins_with: "Имя начинается на"
   last_name_begins_with: "Фамилия начинается на"
   shipping_method: "Способ Доставки"
@@ -2749,8 +2785,8 @@ ru:
   report_header_comments: Комментарии
   report_header_first_name: Имя
   report_header_last_name: Фамилия
-  report_header_phone: Телефон
   report_header_suburb: Город
+  report_header_phone: Телефон
   report_header_address: Адрес
   report_header_billing_address: Платёжный Адрес
   report_header_relationship: Отношения
@@ -2934,7 +2970,6 @@ ru:
   images: "Изображения"
   web: "Веб"
   primary_details: "Основная Информация"
-  contact: "Контакты"
   social: "Социальные сети"
   shipping: "Доставка"
   shipping_methods: "Способы Доставки"
@@ -2995,7 +3030,6 @@ ru:
   no_orders_found: "Заказов Не Найдено"
   order_information: "Информация по Заказу"
   new_payment: "Новый Платёж"
-  new_invoice: "Новый Счет"
   date_completed: "Дата Завершения"
   amount: "К оплате"
   invoice_number: "Номер Счета"
@@ -3546,12 +3580,10 @@ ru:
       report:
         none: "Нет"
   order: "Заказ"
-  distribution: "Дистрибьюция"
   order_details: "Информация по Заказу"
   customer_details: "Информация о Клиенте"
   adjustments: "Корректировки"
   payments: "Платежи"
-  invoices: "Счета"
   return_authorizations: "Разрешения на возврат"
   credit_owed: "Кредит"
   new_adjustment: "Новая Корректировка"
@@ -3660,7 +3692,6 @@ ru:
     tracking: "Отслеживание"
     tracking_number: "Номер Отслеживания"
     order_total: "Итоговый Заказ"
-    order_updated: "Заказ обновлен"
     customer_details: "Информация о Клиенте"
     customer_details_updated: "Информация о Клиенте обновлена"
     customer_search: "Поиск Клиента"
@@ -3967,6 +3998,10 @@ ru:
           to: "Плательщик"
           shipping: "Доставка"
           invoice_number: "Номер Счета"
+          payments_list:
+            date_time: "Дата/Время"
+            payment_method: "Способ оплаты"
+            amount: "Количество"
         note:
           note_label: "Примечание:"
           no_note_present: "Примечаний нет."
@@ -4519,16 +4554,6 @@ ru:
         few: "%{count} лет"
         many: "%{count} лет"
         other: "%{count} лет"
-  errors:
-    not_found:
-      title: "Страница не существует (404)"
-      message_html: "<b>Пожалуйста, попробуйте еще раз</b><p> Это может быть временной проблемой. Нажмите кнопку «Назад», чтобы вернуться к предыдущему экрану, или вернитесь на <a href='/'>Главную</a> страницу и повторите попытку.</p> <b>Свяжитесь с поддержкой</b><p> Если проблема сохраняется или срочная, пожалуйста, сообщите нам об этом. Найдите наши контактные данные на глобальной <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>странице Open Food Network Local</a> .</p><p> Нам очень поможет, если вы сможете дать как можно больше подробностей о том, о чем пропавшая страница.</p>"
-    internal_server_error:
-      title: "Сожалеем, но что-то пошло не так (500)"
-      message_html: "<b>Пожалуйста, попробуйте еще раз</b><p> Это может быть временной проблемой. Нажмите кнопку «Назад», чтобы вернуться к предыдущему экрану, или вернитесь на <a href='/''>главную</a> страницу и повторите попытку.</p> <b>Мы на этом</b><p> Если вы сталкивались с этой проблемой раньше, мы, вероятно, уже знаем о ней и работаем над исправлением. Мы фиксируем все возникающие ошибки.</p> <b>Свяжитесь с поддержкой</b><p> Если проблема сохраняется или срочная, пожалуйста, сообщите нам об этом. Найдите наши контактные данные на глобальной <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>странице Open Food Network Local</a> .</p><p> Нам очень поможет, если вы сможете предоставить как можно больше подробностей о том, что вы делали, когда возникла эта ошибка.</p>"
-    unprocessable_entity:
-      title: "Требуемое изменение было отклонено (422)"
-      message_html: "<p>Требуемое изменение было отклонено. Возможно, вы пытались изменить что-то, к чему у вас нет доступа.<br><h3> <a href='/' >Вернуться домой</a></h3></p>"
   components:
     multiple_checked_select:
       filter_placeholder: "Параметры фильтра"

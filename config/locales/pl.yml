@@ -62,6 +62,8 @@ pl:
             using_producer_stock_settings_but_count_on_hand_set: "musi być puste, ponieważ używane są ustawienia zapasów producenta"
             on_demand_but_count_on_hand_set: "musi być puste, jeśli na żądanie"
             limited_stock_but_no_count_on_hand: "należy określić, z powodu ograniczonych zapasów"
+      messages:
+        blank: "nie może być puste"
   stripe:
     error_code:
       incorrect_number: "Numer karty jest nieprawidłowy."
@@ -234,6 +236,8 @@ pl:
   edit: Edytuj
   clone: Kopiuj
   distributors: Dystrybutorzy
+  distribution: Dystrybucja
+  order_cycles: Cykle zamówień
   bulk_order_management: Zbiorcze zarządzanie zamówieniami
   enterprises: Podmioty
   enterprise_groups: Grupy
@@ -265,6 +269,7 @@ pl:
   powered_by: Obsługiwane przez
   blocked_cookies_alert: "Twoja przeglądarka może blokować pliki cookie potrzebne do korzystania z tej witryny sklepowej. Kliknij poniżej, aby zezwolić na pliki cookie i ponownie załadować stronę."
   allow_cookies: "Zezwalaj na pliki cookie"
+  none: Brak
   notes: Uwagi
   error: Błąd
   processing_payment: "Przetwarzanie płatności ..."
@@ -272,6 +277,7 @@ pl:
   filter_results: Filtruj wyniki
   quantity: Ilość
   pick_up: Odbiór
+  ok: ok
   copy: Kopiuj
   change_my_password: "Zmień moje hasło"
   update_password: "Aktualinij hasło"
@@ -281,6 +287,7 @@ pl:
   back_to_payments_list: "Powrót do listy płatności"
   maestro_or_solo_cards: "Karty Maestro / Solo"
   backordered: "Zamówienie zaległe"
+  on_hand: "Dostępne"
   on hand: "Dostępne"
   ship: "Wyślij"
   shipping_category: "Kategoria dostawy"
@@ -359,6 +366,7 @@ pl:
     clear_all: Wyczyść wszystko
     start_date: "Data rozpoczęcia"
     end_date: "Data zakończenia"
+    unsaved_changes: "Masz niezapisane zmiany"
     form_invalid: "Formularz zawiera brakujące lub nieprawidłowe pola"
     clear_filters: Wyczyść filtry
     clear: Wyczyść
@@ -379,7 +387,6 @@ pl:
     has_one_rule: "ma jedną zasadę"
     has_n_rules: "ma %{num} zasad"
     unsaved_confirm_leave: "Na tej stronie są niezapisane zmiany. Kontynuować bez zapisu?"
-    unsaved_changes: "Masz niezapisane zmiany"
     shopfront_settings:
       embedded_shopfront_settings: "Ustawienia wbudowanej witryny sklepowej"
       enable_embedded_shopfronts: "Włącz osadzone witryny sklepowe"
@@ -999,11 +1006,11 @@ pl:
         general_settings: "Ustawienia główne"
         incoming: Przychodzący
         supplier: Dostawca
+        products: Produkty
         receival_details: Szczegóły odbioru
         fees: Opłaty
         outgoing: Towarzyski
         distributor: Dystrybutor
-        products: Produkty
         tags: Tagi
         add_a_tag: Dodać etykietę
         delivery_details: Szczegóły odbioru / dostawy
@@ -1368,15 +1375,14 @@ pl:
   address2: Adres (cd.)
   city: Miasto
   city_placeholder: np. Poznań
+  state: Status
   postcode: Kod pocztowy
   postcode_placeholder: np. 60-234
   suburb: Lokalizacja
-  state: Status
   country: Kraj
   unauthorized: Nieautoryzowany
   terms_of_service: "Warunki usługi"
   on_demand: Na żądanie
-  none: Brak
   not_allowed: Nie dozwolony
   no_shipping: brak metod dostaw
   no_payment: brak metod płatności
@@ -1384,6 +1390,7 @@ pl:
   unconfirmed: niepotwierdzony
   days: dni
   authorization_failure: "Niepowodzenie autoryzacji"
+  description: "Opis"
   label_shop: "Sklep"
   label_shops: "Sklepy"
   label_map: "Mapa"
@@ -1752,6 +1759,7 @@ pl:
   producers_signup_cta_headline: Dołącz teraz!
   producers_signup_cta_action: Dołącz teraz
   producers_signup_detail: Oto szczegóły.
+  producer: Producent
   products_item: Pozycja
   products_description: Opis
   products_variant: Wariant
@@ -2013,6 +2021,7 @@ pl:
   bulk: "Wielka ilość"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
+  contact: "Kontakt"
   follow: "Obserwuj"
   shop_for_products_html: "<span class=\"turquoise\">%{enterprise}</span> - te produkty kupisz w następujących miejscach: "
   change_shop: "Zmień sklep na:"
@@ -2024,6 +2033,7 @@ pl:
   fundraising_fee: "Opłata za zbiórkę pieniędzy"
   price_graph: "Wykres cen"
   included_tax: "Podatek wliczony w cenę"
+  remove_tax: "Usuń podatek"
   balance: "Saldo"
   transaction: "Transakcja"
   transaction_date: "Data"
@@ -2034,7 +2044,6 @@ pl:
   credit: "Kredyt"
   Paid: "Opłacony"
   Ready: "Gotowy"
-  ok: ok
   not_visible: niewidoczny
   you_have_no_orders_yet: "Nie masz jeszcze żadnych zamówień"
   show_only_complete_orders: "Pokaż tylko kompletne zamówienia"
@@ -2086,7 +2095,6 @@ pl:
   delivery_method: Sposób dostawy
   fee_type: "Typ opłaty"
   tax_category: "Kategoria podatku"
-  description: "Opis"
   tags: "Tagi"
   calculator: "Kalkulator"
   calculator_values: "Wartości kalkulatora"
@@ -2115,10 +2123,8 @@ pl:
   no_customers_found: "Nie znaleziono klientów"
   go: "Przejdź"
   hub: "Hub"
-  producer: "Producent"
   product: "Produkt"
   price: "Cena"
-  on_hand: "Dostępne"
   review: "Przejrzyj"
   save_changes: "Zapisz zmiany"
   order_saved: "Zamówienie zostało zapisane"
@@ -2169,9 +2175,7 @@ pl:
   edit_profile_details: "Edytuj szczegóły profilu"
   edit_profile_details_etc: "Zmień opis profilu, zdjęcia itp."
   order_cycle: "Cykl zamówień"
-  order_cycles: "Cykle zamówień"
   enterprise_relationships: "Uprawnienia podmiotu"
-  remove_tax: "Usuń podatek"
   first_name_begins_with: "Imię zaczyna się od"
   last_name_begins_with: "Nazwisko zaczyna się od"
   shipping_method: "Metoda dostawy"
@@ -2220,8 +2224,8 @@ pl:
   report_header_comments: Komentarze
   report_header_first_name: Imię
   report_header_last_name: Nazwisko
-  report_header_phone: Telefon
   report_header_suburb: Lokalizacja
+  report_header_phone: Telefon
   report_header_address: Adres
   report_header_billing_address: Adres rozliczeniowy
   report_header_relationship: Związek
@@ -2373,7 +2377,6 @@ pl:
   images: "Obrazy"
   web: "Sieć"
   primary_details: "Podstawowe szczegóły"
-  contact: "Kontakt"
   social: "Społeczności"
   shipping: "Dostawa"
   shipping_methods: "Metody dostaw"
@@ -2930,7 +2933,6 @@ pl:
       report:
         none: "Nic"
   order: "Zamówienie"
-  distribution: "Dystrybucja"
   order_details: "Szczegóły zamówienia"
   customer_details: "Szczegóły klienta"
   adjustments: "Korekty"
@@ -3247,6 +3249,8 @@ pl:
           from: "Od"
           to: "Bill to"
           shipping: "Dostawa"
+          payments_list:
+            amount: "Kwota"
         form:
           distribution_fields:
             title: "Dystrybucja"

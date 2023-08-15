@@ -67,6 +67,16 @@ hu:
             using_producer_stock_settings_but_count_on_hand_set: "üresnek kell lennie, mert a termelői készlet beállításait használja"
             on_demand_but_count_on_hand_set: "Igény esetén üresnek kell lennie"
             limited_stock_but_no_count_on_hand: "meg kell adni, mert korlátozott a készlet"
+      messages:
+        blank: "nem lehet üres"
+  errors:
+    messages:
+      file_size_out_of_range: "a 1%{file_size} mérete nem esik bele a kívánt tartományba"
+      limit_out_of_range: "az összmenyiség kívül esik a megengedett tartományon"
+      image_metadata_missing: "nem használható kép"
+      aspect_ratio_not_square: "négyzet alakú képnek kell lennie"
+      aspect_ratio_not_portrait: "portré képnek kell lennie"
+      image_not_processable: "nem használható kép"
   stripe:
     error_code:
       incorrect_number: "A kártyaszám hibás."
@@ -330,6 +340,8 @@ hu:
   edit: Szerkesztés
   clone: Klón
   distributors: Forgalmazók
+  distribution: terjesztés
+  order_cycles: Rendelési ciklusok
   bulk_order_management: Tömeges megrendelés kezelése
   enterprises: Vállalkozások
   enterprise_groups: Csoportok
@@ -361,6 +373,7 @@ hu:
   powered_by: Powered by
   blocked_cookies_alert: "Előfordulhat, hogy az Ön böngészője blokkolja az oldal használatához szükséges cookie-kat. Kattintson az alábbi gombra a cookie-k engedélyezéséhez és az oldal újratöltéséhez."
   allow_cookies: "Cookie-k engedélyezése"
+  none: Egyik sem
   notes: Megjegyzések
   error: Hiba
   processing_payment: "Fizetés feldolgozása..."
@@ -370,6 +383,7 @@ hu:
   clear_filters: Szűrők törlése
   quantity: Mennyiség
   pick_up: Átvétel
+  ok: rendben
   copy: Másolat
   change_my_password: "Változtasd meg a jelszavamat"
   update_password: "Frissítse a jelszót"
@@ -379,6 +393,7 @@ hu:
   back_to_payments_list: "Vissza a fizetési listához"
   maestro_or_solo_cards: "Maestro/Solo kártyák"
   backordered: "Hátrarendelt"
+  on_hand: "Készlet"
   on hand: "Készlet"
   ship: "Szállítás"
   shipping_category: "Szállítási mód"
@@ -475,6 +490,7 @@ hu:
     clear_all: Mindent kitöröl
     start_date: "Kezdő dátum"
     end_date: "Befejezés dátuma"
+    unsaved_changes: "Nem mentett módosításai vannak"
     form_invalid: "Az űrlap hiányzó vagy érvénytelen mezőket tartalmaz"
     clear_filters: Szűrők törlése
     clear: Törlés
@@ -495,7 +511,6 @@ hu:
     has_one_rule: "egy szabálya van"
     has_n_rules: "%{num} szabálya van"
     unsaved_confirm_leave: "Ezen az oldalon vannak nem mentett módosítások. Folytatás mentés nélkül?"
-    unsaved_changes: "Nem mentett módosításai vannak"
     available_units: "Rendelkezésre álló egységek"
     shopfront_settings:
       embedded_shopfront_settings: "Beágyazott kirakatbeállítások"
@@ -1216,11 +1231,11 @@ hu:
         general_settings: "Általános beállítások"
         incoming: Beérkező
         supplier: Termelő
+        products: Termékek
         receival_details: Átvétel részletei
         fees: Díjak
         outgoing: Kimenő
         distributor: Elosztó
-        products: Termékek
         tags: Címkék
         add_a_tag: Adjon hozzá egy címkét
         delivery_details: Átvételi/szállítási részletek
@@ -1658,15 +1673,14 @@ hu:
   longitude: Hosszúság
   longitude_placeholder: például. 144.7851531
   use_geocoder: Automatikusan kiszámítja a szélességi és hosszúsági fokokat a címből?
+  state: Ország
   postcode: Irányítószám
   postcode_placeholder: például. 3070
   suburb: Település
-  state: Ország
   country: Ország
   unauthorized: Jogosulatlan
   terms_of_service: "Szolgáltatás feltételei"
   on_demand: Igény szerint
-  none: Egyik sem
   not_allowed: Nem megengedett
   no_shipping: nincs szállítási mód
   no_payment: nincs fizetési mód
@@ -1674,6 +1688,7 @@ hu:
   unconfirmed: nem megerősített
   days: nap
   authorization_failure: "Engedélyezési hiba"
+  description: "Leírás"
   label_shop: "Átadópont"
   label_shops: "Átadópontok"
   label_map: "Térkép"
@@ -2113,6 +2128,7 @@ hu:
   producers_signup_cta_headline: Csatlakozz most!
   producers_signup_cta_action: Csatlakozz most
   producers_signup_detail: Itt a részlet.
+  producer: Termelő
   products_item: Tétel
   products_description: Leírás
   products_variant: Változat
@@ -2385,6 +2401,7 @@ hu:
   bulk: "Tömeges"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
+  contact: "Kapcsolat"
   follow: "Kövesse"
   shop_for_products_html: "Vásároljon <span class=turquoise>%{enterprise}</span> termékeket itt:"
   change_shop: "Átadópont módosítása erre:"
@@ -2398,6 +2415,7 @@ hu:
   included_tax: "Tartalmazza az adót"
   tax: "Adó"
   tax_amount_included: "%{amount} (beleértve)"
+  remove_tax: "Távolítsa el az adót"
   balance: "Egyensúly"
   transaction: "Tranzakció"
   transaction_date: "A dátum #Tranzakció csak a :dátummal való ütközés elkerülése érdekében kulcsfontosságú"
@@ -2408,7 +2426,6 @@ hu:
   credit: "Hitel"
   Paid: "Fizetett"
   Ready: "Kész"
-  ok: rendben
   not_visible: nem látható
   you_have_no_orders_yet: "Még nincs rendelésed"
   show_only_complete_orders: "Csak a teljes megrendeléseket jelenítse meg"
@@ -2459,7 +2476,6 @@ hu:
   delivery_method: szállítási mód
   fee_type: "Díjtípus"
   tax_category: "Adókategória"
-  description: "Leírás"
   display: "Kijelző"
   tags: "Címkék"
   calculator: "Kiszámítási mód"
@@ -2492,10 +2508,8 @@ hu:
   no_customers_found: "Nem található ügyfelek"
   go: "Megy"
   hub: "Átadópont"
-  producer: "Termelő"
   product: "Termék"
   price: "Ár"
-  on_hand: "Készlet"
   review: "Felülvizsgálat"
   save_changes: "Változtatások mentése"
   order_saved: "Rendelés mentve"
@@ -2547,9 +2561,7 @@ hu:
   edit_profile_details: "Profiladatok szerkesztése"
   edit_profile_details_etc: "Változtasd meg profilod leírását, képeidet stb."
   order_cycle: "Rendelési ciklus"
-  order_cycles: "Rendelési ciklusok"
   enterprise_relationships: "Vállalkozási engedélyek"
-  remove_tax: "Távolítsa el az adót"
   first_name_begins_with: "A keresztnév ezzel kezdődik"
   last_name_begins_with: "A vezetéknév karakterrel kezdődik"
   shipping_method: "Szállítási Mód"
@@ -2606,8 +2618,8 @@ hu:
   report_header_comments: Hozzászólások
   report_header_first_name: Keresztnév
   report_header_last_name: Vezetéknév
-  report_header_phone: Telefon
   report_header_suburb: Település
+  report_header_phone: Telefon
   report_header_address: Cím
   report_header_billing_address: számlázási cím
   report_header_relationship: Kapcsolat
@@ -2773,7 +2785,6 @@ hu:
   images: "Képek"
   web: "Web"
   primary_details: "Főbb adatok"
-  contact: "Kapcsolat"
   social: "Közösségi média"
   shipping: "Szállítás"
   shipping_methods: "Szállítási módok"
@@ -3354,7 +3365,6 @@ hu:
       report:
         none: "Egyik sem"
   order: "Rendelés"
-  distribution: "terjesztés"
   order_details: "Megrendelés részletei"
   customer_details: "Vásárló adatai"
   adjustments: "Kiigazítások"
@@ -3458,7 +3468,6 @@ hu:
     tracking: "Követés"
     tracking_number: "Nyomon követési szám"
     order_total: "Rendelés Összesen"
-    order_updated: "A megrendelés frissítve."
     customer_details: "Vásárló adatai"
     customer_details_updated: "Ügyféladatok frissítve"
     customer_search: "Ügyfélkeresés"
@@ -3751,6 +3760,10 @@ hu:
           code: "Kód"
           to: "Bill to"
           shipping: "Szállítás"
+          payments_list:
+            date_time: "Dátum idő"
+            payment_method: "Fizetési mód"
+            amount: "Összeg"
         note:
           note_label: "Megjegyzés:"
           no_note_present: "Nincs megjegyzés."

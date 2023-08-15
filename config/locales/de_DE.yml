@@ -94,6 +94,39 @@ de_DE:
             using_producer_stock_settings_but_count_on_hand_set: "muss leer sein, da die Einstellungen des Produzentenbestands verwendet werden"
             on_demand_but_count_on_hand_set: "muss leer sein, wenn unbegrenzt verfügbar oder die Produktion auf Bestellung erfolgt"
             limited_stock_but_no_count_on_hand: "muss angegeben werden, da nur begrenzte Lagerbestände verfügbar sind"
+      messages:
+        blank: "darf nicht leer sein."
+  errors:
+    messages:
+      content_type_invalid: "hat ein ungültiges Datenformat"
+      file_size_out_of_range: "Dateigröße %{file_size} liegt außerhalb des zulässigen Bereichs"
+      limit_out_of_range: "Gesamtzahl liegt außerhalb des zulässigen Bereichs"
+      image_metadata_missing: "ist kein gültiges Bild"
+      dimension_min_inclusion: "muss größer oder gleich %{width} x %{height} Pixel sein"
+      dimension_max_inclusion: "muss kleiner oder gleich %{width} x %{height} Pixel sein"
+      dimension_width_inclusion: "Breite liegt nicht zwischen %{min} und %{max} Pixel"
+      dimension_height_inclusion: "Höhe liegt nicht zwischen %{min} und %{max} Pixel"
+      dimension_width_greater_than_or_equal_to: "Breite muss größer oder gleich %{length} Pixel sein"
+      dimension_height_greater_than_or_equal_to: "Höhe muss größer oder gleich %{length} Pixel sein"
+      dimension_width_less_than_or_equal_to: "Breite muss kleiner oder gleich %{length} Pixel sein"
+      dimension_height_less_than_or_equal_to: "Höhe muss kleiner oder gleich %{length} Pixel sein"
+      dimension_width_equal_to: "Breite muss %{length} Pixel sein"
+      dimension_height_equal_to: "Höhe muss %{length} Pixel sein"
+      aspect_ratio_not_square: "muss ein quadratisches Bild sein"
+      aspect_ratio_not_portrait: "muss ein Bild im Hochformat sein"
+      aspect_ratio_not_landscape: "muss ein Bild im Querformat sein"
+      aspect_ratio_is_not: "muss ein Seitenverhältnis von %{aspect_ratio} haben"
+      aspect_ratio_unknown: "hat ein unbekanntes Seitenverhältnis"
+      image_not_processable: "ist kein gültiges Bild"
+    not_found:
+      title: "Die gesuchte Seite existiert nicht (404). "
+      message_html: "<b>Bitte versuchen Sie es erneut</b><p> Dies könnte ein vorübergehendes Problem sein. Bitte klicken Sie auf die Zurück-Schaltfläche, um zum vorherigen Bildschirm zurückzukehren, oder gehen Sie zurück zur <a href='/'>Startseite</a> und versuchen Sie es erneut.</p> <b>Kontaktieren Sie den Support</b><p> Wenn das Problem weiterhin besteht oder dringend ist, teilen Sie uns dies bitte mit. Unsere Kontaktdaten finden Sie auf der <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>lokalen Seite des globalen Open Food Network</a> .</p><p> Es hilft uns sehr, wenn Sie so detailliert wie möglich angeben können, worum es auf der fehlenden Seite geht.</p>"
+    internal_server_error:
+      title: "Es tut uns leid, aber etwas ist schief gelaufen (500). "
+      message_html: "<b>Bitte versuchen Sie es erneut</b><p> Dies könnte ein vorübergehendes Problem sein. Bitte klicken Sie auf die Zurück-Schaltfläche, um zum vorherigen Bildschirm zurückzukehren, oder gehen Sie zurück zur <a href='/''>Startseite</a> und versuchen Sie es erneut.</p> <b>Wir kümmern uns</b><p> Wenn Sie dieses Problem schon einmal gesehen haben, kennen wir es wahrscheinlich bereits und arbeiten an einer Lösung. Wir erfassen alle auftretenden Fehler.</p> <b>Kontaktieren Sie den Support</b><p> Wenn das Problem weiterhin besteht oder dringend ist, teilen Sie uns dies bitte mit. Unsere Kontaktdaten finden Sie auf der <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>lokalen Seite des globalen Open Food Network</a> .</p><p> Es hilft uns sehr, wenn Sie so detailliert wie möglich angeben, was Sie getan haben, als dieser Fehler auftrat.</p>"
+    unprocessable_entity:
+      title: "Die gewünschte Änderung wurde abgelehnt (422). "
+      message_html: "<p>Die gewünschte Änderung wurde abgelehnt. Vielleicht haben Sie versucht, etwas zu ändern, auf das Sie keinen Zugriff haben.<br><h3> <a href='/' >Zur Startseite zurückkehren</a></h3></p>"
   stripe:
     error_code:
       incorrect_number: "Die Kreditkartennummer ist fehlerhaft."
@@ -366,6 +399,8 @@ de_DE:
   edit: Bearbeiten
   clone: Duplizieren
   distributors: Verteilstellen
+  distribution: Verteilung
+  order_cycles: Bestellzyklen
   bulk_order_management: Massenbearbeitung von Bestellungen
   enterprises: Unternehmen
   enterprise_groups: Gruppen
@@ -397,6 +432,7 @@ de_DE:
   powered_by: Unterstützt von
   blocked_cookies_alert: "Ihr Browser blockiert möglicherweise Cookies, die für die Verwendung dieses Online-Shops erforderlich sind. Klicken Sie unten, um Cookies zuzulassen und die Seite neu zu laden."
   allow_cookies: "Cookies erlauben"
+  none: Keine
   notes: Anmerkungen
   error: Fehler
   processing_payment: "Bezahlung wird verarbeitet ..."
@@ -406,6 +442,7 @@ de_DE:
   clear_filters: Zurücksetzen
   quantity: Menge
   pick_up: Abholen
+  ok: OK
   copy: Kopieren
   change_my_password: "Passwort ändern"
   update_password: "Passwort erneuern"
@@ -415,6 +452,7 @@ de_DE:
   back_to_payments_list: "Zurück zur Zahlungsliste"
   maestro_or_solo_cards: "Maestro/Solo-Karten"
   backordered: "nachbestellt"
+  on_hand: "Verfügbar"
   on hand: "Verfügbar"
   ship: "Liefern"
   shipping_category: "Lieferkategorie"
@@ -514,6 +552,7 @@ de_DE:
     clear_all: Zurücksetzen
     start_date: "Anfangsdatum"
     end_date: "Enddatum"
+    unsaved_changes: "Sie haben ungespeicherte Änderungen!"
     form_invalid: "Das Formular enthält fehlende oder ungültige Angaben."
     clear_filters: Zurücksetzen
     clear: Zurücksetzen
@@ -534,7 +573,6 @@ de_DE:
     has_one_rule: "hat eine Regel"
     has_n_rules: "hat %{num} Regeln"
     unsaved_confirm_leave: "Es gibt ungespeicherte Änderungen auf dieser Seite. Möchten Sie ohne Speichern fortfahren?"
-    unsaved_changes: "Sie haben ungespeicherte Änderungen!"
     available_units: "Verfügbare Einheiten"
     shopfront_settings:
       embedded_shopfront_settings: "Einstellungen für eingebettete Gruppen"
@@ -1284,11 +1322,11 @@ de_DE:
         general_settings: "Allgemeine Einstellungen"
         incoming: Eingehende Produkte
         supplier: Lieferant
+        products: Produkte
         receival_details: Lieferinformation
         fees: Gebühren
         outgoing: Ausgehende Produkte
         distributor: Verteilstelle
-        products: Produkte
         tags: Stichwörter
         add_a_tag: Stichwort hinzufügen
         delivery_details: Abhol-/Lieferinformationen
@@ -1766,15 +1804,14 @@ de_DE:
   longitude: Längengrad
   longitude_placeholder: z. B. 10.33109
   use_geocoder: Breiten- und Längengrad automatisch aus der Adresse bestimmen
+  state: Bundesland
   postcode: Postleitzahl
   postcode_placeholder: z. B. 30701
   suburb: Ort
-  state: Bundesland
   country: Land
   unauthorized: Nicht autorisiert
   terms_of_service: "Nutzungsbedingungen"
   on_demand: Unbegrenzt/auf Bestellung
-  none: Keine
   not_allowed: Nicht erlaubt
   no_shipping: keine Lieferoptionen
   no_payment: keine Zahlungsarten
@@ -1782,6 +1819,7 @@ de_DE:
   unconfirmed: unbestätigt
   days: Tage
   authorization_failure: "Fehler bei der Autorisierung"
+  description: "Beschreibung"
   label_shop: "Laden"
   label_shops: "Einkaufen"
   label_map: "Karte"
@@ -2237,6 +2275,7 @@ de_DE:
   producers_signup_cta_headline: Jetzt mitmachen!
   producers_signup_cta_action: Jetzt beitreten
   producers_signup_detail: Weitere Details folgen.
+  producer: Produzent
   products_item: Artikel
   products_description: Beschreibung
   products_variant: Produktvariante
@@ -2509,6 +2548,7 @@ de_DE:
   bulk: "Gruppenkauf"
   shop_variant_quantity_min: "Min"
   shop_variant_quantity_max: "Max"
+  contact: "Kontakt"
   follow: "Folgen"
   shop_for_products_html: "Hier erhalten Sie <span class=\"turquoise\">%{enterprise}</span>-Produkte:"
   change_shop: "In diesen Laden wechseln:"
@@ -2522,6 +2562,7 @@ de_DE:
   included_tax: "inkl. Steuern"
   tax: "Steuern"
   tax_amount_included: "%{amount} (im Preis enthalten)"
+  remove_tax: "Steuer löschen"
   balance: "Saldo"
   transaction: "Transaktion"
   transaction_date: "Datum"
@@ -2532,7 +2573,6 @@ de_DE:
   credit: "Guthaben"
   Paid: "Bezahlt"
   Ready: "Bereit"
-  ok: OK
   not_visible: nicht sichtbar
   you_have_no_orders_yet: "Sie haben noch keine Bestellungen."
   show_only_complete_orders: "Nur abgeschlossene Bestellungen anzeigen"
@@ -2584,7 +2624,6 @@ de_DE:
   delivery_method: Lieferoption
   fee_type: "Art der Gebühr"
   tax_category: "Steuerkategorie"
-  description: "Beschreibung"
   display: "Anzeige"
   tags: "Stichwörter"
   calculator: "Berechnung"
@@ -2617,10 +2656,8 @@ de_DE:
   no_customers_found: "Keine Kunden gefunden."
   go: "Suche"
   hub: "Hub"
-  producer: "Produzent"
   product: "Produkt"
   price: "Preis"
-  on_hand: "Verfügbar"
   review: "Überprüfung"
   save_changes: "Änderungen speichern"
   order_saved: "Bestellung gespeichert"
@@ -2672,9 +2709,7 @@ de_DE:
   edit_profile_details: "Details und Einstellungen bearbeiten"
   edit_profile_details_etc: "Ändern Sie Ihre Unternehmensbeschreibung, Bilder, Zahlungsarten, Lieferoptionen und weitere Einstellungen."
   order_cycle: "Bestellzyklus"
-  order_cycles: "Bestellzyklen"
   enterprise_relationships: "Unternehmensberechtigungen"
-  remove_tax: "Steuer löschen"
   first_name_begins_with: "Vorname beginnt mit"
   last_name_begins_with: "Nachname beginnt mit"
   shipping_method: "Lieferoption"
@@ -2731,8 +2766,8 @@ de_DE:
   report_header_comments: Kommentare
   report_header_first_name: Vorname
   report_header_last_name: Nachname
-  report_header_phone: Telefonnummer
   report_header_suburb: Ort
+  report_header_phone: Telefonnummer
   report_header_address: Adresse
   report_header_billing_address: Rechnungsadresse
   report_header_relationship: Beziehung
@@ -2916,7 +2951,6 @@ de_DE:
   images: "Bilder"
   web: "Internet"
   primary_details: "Unternehmen"
-  contact: "Kontakt"
   social: "Soziale Medien"
   shipping: "Lieferung"
   shipping_methods: "Lieferoptionen"
@@ -3477,7 +3511,6 @@ de_DE:
       report:
         none: "Keine"
   order: "Bestellung"
-  distribution: "Verteilung"
   order_details: "Bestelldetails"
   customer_details: "Kundendetails"
   adjustments: "Anpassungen"
@@ -3590,7 +3623,6 @@ de_DE:
     tracking: "Sendungsverfolgung"
     tracking_number: "Sendungscode"
     order_total: "Bestellung insgesamt"
-    order_updated: "Bestellung wurde aktualisiert."
     customer_details: "Kundendetails"
     customer_details_updated: "Kundendetails gespeichert"
     customer_search: "Kundensuche"
@@ -3896,6 +3928,10 @@ de_DE:
           from: "Von"
           to: "Rechnungsempfänger"
           shipping: "Lieferung"
+          payments_list:
+            date_time: "Datum/Uhrzeit"
+            payment_method: "Zahlungsart"
+            amount: "Summe"
         note:
           note_label: "Anmerkung:"
           no_note_present: "Keine Anmerkung vorhanden."
@@ -4418,16 +4454,6 @@ de_DE:
       x_years:
         one: "1 Jahr"
         other: "%{count} Jahren"
-  errors:
-    not_found:
-      title: "Die gesuchte Seite existiert nicht (404). "
-      message_html: "<b>Bitte versuchen Sie es erneut</b><p> Dies könnte ein vorübergehendes Problem sein. Bitte klicken Sie auf die Zurück-Schaltfläche, um zum vorherigen Bildschirm zurückzukehren, oder gehen Sie zurück zur <a href='/'>Startseite</a> und versuchen Sie es erneut.</p> <b>Kontaktieren Sie den Support</b><p> Wenn das Problem weiterhin besteht oder dringend ist, teilen Sie uns dies bitte mit. Unsere Kontaktdaten finden Sie auf der <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>lokalen Seite des globalen Open Food Network</a> .</p><p> Es hilft uns sehr, wenn Sie so detailliert wie möglich angeben können, worum es auf der fehlenden Seite geht.</p>"
-    internal_server_error:
-      title: "Es tut uns leid, aber etwas ist schief gelaufen (500). "
-      message_html: "<b>Bitte versuchen Sie es erneut</b><p> Dies könnte ein vorübergehendes Problem sein. Bitte klicken Sie auf die Zurück-Schaltfläche, um zum vorherigen Bildschirm zurückzukehren, oder gehen Sie zurück zur <a href='/''>Startseite</a> und versuchen Sie es erneut.</p> <b>Wir kümmern uns</b><p> Wenn Sie dieses Problem schon einmal gesehen haben, kennen wir es wahrscheinlich bereits und arbeiten an einer Lösung. Wir erfassen alle auftretenden Fehler.</p> <b>Kontaktieren Sie den Support</b><p> Wenn das Problem weiterhin besteht oder dringend ist, teilen Sie uns dies bitte mit. Unsere Kontaktdaten finden Sie auf der <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>lokalen Seite des globalen Open Food Network</a> .</p><p> Es hilft uns sehr, wenn Sie so detailliert wie möglich angeben, was Sie getan haben, als dieser Fehler auftrat.</p>"
-    unprocessable_entity:
-      title: "Die gewünschte Änderung wurde abgelehnt (422). "
-      message_html: "<p>Die gewünschte Änderung wurde abgelehnt. Vielleicht haben Sie versucht, etwas zu ändern, auf das Sie keinen Zugriff haben.<br><h3> <a href='/' >Zur Startseite zurückkehren</a></h3></p>"
   components:
     multiple_checked_select:
       filter_placeholder: "Suche"

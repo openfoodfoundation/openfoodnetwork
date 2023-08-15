@@ -81,6 +81,39 @@ fr_CA:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car utilise les informations de stock du producteur"
             on_demand_but_count_on_hand_set: "doit être vide si \"à volonté\""
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
+      messages:
+        blank: "Champ obligatoire"
+  errors:
+    messages:
+      content_type_invalid: "a un contenu invalide"
+      file_size_out_of_range: "la taille %{file_size} n'est pas dans la fourchette requise"
+      limit_out_of_range: "le nombre total est hors de la fourchette"
+      image_metadata_missing: "n'est pas une image valide"
+      dimension_min_inclusion: "doit être plus grand ou égal à %{width} x %{height} pixel."
+      dimension_max_inclusion: "doit être plus grand ou égal à %{width} x %{height} pixel."
+      dimension_width_inclusion: "la largeur n'est pas comprise entre %{min} et %{max} pixel."
+      dimension_height_inclusion: "la hauteur n'est pas comprise entre %{min} et %{max} pixel."
+      dimension_width_greater_than_or_equal_to: "la largeur doit être supérieure ou égale à %{length} pixel."
+      dimension_height_greater_than_or_equal_to: "la hauteur doit être supérieure ou égale à %{length} pixel."
+      dimension_width_less_than_or_equal_to: "la largeur doit être inférieure ou égale à %{length} pixel."
+      dimension_height_less_than_or_equal_to: "la hauteur doit être inférieure ou égale à %{length} pixel."
+      dimension_width_equal_to: "la largeur doit être égale à %{length} pixel."
+      dimension_height_equal_to: "la hauteur doit être égale à %{length} pixel. "
+      aspect_ratio_not_square: "doit être une image carrée"
+      aspect_ratio_not_portrait: "doit être une image en mode portrait"
+      aspect_ratio_not_landscape: "doit être une image en mode paysage"
+      aspect_ratio_is_not: "doit avoir un rapport d'aspect de %{aspect_ratio}"
+      aspect_ratio_unknown: "a un rapport d'aspect inconnu"
+      image_not_processable: "n'est pas une image valide"
+    not_found:
+      title: "La page que vous recherchez n'existe pas (erreur 404)"
+      message_html: "<b>Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l'<a href='/'> Accueil </a> et recommencez. <b> Contacter notre support  </b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter. </p>"
+    internal_server_error:
+      title: "Nous sommes navrés, mais quelque chose c'est mal passé (erreur 500)."
+      message_html: "<b> Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l' <a href='/''> Accueil </a> et recommencez. </p> <b> Contacter notre support</b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter.  </p>"
+    unprocessable_entity:
+      title: "La modification réalisée a été rejetée (erreur 422)"
+      message_html: "<p> La modification souhaitée a été refusée. Peut-être avez-vous essayé de faire quelque chose sans avoir les droits d'accès suffisants ? <br> <h3> <a href='/' > Retourner à l'accueil </a> </h3> </p> "
   stripe:
     error_code:
       incorrect_number: "e numéro de carte bancaire est incorrect."
@@ -347,6 +380,8 @@ fr_CA:
   edit: Modifier
   clone: Dupliquer
   distributors: Distributeurs
+  distribution: Distribution
+  order_cycles: Cycles de Vente
   bulk_order_management: Gestion des commandes par lot
   enterprises: Entreprises
   enterprise_groups: Groupes
@@ -378,6 +413,7 @@ fr_CA:
   powered_by: Exécuté par
   blocked_cookies_alert: "Votre navigateur semble bloquer des cookies nécessaires à l'utilisation de ce site. Cliquez ci-dessous pour autoriser les cookies et rechargez la page."
   allow_cookies: "Autoriser les cookies"
+  none: Aucun
   notes: Commentaires
   error: Erreur
   processing_payment: "Paiement en cours..."
@@ -387,6 +423,7 @@ fr_CA:
   clear_filters: Annuler les filtres
   quantity: Quantité
   pick_up: Retrait
+  ok: OK
   copy: Copier
   change_my_password: "Changer mon mot de passe"
   update_password: "Mettre à jour le mot de passe"
@@ -396,6 +433,7 @@ fr_CA:
   back_to_payments_list: "Retour à la liste des paiements"
   maestro_or_solo_cards: "Cartes Maestro/Solo"
   backordered: "à volonté"
+  on_hand: "En stock"
   on hand: "En stock"
   ship: "Expédier"
   shipping_category: "Condition de transport"
@@ -495,6 +533,7 @@ fr_CA:
     clear_all: Vider
     start_date: "Date de début"
     end_date: "Date de fin"
+    unsaved_changes: "Des modifications n'ont pas été sauvegardées."
     form_invalid: "Le formulaire contient des champs manquants ou invalides"
     clear_filters: Annuler les filtres
     clear: Effacer
@@ -515,7 +554,6 @@ fr_CA:
     has_one_rule: "a une règle"
     has_n_rules: "a %{num} règles"
     unsaved_confirm_leave: "Des modifications n'ont pas été sauvegardées et seront perdues si vous quittez la page. Souhaitez-vous quitter la page?"
-    unsaved_changes: "Des modifications n'ont pas été sauvegardées."
     available_units: "Unités disponibles"
     shopfront_settings:
       embedded_shopfront_settings: "Paramètres Boutiques Intégrées"
@@ -1243,11 +1281,11 @@ fr_CA:
         general_settings: "Configurations générales"
         incoming: Produits entrants (pouvant être mis en vente par les hubs)
         supplier: Fournisseur
+        products: Produits
         receival_details: Détails livraison produits
         fees: Commissions
         outgoing: Produits sortants (mis en vente par/via un ou plusieurs hubs)
         distributor: Hub (distributeur)
-        products: Produits
         tags: Tags
         add_a_tag: Ajouter un tag
         delivery_details: Précisions retrait / livraison
@@ -1700,15 +1738,14 @@ fr_CA:
   longitude: Longitude
   longitude_placeholder: par ex. 144.7851531
   use_geocoder: Souhaitez-vous calculer automatiquement la latitude et la longitude depuis l'adresse ?
+  state: 'Région:'
   postcode: Code postal
   postcode_placeholder: 'ex: 44000'
   suburb: Ville
-  state: 'Région:'
   country: Pays
   unauthorized: Non authorisé
   terms_of_service: "Conditions d'utilisation"
   on_demand: A volonté
-  none: Aucun
   not_allowed: Non autorisé
   no_shipping: pas de méthode de livraison
   no_payment: pas de méthode de paiement
@@ -1716,6 +1753,7 @@ fr_CA:
   unconfirmed: non confirmé
   days: jours
   authorization_failure: "Echec de l'autorisation"
+  description: "Description"
   label_shop: "Boutique"
   label_shops: "Boutiques"
   label_map: "Carte"
@@ -2162,6 +2200,7 @@ fr_CA:
   producers_signup_cta_headline: Rejoindre le réseau!
   producers_signup_cta_action: Rejoindre le réseau
   producers_signup_detail: Comment ça marche.
+  producer: Producteur
   products_item: Produit
   products_description: Description
   products_variant: Variante
@@ -2434,6 +2473,7 @@ fr_CA:
   bulk: "Vrac"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
+  contact: "Contact"
   follow: "Suivre"
   shop_for_products_html: "Acheter les produits de <span class=\"turquoise\">%{enterprise}</span> dans les boutiques suivantes:"
   change_shop: "Changer de boutique pour:"
@@ -2447,6 +2487,7 @@ fr_CA:
   included_tax: "Inclut Taxe"
   tax: "Taxe"
   tax_amount_included: "%{amount}(inclus)"
+  remove_tax: "Retirer taxe"
   balance: "Solde"
   transaction: "Transaction"
   transaction_date: "Date"
@@ -2457,7 +2498,6 @@ fr_CA:
   credit: "Crédit"
   Paid: "Payé"
   Ready: "Prêt"
-  ok: OK
   not_visible: invisible
   you_have_no_orders_yet: "Vous n'avez pas encore de commande"
   show_only_complete_orders: "Ne montrer que les commandes finalisées"
@@ -2509,7 +2549,6 @@ fr_CA:
   delivery_method: Méthode de Livraison
   fee_type: "Type de marge"
   tax_category: "Type de taxe "
-  description: "Description"
   display: "Afficher"
   tags: "Tags"
   calculator: "Calculateur"
@@ -2542,10 +2581,8 @@ fr_CA:
   no_customers_found: "Aucun acheteur trouvé"
   go: "Lancer"
   hub: "Hub"
-  producer: "Producteur"
   product: "Produit"
   price: "Prix"
-  on_hand: "En stock"
   review: "Vérifier"
   save_changes: "Sauvegarder les modifications"
   order_saved: "Commande Sauvegardée"
@@ -2597,9 +2634,7 @@ fr_CA:
   edit_profile_details: "Modifier les informations du profil"
   edit_profile_details_etc: "Modifier la description, les images, etc."
   order_cycle: "Cycle de vente"
-  order_cycles: "Cycles de Vente"
   enterprise_relationships: "Permissions Inter-entreprises"
-  remove_tax: "Retirer taxe"
   first_name_begins_with: "Prénom commence par"
   last_name_begins_with: "Nom de famille commence par"
   shipping_method: "Méthode de livraison"
@@ -2656,8 +2691,8 @@ fr_CA:
   report_header_comments: Commentaire
   report_header_first_name: Prénom
   report_header_last_name: Nom
-  report_header_phone: n° tel
   report_header_suburb: Ville
+  report_header_phone: n° tel
   report_header_address: Adresse
   report_header_billing_address: Adresse de facturation
   report_header_relationship: Relation
@@ -2841,7 +2876,6 @@ fr_CA:
   images: "Images"
   web: "Web"
   primary_details: "Informations de base"
-  contact: "Contact"
   social: "Réseaux sociaux"
   shipping: "Expédition"
   shipping_methods: "Méthodes de livraison"
@@ -3427,7 +3461,6 @@ fr_CA:
       report:
         none: "Aucun"
   order: "Commander"
-  distribution: "Distribution"
   order_details: "Détails de la commande"
   customer_details: "Informations acheteur"
   adjustments: "ajustements"
@@ -3533,7 +3566,6 @@ fr_CA:
     tracking: "Suivi"
     tracking_number: "Numéro de suivi"
     order_total: "Total Commande:"
-    order_updated: "La commande a été mise à jour."
     customer_details: "Informations acheteur"
     customer_details_updated: "Détails de l'acheteur mis à jour"
     customer_search: "Recherche Acheteur"
@@ -3836,6 +3868,10 @@ fr_CA:
           from: "De"
           to: "Facturer à"
           shipping: "Envoi"
+          payments_list:
+            date_time: "Date/heure"
+            payment_method: "Méthode de paiement"
+            amount: "Montant"
         note:
           note_label: "Note :"
           no_note_present: "Aucune note n'a été ajoutée."
@@ -4362,16 +4398,6 @@ fr_CA:
         one: "1 an"
         many: "%{count} ans"
         other: "%{count} ans"
-  errors:
-    not_found:
-      title: "La page que vous recherchez n'existe pas (erreur 404)"
-      message_html: "<b>Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l'<a href='/'> Accueil </a> et recommencez. <b> Contacter notre support  </b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter. </p>"
-    internal_server_error:
-      title: "Nous sommes navrés, mais quelque chose c'est mal passé (erreur 500)."
-      message_html: "<b> Veuillez essayer à nouveau </b> <p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton retour de votre navigateur ou retourner à l' <a href='/''> Accueil </a> et recommencez. </p> <b> Contacter notre support</b> <p> Si le problème persiste ou si c'est urgent, veuillez nous contacter.  </p>"
-    unprocessable_entity:
-      title: "La modification réalisée a été rejetée (erreur 422)"
-      message_html: "<p> La modification souhaitée a été refusée. Peut-être avez-vous essayé de faire quelque chose sans avoir les droits d'accès suffisants ? <br> <h3> <a href='/' > Retourner à l'accueil </a> </h3> </p> "
   components:
     multiple_checked_select:
       filter_placeholder: "Filtres"

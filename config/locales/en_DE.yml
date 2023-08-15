@@ -56,6 +56,8 @@ en_DE:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
+      messages:
+        blank: "can't be blank"
   activemodel:
     errors:
       models:
@@ -222,6 +224,8 @@ en_DE:
   edit: Edit
   clone: Clone
   distributors: Distributors
+  distribution: Distribution
+  order_cycles: Order Cycles
   bulk_order_management: Bulk Order Management
   enterprises: Enterprises
   enterprise_groups: Groups
@@ -252,12 +256,14 @@ en_DE:
   powered_by: Powered by
   blocked_cookies_alert: "Your browser may be blocking cookies needed to use this shopfront. Click below to allow cookies and reload the page."
   allow_cookies: "Allow Cookies"
+  none: None
   notes: Notes
   error: Error
   processing_payment: "Processing payment..."
   filter_results: Filter Results
   quantity: Quantity
   pick_up: Pick up
+  ok: OK
   copy: Copy
   change_my_password: "Change my password"
   update_password: "Update password"
@@ -267,6 +273,7 @@ en_DE:
   back_to_payments_list: "Back to Payments List"
   maestro_or_solo_cards: "Maestro/Solo cards"
   backordered: "Backordered"
+  on_hand: "On Hand"
   on hand: "On Hand"
   ship: "Ship"
   shipping_category: "Shipping Category"
@@ -349,6 +356,7 @@ en_DE:
     clear_all: Clear All
     start_date: "Start Date"
     end_date: "End Date"
+    unsaved_changes: "You have unsaved changes"
     form_invalid: "Form contains missing or invalid fields"
     clear_filters: Clear Filters
     clear: Clear
@@ -368,7 +376,6 @@ en_DE:
     has_one_rule: "has one rule"
     has_n_rules: "has %{num} rules"
     unsaved_confirm_leave: "There are unsaved changed on this page. Continue without saving?"
-    unsaved_changes: "You have unsaved changes"
     shopfront_settings:
       embedded_shopfront_settings: "Embedded Shopfront Settings"
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
@@ -994,11 +1001,11 @@ en_DE:
         general_settings: "General Settings"
         incoming: Incoming
         supplier: Supplier
+        products: Products
         receival_details: Receival details
         fees: Fees
         outgoing: Outgoing
         distributor: Distributor
-        products: Products
         tags: Tags
         add_a_tag: Add a tag
         delivery_details: Pickup / Delivery details
@@ -1375,15 +1382,14 @@ en_DE:
   address2: Address (contd.)
   city: City
   city_placeholder: eg. Northcote
+  state: State
   postcode: Postcode
   postcode_placeholder: eg. 3070
   suburb: Suburb
-  state: State
   country: Country
   unauthorized: Unauthorized
   terms_of_service: "Terms of service"
   on_demand: On demand
-  none: None
   not_allowed: Not allowed
   no_shipping: no shipping methods
   no_payment: no payment methods
@@ -1391,6 +1397,7 @@ en_DE:
   unconfirmed: unconfirmed
   days: days
   authorization_failure: "Authorization Failure"
+  description: "Description"
   label_shop: "Shop"
   label_shops: "Shops"
   label_map: "Map"
@@ -1769,6 +1776,7 @@ en_DE:
   producers_signup_cta_headline: Join now!
   producers_signup_cta_action: Join now
   producers_signup_detail: Here's the detail.
+  producer: Producer
   products_item: Item
   products_description: Description
   products_variant: Variant
@@ -2029,6 +2037,7 @@ en_DE:
   bulk: "Bulk"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
+  contact: "Contact"
   follow: "Follow"
   shop_for_products_html: "Shop for <span class=\"turquoise\">%{enterprise}</span> products at:"
   change_shop: "Change shop to:"
@@ -2040,6 +2049,7 @@ en_DE:
   fundraising_fee: "Fundraising fee"
   price_graph: "Price graph"
   included_tax: "Included tax"
+  remove_tax: "Remove tax"
   balance: "Balance"
   transaction: "Transaction"
   transaction_date: "Date"
@@ -2050,7 +2060,6 @@ en_DE:
   credit: "Credit"
   Paid: "Paid"
   Ready: "Ready"
-  ok: OK
   not_visible: not visible
   you_have_no_orders_yet: "You have no orders yet"
   show_only_complete_orders: "Only show complete orders"
@@ -2100,7 +2109,6 @@ en_DE:
   delivery_method: Delivery Method
   fee_type: "Fee Type"
   tax_category: "Tax Category"
-  description: "Description"
   display: "Display"
   tags: "Tags"
   calculator: "Calculator"
@@ -2129,10 +2137,8 @@ en_DE:
   no_customers_found: "No customers found"
   go: "Go"
   hub: "Hub"
-  producer: "Producer"
   product: "Product"
   price: "Price"
-  on_hand: "On hand"
   review: "Review"
   save_changes: "Save Changes"
   order_saved: "Order Saved"
@@ -2183,9 +2189,7 @@ en_DE:
   edit_profile_details: "Edit profile details"
   edit_profile_details_etc: "Change your profile description, images, etc."
   order_cycle: "Order Cycle"
-  order_cycles: "Order Cycles"
   enterprise_relationships: "Enterprise permissions"
-  remove_tax: "Remove tax"
   first_name_begins_with: "First name begins with"
   last_name_begins_with: "Last name begins with"
   new_order: "New Order"
@@ -2236,8 +2240,8 @@ en_DE:
   report_header_comments: Comments
   report_header_first_name: First Name
   report_header_last_name: Last Name
-  report_header_phone: Phone
   report_header_suburb: Suburb
+  report_header_phone: Phone
   report_header_address: Address
   report_header_billing_address: Billing Address
   report_header_relationship: Relationship
@@ -2392,7 +2396,6 @@ en_DE:
   images: "Images"
   web: "Web"
   primary_details: "Primary Details"
-  contact: "Contact"
   social: "Social"
   shipping: "Shipping"
   shipping_methods: "Shipping Methods"
@@ -2811,7 +2814,6 @@ en_DE:
       report:
         none: "None"
   order: "Order"
-  distribution: "Distribution"
   order_details: "Order Details"
   customer_details: "Customer Details"
   adjustments: "Adjustments"
@@ -3090,6 +3092,8 @@ en_DE:
           tax_invoice: "TAX INVOICE"
           code: "Code"
           from: "From"
+          payments_list:
+            amount: "Amount"
         form:
           distribution_fields:
             title: "Distribution"

@@ -60,6 +60,8 @@ fil_PH:
             using_producer_stock_settings_but_count_on_hand_set: "ay dapat blanko sapagkat ginagamit ang stock settings ng producer"
             on_demand_but_count_on_hand_set: "ay dapat blanko kung on demand"
             limited_stock_but_no_count_on_hand: "ay dapat matukoy sapagkat ipipilit ang limitadong stock"
+      messages:
+        blank: "hindi maaaring iwanang blanko"
   activemodel:
     errors:
       messages:
@@ -228,6 +230,8 @@ fil_PH:
   edit: i-edit
   clone: Gayahin
   distributors: Mga Distributor
+  distribution: pamamahagi
+  order_cycles: mga order cycle
   bulk_order_management: Pamamahala sa mga Bulk Order
   enterprises: Mga Enterprise
   enterprise_groups: Mga grupo
@@ -258,6 +262,7 @@ fil_PH:
   powered_by: Powered by
   blocked_cookies_alert: " ang iyong browser ay maaaring hinaharang ang cookies na kailangan upang magamit ang shopfront na ito. Pindutin sa ibaba upang payagan ang mga cookies at i-reload ang pahina."
   allow_cookies: "Payagan ang cookies"
+  none: wala
   notes: mga tala
   error: Error
   processing_payment: "Pinoproseso ang bayad..."
@@ -265,6 +270,7 @@ fil_PH:
   filter_results: I-filter ang mga resulta
   quantity: Dami
   pick_up: Pick up
+  ok: OK
   copy: Kopyahin
   change_my_password: "Palitan ang aking password"
   update_password: "i-update ang password"
@@ -274,6 +280,7 @@ fil_PH:
   back_to_payments_list: "bumalik sa listahan ng mga bayad"
   maestro_or_solo_cards: "Maestro/Solo cards"
   backordered: "na-backorder"
+  on_hand: "on hand"
   on hand: "on hand"
   ship: "ship"
   shipping_category: "Kategorya ng Pagpapadala"
@@ -356,6 +363,7 @@ fil_PH:
     clear_all: alisin lahat
     start_date: "Petsa ng Pagsimula"
     end_date: "Petsa ng Pagtatapos"
+    unsaved_changes: "May mga pagbabago na hindi na-save"
     form_invalid: "ang form ay may kulang o hindi valid na mga sagot"
     clear_filters: alisin ang mga filter
     clear: alisin
@@ -376,7 +384,6 @@ fil_PH:
     has_one_rule: "may isang panuntunan"
     has_n_rules: "ay may%{num}na panuntunan"
     unsaved_confirm_leave: "may mga hindi naka-save na pagbabago sa pahina na ito. Magpatuloy ng hindi sine-save?"
-    unsaved_changes: "May mga pagbabago na hindi na-save"
     shopfront_settings:
       embedded_shopfront_settings: "Embedded Shopfront Settings"
       enable_embedded_shopfronts: "Enable Embedded  Shopfronts"
@@ -1025,11 +1032,11 @@ fil_PH:
         general_settings: "Pangkalahatang Setting"
         incoming: papasok
         supplier: Supplier
+        products: mga produkto
         receival_details: detalye ng pagtanggap
         fees: Fees
         outgoing: papalabas
         distributor: Distributor
-        products: mga produkto
         tags: tags
         add_a_tag: magdagdag ng tag
         delivery_details: detalye ng pick-up/pagdeliver
@@ -1413,15 +1420,14 @@ fil_PH:
   address2: address (pinagpatuloy)
   city: Lungsod
   city_placeholder: hal. Northcote
+  state: province
   postcode: Postcode
   postcode_placeholder: hal. 3070
   suburb: lungsod
-  state: province
   country: Bansa
   unauthorized: hindi awtorisado
   terms_of_service: "mga tuntunin ng serbisyo"
   on_demand: on demand
-  none: wala
   not_allowed: hindi pinapayagan
   no_shipping: walang mga paraan ng pagpapadala
   no_payment: walang mga paraan ng pagbabayad
@@ -1429,6 +1435,7 @@ fil_PH:
   unconfirmed: hindi kumpirmado
   days: mga araw
   authorization_failure: "hindi nagtagumpay ang pagpahintulot"
+  description: "paglalarawan"
   label_shop: "Shop"
   label_shops: "mga shop"
   label_map: "mapa"
@@ -1810,6 +1817,7 @@ fil_PH:
   producers_signup_cta_headline: sumali ngayon!
   producers_signup_cta_action: sumali ngayon
   producers_signup_detail: 'ito ang mga detalye:'
+  producer: Producer
   products_item: Item
   products_description: paglalarawan
   products_variant: Uri
@@ -2071,6 +2079,7 @@ fil_PH:
   bulk: "Bulto"
   shop_variant_quantity_min: "pinakakaunti"
   shop_variant_quantity_max: "pinakamarami"
+  contact: "Makipag-ugnayan"
   follow: "sumunod"
   shop_for_products_html: "mamili ng<span class=\"turquoise\">%{enterprise}</span>na mga produkto sa:"
   change_shop: "palitan ang shop ng:"
@@ -2082,6 +2091,7 @@ fil_PH:
   fundraising_fee: "bayad sa pangangalap ng pondo"
   price_graph: "graph ng presyo"
   included_tax: "kasamang tax"
+  remove_tax: "alisin ang tax"
   balance: "Balanse"
   transaction: "transaksiyon"
   transaction_date: "petsa"
@@ -2092,7 +2102,6 @@ fil_PH:
   credit: "utang"
   Paid: "bayad na"
   Ready: "handa"
-  ok: OK
   not_visible: hindi nakikita
   you_have_no_orders_yet: "wala ka pang mga order"
   show_only_complete_orders: "Ipakita lamang ang mga nakumpletong order"
@@ -2143,7 +2152,6 @@ fil_PH:
   delivery_method: paraan ng pagdeliver
   fee_type: "uri ng kabayaran"
   tax_category: "kategorya ng tax"
-  description: "paglalarawan"
   display: "Ipakita"
   tags: "tags"
   calculator: "calculator"
@@ -2173,10 +2181,8 @@ fil_PH:
   no_customers_found: "walang nahanap ng mga customer"
   go: "Sige"
   hub: "Hub"
-  producer: "Producer"
   product: "produkto"
   price: "presyo"
-  on_hand: "on hand"
   review: "suriin"
   save_changes: "i-save ang mga pagbabago"
   order_saved: "ang order ay na-save na"
@@ -2227,9 +2233,7 @@ fil_PH:
   edit_profile_details: "i-edit ang mga detalye ng profile"
   edit_profile_details_etc: "palitan ang paglalarawan ng profile, larawan at iba pa"
   order_cycle: "order cycle"
-  order_cycles: "mga order cycle"
   enterprise_relationships: "mga permiso ng enterprise"
-  remove_tax: "alisin ang tax"
   first_name_begins_with: "ang pangalan ay nagsisimula sa"
   last_name_begins_with: "ang apelyido ay nagsisimula sa"
   new_order: "bagong order"
@@ -2280,8 +2284,8 @@ fil_PH:
   report_header_comments: mga komento
   report_header_first_name: Pangalan
   report_header_last_name: Apelyido
-  report_header_phone: telepono
   report_header_suburb: lungsod
+  report_header_phone: telepono
   report_header_address: address
   report_header_billing_address: Billing Address
   report_header_relationship: relasyon
@@ -2436,7 +2440,6 @@ fil_PH:
   images: "larawan"
   web: "Web"
   primary_details: "pangunahing detalye"
-  contact: "Makipag-ugnayan"
   social: "Social"
   shipping: "pagpapadala"
   shipping_methods: "mga paraan ng pagpapadala"
@@ -2945,7 +2948,6 @@ fil_PH:
       report:
         none: "wala"
   order: "order"
-  distribution: "pamamahagi"
   order_details: "mga detalye ng order"
   customer_details: "mga detalye ng customer"
   adjustments: "mga pagsasa-ayos"
@@ -3262,6 +3264,8 @@ fil_PH:
           from: "mula"
           to: "singilin sa"
           shipping: "pagpapadala"
+          payments_list:
+            amount: "Halaga"
         form:
           distribution_fields:
             title: "pamamahagi"

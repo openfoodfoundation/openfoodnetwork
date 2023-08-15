@@ -64,6 +64,8 @@ nl_BE:
             using_producer_stock_settings_but_count_on_hand_set: "moet leeg zijn omdat u de instellingen voor de voorraad van de producent gebruikt"
             on_demand_but_count_on_hand_set: "moet leeg zijn op aanvraag"
             limited_stock_but_no_count_on_hand: "moet worden opgegeven omdat een beperkte voorraad wordt geforceerd"
+      messages:
+        blank: "kan niet leeg zijn"
   activemodel:
     errors:
       messages:
@@ -233,6 +235,8 @@ nl_BE:
   edit: bewerking
   clone: Kloon
   distributors: Distributeurs
+  distribution: Distributie
+  order_cycles: Bestel cycli
   bulk_order_management: Beheer van bulkorders
   enterprises: Ondernemingen
   enterprise_groups: Groepen
@@ -264,6 +268,7 @@ nl_BE:
   powered_by: Aangedreven door
   blocked_cookies_alert: "Het kan zijn dat uw browser cookies blokkeert die nodig zijn om deze shopfront te gebruiken. Klik hieronder om cookies toe te staan en de pagina opnieuw te laden"
   allow_cookies: "Cookies toestaan"
+  none: Geen enkele
   notes: Notities
   error: Fout
   processing_payment: "Verwerking van de betaling....."
@@ -271,6 +276,7 @@ nl_BE:
   filter_results: Filter resultaten
   quantity: Kwantiteit
   pick_up: Afhalen
+  ok: OK
   copy: Exemplaar
   change_my_password: "Mijn paswoord wijzigen "
   update_password: "Wachtwoord wijzigen "
@@ -280,6 +286,7 @@ nl_BE:
   back_to_payments_list: "Terug naar Betalingslijst"
   maestro_or_solo_cards: "Maestro/Solo kaart"
   backordered: "Niet in stock"
+  on_hand: "Bij de Hand"
   on hand: "Bij de Hand"
   ship: "Verzenden"
   shipping_category: "Verzendcategorie"
@@ -365,6 +372,7 @@ nl_BE:
     clear_all: Alles wissen
     start_date: "Startdatum"
     end_date: "Einddatum"
+    unsaved_changes: "U heeft niet opgeslagen wijzigingen"
     form_invalid: "Formulier bevat ontbrekende of ongeldige velden"
     clear_filters: Duidelijke filters
     clear: Duidelijk
@@ -385,7 +393,6 @@ nl_BE:
     has_one_rule: "heeft één regel"
     has_n_rules: "heeft %{num} regels"
     unsaved_confirm_leave: "Op deze pagina zijn de niet opgeslagen gegevens niet gewijzigd. Doorgaan zonder op te slaan?"
-    unsaved_changes: "U heeft niet opgeslagen wijzigingen"
     shopfront_settings:
       embedded_shopfront_settings: "Ingebedde Shopfront-instellingen"
       enable_embedded_shopfronts: "Ingebedde winkelfronten inschakelen"
@@ -1049,11 +1056,11 @@ nl_BE:
         general_settings: "Algemene instellingen"
         incoming: Binnenkomend
         supplier: Leverancier
+        products: Producten
         receival_details: Ontvangstspecificaties
         fees: Vergoedingen
         outgoing: Uitgaande
         distributor: Distributeur
-        products: Producten
         tags: Tags
         add_a_tag: Voeg een tag toe
         delivery_details: Ophaal/ Verzendingsdetails
@@ -1445,15 +1452,14 @@ nl_BE:
   address2: Adres (vervolg)
   city: Stad
   city_placeholder: bv. Gent
+  state: Staat
   postcode: Postcode
   postcode_placeholder: bv. 9000
   suburb: Gemeente
-  state: Staat
   country: Land
   unauthorized: Ongeautoriseerd
   terms_of_service: "Gebruiksvoorwaarden"
   on_demand: Op Aanvraag
-  none: Geen enkele
   not_allowed: Niet toegestaan
   no_shipping: geen leveringsmethodes
   no_payment: geen betaalmethodes
@@ -1461,6 +1467,7 @@ nl_BE:
   unconfirmed: Niet bevestigd
   days: dag(en)
   authorization_failure: "Faling toelating "
+  description: "Beschrijving"
   label_shop: "winkel"
   label_shops: "Winkels"
   label_map: "Kaart"
@@ -1855,6 +1862,7 @@ nl_BE:
   producers_signup_cta_headline: Sluit je nu aan!
   producers_signup_cta_action: Sluit je aan
   producers_signup_detail: Hier heb je het gedetailleerde plaatje.
+  producer: Producent
   products_item: Artikel
   products_description: Beschrijving
   products_variant: Variant
@@ -2118,6 +2126,7 @@ nl_BE:
   bulk: "Bulk (grote hoeveelheid)"
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
+  contact: "Contact"
   follow: "Volg"
   shop_for_products_html: "Koop voor <span class=\"turquoise\">%{enterprise}</span>producten bij:"
   change_shop: "Verander winkel naar:"
@@ -2129,6 +2138,7 @@ nl_BE:
   fundraising_fee: "Fondsverzamelingskost"
   price_graph: "Prijsgrafiek"
   included_tax: "Inbegrepen belastingen"
+  remove_tax: "Verwijder belasting"
   balance: "Saldo"
   transaction: "Transactie"
   transaction_date: "Afspraakje"
@@ -2139,7 +2149,6 @@ nl_BE:
   credit: "Krediet"
   Paid: "Betaald"
   Ready: "Klaar"
-  ok: OK
   not_visible: niet zichtbaar
   you_have_no_orders_yet: "U heeft geen bestellingen momenteel"
   show_only_complete_orders: "Uitsluitend de volledige bestellingen tonen"
@@ -2191,7 +2200,6 @@ nl_BE:
   delivery_method: Leveringswijze
   fee_type: "Sprookjesachtig type"
   tax_category: "Belastingcategorie"
-  description: "Beschrijving"
   display: "Display"
   tags: "Tags"
   calculator: "Rekenmachine"
@@ -2221,10 +2229,8 @@ nl_BE:
   no_customers_found: "Geen klanten gevonden "
   go: "Ga"
   hub: "Hub"
-  producer: "Producent"
   product: "Product"
   price: "Prijs"
-  on_hand: "Bij de hand"
   review: "Beoordeling"
   save_changes: "Bewaar Veranderingen"
   order_saved: "Bestelling opgeslagen"
@@ -2275,9 +2281,7 @@ nl_BE:
   edit_profile_details: "Pas je proefielinformatie aan"
   edit_profile_details_etc: "Verander jouw profiel, beschrijving, beelden enz."
   order_cycle: "Bestelcyclus"
-  order_cycles: "Bestel cycli"
   enterprise_relationships: "Bedrijfstoestemmingen"
-  remove_tax: "Verwijder belasting"
   first_name_begins_with: "Voornaam begint met"
   last_name_begins_with: "Familienaam begint met "
   shipping_method: "Verzending methode"
@@ -2330,8 +2334,8 @@ nl_BE:
   report_header_comments: Opmerkingen
   report_header_first_name: Voornaam
   report_header_last_name: Familienaam
-  report_header_phone: Telefoon
   report_header_suburb: Gemeente
+  report_header_phone: Telefoon
   report_header_address: Adres
   report_header_billing_address: Factuuradres
   report_header_relationship: Verstandhouding
@@ -2490,7 +2494,6 @@ nl_BE:
   images: "Afbeeldingen"
   web: "Web"
   primary_details: "Basisinformatie"
-  contact: "Contact"
   social: "Sociaal"
   shipping: "Verzending"
   shipping_methods: "Verzendmethodes"
@@ -2928,7 +2931,6 @@ nl_BE:
       report:
         none: "Geen enkele"
   order: "Bestelling"
-  distribution: "Distributie"
   order_details: "Bestellingsgegevens"
   customer_details: "Klantengegevens "
   adjustments: "Correcties "
@@ -3256,6 +3258,9 @@ nl_BE:
           from: "Van"
           to: "Factureer naar"
           shipping: "Verzending"
+          payments_list:
+            date_time: "Datum/tijd"
+            amount: "Bedrag"
         form:
           distribution_fields:
             title: "Distributie"
