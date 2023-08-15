@@ -26,11 +26,11 @@
     }
 
     &.prev {
-      margin-right: 20px;
+      margin-right: 28px; // 28+8 (the gap) = 36px : the space between the arrows and the numbers
     }
 
     &.next {
-      margin-left: 20px;
+      margin-left: 28px; // 28+8 (the gap) = 36px : the space between the arrows and the numbers
     }
 
     &.disabled {
