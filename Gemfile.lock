@@ -715,7 +715,7 @@ GEM
     thor (1.2.2)
     thread-local (1.1.0)
     tilt (2.1.0)
-    timecop (0.9.6)
+    timecop (0.9.8)
     timeout (0.4.0)
     ttfunk (1.7.0)
     tzinfo (2.0.6)
