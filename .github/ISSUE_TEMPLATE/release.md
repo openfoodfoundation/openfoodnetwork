@@ -10,8 +10,18 @@ assignees: ''
 ## 1. Preparation on Thursday
 
 - [ ] Merge pull requests in the [Ready To Go] column
-- [ ] Include translations: `tx pull --force`
+- [ ] Include translations 
+  <details><summary>Command line instructions:</summary>
+    <pre>
+    git checkout master
+    git pull upstream master
+    tx pull --force
+    git commit -a -m "Update all locales with the latest Transifex translations"
+    git push upstream master</pre>
+  </details>
 - [ ] [Draft new release]. Look at previous [releases] for inspiration.
+    - Select latest master commit
+    - _Generate release notes_ and arrange into categories as required.
 - [ ] Notify [#instance-managers] of user-facing changes.
 
 ## 2. Testing
