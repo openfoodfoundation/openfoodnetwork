@@ -207,6 +207,7 @@ module Spree
 
         context "saving a new product" do
           let!(:product){ Spree::Product.new }
+          let!(:shipping_category){ create(:shipping_category) }
 
           before do
             create(:stock_location)
@@ -217,7 +218,7 @@ module Spree
             product.variant_unit_scale = 1000
             product.unit_value = 1
             product.price = 4.27
-            product.shipping_category = create(:shipping_category)
+            product.shipping_category_id = shipping_category.id
             product.save!
           end
 
@@ -225,6 +226,7 @@ module Spree
             expect(product.variants.reload.length).to eq 1
             standard_variant = product.variants.reload.first
             expect(standard_variant.price).to eq 4.27
+            expect(standard_variant.shipping_category).to eq shipping_category
           end
         end
 

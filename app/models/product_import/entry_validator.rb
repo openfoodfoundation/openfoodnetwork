@@ -29,7 +29,6 @@ module ProductImport
         unit_type: :variant_unit_scale,
         variant_unit_name: :variant_unit_name,
         tax_category: :tax_category_id,
-        shipping_category: :shipping_category_id
       }
     end
 

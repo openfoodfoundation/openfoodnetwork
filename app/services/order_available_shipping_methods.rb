@@ -3,9 +3,7 @@
 class OrderAvailableShippingMethods
   attr_reader :order, :customer
 
-  delegate :distributor,
-           :order_cycle,
-           to: :order
+  delegate :distributor, :order_cycle, to: :order
 
   def initialize(order, customer = nil)
     @order, @customer = order, customer
@@ -23,7 +21,7 @@ class OrderAvailableShippingMethods
     return methods unless OpenFoodNetwork::FeatureToggle.enabled?(:match_shipping_categories,
                                                                   distributor&.owner)
 
-    required_category_ids = order.products.pluck(:shipping_category_id).to_set
+    required_category_ids = order.variants.pluck(:shipping_category_id).to_set
     return methods if required_category_ids.empty?
 
     methods.select do |method|

@@ -15,6 +15,7 @@ module Spree
 
       def new
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
+        @object.shipping_category ||= DefaultShippingCategory.find_or_create
       end
 
       def edit
@@ -114,6 +115,7 @@ module Spree
 
       def load_data
         @tax_categories = TaxCategory.order(:name)
+        @shipping_categories = ShippingCategory.order(:name)
       end
     end
   end

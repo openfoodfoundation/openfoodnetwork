@@ -110,7 +110,7 @@ describe '
       expect(product.variants.first.price.to_s).to eq('19.99')
       expect(product.on_hand).to eq(5)
       expect(product.variants.first.tax_category_id).to eq(tax_category.id)
-      expect(product.shipping_category).to eq(shipping_category)
+      expect(product.variants.first.shipping_category).to eq(shipping_category)
       expect(product.description).to eq("<p>A description...</p>")
       expect(product.group_buy).to be_falsey
       expect(product.variants.first.unit_presentation).to eq("5kg")

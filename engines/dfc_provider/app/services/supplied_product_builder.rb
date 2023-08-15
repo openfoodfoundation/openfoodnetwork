@@ -22,7 +22,6 @@ class SuppliedProductBuilder < DfcBuilder
       description: supplied_product.description,
       price: 0, # will be in DFC Offer
       primary_taxon: Spree::Taxon.first, # dummy value until we have a mapping
-      shipping_category: DefaultShippingCategory.find_or_create,
     ).tap do |product|
       QuantitativeValueBuilder.apply(supplied_product.quantity, product)
     end

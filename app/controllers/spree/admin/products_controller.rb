@@ -27,7 +27,7 @@ module Spree
       end
 
       def new
-        @object.shipping_category = DefaultShippingCategory.find_or_create
+        @object.shipping_category_id = DefaultShippingCategory.find_or_create.id
       end
 
       def edit

@@ -29,9 +29,9 @@ module Spree
 
     belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product'
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
+    belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
 
-    delegate_belongs_to :product, :name, :description, :shipping_category_id,
-                        :meta_keywords, :shipping_category
+    delegate_belongs_to :product, :name, :description, :meta_keywords
 
     has_many :inventory_units, inverse_of: :variant
     has_many :line_items, inverse_of: :variant
@@ -77,6 +77,7 @@ module Spree
     }
 
     before_validation :set_cost_currency
+    before_validation :ensure_shipping_category
     before_validation :ensure_unit_value
     before_validation :update_weight_from_unit_value, if: ->(v) { v.product.present? }
 
@@ -246,6 +247,10 @@ module Spree
       return unless (product&.variant_unit == "items" && unit_value.nil?) || unit_value&.nan?
 
       self.unit_value = 1.0
+    end
+
+    def ensure_shipping_category
+      self.shipping_category ||= DefaultShippingCategory.find_or_create
     end
 
     def convert_variant_weight_to_decimal

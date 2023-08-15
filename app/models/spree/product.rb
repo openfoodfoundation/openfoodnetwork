@@ -33,7 +33,6 @@ module Spree
     searchable_associations :supplier, :properties, :primary_taxon, :variants
     searchable_scopes :active, :with_properties
 
-    belongs_to :shipping_category, class_name: 'Spree::ShippingCategory'
     belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', optional: false, touch: true
 
@@ -52,7 +51,6 @@ module Spree
                                                        through: :variants
 
     validates :name, presence: true
-    validates :shipping_category, presence: true
 
     validates :variant_unit, presence: true
     validates :unit_value, presence:
@@ -71,7 +69,8 @@ module Spree
 
     # Transient attributes used temporarily when creating a new product,
     # these values are persisted on the product's variant
-    attr_accessor :price, :display_as, :unit_value, :unit_description, :tax_category_id
+    attr_accessor :price, :display_as, :unit_value, :unit_description, :tax_category_id,
+                  :shipping_category_id
 
     after_create :ensure_standard_variant
     after_save :update_units
@@ -292,6 +291,7 @@ module Spree
       variant.unit_value = unit_value
       variant.unit_description = unit_description
       variant.tax_category_id = tax_category_id
+      variant.shipping_category_id = shipping_category_id
       variants << variant
     end
 
