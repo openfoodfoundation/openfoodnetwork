@@ -29,10 +29,16 @@
 
     &.prev {
       margin-right: 28px; // 28+8 (the gap) = 36px : the space between the arrows and the numbers
+      & > i {
+        padding-left: 2px;
+      }
     }
 
     &.next {
       margin-left: 28px; // 28+8 (the gap) = 36px : the space between the arrows and the numbers
+      & > i {
+        padding-left: 6px;
+      }
     }
 
     &:not(.disabled):not(.current) {
