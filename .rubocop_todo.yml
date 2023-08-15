@@ -415,27 +415,10 @@ Naming/VariableNumber:
     - 'spec/requests/api/orders_spec.rb'
 
 # Offense count: 1
-# Configuration parameters: Severity, Include.
-# Include: app/models/**/*.rb
-Rails/ActiveRecordOverride:
-  Exclude:
-    - 'app/models/spree/product.rb'
-
-# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/ApplicationController:
   Exclude:
     - 'engines/dfc_provider/app/controllers/dfc_provider/base_controller.rb'
-
-# Offense count: 5
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: NilOrEmpty, NotPresent, UnlessPresent.
-Rails/Blank:
-  Exclude:
-    - 'app/models/spree/order_contents.rb'
-    - 'app/services/content_sanitizer.rb'
-    - 'engines/order_management/app/services/order_management/stock/package.rb'
-    - 'lib/stripe/authorize_response_patcher.rb'
 
 # Offense count: 17
 # This cop supports unsafe autocorrection (--autocorrect-all).
