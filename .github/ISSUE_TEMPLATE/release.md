@@ -19,17 +19,22 @@ assignees: ''
     git commit -a -m "Update all locales with the latest Transifex translations"
     git push upstream master</pre>
   </details>
+- [ ] Create a tag:
+  <details><summary>Command line instructions:</summary>
+    <pre>
+    git tag vX.X.X
+    git push upstream vX.X.X</pre>
+  </details>  
 - [ ] [Draft new release]. Look at previous [releases] for inspiration.
-    - Select latest master commit
+    - Select new release tag
     - _Generate release notes_ and arrange into categories as required.
 - [ ] Notify [#instance-managers] of user-facing changes.
 
 ## 2. Testing
 
-- [ ] Copy the release commit below
 - [ ] Move this issue to Test Ready.
 - [ ] Notify `@testers` in [#testing].
-- [ ] Test build: [Deploy to Staging] with commit <!-- paste commit ID here, eg bb8bcecc9... -->
+- [ ] Test build: [Deploy to Staging] with release tag.
 
 ## 3. Finish on Tuesday
 
