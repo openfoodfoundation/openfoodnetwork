@@ -797,7 +797,7 @@ en:
         loading: Loading your products
       sort:
         pagination:
-          total_html: "<strong>%{total} products</strong> in your catalogue. Showing %{from} to %{to}."
+          total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
           per_page:
             show: Show
             per_page: "%{num} per page"
