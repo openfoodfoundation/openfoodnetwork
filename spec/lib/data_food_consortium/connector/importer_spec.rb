@@ -3,7 +3,7 @@
 require 'spec_helper'
 require Rails.root.join('lib/data_food_consortium/connector/connector')
 
-describe DataFoodConsortium::Connector::Importer, vcr: true do
+describe DataFoodConsortium::Connector::Importer do
   let(:connector) { DataFoodConsortium::Connector::Connector.instance }
   let(:enterprise) do
     DataFoodConsortium::Connector::Enterprise.new(

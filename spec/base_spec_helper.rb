@@ -91,13 +91,6 @@ RSpec.configure do |config|
     expectations.syntax = :expect
   end
 
-  config.around(:each, vcr: true) do |example|
-    # The DFC Connector fetches the context when loaded.
-    VCR.use_cassette("dfc-context") do
-      example.run
-    end
-  end
-
   # Enable caching in any specs tagged with `caching: true`.
   config.around(:each, :caching) do |example|
     caching = ActionController::Base.perform_caching

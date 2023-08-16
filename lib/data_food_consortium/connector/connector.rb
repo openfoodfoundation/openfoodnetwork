@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "context"
 require_relative "importer"
 
 module DataFoodConsortium
