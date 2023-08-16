@@ -17,7 +17,8 @@ FileUtils.chdir APP_ROOT do
 
   puts "== Installing dependencies =="
   system! "script/install-bundler"
-  system("bundle check") || system!(BUNDLE_ENV, "bundle install")
+  # Check first (it's quicker), then install new gems if necessary
+  system("bundle check 2> /dev/null") || system!(BUNDLE_ENV, "bundle install")
 
   # Install JavaScript dependencies
   system("bin/yarn")
