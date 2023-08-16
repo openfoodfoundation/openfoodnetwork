@@ -11,6 +11,10 @@
     position: static;
   }
 
+  #products-content .container {
+    padding: 0;
+  }
+
   // Hopefully these rules will be moved to component(s).
   table.products {
     table-layout: fixed; // Column widths are based solely on col definitions (not content). This allows more efficient rendering.
@@ -90,8 +94,7 @@
     }
   }
 
-  #sort,
-  #filters {
+  #sort {
     margin-bottom: 1em;
     display: flex;
     justify-content: space-between;
@@ -111,8 +114,12 @@
   }
 
   #filters {
-    gap: 20px;
-    align-items: flex-end;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 20px;
+    align-items: end;
+    margin-bottom: 20px;
 
     .producers,
     .categories {
@@ -123,16 +130,15 @@
     }
 
     .query {
-      flex-grow: 1;
+      grid-column: 1 / span 3;
     }
 
     .producers,
     .categories {
-      flex-grow: 0;
     }
 
     .submit {
-      flex-grow: 0;
+      grid-column: 6 / span 1;
     }
 
     .query {

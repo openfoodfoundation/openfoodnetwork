@@ -30,7 +30,7 @@ export default class extends ApplicationController {
   };
 
   getLoadingController = () => {
-    return (this.loadongController = this.application.getControllerForElementAndIdentifier(
+    return (this.loadingController ||= this.application.getControllerForElementAndIdentifier(
       this.loadingTarget,
       "loading"
     ));
