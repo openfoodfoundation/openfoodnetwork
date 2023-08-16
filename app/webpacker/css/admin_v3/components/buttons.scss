@@ -12,8 +12,8 @@ button:not(.plain):not(.trix-button),
   border: 1px solid $color-btn-bg;
   color: $color-btn-text;
   text-transform: uppercase;
-  line-height: 40px;
-  height: 40px;
+  line-height: $btn-regular-height - 2px; // remove 2px to compensate for border
+  height: $btn-regular-height;
   font-weight: bold;
 
   &:before {
@@ -79,9 +79,14 @@ button:not(.plain):not(.trix-button),
     }
   }
 
-  &.medium {
-    line-height: $btn-medium-height;
-    height: $btn-medium-height;
+  &.condensed {
+    line-height: $btn-condensed-height - 2px; // remove 2px to compensate for border
+    height: $btn-condensed-height;
+  }
+
+  &.relaxed {
+    line-height: $btn-relaxed-height - 2px; // remove 2px to compensate for border
+    height: $btn-relaxed-height;
   }
 
   .badge {

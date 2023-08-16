@@ -104,8 +104,8 @@
   }
 
   #sort {
-    line-height: $btn-medium-height;
-    height: $btn-medium-height;
+    line-height: $btn-relaxed-height;
+    height: $btn-relaxed-height;
 
     .with-dropdown {
       display: flex;
@@ -150,8 +150,8 @@
         background-color: $lighter-grey;
         border: 1px solid $lighter-grey;
         border-radius: 4px;
-        height: $btn-height;
-        line-height: $btn-height;
+        height: $btn-relaxed-height;
+        line-height: $btn-relaxed-height;
 
         &:has(input:focus),
         &:has(input:active) {
@@ -176,7 +176,7 @@
     .categories {
       select {
         width: 150px;
-        height: $btn-height;
+        height: $btn-relaxed-height;
       }
     }
 
