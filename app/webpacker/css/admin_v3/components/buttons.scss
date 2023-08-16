@@ -115,3 +115,10 @@ button:not(.plain):not(.trix-button),
 a.button {
   text-decoration: none;
 }
+
+.button.disruptive::before {
+  margin-right: 3px;
+
+  @extend .icon-remove-sign;
+  font-family: FontAwesome;
+}
