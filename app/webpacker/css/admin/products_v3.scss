@@ -159,7 +159,10 @@
         }
 
         > input {
-          background-color: $lighter-grey;
+          // Totally hide the input from its container
+          background-color: transparent;
+          border: none;
+          width: calc(100% - 30px); // 30px is the width of the search icon + padding
         }
 
         &:before {
