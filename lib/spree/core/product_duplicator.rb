@@ -24,7 +24,7 @@ module Spree
           new_product.created_at = nil
           new_product.deleted_at = nil
           new_product.updated_at = nil
-          new_product.unit_value = true
+          new_product.unit_value = nil
           new_product.product_properties = reset_properties
           new_product.image = duplicate_image(product.image) if product.image
           new_product.variants = duplicate_variants

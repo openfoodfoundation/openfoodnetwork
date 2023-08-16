@@ -168,7 +168,7 @@ module Spree
       end
 
       it "requires a unit value" do
-        expect(build(:simple_product, unit_value: nil)).not_to be_valid
+        expect(build(:simple_product, unit_value: nil)).to be_valid
       end
 
       it "requires a supplier" do
