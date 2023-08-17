@@ -1,9 +1,13 @@
 .pagination {
   text-align: center;
   margin: 0 0 1em;
-  padding: 10px 0;
+  padding: 20px 0 28px 0;
 
   background-color: $color-7;
+
+  display: flex;
+  justify-content: center;
+  gap: 8px;
 
   .page {
     width: 40px;
@@ -14,7 +18,13 @@
     background-color: $color-1;
     @include defaultBoxShadow;
     border-radius: 4px;
-    color: $color-9;
+    color: $color-8;
+    font-weight: 600;
+
+    &.current,
+    &.gap {
+      cursor: default;
+    }
 
     &.current {
       background-color: $color-5;
@@ -22,15 +32,28 @@
     }
 
     &.prev {
-      margin-right: 20px;
+      margin-right: 28px; // 28+8 (the gap) = 36px : the space between the arrows and the numbers
+      & > i {
+        padding-left: 2px;
+      }
     }
 
     &.next {
-      margin-left: 20px;
+      margin-left: 28px; // 28+8 (the gap) = 36px : the space between the arrows and the numbers
+      & > i {
+        padding-left: 6px;
+      }
     }
 
-    &.disabled {
-      cursor: default;
+    &[href]:hover {
+      background-color: $color-5;
+      color: $white;
+    }
+
+    &.gap {
+      background-color: transparent;
+      box-shadow: none;
+      width: auto;
     }
   }
 
@@ -45,10 +68,6 @@
       color: $white;
       background-color: $red;
       cursor: default;
-    }
-
-    &.disabled {
-      display: none;
     }
   }
 }

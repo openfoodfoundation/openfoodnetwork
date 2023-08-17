@@ -73,7 +73,6 @@ describe 'As an admin, I can see the new product page' do
         search_for "searchable product"
 
         expect(page).to have_field "search_term", with: "searchable product"
-        expect_page_to_be 1
         expect_products_count_to_be 1
       end
 
@@ -85,14 +84,12 @@ describe 'As an admin, I can see the new product page' do
         expect_per_page_to_be 15
         expect_products_count_to_be 15
         search_for "searchable product"
-        expect_page_to_be 1
         expect_products_count_to_be 1
       end
 
       it "can clear filters" do
         search_for "searchable product"
         expect(page).to have_field "search_term", with: "searchable product"
-        expect_page_to_be 1
         expect_products_count_to_be 1
         expect(page).to have_selector "table.products tbody tr td", text: product_by_name.name
 
@@ -118,7 +115,6 @@ describe 'As an admin, I can see the new product page' do
         search_by_producer "Producer 1"
 
         expect(page).to have_select "producer_id", selected: "Producer 1"
-        expect_page_to_be 1
         expect_products_count_to_be 1
       end
     end
@@ -133,7 +129,6 @@ describe 'As an admin, I can see the new product page' do
         search_by_category "Category 1"
 
         expect(page).to have_select "category_id", selected: "Category 1"
-        expect_page_to_be 1
         expect_products_count_to_be 1
         expect(page).to have_selector "table.products tbody tr td", text: product_by_category.name
       end

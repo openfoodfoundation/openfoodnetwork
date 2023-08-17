@@ -11,7 +11,8 @@
       .sixteen.columns
         = render partial: 'sort', locals: { pagy: pagy, search_term: search_term, producer_id: producer_id, category_id: category_id }
     = render partial: 'table', locals: { products: products }
-    = render partial: 'admin/shared/v3/pagy', locals: { pagy: pagy, reflex: "click->Products#fetch" }
+    - if pagy.pages > 1
+      = render partial: 'admin/shared/v3/pagy', locals: { pagy: pagy, reflex: "click->Products#fetch" }
   - else
     #no-products
       = render partial: "no_products", locals: { search_term: search_term, producer_id: producer_id, category_id: category_id }
