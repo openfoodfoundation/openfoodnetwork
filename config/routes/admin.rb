@@ -70,7 +70,7 @@ Openfoodnetwork::Application.routes.draw do
     post '/product_import/reset_absent', to: 'product_import#reset_absent_products', as: 'product_import_reset_async'
 
     constraints FeatureToggleConstraint.new(:admin_style_v3) do
-      get '/products_v3', to: 'products_v3#index'
+      resources :products_v3, only: :index
     end
 
     resources :variant_overrides do

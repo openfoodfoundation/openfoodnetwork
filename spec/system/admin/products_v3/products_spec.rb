@@ -11,15 +11,6 @@ describe 'As an admin, I can see the new product page' do
   70.times do |i|
     let!("product_#{i}".to_sym) { create(:simple_product, name: "product #{i}") }
   end
-  # create a product with a name that can be searched
-  let!(:product_by_name) { create(:simple_product, name: "searchable product") }
-  # create a product with a supplier that can be searched
-  let!(:producer) { create(:supplier_enterprise, name: "Producer 1") }
-  let!(:product_by_supplier) { create(:simple_product, supplier: producer) }
-  # create a product with a category that can be searched
-  let!(:product_by_category) {
-    create(:simple_product, primary_taxon: create(:taxon, name: "Category 1"))
-  }
 
   before do
     # activate feature toggle admin_style_v3 to use new admin interface
@@ -28,13 +19,26 @@ describe 'As an admin, I can see the new product page' do
   end
 
   it "can see the new product page" do
-    visit "/admin/products_v3"
+    visit admin_products_v3_index_url
     expect(page).to have_content "Bulk Edit Products"
   end
 
-  context "pagination" do
-    before :each do
-      visit "/admin/products_v3"
+  describe "sorting" do
+    let!(:product_z) { create(:simple_product, name: "Bananas") }
+    let!(:product_a) { create(:simple_product, name: "Apples") }
+
+    before do
+      visit admin_products_v3_index_url
+    end
+
+    it "Should sort products alphabetically by default" do
+      expect(page).to have_content /Apples.*Bananas/
+    end
+  end
+
+  describe "pagination" do
+    before do
+      visit admin_products_v3_index_url
     end
 
     it "has a pagination, has 15 products per page by default and can change the page" do
@@ -56,12 +60,15 @@ describe 'As an admin, I can see the new product page' do
     end
   end
 
-  context "search" do
-    before :each do
-      visit "/admin/products_v3"
+  describe "search" do
+    before do
+      visit admin_products_v3_index_url
     end
 
-    context "search by search term" do
+    context "product has searchable term" do
+      # create a product with a name that can be searched
+      let!(:product_by_name) { create(:simple_product, name: "searchable product") }
+
       it "can search for a product" do
         search_for "searchable product"
 
@@ -81,34 +88,7 @@ describe 'As an admin, I can see the new product page' do
         expect_page_to_be 1
         expect_products_count_to_be 1
       end
-    end
 
-    context "search by producer" do
-      it "has a producer select" do
-        expect(page).to have_selector "select#producer_id"
-      end
-
-      it "can search for a product" do
-        search_by_producer "Producer 1"
-
-        expect(page).to have_select "producer_id", selected: "Producer 1"
-        expect_page_to_be 1
-        expect_products_count_to_be 1
-      end
-    end
-
-    context "search by category" do
-      it "can search for a product" do
-        search_by_category "Category 1"
-
-        expect(page).to have_select "category_id", selected: "Category 1"
-        expect_page_to_be 1
-        expect_products_count_to_be 1
-        expect(page).to have_selector "table.products tbody tr td", text: product_by_category.name
-      end
-    end
-
-    context "clear filters" do
       it "can clear filters" do
         search_for "searchable product"
         expect(page).to have_field "search_term", with: "searchable product"
@@ -121,13 +101,41 @@ describe 'As an admin, I can see the new product page' do
         expect_page_to_be 1
         expect_products_count_to_be 15
       end
-    end
 
-    context "no results" do
       it "shows a message when there are no results" do
         search_for "no results"
         expect(page).to have_content "No products found for your search criteria"
         expect(page).to have_link "Clear search"
+      end
+    end
+
+    context "product has producer" do
+      # create a product with a supplier that can be searched
+      let!(:producer) { create(:supplier_enterprise, name: "Producer 1") }
+      let!(:product_by_supplier) { create(:simple_product, supplier: producer) }
+
+      it "can search for a product" do
+        search_by_producer "Producer 1"
+
+        expect(page).to have_select "producer_id", selected: "Producer 1"
+        expect_page_to_be 1
+        expect_products_count_to_be 1
+      end
+    end
+
+    context "product has category" do
+      # create a product with a category that can be searched
+      let!(:product_by_category) {
+        create(:simple_product, primary_taxon: create(:taxon, name: "Category 1"))
+      }
+
+      it "can search for a product" do
+        search_by_category "Category 1"
+
+        expect(page).to have_select "category_id", selected: "Category 1"
+        expect_page_to_be 1
+        expect_products_count_to_be 1
+        expect(page).to have_selector "table.products tbody tr td", text: product_by_category.name
       end
     end
   end

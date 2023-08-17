@@ -159,6 +159,7 @@ group :test, :development do
   gem 'rspec-retry', require: false
   gem 'rswag-specs'
   gem 'shoulda-matchers'
+  gem 'stimulus_reflex_testing'
   gem 'timecop'
 end
 
