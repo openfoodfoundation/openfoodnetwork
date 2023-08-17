@@ -75,7 +75,7 @@ module OrderManagement
         order_cycle_ids = in_range_order_cycles.pluck(:id)
         return orphaned unless order_cycle_ids.any?
 
-        orphaned.where('order_cycle_id NOT IN (?)', order_cycle_ids)
+        orphaned.where.not(order_cycle_id: order_cycle_ids)
       end
 
       def insert_values

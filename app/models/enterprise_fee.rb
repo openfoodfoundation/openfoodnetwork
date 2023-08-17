@@ -37,7 +37,7 @@ class EnterpriseFee < ApplicationRecord
   }
 
   scope :per_item, lambda {
-    joins(:calculator).where('spree_calculators.type NOT IN (?)', PER_ORDER_CALCULATORS)
+    joins(:calculator).where.not(spree_calculators: { type: PER_ORDER_CALCULATORS })
   }
   scope :per_order, lambda {
     joins(:calculator).where('spree_calculators.type IN (?)', PER_ORDER_CALCULATORS)

@@ -91,7 +91,7 @@ module Spree
     after_save :save_default_price
 
     # default variant scope only lists non-deleted variants
-    scope :deleted, lambda { where('deleted_at IS NOT NULL') }
+    scope :deleted, lambda { where.not(deleted_at: nil) }
 
     scope :with_order_cycles_inner, -> { joins(exchanges: :order_cycle) }
 
@@ -162,7 +162,7 @@ module Spree
                                           where(deleted_at: nil).
                                           where('spree_prices.currency' =>
                                             currency || Spree::Config[:currency]).
-                                          where('spree_prices.amount IS NOT NULL').
+                                          where.not(spree_prices: { amount: nil }).
                                           select("spree_variants.id"))
     end
 

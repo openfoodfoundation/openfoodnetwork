@@ -149,13 +149,13 @@ class Enterprise < ApplicationRecord
       select('DISTINCT enterprises.id')
 
     if ready_enterprises.any?
-      where("enterprises.id NOT IN (?)", ready_enterprises)
+      where.not(enterprises: { id: ready_enterprises })
     else
       where(nil)
     end
   }
   scope :is_primary_producer, -> { where("enterprises.is_primary_producer IS TRUE") }
-  scope :is_distributor, -> { where('sells != ?', 'none') }
+  scope :is_distributor, -> { where.not(sells: 'none') }
   scope :is_hub, -> { where(sells: 'any') }
   scope :supplying_variant_in, lambda { |variants|
     joins(supplied_products: :variants).
@@ -476,7 +476,7 @@ class Enterprise < ApplicationRecord
 
   def name_is_unique
     dups = Enterprise.where(name: name)
-    dups = dups.where('id != ?', id) unless new_record?
+    dups = dups.where.not(id: id) unless new_record?
 
     errors.add :name, I18n.t(:enterprise_name_error, email: dups.first.owner.email) if dups.any?
   end
@@ -531,7 +531,7 @@ class Enterprise < ApplicationRecord
     # - it grants permissions to all pre-existing hubs
     # - all producers grant permission to it
 
-    enterprises = owner.owned_enterprises.where('enterprises.id != ?', self)
+    enterprises = owner.owned_enterprises.where.not(enterprises: { id: self })
 
     # We grant permissions to all pre-existing hubs
     hub_permissions = [:add_to_order_cycle]
@@ -580,7 +580,7 @@ class Enterprise < ApplicationRecord
   # We avoid an infinite loop and don't need to touch the whole distributor tree.
   def touch_distributors
     Enterprise.distributing_products(supplied_products.select(:id)).
-      where('enterprises.id != ?', id).
+      where.not(enterprises: { id: id }).
       update_all(updated_at: Time.zone.now)
   end
 end

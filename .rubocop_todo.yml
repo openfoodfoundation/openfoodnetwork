@@ -741,28 +741,6 @@ Rails/WhereExists:
     - 'lib/tasks/sample_data/order_cycle_factory.rb'
     - 'lib/tasks/sample_data/taxon_factory.rb'
 
-# Offense count: 24
-# This cop supports safe autocorrection (--autocorrect).
-Rails/WhereNot:
-  Exclude:
-    - 'app/controllers/spree/admin/products_controller.rb'
-    - 'app/models/concerns/permalink_generator.rb'
-    - 'app/models/enterprise.rb'
-    - 'app/models/enterprise_fee.rb'
-    - 'app/models/enterprise_relationship.rb'
-    - 'app/models/product_import/inventory_reset_strategy.rb'
-    - 'app/models/proxy_order.rb'
-    - 'app/models/spree/credit_card.rb'
-    - 'app/models/spree/product.rb'
-    - 'app/models/spree/variant.rb'
-    - 'app/models/spree/zone.rb'
-    - 'app/models/variant_override.rb'
-    - 'app/services/cap_quantity.rb'
-    - 'engines/catalog/app/services/catalog/product_import/products_reset_strategy.rb'
-    - 'engines/order_management/app/services/order_management/subscriptions/proxy_order_syncer.rb'
-    - 'lib/reporting/reports/users_and_enterprises/base.rb'
-    - 'lib/tasks/data/anonymize_data.rake'
-
 # Offense count: 1
 Security/Open:
   Exclude:

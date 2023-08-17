@@ -24,7 +24,7 @@ module ProductImport
       relation = VariantOverride.where(hub_id: enterprise_ids)
       return relation if excluded_items_ids.blank?
 
-      relation.where('id NOT IN (?)', excluded_items_ids)
+      relation.where.not(id: excluded_items_ids)
     end
   end
 end

@@ -23,7 +23,7 @@ module Spree
     after_create :ensure_single_default_card
     after_save :ensure_single_default_card, if: :default_card_needs_updating?
 
-    scope :with_payment_profile, -> { where('gateway_customer_profile_id IS NOT NULL') }
+    scope :with_payment_profile, -> { where.not(gateway_customer_profile_id: nil) }
 
     # needed for some of the ActiveMerchant gateways (eg. SagePay)
     alias_attribute :brand, :cc_type
