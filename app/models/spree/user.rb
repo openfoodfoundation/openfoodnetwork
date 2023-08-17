@@ -18,9 +18,9 @@ module Spree
     belongs_to :ship_address, class_name: 'Spree::Address'
     belongs_to :bill_address, class_name: 'Spree::Address'
 
-    has_and_belongs_to_many :spree_roles,
-                            join_table: 'spree_roles_users',
-                            class_name: "Spree::Role"
+    has_many :role_users
+    has_many :spree_roles, through: :role_users,
+                           source: :role, class_name: "Spree::Role"
 
     has_many :spree_orders, class_name: "Spree::Order"
 

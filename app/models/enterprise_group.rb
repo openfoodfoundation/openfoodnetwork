@@ -7,7 +7,9 @@ class EnterpriseGroup < ApplicationRecord
 
   acts_as_list
 
-  has_and_belongs_to_many :enterprises, join_table: 'enterprise_groups_enterprises'
+  has_many :enterprise_group_enterprises, dependent: :destroy
+  has_many :enterprises, through: :enterprise_group_enterprises
+
   belongs_to :owner, class_name: 'Spree::User', inverse_of: :owned_groups, optional: true
   belongs_to :address, class_name: 'Spree::Address'
   accepts_nested_attributes_for :address

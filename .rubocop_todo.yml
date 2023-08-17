@@ -449,19 +449,6 @@ Rails/CompactBlank:
     - 'lib/reporting/report_ruler.rb'
     - 'lib/reporting/reports/enterprise_fee_summary/parameters.rb'
 
-# Offense count: 8
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/HasAndBelongsToMany:
-  Exclude:
-    - 'app/models/enterprise.rb'
-    - 'app/models/enterprise_group.rb'
-    - 'app/models/order_cycle.rb'
-    - 'app/models/spree/role.rb'
-    - 'app/models/spree/shipping_method.rb'
-    - 'app/models/spree/user.rb'
-    - 'app/models/spree/zone.rb'
-
 # Offense count: 47
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb

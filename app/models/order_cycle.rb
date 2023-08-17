@@ -26,12 +26,15 @@ class OrderCycle < ApplicationRecord
   has_many :distributors, -> { distinct }, source: :receiver, through: :cached_outgoing_exchanges
   has_many :order_cycle_schedules
   has_many :schedules, through: :order_cycle_schedules
-  has_and_belongs_to_many :selected_distributor_payment_methods,
-                          class_name: 'DistributorPaymentMethod',
-                          join_table: 'order_cycles_distributor_payment_methods'
-  has_and_belongs_to_many :selected_distributor_shipping_methods,
-                          class_name: 'DistributorShippingMethod',
-                          join_table: 'order_cycles_distributor_shipping_methods'
+  has_many :order_cycle_distributor_payment_methods
+  has_many :selected_distributor_payment_methods, through: :order_cycle_distributor_payment_methods,
+                                                  source: :distributor_payment_method,
+                                                  class_name: 'DistributorPaymentMethod'
+  has_many :order_cycle_distributor_shipping_methods
+  has_many :selected_distributor_shipping_methods,
+           through: :order_cycle_distributor_shipping_methods,
+           source: :distributor_shipping_method,
+           class_name: 'DistributorShippingMethod'
   has_paper_trail meta: { custom_data: proc { |order_cycle| order_cycle.schedule_ids.to_s } }
 
   attr_accessor :incoming_exchanges, :outgoing_exchanges

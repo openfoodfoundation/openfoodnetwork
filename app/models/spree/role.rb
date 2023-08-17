@@ -2,7 +2,7 @@
 
 module Spree
   class Role < ApplicationRecord
-    has_and_belongs_to_many :users, join_table: 'spree_roles_users',
-                                    class_name: "Spree::User"
+    has_many :role_users, dependent: :destroy
+    has_many :users, through: :role_users, class_name: "Spree::User"
   end
 end
