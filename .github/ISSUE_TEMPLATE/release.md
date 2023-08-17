@@ -10,16 +10,26 @@ assignees: ''
 ## 1. Preparation on Thursday
 
 - [ ] Merge pull requests in the [Ready To Go] column
-- [ ] Include translations: `tx pull --force`
+- [ ] Include translations 
+  <details><summary>Command line instructions:</summary>
+    <pre>
+    git checkout master
+    git pull upstream master
+    tx pull --force
+    git commit -a -m "Update all locales with the latest Transifex translations"
+    git push upstream master</pre>
+  </details>
+- [ ] Create a tag: `git push upstream HEAD:refs/tags/vX.Y.Z`
 - [ ] [Draft new release]. Look at previous [releases] for inspiration.
+    - Select new release tag
+    - _Generate release notes_ and arrange into categories as required.
 - [ ] Notify [#instance-managers] of user-facing changes.
 
 ## 2. Testing
 
-- [ ] [Find build] of the release commit and copy it below.
 - [ ] Move this issue to Test Ready.
 - [ ] Notify `@testers` in [#testing].
-- [ ] Test build: <!-- paste build link here, e.g. https://semaphore...builds/1234 -->
+- [ ] Test build: [Deploy to Staging] with release tag.
 
 ## 3. Finish on Tuesday
 
@@ -29,7 +39,7 @@ assignees: ''
   <pre>
   cd ofn-install
   git pull
-  ansible-playbook --limit all-prod --extra-vars "git_version=vx.y.z" playbooks/deploy.yml
+  ansible-playbook --limit all-prod --extra-vars "git_version=vX.Y.Z" playbooks/deploy.yml
   </pre>
   </details>
 - [ ] Notify [#instance-managers]:
@@ -44,5 +54,5 @@ The full process is described at https://github.com/openfoodfoundation/openfoodn
 [releases]: https://github.com/openfoodfoundation/openfoodnetwork/releases
 [#instance-managers]: https://app.slack.com/client/T02G54U79/CG7NJ966B
 [#testing]: https://openfoodnetwork.slack.com/app_redirect?channel=C02TZ6X00
-[Find build]: https://semaphoreci.com/openfoodfoundation/openfoodnetwork-2/branches/master
+[Deploy to Staging]: https://github.com/openfoodfoundation/openfoodnetwork/actions/workflows/stage.yml
 [#global-community]: https://app.slack.com/client/T02G54U79/C59ADD8F2
