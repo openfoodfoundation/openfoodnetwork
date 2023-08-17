@@ -42,7 +42,7 @@ module Spree
             respond_to do |type|
               type.html {
                 render status: :not_found,
-                       file: Rails.root.join("public/404.html"),
+                       file: Rails.public_path.join('404.html'),
                        formats: [:html],
                        layout: nil
               }

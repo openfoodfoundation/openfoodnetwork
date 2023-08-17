@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe TermsOfServiceFile do
-  let(:pdf) { File.open(Rails.root.join("public/Terms-of-service.pdf")) }
+  let(:pdf) { File.open(Rails.public_path.join('Terms-of-service.pdf')) }
   let(:upload) { Rack::Test::UploadedFile.new(pdf, "application/pdf") }
 
   describe ".current" do

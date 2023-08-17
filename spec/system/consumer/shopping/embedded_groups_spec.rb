@@ -15,7 +15,7 @@ describe "Using embedded shopfront functionality" do
 
       FileUtils.copy(
         Rails.root.join("spec/fixtures/files/embedded-group-preview.html"),
-        Rails.root.join("public/embedded-group-preview.html")
+        Rails.public_path.join('embedded-group-preview.html')
       )
 
       visit "/embedded-group-preview.html?#{group.permalink}"
@@ -23,7 +23,7 @@ describe "Using embedded shopfront functionality" do
 
     after do
       FileUtils.remove(
-        Rails.root.join("public/embedded-group-preview.html")
+        Rails.public_path.join('embedded-group-preview.html')
       )
     end
 

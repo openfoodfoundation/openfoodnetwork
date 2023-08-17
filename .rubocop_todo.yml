@@ -449,24 +449,6 @@ Rails/CompactBlank:
     - 'lib/reporting/report_ruler.rb'
     - 'lib/reporting/reports/enterprise_fee_summary/parameters.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Rails/ExpandedDateRange:
-  Exclude:
-    - 'app/models/spree/product.rb'
-
-# Offense count: 5
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: slashes, arguments
-Rails/FilePath:
-  Exclude:
-    - 'app/models/product_import/product_importer.rb'
-    - 'lib/tasks/karma.rake'
-    - 'spec/base_spec_helper.rb'
-    - 'spec/models/content_configuration_spec.rb'
-    - 'spec/support/downloads_helper.rb'
-
 # Offense count: 8
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
@@ -519,14 +501,6 @@ Rails/HelperInstanceVariable:
     - 'app/helpers/shop_helper.rb'
     - 'app/helpers/spree/admin/orders_helper.rb'
     - 'app/helpers/spree/orders_helper.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Include.
-# Include: app/controllers/**/*.rb
-Rails/I18nLazyLookup:
-  Exclude:
-    - 'app/controllers/admin/proxy_orders_controller.rb'
 
 # Offense count: 8
 # Configuration parameters: Include.
@@ -671,6 +645,7 @@ Rails/RedundantPresenceValidationOnBelongsTo:
     - 'app/models/spree/stock_item.rb'
     - 'app/models/spree/stock_movement.rb'
     - 'app/models/spree/tax_rate.rb'
+    - 'app/models/spree/variant.rb'
     - 'app/models/subscription_line_item.rb'
     - 'app/models/tag_rule.rb'
     - 'app/models/variant_override.rb'
@@ -701,29 +676,13 @@ Rails/ResponseParsedBody:
     - 'spec/controllers/spree/credit_cards_controller_spec.rb'
     - 'spec/controllers/user_registrations_controller_spec.rb'
 
-# Offense count: 4
+# Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/RootPathnameMethods:
   Exclude:
     - 'spec/lib/reports/orders_and_fulfillment/order_cycle_customer_totals_report_spec.rb'
-    - 'spec/models/content_configuration_spec.rb'
     - 'spec/models/terms_of_service_file_spec.rb'
     - 'spec/system/admin/configuration/terms_of_service_files_spec.rb'
-
-# Offense count: 13
-# This cop supports safe autocorrection (--autocorrect).
-Rails/RootPublicPath:
-  Exclude:
-    - 'app/controllers/concerns/request_timeouts.rb'
-    - 'lib/spree/core/controller_helpers/common.rb'
-    - 'spec/controllers/api/v0/product_images_controller_spec.rb'
-    - 'spec/controllers/api/v0/terms_and_conditions_controller_spec.rb'
-    - 'spec/models/terms_of_service_file_spec.rb'
-    - 'spec/system/admin/bulk_product_update_spec.rb'
-    - 'spec/system/admin/enterprises/terms_and_conditions_spec.rb'
-    - 'spec/system/consumer/shopping/checkout_spec.rb'
-    - 'spec/system/consumer/shopping/embedded_groups_spec.rb'
-    - 'spec/system/consumer/split_checkout_spec.rb'
 
 # Offense count: 4
 # Configuration parameters: ForbiddenMethods, AllowedMethods.
@@ -740,16 +699,6 @@ Rails/SquishedSQLHeredocs:
     - 'app/queries/customers_with_balance.rb'
     - 'app/queries/outstanding_balance.rb'
     - 'spec/queries/outstanding_balance_spec.rb'
-
-# Offense count: 24
-# This cop supports safe autocorrection (--autocorrect).
-Rails/StripHeredoc:
-  Exclude:
-    - 'app/models/content_configuration.rb'
-    - 'app/queries/customers_with_balance.rb'
-    - 'app/queries/outstanding_balance.rb'
-    - 'lib/reporting/reports/enterprise_fee_summary/scope.rb'
-    - 'lib/tasks/data/truncate_data.rake'
 
 # Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -1530,14 +1479,13 @@ Style/RedundantArgument:
     - 'engines/dfc_provider/app/services/authorization_control.rb'
     - 'spec/support/query_counter.rb'
 
-# Offense count: 14
+# Offense count: 13
 # This cop supports safe autocorrection (--autocorrect).
 Style/RedundantConstantBase:
   Exclude:
     - 'app/controllers/split_checkout_controller.rb'
     - 'app/controllers/webhook_endpoints_controller.rb'
     - 'config.ru'
-    - 'spec/base_spec_helper.rb'
     - 'spec/helpers/checkout_helper_spec.rb'
     - 'spec/models/spree/order_spec.rb'
     - 'spec/models/spree/payment_method_spec.rb'
@@ -1557,6 +1505,13 @@ Style/RedundantDoubleSplatHashBraces:
 Style/RedundantInitialize:
   Exclude:
     - 'spec/models/spree/gateway_spec.rb'
+
+# Offense count: 2
+# This cop supports unsafe autocorrection (--autocorrect-all).
+Style/RedundantInterpolation:
+  Exclude:
+    - 'lib/tasks/karma.rake'
+    - 'spec/base_spec_helper.rb'
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).

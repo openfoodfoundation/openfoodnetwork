@@ -10,7 +10,7 @@ describe Api::V0::ProductImagesController, type: :controller do
   describe "uploading an image" do
     let(:image) { Rack::Test::UploadedFile.new(black_logo_file, 'image/png') }
     let(:pdf) { Rack::Test::UploadedFile.new(pdf_path, 'application/pdf') }
-    let(:pdf_path) { Rails.root.join("public/Terms-of-service.pdf") }
+    let(:pdf_path) { Rails.public_path.join('Terms-of-service.pdf') }
     let(:product_without_image) { create(:product) }
     let(:product_with_image) { create(:product_with_image) }
     let(:current_api_user) { create(:admin_user) }

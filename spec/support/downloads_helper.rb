@@ -4,7 +4,7 @@ module DownloadsHelper
   TIMEOUT = 10
 
   def self.path
-    Rails.root.join("tmp", "capybara")
+    Rails.root.join("tmp/capybara")
   end
 
   def downloaded_filename

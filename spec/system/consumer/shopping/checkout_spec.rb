@@ -91,7 +91,7 @@ describe "As a consumer I want to check out my cart" do
     let(:user) { create(:user) }
     let(:pdf_upload) {
       Rack::Test::UploadedFile.new(
-        Rails.root.join("public/Terms-of-service.pdf"),
+        Rails.public_path.join('Terms-of-service.pdf'),
         "application/pdf"
       )
     }

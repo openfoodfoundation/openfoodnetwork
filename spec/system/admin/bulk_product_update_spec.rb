@@ -904,7 +904,7 @@ describe '
         expect(page).to have_css "img.preview"
 
         # Upload a new image file
-        attach_file 'image-upload', Rails.root.join("public/500.jpg"), visible: false
+        attach_file 'image-upload', Rails.public_path.join('500.jpg'), visible: false
 
         # Shows spinner whilst loading
         expect(page).to have_css ".spinner"
