@@ -45,7 +45,9 @@ describe OrderBalance do
     end
 
     it 'returns the balance wraped in a Money object' do
-      expect(order_balance.display_amount).to eq(Spree::Money.new(20, currency: ENV['currency']))
+      expect(order_balance.display_amount).to eq(Spree::Money.new(20,
+                                                                  currency: ENV.fetch('currency',
+                                                                                      nil)))
     end
   end
 

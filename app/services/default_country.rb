@@ -10,6 +10,7 @@ class DefaultCountry
   end
 
   def self.country
-    Spree::Country.cached_find_by(iso: ENV["DEFAULT_COUNTRY_CODE"]) || Spree::Country.first
+    Spree::Country.cached_find_by(iso: ENV.fetch("DEFAULT_COUNTRY_CODE",
+                                                 nil)) || Spree::Country.first
   end
 end
