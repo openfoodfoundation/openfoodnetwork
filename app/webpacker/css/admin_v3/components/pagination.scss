@@ -22,7 +22,6 @@
     font-weight: 600;
 
     &.current,
-    &.disabled,
     &.gap {
       cursor: default;
     }
@@ -69,10 +68,6 @@
       color: $white;
       background-color: $red;
       cursor: default;
-    }
-
-    &.disabled {
-      display: none;
     }
   }
 }
