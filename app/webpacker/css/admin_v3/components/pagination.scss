@@ -46,7 +46,7 @@
       }
     }
 
-    &:hover:not(.disabled):not(.gap) {
+    &[href]:hover {
       background-color: $color-5;
       color: $white;
     }
