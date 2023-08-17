@@ -2,7 +2,7 @@
 
 # Controller used to provide the Persons API for the DFC application
 module DfcProvider
-  class PersonsController < DfcProvider::BaseController
+  class PersonsController < DfcProvider::ApplicationController
     before_action :check_user_accessibility
 
     def show

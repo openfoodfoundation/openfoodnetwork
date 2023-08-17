@@ -2,7 +2,7 @@
 
 # Controller used to provide the CatalogItem API for the DFC application
 module DfcProvider
-  class EnterprisesController < DfcProvider::BaseController
+  class EnterprisesController < DfcProvider::ApplicationController
     before_action :check_enterprise
 
     def show

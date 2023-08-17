@@ -3,7 +3,7 @@
 # Controller used to provide the API products for the DFC application
 # CatalogItems are items that are being sold by the entreprise.
 module DfcProvider
-  class CatalogItemsController < DfcProvider::BaseController
+  class CatalogItemsController < DfcProvider::ApplicationController
     before_action :check_enterprise
 
     def index
