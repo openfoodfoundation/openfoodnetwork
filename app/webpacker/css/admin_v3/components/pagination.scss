@@ -20,7 +20,12 @@
     border-radius: 4px;
     color: $color-8;
     font-weight: 600;
-    cursor: default;
+
+    &.current,
+    &.disabled,
+    &.gap {
+      cursor: default;
+    }
 
     &.current {
       background-color: $color-5;
@@ -39,10 +44,6 @@
       & > i {
         padding-left: 6px;
       }
-    }
-
-    &:not(.disabled):not(.current) {
-      cursor: pointer;
     }
 
     &:hover:not(.disabled):not(.gap) {
