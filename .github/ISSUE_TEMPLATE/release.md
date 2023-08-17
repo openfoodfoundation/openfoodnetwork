@@ -19,12 +19,7 @@ assignees: ''
     git commit -a -m "Update all locales with the latest Transifex translations"
     git push upstream master</pre>
   </details>
-- [ ] Create a tag:
-  <details><summary>Command line instructions:</summary>
-    <pre>
-    git tag vX.X.X
-    git push upstream vX.X.X</pre>
-  </details>  
+- [ ] Create a tag: `git push upstream HEAD:refs/tags/vX.Y.Z`
 - [ ] [Draft new release]. Look at previous [releases] for inspiration.
     - Select new release tag
     - _Generate release notes_ and arrange into categories as required.
@@ -44,7 +39,7 @@ assignees: ''
   <pre>
   cd ofn-install
   git pull
-  ansible-playbook --limit all-prod --extra-vars "git_version=vx.y.z" playbooks/deploy.yml
+  ansible-playbook --limit all-prod --extra-vars "git_version=vX.Y.Z" playbooks/deploy.yml
   </pre>
   </details>
 - [ ] Notify [#instance-managers]:
