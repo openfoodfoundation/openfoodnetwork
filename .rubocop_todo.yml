@@ -1096,7 +1096,6 @@ Style/HashSyntax:
     - 'spec/helpers/spree/base_helper_spec.rb'
     - 'spec/jobs/report_job_spec.rb'
     - 'spec/jobs/subscription_confirm_job_spec.rb'
-    - 'spec/jobs/subscription_placement_job_spec.rb'
     - 'spec/jobs/webhook_delivery_job_spec.rb'
     - 'spec/lib/open_food_network/address_finder_spec.rb'
     - 'spec/lib/open_food_network/enterprise_fee_applicator_spec.rb'
