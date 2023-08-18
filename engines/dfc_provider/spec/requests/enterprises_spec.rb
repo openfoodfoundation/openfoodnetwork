@@ -9,6 +9,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rs
       :distributor_enterprise,
       id: 10_000, owner: user, abn: "123 456", name: "Fred's Farm",
       description: "This is an awesome enterprise",
+      address: build(:address, id: 40_000),
     )
   end
   let!(:product) {

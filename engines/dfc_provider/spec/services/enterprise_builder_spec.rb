@@ -9,6 +9,7 @@ describe EnterpriseBuilder do
       :enterprise,
       id: 10_000, name: "Fabi's Farm",
       description: "The place where stuff grows", abn: "123 456 789 0",
+      address: build(:address, city: "Melbourne"),
     )
   }
   let(:variant) {
@@ -36,11 +37,16 @@ describe EnterpriseBuilder do
       expect(result.vatNumber).to eq "123 456 789 0"
     end
 
-    it "assignes products" do
+    it "assigns products" do
       expect(variant).to be_persisted
 
       expect(result.suppliedProducts.count).to eq 1
       expect(result.suppliedProducts[0].name).to eq "Apple"
+    end
+
+    it "assigns an address" do
+      expect(result.localizations.count).to eq 1
+      expect(result.localizations[0].city).to eq "Melbourne"
     end
   end
 end
