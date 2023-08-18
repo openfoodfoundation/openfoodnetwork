@@ -83,8 +83,10 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    font-size: $h3-size;
+    font-size: $h6-size;
+    font-weight: 600;
     gap: 20px;
+    margin-top: 116px;
 
     #no-products-actions {
       display: flex;
@@ -102,8 +104,8 @@
   }
 
   #sort {
-    line-height: $btn-medium-height;
-    height: $btn-medium-height;
+    line-height: $btn-relaxed-height;
+    height: $btn-relaxed-height;
 
     .with-dropdown {
       display: flex;
@@ -148,8 +150,8 @@
         background-color: $lighter-grey;
         border: 1px solid $lighter-grey;
         border-radius: 4px;
-        height: $btn-height;
-        line-height: $btn-height;
+        height: $btn-relaxed-height;
+        line-height: $btn-relaxed-height;
 
         &:has(input:focus),
         &:has(input:active) {
@@ -157,7 +159,10 @@
         }
 
         > input {
-          background-color: $lighter-grey;
+          // Totally hide the input from its container
+          background-color: transparent;
+          border: none;
+          width: calc(100% - 30px); // 30px is the width of the search icon + padding
         }
 
         &:before {
@@ -174,7 +179,7 @@
     .categories {
       select {
         width: 150px;
-        height: $btn-height;
+        height: $btn-relaxed-height;
       }
     }
 
