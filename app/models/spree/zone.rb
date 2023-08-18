@@ -90,7 +90,7 @@ module Spree
 
     def country_ids=(ids)
       zone_members.destroy_all
-      ids.reject(&:blank?).map do |id|
+      ids.compact_blank.map do |id|
         member = ZoneMember.new
         member.zoneable_type = 'Spree::Country'
         member.zoneable_id = id
@@ -100,7 +100,7 @@ module Spree
 
     def state_ids=(ids)
       zone_members.destroy_all
-      ids.reject(&:blank?).map do |id|
+      ids.compact_blank.map do |id|
         member = ZoneMember.new
         member.zoneable_type = 'Spree::State'
         member.zoneable_id = id

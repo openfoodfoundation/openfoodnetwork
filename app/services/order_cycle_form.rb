@@ -113,7 +113,7 @@ class OrderCycleForm
   def selected_distributor_payment_method_ids
     @selected_distributor_payment_method_ids = (
       attachable_distributor_payment_method_ids &
-      @selected_distributor_payment_method_ids.reject(&:blank?).map(&:to_i)
+      @selected_distributor_payment_method_ids.compact_blank.map(&:to_i)
     )
 
     if attachable_distributor_payment_method_ids.sort ==
@@ -131,7 +131,7 @@ class OrderCycleForm
   def selected_distributor_shipping_method_ids
     @selected_distributor_shipping_method_ids = (
       attachable_distributor_shipping_method_ids &
-      @selected_distributor_shipping_method_ids.reject(&:blank?).map(&:to_i)
+      @selected_distributor_shipping_method_ids.compact_blank.map(&:to_i)
     )
 
     if attachable_distributor_shipping_method_ids.sort ==

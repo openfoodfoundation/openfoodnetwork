@@ -46,12 +46,12 @@ module Reporting
         #
         # https://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-select
         def cleanup_arrays
-          distributor_ids.reject!(&:blank?)
-          producer_ids.reject!(&:blank?)
-          order_cycle_ids.reject!(&:blank?)
-          enterprise_fee_ids.reject!(&:blank?)
-          shipping_method_ids.reject!(&:blank?)
-          payment_method_ids.reject!(&:blank?)
+          distributor_ids.compact_blank!
+          producer_ids.compact_blank!
+          order_cycle_ids.compact_blank!
+          enterprise_fee_ids.compact_blank!
+          shipping_method_ids.compact_blank!
+          payment_method_ids.compact_blank!
         end
       end
     end

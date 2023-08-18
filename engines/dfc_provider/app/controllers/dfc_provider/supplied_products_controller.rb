@@ -3,7 +3,7 @@
 # Controller used to provide the SuppliedProducts API for the DFC application
 # SuppliedProducts are products that are managed by an enterprise.
 module DfcProvider
-  class SuppliedProductsController < DfcProvider::BaseController
+  class SuppliedProductsController < DfcProvider::ApplicationController
     before_action :check_enterprise
     rescue_from JSON::LD::JsonLdError::LoadingDocumentFailed, with: -> do
       head :bad_request

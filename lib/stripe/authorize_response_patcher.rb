@@ -22,7 +22,7 @@ module Stripe
       return unless %w(requires_source_action requires_action).include?(response.params["status"])
 
       next_action = response.params["next_source_action"] || response.params["next_action"]
-      return unless next_action.present?
+      return if next_action.blank?
 
       next_action_type = next_action["type"]
       return unless %w(authorize_with_url redirect_to_url).include?(next_action_type)

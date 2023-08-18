@@ -12,7 +12,7 @@ class ContentSanitizer
   }.freeze
 
   def strip_content(content)
-    return unless content.present?
+    return if content.blank?
 
     content = strip_tags(content.to_s.strip)
 
@@ -20,7 +20,7 @@ class ContentSanitizer
   end
 
   def sanitize_content(content)
-    return unless content.present?
+    return if content.blank?
 
     content = sanitize(content.to_s, scrubber: ContentScrubber.new)
 
