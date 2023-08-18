@@ -95,7 +95,9 @@ en_FR:
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
       messages:
+        confirmation: "doesn't match %{attribute}"
         blank: "can't be blank"
+        too_short: "is too short (minimum is %{count} characters)"
   errors:
     messages:
       content_type_invalid: "has an invalid content type"
@@ -1646,6 +1648,9 @@ en_FR:
         save: Save
         voucher_code: Voucher Code
         voucher_amount: Amount
+        voucher_type: Voucher Type
+        flat_rate: Flat
+        percentage_rate: Percentage (%)
     controllers:
       enterprises:
         stripe_connect_cancelled: "Connection to Stripe has been cancelled"
@@ -2054,7 +2059,7 @@ en_FR:
       submit: Complete order
       cancel: Back to Payment method
     errors:
-      saving_failed: "Saving failed, please update the highlighted fields. %{messages}"
+      saving_failed: "Saving failed, please update the highlighted fields."
       terms_not_accepted: Please accept Terms and Conditions
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
@@ -3031,6 +3036,7 @@ en_FR:
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
+  create_or_update_invoice: "Create or Update Invoice"
   date_completed: "Date Completed"
   amount: "Amount"
   invoice_number: "Invoice Number"

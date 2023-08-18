@@ -1799,6 +1799,7 @@ fr_CM:
       submit: Valider ma commande
       cancel: Retour à la méthode de paiement
     errors:
+      saving_failed: "La sauvegarde a échoué, merci de mettre à jour les champs mis en évidence."
       terms_not_accepted: Merci d'accepter les CGU & CGV.
       required: Ce champ ne peut pas être vide
       invalid_number: "Merci de renseigner un numéro de téléphone valide"

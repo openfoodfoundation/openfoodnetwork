@@ -1893,6 +1893,7 @@ hu:
       submit: Teljes rendelés
       cancel: Vissza a Fizetési módhoz
     errors:
+      saving_failed: "A mentés nem sikerült, kérjük, frissítse a kiemelt mezőket."
       terms_not_accepted: Kérjük, fogadja el az Általános Szerződési Feltételeket
       required: A mező nem lehet üres
       invalid_number: "Adjon meg egy érvényes telefonszámot"

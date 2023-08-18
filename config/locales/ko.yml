@@ -1883,6 +1883,7 @@ ko:
       submit: 주문 완료
       cancel: 결제 방식으로 돌아가기
     errors:
+      saving_failed: "저장하지 못했습니다. 강조 표시된 필드를 업데이트하세요."
       terms_not_accepted: 약관에 동의하십시오.
       required: 필드는 비워 둘 수 없습니다.
       invalid_number: "올바른 전화 번호를 입력하십시오."

@@ -1954,7 +1954,7 @@ it:
       submit: Completa ordine
       cancel: Torna al metodo di pagamento
     errors:
-      saving_failed: "Salvataggio fallito, per favore controlla i campi evidenziati. %{messages}"
+      saving_failed: "Salvataggio non riuscito. Per favore compila i campi evidenziati."
       terms_not_accepted: Per favore accetta i Termini e Condizioni
       required: Il campo non può essere lasciato vuoto
       invalid_number: "Per favore inserisci un numero di telefono valido"

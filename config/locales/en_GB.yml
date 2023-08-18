@@ -95,7 +95,9 @@ en_GB:
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
       messages:
+        confirmation: "doesn't match %{attribute}"
         blank: "can't be blank"
+        too_short: "is too short (minimum is %{count} characters)"
   errors:
     messages:
       content_type_invalid: "has an invalid content type"
@@ -377,7 +379,10 @@ en_GB:
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
   must_have_valid_business_number: "Please enter your company number."
   invoice: "Invoice"
+  invoices: "Invoices"
+  file: "File"
   active: "Active"
+  download: "Download"
   cancelled: "Cancelled"
   more: "More"
   say_no: "No"
@@ -435,6 +440,7 @@ en_GB:
   none: None
   notes: Notes
   error: Error
+  voucher: Voucher
   processing_payment: "Processing payment..."
   no_pending_payments: "No pending payments"
   invalid_payment_state: "Invalid payment state: %{state}"
@@ -727,15 +733,27 @@ en_GB:
       index:
         header:
           title: Bulk Edit Products
+        loading: Loading your products
       sort:
         pagination:
+          total_html: "<strong>%{total} products </strong> in your catalogue. Showing %{from} to %{to}."
+          per_page:
+            show: Show
+            per_page: "%{num}per page"
           clear_search: Clear search
       filters:
+        search_products: Search for products
+        all_producers: All producers
+        all_categories: All categories
         producers:
           label: Buy
         categories:
           label: Categories
         search: Search
+      no_products:
+        no_products_found: No products found
+        import_products: Import multiple products
+        no_products_found_for_search: No products found for your search criteria
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -1372,6 +1390,10 @@ en_GB:
         could_not_cancel_the_order: Could not cancel the order
       resume:
         could_not_resume_the_order: Could not resume the order
+    select2:
+      minimal_search_length: Please enter %{count} or more characters
+      searching: Searching...
+      no_matches: No matches found
     shared:
       user_guide_link:
         user_guide: User Guide
@@ -1385,7 +1407,7 @@ en_GB:
           address: "Address"
           contact: "Contact"
           social: "Social"
-          about: "Open My Shop"
+          about: "About"
           business_details: "Business Details"
           images: "Images"
           properties: "Properties"
@@ -1414,6 +1436,7 @@ en_GB:
       email_confirmation: "Email confirmation is pending. We've sent a confirmation email to %{email}."
       not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
     reports:
+      deprecated: "This report is deprecated and will be removed in a future release."
       hidden: HIDDEN
       unitsize: UNITSIZE
       total: TOTAL
@@ -1439,6 +1462,8 @@ en_GB:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      download:
+        button: "Download Report"
       show:
         report_taking_longer: >
             Sorry, this report took too long to process. It may contain a lot of data
@@ -1479,6 +1504,7 @@ en_GB:
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      enterprise_fees_with_tax_report_by_order: "Enterprise Fees With Tax Report By Order"
       errors:
         no_report_type: "Please specify a report type"
         report_not_found: "Report not found"
@@ -1622,6 +1648,9 @@ en_GB:
         save: Save
         voucher_code: Voucher Code
         voucher_amount: Amount
+        voucher_type: Voucher Type
+        flat_rate: Flat
+        percentage_rate: Percentage (%)
     controllers:
       enterprises:
         stripe_connect_cancelled: "Connection to Stripe has been cancelled"
@@ -1749,6 +1778,7 @@ en_GB:
   abn: "Company Number:"
   acn: "Charity Number:"
   invoice_issued_on: "Invoice issued on:"
+  order_number: "Order number:"
   date_of_transaction: "Date of transaction:"
   menu_1_title: "Home"
   menu_1_url: "/"
@@ -2029,7 +2059,7 @@ en_GB:
       submit: Complete order
       cancel: Back to Payment method
     errors:
-      saving_failed: "Saving failed, please update the highlighted fields. %{messages}"
+      saving_failed: "Saving failed, please update the highlighted fields."
       terms_not_accepted: Please accept Terms and Conditions
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"
@@ -2043,6 +2073,7 @@ en_GB:
   order_not_paid: NOT PAID
   order_total: Total order
   order_payment: "Paying via:"
+  no_payment_required: "No payment required"
   order_billing_address: Billing address
   order_delivery_on: Delivery on
   order_delivery_address: Delivery address
@@ -2537,6 +2568,7 @@ en_GB:
   shipping_method_destroy_error: "That shipping method cannot be deleted as it is referenced by an order: %{number}."
   fees: "Fees"
   fee_name: "Fee Name"
+  fee_owner: "Fee Owner"
   item_cost: "Item cost"
   bulk: "Bulk"
   shop_variant_quantity_min: "min"
@@ -3004,8 +3036,11 @@ en_GB:
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
+  create_or_update_invoice: "Create or Update Invoice"
   date_completed: "Date Completed"
   amount: "Amount"
+  invoice_number: "Invoice Number"
+  invoice_file: "File"
   state_names:
     ready: Ready
     pending: Pending
@@ -3541,6 +3576,7 @@ en_GB:
       success: Webhook endpoint successfully deleted
       error: Webhook endpoint failed to delete
   spree:
+    order_updated: "Order Updated"
     add_country: "Add country"
     add_state: "Add county"
     adjustment: "Adjustment"
@@ -3920,9 +3956,12 @@ en_GB:
           from: "From"
           to: "Bill to"
           shipping: "Shipping"
+          order_number: "Order Number"
+          invoice_number: "Invoice Number"
           payments_list:
             date_time: "Date/time"
             payment_method: "Payment method"
+            payment_state: "Payment state"
             amount: "Amount"
         note:
           note_label: "Note:"
@@ -3959,6 +3998,8 @@ en_GB:
             many: "You have %{count} active order cycles."
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
+        version:
+          view_all_releases: View all releases
       shipping_methods:
         index:
           shipping_methods: "Shipping Methods"

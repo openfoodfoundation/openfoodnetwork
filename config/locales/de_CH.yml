@@ -1889,6 +1889,7 @@ de_CH:
       submit: Zahlungspflichtig bestellen
       cancel: Zurück - Zahlungsart
     errors:
+      saving_failed: "Speichern fehlgeschlagen. Bitte prüfen Sie die markierten Felder."
       terms_not_accepted: Bitte akzeptieren Sie die Allgemeinen Geschäftsbedingungen.
       required: Feld darf nicht leer sein.
       invalid_number: "Bitte geben Sie eine gültige Telefonnummer ein."

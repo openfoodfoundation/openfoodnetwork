@@ -95,7 +95,9 @@ fr:
             on_demand_but_count_on_hand_set: "doit être vide si \"à volonté\""
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
       messages:
+        confirmation: "ne correspond pas %{attribute}"
         blank: "Champ obligatoire"
+        too_short: "est trop court (minimum %{count} caractère)"
   errors:
     messages:
       content_type_invalid: "a un contenu invalide"
@@ -1649,6 +1651,9 @@ fr:
         save: Sauvegarder
         voucher_code: Code promo
         voucher_amount: Montant
+        voucher_type: Type de promo
+        flat_rate: fixe
+        percentage_rate: Pourcentage (%)
     controllers:
       enterprises:
         stripe_connect_cancelled: "La connexion avec Stripe a été annulée"
@@ -2059,7 +2064,7 @@ fr:
       submit: Valider ma commande
       cancel: Retour à la méthode de paiement
     errors:
-      saving_failed: "La sauvegarde n'a pas fonctionné, veuillez mettre à jour les champs en rouge. %{messages}"
+      saving_failed: "La sauvegarde a échoué, merci de mettre à jour les champs mis en évidence."
       terms_not_accepted: Merci d'accepter les CGU & CGV.
       required: Ce champ ne peut pas être vide
       invalid_number: "Merci de renseigner un numéro de téléphone valide"
@@ -3038,6 +3043,7 @@ fr:
   no_orders_found: "Aucune commande trouvée pour ces critères"
   order_information: "Info commande"
   new_payment: "Nouveau paiement"
+  create_or_update_invoice: "Créer ou mettre à jour la facture"
   date_completed: "Date d'opération"
   amount: "Montant"
   invoice_number: "Numéro de facture"

@@ -1903,6 +1903,7 @@ es_CR:
       submit: Orden completa
       cancel: Volver a Método de pago
     errors:
+      saving_failed: "Error al guardar, actualice los campos resaltados."
       terms_not_accepted: Por favor acepte Términos y Condiciones
       required: El campo no puede estar en blanco
       invalid_number: "Por favor ingrese un número de teléfono válido"

@@ -1940,6 +1940,7 @@ es:
       submit: Completar pedido
       cancel: Regresar a Método de pago
     errors:
+      saving_failed: "Error al guardar, actualice los campos resaltados."
       terms_not_accepted: Por favor acepte Términos y condiciones
       required: Espacio no puede estar en blanco
       invalid_number: "Por favor ingresar un número de teléfono válido"

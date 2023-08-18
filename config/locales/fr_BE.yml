@@ -1865,7 +1865,6 @@ fr_BE:
       submit: Finaliser la commande
       cancel: Retour à Mode de paiement
     errors:
-      saving_failed: "Échec de l'enregistrement, veuillez mettre à jour les champs en surbrillance. %{messages}"
       terms_not_accepted: Veuillez accepter les termes et conditions
       required: Le champ ne peut pas être vide
       invalid_number: "s&#39;il vous plaît entrer un numéro de téléphone valide"
@@ -3745,7 +3744,7 @@ fr_BE:
         table:
           select_and_search: "Sélectionnez les filtres et cliquez sur %{option} pour accéder à vos données."
         customer_names_message:
-          customer_names_tip: "Si le nom des client est cacher pour des commande que vous avez faite, vous pouvez contacter le distributeur est leur demander de changer les préférence pour savoir laisser leur fournisseur voire les nom des client. "
+          customer_names_tip: "Si le nom des clients est caché pour des commandes qui vous concernent, vous pouvez contacter le distributeur et lui demander de modifier ses préférences afin d'autoriser ses fournisseurs à voir le nom des clients."
         products_and_inventory:
           all_products:
             message: "Notez que les niveaux de stock indiqués proviennent uniquement des listes de produits des fournisseurs. Si vous utilisez le \"catalogue magasin\" pour gérer vos stocks, ces valeurs seront ignorées dans ce rapport."

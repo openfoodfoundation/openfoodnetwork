@@ -1919,6 +1919,7 @@ nb:
       submit: Fullfør bestillingen
       cancel: Tilbake til Betalingsmåte
     errors:
+      saving_failed: "Lagring mislyktes, vennligst oppdater de uthevede feltene."
       terms_not_accepted: Vennligst godta vilkår og betingelser
       required: Feltet kan ikke være tomt
       invalid_number: "Vennligst oppgi et gyldig telefonnummer"

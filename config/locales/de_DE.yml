@@ -95,7 +95,9 @@ de_DE:
             on_demand_but_count_on_hand_set: "muss leer sein, wenn unbegrenzt verfügbar oder die Produktion auf Bestellung erfolgt"
             limited_stock_but_no_count_on_hand: "muss angegeben werden, da nur begrenzte Lagerbestände verfügbar sind"
       messages:
+        confirmation: "stimmt nicht mit %{attribute} überein"
         blank: "darf nicht leer sein."
+        too_short: "ist zu kurz (mindestens %{count} Zeichen)"
   errors:
     messages:
       content_type_invalid: "hat ein ungültiges Datenformat"
@@ -377,7 +379,10 @@ de_DE:
   confirm_resend_order_confirmation: "Sind Sie sicher, dass Sie die E-Mail-Bestätigung erneut senden wollen?"
   must_have_valid_business_number: "%{enterprise_name} muss eine gültige Umsatzsteueridentifikationsnummer (USt-IdNr.) haben, bevor Rechnungen gesendet werden können."
   invoice: "Rechnung"
+  invoices: "Rechnungen"
+  file: "Datei"
   active: "Aktiv"
+  download: "Herunterladen"
   cancelled: "Storniert"
   more: "Mehr"
   say_no: "Nein"
@@ -435,6 +440,7 @@ de_DE:
   none: Keine
   notes: Anmerkungen
   error: Fehler
+  voucher: Gutschein
   processing_payment: "Bezahlung wird verarbeitet ..."
   no_pending_payments: "Keine ausstehenden Zahlungen."
   invalid_payment_state: "Ungültiger Zahlungsstatus: %{state}"
@@ -727,15 +733,27 @@ de_DE:
       index:
         header:
           title: Produkte verwalten
+        loading: Produkte werden geladen...
       sort:
         pagination:
+          total_html: "<strong>%{total} Produkte</strong> in Ihrem Katalog. Zeige %{from} bis %{to}."
+          per_page:
+            show: Zeige
+            per_page: "%{num} pro Seite"
           clear_search: Suche zurücksetzen
       filters:
+        search_products: Nach Produkten suchen
+        all_producers: Alle Produzenten
+        all_categories: Alle Kategorien
         producers:
           label: Unsere Produzenten
         categories:
           label: Lieferkategorien
         search: Suche
+      no_products:
+        no_products_found: Keine Produkte gefunden.
+        import_products: Produkte importieren
+        no_products_found_for_search: Keine Produkte für Ihre Suchkriterien gefunden.
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -1420,6 +1438,7 @@ de_DE:
       email_confirmation: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{email} gesendet."
       not_visible: "%{enterprise} ist nicht sichtbar und kann daher nicht auf der Karte oder in Suchen gefunden werden."
     reports:
+      deprecated: "Dieser Bericht ist veraltet und wird in einer zukünftigen Version entfernt."
       hidden: AUSGEBLENDET
       unitsize: EINHEIT
       total: SUMME
@@ -1445,6 +1464,8 @@ de_DE:
       pack_by_customer: Packliste nach Kunden
       pack_by_supplier: Packliste nach Lieferanten
       pack_by_product: Packliste nach Produkten
+      download:
+        button: "Bericht herunterladen"
       show:
         report_taking_longer: >
             Die Bearbeitung dieses Berichts hat leider zu lange gedauert. Er enthält
@@ -1486,6 +1507,7 @@ de_DE:
       enterprise_fee_summary:
         name: "Unternehmensgebühren"
         description: "Bericht der erhobenen Gebühren"
+      enterprise_fees_with_tax_report_by_order: "Unternehmensgebühren mit Steuern nach Bestellung"
       errors:
         no_report_type: "Bitte wählen Sie eine Berichtsart aus."
         report_not_found: "Bericht wurde nicht gefunden."
@@ -1756,6 +1778,7 @@ de_DE:
   abn: "USt-IdNr.:"
   acn: "St.-Nr.:"
   invoice_issued_on: "Rechnungsdatum:"
+  order_number: "Bestellnummer:"
   date_of_transaction: "Bestelldatum:"
   menu_1_title: "Einkaufen"
   menu_1_url: "/shops"
@@ -2036,7 +2059,7 @@ de_DE:
       submit: Zahlungspflichtig bestellen
       cancel: Zurück - Zahlungsart
     errors:
-      saving_failed: "Speichern fehlgeschlagen. Bitte prüfen Sie die markierten Felder. %{messages}"
+      saving_failed: "Speichern fehlgeschlagen. Bitte prüfen Sie die markierten Felder."
       terms_not_accepted: Bitte akzeptieren Sie die Allgemeinen Geschäftsbedingungen.
       required: Feld darf nicht leer sein.
       invalid_number: "Bitte geben Sie eine gültige Telefonnummer ein."
@@ -2050,6 +2073,7 @@ de_DE:
   order_not_paid: NICHT BEZAHLT
   order_total: 'Gesamtsumme:'
   order_payment: "Zahlungsart:"
+  no_payment_required: "Keine Zahlung erforderlich."
   order_billing_address: Rechnungsadresse
   order_delivery_on: Lieferung am
   order_delivery_address: Lieferadresse
@@ -2544,6 +2568,7 @@ de_DE:
   shipping_method_destroy_error: "Diese Lieferoption kann nicht gelöscht werden, da sie in einer Bestellung verwendet wird: %{number}."
   fees: "Gebühren"
   fee_name: "Name der Gebühr"
+  fee_owner: "Gebührenerheber"
   item_cost: "Artikelkosten"
   bulk: "Gruppenkauf"
   shop_variant_quantity_min: "Min"
@@ -3008,11 +3033,14 @@ de_DE:
   order_cycles_no_permission_to_create_error: "Sie sind nicht berechtigt, einen von diesem Unternehmen koordinierten Bestellzyklus zu erstellen."
   order_cycle_closed: "Der von Ihnen ausgewählte Bestellzyklus wurde gerade geschlossen. Bitte versuchen Sie es später noch einmal!"
   back_to_orders_list: "Zurück zur Bestellliste"
-  no_orders_found: "Es wurden keine Bestellungen gefunden."
+  no_orders_found: "Keine Bestellungen gefunden."
   order_information: "Bestellinformationen"
   new_payment: "Neue Zahlung"
+  create_or_update_invoice: "Rechnung erstellen/aktualisieren"
   date_completed: "Bestelldatum"
   amount: "Summe"
+  invoice_number: "Rechnungsnummer"
+  invoice_file: "Datei"
   state_names:
     ready: bereit
     pending: ausstehend
@@ -3549,6 +3577,7 @@ de_DE:
       success: Webhook-Endpunkt erfolgreich gelöscht
       error: Webhook-Endpunkt konnte nicht gelöscht werden
   spree:
+    order_updated: "Bestellung aktualisiert"
     add_country: "Neues Land"
     add_state: "Neues Bundesland"
     adjustment: "Anpassung"
@@ -3928,9 +3957,12 @@ de_DE:
           from: "Von"
           to: "Rechnungsempfänger"
           shipping: "Lieferung"
+          order_number: "Bestellnummer"
+          invoice_number: "Rechnungsnummer"
           payments_list:
             date_time: "Datum/Uhrzeit"
             payment_method: "Zahlungsart"
+            payment_state: "Zahlungsstatus"
             amount: "Summe"
         note:
           note_label: "Anmerkung:"
@@ -3967,6 +3999,8 @@ de_DE:
             many: "Sie haben %{count} aktive Bestellzyklen."
             other: "Sie haben %{count} aktive Bestellzyklen."
           manage_order_cycles: "BESTELLZYKLEN VERWALTEN"
+        version:
+          view_all_releases: Alle Versionen anzeigen
       shipping_methods:
         index:
           shipping_methods: "Lieferoptionen"

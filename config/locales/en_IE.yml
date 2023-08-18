@@ -1946,7 +1946,7 @@ en_IE:
       submit: Complete order
       cancel: Back to Payment method
     errors:
-      saving_failed: "Saving failed, please update the highlighted fields. %{messages}"
+      saving_failed: "Saving failed, please update the highlighted fields."
       terms_not_accepted: Please accept Terms and Conditions
       required: Field cannot be blank
       invalid_number: "Please enter a valid phone number"

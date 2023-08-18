@@ -2026,7 +2026,7 @@ cy:
       submit: Cwblhau'r archeb
       cancel: Nôl at y Dull Talu
     errors:
-      saving_failed: "Wedi methu cadw, llenwch y meysydd a amlygwyd. %{messages}"
+      saving_failed: "Wedi methu ei gadw, gofynnir ichi ddiweddaru'r meysydd a amlygwyd."
       terms_not_accepted: Mae angen ichi dderbyn y Telerau ac Amodau
       required: Ni chaniateir gadael maes yn wag
       invalid_number: "Noder rhif ffôn dilys os gwelwch yn dda"

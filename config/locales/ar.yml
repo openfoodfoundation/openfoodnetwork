@@ -1965,7 +1965,7 @@ ar:
       submit: اكمل الطلب
       cancel: العودة إلى طريقة الدفع
     errors:
-      saving_failed: "فشل الحفظ ، يرجى تحديث الحقول المميزة. %{messages}"
+      saving_failed: "فشل الحفظ ، يرجى تحديث الحقول المميزة."
       terms_not_accepted: الرجاء قبول الشروط والأحكام
       required: لا يمكن أن يكون الحقل فارغًا
       invalid_number: "يرجى إدخال رقم هاتف صالح"
