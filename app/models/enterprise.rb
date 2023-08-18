@@ -452,7 +452,7 @@ class Enterprise < ApplicationRecord
     uri = URI(white_label_logo_link)
     self.white_label_logo_link = "http://#{white_label_logo_link}" if uri.scheme.nil?
   rescue URI::InvalidURIError
-    errors.add(:white_label_logo_link, I18n.t(:invalid_url))
+    errors.add(:white_label_logo_link, I18n.t(:invalid_url, url: white_label_logo_link))
   end
 
   def image_url_for(image, name)

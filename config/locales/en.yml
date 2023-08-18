@@ -90,6 +90,8 @@ en:
         preferred_discount_amount: "Calculator Discount Amount:"
         preferred_unit_from_list: "Calculator Unit From List:"
         preferred_per_unit: "Calculator Per Unit:"
+      enterprise:
+        white_label_logo_link: "Link for the logo used in shopfront"
     errors:
       models:
         enterprise_fee:
@@ -3177,6 +3179,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   amount: "Amount"
   invoice_number: "Invoice Number"
   invoice_file: "File"
+  invalid_url: "'%{url}' is an invalid URL"
   state_names:
     ready: Ready
     pending: Pending
