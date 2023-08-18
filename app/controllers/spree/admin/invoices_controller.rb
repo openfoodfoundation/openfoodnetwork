@@ -12,19 +12,9 @@ module Spree
 
       def show
         invoice_id = params[:id]
-        invoice_pdf = BulkInvoiceService.new.filepath(invoice_id)
+        invoice_pdf = filepath(invoice_id)
 
         send_file(invoice_pdf, type: 'application/pdf', disposition: :inline)
-      end
-
-      def create
-        Spree::Order.where(id: params[:order_ids]).find_each do |order|
-          authorize! :invoice, order
-        end
-        invoice_service = BulkInvoiceService.new
-        invoice_service.start_pdf_job(params[:order_ids])
-
-        render json: invoice_service.id, status: :ok
       end
 
       def generate
@@ -34,14 +24,10 @@ module Spree
         redirect_back(fallback_location: spree.admin_dashboard_path)
       end
 
-      def poll
-        invoice_id = params[:invoice_id]
+      private
 
-        if BulkInvoiceService.new.invoice_created? invoice_id
-          render json: { created: true }, status: :ok
-        else
-          render json: { created: false }, status: :unprocessable_entity
-        end
+      def filepath(invoice_id)
+        "tmp/invoices/#{invoice_id}.pdf"
       end
     end
   end
