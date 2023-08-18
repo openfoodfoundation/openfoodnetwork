@@ -54,8 +54,16 @@ describe SubscriptionPlacementJob do
   describe "performing the job" do
     context "when unplaced proxy_orders exist" do
       let!(:subscription) { create(:subscription, with_items: true) }
-      let(:order) { build(:order, distributor: create(:enterprise)) }
-      let!(:proxy_order) { create(:proxy_order, subscription: subscription, order: order) }
+      let(:order) { build(:order, distributor: shop, line_items: [build(:line_item)]) }
+      let(:shop) { order_cycle.coordinator }
+      let(:order_cycle) { create(:simple_order_cycle) }
+      let(:exchange) {
+        create(
+          :exchange, order_cycle: order_cycle,
+          sender: shop, receiver: shop, incoming: false
+        )
+      }
+      let!(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: order_cycle, order: order) }
 
       before do
         allow(job).to receive(:proxy_orders) { ProxyOrder.where(id: proxy_order.id) }
@@ -73,7 +81,7 @@ describe SubscriptionPlacementJob do
       end
 
       it "records exceptions" do
-        order.line_items << build(:line_item)
+        exchange.variants << order.line_items.first.variant
 
         summarizer = TestSummarizer.new
         allow(OrderManagement::Subscriptions::Summarizer).to receive(:new).and_return(summarizer)
