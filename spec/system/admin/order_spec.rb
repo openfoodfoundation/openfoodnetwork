@@ -608,26 +608,46 @@ describe '
       end
 
       context "Canceling an order" do
-        before do
-          visit spree.edit_admin_order_path(order)
-          find("#links-dropdown .ofn-drop-down").click
+        shared_examples "canceling an order" do
+          it "shows the link" do
+            expect(page).to have_link "Cancel Order",
+                                      href: spree.fire_admin_order_path(order, e: 'cancel')
+          end
+          it 'cancels the order' do
+            within ".ofn-drop-down .menu" do
+              expect(page).to have_selector("span", text: "Cancel Order")
+              page.find("span", text: "Cancel Order").click
+            end
+            within '.modal-content' do
+              expect {
+                find_button("OK").click
+              }.to change { order.reload.state }.from('complete').to('canceled')
+            end
+          end
         end
 
-        it "shows the link" do
-          expect(page).to have_link "Cancel Order",
-                                    href: spree.fire_admin_order_path(order, e: 'cancel')
+        context "from order details page" do
+          before do
+            visit spree.edit_admin_order_path(order)
+            find("#links-dropdown .ofn-drop-down").click
+          end
+          it_behaves_like "canceling an order"
         end
 
-        it "cancels the order" do
-          within ".ofn-drop-down .menu" do
-            expect(page).to have_selector("span", text: "Cancel Order")
-            page.find("span", text: "Cancel Order").click
+        context "from order's payments" do
+          before do
+            visit spree.admin_order_payments_path(order)
+            find("#links-dropdown .ofn-drop-down").click
           end
-          within '.modal-content' do
-            expect {
-              find_button("OK").click
-            }.to change { order.reload.state }.from('complete').to('canceled')
+          it_behaves_like "canceling an order"
+        end
+
+        context "from order's adjustments" do
+          before do
+            visit spree.admin_order_adjustments_path(order)
+            find("#links-dropdown .ofn-drop-down").click
           end
+          it_behaves_like "canceling an order"
         end
       end
 
