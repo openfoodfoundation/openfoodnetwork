@@ -67,10 +67,9 @@ describe '
     it "display all attributes when submitting with error: Unit Value must be grater than 0" do
       login_to_admin_section
 
-      click_link 'Products'
-      click_link 'New Product'
+      visit spree.new_admin_product_path
 
-      select @supplier.name, from: 'product_supplier_id'
+      select 'New supplier', from: 'product_supplier_id'
       fill_in 'product_name', with: "new product name"
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
       fill_in 'product_unit_value', with: "0.00 g"
