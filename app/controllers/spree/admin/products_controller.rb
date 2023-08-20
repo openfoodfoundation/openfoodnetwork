@@ -22,6 +22,7 @@ module Spree
       end
 
       #i want to edit this files / this is another edit
+      # i want the next changes
       def show
         session[:return_to] ||= request.referer
         redirect_to( action: :edit )
