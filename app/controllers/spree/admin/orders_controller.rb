@@ -104,7 +104,7 @@ module Spree
           @order = @order.invoices.find(params[:invoice_id]).presenter
         end
 
-        render_with_wicked_pdf InvoiceRenderer.new.args(@order)
+        render_with_wicked_pdf InvoiceRenderer.new.args(@order, spree_current_user)
       end
 
       private

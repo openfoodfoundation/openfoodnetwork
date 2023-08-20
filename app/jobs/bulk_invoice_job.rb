@@ -38,7 +38,7 @@ class BulkInvoiceJob < ApplicationJob
                     else
                       order
                     end
-    invoice = renderer.render_to_string(renderer_data)
+    invoice = renderer.render_to_string(renderer_data, current_user)
     pdf << CombinePDF.parse(invoice)
   end
 

@@ -58,7 +58,7 @@ module Spree
                         @order
                       end
 
-      pdf = InvoiceRenderer.new.render_to_string(renderer_data)
+      pdf = InvoiceRenderer.new.render_to_string(renderer_data, current_user)
 
       attach_file("invoice-#{@order.number}.pdf", pdf)
       I18n.with_locale valid_locale(@order.user) do
