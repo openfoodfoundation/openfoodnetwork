@@ -418,48 +418,7 @@ Naming/VariableNumber:
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/requests/api/orders_spec.rb'
 
-# Offense count: 11
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowedMethods, AllowedPatterns.
-# AllowedMethods: order, limit, select, lock
-Rails/FindEach:
-  Exclude:
-    - 'app/controllers/admin/order_cycles_controller.rb'
-    - 'app/jobs/subscription_confirm_job.rb'
-    - 'app/services/orders_bulk_cancel_service.rb'
-    - 'app/services/products_renderer.rb'
-    - 'lib/tasks/data.rake'
-    - 'lib/tasks/subscriptions/debug.rake'
-    - 'spec/system/admin/bulk_order_management_spec.rb'
-    - 'spec/system/admin/enterprise_relationships_spec.rb'
 
-# Offense count: 46
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/HasManyOrHasOneDependent:
-  Exclude:
-    - 'app/models/customer.rb'
-    - 'app/models/enterprise.rb'
-    - 'app/models/order_cycle.rb'
-    - 'app/models/spree/address.rb'
-    - 'app/models/spree/adjustment.rb'
-    - 'app/models/spree/country.rb'
-    - 'app/models/spree/credit_card.rb'
-    - 'app/models/spree/order.rb'
-    - 'app/models/spree/payment.rb'
-    - 'app/models/spree/payment_method.rb'
-    - 'app/models/spree/property.rb'
-    - 'app/models/spree/return_authorization.rb'
-    - 'app/models/spree/shipment.rb'
-    - 'app/models/spree/shipping_category.rb'
-    - 'app/models/spree/shipping_method.rb'
-    - 'app/models/spree/stock_item.rb'
-    - 'app/models/spree/tax_rate.rb'
-    - 'app/models/spree/taxonomy.rb'
-    - 'app/models/spree/user.rb'
-    - 'app/models/spree/variant.rb'
-
-# Offense count: 25
 # Configuration parameters: Include.
 # Include: app/helpers/**/*.rb
 Rails/HelperInstanceVariable:
