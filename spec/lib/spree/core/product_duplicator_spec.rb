@@ -8,7 +8,8 @@ describe Spree::Core::ProductDuplicator do
            name: "foo",
            product_properties: [property],
            variants: [variant],
-           image: image
+           image: image,
+           variant_unit: 'item'
   end
 
   let(:new_product) do
