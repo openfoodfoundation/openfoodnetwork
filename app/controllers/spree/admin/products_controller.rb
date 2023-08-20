@@ -21,7 +21,7 @@ module Spree
         @show_latest_import = params[:latest_import] || false
       end
 
-      #i want to edit this files
+      #i want to edit this files / this is another edit
       def show
         session[:return_to] ||= request.referer
         redirect_to( action: :edit )
