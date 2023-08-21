@@ -101,7 +101,12 @@ module Spree
 
       def print
         if OpenFoodNetwork::FeatureToggle.enabled?(:invoices, spree_current_user)
-          @order = @order.invoices.find(params[:invoice_id]).presenter
+          @order = if params[:invoice_id].present?
+                     @order.invoices.find(params[:invoice_id]).presenter
+                   else
+                     OrderInvoiceGenerator.new(@order).generate_or_update_latest_invoice
+                     @order.invoices.first.presenter
+                   end
         end
 
         render_with_wicked_pdf InvoiceRenderer.new.args(@order, spree_current_user)
