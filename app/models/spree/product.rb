@@ -53,7 +53,10 @@ module Spree
     validates :name, presence: true
 
     validates :variant_unit, presence: true
-    validate :validate_unit_value
+    validates :unit_value, numericality: {
+      greater_than: 0,
+      if: ->(p) { p.variant_unit.in?(%w(weight volume)) && new_record? }
+    }
     validates :variant_unit_scale,
               presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
     validates :variant_unit_name,
@@ -204,23 +207,6 @@ module Spree
           arel_table[field].matches("%#{value}%")
         }.inject(:or)
       }.inject(:or)
-    end
-
-    def validate_unit_value
-      return unless %w(weight volume).include?(variant_unit) && new_record?
-
-      return errors.add(:unit_value, I18n.t('errors.messages.blank')) if unit_value.blank?
-
-      value = Float(unit_value, exception: false)
-
-      return if value.is_a?(Numeric) && value > 0
-
-      error = if value.nil?
-                I18n.t('errors.messages.not_a_number')
-              else
-                I18n.t('errors.messages.greater_than', count: 0)
-              end
-      errors.add(:unit_value, error)
     end
 
     def property(property_name)

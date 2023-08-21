@@ -199,7 +199,7 @@ describe '
       click_button 'Create'
 
       expect(current_path).to eq spree.admin_products_path
-      expect(page).to have_content "Unit value can't be blank"
+      expect(page).to have_content "Unit value is not a number"
     end
   end
 
