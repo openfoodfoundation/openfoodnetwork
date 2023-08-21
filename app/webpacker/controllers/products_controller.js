@@ -11,6 +11,7 @@ export default class extends ApplicationController {
 
   beforeReflex() {
     this.showLoading();
+    this.scrollToElement();
   }
 
   afterReflex() {
@@ -27,6 +28,10 @@ export default class extends ApplicationController {
     if (this.getLoadingController()) {
       this.getLoadingController().hideLoading();
     }
+  };
+
+  scrollToElement = () => {
+    this.element.scrollIntoView();
   };
 
   getLoadingController = () => {
