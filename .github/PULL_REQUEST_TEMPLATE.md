@@ -20,7 +20,11 @@
 
 <!-- Please select one for your PR and delete the other. -->
 
-Changelog Category: User facing changes | Technical changes
+Changelog Category (reviewers may add a label for the release notes):
+
+- [x] User facing changes
+- [ ] Technical changes only
+- [ ] Feature toggled
 
 <!-- Choose a pull request title above which explains your change to a
      a user of the Open Food Network app. -->

@@ -6,6 +6,13 @@ changelog:
       exclude:
         labels:
           - dependencies
-    - title: Dependencies 📦
+          - feature toggled
+          - technical changes only
+    - title: "Experimental features for testing 😎"
+        - feature toggled
+    - title: "Technical changes 🔧"
+      labels:
+        - technical changes only
+    - title: "Dependencies 📦"
       labels:
         - dependencies
