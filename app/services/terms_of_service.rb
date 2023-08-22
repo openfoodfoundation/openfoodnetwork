@@ -16,7 +16,8 @@ class TermsOfService
   end
 
   def self.platform_terms_required?
-    Spree::Config.shoppers_require_tos
+    TermsOfServiceFile.exists? &&
+      Spree::Config.shoppers_require_tos
   end
 
   def self.distributor_terms_required?(distributor)

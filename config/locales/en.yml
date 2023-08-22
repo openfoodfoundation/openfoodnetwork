@@ -646,7 +646,6 @@ en:
       show:
         title: "Terms of Service files"
         no_files: "No terms of services have been uploaded yet."
-        using_default_terms_html: "The site is currently linking to your old %{tos_link}."
         current_terms_html: "View the current %{tos_link}. Upload time: %{datetime}."
         terms_of_service: "Terms of Service"
         delete: "Delete file"
