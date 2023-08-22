@@ -43,8 +43,9 @@
               %tr
                 %td{:align => "center"}
                   %p
-                    = link_to_platform_terms
-                    |
+                    - if platform_terms_required?
+                      = link_to_platform_terms
+                      |
                     %a{:href => "#{ main_app.root_url }"}
                       = Spree::Config[:site_name]
                     / | <a href="#"><unsubscribe>Unsubscribe</unsubscribe></a>
