@@ -103,9 +103,10 @@
             %img{src: ContentConfig.url_for(:footer_logo), width: "220"}
         .small-12.medium-5.columns.text-left
           %p.text-small
-            = t '.footer_legal_call'
-            = link_to_platform_terms
-            &#124;
+            - if platform_terms_required?
+              = t '.footer_legal_call'
+              = link_to_platform_terms
+              &#124;
             = t '.footer_legal_visit'
             %a{href:"https://github.com/openfoodfoundation/openfoodnetwork", target: "_blank"} GitHub
           %p.text-small
