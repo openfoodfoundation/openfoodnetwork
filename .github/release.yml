@@ -8,7 +8,7 @@ changelog:
           - dependencies
           - feature toggled
           - technical changes only
-    - title: "Experimental features for testing 😎"
+    - title: "Features under construction 🚧"
         - feature toggled
     - title: "Technical changes 🔧"
       labels:
