@@ -20,10 +20,9 @@ module Sets
     end
 
     def collection_attributes=(attributes)
-      ids = attributes.each_value.map { |product| product[:id] }.compact
-      @collection = []
+      ids = attributes.values.pluck(:id).compact
       # Find and load existing products in the order they are provided
-      @collection = Spree::Product.find(ids) if ids.present?
+      @collection = Spree::Product.find(ids)
       @collection_hash = attributes
     end
 
