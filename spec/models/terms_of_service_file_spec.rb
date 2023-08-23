@@ -24,8 +24,8 @@ describe TermsOfServiceFile do
   describe ".current_url" do
     let(:subject) { TermsOfServiceFile.current_url }
 
-    it "points to the old default" do
-      expect(subject).to eq "/Terms-of-service.pdf"
+    it "points to nil if not ToS file is present" do
+      expect(subject).to eq nil
     end
 
     it "points to a stored file" do
