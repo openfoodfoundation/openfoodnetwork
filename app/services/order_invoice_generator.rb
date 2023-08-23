@@ -13,7 +13,7 @@ class OrderInvoiceGenerator
         data: invoice_data
       )
     elsif comparator.can_update_latest_invoice?
-      order.invoices.first.update!(
+      order.invoices.latest.update!(
         date: Time.zone.today,
         data: invoice_data
       )
