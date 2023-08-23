@@ -10,7 +10,7 @@ changelog:
           - technical changes only
     - title: "Features under construction 🚧"
         - feature toggled
-    - title: "Technical changes 🔧"
+    - title: "Technical changes 🛠️"
       labels:
         - technical changes only
     - title: "Dependencies 📦"
