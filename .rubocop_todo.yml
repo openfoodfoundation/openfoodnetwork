@@ -6,12 +6,13 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 1
+# Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Max, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, AllowedPatterns.
 # URISchemes: http, https
 Layout/LineLength:
   Exclude:
+    - 'spec/controllers/admin/reports_controller_spec.rb'
     - 'spec/system/admin/tag_rules_spec.rb'
 
 # Offense count: 17
@@ -722,6 +723,12 @@ Rails/WhereExists:
     - 'lib/tasks/sample_data/group_factory.rb'
     - 'lib/tasks/sample_data/order_cycle_factory.rb'
     - 'lib/tasks/sample_data/taxon_factory.rb'
+
+# Offense count: 3
+# This cop supports safe autocorrection (--autocorrect).
+Rails/WhereNot:
+  Exclude:
+    - 'lib/reporting/reports/users_and_enterprises/base.rb'
 
 # Offense count: 1
 Security/Open:
