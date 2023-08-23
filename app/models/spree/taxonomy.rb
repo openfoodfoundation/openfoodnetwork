@@ -4,7 +4,7 @@ module Spree
   class Taxonomy < ApplicationRecord
     validates :name, presence: true
 
-    has_many :taxons
+    has_many :taxons, dependent: :nullify
     has_one :root, -> { where parent_id: nil }, class_name: "Spree::Taxon", dependent: :destroy
 
     after_save :set_name
