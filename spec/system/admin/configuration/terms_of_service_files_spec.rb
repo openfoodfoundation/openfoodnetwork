@@ -15,8 +15,6 @@ describe "Terms of Service files" do
       click_link "Terms of Service"
 
       expect(page).to have_content "No terms of services have been uploaded yet."
-      expect(page).to have_content "your old Terms of service"
-      expect(page).to have_link "Terms of service", href: "/Terms-of-service.pdf"
     end
 
     it "can be uploaded" do
@@ -25,6 +23,7 @@ describe "Terms of Service files" do
       click_button "Create Terms of service file"
 
       expect(page).to have_link "Terms of Service"
+      expect(page).to have_link "Delete file"
     end
 
     it "provides Rails' standard action for a new file" do

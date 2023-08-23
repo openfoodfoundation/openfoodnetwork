@@ -1029,13 +1029,16 @@ describe "As a consumer, I want to checkout my order" do
         context "when the platform's terms of service have to be accepted" do
           before do
             allow(Spree::Config).to receive(:shoppers_require_tos).and_return(true)
-            allow(Spree::Config).to receive(:footer_tos_url).and_return(tos_url)
+          end
+
+          let!(:tos) do
+            TermsOfServiceFile.create!(attachment: system_terms)
           end
 
           it "shows the terms which need to be accepted" do
             visit checkout_step_path(:summary)
 
-            expect(page).to have_link "Terms of service", href: tos_url
+            expect(page).to have_link("Terms of service", href: /Terms-of-service.pdf/, count: 2)
             expect(find_link("Terms of service")[:target]).to eq "_blank"
             expect(page).to have_field "order_accept_terms", checked: false
           end
@@ -1043,9 +1046,8 @@ describe "As a consumer, I want to checkout my order" do
           context "when the terms have been accepted in the past" do
             context "with a dedicated ToS file" do
               before do
-                TermsOfServiceFile.create!(
-                  attachment: system_terms,
-                  updated_at: 1.day.ago,
+                tos.update!(
+                  updated_at: 1.day.ago
                 )
                 customer.update(terms_and_conditions_accepted_at: Time.zone.now)
               end
@@ -1080,14 +1082,17 @@ describe "As a consumer, I want to checkout my order" do
             order.distributor.update!(terms_and_conditions: shop_terms)
 
             allow(Spree::Config).to receive(:shoppers_require_tos).and_return(true)
-            allow(Spree::Config).to receive(:footer_tos_url).and_return(tos_url)
+          end
+
+          let!(:tos) do
+            TermsOfServiceFile.create!(attachment: system_terms)
           end
 
           it "shows links to both terms and all need accepting" do
             visit checkout_step_path(:summary)
 
             expect(page).to have_link "Terms and Conditions", href: /#{shop_terms_path.basename}$/
-            expect(page).to have_link "Terms of service", href: tos_url
+            expect(page).to have_link("Terms of service", href: /Terms-of-service.pdf/, count: 2)
             expect(page).to have_field "order_accept_terms", checked: false
           end
         end
