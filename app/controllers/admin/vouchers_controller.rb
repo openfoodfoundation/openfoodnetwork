@@ -9,17 +9,9 @@ module Admin
     end
 
     def create
-      # The use of "safe_constantize" here will trigger a Brakeman error, it can safely be ignored
-      # as it's a false positive : https://github.com/openfoodfoundation/openfoodnetwork/pull/10821
-      voucher_type = params[:vouchers_flat_rate][:voucher_type]
-      if Voucher::TYPES.include?(voucher_type)
-        @voucher = voucher_type.safe_constantize.create(
-          permitted_resource_params.merge(enterprise: @enterprise)
-        )
-      else
-        @voucher.errors.add(:type)
-        return render_error
-      end
+      @voucher = Voucher.new(
+        permitted_resource_params.merge(enterprise: @enterprise)
+      )
 
       if @voucher.save
         flash[:success] = I18n.t(:successfully_created, resource: "Voucher")
@@ -27,6 +19,9 @@ module Admin
       else
         render_error
       end
+    rescue ActiveRecord::SubclassNotFound
+      @voucher.errors.add(:type)
+      render_error
     end
 
     private
@@ -44,7 +39,7 @@ module Admin
     end
 
     def permitted_resource_params
-      params.require(:vouchers_flat_rate).permit(:code, :amount)
+      params.require(:voucher).permit(:code, :amount, :type)
     end
   end
 end

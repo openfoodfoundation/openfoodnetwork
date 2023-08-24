@@ -1,4 +1,4 @@
-= form_with model: @voucher, url: admin_enterprise_vouchers_path(@enterprise), html: { name: "voucher_form" } do |f|
+= form_with model: @voucher.becomes(Voucher), url: admin_enterprise_vouchers_path(@enterprise), html: { name: "voucher_form" } do |f|
   .row
     .sixteen.columns.alpha
       .four.columns.alpha.text-right
@@ -17,11 +17,11 @@
             = f.text_field :code, class: 'fullwidth'
         .row
           .alpha.four.columns
-            = f.label :voucher_type, t('.voucher_type')
+            = f.label :type, t('.voucher_type')
           .omega.eight.columns
-            = f.select :voucher_type, options_for_select(Voucher::TYPES.map { |type| [t(".#{type.demodulize.underscore}"), type] }, @voucher.class.to_s)
+            = f.select :type, options_for_select(Voucher::TYPES.map { |type| [t(".#{type.demodulize.underscore}"), type] }, @voucher.type)
         .row
           .alpha.four.columns
             = f.label :amount, t('.voucher_amount')
           .omega.eight.columns
-            = f.text_field :amount, value: @voucher.amount
+            = f.text_field :amount

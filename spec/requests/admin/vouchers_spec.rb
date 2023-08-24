@@ -2,14 +2,14 @@
 
 require "spec_helper"
 
-describe Admin::VouchersController, type: :request do
+describe "/admin/enterprises/:enterprise_id/vouchers", type: :request do
   let(:enterprise) { create(:supplier_enterprise, name: "Feedme") }
   let(:enterprise_user) { create(:user, enterprise_limit: 1) }
 
   before do
     Flipper.enable(:vouchers)
 
-    enterprise_user.enterprise_roles.build(enterprise: enterprise).save
+    enterprise_user.enterprise_roles.build(enterprise:).save
     sign_in enterprise_user
   end
 
@@ -22,14 +22,14 @@ describe Admin::VouchersController, type: :request do
   end
 
   describe "POST /admin/enterprises/:enterprise_id/vouchers" do
-    subject(:create_voucher) { post admin_enterprise_vouchers_path(enterprise), params: params }
+    subject(:create_voucher) { post admin_enterprise_vouchers_path(enterprise), params: }
 
     let(:params) do
       {
-        vouchers_flat_rate: {
-          code: code,
-          amount: amount,
-          voucher_type: type
+        voucher: {
+          code:,
+          amount:,
+          type:
         }
       }
     end
@@ -50,6 +50,15 @@ describe Admin::VouchersController, type: :request do
     end
 
     context "with a percentage rate voucher" do
+      let(:params) do
+        {
+          voucher: {
+            code:,
+            amount:,
+            type:
+          }
+        }
+      end
       let(:type) { "Vouchers::PercentageRate" }
 
       it "creates a new voucher" do
