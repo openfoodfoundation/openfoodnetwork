@@ -29,6 +29,10 @@ module Spree
 
     acts_as_paranoid
 
+    after_create :ensure_standard_variant
+    around_destroy :destruction
+    after_save :update_units
+
     searchable_attributes :supplier_id, :primary_taxon_id, :meta_keywords, :sku
     searchable_associations :supplier, :properties, :primary_taxon, :variants
     searchable_scopes :active, :with_properties
@@ -73,9 +77,6 @@ module Spree
     # these values are persisted on the product's variant
     attr_accessor :price, :display_as, :unit_value, :unit_description, :tax_category_id,
                   :shipping_category_id
-
-    after_create :ensure_standard_variant
-    after_save :update_units
 
     scope :with_properties, ->(*property_ids) {
       left_outer_joins(:product_properties).
@@ -259,7 +260,7 @@ module Spree
       variants.map(&:import_date).compact.max
     end
 
-    def destroy
+    def destruction
       transaction do
         touch_distributors
 
@@ -267,7 +268,7 @@ module Spree
           where('exchange_variants.variant_id IN (?)', variants.with_deleted.
           select(:id)).destroy_all
 
-        super
+        yield
       end
     end
 
