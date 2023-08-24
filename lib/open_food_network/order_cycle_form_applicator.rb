@@ -73,12 +73,12 @@ module OpenFoodNetwork
       variant_ids = attrs.delete :variant_ids
       exchange = @order_cycle.exchanges.build attrs
 
-      if manages_coordinator?
-        exchange.save!
-        ExchangeVariantBulkUpdater.new(exchange).update!(variant_ids) unless variant_ids.nil?
+      return unless manages_coordinator?
 
-        @touched_exchanges << exchange
-      end
+      exchange.save!
+      ExchangeVariantBulkUpdater.new(exchange).update!(variant_ids) unless variant_ids.nil?
+
+      @touched_exchanges << exchange
     end
 
     def update_exchange(sender_id, receiver_id, incoming, attrs = {})
@@ -104,9 +104,9 @@ module OpenFoodNetwork
     end
 
     def destroy_untouched_exchanges
-      if manages_coordinator?
-        untouched_exchanges.each(&:destroy)
-      end
+      return unless manages_coordinator?
+
+      untouched_exchanges.each(&:destroy)
     end
 
     def untouched_exchanges

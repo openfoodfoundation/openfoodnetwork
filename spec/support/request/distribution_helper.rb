@@ -7,9 +7,9 @@ module OpenFoodNetwork
       visit root_path
       click_link distributor.name
 
-      if order_cycle && page.has_select?('order_order_cycle_id')
-        select_by_value order_cycle.id, from: 'order_order_cycle_id'
-      end
+      return unless order_cycle && page.has_select?('order_order_cycle_id')
+
+      select_by_value order_cycle.id, from: 'order_order_cycle_id'
     end
   end
 end

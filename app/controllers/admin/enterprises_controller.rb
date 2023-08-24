@@ -47,12 +47,12 @@ module Admin
       @object = Enterprise.where(permalink: params[:id]).
         includes(users: [:ship_address, :bill_address]).first
       @object.build_custom_tab if @object.custom_tab.nil?
-      if params[:stimulus]
-        @enterprise.is_primary_producer = params[:is_primary_producer]
-        @enterprise.sells = params[:enterprise_sells]
-        render cable_ready: cable_car.morph("#side_menu", partial("admin/shared/side_menu"))
-          .morph("#permalink", partial("admin/enterprises/form/permalink"))
-      end
+      return unless params[:stimulus]
+
+      @enterprise.is_primary_producer = params[:is_primary_producer]
+      @enterprise.sells = params[:enterprise_sells]
+      render cable_ready: cable_car.morph("#side_menu", partial("admin/shared/side_menu"))
+        .morph("#permalink", partial("admin/enterprises/form/permalink"))
     end
 
     def welcome
@@ -263,32 +263,32 @@ module Admin
     def update_enterprise_notifications
       user_id = params[:receives_notifications].to_i
 
-      if user_id.positive? && @enterprise.user_ids.include?(user_id)
-        @enterprise.update_contact(user_id)
-      end
+      return unless user_id.positive? && @enterprise.user_ids.include?(user_id)
+
+      @enterprise.update_contact(user_id)
     end
 
     def create_calculator_for(rule, attrs)
-      if attrs[:calculator_type].present? && attrs[:calculator_attributes].present?
-        rule.update(calculator_type: attrs[:calculator_type])
-        attrs[:calculator_attributes].merge!( id: rule.calculator.id )
-      end
+      return unless attrs[:calculator_type].present? && attrs[:calculator_attributes].present?
+
+      rule.update(calculator_type: attrs[:calculator_type])
+      attrs[:calculator_attributes].merge!( id: rule.calculator.id )
     end
 
     def check_can_change_bulk_sells
-      unless spree_current_user.admin?
-        params[:sets_enterprise_set][:collection_attributes].each do |_i, enterprise_params|
-          unless spree_current_user == Enterprise.find_by(id: enterprise_params[:id]).owner
-            enterprise_params.delete :sells
-          end
+      return if spree_current_user.admin?
+
+      params[:sets_enterprise_set][:collection_attributes].each do |_i, enterprise_params|
+        unless spree_current_user == Enterprise.find_by(id: enterprise_params[:id]).owner
+          enterprise_params.delete :sells
         end
       end
     end
 
     def check_can_change_sells
-      unless spree_current_user.admin? || spree_current_user == @enterprise.owner
-        enterprise_params.delete :sells
-      end
+      return if spree_current_user.admin? || spree_current_user == @enterprise.owner
+
+      enterprise_params.delete :sells
     end
 
     def override_owner
@@ -296,31 +296,31 @@ module Admin
     end
 
     def override_sells
-      unless spree_current_user.admin?
-        has_hub = spree_current_user.owned_enterprises.is_hub.any?
-        new_enterprise_is_producer = Enterprise.new(enterprise_params).is_primary_producer
-        enterprise_params[:sells] = has_hub && !new_enterprise_is_producer ? 'any' : 'none'
-      end
+      return if spree_current_user.admin?
+
+      has_hub = spree_current_user.owned_enterprises.is_hub.any?
+      new_enterprise_is_producer = Enterprise.new(enterprise_params).is_primary_producer
+      enterprise_params[:sells] = has_hub && !new_enterprise_is_producer ? 'any' : 'none'
     end
 
     def check_can_change_owner
-      unless ( spree_current_user == @enterprise.owner ) || spree_current_user.admin?
+      return if ( spree_current_user == @enterprise.owner ) || spree_current_user.admin?
+
+      enterprise_params.delete :owner_id
+    end
+
+    def check_can_change_bulk_owner
+      return if spree_current_user.admin?
+
+      bulk_params[:collection_attributes].each do |_i, enterprise_params|
         enterprise_params.delete :owner_id
       end
     end
 
-    def check_can_change_bulk_owner
-      unless spree_current_user.admin?
-        bulk_params[:collection_attributes].each do |_i, enterprise_params|
-          enterprise_params.delete :owner_id
-        end
-      end
-    end
-
     def check_can_change_managers
-      unless ( spree_current_user == @enterprise.owner ) || spree_current_user.admin?
-        enterprise_params.delete :user_ids
-      end
+      return if ( spree_current_user == @enterprise.owner ) || spree_current_user.admin?
+
+      enterprise_params.delete :user_ids
     end
 
     def strip_new_properties

@@ -163,9 +163,9 @@ module OrderManagement
           update_shipment_state
         end
 
-        if payment.completed? || order.completed?
-          persist_totals
-        end
+        return unless payment.completed? || order.completed?
+
+        persist_totals
       end
 
       private

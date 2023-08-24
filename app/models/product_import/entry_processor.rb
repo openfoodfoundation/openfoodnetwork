@@ -39,10 +39,10 @@ module ProductImport
         end
       end
 
-      if total_saved_count.zero?
-        @importer.errors.add(:importer,
-                             I18n.t(:product_importer_products_save_error))
-      end
+      return unless total_saved_count.zero?
+
+      @importer.errors.add(:importer,
+                           I18n.t(:product_importer_products_save_error))
     end
 
     def count_existing_items

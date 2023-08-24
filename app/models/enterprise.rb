@@ -515,10 +515,10 @@ class Enterprise < ApplicationRecord
   end
 
   def enforce_ownership_limit
-    unless owner.can_own_more_enterprises?
-      errors.add(:owner, I18n.t(:enterprise_owner_error, email: owner.email,
-                                                         enterprise_limit: owner.enterprise_limit ))
-    end
+    return if owner.can_own_more_enterprises?
+
+    errors.add(:owner, I18n.t(:enterprise_owner_error, email: owner.email,
+                                                       enterprise_limit: owner.enterprise_limit ))
   end
 
   def set_default_contact
@@ -543,26 +543,26 @@ class Enterprise < ApplicationRecord
     end
 
     # All pre-existing producers grant permission to new hubs
-    if is_hub
-      enterprises.is_primary_producer.each do |enterprise|
-        EnterpriseRelationship.create!(parent: enterprise,
-                                       child: self,
-                                       permissions_list: [:add_to_order_cycle,
-                                                          :create_variant_overrides])
-      end
+    return unless is_hub
+
+    enterprises.is_primary_producer.each do |enterprise|
+      EnterpriseRelationship.create!(parent: enterprise,
+                                     child: self,
+                                     permissions_list: [:add_to_order_cycle,
+                                                        :create_variant_overrides])
     end
   end
 
   def shopfront_taxons
-    unless preferred_shopfront_taxon_order =~ /\A((\d+,)*\d+)?\z/
-      errors.add(:shopfront_category_ordering, "must contain a list of taxons.")
-    end
+    return if preferred_shopfront_taxon_order =~ /\A((\d+,)*\d+)?\z/
+
+    errors.add(:shopfront_category_ordering, "must contain a list of taxons.")
   end
 
   def shopfront_producers
-    unless preferred_shopfront_producer_order =~ /\A((\d+,)*\d+)?\z/
-      errors.add(:shopfront_category_ordering, "must contain a list of producers.")
-    end
+    return if preferred_shopfront_producer_order =~ /\A((\d+,)*\d+)?\z/
+
+    errors.add(:shopfront_category_ordering, "must contain a list of producers.")
   end
 
   def restore_permalink

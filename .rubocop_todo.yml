@@ -809,33 +809,6 @@ Style/GlobalStdStream:
     - 'lib/tasks/subscriptions/debug.rake'
     - 'lib/tasks/subscriptions/test.rake'
 
-# Offense count: 38
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: MinBodyLength, AllowConsecutiveConditionals.
-Style/GuardClause:
-  Exclude:
-    - 'app/controllers/admin/enterprises_controller.rb'
-    - 'app/controllers/admin/order_cycles_controller.rb'
-    - 'app/controllers/admin/product_import_controller.rb'
-    - 'app/controllers/api/v0/shipments_controller.rb'
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/home_controller.rb'
-    - 'app/controllers/spree/orders_controller.rb'
-    - 'app/models/enterprise.rb'
-    - 'app/models/enterprise_group.rb'
-    - 'app/models/producer_property.rb'
-    - 'app/models/product_import/entry_processor.rb'
-    - 'app/models/spree/order.rb'
-    - 'app/models/spree/preferences/preferable_class_methods.rb'
-    - 'app/services/order_syncer.rb'
-    - 'engines/order_management/app/services/order_management/order/updater.rb'
-    - 'lib/discourse/single_sign_on.rb'
-    - 'lib/open_food_network/order_cycle_form_applicator.rb'
-    - 'lib/spree/core/controller_helpers/respond_with.rb'
-    - 'spec/support/request/distribution_helper.rb'
-    - 'spec/support/request/shop_workflow.rb'
-    - 'spec/system/support/precompile_assets.rb'
-
 # Offense count: 12
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowSplatArgument.

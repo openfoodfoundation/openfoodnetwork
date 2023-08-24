@@ -124,9 +124,9 @@ module ShopWorkflow
   # and not all needed enterprises are loaded into the shop page.
   def ensure_supplier_exchange(exchange, supplier)
     oc = exchange.order_cycle
-    if oc.exchanges.from_enterprise(supplier).incoming.empty?
-      create(:exchange, order_cycle: oc, incoming: true,
-                        sender: supplier, receiver: oc.coordinator)
-    end
+    return unless oc.exchanges.from_enterprise(supplier).incoming.empty?
+
+    create(:exchange, order_cycle: oc, incoming: true,
+                      sender: supplier, receiver: oc.coordinator)
   end
 end

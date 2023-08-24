@@ -56,9 +56,9 @@ module Admin
     private
 
     def validate_upload_presence
-      unless params[:file] || (params[:filepath] && File.exist?(params[:filepath]))
-        redirect_to '/admin/product_import', notice: I18n.t(:product_import_file_not_found_notice)
-      end
+      return if params[:file] || (params[:filepath] && File.exist?(params[:filepath]))
+
+      redirect_to '/admin/product_import', notice: I18n.t(:product_import_file_not_found_notice)
     end
 
     def process_data(method)
@@ -90,11 +90,11 @@ module Admin
     end
 
     def check_spreadsheet_has_data(importer)
-      unless importer.item_count
-        redirect_to '/admin/product_import',
-                    notice: I18n.t(:product_import_no_data_in_spreadsheet_notice)
-        true
-      end
+      return if importer.item_count
+
+      redirect_to '/admin/product_import',
+                  notice: I18n.t(:product_import_no_data_in_spreadsheet_notice)
+      true
     end
 
     def save_uploaded_file(upload)
