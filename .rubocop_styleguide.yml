@@ -53,6 +53,13 @@ Rails/ApplicationRecord:
     # Migrations should not contain application code:
     - "db/migrate/*.rb"
 
+# Allow many-to-many associations without explicit model.
+# - It avoids the additional code of a model class.
+# - It simplifies the declaration of the association.
+# - Rails may know that there are no callbacks associated.
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
 Rails/SkipsModelValidations:
   AllowedMethods:
     - "touch"
