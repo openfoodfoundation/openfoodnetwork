@@ -38,7 +38,7 @@ module Spree
 
     has_many :stock_items, dependent: :destroy, inverse_of: :variant
     has_many :stock_locations, through: :stock_items
-    has_many :stock_movements, dependent: :destroy
+    has_many :stock_movements, through: :stock_items, dependent: :destroy
     has_many :images, -> { order(:position) }, as: :viewable,
                                                dependent: :destroy,
                                                class_name: "Spree::Image"
