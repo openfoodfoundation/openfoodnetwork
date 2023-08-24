@@ -785,13 +785,6 @@ Style/ClassVars:
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
-Style/FileRead:
-  Exclude:
-    - 'lib/tasks/karma.rake'
-    - 'spec/services/upload_sanitizer_spec.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: MaxUnannotatedPlaceholdersAllowed, AllowedMethods, AllowedPatterns.
 # SupportedStyles: annotated, template, unannotated
 # AllowedMethods: redirect
