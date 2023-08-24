@@ -15,21 +15,19 @@ class SearchOrders
   attr_reader :params, :current_user
 
   def fetch_orders
-    @search = search_query.
+    search = search_query.
       includes(:payments, :subscription, :shipments, :bill_address, :distributor, :order_cycle).
-      ransack(params[:q])
-
-    @search = @search.result(distinct: true)
+      ransack(params[:q]).
+      result(distinct: true)
 
     if ['bill_address',
         'billing_address'].any?{ |param|
          params.dig(:q, :s)&.starts_with?(param)
        }
-      @search = @search.left_joins(:bill_address).
-        select('spree_addresses.*, spree_orders.*')
+      search = search.select('spree_addresses.*, spree_orders.*')
     end
 
-    @search
+    search
   end
 
   def search_query
