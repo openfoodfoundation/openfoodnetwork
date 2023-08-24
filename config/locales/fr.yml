@@ -69,6 +69,8 @@ fr:
         preferred_discount_amount: "Montant du rabais"
         preferred_unit_from_list: "A l'unité depuis la liste"
         preferred_per_unit: "A l'unité"
+      enterprise:
+        white_label_logo_link: "Lien vers le logo utilisé pour la boutique"
     errors:
       models:
         enterprise_fee:
@@ -736,7 +738,7 @@ fr:
         loading: Vos produits sont en cours de chargement
       sort:
         pagination:
-          total_html: "<strong>%{total} produits</strong> dans votre catalogue. Montrer %{from} à %{to}."
+          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Montrer %{from} à %{to}."
           per_page:
             show: Montrer
             per_page: "%{num} par page"
@@ -3048,6 +3050,7 @@ fr:
   amount: "Montant"
   invoice_number: "Numéro de facture"
   invoice_file: "fichier"
+  invalid_url: "'%{url}' est une URL non valide"
   state_names:
     ready: Prêt
     pending: En attente

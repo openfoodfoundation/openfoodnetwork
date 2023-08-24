@@ -69,6 +69,8 @@ ru:
         preferred_discount_amount: "Калькулятор Суммы Скидки:"
         preferred_unit_from_list: "Блок Калькулятора из Списка:"
         preferred_per_unit: "Калькулятор На Единицу:"
+      enterprise:
+        white_label_logo_link: "Ссылка на логотип, используемый на витрине магазина"
     errors:
       models:
         enterprise_fee:

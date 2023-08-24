@@ -69,6 +69,8 @@ de_DE:
         preferred_discount_amount: "Berechnung (Gebühr oberhalb):"
         preferred_unit_from_list: "Berechnung (Einheit):"
         preferred_per_unit: "Berechnung (Pro Einheit):"
+      enterprise:
+        white_label_logo_link: "Verlinkungsziel des Logos im Online-Shop"
     errors:
       models:
         enterprise_fee:
@@ -736,7 +738,6 @@ de_DE:
         loading: Produkte werden geladen...
       sort:
         pagination:
-          total_html: "<strong>%{total} Produkte</strong> in Ihrem Katalog. Zeige %{from} bis %{to}."
           per_page:
             show: Zeige
             per_page: "%{num} pro Seite"

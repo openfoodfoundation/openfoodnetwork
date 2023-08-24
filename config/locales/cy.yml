@@ -69,6 +69,8 @@ cy:
         preferred_discount_amount: "Cyfrifiannell – Swm Gostyngiad:"
         preferred_unit_from_list: "Cyfrifiannell – Uned o’r rhestr:"
         preferred_per_unit: "Cyfrifiannell – Fesul uned:"
+      enterprise:
+        white_label_logo_link: "Defnyddiwyd dolen i’r logo yn ffrynt y siop"
     errors:
       models:
         enterprise_fee:
