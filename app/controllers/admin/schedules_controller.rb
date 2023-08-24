@@ -8,15 +8,11 @@ module Admin
     include PaperTrailLogging
 
     before_action :adapt_params, only: [:update]
-    before_action :editable_order_cycle_ids_for_create, only: [:create]
-    before_action :editable_order_cycle_ids_for_update, only: [:update]
     before_action :check_dependent_subscriptions, only: [:destroy]
-
-    after_action :sync_subscriptions_for_update, only: :update
 
     respond_to :json
 
-    respond_override create: { json: {
+    OVERRIDE_RESPONSE = { json: {
       success: lambda {
                  render_as_json @schedule,
                                 editable_schedule_ids: permissions.editable_schedules.pluck(:id)
@@ -25,17 +21,10 @@ module Admin
                  render json: { errors: @schedule.errors.full_messages },
                         status: :unprocessable_entity
                }
-    } }
-    respond_override update: { json: {
-      success: lambda {
-                 render_as_json @schedule,
-                                editable_schedule_ids: permissions.editable_schedules.pluck(:id)
-               },
-      failure: lambda {
-                 render json: { errors: @schedule.errors.full_messages },
-                        status: :unprocessable_entity
-               }
-    } }
+    } }.freeze
+
+    respond_override create: OVERRIDE_RESPONSE
+    respond_override update: OVERRIDE_RESPONSE
 
     def index
       respond_to do |format|
@@ -50,20 +39,18 @@ module Admin
     end
 
     def create
-      return respond_with(@schedule) if params[:order_cycle_ids].blank?
+      @schedule_form = ScheduleForm.new(params, spree_current_user, @schedule)
 
-      @schedule.attributes = permitted_resource_params
-
-      if @schedule.save
-        @schedule.order_cycle_ids = params[:order_cycle_ids]
-        @schedule.save!
-
-        sync_subscriptions_for_create
-
+      if @schedule_form.save
         flash[:success] = flash_message_for(@schedule, :successfully_created)
       end
 
       respond_with(@schedule)
+    end
+
+    def update
+      @object = ScheduleForm.new(params, spree_current_user, @schedule)
+      super
     end
 
     private
@@ -96,37 +83,7 @@ module Admin
       params[:schedule][:order_cycle_ids] = params[:order_cycle_ids]
     end
 
-    def editable_order_cycle_ids_for_create
-      return unless params[:order_cycle_ids]
-
-      @existing_order_cycle_ids = []
-      result = editable_order_cycles(params[:order_cycle_ids])
-
-      params[:order_cycle_ids] = result
-    end
-
-    def editable_order_cycle_ids_for_update
-      return unless params[:schedule][:order_cycle_ids]
-
-      @existing_order_cycle_ids = @schedule.order_cycle_ids
-      result = editable_order_cycles(params[:schedule][:order_cycle_ids])
-
-      params[:schedule][:order_cycle_ids] = result
-      @schedule.order_cycle_ids = result
-    end
-
-    def editable_order_cycles(requested)
-      permitted = OrderCycle
-        .where(id: params[:order_cycle_ids] | @existing_order_cycle_ids)
-        .merge(OrderCycle.managed_by(spree_current_user))
-        .pluck(:id)
-      result = @existing_order_cycle_ids
-      result |= (requested & permitted) # add any requested & permitted ids
-      # remove any existing and permitted ids that were not specifically requested
-      result -= ((result & permitted) - requested)
-      result
-    end
-
+    # only needed for destroy callback
     def check_dependent_subscriptions
       return if Subscription.where(schedule_id: @schedule).empty?
 
@@ -138,28 +95,6 @@ module Admin
       return @permissions unless @permission.nil?
 
       @permissions = OpenFoodNetwork::Permissions.new(spree_current_user)
-    end
-
-    def sync_subscriptions_for_update
-      return unless params[:schedule][:order_cycle_ids] && @object.errors.blank?
-
-      sync_subscriptions
-    end
-
-    def sync_subscriptions_for_create
-      return unless params[:order_cycle_ids]
-
-      sync_subscriptions
-    end
-
-    def sync_subscriptions
-      removed_ids = @existing_order_cycle_ids - @schedule.order_cycle_ids
-      new_ids = @schedule.order_cycle_ids - @existing_order_cycle_ids
-      return unless removed_ids.any? || new_ids.any?
-
-      subscriptions = Subscription.where(schedule_id: @schedule)
-      syncer = OrderManagement::Subscriptions::ProxyOrderSyncer.new(subscriptions)
-      syncer.sync!
     end
 
     def permitted_resource_params

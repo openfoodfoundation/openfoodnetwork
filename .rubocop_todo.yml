@@ -192,7 +192,6 @@ Metrics/ClassLength:
     - 'app/controllers/admin/order_cycles_controller.rb'
     - 'app/controllers/admin/product_import_controller.rb'
     - 'app/controllers/admin/resource_controller.rb'
-    - 'app/controllers/admin/schedules_controller.rb'
     - 'app/controllers/admin/subscriptions_controller.rb'
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/payment_gateways/paypal_controller.rb'
