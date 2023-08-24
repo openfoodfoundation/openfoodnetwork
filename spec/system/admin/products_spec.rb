@@ -64,6 +64,41 @@ describe '
       expect(page).to have_content "Name can't be blank"
     end
 
+    it "display all attributes when submitting with error: Unit Value must be grater than 0" do
+      login_to_admin_section
+
+      visit spree.new_admin_product_path
+
+      select 'New supplier', from: 'product_supplier_id'
+      fill_in 'product_name', with: "new product name"
+      select "Weight (kg)", from: 'product_variant_unit_with_scale'
+      fill_in 'product_unit_value', with: "0.00 g"
+      assert_selector(:field, placeholder: "0g g")
+      fill_in 'product_display_as', with: "Big Box of Chocolates"
+      select taxon.name, from: "product_primary_taxon_id"
+      fill_in 'product_price', with: '19.99'
+      fill_in 'product_on_hand', with: 5
+      check 'product_on_demand'
+      select 'Test Tax Category', from: 'product_tax_category_id'
+      page.find("div[id^='taTextElement']").native.send_keys('A description...')
+
+      click_button 'Create'
+
+      expect(page).to have_field 'product_name', with: "new product name"
+      expect(page).to have_field 'product_supplier_id', with: @supplier.id
+      expect(page).to have_field 'product_unit_value', with: "0 g"
+      expect(page).to have_field 'product_display_as', with: "Big Box of Chocolates"
+      expect(page).to have_field 'product_primary_taxon_id', with: taxon.id
+      expect(page).to have_field 'product_price', with: '19.99'
+      expect(page).to have_field 'product_on_hand', with: 5
+      expect(page).to have_field 'product_on_demand', checked: true
+      expect(page).to have_field 'product_tax_category_id', with: tax_category.id
+      expect(page.find("div[id^='taTextElement']")).to have_content 'A description...'
+      expect(page.find("#product_variant_unit_field")).to have_content 'Weight (kg)'
+
+      expect(page).to have_content "Unit value must be greater than 0"
+    end
+
     it "preserves 'Items' 'Unit Size' selection when submitting with error" do
       login_to_admin_section
 
@@ -164,7 +199,7 @@ describe '
       click_button 'Create'
 
       expect(current_path).to eq spree.admin_products_path
-      expect(page).to have_content "Unit value can't be blank"
+      expect(page).to have_content "Unit value is not a number"
     end
   end
 

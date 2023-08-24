@@ -8,7 +8,8 @@ describe Spree::Core::ProductDuplicator do
            name: "foo",
            product_properties: [property],
            variants: [variant],
-           image: image
+           image: image,
+           variant_unit: 'item'
   end
 
   let(:new_product) do
@@ -70,7 +71,7 @@ describe Spree::Core::ProductDuplicator do
     expect(new_product).to receive(:sku=).with("")
     expect(new_product).to receive(:product_properties=).with([new_property])
     expect(new_product).to receive(:created_at=).with(nil)
-    expect(new_product).to receive(:unit_value=).with(true)
+    expect(new_product).to receive(:unit_value=).with(nil)
     expect(new_product).to receive(:updated_at=).with(nil)
     expect(new_product).to receive(:deleted_at=).with(nil)
     expect(new_product).to receive(:variants=).with([new_variant])

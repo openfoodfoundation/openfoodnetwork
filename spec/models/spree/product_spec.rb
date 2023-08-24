@@ -167,8 +167,25 @@ module Spree
         expect(build(:simple_product, primary_taxon: nil)).not_to be_valid
       end
 
-      it "requires a unit value" do
-        expect(build(:simple_product, unit_value: nil)).not_to be_valid
+      context "unit value" do
+        it "requires a unit value when variant unit is weight" do
+          expect(build(:simple_product, variant_unit: 'weight', variant_unit_name: 'name',
+                                        unit_value: nil)).not_to be_valid
+          expect(build(:simple_product, variant_unit: 'weight', variant_unit_name: 'name',
+                                        unit_value: 0)).not_to be_valid
+        end
+
+        it "requires a unit value when variant unit is volume" do
+          expect(build(:simple_product, variant_unit: 'volume', variant_unit_name: 'name',
+                                        unit_value: nil)).not_to be_valid
+          expect(build(:simple_product, variant_unit: 'volume', variant_unit_name: 'name',
+                                        unit_value: 0)).not_to be_valid
+        end
+
+        it "does not require a unit value when variant unit is items" do
+          expect(build(:simple_product, variant_unit: 'items', variant_unit_name: 'name',
+                                        unit_value: nil)).to be_valid
+        end
       end
 
       it "requires a supplier" do
