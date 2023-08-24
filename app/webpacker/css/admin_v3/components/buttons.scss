@@ -1,4 +1,5 @@
 input[type="submit"],
+input[type="reset"],
 input[type="button"]:not(.trix-button),
 button:not(.plain):not(.trix-button),
 .button {
@@ -11,7 +12,6 @@ button:not(.plain):not(.trix-button),
   background-color: $color-btn-bg;
   border: 1px solid $color-btn-bg;
   color: $color-btn-text;
-  text-transform: uppercase;
   line-height: $btn-regular-height - 2px; // remove 2px to compensate for border
   height: $btn-regular-height;
   font-weight: bold;
@@ -109,6 +109,25 @@ button:not(.plain):not(.trix-button),
     &.success {
       background-color: $spree-green;
     }
+  }
+}
+
+input[type="reset"] {
+  // Reset button looks like a link, but has a border the same as buttons when active.
+  background: none;
+  border: 1px solid transparent;
+  color: $color-link;
+
+  &:active {
+    color: $color-link-active;
+  }
+  &:focus {
+    color: $color-link-focus;
+  }
+  &:hover {
+    color: $color-link-hover;
+    background: none;
+    border-color: transparent;
   }
 }
 

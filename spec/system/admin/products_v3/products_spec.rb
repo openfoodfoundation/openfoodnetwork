@@ -24,7 +24,7 @@ describe 'As an admin, I can see the new product page' do
   end
 
   describe "sorting" do
-    let!(:product_z) { create(:simple_product, name: "Bananas") }
+    let!(:product_b) { create(:simple_product, name: "Bananas") }
     let!(:product_a) { create(:simple_product, name: "Apples") }
 
     before do
@@ -32,7 +32,13 @@ describe 'As an admin, I can see the new product page' do
     end
 
     it "Should sort products alphabetically by default" do
-      expect(page).to have_content /Apples.*Bananas/
+      within "table.products" do
+        # Gather input values, because page.content doesn't include them.
+        input_content = page.find_all('input[type=text]').map(&:value).join
+
+        # Products are in correct order.
+        expect(input_content).to match /Apples.*Bananas/
+      end
     end
   end
 
@@ -91,7 +97,7 @@ describe 'As an admin, I can see the new product page' do
         search_for "searchable product"
         expect(page).to have_field "search_term", with: "searchable product"
         expect_products_count_to_be 1
-        expect(page).to have_selector "table.products tbody tr td", text: product_by_name.name
+        expect(page).to have_field "Name", with: product_by_name.name
 
         click_link "Clear search"
         expect(page).to have_field "search_term", with: ""
@@ -130,8 +136,29 @@ describe 'As an admin, I can see the new product page' do
 
         expect(page).to have_select "category_id", selected: "Category 1"
         expect_products_count_to_be 1
-        expect(page).to have_selector "table.products tbody tr td", text: product_by_category.name
+        expect(page).to have_field "Name", with: product_by_category.name
       end
+    end
+  end
+
+  describe "updating" do
+    before do
+      visit admin_products_v3_index_url
+    end
+
+    it "can update product fields" do
+      fill_in id: "_product_name_#{product_1.id}", with: "An updated name"
+
+      expect {
+        click_button "Save changes"
+        product_1.reload
+      }.to(
+        change { product_1.name }.to("An updated name")
+      )
+
+      expect(page).to have_field id: "_product_name_#{product_1.id}", with: "An updated name"
+      pending
+      expect(page).to have_content "Changes saved"
     end
   end
 

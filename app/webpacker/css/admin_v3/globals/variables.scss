@@ -14,9 +14,9 @@ $color-body-bg:                  $white !default;
 $color-body-text:                $near-black !default;
 $color-headers:                  $dark-blue !default;
 $color-link:                     $teal !default;
-$color-link-hover:               lighten($color-link, 2) !default;
-$color-link-active:              $green !default;
-$color-link-focus:               $green !default;
+$color-link-hover:               $orient !default;
+$color-link-active:              $dark-blue !default;
+$color-link-focus:               $orient !default;
 $color-link-visited:             $teal !default;
 $color-border:                   $light-grey !default;
 
@@ -33,9 +33,9 @@ $color-tbl-cell-shadow:          rgb(0, 0, 0, 0.15) !default;
 $color-tbl-thead-txt:            $color-headers !default;
 $color-tbl-thead-bg:             $light-grey !default;
 $color-tbl-border:               $pale-blue !default;
-$padding-tbl-cell:               12px 12px;
+$padding-tbl-cell:               12px;
 $padding-tbl-cell-condensed:     10px 12px;
-$padding-tbl-cell-relaxed:       16px 12px;
+$padding-tbl-cell-relaxed:       12px 12px;
 
 // Button colors
 $color-btn-bg:                   $teal !default;
@@ -70,10 +70,12 @@ $color-sel-text:                 $white !default;
 $color-sel-hover-bg:             lighten($color-sel-bg, 2) !default;
 $color-sel-hover-text:           $white !default;
 
-// Text inputs colors
+// Text inputs styles
 $color-txt-brd:                  $color-border !default;
 $color-txt-text:                 $near-black !default;
 $color-txt-hover-brd:            $teal !default;
+$vpadding-txt:                   5px;
+$hpadding-txt:                   8px;
 
 // Modal colors
 $color-modal-close-btn:          $color-5 !default;

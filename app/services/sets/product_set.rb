@@ -1,20 +1,28 @@
 # frozen_string_literal: true
 
 module Sets
+  # Accepts a collection_hash in format:
+  # {
+  #   0=> {id:"7449", name:"Pommes"},
+  #   1=> {...}
+  # }
+  #
   class ProductSet < ModelSet
     def initialize(attributes = {})
       super(Spree::Product, [], attributes)
     end
 
     def save
-      @collection_hash.each_value.all? do |product_attributes|
+      # Attempt to save all records, collecting model errors.
+      @collection_hash.each_value.map do |product_attributes|
         update_product_attributes(product_attributes)
-      end
+      end.all?
     end
 
     def collection_attributes=(attributes)
-      @collection = Spree::Product
-        .where(id: attributes.each_value.map { |product| product[:id] })
+      ids = attributes.values.pluck(:id).compact
+      # Find and load existing products in the order they are provided
+      @collection = Spree::Product.find(ids)
       @collection_hash = attributes
     end
 

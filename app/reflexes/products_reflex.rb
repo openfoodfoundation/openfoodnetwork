@@ -31,6 +31,23 @@ class ProductsReflex < ApplicationReflex
     fetch_and_render_products
   end
 
+  def bulk_update
+    product_set = product_set_from_params
+
+    product_set.collection.each { |p| authorize! :update, p }
+    @products = product_set.collection # use instance variable mainly for testing
+
+    if product_set.save
+      # flash[:success] = with_locale { I18n.t('.success') }
+      # morph_admin_flashes  # ERROR: selector morph type has already been set
+    elsif product_set.errors.present?
+      # @error_msg = with_locale{ I18n.t('.products_have_error', count: product_set.invalid.count) }
+      @error_msg = "#{product_set.invalid.count} products have errors."
+    end
+
+    render_products_form
+  end
+
   private
 
   def init_filters_params
@@ -67,6 +84,19 @@ class ProductsReflex < ApplicationReflex
     ).broadcast_later
 
     morph :nothing
+  end
+
+  def render_products_form
+    cable_ready.replace(
+      selector: "#products-form",
+      html: render(partial: "admin/products_v3/table",
+                   locals: { products: @products, error_msg: @error_msg })
+    ).broadcast
+    morph :nothing
+
+    # dunno why this doesn't work.
+    # morph "#products-form", render(partial: "admin/products_v3/table",
+    #                locals: { products: products })
   end
 
   def producers
@@ -129,5 +159,31 @@ class ProductsReflex < ApplicationReflex
     url.query += "&_producer_id=#{@producer_id}" if @producer_id.present?
     url.query += "&_category_id=#{@category_id}" if @category_id.present?
     url.to_s
+  end
+
+  # Similar to spree/admin/products_controller
+  def product_set_from_params
+    # Form field names:
+    #   '[products][0][id]' (hidden field)
+    #   '[products][0][name]'
+    #
+    # Resulting in params:
+    #     "products" => {
+    #       "<i>" =>  {
+    #         "id" => "123"
+    #         "name" => "Pommes",
+    #       }
+    #     }
+
+    collection_hash = products_bulk_params[:products].each_with_index
+      .to_h { |p, i|
+        [i, p]
+      }.with_indifferent_access
+    Sets::ProductSet.new(collection_attributes: collection_hash)
+  end
+
+  def products_bulk_params
+    params.permit(products: ::PermittedAttributes::Product.attributes)
+      .to_h.with_indifferent_access
   end
 end
