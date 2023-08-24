@@ -6,7 +6,7 @@ module DiscourseHelper
   end
 
   def discourse_url
-    ENV['DISCOURSE_URL']
+    ENV.fetch('DISCOURSE_URL', nil)
   end
 
   def discourse_login_url

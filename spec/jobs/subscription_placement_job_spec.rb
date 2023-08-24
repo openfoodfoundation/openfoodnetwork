@@ -19,9 +19,9 @@ describe SubscriptionPlacementJob do
                                   orders_close_at: 1.minute.ago)
     }
     let(:schedule) { create(:schedule, order_cycles: [order_cycle1, order_cycle2]) }
-    let(:subscription) { create(:subscription, shop: shop, schedule: schedule) }
+    let(:subscription) { create(:subscription, shop:, schedule:) }
     let!(:proxy_order) {
-      create(:proxy_order, subscription: subscription, order_cycle: order_cycle1)
+      create(:proxy_order, subscription:, order_cycle: order_cycle1)
     } # OK
 
     it "ignores proxy orders where the OC has closed" do
@@ -54,8 +54,15 @@ describe SubscriptionPlacementJob do
   describe "performing the job" do
     context "when unplaced proxy_orders exist" do
       let!(:subscription) { create(:subscription, with_items: true) }
-      let(:order) { build(:order, distributor: create(:enterprise)) }
-      let!(:proxy_order) { create(:proxy_order, subscription: subscription, order: order) }
+      let(:order) { build(:order, distributor: shop, line_items: [build(:line_item)]) }
+      let(:shop) { order_cycle.coordinator }
+      let(:order_cycle) { create(:simple_order_cycle) }
+      let(:exchange) {
+        create(:exchange, order_cycle:, sender: shop, receiver: shop, incoming: false)
+      }
+      let!(:proxy_order) {
+        create(:proxy_order, subscription:, order_cycle:, order:)
+      }
 
       before do
         allow(job).to receive(:proxy_orders) { ProxyOrder.where(id: proxy_order.id) }
@@ -73,7 +80,7 @@ describe SubscriptionPlacementJob do
       end
 
       it "records exceptions" do
-        order.line_items << build(:line_item)
+        exchange.variants << order.line_items.first.variant
 
         summarizer = TestSummarizer.new
         allow(OrderManagement::Subscriptions::Summarizer).to receive(:new).and_return(summarizer)
@@ -93,8 +100,8 @@ describe SubscriptionPlacementJob do
     let!(:shipping_method_created_later) { create(:shipping_method, distributors: [shop]) }
 
     let(:shop) { create(:enterprise) }
-    let(:subscription) { create(:subscription, shop: shop, with_items: true) }
-    let(:proxy_order) { create(:proxy_order, subscription: subscription) }
+    let(:subscription) { create(:subscription, shop:, with_items: true) }
+    let(:proxy_order) { create(:proxy_order, subscription:) }
     let(:oc) { proxy_order.order_cycle }
     let(:ex) { oc.exchanges.outgoing.find_by(sender_id: shop.id, receiver_id: shop.id) }
     let(:fee) { create(:enterprise_fee, enterprise: shop, fee_type: 'sales', amount: 10) }
@@ -184,9 +191,9 @@ describe SubscriptionPlacementJob do
       )
     }
     let(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
-    let(:subscription) { create(:subscription, shop: shop, schedule: schedule) }
+    let(:subscription) { create(:subscription, shop:, schedule:) }
     let!(:proxy_order) {
-      create(:proxy_order, subscription: subscription, order_cycle: order_cycle)
+      create(:proxy_order, subscription:, order_cycle:)
     }
     let(:breakpoint) { Mutex.new }
 

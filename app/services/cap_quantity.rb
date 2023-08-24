@@ -42,7 +42,7 @@ class CapQuantity
   end
 
   def unavailable_stock_lines_for
-    order.line_items.where('variant_id NOT IN (?)', available_variants_for.select(&:id))
+    order.line_items.where.not(variant_id: available_variants_for.select(&:id))
   end
 
   def available_variants_for

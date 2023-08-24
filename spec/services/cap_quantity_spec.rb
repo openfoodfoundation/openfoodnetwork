@@ -83,5 +83,38 @@ describe CapQuantity do
         end
       end
     end
+
+    context "when no items are available" do
+      it "sets quantity to 0 for unavailable items, and reports the change" do
+        changes = {}
+
+        expect {
+          changes = CapQuantity.new.call(order)
+          [line_item1, line_item2, line_item3].each(&:reload)
+        }.to change { line_item1.quantity }.to(0)
+          .and change { line_item2.quantity }.to(0)
+          .and change { line_item3.quantity }.to(0)
+
+        expect(changes[line_item1.id]).to eq 3
+        expect(changes[line_item2.id]).to eq 3
+        expect(changes[line_item3.id]).to eq 3
+      end
+
+      context "and the order has been placed" do
+        before do
+          allow(order).to receive(:ensure_available_shipping_rates) { true }
+          allow(order).to receive(:process_each_payment) { true }
+
+          order.create_proposed_shipments
+        end
+
+        it "removes the unavailable items from the shipment" do
+          expect {
+            CapQuantity.new.call(order)
+            order.reload
+          }.to change { order.shipment }.to(nil)
+        end
+      end
+    end
   end
 end

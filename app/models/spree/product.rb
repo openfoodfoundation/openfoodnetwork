@@ -165,7 +165,7 @@ module Spree
       with_order_cycles_inner.
         merge(OrderCycle.active).
         merge(Exchange.outgoing).
-        where('order_cycles.id IS NOT NULL')
+        where.not(order_cycles: { id: nil })
     }
 
     scope :by_producer, -> { joins(:supplier).order('enterprises.name') }

@@ -138,7 +138,7 @@ module Spree
     end
 
     def remove_previous_default
-      Spree::Zone.where('id != ?', id).update_all(default_tax: false) if default_tax
+      Spree::Zone.where.not(id:).update_all(default_tax: false) if default_tax
     end
   end
 end

@@ -6,6 +6,14 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
+# Offense count: 1
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: Max, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, AllowedPatterns.
+# URISchemes: http, https
+Layout/LineLength:
+  Exclude:
+    - 'spec/system/admin/tag_rules_spec.rb'
+
 # Offense count: 17
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: enums
@@ -726,28 +734,6 @@ Rails/WhereExists:
     - 'lib/tasks/sample_data/order_cycle_factory.rb'
     - 'lib/tasks/sample_data/taxon_factory.rb'
 
-# Offense count: 24
-# This cop supports safe autocorrection (--autocorrect).
-Rails/WhereNot:
-  Exclude:
-    - 'app/controllers/spree/admin/products_controller.rb'
-    - 'app/models/concerns/permalink_generator.rb'
-    - 'app/models/enterprise.rb'
-    - 'app/models/enterprise_fee.rb'
-    - 'app/models/enterprise_relationship.rb'
-    - 'app/models/product_import/inventory_reset_strategy.rb'
-    - 'app/models/proxy_order.rb'
-    - 'app/models/spree/credit_card.rb'
-    - 'app/models/spree/product.rb'
-    - 'app/models/spree/variant.rb'
-    - 'app/models/spree/zone.rb'
-    - 'app/models/variant_override.rb'
-    - 'app/services/cap_quantity.rb'
-    - 'engines/catalog/app/services/catalog/product_import/products_reset_strategy.rb'
-    - 'engines/order_management/app/services/order_management/subscriptions/proxy_order_syncer.rb'
-    - 'lib/reporting/reports/users_and_enterprises/base.rb'
-    - 'lib/tasks/data/anonymize_data.rake'
-
 # Offense count: 1
 Security/Open:
   Exclude:
@@ -765,12 +751,6 @@ Style/ArrayIntersect:
     - 'app/services/order_syncer.rb'
     - 'lib/open_food_network/tag_rule_applicator.rb'
     - 'spec/support/matchers/select2_matchers.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/BlockComments:
-  Exclude:
-    - 'spec/system/admin/tag_rules_spec.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
@@ -813,20 +793,6 @@ Style/ClassAndModuleChildren:
 Style/ClassVars:
   Exclude:
     - 'lib/spree/core/delegate_belongs_to.rb'
-
-# Offense count: 9
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowedVars.
-Style/FetchEnvVar:
-  Exclude:
-    - 'app/helpers/discourse_helper.rb'
-    - 'app/models/spree/preferences/configuration.rb'
-    - 'app/models/spree/preferences/preferable.rb'
-    - 'app/services/default_country.rb'
-    - 'spec/base_spec_helper.rb'
-    - 'spec/controllers/spree/credit_cards_controller_spec.rb'
-    - 'spec/models/order_balance_spec.rb'
-    - 'spec/support/vcr_setup.rb'
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
@@ -910,7 +876,7 @@ Style/HashLikeCase:
   Exclude:
     - 'app/models/enterprise.rb'
 
-# Offense count: 1782
+# Offense count: 1784
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, EnforcedShorthandSyntax, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
 # SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
@@ -1115,7 +1081,6 @@ Style/HashSyntax:
     - 'spec/helpers/spree/base_helper_spec.rb'
     - 'spec/jobs/report_job_spec.rb'
     - 'spec/jobs/subscription_confirm_job_spec.rb'
-    - 'spec/jobs/subscription_placement_job_spec.rb'
     - 'spec/jobs/webhook_delivery_job_spec.rb'
     - 'spec/lib/open_food_network/address_finder_spec.rb'
     - 'spec/lib/open_food_network/enterprise_fee_applicator_spec.rb'

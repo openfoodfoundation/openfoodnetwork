@@ -29,7 +29,7 @@ module Catalog
 
         return relation if excluded_items_ids.blank?
 
-        relation.where('spree_variants.id NOT IN (?)', excluded_items_ids)
+        relation.where.not(spree_variants: { id: excluded_items_ids })
       end
 
       def reset_variants_on_hand_and_on_demand(variants)

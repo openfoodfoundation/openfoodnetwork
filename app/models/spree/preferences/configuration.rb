@@ -32,7 +32,7 @@ module Spree
       end
 
       def preference_cache_key(name)
-        [ENV['RAILS_CACHE_ID'], self.class.name, name].flatten.join('::').underscore
+        [ENV.fetch('RAILS_CACHE_ID', nil), self.class.name, name].flatten.join('::').underscore
       end
 
       def reset

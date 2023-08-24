@@ -29,7 +29,7 @@ class VariantOverride < ApplicationRecord
 
   scope :distinct_import_dates, lambda {
     select('DISTINCT variant_overrides.import_date').
-      where('variant_overrides.import_date IS NOT NULL').
+      where.not(variant_overrides: { import_date: nil }).
       order('import_date DESC')
   }
 

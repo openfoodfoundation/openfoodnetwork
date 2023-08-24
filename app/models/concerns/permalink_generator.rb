@@ -34,7 +34,7 @@ module PermalinkGenerator
     if id.nil?
       scope_with_deleted
     else
-      scope_with_deleted.where('id != ?', id)
+      scope_with_deleted.where.not(id:)
     end
   end
 

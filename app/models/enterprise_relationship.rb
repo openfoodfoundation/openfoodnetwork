@@ -75,7 +75,7 @@ class EnterpriseRelationship < ApplicationRecord
     if perms.nil?
       permissions.destroy_all
     else
-      permissions.where('name NOT IN (?)', perms).destroy_all
+      permissions.where.not(name: perms).destroy_all
       perms.map { |name| permissions.find_or_initialize_by name: name }
     end
   end
