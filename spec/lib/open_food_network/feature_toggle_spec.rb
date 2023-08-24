@@ -14,6 +14,15 @@ describe OpenFoodNetwork::FeatureToggle do
       Flipper.enable(:foo)
       expect(feature_toggle.enabled?(:foo)).to be true
     end
+
+    it "can be activated per enterprise" do
+      enterprise = Enterprise.new(id: 5)
+
+      Flipper.enable(:foo, enterprise)
+
+      expect(feature_toggle.enabled?(:foo)).to eq false
+      expect(feature_toggle.enabled?(:foo, enterprise)).to eq true
+    end
   end
 
   describe ".setup!" do

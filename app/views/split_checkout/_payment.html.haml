@@ -1,5 +1,5 @@
 .medium-6#checkout-payment-methods
-  - if feature?(:vouchers, spree_current_user) && @order.distributor.vouchers.present?
+  - if (feature?(:vouchers, spree_current_user) || feature?(:vouchers, @order.distributor)) && @order.distributor.vouchers.present?
     %div.checkout-substep
       = render partial: "split_checkout/voucher_section", locals: { order: @order, voucher_adjustment: @order.voucher_adjustments.first }
 

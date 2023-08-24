@@ -31,6 +31,7 @@ module OpenFoodNetwork
       DESC
       "vouchers" => <<~DESC,
         Add voucher functionality. Voucher can be managed via Enterprise settings.
+        This is activated per enterprise. Enter actors as <code>Enterprise;1234</code>.
       DESC
       "invoices" => <<~DESC,
         Preserve the state of generated invoices and enable multiple invoice numbers instead of only one live-updating invoice.

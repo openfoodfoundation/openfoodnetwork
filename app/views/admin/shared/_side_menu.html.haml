@@ -1,7 +1,7 @@
 .side_menu#side_menu
   - if @enterprise
     - enterprise_side_menu_items(@enterprise).each do |item|
-    - next if !item[:show] || (item[:name] == 'vouchers' && !feature?(:vouchers, spree_current_user))
+    - next if !item[:show] || (item[:name] == 'vouchers' && !(feature?(:vouchers, spree_current_user) || feature?(:vouchers, @enterprise)))
       %a.menu_item{ href: item[:href] || "##{item[:name]}_panel", id: item[:name], data: { action: "tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab", "tabs-and-panels-target": "tab" }, class: item[:selected] }
         %i{ class: item[:icon_class] }
         %span= t(".enterprise.#{item[:name] }")
