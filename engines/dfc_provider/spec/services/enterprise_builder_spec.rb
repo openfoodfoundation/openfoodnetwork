@@ -9,7 +9,7 @@ describe EnterpriseBuilder do
       :enterprise,
       id: 10_000, name: "Fabi's Farm",
       description: "The place where stuff grows", abn: "123 456 789 0",
-      address: build(:address, city: "Melbourne"),
+      address: build(:address, id: 40_000, city: "Melbourne"),
     )
   }
   let(:variant) {

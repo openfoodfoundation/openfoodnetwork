@@ -2,9 +2,8 @@
 
 class AddressBuilder < DfcBuilder
   def self.address(address)
-    # TODO add url helper/address contoller so we can do urls.address_url(address.id)
     DataFoodConsortium::Connector::Address.new(
-      "http://test.host/api/dfc-v1.7/address/#{address.id}",
+      urls.address_url(address),
       street: address.address1,
       postalCode: address.zipcode,
       city: address.city,

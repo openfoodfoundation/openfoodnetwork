@@ -38,6 +38,32 @@ security:
 - ofn_api_token: []
 - ofn_session: []
 paths:
+  "/api/dfc-v1.7/addresses/{id}":
+    get:
+      summary: Show address
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
+                    "@id": http://test.host/api/dfc-v1.7/addresses/40000
+                    "@type": dfc-b:Address
+                    dfc-b:hasStreet: 10 Lovely Street
+                    dfc-b:hasPostalCode: '20170'
+                    dfc-b:hasCity: Herndon
+                    dfc-b:hasCountry: Australia
+        '404':
+          description: not found
   "/api/dfc-v1.7/enterprises/{enterprise_id}/catalog_items":
     parameters:
     - name: enterprise_id
@@ -64,7 +90,7 @@ paths:
                       dfc-b:affiliates: http://test.host/api/dfc-v1.7/enterprises/10000
                     - "@id": http://test.host/api/dfc-v1.7/enterprises/10000
                       "@type": dfc-b:Enterprise
-                      dfc-b:hasAddress: http://test.host/api/dfc-v1.7/address/40000
+                      dfc-b:hasAddress: http://test.host/api/dfc-v1.7/addresses/40000
                       dfc-b:hasName: Fred's Farm
                       dfc-b:hasDescription: Beautiful
                       dfc-b:supplies: http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
@@ -221,7 +247,7 @@ paths:
                     "@graph":
                     - "@id": http://test.host/api/dfc-v1.7/enterprises/10000
                       "@type": dfc-b:Enterprise
-                      dfc-b:hasAddress: http://test.host/api/dfc-v1.7/address/40000
+                      dfc-b:hasAddress: http://test.host/api/dfc-v1.7/addresses/40000
                       dfc-b:hasName: Fred's Farm
                       dfc-b:hasDescription: This is an awesome enterprise
                       dfc-b:VATnumber: 123 456
