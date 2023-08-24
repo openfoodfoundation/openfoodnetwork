@@ -8,6 +8,7 @@ module Reporting
           filter Spree::Order.managed_by(@user)
             .distributed_by_user(@user)
             .complete.not_state(:canceled)
+            .order(:id)
         end
 
         def filter(orders)
