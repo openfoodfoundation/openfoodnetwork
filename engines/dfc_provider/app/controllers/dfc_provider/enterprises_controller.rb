@@ -9,6 +9,7 @@ module DfcProvider
       enterprise = EnterpriseBuilder.enterprise(current_enterprise)
       render json: DfcIo.export(
         enterprise,
+        *enterprise.localizations,
         *enterprise.suppliedProducts,
         *enterprise.catalogItems,
       )

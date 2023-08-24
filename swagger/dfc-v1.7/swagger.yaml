@@ -253,6 +253,12 @@ paths:
                       dfc-b:VATnumber: 123 456
                       dfc-b:supplies: http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
                       dfc-b:manages: http://test.host/api/dfc-v1.7/enterprises/10000/catalog_items/10001
+                    - "@id": http://test.host/api/dfc-v1.7/addresses/40000
+                      "@type": dfc-b:Address
+                      dfc-b:hasStreet: 42 Doveton Street
+                      dfc-b:hasPostalCode: '20170'
+                      dfc-b:hasCity: Herndon
+                      dfc-b:hasCountry: Australia
                     - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Apple

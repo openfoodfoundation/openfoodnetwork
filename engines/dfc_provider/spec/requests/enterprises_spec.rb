@@ -9,7 +9,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rs
       :distributor_enterprise,
       id: 10_000, owner: user, abn: "123 456", name: "Fred's Farm",
       description: "This is an awesome enterprise",
-      address: build(:address, id: 40_000),
+      address: build(:address, id: 40_000, address1: "42 Doveton Street"),
     )
   end
   let!(:product) {
@@ -47,6 +47,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rs
             expect(response.body).to include "This is an awesome enterprise"
             expect(response.body).to include "123 456"
             expect(response.body).to include "Apple"
+            expect(response.body).to include "42 Doveton Street"
           end
         end
       end
