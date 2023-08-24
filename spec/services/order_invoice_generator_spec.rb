@@ -43,6 +43,19 @@ describe OrderInvoiceGenerator do
         expect{ subject }.to change{ latest_invoice.reload.data }
           .and change{ order.invoices.count }.by(0)
       end
+
+      context "when there are more than one invoice" do
+        before do
+          latest_invoice.update!(number: 2, created_at: 1.day.ago)
+          create(:invoice, order:, number: 1, created_at: 2.days.ago)
+        end
+        it "should update the most recent invoice" do
+          expect{ subject }.to change{ latest_invoice.reload.data }
+            .and change{ latest_invoice.date }.to(Time.zone.today)
+            .and change{ latest_invoice.number }.by(0)
+            .and change{ order.invoices.count }.by(0)
+        end
+      end
     end
 
     context "when can't generate new invoice or update latest invoice" do

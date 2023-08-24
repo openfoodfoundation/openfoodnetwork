@@ -9,6 +9,10 @@ class Invoice < ApplicationRecord
   after_create :cancel_previous_invoices
   default_scope { order(created_at: :desc) }
 
+  def self.latest
+    reorder(created_at: :desc).first
+  end
+
   def presenter
     @presenter ||= Invoice::DataPresenter.new(self)
   end
