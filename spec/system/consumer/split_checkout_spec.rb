@@ -706,8 +706,7 @@ describe "As a consumer, I want to checkout my order" do
 
             shared_examples "adding voucher to the order" do
               before do
-                fill_in "Enter voucher code", with: "some_code"
-                click_button("Apply")
+                apply_voucher "some_code"
               end
 
               it "adds a voucher to the order" do
@@ -727,8 +726,7 @@ describe "As a consumer, I want to checkout my order" do
               it_behaves_like "adding voucher to the order"
 
               it "shows a warning message" do
-                fill_in "Enter voucher code", with: "some_code"
-                click_button("Apply")
+                apply_voucher "some_code"
 
                 expect(page).to have_content(
                   "Note: if your order total is less than your voucher " \
@@ -737,8 +735,7 @@ describe "As a consumer, I want to checkout my order" do
               end
 
               it "proceeds without requiring payment" do
-                fill_in "Enter voucher code", with: "some_code"
-                click_button("Apply")
+                apply_voucher "some_code"
 
                 expect(page).to have_content "No payment required"
                 click_button "Next - Order summary"
@@ -779,9 +776,7 @@ describe "As a consumer, I want to checkout my order" do
             end
 
             it "can re-enter a voucher" do
-              # Re-enter a voucher code
-              fill_in "Enter voucher code", with: "some_code"
-              click_button("Apply")
+              apply_voucher "some_code"
 
               expect(page).to have_content("$15.00 Voucher")
               expect(order.reload.voucher_adjustments.length).to eq(1)

@@ -128,10 +128,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
           click_button "Next - Payment method"
 
-          # add Voucher
-          fill_in "Enter voucher code", with: "some_code"
-          click_button("Apply")
-          expect(page).to have_selector ".voucher-added"
+          apply_voucher "some_code"
 
           click_on "Next - Order summary"
           click_on "Complete order"
@@ -163,9 +160,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
             visit checkout_step_path(:details)
             proceed_to_payment
 
-            # add Voucher
-            fill_in "Enter voucher code", with: voucher.code
-            click_button("Apply")
+            apply_voucher voucher.code
 
             proceed_to_summary
             assert_db_voucher_adjustment(-2.00, -0.26)
