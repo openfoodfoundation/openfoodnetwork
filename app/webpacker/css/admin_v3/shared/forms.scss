@@ -35,9 +35,8 @@ label {
   font-weight: 600;
   text-transform: uppercase;
   font-size: 85%;
-  display: inline;
-  margin-bottom: 5px;
-  color: $color-4;
+  margin-bottom: 3px;
+  color: $near-black;
 
   &.inline {
     display: inline-block !important;

@@ -4,10 +4,10 @@
       = text_field_tag :search_term, search_term, placeholder: t('.search_products')
   - if producer_options.many?
     .producers
-      .label= t('.producers.label')
+      = label_tag :producer_id, t('.producers.label')
       = select_tag :producer_id, options_for_select(producer_options, producer_id), include_blank: t('.all_producers'), "data-controller": "tom-select", "data-tom-select-options-value": '{ "plugins": [] }', class: "fullwidth"
   .categories
-    .label= t('.categories.label')
+    = label_tag :category_id, t('.categories.label')
     = select_tag :category_id, options_for_select(category_options, category_id), include_blank: t('.all_categories'),  "data-controller": "tom-select", "data-tom-select-options-value": '{ "plugins": [] }', class: "fullwidth"
   .submit
     .search-button

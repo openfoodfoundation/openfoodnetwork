@@ -155,14 +155,6 @@
     align-items: end;
     margin-bottom: 20px;
 
-    .producers,
-    .categories {
-      > .label {
-        margin-left: 3px;
-        margin-bottom: 2px;
-      }
-    }
-
     .query {
       grid-column: 1 / span 3;
     }
