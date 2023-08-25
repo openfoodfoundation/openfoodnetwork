@@ -24,7 +24,7 @@ module Reporting
         def owners_and_enterprises
           query = Enterprise
             .joins("LEFT JOIN spree_users AS owner ON enterprises.owner_id = owner.id")
-            .where("enterprises.id IS NOT NULL")
+            .where.not(enterprises: { id: nil })
 
           query = filter_by_int_list_if_present(query, "enterprises.id", params[:enterprise_id_in])
           query = filter_by_int_list_if_present(query, "owner.id", params[:user_id_in])
@@ -36,8 +36,8 @@ module Reporting
           query = Enterprise
             .joins("LEFT JOIN enterprise_roles ON enterprises.id = enterprise_roles.enterprise_id")
             .joins("LEFT JOIN spree_users AS managers ON enterprise_roles.user_id = managers.id")
-            .where("enterprise_id IS NOT NULL")
-            .where("user_id IS NOT NULL")
+            .where.not('enterprise_roles.enterprise_id': nil)
+            .where.not('enterprise_roles.user_id': nil)
 
           query = filter_by_int_list_if_present(query, "enterprise_id", params[:enterprise_id_in])
           query = filter_by_int_list_if_present(query, "user_id", params[:user_id_in])
