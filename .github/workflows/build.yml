@@ -17,7 +17,7 @@ permissions:
   contents: read
 
 jobs:
-  knapsack_rspec_controllers:
+  controllers:
     runs-on: ubuntu-22.04
     services:
       postgres:
@@ -85,7 +85,7 @@ jobs:
           git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
           bundle exec rake knapsack_pro:rspec
 
-  knapsack_rspec_models:
+  models:
     runs-on: ubuntu-22.04
     services:
       postgres:
@@ -154,7 +154,7 @@ jobs:
         run: |
           bundle exec rake knapsack_pro:rspec
 
-  knapsack_rspec_system_admin:
+  system_admin:
     runs-on: ubuntu-22.04
     services:
       postgres:
@@ -232,7 +232,7 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
-  knapsack_rspec_system_consumer:
+  system_consumer:
     runs-on: ubuntu-22.04
     services:
       postgres:
@@ -310,7 +310,7 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
-  knapsack_rspec_engines:
+  engines:
     runs-on: ubuntu-22.04
     services:
       postgres:
@@ -388,7 +388,7 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
-  knapsack_rspec_test_the_rest:
+  test_the_rest:
     runs-on: ubuntu-22.04
     services:
       postgres:
