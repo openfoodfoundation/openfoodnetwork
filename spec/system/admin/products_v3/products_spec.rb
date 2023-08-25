@@ -71,13 +71,13 @@ describe 'As an admin, I can see the new product page' do
   end
 
   describe "search" do
-    before do
-      visit admin_products_v3_index_url
-    end
-
     context "product has searchable term" do
       # create a product with a name that can be searched
       let!(:product_by_name) { create(:simple_product, name: "searchable product") }
+
+      before do
+        visit admin_products_v3_index_url
+      end
 
       it "can search for a product" do
         search_for "searchable product"
@@ -128,6 +128,8 @@ describe 'As an admin, I can see the new product page' do
       let!(:product_by_supplier) { create(:simple_product, supplier: producer) }
 
       it "can search for a product" do
+        visit admin_products_v3_index_url
+
         search_by_producer "Producer 1"
 
         # expect(page).to have_content "1 product found for your search criteria."
@@ -143,6 +145,8 @@ describe 'As an admin, I can see the new product page' do
       }
 
       it "can search for a product" do
+        visit admin_products_v3_index_url
+
         search_by_category "Category 1"
 
         # expect(page).to have_content "1 product found for your search criteria."
