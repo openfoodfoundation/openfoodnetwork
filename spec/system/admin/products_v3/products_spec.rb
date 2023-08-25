@@ -53,6 +53,8 @@ describe 'As an admin, I can see the new product page' do
       within ".pagination" do
         click_link "2"
       end
+
+      expect(page).to have_content "Showing 16 to 30"
       expect_page_to_be 2
       expect_per_page_to_be 15
       expect_products_count_to_be 15
@@ -60,6 +62,8 @@ describe 'As an admin, I can see the new product page' do
 
     it "can change the number of products per page" do
       select "50", from: "per_page"
+
+      expect(page).to have_content "Showing 1 to 50"
       expect_page_to_be 1
       expect_per_page_to_be 50
       expect_products_count_to_be 50
@@ -79,6 +83,7 @@ describe 'As an admin, I can see the new product page' do
         search_for "searchable product"
 
         expect(page).to have_field "search_term", with: "searchable product"
+        # expect(page).to have_content "1 product found for your search criteria."
         expect_products_count_to_be 1
       end
 
@@ -86,21 +91,26 @@ describe 'As an admin, I can see the new product page' do
         within ".pagination" do
           click_link "2"
         end
+
+        expect(page).to have_content "Showing 16 to 30"
         expect_page_to_be 2
         expect_per_page_to_be 15
         expect_products_count_to_be 15
         search_for "searchable product"
+        # expect(page).to have_content "1 product found for your search criteria."
         expect_products_count_to_be 1
       end
 
       it "can clear filters" do
         search_for "searchable product"
         expect(page).to have_field "search_term", with: "searchable product"
+        # expect(page).to have_content "1 product found for your search criteria."
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_name.name
 
         click_link "Clear search"
         expect(page).to have_field "search_term", with: ""
+        expect(page).to have_content "Showing 1 to 15"
         expect_page_to_be 1
         expect_products_count_to_be 15
       end
@@ -120,6 +130,7 @@ describe 'As an admin, I can see the new product page' do
       it "can search for a product" do
         search_by_producer "Producer 1"
 
+        # expect(page).to have_content "1 product found for your search criteria."
         expect(page).to have_select "producer_id", selected: "Producer 1"
         expect_products_count_to_be 1
       end
@@ -134,6 +145,7 @@ describe 'As an admin, I can see the new product page' do
       it "can search for a product" do
         search_by_category "Category 1"
 
+        # expect(page).to have_content "1 product found for your search criteria."
         expect(page).to have_select "category_id", selected: "Category 1"
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_category.name
