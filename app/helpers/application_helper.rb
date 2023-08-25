@@ -23,8 +23,9 @@ module ApplicationHelper
     end
   end
 
-  def feature?(feature, user = nil)
-    OpenFoodNetwork::FeatureToggle.enabled?(feature, user)
+  # Checks weather a feature is enabled for any of the given actors.
+  def feature?(feature, *actors)
+    OpenFoodNetwork::FeatureToggle.enabled?(feature, *actors)
   end
 
   def language_meta_tags

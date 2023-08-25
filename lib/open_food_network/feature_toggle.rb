@@ -49,12 +49,18 @@ module OpenFoodNetwork
       end
     end
 
-    def self.enabled?(feature_name, user = nil)
-      Flipper.enabled?(feature_name, user)
+    # Checks weather a feature is enabled for any of the given actors.
+    def self.enabled?(feature_name, *actors)
+      return Flipper.enabled?(feature_name) if actors.empty?
+
+      actors.any? do |actor|
+        Flipper.enabled?(feature_name, actor)
+      end
     end
 
-    def self.disabled?(feature_name, user = nil)
-      !enabled?(feature_name, user)
+    # Checks weather a feature is disabled for all given actors.
+    def self.disabled?(feature_name, *actors)
+      !enabled?(feature_name, *actors)
     end
   end
 end
