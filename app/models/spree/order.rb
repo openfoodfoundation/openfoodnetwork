@@ -149,11 +149,13 @@ module Spree
     }
 
     scope :sort_by_billing_address_name_asc, -> {
-      joins(:bill_address).order("spree_addresses.lastname ASC, spree_addresses.firstname ASC")
+      references(:bill_address)
+        .order("spree_addresses.lastname ASC, spree_addresses.firstname ASC")
     }
 
     scope :sort_by_billing_address_name_desc, -> {
-      joins(:bill_address).order("spree_addresses.lastname DESC, spree_addresses.firstname DESC")
+      references(:bill_address)
+        .order("spree_addresses.lastname DESC, spree_addresses.firstname DESC")
     }
 
     scope :with_line_items_variants_and_products_outer, lambda {

@@ -20,10 +20,7 @@ class SearchOrders
       ransack(params[:q]).
       result(distinct: true)
 
-    if ['bill_address',
-        'billing_address'].any?{ |param|
-         params.dig(:q, :s)&.starts_with?(param)
-       }
+    if params.dig(:q, :s)&.starts_with?("bill_address_")
       search = search.select('spree_addresses.*, spree_orders.*')
     end
 
