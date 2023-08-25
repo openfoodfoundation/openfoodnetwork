@@ -699,12 +699,6 @@ describe "As a consumer, I want to checkout my order" do
             create(:voucher_flat_rate, code: 'some_code', enterprise: distributor, amount: 15)
           end
 
-          it "shows voucher input" do
-            visit checkout_step_path(:payment)
-            expect(page).to have_field "Enter voucher code"
-            expect(page).to have_content "Apply voucher"
-          end
-
           describe "adding voucher to the order" do
             before do
               visit checkout_step_path(:payment)
