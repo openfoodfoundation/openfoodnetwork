@@ -704,18 +704,12 @@ describe "As a consumer, I want to checkout my order" do
               visit checkout_step_path(:payment)
             end
 
-            shared_examples "adding voucher to the order" do
-              before do
-                apply_voucher "some_code"
-              end
+            it "adds a voucher to the order" do
+              apply_voucher "some_code"
 
-              it "adds a voucher to the order" do
-                expect(page).to have_content("$15.00 Voucher")
-                expect(order.reload.voucher_adjustments.length).to eq(1)
-              end
+              expect(page).to have_content "$15.00 Voucher"
+              expect(order.reload.voucher_adjustments.length).to eq(1)
             end
-
-            it_behaves_like "adding voucher to the order"
 
             context "when voucher covers more then the order total" do
               before do
@@ -723,19 +717,14 @@ describe "As a consumer, I want to checkout my order" do
                 order.save!
               end
 
-              it_behaves_like "adding voucher to the order"
-
-              it "shows a warning message" do
+              it "shows a warning message and doesn't require payment" do
                 apply_voucher "some_code"
 
+                expect(page).to have_content "$15.00 Voucher"
                 expect(page).to have_content(
                   "Note: if your order total is less than your voucher " \
                   "you may not be able to spend the remaining value."
                 )
-              end
-
-              it "proceeds without requiring payment" do
-                apply_voucher "some_code"
 
                 expect(page).to have_content "No payment required"
                 click_button "Next - Order summary"
