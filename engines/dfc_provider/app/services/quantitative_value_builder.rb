@@ -36,21 +36,13 @@ class QuantitativeValueBuilder < DfcBuilder
     # listed here and automatically mapped to "item". The following is a list
     # of measures we want or could implement.
     #
-    # Length:
+    # Length is not represented in the OFN:
     #
     # :CENTIMETRE,
     # :DECIMETRE,
     # :METRE,
     # :KILOMETRE,
     # :INCH,
-    #
-    # Bundles:
-    #
-    # :_4PACK,
-    # :_6PACK,
-    # :DOZEN,
-    # :HALFDOZEN,
-    # :PAIR,
     #
     # Other:
     #
@@ -84,6 +76,20 @@ class QuantitativeValueBuilder < DfcBuilder
       #   ["weight", "oz", 28.349523125]
       when quantity_unit.POUNDMASS
         ["weight", "lb", 453.59237]
+      when quantity_unit.PAIR
+        # Ambiguous. A pair of trousers is one.
+        # A pair of socks is technically two but people see it as one item.
+        # I can't think of a good food example. A pair of lemons?
+        # So maybe it's two then.
+        ["items", "pair", 2]
+      when quantity_unit._4PACK
+        ["items", "4 pack", 4]
+      when quantity_unit._6PACK
+        ["items", "6 pack", 6]
+      when quantity_unit.HALFDOZEN
+        ["items", "half dozen", 6]
+      when quantity_unit.DOZEN
+        ["items", "dozen", 12]
       else
         ["items", "items", 1]
       end

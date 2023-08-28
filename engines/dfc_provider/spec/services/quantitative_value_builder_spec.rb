@@ -117,5 +117,19 @@ describe QuantitativeValueBuilder do
       expect(product.variant_unit_scale).to eq 453.59237
       expect(product.unit_value).to eq 4_535.9237
     end
+
+    it "knows customary units" do
+      quantity = DataFoodConsortium::Connector::QuantitativeValue.new(
+        unit: quantity_unit.DOZEN,
+        value: 2,
+      )
+
+      builder.apply(quantity, product)
+
+      expect(product.variant_unit).to eq "items"
+      expect(product.variant_unit_name).to eq "dozen"
+      expect(product.variant_unit_scale).to eq 12
+      expect(product.unit_value).to eq 24
+    end
   end
 end
