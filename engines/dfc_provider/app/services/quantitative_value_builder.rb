@@ -34,6 +34,8 @@ class QuantitativeValueBuilder < DfcBuilder
       case quantity.unit
       when quantity_unit.LITRE
         ["volume", "liter", 1]
+      when quantity_unit.MILLIGRAM
+        ["weight", "mg", 0.001]
       when quantity_unit.GRAM
         ["weight", "gram", 1]
       when quantity_unit.KILOGRAM
