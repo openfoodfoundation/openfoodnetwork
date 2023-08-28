@@ -196,6 +196,7 @@ describe 'As an admin, I can see the new product page' do
   end
 
   def search_by_producer(producer)
+    # TODO: use a helper to more reliably select the tom-select component
     select producer, from: "producer_id"
     click_button "Search"
   end
