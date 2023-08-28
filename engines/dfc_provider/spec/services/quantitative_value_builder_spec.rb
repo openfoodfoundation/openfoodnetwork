@@ -43,4 +43,37 @@ describe QuantitativeValueBuilder do
       expect(quantity.unit.semanticId).to eq "dfc-m:Piece"
     end
   end
+
+  describe ".apply" do
+    let(:quantity_unit) { DfcLoader.connector.MEASURES.UNIT.QUANTITYUNIT }
+    let(:product) { Spree::Product.new }
+
+    it "uses items for anything unknown" do
+      quantity = DataFoodConsortium::Connector::QuantitativeValue.new(
+        unit: quantity_unit.JAR,
+        value: 3,
+      )
+
+      builder.apply(quantity, product)
+
+      expect(product.variant_unit).to eq "items"
+      expect(product.variant_unit_name).to eq "items"
+      expect(product.variant_unit_scale).to eq 1
+      expect(product.unit_value).to eq 3
+    end
+
+    it "knows metric units" do
+      quantity = DataFoodConsortium::Connector::QuantitativeValue.new(
+        unit: quantity_unit.LITRE,
+        value: 2,
+      )
+
+      builder.apply(quantity, product)
+
+      expect(product.variant_unit).to eq "volume"
+      expect(product.variant_unit_name).to eq "liter"
+      expect(product.variant_unit_scale).to eq 1
+      expect(product.unit_value).to eq 2
+    end
+  end
 end
