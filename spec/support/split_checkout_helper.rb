@@ -43,6 +43,13 @@ module SplitCheckoutHelper
     expect(page).to have_button("Next - Order summary")
   end
 
+  def apply_voucher(code)
+    expect(page).to have_content "Apply voucher"
+    fill_in "Enter voucher code", with: code
+    click_button "Apply"
+    expect(page).to have_link "Remove code"
+  end
+
   def expect_to_be_on_first_step
     expect(page).to have_content("1 - Your details")
     expect(page).to have_selector("div.checkout-tab.selected", text: "1 - Your details")

@@ -122,10 +122,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
           click_button "Next - Payment method"
 
-          # add Voucher
-          fill_in "Enter voucher code", with: "some_code"
-          click_button("Apply")
-          expect(page).to have_link "Remove code"
+          apply_voucher "some_code"
 
           # Choose payment
           click_on "Next - Order summary"
@@ -155,9 +152,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
             visit checkout_step_path(:details)
             proceed_to_payment
 
-            # add Voucher
-            fill_in "Enter voucher code", with: "good_code"
-            click_button("Apply")
+            apply_voucher "good_code"
 
             proceed_to_summary
 
