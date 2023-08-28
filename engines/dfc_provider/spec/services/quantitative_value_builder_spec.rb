@@ -89,5 +89,19 @@ describe QuantitativeValueBuilder do
       expect(product.variant_unit_scale).to eq 1_000
       expect(product.unit_value).to eq 4_000
     end
+
+    it "knows metric units with a small scale" do
+      quantity = DataFoodConsortium::Connector::QuantitativeValue.new(
+        unit: quantity_unit.MILLIGRAM,
+        value: 5,
+      )
+
+      builder.apply(quantity, product)
+
+      expect(product.variant_unit).to eq "weight"
+      expect(product.variant_unit_name).to eq "mg"
+      expect(product.variant_unit_scale).to eq 0.001
+      expect(product.unit_value).to eq 0.005
+    end
   end
 end
