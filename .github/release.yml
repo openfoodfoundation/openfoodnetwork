@@ -1,11 +1,18 @@
 changelog:
   categories:
-    - title: "User-facing changes 👀" # Other categories will need to be manually arrange for now.
+    - title: "User-facing changes 👀"
       labels:
         - '*'
       exclude:
         labels:
           - dependencies
-    - title: Dependencies 📦
+          - feature toggled
+          - technical changes only
+    - title: "Features under construction 🚧"
+        - feature toggled
+    - title: "Technical changes 🛠️"
+      labels:
+        - technical changes only
+    - title: "Dependencies 📦"
       labels:
         - dependencies
