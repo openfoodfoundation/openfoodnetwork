@@ -30,16 +30,59 @@ class QuantitativeValueBuilder < DfcBuilder
   def self.apply(quantity, product)
     quantity_unit = DfcLoader.connector.MEASURES.UNIT.QUANTITYUNIT
 
+    # Unimplemented measures
+    #
+    # The DFC knows lots of single piece measures like a tub. There are not
+    # listed here and automatically mapped to "item". The following is a list
+    # of measures we want or could implement.
+    #
+    # Length:
+    #
+    # :CENTIMETRE,
+    # :DECIMETRE,
+    # :METRE,
+    # :KILOMETRE,
+    # :INCH,
+    #
+    # Metric:
+    #
+    # :CENTILITRE,
+    # :DECILITRE,
+    # :MILLILITRE,
+    # :TONNE,
+    #
+    # Bundles:
+    #
+    # :_4PACK,
+    # :_6PACK,
+    # :DOZEN,
+    # :HALFDOZEN,
+    # :PAIR,
+    #
+    # Other:
+    #
+    # :PERCENT,
     measure, unit_name, unit_scale =
       case quantity.unit
       when quantity_unit.LITRE
         ["volume", "liter", 1]
+      when quantity_unit.CUP
+        # Interpreted as metric cup, not US legal cup.
+        # https://github.com/datafoodconsortium/taxonomies/issues/8
+        ["volume", "cu", 0.25]
+      when quantity_unit.GALLON
+        ["volume", "gal", 4.54609]
       when quantity_unit.MILLIGRAM
         ["weight", "mg", 0.001]
       when quantity_unit.GRAM
         ["weight", "gram", 1]
       when quantity_unit.KILOGRAM
         ["weight", "kg", 1_000]
+      # Not part of the DFC yet:
+      # when quantity_unit.OUNCE
+      #   ["weight", "oz", 28.349523125]
+      when quantity_unit.POUNDMASS
+        ["weight", "lb", 453.59237]
       else
         ["items", "items", 1]
       end

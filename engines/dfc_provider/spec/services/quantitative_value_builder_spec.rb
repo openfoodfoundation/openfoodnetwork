@@ -103,5 +103,19 @@ describe QuantitativeValueBuilder do
       expect(product.variant_unit_scale).to eq 0.001
       expect(product.unit_value).to eq 0.005
     end
+
+    it "knows imperial units" do
+      quantity = DataFoodConsortium::Connector::QuantitativeValue.new(
+        unit: quantity_unit.POUNDMASS,
+        value: 10,
+      )
+
+      builder.apply(quantity, product)
+
+      expect(product.variant_unit).to eq "weight"
+      expect(product.variant_unit_name).to eq "lb"
+      expect(product.variant_unit_scale).to eq 453.59237
+      expect(product.unit_value).to eq 4_535.9237
+    end
   end
 end
