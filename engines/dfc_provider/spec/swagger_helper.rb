@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require Rails.root.join("spec/swagger_helper")
 require_relative "spec_helper"
+require Rails.root.join("spec/swagger_helper")
 
 RSpec.configure do |config|
   # Override swagger docs to generate only this file:

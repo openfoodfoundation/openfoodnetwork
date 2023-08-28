@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require DfcProvider::Engine.root.join("spec/spec_helper")
+require_relative "../spec_helper"
 
 describe DfcLoader do
   it "prepares the DFC Connector to provide DFC object classes for export" do
