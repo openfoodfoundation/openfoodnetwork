@@ -75,5 +75,19 @@ describe QuantitativeValueBuilder do
       expect(product.variant_unit_scale).to eq 1
       expect(product.unit_value).to eq 2
     end
+
+    it "knows metric units with a scale in OFN" do
+      quantity = DataFoodConsortium::Connector::QuantitativeValue.new(
+        unit: quantity_unit.KILOGRAM,
+        value: 4,
+      )
+
+      builder.apply(quantity, product)
+
+      expect(product.variant_unit).to eq "weight"
+      expect(product.variant_unit_name).to eq "kg"
+      expect(product.variant_unit_scale).to eq 1_000
+      expect(product.unit_value).to eq 4_000
+    end
   end
 end
