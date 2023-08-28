@@ -44,13 +44,6 @@ class QuantitativeValueBuilder < DfcBuilder
     # :KILOMETRE,
     # :INCH,
     #
-    # Metric:
-    #
-    # :CENTILITRE,
-    # :DECILITRE,
-    # :MILLILITRE,
-    # :TONNE,
-    #
     # Bundles:
     #
     # :_4PACK,
@@ -66,6 +59,12 @@ class QuantitativeValueBuilder < DfcBuilder
       case quantity.unit
       when quantity_unit.LITRE
         ["volume", "liter", 1]
+      when quantity_unit.MILLILITRE
+        ["volume", "ml", 0.001]
+      when quantity_unit.CENTILITRE
+        ["volume", "cl", 0.01]
+      when quantity_unit.DECILITRE
+        ["volume", "dl", 0.1]
       when quantity_unit.CUP
         # Interpreted as metric cup, not US legal cup.
         # https://github.com/datafoodconsortium/taxonomies/issues/8
@@ -78,6 +77,8 @@ class QuantitativeValueBuilder < DfcBuilder
         ["weight", "gram", 1]
       when quantity_unit.KILOGRAM
         ["weight", "kg", 1_000]
+      when quantity_unit.TONNE
+        ["weight", "kg", 1_000_000]
       # Not part of the DFC yet:
       # when quantity_unit.OUNCE
       #   ["weight", "oz", 28.349523125]
