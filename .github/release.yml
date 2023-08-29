@@ -9,6 +9,7 @@ changelog:
           - feature toggled
           - technical changes only
     - title: "Features under construction 🚧"
+      labels:
         - feature toggled
     - title: "Technical changes 🛠️"
       labels:
