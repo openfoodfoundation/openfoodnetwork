@@ -269,8 +269,6 @@ describe '
       end
 
       it "displays non-empty cart orders" do
-        pending "issue #11120"
-
         # empty cart order does not appear in the results
         expect(page).not_to have_content order_empty.number
 
@@ -278,8 +276,13 @@ describe '
         expect(page).to have_content order_not_empty.number
 
         # non-empty cart order, with no with bill- and ship-address appear in the results
+        expect(page).to have_content order_not_empty_no_address.number
 
-        # pending issue #11120
+        # And the same orders are displayed when sorting by name:
+        find("th a", text: "NAME").click
+
+        expect(page).to have_no_content order_empty.number
+        expect(page).to have_content order_not_empty.number
         expect(page).to have_content order_not_empty_no_address.number
       end
     end

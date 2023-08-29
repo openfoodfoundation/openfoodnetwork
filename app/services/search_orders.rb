@@ -15,11 +15,16 @@ class SearchOrders
   attr_reader :params, :current_user
 
   def fetch_orders
-    @search = search_query.
+    search = search_query.
       includes(:payments, :subscription, :shipments, :bill_address, :distributor, :order_cycle).
-      ransack(params[:q])
+      ransack(params[:q]).
+      result(distinct: true)
 
-    @search.result(distinct: true).joins(:bill_address)
+    if params.dig(:q, :s)&.starts_with?("bill_address_")
+      search = search.select('spree_addresses.*, spree_orders.*')
+    end
+
+    search
   end
 
   def search_query
