@@ -163,7 +163,9 @@ describe 'As an admin, I can see the new product page' do
     end
 
     it "can update product fields" do
-      fill_in id: "_product_name_#{product_1.id}", with: "An updated name"
+      within row_containing_name("product 1") do
+        fill_in "Name", with: "An updated name"
+      end
 
       expect {
         click_button "Save changes"
@@ -172,7 +174,9 @@ describe 'As an admin, I can see the new product page' do
         change { product_1.name }.to("An updated name")
       )
 
-      expect(page).to have_field id: "_product_name_#{product_1.id}", with: "An updated name"
+      within row_containing_name("An updated name") do
+        expect(page).to have_field "Name", with: "An updated name"
+      end
       pending
       expect(page).to have_content "Changes saved"
     end
@@ -204,5 +208,12 @@ describe 'As an admin, I can see the new product page' do
   def search_by_category(category)
     select category, from: "category_id"
     click_button "Search"
+  end
+
+  # Selector for table row that has an input with this value.
+  # Because there are no visible labels, the user has to assume which product it is, based on the
+  # visible name.
+  def row_containing_name(value)
+    "tr:has(input[aria-label=Name][value='#{value}'])"
   end
 end
