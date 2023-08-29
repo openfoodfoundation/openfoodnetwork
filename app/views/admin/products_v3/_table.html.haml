@@ -40,7 +40,7 @@
               = product_form.hidden_field :id, name: "[products][#{i}][id]" #todo: can we remove #{i} and implicitly pop?
               = product_form.text_field :name, name: "[products][#{i}][name]", 'aria-label': t('admin.products_page.columns.name')
             %td.align-right
-              .line-clamp-1= product.sku
+              = product_form.text_field :sku, name: "[products][#{i}][sku]", 'aria-label': t('admin.products_page.columns.sku')
             %td.align-right
               .line-clamp-1
                 = product.variant_unit.upcase_first

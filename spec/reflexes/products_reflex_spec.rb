@@ -34,8 +34,8 @@ describe ProductsReflex, type: :reflex do
   end
 
   describe '#bulk_update' do
-    let!(:product_b) { create(:simple_product, name: "Bananas") }
-    let!(:product_a) { create(:simple_product, name: "Apples") }
+    let!(:product_b) { create(:simple_product, name: "Bananas", sku: "BAN-01") }
+    let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-01") }
 
     it "saves valid changes" do
       params = {
@@ -44,6 +44,7 @@ describe ProductsReflex, type: :reflex do
           {
             "id" => product_a.id.to_s,
             "name" => "Pommes",
+            "sku" => "POM-01",
           }
         ]
       }
@@ -51,7 +52,8 @@ describe ProductsReflex, type: :reflex do
       expect{
         run_reflex(:bulk_update, params:)
         product_a.reload
-      }.to change(product_a, :name).to("Pommes")
+      }.to change{ product_a.name }.to("Pommes")
+       .and change{ product_a.sku }.to("POM-01")
     end
 
     describe "sorting" do

@@ -158,24 +158,29 @@ describe 'As an admin, I can see the new product page' do
   end
 
   describe "updating" do
+    let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-01") }
+
     before do
       visit admin_products_v3_index_url
     end
 
     it "can update product fields" do
-      within row_containing_name("product 1") do
-        fill_in "Name", with: "An updated name"
+      within row_containing_name("Apples") do
+        fill_in "Name", with: "Pommes"
+        fill_in "SKU", with: "POM-01"
       end
 
       expect {
         click_button "Save changes"
-        product_1.reload
+        product_a.reload
       }.to(
-        change { product_1.name }.to("An updated name")
+        change { product_a.name }.to("Pommes")
+        .and change{ product_a.sku }.to("POM-01")
       )
 
-      within row_containing_name("An updated name") do
-        expect(page).to have_field "Name", with: "An updated name"
+      within row_containing_name("Pommes") do
+        expect(page).to have_field "Name", with: "Pommes"
+        expect(page).to have_field "SKU", with: "POM-01"
       end
       pending
       expect(page).to have_content "Changes saved"
