@@ -42,6 +42,7 @@ class Enterprise < ApplicationRecord
   has_many :supplied_products, class_name: 'Spree::Product',
                                foreign_key: 'supplier_id',
                                dependent: :destroy
+  has_many :supplied_variants, through: :supplied_products, source: :variants
   has_many :distributed_orders, class_name: 'Spree::Order', foreign_key: 'distributor_id'
   belongs_to :address, class_name: 'Spree::Address'
   belongs_to :business_address, optional: true, class_name: 'Spree::Address', dependent: :destroy

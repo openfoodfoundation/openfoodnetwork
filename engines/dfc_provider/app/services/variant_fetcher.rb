@@ -9,8 +9,6 @@ class VariantFetcher
   end
 
   def scope
-    Spree::Variant.
-      joins(:product).
-      where(spree_products: { supplier: @enterprise })
+    @enterprise.supplied_variants
   end
 end
