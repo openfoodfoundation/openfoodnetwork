@@ -2,7 +2,7 @@
 
 class EnterpriseBuilder < DfcBuilder
   def self.enterprise(enterprise)
-    variants = VariantFetcher.new(enterprise).scope.to_a
+    variants = enterprise.supplied_variants.to_a
     catalog_items = variants.map(&method(:catalog_item))
     supplied_products = catalog_items.map(&:product)
     address = AddressBuilder.address(enterprise.address)
