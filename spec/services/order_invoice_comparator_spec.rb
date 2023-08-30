@@ -18,7 +18,7 @@ describe OrderInvoiceComparator do
     }
 
     context "changes on the order object" do
-      it "returns true if the order didn't change" do
+      it "returns false if the order didn't change" do
         expect(subject).to be false
       end
 
