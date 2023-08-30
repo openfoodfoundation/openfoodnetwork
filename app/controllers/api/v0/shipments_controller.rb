@@ -52,7 +52,7 @@ module Api
           )
         end
 
-        @shipment.ready!
+        @shipment.ready! unless @shipment.ready?
 
         render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
       end
