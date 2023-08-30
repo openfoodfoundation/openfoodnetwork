@@ -34,6 +34,12 @@ describe OrderInvoiceComparator do
         expect(subject).to be true
       end
 
+      it "returns false if an attribute which should not change, changes" do
+        Spree::Order.where(id: order.id).update_all(number: 'R631504404')
+        order.reload
+        expect(subject).to be false
+      end
+
       it "returns false if a non-relevant attribute changes" do
         order.update!(note: "THIS IS A NEW NOTE")
         expect(subject).to be false
