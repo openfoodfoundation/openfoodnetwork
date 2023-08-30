@@ -31,7 +31,7 @@ class QuantitativeValueBuilder < DfcBuilder
     measure, unit_name, unit_scale = map_unit(quantity.unit)
 
     product.variant_unit = measure
-    product.variant_unit_name = unit_name
+    product.variant_unit_name = unit_name if measure == "items"
     product.variant_unit_scale = unit_scale
     product.unit_value = quantity.value * unit_scale
   end
@@ -69,34 +69,38 @@ class QuantitativeValueBuilder < DfcBuilder
   def self.map_unit(unit) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
     quantity_unit = DfcLoader.connector.MEASURES.UNIT.QUANTITYUNIT
 
+    # The unit name is only set for items. The name is implied for weight and
+    # volume and filled in by `WeightsAndMeasures`.
     case unit
     when quantity_unit.LITRE
-      ["volume", "liter", 1]
+      ["volume", nil, 1]
     when quantity_unit.MILLILITRE
-      ["volume", "ml", 0.001]
+      ["volume", nil, 0.001]
     when quantity_unit.CENTILITRE
-      ["volume", "cl", 0.01]
+      ["volume", nil, 0.01]
     when quantity_unit.DECILITRE
-      ["volume", "dl", 0.1]
+      ["volume", nil, 0.1]
     when quantity_unit.CUP
       # Interpreted as metric cup, not US legal cup.
       # https://github.com/datafoodconsortium/taxonomies/issues/8
-      ["volume", "cu", 0.25]
+      ["volume", nil, 0.25]
     when quantity_unit.GALLON
-      ["volume", "gal", 4.54609]
+      ["volume", nil, 4.54609]
+
     when quantity_unit.MILLIGRAM
-      ["weight", "mg", 0.001]
+      ["weight", nil, 0.001]
     when quantity_unit.GRAM
-      ["weight", "gram", 1]
+      ["weight", nil, 1]
     when quantity_unit.KILOGRAM
-      ["weight", "kg", 1_000]
+      ["weight", nil, 1_000]
     when quantity_unit.TONNE
-      ["weight", "kg", 1_000_000]
+      ["weight", nil, 1_000_000]
     # Not part of the DFC yet:
     # when quantity_unit.OUNCE
-    #   ["weight", "oz", 28.349523125]
+    #   ["weight", nil, 28.349523125]
     when quantity_unit.POUNDMASS
-      ["weight", "lb", 453.59237]
+      ["weight", nil, 453.59237]
+
     when quantity_unit.PAIR
       ["items", "pair", 2]
     when quantity_unit._4PACK

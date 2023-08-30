@@ -24,16 +24,25 @@ class WeightsAndMeasures
 
   UNITS = {
     'weight' => {
+      0.001 => { 'name' => 'mg', 'system' => 'metric' },
       1.0 => { 'name' => 'g', 'system' => 'metric' },
-      28.35 => { 'name' => 'oz', 'system' => 'imperial' },
-      453.6 => { 'name' => 'lb', 'system' => 'imperial' },
       1000.0 => { 'name' => 'kg', 'system' => 'metric' },
-      1_000_000.0 => { 'name' => 'T', 'system' => 'metric' }
+      1_000_000.0 => { 'name' => 'T', 'system' => 'metric' },
+
+      28.349523125 => { 'name' => 'oz', 'system' => 'imperial' },
+      28.35 => { 'name' => 'oz', 'system' => 'imperial' },
+      453.59237 => { 'name' => 'lb', 'system' => 'imperial' },
+      453.6 => { 'name' => 'lb', 'system' => 'imperial' },
     },
     'volume' => {
       0.001 => { 'name' => 'mL', 'system' => 'metric' },
+      0.01 => { 'name' => 'cL', 'system' => 'metric' },
+      0.1 => { 'name' => 'dL', 'system' => 'metric' },
       1.0 => { 'name' => 'L', 'system' => 'metric' },
-      1000.0 => { 'name' => 'kL', 'system' => 'metric' }
+      1000.0 => { 'name' => 'kL', 'system' => 'metric' },
+
+      0.25 => { 'name' => 'cu', 'system' => 'imperial' },
+      4.54609 => { 'name' => 'gal', 'system' => 'imperial' },
     }
   }.freeze
 
