@@ -12,7 +12,7 @@ module Spree
 
     has_many :shipping_rates, dependent: :delete_all
     has_many :shipping_methods, through: :shipping_rates
-    has_many :state_changes, as: :stateful
+    has_many :state_changes, as: :stateful, dependent: :destroy
     has_many :inventory_units, dependent: :delete_all
     has_many :adjustments, as: :adjustable, dependent: :destroy
 

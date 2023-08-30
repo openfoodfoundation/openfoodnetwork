@@ -45,7 +45,7 @@ module Spree
     belongs_to :ship_address, class_name: 'Spree::Address'
     alias_attribute :shipping_address, :ship_address
 
-    has_many :state_changes, as: :stateful
+    has_many :state_changes, as: :stateful, dependent: :destroy
     has_many :line_items, -> {
                             order('created_at ASC')
                           }, class_name: "Spree::LineItem", dependent: :destroy
@@ -71,12 +71,12 @@ module Spree
              },
              class_name: 'Spree::Adjustment',
              dependent: :destroy
-    has_many :invoices
+    has_many :invoices, dependent: :destroy
 
     belongs_to :order_cycle
     belongs_to :distributor, class_name: 'Enterprise'
     belongs_to :customer
-    has_one :proxy_order
+    has_one :proxy_order, dependent: :destroy
     has_one :subscription, through: :proxy_order
 
     accepts_nested_attributes_for :line_items

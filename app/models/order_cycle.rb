@@ -11,7 +11,7 @@ class OrderCycle < ApplicationRecord
 
   belongs_to :coordinator, class_name: 'Enterprise'
 
-  has_many :coordinator_fee_refs, class_name: 'CoordinatorFee'
+  has_many :coordinator_fee_refs, class_name: 'CoordinatorFee', dependent: :destroy
   has_many :coordinator_fees, through: :coordinator_fee_refs, source: :enterprise_fee,
                               dependent: :destroy
 
@@ -19,12 +19,16 @@ class OrderCycle < ApplicationRecord
 
   # These scope names are prepended with "cached_" because there are existing accessor methods
   # :incoming_exchanges and :outgoing_exchanges.
-  has_many :cached_incoming_exchanges, -> { where incoming: true }, class_name: "Exchange"
-  has_many :cached_outgoing_exchanges, -> { where incoming: false }, class_name: "Exchange"
+  has_many :cached_incoming_exchanges, -> {
+                                         where incoming: true
+                                       }, class_name: "Exchange", dependent: :destroy
+  has_many :cached_outgoing_exchanges, -> {
+                                         where incoming: false
+                                       }, class_name: "Exchange", dependent: :destroy
 
   has_many :suppliers, -> { distinct }, source: :sender, through: :cached_incoming_exchanges
   has_many :distributors, -> { distinct }, source: :receiver, through: :cached_outgoing_exchanges
-  has_many :order_cycle_schedules
+  has_many :order_cycle_schedules, dependent: :destroy
   has_many :schedules, through: :order_cycle_schedules
   has_and_belongs_to_many :selected_distributor_payment_methods,
                           class_name: 'DistributorPaymentMethod',

@@ -15,7 +15,7 @@ module Spree
     DISPLAY = [:both, :back_end].freeze
     default_scope -> { where(deleted_at: nil) }
 
-    has_many :credit_cards, class_name: "Spree::CreditCard"
+    has_many :credit_cards, class_name: "Spree::CreditCard", dependent: :destroy
 
     validates :name, presence: true
     validate :distributor_validation

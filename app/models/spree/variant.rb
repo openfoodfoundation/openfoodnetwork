@@ -33,12 +33,12 @@ module Spree
 
     delegate :name, :name=, :description, :description=, :meta_keywords, to: :product
 
-    has_many :inventory_units, inverse_of: :variant
-    has_many :line_items, inverse_of: :variant
+    has_many :inventory_units, inverse_of: :variant, dependent: :destroy
+    has_many :line_items, inverse_of: :variant, dependent: :destroy
 
     has_many :stock_items, dependent: :destroy, inverse_of: :variant
     has_many :stock_locations, through: :stock_items
-    has_many :stock_movements
+    has_many :stock_movements, dependent: :destroy
     has_many :images, -> { order(:position) }, as: :viewable,
                                                dependent: :destroy,
                                                class_name: "Spree::Image"
@@ -54,10 +54,10 @@ module Spree
     delegate :display_price, :display_amount, :price, :price=, :currency, :currency=,
              to: :find_or_build_default_price
 
-    has_many :exchange_variants
+    has_many :exchange_variants, dependent: :destroy
     has_many :exchanges, through: :exchange_variants
-    has_many :variant_overrides
-    has_many :inventory_items
+    has_many :variant_overrides, dependent: :destroy
+    has_many :inventory_items, dependent: :destroy
 
     localize_number :price, :weight
 

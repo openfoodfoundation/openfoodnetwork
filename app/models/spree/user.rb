@@ -36,8 +36,8 @@ module Spree
                                  foreign_key: :owner_id, inverse_of: :owner
     has_many :owned_groups, class_name: 'EnterpriseGroup',
                             foreign_key: :owner_id, inverse_of: :owner
-    has_many :customers
-    has_many :credit_cards
+    has_many :customers, dependent: :destroy
+    has_many :credit_cards, dependent: :destroy
     has_many :report_rendering_options, class_name: "::ReportRenderingOptions", dependent: :destroy
     has_many :webhook_endpoints, dependent: :destroy
 

@@ -4,7 +4,7 @@ module Spree
   class Property < ApplicationRecord
     has_many :product_properties, dependent: :destroy
     has_many :products, through: :product_properties
-    has_many :producer_properties
+    has_many :producer_properties, dependent: :destroy
 
     validates :name, :presentation, presence: true
 
