@@ -71,7 +71,7 @@ describe QuantitativeValueBuilder do
       builder.apply(quantity, product)
 
       expect(product.variant_unit).to eq "volume"
-      expect(product.variant_unit_name).to eq "liter"
+      expect(product.variant_unit_name).to eq nil
       expect(product.variant_unit_scale).to eq 1
       expect(product.unit_value).to eq 2
     end
@@ -85,7 +85,7 @@ describe QuantitativeValueBuilder do
       builder.apply(quantity, product)
 
       expect(product.variant_unit).to eq "weight"
-      expect(product.variant_unit_name).to eq "kg"
+      expect(product.variant_unit_name).to eq nil
       expect(product.variant_unit_scale).to eq 1_000
       expect(product.unit_value).to eq 4_000
     end
@@ -99,7 +99,7 @@ describe QuantitativeValueBuilder do
       builder.apply(quantity, product)
 
       expect(product.variant_unit).to eq "weight"
-      expect(product.variant_unit_name).to eq "mg"
+      expect(product.variant_unit_name).to eq nil
       expect(product.variant_unit_scale).to eq 0.001
       expect(product.unit_value).to eq 0.005
     end
@@ -113,7 +113,7 @@ describe QuantitativeValueBuilder do
       builder.apply(quantity, product)
 
       expect(product.variant_unit).to eq "weight"
-      expect(product.variant_unit_name).to eq "lb"
+      expect(product.variant_unit_name).to eq nil
       expect(product.variant_unit_scale).to eq 453.59237
       expect(product.unit_value).to eq 4_535.9237
     end
