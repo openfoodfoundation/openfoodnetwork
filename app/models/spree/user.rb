@@ -14,7 +14,7 @@ module Spree
            encryptor: 'authlogic_sha512', reconfirmable: true,
            omniauth_providers: [:openid_connect]
 
-    has_many :orders
+    has_many :orders, dependent: nil
     belongs_to :ship_address, class_name: 'Spree::Address'
     belongs_to :bill_address, class_name: 'Spree::Address'
 

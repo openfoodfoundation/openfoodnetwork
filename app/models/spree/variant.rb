@@ -33,8 +33,8 @@ module Spree
 
     delegate :name, :name=, :description, :description=, :meta_keywords, to: :product
 
-    has_many :inventory_units, inverse_of: :variant, dependent: :destroy
-    has_many :line_items, inverse_of: :variant, dependent: :destroy
+    has_many :inventory_units, inverse_of: :variant, dependent: nil
+    has_many :line_items, inverse_of: :variant, dependent: nil
 
     has_many :stock_items, dependent: :destroy, inverse_of: :variant
     has_many :stock_locations, through: :stock_items
