@@ -46,6 +46,17 @@ describe OrderInvoiceComparator do
         expect(subject).to be false
       end
 
+      it "returns true if a relevant attribute changes - order state: cancelled" do
+        order.cancel!
+        expect(subject).to be true
+      end
+
+      it "returns true if a relevant attribute changes - order state: resumed" do
+        order.cancel!
+        order.resume!
+        expect(subject).to be true
+      end
+
       it "returns false if a non-relevant attribute changes" do
         order.update!(note: "THIS IS A NEW NOTE")
         expect(subject).to be false
