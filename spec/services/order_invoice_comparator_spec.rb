@@ -58,6 +58,11 @@ describe OrderInvoiceComparator do
       end
 
       it "returns false if a non-relevant attribute changes" do
+        order.update!(special_instructions: "A very special insctruction.")
+        expect(subject).to be false
+      end
+
+      it "returns false if a non-relevant attribute changes" do
         order.update!(note: "THIS IS A NEW NOTE")
         expect(subject).to be false
       end
