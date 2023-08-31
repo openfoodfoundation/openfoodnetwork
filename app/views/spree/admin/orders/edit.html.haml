@@ -18,8 +18,8 @@
 %div
   = render partial: "spree/shared/error_messages", locals: { target: @order }
 
-  = admin_inject_shops(module: 'admin.orders')
-  = admin_inject_order_cycles
+  = admin_inject_shops(@shops, module: 'admin.orders')
+  = admin_inject_order_cycles(@order_cycles)
   %div{"ng-controller" => "orderCtrl", "ofn-distributor-id" => @order.distributor_id, "ofn-order-cycle-id" => @order.order_cycle_id}
 
     = render :partial => 'add_product' if can?(:update, @order)

@@ -451,7 +451,6 @@ Rails/HasManyOrHasOneDependent:
 # Include: app/helpers/**/*.rb
 Rails/HelperInstanceVariable:
   Exclude:
-    - 'app/helpers/admin/injection_helper.rb'
     - 'app/helpers/application_helper.rb'
     - 'app/helpers/injection_helper.rb'
     - 'app/helpers/order_cycles_helper.rb'
