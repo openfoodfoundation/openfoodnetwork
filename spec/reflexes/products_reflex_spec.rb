@@ -36,10 +36,11 @@ describe ProductsReflex, type: :reflex do
   describe '#bulk_update' do
     let!(:product_b) { create(:simple_product, name: "Bananas", sku: "BAN-01") }
     let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-01") }
+    let(:variant_a1) { create(:variant, product: product_a, display_name: "Medium box") }
 
     it "saves valid changes" do
       params = {
-        # '[products][<i>][name]'
+        # '[products][][name]'
         "products" => [
           {
             "id" => product_a.id.to_s,
@@ -53,7 +54,33 @@ describe ProductsReflex, type: :reflex do
         run_reflex(:bulk_update, params:)
         product_a.reload
       }.to change{ product_a.name }.to("Pommes")
-       .and change{ product_a.sku }.to("POM-01")
+        .and change{ product_a.sku }.to("POM-01")
+    end
+
+    it "saves valid changes to nested variants" do
+      params = {
+        # '[products][][name]'
+        # '[products][][variants_attributes][][display_name]'
+        "products" => [
+          {
+            "id" => product_a.id.to_s,
+            "name" => "Pommes",
+            "variants_attributes" => [
+              {
+                "id" => variant_a1.id.to_s,
+                "display_name" => "Large box",
+              }
+            ],
+          }
+        ]
+      }
+
+      expect{
+        run_reflex(:bulk_update, params:)
+        product_a.reload
+        variant_a1.reload
+      }.to change{ product_a.name }.to("Pommes")
+        .and change{ variant_a1.display_name }.to("Large box")
     end
 
     describe "sorting" do

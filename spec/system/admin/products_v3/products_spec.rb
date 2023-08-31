@@ -158,30 +158,40 @@ describe 'As an admin, I can see the new product page' do
   end
 
   describe "updating" do
+    let!(:variant_a1) { create(:variant, product: product_a, display_name: "Medium box") }
     let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-01") }
 
     before do
       visit admin_products_v3_index_url
     end
 
-    it "can update product fields" do
+    it "can update product and variant fields" do
       within row_containing_name("Apples") do
         fill_in "Name", with: "Pommes"
         fill_in "SKU", with: "POM-01"
+      end
+      within row_containing_name("Medium box") do
+        fill_in "Name", with: "Large box"
       end
 
       expect {
         click_button "Save changes"
         product_a.reload
+        variant_a1.reload
       }.to(
         change { product_a.name }.to("Pommes")
         .and change{ product_a.sku }.to("POM-01")
+        .and change{ variant_a1.display_name }.to("Large box")
       )
 
       within row_containing_name("Pommes") do
         expect(page).to have_field "Name", with: "Pommes"
         expect(page).to have_field "SKU", with: "POM-01"
       end
+      within row_containing_name("Large box") do
+        expect(page).to have_field "Name", with: "Large box"
+      end
+
       pending
       expect(page).to have_content "Changes saved"
     end
