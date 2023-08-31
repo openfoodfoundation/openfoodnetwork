@@ -57,7 +57,7 @@ describe QuantitativeValueBuilder do
       builder.apply(quantity, product)
 
       expect(product.variant_unit).to eq "items"
-      expect(product.variant_unit_name).to eq "items"
+      expect(product.variant_unit_name).to eq "Jar"
       expect(product.variant_unit_scale).to eq 1
       expect(product.unit_value).to eq 3
     end

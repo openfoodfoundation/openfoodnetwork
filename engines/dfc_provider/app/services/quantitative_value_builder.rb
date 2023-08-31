@@ -108,7 +108,10 @@ class QuantitativeValueBuilder < DfcBuilder
     when quantity_unit.DOZEN
       ["items", "dozen", 12]
     else
-      ["items", "items", 1]
+      # Labels may be provided one day:
+      # https://github.com/datafoodconsortium/connector-ruby/issues/18
+      label = unit.semanticId.split("#").last || "items"
+      ["items", label, 1]
     end
   end
 end
