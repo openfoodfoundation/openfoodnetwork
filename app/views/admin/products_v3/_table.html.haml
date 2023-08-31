@@ -33,14 +33,14 @@
         %th.align-left= t('admin.products_page.columns.tax_category')
         %th.align-left= t('admin.products_page.columns.inherits_properties')
     - products.each do |product|
-      = form.fields_for(product) do |product_form|
+      = form.fields_for("products", product, index: nil) do |product_form|
         %tbody.relaxed
           %tr
             %td.align-left.header
-              = product_form.hidden_field :id, name: "[products][][id]"
-              = product_form.text_field :name, name: "[products][][name]", 'aria-label': t('admin.products_page.columns.name')
+              = product_form.hidden_field :id
+              = product_form.text_field :name, 'aria-label': t('admin.products_page.columns.name')
             %td.align-right
-              = product_form.text_field :sku, name: "[products][][sku]", 'aria-label': t('admin.products_page.columns.sku')
+              = product_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
             %td.align-right
               .line-clamp-1
                 = product.variant_unit.upcase_first
@@ -59,11 +59,12 @@
             %td.align-left
               .line-clamp-1= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
           - product.variants.each do |variant|
+            - prefix = "[products][][variants_attributes][]" # Couldn't convince the formbuilder to generate this for me, so for now we manually add the prefix
             = form.fields_for(variant) do |variant_form|
               %tr.condensed
                 %td.align-left
-                  = variant_form.hidden_field :id, name: "[products][][variants_attributes][][id]"
-                  = variant_form.text_field :display_name, name: "[products][][variants_attributes][][display_name]", 'aria-label': t('admin.products_page.columns.name'), placeholder: product.name
+                  = variant_form.hidden_field :id, name: "#{prefix}[id]"
+                  = variant_form.text_field :display_name, name: "#{prefix}[display_name]", 'aria-label': t('admin.products_page.columns.name'), placeholder: product.name
                 %td.align-right
                   .line-clamp-1= variant.sku
                 %td.align-right
