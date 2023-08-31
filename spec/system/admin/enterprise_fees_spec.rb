@@ -167,42 +167,51 @@ describe '
       login_as_admin
       visit admin_enterprise_fees_path
 
-      # edits the first fee
-      select 'Foo', from: "#{prefix}_enterprise_id"
-      select 'Fundraising', from: "#{prefix}_fee_type"
-      fill_in "#{prefix}_name", with: 'Hello!'
-      select 'Inherit From Product', from: "#{prefix}_tax_category_id"
-      select 'Flat Percent', from: "#{prefix}_calculator_type"
+      within fee_row(fee.name) do
+        select 'Foo' # enterprise
+        select 'Fundraising' # fee type
+        find("input[id$='_name']").fill_in with: "Hello!"
+        select 'Inherit From Product' # tax category
+        select 'Flat Percent' # calculator type
+      end
 
-      # edits the second fee
-      select 'Sales', from: "#{prefix1}_fee_type"
-      fill_in "#{prefix1}_name", with: 'World!'
-      select 'GST', from: "#{prefix1}_tax_category_id"
-      select 'Flat Rate', from: "#{prefix1}_calculator_type"
+      within fee_row(fee1.name) do
+        select 'Sales' # fee type
+        find("input[id$='_name']").fill_in with: "World!"
+        select 'GST' # tax category
+        select 'Flat Rate' # calculator type
+      end
 
       # We need to save after changing fee types to set an amount.
       click_button 'Update'
 
       # edits the amounts on the calculators
-      fill_in "#{prefix}_calculator_attributes_preferred_flat_percent", with: 12.5
-      fill_in "#{prefix1}_calculator_attributes_preferred_amount", with: 1.5
+      within fee_row("Hello!") do
+        fill_in "Flat Percent", with: 12.5
+      end
+      within fee_row("World!") do
+        fill_in "Amount", with: 1.5
+      end
+
       click_button 'Update'
     end
 
     it "handles updating two enterprise fees" do
       # Then I should see the updated fields for my fees
-      expect(page).to have_select "#{prefix}_fee_type", selected: 'Fundraising fee'
-      expect(page).to have_selector "input[value='Hello!']"
-      expect(page).to have_select "#{prefix}_tax_category_id", selected: 'Inherit From Product'
-      expect(page).to have_selector "option[selected]", text: 'Flat Percent (per item)'
-      expect(page).to have_field "Flat Percent:", with: '12.5'
+      within fee_row("Hello!") do
+        expect(page).to have_select selected: 'Fundraising fee'
+        expect(page).to have_select selected: 'Inherit From Product'
+        expect(page).to have_selector "option[selected]", text: 'Flat Percent (per item)'
+        expect(page).to have_field "Flat Percent:", with: '12.5'
+      end
 
-      expect(page).to have_select "#{prefix1}_enterprise_id", selected: 'Foo'
-      expect(page).to have_select "#{prefix1}_fee_type", selected: 'Sales fee'
-      expect(page).to have_selector "input[value='World!']"
-      expect(page).to have_select "#{prefix1}_tax_category_id", selected: 'GST'
-      expect(page).to have_selector "option[selected]", text: 'Flat Rate (per order)'
-      expect(page).to have_field "Amount:", with: '1.5'
+      within fee_row("World!") do
+        expect(page).to have_select selected: 'Foo'
+        expect(page).to have_select selected: 'Sales fee'
+        expect(page).to have_select selected: 'GST'
+        expect(page).to have_selector "option[selected]", text: 'Flat Rate (per order)'
+        expect(page).to have_field "Amount:", with: '1.5'
+      end
 
       fee.reload
       expect(fee.enterprise).to eq(enterprise)
@@ -344,10 +353,10 @@ describe '
   end
 end
 
-def prefix
-  'sets_enterprise_fee_set_collection_attributes_0'
+def fee_row(fee_name)
+  find("input[id$='_name'][value='#{fee_name}']").ancestor("tr")
 end
 
-def prefix1
-  'sets_enterprise_fee_set_collection_attributes_1'
+def prefix
+  'sets_enterprise_fee_set_collection_attributes_0'
 end
