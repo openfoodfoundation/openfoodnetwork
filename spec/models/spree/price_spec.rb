@@ -25,5 +25,14 @@ module Spree
         expect(expensive_variant.persisted?).to be true
       end
     end
+
+    context "with string" do
+      it "parses the price" do
+        variant.price = " 10.25 eur"
+        variant.save
+
+        expect(variant.reload.price).to eq 10.25
+      end
+    end
   end
 end
