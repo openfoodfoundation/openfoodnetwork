@@ -80,10 +80,6 @@ class QuantitativeValueBuilder < DfcBuilder
       ["volume", nil, 0.01]
     when quantity_unit.DECILITRE
       ["volume", nil, 0.1]
-    when quantity_unit.CUP
-      # Interpreted as metric cup, not US legal cup.
-      # https://github.com/datafoodconsortium/taxonomies/issues/8
-      ["volume", nil, 0.25]
     when quantity_unit.GALLON
       ["volume", nil, 4.54609]
 
