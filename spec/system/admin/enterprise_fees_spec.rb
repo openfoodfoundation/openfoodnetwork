@@ -161,6 +161,7 @@ describe '
       let!(:fee1) { create(:enterprise_fee, fee_type: "sales", enterprise_id: enterprise.id) }
 
       before do
+        visit admin_enterprise_fees_path
         # edits the existing fee
         select 'Fundraising', from: "#{prefix}_fee_type"
         fill_in "#{prefix}_name", with: 'Hello!'
