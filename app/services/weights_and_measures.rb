@@ -41,7 +41,6 @@ class WeightsAndMeasures
       1.0 => { 'name' => 'L', 'system' => 'metric' },
       1000.0 => { 'name' => 'kL', 'system' => 'metric' },
 
-      0.25 => { 'name' => 'cu', 'system' => 'imperial' },
       4.54609 => { 'name' => 'gal', 'system' => 'imperial' },
     }
   }.freeze
