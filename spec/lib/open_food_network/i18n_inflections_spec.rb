@@ -23,7 +23,6 @@ describe OpenFoodNetwork::I18nInflections do
   end
 
   it "switches locales" do
-    skip "French plurals not available yet"
     I18n.with_locale(:fr) do
       expect(subject.pluralize("bouquet", 2)).to eq "bouquets"
     end
