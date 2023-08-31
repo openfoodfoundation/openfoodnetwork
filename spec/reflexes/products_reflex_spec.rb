@@ -38,7 +38,8 @@ describe ProductsReflex, type: :reflex do
       create(:variant,
              product: product_a,
              display_name: "Medium box",
-             sku: "APL-01")
+             sku: "APL-01",
+             price: 5.25)
     }
     let!(:product_b) { create(:simple_product, name: "Bananas", sku: "BAN-00") }
     let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
@@ -75,6 +76,7 @@ describe ProductsReflex, type: :reflex do
                 "id" => variant_a1.id.to_s,
                 "display_name" => "Large box",
                 "sku" => "POM-01",
+                "price" => "10.25",
               }
             ],
           }
@@ -88,6 +90,7 @@ describe ProductsReflex, type: :reflex do
       }.to change{ product_a.name }.to("Pommes")
         .and change{ variant_a1.display_name }.to("Large box")
         .and change{ variant_a1.sku }.to("POM-01")
+        .and change{ variant_a1.price }.to(10.25)
     end
 
     describe "sorting" do

@@ -70,7 +70,7 @@
                 %td.align-right
                   .line-clamp-1= variant.unit_to_display
                 %td.align-right
-                  .line-clamp-1= number_to_currency(variant.price)
+                  = variant_form.text_field :price, name: "#{prefix}[price]", 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
                 %td.align-right
                   .line-clamp-1= variant.on_hand || 0 #TODO: spec for this according to requirements.
                 %td.align-left

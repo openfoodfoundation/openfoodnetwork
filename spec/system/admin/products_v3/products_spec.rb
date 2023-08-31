@@ -162,7 +162,8 @@ describe 'As an admin, I can see the new product page' do
       create(:variant,
              product: product_a,
              display_name: "Medium box",
-             sku: "APL-01")
+             sku: "APL-01",
+             price: 5.25)
     }
     let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
 
@@ -178,6 +179,7 @@ describe 'As an admin, I can see the new product page' do
       within row_containing_name("Medium box") do
         fill_in "Name", with: "Large box"
         fill_in "SKU", with: "POM-01"
+        fill_in "Price", with: "10.25"
       end
 
       expect {
@@ -188,6 +190,7 @@ describe 'As an admin, I can see the new product page' do
         .and change{ product_a.sku }.to("POM-00")
         .and change{ variant_a1.display_name }.to("Large box")
         .and change{ variant_a1.sku }.to("POM-01")
+        .and change{ variant_a1.price }.to(10.25)
 
       within row_containing_name("Pommes") do
         expect(page).to have_field "Name", with: "Pommes"
@@ -196,6 +199,7 @@ describe 'As an admin, I can see the new product page' do
       within row_containing_name("Large box") do
         expect(page).to have_field "Name", with: "Large box"
         expect(page).to have_field "SKU", with: "POM-01"
+        expect(page).to have_field "Price", with: "10.25"
       end
 
       pending
