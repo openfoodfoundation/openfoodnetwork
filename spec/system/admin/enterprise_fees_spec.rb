@@ -156,64 +156,73 @@ describe '
       expect{ click_button 'Update' }.to_not change { fee.reload.calculator_type }
       expect(page).to have_content "Inheriting the tax categeory requires a per-item calculator."
     end
+  end
 
-    context "editing two enterprise fees" do
-      let!(:fee1) { create(:enterprise_fee, fee_type: "sales", enterprise_id: enterprise.id) }
+  context "editing two enterprise fees" do
+    let!(:enterprise) { create(:enterprise, name: 'Foo') }
+    let!(:fee) { create(:enterprise_fee, fee_type: "fundraising") }
+    let!(:fee1) { create(:enterprise_fee, fee_type: "sales", enterprise_id: enterprise.id) }
 
-      before do
-        visit admin_enterprise_fees_path
-        # edits the existing fee
-        select 'Fundraising', from: "#{prefix}_fee_type"
-        fill_in "#{prefix}_name", with: 'Hello!'
+    before do
+      login_as_admin
+      visit admin_enterprise_fees_path
 
-        # edits the another fee
-        select 'Sales', from: "#{prefix1}_fee_type"
-        fill_in "#{prefix1}_name", with: 'World!'
-        select 'GST', from: "#{prefix1}_tax_category_id"
-        select 'Flat Rate', from: "#{prefix1}_calculator_type"
-        click_button 'Update'
+      # edits the first fee
+      select 'Foo', from: "#{prefix}_enterprise_id"
+      select 'Fundraising', from: "#{prefix}_fee_type"
+      fill_in "#{prefix}_name", with: 'Hello!'
+      select 'Inherit From Product', from: "#{prefix}_tax_category_id"
+      select 'Flat Percent', from: "#{prefix}_calculator_type"
 
-        # edits the mounts on the calculators
-        fill_in "#{prefix}_calculator_attributes_preferred_flat_percent", with: 12.5
-        fill_in "#{prefix1}_calculator_attributes_preferred_amount", with: 1.5
-        click_button 'Update'
-      end
+      # edits the second fee
+      select 'Sales', from: "#{prefix1}_fee_type"
+      fill_in "#{prefix1}_name", with: 'World!'
+      select 'GST', from: "#{prefix1}_tax_category_id"
+      select 'Flat Rate', from: "#{prefix1}_calculator_type"
 
-      it "handles updating two enterprise fees" do
-        # Then I should see the updated fields for my fees
-        expect(page).to have_select "#{prefix}_fee_type", selected: 'Fundraising fee'
-        expect(page).to have_selector "input[value='Hello!']"
-        expect(page).to have_select "#{prefix}_tax_category_id", selected: 'Inherit From Product'
-        expect(page).to have_selector "option[selected]", text: 'Flat Percent (per item)'
-        expect(page).to have_field "Flat Percent:", with: '12.5'
+      # We need to save after changing fee types to set an amount.
+      click_button 'Update'
 
-        expect(page).to have_select "#{prefix1}_enterprise_id", selected: 'Foo'
-        expect(page).to have_select "#{prefix1}_fee_type", selected: 'Sales fee'
-        expect(page).to have_selector "input[value='World!']"
-        expect(page).to have_select "#{prefix1}_tax_category_id", selected: 'GST'
-        expect(page).to have_selector "option[selected]", text: 'Flat Rate (per order)'
-        expect(page).to have_field "Amount:", with: '1.5'
+      # edits the amounts on the calculators
+      fill_in "#{prefix}_calculator_attributes_preferred_flat_percent", with: 12.5
+      fill_in "#{prefix1}_calculator_attributes_preferred_amount", with: 1.5
+      click_button 'Update'
+    end
 
-        fee.reload
-        expect(fee.enterprise).to eq(enterprise)
-        expect(fee.name).to eq('Hello!')
-        expect(fee.fee_type).to eq('fundraising')
-        expect(fee.calculator_type).to eq("Calculator::FlatPercentPerItem")
+    it "handles updating two enterprise fees" do
+      # Then I should see the updated fields for my fees
+      expect(page).to have_select "#{prefix}_fee_type", selected: 'Fundraising fee'
+      expect(page).to have_selector "input[value='Hello!']"
+      expect(page).to have_select "#{prefix}_tax_category_id", selected: 'Inherit From Product'
+      expect(page).to have_selector "option[selected]", text: 'Flat Percent (per item)'
+      expect(page).to have_field "Flat Percent:", with: '12.5'
 
-        fee1.reload
-        expect(fee1.enterprise).to eq(enterprise)
-        expect(fee1.name).to eq('World!')
-        expect(fee1.fee_type).to eq('sales')
-        expect(fee1.calculator_type).to eq("Calculator::FlatRate")
+      expect(page).to have_select "#{prefix1}_enterprise_id", selected: 'Foo'
+      expect(page).to have_select "#{prefix1}_fee_type", selected: 'Sales fee'
+      expect(page).to have_selector "input[value='World!']"
+      expect(page).to have_select "#{prefix1}_tax_category_id", selected: 'GST'
+      expect(page).to have_selector "option[selected]", text: 'Flat Rate (per order)'
+      expect(page).to have_field "Amount:", with: '1.5'
 
-        # Sets tax_category and inherits_tax_category
-        expect(fee.tax_category).to eq(nil)
-        expect(fee.inherits_tax_category).to eq(true)
+      fee.reload
+      expect(fee.enterprise).to eq(enterprise)
+      expect(fee.name).to eq('Hello!')
+      expect(fee.fee_type).to eq('fundraising')
+      expect(fee.calculator_type).to eq("Calculator::FlatPercentPerItem")
 
-        # Sets tax_category and inherits_tax_category
-        expect(fee1.tax_category).to eq(tax_category_gst)
-        expect(fee1.inherits_tax_category).to eq(false)
-      end
+      fee1.reload
+      expect(fee1.enterprise).to eq(enterprise)
+      expect(fee1.name).to eq('World!')
+      expect(fee1.fee_type).to eq('sales')
+      expect(fee1.calculator_type).to eq("Calculator::FlatRate")
+
+      # Sets tax_category and inherits_tax_category
+      expect(fee.tax_category).to eq(nil)
+      expect(fee.inherits_tax_category).to eq(true)
+
+      # Sets tax_category and inherits_tax_category
+      expect(fee1.tax_category).to eq(tax_category_gst)
+      expect(fee1.inherits_tax_category).to eq(false)
     end
   end
 
