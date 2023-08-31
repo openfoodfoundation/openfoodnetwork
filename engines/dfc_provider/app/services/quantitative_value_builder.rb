@@ -110,7 +110,7 @@ class QuantitativeValueBuilder < DfcBuilder
     else
       # Labels may be provided one day:
       # https://github.com/datafoodconsortium/connector-ruby/issues/18
-      label = unit.semanticId.split("#").last || "items"
+      label = unit.try(:semanticId)&.split("#")&.last || "items"
       ["items", label, 1]
     end
   end
