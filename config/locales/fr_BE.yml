@@ -1364,6 +1364,7 @@ fr_BE:
       enterprise_fee_summary:
         name: "Récapitulatif de la commission d'entreprise "
         description: "Récapitulatif des commissions d'entreprise perçues"
+      enterprise_fees_with_tax_report_by_order: "Frais d'entreprise avec rapport fiscal par commande"
       errors:
         no_report_type: "Veuillez spécifier un type de rapport"
         report_not_found: "Rapport introuvable"

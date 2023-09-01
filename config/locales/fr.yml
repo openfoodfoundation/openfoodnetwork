@@ -756,6 +756,15 @@ fr:
         no_products_found: Pas de produits trouvés
         import_products: Importer plusieurs produits
         no_products_found_for_search: Aucun produit trouvé avec vos critères de recherche
+      table:
+        save: Sauvegarder les changements
+        reset: Annuler les changements
+      bulk_update:
+        success: "Produits mis à jour"
+        products_have_error:
+          one: "%{count} produits ont une erreur."
+          many: "%{count} produits ont une erreur."
+          other: "%{count} produits ont une erreur."
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
