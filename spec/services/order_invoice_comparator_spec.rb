@@ -4,9 +4,8 @@ require 'spec_helper'
 
 describe OrderInvoiceComparator do
   describe '#can_generate_new_invoice?' do
-    let!(:completed_order_with_fees) { create(:completed_order_with_fees) }
     # this passes 'order' as argument to the invoice comparator
-    let(:order) { completed_order_with_fees }
+    let(:order) { create(:completed_order_with_fees) }
     let!(:invoice_data_generator){ InvoiceDataGenerator.new(order) }
     let!(:invoice){
       create(:invoice,
@@ -69,7 +68,7 @@ describe OrderInvoiceComparator do
 
       context "additional tax total changes" do
         let(:distributor) { create(:distributor_enterprise) }
-        let!(:order_with_taxes) do
+        let(:order) do
           create(:order_with_taxes, distributor: distributor, ship_address: create(:address),
                                     product_price: 110, tax_rate_amount: 0.1,
                                     included_in_price: false,
@@ -78,18 +77,17 @@ describe OrderInvoiceComparator do
                                       order.update_shipping_fees!
                                     end
         end
-        let!(:order) { order_with_taxes }
 
         it "returns returns true" do
           Spree::TaxRate.first.update!(amount: 0.15)
-          order_with_taxes.create_tax_charge! && order_with_taxes.save
+          order.create_tax_charge! && order.save
           expect(subject).to be true
         end
       end
 
       context "included tax total changes" do
         let(:distributor) { create(:distributor_enterprise) }
-        let!(:order_with_taxes) do
+        let(:order) do
           create(:order_with_taxes, distributor: distributor, ship_address: create(:address),
                                     product_price: 110, tax_rate_amount: 0.1,
                                     included_in_price: true,
@@ -98,18 +96,16 @@ describe OrderInvoiceComparator do
                                       order.update_shipping_fees!
                                     end
         end
-        let!(:order) { order_with_taxes }
 
         it "returns returns true" do
           Spree::TaxRate.first.update!(amount: 0.15)
-          order_with_taxes.create_tax_charge! && order_with_taxes.save
+          order.create_tax_charge! && order.save
           expect(subject).to be true
         end
       end
 
       context "shipping method changes" do
         let(:shipping_method) { create(:shipping_method) }
-        let!(:order) { completed_order_with_fees }
         it "returns returns true" do
           Spree::ShippingRate.first.update(shipping_method_id: shipping_method.id)
           expect(subject).to be true
