@@ -44,10 +44,10 @@ class Enterprise < ApplicationRecord
                                dependent: :destroy
   has_many :supplied_variants, through: :supplied_products, source: :variants
   has_many :distributed_orders, class_name: 'Spree::Order', foreign_key: 'distributor_id',
-                                dependent: :destroy
+                                dependent: :nullify
   belongs_to :address, class_name: 'Spree::Address'
   belongs_to :business_address, optional: true, class_name: 'Spree::Address', dependent: :destroy
-  has_many :enterprise_fees, dependent: :destroy
+  has_many :enterprise_fees, dependent: :nullify
   has_many :enterprise_roles, dependent: :destroy
   has_many :users, through: :enterprise_roles
   belongs_to :owner, class_name: 'Spree::User',
