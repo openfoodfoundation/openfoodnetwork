@@ -1810,9 +1810,9 @@ en:
       footer_contact_headline: "Keep in touch"
       footer_contact_email: "Email us"
       footer_nav_headline: "Navigate"
-      footer_join_headline: "Join us"
+      footer_join_headline: "Contact"
       footer_join_body: "Create a listing, shop or group directory on the Open Food Network."
-      footer_join_cta: "Tell me more!"
+      footer_join_cta: "Contact Us"
       footer_legal_call: "Read our"
       footer_legal_visit: "Find us on"
       footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
@@ -1866,16 +1866,16 @@ en:
   menu_1_url: "/shops"
   menu_2_title: "Map"
   menu_2_url: "/map"
-  menu_3_title: "Producers"
-  menu_3_url: "/producers"
-  menu_4_title: "Groups"
-  menu_4_url: "/groups"
-  menu_5_title: "About"
-  menu_5_url: "https://about.openfoodnetwork.org.au/"
-  menu_6_title: "Connect"
-  menu_6_url: "https://openfoodnetwork.org/au/connect/"
-  menu_7_title: "Learn"
-  menu_7_url: "https://openfoodnetwork.org/au/learn/"
+  menu_3_title: "About Us"
+  menu_3_url: "/about-us"
+  menu_4_title: "Contact"
+  menu_4_url: "/contact-us"
+  menu_5_title: "Sell"
+  menu_5_url: "https://about.openfoodnetwork.org.uk/open-my-shop/"
+  menu_6_title: "Resources"
+  menu_6_url: "https://about.openfoodnetwork.org.uk/resources"
+  menu_7_title: "Software Support"
+  menu_7_url: "https://about.openfoodnetwork.org.uk/support-2"
 
   logo: "Logo (640x130)" #FIXME
   logo_mobile: "Mobile logo (75x26)" #FIXME
@@ -4660,3 +4660,56 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     pagination:
       next: Next
       previous: Previous
+
+
+
+  contact_us_title: "Contact Us"
+  contact_us_headline: "Get in Touch with Labelle Orange - Your Fruit Network"
+
+  contact_us_description: "Whether you have a question, a suggestion, or just want to share your love for fruits, we'd love to hear from you!"
+  contact_second_title: "Whether you have a question, a suggestion, or just want to share your love for fruits, we'd love to hear from you!"
+
+  about_hero_text_first: " "
+  about_hero_text: "Welcome to Labelleorange – Where Nature's Finest Thrives!"
+  about_secondhead: "What we do"
+  about_third_section_hero: "The Labelleorange is a global network of people and organisations working together to build a new food system."
+  about_secondhead_description: "In the heart of Labelleorange, a profound sense of pride envelops us, for we have assumed the role of masterful orchestrators conducting a symphony of nature's finest offerings. Just as a conductor wields a baton to guide the musicians in perfect harmony, we, too, guide the intricate dance between the hands that lovingly sow and nurture, the vibrant markets that artfully showcase, and the passionate enthusiasts who wholeheartedly relish in the sumptuous richness bestowed by the earth."
+  about_secondhead_title: "What we do"
+  about_history_title: "Our History"
+  about_history_description: "Labelleorange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, Labelleorange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
+
+At the core of everything we do is a belief that creating a new food system requires a new way of operating. This is why we create open source solutions, communicate with transparency, and hold everything we create as part of the Commons – it doesn’t belong to a single entity, but instead to a community.
+
+ To use the software platform for selling food, it needs to be operating in your area. "
+  about_secondhead: "What we do"
+
+  label_shipping_and_return: "Shipping and Return"
+  label_confidentiality: "Confidentiality"
+  legal_notice: "Legal Notice"
+  legal_notice_title: "Legal Notice"
+  legal_notice_description: "Labelleorange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, Labelleorange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
+
+At the core of everything we do is a belief that creating a new food system requires a new way of operating. This is why we create open source solutions, communicate with transparency, and hold everything we create as part of the Commons – it doesn’t belong to a single entity, but instead to a community.
+
+ To use the software platform for selling food, it needs to be operating in your area. "
+  confidentiality_title: "Confidentiality"
+  confidentiality_description: "Labelleorange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, Labelleorange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
+
+At the core of everything we do is a belief that creating a new food system requires a new way of operating. This is why we create open source solutions, communicate with transparency, and hold everything we create as part of the Commons – it doesn’t belong to a single entity, but instead to a community.
+
+ To use the software platform for selling food, it needs to be operating in your area. "
+  shipping_and_return_title: "Shipping and Return"
+  shipping_and_return_description: "Labelleorange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, Labelleorange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
+
+At the core of everything we do is a belief that creating a new food system requires a new way of operating. This is why we create open source solutions, communicate with transparency, and hold everything we create as part of the Commons – it doesn’t belong to a single entity, but instead to a community.
+
+ To use the software platform for selling food, it needs to be operating in your area. "
+
+  vision_title: "Our Vision"
+  vision_description: "Our vision at Labelleorange transcends mere commerce."
+
+  whatwedo_title: "What We Do"
+  whatwedo_description: "At Labelleorange, we don't just move fruit we curate experiences."
+
+  ourpromise_title: "Our Promise"
+  ourpromise_description: "Our promise isn't just about fruits it's about cultivating trust."
