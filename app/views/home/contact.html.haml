@@ -1,0 +1,41 @@
+- content_for(:title) do
+  = t :contact_us_title
+
+#panes
+  #sell.pane
+    .row.header
+      .small-12.medium-12.columns.text-center
+        %h2
+          = t :contact_us_headline
+    .row.content
+      .small-12.medium-6.medium-offset-3.columns.text-center
+        %p.text-big
+          = t :contact_us_description
+
+  #sell-detail.pane
+    .row.form-row
+      .small-12.medium-12.columns.text-center
+        .medium-8.medium-offset-2.columns
+          %form#contact-form{action: "/contact", method: "post"}
+            .form-group
+              %label{for: "name"} Your Name:
+              %input.form-control{type: "text", name: "name", required: "required"}
+
+            .form-group
+              %label{for: "subject"} Subject:
+              %input.form-control{type: "text", name: "subject", required: "required"}
+
+            .form-group
+              %label{for: "email"} Email Address:
+              %input.form-control{type: "email", name: "email", required: "required"}
+
+            .form-group
+              %label{for: "message"} Message:
+              %textarea.form-control{name: "message", rows: "5", required: "required"}
+
+            .text-center
+              %button.btn.btn-primary{type: "submit"} Send Message
+
+= render "shared/footer"
+
+
