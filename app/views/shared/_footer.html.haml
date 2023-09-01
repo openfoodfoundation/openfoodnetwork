@@ -1,15 +1,5 @@
 %footer
-  .footer-global
-    = cache_with_locale "global" do
-      .row
-        .small-12.columns.text-center
-          .logo
-            %img{src: image_pack_path("logo-white-notext.png") }
-      .row
-        .small-12.medium-8.medium-offset-2.columns.text-center
-          .alert-box
-            = render 'shared/register_call'
-
+  
   .footer-local
     = cache_with_locale "local" do
       .row
@@ -54,12 +44,17 @@
               - if ContentConfig.footer_pinterest_url.present?
                 %a{href: ContentConfig.footer_pinterest_url}
                   %i.ofn-i_045-pintrest
-          - if ContentConfig.footer_email.present?
-            %p
               %a{href: ContentConfig.footer_email.reverse, mailto: true, target: '_blank'}
-                = t '.footer_contact_email'
-          = render_markdown(ContentConfig.footer_links_md).html_safe
-
+                %i.ofn-i_050-mail-circle
+            %p
+              %a{href: "/shipping_and_return"}
+                = t :label_shipping_and_return
+            %p
+              %a{href: "/confidentiality"}
+                = t :label_confidentiality
+            %p
+              %a{href: "/legal-notice"}
+                = t :legal_notice
 
         .small-6.medium-3.columns.text-left
           %h4
@@ -70,12 +65,7 @@
           %p
             %a{href: "/map"}
               = t :label_map
-          %p
-            %a{href: "/producers"}
-              = t :label_producers
-          %p
-            %a{href: "/groups"}
-              = t :label_groups
+         
           %p
             %a{href: ContentConfig.footer_about_url}
               = t :label_about
@@ -105,9 +95,6 @@
           %p.text-small
             = t '.footer_legal_call'
             = link_to_platform_terms
-            &#124;
-            = t '.footer_legal_visit'
-            %a{href:"https://github.co/openfoodfoundation/openfoodnetwork", target: "_blank"} GitHub
           %p.text-small
             = t('.footer_legal_text_html', content_license: link_to('CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'), code_license: link_to('AGPL 3', 'https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)' ))
           %p.text-small
