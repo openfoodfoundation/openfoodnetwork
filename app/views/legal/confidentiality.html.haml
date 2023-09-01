@@ -1,0 +1,14 @@
+:css
+  #tagline:before { background-image: url("/default_images/legal_notice.jpg") }
+
+
+- content_for :page_alert do
+  = render "shared/menu/alert"
+
+%div{"ng-controller" => "HomeCtrl"}
+  = render "legal/confidentialityhero"
+
+  #panes
+    = render "legal/confidentiality"
+
+  = render "shared/footer"
