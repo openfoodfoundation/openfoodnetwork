@@ -5,9 +5,13 @@ changelog:
         - '*'
       exclude:
         labels:
+          - api changes
           - dependencies
           - feature toggled
           - technical changes only
+    - title: "API changes ⚠️"
+      labels:
+        - api changes
     - title: "Features under construction 🚧"
       labels:
         - feature toggled
