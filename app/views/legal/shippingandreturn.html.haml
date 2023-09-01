@@ -1,0 +1,14 @@
+:css
+  #tagline:before { background-image: url("/default_images/shipping_return.jpg") }
+
+
+- content_for :page_alert do
+  = render "shared/menu/alert"
+
+%div{"ng-controller" => "HomeCtrl"}
+  = render "legal/shippingandreturnhero"
+
+  #panes
+    = render "legal/shippingandreturn"
+
+  = render "shared/footer"
