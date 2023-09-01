@@ -10,14 +10,17 @@ assignees: ''
 ## 1. Preparation on Thursday
 
 - [ ] Merge pull requests in the [Ready To Go] column
-- [ ] Include translations 
+- [ ] Include translations
   <details><summary>Command line instructions:</summary>
     <pre>
+    <code>
     git checkout master
     git pull upstream master
     tx pull --force
     git commit -a -m "Update all locales with the latest Transifex translations"
-    git push upstream master</pre>
+    git push upstream master
+    </code>
+    </pre>
   </details>
 - [ ] Create a tag: `git push upstream HEAD:refs/tags/vX.Y.Z`
 - [ ] [Draft new release]. Look at previous [releases] for inspiration.
