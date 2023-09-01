@@ -11,6 +11,15 @@ Openfoodnetwork::Application.routes.draw do
   get "/login", to: redirect("/#/login")
   get '/unauthorized', :to => 'home#unauthorized', :as => :unauthorized
 
+  get '/contact-us', to: 'home#contact'
+  post '/contact', to: 'contacts#create'
+
+  get '/about-us', to: 'home#about'
+  get '/shipping_and_return', to: 'legal#shippingandreturn'
+  get '/confidentiality', to: 'legal#confidentiality'
+  get '/legal-notice', to: 'legal#legalnotice'
+
+
   get "/discourse/login", to: "discourse_sso#login"
   get "/discourse/sso", to: "discourse_sso#sso"
 
