@@ -1,0 +1,24 @@
+#stats.pane
+  .row.header
+    .small-12.medium-8.medium-offset-2.columns.text-center
+      %h2
+        = t :stats_headline
+
+  .row.content
+    - if ContentConfig.home_show_stats
+      .small-12.medium-3.columns.text-center
+        %h4
+          %strong= number_with_delimiter @num_producers
+          = t :stats_producers
+      .small-12.medium-3.columns.text-center
+        %h4
+          %strong= number_with_delimiter @num_distributors
+          = t :stats_shops
+      .small-12.medium-3.columns.text-center
+        %h4
+          %strong= number_with_delimiter @num_users
+          = t :stats_shoppers
+      .small-12.medium-3.columns.text-center
+        %h4
+          %strong= number_with_delimiter @num_orders
+          = t :stats_orders
