@@ -182,17 +182,17 @@ module Admin
     end
 
     def load_data_for_index
-      if json_request?
-        # Split ransack params into all those that currently exist and new ones
-        #   to limit returned ocs to recent or undated
-        orders_close_at_gt = raw_params[:q]&.delete(:orders_close_at_gt) || 31.days.ago
-        raw_params[:q] = {
-          g: [raw_params.delete(:q) || {}, { m: 'or',
-                                             orders_close_at_gt: orders_close_at_gt,
-                                             orders_close_at_null: true }]
-        }
-        @collection = collection
-      end
+      return unless json_request?
+
+      # Split ransack params into all those that currently exist and new ones
+      #   to limit returned ocs to recent or undated
+      orders_close_at_gt = raw_params[:q]&.delete(:orders_close_at_gt) || 31.days.ago
+      raw_params[:q] = {
+        g: [raw_params.delete(:q) || {}, { m: 'or',
+                                           orders_close_at_gt: orders_close_at_gt,
+                                           orders_close_at_null: true }]
+      }
+      @collection = collection
     end
 
     def redirect_to_after_update_path
@@ -245,10 +245,10 @@ module Admin
 
       order_cycle_params.delete :coordinator_id
 
-      unless Enterprise.managed_by(spree_current_user).include?(@order_cycle.coordinator)
-        order_cycle_params.delete_if do |k, _v|
-          [:name, :orders_open_at, :orders_close_at].include? k.to_sym
-        end
+      return if Enterprise.managed_by(spree_current_user).include?(@order_cycle.coordinator)
+
+      order_cycle_params.delete_if do |k, _v|
+        [:name, :orders_open_at, :orders_close_at].include? k.to_sym
       end
     end
 

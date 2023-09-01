@@ -133,10 +133,10 @@ module Spree
     end
 
     def filter_order_params
-      if params[:order] && params[:order][:line_items_attributes]
-        params[:order][:line_items_attributes] =
-          remove_missing_line_items(params[:order][:line_items_attributes])
-      end
+      return unless params[:order] && params[:order][:line_items_attributes]
+
+      params[:order][:line_items_attributes] =
+        remove_missing_line_items(params[:order][:line_items_attributes])
     end
 
     def remove_missing_line_items(attrs)
@@ -180,10 +180,10 @@ module Spree
       items = params[:order][:line_items_attributes]
         &.select{ |_k, attrs| attrs["quantity"].to_i > 0 }
 
-      if items.empty?
-        flash[:error] = I18n.t(:orders_cannot_remove_the_final_item)
-        redirect_to main_app.order_path(order_to_update)
-      end
+      return unless items.empty?
+
+      flash[:error] = I18n.t(:orders_cannot_remove_the_final_item)
+      redirect_to main_app.order_path(order_to_update)
     end
 
     def order_params

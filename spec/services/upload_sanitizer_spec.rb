@@ -10,7 +10,7 @@ describe UploadSanitizer do
         f << "Test"
       end
     end
-    let(:service) { UploadSanitizer.new(File.open(upload).read) }
+    let(:service) { UploadSanitizer.new(File.read(upload)) }
 
     it "sanitizes the uploaded file" do
       sanitized_upload = service.call

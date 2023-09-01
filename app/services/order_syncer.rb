@@ -87,9 +87,9 @@ class OrderSyncer
        (ship_address.changes.keys & relevant_address_attrs).any?
       save_ship_address_in_order(order)
     end
-    if !pickup_to_delivery || order.shipment.blank?
-      order.updater.shipping_address_from_distributor
-    end
+    return unless !pickup_to_delivery || order.shipment.blank?
+
+    order.updater.shipping_address_from_distributor
   end
 
   def relevant_address_attrs

@@ -115,25 +115,25 @@ class ApplicationController < ActionController::Base
   end
 
   def require_distributor_chosen
-    unless (@distributor = current_distributor)
-      redirect_to main_app.root_path
-      false
-    end
+    return if (@distributor = current_distributor)
+
+    redirect_to main_app.root_path
+    false
   end
 
   def require_order_cycle
-    unless current_order_cycle
-      redirect_to main_app.shop_path
-    end
+    return if current_order_cycle
+
+    redirect_to main_app.shop_path
   end
 
   def check_hub_ready_for_checkout
-    if current_distributor_closed?
-      current_order.empty!
-      current_order.set_distribution! nil, nil
-      flash[:info] = I18n.t('order_cycles_closed_for_hub')
-      redirect_to main_app.root_url
-    end
+    return unless current_distributor_closed?
+
+    current_order.empty!
+    current_order.set_distribution! nil, nil
+    flash[:info] = I18n.t('order_cycles_closed_for_hub')
+    redirect_to main_app.root_url
   end
 
   def current_distributor_closed?

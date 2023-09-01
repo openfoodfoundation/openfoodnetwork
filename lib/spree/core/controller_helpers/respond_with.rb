@@ -39,12 +39,10 @@ module ActionController
       block.call(collector) if block_given?
       format = collector.negotiate_format(request)
 
-      if format
-        _process_format(format)
-        collector
-      else
-        raise ActionController::UnknownFormat
-      end
+      raise ActionController::UnknownFormat unless format
+
+      _process_format(format)
+      collector
     end
   end
 end

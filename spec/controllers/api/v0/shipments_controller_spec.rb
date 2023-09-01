@@ -102,6 +102,17 @@ describe Api::V0::ShipmentsController, type: :controller do
       expect(shipment.reload.state).to eq("ready")
     end
 
+    it "checks if shipment is ready already" do
+      allow_any_instance_of(Spree::Order).to receive_messages(paid?: true, complete?: true)
+      shipment.ready!
+
+      api_put :ready, order_id: shipment.order.to_param, id: shipment.to_param
+
+      expect(attributes.all?{ |attr| json_response.key? attr.to_s }).to be_truthy
+      expect(json_response["state"]).to eq("ready")
+      expect(shipment.reload.state).to eq("ready")
+    end
+
     it "cannot make a shipment ready if the order is unpaid" do
       allow_any_instance_of(Spree::Order).to receive_messages(paid?: false)
       api_put :ready, order_id: shipment.order.to_param, id: shipment.to_param

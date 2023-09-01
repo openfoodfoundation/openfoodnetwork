@@ -64,9 +64,9 @@ module Spree
         if method_defined? preference_type_getter_method(name)
           remove_method preference_type_getter_method(name)
         end
-        if method_defined? preference_description_getter_method(name)
-          remove_method preference_description_getter_method(name)
-        end
+        return unless method_defined? preference_description_getter_method(name)
+
+        remove_method preference_description_getter_method(name)
       end
 
       def preference_getter_method(name)

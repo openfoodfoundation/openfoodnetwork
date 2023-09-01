@@ -30,7 +30,7 @@ namespace :karma do
 
   def unit_js(files)
     puts files
-    unit_js = File.open('config/ng-test.conf.js', 'r').read
+    unit_js = File.read('config/ng-test.conf.js')
     unit_js.gsub "APPLICATION_SPEC", "\"#{files.join("\",\n\"")}\""
   end
 

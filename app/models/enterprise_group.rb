@@ -77,9 +77,9 @@ class EnterpriseGroup < ApplicationRecord
   private
 
   def sanitize_permalink
-    if permalink.blank? || permalink_changed?
-      requested = permalink.presence || permalink_was.presence || name.presence || 'group'
-      self.permalink = create_unique_permalink(requested.parameterize)
-    end
+    return unless permalink.blank? || permalink_changed?
+
+    requested = permalink.presence || permalink_was.presence || name.presence || 'group'
+    self.permalink = create_unique_permalink(requested.parameterize)
   end
 end

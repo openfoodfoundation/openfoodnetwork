@@ -44,14 +44,16 @@ module Api
 
       def ready
         authorize! :read, Spree::Shipment
-        unless @shipment.ready?
-          if @shipment.can_ready?
-            @shipment.ready!
-          else
-            render(json: { error: I18n.t(:cannot_ready, scope: "spree.api.shipment") },
-                   status: :unprocessable_entity) && return
-          end
+
+        unless @shipment.ready? || @shipment.can_ready?
+          return render(
+            json: { error: I18n.t(:cannot_ready, scope: "spree.api.shipment") },
+            status: :unprocessable_entity
+          )
         end
+
+        @shipment.ready! unless @shipment.ready?
+
         render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
       end
 

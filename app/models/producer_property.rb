@@ -13,9 +13,9 @@ class ProducerProperty < ApplicationRecord
   end
 
   def property_name=(name)
-    if name.present?
-      self.property = Spree::Property.find_by(name: name) ||
-                      Spree::Property.create(name: name, presentation: name)
-    end
+    return if name.blank?
+
+    self.property = Spree::Property.find_by(name: name) ||
+                    Spree::Property.create(name: name, presentation: name)
   end
 end

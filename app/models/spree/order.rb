@@ -505,10 +505,10 @@ module Spree
     # an order is part-way through checkout and the user changes items in the cart; in that case
     # we need to reset the checkout flow to ensure the order is processed correctly.
     def ensure_updated_shipments
-      if !completed? && shipments.any?
-        shipments.destroy_all
-        restart_checkout_flow
-      end
+      return unless !completed? && shipments.any?
+
+      shipments.destroy_all
+      restart_checkout_flow
     end
 
     # After changing line items of a completed order
