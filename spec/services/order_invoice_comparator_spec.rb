@@ -67,15 +67,13 @@ describe OrderInvoiceComparator do
       end
 
       context "additional tax total changes" do
-        let(:distributor) { create(:distributor_enterprise) }
         let(:order) do
-          create(:order_with_taxes, distributor: distributor, ship_address: create(:address),
-                                    product_price: 110, tax_rate_amount: 0.1,
-                                    included_in_price: false,
-                                    tax_rate_name: "Tax 1").tap do |order|
-                                      order.create_tax_charge!
-                                      order.update_shipping_fees!
-                                    end
+          create(:order_with_taxes, product_price: 110, tax_rate_amount: 0.1,
+                                    included_in_price: false)
+            .tap do |order|
+            order.create_tax_charge!
+            order.update_shipping_fees!
+          end
         end
 
         it "returns returns true" do
@@ -86,15 +84,13 @@ describe OrderInvoiceComparator do
       end
 
       context "included tax total changes" do
-        let(:distributor) { create(:distributor_enterprise) }
         let(:order) do
-          create(:order_with_taxes, distributor: distributor, ship_address: create(:address),
-                                    product_price: 110, tax_rate_amount: 0.1,
-                                    included_in_price: true,
-                                    tax_rate_name: "Tax 1").tap do |order|
-                                      order.create_tax_charge!
-                                      order.update_shipping_fees!
-                                    end
+          create(:order_with_taxes, product_price: 110, tax_rate_amount: 0.1,
+                                    included_in_price: true)
+            .tap do |order|
+            order.create_tax_charge!
+            order.update_shipping_fees!
+          end
         end
 
         it "returns returns true" do
