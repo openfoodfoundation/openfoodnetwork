@@ -3,8 +3,8 @@
 module AuthenticationHelper
   include Warden::Test::Helpers
 
-  def login_as_admin
-    login_as create(:admin_user)
+  def login_as_admin(locale: :en)
+    login_as create(:admin_user, locale:)
   end
 
   def login_to_admin_section
