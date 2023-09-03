@@ -131,21 +131,73 @@ describe "Managing users" do
     end
 
     describe "creating a user" do
+      let(:locale) { :en }
+
+      before do
+        login_as_admin(locale:)
+      end
+
       it "shows no confirmation message to start with" do
         visit spree.new_admin_user_path
         expect(page).to have_no_text "Email confirmation is pending"
       end
 
-      it "confirms successful creation" do
-        visit spree.new_admin_user_path
-        fill_in "Email", with: "user1@example.org"
-        fill_in "Password", with: "user1Secret"
-        fill_in "Confirm Password", with: "user1Secret"
-        expect do
-          click_button "Create"
-        end.to change { Spree::User.count }.by 1
-        expect(page).to have_text "Created Successfully"
-        expect(page).to have_text "Email confirmation is pending"
+      context "when the current user locale is en" do
+        let(:locale) { :en }
+
+        it "uses the current user locale for new new user" do
+          visit spree.new_admin_user_path
+
+          expect(page).to have_select('Language', selected: 'English')
+        end
+
+        it "confirms successful creation" do
+          visit spree.new_admin_user_path
+          fill_in "Email", with: "user1@example.org"
+          fill_in "Password", with: "user1Secret"
+          fill_in "Confirm Password", with: "user1Secret"
+          perform_enqueued_jobs do
+            expect do
+              click_button "Create"
+            end.to change { Spree::User.count }.by 1
+            expect(page).to have_text "Created Successfully"
+            expect(page).to have_text "Email confirmation is pending"
+            expect(Spree::User.last.locale).to eq "en"
+
+            expect(ActionMailer::Base.deliveries.first.subject).to match(
+              "Please confirm your OFN account"
+            )
+          end
+        end
+      end
+
+      context "when the current user locale is es" do
+        let(:locale) { :es }
+
+        it "uses the current user locale for new new user" do
+          visit spree.new_admin_user_path
+
+          expect(page).to have_select('Language', selected: 'Español')
+        end
+
+        it "confirms successful creation" do
+          visit spree.new_admin_user_path
+          fill_in "Email", with: "user1@example.org"
+          fill_in "Contraseña", with: "user1Secret"
+          fill_in "Confirmar contraseña", with: "user1Secret"
+          perform_enqueued_jobs do
+            expect do
+              click_button "Crear"
+            end.to change { Spree::User.count }.by 1
+            expect(page).to have_text "Creado con éxito"
+            expect(page).to have_text "La confirmación por correo electrónico está pendiente"
+            expect(Spree::User.last.locale).to eq "es"
+
+            expect(ActionMailer::Base.deliveries.first.subject).to match(
+              "Por favor, confirma tu cuenta de OFN"
+            )
+          end
+        end
       end
     end
 

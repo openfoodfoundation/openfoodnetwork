@@ -3,6 +3,8 @@
 module Spree
   module Admin
     class UsersController < ::Admin::ResourceController
+      helper I18nHelper
+
       rescue_from Spree::User::DestroyWithOrdersError, with: :user_destroy_with_orders_error
 
       after_action :sign_in_if_change_own_password, only: :update
@@ -127,9 +129,13 @@ module Spree
         params[:user][:email] != @user.email
       end
 
+      def build_resource
+        model_class.new(locale: spree_current_user.locale)
+      end
+
       def user_params
         ::PermittedAttributes::User.new(params).call(
-          %i[enterprise_limit show_api_key_view]
+          %i[enterprise_limit locale show_api_key_view]
         )
       end
     end
