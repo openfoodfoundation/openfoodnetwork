@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module I18nHelper
-  def locales_available
+  def locale_options
     OpenFoodNetwork::I18nConfig.available_locales.map do |locale|
       [t('language_name', locale:), locale]
     end
