@@ -3,6 +3,15 @@
 require 'spec_helper'
 
 describe ApplicationHelper, type: :helper do
+  describe "#feature?" do
+    it "takes several actors" do
+      user = Spree::User.new(id: 4)
+      enterprise = Enterprise.new(id: 5)
+
+      expect(helper.feature?(:foo, user, enterprise)).to eq false
+    end
+  end
+
   describe "#language_meta_tags" do
     let(:request) { double("request", host_with_port: "test.host", protocol: "http://") }
     before do

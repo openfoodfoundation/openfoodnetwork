@@ -5,7 +5,7 @@ require 'spec_helper'
 describe OpenFoodNetwork::FeatureToggle do
   subject(:feature_toggle) { OpenFoodNetwork::FeatureToggle }
 
-  context 'when users are not specified' do
+  describe ".enabled?" do
     it "returns false when feature is undefined" do
       expect(feature_toggle.enabled?(:foo)).to be false
     end
@@ -13,6 +13,34 @@ describe OpenFoodNetwork::FeatureToggle do
     it "uses Flipper configuration" do
       Flipper.enable(:foo)
       expect(feature_toggle.enabled?(:foo)).to be true
+    end
+
+    it "can be activated per enterprise" do
+      enterprise = Enterprise.new(id: 5)
+
+      Flipper.enable(:foo, enterprise)
+
+      expect(feature_toggle.enabled?(:foo)).to eq false
+      expect(feature_toggle.enabled?(:foo, enterprise)).to eq true
+    end
+
+    it "returns true for an enabled user amongst other actors" do
+      user = Spree::User.new(id: 4)
+      enterprise = Enterprise.new(id: 5)
+
+      Flipper.enable(:foo, user)
+
+      expect(feature_toggle.enabled?(:foo, user, enterprise)).to eq true
+      expect(feature_toggle.enabled?(:foo, enterprise, user)).to eq true
+    end
+  end
+
+  describe ".disabled?" do
+    it "returns true if the feature is disabled for all actors" do
+      user = Spree::User.new(id: 4)
+      enterprise = Enterprise.new(id: 5)
+
+      expect(feature_toggle.disabled?(:foo, user, enterprise)).to eq true
     end
   end
 
