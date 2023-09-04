@@ -3,7 +3,7 @@
 - content_for :page_title do
   = t :edit_order_cycle
 
-= admin_inject_order_cycle_instance
+= admin_inject_order_cycle_instance(@order_cycle)
 = form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.orderCycles', 'ng-controller' => 'AdminOrderCycleOutgoingCtrl', name: 'order_cycle_form'} do |f|
 
   = render 'wizard_progress'
