@@ -117,18 +117,7 @@ module InjectionHelper
 
   def inject_enterprise_attributes(enterprise_attributes)
     render partial: "json/injection_ams",
-           locals: { name: 'enterpriseAttributes', json: @enterprise_attributes.to_json.to_s }
-  end
-
-  def inject_orders
-    inject_json_array "orders", @orders.all, Api::OrderSerializer
-  end
-
-  def inject_shops
-    customers = spree_current_user.customers
-    shops = Enterprise.where(id: @orders.pluck(:distributor_id).uniq |
-                                 customers.pluck(:enterprise_id))
-    inject_json_array "shops", shops.all, Api::ShopForOrdersSerializer
+           locals: { name: 'enterpriseAttributes', json: enterprise_attributes.to_json.to_s }
   end
 
   def inject_saved_credit_cards
