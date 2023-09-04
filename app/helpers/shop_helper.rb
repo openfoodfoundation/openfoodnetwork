@@ -40,10 +40,6 @@ module ShopHelper
     }
   end
 
-  def shop_tab_names
-    shop_tabs.map { |tab| tab[:name] }
-  end
-
   def show_home_tab?
     require_customer? || current_distributor.preferred_shopfront_message.present?
   end
