@@ -45,7 +45,7 @@ describe '
       fill_in 'product_on_hand', with: 5
       check 'product_on_demand'
       select 'Test Tax Category', from: 'product_tax_category_id'
-      page.find("div[id^='taTextElement']").native.send_keys('A description...')
+      fill_in_trix_editor 'product_description', with: 'A description...'
 
       click_button 'Create'
 
@@ -58,7 +58,8 @@ describe '
       expect(page).to have_field 'product_on_hand', with: 5
       expect(page).to have_field 'product_on_demand', checked: true
       expect(page).to have_field 'product_tax_category_id', with: tax_category.id
-      expect(page.find("div[id^='taTextElement']")).to have_content 'A description...'
+      expect(page.find("#product_description",
+                       visible: false).value).to eq('<div>A description...</div>')
       expect(page.find("#product_variant_unit_field")).to have_content 'Weight (kg)'
 
       expect(page).to have_content "Name can't be blank"
@@ -80,7 +81,7 @@ describe '
       fill_in 'product_on_hand', with: 5
       check 'product_on_demand'
       select 'Test Tax Category', from: 'product_tax_category_id'
-      page.find("div[id^='taTextElement']").native.send_keys('A description...')
+      fill_in_trix_editor 'product_description', with: 'A description...'
 
       click_button 'Create'
 
@@ -93,7 +94,8 @@ describe '
       expect(page).to have_field 'product_on_hand', with: 5
       expect(page).to have_field 'product_on_demand', checked: true
       expect(page).to have_field 'product_tax_category_id', with: tax_category.id
-      expect(page.find("div[id^='taTextElement']")).to have_content 'A description...'
+      expect(page.find("#product_description",
+                       visible: false).value).to eq('<div>A description...</div>')
       expect(page.find("#product_variant_unit_field")).to have_content 'Weight (kg)'
 
       expect(page).to have_content "Unit value must be greater than 0"
@@ -128,7 +130,7 @@ describe '
       fill_in 'product_price', with: '19.99'
       fill_in 'product_on_hand', with: 5
       select 'Test Tax Category', from: 'product_tax_category_id'
-      page.find("div[id^='taTextElement']").native.send_keys('A description...')
+      fill_in_trix_editor 'product_description', with: 'A description...'
 
       click_button 'Create'
 
@@ -146,7 +148,7 @@ describe '
       expect(product.on_hand).to eq(5)
       expect(product.variants.first.tax_category_id).to eq(tax_category.id)
       expect(product.variants.first.shipping_category).to eq(shipping_category)
-      expect(product.description).to eq("<p>A description...</p>")
+      expect(product.description).to eq("<div>A description...</div>")
       expect(product.group_buy).to be_falsey
       expect(product.variants.first.unit_presentation).to eq("5kg")
     end
@@ -166,8 +168,8 @@ describe '
       fill_in 'product_on_hand', with: 0
       check 'product_on_demand'
       select 'Test Tax Category', from: 'product_tax_category_id'
-      page.find("div[id^='taTextElement']").native
-        .send_keys('In demand, and on_demand! The hottest cakes in town.')
+      fill_in_trix_editor 'product_description',
+                          with: 'In demand, and on_demand! The hottest cakes in town.'
 
       click_button 'Create'
 
@@ -193,9 +195,8 @@ describe '
       fill_in 'product_on_hand', with: 0
       check 'product_on_demand'
       select 'Test Tax Category', from: 'product_tax_category_id'
-      find("div[id^='taTextElement']").native
-        .send_keys('In demand, and on_demand! The hottest cakes in town.')
-
+      fill_in_trix_editor 'product_description',
+                          with: 'In demand, and on_demand! The hottest cakes in town.'
       click_button 'Create'
 
       expect(current_path).to eq spree.admin_products_path

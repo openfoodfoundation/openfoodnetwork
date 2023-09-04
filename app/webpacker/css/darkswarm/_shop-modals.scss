@@ -11,6 +11,12 @@
 
   .product-description {
     margin: 1rem 0.25rem 0.25rem 0;
+
+    .text-small div {
+      margin-bottom: 1.5rem; // Equivalent to p (trix doesn't use p as separator by default, so emulate div as p to be backward compatible)
+    }
+
+    @include trix-styles;
   }
 
   .property-selectors li {

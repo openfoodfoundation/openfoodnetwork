@@ -2,25 +2,29 @@ trix-toolbar [data-trix-button-group="file-tools"] {
   display: none;
 }
 
+trix-toolbar .trix-button--icon-hr::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 12h18v2H3z'/%3E%3C/svg%3E");
+}
+
 // Match the rendering into the shopfront (see ../darkswarm/)
 trix-editor {
   color: #222;
 
-  ol,
-  ul {
-    margin-left: 1.5em;
-  }
-
   a {
-    color: #f27052;
+    color: #f27052; // Equivalent to text-angular a
   }
 
-  // Copy/pasted from _type.scss
-  blockquote {
-    line-height: 1.6;
-    color: #6f6f6f;
-    margin: 0 0 1.25rem;
-    padding: 0.5625rem 1.25rem 0 1.1875rem;
-    border-left: 1px solid #dddddd;
+  @include trix-styles;
+}
+
+// Override app/webpacker/css/admin/shared/forms.scss#L81
+.field trix-editor ul {
+  border-top: none;
+  list-style: disc;
+  padding-top: 0;
+
+  li {
+    padding-right: 0;
+    display: list-item;
   }
 }
