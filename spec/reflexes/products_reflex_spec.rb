@@ -34,16 +34,24 @@ describe ProductsReflex, type: :reflex do
   end
 
   describe '#bulk_update' do
-    let!(:product_b) { create(:simple_product, name: "Bananas") }
-    let!(:product_a) { create(:simple_product, name: "Apples") }
+    let!(:variant_a1) {
+      create(:variant,
+             product: product_a,
+             display_name: "Medium box",
+             sku: "APL-01",
+             price: 5.25)
+    }
+    let!(:product_b) { create(:simple_product, name: "Bananas", sku: "BAN-00") }
+    let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
 
     it "saves valid changes" do
       params = {
-        # '[products][<i>][name]'
+        # '[products][][name]'
         "products" => [
           {
             "id" => product_a.id.to_s,
             "name" => "Pommes",
+            "sku" => "POM-00",
           }
         ]
       }
@@ -51,7 +59,38 @@ describe ProductsReflex, type: :reflex do
       expect{
         run_reflex(:bulk_update, params:)
         product_a.reload
-      }.to change(product_a, :name).to("Pommes")
+      }.to change{ product_a.name }.to("Pommes")
+        .and change{ product_a.sku }.to("POM-00")
+    end
+
+    it "saves valid changes to products and nested variants" do
+      params = {
+        # '[products][][name]'
+        # '[products][][variants_attributes][][display_name]'
+        "products" => [
+          {
+            "id" => product_a.id.to_s,
+            "name" => "Pommes",
+            "variants_attributes" => [
+              {
+                "id" => variant_a1.id.to_s,
+                "display_name" => "Large box",
+                "sku" => "POM-01",
+                "price" => "10.25",
+              }
+            ],
+          }
+        ]
+      }
+
+      expect{
+        run_reflex(:bulk_update, params:)
+        product_a.reload
+        variant_a1.reload
+      }.to change{ product_a.name }.to("Pommes")
+        .and change{ variant_a1.display_name }.to("Large box")
+        .and change{ variant_a1.sku }.to("POM-01")
+        .and change{ variant_a1.price }.to(10.25)
     end
 
     describe "sorting" do

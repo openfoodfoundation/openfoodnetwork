@@ -32,15 +32,15 @@
         %th.align-left= t('admin.products_page.columns.category')
         %th.align-left= t('admin.products_page.columns.tax_category')
         %th.align-left= t('admin.products_page.columns.inherits_properties')
-    - products.each do |product, i|
-      = form.fields_for(product) do |product_form|
+    - products.each do |product|
+      = form.fields_for("products", product, index: nil) do |product_form|
         %tbody.relaxed
           %tr
             %td.align-left.header
-              = product_form.hidden_field :id, name: "[products][#{i}][id]" #todo: can we remove #{i} and implicitly pop?
-              .line-clamp-1= product_form.text_field :name, name: "[products][#{i}][name]", id: "_product_name_#{product.id}", 'aria-label': t('admin.products_page.columns.name')
+              = product_form.hidden_field :id
+              = product_form.text_field :name, 'aria-label': t('admin.products_page.columns.name')
             %td.align-right
-              .line-clamp-1= product.sku
+              = product_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
             %td.align-right
               .line-clamp-1
                 = product.variant_unit.upcase_first
@@ -59,22 +59,25 @@
             %td.align-left
               .line-clamp-1= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
           - product.variants.each do |variant|
-            %tr.condensed
-              %td.align-left
-                .line-clamp-1= variant.display_name
-              %td.align-right
-                .line-clamp-1= variant.sku
-              %td.align-right
-                .line-clamp-1= variant.unit_to_display
-              %td.align-right
-                .line-clamp-1= number_to_currency(variant.price)
-              %td.align-right
-                .line-clamp-1= variant.on_hand || 0 #TODO: spec for this according to requirements.
-              %td.align-left
-                .line-clamp-1= variant.product.supplier.name # same as product
-              %td.align-left
-                -# empty
-              %td.align-left
-                .line-clamp-1= variant.tax_category&.name || "None" # TODO: convert to dropdown, else translate hardcoded string.
-              %td.align-left
-                -# empty
+            - prefix = "[products][][variants_attributes][]" # Couldn't convince the formbuilder to generate this for me, so for now we manually add the prefix
+            = form.fields_for(variant) do |variant_form|
+              %tr.condensed
+                %td.align-left
+                  = variant_form.hidden_field :id, name: "#{prefix}[id]"
+                  = variant_form.text_field :display_name, name: "#{prefix}[display_name]", 'aria-label': t('admin.products_page.columns.name'), placeholder: product.name
+                %td.align-right
+                  = variant_form.text_field :sku, name: "#{prefix}[sku]", 'aria-label': t('admin.products_page.columns.sku')
+                %td.align-right
+                  .line-clamp-1= variant.unit_to_display
+                %td.align-right
+                  = variant_form.text_field :price, name: "#{prefix}[price]", 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
+                %td.align-right
+                  .line-clamp-1= variant.on_hand || 0 #TODO: spec for this according to requirements.
+                %td.align-left
+                  .line-clamp-1= variant.product.supplier.name # same as product
+                %td.align-left
+                  -# empty
+                %td.align-left
+                  .line-clamp-1= variant.tax_category&.name || "None" # TODO: convert to dropdown, else translate hardcoded string.
+                %td.align-left
+                  -# empty
