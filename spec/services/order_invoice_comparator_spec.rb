@@ -53,7 +53,8 @@ describe OrderInvoiceComparator do
 
           it "returns returns true" do
             Spree::TaxRate.first.update!(amount: 0.15)
-            order.create_tax_charge! && order.save
+            order.create_tax_charge!
+            order.reload
             expect(subject).to be true
           end
         end
@@ -70,7 +71,8 @@ describe OrderInvoiceComparator do
 
           it "returns returns true" do
             Spree::TaxRate.first.update!(amount: 0.15)
-            order.create_tax_charge! && order.save
+            order.create_tax_charge!
+            order.reload
             expect(subject).to be true
           end
         end
