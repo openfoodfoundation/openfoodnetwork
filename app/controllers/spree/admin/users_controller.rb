@@ -130,12 +130,12 @@ module Spree
       end
 
       def build_resource
-        model_class.new(locale: spree_current_user.locale)
+        model_class.new(locale: I18n.default_locale)
       end
 
       def user_params
         ::PermittedAttributes::User.new(params).call(
-          %i[enterprise_limit locale show_api_key_view]
+          %i[enterprise_limit show_api_key_view]
         )
       end
     end
