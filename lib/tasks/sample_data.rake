@@ -29,6 +29,9 @@ namespace :ofn do
   task sample_data: :environment do
     raise "Please run `rake db:seed` first." unless seeded?
 
+    # The sample domains like example.org are not resolved by all nameservers.
+    ValidEmail2::Address.define_method(:valid_mx?) { true }
+
     users = SampleData::UserFactory.new.create_samples
 
     enterprises = SampleData::EnterpriseFactory.new.create_samples(users)
