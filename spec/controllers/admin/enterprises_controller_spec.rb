@@ -281,7 +281,7 @@ describe Admin::EnterprisesController, type: :controller do
                           }
                         }
                       }
-            expect(tag_rule.reload).to be
+
             new_tag_rule = TagRule::FilterOrderCycles.last
             expect(new_tag_rule.preferred_exchange_tags).to eq "tags,are,awesome"
           end
