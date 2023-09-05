@@ -131,22 +131,17 @@ describe "Managing users" do
     end
 
     describe "creating a user" do
-      it "shows no confirmation message to start with" do
-        visit spree.new_admin_user_path
-        expect(page).to have_no_text "Email confirmation is pending"
-      end
-
-      it "uses the instance default locale for new new user" do
-        visit spree.new_admin_user_path
-
-        expect(page).to have_select('Language', selected: 'English')
-      end
-
       it "confirms successful creation" do
         visit spree.new_admin_user_path
+
+        # shows no confirmation message to start with
+        expect(page).to have_no_text "Email confirmation is pending"
+
         fill_in "Email", with: "user1@example.org"
         fill_in "Password", with: "user1Secret"
         fill_in "Confirm Password", with: "user1Secret"
+
+        expect(page).to have_select "Language", selected: "English"
         select "Español", from: "Language"
 
         perform_enqueued_jobs do
