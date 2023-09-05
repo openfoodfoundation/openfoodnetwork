@@ -15,7 +15,9 @@ class OrderCycleDistributedProducts
 
   def products_taxons_relation
     Spree::Product.where(id: stocked_products).
-      joins("LEFT JOIN (SELECT DISTINCT ON(product_id) id, product_id, primary_taxon_id FROM spree_variants) first_variant ON spree_products.id = first_variant.product_id").
+      joins("LEFT JOIN (SELECT DISTINCT ON(product_id) id, product_id, primary_taxon_id
+                        FROM spree_variants) first_variant
+                        ON spree_products.id = first_variant.product_id").
       select("spree_products.*, first_variant.primary_taxon_id").
       group("spree_products.id, first_variant.primary_taxon_id")
   end
