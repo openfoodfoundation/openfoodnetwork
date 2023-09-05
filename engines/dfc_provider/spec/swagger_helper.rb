@@ -6,7 +6,7 @@ require_relative "spec_helper"
 RSpec.configure do |config|
   # Override swagger docs to generate only this file:
   config.swagger_docs = {
-    'dfc-v1.7/swagger.yaml' => {
+    'dfc.yaml' => {
       openapi: '3.0.1',
       info: {
         title: 'OFN DFC API',

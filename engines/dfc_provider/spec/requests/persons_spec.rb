@@ -2,7 +2,7 @@
 
 require_relative "../swagger_helper"
 
-describe "Persons", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rswag_autodoc: true do
+describe "Persons", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: true do
   let(:user) { create(:oidc_user, id: 10_000) }
   let(:other_user) { create(:oidc_user) }
 
