@@ -256,9 +256,10 @@ paths:
                     "@context": https://www.datafoodconsortium.org
                     "@id": http://test.host/api/dfc/enterprise_groups/60000
                     "@type": dfc-b:Enterprise
-                    dfc-b:hasName: Enterprise group
+                    dfc-b:hasName: Sustainable Farmers
                     dfc-b:hasDescription: this is a group
                     dfc-b:VATnumber: ''
+                    dfc-b:affiliatedBy: http://test.host/api/dfc/enterprises/10000
   "/api/dfc/enterprises/{id}":
     get:
       summary: Show enterprise

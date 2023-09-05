@@ -4,7 +4,13 @@ require_relative "../swagger_helper"
 
 describe "EnterpriseGroups", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: true do
   let(:user) { create(:oidc_user) }
-  let(:group) { create(:enterprise_group, id: 60_000) }
+  let(:group) {
+    create(
+      :enterprise_group,
+      id: 60_000, name: "Sustainable Farmers", enterprises: [enterprise],
+    )
+  }
+  let(:enterprise) { create(:enterprise, id: 10_000) }
 
   before { login_as user }
 
@@ -16,7 +22,12 @@ describe "EnterpriseGroups", type: :request, swagger_doc: "dfc.yaml", rswag_auto
       response "200", "successful" do
         let(:id) { group.id }
 
-        run_test!
+        run_test! do
+          expect(json_response).to include(
+            "dfc-b:hasName" => "Sustainable Farmers",
+            "dfc-b:affiliatedBy" => "http://test.host/api/dfc/enterprises/10000",
+          )
+        end
       end
     end
   end

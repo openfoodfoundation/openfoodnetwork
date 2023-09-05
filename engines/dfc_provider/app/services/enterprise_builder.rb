@@ -20,10 +20,20 @@ class EnterpriseBuilder < DfcBuilder
   end
 
   def self.enterprise_group(group)
+    members = group.enterprises.map do |member|
+      urls.enterprise_url(member.id)
+    end
+
     DataFoodConsortium::Connector::Enterprise.new(
       urls.enterprise_group_url(group.id),
       name: group.name,
       description: group.description,
-    )
+    ).tap do |enterprise|
+      # This property has been agreed by the DFC but hasn't made it's way into
+      # the Connector yet.
+      enterprise.registerSemanticProperty("dfc-b:affiliatedBy") do
+        members
+      end
+    end
   end
 end
