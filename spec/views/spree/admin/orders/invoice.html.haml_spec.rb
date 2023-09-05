@@ -27,7 +27,10 @@ describe "spree/admin/orders/invoice.html.haml" do
                                     display_checkout_total_less_tax: '8',
                                     outstanding_balance_label: 'Outstanding Balance'
 
-    stub_request(:get, ->(uri) { uri.to_s.include? "/css/mail" })
+    # Ignore requests for CSS pack like: 'http://test.host/packs-test/css/mail-1ab2dc7f.css'
+    VCR.configure do |config|
+      config.ignore_hosts('test.host')
+    end
   end
 
   it "displays the customer code" do
