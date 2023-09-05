@@ -195,7 +195,7 @@ fr:
         signed_up_but_unconfirmed: "Un message avec un lien de confirmation a été envoyé à l'adresse email indiquée. Veuillez cliquer sur ce lien pour activer votre compte."
         unknown_error: "Une erreur s'est glissée lors de la création de votre compte. Vérifiez votre addresse email et recommencez."
     failure:
-      disabled: "Votre compte a été désactivé. Veuillez contacter support@Labelleorange.es"
+      disabled: "Votre compte a été désactivé. Veuillez contacter support@La Belle Orange.es"
       invalid: |
           Email / mot de passe incorrect.
           Créez votre compte ou réinitialisez votre mot de passe.
@@ -258,11 +258,11 @@ fr:
       subject: "Confirmez l'adresse email pour %{enterprise}"
     welcome:
       subject: "%{enterprise} est maintenant sur %{sitename}"
-      email_welcome: "Merci d’avoir rejoint Labelleorange "
+      email_welcome: "Merci d’avoir rejoint La Belle Orange "
       email_registered: "va, dès que vous aurez choisi un type d'entreprise, être créé sur"
       email_userguide_html: "Le Guide Utilisateur est là pour vous accompagner dans la prise en main de la plateforme. Vous y trouverez les informations détaillées de paramétrage de votre entreprise, de vos produits si vous êtes producteur, et éventuellement de votre boutique. Pour accéder au guide en français, cliquez ici : %{link}"
       userguide: "Guide utilisateur"
-      email_admin_html: "Pour gérez votre entreprise, rendez-vous sur l’%{link}. Si vous choisissez Labelleorange pour organiser vos ventes, l’utilisation est gratuite les 3 premiers mois pour vous permettre de tester notre solution. Au-delà, vous devrez choisir une de nos offres pour continuer à utiliser le service (voir rubrique “nos offres” sur notre site internet)."
+      email_admin_html: "Pour gérez votre entreprise, rendez-vous sur l’%{link}. Si vous choisissez La Belle Orange pour organiser vos ventes, l’utilisation est gratuite les 3 premiers mois pour vous permettre de tester notre solution. Au-delà, vous devrez choisir une de nos offres pour continuer à utiliser le service (voir rubrique “nos offres” sur notre site internet)."
       admin_panel: "interface d'administration"
       email_community_html: "Nous avons aussi un forum de discussion en ligne pour échanger avec la communauté sur des questions liées à la plateforme ou aux défis de la gestion d'un circuit court. Nous vous invitons à y participer ! %{link}"
       join_community: "Accéder au forum"
@@ -324,11 +324,11 @@ fr:
         title: Autre échec (%{count} commandes)
         explainer: Le traitement automatique de ces commandes a échoué pour une raison inconnue. Cela n'aurait pas dû arriver, veuillez nous contacter si vous constatez quelque chose d'anormal.
   home: "OFF"
-  title: "Labelleorange"
+  title: "La Belle Orange"
   welcome_to: "Bienvenue sur"
-  site_meta_description: "Le service proposé est basé sur le logiciel libre Open Food Network. Les organisateurs de circuits courts qui utilisent la plateforme décident ensemble des évolutions à apporter au logiciel, et gèrent conjointement l’activité de la coopérative Labelleorange. Ils décident notamment du prix qu’ils paieront pour utiliser cette plateforme."
+  site_meta_description: "Le service proposé est basé sur le logiciel libre Open Food Network. Les organisateurs de circuits courts qui utilisent la plateforme décident ensemble des évolutions à apporter au logiciel, et gèrent conjointement l’activité de la coopérative La Belle Orange. Ils décident notamment du prix qu’ils paieront pour utiliser cette plateforme."
   search_by_name: Recherche par nom ou département...
-  producers_join: Les producteurs et autres circuits courts basés en France sont invités à rejoindre Labelleorange.
+  producers_join: Les producteurs et autres circuits courts basés en France sont invités à rejoindre La Belle Orange.
   charges_sales_tax: Soumis à la TVA?
   business_address: "Adresse du siège social"
   print_invoice: "Imprimer la facture"
@@ -588,7 +588,7 @@ fr:
         matomo_site_id: "ID de l'instance sur Matomo"
         matomo_tag_manager_url: "URL du Matomo Tag Manager"
         info_html: "Matomo est un outil de suivi de traffic et de comportement des utilisateurs. Matomo est open source et validée par la CNIL française car non intrusif dans les données personnelles des utilisateurs. Pour plus d'infos : <a href='http://matomo.org' target='_blank'>matomo.org</a>."
-        config_instructions_html: "Pour utiliser Matomo, vous devez configurer l'intégration avec Labelleorange. L'URL de l'instance sur Matomo correspond à l'url du site internet visé par le suivi de la navigation utilisateur. Si le champ est vide, Matomo n'effectuera aucune analyse sur ce site. L'ID de l'instance sur Matomo n'est pas obligatoire, mais nécessaire si vous souhaitez analyser plusieurs sites web sur une seule instance Matomo. Cet ID peut être trouvé sur l'espace administrateur Matomo."
+        config_instructions_html: "Pour utiliser Matomo, vous devez configurer l'intégration avec La Belle Orange. L'URL de l'instance sur Matomo correspond à l'url du site internet visé par le suivi de la navigation utilisateur. Si le champ est vide, Matomo n'effectuera aucune analyse sur ce site. L'ID de l'instance sur Matomo n'est pas obligatoire, mais nécessaire si vous souhaitez analyser plusieurs sites web sur une seule instance Matomo. Cet ID peut être trouvé sur l'espace administrateur Matomo."
         config_instructions_tag_manager_html: "Ajouter l'URL du Tag Manager rend actif Matomo Tag Manager. Cet outil vous permet de suivre des évènements en particulier. Pour trouver l'URL rendez-vous sur l' \"Install Code section\" du Tag Manager. Attention à bien copier le bon contener et le bon environnement, car ils font varier l'URL."
     customers:
       index:
@@ -998,7 +998,7 @@ fr:
           sells: Produits vendus
           sells_tip: "Aucun - l'entreprise ne vend pas en direct aux acheteurs.<br />Les miens - l'entreprise vend ses propres produits aux acheteurs.<br />Tous - l'entreprise vend ses propres produits et/ou les produits d'autres entreprises.<br />"
           visible_in_search: Apparaît sur la plateforme?
-          visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de Labelleorange, la liste des boutiques et les profils boutiques et producteurs. <br /> 2. Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
+          visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de La Belle Orange, la liste des boutiques et les profils boutiques et producteurs. <br /> 2. Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
           visible: Visible par tous
           not_visible: Cachée
           hidden: Invisible
@@ -1008,7 +1008,7 @@ fr:
           permalink: Nom pour URL (sans espace)
           permalink_tip: "Ce nom permanent est utilisé pour créer l'url de votre boutique: %{link}ma-boutique/shop"
           link_to_front: Lien URL de la boutique
-          link_to_front_tip: C'est le lien qui permet d'accéder en direct à votre boutique sur Labelleorange.
+          link_to_front_tip: C'est le lien qui permet d'accéder en direct à votre boutique sur La Belle Orange.
           ofn_uid: ID OFN
           ofn_uid_tip: L'identifiant unique pour les comptes entreprises sur Open Food Network.
         shipping_methods:
@@ -1076,14 +1076,14 @@ fr:
           linkedin_placeholder: "ex: www.linkedin.com/in/VotreNom"
         stripe_connect:
           connect_with_stripe: "Connecter avec Stripe"
-          stripe_connect_intro: "Pour accepter des paiements utilisant la carte bancaire, vous devez connecter votre compte Stripe à Labelleorange. Cliquez sur le bouton à droite pour commencer."
+          stripe_connect_intro: "Pour accepter des paiements utilisant la carte bancaire, vous devez connecter votre compte Stripe à La Belle Orange. Cliquez sur le bouton à droite pour commencer."
           stripe_account_connected: "Compte Stripe connecté."
           disconnect: "Déconnecter le compte"
           confirm_modal:
             title: Connecter avec Stripe
-            part1: Stripe est un système de paiement qui permet aux boutiques sur Labelleorange d'accepter des paiements par carte bancaire de leurs acheteurs.
-            part2: Pour utiliser cette fonctionnalité, vous devez connecter votre compte Stripe à Labelleorange. En cliquant sur "J'accepte" ci-dessous, vous serez redirigé vers le site internet de Stripe, où vous pourrez connecter votre compte existant ou en créer un si vous n'en avez pas encore.
-            part3: Cela permettra à Labelleorange d'accepter en votre nom les paiements par carte de crédit en provenance de vos acheteurs. Veuillez noter que c'est à vous de gérer votre compte Stripe, de payer les frais dus à Stripe et de gérer les éventuels remboursements et le service après vente.
+            part1: Stripe est un système de paiement qui permet aux boutiques sur La Belle Orange d'accepter des paiements par carte bancaire de leurs acheteurs.
+            part2: Pour utiliser cette fonctionnalité, vous devez connecter votre compte Stripe à La Belle Orange. En cliquant sur "J'accepte" ci-dessous, vous serez redirigé vers le site internet de Stripe, où vous pourrez connecter votre compte existant ou en créer un si vous n'en avez pas encore.
+            part3: Cela permettra à La Belle Orange d'accepter en votre nom les paiements par carte de crédit en provenance de vos acheteurs. Veuillez noter que c'est à vous de gérer votre compte Stripe, de payer les frais dus à Stripe et de gérer les éventuels remboursements et le service après vente.
             i_agree: J'accepte
             cancel: Annuler
         tag_rules:
@@ -1110,7 +1110,7 @@ fr:
           notifications_placeholder: 'ex: bernard@maferme.fr'
           notifications_note: 'A noter: si vous saisissez une nouvelle adresse, un email de confirmation sera envoyé à cette adresse avec un lien de validation à cliquer.'
           managers: Gestionnaires
-          managers_tip: Sélectionner ici les utilisateurs ayant la permission de gérer cette entreprise. Ils doivent avoir un compte sur Labelleorange pour être sélectionnés. Si ce n'est pas le cas, cliquez sur le bouton "Ajouter un nouvel utilisateur" ci-dessous.
+          managers_tip: Sélectionner ici les utilisateurs ayant la permission de gérer cette entreprise. Ils doivent avoir un compte sur La Belle Orange pour être sélectionnés. Si ce n'est pas le cas, cliquez sur le bouton "Ajouter un nouvel utilisateur" ci-dessous.
           invite_manager: "Inviter un gestionnaire"
           invite_manager_tip: "Inviter un nouvel utilisateur à créer son compte et le nommer comme gestionnaire de cette entreprise."
           add_unregistered_user: "Ajouter un nouvel utilisateur"
@@ -1160,20 +1160,20 @@ fr:
         producer_profile: Profil simple
         connect_ofn: Pour apparaître sur la carte et la liste des producteurs
         always_free: ' '
-        producer_description_text: Nous vous invitons à renseigner votre profil de la façon la plus complète possible. Un profil complet et avec des images attire plus ! Vous pourrez mettre des liens pour rediriger les visiteurs vers votre site internet ou espace de vente en ligne le cas échéant. Vous pourrez renseigner votre catalogue produits et le partager avec les circuits courts qui souhaitent vendre vos produits dans leur boutique sur Labelleorange.
+        producer_description_text: Nous vous invitons à renseigner votre profil de la façon la plus complète possible. Un profil complet et avec des images attire plus ! Vous pourrez mettre des liens pour rediriger les visiteurs vers votre site internet ou espace de vente en ligne le cas échéant. Vous pourrez renseigner votre catalogue produits et le partager avec les circuits courts qui souhaitent vendre vos produits dans leur boutique sur La Belle Orange.
         producer_shop: Boutique Producteur
         sell_your_produce: Pour vendre vos produits
         producer_shop_description_text: Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, et partager votre catalogue produits avec d’autres circuits courts souhaitant les distribuer dans leur boutique.
-        producer_shop_description_text2: 'ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Labelleorange pour cet usage, choisissez “profil simple”. De même, si vous fournissez un circuit court utilisant Labelleorange pour vendre, mais ne vendez pas vous-même en direct sur Labelleorange, choisissez “profil simple”.'
+        producer_shop_description_text2: 'ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser La Belle Orange pour cet usage, choisissez “profil simple”. De même, si vous fournissez un circuit court utilisant La Belle Orange pour vendre, mais ne vendez pas vous-même en direct sur La Belle Orange, choisissez “profil simple”.'
         producer_hub: Boutique multi-producteurs
         producer_hub_text: Pour vendre vos produits ainsi que ceux d’autres producteurs
-        producer_hub_description_text: 'Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, vendre les produits d''autres producteurs, et partager votre catalogue produits avec d’autres circuits courts souhaitant les distribuer dans leur boutique. ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Labelleorange pour cet usage, choisissez “profil simple”. De même, si vous fournissez un circuit court utilisant Labelleorange pour vendre, mais ne vendez pas vous-même en direct sur Labelleorange, choisissez “profil simple”.'
+        producer_hub_description_text: 'Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, vendre les produits d''autres producteurs, et partager votre catalogue produits avec d’autres circuits courts souhaitant les distribuer dans leur boutique. ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser La Belle Orange pour cet usage, choisissez “profil simple”. De même, si vous fournissez un circuit court utilisant La Belle Orange pour vendre, mais ne vendez pas vous-même en direct sur La Belle Orange, choisissez “profil simple”.'
         profile: Profil simple
         get_listing: Pour apparaître sur la carte
         profile_description_text: Nous vous invitons à renseigner votre profil de la façon la plus complète possible. Un profil complet et avec des images attire plus ! Vous pourrez mettre des liens pour rediriger les visiteurs vers votre site internet ou espace de vente en ligne le cas échéant.
         hub_shop: Boutique multi-producteurs
         hub_shop_text: Pour vendre des produits de différents fournisseurs
-        hub_shop_description_text: 'Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, et y proposer les produits de multiples producteurs. ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser Labelleorange pour cet usage, choisissez “profil simple”.'
+        hub_shop_description_text: 'Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, et y proposer les produits de multiples producteurs. ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser La Belle Orange pour cet usage, choisissez “profil simple”.'
         choose_option: Veuilliez choisir l'une des options ci-dessus.
         change_now: Changer
       enterprise_user_index:
@@ -1187,7 +1187,7 @@ fr:
         status: "Statut"
       new_form:
         owner: Gestionnaire principal
-        owner_tip: Le gestionnaire principal est l'individu qui porte la responsabilité principale de l'entreprise dans le contexte de l'utilisation de Labelleorange.
+        owner_tip: Le gestionnaire principal est l'individu qui porte la responsabilité principale de l'entreprise dans le contexte de l'utilisation de La Belle Orange.
         i_am_producer: Je suis un producteur
         contact_name: Nom du contact principal
       edit:
@@ -1197,7 +1197,7 @@ fr:
         title: Nouvelle entreprise
         back_link: Revenir à la liste des entreprises
       welcome:
-        welcome_title: Bienvenue sur Labelleorange !
+        welcome_title: Bienvenue sur La Belle Orange !
         welcome_text: 'Vous avez créé avec succès '
         next_step: Etape suivante
         choose_starting_point: 'Choisir votre type d''entreprise :'
@@ -1655,7 +1655,7 @@ fr:
     platform_terms_of_service:
       message_html: "J'accepte les %{tos_link}."
     all_terms_and_conditions:
-      message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de Labelleorange."
+      message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de La Belle Orange."
       terms_and_conditions: "CGU & CGV"
     failed: "La validation du paiement a échoué. Contactez-nous afin de finaliser votre commande."
     payment_cancelled_due_to_stock: "Paiement annulé : la commande n'a pas été finalisée car un ou plusieurs articles ne sont plus en stock."
@@ -1668,7 +1668,7 @@ fr:
   shared:
     mailers:
       powered_by:
-        open_food_network: "Labelleorange"
+        open_food_network: "La Belle Orange"
         powered_html: "Cette commande a été rendue possible par %{open_food_network}."
     menu:
       cart:
@@ -1686,20 +1686,20 @@ fr:
       mobile_menu:
         cart: "Panier"
     register_call:
-      selling_on_ofn: "Vous souhaitez proposer vos produits sur Labelleorange ?"
+      selling_on_ofn: "Vous souhaitez proposer vos produits sur La Belle Orange ?"
       register: "Créez votre compte pro"
     footer:
       footer_secure: "Fiable et sécurisé."
-      footer_secure_text: "Labelleorange utilise un certificat type SSL (2048 bit RSA) pour garantir la confidentialité de vos commandes et données bancaires. Nos serveurs ne conservent pas vos données bancaires et les paiements sont effectués conformément aux normes de sécurité PCI."
-      footer_contact_headline: "Informations Labelleorange"
-      footer_contact_email: "Contacter Labelleorange"
-      footer_nav_headline: "Naviguer sur Labelleorange.es"
-      footer_join_headline: "Vendre via Labelleorange"
-      footer_join_body: "Créer un profil, une boutique ou un groupe sur Labelleorange."
+      footer_secure_text: "La Belle Orange utilise un certificat type SSL (2048 bit RSA) pour garantir la confidentialité de vos commandes et données bancaires. Nos serveurs ne conservent pas vos données bancaires et les paiements sont effectués conformément aux normes de sécurité PCI."
+      footer_contact_headline: "Informations"
+      footer_contact_email: "Nous Contacter"
+      footer_nav_headline: "Naviguer"
+      footer_join_headline: "En savoir plus"
+      footer_join_body: "Participer à notre démarche."
       footer_join_cta: "Je veux en savoir plus!"
       footer_legal_call: "Lire nos"
       footer_legal_visit: "Nous trouver sur"
-      footer_legal_text_html: "Labelleorange utilise pour délivrer son service le logiciel libre Open Food Network, dont le code est protégé sous licence %{code_license}. Les autres productions disponibles sur ce site sont protégées sous licence %{content_license}."
+      footer_legal_text_html: "La Belle Orange utilise pour délivrer son service le logiciel libre Open Food Network, dont le code est protégé sous licence %{code_license}. Les autres productions disponibles sur ce site sont protégées sous licence %{content_license}."
       footer_data_text_with_privacy_policy_html: "Nous prenons soin de vos données. Voir notre %{privacy_policy} et %{cookies_policy}."
       footer_data_text_without_privacy_policy_html: "Nous prenons soin de vos données. Voir notre %{cookies_policy}."
       footer_data_privacy_policy: "politique de gestion des données"
@@ -1794,7 +1794,7 @@ fr:
   state: Département
   country: Pays
   unauthorized: Non autorisé
-  terms_of_service: "Conditions Générales d'Utilisation et de vente de Labelleorange"
+  terms_of_service: "Conditions Générales d'Utilisation et de vente de La Belle Orange"
   on_demand: A volonté
   none: Aucun
   not_allowed: Non autorisé
@@ -1854,17 +1854,17 @@ fr:
     cookies_policy:
       header: "Notre usage des Cookies"
       desc_part_1: "Les cookies sont de tout petits fichiers texte qui sont stockés sur votre ordinateur quand vous naviguez sur certains sites web."
-      desc_part_2: "Chez Labelleorange nous sommes particulièrement soucieux de votre vie privée. Nous n'utilisons que les cookies nécessaires pour vous offrir un service d'achat/vente en ligne performant. Nous ne vendons aucunes de vos données. Peut-être vous proposerons-nous dans le futur de jolis projets qui peuvent être utiles pour faire progresser la vente en circuits courts, et pour lesquels vos données pourraient nous permettre de trouver de nouvelles solutions aux problèmes que vous rencontrez, comme par exemple la construction de services logistiques mutualisés. Mais nous n'y sommes pas encore, et nous ne ferons rien sans votre autorisation :-)"
-      desc_part_3: "Nous utilisons des cookies principalement pour vous permettre de rester connecté(e) après votre première connexion si vous le souhaitez (et éviter de saisir votre mot de passe à chaque fois!), ou encore pour mémoriser les produits dans votre panier. Si vous naviguez sur le site sans cliquer sur \"Accepter les cookies\", cela vaut consentement à l'utilisation des cookies nécessaires au bon fonctionnement du site Labelleorange.es. Voilà la liste détaillée des cookies que nous utilisons."
+      desc_part_2: "Chez La Belle Orange nous sommes particulièrement soucieux de votre vie privée. Nous n'utilisons que les cookies nécessaires pour vous offrir un service d'achat/vente en ligne performant. Nous ne vendons aucunes de vos données. Peut-être vous proposerons-nous dans le futur de jolis projets qui peuvent être utiles pour faire progresser la vente en circuits courts, et pour lesquels vos données pourraient nous permettre de trouver de nouvelles solutions aux problèmes que vous rencontrez, comme par exemple la construction de services logistiques mutualisés. Mais nous n'y sommes pas encore, et nous ne ferons rien sans votre autorisation :-)"
+      desc_part_3: "Nous utilisons des cookies principalement pour vous permettre de rester connecté(e) après votre première connexion si vous le souhaitez (et éviter de saisir votre mot de passe à chaque fois!), ou encore pour mémoriser les produits dans votre panier. Si vous naviguez sur le site sans cliquer sur \"Accepter les cookies\", cela vaut consentement à l'utilisation des cookies nécessaires au bon fonctionnement du site La Belle Orange.es. Voilà la liste détaillée des cookies que nous utilisons."
       essential_cookies: "Cookies essentiels"
-      essential_cookies_desc: "Les cookies suivants sont nécessaires au fonctionnement du site Labelleorange.es."
+      essential_cookies_desc: "Les cookies suivants sont nécessaires au fonctionnement du site La Belle Orange.es."
       essential_cookies_note: "Les cookies contiennent un identifiant unique, mais pas d'autres données. Vos emails et mots de passe par exemple ne sont jamais exposés dans les cookies!"
       cookie_domain: "Déposé par"
       cookie_session_desc: "Utilisé pour garder en mémoire l'utilisateur d'une page à l'autre lors de la navigation sur le site, ou pour se souvenir des produits dans le panier."
       cookie_consent_desc: "Utilisé pour se souvenir du consentement de l'utilisation à l'utilisation de cookies."
       cookie_remember_me_desc: "Utilisé si l'utilisateur a cliqué sur \"se souvenir de moi\" (pour ne pas avoir à se reconnecter à chaque fois). Ce cookie est automatiquement supprimé après 12 jours. Si l'utilisateur souhaite supprimer ce cookie, il n'a qu'à se déconnecter. Si l'utilisateur ne souhaite pas que ce cookie soit installé sur son terminal, il suffit de ne pas cocher la case \"se souvenir de moi\" au moment de la connexion."
-      cookie_openstreemap_desc: "Utilisé par le logiciel de cartographie open source et ami Open Street Map (qui permet l'affichage de la carte sur Labelleorange) pour assurer qu'il ne reçoit pas trop de requêtes sur un laps de temps déterminé, et éviter ainsi les risques d'abus de leurs services."
-      cookie_stripe_desc: "Utilisé par le terminal de payement en ligne Stripe (proposé aux utilisateurs de Labelleorange) https://stripe.com/fr/cookies-policy/legal. Même si toutes les boutiques n'utilisent pas Stripe, c'est une bonne pratique en matière de sécurité d'appliquer ce cookie sur toutes les pages vues. Stripe construit probablement une image des pages qui ont un quelconque lien avec l'API connectant Labelleorange à leur système de paiement pour détecter les comportements anormaux pouvant suggérer un risque de fraude. Donc ce cookie a un rôle qui va au-delà de la simple fourniture d'un système de paiement. Le supprimer pourrait affecter la sécurité du service. Pour en savoir plus sur la politique de confidentialité de Stripe: https://stripe.com/fr/privacy."
+      cookie_openstreemap_desc: "Utilisé par le logiciel de cartographie open source et ami Open Street Map (qui permet l'affichage de la carte sur La Belle Orange) pour assurer qu'il ne reçoit pas trop de requêtes sur un laps de temps déterminé, et éviter ainsi les risques d'abus de leurs services."
+      cookie_stripe_desc: "Utilisé par le terminal de payement en ligne Stripe (proposé aux utilisateurs de La Belle Orange) https://stripe.com/fr/cookies-policy/legal. Même si toutes les boutiques n'utilisent pas Stripe, c'est une bonne pratique en matière de sécurité d'appliquer ce cookie sur toutes les pages vues. Stripe construit probablement une image des pages qui ont un quelconque lien avec l'API connectant La Belle Orange à leur système de paiement pour détecter les comportements anormaux pouvant suggérer un risque de fraude. Donc ce cookie a un rôle qui va au-delà de la simple fourniture d'un système de paiement. Le supprimer pourrait affecter la sécurité du service. Pour en savoir plus sur la politique de confidentialité de Stripe: https://stripe.com/fr/privacy."
       statistics_cookies: "Cookies d'analyse de navigation"
       statistics_cookies_desc: "Ces cookies ne sont pas obligatoires, mais nous permettent de mieux comprendre votre usage de la plateforme, les endroits où vous bloquez, les fonctionnalités qui semblent vous manquer, ou que vous n'utilisez jamais, afin de fournir le service le plus adapté possible aux besoins des utilisateurs."
       statistics_cookies_matomo_desc_html: "Pour analyser les données concernant votre usage de la plateforme, nous utilisons <a href='https://matomo.org/' target='_blank'>Matomo</a>(anciennement Piwik), outil d'analyse open source compatible RGPD et engagé sur le respect de la vie privée des utilisateurs."
@@ -1873,12 +1873,12 @@ fr:
       cookie_matomo_heatmap_desc: "Utilisé par Matomo pour enregistrer les sessions et \"cartes thermiques\" (représentations graphiques des données)"
       cookie_matomo_ignore_desc: "Cookie utilisé pour se souvenir qu'un utilisateur a souhaité explicitement que sa navigation ne soit pas analysée par Matomo, et exclure cet utilisateur du suivi du site."
       disabling_cookies_header: "Mises en garde sur la désactivation des cookies"
-      disabling_cookies_desc: "En tant qu'utilisateur, vous pouvez toujours autoriser, bloquer ou supprimer tous les cookies utilisés par Labelleorange ou tout autre site web via les paramètres de votre navigateur. Chaque navigateur a un chemin spécifique pour effectuer cette désactivation :"
+      disabling_cookies_desc: "En tant qu'utilisateur, vous pouvez toujours autoriser, bloquer ou supprimer tous les cookies utilisés par La Belle Orange ou tout autre site web via les paramètres de votre navigateur. Chaque navigateur a un chemin spécifique pour effectuer cette désactivation :"
       disabling_cookies_firefox_link: "https://support.mozilla.org/fr/kb/activer-desactiver-cookies-preferences"
       disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647?hl=fr"
       disabling_cookies_ie_link: "https://support.microsoft.com/fr-fr/help/17442/windows-internet-explorer-delete-manage-cookies"
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/fr-ww/cookies/"
-      disabling_cookies_note: "Mais gardez bien en tête que si vous supprimez ou modifiez un des cookies essentiels utilisés par Labelleorange, le site ne fonctionnera pas correctement, vous ne pourrez pas ajouter des produits à votre panier ni finaliser votre commande par exemple."
+      disabling_cookies_note: "Mais gardez bien en tête que si vous supprimez ou modifiez un des cookies essentiels utilisés par La Belle Orange, le site ne fonctionnera pas correctement, vous ne pourrez pas ajouter des produits à votre panier ni finaliser votre commande par exemple."
     cookies_banner:
       cookies_usage: "Ce site utilise des cookies pour rendre votre navigation fluide et sécurisée, et nous aider à comprendre l'usage que vous faites de la plateforme afin d'améliorer les fonctionnalités offertes."
       cookies_definition: "Les cookies sont de tout petits fichiers texte qui sont stockés sur votre ordinateur quand vous naviguez sur certains sites web."
@@ -1888,9 +1888,9 @@ fr:
       cookies_accept_button: "Accepter les cookies"
   home_shop: Faire mes courses
   brandstory_headline: "Les circuits courts connectés"
-  brandstory_intro: "Labelleorange est une plateforme libre, cogérée et accessible à tous."
-  brandstory_part1: "Le service proposé est basé sur le logiciel libre Open Food Network. Les organisateurs de circuits courts qui utilisent la plateforme décident ensemble des évolutions à apporter au logiciel, et gèrent conjointement l’activité de la coopérative Labelleorange. Ils décident notamment du prix qu’ils paieront pour utiliser cette plateforme."
-  brandstory_part2: "Afin de permettre à tout type d’initiative de circuit court de fonctionner efficacement, les offres proposées s’adaptent à la diversité des modèles économiques : que vous gériez un groupement d’achat bénévolement, ou pilotiez une entreprise familiale de distribution, Labelleorange vous accompagne :-)"
+  brandstory_intro: "La Belle Orange est une plateforme libre, cogérée et accessible à tous."
+  brandstory_part1: "Le service proposé est basé sur le logiciel libre Open Food Network. Les organisateurs de circuits courts qui utilisent la plateforme décident ensemble des évolutions à apporter au logiciel, et gèrent conjointement l’activité de la coopérative La Belle Orange. Ils décident notamment du prix qu’ils paieront pour utiliser cette plateforme."
+  brandstory_part2: "Afin de permettre à tout type d’initiative de circuit court de fonctionner efficacement, les offres proposées s’adaptent à la diversité des modèles économiques : que vous gériez un groupement d’achat bénévolement, ou pilotiez une entreprise familiale de distribution, La Belle Orange vous accompagne :-)"
   brandstory_part3: " "
   brandstory_part4: " "
   brandstory_part5_strong: " "
@@ -2018,7 +2018,7 @@ fr:
       platform_terms_of_service:
         message_html: "J'accepte les %{tos_link}."
       all_terms_and_conditions:
-        message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de Labelleorange."
+        message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de La Belle Orange."
         terms_and_conditions: "CGU & CGV"
       submit: Valider ma commande
       cancel: Retour à la méthode de paiement
@@ -2067,7 +2067,7 @@ fr:
   email_confirmation_click_link: "Veuillez cliquer sur le lien ci-dessous pour confirmer votre email et continuer la configuration de votre compte."
   email_confirmation_link_label: "Confirmer cette adresse email »"
   email_confirmation_help_html: "Après confirmation de votre email, vous pourrez accéder au compte d'administration de cette entreprise. Voir %{link} pour en savoir plus à propos de %{sitename} et commencer à utiliser votre profil et/ou boutique en ligne."
-  email_confirmation_notice_unexpected: "Vous recevez ce message car vous vous êtes inscrit sur %{sitename}, ou avez été invité à vous inscrire par l'un de vos contacts. Si vous ne comprenez pas pourquoi vous recevez ce message, écrivez à bonjour@Labelleorange.es."
+  email_confirmation_notice_unexpected: "Vous recevez ce message car vous vous êtes inscrit sur %{sitename}, ou avez été invité à vous inscrire par l'un de vos contacts. Si vous ne comprenez pas pourquoi vous recevez ce message, écrivez à bonjour@La Belle Orange.es."
   email_social: "Nous suivre:"
   email_contact: "Nous écrire:"
   email_signoff: "Cordialement,"
@@ -2121,8 +2121,8 @@ fr:
   email_signup_welcome: "Bienvenue sur %{sitename} !"
   email_signup_confirmed_email: "Merci d'avoir confirmé votre email."
   email_signup_shop_html: "Vous pouvez maintenant vous connecter sur %{link}."
-  email_signup_text: "Si vous organisez / fournissez un circuit court, n’hésitez pas à nous contacter à bonjour@Labelleorange.es, nous sommes là pour vous accompagner dans la création de votre espace de vente / commande en ligne. Si vous achetez via un circuit court utilisant Labelleorange, connectez-vous avant de passer commande pour que vos informations personnelles soient gardées en mémoire, cela vous évitera de les ressaisir à chaque commande ! "
-  email_signup_help_html: "Des retours à nous faire quant à votre utilisation de la plateforme ? Écrivez-nous à bonjour@Labelleorange.es."
+  email_signup_text: "Si vous organisez / fournissez un circuit court, n’hésitez pas à nous contacter à bonjour@La Belle Orange.es, nous sommes là pour vous accompagner dans la création de votre espace de vente / commande en ligne. Si vous achetez via un circuit court utilisant La Belle Orange, connectez-vous avant de passer commande pour que vos informations personnelles soient gardées en mémoire, cela vous évitera de les ressaisir à chaque commande ! "
+  email_signup_help_html: "Des retours à nous faire quant à votre utilisation de la plateforme ? Écrivez-nous à bonjour@La Belle Orange.es."
   invite_email:
     greeting: "Bonjour,"
     invited_to_manage: "Vous avez été invité(e) à gérer %{enterprise} sur %{instance}."
@@ -2206,13 +2206,13 @@ fr:
   products_no_results_html: "Nous sommes navrés, mais aucun résultat n'a été trouvé pour %{query}"
   products_clear_search: "Annuler la recherche"
   search_no_results_html: "Désolé, aucun résultat pour %{query}. Autre recherche?"
-  components_profiles_popover: "Certaines entreprises ont juste créé leur profil sur Labelleorange mais ne vendent pas via la plateforme. Elles ont peut-être une boutique physique, ou une boutique en ligne sur une autre plateforme."
+  components_profiles_popover: "Certaines entreprises ont juste créé leur profil sur La Belle Orange mais ne vendent pas via la plateforme. Elles ont peut-être une boutique physique, ou une boutique en ligne sur une autre plateforme."
   components_profiles_show: "Afficher aussi les profils"
   components_filters_nofilters: "Pas de filtre"
   components_filters_clearfilters: "Vider les filtres"
   groups_title: Groupes
   groups_headline: Groupes
-  groups_text: "Un groupe sur Labelleorange est une page permettant de communiquer sur un collectif particulier (de producteurs, réseau de distributeurs d’un même projet et producteurs associés, etc.) Il comprend une présentation du groupe, une carte permettant de visualiser géographiquement les membres, ainsi que des onglets pour un accès rapide aux boutiques et producteurs du groupe."
+  groups_text: "Un groupe sur La Belle Orange est une page permettant de communiquer sur un collectif particulier (de producteurs, réseau de distributeurs d’un même projet et producteurs associés, etc.) Il comprend une présentation du groupe, une carte permettant de visualiser géographiquement les membres, ainsi que des onglets pour un accès rapide aux boutiques et producteurs du groupe."
   groups_search: "Recherche par nom ou mot-clé"
   groups_no_groups: "Aucun groupe trouvé"
   groups_about: "A propos"
@@ -2241,7 +2241,7 @@ fr:
   groups_signup_studies: Histoires de réseaux
   groups_signup_contact: Vous souhaitez créer votre module groupe ?
   groups_signup_contact_text: "Cette fonctionnalité n’est pas encore automatisée. Prenez contact avec nous pour créer votre groupe."
-  groups_signup_detail: "Les avantages Labelleorange"
+  groups_signup_detail: "Les avantages La Belle Orange"
   login_invalid: "Email ou mot de passe erroné"
   producers_about: A propos
   producers_buy: Acheter
@@ -2256,13 +2256,13 @@ fr:
   producers_headline: Trouvez un producteur local
   producers_signup_title: S'inscrire en tant que producteur
   producers_signup_headline: 'Producteurs : gérez vos ventes directes'
-  producers_signup_motivation: Vendez vos produits en direct et en ligne via votre boutique producteur. Gagnez du temps sur la gestion de votre commercialisation grâce à Labelleorange, votre partenaire coopératif et engagé !
+  producers_signup_motivation: Vendez vos produits en direct et en ligne via votre boutique producteur. Gagnez du temps sur la gestion de votre commercialisation grâce à La Belle Orange, votre partenaire coopératif et engagé !
   producers_signup_send: S'inscrire
-  producers_signup_enterprise: Labelleorange vous simplifie la vie
+  producers_signup_enterprise: La Belle Orange vous simplifie la vie
   producers_signup_studies: Histoires de producteurs
   producers_signup_cta_headline: Rejoindre le réseau
   producers_signup_cta_action: S'inscrire
-  producers_signup_detail: Les avantages Labelleorange
+  producers_signup_detail: Les avantages La Belle Orange
   products_item: Produit
   products_description: Description
   products_variant: Variante
@@ -2273,7 +2273,7 @@ fr:
   name_or_sku: "NOM OU REF PRODUIT"
   register_title: S'inscrire
   sell_title: "En savoir plus"
-  sell_headline: "Gérez vos ventes en ligne avec Labelleorange"
+  sell_headline: "Gérez vos ventes en ligne avec La Belle Orange"
   sell_motivation: "3 options pour interagir avec vos acheteurs"
   sell_producers: "Boutique producteur"
   sell_hubs: "Boutique multi-producteurs"
@@ -2282,21 +2282,21 @@ fr:
   sell_hubs_detail: "Vous organisez des distributions de produits en provenance de plusieurs producteurs (drive fermier, groupement d’achat…) ? Créez le profil de votre initiative, et ouvrez votre boutique multi-producteurs."
   sell_groups_detail: "Vous gérez un collectif et souhaitez communiquer sur l’ensemble des membres qui le composent ? Créez une page groupe."
   sell_user_guide: "En savoir plus en explorant le guide utilisateur."
-  sell_listing_price: "Créez gratuitement votre profil sur Labelleorange pour être visible auprès des visiteurs et membres du réseau. L’utilisation de Labelleorange pour vendre en ligne (boutique) est payante après une période d’essai de 3 mois. Voir le lien “nos offres” en bas de page pour en savoir plus."
-  sell_embed: "Nous pouvons aussi intégrer votre boutique Labelleorange dans votre propre site web ou construire pour vous un site de vente en ligne s’appuyant sur une boutique Labelleorange."
+  sell_listing_price: "Créez gratuitement votre profil sur La Belle Orange pour être visible auprès des visiteurs et membres du réseau. L’utilisation de La Belle Orange pour vendre en ligne (boutique) est payante après une période d’essai de 3 mois. Voir le lien “nos offres” en bas de page pour en savoir plus."
+  sell_embed: "Nous pouvons aussi intégrer votre boutique La Belle Orange dans votre propre site web ou construire pour vous un site de vente en ligne s’appuyant sur une boutique La Belle Orange."
   sell_ask_services: "Nous consulter pour en savoir plus."
   shops_title: Boutiques
   shops_headline: Je vote avec mes achats.
   shops_text: Trouvez des circuits de distribution pour vous approvisionner près de chez vous en bio/local/éthique.
   shops_signup_title: S'inscrire et créer une boutique multi-producteurs
   shops_signup_headline: Des circuits courts offrant une large gamme de produits
-  shops_signup_motivation: 'Que vous soyez vous-même producteur, ou que vous gériez un groupement d’achat, un drive ou autre circuit court, proposez à la vente des produits venant de différents producteurs via votre boutique multi-producteurs. Gagnez du temps sur la gestion de votre commercialisation grâce à Labelleorange, votre partenaire coopératif et engagé ! '
+  shops_signup_motivation: 'Que vous soyez vous-même producteur, ou que vous gériez un groupement d’achat, un drive ou autre circuit court, proposez à la vente des produits venant de différents producteurs via votre boutique multi-producteurs. Gagnez du temps sur la gestion de votre commercialisation grâce à La Belle Orange, votre partenaire coopératif et engagé ! '
   shops_signup_action: S'inscrire
-  shops_signup_pricing: Labelleorange vous simplifie la vie
+  shops_signup_pricing: La Belle Orange vous simplifie la vie
   shops_signup_stories: Histoires de circuits courts
   shops_signup_help: Rejoindre le réseau
   shops_signup_help_text: Créez votre profil distributeur, et dès que vous êtes prêt, changez de formule pour ouvrir votre boutique en ligne.
-  shops_signup_detail: Les avantages Labelleorange
+  shops_signup_detail: Les avantages La Belle Orange
   orders: "Commandes"
   orders_fees: "Frais..."
   orders_edit_title: "Panier"
@@ -2408,9 +2408,9 @@ fr:
         registration_promo_image: "Une image bannière pour votre profil"
         registration_about_us: "Un texte \"A propos\""
         registration_outcome_headline: "Qu'est-ce que ça m'apporte?"
-        registration_outcome1_html: "Votre profil permet aux gens de vous <strong>trouver</strong> et de vous <strong>contacter</strong> via Labelleorange."
+        registration_outcome1_html: "Votre profil permet aux gens de vous <strong>trouver</strong> et de vous <strong>contacter</strong> via La Belle Orange."
         registration_outcome2: "N’hésitez pas à raconter l'histoire de votre entreprise et à mettre des images : un profil complété donne plus de chances d’être contacté !"
-        registration_outcome3: "C'est aussi le premier pas avant de pouvoir ouvrir une boutique producteur ou multi-producteurs et organiser vos ventes via Labelleorange."
+        registration_outcome3: "C'est aussi le premier pas avant de pouvoir ouvrir une boutique producteur ou multi-producteurs et organiser vos ventes via La Belle Orange."
         registration_action: "Démarrons !"
       details:
         title: "Informations"
@@ -2465,7 +2465,7 @@ fr:
         title: "A propos"
         headline: "Vous y êtes presque !"
         message: "Le profil entreprise est en passe d’être créé mais il est pour l’instant vide :-( Pour apparaître proprement sur la carte, ajoutez les éléments demandés dans les écrans suivants concernant"
-        success: " %{enterprise} a bien été ajoutée à Labelleorange. Attention, vous apparaîtrez publiquement sur la plateforme uniquement lorsque vous aurez choisi votre catégorie d'entreprise (profil, boutique, boutique multi-producteus). Vous serez invité.e à la choisir dans le dernier écran."
+        success: " %{enterprise} a bien été ajoutée à La Belle Orange. Attention, vous apparaîtrez publiquement sur la plateforme uniquement lorsque vous aurez choisi votre catégorie d'entreprise (profil, boutique, boutique multi-producteus). Vous serez invité.e à la choisir dans le dernier écran."
         registration_exit_message: "Si vous quittez ce module, vous pourrez continuer la création de votre profil à tout moment via l’interface d’administration, en vous connectant puis en cliquant sur Profil > Administration."
         enterprise_description: "Description (en bref)"
         enterprise_description_placeholder: "Une phrase pour décrire votre organisation"
@@ -2505,7 +2505,7 @@ fr:
         enterprise_final_step: "Dernière étape"
         enterprise_social_text: "Comment trouver %{enterprise} sur le web ?"
         website: "Site internet"
-        website_placeholder: "ex: Labelleorange.es"
+        website_placeholder: "ex: La Belle Orange.es"
         facebook: "Facebook"
         facebook_placeholder: "ex: www.facebook.com/NomDeLaPage"
         linkedin: "LinkedIn"
@@ -2522,7 +2522,7 @@ fr:
       finished:
         headline: "C'est terminé !"
         thanks: "Merci d'avoir complété le profil de %{enterprise}"
-        login: "Vous pouvez modifier ou mettre à jour les détails de votre entreprise à tout moment en vous connectant sur Labelleorange, rubrique Admin."
+        login: "Vous pouvez modifier ou mettre à jour les détails de votre entreprise à tout moment en vous connectant sur La Belle Orange, rubrique Admin."
         action: "Aller vers le tableau de bord"
   back: "Retour"
   continue: "Suivant"
@@ -2707,8 +2707,8 @@ fr:
   shipping_method: "Méthode de livraison"
   new_order: "Nouvelle commande"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
-  enterprise_tos_message: "Nous soutenons la mise en place d'un système de distribution résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux organisations s'enregistrant sur Labelleorange de valider nos "
-  enterprise_tos_agree: "Je valide les Conditions Générales d'Utilisation et de vente de Labelleorange."
+  enterprise_tos_message: "Nous soutenons la mise en place d'un système de distribution résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux organisations s'enregistrant sur La Belle Orange de valider nos "
+  enterprise_tos_agree: "Je valide les Conditions Générales d'Utilisation et de vente de La Belle Orange."
   tax_settings: "Paramètres TVA"
   products_require_tax_category: "vous devez choisir la TVA applicable"
   admin_shared_address_1: "Adresse"
@@ -2990,7 +2990,7 @@ fr:
   enterprise_fees_update_notice: Les marges et commissions de votre entreprise ont été mises à jour.
   enterprise_register_package_error: "Veuillez choisir une option"
   enterprise_register_error: "L'inscription a échoué pour %{enterprise}"
-  enterprise_register_success_notice: "Bravo ! L'entreprise %{enterprise} est maintenant inscrite sur Labelleorange :-)"
+  enterprise_register_success_notice: "Bravo ! L'entreprise %{enterprise} est maintenant inscrite sur La Belle Orange :-)"
   enterprise_bulk_update_success_notice: "Entreprises mises à jour avec succès"
   enterprise_bulk_update_error: 'Echec dans la mise à jour'
   enterprise_shop_show_error: "La boutique que vous recherchez n'existe pas ou est inactive. Veuillez sélectionner une boutique depuis la liste ci-dessous."
@@ -3123,7 +3123,7 @@ fr:
           profile_only_text3: >
               Vous pourrez renseigner votre catalogue produits et le partager avec
               les circuits courts qui souhaitent vendre vos produits dans leur boutique
-              sur Labelleorange.
+              sur La Belle Orange.
           producer_shop: Boutique Producteur
           producer_shop_text1: >
               Vous pourrez paramétrer votre boutique en ligne pour l’adapter à vos
@@ -3133,16 +3133,16 @@ fr:
           producer_shop_text2: >
               Vous pourrez renseigner votre catalogue produits et le partager avec
               d’autres circuits courts qui souhaitent vendre vos produits dans leur
-              boutique sur Labelleorange.
+              boutique sur La Belle Orange.
 
               ATTENTION :
 
               - Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser
-              Labelleorange pour organiser vos ventes / commandes, choisissez la catégorie
+              La Belle Orange pour organiser vos ventes / commandes, choisissez la catégorie
               “profil simple”.
 
-              - Si vous fournissez un circuit court utilisant Labelleorange pour vendre,
-              mais ne vendez pas vous-même en direct sur Labelleorange, choisissez
+              - Si vous fournissez un circuit court utilisant La Belle Orange pour vendre,
+              mais ne vendez pas vous-même en direct sur La Belle Orange, choisissez
               la catégorie “profil simple”.
           producer_hub: Boutique multi-producteurs
           producer_hub_text1: >
@@ -3153,16 +3153,16 @@ fr:
           producer_hub_text2: >
               Vous pourrez renseigner votre catalogue produits et le partager avec
               d’autres circuits courts qui souhaitent vendre vos produits dans leur
-              boutique sur Labelleorange.
+              boutique sur La Belle Orange.
           producer_hub_text3: >
               ATTENTION :
 
               - Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser
-              Labelleorange pour organiser vos ventes / commandes, choisissez la catégorie
+              La Belle Orange pour organiser vos ventes / commandes, choisissez la catégorie
               “profil simple”.
 
-              - Si vous fournissez un circuit court utilisant Labelleorange pour vendre,
-              mais ne vendez pas vous-même en direct sur Labelleorange, choisissez
+              - Si vous fournissez un circuit court utilisant La Belle Orange pour vendre,
+              mais ne vendez pas vous-même en direct sur La Belle Orange, choisissez
               la catégorie “profil simple”.
           get_listing: Pour apparaître sur la carte
           always_free: ' '
@@ -3177,11 +3177,11 @@ fr:
           producer_text2: >
               Un producteur peut aussi avoir d'autres rôles, comme par exemple stocker
               et distribuer des produits d'autres producteurs à travers une boutique
-              sur Labelleorange.
+              sur La Belle Orange.
           non_producer: Non-producteur
           non_producer_text1: >
               Les entreprises qui ne produisent pas ne peuvent pas créer leur propre
-              catalogue produits pour les vendre sur Labelleorange.
+              catalogue produits pour les vendre sur La Belle Orange.
           non_producer_text2: >
               Ces entreprises vont plutôt faire le lien entre des producteurs et des
               mangeurs/restaurateurs, en proposant un modèle opérationnel pour agréger,
@@ -3387,7 +3387,7 @@ fr:
       users:
         order: "Commande"
     registration:
-      welcome_to_ofn: "Bienvenue sur Labelleorange !"
+      welcome_to_ofn: "Bienvenue sur La Belle Orange !"
       signup_or_login: "Commencez par vous inscrire (ou connexion) "
       have_an_account: "Déjà inscrit?"
       action_login: "Se connecter."
@@ -3987,7 +3987,7 @@ fr:
           order_total: "Total Commande"
       overview:
         enterprises_header:
-          ofn_with_tip: Les Entreprises sont les entités qui organisent des circuits courts et utilisent pour cela Labelleorange.
+          ofn_with_tip: Les Entreprises sont les entités qui organisent des circuits courts et utilisent pour cela La Belle Orange.
         enterprise_row:
           has_no_enterprise_fees: "n'a pas de marge ou commission"
           has_no_payment_methods: "n'a pas de méthode de paiement"
@@ -4311,7 +4311,7 @@ fr:
         subject: "Veuillez confirmer votre compte"
     payment_mailer:
       authorize_payment:
-        subject: "Veuillez autoriser votre paiement à %{distributor} sur Labelleorange."
+        subject: "Veuillez autoriser votre paiement à %{distributor} sur La Belle Orange."
         instructions: "Votre paiement de %{amount} à %{distributor} demande une autorisation additionnelle. Veuillez suivre ce lien afin d'autoriser votre paiement :"
       authorization_required:
         subject: "Un paiement nécessite une autorisation de l'acheteur"
@@ -4544,27 +4544,27 @@ fr:
   contact_second_title: "Whether you have a question, a suggestion, or just want to share your love for fruits, we'd love to hear from you!"
 
   about_hero_text_first: " "
-  about_hero_text: "Welcome to Labelleorange – Where Nature's Finest Thrives!"
+  about_hero_text: "Welcome to La Belle Orange – Where Nature's Finest Thrives!"
   about_secondhead: "What we do"
-  about_third_section_hero: "The Labelleorange is a global network of people and organisations working together to build a new food system."
-  about_secondhead_description: "In the heart of Labelleorange, a profound sense of pride envelops us, for we have assumed the role of masterful orchestrators conducting a symphony of nature's finest offerings. Just as a conductor wields a baton to guide the musicians in perfect harmony, we, too, guide the intricate dance between the hands that lovingly sow and nurture, the vibrant markets that artfully showcase, and the passionate enthusiasts who wholeheartedly relish in the sumptuous richness bestowed by the earth."
+  about_third_section_hero: "The La Belle Orange is a global network of people and organisations working together to build a new food system."
+  about_secondhead_description: "In the heart of La Belle Orange, a profound sense of pride envelops us, for we have assumed the role of masterful orchestrators conducting a symphony of nature's finest offerings. Just as a conductor wields a baton to guide the musicians in perfect harmony, we, too, guide the intricate dance between the hands that lovingly sow and nurture, the vibrant markets that artfully showcase, and the passionate enthusiasts who wholeheartedly relish in the sumptuous richness bestowed by the earth."
   about_secondhead_title: "What we do"
   about_history_title: "Our History"
-  about_history_description: "Labelleorange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, Labelleorange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
+  about_history_description: "La Belle Orange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, La Belle Orange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
 
 At the core of everything we do is a belief that creating a new food system requires a new way of operating. This is why we create open source solutions, communicate with transparency, and hold everything we create as part of the Commons – it doesn’t belong to a single entity, but instead to a community.
 
  To use the software platform for selling food, it needs to be operating in your area. "
   about_secondhead: "What we do"
 
-  legal_notice_title: "Legal Notice"
-  legal_notice_description: "Labelleorange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, Labelleorange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
+  legal_notice_title: "Mentions Légales"
+  legal_notice_description: "La Belle Orange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, La Belle Orange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
 
 At the core of everything we do is a belief that creating a new food system requires a new way of operating. This is why we create open source solutions, communicate with transparency, and hold everything we create as part of the Commons – it doesn’t belong to a single entity, but instead to a community.
 
  To use the software platform for selling food, it needs to be operating in your area. "
   confidentiality_title: "Confidentiality"
-  confidentiality_description: "Labelleorange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, Labelleorange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
+  confidentiality_description: "La Belle Orange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, La Belle Orange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
 
 At the core of everything we do is a belief that creating a new food system requires a new way of operating. This is why we create open source solutions, communicate with transparency, and hold everything we create as part of the Commons – it doesn’t belong to a single entity, but instead to a community.
 
@@ -4575,14 +4575,14 @@ Sauf accord explicite avec un Acheteur professionnel, les frais de livraison son
 Les dates de livraison sont indiquées sur la page du, ou des points de distribution qui vous intéressent. Vous recevrez par ailleurs régulièrement des emails qui vous permettront de vous tenir informés des dates de livraison sur les points de distribution indiqués.
 Notez que La Belle Orange est un petit réseau, essentiellement organisé autour du bénévolat de la confiance. Lorsque vous commandez des produits, vous vous engagez à vous rendre sur le point de distribution à la date et sur le créneau horaire indiqué pour payer et retirer vos produits.
 Nos produits étant essentiellement des produits frais, nous n’organisons pas de retours de commande. Mais si des fruits devaient vous arriver abîmés (car comme vous le savez, nos produits sont exempts de tout produit ou procédé de conservation artificiel), nous nous engageons à vous faire un avoir à hauteur de la quantité perdue, ou à vous faire un remboursement par virement bancaire, ou à vous renvoyer les fruits sur le prochain cycle de commande, selon vos préférences.
-En cas de problème, vous pouvez toujours nous contacter à fruits(arobase)labelleorange.es, nous vous répondrons dans les meilleurs délais.
+En cas de problème, vous pouvez toujours nous contacter à fruits(arobase)La Belle Orange.es, nous vous répondrons dans les meilleurs délais.
 "
 
   vision_title: "Our Vision"
-  vision_description: "Our vision at Labelleorange transcends mere commerce."
+  vision_description: "Our vision at La Belle Orange transcends mere commerce."
 
   whatwedo_title: "What We Do"
-  whatwedo_description: "At Labelleorange, we don't just move fruit we curate experiences."
+  whatwedo_description: "At La Belle Orange, we don't just move fruit we curate experiences."
 
   ourpromise_title: "Our Promise"
   ourpromise_description: "Our promise isn't just about fruits it's about cultivating trust."
