@@ -287,6 +287,54 @@ describe Admin::EnterprisesController, type: :controller do
           end
         end
       end
+
+      describe "vouchers" do
+        let(:enterprise) { create(:distributor_enterprise) }
+        let!(:voucher_a) { create(:voucher, enterprise: enterprise, code: "voucher 1") }
+        let!(:voucher_b) { create(:voucher, enterprise: enterprise, code: "voucher 2") }
+
+        before do
+          controller_login_as_enterprise_user [enterprise]
+        end
+
+        it "activates checked vouchers" do
+          voucher_b.destroy
+
+          spree_put :update,
+                    id: enterprise,
+                    enterprise: {
+                      voucher_ids: [voucher_a.id.to_s, voucher_b.id.to_s]
+                    }
+
+          expect(voucher_b.reload.deleted?).to be(false)
+        end
+
+        it "deactivates unchecked vouchers" do
+          spree_put :update,
+                    id: enterprise,
+                    enterprise: {
+                      voucher_ids: [voucher_b.id.to_s]
+                    }
+
+          expect(voucher_a.reload.deleted?).to be(true)
+        end
+
+        context "when activating and deactivating voucher at the same time" do
+          it "deactivates and activates accordingly" do
+            voucher_c = create(:voucher, enterprise: enterprise, code: "voucher 3")
+            voucher_c.destroy
+
+            spree_put :update,
+                      id: enterprise,
+                      enterprise: {
+                        voucher_ids: [voucher_a.id.to_s, voucher_c.id.to_s]
+                      }
+
+            expect(enterprise.vouchers.reload).to include(voucher_c)
+            expect(enterprise.vouchers.reload.only_deleted).to include(voucher_b)
+          end
+        end
+      end
     end
 
     context "as owner" do

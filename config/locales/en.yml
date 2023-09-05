@@ -1236,6 +1236,7 @@ en:
           use_limit: Use/Limit
           customers: Customer
           net_value: Net Value
+          active: Active? 
           add_new: Add New
           no_voucher_yet: No Vouchers yet
         white_label:

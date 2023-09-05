@@ -63,6 +63,7 @@ module Admin
       tag_rules_attributes = params[object_name].delete :tag_rules_attributes
       update_tag_rules(tag_rules_attributes) if tag_rules_attributes.present?
       update_enterprise_notifications
+      update_vouchers
 
       delete_custom_tab if params[:custom_tab] == 'false'
 
@@ -266,6 +267,20 @@ module Admin
       return unless user_id.positive? && @enterprise.user_ids.include?(user_id)
 
       @enterprise.update_contact(user_id)
+    end
+
+    def update_vouchers
+      return if params[:enterprise][:voucher_ids].blank?
+
+      params_voucher_ids = params[:enterprise][:voucher_ids].map(&:to_i)
+      voucher_ids = @enterprise.vouchers.map(&:id)
+      deleted_voucher_ids = @enterprise.vouchers.only_deleted.map(&:id)
+
+      vouchers_to_destroy = voucher_ids - params_voucher_ids
+      Voucher.where(id: vouchers_to_destroy).destroy_all if vouchers_to_destroy.present?
+
+      vouchers_to_restore = deleted_voucher_ids.intersection(params_voucher_ids)
+      Voucher.restore(vouchers_to_restore) if vouchers_to_restore.present?
     end
 
     def create_calculator_for(rule, attrs)
