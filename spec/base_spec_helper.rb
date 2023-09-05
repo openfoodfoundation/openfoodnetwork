@@ -102,8 +102,12 @@ RSpec.configure do |config|
   # Take example responses from Rswag specs for API documentation.
   # https://github.com/rswag/rswag#enable-auto-generation-examples-from-responses
   config.after(:each, :rswag_autodoc) do |example|
+    # Categories and group operations of the same API endpoint.
+    example.metadata[:operation][:tags] ||= [self.class.top_level_description]
+
     next if response&.body.blank?
 
+    # Include response as example in the documentation.
     example.metadata[:response][:content] ||= {}
     example.metadata[:response][:content].deep_merge!(
       {
