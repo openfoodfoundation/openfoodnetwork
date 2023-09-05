@@ -224,10 +224,11 @@ module Spree
         context "saving a new product" do
           let!(:product){ Spree::Product.new }
           let!(:shipping_category){ create(:shipping_category) }
+          let!(:taxon){ create(:taxon) }
 
           before do
             create(:stock_location)
-            product.primary_taxon_id = create(:taxon).id
+            product.primary_taxon_id = taxon.id
             product.supplier = create(:supplier_enterprise)
             product.name = "Product1"
             product.variant_unit = "weight"
@@ -243,6 +244,7 @@ module Spree
             standard_variant = product.variants.reload.first
             expect(standard_variant.price).to eq 4.27
             expect(standard_variant.shipping_category).to eq shipping_category
+            expect(standard_variant.primary_taxon).to eq taxon
           end
         end
 
