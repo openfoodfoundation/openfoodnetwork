@@ -22,7 +22,9 @@
   .clear
 
   .form-buttons.filter-actions.actions
-    = button Spree.t('actions.update'), 'icon-refresh'
+    = button_link_to t('actions.cancel'), spree.admin_orders_path, :icon => 'icon-remove'
+    = button_link_to t('actions.back'), spree.new_admin_order_url, icon: 'icon-arrow-left'
+    = button t('actions.update'), 'icon-refresh'
 
   - content_for :head do
     = javascript_include_tag 'admin/spree/orders/use_billing.js'
