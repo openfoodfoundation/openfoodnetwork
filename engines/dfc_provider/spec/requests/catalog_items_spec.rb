@@ -23,7 +23,7 @@ describe "CatalogItems", type: :request, swagger_doc: "dfc.yaml",
 
   before { login_as user }
 
-  path "/api/dfc-v1.7/enterprises/{enterprise_id}/catalog_items" do
+  path "/api/dfc/enterprises/{enterprise_id}/catalog_items" do
     parameter name: :enterprise_id, in: :path, type: :string
 
     get "List CatalogItems" do
@@ -77,7 +77,7 @@ describe "CatalogItems", type: :request, swagger_doc: "dfc.yaml",
     end
   end
 
-  path "/api/dfc-v1.7/enterprises/{enterprise_id}/catalog_items/{id}" do
+  path "/api/dfc/enterprises/{enterprise_id}/catalog_items/{id}" do
     parameter name: :enterprise_id, in: :path, type: :string
     parameter name: :id, in: :path, type: :string
 

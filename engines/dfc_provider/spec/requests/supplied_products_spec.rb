@@ -17,7 +17,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml",
 
   before { login_as user }
 
-  path "/api/dfc-v1.7/enterprises/{enterprise_id}/supplied_products" do
+  path "/api/dfc/enterprises/{enterprise_id}/supplied_products" do
     parameter name: :enterprise_id, in: :path, type: :string
 
     let(:enterprise_id) { enterprise.id }
@@ -36,7 +36,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml",
               '@type': "@id"
             },
           },
-          '@id': "http://test.host/api/dfc-v1.7/enterprises/6201/supplied_products/0",
+          '@id': "http://test.host/api/dfc/enterprises/6201/supplied_products/0",
           '@type': "dfc-b:SuppliedProduct",
           'dfc-b:name': "Apple",
           'dfc-b:description': "A delicious heritage apple",
@@ -84,7 +84,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml",
 
           dfc_id = json_response["@id"]
           expect(dfc_id).to match(
-            %r|^http://test\.host/api/dfc-v1\.7/enterprises/10000/supplied_products/[0-9]+$|
+            %r|^http://test\.host/api/dfc/enterprises/10000/supplied_products/[0-9]+$|
           )
 
           variant_id = dfc_id.split("/").last.to_i
@@ -102,7 +102,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml",
     end
   end
 
-  path "/api/dfc-v1.7/enterprises/{enterprise_id}/supplied_products/{id}" do
+  path "/api/dfc/enterprises/{enterprise_id}/supplied_products/{id}" do
     parameter name: :enterprise_id, in: :path, type: :string
     parameter name: :id, in: :path, type: :string
 

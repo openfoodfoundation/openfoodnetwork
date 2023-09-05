@@ -21,7 +21,7 @@ describe EnterpriseBuilder do
 
     it "assigns a semantic id" do
       expect(result.semanticId).to eq(
-        "http://test.host/api/dfc-v1.7/enterprises/10000"
+        "http://test.host/api/dfc/enterprises/10000"
       )
     end
 

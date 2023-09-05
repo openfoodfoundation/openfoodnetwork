@@ -8,7 +8,7 @@ describe "Persons", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: true
 
   before { login_as user }
 
-  path "/api/dfc-v1.7/persons/{id}" do
+  path "/api/dfc/persons/{id}" do
     get "Show person" do
       parameter name: :id, in: :path, type: :string
       produces "application/json"

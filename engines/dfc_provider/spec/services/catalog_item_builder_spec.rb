@@ -13,7 +13,7 @@ describe DfcBuilder do
       item = DfcBuilder.catalog_item(variant)
 
       expect(item.semanticId).to eq(
-        "http://test.host/api/dfc-v1.7/enterprises/7/catalog_items/5"
+        "http://test.host/api/dfc/enterprises/7/catalog_items/5"
       )
     end
 
@@ -24,7 +24,7 @@ describe DfcBuilder do
       item = DfcBuilder.catalog_item(variant)
 
       expect(item.product.semanticId).to eq(
-        "http://test.host/api/dfc-v1.7/enterprises/7/supplied_products/5"
+        "http://test.host/api/dfc/enterprises/7/supplied_products/5"
       )
     end
   end

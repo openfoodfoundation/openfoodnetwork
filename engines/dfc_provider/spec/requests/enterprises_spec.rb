@@ -23,7 +23,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
 
   before { login_as user }
 
-  path "/api/dfc-v1.7/enterprises/{id}" do
+  path "/api/dfc/enterprises/{id}" do
     get "Show enterprise" do
       parameter name: :id, in: :path, type: :string
       produces "application/json"
