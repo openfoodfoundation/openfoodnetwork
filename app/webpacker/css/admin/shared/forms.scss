@@ -185,6 +185,9 @@ fieldset {
       -o-box-shadow: 0 0 0 15px $color-1;
       box-shadow: 0 0 0 15px $color-1;
 
+      min-height: 32px;
+      min-width: 90px;
+
       &:hover {
         border-color: $color-1;
       }

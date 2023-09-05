@@ -14,7 +14,10 @@
 
 %div{"ng-app" => "admin.orders", "ng-controller" => "orderCtrl"}
   = form_for @order, url: spree.admin_orders_path, method: :post do
-    = render 'spree/admin/orders/_form/distribution_fields'
-    = button_tag class: 'secondary radius expand small', id: 'update-button' do
-      %i.icon-arrow-right
-      = t(:next)
+    %fieldset.no-border-top
+      = render 'spree/admin/orders/_form/distribution_fields'
+      .filter-actions
+        = button_link_to Spree.t('actions.cancel'), spree.admin_orders_path, :icon => 'icon-remove'
+        = button_tag id: 'update-button' do
+          %i.icon-arrow-right
+          = t(:next)
