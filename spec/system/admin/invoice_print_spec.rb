@@ -29,7 +29,12 @@ describe '
 
   before do
     Capybara.current_driver = :rack_test
-    stub_request(:get, ->(uri) { uri.to_s.include? "/css/mail" })
+    # Ignore request for CSS pack like: 'http://www.example.com/packs-test/css/mail-1ab2dc7f.css'
+    VCR.configure do |config|
+      config.ignore_request do |request|
+        request.uri.to_s.include?('packs-test/css/mail')
+      end
+    end
   end
 
   after do
