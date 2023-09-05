@@ -234,6 +234,31 @@ paths:
                     "@type": "@id"
                 dfc-b:stockLimitation: '3'
                 dfc-b:sku: new-sku
+  "/api/dfc/enterprise_groups/{id}":
+    get:
+      summary: Show groups
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - EnterpriseGroups
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
+                    "@id": http://test.host/api/dfc/enterprise_groups/60000
+                    "@type": dfc-b:Enterprise
+                    dfc-b:hasName: Enterprise group
+                    dfc-b:hasDescription: this is a group
+                    dfc-b:VATnumber: ''
   "/api/dfc/enterprises/{id}":
     get:
       summary: Show enterprise

@@ -18,4 +18,12 @@ class EnterpriseBuilder < DfcBuilder
       e.addLocalization(address)
     end
   end
+
+  def self.enterprise_group(group)
+    DataFoodConsortium::Connector::Enterprise.new(
+      urls.enterprise_group_url(group.id),
+      name: group.name,
+      description: group.description,
+    )
+  end
 end
