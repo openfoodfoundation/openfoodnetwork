@@ -319,7 +319,7 @@ module Spree
       let(:product) { create(:simple_product) }
 
       describe "touching affected enterprises when the product is deleted" do
-        let(:product) { create(:simple_product) }
+        let(:product) { create(:simple_product, supplier: distributor) }
         let(:supplier) { product.supplier }
         let(:distributor) { create(:distributor_enterprise) }
         let!(:oc) {
