@@ -413,6 +413,32 @@ describe ProductImport::ProductImporter do
       expect(filter('invalid', entries)).to eq 0
       expect(filter('update_product', entries)).to eq 1
     end
+
+    context "updating tax category" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << ["name", "producer", "category", "on_hand", "price", "units",
+                  "unit_type", "display_name", "shipping_category", "tax_category"]
+          csv << ["Hypothetical Cake", enterprise2.name, "Cake", "123", "123",
+                  "500", "g", "Preexisting Banana", shipping_category.name, tax_category2.name]
+        end
+      }
+
+      it "allows updating tax category" do
+        importer.validate_entries
+
+        entries = JSON.parse(importer.entries_json)
+        expect(filter('valid', entries)).to eq 1
+        expect(filter('invalid', entries)).to eq 0
+        expect(filter('update_product', entries)).to eq 1
+
+        importer.save_entries
+
+        variant = Spree::Variant.find_by(display_name: "Preexisting Banana")
+        expect(variant.on_hand).to eq(123)
+        expect(variant.tax_category).to eq tax_category2
+      end
+    end
   end
 
   describe "updating variant having an nil display name with CSV with empty display name" do
