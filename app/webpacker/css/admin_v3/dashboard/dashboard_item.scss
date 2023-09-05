@@ -1,0 +1,240 @@
+div.dashboard_item {
+  margin-bottom: 30px;
+
+  .centered {
+    text-align: center;
+  }
+
+  .text-icon {
+    margin-top: 8px;
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    padding: 0px 6px;
+    border-radius: 10px;
+
+    &.green {
+      background-color: $spree-green;
+    }
+
+    &.red {
+      background-color: $color-warning;
+    }
+
+    &.orange {
+      background-color: $color-warning;
+    }
+  }
+
+  div.header {
+    height: 50px;
+    border-radius: 6px 6px 0px 0px;
+    border: 1px solid $spree-blue;
+    position: relative;
+
+    a[ofn-with-tip] {
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+    }
+
+    &.red {
+      border-color: $color-warning;
+      border-width: 3px;
+
+      h3 {
+        color: $color-warning;
+      }
+    }
+
+    &.orange {
+      border-color: $color-warning;
+      border-width: 3px;
+
+      h3 {
+        color: $color-warning;
+      }
+    }
+
+    h3.alpha {
+      height: 100%;
+      padding: 10px 5px 0px 3%;
+    }
+
+    a {
+      border-radius: 0px 4px 0px 0px;
+      height: 100%;
+      padding: 15px 2px 0px 2px;
+    }
+  }
+
+  .tabs {
+    height: 30px;
+    border: solid $spree-blue;
+    border-width: 0px 0px 1px 0px;
+    margin-top: 3px;
+
+    div.dashboard_tab {
+      cursor: pointer;
+      height: 30px;
+      color: #fff;
+      background-color: $spree-blue;
+      padding: 5px 5px 0px 5px;
+      text-align: center;
+      font-weight: bold;
+      border: solid $spree-blue;
+      border-width: 1px 1px 0px 1px;
+
+      &:hover {
+        background-color: $spree-green;
+      }
+
+      &.selected {
+        color: $spree-blue;
+        background-color: #fff;
+      }
+    }
+  }
+
+  .list {
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .list-title {
+    border: solid $spree-blue;
+    border-width: 0px 1px 0px 1px;
+
+    span {
+      font-size: 105%;
+      padding: 10px 0px;
+      font-weight: bold;
+    }
+
+    span.alpha {
+      padding: 10px 2px 10px 5%;
+    }
+  }
+
+  .list-item {
+    border: solid $spree-blue;
+    border-width: 0px 1px 0px 1px;
+    height: 38px;
+
+    span.alpha {
+      font-weight: bold;
+      margin-left: -3px;
+      padding: 10px 2px 0px 5%;
+    }
+
+    span.omega {
+      padding-right: 13px;
+      margin-right: -3px;
+      text-align: right;
+    }
+
+    .icon-arrow-right {
+      padding-top: 6px;
+      font-size: 20px;
+    }
+
+    .icon-warning-sign {
+      color: $color-warning;
+      font-size: 30px;
+    }
+
+    .icon-remove-sign {
+      color: $color-warning;
+      font-size: 30px;
+    }
+
+    .icon-ok-sign {
+      color: $spree-green;
+      font-size: 30px;
+    }
+
+    &.orange {
+      color: $color-warning;
+      border: solid $color-warning;
+    }
+
+    &.red {
+      color: $color-warning;
+      border: solid $color-warning;
+    }
+
+    &.orange,
+    &.red {
+      border-width: 0px 3px 0px 3px;
+    }
+
+    &.even {
+      background-color: #fff;
+    }
+
+    &.odd {
+      background-color: $spree-light-blue;
+    }
+
+    &.even,
+    &.odd {
+      &:hover {
+        color: #ffffff;
+        background-color: $spree-green;
+
+        .icon-arrow-right {
+          color: #fff;
+        }
+
+        .icon-remove-sign {
+          color: #fff;
+        }
+
+        .icon-warning-sign {
+          color: #fff;
+        }
+
+        .icon-ok-sign {
+          color: #fff;
+        }
+
+        .text-icon {
+          &.green {
+            color: $spree-green;
+            background-color: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  a.button {
+    color: #fff;
+    font-size: 110%;
+    font-weight: bold;
+    text-align: center;
+
+    &.orange {
+      background-color: $color-warning;
+    }
+
+    &.blue {
+      background-color: $spree-blue;
+    }
+
+    &.red {
+      background-color: $color-warning;
+    }
+
+    &:hover {
+      background-color: $spree-green;
+    }
+
+    &.bottom {
+      border-radius: 0px 0px 6px 6px;
+      padding: 15px 15px;
+    }
+  }
+}
