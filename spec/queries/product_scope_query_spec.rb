@@ -30,7 +30,8 @@ describe ProductScopeQuery do
 
     it "filters results by product category" do
       subject = ProductScopeQuery
-        .new(current_api_user, { q: { primary_taxon_id_eq: taxon.id } }).bulk_products
+        .new(current_api_user, { q: { variants_primary_taxon_id_eq: taxon.id } })
+        .bulk_products
 
       expect(subject).to include(product, product2)
       expect(subject).not_to include(product3)
