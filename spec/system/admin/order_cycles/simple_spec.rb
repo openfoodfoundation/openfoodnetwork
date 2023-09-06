@@ -368,6 +368,47 @@ describe '
         end
       end
 
+      context "when variants are hidden via inventory settings" do
+        let(:oc) do
+          create(:simple_order_cycle, suppliers: [supplier_managed],
+                                      coordinator: distributor_managed,
+                                      distributors: [distributor_managed],
+                                      name: 'Order Cycle 1' )
+        end
+        let(:product) { create(:product, supplier: supplier_managed) }
+        let(:v1) { create(:variant, product: product ) }
+        let(:inventory_item_v1) {
+          create(:inventory_item, enterprise: distributor_managed, variant: v1, visible: false)
+        }
+        before do
+          # Incoming exchange
+          ex_in = oc.exchanges.where(sender_id: supplier_managed, receiver_id: distributor_managed,
+                                     incoming: true).first
+          ex_in.update(variant_ids: [v1.id])
+          ex_in.save!
+
+          # Outgoing exchange
+          ex_out = oc.exchanges.where(sender_id: distributor_managed,
+                                      receiver_id: distributor_managed, incoming: false).first
+          ex_out.update(variant_ids: [v1.id,])
+          v1.inventory_items = [inventory_item_v1]
+          ex_out.save!
+
+          # hide via inventory settings variant v1
+          supplier_managed.update preferred_product_selection_from_inventory_only: true
+          oc.update prefers_product_selection_from_coordinator_inventory_only: false
+        end
+
+        it "shows a warning when going to 'outgoing products' tab" do
+          visit edit_admin_order_cycle_path(oc)
+          click_link "Outgoing Products"
+          within "tr.distributor-#{distributor_managed.id}" do
+            page.find("td.products").click
+          end
+          expect(page).to have_content "(Some variants might be hidden via inventory settings)"
+        end
+      end
+
       it "cloning an order cycle" do
         oc = create(:simple_order_cycle, coordinator: distributor_managed)
 
