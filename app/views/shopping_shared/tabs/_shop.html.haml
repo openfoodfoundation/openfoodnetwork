@@ -2,7 +2,7 @@
   = render partial: "shopping_shared/order_cycles"
 
 %div{"ng-controller" => "ProductsCtrl"}
-  - if no_open_order_cycles?
+  - if no_open_order_cycles?(@order_cycles)
     = render partial: "shop/messages/closed_shop"      
   - else
     = render partial: "shop/messages/select_oc"

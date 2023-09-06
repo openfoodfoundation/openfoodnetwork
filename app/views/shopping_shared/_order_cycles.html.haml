@@ -1,7 +1,7 @@
 - content_for :injection_data do
   = inject_current_order_cycle
 
-- unless no_open_order_cycles? || require_customer?
+- unless no_open_order_cycles?(@order_cycles) || require_customer?
   %ordercycle{"ng-controller" => "OrderCycleCtrl", "ng-cloak" => true,
     "ng-class" => "{'requires-selection': !OrderCycle.selected()}"}
     %form.custom

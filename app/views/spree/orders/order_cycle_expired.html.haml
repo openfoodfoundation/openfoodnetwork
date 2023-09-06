@@ -2,7 +2,7 @@
   = t :orders_oc_expired_headline
 
 %p
-  - if active_order_cycle_for_distributor? current_distributor
+  - if active_order_cycle_for_distributor? @distributor
     = t :orders_oc_expired_text_others_html, time: distance_of_time_in_words_to_now(@order_cycle.orders_close_at), link: link_to t(:orders_oc_expired_text_link), spree.clear_orders_path
   - else
     = t :orders_oc_expired_text, time: distance_of_time_in_words_to_now(@order_cycle.orders_close_at)

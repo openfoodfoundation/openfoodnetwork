@@ -55,10 +55,10 @@ module ApplicationHelper
     end
   end
 
-  def body_classes
+  def body_classes(hide_menu, shopfront_layout)
     classes = []
-    classes << "off-canvas" unless @hide_menu
-    classes << @shopfront_layout
+    classes << "off-canvas" unless hide_menu
+    classes << shopfront_layout
   end
 
   def pdf_stylesheet_pack_tag(source)
