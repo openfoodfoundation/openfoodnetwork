@@ -5,9 +5,9 @@
   = render partial: "shared/google_maps_js"
 
 - content_for :injection_data do
-  = inject_spree_api_key
+  = inject_spree_api_key(@spree_api_key)
   = inject_available_countries
-  = inject_enterprise_attributes
+  = inject_enterprise_attributes(@enterprise_attributes)
 
 - steps = %w{about contact details finished images introduction}
 - steps += %w{logo promo social steps type}

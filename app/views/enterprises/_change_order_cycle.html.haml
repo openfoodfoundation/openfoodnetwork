@@ -14,15 +14,15 @@
       .select-label
         %span= t :enterprises_ready_for
 
-      - if oc_select_options.count == 1
+      - if oc_select_options(@order_cycles).count == 1
         %p
-          = oc_select_options.first[:time]
+          = oc_select_options(@order_cycles).first[:time]
 
       - else
         %select.select2.avenir#order_cycle_id{"ng-model" => "order_cycle.order_cycle_id",
           "ofn-change-order-cycle" => true,
           "disabled" => require_customer?,
-          "ng-options" => "oc.id as oc.time for oc in #{oc_select_options.to_json}"}
+          "ng-options" => "oc.id as oc.time for oc in #{oc_select_options(@order_cycles).to_json}"}
 
-          - if oc_select_options.count > 1
+          - if oc_select_options(@order_cycles).count > 1
             %option{value: "", disabled: "", selected: ""}= t :shopping_oc_select

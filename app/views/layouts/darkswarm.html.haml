@@ -35,7 +35,7 @@
 
     = action_cable_meta_tag
 
-  %body{ class: body_classes, "body-scroll": "true", "data-turbo": "false" }
+  %body{ class: body_classes(@hide_menu, @shopfront_layout), "body-scroll": "true", "data-turbo": "false" }
     .off-canvas-wrap{ offcanvas: true }
       .fixed.off-canvas-fixed
         = render "shared/menu/menu" unless @hide_menu

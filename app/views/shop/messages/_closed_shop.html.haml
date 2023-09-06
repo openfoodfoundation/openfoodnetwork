@@ -16,7 +16,7 @@
   .small-12.columns
     .content
       .shopfront_closed_message
-      - if shopfront_closed_message?
+      - if shopfront_closed_message?(@order_cycles)
         = current_distributor.preferred_shopfront_closed_message.html_safe
       - else
         = t :shopping_oc_closed_description
