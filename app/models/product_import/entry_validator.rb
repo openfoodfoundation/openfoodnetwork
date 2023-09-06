@@ -68,7 +68,7 @@ module ProductImport
 
     def mark_as_new_variant(entry, product_id)
       variant_attributes = entry.assignable_attributes.except(
-        'id', 'product_id', 'on_hand', 'on_demand', 'variant_unit', 'variant_unit_name',
+        'id', 'product_id', 'on_hand', 'on_demand', 'variant_unit_name',
         'variant_unit_scale', 'primary_taxon_id'
       )
       # Variant needs a product. Product needs to be assigned first in order for

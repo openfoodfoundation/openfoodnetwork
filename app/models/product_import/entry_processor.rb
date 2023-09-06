@@ -185,6 +185,7 @@ module ProductImport
     def save_variant(entry)
       variant = entry.product_object
       variant.import_date = @import_time
+      variant.assign_units
 
       if variant.valid? && variant.save
         @updated_ids.push variant.id

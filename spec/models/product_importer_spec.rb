@@ -515,6 +515,55 @@ describe ProductImport::ProductImporter do
       big_sack = Spree::Variant.find_by(display_name: "Big Sack")
       expect(big_sack).to be_blank
     end
+
+    context "with unit type 'items'" do
+      let(:csv_data) {
+        CSV.generate do |csv|
+          csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                  "variant_unit_name", "shipping_category"]
+          csv << ["Potatoes", enterprise.name, "Vegetables", "5", "3.50", "1", "", "bag",
+                  shipping_category.name]
+          csv << ["Potatoes", enterprise.name, "Vegetables", "6", "5.50", "2", "", "bag",
+                  shipping_category.name]
+        end
+      }
+      let(:importer) { import_data csv_data }
+
+      it "validates entries" do
+        importer.validate_entries
+        entries = JSON.parse(importer.entries_json)
+
+        expect(filter('valid', entries)).to eq 2
+        expect(filter('invalid', entries)).to eq 0
+        expect(filter('create_product', entries)).to eq 2
+      end
+
+      it "saves and updates" do
+        importer.save_entries
+
+        expect(importer.products_created_count).to eq 2
+        expect(importer.updated_ids).to be_a(Array)
+        expect(importer.updated_ids.count).to eq 2
+
+        product = Spree::Product.find_by(name: "Potatoes")
+        small_bag = product.variants.first
+        big_bag = product.variants.last
+
+        expect(small_bag.product.name).to eq 'Potatoes'
+        expect(small_bag.price).to eq 3.50
+        expect(small_bag.on_hand).to eq 5
+        expect(small_bag.unit_value).to eq 1
+        expect(small_bag.variant_unit).to eq "items"
+        expect(small_bag.unit_presentation).to eq "1 bag"
+
+        expect(big_bag.product.name).to eq 'Potatoes'
+        expect(big_bag.price).to eq 5.50
+        expect(big_bag.on_hand).to eq 6
+        expect(big_bag.unit_value).to eq 2
+        expect(big_bag.variant_unit).to eq "items"
+        expect(big_bag.unit_presentation).to eq "2 bags"
+      end
+    end
   end
 
   describe "updating various fields" do
