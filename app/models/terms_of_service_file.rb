@@ -11,11 +11,7 @@ class TermsOfServiceFile < ApplicationRecord
   end
 
   def self.current_url
-    if current
-      Rails.application.routes.url_helpers.url_for(current.attachment)
-    else
-      Spree::Config.footer_tos_url
-    end
+    Rails.application.routes.url_helpers.url_for(current.attachment) if current
   end
 
   # If no file has been uploaded, we don't know when the old terms have
