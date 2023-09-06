@@ -48,8 +48,8 @@ button:not(.plain):not(.trix-button),
 
     &:hover {
       background-color: $color-11;
-      border: 1px solid $color-10;
-      color: $color-10;
+      border: 1px solid $color-btn-hover-bg;
+      color: $color-btn-hover-bg;
     }
 
     &:active,
