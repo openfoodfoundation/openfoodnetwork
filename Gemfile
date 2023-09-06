@@ -186,6 +186,7 @@ group :development do
   gem 'rails-erd'
   gem 'rubocop'
   gem 'rubocop-rails'
+  gem 'rubocop-rspec'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'spring-commands-rubocop'

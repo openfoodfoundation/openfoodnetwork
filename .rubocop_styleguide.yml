@@ -125,6 +125,12 @@ Rails/SkipsModelValidations:
     - update_column
     - update_columns
 
+RSpec/MultipleExpectations:
+  Max: 5 # Default 1
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10 # Default 5
+
 Style/Documentation:
   Enabled: false
 
