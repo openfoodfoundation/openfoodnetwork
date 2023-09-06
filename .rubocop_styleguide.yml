@@ -125,6 +125,10 @@ Rails/SkipsModelValidations:
     - update_column
     - update_columns
 
+RSpec/ExpectChange:
+  Enabled: true
+  EnforcedStyle: block
+
 RSpec/MultipleExpectations:
   Max: 5 # Default 1
 
