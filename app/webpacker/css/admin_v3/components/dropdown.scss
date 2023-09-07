@@ -182,12 +182,12 @@
 }
 
 .ofn-drop-down-v2 {
-  border: 1px solid $light-grey;
-  background-color: white;
+  border: 1px solid $lighter-grey;
+  background-color: $lighter-grey;
   padding: 0px;
 
   &:hover {
-    border-color: $light-grey;
+    border-color: $lighter-grey;
   }
 
   .ofn-drop-down-label {
