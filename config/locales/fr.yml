@@ -1794,7 +1794,7 @@ fr:
   state: Département
   country: Pays
   unauthorized: Non autorisé
-  terms_of_service: "Conditions Générales d'Utilisation et de vente de La Belle Orange"
+  terms_of_service: "Conditions Générales d'Utilisation de La Belle Orange"
   on_demand: A volonté
   none: Aucun
   not_allowed: Non autorisé
@@ -2708,7 +2708,7 @@ fr:
   new_order: "Nouvelle commande"
   enterprise_tos_link: "Lien vers les Conditions Générales d'Utilisation"
   enterprise_tos_message: "Nous soutenons la mise en place d'un système de distribution résilient et durable, et souhaitons œuvrer avec des entreprises qui partagent nos valeurs et notre vision. Ainsi, nous demandons aux organisations s'enregistrant sur La Belle Orange de valider nos "
-  enterprise_tos_agree: "Je valide les Conditions Générales d'Utilisation et de vente de La Belle Orange."
+  enterprise_tos_agree: "Je valide les Conditions Générales d'Utilisation de La Belle Orange."
   tax_settings: "Paramètres TVA"
   products_require_tax_category: "vous devez choisir la TVA applicable"
   admin_shared_address_1: "Adresse"
@@ -4547,12 +4547,14 @@ fr:
   about_hero_text: "Bienvenue chez La Belle Orange là où les fruits sont cultivés avec Amour!"
   about_secondhead: "Notre coeur de métier"
   about_third_section_hero: "La Belle Orange est un petit groupe d'amis et de personnes qui décident de travailler ensemble pour proposer des fruits et produits les plus naturels de l'arbre, à l'assiette du consommateur."
-  about_secondhead_description: "Nous prenons soin de nos clients. Et pour celà, tout commence par les fruits, ou nos produits, qui sont cultivés dans des pratiques respectueuses de l'environement. Nous travaillons avec des agriculteurs qui développent des pratiques uniques, parfois surprenantes, pour se passer le plus possible des produits chimiques, ou qui dénaturent la qualité des fruits."
+  about_secondhead_description: "Nous prenons soin de nos clients. Et pour celà, tout commence par les fruits, ou nos produits, qui sont cultivés dans des pratiques respectueuses de l'environnement. Nous travaillons avec des agriculteurs qui développent des pratiques uniques, parfois surprenantes, pour se passer le plus possible des produits chimiques, ou qui dénaturent la qualité des fruits."
   about_secondhead_title: "Notre métier"
   about_history_title: "Notre histoire"
-  about_history_description: "
-Nous sommes trois amis, Julien, Chiara et Pablo, qui vivons sur place et travaillons avec plusieurs agriculteurs andalous les fruits de saison. Nous réservons les fruits dans l'arbre, les cueillons et les conditionnons en faisant très attention au choix de fruits mûrs, savoureux, et d'une grande qualité. <p> La Belle Orange soutient de petits producteurs engagés, aux pratiques écologiques avancées. Leurs employés sont déclarés et travaillent dans de bonnes conditions. Nous établissons une rémunération juste et fixe aux producteurs, garantissant un tarif fixe au consomm’acteur </p>.
- "
+  about_history_description: |
+  Nous sommes trois amis, Julien, Chiara et Pablo, qui vivons sur place et travaillons avec plusieurs agriculteurs andalous les fruits de saison. Nous réservons les fruits dans l'arbre, les cueillons et les conditionnons en faisant très attention au choix de fruits mûrs, savoureux, et d'une grande qualité. 
+
+  La Belle Orange soutient de petits producteurs engagés, aux pratiques écologiques avancées. Leurs employés sont déclarés et travaillent dans de bonnes conditions. Nous établissons une rémunération juste et fixe aux producteurs, garantissant un tarif fixe au consomm’acteur.
+ 
   about_secondhead: "Notre métier"
 
   legal_notice_title: "Mentions Légales"
