@@ -91,7 +91,7 @@
 @import "../admin/dashboard-single-ent";
 @import "../admin/dialog";
 @import "../admin/disabled";
-@import "../admin/dropdown";
+@import "components/dropdown"; // admin_v3
 @import "../admin/enterprise_index_panels";
 @import "../admin/enterprises";
 @import "../admin/filters_and_controls";

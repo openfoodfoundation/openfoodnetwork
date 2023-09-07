@@ -1,0 +1,242 @@
+#content-header .ofn-drop-down {
+  border: none;
+  background-color: $spree-blue;
+  color: #fff;
+  float: none;
+  margin-left: 3px;
+}
+
+.ofn-drop-down {
+  .dropdown-content {
+    display: none;
+  }
+
+  .toggle-off {
+    display: none;
+  }
+
+  &:active:not(.disabled),
+  &:focus:not(.disabled) {
+    .dropdown-content {
+      display: inline-block;
+    }
+  }
+}
+
+.ofn-drop-down:hover,
+.ofn-drop-down.expanded {
+  border: 1px solid #adadad;
+  color: #575757;
+}
+
+@mixin ofn-drop-down-style {
+  padding: 7px 15px;
+  border-radius: 3px;
+  border: 1px solid #d4d4d4;
+  background-color: #f5f5f5;
+  display: block;
+  color: #828282;
+  cursor: pointer;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-align: center;
+  margin-right: 10px;
+
+  &.disabled {
+    opacity: 0.5;
+
+    &:hover {
+      cursor: default;
+      border-color: #d4d4d4;
+      color: #828282;
+    }
+  }
+}
+
+.ofn-drop-down-with-prepend {
+  display: flex;
+
+  &.right {
+    float: right;
+  }
+
+  .ofn-drop-down {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .ofn-drop-down-prepend {
+    @include ofn-drop-down-style;
+
+    border-right: none;
+    margin-left: 0;
+    margin-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    cursor: default;
+  }
+}
+
+.ofn-drop-down {
+  @include ofn-drop-down-style;
+
+  position: relative;
+  float: left;
+
+  &.right {
+    float: right;
+    margin-right: 0px;
+    margin-left: 10px;
+  }
+
+  &:hover,
+  &.expanded {
+    border: 1px solid #adadad;
+    color: #575757;
+  }
+
+  > span {
+    width: auto;
+    text-transform: uppercase;
+    font-size: 85%;
+    font-weight: 600;
+  }
+
+  .menu {
+    margin-top: 1px;
+    position: absolute;
+    float: none;
+    top: 100%;
+    left: 0px;
+    padding: 5px 0px;
+    border: 1px solid #adadad;
+    background-color: #ffffff;
+    box-shadow: 1px 3px 10px #888888;
+    z-index: 100;
+    white-space: nowrap;
+
+    .filter {
+      padding-left: 5px;
+      padding-right: 5px;
+      position: relative;
+
+      > input[type="text"] {
+        border: 1px solid rgba(18, 18, 18, 0.1);
+        width: 100%;
+        padding-left: 30px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 13px;
+        color: #454545;
+      }
+
+      &:after {
+        content: "\f002";
+        font-family: FontAwesome;
+        position: absolute;
+        left: 15px;
+        top: 13px;
+        color: #454545;
+      }
+    }
+
+    .menu_item {
+      margin: 0px;
+      padding: 2px 10px;
+      color: #454545;
+      text-align: left;
+      display: block;
+
+      .check {
+        display: inline-block;
+        text-align: center;
+        width: 40px;
+        &:before {
+          content: "\00a0";
+        }
+      }
+
+      .name {
+        display: inline-block;
+        padding: 0px 15px 0px 0px;
+      }
+
+      &.selected {
+        .check:before {
+          content: "\2713";
+        }
+      }
+
+      &.hidden {
+        display: none;
+      }
+    }
+
+    .menu_item:hover {
+      background-color: #ededed;
+    }
+  }
+}
+
+.ofn-drop-down-v2 {
+  border: 1px solid $pale-blue;
+  background-color: white;
+  padding: 0px;
+
+  &:hover {
+    border-color: $spree-blue;
+  }
+
+  .ofn-drop-down-label {
+    color: $color-3;
+    padding: 10px;
+    width: 235px;
+    display: flex;
+    justify-content: space-between;
+
+    &:hover {
+      color: $color-3;
+    }
+
+    .label {
+      padding-right: 10px;
+    }
+
+    .icon-caret-down,
+    .icon-caret-up {
+      padding-right: 0px;
+    }
+  }
+
+  .menu {
+    width: 100%;
+  }
+
+  .menu_items {
+    max-height: 200px;
+    overflow-y: scroll;
+
+    .menu_item {
+      margin-bottom: 5px;
+      color: #454545;
+      font-weight: 400;
+      cursor: pointer;
+      padding-top: 4px;
+      padding-bottom: 5px;
+      text-transform: uppercase;
+      font-size: 85%;
+    }
+  }
+}
+
+.ofn-drop-down.ofn-drop-down-v2 {
+  // Add very specific styling here for components that are in transition:
+  // ie. the ones using the two classes above
+  .ofn-drop-down-label {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+}
