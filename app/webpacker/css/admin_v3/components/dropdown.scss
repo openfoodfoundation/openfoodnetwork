@@ -182,23 +182,23 @@
 }
 
 .ofn-drop-down-v2 {
-  border: 1px solid $pale-blue;
+  border: 1px solid $light-grey;
   background-color: white;
   padding: 0px;
 
   &:hover {
-    border-color: $spree-blue;
+    border-color: $light-grey;
   }
 
   .ofn-drop-down-label {
-    color: $color-3;
+    color: $near-black;
     padding: 10px;
     width: 235px;
     display: flex;
     justify-content: space-between;
 
     &:hover {
-      color: $color-3;
+      color: $near-black;
     }
 
     .label {
