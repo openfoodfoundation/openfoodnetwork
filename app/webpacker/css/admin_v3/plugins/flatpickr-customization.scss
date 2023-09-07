@@ -1,0 +1,68 @@
+$background-grey: #eceef1;
+$background-blue: $color-3;
+
+// scss-lint:disable SelectorFormat
+
+.flatpickr-calendar {
+  border-radius: 0;
+
+  // Disable animation
+  &.animate.open {
+    animation: none;
+  }
+
+  &.arrowBottom::after {
+    border-top-color: $background-grey;
+  }
+
+  &.arrowTop::after {
+    border-bottom-color: $background-blue;
+  }
+
+  .flatpickr-months .flatpickr-month {
+    border-radius: 0;
+  }
+
+  .flatpickr-months .flatpickr-month,
+  .flatpickr-current-month .flatpickr-monthDropdown-months {
+    background: $background-blue;
+  }
+
+  .flatpickr-weekdays {
+    background: $background-blue;
+
+    .flatpickr-weekday {
+      background: $background-blue;
+    }
+  }
+
+  .flatpickr-day.selected,
+  .flatpickr-day.startRange,
+  .flatpickr-day.endRange,
+  .flatpickr-day.selected.inRange,
+  .flatpickr-day.startRange.inRange,
+  .flatpickr-day.endRange.inRange,
+  .flatpickr-day.selected:focus,
+  .flatpickr-day.startRange:focus,
+  .flatpickr-day.endRange:focus,
+  .flatpickr-day.selected:hover,
+  .flatpickr-day.startRange:hover,
+  .flatpickr-day.endRange:hover,
+  .flatpickr-day.selected.prevMonthDay,
+  .flatpickr-day.startRange.prevMonthDay,
+  .flatpickr-day.endRange.prevMonthDay,
+  .flatpickr-day.selected.nextMonthDay,
+  .flatpickr-day.startRange.nextMonthDay,
+  .flatpickr-day.endRange.nextMonthDay {
+    background: $background-blue;
+    border-color: $background-blue;
+  }
+}
+
+// scss-lint:enable SelectorFormat
+
+// customization for shortcut-buttons
+.shortcut-buttons-flatpickr-wrapper > .shortcut-buttons-flatpickr-buttons {
+  justify-content: space-between;
+  flex-grow: 1;
+}
