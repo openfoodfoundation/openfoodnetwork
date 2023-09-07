@@ -100,6 +100,10 @@
       &:focus {
         border-color: $color-txt-hover-brd;
       }
+
+      &.modified {
+        border-color: $color-txt-modified-brd;
+      }
     }
 
     .field_with_errors {
