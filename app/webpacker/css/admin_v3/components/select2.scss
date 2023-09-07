@@ -206,17 +206,7 @@ label .select2-container {
       b {
         padding-top: 11px; // adjust to align with tom-select
         &:before {
-          content: " ";
-          display: block;
-          position: absolute;
-          top: 50%;
-          right: 15px;
-          margin-top: -3px;
-          width: 0;
-          height: 0;
-          border-style: solid;
-          border-width: 5px 5px 0 5px;
-          border-color: #808080 transparent transparent transparent;
+          @include arrowDown;
         }
       }
     }
