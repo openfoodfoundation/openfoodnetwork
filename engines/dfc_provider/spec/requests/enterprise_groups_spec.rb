@@ -7,10 +7,11 @@ describe "EnterpriseGroups", type: :request, swagger_doc: "dfc.yaml", rswag_auto
   let(:group) {
     create(
       :enterprise_group,
-      id: 60_000, owner: user, name: "Sustainable Farmers",
+      id: 60_000, owner: user, name: "Sustainable Farmers", address:,
       enterprises: [enterprise],
     )
   }
+  let(:address) { create(:address, id: 40_000, address1: "8 Acres Drive") }
   let(:enterprise) { create(:enterprise, id: 10_000) }
 
   before { login_as user }
@@ -49,9 +50,18 @@ describe "EnterpriseGroups", type: :request, swagger_doc: "dfc.yaml", rswag_auto
         let(:id) { group.id }
 
         run_test! do
-          expect(json_response).to include(
+          graph = json_response["@graph"]
+
+          expect(graph[0]).to include(
+            "@type" => "dfc-b:Enterprise",
             "dfc-b:hasName" => "Sustainable Farmers",
+            "dfc-b:hasAddress" => "http://test.host/api/dfc/addresses/40000",
             "dfc-b:affiliatedBy" => "http://test.host/api/dfc/enterprises/10000",
+          )
+
+          expect(graph[1]).to include(
+            "@type" => "dfc-b:Address",
+            "dfc-b:hasStreet" => "8 Acres Drive",
           )
         end
       end

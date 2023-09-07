@@ -278,12 +278,20 @@ paths:
                 test_example:
                   value:
                     "@context": https://www.datafoodconsortium.org
-                    "@id": http://test.host/api/dfc/enterprise_groups/60000
-                    "@type": dfc-b:Enterprise
-                    dfc-b:hasName: Sustainable Farmers
-                    dfc-b:hasDescription: this is a group
-                    dfc-b:VATnumber: ''
-                    dfc-b:affiliatedBy: http://test.host/api/dfc/enterprises/10000
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprise_groups/60000
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
+                      dfc-b:hasName: Sustainable Farmers
+                      dfc-b:hasDescription: this is a group
+                      dfc-b:VATnumber: ''
+                      dfc-b:affiliatedBy: http://test.host/api/dfc/enterprises/10000
+                    - "@id": http://test.host/api/dfc/addresses/40000
+                      "@type": dfc-b:Address
+                      dfc-b:hasStreet: 8 Acres Drive
+                      dfc-b:hasPostalCode: '20170'
+                      dfc-b:hasCity: Herndon
+                      dfc-b:hasCountry: Australia
   "/api/dfc/enterprises/{id}":
     get:
       summary: Show enterprise
