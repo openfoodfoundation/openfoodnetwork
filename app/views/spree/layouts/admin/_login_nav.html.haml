@@ -1,5 +1,16 @@
 - if spree_current_user
   %ul#login-nav.inline-menu
+   - if OpenFoodNetwork::I18nConfig.selectable_locales.count > 1
+      %li.language-switcher.li-menu
+        %a
+          %i.ofn-i_071-globe
+          = t('language_name')
+        %ul
+          - OpenFoodNetwork::I18nConfig.selectable_locales.each do |l|
+            - if I18n.locale != l
+              %li
+                %a{href: "?locale=#{l.to_s}" }= t('language_name', locale: l)
+    %li
     %li.user-logged-in-as
       = t(:logged_in_as)
       \: #{spree_current_user.email}

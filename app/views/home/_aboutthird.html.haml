@@ -4,11 +4,11 @@
       %h2
         = t :about_secondhead
       %p
-        = t :about_third_section_hero
+        != t :about_third_section_hero
 
       #brand-story-text.hide-show.slideable
         %p
-          = t :about_secondhead_description
+          != t :about_secondhead_description
 
       %a.text-vbig{"slide-toggle" => "#brand-story-text", "ng-click" => "toggleBrandStory()"}
         %i.ofn-i_005-caret-down{"ng-hide" => "brandStoryExpanded"}

@@ -5,8 +5,9 @@
       .flex.row
         .columns.small-12.large-8
           - shop_tabs.each do |tab|
-            .page
-              %a{ id: tab[:name], href: "##{tab[:name]}_panel", data: { action: "tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab", "tabs-and-panels-target": "tab" }, class: ("selected" if tab[:default]) }=tab[:title]
+            - unless tab[:name] == "producers"  
+              .page
+                %a{ id: tab[:name], href: "##{tab[:name]}_panel", data: { action: "tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab", "tabs-and-panels-target": "tab" }, class: ("selected" if tab[:default]) }=tab[:title]
         .columns.large-4.show-for-large-up
           = render partial: "shopping_shared/order_cycles"
     - shop_tabs.each do |tab|

@@ -18,6 +18,7 @@ Openfoodnetwork::Application.routes.draw do
   get '/shipping_and_return', to: 'legal#shippingandreturn'
   get '/confidentiality', to: 'legal#confidentiality'
   get '/legal-notice', to: 'legal#legalnotice'
+  get '/terms-of-service', to: 'legal#terms'
 
 
   get "/discourse/login", to: "discourse_sso#login"

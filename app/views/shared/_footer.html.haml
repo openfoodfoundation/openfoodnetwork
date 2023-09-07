@@ -24,6 +24,39 @@
           // This is the instance-managed set of links:
           %h4
             = t '.footer_contact_headline'
+            %br
+            %br
+            %p
+              %a{href: "/shipping_and_return"}
+                = t :label_shipping_and_return
+            %p
+              %a{href: "/confidentiality"}
+                = t :label_confidentiality
+            %p
+              %a{href: "/legal-notice"}
+                = t :legal_notice
+          
+        .small-6.medium-3.columns.text-left
+          %h4
+            = t '.footer_nav_headline'
+          %p
+            %a{href: "/shops"}
+              = t :label_shops
+          %p
+            %a{href: "/map"}
+              = t :label_map
+         
+          %p
+            %a{href: ContentConfig.footer_about_url}
+              = t :label_about
+
+        .small-12.medium-2.columns.text-left
+          %h4
+            = t '.footer_join_headline'
+          %p
+            = t '.footer_join_body'
+            %a{href:  "/contact-us"}
+              = t '.footer_join_cta'
           - if show_social_icons?
             %p.social-icons
               - if ContentConfig.footer_facebook_url.present?
@@ -46,37 +79,6 @@
                   %i.ofn-i_045-pintrest
               %a{href: ContentConfig.footer_email.reverse, mailto: true, target: '_blank'}
                 %i.ofn-i_050-mail-circle
-            %p
-              %a{href: "/shipping_and_return"}
-                = t :label_shipping_and_return
-            %p
-              %a{href: "/confidentiality"}
-                = t :label_confidentiality
-            %p
-              %a{href: "/legal-notice"}
-                = t :legal_notice
-
-        .small-6.medium-3.columns.text-left
-          %h4
-            = t '.footer_nav_headline'
-          %p
-            %a{href: "/shops"}
-              = t :label_shops
-          %p
-            %a{href: "/map"}
-              = t :label_map
-         
-          %p
-            %a{href: ContentConfig.footer_about_url}
-              = t :label_about
-
-        .small-12.medium-2.columns.text-left
-          %h4
-            = t '.footer_join_headline'
-          %p
-            = t '.footer_join_body'
-            %a{href:  "/sell"}
-              = t '.footer_join_cta'
 
         .medium-2.columns.text-center
           / Placeholder
@@ -94,7 +96,9 @@
         .small-12.medium-5.columns.text-left
           %p.text-small
             = t '.footer_legal_call'
-            = link_to_platform_terms
+            %a{href: "/terms-of-service"}
+              = t :terms_of_service
+
           %p.text-small
             = t('.footer_legal_text_html', content_license: link_to('CC BY-SA 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/'), code_license: link_to('AGPL 3', 'https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)' ))
           %p.text-small

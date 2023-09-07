@@ -551,7 +551,7 @@ fr:
         no_files: "Aucun document n'a été mis en ligne pour l'instant."
         using_default_terms_html: "Le site pointe actuellement sur l'ancien %{tos_link}."
         current_terms_html: "Visualiser l'actuel %{tos_link}. Temps de chargement : %{datetime}."
-        terms_of_service: "Conditions Générales d'Utilisation"
+        terms_of_service: "Conditions Générales"
         delete: "Supprimer le fichier"
         confirm_delete: "Etes-vous certain de vouloir supprimer les CGU & CGV actuelles ?"
         attachment: "Fichier joint"
@@ -4557,7 +4557,8 @@ At the core of everything we do is a belief that creating a new food system requ
  To use the software platform for selling food, it needs to be operating in your area. "
   about_secondhead: "What we do"
 
-  legal_notice_title: "Legal Notice"
+  legal_notice_title: "Mention légale"
+  legal_notice: "Mention légale"
   legal_notice_description: "Labelleorange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, Labelleorange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
 
 At the core of everything we do is a belief that creating a new food system requires a new way of operating. This is why we create open source solutions, communicate with transparency, and hold everything we create as part of the Commons – it doesn’t belong to a single entity, but instead to a community.
@@ -4586,3 +4587,6 @@ En cas de problème, vous pouvez toujours nous contacter à fruits(arobase)label
 
   ourpromise_title: "Our Promise"
   ourpromise_description: "Our promise isn't just about fruits it's about cultivating trust."
+
+  terms_of_service_title: "Terms Of Service"
+  terms_of_service_description: "Terms of Service Content."
