@@ -212,28 +212,6 @@ label .select2-container {
     }
   }
 
-  &.light {
-    .select2-choice {
-      background-color: #ffffff;
-      font-weight: normal;
-      color: $spree-blue !important;
-      border: 1px solid $color-border !important;
-    }
-
-    &:hover,
-    &.select2-container-active {
-      .select2-choice {
-        background-color: #ffffff !important;
-
-        .select2-arrow {
-          &:before {
-            color: $spree-blue;
-          }
-        }
-      }
-    }
-  }
-
   &.select2-container-multi {
     .select2-search-field {
       max-height: 20px;
