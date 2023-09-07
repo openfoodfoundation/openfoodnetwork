@@ -34,15 +34,33 @@ describe Spree::UserMailer do
   end
 
   describe "#confirmation_instructions" do
-    it "sends an email" do
-      token = "random"
-      email = Spree::UserMailer.confirmation_instructions(user, token)
+    let(:token) { "random" }
+    subject(:email) { Spree::UserMailer.confirmation_instructions(user, token) }
 
-      expect {
+    it "sends an email" do
+      expect { email.deliver_now }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+
+    context 'when the language is English' do
+      it 'sends an email with the translated subject' do
         email.deliver_now
-      }.to change {
-        ActionMailer::Base.deliveries.count
-      }.by(1)
+
+        expect(ActionMailer::Base.deliveries.first.subject).to include(
+          "Please confirm your OFN account"
+        )
+      end
+    end
+
+    context 'when the language is Spanish' do
+      let(:user) { build(:user, locale: 'es') }
+
+      it 'sends an email with the translated subject' do
+        email.deliver_now
+
+        expect(ActionMailer::Base.deliveries.first.subject).to include(
+          "Por favor, confirma tu cuenta de OFN"
+        )
+      end
     end
   end
 

@@ -12,6 +12,9 @@
             = check_box_tag "user[spree_role_ids][]", role.id, @user.spree_roles.include?(role), id: "user_spree_role_#{role.name}"
             = label_tag role.name
       = hidden_field_tag "user[spree_role_ids][]", ""
+    = f.field_container :locale do
+      = f.label :locale, t(".locale")
+      = f.select :locale, locale_options, class: "fullwidth"
     = f.field_container :enterprise_limit do
       = f.label :enterprise_limit, t(".enterprise_limit")
       = f.text_field :enterprise_limit, class: "fullwidth"

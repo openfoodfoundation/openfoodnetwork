@@ -131,21 +131,32 @@ describe "Managing users" do
     end
 
     describe "creating a user" do
-      it "shows no confirmation message to start with" do
-        visit spree.new_admin_user_path
-        expect(page).to have_no_text "Email confirmation is pending"
-      end
-
       it "confirms successful creation" do
         visit spree.new_admin_user_path
+
+        # shows no confirmation message to start with
+        expect(page).to have_no_text "Email confirmation is pending"
+
         fill_in "Email", with: "user1@example.org"
         fill_in "Password", with: "user1Secret"
         fill_in "Confirm Password", with: "user1Secret"
-        expect do
-          click_button "Create"
-        end.to change { Spree::User.count }.by 1
-        expect(page).to have_text "Created Successfully"
-        expect(page).to have_text "Email confirmation is pending"
+
+        expect(page).to have_select "Language", selected: "English"
+        select "Español", from: "Language"
+
+        perform_enqueued_jobs do
+          expect do
+            click_button "Create"
+          end.to change { Spree::User.count }.by 1
+          expect(page).to have_text "Created Successfully"
+          expect(page).to have_text "Email confirmation is pending"
+
+          expect(Spree::User.last.locale).to eq "es"
+
+          expect(ActionMailer::Base.deliveries.first.subject).to match(
+            "Por favor, confirma tu cuenta de OFN"
+          )
+        end
       end
     end
 
