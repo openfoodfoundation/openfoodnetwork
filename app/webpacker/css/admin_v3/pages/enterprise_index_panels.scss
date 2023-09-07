@@ -1,0 +1,120 @@
+.enterprise_package_panel,
+.enterprise_producer_panel {
+  .info {
+    p {
+      font-size: 1rem;
+      margin: 10px 0px;
+    }
+  }
+
+  a.selector {
+    display: block;
+    position: relative;
+    margin-bottom: 20px;
+    border: 2px solid black;
+    text-align: center;
+    // width: 100%;
+    cursor: pointer;
+    &,
+    & * {
+      color: white;
+    }
+    &:hover {
+      &:after {
+        border-top-color: $spree-green;
+      }
+    }
+    &.disabled {
+      background-color: #c1c1c1;
+    }
+    .bottom {
+      background: repeating-linear-gradient(
+        60deg,
+        rgba(84, 152, 218, 0),
+        rgba(84, 152, 218, 0) 5px,
+        rgba(255, 255, 255, 0.25) 5px,
+        rgba(255, 255, 255, 0.25) 10px
+      );
+      margin-top: 1em;
+      margin-left: -15px;
+      margin-right: -15px;
+      padding: 5px;
+      text-transform: uppercase;
+    }
+    &.selected {
+      background-color: #000000;
+
+      &:after {
+        top: 50%;
+        left: 0;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        border-right: 20px solid #000000;
+        margin-top: -20px;
+        margin-left: -20px;
+      }
+    }
+  }
+}
+
+.enterprise_status_panel {
+  .status-ok {
+    margin: 30px 0px;
+    i.icon-ok-sign {
+      color: $spree-green;
+      font-size: 1.5rem;
+    }
+  }
+
+  td.description {
+    font-size: 0.9rem;
+  }
+
+  td.severity {
+    text-align: center;
+
+    i {
+      font-size: 1.5rem;
+
+      &.issue {
+        color: $color-warning;
+      }
+
+      &.warning {
+        color: #ff9848;
+      }
+    }
+  }
+}
+
+tags-input .tags li.tag-item {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  margin: 2px 0 2px 3px;
+  background-image: none;
+  background-color: #5fa5e8;
+  border: none;
+  box-shadow: none;
+  color: white !important;
+  font-size: 85%;
+  height: 25px;
+}
+
+tags-input .tags .tag-item .remove-button {
+  color: white;
+}
+
+table th.actions .no-text[class*="icon-"],
+table td.actions .no-text[class*="icon-"] {
+  cursor: pointer;
+}
