@@ -1,4 +1,4 @@
-$background-grey: #eceef1;
+$background-grey: $lighter-grey;
 $background-blue: $color-3;
 
 // scss-lint:disable SelectorFormat
@@ -33,6 +33,7 @@ $background-blue: $color-3;
 
     .flatpickr-weekday {
       background: $background-blue;
+      color: white;
     }
   }
 
@@ -65,4 +66,24 @@ $background-blue: $color-3;
 .shortcut-buttons-flatpickr-wrapper > .shortcut-buttons-flatpickr-buttons {
   justify-content: space-between;
   flex-grow: 1;
+}
+
+// material-ui colors customization ("~flatpickr/dist/themes/material_blue")
+.flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n + 1)),
+.flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
+.flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
+  box-shadow: -10px 0 0 #e2e2e2;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months #admin-menu ul li.selected a.flatpickr-prev-month svg,
+#admin-menu ul li.selected .flatpickr-months a.flatpickr-prev-month svg,
+.flatpickr-months #sub-menu ul li.selected a.flatpickr-prev-month svg,
+#sub-menu ul li.selected .flatpickr-months a.flatpickr-prev-month svg,
+.flatpickr-months .flatpickr-next-month:hover svg,
+.flatpickr-months #admin-menu ul li.selected a.flatpickr-next-month svg,
+#admin-menu ul li.selected .flatpickr-months a.flatpickr-next-month svg,
+.flatpickr-months #sub-menu ul li.selected a.flatpickr-next-month svg,
+#sub-menu ul li.selected .flatpickr-months a.flatpickr-next-month svg {
+  fill: white;
 }
