@@ -1,0 +1,20 @@
+// scss-lint:disable QualifyingElement
+
+input.datetimepicker {
+  min-width: 12.9em;
+}
+
+.container input[readonly].flatpickr-input,
+.container input[readonly].datepicker,
+.container input[readonly].datetimepicker {
+  background-color: $white;
+  cursor: pointer;
+}
+
+img.ui-datepicker-trigger {
+  margin-left: -1.75em;
+  position: absolute;
+  margin-top: 0.5em;
+}
+
+// scss-lint:enable QualifyingElement
