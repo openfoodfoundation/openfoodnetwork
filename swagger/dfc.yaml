@@ -313,6 +313,7 @@ paths:
                       dfc-b:VATnumber: 123 456
                       dfc-b:supplies: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       dfc-b:manages: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      dfc-b:affiliates: http://test.host/api/dfc/enterprise_groups/60000
                     - "@id": http://test.host/api/dfc/addresses/40000
                       "@type": dfc-b:Address
                       dfc-b:hasStreet: 42 Doveton Street
