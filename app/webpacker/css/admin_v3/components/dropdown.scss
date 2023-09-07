@@ -208,6 +208,16 @@
     .icon-caret-down,
     .icon-caret-up {
       padding-right: 0px;
+      &:before {
+        display: none;
+      }
+      &:after {
+        @include arrowDown;
+      }
+    }
+
+    .icon-caret-up:after {
+      transform: rotate(180deg);
     }
   }
 
