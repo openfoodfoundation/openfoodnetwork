@@ -8,6 +8,12 @@ module DfcProvider
 
     def index
       person = PersonBuilder.person(current_user)
+
+      enterprises = current_user.enterprises.map do |enterprise|
+        EnterpriseBuilder.enterprise(enterprise)
+      end
+      person.affiliatedOrganizations = enterprises
+
       render json: DfcIo.export(
         person,
         *person.affiliatedOrganizations,

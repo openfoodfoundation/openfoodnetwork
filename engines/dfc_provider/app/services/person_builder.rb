@@ -6,13 +6,6 @@ class PersonBuilder < DfcBuilder
       urls.person_url(user.id),
       firstName: user.bill_address&.firstname,
       lastName: user.bill_address&.lastname,
-      affiliatedOrganizations: enterprises(user),
     )
-  end
-
-  def self.enterprises(user)
-    user.enterprises.map do |enterprise|
-      EnterpriseBuilder.enterprise(enterprise)
-    end
   end
 end
