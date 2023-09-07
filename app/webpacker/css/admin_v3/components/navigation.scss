@@ -23,13 +23,13 @@ nav.menu {
       }
 
       &.active a {
-        color: $green;
+        color: $red;
         border-left-width: 0;
-        border-bottom-color: $green;
+        border-bottom-color: $red;
       }
 
       &:hover a {
-        color: $green;
+        color: $red;
       }
     }
   }
@@ -53,7 +53,7 @@ nav.menu {
 
       &:hover {
         i {
-          color: $green;
+          color: $red;
         }
       }
     }
