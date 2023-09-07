@@ -19,6 +19,10 @@ table {
       border-left: 4px solid $color-border;
     }
 
+    &:last-child {
+      border-right: 4px solid $color-border;
+    }
+
     &.header {
       font-weight: $font-weight-bold;
     }
