@@ -32,6 +32,9 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
             'dfc-b': "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#",
             'dfc-m': "http://static.datafoodconsortium.org/data/measures.rdf#",
             'dfc-pt': "http://static.datafoodconsortium.org/data/productTypes.rdf#",
+            'dfc-b:hasUnit': {
+              '@type': "@id"
+            },
           },
           '@id': "http://test.host/api/dfc-v1.7/enterprises/6201/supplied_products/0",
           '@type': "dfc-b:SuppliedProduct",
@@ -128,7 +131,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
       consumes "application/json"
 
       parameter name: :supplied_product, in: :body, schema: {
-        example: ExampleJson.read("patch_supplied_product")
+        example: ExampleJson.read("put_supplied_product")
       }
 
       let(:id) { variant.id }
@@ -148,6 +151,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml
             submit_request(example.metadata)
             variant.reload
           }.to change { variant.description }.to("DFC-Pesto updated")
+            .and change { variant.name }.to("Pesto novo")
             .and change { variant.unit_value }.to(17)
         end
       end

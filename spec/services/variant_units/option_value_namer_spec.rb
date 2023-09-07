@@ -115,8 +115,8 @@ module VariantUnits
           p = double(:product, variant_unit: 'volume', variant_unit_scale: scale)
           allow(v).to receive(:product) { p }
           allow(p).to receive(:persisted?) { true }
-          allow(v).to receive(:unit_value) { 100 * scale }
-          expect(subject.send(:option_value_value_unit)).to eq [100, unit]
+          allow(v).to receive(:unit_value) { 3 * scale }
+          expect(subject.send(:option_value_value_unit)).to eq [3, unit]
         end
       end
 

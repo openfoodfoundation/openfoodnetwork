@@ -330,7 +330,7 @@ paths:
                     dfc-b:hasType: http://static.datafoodconsortium.org/data/productTypes.rdf#non-local-vegetable
                     dfc-b:hasQuantity:
                       "@type": dfc-b:QuantitativeValue
-                      dfc-b:hasUnit: dfc-m:Piece
+                      dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 3.0
                     dfc-b:alcoholPercentage: 0.0
                     dfc-b:lifetime: ''
@@ -345,6 +345,8 @@ paths:
                   dfc-b: http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#
                   dfc-m: http://static.datafoodconsortium.org/data/measures.rdf#
                   dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
+                  dfc-b:hasUnit:
+                    "@type": "@id"
                 "@id": http://test.host/api/dfc-v1.7/enterprises/6201/supplied_products/0
                 "@type": dfc-b:SuppliedProduct
                 dfc-b:name: Apple
@@ -412,14 +414,15 @@ paths:
                 "@context":
                   rdfs: http://www.w3.org/2000/01/rdf-schema#
                   skos: http://www.w3.org/2004/02/skos/core#
-                  dfc: http://static.datafoodconsortium.org/ontologies/DFC_FullModel.owl#
+                  dfc: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#
                   dc: http://purl.org/dc/elements/1.1/#
-                  dfc-b: http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#
-                  dfc-p: http://static.datafoodconsortium.org/ontologies/DFC_ProductOntology.owl#
-                  dfc-t: http://static.datafoodconsortium.org/ontologies/DFC_TechnicalOntology.owl#
-                  dfc-m: http://static.datafoodconsortium.org/data/measures.rdf#
-                  dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
-                  dfc-f: http://static.datafoodconsortium.org/data/facets.rdf#
+                  dfc-b: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#
+                  dfc-p: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_ProductGlossary.owl#
+                  dfc-t: https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_TechnicalOntology.owl#
+                  dfc-m: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#
+                  dfc-pt: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#
+                  dfc-f: https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#
+                  ontosec: http://www.semanticweb.org/ontologies/2008/11/OntologySecurity.owl#
                   dfc-p:hasUnit:
                     "@type": "@id"
                   dfc-b:hasUnit:
@@ -442,6 +445,8 @@ paths:
                     "@type": "@id"
                   dfc-b:affiliates:
                     "@type": "@id"
+                  dfc-b:hasCertification:
+                    "@type": "@id"
                   dfc-b:manages:
                     "@type": "@id"
                   dfc-b:offeredThrough:
@@ -454,7 +459,7 @@ paths:
                     "@type": "@id"
                   dfc-b:hasAllergenDimension:
                     "@type": "@id"
-                  dfc-b:hasNutrimentDimension:
+                  dfc-b:hasNutrientDimension:
                     "@type": "@id"
                   dfc-b:hasPhysicalDimension:
                     "@type": "@id"
@@ -466,7 +471,22 @@ paths:
                     "@type": "@id"
                   dfc-t:represent:
                     "@type": "@id"
+                "@id": https://staging.coopcircuits.fr/api/dfc-v1.7/enterprises/2731/supplied_products/56790
+                "@type": dfc-b:SuppliedProduct
+                dfc-b:alcoholPercentage: 0
                 dfc-b:description: DFC-Pesto updated
-                dfc-b:quantity: 17
+                dfc-b:hasQuantity:
+                  "@type": dfc-b:QuantitativeValue
+                  dfc-b:hasUnit: dfc-m:Piece
+                  dfc-b:value: 17
+                dfc-b:hasType: dfc-pt:non-local-vegetable
+                dfc-b:lifetime: ''
+                dfc-b:name: Pesto novo
+                dfc-b:totalTheoreticalStock: 0
+                dfc-b:usageOrStorageCondition: ''
+                dfc:owner: http://proto.datafoodconsortium.org:3000/ldp/user/64c1d30351ecb4367037a9f6
+                dfc-b:hasPhysicalCharacteristic: []
+                dfc-b:hasNutrientCharacteristic: []
+                dfc-b:hasAllergenCharacteristic: []
 servers:
 - url: "/"
