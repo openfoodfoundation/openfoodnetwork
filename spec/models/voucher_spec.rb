@@ -12,7 +12,7 @@ describe Voucher do
 
   describe 'associations' do
     it { is_expected.to belong_to(:enterprise).required }
-    it { is_expected.to have_many(:adjustments) }
+    it { is_expected.to have_many(:adjustments).dependent(nil) }
   end
 
   describe '#code=' do

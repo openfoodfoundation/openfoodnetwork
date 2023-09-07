@@ -7,10 +7,12 @@ class Voucher < ApplicationRecord
 
   belongs_to :enterprise, optional: false
 
+  # We want to keep the association with the adjustment when a voucher is "destroyed" as we use
+  # the soft delete functionality to activate/deactivate vouchers
   has_many :adjustments,
            as: :originator,
            class_name: 'Spree::Adjustment',
-           dependent: :nullify
+           dependent: nil
 
   validates :code, presence: true, uniqueness: { scope: :enterprise_id }
 
