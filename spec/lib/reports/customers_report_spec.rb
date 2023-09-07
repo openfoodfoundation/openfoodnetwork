@@ -44,15 +44,18 @@ module Reporting
               let!(:a) { create(:bill_address) }
               let!(:d){ create(:distributor_enterprise) }
               let!(:sm) { create(:shipping_method, distributors: [d]) }
+              let!(:customer) { create(:customer) }
               let!(:o1) {
                 create(:order_with_totals_and_distribution, :completed, distributor: d,
                                                                         bill_address: a,
-                                                                        shipping_method: sm)
+                                                                        shipping_method: sm,
+                                                                        customer:)
               }
               let!(:o2) {
                 create(:order_with_totals_and_distribution, :completed, distributor: d,
                                                                         bill_address: a,
-                                                                        shipping_method: sm)
+                                                                        shipping_method: sm,
+                                                                        customer:)
               }
               before do
                 o1.update(completed_at: "2023-01-01")
