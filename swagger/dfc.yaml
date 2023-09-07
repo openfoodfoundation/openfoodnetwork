@@ -234,6 +234,30 @@ paths:
                     "@type": "@id"
                 dfc-b:stockLimitation: '3'
                 dfc-b:sku: new-sku
+  "/api/dfc/enterprise_groups":
+    get:
+      summary: List groups
+      tags:
+      - EnterpriseGroups
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/persons/12345
+                      "@type": dfc-b:Person
+                      dfc-b:affiliates: http://test.host/api/dfc/enterprise_groups/60000
+                    - "@id": http://test.host/api/dfc/enterprise_groups/60000
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasName: Sustainable Farmers
+                      dfc-b:hasDescription: this is a group
+                      dfc-b:VATnumber: ''
+                      dfc-b:affiliatedBy: http://test.host/api/dfc/enterprises/10000
   "/api/dfc/enterprise_groups/{id}":
     get:
       summary: Show groups
