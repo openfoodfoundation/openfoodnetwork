@@ -33,9 +33,11 @@ module Spree
     has_many :enterprise_roles, dependent: :destroy
     has_many :enterprises, through: :enterprise_roles
     has_many :owned_enterprises, class_name: 'Enterprise',
-                                 foreign_key: :owner_id, inverse_of: :owner, dependent: :nullify
+                                 foreign_key: :owner_id, inverse_of: :owner,
+                                 dependent: :restrict_with_exception
     has_many :owned_groups, class_name: 'EnterpriseGroup',
-                            foreign_key: :owner_id, inverse_of: :owner, dependent: :nullify
+                            foreign_key: :owner_id, inverse_of: :owner,
+                            dependent: :restrict_with_exception
     has_many :customers, dependent: :destroy
     has_many :credit_cards, dependent: :destroy
     has_many :report_rendering_options, class_name: "::ReportRenderingOptions", dependent: :destroy
