@@ -276,11 +276,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
       context "with line items from a single supplier" do
         it 'generates the report and displays fees for the respective suppliers' do
-          login_as distributor_owner
-          visit admin_reports_path
-          click_on "Enterprise Fees With Tax Report By Producer"
-          expect(page).to have_button("Go")
-
+          visit_report
           click_on "Go"
 
           expect(page.find("table.report__table thead tr")).to have_content(table_header)
@@ -307,9 +303,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
         context "filtering" do
           before do
-            login_as distributor_owner
-            visit admin_reports_path
-            click_on "Enterprise Fees With Tax Report By Producer"
+            visit_report
           end
 
           it "should filter by distributor and order cycle" do
@@ -485,9 +479,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
           }
 
           before do
-            login_as distributor_owner
-            visit admin_reports_path
-            click_on "Enterprise Fees With Tax Report By Producer"
+            visit_report
           end
 
           it "should filter by distributor and order cycle" do
@@ -697,11 +689,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
     context "with line items from a single supplier" do
       it 'generates the report and displays fees for the respective suppliers' do
-        login_as distributor_owner
-        visit admin_reports_path
-        click_on "Enterprise Fees With Tax Report By Producer"
-        expect(page).to have_button("Go")
-
+        visit_report
         click_on "Go"
 
         expect(page.find("table.report__table thead tr")).to have_content(table_header)
@@ -839,11 +827,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       }
 
       it 'should list all the tax rates' do
-        login_as distributor_owner
-        visit admin_reports_path
-        click_on "Enterprise Fees With Tax Report By Producer"
-        expect(page).to have_button("Go")
-
+        visit_report
         click_on "Go"
 
         expect(page.find("table.report__table thead tr")).to have_content(table_header)
@@ -938,11 +922,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       }
 
       it 'should list all the tax rates' do
-        login_as distributor_owner
-        visit admin_reports_path
-        click_on "Enterprise Fees With Tax Report By Producer"
-
-        expect(page).to have_button("Go")
+        visit_report
         click_on "Go"
 
         expect(page.find("table.report__table thead tr")).to have_content(table_header)
@@ -963,5 +943,12 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
         expect(table).to have_content(summary_row)
       end
     end
+  end
+
+  def visit_report
+    login_as distributor_owner
+    visit admin_reports_path
+    click_on "Enterprise Fees With Tax Report By Producer"
+    expect(page).to have_button("Go")
   end
 end
