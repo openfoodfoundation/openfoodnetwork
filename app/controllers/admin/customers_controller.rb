@@ -11,7 +11,7 @@ module Admin
     respond_override update: { json: {
       success: lambda {
         tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: @customer.enterprise))
-        render_as_json @customer, tag_rule_mapping: tag_rule_mapping
+        render_as_json @customer, tag_rule_mapping:
       },
       failure: lambda {
                  render json: { errors: @customer.errors.full_messages },
@@ -25,7 +25,7 @@ module Admin
         format.json do
           render json: @collection,
                  each_serializer: ::Api::Admin::CustomerWithBalanceSerializer,
-                 tag_rule_mapping: tag_rule_mapping,
+                 tag_rule_mapping:,
                  customer_tags: customer_tags_by_id
         end
       end
@@ -42,7 +42,7 @@ module Admin
         @customer.created_manually = true
         if @customer.save
           tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: @customer.enterprise))
-          render_as_json @customer, tag_rule_mapping: tag_rule_mapping
+          render_as_json @customer, tag_rule_mapping:
         else
           render json: { errors: @customer.errors.full_messages }, status: :bad_request
         end

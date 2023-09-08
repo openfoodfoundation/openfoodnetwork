@@ -95,7 +95,7 @@ module CheckoutHelper
       "ng-class" => "{error: !fieldValid('#{path}')}"
     }.merge args
 
-    render "shared/validated_input", name: name, path: path, attributes: attributes
+    render "shared/validated_input", name:, path:, attributes:
   end
 
   def validated_select(name, path, options, args = {})
@@ -106,8 +106,8 @@ module CheckoutHelper
       "ng-class" => "{error: !fieldValid('#{path}')}"
     }.merge args
 
-    render "shared/validated_select", name: name, path: path, options: options,
-                                      attributes: attributes
+    render "shared/validated_select", name:, path:, options:,
+                                      attributes:
   end
 
   def payment_method_price(method, order)

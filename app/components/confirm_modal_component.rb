@@ -3,7 +3,7 @@
 class ConfirmModalComponent < ModalComponent
   def initialize(id:, confirm_actions: nil, reflex: nil, controller: nil, message: nil,
                  confirm_reflexes: nil)
-    super(id: id, close_button: true)
+    super(id:, close_button: true)
     @confirm_actions = confirm_actions
     @reflex = reflex
     @confirm_reflexes = confirm_reflexes

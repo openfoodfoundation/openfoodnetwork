@@ -192,16 +192,16 @@ module Admin
       json = data.to_json
       render partial: "admin/json/injection_ams",
              locals: { ngModule: ng_module,
-                       name: name,
-                       json: json }
+                       name:,
+                       json: }
     end
 
     def admin_inject_json_ams(ng_module, name, data, serializer, opts = {})
       json = serializer.new(data, { scope: spree_current_user }.merge(opts)).to_json
       render partial: "admin/json/injection_ams",
              locals: { ngModule: ng_module,
-                       name: name,
-                       json: json }
+                       name:,
+                       json: }
     end
 
     def admin_inject_json_ams_array(ng_module, name, data, serializer, opts = {})
@@ -210,8 +210,8 @@ module Admin
 
       render partial: "admin/json/injection_ams",
              locals: { ngModule: ng_module,
-                       name: name,
-                       json: json }
+                       name:,
+                       json: }
     end
   end
 end

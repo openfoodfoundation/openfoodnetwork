@@ -21,7 +21,7 @@ module Api
         @enterprise.update!(attachment_name => nil)
         render json: @enterprise,
                serializer: Admin::EnterpriseSerializer,
-               spree_current_user: spree_current_user
+               spree_current_user:
       end
 
       protected

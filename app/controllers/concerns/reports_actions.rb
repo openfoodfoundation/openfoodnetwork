@@ -74,8 +74,8 @@ module ReportsActions
   def rendering_options
     @rendering_options ||= ReportRenderingOptions.where(
       user: spree_current_user,
-      report_type: report_type,
-      report_subtype: report_subtype
+      report_type:,
+      report_subtype:
     ).first_or_create do |report_rendering_options|
       report_rendering_options.options = {
         fields_to_show: if request.get?

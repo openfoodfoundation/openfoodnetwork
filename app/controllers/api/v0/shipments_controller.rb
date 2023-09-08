@@ -110,7 +110,7 @@ module Api
       end
 
       def get_or_create_shipment(stock_location_id)
-        @order.shipment || @order.shipments.create(stock_location_id: stock_location_id)
+        @order.shipment || @order.shipments.create(stock_location_id:)
       end
 
       def shipment_params
