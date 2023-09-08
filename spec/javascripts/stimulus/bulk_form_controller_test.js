@@ -29,6 +29,7 @@ describe("BulkFormController", () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <form data-controller="bulk-form">
+        <div id="actions" data-bulk-form-target="actions" class="hidden"></div>
         <div id="modified_summary" data-bulk-form-target="modifiedSummary" data-translation-key="modified_summary"></div>
         <div data-record-id="1">
           <input id="input1a" type="text" value="initial1a">
@@ -46,6 +47,7 @@ describe("BulkFormController", () => {
     // would be repeated if these were broken into multiple examples. So it seems impractical to
     // write individual unit tests.
     it("counts modified fields and records", () => {
+      const actions = document.getElementById("actions");
       const modified_summary = document.getElementById("modified_summary");
       const input1a = document.getElementById("input1a");
       const input1b = document.getElementById("input1b");
@@ -58,6 +60,7 @@ describe("BulkFormController", () => {
       expect(input1a.classList).toContain('modified');
       expect(input1b.classList).not.toContain('modified');
       expect(input2.classList).not.toContain('modified');
+      expect(actions.classList).not.toContain('hidden');
       expect(modified_summary.textContent).toBe('modified_summary, {"count":1}');
 
       // Record 1: Second field changed
@@ -67,6 +70,7 @@ describe("BulkFormController", () => {
       expect(input1a.classList).toContain('modified');
       expect(input1b.classList).toContain('modified');
       expect(input2.classList).not.toContain('modified');
+      expect(actions.classList).not.toContain('hidden');
       expect(modified_summary.textContent).toBe('modified_summary, {"count":1}');
 
       // Record 2: has been changed
@@ -76,6 +80,7 @@ describe("BulkFormController", () => {
       expect(input1a.classList).toContain('modified');
       expect(input1b.classList).toContain('modified');
       expect(input2.classList).toContain('modified');
+      expect(actions.classList).not.toContain('hidden');
       expect(modified_summary.textContent).toBe('modified_summary, {"count":2}');
 
       // Record 1: Change first field back to original value
@@ -85,6 +90,7 @@ describe("BulkFormController", () => {
       expect(input1a.classList).not.toContain('modified');
       expect(input1b.classList).toContain('modified');
       expect(input2.classList).toContain('modified');
+      expect(actions.classList).not.toContain('hidden');
       expect(modified_summary.textContent).toBe('modified_summary, {"count":2}');
 
       // Record 1: Change second field back to original value
@@ -94,6 +100,7 @@ describe("BulkFormController", () => {
       expect(input1a.classList).not.toContain('modified');
       expect(input1b.classList).not.toContain('modified');
       expect(input2.classList).toContain('modified');
+      expect(actions.classList).not.toContain('hidden');
       expect(modified_summary.textContent).toBe('modified_summary, {"count":1}');
 
       // Record 2: Change back to original value
@@ -103,6 +110,7 @@ describe("BulkFormController", () => {
       expect(input1a.classList).not.toContain('modified');
       expect(input1b.classList).not.toContain('modified');
       expect(input2.classList).not.toContain('modified');
+      expect(actions.classList).toContain('hidden');
       expect(modified_summary.textContent).toBe('modified_summary, {"count":0}');
     });
   });

@@ -40,6 +40,8 @@ export default class BulkFormController extends Controller {
       });
     }).length;
 
+    this.actionsTarget.classList.toggle("hidden", modifiedRecordCount == 0);
+
     // Display number of records modified
     const key = this.modifiedSummaryTarget && this.modifiedSummaryTarget.dataset.translationKey;
     if (key) {
