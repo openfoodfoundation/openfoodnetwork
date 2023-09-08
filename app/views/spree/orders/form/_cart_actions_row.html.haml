@@ -1,8 +1,10 @@
 %tr
   %td{colspan:"2"}
   %td
-    %button#update-button.secondary.radius.expand.small{"ng-class" => "{ alert: form.$dirty && form.$valid }"}
-      %i.ofn-i_023-refresh
+    %button#update-button.secondary.radius.small{"ng-class" => "{ alert: form.$dirty && form.$valid }"}<
+      =# Trimmed whitespace (angle brackets) to ensure first word doesn't wrap after icon
+      %i.ofn-i_023-refresh>
+      &nbsp;
       = t(:orders_form_update_cart)
   %td
   %td#empty-cart.text-center
