@@ -947,8 +947,10 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
   def visit_report
     login_as distributor_owner
-    visit admin_reports_path
-    click_on "Enterprise Fees With Tax Report By Producer"
+    visit admin_report_path(
+      report_type: :enterprise_fee_summary,
+      report_subtype: :enterprise_fees_with_tax_report_by_producer
+    )
     expect(page).to have_button("Go")
   end
 end
