@@ -55,8 +55,8 @@ module OrderCyclesHelper
     end
   end
 
-  def active_order_cycle_for_distributor?(_distributor)
-    OrderCycle.active.with_distributor(@distributor).present?
+  def active_order_cycle_for_distributor?(distributor)
+    OrderCycle.active.with_distributor(distributor).present?
   end
 
   def simple_index

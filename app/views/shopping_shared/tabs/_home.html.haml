@@ -5,7 +5,7 @@
   = render partial: "shop/messages/customer_required"
 
 - else
-  - if no_open_order_cycles?
+  - if no_open_order_cycles?(@order_cycles)
     = render partial: "shop/messages/closed_shop"
 
   - else

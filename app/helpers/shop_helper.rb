@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module ShopHelper
-  def oc_select_options
-    @order_cycles.map { |oc| { time: pickup_time(oc), id: oc.id } }
+  def oc_select_options(order_cycles)
+    order_cycles.map { |oc| { time: pickup_time(oc), id: oc.id } }
   end
 
   def require_customer?
@@ -40,20 +40,17 @@ module ShopHelper
     }
   end
 
-  def shop_tab_names
-    shop_tabs.map { |tab| tab[:name] }
-  end
-
   def show_home_tab?
     require_customer? || current_distributor.preferred_shopfront_message.present?
   end
 
-  def shopfront_closed_message?
-    no_open_order_cycles? && current_distributor.preferred_shopfront_closed_message.present?
+  def shopfront_closed_message?(order_cycles)
+    no_open_order_cycles?(order_cycles) && \
+      current_distributor.preferred_shopfront_closed_message.present?
   end
 
-  def no_open_order_cycles?
-    @no_open_order_cycles ||= @order_cycles&.empty?
+  def no_open_order_cycles?(order_cycles)
+    @no_open_order_cycles ||= order_cycles&.empty?
   end
 
   def show_shopping_cta?

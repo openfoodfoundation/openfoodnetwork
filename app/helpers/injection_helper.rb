@@ -12,7 +12,7 @@ module InjectionHelper
       "enterprises",
       enterprises || default_enterprise_query,
       Api::EnterpriseSerializer,
-      enterprise_injection_data
+      enterprise_injection_data,
     )
   end
 
@@ -56,15 +56,16 @@ module InjectionHelper
 
     inject_json_array "enterprises",
                       enterprises_and_relatives,
-                      Api::EnterpriseSerializer, enterprise_injection_data
+                      Api::EnterpriseSerializer,
+                      enterprise_injection_data
   end
 
-  def inject_group_enterprises
+  def inject_group_enterprises(group)
     inject_json_array(
       "enterprises",
-      @group.enterprises.activated.visible.all,
+      group.enterprises.activated.visible.all,
       Api::EnterpriseSerializer,
-      enterprise_injection_data
+      enterprise_injection_data,
     )
   end
 
@@ -105,29 +106,18 @@ module InjectionHelper
     inject_json "openStreetMapConfig", {}, Api::OpenStreetMapConfigSerializer
   end
 
-  def inject_spree_api_key
+  def inject_spree_api_key(spree_api_key)
     render partial: "json/injection_ams",
-           locals: { name: 'spreeApiKey', json: "'#{@spree_api_key}'" }
+           locals: { name: 'spreeApiKey', json: "'#{spree_api_key}'" }
   end
 
   def inject_available_countries
     inject_json_array "availableCountries", available_countries, Api::CountrySerializer
   end
 
-  def inject_enterprise_attributes
+  def inject_enterprise_attributes(enterprise_attributes)
     render partial: "json/injection_ams",
-           locals: { name: 'enterpriseAttributes', json: @enterprise_attributes.to_json.to_s }
-  end
-
-  def inject_orders
-    inject_json_array "orders", @orders.all, Api::OrderSerializer
-  end
-
-  def inject_shops
-    customers = spree_current_user.customers
-    shops = Enterprise.where(id: @orders.pluck(:distributor_id).uniq |
-                                 customers.pluck(:enterprise_id))
-    inject_json_array "shops", shops.all, Api::ShopForOrdersSerializer
+           locals: { name: 'enterpriseAttributes', json: enterprise_attributes.to_json.to_s }
   end
 
   def inject_saved_credit_cards
