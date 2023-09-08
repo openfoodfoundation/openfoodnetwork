@@ -1,10 +1,10 @@
 = form_with url: bulk_update_admin_products_v3_index_path, method: :patch, id: "products-form",
             html: {'data-reflex-serialize-form': true, 'data-reflex': 'submit->products#bulk_update',
                    'data-controller': "bulk-form"} do |form|
-  %fieldset.form-actions
+  %fieldset.form-actions{ 'data-bulk-form-target': "actions" }
     .container
       .status.ten.columns
-        / = t('.products_modified', count: 'X')
+        .modified_summary{ 'data-bulk-form-target': "modifiedSummary", 'data-translation-key': 'admin.products_v3.table.modified_summary'}
         - if defined?(error_msg) && error_msg.present?
           .error
             = error_msg
@@ -34,7 +34,7 @@
         %th.align-left= t('admin.products_page.columns.inherits_properties')
     - products.each do |product|
       = form.fields_for("products", product, index: nil) do |product_form|
-        %tbody.relaxed
+        %tbody.relaxed{ 'data-record-id': product_form.object.id }
           %tr
             %td.align-left.header
               = product_form.hidden_field :id
