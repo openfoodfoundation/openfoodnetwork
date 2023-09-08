@@ -823,37 +823,13 @@ Style/HashLikeCase:
   Exclude:
     - 'app/models/enterprise.rb'
 
-# Offense count: 1769
+# Offense count: 1715
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, EnforcedShorthandSyntax, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
 # SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
 # SupportedShorthandSyntax: always, never, either, consistent
 Style/HashSyntax:
   Exclude:
-    - 'app/components/confirm_modal_component.rb'
-    - 'app/components/help_modal_component.rb'
-    - 'app/controllers/admin/customers_controller.rb'
-    - 'app/controllers/admin/enterprise_fees_controller.rb'
-    - 'app/controllers/admin/enterprise_groups_controller.rb'
-    - 'app/controllers/admin/enterprises_controller.rb'
-    - 'app/controllers/admin/order_cycles_controller.rb'
-    - 'app/controllers/admin/reports_controller.rb'
-    - 'app/controllers/admin/resource_controller.rb'
-    - 'app/controllers/admin/stripe_connect_settings_controller.rb'
-    - 'app/controllers/api/v0/enterprise_attachment_controller.rb'
-    - 'app/controllers/api/v0/shipments_controller.rb'
-    - 'app/controllers/concerns/extra_fields.rb'
-    - 'app/controllers/concerns/manager_invitations.rb'
-    - 'app/controllers/concerns/reports_actions.rb'
-    - 'app/controllers/line_items_controller.rb'
-    - 'app/controllers/payment_gateways/paypal_controller.rb'
-    - 'app/controllers/spree/admin/mail_methods_controller.rb'
-    - 'app/controllers/spree/admin/orders/customer_details_controller.rb'
-    - 'app/helpers/admin/injection_helper.rb'
-    - 'app/helpers/checkout_helper.rb'
-    - 'app/helpers/injection_helper.rb'
-    - 'app/helpers/serializer_helper.rb'
-    - 'app/helpers/spree/admin/base_helper.rb'
     - 'app/helpers/tax_helper.rb'
     - 'app/jobs/report_job.rb'
     - 'app/jobs/webhook_delivery_job.rb'
