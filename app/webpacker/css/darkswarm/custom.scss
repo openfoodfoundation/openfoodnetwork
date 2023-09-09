@@ -1,3 +1,53 @@
-.ofn-logo{
-    border-radius: 50% !important;
+shop ordercycle {background: green !important;}
+
+ordercycle order-cycle-select {border: 1px solid greenyellow;}
+
+.filter-shopfront.taxon-selectors li a, .filter-shopfront.taxon-selectors li a.button {border: 1px solid green; color: green;}
+
+.filter-shopfront.taxon-selectors li a:focus, .filter-shopfront.taxon-selectors li a:hover {
+    border-color: greenyellow;
+    color: green;
+}
+
+.darkswarm products product .summary .summary-header .product-producer {
+        display: none;
+}
+
+
+
+#shop-tabs .page a:active, #shop-tabs .page a:hover {
+    color: green;
+}
+
+
+#shop-tabs .page a.selected {
+    border-bottom: 4px solid green;
+}
+
+
+.button, button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 0;
+    cursor: pointer;
+    font-family: Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0 0 1.25rem;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 1rem 2rem 1.0625rem;
+    font-size: 1rem;
+    background-color: green;
+    border: 1px solid #9ACD32;
+    color: #fff;
+    transition: background-color .3s ease-out;
+}
+
+
+button:hover {
+    background-color: darkgreen;
+    color: #fff;
 }

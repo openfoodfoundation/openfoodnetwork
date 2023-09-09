@@ -4552,8 +4552,9 @@ fr:
   about_history_title: "Notre histoire"
   about_history_description: "Nous sommes trois amis, Julien, Chiara et Pablo, qui vivons sur place et travaillons avec plusieurs agriculteurs andalous les fruits de saison. Nous réservons les fruits dans l'arbre, les cueillons et les conditionnons en faisant très attention au choix de fruits mûrs, savoureux, et d'une grande qualité.\n\nLa Belle Orange soutient de petits producteurs engagés, aux pratiques écologiques avancées. Leurs employés sont déclarés et travaillent dans de bonnes conditions. Nous établissons une rémunération juste et fixe aux producteurs, garantissant un tarif fixe au consomm’acteur."
 
- 
-  about_secondhead: "Notre métier"
+  confidentiality_title: "Confidentiality"
+  confidentiality_description: "Confidentiality  Des "
+
   legal_notice: "Mention légale"
   legal_notice_title: "Mention légale"
   legal_notice_description: "Définitions
@@ -4659,3 +4660,9 @@ En cas de problème, vous pouvez toujours nous contacter à fruits(arobase)La Be
 
   ourpromise_title: "Our Promise"
   ourpromise_description: "Our promise isn't just about fruits it's about cultivating trust."
+
+  your_name: "votre nom"
+  subject: "Sujette"
+  email_address_contact: "Votre adresse e-mail"
+  contact_message: "Message"
+  send_message_contact: "Envoyer le message"

@@ -12,29 +12,34 @@
         %p.text-big
           != t :contact_us_description
 
-  #sell-detail.pane
-    .row.form-row
-      .small-12.medium-12.columns.text-center
-        .medium-8.medium-offset-2.columns
-          %form#contact-form{action: "/contact", method: "post"}
-            .form-group
-              %label{for: "name"} Your Name:
-              %input.form-control{type: "text", name: "name", required: "required"}
+#sell-detail.pane
+  .row.form-row
+    .small-12.medium-12.columns.text-center
+      .medium-8.medium-offset-2.columns
+        %form#contact-form{action: "/contact", method: "post", class: "text-center"}
+          .form-group.text-left
+            %label{for: "name"} 
+              = t :your_name
+            %input.form-control{type: "text", name: "name", required: "required"}
 
-            .form-group
-              %label{for: "subject"} Subject:
-              %input.form-control{type: "text", name: "subject", required: "required"}
+          .form-group.text-left
+            %label{for: "subject"}
+              = t :subject
+            %input.form-control{type: "text", name: "subject", required: "required"}
 
-            .form-group
-              %label{for: "email"} Email Address:
-              %input.form-control{type: "email", name: "email", required: "required"}
+          .form-group.text-left
+            %label{for: "email"}
+              = t :email_address_contact
+            %input.form-control{type: "email", name: "email", required: "required"}
 
-            .form-group
-              %label{for: "message"} Message:
-              %textarea.form-control{name: "message", rows: "5", required: "required"}
+          .form-group.text-left
+            %label{for: "message"}
+              = t :contact_message
+            %textarea.form-control{name: "message", rows: "5", required: "required"}
 
-            .text-center
-              %button.btn.btn-primary{type: "submit"} Send Message
+          .text-center
+            %button.btn.btn-primary{type: "submit"}
+              = t :send_message_contact
 
 = render "shared/footer"
 

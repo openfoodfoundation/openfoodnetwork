@@ -4464,12 +4464,10 @@ At the core of everything we do is a belief that creating a new food system requ
 At the core of everything we do is a belief that creating a new food system requires a new way of operating. This is why we create open source solutions, communicate with transparency, and hold everything we create as part of the Commons – it doesn’t belong to a single entity, but instead to a community.
 
  To use the software platform for selling food, it needs to be operating in your area. "
+
   confidentiality_title: "Confidentiality"
-  confidentiality_description: "Labelleorange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, Labelleorange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
+  confidentiality_description: "Confidentiality  Des "
 
-At the core of everything we do is a belief that creating a new food system requires a new way of operating. This is why we create open source solutions, communicate with transparency, and hold everything we create as part of the Commons – it doesn’t belong to a single entity, but instead to a community.
-
- To use the software platform for selling food, it needs to be operating in your area. "
   shipping_and_return_title: "Shipping and Return"
   shipping_and_return_description: "Labelleorange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, Labelleorange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
 
@@ -4485,3 +4483,9 @@ At the core of everything we do is a belief that creating a new food system requ
 
   ourpromise_title: "Our Promise"
   ourpromise_description: "Our promise isn't just about fruits it's about cultivating trust."
+
+  your_name: "Your Name"
+  subject: "Subject"
+  email_address_contact: "Your Email Address"
+  contact_message: "Message"
+  send_message_contact: "Send Message"
