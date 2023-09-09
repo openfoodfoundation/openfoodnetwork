@@ -18,3 +18,11 @@
     }
   }
 }
+
+#hubs > div:nth-child(1) > div > h1 {margin-bottom: 20px;}
+
+#hubs #active-table-search > div {margin-bottom: 10px;}
+
+#hubs .button.success, button.success {background: grey;} 
+
+#hubs .button.success:hover, button.success:active, button.success:focus, button.success:hover {background: darkseagreen;}
