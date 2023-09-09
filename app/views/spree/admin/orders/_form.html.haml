@@ -22,9 +22,11 @@
     = form_for @order, url: spree.admin_order_url(@order), method: :put do |f|
       = render partial: 'spree/admin/orders/_form/distribution_fields'
 
+    %fieldset.no-border-top
       .filter-actions.actions{"ng-show" => "distributionChosen()"}
-        = button t(:update_and_recalculate_fees), 'icon-refresh'
-        = link_to_with_icon 'button icon-arrow-left', t(:back), spree.admin_orders_url
+        = button_link_to t('actions.cancel'), spree.admin_orders_path, :icon => 'icon-remove'
+        = link_to_with_icon 'button icon-arrow-left', t('actions.back'), spree.admin_order_customer_url(@order)
+        = button t('actions.recalculate_fees_and_update'), 'icon-refresh'
 
   = javascript_tag do
     var order_number = '#{@order.number}';

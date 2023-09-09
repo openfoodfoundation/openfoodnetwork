@@ -524,6 +524,7 @@ en:
     destroy: "Destroy"
     rename: "Rename"
     back: "Back"
+    recalculate_fees_and_update: "Recalculate Fees AND Update"
 
 # Admin
 #
@@ -2573,7 +2574,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   forgot_password: "Forgot Password?"
   password_reset_sent: "An email with instructions on resetting your password has been sent!"
   reset_password: "Reset password"
-  update_and_recalculate_fees: "Update And Recalculate Fees"
   registration:
     steps:
       introduction:
