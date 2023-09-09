@@ -11,12 +11,6 @@
         %a{"ng-click" => "triggerProductModal()", href: 'javascript:void(0)'}
           %span{"ng-bind" => "::product.name"}
       .product-description{ng: {"bind-html": "::product.description_html", click: "triggerProductModal()", show: "product.description_html.length"}}
-      %div{ "ng-switch" => "enterprise.visible" }
-        .product-producer
-          = t :products_from
-          %span{ "ng-switch-when": "hidden", "ng-bind" => "::enterprise.name"}
-          %span{ "ng-switch-default": true }
-            %enterprise-modal{"ng-bind" => "::enterprise.name"}
-
+    
       .product-properties.filter-shopfront.property-selectors
         %filter-selector{ 'selector-set' => "productPropertySelectors", objects: "[product] | propertiesWithValuesOf" }
