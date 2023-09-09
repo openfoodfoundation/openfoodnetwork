@@ -4554,8 +4554,8 @@ fr:
 
  
   about_secondhead: "Notre métier"
-
-  legal_notice_title: "Legal Notice"
+  legal_notice: "Mention légale"
+  legal_notice_title: "Mention légale"
   legal_notice_description: "Définitions
 « Responsable de traitement » Désigne la personne qui détermine les finalités et les moyens du traitement de données à caractère personnel.
 « Données à caractère personnel » (ci-après « données personnelles ») Information qui permet de vous reconnaître en tant que personne. Votre nom de famille est une donnée personnelle. Votre numéro de téléphone, votre email, votre adresse IP sont des données personnelles.
