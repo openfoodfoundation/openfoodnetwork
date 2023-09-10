@@ -1888,9 +1888,9 @@ fr:
       cookies_accept_button: "Accepter les cookies"
   home_shop: Faire mes courses
   brandstory_headline: "Les circuits courts connectés"
-  brandstory_intro: "La Belle Orange est une plateforme libre, cogérée et accessible à tous."
-  brandstory_part1: "Le service proposé est basé sur le logiciel libre Open Food Network. Les organisateurs de circuits courts qui utilisent la plateforme décident ensemble des évolutions à apporter au logiciel, et gèrent conjointement l’activité de la coopérative La Belle Orange. Ils décident notamment du prix qu’ils paieront pour utiliser cette plateforme."
-  brandstory_part2: "Afin de permettre à tout type d’initiative de circuit court de fonctionner efficacement, les offres proposées s’adaptent à la diversité des modèles économiques : que vous gériez un groupement d’achat bénévolement, ou pilotiez une entreprise familiale de distribution, La Belle Orange vous accompagne :-)"
+  brandstory_intro: "La Belle Orange est une plateforme libre, et accessible à tous."
+  brandstory_part1: "Les organisateurs de circuits courts qui gèrent les différents points de distribution sont au coeur de notre réussite. Ils aident l’activité de La Belle Orange, le plus souvent de bon coeur, bénévolement, pour vous fournir des fruits et produits les meilleurs possible, au meilleur prix. "
+  brandstory_part2: "Afin de permettre à tout type d’initiative de circuit court de fonctionner efficacement, nous nous adaptons à la diversité : qu'ils gèrent un groupement d’achat bénévolement, une petite épicerie, ou une entreprise familiale de distribution, La Belle Orange trouve des solutions :-)"
   brandstory_part3: " "
   brandstory_part4: " "
   brandstory_part5_strong: " "
@@ -2286,7 +2286,7 @@ fr:
   sell_embed: "Nous pouvons aussi intégrer votre boutique La Belle Orange dans votre propre site web ou construire pour vous un site de vente en ligne s’appuyant sur une boutique La Belle Orange."
   sell_ask_services: "Nous consulter pour en savoir plus."
   shops_title: Boutiques
-  shops_headline: Je vote avec mes achats.
+  shops_headline: Mes achats ont un sens.
   shops_text: Trouvez des circuits de distribution pour vous approvisionner près de chez vous en bio/local/éthique.
   shops_signup_title: S'inscrire et créer une boutique multi-producteurs
   shops_signup_headline: Des circuits courts offrant une large gamme de produits
@@ -4538,26 +4538,22 @@ fr:
 
 
   contact_us_title: "Nous Contacter"
-  contact_us_headline: "Restez en contact avec La Belle Orange - Votre Réseau Fruité"
+  contact_us_headline: "Restez en contact avec La Belle Orange <p>Votre Réseau Fruité</p>"
 
-  contact_us_description: "Si vous avez une question, une suggestion, ou si vous voulez juste partager avec nous votre amour du bon fruit, nous serons heureux de reçevoir vos messages !"
+  contact_us_description: "Pour une question, une suggestion, ou si vous voulez simplement partager avec nous votre amour du bon fruit, nous sommes toujours heureux de reçevoir vos messages !"
   contact_second_title: "Si vous avez une question, une suggestion, ou si vous voulez juste partager avec nous votre amour du bon fruit, nous serons heureux de reçevoir vos messages !"
 
   about_hero_text_first: " "
   about_hero_text: "Bienvenue chez La Belle Orange là où les fruits sont cultivés avec Amour!"
   about_secondhead: "Notre coeur de métier"
-  about_third_section_hero: "La Belle Orange est un petit groupe d'amis et de personnes qui décident de travailler ensemble pour proposer des fruits et produits les plus naturels de l'arbre, à l'assiette du consommateur."
-  about_secondhead_description: "Nous prenons soin de nos clients. Et pour celà, tout commence par les fruits, ou nos produits, qui sont cultivés dans des pratiques respectueuses de l'environnement. Nous travaillons avec des agriculteurs qui développent des pratiques uniques, parfois surprenantes, pour se passer le plus possible des produits chimiques, ou qui dénaturent la qualité des fruits."
+  about_third_section_hero: "La Belle Orange est un petit groupe d'amis et de personnes qui décident de travailler ensemble pour proposer des fruits et produits les plus naturels de l'arbre, à l'assiette du consom'acteur."
+  about_secondhead_description: "<p>Nous prenons soin de nos clients.</p> Et pour celà, tout commence par les fruits, ou nos produits, qui sont cultivés dans des pratiques respectueuses de l'environnement. Nous travaillons avec des agriculteurs qui développent des pratiques uniques, parfois surprenantes, pour développer et conserver au mieux les qualités et saveurs naturelles des fruits."
   about_secondhead_title: "Notre métier"
   about_history_title: "Notre histoire"
   about_history_description: "Nous sommes trois amis, Julien, Chiara et Pablo, qui vivons sur place et travaillons avec plusieurs agriculteurs andalous les fruits de saison. Nous réservons les fruits dans l'arbre, les cueillons et les conditionnons en faisant très attention au choix de fruits mûrs, savoureux, et d'une grande qualité. La Belle Orange soutient de petits producteurs engagés, aux pratiques écologiques avancées. Leurs employés sont déclarés et travaillent dans de bonnes conditions. Nous établissons une rémunération juste et fixe aux producteurs, garantissant un tarif fixe au consomm’acteur."
 
-  confidentiality_title: "Confidentiality"
-  confidentiality_description: "Confidentiality  Des "
-
-  legal_notice: "Mention légale"
-  legal_notice_title: "Mention légale"
-  legal_notice_description: "Définitions
+  confidentiality_title: "Confidentialité"
+  confidentiality_description: "Définitions
 « Responsable de traitement » Désigne la personne qui détermine les finalités et les moyens du traitement de données à caractère personnel.
 « Données à caractère personnel » (ci-après « données personnelles ») Information qui permet de vous reconnaître en tant que personne. Votre nom de famille est une donnée personnelle. Votre numéro de téléphone, votre email, votre adresse IP sont des données personnelles.
 « Traitement de données à caractère personnel » Opération ou ensemble d’opérations appliquées à des données personnelles (collecte, enregistrement, conservation, consultation etc.)
@@ -4643,6 +4639,22 @@ Cette Politique a été mise à jour pour la dernière fois à la date indiquée
 Contact
 Pour toute question relative à notre Politique, vous pouvez nous contacter directement en vous adressant à fruits@labelleorange.es, ou par courrier La Belle Orange – Calle Porvenir – 3 Nave 8 – 29560 Pizarra (Espagne).
  "
+
+  legal_notice: "Mentions légales"
+  legal_notice_title: "Mentions légales"
+  legal_notice_description: "- Éditeur du site : LA BELLE ORANGE SL Sociedad de Responsabilidad Limitada enregistrée au Registro Mercantil de Málaga, sous le CIF B93619815
+- Siège Social: Calle Hipolito, 14 – 29560 Pizarra (Espagne)
+- Email de contact : fruits(arobase)labelleorange.es
+- Directeur de la Publication : Julien BRANTENER
+- Hébergeur du site : Le Site est hébergé sur l’infrastructure de la société Contabo en Union Européenne.
+- Code source : le code source du site est fourni par OpenFood Network et adapté en fonction des besoins de La Belle Orange SL
+- Vous pouvez vous désabonner à tout moment en cliquant sur le lien présent dans toutes les newsletters
+- La société La Belle Orange SL, responsable de traitement, met en œuvre un traitement de données à caractère personnel ayant pour finalités l’achat de produits alimentaires en direct des producteurs et artisans. Vous pouvez exprimer votre accord ou refus lors de votre inscription ou à tout autre moment.
+Les données personnelles collectées sont destinées à La Belle Orange SL uniquement, aux transporteurs et points de distribution en cas de problème au moment de la livraison.
+Conformément au Règlement (UE) 2016/679 (GDPR/RGPD), vous bénéficiez d’un droit d’accès, de rectification, d’opposition, de suppression, de limitation, de portabilité de vos données et à ne pas faire l’objet d’une décision individuelle automatisée, y compris le profilage. Vous seul pouvez exercer ces droits sur vos propres données en vous adressant à LA BELLE ORANGE SL, Calle Porvenir – 3 Nave 8 – 29560 Pizarra (Espagne), ou à fruits(arobase)labelleorange.es en précisant dans l’objet du courrier « Droit des personnes » et en joignant la copie de votre justificatif d’identité.
+Vous pouvez également nous transmettre vos directives relatives à la conservation, à l’effacement et à la communication de vos données personnelles après votre décès.
+En cas de réponse non satisfaisante, vous avez la possibilité de saisir la CNIL ou toute autorité compétente relative à votre juridiction."
+
   shipping_and_return_title: "Livraisons et Retours"
   shipping_and_return_description: "<p>La livraison de nos fruits et produits est offerte pour tous les acheteurs particuliers !</p>
 
