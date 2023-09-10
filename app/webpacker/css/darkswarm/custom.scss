@@ -1,3 +1,31 @@
+/* General layouts */
+.button, button {border-radius: 8px;}
+
+
+
+/* Page Contact */
+#sell {background-color: green !important;}
+
+
+
+
+/* Page About Us */
+
+#tagline { 
+    background-image: url("/default_images/shipping_return.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;}
+
+#system > div > div > div > div {text-align: center !important;}
+
+
+
+
+
+
+
+
 #hubs > div:nth-child(1) > div > h1 {margin-bottom: 20px !important;}
 
 #hubs #active-table-search > div {margin-bottom: 10px !important;}
