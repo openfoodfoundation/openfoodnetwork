@@ -4489,3 +4489,7 @@ At the core of everything we do is a belief that creating a new food system requ
   email_address_contact: "Your Email Address"
   contact_message: "Message"
   send_message_contact: "Send Message"
+  terms_of_service_title: "<b>Terms Of Service<b>"
+  terms_of_service_description: "Terms of Service Content."
+  delivery_description: "Terms of Service Content."
+  delivery_title: "Terms of Service Content."

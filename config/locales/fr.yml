@@ -4666,3 +4666,7 @@ En cas de problème, vous pouvez toujours nous contacter à fruits(arobase)La Be
   email_address_contact: "Votre adresse e-mail"
   contact_message: "Message"
   send_message_contact: "Envoyer le message"
+  terms_of_service_title: "<b>Terms Of Service<b>"
+  terms_of_service_description: "Terms of Service Content."
+  delivery_description: "Terms of Service Content."
+  delivery_title: "Terms of Service Content."

@@ -4382,3 +4382,7 @@ At the core of everything we do is a belief that creating a new food system requ
   email_address_contact: "Su dirección de correo electrónico"
   contact_message: "Mensaje"
   send_message_contact: "Enviar mensaje"
+  terms_of_service_title: "<b>Terms Of Service<b>"
+  terms_of_service_description: "Terms of Service Content."
+  delivery_description: "Terms of Service Content."
+  delivery_title: "Terms of Service Content."
