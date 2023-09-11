@@ -412,6 +412,21 @@ Naming/VariableNumber:
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/requests/api/orders_spec.rb'
 
+# Offense count: 11
+# This cop supports unsafe autocorrection (--autocorrect-all).
+# Configuration parameters: AllowedMethods, AllowedPatterns.
+# AllowedMethods: order, limit, select, lock
+Rails/FindEach:
+  Exclude:
+    - 'app/controllers/admin/order_cycles_controller.rb'
+    - 'app/jobs/subscription_confirm_job.rb'
+    - 'app/services/orders_bulk_cancel_service.rb'
+    - 'app/services/products_renderer.rb'
+    - 'lib/tasks/data.rake'
+    - 'lib/tasks/subscriptions/debug.rake'
+    - 'spec/system/admin/bulk_order_management_spec.rb'
+    - 'spec/system/admin/enterprise_relationships_spec.rb'
+
 # Offense count: 47
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
@@ -438,14 +453,13 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/spree/user.rb'
     - 'app/models/spree/variant.rb'
 
-# Offense count: 26
+# Offense count: 25
 # Configuration parameters: Include.
 # Include: app/helpers/**/*.rb
 Rails/HelperInstanceVariable:
   Exclude:
     - 'app/helpers/injection_helper.rb'
     - 'app/helpers/shared_helper.rb'
-    - 'app/helpers/shop_helper.rb'
     - 'app/helpers/spree/admin/orders_helper.rb'
     - 'app/helpers/spree/orders_helper.rb'
 
@@ -561,6 +575,22 @@ Rails/PluckInWhere:
   Exclude:
     - 'app/models/spree/variant.rb'
 
+# Offense count: 15
+# This cop supports unsafe autocorrection (--autocorrect-all).
+Rails/RedundantActiveRecordAllMethod:
+  Exclude:
+    - 'app/models/spree/tax_rate.rb'
+    - 'app/models/spree/user.rb'
+    - 'app/models/spree/variant.rb'
+    - 'spec/support/request/shop_workflow.rb'
+    - 'spec/support/request/web_helper.rb'
+    - 'spec/system/admin/bulk_product_update_spec.rb'
+    - 'spec/system/admin/order_cycles/complex_editing_spec.rb'
+    - 'spec/system/admin/product_import_spec.rb'
+    - 'spec/system/admin/products_spec.rb'
+    - 'spec/system/admin/tag_rules_spec.rb'
+    - 'spec/system/consumer/shopping/shopping_spec.rb'
+
 # Offense count: 22
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/RedundantPresenceValidationOnBelongsTo:
@@ -617,6 +647,12 @@ Rails/RootPathnameMethods:
     - 'spec/models/terms_of_service_file_spec.rb'
     - 'spec/system/admin/configuration/terms_of_service_files_spec.rb'
 
+# Offense count: 1
+# This cop supports unsafe autocorrection (--autocorrect-all).
+Rails/SelectMap:
+  Exclude:
+    - 'app/models/enterprise.rb'
+
 # Offense count: 4
 # Configuration parameters: ForbiddenMethods, AllowedMethods.
 # ForbiddenMethods: decrement!, decrement_counter, increment!, increment_counter, insert, insert!, insert_all, insert_all!, toggle!, touch, touch_all, update_all, update_attribute, update_column, update_columns, update_counters, upsert, upsert_all
@@ -633,7 +669,7 @@ Rails/SquishedSQLHeredocs:
     - 'app/queries/outstanding_balance.rb'
     - 'spec/queries/outstanding_balance_spec.rb'
 
-# Offense count: 3
+# Offense count: 7
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: strict, flexible
@@ -642,8 +678,10 @@ Rails/TimeZone:
     - 'app/models/spree/gateway/pay_pal_express.rb'
     - 'spec/controllers/spree/credit_cards_controller_spec.rb'
     - 'spec/services/customer_order_cancellation_spec.rb'
+    - 'spec/services/order_cycle_webhook_service_spec.rb'
 
 # Offense count: 1
+# Configuration parameters: TransactionMethods.
 Rails/TransactionExitStatement:
   Exclude:
     - 'app/services/place_proxy_order.rb'
@@ -665,6 +703,18 @@ Rails/UniqueValidationWithoutIndex:
 Rails/UnknownEnv:
   Exclude:
     - 'app/models/spree/app_configuration.rb'
+
+# Offense count: 7
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: Severity.
+Rails/UnusedRenderContent:
+  Exclude:
+    - 'app/controllers/admin/bulk_line_items_controller.rb'
+    - 'app/controllers/admin/tag_rules_controller.rb'
+    - 'app/controllers/api/v0/enterprise_fees_controller.rb'
+    - 'app/controllers/api/v0/products_controller.rb'
+    - 'app/controllers/api/v0/taxons_controller.rb'
+    - 'app/controllers/api/v0/variants_controller.rb'
 
 # Offense count: 56
 # This cop supports unsafe autocorrection (--autocorrect-all).
