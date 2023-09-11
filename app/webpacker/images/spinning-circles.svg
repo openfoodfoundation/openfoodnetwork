@@ -1,55 +1,53 @@
-<!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
-<svg width="58" height="58" viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
-    <g fill="none" fill-rule="evenodd">
-        <g transform="translate(2 1)" stroke="#0096ad" stroke-width="1.5">
-            <circle cx="42.601" cy="11.462" r="5" fill-opacity="1" fill="#0096ad">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="1;0;0;0;0;0;0;0" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-            <circle cx="49.063" cy="27.063" r="5" fill-opacity="0" fill="#0096ad">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="0;1;0;0;0;0;0;0" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-            <circle cx="42.601" cy="42.663" r="5" fill-opacity="0" fill="#0096ad">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="0;0;1;0;0;0;0;0" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-            <circle cx="27" cy="49.125" r="5" fill-opacity="0" fill="#0096ad">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="0;0;0;1;0;0;0;0" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-            <circle cx="11.399" cy="42.663" r="5" fill-opacity="0" fill="#0096ad">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="0;0;0;0;1;0;0;0" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-            <circle cx="4.938" cy="27.063" r="5" fill-opacity="0" fill="#0096ad">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="0;0;0;0;0;1;0;0" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-            <circle cx="11.399" cy="11.462" r="5" fill-opacity="0" fill="#0096ad">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="0;0;0;0;0;0;1;0" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-            <circle cx="27" cy="5" r="5" fill-opacity="0" fill="#0096ad">
-                <animate attributeName="fill-opacity"
-                     begin="0s" dur="1.3s"
-                     values="0;0;0;0;0;0;0;1" calcMode="linear"
-                     repeatCount="indefinite" />
-            </circle>
-        </g>
-    </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.1.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 58 58" style="enable-background:new 0 0 58 58;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#008000;stroke:#008000;stroke-width:1.5;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#008000;fill-opacity:0;stroke:#008000;stroke-width:1.5;}
+</style>
+<g>
+	<g transform="translate(2 1)">
+		<circle class="st0" cx="42.6" cy="11.5" r="5">
+		
+			<animate  accumulate="none" additive="replace" attributeName="fill-opacity" begin="0s" calcMode="linear" dur="1.3s" fill="remove" repeatCount="indefinite" restart="always" values="1;0;0;0;0;0;0;0">
+			</animate>
+		</circle>
+		<circle class="st1" cx="49.1" cy="27.1" r="5">
+		
+			<animate  accumulate="none" additive="replace" attributeName="fill-opacity" begin="0s" calcMode="linear" dur="1.3s" fill="remove" repeatCount="indefinite" restart="always" values="0;1;0;0;0;0;0;0">
+			</animate>
+		</circle>
+		<circle class="st1" cx="42.6" cy="42.7" r="5">
+		
+			<animate  accumulate="none" additive="replace" attributeName="fill-opacity" begin="0s" calcMode="linear" dur="1.3s" fill="remove" repeatCount="indefinite" restart="always" values="0;0;1;0;0;0;0;0">
+			</animate>
+		</circle>
+		<circle class="st1" cx="27" cy="49.1" r="5">
+		
+			<animate  accumulate="none" additive="replace" attributeName="fill-opacity" begin="0s" calcMode="linear" dur="1.3s" fill="remove" repeatCount="indefinite" restart="always" values="0;0;0;1;0;0;0;0">
+			</animate>
+		</circle>
+		<circle class="st1" cx="11.4" cy="42.7" r="5">
+		
+			<animate  accumulate="none" additive="replace" attributeName="fill-opacity" begin="0s" calcMode="linear" dur="1.3s" fill="remove" repeatCount="indefinite" restart="always" values="0;0;0;0;1;0;0;0">
+			</animate>
+		</circle>
+		<circle class="st1" cx="4.9" cy="27.1" r="5">
+		
+			<animate  accumulate="none" additive="replace" attributeName="fill-opacity" begin="0s" calcMode="linear" dur="1.3s" fill="remove" repeatCount="indefinite" restart="always" values="0;0;0;0;0;1;0;0">
+			</animate>
+		</circle>
+		<circle class="st1" cx="11.4" cy="11.5" r="5">
+		
+			<animate  accumulate="none" additive="replace" attributeName="fill-opacity" begin="0s" calcMode="linear" dur="1.3s" fill="remove" repeatCount="indefinite" restart="always" values="0;0;0;0;0;0;1;0">
+			</animate>
+		</circle>
+		<circle class="st1" cx="27" cy="5" r="5">
+		
+			<animate  accumulate="none" additive="replace" attributeName="fill-opacity" begin="0s" calcMode="linear" dur="1.3s" fill="remove" repeatCount="indefinite" restart="always" values="0;0;0;0;0;0;0;1">
+			</animate>
+		</circle>
+	</g>
+</g>
 </svg>
