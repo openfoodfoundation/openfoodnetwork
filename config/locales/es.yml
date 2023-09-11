@@ -971,7 +971,7 @@ es:
           permalink: Permalink (sin espacios)
           permalink_tip: "Se usa para crear la URL de tu tienda: %{link}nombre-de-tu-tienda/shop"
           link_to_front: Link a la tienda
-          link_to_front_tip: Enlace directo a tu tienda en La Belle Oranges
+          link_to_front_tip: Enlace directo a tu tienda en La Belle Orange
           ofn_uid: UID de La Belle Orange
           ofn_uid_tip: La identificación única utilizada para identificar la organización en La Belle Orange.
         shipping_methods:

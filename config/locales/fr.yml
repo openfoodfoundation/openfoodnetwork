@@ -195,7 +195,7 @@ fr:
         signed_up_but_unconfirmed: "Un message avec un lien de confirmation a été envoyé à l'adresse email indiquée. Veuillez cliquer sur ce lien pour activer votre compte."
         unknown_error: "Une erreur s'est glissée lors de la création de votre compte. Vérifiez votre addresse email et recommencez."
     failure:
-      disabled: "Votre compte a été désactivé. Veuillez contacter support@La Belle Orange.es"
+      disabled: "Votre compte a été désactivé. Veuillez contacter fruits(at)labelleorange.es"
       invalid: |
           Email / mot de passe incorrect.
           Créez votre compte ou réinitialisez votre mot de passe.
@@ -1855,9 +1855,9 @@ fr:
       header: "Notre usage des Cookies"
       desc_part_1: "Les cookies sont de tout petits fichiers texte qui sont stockés sur votre ordinateur quand vous naviguez sur certains sites web."
       desc_part_2: "Chez La Belle Orange nous sommes particulièrement soucieux de votre vie privée. Nous n'utilisons que les cookies nécessaires pour vous offrir un service d'achat/vente en ligne performant. Nous ne vendons aucunes de vos données. Peut-être vous proposerons-nous dans le futur de jolis projets qui peuvent être utiles pour faire progresser la vente en circuits courts, et pour lesquels vos données pourraient nous permettre de trouver de nouvelles solutions aux problèmes que vous rencontrez, comme par exemple la construction de services logistiques mutualisés. Mais nous n'y sommes pas encore, et nous ne ferons rien sans votre autorisation :-)"
-      desc_part_3: "Nous utilisons des cookies principalement pour vous permettre de rester connecté(e) après votre première connexion si vous le souhaitez (et éviter de saisir votre mot de passe à chaque fois!), ou encore pour mémoriser les produits dans votre panier. Si vous naviguez sur le site sans cliquer sur \"Accepter les cookies\", cela vaut consentement à l'utilisation des cookies nécessaires au bon fonctionnement du site La Belle Orange.es. Voilà la liste détaillée des cookies que nous utilisons."
+      desc_part_3: "Nous utilisons des cookies principalement pour vous permettre de rester connecté(e) après votre première connexion si vous le souhaitez (et éviter de saisir votre mot de passe à chaque fois!), ou encore pour mémoriser les produits dans votre panier. Si vous naviguez sur le site sans cliquer sur \"Accepter les cookies\", cela vaut consentement à l'utilisation des cookies nécessaires au bon fonctionnement du site labelleorange.es. Voilà la liste détaillée des cookies que nous utilisons."
       essential_cookies: "Cookies essentiels"
-      essential_cookies_desc: "Les cookies suivants sont nécessaires au fonctionnement du site La Belle Orange.es."
+      essential_cookies_desc: "Les cookies suivants sont nécessaires au fonctionnement du site labelleorange.es."
       essential_cookies_note: "Les cookies contiennent un identifiant unique, mais pas d'autres données. Vos emails et mots de passe par exemple ne sont jamais exposés dans les cookies!"
       cookie_domain: "Déposé par"
       cookie_session_desc: "Utilisé pour garder en mémoire l'utilisateur d'une page à l'autre lors de la navigation sur le site, ou pour se souvenir des produits dans le panier."
@@ -2067,7 +2067,7 @@ fr:
   email_confirmation_click_link: "Veuillez cliquer sur le lien ci-dessous pour confirmer votre email et continuer la configuration de votre compte."
   email_confirmation_link_label: "Confirmer cette adresse email »"
   email_confirmation_help_html: "Après confirmation de votre email, vous pourrez accéder au compte d'administration de cette entreprise. Voir %{link} pour en savoir plus à propos de %{sitename} et commencer à utiliser votre profil et/ou boutique en ligne."
-  email_confirmation_notice_unexpected: "Vous recevez ce message car vous vous êtes inscrit sur %{sitename}, ou avez été invité à vous inscrire par l'un de vos contacts. Si vous ne comprenez pas pourquoi vous recevez ce message, écrivez à bonjour@La Belle Orange.es."
+  email_confirmation_notice_unexpected: "Vous recevez ce message car vous vous êtes inscrit sur %{sitename}, ou avez été invité à vous inscrire par l'un de vos contacts. Si vous ne comprenez pas pourquoi vous recevez ce message, écrivez à fruits(at)labelleorange.es."
   email_social: "Nous suivre:"
   email_contact: "Nous écrire:"
   email_signoff: "Cordialement,"
@@ -2121,8 +2121,8 @@ fr:
   email_signup_welcome: "Bienvenue sur %{sitename} !"
   email_signup_confirmed_email: "Merci d'avoir confirmé votre email."
   email_signup_shop_html: "Vous pouvez maintenant vous connecter sur %{link}."
-  email_signup_text: "Si vous organisez / fournissez un circuit court, n’hésitez pas à nous contacter à bonjour@La Belle Orange.es, nous sommes là pour vous accompagner dans la création de votre espace de vente / commande en ligne. Si vous achetez via un circuit court utilisant La Belle Orange, connectez-vous avant de passer commande pour que vos informations personnelles soient gardées en mémoire, cela vous évitera de les ressaisir à chaque commande ! "
-  email_signup_help_html: "Des retours à nous faire quant à votre utilisation de la plateforme ? Écrivez-nous à bonjour@La Belle Orange.es."
+  email_signup_text: "Si vous organisez / fournissez un circuit court, n’hésitez pas à nous contacter à fruits(at)labelleorange.es, nous sommes là pour vous accompagner dans la création de votre espace de vente / commande en ligne. Si vous achetez via un circuit court utilisant La Belle Orange, connectez-vous avant de passer commande pour que vos informations personnelles soient gardées en mémoire, cela vous évitera de les ressaisir à chaque commande ! "
+  email_signup_help_html: "Des retours à nous faire quant à votre utilisation de la plateforme ? Écrivez-nous à fruits(at)labelleorange.es."
   invite_email:
     greeting: "Bonjour,"
     invited_to_manage: "Vous avez été invité(e) à gérer %{enterprise} sur %{instance}."
@@ -2505,7 +2505,7 @@ fr:
         enterprise_final_step: "Dernière étape"
         enterprise_social_text: "Comment trouver %{enterprise} sur le web ?"
         website: "Site internet"
-        website_placeholder: "ex: La Belle Orange.es"
+        website_placeholder: "ex: labelleorange.es"
         facebook: "Facebook"
         facebook_placeholder: "ex: www.facebook.com/NomDeLaPage"
         linkedin: "LinkedIn"
@@ -4538,7 +4538,7 @@ fr:
 
 
   contact_us_title: "Nous Contacter"
-  contact_us_headline: "Restez en contact avec votre Réseau Fruité</p>"
+  contact_us_headline: "Restez en contact avec votre Réseau Fruité"
 
   contact_us_description: "Pour une question, une suggestion, ou si vous voulez simplement partager avec nous votre amour du bon fruit, nous sommes toujours heureux de reçevoir vos messages !"
   contact_second_title: "Si vous avez une question, une suggestion, ou si vous voulez juste partager avec nous votre amour du bon fruit, nous serons heureux de reçevoir vos messages !"
@@ -4589,7 +4589,7 @@ fr:
 La Belle Orange SL
 Calle Hipolito, 14
 29560 Pizarra (Espagne)<br>
-E-mail : fruits(arobase)labelleorange.es
+E-mail : fruits(at)labelleorange.es
 </p>
 La Belle Orange adressera une réponse dans un délai de 1 mois après la réception de la demande. Vous pouvez également exercer votre droit à la limitation du traitement, à l’effacement de vos données, à la portabilité des données et à ne pas faire l’objet d’une décision individuelle automatisée, y compris le profilage. Dans un souci de confidentialité et de protection des données personnelles, une copie d’un titre d’identité signé devra être intégrée à la demande. En cas de réponse non satisfaisante, vous avez la possibilité de saisir la CNIL ou tout organisme relavant de votre juridiction.
 <br><br>
@@ -4627,7 +4627,7 @@ Les destinataires des données sont donc :
 <br><br>
 <b>Contact</b><br>
 Pour toute question relative à notre Politique, vous pouvez nous contacter directement en vous adressant à :<br>
-fruits@labelleorange.es<br>
+fruits(at)labelleorange.es<br>
 ou par courrier<br>
 La Belle Orange – Calle Porvenir – 3 Nave 8 – 29560 Pizarra (Espagne).
  "
@@ -4637,7 +4637,7 @@ La Belle Orange – Calle Porvenir – 3 Nave 8 – 29560 Pizarra (Espagne).
   legal_notice_description: "<b>LA BELLE ORANGE SL Sociedad de Responsabilidad Limitada enregistrée au Registro Mercantil de Málaga, sous le CIF B93619815</b>
   <br>
 <br>Siège Social: Calle Hipolito, 14 – 29560 Pizarra (Espagne)
-<br>Email de contact : fruits(arobase)labelleorange.es
+<br>Email de contact : fruits(at)labelleorange.es
 <br>Directeur de la Publication : Julien BRANTENER
 <br>Hébergeur du site : Le Site est hébergé sur l’infrastructure de la société Contabo en Union Européenne.
 <br>Code source : le code source du site est fourni par OpenFood Network et adapté en fonction des besoins de La Belle Orange SL
@@ -4648,7 +4648,7 @@ La société La Belle Orange SL, responsable de traitement, met en œuvre un tra
 <br>
 Les données personnelles collectées sont destinées à La Belle Orange SL uniquement, aux transporteurs et points de distribution en cas de problème au moment de la livraison.
 <br><br>
-Conformément au Règlement (UE) 2016/679 (GDPR/RGPD), vous bénéficiez d’un droit d’accès, de rectification, d’opposition, de suppression, de limitation, de portabilité de vos données et à ne pas faire l’objet d’une décision individuelle automatisée, y compris le profilage. Vous seul pouvez exercer ces droits sur vos propres données en vous adressant à LA BELLE ORANGE SL, Calle Porvenir – 3 Nave 8 – 29560 Pizarra (Espagne), ou à fruits(arobase)labelleorange.es en précisant dans l’objet du courrier « Droit des personnes » et en joignant la copie de votre justificatif d’identité. Vous pouvez également nous transmettre vos directives relatives à la conservation, à l’effacement et à la communication de vos données personnelles après votre décès. En cas de réponse non satisfaisante, vous avez la possibilité de saisir la CNIL ou toute autorité compétente relative à votre juridiction."
+Conformément au Règlement (UE) 2016/679 (GDPR/RGPD), vous bénéficiez d’un droit d’accès, de rectification, d’opposition, de suppression, de limitation, de portabilité de vos données et à ne pas faire l’objet d’une décision individuelle automatisée, y compris le profilage. Vous seul pouvez exercer ces droits sur vos propres données en vous adressant à LA BELLE ORANGE SL, Calle Porvenir – 3 Nave 8 – 29560 Pizarra (Espagne), ou à fruits(at)labelleorange.es en précisant dans l’objet du courrier « Droit des personnes » et en joignant la copie de votre justificatif d’identité. Vous pouvez également nous transmettre vos directives relatives à la conservation, à l’effacement et à la communication de vos données personnelles après votre décès. En cas de réponse non satisfaisante, vous avez la possibilité de saisir la CNIL ou toute autorité compétente relative à votre juridiction."
 
   shipping_and_return_title: "Livraisons et Retours"
   shipping_and_return_description: "<p>La livraison de nos fruits et produits est offerte pour tous les acheteurs particuliers !</p>
