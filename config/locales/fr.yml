@@ -4680,51 +4680,7 @@ Conformément au Règlement (UE) 2016/679 (GDPR/RGPD), vous bénéficiez d’un 
   contact_message: "Message"
   send_message_contact: "Envoyer le message"
   terms_of_service_title: "<b>Conditions Générales de Vente et d'Utilisation<b>"
-  terms_of_service_description: "1 – Généralités<br>
-La société La Belle Orange SL édite et exploite un site internet à l’adresse labelleorange.es (ci-après le « Site ») afin de proposer des produits alimentaires frais ou secs (ci-après les « Produits ») à un prix ferme.<br>
-Le service proposé sur le Site de La Belle Orange (ci-après « le Service ») permet aux consommateurs (ci-après « Acheteurs ») et/ou points de distribution (ci-après « Points de Distribution ») de se procurer, acheter, ou vendre les produits de La Belle Orange SA (ci-après « le Vendeur »).<br>
-Les présentes Conditions Générales de Vente (ci-après les « CGV») s'appliquent, dès lors qu’une commande est passée par un Acheteur sur le site labelleorange.es.<br>
-Dans ce cadre, la société La Belle Orange SA intervient uniquement en qualité d’éditeur du Site et de Vendeur.<br>
-Les CGV sont opposables à l’Acheteur qui reconnaît, en cochant une case prévue à cet effet, en avoir eu connaissance et les avoir acceptées avant de passer commande. Les CGV sont directement consultables sur le Site.<br>
-Elles pourront faire l’objet de modifications à tout moment. Les CGV applicables à l’Acheteur demeurent celles en vigueur à la date de la commande.<br><br>
-
-<b>2 – Modalités de commande et prix</b><br>
-<b>2.1 Inscription sur le Site</b><br>
-Pour passer une commande, l’Acheteur doit créer un compte client au moyen d’une adresse email valide et d’un mot de passe.<br>
-Lors de la création de ce compte, l’Acheteur doit remplir un formulaire comportant des données personnelles à renseigner obligatoirement.<br>
-...
-<b>2.6 Sécurisation</b><br>
-Le Site fait l'objet d'un système de sécurisation selon le procédé de cryptage SSL.<br>
-...
-<b>3 – Droit de rétractation</b><br>
-<b>3.1 Périmètre</b><br>
-L’Acheteur dispose d’un délai de rétractation de 3 jours calendaires à compter de la date d’achat de Produits alimentaires secs non susceptibles de se détériorer ou de se périmer rapidement...<br><br>
-
-<b>4 – Livraison</b><br>
-Les Produits vendus via le Service peuvent uniquement être expédiés à des adresses de livraison correspondant aux Points de Distribution indiqués sur le Site.<br>
-...
-<b>5 - Responsabilité</b><br>
-Le Vendeur assume toute responsabilité relative aux Produits mis en vente sur le Site et aux réclamations afférentes...<br><br>
-
-<b>6 - Réclamations</b><br>
-<br>
-<b>6.1 Réclamations relative au Produit</b><br>
-A tout moment, l’Acheteur a la possibilité de contacter le Vendeur, d’adresser toute demande, réclamation relative aux Produits commandés en utilisant l’outil de messagerie mis à disposition dans le cadre du Service, ou par mail simplement, notamment pour faire valoir ses garanties quand elles sont en cours.<br>
-En sus de l’outil de messagerie, il est mis à la disposition un bouton dédié permettant à tout Acheteur de signaler dans son compte, dans un délai de 30 jours à compter de la date de débit de son compte pour les achats effectués auprès d’un Vendeur toute réclamation concernant les Produits commandés.<br>
-En cas de réclamation d'un Acheteur concernant un Produit, y compris lorsque le Vendeur est informé de ladite réclamation par le biais de l'outil d'information mis à sa disposition dans le Service, le Vendeur fait son affaire personnelle de la résolution du différend qui l'oppose à l'Acheteur. Les litiges sont directement réglés entre l'Acheteur et le Vendeur, le cas échéant à l'aide de l'outil de messagerie mis à leur disposition sur le Service. Le Vendeur fera ses meilleurs efforts pour résoudre le litige l'opposant à l'Acheteur amiablement.<br>
-Si la contestation de l'Acheteur s'avère fondée, le Vendeur procèdera soit au renvoi du Produit commandé sur le prochain cycle de commande, soit à un avoir, soit au remboursement.<br>
-<br>
-<b>6.2 Réclamations relative à la livraison</b><br>
-Toute question ou demande de précision concernant un retard ou défaut de livraison devront être transmises à la Belle Orange, par email ou par le biais du Site.<br>
-<br>
-<b>6.3 Médiation</b><br>
-Le réclamant consommateur a la possibilité, si la réponse de La Belle Orange SL ne le satisfait pas ou s’il n’a pas reçu de réponse 2 mois après le dépôt de sa réclamation, de saisir un médiateur compétent pour tout litige concernant l’ensemble des services couverts par les présentes conditions générales de vente. La procédure de médiation est gratuite. Un médiateur peut être saisi par les consommateurs soit directement soit par un intermédiaire (association de consommateurs, avocat, élu, autre médiateur…).<br>
-<br>
-<b>7 - Garanties des produits</b><br>
-Les Produits vendus sur le Site sont conformes aux règlementations en vigueur dans les pays où La Belle Orange SL exerce ses activités opérationnelles et commerciales.<br>
-Au titre de ces garanties, le Vendeur s'engage, au choix de l’Acheteur, à lui faire un avoir, le rembourser, ou à échanger les produits défectueux ou ne correspondant pas à sa commande.<br>
-Les remboursements des Produits jugés non conformes ou défectueux seront effectués dans les meilleurs délais suivant la constatation par le Vendeur du défaut de conformité ou du vice caché. Le remboursement s’effectuera par virement sur le compte bancaire de l’Acheteur. Un avoir peut également avoir lieu (c’est généralement la solution la plus simple employée).<br>
-Indépendamment de la garantie commerciale que le Vendeur peut accorder à l’Acheteur en vertu de ses Conditions de Vente, le Vendeur est responsable des défauts de conformité et des vices cachés du produit.<br><br>"
+  terms_of_service_description: ""
   delivery_description: "Delivery Description."
   delivery_title: "Delivery Title"
   delivery_and_return: "Delivery and Returns"
