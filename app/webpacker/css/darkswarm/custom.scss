@@ -12,6 +12,21 @@ button:hover {
 }
 
 
+#shops > div > div @media only screen and (min-width: 40.0625em)
+.medium-offset-3 {
+    margin-left: 0%!important;
+}
+
+
+#shops > div > div @media only screen and (min-width: 40.0625em)
+.medium-offset-3 {
+    margin-left: 0%!important;
+}
+
+#shops > div > div @media only screen and (min-width: 40.0625em)
+.medium-6 {
+    width: 100%;
+}
 
 
 
@@ -47,6 +62,11 @@ body > div.off-canvas-wrap.ng-isolate-scope > div.inner-wrap > section > div.dar
 
 
 /* Page Shops */
+
+.filter-box .tdhead {color: green !important; border-bottom: greenyellow !important;}
+
+.row.filter-box:first-child {border: 1px solid yellowgreen;}
+
 
 #hubs > div:nth-child(1) > div > h1 {margin-bottom: 20px !important;}
 
