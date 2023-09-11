@@ -147,7 +147,7 @@ en:
       message_html: "<b>Please try again</b>
       <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/'>Home</a> and try again.</p>
       <b>Contact support</b>
-      <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p>
+      <p>If the problem persists or is urgent, please tell us about it.</p>
       <p>It really helps us if you can give as much detail as possible about what the missing page is about.</p>"
     internal_server_error:
       title: "We're sorry, but something went wrong (500)"
@@ -156,7 +156,7 @@ en:
       <b>We're on it</b>
       <p>If you have seen this problem before, we probably already know about it and are working on a fix. We record all the errors that come up.</p>
       <b>Contact support</b>
-      <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p>
+      <p>If the problem persists or is urgent, please tell us about it.</p>
       <p>It really helps us if you can give as much detail as possible about what you were doing when this error occurred.</p>"
     unprocessable_entity:
       title: "The change you wanted was rejected (422)"

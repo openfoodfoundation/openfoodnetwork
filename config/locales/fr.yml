@@ -4680,7 +4680,7 @@ Conformément au Règlement (UE) 2016/679 (GDPR/RGPD), vous bénéficiez d’un 
   contact_message: "Message"
   send_message_contact: "Envoyer le message"
   terms_of_service_title: "<b>Conditions Générales de Vente et d'Utilisation<b>"
-  terms_of_service_description: "<b>1 – Généralités</b><br>
+  terms_of_service_description: "1 – Généralités<br>
 La société La Belle Orange SL édite et exploite un site internet à l’adresse labelleorange.es (ci-après le « Site ») afin de proposer des produits alimentaires frais ou secs (ci-après les « Produits ») à un prix ferme.<br>
 Le service proposé sur le Site de La Belle Orange (ci-après « le Service ») permet aux consommateurs (ci-après « Acheteurs ») et/ou points de distribution (ci-après « Points de Distribution ») de se procurer, acheter, ou vendre les produits de La Belle Orange SA (ci-après « le Vendeur »).<br>
 Les présentes Conditions Générales de Vente (ci-après les « CGV») s'appliquent, dès lors qu’une commande est passée par un Acheteur sur le site labelleorange.es.<br>
