@@ -4679,3 +4679,8 @@ Conformément au Règlement (UE) 2016/679 (GDPR/RGPD), vous bénéficiez d’un 
   email_address_contact: "Votre Adresse e-mail"
   contact_message: "Message"
   send_message_contact: "Envoyer le message"
+  terms_of_service_title: "<b>Terms Of Service<b>"
+  terms_of_service_description: "Terms of Service Content."
+  delivery_description: "Delivery Description."
+  delivery_title: "Delivery Title"
+  delivery_and_return: "Delivery and Returns"
