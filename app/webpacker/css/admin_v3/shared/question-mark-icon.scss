@@ -25,7 +25,7 @@
 
   &.open {
     background-image: none;
-    background-color: $teal-500;
+    background-color: $orient;
 
     &:focus {
       outline: 0;
@@ -68,7 +68,7 @@
   }
 
   .joyride-content-wrapper {
-    background-color: $dynamic-blue;
+    background-color: $orient;
     padding: $padding-small;
     border-radius: $radius-small;
     color: $white;
@@ -78,7 +78,7 @@
 
   .joyride-nub.bottom {
     // Need to rewrite all with !important as it's marked as !important in the original file
-    border-color: $dynamic-blue !important;
+    border-color: $orient !important;
     border-bottom-color: transparent !important;
     border-left-color: transparent !important;
     border-right-color: transparent !important;
