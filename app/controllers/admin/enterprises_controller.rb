@@ -270,7 +270,7 @@ module Admin
     end
 
     def update_vouchers
-      return if params[:enterprise][:voucher_ids].blank?
+      params[:enterprise][:voucher_ids] = [] if params[:enterprise][:voucher_ids].blank?
 
       params_voucher_ids = params[:enterprise][:voucher_ids].map(&:to_i)
       voucher_ids = @enterprise.vouchers.map(&:id)

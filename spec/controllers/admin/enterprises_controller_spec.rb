@@ -319,6 +319,19 @@ describe Admin::EnterprisesController, type: :controller do
           expect(voucher_a.reload.deleted?).to be(true)
         end
 
+        context "when desactivating the only existing voucher" do
+          it "deactivates the voucher" do
+            voucher_b.really_destroy!
+
+            # Rails won't populate vouchers_id params if no voucher selected
+            spree_put :update,
+                      id: enterprise,
+                      enterprise: {}
+
+            expect(voucher_a.reload.deleted?).to be(true)
+          end
+        end
+
         context "when activating and deactivating voucher at the same time" do
           it "deactivates and activates accordingly" do
             voucher_c = create(:voucher, enterprise: enterprise, code: "voucher 3")
