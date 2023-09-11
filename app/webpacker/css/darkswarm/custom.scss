@@ -1,0 +1,111 @@
+/* Copy of CSS */
+
+/* General layouts */
+#system > div > div > div > div {text-align: jutify !important;}
+
+.button, button {
+    background-color: green;
+    border: 1px solid #9ACD32;
+    border-radius: 8px;
+}
+
+button:hover {
+    background-color: darkgreen;
+}
+
+
+#shops > div > div @media only screen and (min-width: 40.0625em)
+.medium-offset-3 {
+    margin-left: 0%!important;
+}
+
+
+#shops > div > div @media only screen and (min-width: 40.0625em)
+.medium-offset-3 {
+    margin-left: 0%!important;
+}
+
+#shops > div > div @media only screen and (min-width: 40.0625em)
+.medium-6 {
+    width: 100%;
+}
+
+
+
+
+/* Page Contact */
+#sell {background-color: green !important;}
+
+#contact-form > div.text-center > button {border-radius: 8px;}
+
+#sell.pane {background-color: green !important;}
+
+
+
+
+/* Page About Us */
+    #tagline { 
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;}
+
+
+/* Page Compte client */
+
+body > div.off-canvas-wrap.ng-isolate-scope > div.inner-wrap > section > div.darkswarm > div.row.pad-top > div {padding-bottom: 1em;}
+.tabset-ctrl:not(#shop-tabs) .tab.selected {border-bottom: 4px solid green!important;}
+.tabset-ctrl:not(#shop-tabs) .tab.selected a {color: green!important;}
+.tabset-ctrl:not(#shop-tabs) .tab a {color: green!important;}
+
+#labelleorange > div > div.row.active_table_row.skinny-head.margin-top > div.columns.small-5 > h3 {color: #F4704C!important;}
+
+
+
+
+
+/* Page Shops */
+
+.filter-box .tdhead {color: green !important; border-bottom: greenyellow !important;}
+
+.row.filter-box:first-child {border: 1px solid yellowgreen;}
+
+
+#hubs > div:nth-child(1) > div > h1 {margin-bottom: 20px !important;}
+
+#hubs #active-table-search > div {margin-bottom: 10px !important;}
+
+#hubs .button.success, button.success {background: grey !important;} 
+
+#hubs .button.success:hover, button.success:active, button.success:focus, button.success:hover {background: darkseagreen !important;}
+
+
+shop ordercycle {background: green !important;}
+
+ordercycle .order-cycle-select {border: 1px solid yellowgreen;}
+
+
+.filter-shopfront.taxon-selectors li a, .filter-shopfront.taxon-selectors li a.button {border: 1px solid green; color: green;}
+
+.filter-shopfront.taxon-selectors li a:focus, .filter-shopfront.taxon-selectors li a:hover {
+    border-color: greenyellow;
+    color: green;
+}
+
+.darkswarm products product .summary .summary-header .product-producer {display: none;}
+
+
+#shop-tabs .page a:active, #shop-tabs .page a:hover {color: #008000!important;}
+
+
+#shop-tabs .page a.selected {border-bottom: 4px solid #008000!important;}
+
+.question-mark-icon {margin-right: 4px;}
+.darkswarm products product .row.variants .total-price {padding-left: 10px; font-weight: bold;}
+
+
+
+
+/* Page paiement */
+
+.checkout-summary .summary-edit {color: #008000!important;}
+.checkout-step .checkout-input a {color: #008000!important;}
