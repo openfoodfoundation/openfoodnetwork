@@ -1,30 +1,52 @@
 /* General layouts */
-.button, button {border-radius: 8px;}
+#system > div > div > div > div {text-align: jutify !important;}
+
+.button, button {
+    background-color: green;
+    border: 1px solid #9ACD32;
+    border-radius: 8px;
+}
+
+button:hover {
+    background-color: darkgreen;
+}
+
+
+
 
 
 
 /* Page Contact */
 #sell {background-color: green !important;}
 
+#contact-form > div.text-center > button {border-radius: 8px;}
+
+#sell.pane {background-color: green !important;}
+
 
 
 
 /* Page About Us */
-
-#tagline { 
-    background-image: url("/default_images/shipping_return.jpg");
+    #tagline { 
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;}
 
-#system > div > div > div > div {text-align: center !important;}
+
+/* Page Compte client */
+
+body > div.off-canvas-wrap.ng-isolate-scope > div.inner-wrap > section > div.darkswarm > div.row.pad-top > div {padding-bottom: 1em;}
+.tabset-ctrl:not(#shop-tabs) .tab.selected {border-bottom: 4px solid green!important;}
+.tabset-ctrl:not(#shop-tabs) .tab.selected a {color: green!important;}
+.tabset-ctrl:not(#shop-tabs) .tab a {color: green!important;}
+
+#labelleorange > div > div.row.active_table_row.skinny-head.margin-top > div.columns.small-5 > h3 {color: #F4704C!important;}
 
 
 
 
 
-
-
+/* Page Shops */
 
 #hubs > div:nth-child(1) > div > h1 {margin-bottom: 20px !important;}
 
@@ -35,13 +57,9 @@
 #hubs .button.success:hover, button.success:active, button.success:focus, button.success:hover {background: darkseagreen !important;}
 
 
-
-
-
 shop ordercycle {background: green !important;}
 
 ordercycle .order-cycle-select {border: 1px solid yellowgreen;}
-
 
 
 .filter-shopfront.taxon-selectors li a, .filter-shopfront.taxon-selectors li a.button {border: 1px solid green; color: green;}
@@ -51,22 +69,13 @@ ordercycle .order-cycle-select {border: 1px solid yellowgreen;}
     color: green;
 }
 
-.darkswarm products product .summary .summary-header .product-producer {
-        display: none;
-}
+.darkswarm products product .summary .summary-header .product-producer {display: none;}
 
 
-
-#shop-tabs .page a:active, #shop-tabs .page a:hover {
-    color: green;
-}
+#shop-tabs .page a:active, #shop-tabs .page a:hover {color: #008000!important;}
 
 
-#shop-tabs .page a.selected {
-    border-bottom: 4px solid green !important;
-}
-
-
+#shop-tabs .page a.selected {border-bottom: 4px solid #008000!important;}
 
 .question-mark-icon {margin-right: 4px;}
 .darkswarm products product .row.variants .total-price {padding-left: 10px; font-weight: bold;}
@@ -74,18 +83,5 @@ ordercycle .order-cycle-select {border: 1px solid yellowgreen;}
 
 
 
-.button, button {
-    background-color: green;
-    border: 1px solid #9ACD32;
-}
 
 
-button:hover {
-    background-color: darkgreen;
-}
-
-
-
-#contact-form > div.text-center > button {border-radius: 8px;}
-
-#sell.pane {background-color: green !important;}
