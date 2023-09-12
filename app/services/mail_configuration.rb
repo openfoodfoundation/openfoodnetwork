@@ -16,11 +16,11 @@ class MailConfiguration
       mail_host: ENV.fetch('MAIL_HOST'),
       mail_domain: ENV.fetch('MAIL_DOMAIN'),
       mail_port: ENV.fetch('MAIL_PORT'),
-      mail_auth_type: ENV.fetch('MAIL_AUTH_TYPE', 'login'),
+      mail_auth_type: 'login',
       smtp_username: ENV.fetch('SMTP_USERNAME'),
       smtp_password: ENV.fetch('SMTP_PASSWORD'),
-      secure_connection_type: ENV.fetch('MAIL_SECURE_CONNECTION', 'None'),
-      mails_from: ENV.fetch('MAILS_FROM', "no-reply@#{ENV.fetch('MAIL_DOMAIN')}"),
+      secure_connection_type: 'TLS',
+      mails_from: ENV.fetch('MAILS_FROM', "fruits@labelleorange.es"),
       mail_bcc: ENV.fetch('MAIL_BCC', ''),
     }
   end
