@@ -3,7 +3,7 @@ class ContactMailer < ApplicationMailer
       @name = name
       @message = message
   
-      mail(to: Spree::Config[:mails_from], from: email, ,subject: subject)
+      mail(to: email, subject: subject)
     end
   end
   
