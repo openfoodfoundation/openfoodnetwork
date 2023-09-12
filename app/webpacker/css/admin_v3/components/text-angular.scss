@@ -28,7 +28,7 @@ text-angular {
     display: inline;
     margin-right: 8px;
     button {
-      padding: 5px 10px !important; // Add `!important` to be more specific than the default button styles (app/webpacker/css/admin/components/buttons.scss)
+      padding: 0 8px !important; // Add `!important` to be more specific than the default button styles (app/webpacker/css/admin/components/buttons.scss)
       // Hope this (text-angular) will be removed soon in order to use trix editor
       margin-right: 0.25em;
     }
