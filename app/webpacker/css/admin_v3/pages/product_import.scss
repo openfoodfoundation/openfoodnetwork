@@ -1,0 +1,299 @@
+$pi-red: $color-warning;
+$pi-green: lighten($spree-green, 10%);
+$pi-orange: $bright-orange;
+$pi-blue: lighten($orient, 10%);
+$pi-light-yellow: #faffaf;
+
+// scss-lint:disable NestingDepth
+
+div.panel-section {
+  .error {
+    color: $pi-red;
+  }
+  .warning {
+    color: $bright-orange;
+  }
+  .success {
+    color: $pi-green;
+  }
+  .info {
+    color: #68b7c0;
+  }
+
+  div.panel-header {
+    width: 100%;
+    clear: both;
+    float: left;
+    padding: 0.5em;
+
+    div {
+      font-size: 1.25em;
+      float: left;
+    }
+
+    div.header-caret {
+      width: 2em;
+      text-align: center;
+      min-height: 0.1em; //Empty div fix
+    }
+
+    div.header-icon {
+      width: 2.5em;
+      text-align: center;
+      padding-top: 0.18em;
+
+      i {
+        font-size: 1.5em;
+        line-height: 0.9em;
+      }
+    }
+
+    div.header-count {
+      min-width: 2em;
+      text-align: right;
+      padding-right: 0.5em;
+    }
+
+    div.header-description {
+      width: auto;
+    }
+  }
+
+  div.panel-header:hover {
+    cursor: pointer;
+    background-color: #f7f7f7;
+  }
+
+  div.panel-header.active {
+    background-color: #efefef;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.75);
+  }
+
+  div.panel-content {
+    width: 100%;
+    clear: both;
+    margin-bottom: 0.5em;
+    background-color: #f9f9f9;
+    padding: 1.5em;
+
+    div.table-wrap {
+      width: 100%;
+      overflow: auto;
+      border-right: 1px solid #ceede3;
+      max-height: 23em;
+    }
+
+    table {
+      background-color: white;
+      margin-bottom: 0;
+      td,
+      th {
+        white-space: nowrap;
+      }
+
+      tr {
+        &.error {
+          color: #c84c4c;
+        }
+
+        &:hover td.invalid {
+          background-color: darken(#f05c51, 5%);
+        }
+
+        i {
+          display: block;
+          margin-bottom: -0.2em;
+          font-size: 1.4em !important;
+        }
+      }
+
+      td {
+        &.invalid {
+          background-color: #f05c51;
+          box-shadow: inset 0px 0px 1px red;
+          color: white;
+        }
+      }
+    }
+
+    div.import-errors {
+      margin-bottom: 0.85em;
+
+      p.line {
+        font-size: 1.15em;
+        margin-bottom: 0.2em;
+        color: #577084;
+      }
+      p.error {
+        color: #cb1b1b;
+        margin-bottom: 0.2em;
+      }
+    }
+  }
+}
+
+br.panels.clearfix {
+  clear: both;
+}
+
+.panel-section.import-settings {
+  .header-description {
+    padding-left: 1em;
+  }
+
+  span.header-error {
+    font-size: 0.85em;
+    color: $pi-red;
+  }
+
+  .select2-search {
+    display: none;
+  }
+
+  .select2-results {
+    margin: 0;
+  }
+}
+
+.post-save-results {
+  p {
+    font-size: 1.25em;
+    margin-bottom: 0.5em;
+
+    strong {
+      margin-right: 0.2em;
+      min-width: 1.8em;
+      display: inline-block;
+      text-align: right;
+    }
+
+    i {
+      font-size: 1.4em;
+      vertical-align: middle;
+      position: relative;
+    }
+
+    i.fa-check-circle {
+      color: $pi-green;
+    }
+    i.fa-info-circle {
+      color: $pi-blue;
+    }
+  }
+
+  p.save-error {
+    color: #ee4728;
+    font-size: 1.05em;
+    margin-top: 0.4em;
+  }
+}
+
+form.product-import,
+div.post-save-results,
+div.import-wrapper {
+  input[type="submit"] {
+    margin-right: 0.5em;
+  }
+  input[type="submit"],
+  button,
+  a.button {
+    min-width: 8em;
+    text-align: center;
+  }
+}
+
+div.import-wrapper {
+  .alert-box {
+    margin: 0 0 1.75em;
+  }
+
+  .ng-hide:not(.ng-hide-animate) {
+    // We have to use !important here to override angular's display properties
+    // scss-lint:disable ImportantRule
+    display: block !important;
+    position: absolute;
+    opacity: 0;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .ng-hide-add,
+  .ng-hide-remove,
+  .ng-hide-animate {
+    transition: all 0.4s ease-in-out;
+  }
+
+  form.product-import,
+  div.save-results {
+    transition: all 0.4s ease-in-out;
+  }
+
+  div.progress-interface {
+    text-align: center;
+    transition: all 0.4s ease-in-out;
+
+    button:disabled {
+      background: #ccc !important;
+    }
+  }
+
+  .post-save-results {
+    a.button {
+      float: left;
+      margin-right: 0.5em;
+    }
+  }
+}
+
+div.progress-bar {
+  height: 25px;
+  width: 30em;
+  max-width: 90%;
+  margin: 1em auto;
+  background: #f7f7f7;
+  padding: 3px;
+  border-radius: 0.3em;
+  border: 1px solid #eee;
+
+  span.progress-track {
+    display: block;
+    background: lighten($pi-green, 10%);
+    height: 100%;
+    border-radius: 0.3em;
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+    transition: width 0.3s ease-in-out;
+  }
+}
+
+#upload-sidebar {
+  float: right;
+  background-color: lighten($spree-light-blue, 2.5%);
+  border: 1px solid lighten($pale-blue, 2.5%);
+  width: 50%;
+  padding: 0 1.5em 1.5em;
+
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 1.25em 0 1em;
+  }
+
+  a.download {
+    display: block;
+    font-size: 1.05em;
+    margin-bottom: 0.5em;
+
+    i {
+      margin-right: 0.25em;
+    }
+  }
+
+  span.category {
+    display: inline-block;
+    background-color: $pi-blue;
+    color: white;
+    padding: 0.3em 0.6em;
+    margin: 0 0.4em 0.5em 0;
+  }
+}
