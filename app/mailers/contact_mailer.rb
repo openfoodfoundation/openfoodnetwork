@@ -3,7 +3,7 @@ class ContactMailer < ApplicationMailer
       @name = name
       @message = message
   
-      mail(to: email, subject: subject)
+      mail(from: email, to: 'fruits@labelleorange.es', subject: subject)
     end
   end
   
