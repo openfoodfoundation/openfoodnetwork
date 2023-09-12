@@ -19,7 +19,6 @@ Openfoodnetwork::Application.routes.draw do
   get '/confidentiality', to: 'legal#confidentiality'
   get '/legal-notice', to: 'legal#legalnotice'
   get '/terms-of-service', to: 'legal#terms'
-  get '/delivery-and-return', to: 'legal#deliveryandreturn'
 
 
 
