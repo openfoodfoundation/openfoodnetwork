@@ -38,21 +38,6 @@ div.error:not(.flash) {
   margin-bottom: 0;
 }
 
-input.red,
-a.button.red,
-button.red {
-  background-color: $color-warning;
-  margin-right: 5px;
-  color: #ffffff;
-}
-
-a.button.red {
-  &:not(:hover) {
-    color: #fff;
-    background-color: $color-warning;
-  }
-}
-
 input.orange {
   background-color: #ff9848;
   margin-right: 5px;

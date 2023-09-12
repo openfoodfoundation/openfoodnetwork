@@ -76,3 +76,18 @@ button:not(.plain):not(.trix-button),
     }
   }
 }
+
+input.red,
+a.button.red,
+button.red {
+  background-color: $color-warning;
+  margin-right: 5px;
+  color: #ffffff;
+}
+
+a.button.red {
+  &:not(:hover) {
+    color: #fff;
+    background-color: $color-warning;
+  }
+}

@@ -89,6 +89,16 @@ button:not(.plain):not(.trix-button),
     height: $btn-relaxed-height;
   }
 
+  &.red {
+    background-color: $color-btn-red-bg;
+    border-color: $color-btn-red-bg;
+
+    &:hover {
+      background-color: $color-btn-red-hover-bg;
+      border-color: $color-btn-red-hover-bg;
+    }
+  }
+
   .badge {
     position: absolute;
     top: 0;
